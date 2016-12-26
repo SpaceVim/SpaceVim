@@ -18,7 +18,7 @@ function! s:my_complete_done() abort "{{{
         if snippet ==# ''
             return
         endif
-        let [cur_text, col, _] = neosnippet#mappings#_pre_trigger()
+        let [cur_text, col] = neosnippet#mappings#_pre_trigger()[0:1]
         call neosnippet#view#_insert(snippet, {}, cur_text, col)
     endif
 endfunction"}}}
