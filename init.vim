@@ -1,1 +1,1 @@
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/core/main.vim'
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
