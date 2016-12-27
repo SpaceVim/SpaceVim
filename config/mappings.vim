@@ -237,3 +237,4 @@ call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p
             \'Open previous buffer in split window' , 'split|wincmd p|e#')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
             \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
+call zvim#util#defineMap('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')

@@ -22,6 +22,7 @@ else
     call deoplete#custom#set('omni', 'mark', '')
 endif
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+let g:deoplete#ignore_sources._ = ['around']
 "call deoplete#custom#set('omni', 'min_pattern_length', 0)
 inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
