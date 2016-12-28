@@ -33,6 +33,36 @@ Like spacemacs, but for vim.
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
 
+## Modular configuration
+
+SpaceVim will load custom configuration from `./.local.vim`, here is an example:
+```viml
+" here are some basic customizations, please refer to the top of the vimrc file for all possible options
+let g:settings.default_indent = 3
+let g:settings.max_column     = 80
+let g:settings.colorscheme    = 'my_awesome_colorscheme'
+let g:settings.plugin_manager = 'dein'  " neobundle or dein or vim-plug
+
+" change the default directory where all miscellaneous persistent files go
+let g:settings.cache_dir = "/some/place/else"
+
+" by default, language specific plugins are not loaded.  this can be changed with the following:
+let g:settings.plugin_groups_exclude = ['ruby', 'python']
+
+" if there are groups you want always loaded, you can use this:
+let g:settings.plugin_groups_include = ['go']
+
+" alternatively, you can set this variable to load exactly what you want
+let g:settings.plugin_groups = ['core', 'web']
+
+" if there is a particular plugin you don't like, you can define this variable to disable them entirely
+let g:settings.disabled_plugins=['vim-foo', 'vim-bar']
+
+" anything defined here are simply overrides
+set wildignore+=\*/node_modules/\*
+set guifont=Wingdings:h10
+```
+
 ## Plugin Highlights
 
 - Package management with caching enabled and lazy loading

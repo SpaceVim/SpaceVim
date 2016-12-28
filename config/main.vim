@@ -2,15 +2,18 @@ let g:Config_Main_Home = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'.((has('win
 try
     call zvim#util#source_rc('functions.vim')
 catch
-    execute "set rtp +=" . fnamemodify(g:Config_Main_Home, ':p:h:h')
+    execute 'set rtp +=' . fnamemodify(g:Config_Main_Home, ':p:h:h')
     call zvim#util#source_rc('functions.vim')
 endtry
 
+call SpaceVim#init()
+
 call zvim#util#source_rc('init.vim')
 
-scriptencoding utf-8
 
-call zvim#util#source_rc('local.vim')
+call SpaceVim#loadCustomConfig()
+
+call SpaceVim#end()
 
 call zvim#util#source_rc('plugins.vim')
 
