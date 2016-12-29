@@ -9,7 +9,7 @@ Like spacemacs, but for vim.
 - [Modular configuration](#modular-configuration)
 - Lazy-load 90% of plugins with [dein.vim]
 - Robust, yet light weight
-- Unite centric work-flow
+- [Unite centric work-flow](#unite-centric-work-flow)
 - Extensive Neocomplete setup
 - Central location for tags
 - Lightweight simple status/tabline
@@ -75,6 +75,17 @@ let g:settings.disabled_plugins=['vim-foo', 'vim-bar']
 set wildignore+=\*/node_modules/\*
 set guifont=Wingdings:h10
 ```
+
+## Unite centric work-flow
+- List all the plugins has been installed, fuzzy find what you want,
+default action is open the github website of current plugin. default key is `<leader>lp`
+![2016-12-29-22 31 27](https://cloud.githubusercontent.com/assets/13142418/21545996/c48d7728-ce16-11e6-8e30-0c72139f642f.png)
+
+- List all the mappings and description: `f<space>`
+![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+
+- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
+![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
 
 ## Plugin Highlights
 

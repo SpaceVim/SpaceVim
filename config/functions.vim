@@ -196,7 +196,7 @@ fu! s:Opencommit(repo,commit)
 endf
 
 fu! UpdateStarredRepos()
-    let repos = githubapi#users#GetStarred('wsdjeg')
+    let repos = github#api#users#GetStarred('wsdjeg')
     for repo in repos
         let description = repo.full_name . repeat(' ', 40 - len(repo.full_name)) . repo.description
         let cmd = "OpenBrowser " . repo.html_url
