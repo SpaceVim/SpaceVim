@@ -471,5 +471,6 @@ if zvim#plug#enable_plug()
     call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
     " google plugins
     call zvim#plug#add('google/vim-searchindex')
+    call zvim#plug#add('Yggdroot/LeaderF', {'merged' : 0})
     call zvim#plug#end()
 endif
