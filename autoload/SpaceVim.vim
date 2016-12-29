@@ -42,6 +42,10 @@ endfunction
 
 function! SpaceVim#loadCustomConfig() abort
     let custom_confs = SpaceVim#util#globpath(getcwd(), '.local.vim')
+    let custom_glob_conf = expand('~/.local.vim')
+    if filereadable(custom_glob_conf)
+        exe 'source ' . custom_glob_conf
+    endif
     if !empty(custom_confs)
         exe 'source ' . custom_confs[0]
     endif
