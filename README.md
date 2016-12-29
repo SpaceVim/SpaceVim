@@ -33,6 +33,19 @@ Like spacemacs, but for vim.
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
 
+## Installl
+
+- vim
+```sh
+ mv ~/.vimrc ~/.vimrc_bak
+ mv ~/.vim ~/.vim_bak
+ git clone https://github.com/SpaceVim/SpaceVim.git ~/.vim
+```
+- nvim
+```sh
+ git clone https://github.com/SpaceVim/SpaceVim.git ~/.config/nvim
+```
+
 ## Modular configuration
 
 SpaceVim will load custom configuration from `./.local.vim`, here is an example:
