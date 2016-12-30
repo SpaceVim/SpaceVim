@@ -87,6 +87,7 @@ endfunction
 
 function! SpaceVim#default() abort
     call add(g:settings.plugin_groups, 'web')
+    call add(g:settings.plugin_groups, 'lang')
     call add(g:settings.plugin_groups, 'javascript')
     call add(g:settings.plugin_groups, 'ruby')
     call add(g:settings.plugin_groups, 'python')
@@ -100,6 +101,7 @@ function! SpaceVim#default() abort
 
     call add(g:settings.plugin_groups, 'core')
     call add(g:settings.plugin_groups, 'unite')
+    call add(g:settings.plugin_groups, 'github')
     if has('python3')
         call add(g:settings.plugin_groups, 'denite')
     endif
@@ -122,4 +124,8 @@ function! SpaceVim#default() abort
 endfunction
 
 function! SpaceVim#defindFuncs() abort
+endfunction
+
+function! SpaceVim#loadPlugins() abort
+    
 endfunction

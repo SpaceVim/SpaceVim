@@ -18,7 +18,7 @@ Like spacemacs, but for vim.
 ## Structure
 - [config](./config)/ - Configuration
   - [plugins](./config/plugins)/ - Plugin configurations
-  - [mappings.vim](./config/mappings.vim) - Key bindings
+  - [mappings.vim](./config/mappings.vim) - Key mappings
   - [autocmds.vim](./config/autocmds.vim) - autocmd group
   - [general.vim](./config/general.vim) - General configuration
   - [init.vim](./config/init.vim) - `runtimepath` initialization
@@ -48,7 +48,9 @@ Like spacemacs, but for vim.
 
 ## Modular configuration
 
-SpaceVim will load custom configuration from `~/.local.vim`, here is an example:
+SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
+
+here is an example:
 ```viml
 " here are some basic customizations, please refer to the top of the vimrc file for all possible options
 let g:settings.default_indent = 3

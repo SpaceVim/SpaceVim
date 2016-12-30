@@ -173,6 +173,10 @@ elseif executable('jvgrep')
     let g:unite_source_grep_command = 'jvgrep'
     let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
     let g:unite_source_grep_recursive_opt = '-R'
+elseif executable('beagrep')
+    " Use beagrep
+    " https://github.com/baohaojun/beagrep
+    let g:unite_source_grep_command = 'beagrep'
 endif
 let g:unite_source_rec_async_command =
             \ ['ag', '--follow', '--nocolor', '--nogroup',

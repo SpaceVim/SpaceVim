@@ -1,11 +1,78 @@
 scriptencoding utf-8
+let s:plugins = {}
+
+let s:plugins.core = [
+            \ ['Shougo/vimproc.vim', {'build' : 'make'}],
+            \ ]
+
+let s:plugins.unite = [
+            \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
+            \ ]
+
+let s:plugins.lang = [
+            \ ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}],
+            \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet'}],
+            \ ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}],
+            \ ['m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'}],
+            \ ['groenewege/vim-less',                    { 'on_ft' : ['less']}],
+            \ ['cakebaker/scss-syntax.vim',              { 'on_ft' : ['scss','sass']}],
+            \ ['hail2u/vim-css3-syntax',                 { 'on_ft' : ['css','scss','sass']}],
+            \ ['ap/vim-css-color',                       { 'on_ft' : ['css','scss','sass','less','styl']}],
+            \ ['othree/html5.vim',                       { 'on_ft' : ['html']}],
+            \ ['wavded/vim-stylus',                      { 'on_ft' : ['styl']}],
+            \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
+            \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
+            \ ['Valloric/MatchTagAlways',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}],
+            \ ['pangloss/vim-javascript',                { 'on_ft' : ['javascript']}],
+            \ ['maksimr/vim-jsbeautify',                 { 'on_ft' : ['javascript']}],
+            \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],
+            \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
+            \ ['mmalecki/vim-node.js',                   { 'on_ft' : ['javascript']}],
+            \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],
+            \ ['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript','coffee','ls','typescript']}],
+            \ ['wsdjeg/vim-dict',                        { 'on_ft' : 'java'}],
+            \ ['wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'}],
+            \ ['wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'}],
+            \ ['vim-jp/vim-java',                        { 'on_ft' : 'java'}],
+            \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
+            \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
+            \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
+            \ ['plasticboy/vim-markdown',                { 'on_ft' : 'markdown'}],
+            \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
+            \ ['racer-rust/vim-racer',                   { 'on_ft' : 'rust'}],
+            \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
+            \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
+            \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
+            \ ]
+if g:settings.enable_javacomplete2_py
+    call add(s:plugins.lang , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp']}])
+else
+    call add(s:plugins.lang , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']}])
+endif
+let g:JavaComplete_UseFQN = 1
+let g:JavaComplete_ServerAutoShutdownTime = 300
+let g:JavaComplete_MavenRepositoryDisable = 0
+
+let s:plugins.chat = [
+            \ ['wsdjeg/vim-chat',                        { 'merged' : 0}],
+            \ ]
 
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:settings.plugin_bundle_dir)
     call zvim#plug#fetch()
-    if count(g:settings.plugin_groups, 'core') "{{{
-        call zvim#plug#add('Shougo/vimproc.vim', {'build': 'make'})
-    endif
+    let g:wsd = []
+    for group in g:settings.plugin_groups
+        for plugin in get(s:plugins, group, [])
+            if len(plugin) == 2
+                call zvim#plug#add(plugin[0], plugin[1])
+                if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
+                    call zvim#plug#defind_hooks(split(plugin[0], '/')[-1])
+                endif
+            else
+                call zvim#plug#add(plugin[0])
+            endif
+        endfor
+    endfor
     if count(g:settings.plugin_groups, 'denite')
         call zvim#plug#add('Shougo/denite.nvim',{ 'merged' : 0})
         if zvim#plug#tap('denite.nvim')
@@ -13,10 +80,6 @@ if zvim#plug#enable_plug()
         endif
     endif
     if count(g:settings.plugin_groups, 'unite') "{{{
-        call zvim#plug#add('Shougo/unite.vim',{ 'merged' : 0})
-        if zvim#plug#tap('unite.vim')
-            call zvim#plug#defind_hooks('unite.vim')
-        endif
         call zvim#plug#add('Shougo/neoyank.vim')
         call zvim#plug#add('soh335/unite-qflist')
         call zvim#plug#add('ujihisa/unite-equery')
@@ -208,7 +271,6 @@ if zvim#plug#enable_plug()
             if zvim#plug#tap('deoplete.nvim')
                 call zvim#plug#defind_hooks('deoplete.nvim')
             endif
-            call zvim#plug#add('zchee/deoplete-jedi',      { 'on_ft' : 'python'})
         endif "}}}
         call zvim#plug#add('Shougo/neco-syntax',           { 'on_i' : 1})
         call zvim#plug#add('ujihisa/neco-look',            { 'on_i' : 1})
@@ -221,10 +283,6 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('Shougo/context_filetype.vim',  { 'on_i' : 1})
         call zvim#plug#add('Shougo/neoinclude.vim',        { 'on_i' : 1})
         call zvim#plug#add('Shougo/neosnippet-snippets',   { 'merged' : 0})
-        call zvim#plug#add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
-        if zvim#plug#tap('neosnippet.vim')
-            call zvim#plug#defind_hooks('neosnippet.vim')
-        endif
         call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
     endif "}}}
 
@@ -247,20 +305,13 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('vimcn/vimcdoc')
     endif
 
-    call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
+    if count(g:settings.plugin_groups, 'github') "{{{
+        call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
+    endif
+
     if count(g:settings.plugin_groups, 'vim') "{{{
         call zvim#plug#add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
         call zvim#plug#add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
-        call zvim#plug#add('davidhalter/jedi-vim',     { 'on_ft' : 'python'})
-        if zvim#plug#tap('jedi-vim')
-            call zvim#plug#defind_hooks('jedi-vim')
-        endif
-    endif
-    if count(g:settings.plugin_groups, 'nvim') "{{{
-        call zvim#plug#add('m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'})
-        if zvim#plug#tap('phpcomplete-extended')
-            call zvim#plug#defind_hooks('phpcomplete-extended')
-        endif
     endif
     call zvim#plug#add('tpope/vim-scriptease')
     call zvim#plug#add('tpope/vim-fugitive')
@@ -275,44 +326,15 @@ if zvim#plug#enable_plug()
 
     "web plugins
 
-    call zvim#plug#add('groenewege/vim-less',                    { 'on_ft':['less']})
-    call zvim#plug#add('cakebaker/scss-syntax.vim',              { 'on_ft':['scss','sass']})
-    call zvim#plug#add('hail2u/vim-css3-syntax',                 { 'on_ft':['css','scss','sass']})
-    call zvim#plug#add('ap/vim-css-color',                       { 'on_ft':['css','scss','sass','less','styl']})
-    call zvim#plug#add('othree/html5.vim',                       { 'on_ft':['html']})
-    call zvim#plug#add('wavded/vim-stylus',                      { 'on_ft':['styl']})
-    call zvim#plug#add('digitaltoad/vim-jade',                   { 'on_ft':['jade']})
-    call zvim#plug#add('juvenn/mustache.vim',                    { 'on_ft':['mustache']})
-    call zvim#plug#add('Valloric/MatchTagAlways',                { 'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
-    call zvim#plug#add('pangloss/vim-javascript',                { 'on_ft':['javascript']})
-    call zvim#plug#add('maksimr/vim-jsbeautify',                 { 'on_ft':['javascript']})
-    call zvim#plug#add('leafgarland/typescript-vim',             { 'on_ft':['typescript']})
-    call zvim#plug#add('kchmck/vim-coffee-script',               { 'on_ft':['coffee']})
-    call zvim#plug#add('mmalecki/vim-node.js',                   { 'on_ft':['javascript']})
-    call zvim#plug#add('leshill/vim-json',                       { 'on_ft':['javascript','json']})
-    call zvim#plug#add('othree/javascript-libraries-syntax.vim', { 'on_ft':['javascript','coffee','ls','typescript']})
-    if g:settings.enable_javacomplete2_py
-        call zvim#plug#add('wsdjeg/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
-    else
-        call zvim#plug#add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
-    endif
-    let g:JavaComplete_UseFQN = 1
-    let g:JavaComplete_ServerAutoShutdownTime = 300
-    let g:JavaComplete_MavenRepositoryDisable = 0
-    call zvim#plug#add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
     call zvim#plug#add('wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'})
-    call zvim#plug#add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
     if zvim#plug#tap('java_getset.vim')
         call zvim#plug#defind_hooks('java_getset.vim')
     endif
-    call zvim#plug#add('wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'})
     call zvim#plug#add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
     call zvim#plug#add('wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'})
     call zvim#plug#add('wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'})
-    call zvim#plug#add('wsdjeg/vim-chat',                        { 'merged' : 0})
     call zvim#plug#add('wsdjeg/job.vim',                        { 'merged' : 0})
     call zvim#plug#add('wsdjeg/GitHub-api.vim')
-    call zvim#plug#add('vim-jp/vim-java',                        { 'on_ft' : 'java'})
     call zvim#plug#add('vim-airline/vim-airline',                { 'merged' : 0})
     call zvim#plug#add('vim-airline/vim-airline-themes',         { 'merged' : 0})
     if zvim#plug#tap('vim-airline')
@@ -345,16 +367,12 @@ if zvim#plug#enable_plug()
             call zvim#plug#defind_hooks('syntastic')
         endif
     endif
-    call zvim#plug#add('syngan/vim-vimlint',{'on_ft' : 'vim'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    call zvim#plug#add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
-    call zvim#plug#add('todesking/vint-syntastic',{'on_ft' : 'vim'})
-    "let g:syntastic_vim_checkers = ['vint']
     call zvim#plug#add('gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
@@ -439,7 +457,7 @@ if zvim#plug#enable_plug()
 
     call zvim#plug#add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
     call zvim#plug#add('wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'})
-    call zvim#plug#add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
+    "call zvim#plug#add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
     call zvim#plug#add('simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'})
@@ -449,7 +467,6 @@ if zvim#plug#enable_plug()
     call zvim#plug#add('ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']})
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
-    call zvim#plug#add('elixir-lang/vim-elixir',        { 'on_ft' : 'elixir'})
     call zvim#plug#add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
     call zvim#plug#add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
     nnoremap <Leader>fz :FZF<CR>
@@ -461,12 +478,9 @@ if zvim#plug#enable_plug()
     if zvim#plug#tap('open-brower.vim')
         call zvim#plug#defind_hooks('open-brower.vim')
     endif
-    call zvim#plug#add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
+    "call zvim#plug#add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
     let g:racer_cmd = $HOME.'/.cargo/bin/racer'
     call zvim#plug#add('rust-lang/rust.vim')
-    call zvim#plug#add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
-    call zvim#plug#add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})
-    call zvim#plug#add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
     call zvim#plug#add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
     call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
     " google plugins
