@@ -48,7 +48,7 @@ Like spacemacs, but for vim.
 
 ## Modular configuration
 
-SpaceVim will load custom configuration from `./.local.vim`, here is an example:
+SpaceVim will load custom configuration from `~/.local.vim`, here is an example:
 ```viml
 " here are some basic customizations, please refer to the top of the vimrc file for all possible options
 let g:settings.default_indent = 3
