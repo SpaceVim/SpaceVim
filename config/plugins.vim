@@ -7,8 +7,78 @@ let s:plugins.core = [
 
 let s:plugins.unite = [
             \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
+            \ ['Shougo/neoyank.vim'],
+            \ ['soh335/unite-qflist'],
+            \ ['ujihisa/unite-equery'],
+            \ ['m2mdas/unite-file-vcs'],
+            \ ['Shougo/neomru.vim'],
+            \ ['kmnk/vim-unite-svn'],
+            \ ['basyura/unite-rails'],
+            \ ['nobeans/unite-grails'],
+            \ ['choplin/unite-vim_hacks'],
+            \ ['mattn/webapi-vim'],
+            \ ['mattn/gist-vim', {'loadconf' : 1}],
+            \ ['gist-vim'],
+            \ ['henices/unite-stock'],
+            \ ['mattn/wwwrenderer-vim'],
+            \ ['thinca/vim-openbuf'],
+            \ ['ujihisa/unite-haskellimport'],
+            \ ['oppara/vim-unite-cake'],
+            \ ['thinca/vim-ref', {'loadconf' : 1}],
+            \ ['heavenshell/unite-zf'],
+            \ ['heavenshell/unite-sf2'],
+            \ ['osyo-manga/unite-vimpatches'],
+            \ ['Shougo/unite-outline'],
+            \ ['hewes/unite-gtags' ,{'loadconf' : 1}],
+            \ ['rafi/vim-unite-issue'],
+            \ ['joker1007/unite-pull-request'],
+            \ ['tsukkee/unite-tag'],
+            \ ['ujihisa/unite-launch'],
+            \ ['ujihisa/unite-gem'],
+            \ ['osyo-manga/unite-filetype'],
+            \ ['thinca/vim-unite-history'],
+            \ ['Shougo/neobundle-vim-recipes'],
+            \ ['Shougo/unite-help'],
+            \ ['ujihisa/unite-locate'],
+            \ ['kmnk/vim-unite-giti'],
+            \ ['ujihisa/unite-font'],
+            \ ['t9md/vim-unite-ack'],
+            \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
+            \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
+            \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
+            \ ['daisuzu/unite-adb'],
+            \ ['osyo-manga/unite-airline_themes'],
+            \ ['mattn/unite-vim_advent-calendar'],
+            \ ['mattn/unite-remotefile'],
+            \ ['sgur/unite-everything'],
+            \ ['kannokanno/unite-dwm'],
+            \ ['raw1z/unite-projects'],
+            \ ['voi/unite-ctags'],
+            \ ['Shougo/unite-session'],
+            \ ['osyo-manga/unite-quickfix'],
+            \ ['Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler', 'loadconf' : 1 , 'loadconf_before' : 1}],
+            \ ['ujihisa/unite-colorscheme'],
+            \ ['mattn/unite-gist'],
+            \ ['tacroe/unite-mark'],
+            \ ['tacroe/unite-alias'],
+            \ ['tex/vim-unite-id'],
+            \ ['sgur/unite-qf'],
+            \ ['lambdalisue/vim-gista-unite'],
+            \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1}],
+            \ ['lambdalisue/unite-grep-vcs', {
+            \ 'autoload': {
+            \    'unite_sources': ['grep/git', 'grep/hg'],
+            \ }}],
+            \ ['lambdalisue/vim-gista', {
+            \ 'on_cmd': 'Gista'
+            \ }],
             \ ]
 
+if g:spacevim_enable_googlesuggest
+    call add(s:plugins.unite, ['mopp/googlesuggest-source.vim'])
+    call add(s:plugins.unite, ['mattn/googlesuggest-complete-vim'])
+endif
+"call add(s:plugins.unite, ['ujihisa/quicklearn'])
 let s:plugins.lang = [
             \ ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}],
             \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet'}],
@@ -45,132 +115,36 @@ let s:plugins.lang = [
             \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
             \ ]
 if g:spacevim_enable_javacomplete2_py
-    call add(s:plugins.lang , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp']}])
+    call add(s:plugins.lang , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
 else
-    call add(s:plugins.lang , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']}])
+    call add(s:plugins.lang , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
 endif
-let g:JavaComplete_UseFQN = 1
-let g:JavaComplete_ServerAutoShutdownTime = 300
-let g:JavaComplete_MavenRepositoryDisable = 0
-
 let s:plugins.chat = [
             \ ['wsdjeg/vim-chat',                        { 'merged' : 0}],
+            \ ]
+
+let s:plugins.denite = [
+            \ ['Shougo/denite.nvim',{ 'merged' : 0, 'loadconf' : 1}],
             \ ]
 
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
-    let g:wsd = []
     for group in g:spacevim_plugin_groups
         for plugin in get(s:plugins, group, [])
             if len(plugin) == 2
                 call zvim#plug#add(plugin[0], plugin[1])
                 if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
                     call zvim#plug#defind_hooks(split(plugin[0], '/')[-1])
+                    if get(plugin[1], 'loadconf_before', 0 )
+                        call zvim#plug#loadPluginBefore(split(plugin[0], '/')[-1])
+                    endif
                 endif
             else
                 call zvim#plug#add(plugin[0])
             endif
         endfor
     endfor
-    if count(g:spacevim_plugin_groups, 'denite')
-        call zvim#plug#add('Shougo/denite.nvim',{ 'merged' : 0})
-        if zvim#plug#tap('denite.nvim')
-            call zvim#plug#defind_hooks('denite.nvim')
-        endif
-    endif
-    if count(g:spacevim_plugin_groups, 'unite') "{{{
-        call zvim#plug#add('Shougo/neoyank.vim')
-        call zvim#plug#add('soh335/unite-qflist')
-        call zvim#plug#add('ujihisa/unite-equery')
-        call zvim#plug#add('m2mdas/unite-file-vcs')
-        call zvim#plug#add('Shougo/neomru.vim')
-        call zvim#plug#add('kmnk/vim-unite-svn')
-        call zvim#plug#add('basyura/unite-rails')
-        call zvim#plug#add('nobeans/unite-grails')
-        call zvim#plug#add('choplin/unite-vim_hacks')
-        call zvim#plug#add('mattn/webapi-vim')
-        call zvim#plug#add('mattn/gist-vim')
-        if zvim#plug#tap('gist-vim')
-            call zvim#plug#defind_hooks('gist-vim')
-        endif
-        call zvim#plug#add('henices/unite-stock')
-        call zvim#plug#add('mattn/wwwrenderer-vim')
-        call zvim#plug#add('thinca/vim-openbuf')
-        call zvim#plug#add('ujihisa/unite-haskellimport')
-        call zvim#plug#add('oppara/vim-unite-cake')
-        call zvim#plug#add('thinca/vim-ref')
-        if zvim#plug#tap('vim-ref')
-            call zvim#plug#defind_hooks('vim-ref')
-        endif
-        call zvim#plug#add('heavenshell/unite-zf')
-        call zvim#plug#add('heavenshell/unite-sf2')
-        call zvim#plug#add('osyo-manga/unite-vimpatches')
-        call zvim#plug#add('Shougo/unite-outline')
-        call zvim#plug#add('hewes/unite-gtags')
-        if zvim#plug#tap('unite-gtags')
-            call zvim#plug#defind_hooks('unite-gtags')
-        endif
-        call zvim#plug#add('rafi/vim-unite-issue')
-        call zvim#plug#add('joker1007/unite-pull-request')
-        call zvim#plug#add('tsukkee/unite-tag')
-        call zvim#plug#add('ujihisa/unite-launch')
-        call zvim#plug#add('ujihisa/unite-gem')
-        call zvim#plug#add('osyo-manga/unite-filetype')
-        call zvim#plug#add('thinca/vim-unite-history')
-        call zvim#plug#add('Shougo/neobundle-vim-recipes')
-        call zvim#plug#add('Shougo/unite-help')
-        call zvim#plug#add('ujihisa/unite-locate')
-        call zvim#plug#add('kmnk/vim-unite-giti')
-        call zvim#plug#add('ujihisa/unite-font')
-        call zvim#plug#add('t9md/vim-unite-ack')
-        call zvim#plug#add('mileszs/ack.vim',{'on_cmd' : 'Ack'})
-        call zvim#plug#add('albfan/ag.vim',{'on_cmd' : 'Ag'})
-        let g:ag_prg='ag  --vimgrep'
-        let g:ag_working_path_mode='r'
-        call zvim#plug#add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
-        if zvim#plug#tap('ctrlsf.vim')
-            call zvim#plug#defind_hooks('ctrlsf.vim')
-            nmap <silent><leader>sn <Plug>CtrlSFCwordExec
-        endif
-        call zvim#plug#add('daisuzu/unite-adb')
-        call zvim#plug#add('osyo-manga/unite-airline_themes')
-        call zvim#plug#add('mattn/unite-vim_advent-calendar')
-        call zvim#plug#add('mattn/unite-remotefile')
-        call zvim#plug#add('sgur/unite-everything')
-        call zvim#plug#add('kannokanno/unite-dwm')
-        call zvim#plug#add('raw1z/unite-projects')
-        call zvim#plug#add('voi/unite-ctags')
-        call zvim#plug#add('Shougo/unite-session')
-        call zvim#plug#add('osyo-manga/unite-quickfix')
-        call zvim#plug#add('Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler'})
-        if zvim#plug#tap('vimfiler.vim')
-            call zvim#plug#defind_hooks('vimfiler.vim')
-            noremap <silent> <F3> :call zvim#util#OpenVimfiler()<CR>
-        endif
-        if g:spacevim_enable_googlesuggest
-            call zvim#plug#add('mopp/googlesuggest-source.vim')
-            call zvim#plug#add('mattn/googlesuggest-complete-vim')
-        endif
-        call zvim#plug#add('ujihisa/unite-colorscheme')
-        call zvim#plug#add('mattn/unite-gist')
-        call zvim#plug#add('tacroe/unite-mark')
-        call zvim#plug#add('tacroe/unite-alias')
-        call zvim#plug#add('tex/vim-unite-id')
-        call zvim#plug#add('sgur/unite-qf')
-        call zvim#plug#add('lambdalisue/unite-grep-vcs', {
-                    \ 'autoload': {
-                    \    'unite_sources': ['grep/git', 'grep/hg'],
-                    \}})
-        call zvim#plug#add('lambdalisue/vim-gista', {
-                    \ 'on_cmd': 'Gista'
-                    \})
-        call zvim#plug#add('lambdalisue/vim-gista-unite')
-        call zvim#plug#add('wsdjeg/unite-radio.vim')
-        let g:unite_source_radio_play_cmd='mpv'
-        "call zvim#plug#add('ujihisa/quicklearn')
-    endif "}}}
-
 
     "{{{ctrlpvim settings
     if count(g:spacevim_plugin_groups, 'ctrlp') "{{{

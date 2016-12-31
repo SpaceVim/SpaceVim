@@ -181,5 +181,9 @@ function! zvim#plug#enable_plug() abort
                 \ || g:spacevim_vim_plug_installed
 endfunction
 
+function! zvim#plug#loadPluginBefore(plugin) abort
+    call zvim#util#source_rc('plugins_before/' . a:plugin)
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
