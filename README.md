@@ -438,8 +438,10 @@ Key   | Mode | Action
 
 ## Enjoy!
 
-## Thanks
+## Credits & Thanks
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
+- [Rafael Bodill](https://github.com/rafi) and his vim-config
+- [Bailey Ling](https://github.com/bling) and his dotvim
 
 <!-- plublic links -->
 [dein.vim]: https://github.com/Shougo/dein.vim
