@@ -1,0 +1,9 @@
+tags
+*.html
+*.class
+.floo
+.flooignore
+*.netrwhist
+*-rplugin~
+*rplugin.vim
+/config/local.vim
