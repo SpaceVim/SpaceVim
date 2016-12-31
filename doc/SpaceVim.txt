@@ -1,0 +1,22 @@
+*SpaceVim.txt*	Like spacemacs, but for vim
+wsdjeg                                                              *SpaceVim*
+
+==============================================================================
+CONTENTS                                                   *SpaceVim-contents*
+  1. Configuration...........................................|SpaceVim-config|
+  2. Functions............................................|SpaceVim-functions|
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+                                                                  *g:settings*
+The default_indent of SpaceVim.
+
+==============================================================================
+FUNCTIONS                                                 *SpaceVim-functions*
+
+SpaceVim#Layer({layer}, {opt})                              *SpaceVim#Layer()*
+  Load the {layer} you want, with the {opt}.
+
+
+vim:tw=78:ts=8:ft=help:norl:

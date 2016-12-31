@@ -2,6 +2,8 @@ scriptencoding utf-8
 function! SpaceVim#init() abort
     "Vim settings
     let g:settings                         = get(g:, 'settings', {})
+    ""
+    " The default_indent of SpaceVim.
     let g:settings.default_indent          = 2
     let g:settings.max_column              = 120
     let g:settings.enable_googlesuggest    = 0
@@ -50,7 +52,9 @@ function! SpaceVim#loadCustomConfig() abort
         exe 'source ' . custom_confs[0]
     endif
 endfunction
-
+""
+" @public
+" Load the {layer} you want, with the {opt}.
 function! SpaceVim#Layer(layer, opt) abort
 
 endfunction

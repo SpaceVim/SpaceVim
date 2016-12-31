@@ -438,6 +438,9 @@ Key   | Mode | Action
 
 ## Enjoy!
 
+## Thanks
+- [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
+
 <!-- plublic links -->
 [dein.vim]: https://github.com/Shougo/dein.vim
 [vimproc]: https://github.com/Shougo/vimproc.vim
