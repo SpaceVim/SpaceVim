@@ -5,6 +5,8 @@ function! SpaceVim#init() abort
     ""
     " The default_indent of SpaceVim.
     let g:spacevim_default_indent          = 2
+    ""
+    " The max column of SpaceVim
     let g:spacevim_max_column              = 120
     let g:spacevim_enable_googlesuggest    = 0
     let g:spacevim_auto_download_neobundle = 0
@@ -15,9 +17,13 @@ function! SpaceVim#init() abort
     let g:spacevim_autocomplete_method     = ''
     let g:spacevim_enable_cursorcolumn     = 0
     let g:spacevim_enable_neomake          = 1
+    ""
+    " Enable ycm or not, but default it is 0.
     let g:spacevim_enable_ycm              = 0
     let g:spacevim_enable_neocomplcache    = 0
     let g:spacevim_enable_cursorline       = 0
+    ""
+    " The error symbol used by maker.
     let g:spacevim_error_symbol            = '✖'
     let g:spacevim_warning_symbol          = '⚠'
     let g:spacevim_use_colorscheme         = 1

@@ -156,7 +156,7 @@ nnoremap <Leader>d m`YP``
 vnoremap <Leader>d YPgv
 
 fu! s:tobur(num)
-    if index(get(g:settings,'altmoveignoreft',[]), &filetype) == -1
+    if index(get(g:,'spacevim_altmoveignoreft',[]), &filetype) == -1
         if a:num ==# 'bnext'
             bnext
         elseif a:num ==# 'bprev'

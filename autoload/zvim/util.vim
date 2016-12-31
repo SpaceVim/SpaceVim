@@ -32,8 +32,8 @@ fu! zvim#util#source_rc(file) abort
 endf
 
 fu! zvim#util#SmartClose() abort
-    let ignorewin = get(g:settings,'smartcloseignorewin',[])
-    let ignoreft = get(g:settings,'smartcloseignoreft',[])
+    let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
+    let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
     let win_count = winnr('$')
     let num = win_count
     for i in range(1,win_count)
@@ -214,7 +214,7 @@ endfunction
 
 function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
     call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
-    let dir = get(g:settings, 'src_root', '~')
+    let dir = get(g:,'spacevim_src_root', '~')
     "return globpath(dir, '*')
     let result = split(globpath(dir, '*'), "\n")
     let ps = []
@@ -227,13 +227,13 @@ function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
 endfunction
 
 function! zvim#util#OpenProject(p) abort
-    let dir = get(g:settings, 'src_root', '~') . a:p
+    let dir = get(g:, 'spacevim_src_root', '~') . a:p
     exe 'CtrlP '. dir
 endfunction
 
 function! zvim#util#UpdateHosts(...) abort
     if len(a:000) == 0
-        let url = get(g:settings, 'hosts_url', '')
+        let url = get(g:,'spacevim_hosts_url', '')
     else
         let url = a:1
     endif

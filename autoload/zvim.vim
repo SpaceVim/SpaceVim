@@ -19,7 +19,7 @@ function! zvim#enter() abort
     if pumvisible()
         if getline('.')[col('.') - 2]==# '{'
             return "\<Enter>"
-        elseif g:settings.autocomplete_method ==# 'neocomplete'||g:settings.autocomplete_method ==# 'deoplete'
+        elseif g:spacevim_autocomplete_method ==# 'neocomplete'||g:spacevim_autocomplete_method ==# 'deoplete'
             return "\<C-y>"
         else
             return "\<esc>a"

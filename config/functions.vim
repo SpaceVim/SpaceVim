@@ -146,13 +146,13 @@ endfunction
 
 
 function! MyLeaderTabfunc() abort
-    if g:settings.autocomplete_method == 'deoplete'
-        if g:settings.enable_javacomplete2_py
+    if g:spacevim_autocomplete_method == 'deoplete'
+        if g:spacevim_enable_javacomplete2_py
             return deoplete#mappings#manual_complete(['javacomplete2'])
         else
             return deoplete#mappings#manual_complete(['omni'])
         endif
-    elseif g:settings.autocomplete_method == 'neocomplete'
+    elseif g:spacevim_autocomplete_method == 'neocomplete'
         return neocomplete#start_manual_complete(['omni'])
     endif
 endfunction

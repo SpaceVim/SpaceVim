@@ -12,6 +12,15 @@ CONFIGURATION                                                *SpaceVim-config*
                                                    *g:spacevim_default_indent*
 The default_indent of SpaceVim.
 
+                                                       *g:spacevim_max_column*
+The max column of SpaceVim
+
+                                                       *g:spacevim_enable_ycm*
+Enable ycm or not, but default it is 0.
+
+                                                     *g:spacevim_error_symbol*
+The error symbol used by maker.
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
