@@ -18,6 +18,9 @@ function! SpaceVim#init() abort
     let g:spacevim_enable_cursorcolumn     = 0
     let g:spacevim_enable_neomake          = 1
     ""
+    " set the guifont of Spacevim, default is empty.
+    let g:spacevim_guifont                 = ''
+    ""
     " Enable ycm or not, but default it is 0.
     let g:spacevim_enable_ycm              = 0
     let g:spacevim_enable_neocomplcache    = 0
@@ -110,6 +113,7 @@ endfunction
 function! SpaceVim#default() abort
     call add(g:spacevim_plugin_groups, 'web')
     call add(g:spacevim_plugin_groups, 'lang')
+    call add(g:spacevim_plugin_groups, 'chat')
     call add(g:spacevim_plugin_groups, 'javascript')
     call add(g:spacevim_plugin_groups, 'ruby')
     call add(g:spacevim_plugin_groups, 'python')

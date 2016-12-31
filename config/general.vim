@@ -13,6 +13,9 @@ if has("gui_running")
     else
         set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
     endif
+    if !empty(g:spacevim_guifont)
+        exe 'set guifont=' . g:spacevim_guifont
+    endif
 endif
 
 " indent use backspace delete indent, eol use backspace delete line at

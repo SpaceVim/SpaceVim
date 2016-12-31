@@ -15,6 +15,9 @@ The default_indent of SpaceVim.
                                                        *g:spacevim_max_column*
 The max column of SpaceVim
 
+                                                          *g:spacevim_guifont*
+set the guifont of Spacevim, default is empty.
+
                                                        *g:spacevim_enable_ycm*
 Enable ycm or not, but default it is 0.
 
