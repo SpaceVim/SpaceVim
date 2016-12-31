@@ -9,7 +9,7 @@ CONTENTS                                                   *SpaceVim-contents*
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
-                                                                  *g:settings*
+                                                   *g:spacevim_default_indent*
 The default_indent of SpaceVim.
 
 ==============================================================================

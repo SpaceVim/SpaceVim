@@ -18,9 +18,9 @@ let g:ctrlp_custom_ignore = {
             \ }
 if executable('rg')
     let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
-                \ . join(zvim#util#Generate_ignore(g:settings.wildignore,'rg'))
+                \ . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'rg'))
 elseif executable('ag')
-    let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:settings.wildignore,'ag'))
+    let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag'))
 endif
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 "nnoremap <Leader>kk :CtrlPMixed<Cr>

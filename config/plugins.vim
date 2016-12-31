@@ -44,7 +44,7 @@ let s:plugins.lang = [
             \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
             \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
             \ ]
-if g:settings.enable_javacomplete2_py
+if g:spacevim_enable_javacomplete2_py
     call add(s:plugins.lang , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp']}])
 else
     call add(s:plugins.lang , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']}])
@@ -58,10 +58,10 @@ let s:plugins.chat = [
             \ ]
 
 if zvim#plug#enable_plug()
-    call zvim#plug#begin(g:settings.plugin_bundle_dir)
+    call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
     let g:wsd = []
-    for group in g:settings.plugin_groups
+    for group in g:spacevim_plugin_groups
         for plugin in get(s:plugins, group, [])
             if len(plugin) == 2
                 call zvim#plug#add(plugin[0], plugin[1])
@@ -73,13 +73,13 @@ if zvim#plug#enable_plug()
             endif
         endfor
     endfor
-    if count(g:settings.plugin_groups, 'denite')
+    if count(g:spacevim_plugin_groups, 'denite')
         call zvim#plug#add('Shougo/denite.nvim',{ 'merged' : 0})
         if zvim#plug#tap('denite.nvim')
             call zvim#plug#defind_hooks('denite.nvim')
         endif
     endif
-    if count(g:settings.plugin_groups, 'unite') "{{{
+    if count(g:spacevim_plugin_groups, 'unite') "{{{
         call zvim#plug#add('Shougo/neoyank.vim')
         call zvim#plug#add('soh335/unite-qflist')
         call zvim#plug#add('ujihisa/unite-equery')
@@ -148,7 +148,7 @@ if zvim#plug#enable_plug()
             call zvim#plug#defind_hooks('vimfiler.vim')
             noremap <silent> <F3> :call zvim#util#OpenVimfiler()<CR>
         endif
-        if g:settings.enable_googlesuggest
+        if g:spacevim_enable_googlesuggest
             call zvim#plug#add('mopp/googlesuggest-source.vim')
             call zvim#plug#add('mattn/googlesuggest-complete-vim')
         endif
@@ -173,7 +173,7 @@ if zvim#plug#enable_plug()
 
 
     "{{{ctrlpvim settings
-    if count(g:settings.plugin_groups, 'ctrlp') "{{{
+    if count(g:spacevim_plugin_groups, 'ctrlp') "{{{
         call zvim#plug#add('ctrlpvim/ctrlp.vim')
         if zvim#plug#tap('ctrlp.vim')
             call zvim#plug#defind_hooks('ctrlp.vim')
@@ -204,7 +204,7 @@ if zvim#plug#enable_plug()
     endif "}}}
 
 
-    if count(g:settings.plugin_groups, 'autocomplete') "{{{
+    if count(g:spacevim_plugin_groups, 'autocomplete') "{{{
         call zvim#plug#add('honza/vim-snippets',{'on_i' : 1})
         imap <silent><expr><TAB> zvim#tab()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
@@ -216,7 +216,7 @@ if zvim#plug#enable_plug()
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
         smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        if g:settings.autocomplete_method ==# 'ycm' "{{{
+        if g:spacevim_autocomplete_method ==# 'ycm' "{{{
             call zvim#plug#add('SirVer/ultisnips')
             let g:UltiSnipsExpandTrigger='<tab>'
             let g:UltiSnipsJumpForwardTrigger='<tab>'
@@ -250,21 +250,21 @@ if zvim#plug#enable_plug()
                         \   'lua' : ['.', ':'],
                         \   'erlang' : [':'],
                         \ }
-        elseif g:settings.autocomplete_method ==# 'neocomplete' "{{{
+        elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
             call zvim#plug#add('Shougo/neocomplete', {
                         \ 'on_i' : 1,
                         \ })
             if zvim#plug#tap('neocomplete')
                 call zvim#plug#defind_hooks('neocomplete.vim')
             endif
-        elseif g:settings.autocomplete_method ==# 'neocomplcache' "{{{
+        elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
             call zvim#plug#add('Shougo/neocomplcache.vim', {
                         \ 'on_i' : 1,
                         \ })
             if zvim#plug#tap('neocomplcache.vim')
                 call zvim#plug#defind_hooks('neocomplcache.vim')
             endif
-        elseif g:settings.autocomplete_method ==# 'deoplete'
+        elseif g:spacevim_autocomplete_method ==# 'deoplete'
             call zvim#plug#add('Shougo/deoplete.nvim', {
                         \ 'on_i' : 1,
                         \ })
@@ -286,7 +286,7 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
     endif "}}}
 
-    if count(g:settings.plugin_groups, 'colorscheme') "{{{
+    if count(g:spacevim_plugin_groups, 'colorscheme') "{{{
         "colorscheme
         call zvim#plug#add('morhetz/gruvbox')
         if zvim#plug#tap('gruvbox')
@@ -301,15 +301,15 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('kristijanhusak/vim-hybrid-material')
     endif
 
-    if count(g:settings.plugin_groups, 'chinese') "{{{
+    if count(g:spacevim_plugin_groups, 'chinese') "{{{
         call zvim#plug#add('vimcn/vimcdoc')
     endif
 
-    if count(g:settings.plugin_groups, 'github') "{{{
+    if count(g:spacevim_plugin_groups, 'github') "{{{
         call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
     endif
 
-    if count(g:settings.plugin_groups, 'vim') "{{{
+    if count(g:spacevim_plugin_groups, 'vim') "{{{
         call zvim#plug#add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
         call zvim#plug#add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
     endif
@@ -352,7 +352,7 @@ if zvim#plug#enable_plug()
     " use this two command to find how long the plugin take!
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
-    if g:settings.enable_neomake
+    if g:spacevim_enable_neomake
         call zvim#plug#add('neomake/neomake',{'merged' : 0})
         if zvim#plug#tap('neomake')
             call zvim#plug#defind_hooks('neomake')

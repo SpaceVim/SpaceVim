@@ -10,20 +10,20 @@ function! s:install_manager()
         let s:Fsep = '/'
     endif
     " auto install plugin manager
-    if g:settings.plugin_manager ==# 'neobundle'
+    if g:spacevim_plugin_manager ==# 'neobundle'
         "auto install neobundle
-        if filereadable(expand(g:settings.plugin_bundle_dir)
+        if filereadable(expand(g:spacevim_plugin_bundle_dir)
                     \ . 'neobundle.vim'. s:Fsep. 'README.md')
-            let g:settings.neobundle_installed = 1
+            let g:spacevim_neobundle_installed = 1
         else
             if executable('git')
                 exec '!git clone '
                             \ .'https://github.com/'
                             \ .'Shougo/neobundle.vim'
                             \ . ' '
-                            \ . g:settings.plugin_bundle_dir
+                            \ . g:spacevim_plugin_bundle_dir
                             \ . 'neobundle.vim'
-                let g:settings.neobundle_installed = 1
+                let g:spacevim_neobundle_installed = 1
             else
                 echohl WarningMsg
                 echom "You need install git!"
@@ -31,35 +31,35 @@ function! s:install_manager()
             endif
         endif
         exec 'set runtimepath+='
-                    \ . g:settings.plugin_bundle_dir
+                    \ . g:spacevim_plugin_bundle_dir
                     \ . 'neobundle.vim'
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         "auto install dein
-        if filereadable(expand(g:settings.plugin_bundle_dir)
+        if filereadable(expand(g:spacevim_plugin_bundle_dir)
                     \ . join(['repos', 'github.com',
                     \ 'Shougo', 'dein.vim', 'README.md'],
                     \ s:Fsep))
-            let g:settings.dein_installed = 1
+            let g:spacevim_dein_installed = 1
         else
             if executable('git')
                 exec '!git clone https://github.com/Shougo/dein.vim '
-                            \ . g:settings.plugin_bundle_dir
+                            \ . g:spacevim_plugin_bundle_dir
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim'], s:Fsep)
-                let g:settings.dein_installed = 1
+                let g:spacevim_dein_installed = 1
             else
                 echohl WarningMsg
                 echom "You need install git!"
                 echohl None
             endif
         endif
-        exec 'set runtimepath+='.g:settings.plugin_bundle_dir
+        exec 'set runtimepath+='.g:spacevim_plugin_bundle_dir
                     \ . join(['repos', 'github.com', 'Shougo',
                     \ 'dein.vim'], s:Fsep)
-    elseif g:settings.plugin_manager == 'vim-plug'
+    elseif g:spacevim_plugin_manager == 'vim-plug'
         "auto install vim-plug
         if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-            let g:settings.dein_installed = 1
+            let g:spacevim_dein_installed = 1
         else
             if executable('curl')
                 exec '!curl -fLo '
@@ -67,7 +67,7 @@ function! s:install_manager()
                             \ . ' --create-dirs '
                             \ . 'https://raw.githubusercontent.com/'
                             \ . 'junegunn/vim-plug/master/plug.vim'
-                let g:settings.dein_installed = 1
+                let g:spacevim_dein_installed = 1
             else
                 echohl WarningMsg
                 echom "You need install curl!"
@@ -78,7 +78,7 @@ function! s:install_manager()
     endif
 endf
 
-if get(g:settings, 'enable_plugins', 1)
+if get(g:,'spacevim_enable_plugins', 1)
     call s:install_manager()
 endif
 
@@ -90,41 +90,41 @@ function! zvim#plug#begin(path) abort
     let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
     nnoremap <silent><Leader>lp :Unite -silent
                 \ -winheight=17 -start-insert menu:AddedPlugins<CR>
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         call neobundle#begin(a:path)
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         call dein#begin(a:path)
-    elseif g:settings.plugin_manager == 'vim-plug'
+    elseif g:spacevim_plugin_manager == 'vim-plug'
         call plug#begin(a:path)
     endif
 endfunction
 
 function! zvim#plug#end() abort
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         call neobundle#end()
-        if g:settings.checkinstall == 1
+        if g:spacevim_checkinstall == 1
             NeoBundleCheck
         endif
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         call dein#end()
-        if g:settings.checkinstall == 1
+        if g:spacevim_checkinstall == 1
             if dein#check_install()
                 call dein#install()
             endif
         endif
         call dein#call_hook('source')
-    elseif g:settings.plugin_manager == 'vim-plug'
+    elseif g:spacevim_plugin_manager == 'vim-plug'
         call plug#end()
     endif
 endfunction
 
 function! zvim#plug#defind_hooks(bundle) abort
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         let s:hooks = neobundle#get_hooks(a:bundle)
         func! s:hooks.on_source(bundle) abort
             call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
         endf
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         call dein#config(g:dein#name, {
                     \ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
                     \ })
@@ -132,9 +132,9 @@ function! zvim#plug#defind_hooks(bundle) abort
 endfunction
 
 function! zvim#plug#fetch() abort
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         NeoBundleFetch 'Shougo/neobundle.vim'
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         call dein#add('Shougo/dein.vim')
     endif
 endfunction
@@ -146,9 +146,9 @@ fu! s:parser(args)
 endf
 
 function! zvim#plug#add(repo,...) abort
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         if len(a:000) > 0
             call dein#add(a:repo,s:parser(a:000[0]))
         else
@@ -168,17 +168,17 @@ function! zvim#plug#add(repo,...) abort
 endfunction
 
 function! zvim#plug#tap(plugin) abort
-    if g:settings.plugin_manager == 'neobundle'
+    if g:spacevim_plugin_manager == 'neobundle'
         return neobundle#tap(a:plugin)
-    elseif g:settings.plugin_manager == 'dein'
+    elseif g:spacevim_plugin_manager == 'dein'
         return dein#tap(a:plugin)
     endif
 endfunction
 
 function! zvim#plug#enable_plug() abort
-    return g:settings.neobundle_installed
-                \ || g:settings.dein_installed
-                \ || g:settings.vim_plug_installed
+    return g:spacevim_neobundle_installed
+                \ || g:spacevim_dein_installed
+                \ || g:spacevim_vim_plug_installed
 endfunction
 
 let &cpo = s:save_cpo

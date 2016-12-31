@@ -1,42 +1,42 @@
 scriptencoding utf-8
 function! SpaceVim#init() abort
     "Vim settings
-    let g:settings                         = get(g:, 'settings', {})
+    let g:spacevim_                        = get(g:, 'settings', {})
     ""
     " The default_indent of SpaceVim.
-    let g:settings.default_indent          = 2
-    let g:settings.max_column              = 120
-    let g:settings.enable_googlesuggest    = 0
-    let g:settings.auto_download_neobundle = 0
-    let g:settings.neobundle_installed     = 0
-    let g:settings.dein_installed          = 0
-    let g:settings.vim_plug_installed      = 0
-    let g:settings.plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
-    let g:settings.autocomplete_method     = ''
-    let g:settings.enable_cursorcolumn     = 0
-    let g:settings.enable_neomake          = 1
-    let g:settings.enable_ycm              = 0
-    let g:settings.enable_neocomplcache    = 0
-    let g:settings.enable_cursorline       = 0
-    let g:settings.error_symbol            = '✖'
-    let g:settings.warning_symbol          = '⚠'
-    let g:settings.use_colorscheme         = 1
-    let g:settings.vim_help_language       = 'en'
-    let g:settings.colorscheme             = 'gruvbox'
-    let g:settings.colorscheme_default     = 'desert'
-    let g:settings.filemanager             = 'vimfiler'
-    let g:settings.plugin_manager          = 'dein'  " neobundle or dein or vim-plug
-    let g:settings.checkinstall            = 0
-    let g:settings.hiddenfileinfo          = 1
-    let g:settings.plugin_groups_exclude   = []
-    let g:settings.plugin_groups = []
-    let g:settings.smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-    let g:settings.smartcloseignoreft      = ['help']
-    let g:settings.altmoveignoreft         = ['Tagbar' , 'vimfiler']
-    let g:settings.enable_javacomplete2_py = 0
-    let g:settings.src_root                = 'E:\sources\'
-    let g:settings.hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
-    let g:settings.wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+    let g:spacevim_default_indent          = 2
+    let g:spacevim_max_column              = 120
+    let g:spacevim_enable_googlesuggest    = 0
+    let g:spacevim_auto_download_neobundle = 0
+    let g:spacevim_neobundle_installed     = 0
+    let g:spacevim_dein_installed          = 0
+    let g:spacevim_vim_plug_installed      = 0
+    let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
+    let g:spacevim_autocomplete_method     = ''
+    let g:spacevim_enable_cursorcolumn     = 0
+    let g:spacevim_enable_neomake          = 1
+    let g:spacevim_enable_ycm              = 0
+    let g:spacevim_enable_neocomplcache    = 0
+    let g:spacevim_enable_cursorline       = 0
+    let g:spacevim_error_symbol            = '✖'
+    let g:spacevim_warning_symbol          = '⚠'
+    let g:spacevim_use_colorscheme         = 1
+    let g:spacevim_vim_help_language       = 'en'
+    let g:spacevim_colorscheme             = 'gruvbox'
+    let g:spacevim_colorscheme_default     = 'desert'
+    let g:spacevim_filemanager             = 'vimfiler'
+    let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
+    let g:spacevim_checkinstall            = 0
+    let g:spacevim_hiddenfileinfo          = 1
+    let g:spacevim_plugin_groups_exclude   = []
+    let g:spacevim_plugin_groups = []
+    let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
+    let g:spacevim_smartcloseignoreft      = ['help']
+    let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+    let g:spacevim_enable_javacomplete2_py = 0
+    let g:spacevim_src_root                = 'E:\sources\'
+    let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
+    let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
                 \*.ttf,*.TTF,*.png,*/target/*,
                 \.git,.svn,.hg,.DS_Store'
 
@@ -60,70 +60,70 @@ function! SpaceVim#Layer(layer, opt) abort
 endfunction
 
 function! SpaceVim#end() abort
-    for s:group in g:settings.plugin_groups_exclude
-        let s:i = index(g:settings.plugin_groups, s:group)
+    for s:group in g:spacevim_plugin_groups_exclude
+        let s:i = index(g:spacevim_plugin_groups, s:group)
         if s:i != -1
-            call remove(g:settings.plugin_groups, s:i)
+            call remove(g:spacevim_plugin_groups, s:i)
         endif
     endfor
-    if g:settings.vim_help_language ==# 'cn'
-        call add(g:settings.plugin_groups, 'chinese')
+    if g:spacevim_vim_help_language ==# 'cn'
+        call add(g:spacevim_plugin_groups, 'chinese')
     endif
-    if g:settings.use_colorscheme==1
-        call add(g:settings.plugin_groups, 'colorscheme')
+    if g:spacevim_use_colorscheme==1
+        call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
     if has('nvim')
-        let g:settings.autocomplete_method = 'deoplete'
+        let g:spacevim_autocomplete_method = 'deoplete'
     elseif has('lua')
-        let g:settings.autocomplete_method = 'neocomplete'
+        let g:spacevim_autocomplete_method = 'neocomplete'
     else
-        let g:settings.autocomplete_method = 'neocomplcache'
+        let g:spacevim_autocomplete_method = 'neocomplcache'
     endif
-    if g:settings.enable_ycm
-        let g:settings.autocomplete_method = 'ycm'
+    if g:spacevim_enable_ycm
+        let g:spacevim_autocomplete_method = 'ycm'
     endif
-    if g:settings.enable_neocomplcache
-        let g:settings.autocomplete_method = 'neocomplcache'
+    if g:spacevim_enable_neocomplcache
+        let g:spacevim_autocomplete_method = 'neocomplcache'
     endif
 endfunction
 
 
 function! SpaceVim#default() abort
-    call add(g:settings.plugin_groups, 'web')
-    call add(g:settings.plugin_groups, 'lang')
-    call add(g:settings.plugin_groups, 'javascript')
-    call add(g:settings.plugin_groups, 'ruby')
-    call add(g:settings.plugin_groups, 'python')
-    call add(g:settings.plugin_groups, 'scala')
-    call add(g:settings.plugin_groups, 'go')
-    call add(g:settings.plugin_groups, 'scm')
-    call add(g:settings.plugin_groups, 'editing')
-    call add(g:settings.plugin_groups, 'indents')
-    call add(g:settings.plugin_groups, 'navigation')
-    call add(g:settings.plugin_groups, 'misc')
+    call add(g:spacevim_plugin_groups, 'web')
+    call add(g:spacevim_plugin_groups, 'lang')
+    call add(g:spacevim_plugin_groups, 'javascript')
+    call add(g:spacevim_plugin_groups, 'ruby')
+    call add(g:spacevim_plugin_groups, 'python')
+    call add(g:spacevim_plugin_groups, 'scala')
+    call add(g:spacevim_plugin_groups, 'go')
+    call add(g:spacevim_plugin_groups, 'scm')
+    call add(g:spacevim_plugin_groups, 'editing')
+    call add(g:spacevim_plugin_groups, 'indents')
+    call add(g:spacevim_plugin_groups, 'navigation')
+    call add(g:spacevim_plugin_groups, 'misc')
 
-    call add(g:settings.plugin_groups, 'core')
-    call add(g:settings.plugin_groups, 'unite')
-    call add(g:settings.plugin_groups, 'github')
+    call add(g:spacevim_plugin_groups, 'core')
+    call add(g:spacevim_plugin_groups, 'unite')
+    call add(g:spacevim_plugin_groups, 'github')
     if has('python3')
-        call add(g:settings.plugin_groups, 'denite')
+        call add(g:spacevim_plugin_groups, 'denite')
     endif
-    call add(g:settings.plugin_groups, 'ctrlp')
-    call add(g:settings.plugin_groups, 'autocomplete')
+    call add(g:spacevim_plugin_groups, 'ctrlp')
+    call add(g:spacevim_plugin_groups, 'autocomplete')
     if ! has('nvim')
-        call add(g:settings.plugin_groups, 'vim')
+        call add(g:spacevim_plugin_groups, 'vim')
     else
-        call add(g:settings.plugin_groups, 'nvim')
+        call add(g:spacevim_plugin_groups, 'nvim')
     endif
     if OSX()
-        call add(g:settings.plugin_groups, 'osx')
+        call add(g:spacevim_plugin_groups, 'osx')
     endif
     if WINDOWS()
-        call add(g:settings.plugin_groups, 'windows')
+        call add(g:spacevim_plugin_groups, 'windows')
     endif
     if LINUX()
-        call add(g:settings.plugin_groups, 'linux')
+        call add(g:spacevim_plugin_groups, 'linux')
     endif
 endfunction
 

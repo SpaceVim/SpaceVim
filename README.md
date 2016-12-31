@@ -53,25 +53,25 @@ SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in 
 here is an example:
 ```viml
 " here are some basic customizations, please refer to the top of the vimrc file for all possible options
-let g:settings.default_indent = 3
-let g:settings.max_column     = 80
-let g:settings.colorscheme    = 'my_awesome_colorscheme'
-let g:settings.plugin_manager = 'dein'  " neobundle or dein or vim-plug
+let g:spacevim_default_indent = 3
+let g:spacevim_max_column     = 80
+let g:spacevim_colorscheme    = 'my_awesome_colorscheme'
+let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
 
 " change the default directory where all miscellaneous persistent files go
-let g:settings.cache_dir = "/some/place/else"
+let g:spacevim_cache_dir = "/some/place/else"
 
 " by default, language specific plugins are not loaded.  this can be changed with the following:
-let g:settings.plugin_groups_exclude = ['ruby', 'python']
+let g:spacevim_plugin_groups_exclude = ['ruby', 'python']
 
 " if there are groups you want always loaded, you can use this:
-let g:settings.plugin_groups_include = ['go']
+let g:spacevim_plugin_groups_include = ['go']
 
 " alternatively, you can set this variable to load exactly what you want
-let g:settings.plugin_groups = ['core', 'web']
+let g:spacevim_plugin_groups = ['core', 'web']
 
 " if there is a particular plugin you don't like, you can define this variable to disable them entirely
-let g:settings.disabled_plugins=['vim-foo', 'vim-bar']
+let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
 
 " anything defined here are simply overrides
 set wildignore+=\*/node_modules/\*

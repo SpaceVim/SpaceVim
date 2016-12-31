@@ -88,7 +88,7 @@ set autowrite
 set hlsearch
 set laststatus=2
 set completeopt=longest,menu
-exe "set wildignore+=" . g:settings.wildignore
+exe "set wildignore+=" . g:spacevim_wildignore
 set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 set mouse=
@@ -101,21 +101,21 @@ if has('filterpipe')
 endif
 filetype plugin indent on
 syntax on
-if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{{{
+if count(g:spacevim_plugin_groups, 'colorscheme')&&g:spacevim_colorscheme!='' "{{{
     set background=dark
     try
-        exec 'colorscheme '. g:settings.colorscheme
+        exec 'colorscheme '. g:spacevim_colorscheme
     catch
-        exec 'colorscheme '. g:settings.colorscheme_default
+        exec 'colorscheme '. g:spacevim_colorscheme_default
     endtry
 endif
-if g:settings.enable_cursorline == 1
+if g:spacevim_enable_cursorline == 1
     set cursorline                  "显示当前行
 endif
-if g:settings.enable_cursorcolumn == 1
+if g:spacevim_enable_cursorcolumn == 1
     set cursorcolumn                "显示当前列
 endif
-if g:settings.hiddenfileinfo == 1 && has("patch-7.4.1570")
+if g:spacevim_hiddenfileinfo == 1 && has("patch-7.4.1570")
     set shortmess=filnxtToOFs
 endif
 if exists('+termguicolors')
