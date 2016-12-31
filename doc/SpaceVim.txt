@@ -21,6 +21,23 @@ Enable ycm or not, but default it is 0.
                                                      *g:spacevim_error_symbol*
 The error symbol used by maker.
 
+                                                      *g:spacevim_colorscheme*
+The colorscheme of SpaceVim, if colorscheme groups are installed.
+
+                                              *g:spacevim_colorscheme_default*
+The default colorscheme of SpaceVim.
+
+                                                      *g:spacevim_filemanager*
+The default file manager of SpaceVim.
+
+                                                   *g:spacevim_plugin_manager*
+The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
+default it is dein.
+
+                                                        *g:spacevim_hosts_url*
+The host file url. this option is for chinese users who can not use google and
+twitter.
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 

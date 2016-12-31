@@ -28,9 +28,18 @@ function! SpaceVim#init() abort
     let g:spacevim_warning_symbol          = '⚠'
     let g:spacevim_use_colorscheme         = 1
     let g:spacevim_vim_help_language       = 'en'
+    ""
+    " The colorscheme of SpaceVim, if colorscheme groups are installed.
     let g:spacevim_colorscheme             = 'gruvbox'
+    ""
+    " The default colorscheme of SpaceVim.
     let g:spacevim_colorscheme_default     = 'desert'
+    ""
+    " The default file manager of SpaceVim.
     let g:spacevim_filemanager             = 'vimfiler'
+    ""
+    " The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
+    " default it is dein.
     let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
     let g:spacevim_checkinstall            = 0
     let g:spacevim_hiddenfileinfo          = 1
@@ -41,6 +50,9 @@ function! SpaceVim#init() abort
     let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
     let g:spacevim_enable_javacomplete2_py = 0
     let g:spacevim_src_root                = 'E:\sources\'
+    ""
+    " The host file url. this option is for chinese users who can not use
+    " google and twitter.
     let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
     let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
                 \*.ttf,*.TTF,*.png,*/target/*,
