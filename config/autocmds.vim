@@ -55,6 +55,7 @@ augroup My_autocmds
         autocmd FocusLost * call system('synclient touchpadoff=0')
         autocmd FocusGained * call s:reload_touchpad_status()
     endif
+    autocmd VimResized * wincmd =
 augroup END
 function! s:reload_touchpad_status()
     if s:touchpadoff
