@@ -37,6 +37,15 @@ The default file manager of SpaceVim.
 The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
 default it is dein.
 
+                                                    *g:spacevim_plugin_groups*
+groups of plugins should be loaded.
+
+example:
+>
+   let g:spacevim_plugin_groups = ['core', 'lang']
+<
+now Space Vim support these groups:
+
                                                         *g:spacevim_hosts_url*
 The host file url. this option is for chinese users who can not use google and
 twitter.

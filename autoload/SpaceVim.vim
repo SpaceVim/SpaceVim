@@ -47,7 +47,14 @@ function! SpaceVim#init() abort
     let g:spacevim_checkinstall            = 0
     let g:spacevim_hiddenfileinfo          = 1
     let g:spacevim_plugin_groups_exclude   = []
-    let g:spacevim_plugin_groups = []
+    ""
+    " groups of plugins should be loaded. 
+    "
+    " example: >
+    "    let g:spacevim_plugin_groups = ['core', 'lang']
+    " <
+    " now Space Vim support these groups:
+    let g:spacevim_plugin_groups           = []
     let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
     let g:spacevim_smartcloseignoreft      = ['help']
     let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
