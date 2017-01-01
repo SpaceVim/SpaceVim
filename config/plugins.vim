@@ -127,6 +127,33 @@ let s:plugins.denite = [
             \ ['Shougo/denite.nvim',{ 'merged' : 0, 'loadconf' : 1}],
             \ ]
 
+let s:plugins.ctrlp = [
+            \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1}],
+            \ ['voronkovich/ctrlp-nerdtree.vim', { 'on_cmd' : 'CtrlPNerdTree'}],
+            \ ['h14i/vim-ctrlp-buftab',          { 'on_cmd' : 'CtrlPBufTab'}],
+            \ ['vim-scripts/ctrlp-cmdpalette',   { 'on_cmd' : 'CtrlPCmdPalette'}],
+            \ ['mattn/ctrlp-windowselector',     { 'on_cmd' : 'CtrlPWindowSelector'}],
+            \ ['the9ball/ctrlp-gtags',           { 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']}],
+            \ ['thiderman/ctrlp-project',        { 'on_cmd' : 'CtrlPProject'}],
+            \ ['mattn/ctrlp-google',             { 'on_cmd' : 'CtrlPGoogle'}],
+            \ ['ompugao/ctrlp-history',          { 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']}],
+            \ ['pielgrzym/ctrlp-sessions',       { 'on_cmd' : ['CtrlPSessions','MkS']}],
+            \ ['tacahiroy/ctrlp-funky',          { 'on_cmd' : 'CtrlPFunky'}],
+            \ ['mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'}],
+            \ ['sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']}],
+            \ ['FelikZ/ctrlp-py-matcher'],
+            \ ['lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'}],
+            \ ['elentok/ctrlp-objects.vim',      { 'on_cmd' : [
+            \'CtrlPModels',
+            \'CtrlPViews',
+            \'CtrlPControllers',
+            \'CtrlPTemplates',
+            \'CtrlPPresenters']}],
+            \ ]
+if !has('nvim')
+    call add(s:plugins.ctrlp, ['wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'}])
+endif
+
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
@@ -146,36 +173,6 @@ if zvim#plug#enable_plug()
         endfor
     endfor
 
-    "{{{ctrlpvim settings
-    if count(g:spacevim_plugin_groups, 'ctrlp') "{{{
-        call zvim#plug#add('ctrlpvim/ctrlp.vim')
-        if zvim#plug#tap('ctrlp.vim')
-            call zvim#plug#defind_hooks('ctrlp.vim')
-        endif
-        if !has('nvim')
-            call zvim#plug#add('wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'})
-        endif
-        call zvim#plug#add('voronkovich/ctrlp-nerdtree.vim', { 'on_cmd' : 'CtrlPNerdTree'})
-        call zvim#plug#add('elentok/ctrlp-objects.vim',      { 'on_cmd' : [
-                    \'CtrlPModels',
-                    \'CtrlPViews',
-                    \'CtrlPControllers',
-                    \'CtrlPTemplates',
-                    \'CtrlPPresenters']})
-        call zvim#plug#add('h14i/vim-ctrlp-buftab',          { 'on_cmd' : 'CtrlPBufTab'})
-        call zvim#plug#add('vim-scripts/ctrlp-cmdpalette',   { 'on_cmd' : 'CtrlPCmdPalette'})
-        call zvim#plug#add('mattn/ctrlp-windowselector',     { 'on_cmd' : 'CtrlPWindowSelector'})
-        call zvim#plug#add('the9ball/ctrlp-gtags',           { 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']})
-        call zvim#plug#add('thiderman/ctrlp-project',        { 'on_cmd' : 'CtrlPProject'})
-        call zvim#plug#add('mattn/ctrlp-google',             { 'on_cmd' : 'CtrlPGoogle'})
-        call zvim#plug#add('ompugao/ctrlp-history',          { 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']})
-        call zvim#plug#add('pielgrzym/ctrlp-sessions',       { 'on_cmd' : ['CtrlPSessions','MkS']})
-        call zvim#plug#add('tacahiroy/ctrlp-funky',          { 'on_cmd' : 'CtrlPFunky'})
-        call zvim#plug#add('mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'})
-        call zvim#plug#add('sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
-        call zvim#plug#add('FelikZ/ctrlp-py-matcher')
-        call zvim#plug#add('lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'})
-    endif "}}}
 
 
     if count(g:spacevim_plugin_groups, 'autocomplete') "{{{

@@ -1,7 +1,7 @@
 # SpaceVim
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 
-Like spacemacs, but for vim.
+Like spacemacs, but for vim. [中文交流群：121056965, 点击加入](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 
 ## Features
 
