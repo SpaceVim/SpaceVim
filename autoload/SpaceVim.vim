@@ -55,6 +55,9 @@ function! SpaceVim#init() abort
     " <
     " now Space Vim support these groups:
     let g:spacevim_plugin_groups           = []
+    ""
+    " enable/disable SpaceVim with powerline symbols.
+    let g:spacevim_enable_powerline_fonts  = 1
     let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
     let g:spacevim_smartcloseignoreft      = ['help']
     let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
