@@ -76,7 +76,6 @@ let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,
             \*.ttf,*.TTF,*.png,*/target/*,
             \.git,.svn,.hg,.DS_Store'
 
-
 function! SpaceVim#loadCustomConfig() abort
     let custom_confs = SpaceVim#util#globpath(getcwd(), '.local.vim')
     let custom_glob_conf = expand('~/.local.vim')
@@ -90,7 +89,9 @@ endfunction
 
 ""
 " @public
-" Load the {layer} you want
+" Load the {layer} you want :
+" autocompletion : Make SpaceVim support autocompletion.
+" unite : Unite centric work-flow
 function! SpaceVim#Layer(layer) abort
     if index(g:spacevim_plugin_groups, a:layer) == -1
         call add(g:spacevim_plugin_groups, a:layer)
@@ -124,12 +125,17 @@ function! SpaceVim#end() abort
     if g:spacevim_enable_neocomplcache
         let g:spacevim_autocomplete_method = 'neocomplcache'
     endif
+    ""
+    " generate tags for SpaceVim
+    let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
+    exe 'helptags ' . help
 endfunction
 
 
 function! SpaceVim#default() abort
     call add(g:spacevim_plugin_groups, 'web')
     call add(g:spacevim_plugin_groups, 'lang')
+    call add(g:spacevim_plugin_groups, 'checkers')
     call add(g:spacevim_plugin_groups, 'chat')
     call add(g:spacevim_plugin_groups, 'javascript')
     call add(g:spacevim_plugin_groups, 'ruby')

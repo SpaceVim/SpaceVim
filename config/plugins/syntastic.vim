@@ -10,3 +10,9 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = get(g:, 'spacevim_error_symbol', '✖')
 let g:syntastic_warning_symbol = get(g:, 'spacevim_warning_symbol', '➤')
+let g:syntastic_vimlint_options = {
+            \'EVL102': 1 ,
+            \'EVL103': 1 ,
+            \'EVL205': 1 ,
+            \'EVL105': 1 ,
+            \}

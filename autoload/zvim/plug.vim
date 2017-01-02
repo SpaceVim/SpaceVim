@@ -182,7 +182,11 @@ function! zvim#plug#enable_plug() abort
 endfunction
 
 function! zvim#plug#loadPluginBefore(plugin) abort
-    call zvim#util#source_rc('plugins_before/' . a:plugin)
+    if matchend(a:plugin, ".vim") == len(a:plugin)
+        call zvim#util#source_rc('plugins_before/' . a:plugin)
+    else
+        call zvim#util#source_rc('plugins_before/' . a:plugin . '.vim')
+    endif
 endfunction
 
 let &cpo = s:save_cpo

@@ -5,6 +5,25 @@ let s:plugins.core = [
             \ ['Shougo/vimproc.vim', {'build' : 'make'}],
             \ ]
 
+let s:plugins.colorscheme = [
+            \ ['morhetz/gruvbox', {'loadconf' : 1}],
+            \ ['kristijanhusak/vim-hybrid-material'],
+            \ ['altercation/vim-colors-solarized'],
+            \ ['nanotech/jellybeans.vim'],
+            \ ['mhartington/oceanic-next'],
+            \ ['mhinz/vim-janah'],
+            \ ['tomasr/molokai'],
+            \ ['kabbamine/yowish.vim'],
+            \ ]
+
+let s:plugins.checkers = []
+if g:spacevim_enable_neomake
+    call add(s:plugins.checkers, ['neomake/neomake',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+else
+    call add(s:plugins.checkers, ['wsdjeg/syntastic', {'on_event': 'WinEnter', 'loadconf' : 1, 'merged' : 0}])
+endif
+
+
 let s:plugins.unite = [
             \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
             \ ['Shougo/neoyank.vim'],
@@ -261,17 +280,6 @@ if zvim#plug#enable_plug()
 
     if count(g:spacevim_plugin_groups, 'colorscheme') "{{{
         "colorscheme
-        call zvim#plug#add('morhetz/gruvbox')
-        if zvim#plug#tap('gruvbox')
-            call zvim#plug#defind_hooks('gruvbox')
-        endif
-        call zvim#plug#add('kabbamine/yowish.vim')
-        call zvim#plug#add('tomasr/molokai')
-        call zvim#plug#add('mhinz/vim-janah')
-        call zvim#plug#add('mhartington/oceanic-next')
-        call zvim#plug#add('nanotech/jellybeans.vim')
-        call zvim#plug#add('altercation/vim-colors-solarized')
-        call zvim#plug#add('kristijanhusak/vim-hybrid-material')
     endif
 
     if count(g:spacevim_plugin_groups, 'chinese') "{{{
@@ -325,27 +333,6 @@ if zvim#plug#enable_plug()
     " use this two command to find how long the plugin take!
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
-    if g:spacevim_enable_neomake
-        call zvim#plug#add('neomake/neomake',{'merged' : 0})
-        if zvim#plug#tap('neomake')
-            call zvim#plug#defind_hooks('neomake')
-            augroup Neomake_wsd
-                au!
-                autocmd! BufWritePost * Neomake
-            augroup END
-        endif
-    else
-        call zvim#plug#add('wsdjeg/syntastic', {'on_event': 'WinEnter'})
-        if zvim#plug#tap('syntastic')
-            call zvim#plug#defind_hooks('syntastic')
-        endif
-    endif
-    let g:syntastic_vimlint_options = {
-                \'EVL102': 1 ,
-                \'EVL103': 1 ,
-                \'EVL205': 1 ,
-                \'EVL105': 1 ,
-                \}
     call zvim#plug#add('gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
