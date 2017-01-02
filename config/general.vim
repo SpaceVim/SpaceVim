@@ -10,6 +10,8 @@ if has("gui_running")
     if WINDOWS()
         " please install the font in 'Dotfiles\font'
         set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
+    elseif OSX()
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
     else
         set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
     endif
