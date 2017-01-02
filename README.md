@@ -4,6 +4,8 @@
 
 Like spacemacs, but for vim. [中文交流群：121056965, 点击加入](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 
+[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput) 
+
 ## Features
 
 - Neovim-centric
