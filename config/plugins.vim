@@ -154,9 +154,7 @@ if !has('nvim')
     call add(s:plugins.ctrlp, ['wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'}])
 endif
 
-if zvim#plug#enable_plug()
-    call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
-    call zvim#plug#fetch()
+function! s:load_plugins() abort
     for group in g:spacevim_plugin_groups
         for plugin in get(s:plugins, group, [])
             if len(plugin) == 2
@@ -172,8 +170,12 @@ if zvim#plug#enable_plug()
             endif
         endfor
     endfor
+endfunction
 
-
+if zvim#plug#enable_plug()
+    call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
+    call zvim#plug#fetch()
+    call s:load_plugins()
 
     if count(g:spacevim_plugin_groups, 'autocomplete') "{{{
         call zvim#plug#add('honza/vim-snippets',{'on_i' : 1})
