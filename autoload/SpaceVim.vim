@@ -8,11 +8,23 @@ scriptencoding utf-8
 " @plugin(name) is configured by these options.
 
 ""
-" The default_indent of SpaceVim.
+" Change the default indent of SpaceVim. default is 2.
+" >
+"   let g:spacevim_default_indent = 2
+" <
 let g:spacevim_default_indent          = 2
 ""
-" The max column of SpaceVim
+" Change the max column of SpaceVim, default is 120.
+" >
+"   let g:spacevim_max_column = 120
+" <
 let g:spacevim_max_column              = 120
+""
+" Enable/Disable google suggestion for neocomplete. by default it is Disabled.
+" you can enable it by:
+" >
+"   let g:spacevim_enable_googlesuggest = 1
+" <
 let g:spacevim_enable_googlesuggest    = 0
 let g:spacevim_auto_download_neobundle = 0
 let g:spacevim_neobundle_installed     = 0

@@ -18,10 +18,23 @@ CONFIGURATION                                                *SpaceVim-config*
 SpaceVim is configured by these options.
 
                                                    *g:spacevim_default_indent*
-The default_indent of SpaceVim.
+Change the default indent of SpaceVim. default is 2.
+>
+  let g:spacevim_default_indent = 2
+<
 
                                                        *g:spacevim_max_column*
-The max column of SpaceVim
+Change the max column of SpaceVim, default is 120.
+>
+  let g:spacevim_max_column = 120
+<
+
+                                             *g:spacevim_enable_googlesuggest*
+Enable/Disable google suggestion for neocomplete. by default it is Disabled.
+you can enable it by:
+>
+  let g:spacevim_enable_googlesuggest = 1
+<
 
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.

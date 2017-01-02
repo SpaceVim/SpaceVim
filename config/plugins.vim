@@ -5,6 +5,10 @@ let s:plugins.core = [
             \ ['Shougo/vimproc.vim', {'build' : 'make'}],
             \ ]
 
+let s:plugins.chinese = [
+            \ ['vimcn/vimcdoc'],
+            \ ]
+
 let s:plugins.colorscheme = [
             \ ['morhetz/gruvbox', {'loadconf' : 1}],
             \ ['kristijanhusak/vim-hybrid-material'],
@@ -278,13 +282,6 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
     endif "}}}
 
-    if count(g:spacevim_plugin_groups, 'colorscheme') "{{{
-        "colorscheme
-    endif
-
-    if count(g:spacevim_plugin_groups, 'chinese') "{{{
-        call zvim#plug#add('vimcn/vimcdoc')
-    endif
 
     if count(g:spacevim_plugin_groups, 'github') "{{{
         call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})

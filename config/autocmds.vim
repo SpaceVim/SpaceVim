@@ -56,6 +56,7 @@ augroup My_autocmds
         autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd VimResized * wincmd =
+    autocmd BufWritePost *.vim call s:generate_doc()
 augroup END
 function! s:reload_touchpad_status()
     if s:touchpadoff
@@ -77,3 +78,8 @@ fu! s:tool()
         let s:done = 1
     endif
 endf
+function! s:generate_doc() abort
+    if filereadable('./addon-info.json') && executable('vimdoc')
+        call system('vimdoc .')
+    endif
+endfunction
