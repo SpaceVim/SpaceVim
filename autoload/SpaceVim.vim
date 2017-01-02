@@ -1,77 +1,81 @@
 scriptencoding utf-8
-function! SpaceVim#init() abort
-    "Vim settings
-    let g:spacevim_                        = get(g:, 'settings', {})
-    ""
-    " The default_indent of SpaceVim.
-    let g:spacevim_default_indent          = 2
-    ""
-    " The max column of SpaceVim
-    let g:spacevim_max_column              = 120
-    let g:spacevim_enable_googlesuggest    = 0
-    let g:spacevim_auto_download_neobundle = 0
-    let g:spacevim_neobundle_installed     = 0
-    let g:spacevim_dein_installed          = 0
-    let g:spacevim_vim_plug_installed      = 0
-    let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
-    let g:spacevim_autocomplete_method     = ''
-    let g:spacevim_enable_cursorcolumn     = 0
-    let g:spacevim_enable_neomake          = 1
-    ""
-    " set the guifont of Spacevim, default is empty.
-    let g:spacevim_guifont                 = ''
-    ""
-    " Enable ycm or not, but default it is 0.
-    let g:spacevim_enable_ycm              = 0
-    let g:spacevim_enable_neocomplcache    = 0
-    let g:spacevim_enable_cursorline       = 0
-    ""
-    " The error symbol used by maker.
-    let g:spacevim_error_symbol            = '✖'
-    let g:spacevim_warning_symbol          = '⚠'
-    let g:spacevim_use_colorscheme         = 1
-    let g:spacevim_vim_help_language       = 'en'
-    ""
-    " The colorscheme of SpaceVim, if colorscheme groups are installed.
-    let g:spacevim_colorscheme             = 'gruvbox'
-    ""
-    " The default colorscheme of SpaceVim.
-    let g:spacevim_colorscheme_default     = 'desert'
-    ""
-    " The default file manager of SpaceVim.
-    let g:spacevim_filemanager             = 'vimfiler'
-    ""
-    " The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
-    " default it is dein.
-    let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
-    let g:spacevim_checkinstall            = 0
-    let g:spacevim_hiddenfileinfo          = 1
-    let g:spacevim_plugin_groups_exclude   = []
-    ""
-    " groups of plugins should be loaded. 
-    "
-    " example: >
-    "    let g:spacevim_plugin_groups = ['core', 'lang']
-    " <
-    " now Space Vim support these groups:
-    let g:spacevim_plugin_groups           = []
-    ""
-    " enable/disable SpaceVim with powerline symbols.
-    let g:spacevim_enable_powerline_fonts  = 1
-    let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-    let g:spacevim_smartcloseignoreft      = ['help']
-    let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
-    let g:spacevim_enable_javacomplete2_py = 0
-    let g:spacevim_src_root                = 'E:\sources\'
-    ""
-    " The host file url. this option is for chinese users who can not use
-    " google and twitter.
-    let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
-    let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
-                \*.ttf,*.TTF,*.png,*/target/*,
-                \.git,.svn,.hg,.DS_Store'
+""
+" @section Introduction, intro
+" SpaceVim is a modular configuration for vim/neovim plugins.
 
-endfunction
+""
+" @section Configuration, config
+" @plugin(name) is configured by these options.
+
+""
+" The default_indent of SpaceVim.
+let g:spacevim_default_indent          = 2
+""
+" The max column of SpaceVim
+let g:spacevim_max_column              = 120
+let g:spacevim_enable_googlesuggest    = 0
+let g:spacevim_auto_download_neobundle = 0
+let g:spacevim_neobundle_installed     = 0
+let g:spacevim_dein_installed          = 0
+let g:spacevim_vim_plug_installed      = 0
+let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
+let g:spacevim_autocomplete_method     = ''
+let g:spacevim_enable_cursorcolumn     = 0
+let g:spacevim_enable_neomake          = 1
+""
+" set the guifont of Spacevim, default is empty.
+let g:spacevim_guifont                 = ''
+""
+" Enable ycm or not, but default it is 0.
+let g:spacevim_enable_ycm              = 0
+let g:spacevim_enable_neocomplcache    = 0
+let g:spacevim_enable_cursorline       = 0
+""
+" The error symbol used by maker.
+let g:spacevim_error_symbol            = '✖'
+let g:spacevim_warning_symbol          = '⚠'
+let g:spacevim_use_colorscheme         = 1
+let g:spacevim_vim_help_language       = 'en'
+""
+" The colorscheme of SpaceVim, if colorscheme groups are installed.
+let g:spacevim_colorscheme             = 'gruvbox'
+""
+" The default colorscheme of SpaceVim.
+let g:spacevim_colorscheme_default     = 'desert'
+""
+" The default file manager of SpaceVim.
+let g:spacevim_filemanager             = 'vimfiler'
+""
+" The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
+" default it is dein.
+let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
+let g:spacevim_checkinstall            = 0
+let g:spacevim_hiddenfileinfo          = 1
+let g:spacevim_plugin_groups_exclude   = []
+""
+" groups of plugins should be loaded. 
+"
+" example: >
+"    let g:spacevim_plugin_groups = ['core', 'lang']
+" <
+" now Space Vim support these groups:
+let g:spacevim_plugin_groups           = []
+""
+" enable/disable SpaceVim with powerline symbols.
+let g:spacevim_enable_powerline_fonts  = 1
+let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
+let g:spacevim_smartcloseignoreft      = ['help']
+let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:spacevim_enable_javacomplete2_py = 0
+let g:spacevim_src_root                = 'E:\sources\'
+""
+" The host file url. this option is for chinese users who can not use
+" google and twitter.
+let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
+let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+            \*.ttf,*.TTF,*.png,*/target/*,
+            \.git,.svn,.hg,.DS_Store'
+
 
 function! SpaceVim#loadCustomConfig() abort
     let custom_confs = SpaceVim#util#globpath(getcwd(), '.local.vim')
@@ -163,5 +167,5 @@ function! SpaceVim#defindFuncs() abort
 endfunction
 
 function! SpaceVim#loadPlugins() abort
-    
+
 endfunction

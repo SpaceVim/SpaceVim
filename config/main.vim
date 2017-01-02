@@ -7,7 +7,6 @@ catch
     call zvim#util#source_rc('functions.vim')
 endtry
 
-call SpaceVim#init()
 
 call zvim#util#source_rc('init.vim')
 

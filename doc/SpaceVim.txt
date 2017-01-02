@@ -3,11 +3,19 @@ wsdjeg                                                              *SpaceVim*
 
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
-  1. Configuration...........................................|SpaceVim-config|
-  2. Functions............................................|SpaceVim-functions|
+  1. Introduction.............................................|SpaceVim-intro|
+  2. Configuration...........................................|SpaceVim-config|
+  3. Functions............................................|SpaceVim-functions|
+
+==============================================================================
+INTRODUCTION                                                  *SpaceVim-intro*
+
+SpaceVim is a modular configuration for vim/neovim plugins.
 
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
+
+SpaceVim is configured by these options.
 
                                                    *g:spacevim_default_indent*
 The default_indent of SpaceVim.
@@ -45,6 +53,9 @@ example:
    let g:spacevim_plugin_groups = ['core', 'lang']
 <
 now Space Vim support these groups:
+
+                                           *g:spacevim_enable_powerline_fonts*
+enable/disable SpaceVim with powerline symbols.
 
                                                         *g:spacevim_hosts_url*
 The host file url. this option is for chinese users who can not use google and
