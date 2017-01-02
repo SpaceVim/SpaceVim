@@ -87,11 +87,14 @@ function! SpaceVim#loadCustomConfig() abort
         exe 'source ' . custom_confs[0]
     endif
 endfunction
+
 ""
 " @public
-" Load the {layer} you want, with the {opt}.
-function! SpaceVim#Layer(layer, opt) abort
-
+" Load the {layer} you want
+function! SpaceVim#Layer(layer) abort
+    if index(g:spacevim_plugin_groups, a:layer) == -1
+        call add(g:spacevim_plugin_groups, a:layer)
+    endif
 endfunction
 
 function! SpaceVim#end() abort

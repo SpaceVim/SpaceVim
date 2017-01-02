@@ -81,7 +81,7 @@ endif
 "call add(s:plugins.unite, ['ujihisa/quicklearn'])
 let s:plugins.lang = [
             \ ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}],
-            \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet'}],
+            \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet', 'loadconf' : 1}],
             \ ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}],
             \ ['m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'}],
             \ ['groenewege/vim-less',                    { 'on_ft' : ['less']}],

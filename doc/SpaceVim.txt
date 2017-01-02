@@ -64,8 +64,8 @@ twitter.
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
-SpaceVim#Layer({layer}, {opt})                              *SpaceVim#Layer()*
-  Load the {layer} you want, with the {opt}.
+SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
+  Load the {layer} you want
 
 
 vim:tw=78:ts=8:ft=help:norl:
