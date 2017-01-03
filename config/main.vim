@@ -22,7 +22,7 @@ call zvim#util#source_rc('general.vim')
 
 call zvim#util#source_rc('mappings.vim')
 
-call zvim#util#source_rc('autocmds.vim')
+call SpaceVim#autocmds#init()
 
 if has('nvim')
     call zvim#util#source_rc('neovim.vim')
