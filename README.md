@@ -1,10 +1,17 @@
 # SpaceVim
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
+[![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 
-Like spacemacs, but for vim. [中文交流群：121056965, 点击加入](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+Like spacemacs, but for vim. 
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput) 
+
+## Install
+
+```sh
+curl spacevim.org/install.sh | sh
+```
 
 ## Features
 
