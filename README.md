@@ -1,3 +1,16 @@
+<head>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89745542-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+</head>
+
 # SpaceVim
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
@@ -48,15 +61,15 @@ curl spacevim.org/install.sh -sSf | sh
 ## Installl
 
 - vim
-```sh
- mv ~/.vimrc ~/.vimrc_bak
- mv ~/.vim ~/.vim_bak
- git clone https://github.com/SpaceVim/SpaceVim.git ~/.vim
-```
+    ```sh
+    mv ~/.vimrc ~/.vimrc_bak
+    mv ~/.vim ~/.vim_bak
+    git clone https://github.com/SpaceVim/SpaceVim.git ~/.vim
+    ```
 - nvim
-```sh
- git clone https://github.com/SpaceVim/SpaceVim.git ~/.config/nvim
-```
+    ```sh
+    git clone https://github.com/SpaceVim/SpaceVim.git ~/.config/nvim
+    ```
 
 ## Modular configuration
 
@@ -92,18 +105,18 @@ set guifont=Wingdings:h10
 
 ## Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
-default action is open the github website of current plugin. default key is `<leader>lp`
-![2016-12-29-22 31 27](https://cloud.githubusercontent.com/assets/13142418/21545996/c48d7728-ce16-11e6-8e30-0c72139f642f.png)
+    default action is open the github website of current plugin. default key is `<leader>lp`
+    ![2016-12-29-22 31 27](https://cloud.githubusercontent.com/assets/13142418/21545996/c48d7728-ce16-11e6-8e30-0c72139f642f.png)
 
 - List all the mappings and description: `f<space>`
-![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+    ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
+    ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
 
 ## Awesome ui
 - outline + filemanager + checker
-![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
 
 ## Language specific mode
 - java
@@ -126,8 +139,8 @@ default action is open the github website of current plugin. default key is `<le
 - Helpers: Undo tree, bookmarks, git, tmux navigation,
     hex editor, sessions, and much more.
 
-_Note_ that 90% of the plugins are **[lazy-loaded]**.
-[lazy-loaded]: ./config/plugins.vim
+    _Note_ that 90% of the plugins are **[lazy-loaded]**.
+    [lazy-loaded]: ./config/plugins.vim
 
 ## Non Lazy-Loaded Plugins
 
@@ -467,106 +480,96 @@ Key   | Mode | Action
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
 
-<!-- plublic links -->
-[dein.vim]: https://github.com/Shougo/dein.vim
-[vimproc]: https://github.com/Shougo/vimproc.vim
-[colorschemes]: https://github.com/rafi/awesome-vim-colorschemes
-[file-line]: https://github.com/bogado/file-line
-[neomru]: https://github.com/Shougo/neomru.vim
-[cursorword]: https://github.com/itchyny/vim-cursorword
-[gitbranch]: https://github.com/itchyny/vim-gitbranch
-[gitgutter]: https://github.com/airblade/vim-gitgutter
-[bookmarks]: https://github.com/MattesGroeger/vim-bookmarks
-[tmux-navigator]: https://github.com/christoomey/vim-tmux-navigator
-[tinyline]: https://github.com/rafi/vim-tinyline
-[tagabana]: https://github.com/rafi/vim-tagabana
+    <!-- plublic links -->
+    [dein.vim]: https://github.com/Shougo/dein.vim
+    [vimproc]: https://github.com/Shougo/vimproc.vim
+    [colorschemes]: https://github.com/rafi/awesome-vim-colorschemes
+    [file-line]: https://github.com/bogado/file-line
+    [neomru]: https://github.com/Shougo/neomru.vim
+    [cursorword]: https://github.com/itchyny/vim-cursorword
+    [gitbranch]: https://github.com/itchyny/vim-gitbranch
+    [gitgutter]: https://github.com/airblade/vim-gitgutter
+    [bookmarks]: https://github.com/MattesGroeger/vim-bookmarks
+    [tmux-navigator]: https://github.com/christoomey/vim-tmux-navigator
+    [tinyline]: https://github.com/rafi/vim-tinyline
+    [tagabana]: https://github.com/rafi/vim-tagabana
 
-[html5]: https://github.com/othree/html5.vim
-[mustache]: https://github.com/mustache/vim-mustache-handlebars
-[markdown]: https://github.com/rcmdnk/vim-markdown
-[ansible-yaml]: https://github.com/chase/vim-ansible-yaml
-[jinja]: https://github.com/mitsuhiko/vim-jinja
-[less]: https://github.com/groenewege/vim-less
-[css3-syntax]: https://github.com/hail2u/vim-css3-syntax
-[csv]: https://github.com/chrisbra/csv.vim
-[pep8-indent]: https://github.com/hynek/vim-python-pep8-indent
-[logstash]: https://github.com/robbles/logstash.vim
-[tmux]: https://github.com/tmux-plugins/vim-tmux
-[json]: https://github.com/elzr/vim-json
-[toml]: https://github.com/cespare/vim-toml
-[i3]: https://github.com/PotatoesMaster/i3-vim-syntax
-[Dockerfile]: https://github.com/ekalinin/Dockerfile.vim
-[go]: https://github.com/fatih/vim-go
-[jedi-vim]: https://github.com/davidhalter/jedi-vim
-[ruby]: https://github.com/vim-ruby/vim-ruby
-[portfile]: https://github.com/jstrater/mpvim
+    [html5]: https://github.com/othree/html5.vim
+    [mustache]: https://github.com/mustache/vim-mustache-handlebars
+    [markdown]: https://github.com/rcmdnk/vim-markdown
+    [ansible-yaml]: https://github.com/chase/vim-ansible-yaml
+    [jinja]: https://github.com/mitsuhiko/vim-jinja
+    [less]: https://github.com/groenewege/vim-less
+    [css3-syntax]: https://github.com/hail2u/vim-css3-syntax
+    [csv]: https://github.com/chrisbra/csv.vim
+    [pep8-indent]: https://github.com/hynek/vim-python-pep8-indent
+    [logstash]: https://github.com/robbles/logstash.vim
+    [tmux]: https://github.com/tmux-plugins/vim-tmux
+    [json]: https://github.com/elzr/vim-json
+    [toml]: https://github.com/cespare/vim-toml
+    [i3]: https://github.com/PotatoesMaster/i3-vim-syntax
+    [Dockerfile]: https://github.com/ekalinin/Dockerfile.vim
+    [go]: https://github.com/fatih/vim-go
+    [jedi-vim]: https://github.com/davidhalter/jedi-vim
+    [ruby]: https://github.com/vim-ruby/vim-ruby
+    [portfile]: https://github.com/jstrater/mpvim
 
-[javascript]: https://github.com/jelera/vim-javascript-syntax
-[javascript-indent]: https://github.com/jiangmiao/simple-javascript-indenter
-[tern]: https://github.com/marijnh/tern_for_vim
+    [javascript]: https://github.com/jelera/vim-javascript-syntax
+    [javascript-indent]: https://github.com/jiangmiao/simple-javascript-indenter
+    [tern]: https://github.com/marijnh/tern_for_vim
 
-[php]: https://github.com/StanAngeloff/php.vim
-[phpfold]: https://github.com/rayburgemeestre/phpfolding.vim
-[phpcomplete]: https://github.com/shawncplus/phpcomplete.vim
-[phpindent]: https://github.com/2072/PHP-Indenting-for-VIm
-[phpspec]: https://github.com/rafi/vim-phpspec
+    [php]: https://github.com/StanAngeloff/php.vim
+    [phpfold]: https://github.com/rayburgemeestre/phpfolding.vim
+    [phpcomplete]: https://github.com/shawncplus/phpcomplete.vim
+    [phpindent]: https://github.com/2072/PHP-Indenting-for-VIm
+    [phpspec]: https://github.com/rafi/vim-phpspec
 
-[vimfiler]: https://github.com/Shougo/vimfiler.vim
-[tinycomment]: https://github.com/rafi/vim-tinycomment
-[vinarise]: https://github.com/Shougo/vinarise.vim
-[syntastic]: https://github.com/scrooloose/syntastic
-[gita]: https://github.com/lambdalisue/vim-gita
-[gista]: https://github.com/lambdalisue/vim-gista
-[undotree]: https://github.com/mbbill/undotree
-[incsearch]: https://github.com/haya14busa/incsearch.vim
-[expand-region]: https://github.com/terryma/vim-expand-region
-[open-browser]: https://github.com/tyru/open-browser.vim
-[prettyprint]: https://github.com/thinca/vim-prettyprint
-[quickrun]: https://github.com/thinca/vim-quickrun
-[ref]: https://github.com/thinca/vim-ref
-[dictionary]: https://github.com/itchyny/dictionary.vim
-[vimwiki]: https://github.com/vimwiki/vimwiki
-[thesaurus]: https://github.com/beloglazov/vim-online-thesaurus
+    [vimfiler]: https://github.com/Shougo/vimfiler.vim
+    [tinycomment]: https://github.com/rafi/vim-tinycomment
+    [vinarise]: https://github.com/Shougo/vinarise.vim
+    [syntastic]: https://github.com/scrooloose/syntastic
+    [gita]: https://github.com/lambdalisue/vim-gita
+    [gista]: https://github.com/lambdalisue/vim-gista
+    [undotree]: https://github.com/mbbill/undotree
+    [incsearch]: https://github.com/haya14busa/incsearch.vim
+    [expand-region]: https://github.com/terryma/vim-expand-region
+    [open-browser]: https://github.com/tyru/open-browser.vim
+    [prettyprint]: https://github.com/thinca/vim-prettyprint
+    [quickrun]: https://github.com/thinca/vim-quickrun
+    [ref]: https://github.com/thinca/vim-ref
+    [dictionary]: https://github.com/itchyny/dictionary.vim
+    [vimwiki]: https://github.com/vimwiki/vimwiki
+    [thesaurus]: https://github.com/beloglazov/vim-online-thesaurus
 
-[goyo]: https://github.com/junegunn/goyo.vim
-[limelight]: https://github.com/junegunn/limelight.vim
-[matchit]: http://www.vim.org/scripts/script.php?script_id=39
-[indentline]: https://github.com/Yggdroot/indentLine
-[choosewin]: https://github.com/t9md/vim-choosewin
+    [goyo]: https://github.com/junegunn/goyo.vim
+    [limelight]: https://github.com/junegunn/limelight.vim
+    [matchit]: http://www.vim.org/scripts/script.php?script_id=39
+    [indentline]: https://github.com/Yggdroot/indentLine
+    [choosewin]: https://github.com/t9md/vim-choosewin
 
-[delimitmate]: https://github.com/Raimondi/delimitMate
-[echodoc]: https://github.com/Shougo/echodoc.vim
-[deoplete]: https://github.com/Shougo/deoplete.nvim
-[neocomplete]: https://github.com/Shougo/neocomplete.vim
-[neosnippet]: https://github.com/Shougo/neosnippet.vim
+    [delimitmate]: https://github.com/Raimondi/delimitMate
+    [echodoc]: https://github.com/Shougo/echodoc.vim
+    [deoplete]: https://github.com/Shougo/deoplete.nvim
+    [neocomplete]: https://github.com/Shougo/neocomplete.vim
+    [neosnippet]: https://github.com/Shougo/neosnippet.vim
 
-[unite]: https://github.com/Shougo/unite.vim
-[unite-colorscheme]: https://github.com/ujihisa/unite-colorscheme
-[unite-filetype]: https://github.com/osyo-manga/unite-filetype
-[unite-history]: https://github.com/thinca/vim-unite-history
-[unite-build]: https://github.com/Shougo/unite-build
-[unite-outline]: https://github.com/h1mesuke/unite-outline
-[unite-tag]: https://github.com/tsukkee/unite-tag
-[unite-quickfix]: https://github.com/osyo-manga/unite-quickfix
-[neossh]: https://github.com/Shougo/neossh.vim
-[unite-pull-request]: https://github.com/joker1007/unite-pull-request
-[junkfile]: https://github.com/Shougo/junkfile.vim
-[unite-issue]: https://github.com/rafi/vim-unite-issue
+    [unite]: https://github.com/Shougo/unite.vim
+    [unite-colorscheme]: https://github.com/ujihisa/unite-colorscheme
+    [unite-filetype]: https://github.com/osyo-manga/unite-filetype
+    [unite-history]: https://github.com/thinca/vim-unite-history
+    [unite-build]: https://github.com/Shougo/unite-build
+    [unite-outline]: https://github.com/h1mesuke/unite-outline
+    [unite-tag]: https://github.com/tsukkee/unite-tag
+    [unite-quickfix]: https://github.com/osyo-manga/unite-quickfix
+    [neossh]: https://github.com/Shougo/neossh.vim
+    [unite-pull-request]: https://github.com/joker1007/unite-pull-request
+    [junkfile]: https://github.com/Shougo/junkfile.vim
+    [unite-issue]: https://github.com/rafi/vim-unite-issue
 
-[operator-user]: https://github.com/kana/vim-operator-user
-[operator-replace]: https://github.com/kana/vim-operator-replace
-[operator-surround]: https://github.com/rhysd/vim-operator-surround
-[textobj-user]: https://github.com/kana/vim-textobj-user
-[textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
+    [operator-user]: https://github.com/kana/vim-operator-user
+    [operator-replace]: https://github.com/kana/vim-operator-replace
+    [operator-surround]: https://github.com/rhysd/vim-operator-surround
+    [textobj-user]: https://github.com/kana/vim-textobj-user
+    [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-89745542-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
