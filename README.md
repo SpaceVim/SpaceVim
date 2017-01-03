@@ -10,7 +10,7 @@ Like spacemacs, but for vim.
 ## Install
 
 ```sh
-curl spacevim.org/install.sh | sh
+curl spacevim.org/install.sh -sSf | sh
 ```
 
 ## Features
