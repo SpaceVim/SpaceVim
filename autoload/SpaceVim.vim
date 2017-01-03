@@ -30,6 +30,12 @@ let g:spacevim_auto_download_neobundle = 0
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
+""
+" Set the cache dir of plugins, by default, it is `~/.cache/vimfiles`.
+" you can set it by:
+" >
+"   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
+" <
 let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0

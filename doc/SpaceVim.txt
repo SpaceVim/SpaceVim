@@ -36,6 +36,13 @@ you can enable it by:
   let g:spacevim_enable_googlesuggest = 1
 <
 
+                                                *g:spacevim_plugin_bundle_dir*
+Set the cache dir of plugins, by default, it is `~/.cache/vimfiles`. you can
+set it by:
+>
+  let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
+<
+
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
 
