@@ -14,6 +14,7 @@ Like spacemacs, but for vim. [中文交流群：121056965, 点击加入](https:/
 - Robust, yet light weight
 - [Unite centric work-flow](#unite-centric-work-flow)
 - [Awesome ui](#awesome-ui)
+- [Language specific mode](#language-specific-mode)
 - Extensive Neocomplete setup
 - Central location for tags
 - Lightweight simple status/tabline
@@ -96,6 +97,14 @@ default action is open the github website of current plugin. default key is `<le
 ## Awesome ui
 - outline + filemanager + checker
 ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+
+## Language specific mode
+- java
+- viml
+- rust
+- php
+- c/c++
+- js
 
 ## Plugin Highlights
 
