@@ -13,6 +13,7 @@ Like spacemacs, but for vim. [中文交流群：121056965, 点击加入](https:/
 - Lazy-load 90% of plugins with [dein.vim]
 - Robust, yet light weight
 - [Unite centric work-flow](#unite-centric-work-flow)
+- [Awesome ui](#awesome-ui)
 - Extensive Neocomplete setup
 - Central location for tags
 - Lightweight simple status/tabline
@@ -91,6 +92,10 @@ default action is open the github website of current plugin. default key is `<le
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
 ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
+
+## Awesome ui
+- outline + filemanager + checker
+![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
 
 ## Plugin Highlights
 
