@@ -1,0 +1,85 @@
+*SpaceVim.txt*	Like spacemacs, but for vim
+wsdjeg                                                              *SpaceVim*
+
+==============================================================================
+CONTENTS                                                   *SpaceVim-contents*
+  1. Introduction.............................................|SpaceVim-intro|
+  2. Configuration...........................................|SpaceVim-config|
+  3. Functions............................................|SpaceVim-functions|
+
+==============================================================================
+INTRODUCTION                                                  *SpaceVim-intro*
+
+SpaceVim is a modular configuration for vim/neovim plugins.
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+SpaceVim is configured by these options.
+
+                                                   *g:spacevim_default_indent*
+Change the default indent of SpaceVim. default is 2.
+>
+  let g:spacevim_default_indent = 2
+<
+
+                                                       *g:spacevim_max_column*
+Change the max column of SpaceVim, default is 120.
+>
+  let g:spacevim_max_column = 120
+<
+
+                                             *g:spacevim_enable_googlesuggest*
+Enable/Disable google suggestion for neocomplete. by default it is Disabled.
+you can enable it by:
+>
+  let g:spacevim_enable_googlesuggest = 1
+<
+
+                                                          *g:spacevim_guifont*
+set the guifont of Spacevim, default is empty.
+
+                                                       *g:spacevim_enable_ycm*
+Enable ycm or not, but default it is 0.
+
+                                                     *g:spacevim_error_symbol*
+The error symbol used by maker.
+
+                                                      *g:spacevim_colorscheme*
+The colorscheme of SpaceVim, if colorscheme groups are installed.
+
+                                              *g:spacevim_colorscheme_default*
+The default colorscheme of SpaceVim.
+
+                                                      *g:spacevim_filemanager*
+The default file manager of SpaceVim.
+
+                                                   *g:spacevim_plugin_manager*
+The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
+default it is dein.
+
+                                                    *g:spacevim_plugin_groups*
+groups of plugins should be loaded.
+
+example:
+>
+   let g:spacevim_plugin_groups = ['core', 'lang']
+<
+now Space Vim support these groups:
+
+                                           *g:spacevim_enable_powerline_fonts*
+enable/disable SpaceVim with powerline symbols.
+
+                                                        *g:spacevim_hosts_url*
+The host file url. this option is for chinese users who can not use google and
+twitter.
+
+==============================================================================
+FUNCTIONS                                                 *SpaceVim-functions*
+
+SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
+  Load the {layer} you want : autocompletion : Make SpaceVim support
+  autocompletion. unite : Unite centric work-flow
+
+
+vim:tw=78:ts=8:ft=help:norl:
