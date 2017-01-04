@@ -15,6 +15,7 @@ ga('send', 'pageview');
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+[![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Like spacemacs, but for vim. 
 
@@ -25,6 +26,11 @@ Like spacemacs, but for vim.
 ```sh
 curl spacevim.org/install.sh -sSf | sh
 ```
+before use SpaceVim, you should install the plugin by `call dein#install()`
+
+installation of neovim/vim with python support:
+> [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+> [vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
 ## Features
 
