@@ -28,7 +28,7 @@ For learning about Vim in general, read
 ## Install
 
 ```sh
-curl spacevim.org/install.sh -sSf | sh
+curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash
 ```
 before use SpaceVim, you should install the plugin by `call dein#install()`
 
