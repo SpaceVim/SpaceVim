@@ -149,6 +149,7 @@ Name           | Description
 ## Lazy-Loaded Plugins
 
 ### Language
+
 Name           | Description
 -------------- | ----------------------
 [html5] | HTML5 omnicomplete and syntax
@@ -180,6 +181,7 @@ Name           | Description
 [phpspec] | PhpSpec integration
 
 ### Commands
+
 Name           | Description
 -------------- | ----------------------
 [vimfiler] | Powerful file explorer
@@ -200,6 +202,7 @@ Name           | Description
 [thesaurus] | Look up words in an online thesaurus
 
 ### Commands
+
 Name           | Description
 -------------- | ----------------------
 [goyo] | Distraction-free writing
@@ -209,6 +212,7 @@ Name           | Description
 [choosewin] | Choose window to use, like tmux's 'display-pane'
 
 ### Completion
+
 Name           | Description
 -------------- | ----------------------
 [delimitmate] | Insert mode auto-completion for quotes, parens, brackets
@@ -218,6 +222,7 @@ Name           | Description
 [neosnippet] | Contains neocomplete snippets source
 
 ### Unite
+
 Name           | Description
 -------------- | ----------------------
 [unite] | Unite and create user interfaces
@@ -234,6 +239,7 @@ Name           | Description
 [unite-issue] | Issue manager for JIRA and GitHub
 
 ### Operators & Text Objects
+
 Name           | Description
 -------------- | ----------------------
 [operator-user] | Define your own operator easily
