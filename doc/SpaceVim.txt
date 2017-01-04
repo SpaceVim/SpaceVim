@@ -17,6 +17,9 @@ CONFIGURATION                                                *SpaceVim-config*
 
 SpaceVim is configured by these options.
 
+                                                          *g:spacevim_version*
+Version of SpaceVim , this value can not be changed.
+
                                                    *g:spacevim_default_indent*
 Change the default indent of SpaceVim. default is 2.
 >

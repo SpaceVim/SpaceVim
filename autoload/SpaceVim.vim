@@ -8,6 +8,10 @@ scriptencoding utf-8
 " @plugin(name) is configured by these options.
 
 ""
+" Version of SpaceVim , this value can not be changed.
+let g:spacevim_version = '0.1.0-dev'
+lockvar g:spacevim_version
+""
 " Change the default indent of SpaceVim. default is 2.
 " >
 "   let g:spacevim_default_indent = 2
