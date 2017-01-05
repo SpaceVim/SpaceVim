@@ -1,12 +1,12 @@
 function! SpaceVim#default#SetOptions() abort
     " basic vim settiing
-    if has("gui_running")
-        set guioptions-=m " 隐藏菜单栏
-        set guioptions-=T " 隐藏工具栏
-        set guioptions-=L " 隐藏左侧滚动条
-        set guioptions-=r " 隐藏右侧滚动条
-        set guioptions-=b " 隐藏底部滚动条
-        set showtabline=0 " 隐藏Tab栏
+    if has('gui_running')
+        set guioptions-=m " Hide menu bar.
+        set guioptions-=T " Hide toolbar
+        set guioptions-=L " Hide left-hand scrollbar
+        set guioptions-=r " Hide right-hand scrollbar
+        set guioptions-=b " Hide bottom scrollbar
+        set showtabline=0 " Hide tabline
         if WINDOWS()
             " please install the font in 'Dotfiles\font'
             set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
@@ -25,31 +25,28 @@ function! SpaceVim#default#SetOptions() abort
     " nocompatible ,you need this
     set backspace=indent,eol,start
 
-    "显示相对行号
+    " Shou number and relativenumber
     set relativenumber
-
-    " 显示行号
     set number
 
-    " 自动缩进,自动智能对齐
+    " indent
     set autoindent
     set smartindent
     set cindent
 
-    " 状态栏预览命令
+    " show wildmenu
     set wildmenu
 
-    "整词换行
+    " do not break words.
     set linebreak
 
-    "Tab键的宽度
+    " tab options:
     set tabstop=4
-    "用空格来执行tab
     set expandtab
-    " 统一缩进为4
     set softtabstop=4
     set shiftwidth=4
-    "set nobackup
+
+    " backup
     set backup
     set undofile
     set undolevels=1000
@@ -57,16 +54,16 @@ function! SpaceVim#default#SetOptions() abort
     let g:backup_dir = g:data_dir . 'backup'
     let g:swap_dir = g:data_dir . 'swap'
     let g:undo_dir = g:data_dir . 'undofile'
-    if finddir(g:data_dir) == ''
+    if finddir(g:data_dir) ==# ''
         silent call mkdir(g:data_dir)
     endif
-    if finddir(g:backup_dir) == ''
+    if finddir(g:backup_dir) ==# ''
         silent call mkdir(g:backup_dir)
     endif
-    if finddir(g:swap_dir) == ''
+    if finddir(g:swap_dir) ==# ''
         silent call mkdir(g:swap_dir)
     endif
-    if finddir(g:undo_dir) == ''
+    if finddir(g:undo_dir) ==# ''
         silent call mkdir(g:undo_dir)
     endif
     unlet g:backup_dir
@@ -76,18 +73,18 @@ function! SpaceVim#default#SetOptions() abort
     set undodir=$HOME/.data/undofile
     set backupdir=$HOME/.data/backup
     set directory=$HOME/.data/swap
-    set nofoldenable                "关闭自动折叠 折叠按键 'za'
+    set nofoldenable                " no fold enable
     set nowritebackup
     set matchtime=0
     set ruler
-    set showcmd						"命令行显示输入的命令
-    set showmatch					"设置匹配模式,显示匹配的括号
-    set showmode					"命令行显示当前vim的模式
+    set showcmd
+    set showmatch
+    set showmode
     "menuone: show the pupmenu when only one match
     set completeopt=menu,menuone,longest " disable preview scratch window,
     set complete=.,w,b,u,t " h: 'complete'
     set pumheight=15 " limit completion menu height
-    set scrolloff=7               "最低显示行数
+    set scrolloff=7
     set incsearch
     set autowrite
     set hlsearch
