@@ -74,6 +74,7 @@ installation of neovim/vim with python support:
 SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
 
 here is an example:
+
 ```viml
 " here are some basic customizations, please refer to the top of the vimrc file for all possible options
 let g:spacevim_default_indent = 3
