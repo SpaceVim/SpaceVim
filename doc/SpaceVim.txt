@@ -77,6 +77,12 @@ example:
 <
 now Space Vim support these groups:
 
+                                                 *g:spacevim_disabled_plugins*
+Disable plugins by names. example:
+>
+  let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
+<
+
                                            *g:spacevim_enable_powerline_fonts*
 enable/disable SpaceVim with powerline symbols.
 

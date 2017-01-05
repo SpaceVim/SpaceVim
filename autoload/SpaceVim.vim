@@ -83,6 +83,12 @@ let g:spacevim_plugin_groups_exclude   = []
 " now Space Vim support these groups:
 let g:spacevim_plugin_groups           = []
 ""
+" Disable plugins by names.
+" example: >
+"   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
+" <
+let g:spacevim_disabled_plugins        = []
+""
 " enable/disable SpaceVim with powerline symbols.
 let g:spacevim_enable_powerline_fonts  = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']

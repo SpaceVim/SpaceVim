@@ -195,6 +195,12 @@ function! s:load_plugins() abort
     endfor
 endfunction
 
+function! s:disable_plugins(plugin_list) abort
+    for name in a:plugin_list
+        call dein#disable(name)
+    endfor
+endfunction
+
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
@@ -444,5 +450,8 @@ if zvim#plug#enable_plug()
     " google plugins
     call zvim#plug#add('google/vim-searchindex')
     call zvim#plug#add('Yggdroot/LeaderF', {'merged' : 0})
+
+    call s:disable_plugins(g:spacevim_disabled_plugins)
+
     call zvim#plug#end()
 endif
