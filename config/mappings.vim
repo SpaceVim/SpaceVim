@@ -218,7 +218,8 @@ call zvim#util#defineMap('vnoremap <silent>', '<Leader><C-l>',
 call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
 call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
 
-call zvim#util#defineMap('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to another buffer','wincmd w')
+call zvim#util#defineMap('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
+call zvim#util#defineMap('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]p', ':<C-u>vsplit<CR>:wincmd w<CR>',
             \'vsplit vertically,switch to next window','vsplit | wincmd w')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]v', ':<C-u>split<CR>', 'split window','split')
