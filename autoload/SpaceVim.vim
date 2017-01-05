@@ -83,6 +83,12 @@ let g:spacevim_plugin_groups_exclude   = []
 " now Space Vim support these groups:
 let g:spacevim_plugin_groups           = []
 ""
+" Disable plugins by names.
+" example: >
+"   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
+" <
+let g:spacevim_disabled_plugins        = []
+""
 " enable/disable SpaceVim with powerline symbols.
 let g:spacevim_enable_powerline_fonts  = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
@@ -155,43 +161,8 @@ endfunction
 
 
 function! SpaceVim#default() abort
-    call add(g:spacevim_plugin_groups, 'web')
-    call add(g:spacevim_plugin_groups, 'lang')
-    call add(g:spacevim_plugin_groups, 'checkers')
-    call add(g:spacevim_plugin_groups, 'chat')
-    call add(g:spacevim_plugin_groups, 'javascript')
-    call add(g:spacevim_plugin_groups, 'ruby')
-    call add(g:spacevim_plugin_groups, 'python')
-    call add(g:spacevim_plugin_groups, 'scala')
-    call add(g:spacevim_plugin_groups, 'go')
-    call add(g:spacevim_plugin_groups, 'scm')
-    call add(g:spacevim_plugin_groups, 'editing')
-    call add(g:spacevim_plugin_groups, 'indents')
-    call add(g:spacevim_plugin_groups, 'navigation')
-    call add(g:spacevim_plugin_groups, 'misc')
-
-    call add(g:spacevim_plugin_groups, 'core')
-    call add(g:spacevim_plugin_groups, 'unite')
-    call add(g:spacevim_plugin_groups, 'github')
-    if has('python3')
-        call add(g:spacevim_plugin_groups, 'denite')
-    endif
-    call add(g:spacevim_plugin_groups, 'ctrlp')
-    call add(g:spacevim_plugin_groups, 'autocomplete')
-    if ! has('nvim')
-        call add(g:spacevim_plugin_groups, 'vim')
-    else
-        call add(g:spacevim_plugin_groups, 'nvim')
-    endif
-    if OSX()
-        call add(g:spacevim_plugin_groups, 'osx')
-    endif
-    if WINDOWS()
-        call add(g:spacevim_plugin_groups, 'windows')
-    endif
-    if LINUX()
-        call add(g:spacevim_plugin_groups, 'linux')
-    endif
+    call SpaceVim#default#SetOptions()
+    call SpaceVim#default#SetPlugins()
 endfunction
 
 function! SpaceVim#defindFuncs() abort
