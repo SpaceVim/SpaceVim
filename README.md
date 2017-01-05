@@ -16,7 +16,7 @@ ga('send', 'pageview');
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-SpaceVim is a distribution, a bundle of custom settings and plugins, for Vim. It
+SpaceVim is a Modular configuration, a bundle of custom settings and plugins, for Vim. It
 got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs).
 
 For learning about Vim in general, read
