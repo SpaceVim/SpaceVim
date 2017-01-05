@@ -35,7 +35,7 @@ install_vim () {
     fi
 
     if [[ -d "$HOME/.vim" ]]; then
-        if file "$HOME/.vim" | grep "$HOME/.SpaceVim" &>/dev/null; then
+        if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
             echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
         else
             mv "$HOME/.vim" "$HOME/.vim_back"
@@ -52,7 +52,7 @@ install_vim () {
 
 install_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
-        if file "$HOME/.config/nvim" | grep "$HOME/.SpaceVim" &>/dev/null; then
+        if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
             echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
         else
             mv "$HOME/.config/nvim" "$HOME/.config/nvim_back"
