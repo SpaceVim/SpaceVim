@@ -10,7 +10,7 @@ ga('send', 'pageview');
 
 </script>
 </head>
-# SpaceVim
+### SpaceVim
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
@@ -25,7 +25,7 @@ For learning about Vim in general, read
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput) 
 
-## Install
+##### Install
 
 ```sh
 curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash
@@ -37,7 +37,7 @@ installation of neovim/vim with python support:
 
 > [Building Vim from source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
-## Features
+#### Features
 
 - Neovim-centric
 - [Modular configuration](#modular-configuration)
@@ -51,7 +51,7 @@ installation of neovim/vim with python support:
 - Lightweight simple status/tabline
 - Premium color-schemes
 
-## Structure
+#### Structure
 - [config](./config)/ - Configuration
   - [plugins](./config/plugins)/ - Plugin configurations
   - [mappings.vim](./config/mappings.vim) - Key mappings
@@ -69,7 +69,7 @@ installation of neovim/vim with python support:
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
 
-## Modular configuration
+#### Modular configuration
 
 SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
 
@@ -102,7 +102,7 @@ set wildignore+=\*/node_modules/\*
 set guifont=Wingdings:h10
 ```
 
-## Unite centric work-flow
+#### Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
     default action is open the github website of current plugin. default key is `<leader>lp`
     ![2016-12-29-22 31 27](https://cloud.githubusercontent.com/assets/13142418/21545996/c48d7728-ce16-11e6-8e30-0c72139f642f.png)
@@ -113,19 +113,21 @@ set guifont=Wingdings:h10
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
 
-## Awesome ui
+#### Awesome ui
 - outline + filemanager + checker
     ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
 
-## Language specific mode
+#### Language specific mode
 - java
 - viml
 - rust
 - php
 - c/c++
 - js
+- python
 
-## Plugin Highlights
+
+#### Plugin Highlights
 
 - Package management with caching enabled and lazy loading
 - Project-aware tabs and label
@@ -141,7 +143,7 @@ set guifont=Wingdings:h10
     _Note_ that 90% of the plugins are **[lazy-loaded]**.
     [lazy-loaded]: ./config/plugins.vim
 
-## Non Lazy-Loaded Plugins
+#### Non Lazy-Loaded Plugins
 
 Name           | Description
 -------------- | ----------------------
@@ -158,9 +160,9 @@ Name           | Description
 [bookmarks] | Bookmarks, works independently from vim marks
 [tmux-navigator] | Seamless navigation between tmux panes and vim splits
 
-## Lazy-Loaded Plugins
+#### Lazy-Loaded Plugins
 
-### Language
+##### Language
 
 Name           | Description
 -------------- | ----------------------
@@ -192,7 +194,7 @@ Name           | Description
 [phpindent] | PHP official indenting
 [phpspec] | PhpSpec integration
 
-### Commands
+##### Commands
 
 Name           | Description
 -------------- | ----------------------
@@ -213,7 +215,7 @@ Name           | Description
 [vimwiki] | Personal Wiki for Vim
 [thesaurus] | Look up words in an online thesaurus
 
-### Commands
+##### Commands
 
 Name           | Description
 -------------- | ----------------------
@@ -223,7 +225,7 @@ Name           | Description
 [indentline] | Display vertical indention lines
 [choosewin] | Choose window to use, like tmux's 'display-pane'
 
-### Completion
+##### Completion
 
 Name           | Description
 -------------- | ----------------------
@@ -233,7 +235,7 @@ Name           | Description
 [neocomplete] | Next generation completion framework
 [neosnippet] | Contains neocomplete snippets source
 
-### Unite
+##### Unite
 
 Name           | Description
 -------------- | ----------------------
@@ -250,7 +252,7 @@ Name           | Description
 [junkfile] | Create temporary files for memo and testing
 [unite-issue] | Issue manager for JIRA and GitHub
 
-### Operators & Text Objects
+##### Operators & Text Objects
 
 Name           | Description
 -------------- | ----------------------
@@ -261,7 +263,7 @@ Name           | Description
 [textobj-multiblock] | Handle multiple brackets objects
 
 
-## Custom Key bindings
+#### Custom Key bindings
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -285,7 +287,7 @@ Key   | Mode | Action
 `Ctrl`+`b` | Command | Move cursor backward in command line
 `Ctrl`+`f` | Command | Move cursor forward in command line
 
-### File Operations
+##### File Operations
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -294,7 +296,7 @@ Key   | Mode | Action
 `Ctrl`+`s` | _All_ | Write (:w)
 `W!!` | Command | Write as root
 
-### Editor UI
+##### Editor UI
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -320,7 +322,7 @@ Key   | Mode | Action
 `<leader>`+`lk` | Normal | Previous on location list
 `<leader>`+`S` | Normal/visual | Source selection
 
-### Window Management
+##### Window Management
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -338,7 +340,7 @@ Key   | Mode | Action
 `<leader>`+`sv` | Normal | Split with previous buffer
 `<leader>`+`sg` | Normal | Vertical split with previous buffer
 
-### Plugin: Unite
+##### Plugin: Unite
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -381,7 +383,7 @@ Key   | Mode | Action
 `Ctrl`+`z` | Normal/insert | Toggle transpose window
 `Ctrl`+`w` | Insert | Delete backward path
 
-### Plugin: VimFiler
+##### Plugin: VimFiler
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -398,7 +400,7 @@ Key   | Mode | Action
 `Ctrl`+`r` | Normal | Redraw
 `Ctrl`+`q` | Normal | Quick look
 
-### Plugin: neocomplete
+##### Plugin: neocomplete
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -415,27 +417,27 @@ Key   | Mode | Action
 `Ctrl`+`d` | Insert | Scroll down
 `Ctrl`+`u` | Insert | Scroll up
 
-### Plugin: TinyComment
+##### Plugin: TinyComment
 
 Key   | Mode | Action
 ----- |:----:| ------------------
 `<leader>`+`v` | Normal/visual | Toggle single-line comments
 `<leader>`+`V` | Normal/visual | Toggle comment block
 
-### Plugin: Goyo and Limelight
+##### Plugin: Goyo and Limelight
 
 Key   | Mode | Action
 ----- |:----:| ------------------
 `<leader>`+`G` | Normal | Toggle distraction-free writing
 
-### Plugin: ChooseWin
+##### Plugin: ChooseWin
 
 Key   | Mode | Action
 ----- |:----:| ------------------
 `-` | Normal | Choose a window to edit
 `<leader>`+`-` | Normal | Switch editing window with selected
 
-### Plugin: Bookmarks
+##### Plugin: Bookmarks
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -445,7 +447,7 @@ Key   | Mode | Action
 `m`+`p` | Normal | Jump to previous bookmark
 `m`+`i` | Normal | Annotate bookmark
 
-### Plugin: Gita
+##### Plugin: Gita
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -456,7 +458,7 @@ Key   | Mode | Action
 `<leader>`+`gB` | Normal | Open in browser
 `<leader>`+`gp` | Normal | Git push
 
-### Plugin: GitGutter
+##### Plugin: GitGutter
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -466,7 +468,7 @@ Key   | Mode | Action
 `<leader>`+`hr` | Normal | Revert hunk
 `<leader>`+`hp` | Normal | Preview hunk
 
-### Misc Plugins
+##### Misc Plugins
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -478,9 +480,9 @@ Key   | Mode | Action
 `<leader>`+`W` | Normal | Wiki
 `<leader>`+`K` | Normal | Thesaurus
 
-## Enjoy!
+#### Enjoy!
 
-## Credits & Thanks
+#### Credits & Thanks
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
