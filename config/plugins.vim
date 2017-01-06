@@ -61,7 +61,6 @@ let s:plugins.unite = [
             \ ['choplin/unite-vim_hacks'],
             \ ['mattn/webapi-vim'],
             \ ['mattn/gist-vim', {'loadconf' : 1}],
-            \ ['gist-vim'],
             \ ['henices/unite-stock'],
             \ ['mattn/wwwrenderer-vim'],
             \ ['thinca/vim-openbuf'],
