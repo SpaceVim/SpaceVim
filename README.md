@@ -37,6 +37,12 @@ installation of neovim/vim with python support:
 
 > [Building Vim from source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
+for more info about the install script, please check:
+
+```sh
+curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash -s -- -h
+```
+
 #### Features
 
 - Neovim-centric
