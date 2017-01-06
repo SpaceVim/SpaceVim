@@ -78,12 +78,12 @@ let g:spacevim_filemanager             = 'vimfiler'
 " default it is dein.
 let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
 ""
-" Enable/Disable checkinstall on SpaceVim startup. by default is 0.
+" Enable/Disable checkinstall on SpaceVim startup. by default is 1.
 "
-" To enable it: >
-"   let g:spacevim_checkinstall = 1
+" To disable it: >
+"   let g:spacevim_checkinstall = 0
 " <
-let g:spacevim_checkinstall            = 0
+let g:spacevim_checkinstall            = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
 ""
