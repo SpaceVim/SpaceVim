@@ -24,6 +24,12 @@ let g:spacevim_default_indent          = 2
 " <
 let g:spacevim_max_column              = 120
 ""
+" Enable true color support in terminal.
+" >
+"   let g:spacevim_enable_guicolors = 1
+" <
+let g:spacevim_enable_guicolors = 1
+""
 " Enable/Disable google suggestion for neocomplete. by default it is Disabled.
 " you can enable it by:
 " >

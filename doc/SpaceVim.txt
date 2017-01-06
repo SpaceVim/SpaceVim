@@ -32,6 +32,12 @@ Change the max column of SpaceVim, default is 120.
   let g:spacevim_max_column = 120
 <
 
+                                                 *g:spacevim_enable_guicolors*
+Enable true color support in terminal.
+>
+  let g:spacevim_enable_guicolors = 1
+<
+
                                              *g:spacevim_enable_googlesuggest*
 Enable/Disable google suggestion for neocomplete. by default it is Disabled.
 you can enable it by:
