@@ -95,13 +95,13 @@ uninstall_neovim () {
 usage () {
     echo "SpaceVim install script : V 0.1.0-dev"
     echo "    Install SpaceVim for vim and neovim"
-    echo "        curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash"
     echo "    Install SpaceVim for vim only or neovim only"
-    echo "        curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash -s -- install vim"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install vim"
     echo "        or"
-    echo "        curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash -s -- install neovim"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install neovim"
     echo "    Uninstall SpaceVim"
-    echo "        curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash -s -- uninstall"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- uninstall"
 }
 
 

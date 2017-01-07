@@ -30,7 +30,7 @@ For learning about Vim in general, read
 ##### Install
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash
+curl -sLf https://spacevim.org/install.sh | bash
 ```
 before use SpaceVim, you should install the plugin by `call dein#install()`
 
@@ -42,7 +42,7 @@ installation of neovim/vim with python support:
 for more info about the install script, please check:
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/install.sh | bash -s -- -h
+curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
 #### Features
