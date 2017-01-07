@@ -5,6 +5,37 @@ let s:plugins.core = [
             \ ['Shougo/vimproc.vim', {'build' : 'make'}],
             \ ]
 
+let s:plugins.autocomplete = [
+            \ ['honza/vim-snippets', {'on_i' : 1, 'loadconf_before' : 1}],
+            \ ['Shougo/neco-syntax',           { 'on_i' : 1}],
+            \ ['ujihisa/neco-look',            { 'on_i' : 1}],
+            \ ['Shougo/neco-vim',              { 'on_i' : 1, 'loadconf_before' : 1}],
+            \ ['Shougo/context_filetype.vim',  { 'on_i' : 1}],
+            \ ['Shougo/neoinclude.vim',        { 'on_i' : 1}],
+            \ ['Shougo/neosnippet-snippets',   { 'merged' : 0}],
+            \ ['Shougo/neopairs.vim',          { 'on_i' : 1}],
+            \ ]
+if g:spacevim_autocomplete_method ==# 'ycm'
+    call add(s:plugins.autocomplete, ['SirVer/ultisnips', {'loadconf_before' : 1}])
+    call add(s:plugins.autocomplete, ['ervandew/supertab', {'loadconf_before' : 1}])
+    call add(s:plugins.autocomplete, ['Valloric/YouCompleteMe', {'loadconf_before' : 1}])
+elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
+    call add(s:plugins.autocomplete, ['Shougo/neocomplete', {
+                \ 'on_i' : 1,
+                \ 'loadconf' : 1,
+                \ }])
+elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
+    call add(s:plugins.autocomplete, ['Shougo/neocomplcache.vim', {
+                \ 'on_i' : 1,
+                \ 'loadconf' : 1,
+                \ }])
+elseif g:spacevim_autocomplete_method ==# 'deoplete'
+    call add(s:plugins.autocomplete, ['Shougo/deoplete.nvim', {
+                \ 'on_i' : 1,
+                \ 'loadconf' : 1,
+                \ }])
+endif
+
 let s:plugins.chinese = [
             \ ['vimcn/vimcdoc'],
             \ ]
@@ -227,52 +258,7 @@ endfunction
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
-    let s:plugins.autocomplete = [
-                \ ['honza/vim-snippets', {'on_i' : 1, 'loadconf_before' : 1}],
-                \ ]
-    if g:spacevim_autocomplete_method ==# 'ycm'
-        call add(s:plugins.autocomplete, ['SirVer/ultisnips', {'loadconf_before' : 1}])
-        call add(s:plugins.autocomplete, ['ervandew/supertab', {'loadconf_before' : 1}])
-        call add(s:plugins.autocomplete, ['Valloric/YouCompleteMe', {'loadconf_before' : 1}])
-    endif
     call s:load_plugins()
-    if count(g:spacevim_plugin_groups, 'autocomplete') "{{{
-        if g:spacevim_autocomplete_method ==# 'ycm' "{{{
-        elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
-            call zvim#plug#add('Shougo/neocomplete', {
-                        \ 'on_i' : 1,
-                        \ })
-            if zvim#plug#tap('neocomplete')
-                call zvim#plug#defind_hooks('neocomplete.vim')
-            endif
-        elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
-            call zvim#plug#add('Shougo/neocomplcache.vim', {
-                        \ 'on_i' : 1,
-                        \ })
-            if zvim#plug#tap('neocomplcache.vim')
-                call zvim#plug#defind_hooks('neocomplcache.vim')
-            endif
-        elseif g:spacevim_autocomplete_method ==# 'deoplete'
-            call zvim#plug#add('Shougo/deoplete.nvim', {
-                        \ 'on_i' : 1,
-                        \ })
-            if zvim#plug#tap('deoplete.nvim')
-                call zvim#plug#defind_hooks('deoplete.nvim')
-            endif
-        endif "}}}
-        call zvim#plug#add('Shougo/neco-syntax',           { 'on_i' : 1})
-        call zvim#plug#add('ujihisa/neco-look',            { 'on_i' : 1})
-        call zvim#plug#add('Shougo/neco-vim',              { 'on_i' : 1})
-        if !exists('g:necovim#complete_functions')
-            let g:necovim#complete_functions = {}
-        endif
-        let g:necovim#complete_functions.Ref =
-                    \ 'ref#complete'
-        call zvim#plug#add('Shougo/context_filetype.vim',  { 'on_i' : 1})
-        call zvim#plug#add('Shougo/neoinclude.vim',        { 'on_i' : 1})
-        call zvim#plug#add('Shougo/neosnippet-snippets',   { 'merged' : 0})
-        call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
-    endif "}}}
 
 
     if count(g:spacevim_plugin_groups, 'github') "{{{
