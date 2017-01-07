@@ -17,6 +17,8 @@ ga('send', 'pageview');
 </script>
 </head>
 
+![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
+
 SpaceVim is a Modular configuration, a bundle of custom settings and plugins, for Vim. It
 got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs).
 
