@@ -4,8 +4,6 @@ exe 'set wildignore+=' . g:spacevim_wildignore
 if has('filterpipe')
     set noshelltemp
 endif
-filetype plugin indent on
-syntax on
 if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# '' "{{{
     set background=dark
     try
