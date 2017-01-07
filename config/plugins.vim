@@ -98,7 +98,7 @@ let s:plugins.unite = [
             \ ['voi/unite-ctags'],
             \ ['Shougo/unite-session'],
             \ ['osyo-manga/unite-quickfix'],
-            \ ['Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler', 'loadconf' : 1 , 'loadconf_before' : 1}],
+            \ ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
             \ ['ujihisa/unite-colorscheme'],
             \ ['mattn/unite-gist'],
             \ ['tacroe/unite-mark'],
@@ -386,7 +386,7 @@ if zvim#plug#enable_plug()
     let g:indentLine_char = '¦'
     let g:indentLine_concealcursor = 'niv' " (default 'inc')
     let g:indentLine_conceallevel = 2  " (default 2)
-    let g:indentLine_fileTypeExclude = ['help']
+    let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
     call zvim#plug#add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
     call zvim#plug#add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk

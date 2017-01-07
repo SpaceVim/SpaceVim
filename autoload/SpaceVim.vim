@@ -184,3 +184,9 @@ endfunction
 function! SpaceVim#loadPlugins() abort
 
 endfunction
+
+function! SpaceVim#welcome() abort
+    VimFiler
+    wincmd p
+    Startify
+endfunction

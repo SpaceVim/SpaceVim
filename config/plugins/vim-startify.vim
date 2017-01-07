@@ -29,6 +29,7 @@ let g:startify_list_order = [
             \ ]
 "let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_update_oldfiles = 1
+let g:startify_disable_at_vimenter = 1
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 "let g:startify_session_delete_buffers = 0
@@ -45,6 +46,8 @@ fu! <SID>startify_mapping()
     endif
 endf
 augroup startify_map
+    au!
     autocmd FileType startify nnoremap <buffer><F2> <Nop>
     autocmd FileType startify call <SID>startify_mapping()
+    autocmd FileType startify set scrolloff=0
 augroup END

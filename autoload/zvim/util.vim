@@ -174,8 +174,10 @@ function! zvim#util#OpenVimfiler() abort
         VimFiler
         AirlineRefresh
         wincmd p
-        IndentLinesToggle
-        IndentLinesToggle
+        if &filetype !=# 'startify'
+            IndentLinesToggle
+            IndentLinesToggle
+        endif
         wincmd p
     else
         VimFiler
