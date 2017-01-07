@@ -227,54 +227,17 @@ endfunction
 if zvim#plug#enable_plug()
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
+    let s:plugins.autocomplete = [
+                \ ['honza/vim-snippets', {'on_i' : 1, 'loadconf_before' : 1}],
+                \ ]
+    if g:spacevim_autocomplete_method ==# 'ycm'
+        call add(s:plugins.autocomplete, ['SirVer/ultisnips', {'loadconf_before' : 1}])
+        call add(s:plugins.autocomplete, ['ervandew/supertab', {'loadconf_before' : 1}])
+        call add(s:plugins.autocomplete, ['Valloric/YouCompleteMe', {'loadconf_before' : 1}])
+    endif
     call s:load_plugins()
-
     if count(g:spacevim_plugin_groups, 'autocomplete') "{{{
-        call zvim#plug#add('honza/vim-snippets',{'on_i' : 1})
-        imap <silent><expr><TAB> zvim#tab()
-        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        inoremap <silent><expr><CR> zvim#enter()
-        inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
-        inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-        inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
         if g:spacevim_autocomplete_method ==# 'ycm' "{{{
-            call zvim#plug#add('SirVer/ultisnips')
-            let g:UltiSnipsExpandTrigger='<tab>'
-            let g:UltiSnipsJumpForwardTrigger='<tab>'
-            let g:UltiSnipsJumpBackwardTrigger='<S-tab>'
-            let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-            call zvim#plug#add('ervandew/supertab')
-            let g:SuperTabContextDefaultCompletionType = '<c-n>'
-            let g:SuperTabDefaultCompletionType = '<C-n>'
-            "autocmd InsertLeave * if pumvisible() ==# 0|pclose|endif
-            let g:neobundle#install_process_timeout = 1500
-            call zvim#plug#add('Valloric/YouCompleteMe')
-            "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-            "let g:ycm_confirm_extra_conf = 0
-            let g:ycm_collect_identifiers_from_tags_files = 1
-            let g:ycm_collect_identifiers_from_comments_and_strings = 1
-            let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-            let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
-            let g:ycm_seed_identifiers_with_syntax = 1
-            let g:ycm_key_invoke_completion = '<leader><tab>'
-            let g:ycm_semantic_triggers =  {
-                        \   'c' : ['->', '.'],
-                        \   'objc' : ['->', '.'],
-                        \   'ocaml' : ['.', '#'],
-                        \   'cpp,objcpp' : ['->', '.', '::'],
-                        \   'perl' : ['->'],
-                        \   'php' : ['->', '::'],
-                        \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-                        \   'java,jsp' : ['.'],
-                        \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-                        \   'ruby' : ['.', '::'],
-                        \   'lua' : ['.', ':'],
-                        \   'erlang' : [':'],
-                        \ }
         elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
             call zvim#plug#add('Shougo/neocomplete', {
                         \ 'on_i' : 1,
