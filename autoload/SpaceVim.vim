@@ -169,6 +169,7 @@ function! SpaceVim#end() abort
     " generate tags for SpaceVim
     let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
     exe 'helptags ' . help
+    call SpaceVim#plugins#load()
 endfunction
 
 
@@ -181,9 +182,6 @@ endfunction
 function! SpaceVim#defindFuncs() abort
 endfunction
 
-function! SpaceVim#loadPlugins() abort
-
-endfunction
 
 function! SpaceVim#welcome() abort
     VimFiler

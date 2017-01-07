@@ -16,8 +16,6 @@ call SpaceVim#loadCustomConfig()
 
 call SpaceVim#end()
 
-call zvim#util#source_rc('plugins.vim')
-
 call zvim#util#source_rc('general.vim')
 
 
