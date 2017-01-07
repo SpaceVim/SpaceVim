@@ -42,10 +42,14 @@ let s:plugins.colorscheme = [
 
 let s:plugins.checkers = []
 if g:spacevim_enable_neomake
-    call add(s:plugins.checkers, ['neomake/neomake',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(s:plugins.checkers, ['neomake/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
 else
     call add(s:plugins.checkers, ['wsdjeg/syntastic', {'on_event': 'WinEnter', 'loadconf' : 1, 'merged' : 0}])
 endif
+
+let s:plugins.format = [
+            \ ['sbdchd/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
+            \ ]
 
 
 let s:plugins.unite = [
