@@ -108,8 +108,12 @@ function! zvim#plug#end() abort
     elseif g:spacevim_plugin_manager == 'dein'
         call dein#end()
         if g:spacevim_checkinstall == 1
-            if dein#check_install()
-                call dein#install()
+            silent! let flag = dein#check_install()
+            if flag
+                augroup SpaceVimCheckInstall
+                    au!
+                    au VimEnter * call dein#install()
+                augroup END
             endif
         endif
         call dein#call_hook('source')
