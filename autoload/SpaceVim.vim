@@ -103,6 +103,14 @@ let g:spacevim_disabled_plugins        = []
 ""
 " enable/disable SpaceVim with powerline symbols.
 let g:spacevim_enable_powerline_fonts  = 1
+""
+" Enable/Disable lint on save feature of SpaceVim's maker.
+"
+" To disable lint on save:
+" >
+"   let g:spacevim_lint_on_save = 0
+" <
+let g:spacevim_lint_on_save            = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']

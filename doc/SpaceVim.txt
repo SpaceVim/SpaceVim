@@ -100,6 +100,14 @@ Disable plugins by names. example:
                                            *g:spacevim_enable_powerline_fonts*
 enable/disable SpaceVim with powerline symbols.
 
+                                                     *g:spacevim_lint_on_save*
+Enable/Disable lint on save feature of SpaceVim's maker.
+
+To disable lint on save:
+>
+  let g:spacevim_lint_on_save = 0
+<
+
                                                         *g:spacevim_hosts_url*
 The host file url. this option is for chinese users who can not use google and
 twitter.
