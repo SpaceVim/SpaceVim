@@ -45,6 +45,8 @@ fu! <SID>startify_mapping()
     endif
 endf
 augroup startify_map
+    au!
     autocmd FileType startify nnoremap <buffer><F2> <Nop>
     autocmd FileType startify call <SID>startify_mapping()
+    autocmd FileType startify set scrolloff=0
 augroup END

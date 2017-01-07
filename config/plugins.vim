@@ -386,7 +386,7 @@ if zvim#plug#enable_plug()
     let g:indentLine_char = '¦'
     let g:indentLine_concealcursor = 'niv' " (default 'inc')
     let g:indentLine_conceallevel = 2  " (default 2)
-    let g:indentLine_fileTypeExclude = ['help']
+    let g:indentLine_fileTypeExclude = ['help', 'startify']
     call zvim#plug#add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
     call zvim#plug#add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
