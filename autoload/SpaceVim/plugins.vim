@@ -2,6 +2,7 @@ let s:plugins = {}
 
 let s:plugins.core = [
             \ ['Shougo/vimproc.vim', {'build' : 'make'}],
+            \ ['hecal3/vim-leader-guide', {'loadconf': 1, 'loadconf_before' : 1, 'merged' : 0}],
             \ ]
 
 let s:plugins.autocomplete = [
