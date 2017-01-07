@@ -109,7 +109,10 @@ function! zvim#plug#end() abort
         call dein#end()
         if g:spacevim_checkinstall == 1
             if dein#check_install()
-                call dein#install()
+                augroup SpaceVimCheckInstall
+                    au!
+                    au VimEnter * call dein#install()
+                augroup END
             endif
         endif
         call dein#call_hook('source')
