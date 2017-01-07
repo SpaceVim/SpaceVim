@@ -189,6 +189,7 @@ let s:plugins.lang = [
             \ ['racer-rust/vim-racer',                   { 'on_ft' : 'rust'}],
             \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
             \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
+            \ ['lervag/vimtex',                          { 'on_ft' : 'tex'}],
             \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
             \ ]
 if g:spacevim_enable_javacomplete2_py
