@@ -29,6 +29,7 @@ let g:startify_list_order = [
             \ ]
 "let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_update_oldfiles = 1
+let g:startify_disable_at_vimenter = 1
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 "let g:startify_session_delete_buffers = 0

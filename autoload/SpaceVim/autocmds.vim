@@ -60,6 +60,10 @@ function! SpaceVim#autocmds#init() abort
         autocmd BufWritePost *.vim call s:generate_doc()
         autocmd FileType * set scrolloff=7
     augroup END
+    augroup SpaceVimInit
+        au!
+        autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
+    augroup END
 endfunction
 function! s:reload_touchpad_status() abort
     if s:touchpadoff
