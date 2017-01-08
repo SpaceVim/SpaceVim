@@ -17,7 +17,6 @@ endfunction
 
 function! SpaceVim#logger#info(msg) abort
     if g:spacevim_enable_debug && s:logger_level <= 1
-        echo s:logger_level
         call s:wite(s:warpMsg(a:msg, 1))
     endif
 endfunction
@@ -35,14 +34,16 @@ function! SpaceVim#logger#error(msg) abort
 endfunction
 
 function! s:wite(msg) abort
-    call writefile([a:msg], s:logger_file, 'a')
+    let flags = filewritable(s:logger_file) ? 'a' : ''
+    call writefile([a:msg], s:logger_file, flags)
 endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
     let l = a:0 > 0 ? a:1 : 1
     let logs = readfile(s:logger_file, '')
-    return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[' . s:levels[l] .'\]'"), "\n")
+    echo logs[0]
+    return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
 endfunction
 
 ""
