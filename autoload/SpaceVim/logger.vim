@@ -1,26 +1,42 @@
-let s:logger_level = 0
+let s:logger_level = 1
 let s:levels = ['Info', 'Warn', 'Error']
 let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
+
 ""
 " @public
-" Set debug level of SpaceVim, by default it is 0.
+" Set debug level of SpaceVim, by default it is 1. all message will be logged.
 "
-"     0 : log all the message.
+"     1 : log all the message.
 "
-"     1 : log warning and error message
+"     2 : log warning and error message
 "
-"     2 : log error message only
+"     3 : log error message only
 function! SpaceVim#logger#setLevel(level) abort
     let s:logger_level = a:level
+endfunction
+
+function! SpaceVim#logger#info(msg) abort
+    if g:spacevim_enable_debug && s:logger_level <= 1
+        call s:wite(s:warpMsg(a:msg, 1))
+    endif
+endfunction
+
+function! SpaceVim#logger#warn(msg) abort
+    if g:spacevim_enable_debug && s:logger_level <= 2
+        call s:wite(s:warpMsg(a:msg, 2))
+    endif
+endfunction
+
+function! SpaceVim#logger#error(msg) abort
+    if g:spacevim_enable_debug && s:logger_level <= 3
+        call s:wite(s:warpMsg(a:msg, 3))
+    endif
 endfunction
 
 function! s:wite(msg) abort
     call writefile([a:msg], s:logger_file, 'a')
 endfunction
 
-function! SpaceVim#logger#info(msg) abort
-    call s:wite(s:warpMsg(a:msg, 1))
-endfunction
 
 function! SpaceVim#logger#viewLog(...) abort
     let l = a:0 > 0 ? a:1 : 0

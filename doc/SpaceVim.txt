@@ -128,13 +128,13 @@ SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
   autocompletion. unite : Unite centric work-flow
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
-  Set debug level of SpaceVim, by default it is 0.
+  Set debug level of SpaceVim, by default it is 1. all message will be logged.
 
-      0 : log all the message.
+      1 : log all the message.
 
-      1 : log warning and error message
+      2 : log warning and error message
 
-      2 : log error message only
+      3 : log error message only
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set log output file of SpaceVim. by default it is
