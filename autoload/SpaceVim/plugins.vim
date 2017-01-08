@@ -1,3 +1,4 @@
+scriptencoding utf-8
 let s:plugins = {}
 
 let s:plugins.core = [

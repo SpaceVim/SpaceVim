@@ -84,6 +84,16 @@ let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
 "   let g:spacevim_checkinstall = 0
 " <
 let g:spacevim_checkinstall            = 1
+""
+" Enable/Disable debug mode for SpaceVim, by default it is disabled.
+"
+" to enable it: >
+"   let g:spacevim_enable_debug = 1
+" <
+let g:spacevim_enable_debug            = 0
+""
+" Set the debug level of SpaceVim, by default it is 1.
+let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
 ""
