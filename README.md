@@ -40,7 +40,7 @@ For learning about Vim in general, read
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput) 
 
-##### Install
+#### Install
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -56,6 +56,24 @@ for more info about the install script, please check:
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+```
+
+##### windows support
+
+- For vim in windows, please just clone this repo as vimfiles in you Home directory;
+by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
+make sure you have backup your own vimfiles.
+
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+```
+
+- For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
+for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
+
+```sh 
+git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
 #### Features
