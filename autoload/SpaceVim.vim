@@ -91,6 +91,9 @@ let g:spacevim_checkinstall            = 1
 "   let g:spacevim_enable_debug = 1
 " <
 let g:spacevim_enable_debug            = 0
+""
+" Set the debug level of SpaceVim, by default it is 1.
+let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
 ""

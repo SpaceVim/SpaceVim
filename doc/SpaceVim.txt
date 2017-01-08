@@ -90,6 +90,9 @@ to enable it:
   let g:spacevim_enable_debug = 1
 <
 
+                                                      *g:spacevim_debug_level*
+Set the debug level of SpaceVim, by default it is 1.
+
                                                     *g:spacevim_plugin_groups*
 groups of plugins should be loaded.
 

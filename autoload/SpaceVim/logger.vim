@@ -1,4 +1,4 @@
-let s:logger_level = 1
+let s:logger_level = g:spacevim_debug_level
 let s:levels = ['Info', 'Warn', 'Error']
 let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
 
@@ -17,6 +17,7 @@ endfunction
 
 function! SpaceVim#logger#info(msg) abort
     if g:spacevim_enable_debug && s:logger_level <= 1
+        echo s:logger_level
         call s:wite(s:warpMsg(a:msg, 1))
     endif
 endfunction
@@ -39,13 +40,9 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
-    let l = a:0 > 0 ? a:1 : 0
+    let l = a:0 > 0 ? a:1 : 1
     let logs = readfile(s:logger_file, '')
-    for log in logs
-        if log =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[' . s:levels[l] .'\]'
-            echo log
-        endif
-    endfor
+    return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[' . s:levels[l] .'\]'"), "\n")
 endfunction
 
 ""
