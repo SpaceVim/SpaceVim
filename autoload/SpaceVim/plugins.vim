@@ -191,7 +191,7 @@ let s:plugins.lang = [
             \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
             \ ['lervag/vimtex',                          { 'on_ft' : 'tex'}],
             \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
-            \ ['fatih/vim-go',                           { 'on_ft' : 'go', 'loadconf' : 1}],
+            \ ['fatih/vim-go',                           { 'on_ft' : 'go', 'loadconf_before' : 1}],
             \ ]
 if g:spacevim_enable_javacomplete2_py
     call add(s:plugins.lang , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
