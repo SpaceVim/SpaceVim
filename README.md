@@ -1,5 +1,4 @@
 <head>
-<meta name="msvalidate.01" content="14716157352C631AD40087A3D69C499B" />
 <title>SpaceVim - Like spacemacs, but for vim</title>
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
