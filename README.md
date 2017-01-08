@@ -28,6 +28,8 @@ var _hmt = _hmt || [];
 })();
 </script>
 
+<meta name="msvalidate.01" content="14716157352C631AD40087A3D69C499B" />
+
 </head>
 
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
