@@ -82,6 +82,14 @@ To disable it:
   let g:spacevim_checkinstall = 0
 <
 
+                                                     *g:spacevim_enable_debug*
+Enable/Disable debug mode for SpaceVim, by default it is disabled.
+
+to enable it:
+>
+  let g:spacevim_enable_debug = 1
+<
+
                                                     *g:spacevim_plugin_groups*
 groups of plugins should be loaded.
 
@@ -118,6 +126,19 @@ FUNCTIONS                                                 *SpaceVim-functions*
 SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
   Load the {layer} you want : autocompletion : Make SpaceVim support
   autocompletion. unite : Unite centric work-flow
+
+SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
+  Set debug level of SpaceVim, by default it is 0.
+
+      0 : log all the message.
+
+      1 : log warning and error message
+
+      2 : log error message only
+
+SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
+  Set log output file of SpaceVim. by default it is
+  `~/.SpaceVim/.SpaceVim.log`
 
 
 vim:tw=78:ts=8:ft=help:norl:
