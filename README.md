@@ -17,6 +17,17 @@ ga('create', 'UA-89745542-1', 'auto');
 ga('send', 'pageview');
 
 </script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 </head>
 
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
