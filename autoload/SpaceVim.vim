@@ -111,6 +111,15 @@ let g:spacevim_plugin_groups           = []
 " <
 let g:spacevim_disabled_plugins        = []
 ""
+" Add custom plugins
+" >
+"   let g:spacevim_custom_plugins = [
+"               \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
+"               \ ['wsdjeg/GitHub.vim'],
+"               \ ]
+" <
+let g:spacevim_custom_plugins          = []
+""
 " enable/disable SpaceVim with powerline symbols.
 let g:spacevim_enable_powerline_fonts  = 1
 ""

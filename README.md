@@ -135,6 +135,11 @@ let g:spacevim_plugin_groups = ['core', 'web']
 
 " if there is a particular plugin you don't like, you can define this variable to disable them entirely
 let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
+" if you want to add some custom plugins, use this options.
+let g:spacevim_custom_plugins = [
+        \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
+        \ ['wsdjeg/GitHub.vim'],
+        \ ]
 
 " anything defined here are simply overrides
 set wildignore+=\*/node_modules/\*
