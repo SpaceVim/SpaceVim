@@ -108,6 +108,15 @@ Disable plugins by names. example:
   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
 <
 
+                                                   *g:spacevim_custom_plugins*
+Add custom plugins
+>
+  let g:spacevim_custom_plugins = [
+              \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
+              \ ['wsdjeg/GitHub.vim'],
+              \ ]
+<
+
                                            *g:spacevim_enable_powerline_fonts*
 enable/disable SpaceVim with powerline symbols.
 

@@ -428,6 +428,13 @@ function! s:load_plugins() abort
             endif
         endfor
     endfor
+    for plugin in g:spacevim_custom_plugins
+        if len(plugin) == 2
+            call zvim#plug#add(plugin[0], plugin[1])
+        else
+            call zvim#plug#add(plugin[0])
+        endif
+    endfor
 endfunction
 
 function! s:disable_plugins(plugin_list) abort
