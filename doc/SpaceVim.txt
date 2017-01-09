@@ -117,6 +117,13 @@ Add custom plugins
               \ ]
 <
 
+                                              *g:spacevim_force_global_config*
+SpaceVim will load global config after local config if set to 1. by default it
+is 0, if you has local config, the global config will not be loaded.
+>
+  let g:spacevim_force_global_config = 1
+<
+
                                            *g:spacevim_enable_powerline_fonts*
 enable/disable SpaceVim with powerline symbols.
 

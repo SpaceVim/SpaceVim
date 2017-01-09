@@ -9,7 +9,6 @@ ga('create', 'UA-89745542-1', 'auto');
 ga('send', 'pageview');
 
 </script>
-
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -21,6 +20,7 @@ s.parentNode.insertBefore(hm, s);
 </script>
 </head>
 ### SpaceVim
+
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
@@ -110,7 +110,9 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 #### Modular configuration
 
-SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
+- SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
+- SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
+
 
 here is an example:
 

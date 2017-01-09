@@ -120,6 +120,13 @@ let g:spacevim_disabled_plugins        = []
 " <
 let g:spacevim_custom_plugins          = []
 ""
+" SpaceVim will load global config after local config if set to 1. by default
+" it is 0, if you has local config, the global config will not be loaded.
+" >
+"   let g:spacevim_force_global_config = 1
+" <
+let g:spacevim_force_global_config     = 0
+""
 " enable/disable SpaceVim with powerline symbols.
 let g:spacevim_enable_powerline_fonts  = 1
 ""
@@ -144,20 +151,34 @@ let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,
             \.git,.svn,.hg,.DS_Store'
 
 function! SpaceVim#loadCustomConfig() abort
-    let custom_confs = SpaceVim#util#globpath(getcwd(), '.local.vim')
-    let custom_glob_conf = expand('~/.local.vim')
-    if filereadable(custom_glob_conf)
-        exe 'source ' . custom_glob_conf
+    let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
+    let custom_confs = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
+    let custom_glob_conf_old = expand('~/.local.vim')
+    let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
+    " the old value will be remove
+    if filereadable(custom_glob_conf_old)
+        exe 'source ' . custom_glob_conf_old
     endif
-    if isdirectory(expand('~/.SpaceVim.d/'))
-        set runtimepath^=~/.SpaceVim.d
+    if !empty(custom_confs_old)
+        exe 'source ' . custom_confs_old[0]
     endif
 
     if !empty(custom_confs)
         exe 'source ' . custom_confs[0]
-    endif
-    if isdirectory('.SpaceVim.d')
-        exe 'set rtp ^=' . expand('.SpaceVim.d')
+        if isdirectory('.SpaceVim.d')
+            exe 'set rtp ^=' . expand('.SpaceVim.d')
+        endif
+        if filereadable(custom_glob_conf) && g:spacevim_force_global_config
+            exe 'source ' . custom_glob_conf
+            if isdirectory(expand('~/.SpaceVim.d/'))
+                set runtimepath^=~/.SpaceVim.d
+            endif
+        endif
+    elseif filereadable(custom_glob_conf)
+        exe 'source ' . custom_glob_conf
+        if isdirectory(expand('~/.SpaceVim.d/'))
+            set runtimepath^=~/.SpaceVim.d
+        endif
     endif
 endfunction
 

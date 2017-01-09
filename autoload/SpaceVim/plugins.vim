@@ -233,10 +233,13 @@ let s:plugins.ctrlp = [
 if !has('nvim')
     call add(s:plugins.ctrlp, ['wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'}])
 endif
-function! SpaceVim#plugins#get(...) abort
-
-endfunction
-
+let s:plugins.github = [
+            \ ['junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']}],
+            \ ]
+let s:plugins.vim = [
+            \ ['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}],
+            \ ['mattn/vim-terminal',                 { 'on_cmd':['Terminal']}],
+            \ ]
 function! SpaceVim#plugins#load() abort
     if zvim#plug#enable_plug()
         call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
@@ -244,14 +247,6 @@ function! SpaceVim#plugins#load() abort
         call s:load_plugins()
 
 
-        if count(g:spacevim_plugin_groups, 'github') "{{{
-            call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
-        endif
-
-        if count(g:spacevim_plugin_groups, 'vim') "{{{
-            call zvim#plug#add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
-            call zvim#plug#add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
-        endif
         call zvim#plug#add('tpope/vim-scriptease')
         call zvim#plug#add('tpope/vim-fugitive')
         call zvim#plug#add('cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']})
@@ -337,7 +332,7 @@ function! SpaceVim#plugins#load() abort
         call zvim#plug#add('scrooloose/nerdtree',{'on_cmd':'NERDTreeToggle'})
         if zvim#plug#tap('nerdtree')
             call zvim#plug#defind_hooks('nerdtree')
-            function! OpenOrCloseNERDTree()
+            function! OpenOrCloseNERDTree() abort
                 exec 'normal! A'
             endfunction
             noremap <silent> <F9> :NERDTreeToggle<CR>
@@ -441,5 +436,9 @@ function! s:disable_plugins(plugin_list) abort
     for name in a:plugin_list
         call dein#disable(name)
     endfor
+endfunction
+
+function! SpaceVim#plugins#get(...) abort
+
 endfunction
 
