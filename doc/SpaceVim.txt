@@ -1,24 +1,18 @@
 *SpaceVim.txt*	Like spacemacs, but for vim
-wsdjeg                                                              *SpaceVim*
+wsdjeg                                                    *Maktaba* *SpaceVim*
 
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Configuration...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
+  4. Layers..................................................|SpaceVim-layers|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
 
-SpaceVim is a modular configuration for vim/neovim plugins.
-
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
-
-SpaceVim is configured by these options.
-
-                                                          *g:spacevim_version*
-Version of SpaceVim , this value can not be changed.
 
                                                    *g:spacevim_default_indent*
 Change the default indent of SpaceVim. default is 2.
@@ -54,9 +48,21 @@ set it by:
 
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
+>
+  let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+<
 
                                                        *g:spacevim_enable_ycm*
 Enable ycm or not, but default it is 0.
+>
+  let g:spacevim_enable_ycm = 1
+<
+
+                                                *g:spacevim_enable_cursorline*
+Enable cursorline
+>
+  let g:spacevim_enable_cursorline = 1
+<
 
                                                      *g:spacevim_error_symbol*
 The error symbol used by maker.
@@ -158,6 +164,11 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set log output file of SpaceVim. by default it is
   `~/.SpaceVim/.SpaceVim.log`
+
+==============================================================================
+LAYERS                                                       *SpaceVim-layers*
+
+SpaceVim support such layers:
 
 
 vim:tw=78:ts=8:ft=help:norl:

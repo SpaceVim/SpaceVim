@@ -1,7 +1,4 @@
 scriptencoding utf-8
-""
-" @section Layers layers
-" nihao 
 let s:plugins = {}
 
 let s:plugins.core = [
