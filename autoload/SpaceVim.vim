@@ -1,7 +1,9 @@
 scriptencoding utf-8
 ""
 " @section Introduction, intro
+" @library
 " SpaceVim is a modular configuration for vim/neovim plugins.
+" @order intro version dicts functions exceptions layers
 
 ""
 " @section Configuration, config
@@ -183,7 +185,6 @@ function! SpaceVim#loadCustomConfig() abort
 endfunction
 
 ""
-" @public
 " Load the {layer} you want :
 " autocompletion : Make SpaceVim support autocompletion.
 " unite : Unite centric work-flow

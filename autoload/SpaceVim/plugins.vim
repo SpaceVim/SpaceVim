@@ -1,4 +1,7 @@
 scriptencoding utf-8
+""
+" @section Layers layers
+" nihao 
 let s:plugins = {}
 
 let s:plugins.core = [
@@ -240,6 +243,11 @@ let s:plugins.vim = [
             \ ['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}],
             \ ['mattn/vim-terminal',                 { 'on_cmd':['Terminal']}],
             \ ]
+let s:plugins.git = [
+            \ ['cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']}],
+            \ ['gregsexton/gitv',                        { 'on_cmd':['Gitv']}],
+            \ ['junegunn/gv.vim',               { 'on_cmd' : 'GV'}],
+            \ ]
 function! SpaceVim#plugins#load() abort
     if zvim#plug#enable_plug()
         call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
@@ -249,8 +257,6 @@ function! SpaceVim#plugins#load() abort
 
         call zvim#plug#add('tpope/vim-scriptease')
         call zvim#plug#add('tpope/vim-fugitive')
-        call zvim#plug#add('cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']})
-        call zvim#plug#add('gregsexton/gitv',                        { 'on_cmd':['Gitv']})
         call zvim#plug#add('tpope/vim-surround')
         call zvim#plug#add('terryma/vim-multiple-cursors')
         let g:multi_cursor_next_key='<C-j>'
@@ -384,7 +390,6 @@ function! SpaceVim#plugins#load() abort
         call zvim#plug#add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
         call zvim#plug#add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
         nnoremap <Leader>fz :FZF<CR>
-        call zvim#plug#add('junegunn/gv.vim',               { 'on_cmd' : 'GV'})
         call zvim#plug#add('tyru/open-browser.vim',         {
                     \'on_cmd' : ['OpenBrowserSmartSearch','OpenBrowser','OpenBrowserSearch'],
                     \'on_map' : '<Plug>(openbrowser-',
@@ -394,7 +399,7 @@ function! SpaceVim#plugins#load() abort
         endif
         "call zvim#plug#add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
         let g:racer_cmd = $HOME.'/.cargo/bin/racer'
-        call zvim#plug#add('rust-lang/rust.vim')
+        call zvim#plug#add('rust-lang/rust.vim',            {'merged' : 1})
         call zvim#plug#add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
         call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
         " google plugins
