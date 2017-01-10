@@ -12,7 +12,7 @@ let g:startify_custom_header = get(g:, 'startify_custom_header', [
   \'               | ##                                                           ',
   \'               | ##                                                           ',
   \'               |__/                                                           ',
-  \'        version : ' . g:spacevim_version . '   by : @SpaceVim',
+  \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
   \'',
   \ ])
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
