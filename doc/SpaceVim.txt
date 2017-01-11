@@ -84,6 +84,9 @@ installed.you can change it in custom config file.
                                                       *g:spacevim_simple_mode*
 Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
 installed.
+>
+  let g:spacevim_simple_mode = 1
+<
 
                                                       *g:spacevim_filemanager*
 The default file manager of SpaceVim.

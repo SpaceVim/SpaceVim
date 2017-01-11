@@ -88,6 +88,9 @@ let g:spacevim_colorscheme_default     = 'desert'
 ""
 " Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
 " installed.
+" >
+"   let g:spacevim_simple_mode = 1
+" <
 let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim.
@@ -227,47 +230,48 @@ function! SpaceVim#Layer(layer) abort
 endfunction
 
 function! SpaceVim#end() abort
-    for s:group in g:spacevim_plugin_groups_exclude
-        let s:i = index(g:spacevim_plugin_groups, s:group)
-        if s:i != -1
-            call remove(g:spacevim_plugin_groups, s:i)
-        endif
-    endfor
-    if g:spacevim_vim_help_language ==# 'cn'
-        call add(g:spacevim_plugin_groups, 'chinese')
-    endif
-    if g:spacevim_use_colorscheme==1
-        call add(g:spacevim_plugin_groups, 'colorscheme')
-    endif
-
-    if has('nvim')
-        let g:spacevim_autocomplete_method = 'deoplete'
-    elseif has('lua')
-        let g:spacevim_autocomplete_method = 'neocomplete'
+    if g:spacevim_simple_mode
+        let g:spacevim_plugin_groups = ['core']
     else
-        let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
-    if g:spacevim_enable_ycm
-        let g:spacevim_autocomplete_method = 'ycm'
-    endif
-    if g:spacevim_enable_neocomplcache
-        let g:spacevim_autocomplete_method = 'neocomplcache'
+        for s:group in g:spacevim_plugin_groups_exclude
+            let s:i = index(g:spacevim_plugin_groups, s:group)
+            if s:i != -1
+                call remove(g:spacevim_plugin_groups, s:i)
+            endif
+        endfor
+        if g:spacevim_vim_help_language ==# 'cn'
+            call add(g:spacevim_plugin_groups, 'chinese')
+        endif
+        if g:spacevim_use_colorscheme==1
+            call add(g:spacevim_plugin_groups, 'colorscheme')
+        endif
+
+        if has('nvim')
+            let g:spacevim_autocomplete_method = 'deoplete'
+        elseif has('lua')
+            let g:spacevim_autocomplete_method = 'neocomplete'
+        else
+            let g:spacevim_autocomplete_method = 'neocomplcache'
+        endif
+        if g:spacevim_enable_ycm
+            let g:spacevim_autocomplete_method = 'ycm'
+        endif
+        if g:spacevim_enable_neocomplcache
+            let g:spacevim_autocomplete_method = 'neocomplcache'
+        endif
     endif
     ""
     " generate tags for SpaceVim
     let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
     exe 'helptags ' . help
+
     call SpaceVim#plugins#load()
 endfunction
 
 
 function! SpaceVim#default() abort
     call SpaceVim#default#SetOptions()
-    if g:spacevim_simple_mode
-        call SpaceVim#default#UseSimpleMode()
-    else
-        call SpaceVim#default#SetPlugins()
-    endif
+    call SpaceVim#default#SetPlugins()
     call SpaceVim#default#SetMappings()
 endfunction
 
