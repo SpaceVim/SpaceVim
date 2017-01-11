@@ -393,3 +393,7 @@ fu! s:tobur(num) abort
         endif
     endif
 endf
+
+function! SpaceVim#default#UseSimpleMode() abort
+    
+endfunction

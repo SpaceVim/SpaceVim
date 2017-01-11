@@ -11,6 +11,9 @@ CONTENTS                                                   *SpaceVim-contents*
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
 
+  SpaceVim is a Modular configuration, a bundle of custom settings and
+plugins, for Vim. It got inspired by spacemacs.
+
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
@@ -71,7 +74,19 @@ The error symbol used by maker.
 The colorscheme of SpaceVim, if colorscheme groups are installed.
 
                                               *g:spacevim_colorscheme_default*
-The default colorscheme of SpaceVim.
+The default colorscheme of SpaceVim. By default SpaceVim use desert, if
+colorscheme which name is the value of g:spacevim_colorscheme has not been
+installed.you can change it in custom config file.
+>
+  let g:spacevim_colorscheme_default = 'other_color'
+<
+
+                                                      *g:spacevim_simple_mode*
+Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
+installed.
+>
+  let g:spacevim_simple_mode = 1
+<
 
                                                       *g:spacevim_filemanager*
 The default file manager of SpaceVim.
@@ -168,7 +183,15 @@ SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*
 
-SpaceVim support such layers:
+  SpaceVim support such layers:
+
+      core : core plugins for SpaceVim.
+
+      autocompletion : Plugins for autocompletion,
+
+      maker : syntax checker
+
+      unite : unite centric work-flow
 
 
 vim:tw=78:ts=8:ft=help:norl:
