@@ -17,7 +17,7 @@ need_cmd () {
 
 fetch_repo () {
     if [[ -d "$HOME/.SpaceVim" ]]; then
-        git -C "$HOME/.SpaceVim" pull
+        git --git-dir "$HOME/.SpaceVim/.git" pull
         echo -e "${Blue}Successfully update SpaceVim${Color_off}"
     else
         git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
