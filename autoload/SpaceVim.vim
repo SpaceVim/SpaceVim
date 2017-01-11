@@ -1,14 +1,12 @@
-scriptencoding utf-8
 ""
 " @section Introduction, intro
-" SpaceVim is a modular configuration for vim/neovim plugins.
-
-""
-" @section Configuration, config
-" @plugin(name) is configured by these options.
+" @stylized Maktaba
+" @library
+" @order intro version dicts functions exceptions layers
 
 ""
 " Version of SpaceVim , this value can not be changed.
+scriptencoding utf-8
 let g:spacevim_version = '0.1.0-dev'
 lockvar g:spacevim_version
 ""
@@ -36,7 +34,6 @@ let g:spacevim_enable_guicolors = 1
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
-let g:spacevim_auto_download_neobundle = 0
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -52,11 +49,22 @@ let g:spacevim_enable_cursorcolumn     = 0
 let g:spacevim_enable_neomake          = 1
 ""
 " set the guifont of Spacevim, default is empty.
+" >
+"   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+" <
 let g:spacevim_guifont                 = ''
 ""
 " Enable ycm or not, but default it is 0.
+" >
+"   let g:spacevim_enable_ycm = 1
+" <
 let g:spacevim_enable_ycm              = 0
 let g:spacevim_enable_neocomplcache    = 0
+""
+" Enable cursorline
+" >
+"   let g:spacevim_enable_cursorline = 1
+" <
 let g:spacevim_enable_cursorline       = 0
 ""
 " The error symbol used by maker.
@@ -96,6 +104,8 @@ let g:spacevim_enable_debug            = 0
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
+
+
 ""
 " groups of plugins should be loaded. 
 "
@@ -183,7 +193,11 @@ function! SpaceVim#loadCustomConfig() abort
 endfunction
 
 ""
-" @public
+" @section Layers, layers
+" SpaceVim support such layers:
+
+
+""
 " Load the {layer} you want :
 " autocompletion : Make SpaceVim support autocompletion.
 " unite : Unite centric work-flow

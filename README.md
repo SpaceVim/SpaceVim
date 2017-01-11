@@ -512,8 +512,6 @@ Key   | Mode | Action
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
 
-<<<<<<< HEAD
-=======
 
 [dein.vim]: https://github.com/Shougo/dein.vim  
 [vimproc]: https://github.com/Shougo/vimproc.vim  
