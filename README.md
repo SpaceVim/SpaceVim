@@ -59,6 +59,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 - Neovim-centric
 - [Modular configuration](#modular-configuration)
+- [multiple leader mode](#multiple-leader-mode)
 - Lazy-load 90% of plugins with [dein.vim]
 - Robust, yet light weight
 - [Unite centric work-flow](#unite-centric-work-flow)
@@ -96,16 +97,19 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 here is an example:
 
 ```viml
-" here are some basic customizations, please refer to the top of the vimrc file for all possible options
+" here are some basic customizations, please refer to the top of the vimrc
+" file for all possible options
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 let g:spacevim_colorscheme    = 'my_awesome_colorscheme'
 let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
 
 " change the default directory where all miscellaneous persistent files go
-let g:spacevim_cache_dir = "/some/place/else"
+" by default it is ~/.cache/vimfiles
+let g:spacevim_plugin_bundle_dir = "/some/place/else"
 
-" by default, language specific plugins are not loaded.  this can be changed with the following:
+" by default, language specific plugins are not loaded.  this can be changed
+" with the following:
 let g:spacevim_plugin_groups_exclude = ['ruby', 'python']
 
 " if there are groups you want always loaded, you can use this:
@@ -114,7 +118,8 @@ let g:spacevim_plugin_groups_include = ['go']
 " alternatively, you can set this variable to load exactly what you want
 let g:spacevim_plugin_groups = ['core', 'web']
 
-" if there is a particular plugin you don't like, you can define this variable to disable them entirely
+" if there is a particular plugin you don't like, you can define this
+" variable to disable them entirely
 let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
 " if you want to add some custom plugins, use this options.
 let g:spacevim_custom_plugins = [
@@ -126,6 +131,16 @@ let g:spacevim_custom_plugins = [
 set wildignore+=\*/node_modules/\*
 set guifont=Wingdings:h10
 ```
+
+#### multiple leader mode
+##### global origin vim leader, default : `\`
+vim's origin global leader can be used in all the mode.
+##### local origin vim leader, default : `,`
+vim's origin local leader can be used in all the mode.
+##### windows function leader, default : `s`
+windows function leader can only be used in normal mode.
+##### unite work flow leader, default : `f`
+unite work flow leader can only be used in normal mode.
 
 #### Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
