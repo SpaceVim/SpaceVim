@@ -15,3 +15,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
         call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
     endif
 endfunction
+
+function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
+    
+endfunction

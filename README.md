@@ -140,7 +140,7 @@ vim's origin local leader can be used in all the mode.
 ##### windows function leader, default : `s`
 windows function leader can only be used in normal mode.
 ##### unite work flow leader, default : `f`
-unite work flow leader can only be used in normal mode.
+unite work flow leader can only be used in normal mode. unite leader need unite groups.
 
 #### Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
