@@ -3,6 +3,8 @@
 " @stylized Maktaba
 " @library
 " @order intro version dicts functions exceptions layers
+"   SpaceVim is a Modular configuration, a bundle of custom settings
+" and plugins, for Vim. It got inspired by spacemacs.
 
 ""
 " Version of SpaceVim , this value can not be changed.
@@ -76,8 +78,17 @@ let g:spacevim_vim_help_language       = 'en'
 " The colorscheme of SpaceVim, if colorscheme groups are installed.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
-" The default colorscheme of SpaceVim.
+" The default colorscheme of SpaceVim. By default SpaceVim use desert, if
+" colorscheme which name is the value of g:spacevim_colorscheme has not been
+" installed.you can change it in custom config file.
+" >
+"   let g:spacevim_colorscheme_default = 'other_color'
+" <
 let g:spacevim_colorscheme_default     = 'desert'
+""
+" Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
+" installed.
+let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim.
 let g:spacevim_filemanager             = 'vimfiler'
@@ -194,7 +205,15 @@ endfunction
 
 ""
 " @section Layers, layers
-" SpaceVim support such layers:
+"   SpaceVim support such layers:
+"
+"       core : core plugins for SpaceVim.
+"
+"       autocompletion : Plugins for autocompletion,
+"
+"       maker : syntax checker
+"
+"       unite : unite centric work-flow
 
 
 ""
@@ -244,7 +263,11 @@ endfunction
 
 function! SpaceVim#default() abort
     call SpaceVim#default#SetOptions()
-    call SpaceVim#default#SetPlugins()
+    if g:spacevim_simple_mode
+        call SpaceVim#default#UseSimpleMode()
+    else
+        call SpaceVim#default#SetPlugins()
+    endif
     call SpaceVim#default#SetMappings()
 endfunction
 
