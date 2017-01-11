@@ -36,6 +36,17 @@ let g:spacevim_enable_guicolors = 1
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
+""
+" Windows function leader of SpaceVim, default is `s`, set to empty to disable
+" this feature, or you can set to other char.
+" >
+"   let g:spacevim_windows_leader = ''
+" <
+let g:spacevim_windows_leader          = 's'
+""
+" Unite work flow leader of SpaceVim, default is `f`, set to empty to disable
+" this feature, or you can set to other char.
+let g:spacevim_unite_leader            = 'f'
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -121,7 +132,7 @@ let g:spacevim_plugin_groups_exclude   = []
 
 
 ""
-" groups of plugins should be loaded. 
+" groups of plugins should be loaded.
 "
 " example: >
 "    let g:spacevim_plugin_groups = ['core', 'lang']
@@ -230,6 +241,9 @@ function! SpaceVim#Layer(layer) abort
 endfunction
 
 function! SpaceVim#end() abort
+    if !empty(g:spacevim_windows_leader)
+        call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
+    endif
     if g:spacevim_simple_mode
         let g:spacevim_plugin_groups = ['core']
     else
