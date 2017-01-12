@@ -90,8 +90,16 @@ fu! zvim#util#CopyToClipboard(...) abort
                     elseif a:1 == 3
                         let f_url .= '#L' . getpos("'<")[1] . '-L' . getpos("'>")[1]
                     endif
-                    let @+=f_url
-                    echo 'Copied to clipboard'
+                    try
+                        let @+=f_url
+                        echo 'Copied to clipboard'
+                    catch /^Vim\%((\a\+)\)\=:E354/
+                        if has('nvim')
+                            echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
+                        else
+                            echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+                        endif
+                    endtry
                 else
                     echohl WarningMsg | echom 'This git repo has no remote host' | echohl None
                 endif
@@ -102,8 +110,16 @@ fu! zvim#util#CopyToClipboard(...) abort
             echohl WarningMsg | echom 'You need install git!' | echohl None
         endif
     else
-        let @+=expand('%:p')
-        echo 'Copied to clipboard'
+        try
+            let @+=expand('%:p')
+            echo 'Copied to clipboard'
+        catch /^Vim\%((\a\+)\)\=:E354/
+            if has('nvim')
+                echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
+            else
+                echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+            endif
+        endtry
     endif
 endf
 
