@@ -428,8 +428,7 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`;`+`e` | Normal | Toggle file explorer
-`;`+`a` | Normal | Toggle file explorer on current file
+`<F3>` | Normal | Toggle file explorer
 | **Within _VimFiler_ buffers** |||
 `Ctrl`+`j` | Normal | Un-map
 `Ctrl`+`l` | Normal | Un-map
@@ -438,8 +437,11 @@ Key   | Mode | Action
 `sg` | Normal | Vertical split edit
 `p` | Normal | Preview
 `i` | Normal | Switch to directory history
+`v` | Normal | Quick look
+`gx` | Normal | Execute with vimfiler associated
+`'` | Normal | Toggle mark current line
+`V` | Normal | Clear all marks
 `Ctrl`+`r` | Normal | Redraw
-`Ctrl`+`q` | Normal | Quick look
 
 ##### Plugin: neocomplete
 
