@@ -57,6 +57,7 @@ function! s:vimfilerinit()
     silent! nunmap <buffer> gr
     silent! nunmap <buffer> gf
     silent! nunmap <buffer> -
+    silent! nunmap <buffer> s
 
     nnoremap <silent><buffer> gr  :<C-u>Denite grep:<C-R>=<SID>selected()<CR> -buffer-name=grep<CR>
     nnoremap <silent><buffer> gf  :<C-u>Denite file_rec:<C-R>=<SID>selected()<CR><CR>
