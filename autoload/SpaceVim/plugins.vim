@@ -433,6 +433,15 @@ function! s:load_plugins() abort
     endfor
 endfunction
 
+function! s:getLayerPlugins(layer) abort
+    try
+        return SpaceVim#layers#{a:layer}#plugins()
+    catch /^Vim\%((\a\+)\)\=:E117/
+        return []
+    endtry
+    
+endfunction
+
 function! s:disable_plugins(plugin_list) abort
     for name in a:plugin_list
         call dein#disable(name)
