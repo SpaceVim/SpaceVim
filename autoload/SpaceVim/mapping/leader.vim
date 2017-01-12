@@ -17,5 +17,30 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
 endfunction
 
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
-    
+    if !empty(a:key)
+        " The prefix key.
+        nnoremap    [unite]   <Nop>
+        exe 'nmap ' .a:key . ' [unite]'
+        nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                    \ -buffer-name=files buffer bookmark file<CR>
+        nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                    \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+        nnoremap <silent> [unite]r  :<C-u>Unite
+                    \ -buffer-name=register register<CR>
+        nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
+        nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+        nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+        nnoremap <silent> [unite]fr
+                    \ :<C-u>Unite -buffer-name=resume resume<CR>
+        nnoremap <silent> [unite]ma
+                    \ :<C-u>Unite mapping<CR>
+        nnoremap <silent> [unite]me
+                    \ :<C-u>Unite output:message<CR>
+        nnoremap  [unite]f  :<C-u>Unite source<CR>
+        nnoremap <silent> [unite]w
+                    \ :<C-u>Unite -buffer-name=files -no-split
+                    \ jump_point file_point buffer_tab
+                    \ file_rec:! file file/new<CR>
+        nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
+    endif
 endfunction

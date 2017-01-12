@@ -244,6 +244,9 @@ function! SpaceVim#end() abort
     if !empty(g:spacevim_windows_leader)
         call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
     endif
+    if !empty(g:spacevim_unite_leader)
+        call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
+    endif
     if g:spacevim_simple_mode
         let g:spacevim_plugin_groups = ['core']
     else
