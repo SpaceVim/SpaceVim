@@ -43,11 +43,10 @@ function! SpaceVim#logger#viewLog(...) abort
     let l = a:0 > 0 ? a:1 : 1
     if filereadable(s:logger_file)
         let logs = readfile(s:logger_file, '')
+        return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
     else
-        let logs = []
-        echom '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists!'
+        return '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists!'
     endif
-    return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
 endfunction
 
 ""
