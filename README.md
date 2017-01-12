@@ -139,6 +139,7 @@ vim's origin global leader can be used in all the mode.
 vim's origin local leader can be used in all the mode.
 ##### windows function leader, default : `s`
 windows function leader can only be used in normal mode.
+for the list of mappings see the [link](#window-management)
 ##### unite work flow leader, default : `f`
 unite work flow leader can only be used in normal mode. unite leader need unite groups.
 
