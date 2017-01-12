@@ -103,6 +103,7 @@ function! SpaceVim#default#SetPlugins() abort
     call add(g:spacevim_plugin_groups, 'checkers')
     call add(g:spacevim_plugin_groups, 'format')
     call add(g:spacevim_plugin_groups, 'chat')
+    call add(g:spacevim_plugin_groups, 'git')
     call add(g:spacevim_plugin_groups, 'javascript')
     call add(g:spacevim_plugin_groups, 'ruby')
     call add(g:spacevim_plugin_groups, 'python')
@@ -346,22 +347,8 @@ function! SpaceVim#default#SetMappings() abort
                 \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
                 \ 'Yank the github link of current selection to X11 clipboard',
                 \ 'call zvim#util#CopyToClipboard(3)')
-    " Window prefix
-    call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
-    call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
-
     call zvim#util#defineMap('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
     call zvim#util#defineMap('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]p', ':<C-u>vsplit<CR>:wincmd w<CR>',
-                \'vsplit vertically,switch to next window','vsplit | wincmd w')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]v', ':<C-u>split<CR>', 'split window','split')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]g', ':<C-u>vsplit<CR>', 'vsplit window','vsplit')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]t', ':<C-u>tabnew<CR>', 'Create new tab','tabnew')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]o', ':<C-u>only<CR>', 'Close other windows','only')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]x', ':<C-u>call zvim#util#BufferEmpty()<CR>',
-                \'Empty current buffer','call zvim#util#BufferEmpty()')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
     call zvim#util#defineMap('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
                 \ 'Smart close windows',
                 \ 'call zvim#util#SmartClose()')
@@ -392,3 +379,7 @@ fu! s:tobur(num) abort
         endif
     endif
 endf
+
+function! SpaceVim#default#UseSimpleMode() abort
+    
+endfunction

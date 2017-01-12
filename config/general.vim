@@ -11,6 +11,8 @@ if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# 
     catch
         exec 'colorscheme '. g:spacevim_colorscheme_default
     endtry
+else
+    exec 'colorscheme '. g:spacevim_colorscheme_default
 endif
 if g:spacevim_enable_cursorline == 1
     set cursorline                  "显示当前行

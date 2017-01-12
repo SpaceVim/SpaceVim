@@ -1,14 +1,14 @@
-scriptencoding utf-8
 ""
 " @section Introduction, intro
-" SpaceVim is a modular configuration for vim/neovim plugins.
-
-""
-" @section Configuration, config
-" @plugin(name) is configured by these options.
+" @stylized Maktaba
+" @library
+" @order intro version dicts functions exceptions layers
+"   SpaceVim is a Modular configuration, a bundle of custom settings
+" and plugins, for Vim. It got inspired by spacemacs.
 
 ""
 " Version of SpaceVim , this value can not be changed.
+scriptencoding utf-8
 let g:spacevim_version = '0.1.0-dev'
 lockvar g:spacevim_version
 ""
@@ -36,7 +36,17 @@ let g:spacevim_enable_guicolors = 1
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
-let g:spacevim_auto_download_neobundle = 0
+""
+" Windows function leader of SpaceVim, default is `s`, set to empty to disable
+" this feature, or you can set to other char.
+" >
+"   let g:spacevim_windows_leader = ''
+" <
+let g:spacevim_windows_leader          = 's'
+""
+" Unite work flow leader of SpaceVim, default is `f`, set to empty to disable
+" this feature, or you can set to other char.
+let g:spacevim_unite_leader            = 'f'
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -52,11 +62,22 @@ let g:spacevim_enable_cursorcolumn     = 0
 let g:spacevim_enable_neomake          = 1
 ""
 " set the guifont of Spacevim, default is empty.
+" >
+"   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+" <
 let g:spacevim_guifont                 = ''
 ""
 " Enable ycm or not, but default it is 0.
+" >
+"   let g:spacevim_enable_ycm = 1
+" <
 let g:spacevim_enable_ycm              = 0
 let g:spacevim_enable_neocomplcache    = 0
+""
+" Enable cursorline
+" >
+"   let g:spacevim_enable_cursorline = 1
+" <
 let g:spacevim_enable_cursorline       = 0
 ""
 " The error symbol used by maker.
@@ -68,8 +89,20 @@ let g:spacevim_vim_help_language       = 'en'
 " The colorscheme of SpaceVim, if colorscheme groups are installed.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
-" The default colorscheme of SpaceVim.
+" The default colorscheme of SpaceVim. By default SpaceVim use desert, if
+" colorscheme which name is the value of g:spacevim_colorscheme has not been
+" installed.you can change it in custom config file.
+" >
+"   let g:spacevim_colorscheme_default = 'other_color'
+" <
 let g:spacevim_colorscheme_default     = 'desert'
+""
+" Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
+" installed.
+" >
+"   let g:spacevim_simple_mode = 1
+" <
+let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim.
 let g:spacevim_filemanager             = 'vimfiler'
@@ -96,8 +129,10 @@ let g:spacevim_enable_debug            = 0
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
+
+
 ""
-" groups of plugins should be loaded. 
+" groups of plugins should be loaded.
 "
 " example: >
 "    let g:spacevim_plugin_groups = ['core', 'lang']
@@ -183,7 +218,19 @@ function! SpaceVim#loadCustomConfig() abort
 endfunction
 
 ""
-" @public
+" @section Layers, layers
+"   SpaceVim support such layers:
+"
+"       core : core plugins for SpaceVim.
+"
+"       autocompletion : Plugins for autocompletion,
+"
+"       maker : syntax checker
+"
+"       unite : unite centric work-flow
+
+
+""
 " Load the {layer} you want :
 " autocompletion : Make SpaceVim support autocompletion.
 " unite : Unite centric work-flow
@@ -194,36 +241,47 @@ function! SpaceVim#Layer(layer) abort
 endfunction
 
 function! SpaceVim#end() abort
-    for s:group in g:spacevim_plugin_groups_exclude
-        let s:i = index(g:spacevim_plugin_groups, s:group)
-        if s:i != -1
-            call remove(g:spacevim_plugin_groups, s:i)
-        endif
-    endfor
-    if g:spacevim_vim_help_language ==# 'cn'
-        call add(g:spacevim_plugin_groups, 'chinese')
+    if !empty(g:spacevim_windows_leader)
+        call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
     endif
-    if g:spacevim_use_colorscheme==1
-        call add(g:spacevim_plugin_groups, 'colorscheme')
+    if !empty(g:spacevim_unite_leader)
+        call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
     endif
-
-    if has('nvim')
-        let g:spacevim_autocomplete_method = 'deoplete'
-    elseif has('lua')
-        let g:spacevim_autocomplete_method = 'neocomplete'
+    if g:spacevim_simple_mode
+        let g:spacevim_plugin_groups = ['core']
     else
-        let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
-    if g:spacevim_enable_ycm
-        let g:spacevim_autocomplete_method = 'ycm'
-    endif
-    if g:spacevim_enable_neocomplcache
-        let g:spacevim_autocomplete_method = 'neocomplcache'
+        for s:group in g:spacevim_plugin_groups_exclude
+            let s:i = index(g:spacevim_plugin_groups, s:group)
+            if s:i != -1
+                call remove(g:spacevim_plugin_groups, s:i)
+            endif
+        endfor
+        if g:spacevim_vim_help_language ==# 'cn'
+            call add(g:spacevim_plugin_groups, 'chinese')
+        endif
+        if g:spacevim_use_colorscheme==1
+            call add(g:spacevim_plugin_groups, 'colorscheme')
+        endif
+
+        if has('nvim')
+            let g:spacevim_autocomplete_method = 'deoplete'
+        elseif has('lua')
+            let g:spacevim_autocomplete_method = 'neocomplete'
+        else
+            let g:spacevim_autocomplete_method = 'neocomplcache'
+        endif
+        if g:spacevim_enable_ycm
+            let g:spacevim_autocomplete_method = 'ycm'
+        endif
+        if g:spacevim_enable_neocomplcache
+            let g:spacevim_autocomplete_method = 'neocomplcache'
+        endif
     endif
     ""
     " generate tags for SpaceVim
     let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
     exe 'helptags ' . help
+
     call SpaceVim#plugins#load()
 endfunction
 

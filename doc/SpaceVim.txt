@@ -1,24 +1,21 @@
 *SpaceVim.txt*	Like spacemacs, but for vim
-wsdjeg                                                              *SpaceVim*
+wsdjeg                                                    *Maktaba* *SpaceVim*
 
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Configuration...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
+  4. Layers..................................................|SpaceVim-layers|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
 
-SpaceVim is a modular configuration for vim/neovim plugins.
+  SpaceVim is a Modular configuration, a bundle of custom settings and
+plugins, for Vim. It got inspired by spacemacs.
 
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
-
-SpaceVim is configured by these options.
-
-                                                          *g:spacevim_version*
-Version of SpaceVim , this value can not be changed.
 
                                                    *g:spacevim_default_indent*
 Change the default indent of SpaceVim. default is 2.
@@ -45,6 +42,17 @@ you can enable it by:
   let g:spacevim_enable_googlesuggest = 1
 <
 
+                                                   *g:spacevim_windows_leader*
+Windows function leader of SpaceVim, default is `s`, set to empty to disable
+this feature, or you can set to other char.
+>
+  let g:spacevim_windows_leader = ''
+<
+
+                                                     *g:spacevim_unite_leader*
+Unite work flow leader of SpaceVim, default is `f`, set to empty to disable
+this feature, or you can set to other char.
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache dir of plugins, by default, it is `~/.cache/vimfiles`. you can
 set it by:
@@ -54,9 +62,21 @@ set it by:
 
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
+>
+  let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+<
 
                                                        *g:spacevim_enable_ycm*
 Enable ycm or not, but default it is 0.
+>
+  let g:spacevim_enable_ycm = 1
+<
+
+                                                *g:spacevim_enable_cursorline*
+Enable cursorline
+>
+  let g:spacevim_enable_cursorline = 1
+<
 
                                                      *g:spacevim_error_symbol*
 The error symbol used by maker.
@@ -65,7 +85,19 @@ The error symbol used by maker.
 The colorscheme of SpaceVim, if colorscheme groups are installed.
 
                                               *g:spacevim_colorscheme_default*
-The default colorscheme of SpaceVim.
+The default colorscheme of SpaceVim. By default SpaceVim use desert, if
+colorscheme which name is the value of g:spacevim_colorscheme has not been
+installed.you can change it in custom config file.
+>
+  let g:spacevim_colorscheme_default = 'other_color'
+<
+
+                                                      *g:spacevim_simple_mode*
+Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
+installed.
+>
+  let g:spacevim_simple_mode = 1
+<
 
                                                       *g:spacevim_filemanager*
 The default file manager of SpaceVim.
@@ -158,6 +190,19 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set log output file of SpaceVim. by default it is
   `~/.SpaceVim/.SpaceVim.log`
+
+==============================================================================
+LAYERS                                                       *SpaceVim-layers*
+
+  SpaceVim support such layers:
+
+      core : core plugins for SpaceVim.
+
+      autocompletion : Plugins for autocompletion,
+
+      maker : syntax checker
+
+      unite : unite centric work-flow
 
 
 vim:tw=78:ts=8:ft=help:norl:
