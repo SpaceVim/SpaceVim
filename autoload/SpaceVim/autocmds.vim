@@ -48,7 +48,7 @@ function! SpaceVim#autocmds#init() abort
         " Instead of reverting the cursor to the last position in the buffer, we
         " set it to the first line when editing a git commit message
         au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-        autocmd InsertEnter * call s:tool()
+        autocmd InsertEnter * call s:fixindentline()
         if executable('synclient')
             let s:touchpadoff = 0
             autocmd InsertEnter * call s:disable_touchpad()
@@ -78,10 +78,17 @@ function! s:enable_touchpad() abort
     let s:touchpadoff = 0
     call system('synclient touchpadoff=0')
 endfunction
-function! s:tool() abort
+function! s:fixindentline() abort
     if !exists('s:done')
-        IndentLinesToggle
-        IndentLinesToggle
+        if exists(':IndentLinesToggle') == 2
+            IndentLinesToggle
+            IndentLinesToggle
+        else
+            echohl WarningMsg
+            echom 'plugin : indentLines has not been installed,
+                        \ please use `:call dein#install(["indentLine"])` to install this plugin,'
+            echohl None
+        endif
         let s:done = 1
     endif
 endfunction
