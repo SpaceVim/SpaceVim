@@ -4,6 +4,7 @@ function! SpaceVim#layers#git#plugins() abort
                 \ ['gregsexton/gitv',                        { 'on_cmd':['Gitv']}],
                 \ ['junegunn/gv.vim',               { 'on_cmd' : 'GV'}],
                 \ ['lambdalisue/vim-gita',          {'on_cmd': 'Gita'}],
+                \ ['tpope/vim-fugitive'],
                 \ ]
 endfunction
 

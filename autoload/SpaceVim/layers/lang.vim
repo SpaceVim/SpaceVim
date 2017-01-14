@@ -21,7 +21,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],
                 \ ['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript','coffee','ls','typescript']}],
                 \ ['wsdjeg/vim-dict',                        { 'on_ft' : 'java'}],
-                \ ['wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'}],
+                \ ['wsdjeg/java_getset.vim',                 { 'on_ft' : 'java', 'loadconf' : 1}],
                 \ ['wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'}],
                 \ ['vim-jp/vim-java',                        { 'on_ft' : 'java'}],
                 \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
@@ -35,6 +35,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['lervag/vimtex',                          { 'on_ft' : 'tex'}],
                 \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
                 \ ['fatih/vim-go',                           { 'on_ft' : 'go', 'loadconf_before' : 1}],
+                \ ['rust-lang/rust.vim',            {'merged' : 1}],
                 \ ] 
     if g:spacevim_enable_javacomplete2_py
         call add(plugins , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
@@ -42,4 +43,10 @@ function! SpaceVim#layers#lang#plugins() abort
         call add(plugins , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
     endif
     return plugins
+endfunction
+
+function! SpaceVim#layers#lang#config() abort
+    let g:racer_cmd = $HOME.'/.cargo/bin/racer'
+    let g:vim_markdown_conceal = 0
+    let g:vim_markdown_folding_disabled = 1
 endfunction

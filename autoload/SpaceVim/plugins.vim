@@ -6,26 +6,9 @@ function! SpaceVim#plugins#load() abort
         call s:load_plugins()
 
 
-        call zvim#plug#add('tpope/vim-scriptease')
-        call zvim#plug#add('tpope/vim-fugitive')
-        call zvim#plug#add('tpope/vim-surround')
-        call zvim#plug#add('terryma/vim-multiple-cursors')
-        let g:multi_cursor_next_key='<C-j>'
-        let g:multi_cursor_prev_key='<C-k>'
-        let g:multi_cursor_skip_key='<C-x>'
-        let g:multi_cursor_quit_key='<Esc>'
 
         "web plugins
 
-        call zvim#plug#add('wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'})
-        if zvim#plug#tap('java_getset.vim')
-            call zvim#plug#defind_hooks('java_getset.vim')
-        endif
-        call zvim#plug#add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
-        call zvim#plug#add('wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'})
-        call zvim#plug#add('wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'})
-        call zvim#plug#add('wsdjeg/job.vim',                        { 'merged' : 0})
-        call zvim#plug#add('wsdjeg/GitHub-api.vim')
         call zvim#plug#add('vim-airline/vim-airline',                { 'merged' : 0})
         call zvim#plug#add('vim-airline/vim-airline-themes',         { 'merged' : 0})
         if zvim#plug#tap('vim-airline')
@@ -48,7 +31,6 @@ function! SpaceVim#plugins#load() abort
         vnoremap <C-SPACE> <Plug>(wildfire-water)
         let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
-        call zvim#plug#add('scrooloose/nerdcommenter')
         call zvim#plug#add('easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'})
         if zvim#plug#tap('vim-easymotion')
             map <Leader><Leader> <Plug>(easymotion-prefix)
@@ -59,32 +41,7 @@ function! SpaceVim#plugins#load() abort
         if zvim#plug#tap('vim-startify')
             call zvim#plug#defind_hooks('vim-startify')
         endif
-        call zvim#plug#add('mhinz/vim-signify')
-        let g:signify_disable_by_default = 0
-        let g:signify_line_highlight = 0
-        call zvim#plug#add('mhinz/vim-grepper' , { 'on_cmd' : 'Grepper' } )
-        if zvim#plug#tap('vim-grepper')
-            call zvim#plug#defind_hooks('vim-grepper')
-        endif
-        call zvim#plug#add('airblade/vim-rooter')
-        let g:rooter_silent_chdir = 1
-        call zvim#plug#add('Yggdroot/indentLine')
-        let g:indentLine_color_term = 239
-        let g:indentLine_color_gui = '#09AA08'
-        let g:indentLine_char = '¦'
-        let g:indentLine_concealcursor = 'niv' " (default 'inc')
-        let g:indentLine_conceallevel = 2  " (default 2)
-        let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
-        call zvim#plug#add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
-        call zvim#plug#add('benizi/vim-automkdir')
-        "[c  ]c  jump between prev or next hunk
-        call zvim#plug#add('airblade/vim-gitgutter',{'on_cmd' : 'GitGutterEnable'})
-        call zvim#plug#add('itchyny/calendar.vim',      { 'on_cmd' : 'Calendar'})
         call zvim#plug#add('lilydjwg/fcitx.vim',        { 'on_i' : 1})
-        call zvim#plug#add('junegunn/goyo.vim',         { 'on_cmd' : 'Goyo'})
-        if zvim#plug#tap('goyo.vim')
-            call zvim#plug#defind_hooks('goyo.vim')
-        endif
         "vim Wimdows config
         call zvim#plug#add('scrooloose/nerdtree',{'on_cmd':'NERDTreeToggle'})
         if zvim#plug#tap('nerdtree')
@@ -102,37 +59,15 @@ function! SpaceVim#plugins#load() abort
                 autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
             augroup END
         endif
-        call zvim#plug#add('tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
         call zvim#plug#add('Xuyuanp/nerdtree-git-plugin')
         call zvim#plug#add('taglist.vim',{'on_cmd' : 'TlistToggle'})
         if zvim#plug#tap('taglist.vim')
             call zvim#plug#defind_hooks('taglist.vim')
             noremap <silent> <F8> :TlistToggle<CR>
         endif
-        call zvim#plug#add('ntpeters/vim-better-whitespace',{'on_cmd' : 'StripWhitespace'})
-        call zvim#plug#add('junegunn/rainbow_parentheses.vim',{'on_cmd' : 'RainbowParentheses'})
-        augroup rainbow_lisp
-            autocmd!
-            autocmd FileType lisp,clojure,scheme,java RainbowParentheses
-        augroup END
-        let g:rainbow#max_level = 16
-        let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
-        " List of colors that you do not want. ANSI code or #RRGGBB
-        let g:rainbow#blacklist = [233, 234]
-        call zvim#plug#add('majutsushi/tagbar')
-        if zvim#plug#tap('tagbar')
-            call zvim#plug#defind_hooks('tagbar')
-            noremap <silent> <F2> :TagbarToggle<CR>
-        endif
         "}}}
 
         call zvim#plug#add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
-        call zvim#plug#add('wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'})
-        "call zvim#plug#add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
-        let g:vim_markdown_conceal = 0
-        let g:vim_markdown_folding_disabled = 1
-        call zvim#plug#add('simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'})
-        nnoremap <silent> <F7> :MundoToggle<CR>
         call zvim#plug#add('TaskList.vim',                  { 'on_cmd' : 'TaskList'})
         map <unique> <Leader>td <Plug>TaskList
         call zvim#plug#add('ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']})
@@ -141,19 +76,6 @@ function! SpaceVim#plugins#load() abort
         call zvim#plug#add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
         call zvim#plug#add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
         nnoremap <Leader>fz :FZF<CR>
-        call zvim#plug#add('tyru/open-browser.vim',         {
-                    \'on_cmd' : ['OpenBrowserSmartSearch','OpenBrowser','OpenBrowserSearch'],
-                    \'on_map' : '<Plug>(openbrowser-',
-                    \})
-        if zvim#plug#tap('open-brower.vim')
-            call zvim#plug#defind_hooks('open-brower.vim')
-        endif
-        let g:racer_cmd = $HOME.'/.cargo/bin/racer'
-        call zvim#plug#add('rust-lang/rust.vim',            {'merged' : 1})
-        call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
-        " google plugins
-        call zvim#plug#add('google/vim-searchindex')
-        call zvim#plug#add('Yggdroot/LeaderF', {'merged' : 0})
 
         call s:disable_plugins(g:spacevim_disabled_plugins)
 
