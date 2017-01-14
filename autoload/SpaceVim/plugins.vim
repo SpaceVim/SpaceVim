@@ -24,6 +24,7 @@ function! s:load_plugins() abort
                 call zvim#plug#add(plugin[0])
             endif
         endfor
+        call s:loadLayerConfig(group)
     endfor
     for plugin in g:spacevim_custom_plugins
         if len(plugin) == 2
@@ -41,6 +42,14 @@ function! s:getLayerPlugins(layer) abort
     catch /^Vim\%((\a\+)\)\=:E117/
     endtry
     return p
+endfunction
+
+function! s:loadLayerConfig(layer) abort
+    try
+        call SpaceVim#layers#{a:layer}#config()
+    catch /^Vim\%((\a\+)\)\=:E117/
+    endtry
+
 endfunction
 
 function! s:disable_plugins(plugin_list) abort

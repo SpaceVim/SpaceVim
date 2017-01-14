@@ -100,6 +100,9 @@ function! SpaceVim#default#SetPlugins() abort
 
     call add(g:spacevim_plugin_groups, 'web')
     call add(g:spacevim_plugin_groups, 'lang')
+    call add(g:spacevim_plugin_groups, 'edit')
+    call add(g:spacevim_plugin_groups, 'ui')
+    call add(g:spacevim_plugin_groups, 'tools')
     call add(g:spacevim_plugin_groups, 'checkers')
     call add(g:spacevim_plugin_groups, 'format')
     call add(g:spacevim_plugin_groups, 'chat')
