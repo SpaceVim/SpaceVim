@@ -439,7 +439,6 @@ function! s:getLayerPlugins(layer) abort
     catch /^Vim\%((\a\+)\)\=:E117/
         return []
     endtry
-    
 endfunction
 
 function! s:disable_plugins(plugin_list) abort
