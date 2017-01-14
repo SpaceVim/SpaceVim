@@ -1,4 +1,4 @@
-### SpaceVim
+<p align="center"><img src="logo.png" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -240,7 +240,7 @@ Name           | Description
 Name           | Description
 -------------- | ----------------------
 [vimfiler] | Powerful file explorer
-[tinycomment] | Robust but light-weight commenting
+[NERD Commenter] | Comment tool - no comment necessary
 [vinarise] | Hex editor
 [syntastic] | Syntax checking hacks
 [gita] | An awesome git handling plugin
@@ -460,12 +460,15 @@ Key   | Mode | Action
 `Ctrl`+`d` | Insert | Scroll down
 `Ctrl`+`u` | Insert | Scroll up
 
-##### Plugin: TinyComment
+##### Plugin: NERD Commenter
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`v` | Normal/visual | Toggle single-line comments
-`<leader>`+`V` | Normal/visual | Toggle comment block
+`<leader>`+`cc` | Normal/visual | Comment out the current line or text selected in visual mode.
+`<leader>`+`cn` | Normal/visual | Same as cc but forces nesting.
+`<leader>`+`cu` | Normal/visual | Uncomments the selected line(s).
+`<leader>`+`cs` | Normal/visual | Comments out the selected lines with a pretty block formatted layout.
+`<leader>`+`cy` | Normal/visual | Same as cc except that the commented line(s) are yanked first.
 
 ##### Plugin: Goyo and Limelight
 
