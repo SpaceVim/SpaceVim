@@ -1,5 +1,5 @@
 function! SpaceVim#layers#autocomplete#plugins() abort
-    return [
+    let plugins = [
                 \ ['honza/vim-snippets', {'on_i' : 1, 'loadconf_before' : 1}],
                 \ ['Shougo/neco-syntax',           { 'on_i' : 1}],
                 \ ['ujihisa/neco-look',            { 'on_i' : 1}],
@@ -9,4 +9,25 @@ function! SpaceVim#layers#autocomplete#plugins() abort
                 \ ['Shougo/neosnippet-snippets',   { 'merged' : 0}],
                 \ ['Shougo/neopairs.vim',          { 'on_i' : 1}],
                 \ ]
+    if g:spacevim_autocomplete_method ==# 'ycm'
+        call add(plugins, ['SirVer/ultisnips', {'loadconf_before' : 1}])
+        call add(plugins, ['ervandew/supertab', {'loadconf_before' : 1}])
+        call add(plugins, ['Valloric/YouCompleteMe', {'loadconf_before' : 1}])
+    elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
+        call add(plugins, ['Shougo/neocomplete', {
+                    \ 'on_i' : 1,
+                    \ 'loadconf' : 1,
+                    \ }])
+    elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
+        call add(plugins, ['Shougo/neocomplcache.vim', {
+                    \ 'on_i' : 1,
+                    \ 'loadconf' : 1,
+                    \ }])
+    elseif g:spacevim_autocomplete_method ==# 'deoplete'
+        call add(plugins, ['Shougo/deoplete.nvim', {
+                    \ 'on_i' : 1,
+                    \ 'loadconf' : 1,
+                    \ }])
+    endif
+    return plugins
 endfunction

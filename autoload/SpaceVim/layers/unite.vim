@@ -1,5 +1,5 @@
 function! SpaceVim#layers#unite#plugins() abort
-    return [
+    let plugins = [
                 \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
                 \ ['Shougo/neoyank.vim'],
                 \ ['soh335/unite-qflist'],
@@ -66,6 +66,11 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ 'on_cmd': 'Gista'
                 \ }],
                 \ ]
+    if g:spacevim_enable_googlesuggest
+        call add(plugins, ['mopp/googlesuggest-source.vim'])
+        call add(plugins, ['mattn/googlesuggest-complete-vim'])
+    endif
+    return plugins
 endfunction
 
 function! SpaceVim#layers#unite#config() abort
