@@ -1,4 +1,4 @@
-### SpaceVim
+<p align="center"><img src="logo.png" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -128,9 +128,9 @@ let g:spacevim_plugin_groups = ['core', 'web']
 let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
 " if you want to add some custom plugins, use this options.
 let g:spacevim_custom_plugins = [
-\ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
-\ ['wsdjeg/GitHub.vim'],
-\ ]
+ \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+ \ ['wsdjeg/GitHub.vim'],
+ \ ]
 
 " anything defined here are simply overrides
 set wildignore+=\*/node_modules/\*
@@ -245,7 +245,7 @@ Name           | Description
 Name           | Description
 -------------- | ----------------------
 [vimfiler] | Powerful file explorer
-[tinycomment] | Robust but light-weight commenting
+[NERD Commenter] | Comment tool - no comment necessary
 [vinarise] | Hex editor
 [syntastic] | Syntax checking hacks
 [gita] | An awesome git handling plugin
@@ -465,12 +465,15 @@ Key   | Mode | Action
 `Ctrl`+`d` | Insert | Scroll down
 `Ctrl`+`u` | Insert | Scroll up
 
-##### Plugin: TinyComment
+##### Plugin: NERD Commenter
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`v` | Normal/visual | Toggle single-line comments
-`<leader>`+`V` | Normal/visual | Toggle comment block
+`<leader>`+`cc` | Normal/visual | Comment out the current line or text selected in visual mode.
+`<leader>`+`cn` | Normal/visual | Same as cc but forces nesting.
+`<leader>`+`cu` | Normal/visual | Uncomments the selected line(s).
+`<leader>`+`cs` | Normal/visual | Comments out the selected lines with a pretty block formatted layout.
+`<leader>`+`cy` | Normal/visual | Same as cc except that the commented line(s) are yanked first.
 
 ##### Plugin: Goyo and Limelight
 
