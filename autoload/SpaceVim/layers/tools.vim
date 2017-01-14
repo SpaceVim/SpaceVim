@@ -23,6 +23,13 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['itchyny/calendar.vim',      { 'on_cmd' : 'Calendar'}],
                 \ ['wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'}],
                 \ ['wsdjeg/job.vim',                        { 'merged' : 0}],
+                \ ['junegunn/fzf',                  { 'on_cmd' : 'FZF'}],
+                \ ['ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']}],
+                \ ['TaskList.vim',                  { 'on_cmd' : 'TaskList'}],
+                \ ['MarcWeber/vim-addon-mw-utils'],
+                \ ['taglist.vim',{'on_cmd' : 'TlistToggle', 'loadconf' : 1}],
+                \ ['scrooloose/nerdtree',{'on_cmd' : 'NERDTreeToggle', 'loadconf' : 1}],
+                \ ['Xuyuanp/nerdtree-git-plugin'],
                 \ ]
 endfunction
 
@@ -36,4 +43,21 @@ function! SpaceVim#layers#tools#config() abort
     let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
     " List of colors that you do not want. ANSI code or #RRGGBB
     let g:rainbow#blacklist = [233, 234]
+    nnoremap <Leader>fz :FZF<CR>
+    vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+    nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+    map <unique> <Leader>td <Plug>TaskList
+    noremap <silent> <F8> :TlistToggle<CR>
+    function! OpenOrCloseNERDTree() abort
+        exec 'normal! A'
+    endfunction
+    noremap <silent> <F9> :NERDTreeToggle<CR>
+    let g:NERDTreeWinPos='right'
+    let g:NERDTreeWinSize=31
+    let g:NERDTreeChDirMode=1
+    autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+    augroup nerdtree_zvim
+        autocmd!
+        autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
+    augroup END
 endfunction

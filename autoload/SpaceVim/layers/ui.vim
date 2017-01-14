@@ -4,6 +4,9 @@ function! SpaceVim#layers#ui#plugins() abort
                 \ ['Yggdroot/indentLine'],
                 \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
+                \ ['vim-airline/vim-airline',                { 'merged' : 0,  'loadconf' : 1}],
+                \ ['vim-airline/vim-airline-themes',         { 'merged' : 0}],
+                \ ['mhinz/vim-startify', {'loadconf' : 1}],
                 \ ]
 endfunction
 
