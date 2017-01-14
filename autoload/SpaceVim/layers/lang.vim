@@ -1,8 +1,6 @@
 function! SpaceVim#layers#lang#plugins() abort
     let plugins = [
-                \ ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}],
                 \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet', 'loadconf' : 1}],
-                \ ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}],
                 \ ['m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'}],
                 \ ['groenewege/vim-less',                    { 'on_ft' : ['less']}],
                 \ ['cakebaker/scss-syntax.vim',              { 'on_ft' : ['scss','sass']}],
@@ -41,6 +39,12 @@ function! SpaceVim#layers#lang#plugins() abort
         call add(plugins , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
     else
         call add(plugins , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
+    endif
+    " python
+    if has('nvim')
+        call add(plugins, ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}])
+    else
+        call add(plugins, ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}])
     endif
     return plugins
 endfunction
