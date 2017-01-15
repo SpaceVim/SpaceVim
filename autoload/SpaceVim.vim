@@ -57,6 +57,13 @@ let g:spacevim_vim_plug_installed      = 0
 "   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
+""
+" Disable/Enable realtime leader guide, by default it is 0.
+" to enable this feature:
+" >
+"   let g:spacevim_realtime_leader_guide = 1
+" <
+let g:spacevim_realtime_leader_guide   = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
 let g:spacevim_enable_neomake          = 1
@@ -199,21 +206,21 @@ function! SpaceVim#loadCustomConfig() abort
     endif
 
     if !empty(custom_confs)
-        exe 'source ' . custom_confs[0]
         if isdirectory('.SpaceVim.d')
             exe 'set rtp ^=' . expand('.SpaceVim.d')
         endif
+        exe 'source ' . custom_confs[0]
         if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-            exe 'source ' . custom_glob_conf
             if isdirectory(expand('~/.SpaceVim.d/'))
                 set runtimepath^=~/.SpaceVim.d
             endif
+            exe 'source ' . custom_glob_conf
         endif
     elseif filereadable(custom_glob_conf)
-        exe 'source ' . custom_glob_conf
         if isdirectory(expand('~/.SpaceVim.d/'))
             set runtimepath^=~/.SpaceVim.d
         endif
+        exe 'source ' . custom_glob_conf
     endif
 endfunction
 

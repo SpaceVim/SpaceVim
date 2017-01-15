@@ -319,48 +319,46 @@ function! SpaceVim#default#SetMappings() abort
     nnoremap <silent><M-Right> :<C-U>call <SID>tobur("bnext")<CR>
     nnoremap <silent><M-Left> :<C-U>call <SID>tobur("bprev")<CR>
 
-    "qqmsg hot key
-    nnoremap <silent><M-x> :call chat#qq#OpenMsgWin()<CR>
-    "weixin hot key
-    nnoremap <silent><M-w> :call chat#weixin#OpenMsgWin()<CR>
-    "chatting hot key
-    nnoremap <silent><M-c> :call chat#chatting#OpenMsgWin()<CR>
+    call SpaceVim#mapping#def('nnoremap <silent>','<M-x>',':call chat#qq#OpenMsgWin()<cr>',
+                \ 'Open qq chatting room','call chat#chatting#OpenMsgWin()')
+    call SpaceVim#mapping#def('nnoremap <silent>','<M-w>',':call chat#weixin#OpenMsgWin()<cr>',
+                \ 'Open weixin chatting room','call chat#chatting#OpenMsgWin()')
+    call SpaceVim#mapping#def('nnoremap <silent>','<M-c>',':call chat#chatting#OpenMsgWin()<cr>',
+                \ 'Open chatting room','call chat#chatting#OpenMsgWin()')
 
-    "format current buffer
-    nnoremap <silent> g= :call zvim#format()<cr>
+    call SpaceVim#mapping#def('nnoremap <silent>','g=',':call zvim#format()<cr>','format current buffer','call zvim#format')
 
-
-    call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
+    call SpaceVim#mapping#def('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
                 \ 'Sourced selection.',
                 \ "echo 'Use <leader>S to sourced selection.'")
-    call zvim#util#defineMap('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
+    call SpaceVim#mapping#def('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
                 \ "echo 'Use <leader>S to sourced line.'")
 
-    call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#CopyToClipboard()<cr>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#CopyToClipboard()<cr>',
                 \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
-    call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-c>',
                 \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
                 \ 'Yank the github link of current file to X11 clipboard',
                 \ 'call zvim#util#CopyToClipboard(1)')
-    call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-l>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-l>',
                 \ ':<c-u>call zvim#util#CopyToClipboard(2)<cr>',
                 \ 'Yank the github link of current line to X11 clipboard',
                 \ 'call zvim#util#CopyToClipboard(2)')
-    call zvim#util#defineMap('vnoremap <silent>', '<Leader><C-l>',
+    call SpaceVim#mapping#def('vnoremap <silent>', '<Leader><C-l>',
                 \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
                 \ 'Yank the github link of current selection to X11 clipboard',
                 \ 'call zvim#util#CopyToClipboard(3)')
-    call zvim#util#defineMap('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call zvim#util#defineMap('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-    call zvim#util#defineMap('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
+    call SpaceVim#mapping#def('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
                 \ 'Smart close windows',
                 \ 'call zvim#util#SmartClose()')
-    call zvim#util#defineMap('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
-    call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
                 \'Open previous buffer in split window' , 'split|wincmd p|e#')
-    call zvim#util#defineMap('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
                 \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
-    call zvim#util#defineMap('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
+    call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
 endfunction
 
 fu! s:tobur(num) abort
