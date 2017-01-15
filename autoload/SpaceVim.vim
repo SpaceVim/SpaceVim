@@ -235,6 +235,8 @@ endfunction
 "       maker : syntax checker
 "
 "       unite : unite centric work-flow
+"       
+"       lang#java : java autocompletion and syntax checker
 
 
 ""

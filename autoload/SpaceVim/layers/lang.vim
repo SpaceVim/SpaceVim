@@ -18,10 +18,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['mmalecki/vim-node.js',                   { 'on_ft' : ['javascript']}],
                 \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],
                 \ ['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript','coffee','ls','typescript']}],
-                \ ['wsdjeg/vim-dict',                        { 'on_ft' : 'java'}],
-                \ ['wsdjeg/java_getset.vim',                 { 'on_ft' : 'java', 'loadconf' : 1}],
-                \ ['wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'}],
-                \ ['vim-jp/vim-java',                        { 'on_ft' : 'java'}],
                 \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
                 \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
                 \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
@@ -35,11 +31,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['fatih/vim-go',                           { 'on_ft' : 'go', 'loadconf_before' : 1}],
                 \ ['rust-lang/rust.vim',            {'merged' : 1}],
                 \ ] 
-    if g:spacevim_enable_javacomplete2_py
-        call add(plugins , ['wsdjeg/vim-javacomplete2',               { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
-    else
-        call add(plugins , ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
-    endif
     " python
     if has('nvim')
         call add(plugins, ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}])
