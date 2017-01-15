@@ -240,9 +240,7 @@ endfunction
 
 
 ""
-" Load the {layer} you want :
-" autocompletion : Make SpaceVim support autocompletion.
-" unite : Unite centric work-flow
+" Load the {layer} you want, for more info see `:h SpaceVim-layers`.
 function! SpaceVim#Layer(layer) abort
     if index(g:spacevim_plugin_groups, a:layer) == -1
         call add(g:spacevim_plugin_groups, a:layer)
