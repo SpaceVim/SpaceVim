@@ -199,21 +199,21 @@ function! SpaceVim#loadCustomConfig() abort
     endif
 
     if !empty(custom_confs)
-        exe 'source ' . custom_confs[0]
         if isdirectory('.SpaceVim.d')
             exe 'set rtp ^=' . expand('.SpaceVim.d')
         endif
+        exe 'source ' . custom_confs[0]
         if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-            exe 'source ' . custom_glob_conf
             if isdirectory(expand('~/.SpaceVim.d/'))
                 set runtimepath^=~/.SpaceVim.d
             endif
+            exe 'source ' . custom_glob_conf
         endif
     elseif filereadable(custom_glob_conf)
-        exe 'source ' . custom_glob_conf
         if isdirectory(expand('~/.SpaceVim.d/'))
             set runtimepath^=~/.SpaceVim.d
         endif
+        exe 'source ' . custom_glob_conf
     endif
 endfunction
 
