@@ -15,3 +15,44 @@ function! SpaceVim#mapping#def(type,key,value,desc,...) abort
     let cmd = len(a:000) > 0 ? a:000[0] : a:value
     call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 endfunction
+
+function! SpaceVim#mapping#tab() abort
+    if getline('.')[col('.')-2] ==# '{'&& pumvisible()
+        return "\<C-n>"
+    endif
+    if !index(g:spacevim_plugin_groups, 'autocompletion') == -1
+        if neosnippet#expandable() && getline('.')[col('.')-2] ==# '(' && !pumvisible()
+            return "\<Plug>(neosnippet_expand)"
+        elseif neosnippet#jumpable()
+            && getline('.')[col('.')-2] ==# '(' && !pumvisible() 
+            && !neosnippet#expandable()
+            return "\<plug>(neosnippet_jump)"
+        elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !=#'('
+            return "\<plug>(neosnippet_expand_or_jump)"
+        elseif pumvisible()
+            return "\<C-n>"
+        else
+            return "\<tab>"
+        endif
+    elseif pumvisible()
+        return "\<C-n>"
+    else
+        return "\<tab>"
+    endif
+endfunction
+
+function! SpaceVim#mapping#enter() abort
+    if pumvisible()
+        if getline('.')[col('.') - 2]==# '{'
+            return "\<Enter>"
+        elseif g:spacevim_autocomplete_method ==# 'neocomplete'||g:spacevim_autocomplete_method ==# 'deoplete'
+            return "\<C-y>"
+        else
+            return "\<esc>a"
+        endif
+    elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
+        return "\<Enter>\<esc>ko"
+    else
+        return "\<Enter>"
+    endif
+endfunction

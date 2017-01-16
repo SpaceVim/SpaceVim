@@ -147,9 +147,9 @@ function! SpaceVim#default#SetMappings() abort
     "mapping
     "全局映射
     "也可以通过'za'打开或者关闭折叠
-    imap <silent><expr><TAB> zvim#tab()
+    imap <silent><expr><TAB> SpaceVim#mapping#tab()
     smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    inoremap <silent><expr><CR> zvim#enter()
+    inoremap <silent><expr><CR> SpaceVim#mapping#enter()
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
     inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
     inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
