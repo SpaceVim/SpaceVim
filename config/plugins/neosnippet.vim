@@ -13,7 +13,7 @@ augroup neosnippet_complete_done
     autocmd CompleteDone * call s:my_complete_done()
 augroup END
 function! s:my_complete_done() abort "{{{
-    if !empty(v:completed_item) && exists('v:completed_item')
+    if get(v:,'completed_item','') ==# ''
         let snippet = neosnippet#parser#_get_completed_snippet(v:completed_item,neosnippet#util#get_cur_text(), neosnippet#util#get_next_text())
         if snippet ==# ''
             return
