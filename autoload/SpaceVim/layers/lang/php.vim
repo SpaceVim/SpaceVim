@@ -3,6 +3,7 @@ function! SpaceVim#layers#lang#php#plugins() abort
     if has('nvim')
         call add(plugins, ['padawan-php/deoplete-padawan'])
     endif
+    call add(plugins, ['wsdjeg/phpcd.vim'])
     return plugins
 endfunction
 
