@@ -182,7 +182,8 @@ twitter.
 FUNCTIONS                                                 *SpaceVim-functions*
 
 SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
-  Load the {layer} you want, for more info see `:h SpaceVim-layers`.
+  Load the {layer} you want, for all the layers SpaceVim supported, see
+  |SpaceVim-layers|.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim, by default it is 1. all message will be logged.
