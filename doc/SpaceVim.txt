@@ -60,6 +60,13 @@ set it by:
   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 <
 
+                                            *g:spacevim_realtime_leader_guide*
+Disable/Enable realtime leader guide, by default it is 0. to enable this
+feature:
+>
+  let g:spacevim_realtime_leader_guide = 1
+<
+
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
 >
@@ -175,8 +182,7 @@ twitter.
 FUNCTIONS                                                 *SpaceVim-functions*
 
 SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
-  Load the {layer} you want : autocompletion : Make SpaceVim support
-  autocompletion. unite : Unite centric work-flow
+  Load the {layer} you want, for more info see `:h SpaceVim-layers`.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim, by default it is 1. all message will be logged.
@@ -203,6 +209,8 @@ LAYERS                                                       *SpaceVim-layers*
       maker : syntax checker
 
       unite : unite centric work-flow
+
+      lang#java : java autocompletion and syntax checker
 
 
 vim:tw=78:ts=8:ft=help:norl:
