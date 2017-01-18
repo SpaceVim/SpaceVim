@@ -224,28 +224,6 @@ function! SpaceVim#loadCustomConfig() abort
     endif
 endfunction
 
-""
-" @section Layers, layers
-"   SpaceVim support such layers:
-"
-"       core : core plugins for SpaceVim.
-"
-"       autocompletion : Plugins for autocompletion,
-"
-"       maker : syntax checker
-"
-"       unite : unite centric work-flow
-"       
-"       lang#java : java autocompletion and syntax checker
-
-
-""
-" Load the {layer} you want, for more info see `:h SpaceVim-layers`.
-function! SpaceVim#Layer(layer) abort
-    if index(g:spacevim_plugin_groups, a:layer) == -1
-        call add(g:spacevim_plugin_groups, a:layer)
-    endif
-endfunction
 
 function! SpaceVim#end() abort
     if !empty(g:spacevim_windows_leader)

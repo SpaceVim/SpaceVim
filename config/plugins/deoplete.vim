@@ -17,7 +17,9 @@ let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
 let g:deoplete#omni_patterns.php = '->\|::'
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['omni']
+let g:deoplete#ignore_sources.c = ['omni']
 call deoplete#custom#set('go', 'mark', '')
+call deoplete#custom#set('clang2', 'mark', '')
 if g:spacevim_enable_javacomplete2_py
     let g:deoplete#ignore_sources.java = ['omni']
     call deoplete#custom#set('javacomplete2', 'mark', '')

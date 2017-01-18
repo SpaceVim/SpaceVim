@@ -181,8 +181,9 @@ twitter.
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
-SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
-  Load the {layer} you want, for more info see `:h SpaceVim-layers`.
+SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
+  Load the {layer} you want, for all the layers SpaceVim supported, see
+  |SpaceVim-layers|.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim, by default it is 1. all message will be logged.
@@ -201,16 +202,6 @@ SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
 LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
-
-      core : core plugins for SpaceVim.
-
-      autocompletion : Plugins for autocompletion,
-
-      maker : syntax checker
-
-      unite : unite centric work-flow
-
-      lang#java : java autocompletion and syntax checker
 
 
 vim:tw=78:ts=8:ft=help:norl:
