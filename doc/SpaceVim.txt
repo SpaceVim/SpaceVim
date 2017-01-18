@@ -181,7 +181,7 @@ twitter.
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
-SpaceVim#Layer({layer})                                     *SpaceVim#Layer()*
+SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want, for all the layers SpaceVim supported, see
   |SpaceVim-layers|.
 
@@ -202,16 +202,6 @@ SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
 LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
-
-      core : core plugins for SpaceVim.
-
-      autocompletion : Plugins for autocompletion,
-
-      maker : syntax checker
-
-      unite : unite centric work-flow
-
-      lang#java : java autocompletion and syntax checker
 
 
 vim:tw=78:ts=8:ft=help:norl:
