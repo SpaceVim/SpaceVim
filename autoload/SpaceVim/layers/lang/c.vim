@@ -9,7 +9,7 @@
 function! SpaceVim#layers#lang#c#plugins() abort
     let plugins = []
     if has('nvim')
-        call add(plugins, ['zchee/deoplete-clang'])
+        call add(plugins, ['tweekmonster/deoplete-clang2'])
     else
         call add(plugins, ['Rip-Rip/clang_complete'])
     endif
