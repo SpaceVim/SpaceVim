@@ -14,7 +14,8 @@ let g:deoplete#omni#input_patterns.java = [
 let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
 let g:deoplete#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
-let g:deoplete#omni_patterns.php = '->\|::'let g:deoplete#ignore_sources = {}
+let g:deoplete#omni_patterns.php = '->\|::'
+let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['omni']
 call deoplete#custom#set('go', 'mark', '')
 if g:spacevim_enable_javacomplete2_py
