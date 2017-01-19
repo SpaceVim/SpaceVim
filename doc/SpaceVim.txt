@@ -86,7 +86,23 @@ Enable cursorline
 <
 
                                                      *g:spacevim_error_symbol*
-The error symbol used by maker.
+Set the error symbol of SpaceVim's syntax maker. example:
+>
+  let g:spacevim_error_symbol = '+'
+<
+
+                                                   *g:spacevim_warning_symbol*
+Set the warning symbol of SpaceVim's syntax maker. example:
+>
+  let g:spacevim_warning_symbol = '!'
+<
+
+                                                *g:spacevim_vim_help_language*
+Set the help language of vim. By default it is `en`, you can change it to
+chinese.
+>
+  let g:spacevim_vim_help_language = 'chinese'
+<
 
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim, if colorscheme groups are installed.
