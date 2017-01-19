@@ -7,6 +7,7 @@ CONTENTS                                                   *SpaceVim-contents*
   2. Configuration...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
+  5. Layer-lang-php..................................|SpaceVim-layer-lang-php|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -218,6 +219,25 @@ SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
 LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
+
+==============================================================================
+LAYER-LANG-PHP                                       *SpaceVim-layer-lang-php*
+
+lang#php :
+
+  this layer is for php development, and it provide auto codo completion,  and
+syntax check, and jump to the definition location.
+
+  requirement:
+
+         PHP 5.3+
+
+         PCNTL Extension
+
+         Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+
+         Composer Project
+
 
 
 vim:tw=78:ts=8:ft=help:norl:
