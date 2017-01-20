@@ -1,5 +1,5 @@
 function! SpaceVim#layers#edit#plugins() abort
-    return [
+    let plugins = [
                 \ ['tpope/vim-surround'],
                 \ ['terryma/vim-multiple-cursors'],
                 \ ['scrooloose/nerdcommenter'],
@@ -8,8 +8,11 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'}],
                 \ ['editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'}],
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
-                \ ['lilydjwg/fcitx.vim',        { 'on_i' : 1}],
                 \ ]
+    if executable('fcitx')
+        call add(plugins,['lilydjwg/fcitx.vim',        { 'on_i' : 1}])
+    endif
+    return plugins
 endfunction
 
 function! SpaceVim#layers#edit#config() abort
