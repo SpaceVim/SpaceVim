@@ -155,7 +155,10 @@ unite work flow leader can only be used in normal mode. unite leader need unite 
 #### Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
     default action is open the github website of current plugin. default key is `<leader>lp`
-    ![2016-12-29-22 31 27](https://cloud.githubusercontent.com/assets/13142418/21545996/c48d7728-ce16-11e6-8e30-0c72139f642f.png)
+
+    [layer name]   [plugin name]  [load type]    [plugin options]
+
+    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
     ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
