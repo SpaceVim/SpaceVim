@@ -26,7 +26,7 @@ SpaceVim对于新手有着非常友好的界面，界面格局和大多数IDE也
 
 ### 安装
 
-一、Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：
+#### Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
@@ -40,11 +40,11 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim以及neovim的安装，请参考以下链接：
 
-neovim installation
+[安装neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
-Building Vim from source
+[从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
-### windows系统下的安装步骤：
+#### windows系统下的安装步骤：
 
 Windows 下 vim 用户只需要将本仓库克隆到用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
 ```sh
@@ -70,22 +70,22 @@ Unite为主的工作平台
 
 ### 文件结构
 
-config/ - Configuration
-plugins/ - Plugin configurations
-mappings.vim - Key mappings
-autocmds.vim - autocmd group
-general.vim - General configuration
-init.vim - runtimepath initialization
-neovim.vim - Neovim specific setup
-plugins.vim - Plugin bundles
-commands.vim - Commands
-functions.vim - Functions
-main.vim - Main config
-ftplugin/ - Language specific custom settings
-snippets/ - Code snippets
-filetype.vim - Custom filetype detection
-init.vim - Sources config/main.vim
-vimrc - Sources config/main.vim
+- [config](./config)/ - Configuration
+  - [plugins](./config/plugins)/ - Plugin configurations
+  - [mappings.vim](./config/mappings.vim) - Key mappings
+  - [autocmds.vim](./config/autocmds.vim) - autocmd group
+  - [general.vim](./config/general.vim) - General configuration
+  - [init.vim](./config/init.vim) - `runtimepath` initialization
+  - [neovim.vim](./config/neovim.vim) - Neovim specific setup
+  - [plugins.vim](./config/plugins.vim) - Plugin bundles
+  - [commands.vim](./config/commands.vim) - Commands
+  - [functions.vim](./config/functions.vim) - Functions
+  - [main.vim](./config/main.vim) - Main config
+- [ftplugin](./ftplugin)/ - Language specific custom settings
+- [snippets](../../snippets)/ - Code snippets
+- [filetype.vim](./filetype.vim) - Custom filetype detection
+- [init.vim](./init.vim) - Sources `config/main.vim`
+- [vimrc](./vimrc) - Sources `config/main.vim`
 
 ### 模块化设置
 
