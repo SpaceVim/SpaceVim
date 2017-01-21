@@ -24,6 +24,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
                 \ ['lervag/vimtex',                          { 'on_ft' : 'tex'}],
                 \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
+                \ ['voxpupuli/vim-puppet',                   {'on_ft' : 'puppet'}],
                 \ ['rust-lang/rust.vim',            {'merged' : 1}],
                 \ ] 
     " python
