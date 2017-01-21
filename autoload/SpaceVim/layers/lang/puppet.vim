@@ -1,0 +1,12 @@
+function! SpaceVim#layers#lang#puppet#plugins() abort
+    let plugins = []
+    call add(plugins, ['voxpupuli/vim-puppet', { 'on_ft' : 'puppet', 'loadconf_before' : 1}])
+    return plugins
+endfunction
+
+
+function! SpaceVim#layers#lang#puppet#config() abort
+    let g:syntastic_puppet_checkers = ['puppetlint', 'puppet']
+    let g:syntastic_puppet_puppetlint_args='--no-autoloader_layout-check --no-class_inherits_from_params_class-check'
+    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['puppet'] }
+endfunction
