@@ -52,17 +52,17 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
     by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
     make sure you have backup your own vimfiles.
 
-    ```sh
-    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-    ```
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
     for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
     by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-    ```sh
-    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-    ```
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+```
 
 #### Features
 
