@@ -59,7 +59,7 @@ function! s:install_manager()
     elseif g:spacevim_plugin_manager == 'vim-plug'
         "auto install vim-plug
         if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-            let g:spacevim_dein_installed = 1
+            let g:spacevim_vim_plug_installed = 1
         else
             if executable('curl')
                 exec '!curl -fLo '
@@ -67,7 +67,7 @@ function! s:install_manager()
                             \ . ' --create-dirs '
                             \ . 'https://raw.githubusercontent.com/'
                             \ . 'junegunn/vim-plug/master/plug.vim'
-                let g:spacevim_dein_installed = 1
+                let g:spacevim_vim_plug_installed = 1
             else
                 echohl WarningMsg
                 echom "You need install curl!"
@@ -158,9 +158,18 @@ function! zvim#plug#add(repo,...) abort
         else
             call dein#add(a:repo)
         endif
+    elseif g:spacevim_plugin_manager == 'vim-plug'
+        if len(a:000) > 0
+            exec "Plug '".a:repo."', ".join(a:000,',')
+        else
+            exec "Plug '".a:repo."'"
+        endif
     endif
+    let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
+    let str = '[' . str . ']'
+    let str = str . repeat(' ', 25 - len(str))
     exec 'call add(g:unite_source_menu_menus'
-                \ . '.AddedPlugins.command_candidates, ["['
+                \ . '.AddedPlugins.command_candidates, ["'. str . '['
                 \ . a:repo
                 \ . (len(a:000) > 0 ? (']'
                 \ . repeat(' ', 40 - len(a:repo))
