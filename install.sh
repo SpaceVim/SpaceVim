@@ -150,4 +150,4 @@ install_neovim
 }
 
 # download finished fine
-guard
+guard $@
