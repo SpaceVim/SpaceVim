@@ -7,6 +7,8 @@ CONTENTS                                                   *SpaceVim-contents*
   2. Configuration...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
+  5. Layer-lang-php..................................|SpaceVim-layer-lang-php|
+  6. Layer-lang-c......................................|SpaceVim-layer-lang-c|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -86,7 +88,23 @@ Enable cursorline
 <
 
                                                      *g:spacevim_error_symbol*
-The error symbol used by maker.
+Set the error symbol of SpaceVim's syntax maker. example:
+>
+  let g:spacevim_error_symbol = '+'
+<
+
+                                                   *g:spacevim_warning_symbol*
+Set the warning symbol of SpaceVim's syntax maker. example:
+>
+  let g:spacevim_warning_symbol = '!'
+<
+
+                                                *g:spacevim_vim_help_language*
+Set the help language of vim. By default it is `en`, you can change it to
+chinese.
+>
+  let g:spacevim_vim_help_language = 'chinese'
+<
 
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim, if colorscheme groups are installed.
@@ -202,6 +220,34 @@ SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
 LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
+
+==============================================================================
+LAYER-LANG-PHP                                       *SpaceVim-layer-lang-php*
+
+lang#php :
+
+  this layer is for php development, and it provide auto codo completion,  and
+syntax check, and jump to the definition location.
+
+  requirement:
+
+         PHP 5.3+
+
+         PCNTL Extension
+
+         Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+
+         Composer Project
+
+
+==============================================================================
+LAYER-LANG-C                                           *SpaceVim-layer-lang-c*
+
+lang#c :
+
+     this layer provide c family language code completion.
+
+     requirement:      clang      libclang
 
 
 vim:tw=78:ts=8:ft=help:norl:

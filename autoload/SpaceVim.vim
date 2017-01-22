@@ -2,7 +2,7 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers
+" @order intro version dicts functions exceptions layers layer-lang-php layer-lang-c
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
 
@@ -87,10 +87,24 @@ let g:spacevim_enable_neocomplcache    = 0
 " <
 let g:spacevim_enable_cursorline       = 0
 ""
-" The error symbol used by maker.
+" Set the error symbol of SpaceVim's syntax maker.
+" example: >
+"   let g:spacevim_error_symbol = '+'
+" <
 let g:spacevim_error_symbol            = '✖'
+""
+" Set the warning symbol of SpaceVim's syntax maker.
+" example: >
+"   let g:spacevim_warning_symbol = '!'
+" <
 let g:spacevim_warning_symbol          = '⚠'
 let g:spacevim_use_colorscheme         = 1
+""
+" Set the help language of vim. By default it is `en`, you can change it to
+" chinese.
+" >
+"   let g:spacevim_vim_help_language = 'chinese'
+" <
 let g:spacevim_vim_help_language       = 'en'
 ""
 " The colorscheme of SpaceVim, if colorscheme groups are installed.

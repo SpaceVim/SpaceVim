@@ -9,7 +9,6 @@ function! SpaceVim#autocmds#init() abort
                     \   q | endif
         autocmd FileType jsp call JspFileTypeInit()
         autocmd FileType html,css,jsp EmmetInstall
-        autocmd FileType java call JavaFileTypeInit()
         autocmd BufRead,BufNewFile *.pp setfiletype puppet
         autocmd BufEnter,WinEnter,InsertLeave * set cursorline
         autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
@@ -37,7 +36,7 @@ function! SpaceVim#autocmds#init() abort
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
         autocmd BufEnter *
-                    \   if empty(&buftype)&&has('nvim')
+                    \   if empty(&buftype) && has('nvim') && &filetype != 'help'
                     \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
                     \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
                     \|  else

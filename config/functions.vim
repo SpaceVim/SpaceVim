@@ -58,17 +58,6 @@ function! XmlFileTypeInit()
         set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
 endf
-function! JavaFileTypeInit()
-    set omnifunc=javacomplete#Complete
-    set tags +=~/others/openjdksrc/java/tags
-    set tags +=~/others/openjdksrc/javax/tags
-    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-    nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-    imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-endf
 function! WSDAutoComplete(char)
     if(getline(".")=~?'^\s*.*\/\/')==0
         let line = getline('.')
