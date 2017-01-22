@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # 
 
+# A guarding function to avoid executing an incompletely downloaded script
+guard () {
+
 # Reset
 Color_off='\033[0m'       # Text Reset
 
@@ -142,3 +145,9 @@ need_cmd 'git'
 fetch_repo
 install_vim
 install_neovim
+
+# end of guard
+}
+
+# download finished fine
+guard

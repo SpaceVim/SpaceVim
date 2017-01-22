@@ -5,7 +5,6 @@ if has('filterpipe')
     set noshelltemp
 endif
 if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# '' "{{{
-    set background=dark
     try
         exec 'colorscheme '. g:spacevim_colorscheme
     catch

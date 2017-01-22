@@ -94,6 +94,7 @@ function! SpaceVim#default#SetOptions() abort
     set hidden
     set ttimeout
     set ttimeoutlen=50
+    set background=dark
 endfunction
 
 function! SpaceVim#default#SetPlugins() abort
