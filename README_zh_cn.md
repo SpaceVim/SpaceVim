@@ -89,9 +89,11 @@ Unite为主的工作平台
 
 ### 模块化设置
 
-SpaceVim 将从 ~/.local.vim 和当前目录的 .local.vim 载入用户配置，（该方式将被舍弃）.
-SpaceVim 将从 ~/.SpaceVim.d/init.vim 和当前目录的 ./SpaceVim.d/init.vim 载入配置，并且更新 rtp，用户可以在 ~/.SpaceVim.d/ 和 .SpaceVim.d/ 这两个文件夹下编辑自己的脚本，和 SpaceVim 的配置文件。
+1. SpaceVim 将从 ~/.local.vim 和当前目录的 .local.vim 载入用户配置，（该方式将被舍弃）.
+2. SpaceVim 将从 ~/.SpaceVim.d/init.vim 和当前目录的 ./SpaceVim.d/init.vim 载入配置，并且更新 rtp，用户可以在 ~/.SpaceVim.d/ 和 .SpaceVim.d/ 这两个文件夹下编辑自己的脚本，和 SpaceVim 的配置文件。
+
 示例：
+
 ```viml
 " here are some basic customizations, please refer to the top of the vimrc file for all possible options
 let g:spacevim_default_indent = 3
@@ -111,8 +113,12 @@ let g:spacevim_plugin_groups_include = ['go']
 " alternatively, you can set this variable to load exactly what you want
 let g:spacevim_plugin_groups = ['core', 'web']
 
+" recommend to use layer function, all the layers's name can be find in `:h SpaceVim-layers`
+call SpaceVim#layers#load('layer_name')
+
 " if there is a particular plugin you don't like, you can define this variable to disable them entirely
 let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
+
 " if you want to add some custom plugins, use this options.
 let g:spacevim_custom_plugins = [
         \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
@@ -120,9 +126,13 @@ let g:spacevim_custom_plugins = [
         \ ]
 
 " anything defined here are simply overrides
-set wildignore+=\*/node_modules/\*
-set guifont=Wingdings:h10
+set backgroud=light
+set nu
+
+" but some options need to use spacevim's option, such as:
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
+
 #### Unite 为主的工作流
 
 列出所有插件，并且可以根据输入的字符模糊匹配，回车将打开对应插件的github网站， 这非常便于临时去github上面找文档，默认的启动快捷键是 ： <leader>lp
