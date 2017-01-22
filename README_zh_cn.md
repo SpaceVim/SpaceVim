@@ -134,13 +134,20 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
 #### Unite 为主的工作流
+1. 列出所有插件，并且可以根据输入的字符模糊匹配，回车将打开对应插件的github网站， 这非常便于临时去github上面找文档，默认的启动快捷键是 ： `<leader>lp`
 
-列出所有插件，并且可以根据输入的字符模糊匹配，回车将打开对应插件的github网站， 这非常便于临时去github上面找文档，默认的启动快捷键是 ： <leader>lp
+    [layer name]   [plugin name]  [load type]    [plugin options]
 
-列出所有按键映射以及描述，可以通过输入模糊搜索对应的快捷键，回车即可执行，默认启动该功能的快捷键是： f<space>
+    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
-通过 Unite 列出自己在 github 上面所有的 star 的仓库名称以及描述，模糊搜索，回车通过浏览器打开相应的网站，默认的快捷键是 ：<leader>ls
+2. 列出所有按键映射以及描述，可以通过输入模糊搜索对应的快捷键，回车即可执行，默认启动该功能的快捷键是： `f<space>`
 
+ ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+
+3. 通过 Unite 列出自己在 github 上面所有的 star 的仓库名称以及描述，模糊搜索，回车通过浏览器打开相应的网站，默认的快捷键是 ：`<leader>ls`
+
+ ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
+ 
 ####Awesome ui
 
 outline + filemanager + checker
