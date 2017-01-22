@@ -9,7 +9,6 @@ function! SpaceVim#autocmds#init() abort
                     \   q | endif
         autocmd FileType jsp call JspFileTypeInit()
         autocmd FileType html,css,jsp EmmetInstall
-        autocmd FileType java call JavaFileTypeInit()
         autocmd BufRead,BufNewFile *.pp setfiletype puppet
         autocmd BufEnter,WinEnter,InsertLeave * set cursorline
         autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
