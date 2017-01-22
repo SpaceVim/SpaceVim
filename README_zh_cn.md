@@ -148,6 +148,20 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
  ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
  
-####Awesome ui
+#### 友好的交互界面
 
-outline + filemanager + checker
+1. 语法树 + 文件管理 + 语法检查
+
+![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+
+#### 已支持的开发语言
+- java
+- viml
+- rust
+- php
+- c/c++
+- js
+- python
+- php
+- lua
+- javascript
