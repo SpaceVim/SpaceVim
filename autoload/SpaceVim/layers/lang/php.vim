@@ -1,5 +1,5 @@
 ""
-" @section Layer-lang-php
+" @section Layer_lang_php
 " lang#php :
 " 
 "   this layer is for php development, and it provide auto codo completion, 

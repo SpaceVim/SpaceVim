@@ -1,3 +1,13 @@
+""
+" @section Colorscheme, colorscheme
+" gruvbox : this is SpaceVim default colorscheme. SpaceVim also support there
+" colorschemes:
+" >
+"   hybrid-material
+"   solarized
+" <
+
+
 function! SpaceVim#layers#colorscheme#plugins() abort
     return [
                 \ ['morhetz/gruvbox', {'loadconf' : 1}],

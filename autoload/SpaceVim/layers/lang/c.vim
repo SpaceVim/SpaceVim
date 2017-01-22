@@ -1,5 +1,5 @@
 ""
-" @section Layer-lang-c
+" @section Layer_lang_c
 " lang#c :
 "
 "      this layer provide c family language code completion.
