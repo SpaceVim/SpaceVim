@@ -165,8 +165,11 @@ function! zvim#plug#add(repo,...) abort
             exec "Plug '".a:repo."'"
         endif
     endif
+    let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
+    let str = '[' . str . ']'
+    let str = str . repeat(' ', 25 - len(str))
     exec 'call add(g:unite_source_menu_menus'
-                \ . '.AddedPlugins.command_candidates, ["['
+                \ . '.AddedPlugins.command_candidates, ["'. str . '['
                 \ . a:repo
                 \ . (len(a:000) > 0 ? (']'
                 \ . repeat(' ', 40 - len(a:repo))

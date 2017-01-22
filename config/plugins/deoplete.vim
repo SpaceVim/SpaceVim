@@ -12,6 +12,7 @@ let g:deoplete#omni#input_patterns.java = [
             \'[^. \t0-9]\::\w*',
             \]
 let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
+let g:deoplete#omni#input_patterns.javascript = ['[^. \t0-9]\.\w*']
 let g:deoplete#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
 let g:deoplete#omni_patterns.php = '->\|::'
