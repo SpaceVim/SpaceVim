@@ -1,8 +1,14 @@
 ""
 " @section Colorscheme, colorscheme
-" gruvbox : this is SpaceVim default colorscheme. SpaceVim also support there
+" SpaceVim default colorscheme is gruvbox, you can change it by set spacevim
+" option. add this to your `~/.SpaceVim.d/init.vim`
+" >
+"   let g:spacevim_colorscheme = 'solarized'
+" <
+" 
 " colorschemes:
 " >
+"   gruvbox
 "   hybrid-material
 "   solarized
 " <
