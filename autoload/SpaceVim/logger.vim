@@ -40,12 +40,16 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
+    let info = "SpaceVim Options :\n\n"
+    let info .= join(SpaceVim#options#list(), "\n")
+    let info .= "\n"
+
     let l = a:0 > 0 ? a:1 : 1
     if filereadable(s:logger_file)
         let logs = readfile(s:logger_file, '')
-        return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+        return info . join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
     else
-        return '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists!'
+        return info . '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists!'
     endif
 endfunction
 
