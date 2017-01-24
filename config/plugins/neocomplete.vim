@@ -37,6 +37,7 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.java ='[^. \t0-9]\.\w*'
+let g:neocomplete#sources#omni#input_patterns.lua ='[^. \t0-9]\.\w*'
 let g:neocomplete#force_omni_input_patterns = {}
 "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
 " <C-h>, <BS>: close popup and delete backword char.
