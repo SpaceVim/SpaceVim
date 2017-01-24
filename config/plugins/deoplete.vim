@@ -16,6 +16,7 @@ let g:deoplete#omni#input_patterns.javascript = ['[^. \t0-9]\.\w*']
 let g:deoplete#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
 let g:deoplete#omni_patterns.php = '->\|::'
+let g:deoplete#omni_patterns.lua = '.'
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['omni']
 let g:deoplete#ignore_sources.c = ['omni']
