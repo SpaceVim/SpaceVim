@@ -2,7 +2,7 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers colorscheme layer_lang_java layer_lang_php layer_lang_c
+" @order intro version dicts functions exceptions layers autocomplete colorscheme layer_lang_java layer_lang_php layer_lang_c faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
 
@@ -74,7 +74,7 @@ let g:spacevim_enable_neomake          = 1
 " <
 let g:spacevim_guifont                 = ''
 ""
-" Enable ycm or not, but default it is 0.
+" Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
 " >
 "   let g:spacevim_enable_ycm = 1
 " <
@@ -300,3 +300,7 @@ function! SpaceVim#welcome() abort
     wincmd p
     Startify
 endfunction
+
+""
+" @section FAQ, faq
+" 1. How to enable YouCompleteMe?
