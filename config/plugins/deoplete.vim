@@ -25,9 +25,11 @@ let g:deoplete#omni_patterns.lua = '.'
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['omni']
 let g:deoplete#ignore_sources.c = ['omni']
+let g:deoplete#ignore_sources.rust = ['omni']
 let g:deoplete#ignore_sources.perl = ['omni']
 call deoplete#custom#set('go', 'mark', '')
 call deoplete#custom#set('clang2', 'mark', '')
+call deoplete#custom#set('racer', 'mark', '')
 if g:spacevim_enable_javacomplete2_py
     let g:deoplete#ignore_sources.java = ['omni']
     call deoplete#custom#set('javacomplete2', 'mark', '')

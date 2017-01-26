@@ -12,7 +12,8 @@ CONTENTS                                                   *SpaceVim-contents*
   7. Layer_lang_java................................|SpaceVim-layer_lang_java|
   8. Layer_lang_php..................................|SpaceVim-layer_lang_php|
   9. Layer_lang_c......................................|SpaceVim-layer_lang_c|
-  10. FAQ.......................................................|SpaceVim-faq|
+  10. layer-lang-rust...............................|SpaceVim-layer-lang-rust|
+  11. FAQ.......................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -431,6 +432,30 @@ lang#c :
      this layer provide c family language code completion.
 
      requirement:      clang      libclang
+
+==============================================================================
+LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*
+
+requirement:
+  1. racer : cargo install racer
+  2. export RUST_SRC_PATH :  you can download src by : rustup component add
+    rust-src, and add below into your bashrc.
+
+export RUST_SRC_PATH=~/.multirust/toolchains/[your-toolchain]/lib/rustlib/src/
+rust/src
+
+configuration:
+  1. add `let g:racer_cmd = "/path/to/racer/bin"` in to custom config, if you
+    has racer executable in you PATH. g:racer_cmd should be auto detect.
+
+mappings:
+>
+  mode        key         function
+  normal      gd          rust-definition
+  normal      gs          rust-definition-split
+  normal      gx          rust-definition-vertical
+  normal      <leader>gd  rust-doc
+<
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
