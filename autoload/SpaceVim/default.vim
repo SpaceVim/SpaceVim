@@ -178,6 +178,8 @@ function! SpaceVim#default#SetMappings() abort
         exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
         exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
         exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
+        exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
+        exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
         exe 'tnoremap <silent><esc>     <C-\><C-n>'
     endif
 
