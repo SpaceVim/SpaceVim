@@ -11,6 +11,11 @@ let g:deoplete#omni#input_patterns.java = [
             \'[^. \t0-9]\->\w*',
             \'[^. \t0-9]\::\w*',
             \]
+let g:deoplete#omni#input_patterns.perl = [
+            \'[^. \t0-9]\.\w*',
+            \'[^. \t0-9]\->\w*',
+            \'[^. \t0-9]\::\w*',
+            \]
 let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
 let g:deoplete#omni#input_patterns.javascript = ['[^. \t0-9]\.\w*']
 let g:deoplete#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
@@ -21,6 +26,7 @@ let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources.go = ['omni']
 let g:deoplete#ignore_sources.c = ['omni']
 let g:deoplete#ignore_sources.rust = ['omni']
+let g:deoplete#ignore_sources.perl = ['omni']
 call deoplete#custom#set('go', 'mark', '')
 call deoplete#custom#set('clang2', 'mark', '')
 call deoplete#custom#set('racer', 'mark', '')

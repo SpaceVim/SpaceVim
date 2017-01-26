@@ -2,7 +2,7 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers colorscheme layer_lang_java layer_lang_php layer_lang_c layer-lang-rust
+" @order intro version dicts functions exceptions layers autocomplete colorscheme layer_lang_java layer_lang_php layer_lang_c layer-lang-rust faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
 
@@ -74,7 +74,7 @@ let g:spacevim_enable_neomake          = 1
 " <
 let g:spacevim_guifont                 = ''
 ""
-" Enable ycm or not, but default it is 0.
+" Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
 " >
 "   let g:spacevim_enable_ycm = 1
 " <
@@ -300,3 +300,24 @@ function! SpaceVim#welcome() abort
     wincmd p
     Startify
 endfunction
+
+""
+" @section FAQ, faq
+" 1. How to enable YouCompleteMe? (I do not recommend to use YouCompleteMe, it
+" is too big as a vim plugin, BTW I do not like using submodule in vim plugin,
+" it is hard to manager by vim plugin manager.)
+"
+" >
+"   step 1: add `let g:spacevim_enable_ycm = 1` to custom_config, by default it
+"   should be `~/.SpaceVim.d/init.vim`.
+"
+"   step 2: Get into the directory of YouCompleteMe's author, by default it
+"   should be `~/.cache/vimfiles/repos/github.com/Valloric/`, If you find the
+"   directory `YouCompleteMe` in it, just get into it, otherwise clone
+"   YouCompleteMe repo by
+"   `git clone https://github.com/Valloric/YouCompleteMe.git`, after cloning,
+"   get into it, run `git submodule update --init --recursive`.
+"
+"   step 3: compile YouCompleteMe with the feature you want. if you just want
+"   support c family, you need run `./install.py --clang-completer`.
+" <

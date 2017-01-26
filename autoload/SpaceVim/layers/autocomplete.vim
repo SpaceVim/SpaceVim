@@ -1,3 +1,15 @@
+""
+" @section Autocomplete, autocomplete
+" SpaceVim use neocomplete as default completion engine for vim with lua
+" support, if has no lua support neocomplcache will be the completion engine.
+" SpaceVim use deoplete as default completion engine for nevoim. to make
+" neovim support python, please read neovim's |provider-python|.
+"
+" SpaceVim include YouCompleteMe, but it is disabled by default, to enable
+" ycm, see |g:spacevim_enable_ycm|.
+
+
+
 function! SpaceVim#layers#autocomplete#plugins() abort
     let plugins = [
                 \ ['honza/vim-snippets', {'on_i' : 1, 'loadconf_before' : 1}],
@@ -10,9 +22,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
                 \ ['Shougo/neopairs.vim',          { 'on_i' : 1}],
                 \ ]
     if g:spacevim_autocomplete_method ==# 'ycm'
-        call add(plugins, ['SirVer/ultisnips', {'loadconf_before' : 1}])
-        call add(plugins, ['ervandew/supertab', {'loadconf_before' : 1}])
-        call add(plugins, ['Valloric/YouCompleteMe', {'loadconf_before' : 1}])
+        call add(plugins, ['SirVer/ultisnips', {'loadconf_before' : 1, 'merged' : 0}])
+        call add(plugins, ['ervandew/supertab', {'loadconf_before' : 1, 'merged' : 0}])
+        call add(plugins, ['Valloric/YouCompleteMe', {'loadconf_before' : 1, 'merged' : 0}])
     elseif g:spacevim_autocomplete_method ==# 'neocomplete' "{{{
         call add(plugins, ['Shougo/neocomplete', {
                     \ 'on_i' : 1,
