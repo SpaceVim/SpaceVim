@@ -35,7 +35,6 @@ function! SpaceVim#layers#lang#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#config() abort
-    let g:racer_cmd = $HOME.'/.cargo/bin/racer'
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
 endfunction
