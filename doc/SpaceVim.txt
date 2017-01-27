@@ -408,30 +408,22 @@ This layer is for java development.
 ==============================================================================
 LAYER_LANG_PHP                                       *SpaceVim-layer_lang_php*
 
-lang#php :
-
-  this layer is for php development, and it provide auto codo completion,  and
+  this layer is for php development, and it provide auto codo completion, and
 syntax check, and jump to the definition location.
 
-  requirement:
-
-         PHP 5.3+
-
-         PCNTL Extension
-
-         Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
-
-         Composer Project
-
+requirement:
+>
+  PHP 5.3+
+  PCNTL Extension
+  Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+  Composer Project
+<
 
 ==============================================================================
 LAYER_LANG_C                                           *SpaceVim-layer_lang_c*
 
-lang#c :
-
-     this layer provide c family language code completion.
-
-     requirement:      clang      libclang
+  this layer provide c family language code completion and syntax chaeck.you
+need install clang.
 
 ==============================================================================
 LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*

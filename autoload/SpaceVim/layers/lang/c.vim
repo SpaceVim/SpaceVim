@@ -1,12 +1,7 @@
 ""
 " @section Layer_lang_c
-" lang#c :
-"
-"      this layer provide c family language code completion.
-"
-"      requirement:
-"      clang
-"      libclang
+"   this layer provide c family language code completion and syntax chaeck.you
+"   need install clang.
 
 function! SpaceVim#layers#lang#c#plugins() abort
     let plugins = []
