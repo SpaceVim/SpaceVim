@@ -5,6 +5,16 @@
 " @order intro version dicts functions exceptions layers autocomplete colorscheme layer_lang_java layer_lang_php layer_lang_c layer-lang-rust faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
+"
+
+""
+" @section CONFIGURATION, config
+" SpaceVim use `~/.SpaceVim.d/init.vim` as it's default global config file.
+" you can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
+" also be added to runtimepath, so you can write your own script in it.
+" SpaceVim also support local config of each project. It should be
+" `.SpaceVim.d/init.vim` in the root directory of your project. and
+" `.SpaceVim.d/` will also be added to runtimepath.
 
 ""
 " Version of SpaceVim , this value can not be changed.

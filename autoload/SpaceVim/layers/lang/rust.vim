@@ -1,5 +1,8 @@
 ""
 " @section layer-lang-rust, layer-lang-rust
+" SpaceVim do not load this layer by default, if you are a rust developer, you
+" should add `call SpaceVim#layers#load('lang#rust')` to your @section(config)
+"
 " requirement:
 "   1. racer : cargo install racer
 "   2. export RUST_SRC_PATH : 

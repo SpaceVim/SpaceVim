@@ -4,7 +4,7 @@ wsdjeg                                                    *Maktaba* *SpaceVim*
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
-  2. Configuration...........................................|SpaceVim-config|
+  2. CONFIGURATION...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
   5. Autocomplete......................................|SpaceVim-autocomplete|
@@ -21,8 +21,16 @@ INTRODUCTION                                                  *SpaceVim-intro*
   SpaceVim is a Modular configuration, a bundle of custom settings and
 plugins, for Vim. It got inspired by spacemacs.
 
+
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
+
+SpaceVim use `~/.SpaceVim.d/init.vim` as it's default global config file. you
+can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
+be added to runtimepath, so you can write your own script in it. SpaceVim also
+support local config of each project. It should be `.SpaceVim.d/init.vim` in
+the root directory of your project. and `.SpaceVim.d/` will also be added to
+runtimepath.
 
                                                    *g:spacevim_default_indent*
 Change the default indent of SpaceVim. default is 2.
@@ -458,6 +466,9 @@ setting it to 0 disables this feature.
 
 ==============================================================================
 LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*
+
+SpaceVim do not load this layer by default, if you are a rust developer, you
+should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
 
 requirement:
   1. racer : cargo install racer
