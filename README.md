@@ -15,6 +15,30 @@
 
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
 
+### Table of Contents
+- Introduction
+- Install
+    - Linux/Mac
+    - Windows
+- Features
+    - Neovim-centric
+    - [Modular configuration](#modular-configuration)
+    - [multiple leader mode](#multiple-leader-mode)
+    - Lazy-load 90% of plugins with [dein.vim]
+    - Robust, yet light weight
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Awesome ui](#awesome-ui)
+    - [Language specific mode](#language-specific-mode)
+    - Extensive Neocomplete setup
+    - Central location for tags
+    - Lightweight simple status/tabline
+    - Premium color-schemes
+- Custom configuration
+- Support SpaceVim
+    - contribute to SpaceVim
+    - Write post about SpaceVim
+    - Report bugs
+
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, user just need
 to select the layers they need. It got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). If you use SpaceVim,
@@ -29,6 +53,8 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 #### Install
+
+#### Linux/Mac
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -64,22 +90,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
-#### Features
-
-- Neovim-centric
-- [Modular configuration](#modular-configuration)
-- [multiple leader mode](#multiple-leader-mode)
-- Lazy-load 90% of plugins with [dein.vim]
-- Robust, yet light weight
-- [Unite centric work-flow](#unite-centric-work-flow)
-- [Awesome ui](#awesome-ui)
-- [Language specific mode](#language-specific-mode)
-- Extensive Neocomplete setup
-- Central location for tags
-- Lightweight simple status/tabline
-- Premium color-schemes
-
-#### Structure
+#### File Structure
 - [config](./config)/ - Configuration
   - [plugins](./config/plugins)/ - Plugin configurations
   - [mappings.vim](./config/mappings.vim) - Key mappings
