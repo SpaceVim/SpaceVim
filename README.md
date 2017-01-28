@@ -118,14 +118,14 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 By defalut, SpaceVim use these dark powered plugins:
 
-1. Dark powered asynchronous completion framework for neovim - -  [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
-2. Dark powered Vim/Neovim plugin manager - - - - - - - - - - - - [dein.vim](https://github.com/Shougo/dein.vim)
+1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
+2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
 
 TODO:
 
-1. Dark powered file explorer - - - - - - - - - - - - - - - - - - [defx.nvim](https://github.com/Shougo/defx.nvim)
-2. Dark powered snippet plugin - - - - - - - - - - - - - - - - -  [deoppet.nvim](https://github.com/Shougo/deoppet.nvim)
-3. Dark powered asynchronous unite all interfaces for Neovim/Vim8 [denite.nvim](https://github.com/Shougo/denite.nvim)
+1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
+2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
+3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
 
 ##### Modular configuration
 
