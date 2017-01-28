@@ -1,4 +1,4 @@
-<p align="center"><img src="logo.jpg" alt="SpaceVim"/></p>
+<p align="center"><img src="https://github.com/SpaceVim/SpaceVim/raw/table/logo.jpg" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -16,10 +16,10 @@
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
 
 ### Table of Contents
-- Introduction
-- Install
-    - Linux/Mac
-    - Windows
+- [Introduction](#introduction)
+- [Install](#install)
+    - [Linux/Mac](#linuxmac)
+    - [Windows support](#windows-support)
 - Features
     - Neovim-centric
     - [Modular configuration](#modular-configuration)
@@ -38,6 +38,8 @@
     - contribute to SpaceVim
     - Write post about SpaceVim
     - Report bugs
+
+#### Introduction
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, user just need
