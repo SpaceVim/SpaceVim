@@ -20,6 +20,7 @@
 - [Install](#install)
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
+- [File Structure](#file-structure)
 - Features
     - Neovim-centric
     - [Modular configuration](#modular-configuration)
@@ -56,7 +57,7 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 
 #### Install
 
-#### Linux/Mac
+##### Linux/Mac
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -110,7 +111,12 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
 
-#### Modular configuration
+
+#### Features
+
+##### Neovim centric - Dark powered mode of SpaceVim.
+
+##### Modular configuration
 
 - SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
 - SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
