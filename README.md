@@ -549,6 +549,32 @@ Key   | Mode | Action
 `<leader>`+`W` | Normal | Wiki
 `<leader>`+`K` | Normal | Thesaurus
 
+#### Custom configuration
+SpaceVim use `~/.SpaceVim.d/init.vim` as defalut global init file. you can set
+SpaceVim-options or config layers in it. SpaceVim also will add `~/.SpaceVim.d/`
+into runtimepath. so you can write your own vim script in it.
+
+SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
+in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+
+here is an example config file for SpaceVim:
+```viml
+" set the options of SpaceVim
+let g:spacevim_colorscheme = 'solarized'
+
+" setting layers, load 'lang#java' layer.
+call SpaceVim#layers#load('lang#java')
+
+" add custom plugins.
+let g:spacevim_custom_plugins = [
+ \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+ \ ['wsdjeg/GitHub.vim'],
+ \ ]
+
+ " custom mappings:
+ nnoremap <c-l> :Ydc<cr>
+```
+
 #### Enjoy!
 
 #### Credits & Thanks
