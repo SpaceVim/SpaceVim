@@ -117,9 +117,12 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
 By defalut, SpaceVim use these dark powered plugins:
+
 1. Dark powered asynchronous completion framework for neovim - -  [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
 2. Dark powered Vim/Neovim plugin manager - - - - - - - - - - - - [dein.vim](https://github.com/Shougo/dein.vim)
+
 TODO:
+
 1. Dark powered file explorer - - - - - - - - - - - - - - - - - - [defx.nvim](https://github.com/Shougo/defx.nvim)
 2. Dark powered snippet plugin - - - - - - - - - - - - - - - - -  [deoppet.nvim](https://github.com/Shougo/deoppet.nvim)
 3. Dark powered asynchronous unite all interfaces for Neovim/Vim8 [denite.nvim](https://github.com/Shougo/denite.nvim)
