@@ -16,7 +16,7 @@
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
-here we call them layers, each layer has different plugins and config, user just need
+here we call them layers, each layer has different plugins and config, users just need
 to select the layers they need. It got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). If you use SpaceVim,
 please star it on github. It's a great way of getting feedback and gives me the kick to
 put more time into development.
@@ -35,7 +35,7 @@ curl -sLf https://spacevim.org/install.sh | bash
 ```
 before use SpaceVim, you should install the plugin by `call dein#install()`
 
-installation of neovim/vim with python support:
+Installation of neovim/vim with python support:
 > [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
 > [Building Vim from source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
@@ -49,16 +49,16 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ##### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
-    by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
-    make sure you have backup your own vimfiles.
+    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+    make sure you have a backup of your own vimfiles.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 ```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
-    for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-    by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
+    For more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+    By defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
@@ -103,54 +103,54 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 - SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
 
 
-here is an example:
+Here is an example:
 
 ```viml
-" here are some basic customizations, please refer to the top of the vimrc
-" file for all possible options
+" Here are some basic customizations, please refer to the top of the vimrc
+" file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 let g:spacevim_colorscheme    = 'my_awesome_colorscheme'
 let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
 
-" change the default directory where all miscellaneous persistent files go
-" by default it is ~/.cache/vimfiles
+" Change the default directory where all miscellaneous persistent files go.
+" By default it is ~/.cache/vimfiles.
 let g:spacevim_plugin_bundle_dir = "/some/place/else"
 
-" by default, language specific plugins are not loaded.  this can be changed
+" By default, language specific plugins are not loaded. This can be changed
 " with the following:
 let g:spacevim_plugin_groups_exclude = ['ruby', 'python']
 
-" if there are groups you want always loaded, you can use this:
+" If there are groups you want always loaded, you can use this:
 let g:spacevim_plugin_groups_include = ['go']
 
-" alternatively, you can set this variable to load exactly what you want
+" Alternatively, you can set this variable to load exactly what you want:
 let g:spacevim_plugin_groups = ['core', 'web']
 
-" if there is a particular plugin you don't like, you can define this
-" variable to disable them entirely
+" If there is a particular plugin you don't like, you can define this
+" variable to disable them entirely:
 let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
-" if you want to add some custom plugins, use this options.
+" If you want to add some custom plugins, use these options:
 let g:spacevim_custom_plugins = [
  \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
  \ ['wsdjeg/GitHub.vim'],
  \ ]
 
-" anything defined here are simply overrides
+" Anything defined here are simply overrides
 set wildignore+=\*/node_modules/\*
 set guifont=Wingdings:h10
 ```
 
-#### multiple leader mode
-##### global origin vim leader, default : `\`
-vim's origin global leader can be used in all the mode.
-##### local origin vim leader, default : `,`
-vim's origin local leader can be used in all the mode.
-##### windows function leader, default : `s`
-windows function leader can only be used in normal mode.
-for the list of mappings see the [link](#window-management)
-##### unite work flow leader, default : `f`
-unite work flow leader can only be used in normal mode. unite leader need unite groups.
+#### Multiple leader mode
+##### Global origin vim leader, default : `\`
+Vim's origin global leader can be used in all modes.
+##### Local origin vim leader, default : `,`
+Vim's origin local leader can be used in all the mode.
+##### Windows function leader, default : `s`
+Windows function leader can only be used in normal mode.
+For the list of mappings see the [link](#window-management)
+##### Unite work flow leader, default : `f`
+Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
 #### Unite centric work-flow
 - List all the plugins has been installed, fuzzy find what you want,
@@ -282,7 +282,7 @@ Name           | Description
 
 Name           | Description
 -------------- | ----------------------
-[delimitmate] | Insert mode auto-completion for quotes, parens, brackets
+[delimitmate] | Insert mode auto-completion for quotes, parenthesis, brackets
 [echodoc] | Print objects' documentation in echo area
 [deoplete] | Neovim: Dark powered asynchronous completion framework
 [neocomplete] | Next generation completion framework
