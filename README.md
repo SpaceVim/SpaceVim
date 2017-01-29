@@ -1,4 +1,4 @@
-<p align="center"><img src="logo.jpg" alt="SpaceVim"/></p>
+<p align="center"><img src="https://github.com/SpaceVim/SpaceVim/raw/table/logo.jpg" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -15,6 +15,33 @@
 
 ![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
 
+### Table of Contents
+- [Introduction](#introduction)
+- [Install](#install)
+    - [Linux/Mac](#linuxmac)
+    - [Windows support](#windows-support)
+- [File Structure](#file-structure)
+- Features
+    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
+    - [Modular configuration](#modular-configuration)
+    - [multiple leader mode](#multiple-leader-mode)
+    - Lazy-load 90% of plugins with [dein.vim]
+    - Robust, yet light weight
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Awesome ui](#awesome-ui)
+    - [Language specific mode](#language-specific-mode)
+    - Extensive Neocomplete setup
+    - Central location for tags
+    - Lightweight simple status/tabline
+    - Premium color-schemes
+- Custom configuration
+- Support SpaceVim
+    - contribute to SpaceVim
+    - Write post about SpaceVim
+    - Report bugs
+
+#### Introduction
+
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, user just need
 to select the layers they need. It got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). If you use SpaceVim,
@@ -29,6 +56,8 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 #### Install
+
+##### Linux/Mac
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -64,22 +93,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
-#### Features
-
-- Neovim-centric
-- [Modular configuration](#modular-configuration)
-- [multiple leader mode](#multiple-leader-mode)
-- Lazy-load 90% of plugins with [dein.vim]
-- Robust, yet light weight
-- [Unite centric work-flow](#unite-centric-work-flow)
-- [Awesome ui](#awesome-ui)
-- [Language specific mode](#language-specific-mode)
-- Extensive Neocomplete setup
-- Central location for tags
-- Lightweight simple status/tabline
-- Premium color-schemes
-
-#### Structure
+#### File Structure
 - [config](./config)/ - Configuration
   - [plugins](./config/plugins)/ - Plugin configurations
   - [mappings.vim](./config/mappings.vim) - Key mappings
@@ -97,7 +111,23 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
 
-#### Modular configuration
+
+#### Features
+
+##### Neovim centric - Dark powered mode of SpaceVim.
+
+By defalut, SpaceVim use these dark powered plugins:
+
+1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
+2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
+
+TODO:
+
+1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
+2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
+3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
+
+##### Modular configuration
 
 - SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
 - SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
@@ -535,6 +565,32 @@ Key   | Mode | Action
 `<leader>`+`?` | Normal | Dictionary
 `<leader>`+`W` | Normal | Wiki
 `<leader>`+`K` | Normal | Thesaurus
+
+#### Custom configuration
+SpaceVim use `~/.SpaceVim.d/init.vim` as defalut global init file. you can set
+SpaceVim-options or config layers in it. SpaceVim also will add `~/.SpaceVim.d/`
+into runtimepath. so you can write your own vim script in it.
+
+SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
+in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+
+here is an example config file for SpaceVim:
+```viml
+" set the options of SpaceVim
+let g:spacevim_colorscheme = 'solarized'
+
+" setting layers, load 'lang#java' layer.
+call SpaceVim#layers#load('lang#java')
+
+" add custom plugins.
+let g:spacevim_custom_plugins = [
+ \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+ \ ['wsdjeg/GitHub.vim'],
+ \ ]
+
+ " custom mappings:
+ nnoremap <c-l> :Ydc<cr>
+```
 
 #### Enjoy!
 
