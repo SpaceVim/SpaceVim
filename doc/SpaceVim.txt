@@ -7,13 +7,13 @@ CONTENTS                                                   *SpaceVim-contents*
   2. CONFIGURATION...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
-  5. Autocomplete......................................|SpaceVim-autocomplete|
-  6. Colorscheme........................................|SpaceVim-colorscheme|
-  7. Layer_lang_java................................|SpaceVim-layer_lang_java|
-  8. Layer_lang_php..................................|SpaceVim-layer_lang_php|
-  9. Layer_lang_c......................................|SpaceVim-layer_lang_c|
-  10. layer-lang-rust...............................|SpaceVim-layer-lang-rust|
-  11. FAQ.......................................................|SpaceVim-faq|
+      1. Autocomplete..................................|SpaceVim-autocomplete|
+      2. Colorscheme....................................|SpaceVim-colorscheme|
+      3. Layer_lang_c..................................|SpaceVim-layer_lang_c|
+      4. Layer_lang_java............................|SpaceVim-layer_lang_java|
+      5. Layer_lang_php..............................|SpaceVim-layer_lang_php|
+      6. layer-lang-rust............................|SpaceVim-layer-lang-rust|
+  5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -377,6 +377,43 @@ colorschemes: if the colorscheme you want do not list below, PR welcome.
 <
 
 ==============================================================================
+LAYER_LANG_C                                           *SpaceVim-layer_lang_c*
+
+  this layer provide c family language code completion and syntax chaeck.you
+need install clang.
+
+configuration:
+
+  1.setting compile flag:
+>
+  let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]
+<
+  2.`g:deoplete#sources#clang#executable` sets the path to the clang
+executable.
+
+  3.`g:deoplete#sources#clang#autofill_neomake` is a boolean that tells this
+plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
+clang executable path and flags. You will still need to enable it with
+`g:neomake_<filetype>_enabled_make=['clang']`.
+
+  4.`g:deoplete#sources#clang#std` is a dict containing the standards you want
+to use. It's not used if you already have `-std=whatever` in your flags. The
+defaults are:
+>
+  {
+      'c': 'c11',
+      'cpp': 'c++1z',
+      'objc': 'c11',
+      'objcpp': 'c++1z',
+  }
+<
+  5.`g:deoplete#sources#clang#preproc_max_lines` sets the   maximum number of
+lines to search for a #ifdef or #endif   line. #ifdef lines are discarded to
+get completions within   conditional preprocessor blocks. The default is 50,
+setting it to 0 disables this feature.
+
+
+==============================================================================
 LAYER_LANG_JAVA                                     *SpaceVim-layer_lang_java*
 
 This layer is for java development.
@@ -426,43 +463,6 @@ requirement:
   Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
   Composer Project
 <
-
-==============================================================================
-LAYER_LANG_C                                           *SpaceVim-layer_lang_c*
-
-  this layer provide c family language code completion and syntax chaeck.you
-need install clang.
-
-configuration:
-
-  1.setting compile flag:
->
-  let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]
-<
-  2.`g:deoplete#sources#clang#executable` sets the path to the clang
-executable.
-
-  3.`g:deoplete#sources#clang#autofill_neomake` is a boolean that tells this
-plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
-clang executable path and flags. You will still need to enable it with
-`g:neomake_<filetype>_enabled_make=['clang']`.
-
-  4.`g:deoplete#sources#clang#std` is a dict containing the standards you want
-to use. It's not used if you already have `-std=whatever` in your flags. The
-defaults are:
->
-  {
-      'c': 'c11',
-      'cpp': 'c++1z',
-      'objc': 'c11',
-      'objcpp': 'c++1z',
-  }
-<
-  5.`g:deoplete#sources#clang#preproc_max_lines` sets the   maximum number of
-lines to search for a #ifdef or #endif   line. #ifdef lines are discarded to
-get completions within   conditional preprocessor blocks. The default is 50,
-setting it to 0 disables this feature.
-
 
 ==============================================================================
 LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*

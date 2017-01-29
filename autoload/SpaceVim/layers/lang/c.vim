@@ -1,5 +1,6 @@
 ""
 " @section Layer_lang_c
+" @parentsection layers
 "   this layer provide c family language code completion and syntax chaeck.you
 "   need install clang. 
 "

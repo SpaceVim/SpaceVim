@@ -2,7 +2,7 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers autocomplete colorscheme layer_lang_java layer_lang_php layer_lang_c layer-lang-rust faq
+" @order intro version dicts functions exceptions layers faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
 "

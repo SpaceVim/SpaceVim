@@ -1,5 +1,6 @@
 ""
 " @section layer-lang-rust, layer-lang-rust
+" @parentsection layers
 " SpaceVim do not load this layer by default, if you are a rust developer, you
 " should add `call SpaceVim#layers#load('lang#rust')` to your @section(config)
 "

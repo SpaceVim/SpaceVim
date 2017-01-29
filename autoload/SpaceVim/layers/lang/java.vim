@@ -1,5 +1,6 @@
 ""
 " @section Layer_lang_java, layer_lang_java
+" @parentsection layers
 " This layer is for java development. 
 " >
 "   import-mappings:

@@ -1,5 +1,6 @@
 ""
 " @section Autocomplete, autocomplete
+" @parentsection layers
 " SpaceVim use neocomplete as default completion engine for vim with lua
 " support, if has no lua support neocomplcache will be the completion engine.
 " SpaceVim use deoplete as default completion engine for nevoim. to make
