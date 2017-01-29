@@ -515,15 +515,14 @@ Key   | Mode | Action
 `<leader>`+`gb` | Normal | Git blame
 `<leader>`+`gp` | Normal | Git push
 
-##### Plugin: GitGutter
+##### Plugin: vim-signify
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`hj` | Normal | Jump to next hunk
-`<leader>`+`hk` | Normal | Jump to previous hunk
-`<leader>`+`hs` | Normal | Stage hunk
-`<leader>`+`hr` | Normal | Revert hunk
-`<leader>`+`hp` | Normal | Preview hunk
+`<leader>`+`hj` / `]c` | Normal | Jump to next hunk
+`<leader>`+`hk` / `[c` | Normal | Jump to previous hunk
+`<leader>`+`hJ` / `]C` | Normal | Jump to last hunk
+`<leader>`+`hK` / `[C` | Normal | Jump to first hunk
 
 ##### Misc Plugins
 

@@ -15,4 +15,8 @@ function! SpaceVim#layers#git#config() abort
     nnoremap <silent> <Leader>gc :Gita commit<CR>
     nnoremap <silent> <Leader>gb :Gita blame<CR>
     nnoremap <silent> <Leader>gp :Gita push<CR>
+    nmap <leader>hj <plug>(signify-next-hunk)
+    nmap <leader>hk <plug>(signify-prev-hunk)
+    nmap <leader>hJ 9999<leader>gj
+    nmap <leader>hK 9999<leader>gk
 endfunction
