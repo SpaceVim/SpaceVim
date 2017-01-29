@@ -10,5 +10,9 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
-    
+    nnoremap <silent> <Leader>gs :Gita status<CR>
+    nnoremap <silent> <Leader>gd :Gita diff<CR>
+    nnoremap <silent> <Leader>gc :Gita commit<CR>
+    nnoremap <silent> <Leader>gb :Gita blame<CR>
+    nnoremap <silent> <Leader>gp :Gita push<CR>
 endfunction

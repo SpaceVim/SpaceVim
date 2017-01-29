@@ -513,7 +513,6 @@ Key   | Mode | Action
 `<leader>`+`gd` | Normal | Git diff
 `<leader>`+`gc` | Normal | Git commit
 `<leader>`+`gb` | Normal | Git blame
-`<leader>`+`gB` | Normal | Open in browser
 `<leader>`+`gp` | Normal | Git push
 
 ##### Plugin: GitGutter
