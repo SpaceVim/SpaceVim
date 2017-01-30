@@ -362,6 +362,7 @@ function! SpaceVim#default#SetMappings() abort
     call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
                 \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
     call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
+    call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
 endfunction
 
 fu! s:tobur(num) abort
