@@ -78,7 +78,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ##### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
-    by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
+    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
     make sure you have backup your own vimfiles.
 
 ```sh
@@ -87,7 +87,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
     for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-    by defalut, when open a cmd, the current dir is your Home directory, run this command in cmd.
+    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
@@ -116,7 +116,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
-By defalut, SpaceVim use these dark powered plugins:
+By default, SpaceVim use these dark powered plugins:
 
 1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
 2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
@@ -567,7 +567,7 @@ Key   | Mode | Action
 `<leader>`+`K` | Normal | Thesaurus
 
 #### Custom configuration
-SpaceVim use `~/.SpaceVim.d/init.vim` as defalut global init file. you can set
+SpaceVim use `~/.SpaceVim.d/init.vim` as default global init file. you can set
 SpaceVim-options or config layers in it. SpaceVim also will add `~/.SpaceVim.d/`
 into runtimepath. so you can write your own vim script in it.
 
