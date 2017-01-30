@@ -21,7 +21,7 @@
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
 - [File Structure](#file-structure)
-- Features
+- [Features](#features)
     - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
     - [Modular configuration](#modular-configuration)
     - [multiple leader mode](#multiple-leader-mode)
@@ -30,11 +30,17 @@
     - [Unite centric work-flow](#unite-centric-work-flow)
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
+        - [c family support](#c-family-support)
+        - python support
+        - lua support
+        - java support
+        - perl support
+        - php support
     - Extensive Neocomplete setup
     - Central location for tags
     - Lightweight simple status/tabline
     - Premium color-schemes
-- Custom configuration
+- [Custom configuration](#custom-configuration)
 - Support SpaceVim
     - contribute to SpaceVim
     - Write post about SpaceVim
@@ -201,6 +207,11 @@ unite work flow leader can only be used in normal mode. unite leader need unite 
     ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
 
 #### Language specific mode
+
+##### c family support
+1. code completion
+2. syntax check
+
 - java
 - viml
 - rust
