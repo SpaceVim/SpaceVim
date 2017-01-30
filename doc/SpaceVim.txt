@@ -119,6 +119,13 @@ chinese.
   let g:spacevim_vim_help_language = 'chinese'
 <
 
+                                                         *g:spacevim_language*
+Set the message language of vim. By default it is empty, and the language is
+en_US.UTF-8. example:
+>
+  let g:spacevim_language = 'en_CA.utf8'
+<
+
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim, if colorscheme groups are installed.
 

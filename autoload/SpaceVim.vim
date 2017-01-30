@@ -117,6 +117,13 @@ let g:spacevim_use_colorscheme         = 1
 " <
 let g:spacevim_vim_help_language       = 'en'
 ""
+" Set the message language of vim. By default it is empty, and the language is
+" en_US.UTF-8. example:
+" >
+"   let g:spacevim_language = 'en_CA.utf8'
+" <
+let g:spacevim_language                = ''
+""
 " The colorscheme of SpaceVim, if colorscheme groups are installed.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
