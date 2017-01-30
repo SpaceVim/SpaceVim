@@ -282,6 +282,8 @@ fu! zvim#util#Generate_ignore(ignore,tool) abort
     endif
     return ignore
 endf
-
+	function! Cont() abort
+	  execute (a:firstline + 1) . ',' . a:lastline . 's/^/\t\\ '
+	endfunction
 let &cpo = s:save_cpo
 unlet s:save_cpo
