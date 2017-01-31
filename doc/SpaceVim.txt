@@ -9,10 +9,11 @@ CONTENTS                                                   *SpaceVim-contents*
   4. Layers..................................................|SpaceVim-layers|
       1. Autocomplete..................................|SpaceVim-autocomplete|
       2. Colorscheme....................................|SpaceVim-colorscheme|
-      3. Layer_lang_c..................................|SpaceVim-layer_lang_c|
-      4. Layer_lang_java............................|SpaceVim-layer_lang_java|
-      5. Layer_lang_php..............................|SpaceVim-layer_lang_php|
-      6. layer-lang-rust............................|SpaceVim-layer-lang-rust|
+      3. lang#c........................................|SpaceVim-layer-lang-c|
+      4. lang#java..................................|SpaceVim-layer-lang-java|
+      5. lang#php....................................|SpaceVim-layer-lang-php|
+      6. lang#xml....................................|SpaceVim-layer-lang-xml|
+      7. layer-lang-rust............................|SpaceVim-layer-lang-rust|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -384,7 +385,7 @@ colorschemes: if the colorscheme you want do not list below, PR welcome.
 <
 
 ==============================================================================
-LAYER_LANG_C                                           *SpaceVim-layer_lang_c*
+LANG#C                                                 *SpaceVim-layer-lang-c*
 
   this layer provide c family language code completion and syntax chaeck.you
 need install clang.
@@ -421,7 +422,7 @@ setting it to 0 disables this feature.
 
 
 ==============================================================================
-LAYER_LANG_JAVA                                     *SpaceVim-layer_lang_java*
+LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
 This layer is for java development.
 >
@@ -458,7 +459,7 @@ This layer is for java development.
 
 
 ==============================================================================
-LAYER_LANG_PHP                                       *SpaceVim-layer_lang_php*
+LANG#PHP                                             *SpaceVim-layer-lang-php*
 
   this layer is for php development, and it provide auto codo completion, and
 syntax check, and jump to the definition location.
@@ -470,6 +471,11 @@ requirement:
   Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
   Composer Project
 <
+
+==============================================================================
+LANG#XML                                             *SpaceVim-layer-lang-xml*
+
+when edite an xml file, the omni func is
 
 ==============================================================================
 LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*

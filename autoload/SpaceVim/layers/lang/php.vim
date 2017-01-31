@@ -1,5 +1,5 @@
 ""
-" @section Layer_lang_php
+" @section lang#php, layer-lang-php
 " @parentsection layers
 "   this layer is for php development, and it provide auto codo completion,
 " and syntax check, and jump to the definition location.
