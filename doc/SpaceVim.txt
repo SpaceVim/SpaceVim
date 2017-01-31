@@ -10,10 +10,11 @@ CONTENTS                                                   *SpaceVim-contents*
       1. autocomplete..................................|SpaceVim-autocomplete|
       2. colorscheme....................................|SpaceVim-colorscheme|
       3. lang#c........................................|SpaceVim-layer-lang-c|
-      4. lang#java..................................|SpaceVim-layer-lang-java|
-      5. lang#php....................................|SpaceVim-layer-lang-php|
-      6. lang#rust..................................|SpaceVim-layer-lang-rust|
-      7. lang#xml....................................|SpaceVim-layer-lang-xml|
+      4. lang#go......................................|SpaceVim-layer-lang-go|
+      5. lang#java..................................|SpaceVim-layer-lang-java|
+      6. lang#php....................................|SpaceVim-layer-lang-php|
+      7. lang#rust..................................|SpaceVim-layer-lang-rust|
+      8. lang#xml....................................|SpaceVim-layer-lang-xml|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -425,6 +426,25 @@ lines to search for a #ifdef or #endif   line. #ifdef lines are discarded to
 get completions within   conditional preprocessor blocks. The default is 50,
 setting it to 0 disables this feature.
 
+
+==============================================================================
+LANG#GO                                               *SpaceVim-layer-lang-go*
+
+This layer support go development, include code completion and syntax check.
+MAPPINGS
+
+>
+  mode            key             function
+  normal          <leader>gi      go implements
+  normal          <leader>gf      go info
+  normal          <leader>ge      go rename
+  normal          <leader>gr      go run
+  normal          <leader>gb      go build
+  normal          <leader>gt      go test
+  normal          <leader>gd      go doc
+  normal          <leader>gv      go doc vertical
+  normal          <leader>gco     go coverage
+<
 
 ==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
