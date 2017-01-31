@@ -19,4 +19,8 @@ function! SpaceVim#layers#git#config() abort
     nmap <leader>hk <plug>(signify-prev-hunk)
     nmap <leader>hJ 9999<leader>gj
     nmap <leader>hK 9999<leader>gk
+    augroup spacevim_layer_git
+        autocmd!
+        autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
+    augroup END
 endfunction
