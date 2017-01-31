@@ -10,7 +10,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['wavded/vim-stylus',                      { 'on_ft' : ['styl']}],
                 \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
-                \ ['Valloric/MatchTagAlways',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}],
                 \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
                 \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],

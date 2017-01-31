@@ -44,6 +44,9 @@ function! SpaceVim#default#SetOptions() abort
     set softtabstop=4
     set shiftwidth=4
 
+    " autoread
+    set autoread
+
     " backup
     set backup
     set undofile
