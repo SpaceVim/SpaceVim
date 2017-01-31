@@ -7,13 +7,13 @@ CONTENTS                                                   *SpaceVim-contents*
   2. CONFIGURATION...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
-      1. Autocomplete..................................|SpaceVim-autocomplete|
-      2. Colorscheme....................................|SpaceVim-colorscheme|
+      1. autocomplete..................................|SpaceVim-autocomplete|
+      2. colorscheme....................................|SpaceVim-colorscheme|
       3. lang#c........................................|SpaceVim-layer-lang-c|
       4. lang#java..................................|SpaceVim-layer-lang-java|
       5. lang#php....................................|SpaceVim-layer-lang-php|
-      6. lang#xml....................................|SpaceVim-layer-lang-xml|
-      7. layer-lang-rust............................|SpaceVim-layer-lang-rust|
+      6. lang#rust..................................|SpaceVim-layer-lang-rust|
+      7. lang#xml....................................|SpaceVim-layer-lang-xml|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -245,6 +245,7 @@ LAYERS                                                       *SpaceVim-layers*
 ==============================================================================
 AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 
+CODE COMPLETION
 SpaceVim use neocomplete as default completion engine for vim with lua
 support, if has no lua support neocomplcache will be the completion engine.
 SpaceVim use deoplete as default completion engine for nevoim. to make neovim
@@ -252,6 +253,10 @@ support python, please read neovim's |provider-python|.
 
 SpaceVim include YouCompleteMe, but it is disabled by default, to enable ycm,
 see |g:spacevim_enable_ycm|.
+
+SNIPPET
+SpaceVim use neosnippet as default snippet engine, and the default snippets is
+`Shougo/neosnippet-snippets`. for more information, please read |neosnippet|.
 
 ==============================================================================
 COLORSCHEME                                             *SpaceVim-colorscheme*
@@ -473,12 +478,7 @@ requirement:
 <
 
 ==============================================================================
-LANG#XML                                             *SpaceVim-layer-lang-xml*
-
-when edite an xml file, the omni func is
-
-==============================================================================
-LAYER-LANG-RUST                                     *SpaceVim-layer-lang-rust*
+LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
 SpaceVim do not load this layer by default, if you are a rust developer, you
 should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
@@ -503,6 +503,13 @@ mappings:
   normal      gx          rust-definition-vertical
   normal      <leader>gd  rust-doc
 <
+
+==============================================================================
+LANG#XML                                             *SpaceVim-layer-lang-xml*
+
+when edite an xml file, the omni func is `xmlcomplete#CompleteTags`, you can
+read the document in `autoload/xmlcomplete.vim` in vim or neovim runtime
+directory.
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*

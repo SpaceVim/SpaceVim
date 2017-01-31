@@ -1,6 +1,7 @@
 ""
-" @section Autocomplete, autocomplete
+" @section autocomplete, autocomplete
 " @parentsection layers
+" @subsection code completion
 " SpaceVim use neocomplete as default completion engine for vim with lua
 " support, if has no lua support neocomplcache will be the completion engine.
 " SpaceVim use deoplete as default completion engine for nevoim. to make
@@ -8,6 +9,11 @@
 "
 " SpaceVim include YouCompleteMe, but it is disabled by default, to enable
 " ycm, see |g:spacevim_enable_ycm|.
+"
+" @subsection snippet
+" SpaceVim use neosnippet as default snippet engine, and the default snippets
+" is `Shougo/neosnippet-snippets`. for more information, please read
+" |neosnippet|.
 
 
 
