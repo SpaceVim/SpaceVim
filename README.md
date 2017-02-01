@@ -13,7 +13,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
+![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22506984/38c627ae-e8be-11e6-8f9c-37e260d069a7.png)
 
 ### Table of Contents
 - [Introduction](#introduction)
@@ -24,7 +24,7 @@
 - Features
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
-        - c/c++ support
+        - [c/c++ support](#cc-support)
         - go support
         - rust support
         - php support
@@ -124,7 +124,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ##### Awesome ui
 
 - outline + filemanager + checker
-    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
 ##### Language specific mode
 
@@ -204,20 +204,14 @@ For the list of mappings see the [link](#window-management)
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
 #### Unite centric work-flow
-- List all the plugins has been installed, fuzzy find what you want,
-    default action is open the github website of current plugin. default key is `<leader>lp`
-
-    [layer name]   [plugin name]  [load type]    [plugin options]
-
+- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
     ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-    ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+    ![2017-02-01_1359x719](https://cloud.githubusercontent.com/assets/13142418/22506769/301f77c8-e8bd-11e6-9d8d-f8aeae3d08d4.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
-
-
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
