@@ -25,10 +25,10 @@
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
         - [c/c++ support](#cc-support)
+        - python support
         - [go support](#go-support)
         - rust support
         - php support
-        - python support
         - perl support
         - lua support
     - [Unite centric work-flow](#unite-centric-work-flow)
