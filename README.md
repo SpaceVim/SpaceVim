@@ -208,7 +208,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
     ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-    ![2017-02-01_1359x719](https://cloud.githubusercontent.com/assets/13142418/22506769/301f77c8-e8bd-11e6-9d8d-f8aeae3d08d4.png)
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
