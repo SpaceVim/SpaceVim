@@ -4,13 +4,18 @@ wsdjeg                                                    *Maktaba* *SpaceVim*
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
-  2. Configuration...........................................|SpaceVim-config|
+  2. CONFIGURATION...........................................|SpaceVim-config|
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
-  5. Colorscheme........................................|SpaceVim-colorscheme|
-  6. Layer_lang_java................................|SpaceVim-layer_lang_java|
-  7. Layer_lang_php..................................|SpaceVim-layer_lang_php|
-  8. Layer_lang_c......................................|SpaceVim-layer_lang_c|
+      1. autocomplete..................................|SpaceVim-autocomplete|
+      2. colorscheme....................................|SpaceVim-colorscheme|
+      3. lang#c........................................|SpaceVim-layer-lang-c|
+      4. lang#go......................................|SpaceVim-layer-lang-go|
+      5. lang#java..................................|SpaceVim-layer-lang-java|
+      6. lang#php....................................|SpaceVim-layer-lang-php|
+      7. lang#rust..................................|SpaceVim-layer-lang-rust|
+      8. lang#xml....................................|SpaceVim-layer-lang-xml|
+  5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -18,8 +23,16 @@ INTRODUCTION                                                  *SpaceVim-intro*
   SpaceVim is a Modular configuration, a bundle of custom settings and
 plugins, for Vim. It got inspired by spacemacs.
 
+
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
+
+SpaceVim use `~/.SpaceVim.d/init.vim` as it's default global config file. you
+can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
+be added to runtimepath, so you can write your own script in it. SpaceVim also
+support local config of each project. It should be `.SpaceVim.d/init.vim` in
+the root directory of your project. and `.SpaceVim.d/` will also be added to
+runtimepath.
 
                                                    *g:spacevim_default_indent*
 Change the default indent of SpaceVim. default is 2.
@@ -78,7 +91,7 @@ set the guifont of Spacevim, default is empty.
 <
 
                                                        *g:spacevim_enable_ycm*
-Enable ycm or not, but default it is 0.
+Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
 >
   let g:spacevim_enable_ycm = 1
 <
@@ -106,6 +119,13 @@ Set the help language of vim. By default it is `en`, you can change it to
 chinese.
 >
   let g:spacevim_vim_help_language = 'chinese'
+<
+
+                                                         *g:spacevim_language*
+Set the message language of vim. By default it is empty, and the language is
+en_US.UTF-8. example:
+>
+  let g:spacevim_language = 'en_CA.utf8'
 <
 
                                                       *g:spacevim_colorscheme*
@@ -224,17 +244,210 @@ LAYERS                                                       *SpaceVim-layers*
   SpaceVim support such layers:
 
 ==============================================================================
+AUTOCOMPLETE                                           *SpaceVim-autocomplete*
+
+CODE COMPLETION
+SpaceVim use neocomplete as default completion engine for vim with lua
+support, if has no lua support neocomplcache will be the completion engine.
+SpaceVim use deoplete as default completion engine for nevoim. to make neovim
+support python, please read neovim's |provider-python|.
+
+SpaceVim include YouCompleteMe, but it is disabled by default, to enable ycm,
+see |g:spacevim_enable_ycm|.
+
+SNIPPET
+SpaceVim use neosnippet as default snippet engine, and the default snippets is
+`Shougo/neosnippet-snippets`. for more information, please read |neosnippet|.
+
+==============================================================================
 COLORSCHEME                                             *SpaceVim-colorscheme*
 
-gruvbox : this is SpaceVim default colorscheme. SpaceVim also support there
-colorschemes:
+SpaceVim default colorscheme is gruvbox, you can change it by set spacevim
+option. add this to your `~/.SpaceVim.d/init.vim`
 >
+  let g:spacevim_colorscheme = 'solarized'
+<
+
+colorschemes: if the colorscheme you want do not list below, PR welcome.
+>
+  gruvbox
   hybrid-material
   solarized
+  zellner
+  yowish
+  wombat256mod
+  twilight256
+  torte
+  solarized
+  slate
+  shine
+  seoul256-light
+  seoul256
+  scheakur
+  ron
+  rdark-terminal2
+  pyte
+  peachpuff
+  parsec
+  pablo
+  onedark
+  murphy
+  morning
+  molokayo
+  molokai
+  lucius
+  lightning
+  koehler
+  jellybeans
+  janah
+  industry
+  hybrid_reverse
+  hybrid_material
+  hybrid
+  gruvbox
+  focuspoint
+  flattened_light
+  flattened_dark
+  flatcolor
+  evening
+  elflord
+  desert
+  delek
+  default
+  darkblue
+  blue
+  base16-woodland
+  base16-unikitty-light
+  base16-unikitty-dark
+  base16-twilight
+  base16-tomorrow-night
+  base16-tomorrow
+  base16-summerfruit-light
+  base16-summerfruit-dark
+  base16-spacemacs
+  base16-solarized-light
+  base16-solarized-dark
+  base16-solar-flare
+  base16-shapeshifter
+  base16-seti-ui
+  base16-railscasts
+  base16-pop
+  base16-pico
+  base16-phd
+  base16-paraiso
+  base16-onedark
+  base16-oceanicnext
+  base16-ocean
+  base16-monokai
+  base16-mocha
+  base16-mexico-light
+  base16-materia
+  base16-marrakesh
+  base16-macintosh
+  base16-london-tube
+  base16-isotope
+  base16-ir-black
+  base16-hopscotch
+  base16-harmonic16-light
+  base16-harmonic16-dark
+  base16-green-screen
+  base16-grayscale-light
+  base16-grayscale-dark
+  base16-google-light
+  base16-google-dark
+  base16-github
+  base16-flat
+  base16-embers
+  base16-eighties
+  base16-dracula
+  base16-default-light
+  base16-default-dark
+  base16-darktooth
+  base16-cupcake
+  base16-codeschool
+  base16-chalk
+  base16-bright
+  base16-brewer
+  base16-bespin
+  base16-atelier-sulphurpool
+  base16-atelier-seaside
+  base16-atelier-savanna
+  base16-atelier-plateau
+  base16-atelier-lakeside
+  base16-atelier-heath
+  base16-atelier-forest
+  base16-atelier-estuary
+  base16-atelier-dune
+  base16-atelier-cave
+  base16-ashes
+  base16-apathy
+  base16-3024
+  atom
+  apprentice
+  anderson
+  PaperColor
+  OceanicNextLight
+  OceanicNext
 <
 
 ==============================================================================
-LAYER_LANG_JAVA                                     *SpaceVim-layer_lang_java*
+LANG#C                                                 *SpaceVim-layer-lang-c*
+
+  this layer provide c family language code completion and syntax chaeck.you
+need install clang.
+
+configuration:
+
+  1.setting compile flag:
+>
+  let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]
+<
+  2.`g:deoplete#sources#clang#executable` sets the path to the clang
+executable.
+
+  3.`g:deoplete#sources#clang#autofill_neomake` is a boolean that tells this
+plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
+clang executable path and flags. You will still need to enable it with
+`g:neomake_<filetype>_enabled_make=['clang']`.
+
+  4.`g:deoplete#sources#clang#std` is a dict containing the standards you want
+to use. It's not used if you already have `-std=whatever` in your flags. The
+defaults are:
+>
+  {
+      'c': 'c11',
+      'cpp': 'c++1z',
+      'objc': 'c11',
+      'objcpp': 'c++1z',
+  }
+<
+  5.`g:deoplete#sources#clang#preproc_max_lines` sets the   maximum number of
+lines to search for a #ifdef or #endif   line. #ifdef lines are discarded to
+get completions within   conditional preprocessor blocks. The default is 50,
+setting it to 0 disables this feature.
+
+
+==============================================================================
+LANG#GO                                               *SpaceVim-layer-lang-go*
+
+This layer support go development, include code completion and syntax check.
+MAPPINGS
+
+>
+  mode            key             function
+  normal          <leader>gi      go implements
+  normal          <leader>gf      go info
+  normal          <leader>ge      go rename
+  normal          <leader>gr      go run
+  normal          <leader>gb      go build
+  normal          <leader>gt      go test
+  normal          <leader>gd      go doc
+  normal          <leader>gv      go doc vertical
+  normal          <leader>gco     go coverage
+<
+
+==============================================================================
+LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
 This layer is for java development.
 >
@@ -271,32 +484,75 @@ This layer is for java development.
 
 
 ==============================================================================
-LAYER_LANG_PHP                                       *SpaceVim-layer_lang_php*
+LANG#PHP                                             *SpaceVim-layer-lang-php*
 
-lang#php :
-
-  this layer is for php development, and it provide auto codo completion,  and
+  this layer is for php development, and it provide auto codo completion, and
 syntax check, and jump to the definition location.
 
-  requirement:
-
-         PHP 5.3+
-
-         PCNTL Extension
-
-         Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
-
-         Composer Project
-
+requirement:
+>
+  PHP 5.3+
+  PCNTL Extension
+  Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+  Composer Project
+<
 
 ==============================================================================
-LAYER_LANG_C                                           *SpaceVim-layer_lang_c*
+LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
-lang#c :
+SpaceVim do not load this layer by default, if you are a rust developer, you
+should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
 
-     this layer provide c family language code completion.
+requirement:
+  1. racer : cargo install racer
+  2. export RUST_SRC_PATH :  you can download src by : rustup component add
+    rust-src, and add below into your bashrc.
 
-     requirement:      clang      libclang
+export RUST_SRC_PATH=~/.multirust/toolchains/[your-toolchain]/lib/rustlib/src/
+rust/src
+
+configuration:
+  1. add `let g:racer_cmd = "/path/to/racer/bin"` in to custom config, if you
+    has racer executable in you PATH. g:racer_cmd should be auto detect.
+
+mappings:
+>
+  mode        key         function
+  normal      gd          rust-definition
+  normal      gs          rust-definition-split
+  normal      gx          rust-definition-vertical
+  normal      <leader>gd  rust-doc
+<
+
+==============================================================================
+LANG#XML                                             *SpaceVim-layer-lang-xml*
+
+when edite an xml file, the omni func is `xmlcomplete#CompleteTags`, you can
+read the document in `autoload/xmlcomplete.vim` in vim or neovim runtime
+directory.
+
+==============================================================================
+FAQ                                                             *SpaceVim-faq*
+
+  1. How to enable YouCompleteMe? (I do not recommend to use YouCompleteMe, it
+is too big as a vim plugin, BTW I do not like using submodule in vim plugin,
+it is hard to manager by vim plugin manager.)
+
+
+>
+  step 1: add `let g:spacevim_enable_ycm = 1` to custom_config, by default it
+  should be `~/.SpaceVim.d/init.vim`.
+
+  step 2: Get into the directory of YouCompleteMe's author, by default it
+  should be `~/.cache/vimfiles/repos/github.com/Valloric/`, If you find the
+  directory `YouCompleteMe` in it, just get into it, otherwise clone
+  YouCompleteMe repo by
+  `git clone https://github.com/Valloric/YouCompleteMe.git`, after cloning,
+  get into it, run `git submodule update --init --recursive`.
+
+  step 3: compile YouCompleteMe with the feature you want. if you just want
+  support c family, you need run `./install.py --clang-completer`.
+<
 
 
 vim:tw=78:ts=8:ft=help:norl:

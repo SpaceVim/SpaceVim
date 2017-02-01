@@ -17,7 +17,7 @@ command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
 command! REPLSendLine call REPLSend([getline('.')])
 " }}}
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -55,7 +55,7 @@ let g:terminal_color_15 = "#ebdbb2"
 augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
-    au WinEnter term://* startinsert | IndentLinesDisable
+    au BufWinEnter term://* startinsert | IndentLinesDisable
     "au TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
     au TermClose * exe expand('<abuf>').'bd!'
 augroup END

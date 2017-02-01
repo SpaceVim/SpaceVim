@@ -48,8 +48,3 @@ if get(g:, 'airline_powerline_fonts', 0)
     let g:airline_symbols.maxlinenr= ''
 endif
 
-
-augroup Fix_airline_with_unite
-    autocmd FileType unite AirlineRefresh
-    autocmd FileType vimfiler AirlineRefresh
-augroup END

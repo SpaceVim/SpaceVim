@@ -2,9 +2,19 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers colorscheme layer_lang_java layer_lang_php layer_lang_c
+" @order intro version dicts functions exceptions layers faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
+"
+
+""
+" @section CONFIGURATION, config
+" SpaceVim use `~/.SpaceVim.d/init.vim` as it's default global config file.
+" you can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
+" also be added to runtimepath, so you can write your own script in it.
+" SpaceVim also support local config of each project. It should be
+" `.SpaceVim.d/init.vim` in the root directory of your project. and
+" `.SpaceVim.d/` will also be added to runtimepath.
 
 ""
 " Version of SpaceVim , this value can not be changed.
@@ -74,7 +84,7 @@ let g:spacevim_enable_neomake          = 1
 " <
 let g:spacevim_guifont                 = ''
 ""
-" Enable ycm or not, but default it is 0.
+" Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
 " >
 "   let g:spacevim_enable_ycm = 1
 " <
@@ -106,6 +116,13 @@ let g:spacevim_use_colorscheme         = 1
 "   let g:spacevim_vim_help_language = 'chinese'
 " <
 let g:spacevim_vim_help_language       = 'en'
+""
+" Set the message language of vim. By default it is empty, and the language is
+" en_US.UTF-8. example:
+" >
+"   let g:spacevim_language = 'en_CA.utf8'
+" <
+let g:spacevim_language                = ''
 ""
 " The colorscheme of SpaceVim, if colorscheme groups are installed.
 let g:spacevim_colorscheme             = 'gruvbox'
@@ -300,3 +317,24 @@ function! SpaceVim#welcome() abort
     wincmd p
     Startify
 endfunction
+
+""
+" @section FAQ, faq
+" 1. How to enable YouCompleteMe? (I do not recommend to use YouCompleteMe, it
+" is too big as a vim plugin, BTW I do not like using submodule in vim plugin,
+" it is hard to manager by vim plugin manager.)
+"
+" >
+"   step 1: add `let g:spacevim_enable_ycm = 1` to custom_config, by default it
+"   should be `~/.SpaceVim.d/init.vim`.
+"
+"   step 2: Get into the directory of YouCompleteMe's author, by default it
+"   should be `~/.cache/vimfiles/repos/github.com/Valloric/`, If you find the
+"   directory `YouCompleteMe` in it, just get into it, otherwise clone
+"   YouCompleteMe repo by
+"   `git clone https://github.com/Valloric/YouCompleteMe.git`, after cloning,
+"   get into it, run `git submodule update --init --recursive`.
+"
+"   step 3: compile YouCompleteMe with the feature you want. if you just want
+"   support c family, you need run `./install.py --clang-completer`.
+" <

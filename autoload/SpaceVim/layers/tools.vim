@@ -6,7 +6,6 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['junegunn/goyo.vim',         { 'on_cmd' : 'Goyo', 'loadconf' : 1}],
                 \ ['Yggdroot/LeaderF', {'merged' : 0}],
                 \ ['google/vim-searchindex'],
-                \ ['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}],
                 \ ['simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'}],
                 \ ['wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'}],
                 \ ['mhinz/vim-grepper' , { 'on_cmd' : 'Grepper', 'loadconf' : 1} ],

@@ -56,3 +56,11 @@ function! SpaceVim#mapping#enter() abort
         return "\<Enter>"
     endif
 endfunction
+
+function! SpaceVim#mapping#gd() abort
+    if !empty(SpaceVim#mapping#gd#get())
+        call call(SpaceVim#mapping#gd#get(), [])
+    else
+        normal! gd
+    endif
+endfunction

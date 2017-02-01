@@ -10,3 +10,10 @@
 
 
 ### Output of the ":message" command, and ":echo SpaceVim#logger#viewLog()"
+
+```log
+please post log here:
+
+
+
+```

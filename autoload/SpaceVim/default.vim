@@ -44,6 +44,9 @@ function! SpaceVim#default#SetOptions() abort
     set softtabstop=4
     set shiftwidth=4
 
+    " autoread
+    set autoread
+
     " backup
     set backup
     set undofile
@@ -178,6 +181,8 @@ function! SpaceVim#default#SetMappings() abort
         exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
         exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
         exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
+        exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
+        exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
         exe 'tnoremap <silent><esc>     <C-\><C-n>'
     endif
 
@@ -360,6 +365,7 @@ function! SpaceVim#default#SetMappings() abort
     call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
                 \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
     call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
+    call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
 endfunction
 
 fu! s:tobur(num) abort

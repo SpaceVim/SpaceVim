@@ -1,6 +1,7 @@
 let s:logger_level = g:spacevim_debug_level
 let s:levels = ['Info', 'Warn', 'Error']
 let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
+let s:log_temp = []
 
 ""
 " @public
@@ -18,18 +19,24 @@ endfunction
 function! SpaceVim#logger#info(msg) abort
     if g:spacevim_enable_debug && s:logger_level <= 1
         call s:wite(s:warpMsg(a:msg, 1))
+    else
+        call add(s:log_temp,s:warpMsg(a:msg,1))
     endif
 endfunction
 
 function! SpaceVim#logger#warn(msg) abort
     if g:spacevim_enable_debug && s:logger_level <= 2
         call s:wite(s:warpMsg(a:msg, 2))
+    else
+        call add(s:log_temp,s:warpMsg(a:msg,2))
     endif
 endfunction
 
 function! SpaceVim#logger#error(msg) abort
     if g:spacevim_enable_debug && s:logger_level <= 3
         call s:wite(s:warpMsg(a:msg, 3))
+    else
+        call add(s:log_temp,s:warpMsg(a:msg,3))
     endif
 endfunction
 
@@ -40,12 +47,18 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
+    let info = "SpaceVim Options :\n\n"
+    let info .= join(SpaceVim#options#list(), "\n")
+    let info .= "\n"
+
     let l = a:0 > 0 ? a:1 : 1
     if filereadable(s:logger_file)
         let logs = readfile(s:logger_file, '')
-        return join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+        return info . join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
     else
-        return '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists!'
+        let info .= '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists, only log for current process will be shown!'
+        let info .= join(filter(s:log_temp, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+        return  info
     endif
 endfunction
 

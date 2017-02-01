@@ -10,7 +10,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['wavded/vim-stylus',                      { 'on_ft' : ['styl']}],
                 \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
-                \ ['Valloric/MatchTagAlways',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}],
                 \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
                 \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],
@@ -19,13 +18,11 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
                 \ ['plasticboy/vim-markdown',                { 'on_ft' : 'markdown'}],
                 \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
-                \ ['racer-rust/vim-racer',                   { 'on_ft' : 'rust'}],
                 \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
                 \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
                 \ ['lervag/vimtex',                          { 'on_ft' : 'tex'}],
                 \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
                 \ ['voxpupuli/vim-puppet',                   {'on_ft' : 'puppet'}],
-                \ ['rust-lang/rust.vim',            {'merged' : 1}],
                 \ ] 
     " python
     if has('nvim')
@@ -37,7 +34,6 @@ function! SpaceVim#layers#lang#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#config() abort
-    let g:racer_cmd = $HOME.'/.cargo/bin/racer'
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
 endfunction
