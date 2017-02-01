@@ -22,14 +22,21 @@
     - [Windows support](#windows-support)
 - [File Structure](#file-structure)
 - Features
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [Modular configuration](#modular-configuration)
-    - [multiple leader mode](#multiple-leader-mode)
-    - Lazy-load 90% of plugins with [dein.vim]
-    - Robust, yet light weight
-    - [Unite centric work-flow](#unite-centric-work-flow)
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
+        - c/c++ support
+        - go support
+        - rust support
+        - php support
+        - python support
+        - perl support
+        - lua support
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
+    - [multiple leader mode](#multiple-leader-mode)
+    - [Modular configuration](#modular-configuration)
+    - Lazy-load 90% of plugins with [dein.vim]
+    - Robust, yet light weight
     - Extensive Neocomplete setup
     - Central location for tags
     - Lightweight simple status/tabline
@@ -114,6 +121,18 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 #### Features
 
+##### Awesome ui
+
+- outline + filemanager + checker
+    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+
+##### Language specific mode
+
+###### c/c++ support
+
+1. code completion:
+2. syntax check:
+
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
 By default, SpaceVim use these dark powered plugins:
@@ -196,18 +215,6 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
 
-#### Awesome ui
-- outline + filemanager + checker
-    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
-
-#### Language specific mode
-- java
-- viml
-- rust
-- php
-- c/c++
-- js
-- python
 
 
 #### Plugin Highlights
