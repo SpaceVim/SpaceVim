@@ -25,7 +25,7 @@
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
         - [c/c++ support](#cc-support)
-        - go support
+        - [go support](#go-support)
         - rust support
         - php support
         - python support
@@ -128,12 +128,19 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ##### Language specific mode
 
-###### c/c++ support [back](#table-of-contents)
+###### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
     ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
 2. syntax check: Asynchronous linting and make framework.
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+
+###### go support
+1. code completion:
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+
+2. syntax check:
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
