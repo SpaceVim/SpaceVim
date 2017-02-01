@@ -4,6 +4,7 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'}],
                 \ ['wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'}],
                 \ ['junegunn/goyo.vim',         { 'on_cmd' : 'Goyo', 'loadconf' : 1}],
+                \ ['junegunn/limelight.vim',    { 'on_cmd' : 'Limelight'}],
                 \ ['Yggdroot/LeaderF', {'merged' : 0}],
                 \ ['google/vim-searchindex'],
                 \ ['simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'}],

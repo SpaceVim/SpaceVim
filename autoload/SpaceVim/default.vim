@@ -27,6 +27,9 @@ function! SpaceVim#default#SetOptions() abort
     set relativenumber
     set number
 
+    " hide cmd
+    set noshowcmd
+
     " indent
     set autoindent
     set smartindent
@@ -78,7 +81,6 @@ function! SpaceVim#default#SetOptions() abort
     set nowritebackup
     set matchtime=0
     set ruler
-    set showcmd
     set showmatch
     set showmode
     "menuone: show the pupmenu when only one match

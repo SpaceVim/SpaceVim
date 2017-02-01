@@ -28,6 +28,7 @@ let g:deoplete#ignore_sources.c = ['omni']
 let g:deoplete#ignore_sources.rust = ['omni']
 let g:deoplete#ignore_sources.perl = ['omni']
 call deoplete#custom#set('go', 'mark', '')
+call deoplete#custom#set('go', 'rank', 9999)
 call deoplete#custom#set('clang2', 'mark', '')
 call deoplete#custom#set('racer', 'mark', '')
 if g:spacevim_enable_javacomplete2_py

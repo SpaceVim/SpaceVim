@@ -13,7 +13,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
+![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22506984/38c627ae-e8be-11e6-8f9c-37e260d069a7.png)
 
 ### Table of Contents
 - [Introduction](#introduction)
@@ -22,14 +22,21 @@
     - [Windows support](#windows-support)
 - [File Structure](#file-structure)
 - Features
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [Modular configuration](#modular-configuration)
-    - [multiple leader mode](#multiple-leader-mode)
-    - Lazy-load 90% of plugins with [dein.vim]
-    - Robust, yet light weight
-    - [Unite centric work-flow](#unite-centric-work-flow)
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
+        - [c/c++ support](#cc-support)
+        - python support
+        - [go support](#go-support)
+        - rust support
+        - php support
+        - perl support
+        - lua support
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
+    - [multiple leader mode](#multiple-leader-mode)
+    - [Modular configuration](#modular-configuration)
+    - Lazy-load 90% of plugins with [dein.vim]
+    - Robust, yet light weight
     - Extensive Neocomplete setup
     - Central location for tags
     - Lightweight simple status/tabline
@@ -114,6 +121,27 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 #### Features
 
+##### Awesome ui
+
+- outline + filemanager + checker
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+##### Language specific mode
+
+###### c/c++ support
+
+1. code completion: autocompletion and fuzzy match.
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+2. syntax check: Asynchronous linting and make framework.
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+
+###### go support
+1. code completion:
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+
+2. syntax check:
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
 By default, SpaceVim use these dark powered plugins:
@@ -183,32 +211,14 @@ For the list of mappings see the [link](#window-management)
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
 #### Unite centric work-flow
-- List all the plugins has been installed, fuzzy find what you want,
-    default action is open the github website of current plugin. default key is `<leader>lp`
-
-    [layer name]   [plugin name]  [load type]    [plugin options]
-
+- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
     ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-    ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
-
-#### Awesome ui
-- outline + filemanager + checker
-    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
-
-#### Language specific mode
-- java
-- viml
-- rust
-- php
-- c/c++
-- js
-- python
-
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 

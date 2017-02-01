@@ -313,9 +313,11 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-    VimFiler
-    wincmd p
-    Startify
+    if exists(':VimFiler') == 2 && exists(':Startify') == 2
+        VimFiler
+        wincmd p
+        Startify
+    endif
 endfunction
 
 ""
