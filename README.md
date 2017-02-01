@@ -25,7 +25,7 @@
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
         - [c/c++ support](#cc-support)
-        - python support
+        - [python support](#python-support)
         - [go support](#go-support)
         - rust support
         - php support
@@ -138,9 +138,10 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ###### go support
 1. code completion:
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
-
 2. syntax check:
     ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+
+###### python support
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 

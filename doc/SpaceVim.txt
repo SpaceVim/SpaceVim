@@ -13,8 +13,9 @@ CONTENTS                                                   *SpaceVim-contents*
       4. lang#go......................................|SpaceVim-layer-lang-go|
       5. lang#java..................................|SpaceVim-layer-lang-java|
       6. lang#php....................................|SpaceVim-layer-lang-php|
-      7. lang#rust..................................|SpaceVim-layer-lang-rust|
-      8. lang#xml....................................|SpaceVim-layer-lang-xml|
+      7. lang#python..............................|SpaceVim-layer-lang-python|
+      8. lang#rust..................................|SpaceVim-layer-lang-rust|
+      9. lang#xml....................................|SpaceVim-layer-lang-xml|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -495,6 +496,16 @@ requirement:
   PCNTL Extension
   Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
   Composer Project
+<
+
+==============================================================================
+LANG#PYTHON                                       *SpaceVim-layer-lang-python*
+
+To make this layer works well, you should install jedi.
+MAPPINGS
+
+>
+  mode            key             function
 <
 
 ==============================================================================

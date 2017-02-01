@@ -1,3 +1,12 @@
+""
+" @section lang#python, layer-lang-python
+" @parentsection layers
+" To make this layer works well, you should install jedi.
+" @subsection mappings
+" >
+"   mode            key             function
+" <
+
 function! SpaceVim#layers#lang#python#plugins() abort
     let plugins = []
     " python
