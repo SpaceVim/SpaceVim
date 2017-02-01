@@ -128,7 +128,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ##### Language specific mode
 
-###### c/c++ support
+###### c/c++ support [back](#table-of-contents)
 
 1. code completion: autocompletion and fuzzy match.
     ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
