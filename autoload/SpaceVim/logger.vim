@@ -47,19 +47,29 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
-    let info = "SpaceVim Options :\n\n"
+    let info = "### SpaceVim Options :\n\n"
+    let info .= "```viml\n"
     let info .= join(SpaceVim#options#list(), "\n")
-    let info .= "\n"
+    let info .= "\n```\n"
+    let info .= "\n\n"
+
+    let info .= "### SpaceVim Health checking :\n\n"
+    let info .= SpaceVim#health#report()
+    let info .= "\n\n"
+
+    let info .= "### SpaceVim runtime log :\n\n"
+    let info .= "```log\n"
 
     let l = a:0 > 0 ? a:1 : 1
     if filereadable(s:logger_file)
         let logs = readfile(s:logger_file, '')
-        return info . join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+        let info .= join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
     else
         let info .= '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists, only log for current process will be shown!'
         let info .= join(filter(s:log_temp, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
-        return  info
     endif
+    let info .= "\n```\n"
+    return info
 endfunction
 
 ""
