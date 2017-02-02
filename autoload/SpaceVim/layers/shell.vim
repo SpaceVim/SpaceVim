@@ -1,3 +1,9 @@
+""
+" @section shell, layer-shell
+" @parentsection layers
+" SpaceVim use deol.nvim for shell support in neovim, and use vimshell for
+" vim. for info, read |deol| and |vimshell|.
+
 function! SpaceVim#layers#shell#plugins() abort
     let plugins = []
     if has('nvim')

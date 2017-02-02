@@ -16,6 +16,7 @@ CONTENTS                                                   *SpaceVim-contents*
       7. lang#python..............................|SpaceVim-layer-lang-python|
       8. lang#rust..................................|SpaceVim-layer-lang-rust|
       9. lang#xml....................................|SpaceVim-layer-lang-xml|
+      10. shell.........................................|SpaceVim-layer-shell|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -541,6 +542,12 @@ LANG#XML                                             *SpaceVim-layer-lang-xml*
 when edite an xml file, the omni func is `xmlcomplete#CompleteTags`, you can
 read the document in `autoload/xmlcomplete.vim` in vim or neovim runtime
 directory.
+
+==============================================================================
+SHELL                                                   *SpaceVim-layer-shell*
+
+SpaceVim use deol.nvim for shell support in neovim, and use vimshell for vim.
+for info, read |deol| and |vimshell|.
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
