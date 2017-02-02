@@ -142,6 +142,10 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
     ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
 ###### python support
+1. code completion:
+    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
+2. syntax check:
+    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
