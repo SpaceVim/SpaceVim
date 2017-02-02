@@ -2,7 +2,7 @@
 " @section Introduction, intro
 " @stylized Maktaba
 " @library
-" @order intro version dicts functions exceptions layers autocomplete colorscheme layer_lang_java layer_lang_php layer_lang_c layer-lang-rust faq
+" @order intro version dicts functions exceptions layers faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
 " and plugins, for Vim. It got inspired by spacemacs.
 "
@@ -116,6 +116,13 @@ let g:spacevim_use_colorscheme         = 1
 "   let g:spacevim_vim_help_language = 'chinese'
 " <
 let g:spacevim_vim_help_language       = 'en'
+""
+" Set the message language of vim. By default it is empty, and the language is
+" en_US.UTF-8. example:
+" >
+"   let g:spacevim_language = 'en_CA.utf8'
+" <
+let g:spacevim_language                = ''
 ""
 " The colorscheme of SpaceVim, if colorscheme groups are installed.
 let g:spacevim_colorscheme             = 'gruvbox'
@@ -306,9 +313,11 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-    VimFiler
-    wincmd p
-    Startify
+    if exists(':VimFiler') == 2 && exists(':Startify') == 2
+        VimFiler
+        wincmd p
+        Startify
+    endif
 endfunction
 
 ""

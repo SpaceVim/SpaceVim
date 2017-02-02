@@ -21,6 +21,7 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['heavenshell/unite-zf'],
                 \ ['heavenshell/unite-sf2'],
                 \ ['osyo-manga/unite-vimpatches'],
+                \ ['rhysd/unite-emoji.vim'],
                 \ ['Shougo/unite-outline'],
                 \ ['hewes/unite-gtags' ,{'loadconf' : 1}],
                 \ ['rafi/vim-unite-issue'],
