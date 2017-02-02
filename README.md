@@ -41,11 +41,11 @@
     - Central location for tags
     - Lightweight simple status/tabline
     - Premium color-schemes
-- Custom configuration
-- Support SpaceVim
-    - contribute to SpaceVim
+- [Custom configuration](#custom-configuration)
+- [Support SpaceVim](#support-spacevim)
+    - [Report bugs](#report-bugs)
+    - [contribute to SpaceVim](#contribute-to-spacevim)
     - Write post about SpaceVim
-    - Report bugs
 
 #### Introduction
 
@@ -606,6 +606,14 @@ let g:spacevim_custom_plugins = [
  " custom mappings:
  nnoremap <c-l> :Ydc<cr>
 ```
+
+#### Support SpaceVim
+
+##### report bugs
+
+If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is useful for me to debug for this issue.
+
+##### contribute to SpaceVim
 
 #### Enjoy!
 
