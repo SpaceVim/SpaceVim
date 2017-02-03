@@ -1,5 +1,6 @@
-if isdirectory(expand('~/DotFiles/snippets/'))
-    let g:neosnippet#snippets_directory = expand('~/DotFiles/snippets/')
+let g:neosnippet#snippets_directory = [expand('~/.SpaceVim.d/snippets/'), expand('~/.SpaceVim/snippets/')]
+if g:spacevim_force_global_config == 0
+    call add(g:neosnippet#snippets_directory, getcwd() . '/.Spacevim.d/snippets')
 endif
 let g:neosnippet#enable_snipmate_compatibility=1
 let g:neosnippet#enable_complete_done = 1
