@@ -218,6 +218,14 @@ To disable lint on save:
   let g:spacevim_lint_on_save = 0
 <
 
+                                          *g:spacevim_enable_vimfiler_welcome*
+Enable/Disable Vimfiler in the welcome windows, this will cause vim slow on
+startup if there are too many files in current directory. you can disable it
+by:
+>
+  let g:spacevim_enable_vimfiler_welcome = 0
+<
+
                                                         *g:spacevim_hosts_url*
 The host file url. this option is for chinese users who can not use google and
 twitter.
