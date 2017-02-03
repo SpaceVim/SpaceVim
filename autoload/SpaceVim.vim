@@ -298,6 +298,12 @@ function! SpaceVim#end() abort
     let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
     exe 'helptags ' . help
 
+    ""
+    " set language
+    if !empty(g:spacevim_language)
+        silent exec 'lan ' . g:spacevim_language
+    endif
+
     call SpaceVim#plugins#load()
 endfunction
 
