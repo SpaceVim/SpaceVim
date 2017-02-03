@@ -26,7 +26,7 @@ else
         silent exec 'language en_US'
     else
         " in linux-terminal
-        silent exec 'language en_US.utf8'
+        silent exec 'lan POSIX'
     endif
 endif
 
