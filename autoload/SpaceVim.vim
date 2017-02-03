@@ -210,6 +210,13 @@ let g:spacevim_enable_powerline_fonts  = 1
 "   let g:spacevim_lint_on_save = 0
 " <
 let g:spacevim_lint_on_save            = 1
+""
+" Enable/Disable Vimfiler in the welcome windows, this will cause vim slow on startup if
+" there are too many files in current directory. you can disable it by:
+" >
+"   let g:spacevim_enable_vimfiler_welcome = 0
+" <
+let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
@@ -320,7 +327,9 @@ endfunction
 
 function! SpaceVim#welcome() abort
     if exists(':VimFiler') == 2 && exists(':Startify') == 2
-        VimFiler
+        if g:spacevim_enable_vimfiler_welcome
+            VimFiler
+        endif
         wincmd p
         Startify
     endif
