@@ -52,3 +52,11 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     endif
     return plugins
 endfunction
+
+
+function SpaceVim#layers#autocomplete#config()
+    if g:spacevim_autocomplete_method ==# 'ycm'
+        iunmap <S-TAB>
+        sunmap <S-TAB>
+    endif
+endfunction
