@@ -365,7 +365,7 @@ Name           | Description
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`y` | Normal/visual | Copy selection to X11 clipboard ("+y)
+`<leader>`+`y` | visual | Copy selection to X11 clipboard ("+y)
 `<leader>`+`p` | Normal/visual | Paste selection from X11 clipboard ("+p)
 `Ctrl`+`f` | Normal | Smart page forward (C-f/C-d)
 `Ctrl`+`b` | Normal | Smart page backwards (C-b/C-u)
@@ -389,10 +389,10 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`cd` | Normal | Switch to the root directory(vim-rooter)
+`<leader>`+`cd` | Normal | Switch to the directory of the open buffer
 `<leader>`+`w` | Normal/visual | Write (:w)
-`Ctrl`+`s` | _All_ | Write (:w)
-`W!!` | Command | Write as root
+`Ctrl`+`s` | Normal/visual/Command | Write (:w)
+`:w!!` | Command | Write as root (%!sudo tee > /dev/null %)
 
 ##### Editor UI
 
