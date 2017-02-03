@@ -8,15 +8,17 @@ CONTENTS                                                   *SpaceVim-contents*
   3. Functions............................................|SpaceVim-functions|
   4. Layers..................................................|SpaceVim-layers|
       1. autocomplete..................................|SpaceVim-autocomplete|
-      2. colorscheme....................................|SpaceVim-colorscheme|
-      3. lang#c........................................|SpaceVim-layer-lang-c|
-      4. lang#go......................................|SpaceVim-layer-lang-go|
-      5. lang#java..................................|SpaceVim-layer-lang-java|
-      6. lang#php....................................|SpaceVim-layer-lang-php|
-      7. lang#python..............................|SpaceVim-layer-lang-python|
-      8. lang#rust..................................|SpaceVim-layer-lang-rust|
-      9. lang#xml....................................|SpaceVim-layer-lang-xml|
-      10. shell.........................................|SpaceVim-layer-shell|
+      2. checkers....................................|SpaceVim-layer-checkers|
+      3. colorscheme....................................|SpaceVim-colorscheme|
+      4. lang#c........................................|SpaceVim-layer-lang-c|
+      5. lang#elixir..............................|SpaceVim-layer-lang-elixir|
+      6. lang#go......................................|SpaceVim-layer-lang-go|
+      7. lang#java..................................|SpaceVim-layer-lang-java|
+      8. lang#php....................................|SpaceVim-layer-lang-php|
+      9. lang#python..............................|SpaceVim-layer-lang-python|
+      10. lang#rust.................................|SpaceVim-layer-lang-rust|
+      11. lang#xml...................................|SpaceVim-layer-lang-xml|
+      12. shell.........................................|SpaceVim-layer-shell|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -265,6 +267,11 @@ neosnippet support custtom snippets, and the default snippets directory is
 will not append `./.SpaceVim.d/snippets` as default snippets directory.
 
 ==============================================================================
+CHECKERS                                             *SpaceVim-layer-checkers*
+
+SpaceVim use neomake as default syntax checker.
+
+==============================================================================
 COLORSCHEME                                             *SpaceVim-colorscheme*
 
 SpaceVim default colorscheme is gruvbox, you can change it by set spacevim
@@ -431,6 +438,15 @@ lines to search for a #ifdef or #endif   line. #ifdef lines are discarded to
 get completions within   conditional preprocessor blocks. The default is 50,
 setting it to 0 disables this feature.
 
+
+==============================================================================
+LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
+
+INTRO
+lang#elixir layer provide code completion,documentation lookup, jump to
+definition, mix integration and iex integration for elixir project. SpaceVim
+use neomake as default syntax checker which is loaded in
+|SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#GO                                               *SpaceVim-layer-lang-go*
