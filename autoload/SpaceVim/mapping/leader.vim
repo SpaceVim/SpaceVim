@@ -21,22 +21,36 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
         " The prefix key.
         nnoremap    [unite]   <Nop>
         exe 'nmap ' .a:key . ' [unite]'
-        nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-                    \ -buffer-name=files buffer bookmark file<CR>
-        nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-                    \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-        nnoremap <silent> [unite]r  :<C-u>Unite
-                    \ -buffer-name=register register<CR>
-        nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
-        nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
-        nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-        nnoremap <silent> [unite]fr
+        nnoremap <silent> [unite]r
                     \ :<C-u>Unite -buffer-name=resume resume<CR>
+        if has('nvim')
+            nnoremap <silent> [unite]f  :<C-u>Unite file_rec/neovim<cr>
+        else
+            nnoremap <silent> [unite]f  :<C-u>Unite file_rec/async<cr>
+        endif
+        nnoremap <silent> [unite]i  :<C-u>Unite file_rec/git<cr>
+        nnoremap <silent> [unite]g  :<C-u>Unite grep<cr>
+        nnoremap <silent> [unite]u  :<C-u>Unite source<CR>
+        nnoremap <silent> [unite]t  :<C-u>Unite tag<CR>
+        nnoremap <silent> [unite]T  :<C-u>Unite tag/include<CR>
+        nnoremap <silent> [unite]l  :<C-u>Unite locationlist<CR>
+        nnoremap <silent> [unite]q  :<C-u>Unite quickfix<CR>
+        nnoremap <silent> [unite]e  :<C-u>Unite
+                    \ -buffer-name=register register<CR>
+        nnoremap <silent> [unite]j  :<C-u>Unite jump<CR>
+        nnoremap <silent> [unite]h  :<C-u>Unite history/yank<CR>
+        nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+        nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
         nnoremap <silent> [unite]ma
                     \ :<C-u>Unite mapping<CR>
         nnoremap <silent> [unite]me
                     \ :<C-u>Unite output:message<CR>
-        nnoremap  [unite]f  :<C-u>Unite source<CR>
+
+        nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                    \ -buffer-name=files buffer bookmark file<CR>
+        nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                    \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+        nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
         nnoremap <silent> [unite]w
                     \ :<C-u>Unite -buffer-name=files -no-split
                     \ jump_point file_point buffer_tab

@@ -5,7 +5,7 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'}],
                 \ ['junegunn/goyo.vim',         { 'on_cmd' : 'Goyo', 'loadconf' : 1}],
                 \ ['junegunn/limelight.vim',    { 'on_cmd' : 'Limelight'}],
-                \ ['Yggdroot/LeaderF', {'merged' : 0}],
+                \ ['Yggdroot/LeaderF', {'merged' : 0, 'on_cmd' : 'LeaderF'}],
                 \ ['MattesGroeger/vim-bookmarks', { 'on_map' : '<Plug>Bookmark', 'loadconf_before' : 1}],
                 \ ['google/vim-searchindex'],
                 \ ['simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'}],
