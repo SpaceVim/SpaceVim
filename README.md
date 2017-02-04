@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/SpaceVim/SpaceVim/raw/table/logo.jpg" alt="SpaceVim"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/logo.jpg" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
