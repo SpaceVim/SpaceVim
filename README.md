@@ -38,6 +38,7 @@
     - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
     - Write post about SpaceVim
+- [Credits & Thanks](#credits--thanks)
 
 #### Introduction
 
@@ -603,6 +604,7 @@ SpaceVim also support local config file for project, the init file is `.SpaceVim
 in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 
 here is an example config file for SpaceVim:
+
 ```viml
 " set the options of SpaceVim
 let g:spacevim_colorscheme = 'solarized'
@@ -627,8 +629,6 @@ let g:spacevim_custom_plugins = [
 If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is useful for me to debug for this issue.
 
 ##### contribute to SpaceVim
-
-#### Enjoy!
 
 #### Credits & Thanks
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
