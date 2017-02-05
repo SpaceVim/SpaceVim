@@ -8,7 +8,8 @@
 " >
 "   PHP 5.3+
 "   PCNTL Extension
-"   Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+"   Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
+"   JSON(for Vim 7.4+)Extension
 "   Composer Project
 " <
 
@@ -16,10 +17,7 @@
 
 function! SpaceVim#layers#lang#php#plugins() abort
     let plugins = []
-    if has('nvim')
-        call add(plugins, ['padawan-php/deoplete-padawan'])
-    endif
-    call add(plugins, ['php-vim/phpcd.vim'])
+    call add(plugins, ['php-vim/phpcd.vim', { 'on_ft' : 'php'}])
     return plugins
 endfunction
 
