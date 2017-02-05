@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/logo.jpg" alt="SpaceVim"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/logo.png" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -8,15 +8,17 @@
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
 
-[![GitHub watchers](https://img.shields.io/github/watchers/SpaceVim/SpaceVim.svg?style=social&label=Watch)](https://github.com/SpaceVim/SpaceVim)
-[![GitHub stars](https://img.shields.io/github/stars/SpaceVim/SpaceVim.svg?style=social&label=Star)](https://github.com/SpaceVim/SpaceVim)
-[![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
-[![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
-
-![2017-02-05_1359x721](https://cloud.githubusercontent.com/assets/13142418/22622826/f88881a8-eb80-11e6-880b-b12e0430689a.png)
-
 ### Table of Contents
 - [Introduction](#introduction)
+- [Community](#community)
+    - Ask
+        - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+        - vi StackExchange for "how to" & configuration questions
+        - Twitter @SpaceVim for hugs & pithy comments
+    - Chat
+        - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+        - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+    - Discuss
 - [Install](#install)
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
@@ -49,6 +51,8 @@
 
 #### Introduction
 
+![2017-02-05_1359x721](https://cloud.githubusercontent.com/assets/13142418/22622826/f88881a8-eb80-11e6-880b-b12e0430689a.png)
+
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, users just need
 to select the layers they need. It got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). If you use SpaceVim,
@@ -61,6 +65,9 @@ report on Github.
 For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
+
+#### Community
+Try these Neovim hangouts for any questions, problems or comments. 
 
 #### Install
 
