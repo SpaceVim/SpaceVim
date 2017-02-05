@@ -13,7 +13,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-02-05_1361x720](https://cloud.githubusercontent.com/assets/13142418/22622808/42d5eb48-eb80-11e6-89dd-4672ec93d6da.png)
+![2017-02-05_1359x721](https://cloud.githubusercontent.com/assets/13142418/22622826/f88881a8-eb80-11e6-880b-b12e0430689a.png)
 
 ### Table of Contents
 - [Introduction](#introduction)
