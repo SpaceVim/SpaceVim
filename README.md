@@ -4,21 +4,11 @@
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
-[![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-[![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
+
 
 ### Table of Contents
 - [Introduction](#introduction)
 - [Community](#community)
-    - Ask
-        - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
-        - vi StackExchange for "how to" & configuration questions
-        - Twitter @SpaceVim for hugs & pithy comments
-    - Chat
-        - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-        - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-    - Discuss
 - [Install](#install)
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
@@ -68,6 +58,15 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 
 #### Community
 Try these Neovim hangouts for any questions, problems or comments. 
+- Ask
+    - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+    - vi StackExchange for "how to" & configuration questions
+    - [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim) for hugs & pithy comments
+- Chat
+    - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+    - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+    - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
+- Discuss
 
 #### Install
 
