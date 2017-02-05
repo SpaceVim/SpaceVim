@@ -4,7 +4,9 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'}],
                 \ ['wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'}],
                 \ ['junegunn/goyo.vim',         { 'on_cmd' : 'Goyo', 'loadconf' : 1}],
-                \ ['Yggdroot/LeaderF', {'merged' : 0}],
+                \ ['junegunn/limelight.vim',    { 'on_cmd' : 'Limelight'}],
+                \ ['Yggdroot/LeaderF', {'merged' : 0, 'on_cmd' : 'LeaderF'}],
+                \ ['MattesGroeger/vim-bookmarks', { 'on_map' : '<Plug>Bookmark', 'loadconf_before' : 1}],
                 \ ['google/vim-searchindex'],
                 \ ['simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'}],
                 \ ['wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'}],
@@ -33,6 +35,11 @@ function! SpaceVim#layers#tools#plugins() abort
 endfunction
 
 function! SpaceVim#layers#tools#config() abort
+    nmap mm <Plug>BookmarkToggle
+    nmap mi <Plug>BookmarkAnnotate
+    nmap ma <Plug>BookmarkShowAll
+    nmap mn <Plug>BookmarkNext
+    nmap mp <Plug>BookmarkPrev
     nnoremap <silent> <F7> :MundoToggle<CR>
     augroup rainbow_lisp
         autocmd!

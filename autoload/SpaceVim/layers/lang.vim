@@ -24,12 +24,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
                 \ ['voxpupuli/vim-puppet',                   {'on_ft' : 'puppet'}],
                 \ ] 
-    " python
-    if has('nvim')
-        call add(plugins, ['zchee/deoplete-jedi',                    { 'on_ft' : 'python'}])
-    else
-        call add(plugins, ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}])
-    endif
     return plugins
 endfunction
 

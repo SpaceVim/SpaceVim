@@ -150,20 +150,24 @@ fu! s:parser(args)
 endf
 
 function! zvim#plug#add(repo,...) abort
+    let g:spacevim_plugin_name = ''
     if g:spacevim_plugin_manager == 'neobundle'
         exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
+        let g:spacevim_plugin_name = split(a:repo, '/')[-1]
     elseif g:spacevim_plugin_manager == 'dein'
         if len(a:000) > 0
             call dein#add(a:repo,s:parser(a:000[0]))
         else
             call dein#add(a:repo)
         endif
+        let g:spacevim_plugin_name = g:dein#name
     elseif g:spacevim_plugin_manager == 'vim-plug'
         if len(a:000) > 0
             exec "Plug '".a:repo."', ".join(a:000,',')
         else
             exec "Plug '".a:repo."'"
         endif
+        let g:spacevim_plugin_name = split(a:repo, '/')[-1]
     endif
     let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
     let str = '[' . str . ']'

@@ -1,46 +1,48 @@
-<p align="center"><img src="https://github.com/SpaceVim/SpaceVim/raw/table/logo.jpg" alt="SpaceVim"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/logo.png" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
-[![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-[![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
 
-[![GitHub watchers](https://img.shields.io/github/watchers/SpaceVim/SpaceVim.svg?style=social&label=Watch)](https://github.com/SpaceVim/SpaceVim)
-[![GitHub stars](https://img.shields.io/github/stars/SpaceVim/SpaceVim.svg?style=social&label=Star)](https://github.com/SpaceVim/SpaceVim)
-[![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
-[![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
-
-![2017-01-07_1363x723](https://cloud.githubusercontent.com/assets/13142418/21739011/6c38c14e-d4ca-11e6-8f3e-2c21dfc489c0.png)
 
 ### Table of Contents
 - [Introduction](#introduction)
+- [Community](#community)
 - [Install](#install)
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
 - [File Structure](#file-structure)
 - Features
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [Modular configuration](#modular-configuration)
-    - [multiple leader mode](#multiple-leader-mode)
-    - Lazy-load 90% of plugins with [dein.vim]
-    - Robust, yet light weight
-    - [Unite centric work-flow](#unite-centric-work-flow)
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
+        - [c/c++ support](#cc-support)
+        - [python support](#python-support)
+        - [go support](#go-support)
+        - rust support
+        - php support
+        - perl support
+        - lua support
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
+    - [multiple leader mode](#multiple-leader-mode)
+    - [Modular configuration](#modular-configuration)
+    - Lazy-load 90% of plugins with [dein.vim]
+    - Robust, yet light weight
     - Extensive Neocomplete setup
     - Central location for tags
     - Lightweight simple status/tabline
     - Premium color-schemes
-- Custom configuration
-- Support SpaceVim
-    - contribute to SpaceVim
+- [Custom configuration](#custom-configuration)
+- [Support SpaceVim](#support-spacevim)
+    - [Report bugs](#report-bugs)
+    - [contribute to SpaceVim](#contribute-to-spacevim)
     - Write post about SpaceVim
-    - Report bugs
+- [Credits & Thanks](#credits--thanks)
 
 #### Introduction
+
+![2017-02-05_1359x721](https://cloud.githubusercontent.com/assets/13142418/22622826/f88881a8-eb80-11e6-880b-b12e0430689a.png)
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, users just need
@@ -54,6 +56,18 @@ report on Github.
 For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
+
+#### Community
+Try these Neovim hangouts for any questions, problems or comments. 
+- Ask
+    - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+    - vi StackExchange for "how to" & configuration questions
+    - [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim) for hugs & pithy comments
+- Chat
+    - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+    - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+    - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
+- Discuss
 
 #### Install
 
@@ -113,6 +127,32 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 
 #### Features
+
+##### Awesome ui
+
+- outline + filemanager + checker
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+##### Language specific mode
+
+###### c/c++ support
+
+1. code completion: autocompletion and fuzzy match.
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+2. syntax check: Asynchronous linting and make framework.
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+
+###### go support
+1. code completion:
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+2. syntax check:
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+
+###### python support
+1. code completion:
+    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
+2. syntax check:
+    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
@@ -183,32 +223,14 @@ For the list of mappings see the [link](#window-management)
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
 #### Unite centric work-flow
-- List all the plugins has been installed, fuzzy find what you want,
-    default action is open the github website of current plugin. default key is `<leader>lp`
-
-    [layer name]   [plugin name]  [load type]    [plugin options]
-
+- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
     ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-    ![2016-12-29-22 35 29](https://cloud.githubusercontent.com/assets/13142418/21546066/4896c5e2-ce17-11e6-8246-945b924df9aa.png)
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2016-12-29-22 38 52](https://cloud.githubusercontent.com/assets/13142418/21546148/c6836618-ce17-11e6-82a9-81e90017dbf1.png)
-
-#### Awesome ui
-- outline + filemanager + checker
-    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
-
-#### Language specific mode
-- java
-- viml
-- rust
-- php
-- c/c++
-- js
-- python
-
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
@@ -350,7 +372,10 @@ Name           | Description
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`y` | Normal/visual | Copy selection to X11 clipboard ("+y)
+`<leader>`+`y` | visual | Copy selection to X11 clipboard ("+y)
+`Ctrl`+`c` | Normal | Copy full path of current buffer to X11 clipboard
+`<leader>`+`Ctrl`+`c` | Normal | Copy github.com url of current buffer to X11 clipboard(if it is a github repo)
+`<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)
 `<leader>`+`p` | Normal/visual | Paste selection from X11 clipboard ("+p)
 `Ctrl`+`f` | Normal | Smart page forward (C-f/C-d)
 `Ctrl`+`b` | Normal | Smart page backwards (C-b/C-u)
@@ -374,10 +399,10 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`cd` | Normal | Switch to the root directory(vim-rooter)
+`<leader>`+`cd` | Normal | Switch to the directory of the open buffer
 `<leader>`+`w` | Normal/visual | Write (:w)
-`Ctrl`+`s` | _All_ | Write (:w)
-`W!!` | Command | Write as root
+`Ctrl`+`s` | Normal/visual/Command | Write (:w)
+`:w!!` | Command | Write as root (%!sudo tee > /dev/null %)
 
 ##### Editor UI
 
@@ -427,27 +452,31 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`;`+`r` | Normal | Resumes Unite window
-`;`+`f` | Normal | Opens Unite file recursive search
-`;`+`i` | Normal | Opens Unite git file search
-`;`+`g` | Normal | Opens Unite grep with ag (the_silver_searcher)
-`;`+`u` | Normal | Opens Unite source
-`;`+`t` | Normal | Opens Unite tag
-`;`+`T` | Normal | Opens Unite tag/include
-`;`+`l` | Normal | Opens Unite location list
-`;`+`q` | Normal | Opens Unite quick fix
-`;`+`e` | Normal | Opens Unite register
-`;`+`j` | Normal | Opens Unite jump, change
-`;`+`h` | Normal | Opens Unite history/yank
-`;`+`s` | Normal | Opens Unite session
-`;`+`o` | Normal | Opens Unite outline
-`;`+`ma` | Normal | Opens Unite mapping
-`;`+`me` | Normal | Opens Unite output messages
-`<leader>`+`b` | Normal | Opens Unite buffers, mru, bookmark
+`[unite]` | Normal | unite leader, default is `f`, `:h g:spacevim_unite_leader`
+`[unite]`+`r` | Normal | Resumes Unite window
+`[unite]`+`f` | Normal | Opens Unite file recursive search
+`[unite]`+`i` | Normal | Opens Unite git file search
+`[unite]`+`g` | Normal | Opens Unite grep with ag (the_silver_searcher)
+`[unite]`+`u` | Normal | Opens Unite source
+`[unite]`+`t` | Normal | Opens Unite tag
+`[unite]`+`T` | Normal | Opens Unite tag/include
+`[unite]`+`l` | Normal | Opens Unite location list
+`[unite]`+`q` | Normal | Opens Unite quick fix
+`[unite]`+`e` | Normal | Opens Unite register
+`[unite]`+`j` | Normal | Opens Unite jump, change
+`[unite]`+`h` | Normal | Opens Unite history/yank
+`[unite]`+`s` | Normal | Opens Unite session
+`[unite]`+`n` | Normal | Opens Unite session/new
+`[unite]`+`o` | Normal | Opens Unite outline
+`[unite]`+`c` | Normal | Opens Unite buffer bookmark file in current directory
+`[unite]`+`b` | Normal | Opens Unite buffer bookmark file in buffer directory
+`[unite]`+`ma` | Normal | Opens Unite mapping
+`[unite]`+`<space>` | Normal | Opens Unite menu:CustomKeyMaps
+`[unite]`+`me` | Normal | Opens Unite output messages
+`<leader>`+`bl` | Normal | Opens Unite buffers, mru, bookmark
 `<leader>`+`ta` | Normal | Opens Unite tab
-`<leader>`+`gf` | Normal | Opens Unite file with word at cursor
-`<leader>`+`gt` | Normal/visual | Opens Unite tag with word at cursor
-`<leader>`+`gg` | Visual | Opens Unite navigate with word at cursor
+`<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
+`<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
 | **Within _Unite_ buffers** |||
 `Ctrl`+`h/k/l/r` | Normal | Un-map
 `Ctrl`+`r` | Normal | Redraw
@@ -575,6 +604,7 @@ SpaceVim also support local config file for project, the init file is `.SpaceVim
 in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 
 here is an example config file for SpaceVim:
+
 ```viml
 " set the options of SpaceVim
 let g:spacevim_colorscheme = 'solarized'
@@ -592,9 +622,16 @@ let g:spacevim_custom_plugins = [
  nnoremap <c-l> :Ydc<cr>
 ```
 
-#### Enjoy!
+#### Support SpaceVim
+
+##### report bugs
+
+If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is useful for me to debug for this issue.
+
+##### contribute to SpaceVim
 
 #### Credits & Thanks
+- [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim

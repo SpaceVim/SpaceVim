@@ -27,6 +27,9 @@ function! SpaceVim#default#SetOptions() abort
     set relativenumber
     set number
 
+    " hide cmd
+    set noshowcmd
+
     " indent
     set autoindent
     set smartindent
@@ -78,7 +81,6 @@ function! SpaceVim#default#SetOptions() abort
     set nowritebackup
     set matchtime=0
     set ruler
-    set showcmd
     set showmatch
     set showmode
     "menuone: show the pupmenu when only one match
@@ -274,8 +276,8 @@ function! SpaceVim#default#SetMappings() abort
     cnoremap <C-b> <Left>
     cnoremap <C-f> <Right>
 
-    " When pressing <leader>cd switch to the directory of the open buffer
-    " map <Leader>cd :cd %:p:h<CR>:pwd<CR>       "I use <Plug>RooterChangeToRootDirectory
+    "When pressing <leader>cd switch to the directory of the open buffer
+    map <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
     " Fast saving
     nnoremap <Leader>w :w<CR>

@@ -1,6 +1,7 @@
 function! SpaceVim#layers#edit#plugins() abort
     let plugins = [
                 \ ['tpope/vim-surround'],
+                \ ['junegunn/vim-emoji'],
                 \ ['terryma/vim-multiple-cursors'],
                 \ ['scrooloose/nerdcommenter'],
                 \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],

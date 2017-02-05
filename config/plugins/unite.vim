@@ -219,6 +219,7 @@ noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
 """ For searching the word in the cursor in all opened buffer
 noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
 nnoremap <silent><Leader>bl :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+nnoremap <silent><Leader>ta :<C-u>Unite -start-insert -buffer-name=tag tag<cr>
 "" outline
 nnoremap <silent><leader>o :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -no-split outline<cr>
 "" Line search
@@ -228,7 +229,9 @@ nnoremap <silent><leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<
 " search plugin
 " :Unite neobundle/search
 "for Unite menu{
-nnoremap <silent><leader>ug :Unite -silent -start-insert menu:git<CR>
+nnoremap <silent><leader>ugg :Unite -silent -start-insert menu:git<CR>
+nnoremap <silent><leader>ugf :UniteWithCursorWord file_rec/async<CR>
+nnoremap <silent><leader>ugt :UniteWithCursorWord tag<CR>
 nnoremap <silent><Leader>ls :Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos<CR>
 nnoremap <silent><Leader>lm :Unite -silent -ignorecase -winheight=17 -start-insert menu:MpvPlayer<CR>
 call zvim#util#loadMusics()

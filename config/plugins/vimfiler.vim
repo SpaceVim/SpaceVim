@@ -54,6 +54,7 @@ function! s:vimfilerinit()
     silent! nunmap <buffer> <Space>
     silent! nunmap <buffer> <C-l>
     silent! nunmap <buffer> <C-j>
+    silent! nunmap <buffer> E
     silent! nunmap <buffer> gr
     silent! nunmap <buffer> gf
     silent! nunmap <buffer> -

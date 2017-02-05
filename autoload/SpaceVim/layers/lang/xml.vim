@@ -10,7 +10,6 @@ function! SpaceVim#layers#lang#xml#plugins() abort
     let plugins = []
     call add(plugins,['Valloric/MatchTagAlways',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}])
     call add(plugins,['sukima/xmledit',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}])
-    call add(plugins,['alvan/vim-closetag',                { 'on_ft' : ['html' , 'xhtml' , 'xml' , 'jinja']}])
     return plugins
 endfunction
 
