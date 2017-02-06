@@ -1,4 +1,4 @@
-### About SpaceVim
+## About SpaceVim
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a Modular configuration, a bundle of custom settings and plugins for Vim,
 here we call them layers, each layer has different plugins and config, users just need
