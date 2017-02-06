@@ -1,10 +1,7 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/docs/logo.png" alt="SpaceVim"/></p>
-
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
-
 
 ### Table of Contents
 - [Introduction](#introduction)
