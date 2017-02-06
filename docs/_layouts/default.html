@@ -35,8 +35,11 @@
           <h1>{{ site.title | default: site.github.repository_name }}</h1>
           <p>{{ site.description | default: site.github.project_tagline }}</p>
           <hr>
-          <span class="credits left">Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+          <p align="center">
+              <b><a href="https://spacevim.org">Home</a></b> |
+              <b><a href="https://spacevim.org/about">about</a></b> |
+          </p>
+          <hr>
         </div>
 
         {{ content }}
@@ -57,5 +60,8 @@
         } catch(err) {}
       </script>
     {% endif %}
-  </body>
+</body>
+<root>
+    <span class="credits right">Hosted on GitHub &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+</root>
 </html>
