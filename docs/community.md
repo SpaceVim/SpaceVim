@@ -1,6 +1,7 @@
 #### Community
 
 Try these SpaceVim hangouts for any questions, problems or comments. 
+
 - Ask
     - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
     - vi StackExchange for "how to" & configuration questions
