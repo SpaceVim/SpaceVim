@@ -448,6 +448,9 @@ Key   | Mode | Action
 `<leader>`+`sv` | Normal | Split with previous buffer
 `<leader>`+`sg` | Normal | Vertical split with previous buffer
 
+SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
+can be get by <kbd><leader> q r</kbd>
+
 ##### Plugin: Unite
 
 Key   | Mode | Action
