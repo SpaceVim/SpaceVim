@@ -522,7 +522,8 @@ requirement:
 >
   PHP 5.3+
   PCNTL Extension
-  Msgpack 0.5.7+(for NeoVim) Extension or JSON(for Vim 7.4+) Extension
+  Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
+  JSON(for Vim 7.4+)Extension
   Composer Project
 <
 
