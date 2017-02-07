@@ -449,7 +449,16 @@ Key   | Mode | Action
 `<leader>`+`sg` | Normal | Vertical split with previous buffer
 
 SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
-can be get by <kbd><leader> q r</kbd>
+can be get by <kbd>`<leader>` q r</kbd>
+
+##### Native functions
+
+Key   | Mode | Action
+----- |:----:| ------------------
+`<leader>` + `qr` | Normal | Same as native `q`
+`<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin
+`<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin
+`<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin
 
 ##### Plugin: Unite
 

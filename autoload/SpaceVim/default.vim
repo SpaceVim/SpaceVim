@@ -263,10 +263,6 @@ function! SpaceVim#default#SetMappings() abort
     " Select last paste
     nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-    " Disable Q and gQ
-    nnoremap Q <Nop>
-    nnoremap gQ <Nop>
-
     " Navigate window
     nnoremap <silent><C-q> <C-w>
     nnoremap <silent><C-x> <C-w>x
