@@ -1,6 +1,6 @@
 function! SpaceVim#layers#lang#plugins() abort
     let plugins = [
-                \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet', 'loadconf' : 1}],
+                \ ['Shougo/neosnippet.vim',                  { 'on_i'  : 1 , 'on_ft' : 'neosnippet', 'loadconf' : 1, 'on_cmd' : 'NeoSnippetEdit'}],
                 \ ['m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'}],
                 \ ['groenewege/vim-less',                    { 'on_ft' : ['less']}],
                 \ ['cakebaker/scss-syntax.vim',              { 'on_ft' : ['scss','sass']}],

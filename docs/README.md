@@ -1,10 +1,7 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/docs/logo.png" alt="SpaceVim"/></p>
-
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
-
 
 ### Table of Contents
 - [Introduction](#introduction)
@@ -723,14 +720,6 @@ If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is usefu
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
 
 <head>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-89745542-1', 'auto');
-ga('send', 'pageview');
-</script>
 <script>
 var _hmt = _hmt || [];
 (function() {

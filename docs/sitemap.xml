@@ -7,13 +7,33 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 <url>
-  <loc>http://spacevim.org/</loc>
-  <lastmod>2017-01-08T05:59:52+00:00</lastmod>
+  <loc>https://spacevim.org/</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://spacevim.org/doc/SpaceVim.txt</loc>
-  <lastmod>2017-01-08T05:59:47+00:00</lastmod>
+  <loc>https://spacevim.org/about</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://spacevim.org/development</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://spacevim.org/community</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://spacevim.org/documentation</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://spacevim.org/sponsors</loc>
+  <lastmod>2017-02-06T18:09:15+00:00</lastmod>
   <changefreq>daily</changefreq>
 </url>
 </urlset>
