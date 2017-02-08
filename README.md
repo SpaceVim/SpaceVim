@@ -737,7 +737,3 @@ If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is usefu
 [operator-surround]: https://github.com/rhysd/vim-operator-surround
 [textobj-user]: https://github.com/kana/vim-textobj-user
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
-
-<head>
-<meta name="baidu-site-verification" content="rZl9hrrjp3" />
-</head>

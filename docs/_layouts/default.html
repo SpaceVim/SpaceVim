@@ -63,6 +63,7 @@
                 pageTracker._trackPageview();
             } catch(err) {}
         </script>
+        {% endif %}
         <script>
             (function(){
                 var bp = document.createElement('script');
@@ -82,11 +83,10 @@
             (function() {
                 var hm = document.createElement("script");
                 hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
-                var s = document.getElementsByTagName("script")[0];
+                var s = document.getElementsByTagName("script")[0]; 
                 s.parentNode.insertBefore(hm, s);
             })();
         </script>
-        {% endif %}
     </body>
     <root>
         <p align="center">
