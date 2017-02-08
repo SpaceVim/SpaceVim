@@ -718,15 +718,3 @@ If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is usefu
 [operator-surround]: https://github.com/rhysd/vim-operator-surround
 [textobj-user]: https://github.com/kana/vim-textobj-user
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
-
-<head>
-<script>
-var _hmt = _hmt || [];
-(function() {
-var hm = document.createElement("script");
-hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
-var s = document.getElementsByTagName("script")[0];
-s.parentNode.insertBefore(hm, s);
-})();
-</script>
-</head>
