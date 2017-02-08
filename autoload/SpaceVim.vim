@@ -367,3 +367,9 @@ endfunction
 "   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
 " <
 " for more info about how to write snippet, please read ||neosnippet-snippet-syntax|.
+"
+" 3. Where is `<c-f>` in cmdline-mode?
+"
+" `<c-f>` is the default value of |cedit| option, but in SpaceVim we use same
+" as `<Right>`, so maybe you can change the `ceite` option, or use
+" `<leader>+<c-f>`.
