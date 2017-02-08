@@ -355,3 +355,15 @@ endfunction
 "   step 3: compile YouCompleteMe with the feature you want. if you just want
 "   support c family, you need run `./install.py --clang-completer`.
 " <
+"
+" 2. How to add custom snippt?
+"
+" SpaceVim use neosnippet as default snippet engine. If you want to add
+" snippet for vim filetype, open a vim file, run `:NeoSnippetEdit` command, a
+" buffer will be opened, you can add your custom snippet, by default this
+" buffer will be save in `~/.SpaceVim.d/snippets`, if you want to use other
+" directory:
+" >
+"   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+" <
+" for more info about how to write snippet, please read ||neosnippet-snippet-syntax|.
