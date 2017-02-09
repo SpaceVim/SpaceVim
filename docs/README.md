@@ -1,4 +1,4 @@
-#### Introduction
+# Introduction
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -20,9 +20,9 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
-#### Install
+## Install
 
-##### Linux/Mac
+### Linux/Mac
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -40,7 +40,7 @@ for more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
-##### windows support
+### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
@@ -58,7 +58,7 @@ git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
-#### File Structure
+## File Structure
 - [config](./config)/ - Configuration
   - [plugins](./config/plugins)/ - Plugin configurations
   - [mappings.vim](./config/mappings.vim) - Key mappings
