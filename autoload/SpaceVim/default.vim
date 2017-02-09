@@ -274,6 +274,7 @@ function! SpaceVim#default#SetMappings() abort
     cnoremap <C-a> <Home>
     cnoremap <C-b> <Left>
     cnoremap <C-f> <Right>
+    cnoremap <Leader><C-F> <C-F>
 
     "When pressing <leader>cd switch to the directory of the open buffer
     map <Leader>cd :cd %:p:h<CR>:pwd<CR>
