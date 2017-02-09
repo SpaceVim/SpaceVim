@@ -1,3 +1,3 @@
-## Current Sponsors
+# Current Sponsors
 
 

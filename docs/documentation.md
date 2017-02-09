@@ -1,4 +1,4 @@
-## SpaceVim Documentation
+# SpaceVim Documentation
 
 - Features
     - [Awesome ui](#awesome-ui)
@@ -24,16 +24,16 @@
 
 
 
-#### Features
+## Features
 
-##### Awesome ui
+### Awesome ui
 
 - outline + filemanager + checker
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-##### Language specific mode
+### Language specific mode
 
-###### c/c++ support
+#### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
     ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
