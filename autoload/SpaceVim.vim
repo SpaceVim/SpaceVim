@@ -1,6 +1,6 @@
 ""
 " @section Introduction, intro
-" @stylized Maktaba
+" @stylized spacevim
 " @library
 " @order intro version dicts functions exceptions layers faq
 "   SpaceVim is a Modular configuration, a bundle of custom settings
