@@ -1,58 +1,48 @@
 # SpaceVim Documentation
 
+---
+
 - Features
-    - [Awesome ui](#awesome-ui)
-    - [Language specific mode](#language-specific-mode)
-        - [c/c++ support](#cc-support)
-        - [python support](#python-support)
-        - [go support](#go-support)
-        - rust support
-        - php support
-        - perl support
-        - lua support
-    - [Unite centric work-flow](#unite-centric-work-flow)
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [multiple leader mode](#multiple-leader-mode)
     - [Modular configuration](#modular-configuration)
-    - Lazy-load 90% of plugins with [dein.vim]
-    - Robust, yet light weight
-    - Extensive Neocomplete setup
-    - Central location for tags
-    - Lightweight simple status/tabline
-    - Premium color-schemes
+    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
+    - [Language specific mode](#language-specific-mode)
+    - [Awesome ui](#awesome-ui)
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [multiple leader mode](#multiple-leader-mode)
 - [Custom configuration](#custom-configuration)
+- [Layers](#layers)
 
+# Features
 
-
-## Features
-
-### Awesome ui
+## Awesome ui
 
 - outline + filemanager + checker
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-### Language specific mode
+## Language specific mode
 
-#### c/c++ support
+### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
-    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
 2. syntax check: Asynchronous linting and make framework.
-    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
-###### go support
+### go support
+
 1. code completion:
-    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
 2. syntax check:
-    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
-###### python support
+### python support
+
 1. code completion:
-    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
+![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
 2. syntax check:
-    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
+![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
-##### Neovim centric - Dark powered mode of SpaceVim.
+## Neovim centric - Dark powered mode of SpaceVim.
 
 By default, SpaceVim use these dark powered plugins:
 
@@ -65,70 +55,37 @@ TODO:
 2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
 3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
 
-##### Modular configuration
+## Modular configuration
 
-- SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
-- SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
+## Multiple leader mode
 
+### Global origin vim leader, default : `\`
 
-Here is an example:
-
-```viml
-" Here are some basic customizations, please refer to the top of the vimrc
-" file for all possible options:
-let g:spacevim_default_indent = 3
-let g:spacevim_max_column     = 80
-let g:spacevim_colorscheme    = 'my_awesome_colorscheme'
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = "/some/place/else"
-
-" By default, language specific plugins are not loaded. This can be changed
-" with the following:
-let g:spacevim_plugin_groups_exclude = ['ruby', 'python']
-
-" If there are groups you want always loaded, you can use this:
-let g:spacevim_plugin_groups_include = ['go']
-
-" Alternatively, you can set this variable to load exactly what you want:
-let g:spacevim_plugin_groups = ['core', 'web']
-
-" If there is a particular plugin you don't like, you can define this
-" variable to disable them entirely:
-let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
-" If you want to add some custom plugins, use these options:
-let g:spacevim_custom_plugins = [
- \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
- \ ['wsdjeg/GitHub.vim'],
- \ ]
-
-" Anything defined here are simply overrides
-set wildignore+=\*/node_modules/\*
-set guifont=Wingdings:h10
-```
-
-#### Multiple leader mode
-##### Global origin vim leader, default : `\`
 Vim's origin global leader can be used in all modes.
-##### Local origin vim leader, default : `,`
+
+### Local origin vim leader, default : `,`
+
 Vim's origin local leader can be used in all the mode.
-##### Windows function leader, default : `s`
+
+### Windows function leader, default : `s`
+
 Windows function leader can only be used in normal mode.
 For the list of mappings see the [link](#window-management)
-##### Unite work flow leader, default : `f`
+
+### Unite work flow leader, default : `f`
+
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
-#### Unite centric work-flow
+## Unite centric work-flow
+
 - List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
+![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
+![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
