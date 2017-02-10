@@ -93,7 +93,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-    make sure you have a backup of your own vimfiles.
+    make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
