@@ -10,7 +10,7 @@
     - [Unite centric work-flow](#unite-centric-work-flow)
     - [multiple leader mode](#multiple-leader-mode)
 - [Custom configuration](#custom-configuration)
-- [Layers](#layers)
+- [Layers](https://spacevim.org/layers)
 
 # Features
 
