@@ -1,12 +1,12 @@
 
 
-function! SpaceVim#layers#fold_by_regexp#plugins() abort
+function! SpaceVim#layers#exprfold#plugins() abort
     return [
                 \ ['ZSaberLv0/ZFVimFoldBlock', {'merged' : 0}],
                 \ ]
 endfunction
 
-function! SpaceVim#layers#fold_by_regexp#config() abort
+function! SpaceVim#layers#exprfold#config() abort
     nnoremap ZB q::call ZF_FoldBlockTemplate()<cr>
     nnoremap ZF :ZFFoldBlock //<left>
     function! ZF_Plugin_ZFVimFoldBlock_comment() abort
