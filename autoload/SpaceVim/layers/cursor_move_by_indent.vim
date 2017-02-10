@@ -1,6 +1,6 @@
 function! SpaceVim#layers#cursor_move_by_indent#plugins() abort
     return [
-                \ ['ZSaberLv0/ZFVimIndentMove'],
+                \ ['ZSaberLv0/ZFVimIndentMove', { 'merged' : 0}],
                 \ ]
 endfunction
 
