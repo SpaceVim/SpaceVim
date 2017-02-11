@@ -22,7 +22,6 @@ To report an issue or give feedback to the developers, please use the [issue tra
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}">{{ post.title }}</a>
-      {{ post.excerpt }}
     </li>
   {% endfor %}
 </ul>

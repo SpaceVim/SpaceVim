@@ -11,8 +11,10 @@ I am a vimer and a java developer. Here are some useful plugins for developing j
 
 ## Code completion
 1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
+
 Demo
 ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
+
 Generics demo
 ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
 

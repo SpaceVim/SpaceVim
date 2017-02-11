@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PCLWNCD');
+        </script>
+        <!-- End Google Tag Manager -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>SpaceVim - A community-driven Vim distribution</title>
+        <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" href="{{ '/assets/css/ie.css' | relative_url }}">
+        <![endif]-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+        <script type="text/javascript" src="http://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script> 
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCLWNCD"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        <div id="header">
+            <nav>
+                <li class="fork"><a href="{{ site.project_repo_url }}">View On GitHub</a></li>
+                {% if site.show_downloads %}
+                <li class="downloads"><a href="{{ site.github.zip_url }}">ZIP</a></li>
+                <li class="downloads"><a href="{{ site.github.tar_url }}">TAR</a></li>
+                <li class="title">DOWNLOADS</li>
+                {% endif %}
+            </nav>
+        </div><!-- end header -->
+
+        <div class="wrapper">
+
+            <section>
+                <div id="title">
+                    <h1>{{ site.title | default: site.github.repository_name }}</h1>
+                    <p>{{ site.description | default: site.github.project_tagline }}</p>
+                    <hr>
+                    <p align="center">
+                        <b><a href="https://spacevim.org">Home</a></b> |
+                        <b><a href="https://spacevim.org/community">Community</a></b> |
+                        <b>{{ post.title }}</b>
+                    </p>
+                    <hr>
+                </div>
+
+                {{ content }}
+
+            </section>
+
+        </div>
+
+        {% if site.google_analytics %}
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try {
+                var pageTracker = _gat._getTracker("{{ site.google_analytics }}");
+                pageTracker._trackPageview();
+            } catch(err) {}
+        </script>
+        {% endif %}
+    </body>
+    <root>
+        <p align="center">
+            <span class="credits right">Hosted on GitHub &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </p>
+    </root>
+</html>
