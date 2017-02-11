@@ -304,7 +304,7 @@ Name           | Description
 Name           | Description
 -------------- | ----------------------
 [vimfiler] | Powerful file explorer
-[NERD Commenter] | Comment tool - no comment necessary
+[nerdcommenter] | Comment tool - no comment necessary
 [vinarise] | Hex editor
 [syntastic] | Syntax checking hacks
 [gita] | An awesome git handling plugin
