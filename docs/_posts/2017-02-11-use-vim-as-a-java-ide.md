@@ -29,8 +29,10 @@ elseif executable('ag')
     " https://github.com/ggreer/the_silver_searcher
     let g:unite_source_grep_command = 'ag'
     let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-                \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+                \ '-i --line-numbers --nocolor ' .
+                \ '--nogroup --hidden --ignore ' .
+                \ '''.hg'' --ignore ''.svn'' --ignore' .
+                \ ' ''.git'' --ignore ''.bzr'''
     let g:unite_source_grep_recursive_opt = ''
 elseif executable('pt')
     " Use pt (the platinum searcher)
@@ -47,13 +49,15 @@ elseif executable('ack-grep')
     let g:unite_source_grep_recursive_opt = ''
 elseif executable('ack')
     let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+    let g:unite_source_grep_default_opts = '-i --no-heading' .
+                \ ' --no-color -k -H'
     let g:unite_source_grep_recursive_opt = ''
 elseif executable('jvgrep')
     " Use jvgrep
     " https://github.com/mattn/jvgrep
     let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
+    let g:unite_source_grep_default_opts =
+                \ '-i --exclude ''\.(git|svn|hg|bzr)'''
     let g:unite_source_grep_recursive_opt = '-R'
 elseif executable('beagrep')
     " Use beagrep
@@ -101,9 +105,11 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 
 1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
     - Demo
+
     ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
 
     - Generics demo
+
     ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
 
 2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
@@ -113,6 +119,7 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 ## Syntax lint
 
 1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
+
 I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
 also you can set the classpath.
 
