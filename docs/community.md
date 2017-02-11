@@ -15,3 +15,14 @@ Try these SpaceVim hangouts for any questions, problems or comments.
 ## Discuss
 
 To report an issue or give feedback to the developers, please use the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues). 
+
+## Blogs
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+      {{ post.excerpt }}
+    </li>
+  {% endfor %}
+</ul>
