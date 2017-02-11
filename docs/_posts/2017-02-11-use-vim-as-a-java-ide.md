@@ -1,3 +1,8 @@
+---
+layout: post
+title:  "Use Vim as a Java IDE"
+---
+
 # Use Vim as a Java IDE
 
 I am a vimer and a java developer. Here are some useful plugins for developing java in vim/neovim.
