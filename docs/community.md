@@ -24,10 +24,11 @@ To report an issue or give feedback to the developers, please use the [issue tra
 
 <ul>
     {% for post in site.posts %}
-        {% if post.categories == "blog" %}
+    {% alert(post.categories) %}
             <li>
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </li>
+            {% if post.categories == "blog" %}
         {% endif %}
     {% endfor %}
 </ul>
