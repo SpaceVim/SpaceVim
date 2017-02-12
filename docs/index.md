@@ -1,3 +1,7 @@
+---
+title:  "A community-driven Vim distribution"
+---
+
 # Introduction
 
 
