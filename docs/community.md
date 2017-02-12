@@ -24,8 +24,10 @@ To report an issue or give feedback to the developers, please use the [issue tra
 
 <ul>
     {% for post in site.categories.blog %}
+        {% if post.categorie != "changelog" %}
             <li>
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </li>
+        {% endif %}
     {% endfor %}
 </ul>
