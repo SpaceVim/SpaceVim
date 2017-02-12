@@ -23,9 +23,11 @@ To report an issue or give feedback to the developers, please use the [issue tra
 ## Blogs
 
 <ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-    </li>
-  {% endfor %}
+    {% for post in site.posts %}
+        {% if post.categories == "blog" %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
 </ul>

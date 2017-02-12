@@ -20,15 +20,27 @@ If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is usefu
 
 ```vim
 function! SpaceVim#layers#foo#plugins() abort
-    let plugins = []
-    call add(plugins, ['Shougo/foo.vim', {'option' : 'value'}])
-    return plugins
+let plugins = []
+call add(plugins, ['Shougo/foo.vim', {'option' : 'value'}])
+return plugins
 endfunction
 
 
 function! SpaceVim#layers#foo#config() abort
-    " here you can set some value or mappings
+" here you can set some value or mappings
 endfunction
 ```
 
 4. send PR to SpaceVim.
+
+## Changelog
+
+<ul>
+    {% for post in site.posts %}
+        {% if post.categories == "changelog" %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
