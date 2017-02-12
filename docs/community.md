@@ -1,3 +1,7 @@
+---
+title:  "Community"
+---
+
 # Community
 
 Try these SpaceVim hangouts for any questions, problems or comments. 

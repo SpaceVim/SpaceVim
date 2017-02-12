@@ -1,3 +1,7 @@
+---
+title:  "Development"
+---
+
 # Support SpaceVim
 
 ## Development happens in the GitHub repository.
