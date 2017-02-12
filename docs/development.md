@@ -36,11 +36,9 @@ endfunction
 ## Changelog
 
 <ul>
-    {% for post in site.posts %}
-        {% if post.categories == "changelog" %}
+    {% for post in site.categories.changelog %}
             <li>
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </li>
-        {% endif %}
     {% endfor %}
 </ul>

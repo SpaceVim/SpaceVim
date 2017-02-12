@@ -23,12 +23,9 @@ To report an issue or give feedback to the developers, please use the [issue tra
 ## Blogs
 
 <ul>
-    {% for post in site.posts %}
-    {% alert(post.categories) %}
+    {% for post in site.categories.blog %}
             <li>
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </li>
-            {% if post.categories == "blog" %}
-        {% endif %}
     {% endfor %}
 </ul>
