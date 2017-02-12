@@ -30,11 +30,12 @@ CONTENTS                                                   *SpaceVim-contents*
       8. lang#elixir..............................|SpaceVim-layer-lang-elixir|
       9. lang#go......................................|SpaceVim-layer-lang-go|
       10. lang#java.................................|SpaceVim-layer-lang-java|
-      11. lang#php...................................|SpaceVim-layer-lang-php|
-      12. lang#python.............................|SpaceVim-layer-lang-python|
-      13. lang#rust.................................|SpaceVim-layer-lang-rust|
-      14. lang#xml...................................|SpaceVim-layer-lang-xml|
-      15. shell.........................................|SpaceVim-layer-shell|
+      11. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      12. lang#php...................................|SpaceVim-layer-lang-php|
+      13. lang#python.............................|SpaceVim-layer-lang-python|
+      14. lang#rust.................................|SpaceVim-layer-lang-rust|
+      15. lang#xml...................................|SpaceVim-layer-lang-xml|
+      16. shell.........................................|SpaceVim-layer-shell|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -564,6 +565,17 @@ This layer is for java development.
   visual    <leader>ja    generate setter and getter acctssor.
 <
 
+
+==============================================================================
+LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
+
+OCaml autocompletion provided by merlin
+
+Make sure `opam` and `merlin` are installed on your system. requirement:
+>
+  opam
+  merlin
+<
 
 ==============================================================================
 LANG#PHP                                             *SpaceVim-layer-lang-php*
