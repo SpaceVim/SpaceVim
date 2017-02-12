@@ -1,3 +1,15 @@
+""
+" @section exprfold, layer-exprfold
+" @parentsection layers
+" fold code quickly accorrding to expr
+"
+" mappings:
+" >
+"   Key         mode            function
+"   ZB          Normal          Open fold block template
+"   ZF          Normal          fold block
+"   ZC          Normal          fold block comment
+" <
 
 
 function! SpaceVim#layers#exprfold#plugins() abort

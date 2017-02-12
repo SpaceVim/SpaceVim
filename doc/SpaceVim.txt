@@ -24,16 +24,17 @@ CONTENTS                                                   *SpaceVim-contents*
       2. autocomplete..................................|SpaceVim-autocomplete|
       3. checkers....................................|SpaceVim-layer-checkers|
       4. colorscheme....................................|SpaceVim-colorscheme|
-      5. indentmove......................................|SpaceVim-indentmove|
-      6. lang#c........................................|SpaceVim-layer-lang-c|
-      7. lang#elixir..............................|SpaceVim-layer-lang-elixir|
-      8. lang#go......................................|SpaceVim-layer-lang-go|
-      9. lang#java..................................|SpaceVim-layer-lang-java|
-      10. lang#php...................................|SpaceVim-layer-lang-php|
-      11. lang#python.............................|SpaceVim-layer-lang-python|
-      12. lang#rust.................................|SpaceVim-layer-lang-rust|
-      13. lang#xml...................................|SpaceVim-layer-lang-xml|
-      14. shell.........................................|SpaceVim-layer-shell|
+      5. exprfold....................................|SpaceVim-layer-exprfold|
+      6. indentmove................................|SpaceVim-layer-indentmove|
+      7. lang#c........................................|SpaceVim-layer-lang-c|
+      8. lang#elixir..............................|SpaceVim-layer-lang-elixir|
+      9. lang#go......................................|SpaceVim-layer-lang-go|
+      10. lang#java.................................|SpaceVim-layer-lang-java|
+      11. lang#php...................................|SpaceVim-layer-lang-php|
+      12. lang#python.............................|SpaceVim-layer-lang-python|
+      13. lang#rust.................................|SpaceVim-layer-lang-rust|
+      14. lang#xml...................................|SpaceVim-layer-lang-xml|
+      15. shell.........................................|SpaceVim-layer-shell|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -429,7 +430,20 @@ colorschemes: if the colorscheme you want do not list below, PR welcome.
 <
 
 ==============================================================================
-INDENTMOVE                                               *SpaceVim-indentmove*
+EXPRFOLD                                             *SpaceVim-layer-exprfold*
+
+fold code quickly accorrding to expr
+
+mappings:
+>
+  Key         mode            function
+  ZB          Normal          Open fold block template
+  ZF          Normal          fold block
+  ZC          Normal          fold block comment
+<
+
+==============================================================================
+INDENTMOVE                                         *SpaceVim-layer-indentmove*
 
 move cursor quickly accorrding to indent
 

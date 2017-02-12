@@ -1,5 +1,5 @@
 ""
-" @section indentmove, indentmove
+" @section indentmove, layer-indentmove
 " @parentsection layers
 " move cursor quickly accorrding to indent
 "
