@@ -24,7 +24,8 @@ To report an issue or give feedback to the developers, please use the [issue tra
 
 <ul>
     {% for post in site.posts %}
-        {% if post.categorie != "changelog" %}
+        {% if post.categories contains "changelog" %}
+        {% else %}
             <li>
                 <a href="{{ post.url }}">{{ post.title }}</a>
             </li>
