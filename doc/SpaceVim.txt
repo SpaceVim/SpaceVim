@@ -32,6 +32,7 @@ CONTENTS                                                   *SpaceVim-contents*
       10. lang#java.................................|SpaceVim-layer-lang-java|
       11. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
       12. lang#php...................................|SpaceVim-layer-lang-php|
+      12. lang#puppet.............................|SpaceVim-layer-lang-puppet|
       13. lang#python.............................|SpaceVim-layer-lang-python|
       14. lang#rust.................................|SpaceVim-layer-lang-rust|
       15. lang#xml...................................|SpaceVim-layer-lang-xml|
@@ -590,6 +591,18 @@ requirement:
   Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
   JSON(for Vim 7.4+)Extension
   Composer Project
+<
+
+==============================================================================
+LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
+
+  this layer is for Puppet development, and it provides syntax highlighting,
+and syntax check.
+
+requirement:
+>
+  Puppet
+  Puppet Lint
 <
 
 ==============================================================================
