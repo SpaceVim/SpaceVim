@@ -32,11 +32,11 @@ CONTENTS                                                   *SpaceVim-contents*
       10. lang#java.................................|SpaceVim-layer-lang-java|
       11. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
       12. lang#php...................................|SpaceVim-layer-lang-php|
-      12. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      13. lang#python.............................|SpaceVim-layer-lang-python|
-      14. lang#rust.................................|SpaceVim-layer-lang-rust|
-      15. lang#xml...................................|SpaceVim-layer-lang-xml|
-      16. shell.........................................|SpaceVim-layer-shell|
+      13. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      14. lang#python.............................|SpaceVim-layer-lang-python|
+      15. lang#rust.................................|SpaceVim-layer-lang-rust|
+      16. lang#xml...................................|SpaceVim-layer-lang-xml|
+      17. shell.........................................|SpaceVim-layer-shell|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -596,8 +596,8 @@ requirement:
 ==============================================================================
 LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
 
-  this layer is for Puppet development, and it provides syntax highlighting,
-and syntax check.
+this layer is for Puppet development, and it provides syntax highlighting, and
+syntax check.
 
 requirement:
 >

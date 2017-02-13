@@ -1,3 +1,15 @@
+""
+" @section lang#puppet, layer-lang-puppet
+" @parentsection layers
+" this layer is for Puppet development, and it provides syntax highlighting,
+" and syntax check.
+"
+" requirement:
+" >
+"   Puppet
+"   Puppet Lint
+" <
+
 function! SpaceVim#layers#lang#puppet#plugins() abort
     let plugins = []
     call add(plugins, ['voxpupuli/vim-puppet', { 'on_ft' : 'puppet', 'loadconf_before' : 1}])
