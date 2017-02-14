@@ -33,6 +33,17 @@ endfunction
 
 4. send PR to SpaceVim.
 
+## Build with SpaceVim
+
+SpaceVim provide a lot of public APIs, you can create plugins base on this APIs. also you can add a badge to the README of your plugin.
+
+![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
+
+markdown
+```md
+[![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)](https://spacevim.org)
+```
+
 ## Changelog
 
 <ul>
