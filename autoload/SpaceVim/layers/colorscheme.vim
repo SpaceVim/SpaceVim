@@ -161,5 +161,6 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['gilgigilgil/anderson.vim'],
                 \ ['romainl/Apprentice'],
                 \ ['icymind/NeoSolarized'],
+                \ ['jacoborus/tender'],
                 \ ]
 endfunction
