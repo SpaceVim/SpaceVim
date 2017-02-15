@@ -35,13 +35,14 @@ endfunction
 
 ## Build with SpaceVim
 
-SpaceVim provide a lot of public APIs, you can create plugins base on this APIs. also you can add a badge to the README of your plugin.
+SpaceVim provide a lot of public [APIs](https://spacevim.org/development#apis), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
 markdown
+
 ```md
-[![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)](https://spacevim.org)
+[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 
 ## Changelog
