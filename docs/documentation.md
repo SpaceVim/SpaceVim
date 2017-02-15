@@ -15,6 +15,7 @@ title:  "Documentation"
     - [multiple leader mode](#multiple-leader-mode)
 - [Custom configuration](#custom-configuration)
 - [Layers](https://spacevim.org/layers)
+- [APIs](#apis)
 
 # Features
 
@@ -481,6 +482,14 @@ let g:spacevim_custom_plugins = [
  nnoremap <c-l> :Ydc<cr>
 ```
 
+## APIs
+
+SpaceVim provide many public apis, you can use this apis in your plugins. here is the list of all the apis:
+
+nanme | description
+----- | ------------------
+file  | 
+system |
 
 
 <!-- plublic links -->
