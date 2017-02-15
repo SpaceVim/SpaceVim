@@ -211,7 +211,6 @@ nnoremap <silent><leader>ff :<c-u>Unite tag/include -start-insert<CR>
 "" grep dictionay
 """ For searching the word in the cursor in the current directory
 nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
-nnoremap <space>/ :Unite -auto-preview grep:.<cr>
 """ For searching the word handin
 nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
 """ For searching the word in the cursor in the current buffer

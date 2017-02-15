@@ -29,7 +29,7 @@ function! SpaceVim#layers#edit#config() abort
                 \      'extends' : 'html',
                 \  },
                 \}
-    noremap <SPACE> <Plug>(wildfire-fuel)
+    "noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
     map <Leader><Leader> <Plug>(easymotion-prefix)

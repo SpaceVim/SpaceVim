@@ -51,6 +51,7 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
         nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
                     \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
         nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+        nnoremap <silent> [unite]/ :Unite -auto-preview grep:.<cr>
         nnoremap <silent> [unite]w
                     \ :<C-u>Unite -buffer-name=files -no-split
                     \ jump_point file_point buffer_tab
