@@ -1,3 +1,7 @@
+---
+title:  "Documentation"
+---
+
 # SpaceVim Documentation
 
 ---
