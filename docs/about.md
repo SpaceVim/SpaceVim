@@ -1,5 +1,5 @@
 ---
-title:  "About SpaceVim"
+title:  "About"
 ---
 
 # About SpaceVim
