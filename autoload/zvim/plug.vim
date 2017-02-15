@@ -42,10 +42,10 @@ function! s:install_manager() abort
             let g:spacevim_dein_installed = 1
         else
             if executable('git')
-                exec '!git clone https://github.com/Shougo/dein.vim '
+                exec '!git clone https://github.com/Shougo/dein.vim "'
                             \ . fnameescape(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
-                            \ 'Shougo', 'dein.vim'], s:Fsep)
+                            \ 'Shougo', 'dein.vim"'], s:Fsep)
                 let g:spacevim_dein_installed = 1
             else
                 echohl WarningMsg
