@@ -1,6 +1,6 @@
 ---
 title: "Use Vim as a Java IDE"
-permalink: "/blog/:title"
+permalink: /blog/use-vim-as-a-java-ide.html
 redirect_from: /2017/02/11/use-vim-as-a-java-ide.html
 ---
 
