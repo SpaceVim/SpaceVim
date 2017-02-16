@@ -273,7 +273,13 @@ function! SpaceVim#default#SetMappings() abort
     nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 
     " C-r: Easier search and replace
-    xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
+    xnoremap <C-r> :<C-u>call <SID>VSetSearch()<CR>:,$s/<C-R>=@/<CR>//gc<left><left><left>
+    function! s:VSetSearch() abort
+        let temp = @s
+        norm! gv"sy
+        let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+        let @s = temp
+    endfunction
 
     "irssi like hot key
     nnoremap <silent><M-1> :<C-u>call <SID>tobur(1)<CR>
@@ -325,5 +331,5 @@ fu! s:tobur(num) abort
 endf
 
 function! SpaceVim#default#UseSimpleMode() abort
-    
+
 endfunction
