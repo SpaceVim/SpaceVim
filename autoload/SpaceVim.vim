@@ -94,6 +94,10 @@ let g:spacevim_guifont                 = ''
 "   let g:spacevim_enable_ycm = 1
 " <
 let g:spacevim_enable_ycm              = 0
+""
+" Set the width of value of spacevim sidebar width, and this value will be
+" used by tagbar, vimfiler, mundo etc. default it is 30.
+let g:spacevim_sidebar_width           = 30
 let g:spacevim_enable_neocomplcache    = 0
 ""
 " Enable cursorline

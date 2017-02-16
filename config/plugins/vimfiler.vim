@@ -26,7 +26,7 @@ endif
 
 call vimfiler#custom#profile('default', 'context', {
             \ 'explorer' : 1,
-            \ 'winwidth' : 30,
+            \ 'winwidth' : get(g:, 'spacevim_sidebar_width', 30) ,
             \ 'winminwidth' : 30,
             \ 'toggle' : 1,
             \ 'columns' : 'type',

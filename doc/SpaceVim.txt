@@ -124,6 +124,10 @@ Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
   let g:spacevim_enable_ycm = 1
 <
 
+                                                    *g:spacevim_sidebar_width*
+Set the width of value of spacevim sidebar width, and this value will be used
+by tagbar, vimfiler, mundo etc. default it is 30.
+
                                                 *g:spacevim_enable_cursorline*
 Enable cursorline
 >
