@@ -76,6 +76,11 @@ let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', 
 let g:spacevim_realtime_leader_guide   = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
+""
+" SpaceVim default checker is neomake, if you want to use syntastic, use:
+" >
+"   let g:spacevim_enable_neomake = 0
+" <
 let g:spacevim_enable_neomake          = 1
 ""
 " set the guifont of Spacevim, default is empty.

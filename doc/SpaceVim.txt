@@ -106,6 +106,12 @@ feature:
   let g:spacevim_realtime_leader_guide = 1
 <
 
+                                                   *g:spacevim_enable_neomake*
+SpaceVim default checker is neomake, if you want to use syntastic, use:
+>
+  let g:spacevim_enable_neomake = 0
+<
+
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
 >
