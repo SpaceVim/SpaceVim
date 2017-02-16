@@ -28,7 +28,7 @@ let g:neocomplcache_enable_prefetch = 1
 let g:neocomplcache_skip_auto_completion_time = '0.6'
 
 " For auto select.
-let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_auto_select = 0
 
 let g:neocomplcache_enable_auto_delimiter = 1
 let g:neocomplcache_disable_auto_select_buffer_name_pattern =

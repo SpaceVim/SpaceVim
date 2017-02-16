@@ -106,6 +106,12 @@ feature:
   let g:spacevim_realtime_leader_guide = 1
 <
 
+                                                   *g:spacevim_enable_neomake*
+SpaceVim default checker is neomake, if you want to use syntastic, use:
+>
+  let g:spacevim_enable_neomake = 0
+<
+
                                                           *g:spacevim_guifont*
 set the guifont of Spacevim, default is empty.
 >
@@ -117,6 +123,10 @@ Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
 >
   let g:spacevim_enable_ycm = 1
 <
+
+                                                    *g:spacevim_sidebar_width*
+Set the width of value of spacevim sidebar width, and this value will be used
+by tagbar, vimfiler. default it is 30.
 
                                                 *g:spacevim_enable_cursorline*
 Enable cursorline

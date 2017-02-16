@@ -19,7 +19,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.1.0-dev'
+let g:spacevim_version = '0.2.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indent of SpaceVim. default is 2.
@@ -66,7 +66,7 @@ let g:spacevim_vim_plug_installed      = 0
 " >
 "   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 " <
-let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], '/')
+let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], SpaceVim#api#import('file').separator)
 ""
 " Disable/Enable realtime leader guide, by default it is 0.
 " to enable this feature:
@@ -76,6 +76,11 @@ let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', 
 let g:spacevim_realtime_leader_guide   = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
+""
+" SpaceVim default checker is neomake, if you want to use syntastic, use:
+" >
+"   let g:spacevim_enable_neomake = 0
+" <
 let g:spacevim_enable_neomake          = 1
 ""
 " set the guifont of Spacevim, default is empty.
@@ -89,6 +94,10 @@ let g:spacevim_guifont                 = ''
 "   let g:spacevim_enable_ycm = 1
 " <
 let g:spacevim_enable_ycm              = 0
+""
+" Set the width of value of spacevim sidebar width, and this value will be
+" used by tagbar, vimfiler. default it is 30.
+let g:spacevim_sidebar_width           = 30
 let g:spacevim_enable_neocomplcache    = 0
 ""
 " Enable cursorline
@@ -270,6 +279,7 @@ function! SpaceVim#end() abort
     if !empty(g:spacevim_unite_leader)
         call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
     endif
+    call SpaceVim#mapping#leader#defindglobalMappings()
     if g:spacevim_simple_mode
         let g:spacevim_plugin_groups = ['core']
     else

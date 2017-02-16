@@ -1,4 +1,4 @@
-let g:tagbar_width=30
+let g:tagbar_width = g:spacevim_sidebar_width
 let g:tagbar_left = 1
 
 
