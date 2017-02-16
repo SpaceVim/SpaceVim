@@ -1,3 +1,76 @@
+function! SpaceVim#mapping#leader#defindglobalMappings() abort
+    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+    nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+
+    "for buftabs
+    noremap <silent><Leader>bp :bprev<CR>
+    noremap <silent><Leader>bn :bnext<CR>
+
+    "background
+    noremap <silent><leader>bg :call ToggleBG()<CR>
+    "numbers
+    noremap <silent><leader>nu :call ToggleNumber()<CR>
+    
+    " yark and paste
+    vmap <Leader>y "+y
+    vmap <Leader>d "+d
+    nmap <Leader>p "+p
+    nmap <Leader>P "+P
+    vmap <Leader>p "+p
+    vmap <Leader>P "+P
+
+    cnoremap <Leader><C-F> <C-F>
+    "When pressing <leader>cd switch to the directory of the open buffer
+    map <Leader>cd :cd %:p:h<CR>:pwd<CR>
+    " Fast saving
+    nnoremap <Leader>w :w<CR>
+    vnoremap <Leader>w <Esc>:w<CR>
+
+    " Toggle editor visuals
+    nmap <Leader>ts :setlocal spell!<cr>
+    nmap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
+    nmap <Leader>tl :setlocal nolist!<CR>
+    nmap <Leader>th :nohlsearch<CR>
+    nmap <Leader>tw :setlocal wrap! breakindent!<CR>
+
+    " Location list movement
+    nmap <silent><Leader>lj :lnext<CR>
+    nmap <silent><Leader>lk :lprev<CR>
+    nmap <silent><Leader>lq :lclose<CR>
+
+    " quickfix list movement
+    nmap <silent><Leader>qj :cnext<CR>
+    nmap <silent><Leader>qk :cprev<CR>
+    nmap <silent><Leader>qq :cclose<CR>
+
+    " Duplicate lines
+    nnoremap <Leader>d m`YP``
+    vnoremap <Leader>d YPgv
+
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-c>',
+                \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
+                \ 'Yank the github link of current file to X11 clipboard',
+                \ 'call zvim#util#CopyToClipboard(1)')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-l>',
+                \ ':<c-u>call zvim#util#CopyToClipboard(2)<cr>',
+                \ 'Yank the github link of current line to X11 clipboard',
+                \ 'call zvim#util#CopyToClipboard(2)')
+    call SpaceVim#mapping#def('vnoremap <silent>', '<Leader><C-l>',
+                \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
+                \ 'Yank the github link of current selection to X11 clipboard',
+                \ 'call zvim#util#CopyToClipboard(3)')
+    call SpaceVim#mapping#def('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
+                \ 'Sourced selection.',
+                \ "echo 'Use <leader>S to sourced selection.'")
+    call SpaceVim#mapping#def('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
+                \ "echo 'Use <leader>S to sourced line.'")
+
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
+                \'Open previous buffer in split window' , 'split|wincmd p|e#')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
+                \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
+endfunction
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     if !empty(a:key)
         call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
