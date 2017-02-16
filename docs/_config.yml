@@ -1,7 +1,5 @@
 theme: jekyll-theme-midnight
 title: SpaceVim
-lang: "en"
-markdown: kramdown
 description: A community-driven Vim distribution
 show_downloads: false
 google_analytics: UA-89745542-1

@@ -1,10 +1,3 @@
----
-title: "Use Vim as a Java IDE"
-permalink: /blog/use-vim-as-a-java-ide.html
-redirect_from: /2017/02/11/use-vim-as-a-java-ide.html
----
-
-
 # [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
 
 I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim.
