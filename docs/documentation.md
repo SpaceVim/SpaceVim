@@ -482,15 +482,6 @@ let g:spacevim_custom_plugins = [
  nnoremap <c-l> :Ydc<cr>
 ```
 
-## APIs
-
-SpaceVim provide many public apis, you can use this apis in your plugins. here is the list of all the apis:
-
-nanme | description
------ | ------------------
-file  | 
-system |
-
 
 <!-- plublic links -->
 [dein.vim]: https://github.com/Shougo/dein.vim
