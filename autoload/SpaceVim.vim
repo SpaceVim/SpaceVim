@@ -19,7 +19,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.1.0-dev'
+let g:spacevim_version = '0.2.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indent of SpaceVim. default is 2.
