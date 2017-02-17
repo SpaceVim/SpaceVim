@@ -1,8 +1,8 @@
 ""
 " @section lang#xml, layer-lang-xml
 " @parentsection layers
-" when edite an xml file, the omni func is `xmlcomplete#CompleteTags`, you can
-" read the document in `autoload/xmlcomplete.vim` in vim or neovim
+" When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
+" read the documentation in autoload/xmlcomplete.vim in the vim or neovim
 " runtime directory.
 
 

@@ -1,14 +1,15 @@
 ""
 " @section exprfold, layer-exprfold
 " @parentsection layers
-" fold code quickly accorrding to expr
+" Fold code quickly according to expr.
 "
-" mappings:
+" Mappings:
 " >
-"   Key         mode            function
-"   ZB          Normal          Open fold block template
-"   ZF          Normal          fold block
-"   ZC          Normal          fold block comment
+"   Key         Mode            Function
+"   ----------------------------------------------------
+"   ZB          normal          Open fold block template
+"   ZF          normal          Fold block
+"   ZC          normal          Fold block comment
 " <
 
 

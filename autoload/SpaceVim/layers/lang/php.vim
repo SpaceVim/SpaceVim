@@ -1,10 +1,10 @@
 ""
 " @section lang#php, layer-lang-php
 " @parentsection layers
-"   this layer is for php development, and it provide auto codo completion,
-" and syntax check, and jump to the definition location.
+" This layer is for PHP development. It proides code completion, syntax
+" checking, and jump to definition.
 "      
-" requirement:
+" Requirements:
 " >
 "   PHP 5.3+
 "   PCNTL Extension
