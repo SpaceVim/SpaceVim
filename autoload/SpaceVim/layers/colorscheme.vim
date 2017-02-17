@@ -138,7 +138,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['nanotech/jellybeans.vim'],
                 \ ['mhartington/oceanic-next'],
                 \ ['mhinz/vim-janah'],
-                \ ['tomasr/molokai'],
+                \ ['Gabirel/molokai'],
                 \ ['kabbamine/yowish.vim'],
                 \ ['vim-scripts/wombat256.vim'],
                 \ ['vim-scripts/twilight256.vim'],
