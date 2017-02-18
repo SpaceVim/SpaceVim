@@ -123,7 +123,6 @@ function! SpaceVim#default#SetPlugins() abort
     call add(g:spacevim_plugin_groups, 'indents')
     call add(g:spacevim_plugin_groups, 'navigation')
     call add(g:spacevim_plugin_groups, 'misc')
-    call add(g:spacevim_plugin_groups, 'tmux')
 
     call add(g:spacevim_plugin_groups, 'core')
     call add(g:spacevim_plugin_groups, 'unite')
