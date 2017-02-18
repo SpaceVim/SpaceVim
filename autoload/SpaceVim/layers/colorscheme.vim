@@ -10,6 +10,15 @@
 " 
 " The following colorschemes are include in SpaceVim. If the colorscheme you
 " want is not included in the list below, a PR is welcome.
+" 
+" Also, there's one thing which everyone should know and pay attention to.
+" NOT all of below colorschemes support spell check very well. For example,
+" a colorscheme called atom doesn't support atom very well. 
+"
+" SpaceVim is not gonna fix them since these should be in charge of each author.
+" You can see a list which has no support of spell check in here:
+" https://github.com/SpaceVim/SpaceVim/issues/209#issuecomment-280545818
+"
 " >
 "   anderson
 "   apprentice
@@ -138,7 +147,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['nanotech/jellybeans.vim'],
                 \ ['mhartington/oceanic-next'],
                 \ ['mhinz/vim-janah'],
-                \ ['tomasr/molokai'],
+                \ ['Gabirel/molokai'],
                 \ ['kabbamine/yowish.vim'],
                 \ ['vim-scripts/wombat256.vim'],
                 \ ['vim-scripts/twilight256.vim'],
