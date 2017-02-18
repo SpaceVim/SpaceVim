@@ -4,3 +4,5 @@ description: A community-driven Vim distribution
 show_downloads: false
 google_analytics: UA-89745542-1
 project_repo_url: https://github.com/SpaceVim/SpaceVim
+
+permalink: /:title/
