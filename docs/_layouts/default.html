@@ -1,6 +1,24 @@
 <!doctype html>
 <html>
     <head>
+        <script type="application/ld+json">
+            { 
+                "@context": "http://schema.org", 
+                "@type": "WebSite", 
+                "url": "https://spacevim.org/", 
+                "name": "{{ page.title | default: Home }} - SpaceVim",
+                "author": {
+                    "@type": "Person",
+                    "name": "Shidong Wang"
+                },
+                "description": "{{ site.description }}",
+                "publisher": "Shidong Wang",
+                "potentialAction": { 
+                    "@type": "SearchAction", 
+                    "target": "https://spacevim.org/?s={search_term}", 
+                    "query-input": "required name=search_term" } 
+            }
+        </script>
         <script>
             var _hmt = _hmt || [];
 (function() {
