@@ -1,10 +1,12 @@
 ""
 " @section lang#go, layer-lang-go
 " @parentsection layers
-" This layer support go development, include code completion and syntax check.
-" @subsection mappings
+" This layer includes code completion and syntax checking for Go development.
+"
+" @subsection Mappings
 " >
-"   mode            key             function
+"   Mode            Key             Function
+"   ---------------------------------------------
 "   normal          <leader>gi      go implements
 "   normal          <leader>gf      go info
 "   normal          <leader>ge      go rename

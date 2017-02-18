@@ -2,21 +2,21 @@
 " @section autocomplete, autocomplete
 " @parentsection layers
 " @subsection code completion
-" SpaceVim use neocomplete as default completion engine for vim with lua
-" support, if has no lua support neocomplcache will be the completion engine.
-" SpaceVim use deoplete as default completion engine for nevoim. to make
-" neovim support python, please read neovim's |provider-python|.
+" SpaceVim uses neocomplete as the default completion engine if vim has lua
+" support. If there is no lua support, neocomplcache will be used for the
+" completion engine. Spacevim uses deoplete as the default completion engine
+" for neovim. Deoplete requires neovim to be compiled with python support. For
+" more information on python support, please read neovim's |provider-python|.
 "
-" SpaceVim include YouCompleteMe, but it is disabled by default, to enable
+" SpaceVim includes YouCompleteMe, but it is disabled by default. To enable
 " ycm, see |g:spacevim_enable_ycm|.
 "
 " @subsection snippet
-" SpaceVim use neosnippet as default snippet engine, and the default snippets
-" is `Shougo/neosnippet-snippets`. for more information, please read
-" |neosnippet|. neosnippet support custtom snippets, and the default snippets
-" directory is `~/.SpaceVim.d/snippets/` and if
-" g:spacevim_force_global_config = 1, SpaceVim will not append
-" `./.SpaceVim.d/snippets` as default snippets directory.
+" SpaceVim use neosnippet as the default snippet engine. The default snippets
+" are provided by `Shougo/neosnippet-snippets`. For more information, please read
+" |neosnippet|. Neosnippet support custom snippets, and the default snippets
+" directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
+" SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
 
 

@@ -1,10 +1,10 @@
 ""
 " @section lang#puppet, layer-lang-puppet
 " @parentsection layers
-" this layer is for Puppet development, and it provides syntax highlighting,
-" and syntax check.
+" This layer is for Puppet development. It provides syntax highlighting and
+" syntax checking.
 "
-" requirement:
+" Requirements:
 " >
 "   Puppet
 "   Puppet Lint

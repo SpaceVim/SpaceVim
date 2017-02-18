@@ -3,17 +3,17 @@
 " @stylized spacevim
 " @library
 " @order intro version dicts functions exceptions layers faq
-"   SpaceVim is a Modular configuration, a bundle of custom settings
-" and plugins, for Vim. It got inspired by spacemacs.
+" SpaceVim is a bundle of custom settings and plugins with a modular
+" configuration for Vim. It was inspired by Spacemacs.
 "
 
 ""
 " @section CONFIGURATION, config
-" SpaceVim use `~/.SpaceVim.d/init.vim` as it's default global config file.
-" you can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
-" also be added to runtimepath, so you can write your own script in it.
-" SpaceVim also support local config of each project. It should be
-" `.SpaceVim.d/init.vim` in the root directory of your project. and
+" SpaceVim uses `~/.SpaceVim/init.vim` as its default global config file.
+" You can set all the SpaceVim options and layers in it. `~/.SpaceVim/` will
+" also be added to runtimepath, so you can write your own scripts in it.
+" SpaceVim also supports local config for each project. Place local config 
+" settings in `.SpaceVim.d/init.vim` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
 
 ""
@@ -22,54 +22,51 @@ scriptencoding utf-8
 let g:spacevim_version = '0.2.0-dev'
 lockvar g:spacevim_version
 ""
-" Change the default indent of SpaceVim. default is 2.
+" Change the default indentation of SpaceVim. Default is 2.
 " >
 "   let g:spacevim_default_indent = 2
 " <
 let g:spacevim_default_indent          = 2
 ""
-" Change the max column of SpaceVim, default is 120.
+" Change the max number of columns for SpaceVim. Default is 120.
 " >
 "   let g:spacevim_max_column = 120
 " <
 let g:spacevim_max_column              = 120
 ""
-" Enable true color support in terminal.
+" Enable true color support in terminal. Default is 1.
 " >
 "   let g:spacevim_enable_guicolors = 1
 " <
 let g:spacevim_enable_guicolors = 1
 ""
-" Enable/Disable google suggestion for neocomplete. by default it is Disabled.
-" you can enable it by:
+" Enable/Disable Google suggestions for neocomplete. Default is 0.
 " >
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
 ""
-" Windows function leader of SpaceVim, default is `s`, set to empty to disable
-" this feature, or you can set to other char.
+" Window functions leader for SpaceVim. Default is `s`. 
+" Set to empty to disable this feature, or you can set to another char.
 " >
 "   let g:spacevim_windows_leader = ''
 " <
 let g:spacevim_windows_leader          = 's'
 ""
-" Unite work flow leader of SpaceVim, default is `f`, set to empty to disable
-" this feature, or you can set to other char.
+" Unite work flow leader of SpaceVim. Default is `f`.
+" Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_unite_leader            = 'f'
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
 ""
-" Set the cache dir of plugins, by default, it is `~/.cache/vimfiles`.
-" you can set it by:
+" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 " >
 "   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], SpaceVim#api#import('file').separator)
 ""
-" Disable/Enable realtime leader guide, by default it is 0.
-" to enable this feature:
+" Enable/Disable realtime leader guide. Default is 0.
 " >
 "   let g:spacevim_realtime_leader_guide = 1
 " <
@@ -77,123 +74,118 @@ let g:spacevim_realtime_leader_guide   = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
 ""
-" SpaceVim default checker is neomake, if you want to use syntastic, use:
+" SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
 "   let g:spacevim_enable_neomake = 0
 " <
 let g:spacevim_enable_neomake          = 1
 ""
-" set the guifont of Spacevim, default is empty.
+" Set the guifont of SpaceVim. Default is empty.
 " >
 "   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 " <
 let g:spacevim_guifont                 = ''
 ""
-" Disable/Enable YouCompleteMe, by default it is disabled. To enable it:
+" Enable/Disable YouCompleteMe. Default is 0.
 " >
 "   let g:spacevim_enable_ycm = 1
 " <
 let g:spacevim_enable_ycm              = 0
 ""
-" Set the width of value of spacevim sidebar width, and this value will be
-" used by tagbar, vimfiler. default it is 30.
+" Set the width of the SpaceVim sidebar. Default is 30.
+" This value will be used by tagbar and vimfiler.
 let g:spacevim_sidebar_width           = 30
 let g:spacevim_enable_neocomplcache    = 0
 ""
-" Enable cursorline
+" Enable/Disable cursorline. Default is 0.
 " >
 "   let g:spacevim_enable_cursorline = 1
 " <
 let g:spacevim_enable_cursorline       = 0
 ""
-" Set the error symbol of SpaceVim's syntax maker.
-" example: >
+" Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
+" >
 "   let g:spacevim_error_symbol = '+'
 " <
 let g:spacevim_error_symbol            = '✖'
 ""
-" Set the warning symbol of SpaceVim's syntax maker.
-" example: >
+" Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
+" >
 "   let g:spacevim_warning_symbol = '!'
 " <
 let g:spacevim_warning_symbol          = '⚠'
 let g:spacevim_use_colorscheme         = 1
 ""
-" Set the help language of vim. By default it is `en`, you can change it to
-" chinese.
+" Set the help language of vim. Default is 'en'. 
+" You can change it to Chinese.
 " >
 "   let g:spacevim_vim_help_language = 'chinese'
 " <
 let g:spacevim_vim_help_language       = 'en'
 ""
-" Set the message language of vim. By default it is empty, and the language is
-" en_US.UTF-8. example:
+" Set the message language of vim. Default is 'en_US.UTF-8'.
 " >
 "   let g:spacevim_language = 'en_CA.utf8'
 " <
 let g:spacevim_language                = ''
 ""
-" The colorscheme of SpaceVim, if colorscheme groups are installed.
+" The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
-" The default colorscheme of SpaceVim. By default SpaceVim use desert, if
-" colorscheme which name is the value of g:spacevim_colorscheme has not been
-" installed.you can change it in custom config file.
+" The default colorscheme of SpaceVim. Default is 'desert'. 
+" This colorscheme will be used if the colorscheme set by 
+" `g:spacevim_colorscheme` is not installed.
 " >
 "   let g:spacevim_colorscheme_default = 'other_color'
 " <
 let g:spacevim_colorscheme_default     = 'desert'
 ""
-" Disable/Enable simple mode of SpaceVim, in this mode, only few plugins will be
-" installed.
+" Enable/disable simple mode of SpaceVim. Default is 0.
+" In this mode, only few plugins will be installed.
 " >
 "   let g:spacevim_simple_mode = 1
 " <
 let g:spacevim_simple_mode             = 0
 ""
-" The default file manager of SpaceVim.
+" The default file manager of SpaceVim. Default is 'vimfiler'.
 let g:spacevim_filemanager             = 'vimfiler'
 ""
-" The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
-" default it is dein.
+" The default plugin manager of SpaceVim. Default is 'dein'.
+" Options are dein, neobundle, or vim-plug.
 let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
 ""
-" Enable/Disable checkinstall on SpaceVim startup. by default is 1.
-"
-" To disable it: >
+" Enable/Disable checkinstall on SpaceVim startup. Default is 1.
+" >
 "   let g:spacevim_checkinstall = 0
 " <
 let g:spacevim_checkinstall            = 1
 ""
-" Enable/Disable debug mode for SpaceVim, by default it is disabled.
-"
-" to enable it: >
+" Enable/Disable debug mode for SpaceVim. Default is 0.
+" >
 "   let g:spacevim_enable_debug = 1
 " <
 let g:spacevim_enable_debug            = 0
 ""
-" Set the debug level of SpaceVim, by default it is 1.
+" Set the debug level of SpaceVim. Default is 1.
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
 
 
 ""
-" groups of plugins should be loaded.
-"
-" example: >
+" Plugin groups to be loaded.
+" >
 "    let g:spacevim_plugin_groups = ['core', 'lang']
 " <
-" now Space Vim support these groups:
 let g:spacevim_plugin_groups           = []
 ""
-" Disable plugins by names.
-" example: >
+" Disable plugins by name.
+" >
 "   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
 " <
 let g:spacevim_disabled_plugins        = []
 ""
-" Add custom plugins
+" Add custom plugins.
 " >
 "   let g:spacevim_custom_plugins = [
 "               \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
@@ -202,26 +194,25 @@ let g:spacevim_disabled_plugins        = []
 " <
 let g:spacevim_custom_plugins          = []
 ""
-" SpaceVim will load global config after local config if set to 1. by default
-" it is 0, if you has local config, the global config will not be loaded.
+" SpaceVim will load the global config after local config if set to 1. Default
+" is 0. If you have a local config, the global config will not be loaded. 
 " >
 "   let g:spacevim_force_global_config = 1
 " <
 let g:spacevim_force_global_config     = 0
 ""
-" enable/disable SpaceVim with powerline symbols.
+" Enable/Disable powerline symbols. Default is 1.
 let g:spacevim_enable_powerline_fonts  = 1
 ""
-" Enable/Disable lint on save feature of SpaceVim's maker.
-"
-" To disable lint on save:
+" Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
 " >
 "   let g:spacevim_lint_on_save = 0
 " <
 let g:spacevim_lint_on_save            = 1
 ""
-" Enable/Disable Vimfiler in the welcome windows, this will cause vim slow on startup if
-" there are too many files in current directory. you can disable it by:
+" Enable/Disable vimfiler in the welcome windows. Default is 1. 
+" This will cause vim to start up slowly if there are too many files in the
+" current directory. 
 " >
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
@@ -232,8 +223,8 @@ let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
 ""
-" The host file url. this option is for chinese users who can not use
-" google and twitter.
+" The host file url. This option is for Chinese users who can not use
+" Google and Twitter.
 let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
 let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
             \*.ttf,*.TTF,*.png,*/target/*,
@@ -347,39 +338,43 @@ endfunction
 
 ""
 " @section FAQ, faq
-" 1. How to enable YouCompleteMe? (I do not recommend to use YouCompleteMe, it
-" is too big as a vim plugin, BTW I do not like using submodule in vim plugin,
-" it is hard to manager by vim plugin manager.)
-"
+"1. How do I enable YouCompleteMe? 
 " >
-"   step 1: add `let g:spacevim_enable_ycm = 1` to custom_config, by default it
-"   should be `~/.SpaceVim.d/init.vim`.
+"   I do not recommend using YouCompleteMe.
+"   It is too big as a vim plugin. Also, I do not like using submodules in a vim
+"   plugin. It is hard to manage with a plugin manager.
 "
-"   step 2: Get into the directory of YouCompleteMe's author, by default it
-"   should be `~/.cache/vimfiles/repos/github.com/Valloric/`, If you find the
-"   directory `YouCompleteMe` in it, just get into it, otherwise clone
+"   Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
+"   it should be `~/.SpaceVim/init.vim`.
+"
+"   Step 2: Get into the directory of YouCompleteMe's author. By default it
+"   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
+"   directory `YouCompleteMe` in it, go into it. Otherwise clone
 "   YouCompleteMe repo by
-"   `git clone https://github.com/Valloric/YouCompleteMe.git`, after cloning,
-"   get into it, run `git submodule update --init --recursive`.
+"   `git clone https://github.com/Valloric/YouCompleteMe.git`. After cloning,
+"   get into it and run `git submodule update --init --recursive`.
 "
-"   step 3: compile YouCompleteMe with the feature you want. if you just want
-"   support c family, you need run `./install.py --clang-completer`.
+"   Step 3: Compile YouCompleteMe with the features you want. If you just want
+"   C family support, run `./install.py --clang-completer`.
 " <
 "
-" 2. How to add custom snippt?
-"
-" SpaceVim use neosnippet as default snippet engine. If you want to add
-" snippet for vim filetype, open a vim file, run `:NeoSnippetEdit` command, a
-" buffer will be opened, you can add your custom snippet, by default this
-" buffer will be save in `~/.SpaceVim.d/snippets`, if you want to use other
-" directory:
+" 2. How to add custom snippet?
 " >
+"   SpaceVim uses neosnippet as the default snippet engine. If you want to add
+"   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
+"   command. A buffer will be opened and you can add your custom snippet. 
+"   By default this buffer will be save in `~/.SpaceVim/snippets`. 
+"   If you want to use another directory:
+"
 "   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+"   
+"   For more info about how to write snippet, please 
+"   read |neosnippet-snippet-syntax|.
 " <
-" for more info about how to write snippet, please read ||neosnippet-snippet-syntax|.
 "
 " 3. Where is `<c-f>` in cmdline-mode?
-"
-" `<c-f>` is the default value of |cedit| option, but in SpaceVim we use same
-" as `<Right>`, so maybe you can change the `ceite` option, or use
-" `<leader>+<c-f>`.
+" >
+"   `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
+"   binding as `<Right>`, so maybe you can change the `cedit` option or use
+"   `<leader>+<c-f>`.
+" <

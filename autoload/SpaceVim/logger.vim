@@ -5,13 +5,13 @@ let s:log_temp = []
 
 ""
 " @public
-" Set debug level of SpaceVim, by default it is 1. all message will be logged.
+" Set debug level of SpaceVim. Default is 1.
 "
-"     1 : log all the message.
+"     1 : log all messages
 "
-"     2 : log warning and error message
+"     2 : log warning and error messages
 "
-"     3 : log error message only
+"     3 : log error messages only
 function! SpaceVim#logger#setLevel(level) abort
     let s:logger_level = a:level
 endfunction
@@ -74,8 +74,7 @@ endfunction
 
 ""
 " @public
-" Set log output file of SpaceVim. by default it is
-" `~/.SpaceVim/.SpaceVim.log`
+" Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
 function! SpaceVim#logger#setOutput(file) abort
     let s:logger_file = a:file
 endfunction

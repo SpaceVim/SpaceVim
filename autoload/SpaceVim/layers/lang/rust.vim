@@ -1,24 +1,35 @@
 ""
 " @section lang#rust, layer-lang-rust
 " @parentsection layers
-" SpaceVim do not load this layer by default, if you are a rust developer, you
-" should add `call SpaceVim#layers#load('lang#rust')` to your @section(config)
+" SpaceVim does not load this layer by default. If you are a rust developer,
+" you should add `call SpaceVim#layers#load('lang#rust')` to your
+" @section(config)
 "
-" requirement:
-"   1. racer : cargo install racer
-"   2. export RUST_SRC_PATH : 
-"       you can download src by : rustup component add rust-src, and add below
-"       into your bashrc.
-"
-" export RUST_SRC_PATH=~/.multirust/toolchains/[your-toolchain]/lib/rustlib/src/rust/src
-"
-" configuration:
-"   1. add `let g:racer_cmd = "/path/to/racer/bin"` in to custom config, if
-"   you has racer executable in you PATH. g:racer_cmd should be auto detect.
-"
-" mappings:
+" Requirements:
+"   
+"   1. Racer needs a copy of the rust source. The easiest way to do this is
+"       with rustup. Once rustup is installed, download the source with:
 " >
-"   mode        key         function
+"       rustup component add rust-src 
+" <
+"   2. Install racer:
+" >
+"       cargo install racer
+" <
+"   3. Set the RUST_SRC_PATH variable in your .bashrc:
+" >
+"       RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+"       export RUST_SRC_PATH
+" <
+"   4. Add racer to your path, or set the path with:
+" >
+"       let g:racer_cmd = "/path/to/racer/bin"
+" <
+"
+" @subsection Mappings
+" >
+"   Mode        Key         Function
+"   -----------------------------------------------
 "   normal      gd          rust-definition
 "   normal      gs          rust-definition-split
 "   normal      gx          rust-definition-vertical

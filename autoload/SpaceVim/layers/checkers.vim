@@ -1,7 +1,7 @@
 ""
 " @section checkers, layer-checkers
 " @parentsection layers
-" SpaceVim use neomake as default syntax checker.
+" SpaceVim uses neomake as default syntax checker.
 
 function! SpaceVim#layers#checkers#plugins() abort
     let plugins = []

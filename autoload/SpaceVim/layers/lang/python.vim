@@ -1,7 +1,7 @@
 ""
 " @section lang#python, layer-lang-python
 " @parentsection layers
-" To make this layer works well, you should install jedi.
+" To make this layer work well, you should install jedi.
 " @subsection mappings
 " >
 "   mode            key             function
