@@ -94,7 +94,6 @@ function! SpaceVim#default#SetOptions() abort
     set laststatus=2
     set completeopt=longest,menu
     set wildignorecase
-    let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
     set mouse=
     set hidden
     set ttimeout

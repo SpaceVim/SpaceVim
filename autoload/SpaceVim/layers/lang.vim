@@ -16,7 +16,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
                 \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
                 \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
-                \ ['plasticboy/vim-markdown',                { 'on_ft' : 'markdown'}],
                 \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
                 \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
                 \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
@@ -28,6 +27,4 @@ function! SpaceVim#layers#lang#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#config() abort
-    let g:vim_markdown_conceal = 0
-    let g:vim_markdown_folding_disabled = 1
 endfunction
