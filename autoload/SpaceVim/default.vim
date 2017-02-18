@@ -117,6 +117,7 @@ function! SpaceVim#default#SetPlugins() abort
     call add(g:spacevim_plugin_groups, 'python')
     call add(g:spacevim_plugin_groups, 'scala')
     call add(g:spacevim_plugin_groups, 'lang#go')
+    call add(g:spacevim_plugin_groups, 'lang#markdown')
     call add(g:spacevim_plugin_groups, 'scm')
     call add(g:spacevim_plugin_groups, 'editing')
     call add(g:spacevim_plugin_groups, 'indents')
