@@ -3,16 +3,18 @@
 " @parentsection layers
 " Adds integration between tmux and vim panes. Switch between panes
 " seamlessly.
+" This layer is not added by default. To include it, add
+" `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`
 "
 " @subsection mappings
-"
-" Key       Mode        Function
-" ------------------------------
-" <C-h>     normal      Switch to pane in left direction
-" <C-j>     normal      Switch to pane in down direction
-" <C-k>     normal      Switch to pane in up direction
-" <C-l>     normal      Switch to pane in right direction
-"
+" >
+"   Key       Mode        Function
+"   ------------------------------
+"   <C-h>     normal      Switch to pane in left direction
+"   <C-j>     normal      Switch to pane in down direction
+"   <C-k>     normal      Switch to pane in up direction
+"   <C-l>     normal      Switch to pane in right direction
+" <
 
 function! SpaceVim#layers#tmux#plugins() abort
     let plugins = []
