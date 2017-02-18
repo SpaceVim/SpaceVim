@@ -1,10 +1,9 @@
 ""
 " @section lang#ocaml, layer-lang-ocaml
 " @parentsection layers
-" OCaml autocompletion provided by merlin
+" OCaml autocompletion provided by merlin.
 "
-" Make sure `opam` and `merlin` are installed on your system.
-" requirement:
+" Requirements:
 " >
 "   opam
 "   merlin
