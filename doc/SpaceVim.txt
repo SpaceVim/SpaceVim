@@ -37,6 +37,7 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#rust.................................|SpaceVim-layer-lang-rust|
       16. lang#xml...................................|SpaceVim-layer-lang-xml|
       17. shell.........................................|SpaceVim-layer-shell|
+      18. tmux...........................................|SpaceVim-layer-tmux|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -688,6 +689,24 @@ SHELL                                                   *SpaceVim-layer-shell*
 
 SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
 For more info, read |deol| and |vimshell|.
+
+==============================================================================
+TMUX                                                     *SpaceVim-layer-tmux*
+
+Adds integration between tmux and vim panes. Switch between panes seamlessly.
+This layer is not added by default. To include it, add
+`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`
+
+MAPPINGS
+
+>
+  Key       Mode        Function
+  ------------------------------
+  <C-h>     normal      Switch to pane in left direction
+  <C-j>     normal      Switch to pane in down direction
+  <C-k>     normal      Switch to pane in up direction
+  <C-l>     normal      Switch to pane in right direction
+<
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
