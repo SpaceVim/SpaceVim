@@ -19,10 +19,10 @@
         - [c/c++ support](#cc-support)
         - [python support](#python-support)
         - [go support](#go-support)
-        - rust support
-        - php support
-        - perl support
         - lua support
+        - perl support
+        - php support
+        - rust support
     - [Unite centric work-flow](#unite-centric-work-flow)
     - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
     - [multiple leader mode](#multiple-leader-mode)

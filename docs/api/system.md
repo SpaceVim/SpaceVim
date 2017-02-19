@@ -2,6 +2,8 @@
 title: "system api"
 ---
 
+# [APIs](https://spacevim.org/apis) : system
+
 ## values
 
 name   | values | description

@@ -1,8 +1,8 @@
 ""
 " @section shell, layer-shell
 " @parentsection layers
-" SpaceVim use deol.nvim for shell support in neovim, and use vimshell for
-" vim. for info, read |deol| and |vimshell|.
+" SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
+" vim. For more info, read |deol| and |vimshell|.
 
 function! SpaceVim#layers#shell#plugins() abort
     let plugins = []

@@ -1,20 +1,21 @@
 ""
 " @section indentmove, layer-indentmove
 " @parentsection layers
-" move cursor quickly accorrding to indent
+" Move cursor quickly according to indent.
 "
-" mappings:
+" @subsection Mappings
 " >
 "   Key         mode            function
-"   EH          Normal/vasual   move up to nearest line with smaller
+"   -----------------------------------------------------------------
+"   EH          normal/visual   move up to nearest line with smaller
 "                               indent level
-"   EL          Normal/vasual   move down to nearest line with larger
+"   EL          normal/visual   move down to nearest line with larger
 "                               indent level
-"   EJ          Normal/vasual   move down to nearest line with smaller
+"   EJ          normal/visual   move down to nearest line with smaller
 "                               or same indent level
-"   EK          Normal/vasual   move down to nearest line with larger
+"   EK          normal/visual   move down to nearest line with larger
 "                               or same indent level
-"   EI          Normal/vasual   move down to nearest child indent
+"   EI          normal/visual   move down to nearest child indent
 " <
 "
 " 

@@ -37,70 +37,69 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#rust.................................|SpaceVim-layer-lang-rust|
       16. lang#xml...................................|SpaceVim-layer-lang-xml|
       17. shell.........................................|SpaceVim-layer-shell|
+      18. tmux...........................................|SpaceVim-layer-tmux|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
 
-SpaceVim is a bundle of custom settings and plugins with a modular 
+SpaceVim is a bundle of custom settings and plugins with a modular
 configuration for Vim. It was inspired by Spacemacs.
 
 
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
-SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file. You
-can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
-be added to runtimepath, so you can write your own scripts in it. SpaceVim 
-also supports local config for each project. Place local config settings in 
-`.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/` 
+SpaceVim uses `~/.SpaceVim/init.vim` as its default global config file. You
+can set all the SpaceVim options and layers in it. `~/.SpaceVim/` will also be
+added to runtimepath, so you can write your own scripts in it. SpaceVim also
+supports local config for each project. Place local config  settings in
+`.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
 
                                                    *g:spacevim_default_indent*
-Change the default indent of SpaceVim. Default is 2.
+Change the default indentation of SpaceVim. Default is 2.
 >
   let g:spacevim_default_indent = 2
 <
 
                                                        *g:spacevim_max_column*
-Change the max column of SpaceVim. Default is 120.
+Change the max number of columns for SpaceVim. Default is 120.
 >
   let g:spacevim_max_column = 120
 <
 
                                                  *g:spacevim_enable_guicolors*
-Enable/Disable true color support in terminal.
+Enable true color support in terminal. Default is 1.
 >
   let g:spacevim_enable_guicolors = 1
 <
 
                                              *g:spacevim_enable_googlesuggest*
-Enable/Disable Google suggestion for neocomplete. Disabled by default.
+Enable/Disable Google suggestions for neocomplete. Default is 0.
 >
   let g:spacevim_enable_googlesuggest = 1
 <
 
                                                    *g:spacevim_windows_leader*
-Windows function leader of SpaceVim. Default is `s`. 
-Set to empty to disable this feature, or you can set to another char.
+Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+this feature, or you can set to another char.
 >
   let g:spacevim_windows_leader = ''
 <
 
                                                      *g:spacevim_unite_leader*
-Unite work flow leader of SpaceVim. Default is `f`.
-Set to empty to disable this feature, or you can set to another char.
-
-  `let g:spacevim_unite_leader = ''`
+Unite work flow leader of SpaceVim. Default is `f`. Set to empty to disable
+this feature, or you can set to another char.
 
                                                 *g:spacevim_plugin_bundle_dir*
-Set the cache dir for plugins. Default is `~/.cache/vimfiles`. 
+Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >
   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 <
 
                                             *g:spacevim_realtime_leader_guide*
-Enable/Disable realtime leader guide. Disabled by default.
+Enable/Disable realtime leader guide. Default is 0.
 >
   let g:spacevim_realtime_leader_guide = 1
 <
@@ -118,100 +117,97 @@ Set the guifont of SpaceVim. Default is empty.
 <
 
                                                        *g:spacevim_enable_ycm*
-Enable/Disable YouCompleteMe. Disabled by default. 
+Enable/Disable YouCompleteMe. Default is 0.
 >
   let g:spacevim_enable_ycm = 1
 <
 
                                                     *g:spacevim_sidebar_width*
-Set the width of the SpaceVim sidebar. Default is 30.
-This value will be used by tagbar and vimfiler.
-
-  `let g:spacevim_sidebar_width = 50`
+Set the width of the SpaceVim sidebar. Default is 30. This value will be used
+by tagbar and vimfiler.
 
                                                 *g:spacevim_enable_cursorline*
-Enable/Disable cursorline. Disabled by default.
+Enable/Disable cursorline. Default is 0.
 >
   let g:spacevim_enable_cursorline = 1
 <
 
                                                      *g:spacevim_error_symbol*
-Set the error symbol for SpaceVim's syntax maker.
+Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 >
   let g:spacevim_error_symbol = '+'
 <
 
                                                    *g:spacevim_warning_symbol*
-Set the warning symbol of SpaceVim's syntax maker.
+Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 >
   let g:spacevim_warning_symbol = '!'
 <
 
                                                 *g:spacevim_vim_help_language*
-Set the help language of vim. Default is `en`.
-You can change it to Chinese.
+Set the help language of vim. Default is 'en'.  You can change it to Chinese.
 >
   let g:spacevim_vim_help_language = 'chinese'
 <
 
                                                          *g:spacevim_language*
-Set the message language of vim. Defaults to `en_US.UTF-8`.
+Set the message language of vim. Default is 'en_US.UTF-8'.
 >
   let g:spacevim_language = 'en_CA.utf8'
 <
 
                                                       *g:spacevim_colorscheme*
-The colorscheme of SpaceVim if colorscheme groups are installed.
+The colorscheme of SpaceVim. Default is 'gruvbox'.
 
                                               *g:spacevim_colorscheme_default*
-The default colorscheme of SpaceVim. Default is `desert`. This colorscheme 
-will be used if the colorscheme set by g:spacevim_colorscheme has not 
-been installed.
+The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
+will be used if the colorscheme set by  `g:spacevim_colorscheme` is not
+installed.
 >
   let g:spacevim_colorscheme_default = 'other_color'
 <
 
                                                       *g:spacevim_simple_mode*
-Enable/Disable simple mode of SpaceVim. Disabled by default.
-In this mode, only a few plugins will be installed.
+Enable/disable simple mode of SpaceVim. Default is 0. In this mode, only few
+plugins will be installed.
 >
   let g:spacevim_simple_mode = 1
 <
 
                                                       *g:spacevim_filemanager*
-The default file manager of SpaceVim.
+The default file manager of SpaceVim. Default is 'vimfiler'.
 
                                                    *g:spacevim_plugin_manager*
-The default plugin manager of SpaceVim, dein, neobundle or vim-plug. by
-default it is dein.
-
-  `let g:spacevim_plugin_manager = 'vim-plug'`
+The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
+neobundle, or vim-plug.
 
                                                      *g:spacevim_checkinstall*
-Enable/Disable checkinstall on SpaceVim startup. Enabled by default.
-
-  `let g:spacevim_checkinstall = 0`
+Enable/Disable checkinstall on SpaceVim startup. Default is 1.
+>
+  let g:spacevim_checkinstall = 0
+<
 
                                                      *g:spacevim_enable_debug*
-Enable/Disable debug mode for SpaceVim. Disabled by default.
+Enable/Disable debug mode for SpaceVim. Default is 0.
 >
   let g:spacevim_enable_debug = 1
 <
+
                                                       *g:spacevim_debug_level*
 Set the debug level of SpaceVim. Default is 1.
 
                                                     *g:spacevim_plugin_groups*
 Plugin groups to be loaded.
-
-   `let g:spacevim_plugin_groups = ['core', 'lang']`
-
-SpaceVim supports the following groups:
+>
+   let g:spacevim_plugin_groups = ['core', 'lang']
+<
 
                                                  *g:spacevim_disabled_plugins*
-Disable plugins by names.
+Disable plugins by name.
 >
   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
 <
+
                                                    *g:spacevim_custom_plugins*
 Add custom plugins.
 >
@@ -220,31 +216,33 @@ Add custom plugins.
               \ ['wsdjeg/GitHub.vim'],
               \ ]
 <
+
                                               *g:spacevim_force_global_config*
-SpaceVim will load global config after local config if set to 1. Disabled
-by default. If you have a local config, the global config will not be loaded.
+SpaceVim will load the global config after local config if set to 1. Default
+is 0. If you have a local config, the global config will not be loaded.
 >
   let g:spacevim_force_global_config = 1
 <
+
                                            *g:spacevim_enable_powerline_fonts*
-Enable/Disable powerline symbols.
+Enable/Disable powerline symbols. Default is 1.
 
                                                      *g:spacevim_lint_on_save*
-Enable/Disable lint on save feature of SpaceVim's maker. Enabled by default.
+Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
 >
   let g:spacevim_lint_on_save = 0
 <
+
                                           *g:spacevim_enable_vimfiler_welcome*
-Enable/Disable Vimfiler in the welcome windows. Disabled by default.
-This will cause vim to start up slowly if there are too many files in 
-current directory.
+Enable/Disable vimfiler in the welcome windows. Default is 1.  This will cause
+vim to start up slowly if there are too many files in the current directory.
 >
   let g:spacevim_enable_vimfiler_welcome = 0
 <
 
                                                         *g:spacevim_hosts_url*
-The host file url. This option is for Chinese users who can not use Google 
-and Twitter.
+The host file url. This option is for Chinese users who can not use Google and
+Twitter.
 
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
@@ -254,21 +252,21 @@ SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   |SpaceVim-layers|.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
-  Set the debug level of SpaceVim. Default is 1. 
+  Set debug level of SpaceVim. Default is 1.
 
-      1 : log all the message.
+      1 : log all messages
 
-      2 : log warning and error message
+      2 : log warning and error messages
 
-      3 : log error message only
+      3 : log error messages only
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
-  Set log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`
+  Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
 
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*
 
-  SpaceVim supports the following layers:
+  SpaceVim support such layers:
 
 ==============================================================================
 DEFAULT                                                     *SpaceVim-default*
@@ -278,39 +276,49 @@ AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 
 CODE COMPLETION
 SpaceVim uses neocomplete as the default completion engine if vim has lua
-support. If there is no lua support, neocomplcache will be used for the 
-completion engine. SpaceVim use deoplete as default completion engine for 
-neovim. Deoplete requires neovim to be compiled with python support. For 
-more information on python support, please read neovim's |provider-python|.
+support. If there is no lua support, neocomplcache will be used for the
+completion engine. Spacevim uses deoplete as the default completion engine for
+neovim. Deoplete requires neovim to be compiled with python support. For more
+information on python support, please read neovim's |provider-python|.
 
-SpaceVim include YouCompleteMe, but it is disabled by default. To enable ycm,
+SpaceVim includes YouCompleteMe, but it is disabled by default. To enable ycm,
 see |g:spacevim_enable_ycm|.
 
 SNIPPET
-SpaceVim uses neosnippet as the default snippet engine. The default snippets
-are provided by `Shougo/neosnippet-snippets`. For more information, please 
-read |neosnippet|. 
-Neosnippet supports custom snippets, and the default snippets directory is 
-`~/.SpaceVim.d/snippets/`. If `g:spacevim_force_global_config = 1`, SpaceVim 
-will not append `./.SpaceVim.d/snippets` as the default snippets directory.
+SpaceVim use neosnippet as the default snippet engine. The default snippets
+are provided by `Shougo/neosnippet-snippets`. For more information, please
+read |neosnippet|. Neosnippet support custom snippets, and the default
+snippets directory is `~/.SpaceVim/snippets/`. If
+`g:spacevim_force_global_config = 1`, SpaceVim will not append
+`./.SpaceVim/snippets` as default snippets directory.
 
 ==============================================================================
 CHECKERS                                             *SpaceVim-layer-checkers*
 
-SpaceVim use neomake as default syntax checker.
+SpaceVim uses neomake as default syntax checker.
 
 ==============================================================================
 COLORSCHEME                                             *SpaceVim-colorscheme*
 
-The SpaceVim default colorscheme is `gruvbox`. The colorscheme can be changed
-with the `g:spacevim_colorscheme` option by adding the following line
-to your `~/.SpaceVim.d/init.vim`.
+The ldefault colorscheme for SpaceVim is gruvbox. The colorscheme can be
+changed with the `g:spacevim_colorscheme` option by adding the following line
+to your `~/.SpaceVim/init.vim`.
 >
   let g:spacevim_colorscheme = 'solarized'
 <
 
-The following colorschemes are included in SpaceVim. If the colorscheme 
-you want is not included in the list below, a PR is welcome.
+The following colorschemes are include in SpaceVim. If the colorscheme you
+want is not included in the list below, a PR is welcome.
+
+Also, there's one thing which everyone should know and pay attention to. NOT
+all of below colorschemes support spell check very well. For example, a
+colorscheme called atom doesn't support atom very well.
+
+SpaceVim is not gonna fix them since these should be in charge of each author.
+You can see a list which has no support of spell check in here:
+https://github.com/SpaceVim/SpaceVim/issues/209#issuecomment-280545818
+
+
 >
   anderson
   apprentice
@@ -438,7 +446,7 @@ Fold code quickly according to expr.
 Mappings:
 >
   Key         Mode            Function
-  ------------------------------------
+  ----------------------------------------------------
   ZB          normal          Open fold block template
   ZF          normal          Fold block
   ZC          normal          Fold block comment
@@ -449,19 +457,21 @@ INDENTMOVE                                         *SpaceVim-layer-indentmove*
 
 Move cursor quickly according to indent.
 
-Mappings:
+MAPPINGS
+
 >
-  Key         Mode            Function
-  ------------------------------------
-  EH          normal/visual   Move up to nearest line with smaller
+  Key         mode            function
+  -----------------------------------------------------------------
+  EH          normal/visual   move up to nearest line with smaller
                               indent level
-  EL          normal/visual   Move down to nearest line with larger
+  EL          normal/visual   move down to nearest line with larger
                               indent level
-  EJ          normal/visual   Move down to nearest line with smaller
+  EJ          normal/visual   move down to nearest line with smaller
                               or same indent level
-  EK          normal/visual   Move down to nearest line with larger
+  EK          normal/visual   move down to nearest line with larger
                               or same indent level
-  EI          normal/visual   Move down to nearest child indent
+  EI          normal/visual   move down to nearest child indent
+<
 
 
 
@@ -471,26 +481,25 @@ LANG#C                                                 *SpaceVim-layer-lang-c*
 This layer provides C family language code completion and syntax checking.
 Requires clang.
 
-
-Optional configuration for `tweekmonster/deoplete-clang2`:
+Configuration for `tweekmonster/deoplete-clang2`:
 
   1. Set the compile flags:
->
-      let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]
-<
+
+      `let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]`
+
   2. Set the path to the clang executable:
 
-      `let g:deoplete#sources#clang#executable = '/usr/bin/clang'`
+      `let g:deoplete#sources#clang#executable = '/usr/bin/clang'
 
   3. `g:deoplete#sources#clang#autofill_neomake` is a boolean that tells this
-     plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
-     clang executable path and flags. You will still need to enable it with
-     `g:neomake_<filetype>_enabled_make=['clang']`.
+    plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
+    clang executable path and flags. You will still need to enable it with
+    `g:neomake_<filetype>_enabled_make=['clang']`.
 
-  4. Set the standards for each language:
-     `g:deoplete#sources#clang#std` is a dict containing the standards you 
-     want to use. It's not used if you already have `-std=whatever` in your 
-     flags. The defaults are:
+  4. Set the standards for each language: `g:deoplete#sources#clang#std` is a
+    dict containing the standards you want to use. It's not used if you
+    already have `-std=whatever` in your flags. The defaults are:
+
 >
       {
           'c': 'c11',
@@ -500,29 +509,29 @@ Optional configuration for `tweekmonster/deoplete-clang2`:
       }
 <
   5. `g:deoplete#sources#clang#preproc_max_lines` sets the maximum number of
-     lines to search for a #ifdef or #endif line. #ifdef lines are discarded to
-     get completions within conditional preprocessor blocks. The default is 50,
-     setting it to 0 disables this feature.
+    lines to search for an #ifdef or #endif line. #ifdef lines are discarded
+    to get completions within conditional preprocessor blocks. The default is
+    50,  setting it to 0 disables this feature.
 
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
 
-The lang#elixir layer provides code completion, documentation lookup, jump 
-to definition, mix integration, and iex integration for Elixir. SpaceVim
-uses neomake as the default syntax checker which is loaded in
-|SpaceVim-layer-checkers|
+INTRO
+The lang#elixir layer provides code completion, documentation lookup, jump to
+definition, mix integration, and iex integration for Elixir. SpaceVim uses
+neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#GO                                               *SpaceVim-layer-lang-go*
 
-This layer includes include code completion and syntax check for Go 
-development.
+This layer includes code completion and syntax checking for Go development.
 
-Mappings:
+MAPPINGS
+
 >
   Mode            Key             Function
-  ----------------------------------------
+  ---------------------------------------------
   normal          <leader>gi      go implements
   normal          <leader>gf      go info
   normal          <leader>ge      go rename
@@ -538,11 +547,14 @@ Mappings:
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
 This layer is for Java development.
+
+MAPPINGS
+
 >
-Import Mappings:
->
+  Import mappings:
+
   Mode      Key           Function
-  --------------------------------
+  -------------------------------------------------------------
   normal    <F4>          import class under cursor
   insert    <F4>          import class under cursor
   normal    <leader>jI    import missing classes
@@ -554,9 +566,10 @@ Import Mappings:
   insert    <c-j>i        smart import class under cursor
   insert    <c-j>ii       add import for class under cursor
 
-Generate Mappings:
->
-  mode      key           function
+  Generate mappings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
   normal    <leader>jA    generate accessors
   normal    <leader>js    generate setter accessor
   normal    <leader>jg    generate getter accessor
@@ -577,7 +590,7 @@ Generate Mappings:
 ==============================================================================
 LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
 
-OCaml autocompletion provided by Merlin
+OCaml autocompletion provided by merlin.
 
 Requirements:
 >
@@ -588,8 +601,8 @@ Requirements:
 ==============================================================================
 LANG#PHP                                             *SpaceVim-layer-lang-php*
 
-This layer is for PHP development. It provides code completion,
-syntax checking, and jump to definition. 
+This layer is for PHP development. It proides code completion, syntax
+checking, and jump to definition.
 
 Requirements:
 >
@@ -616,39 +629,48 @@ Requirements:
 LANG#PYTHON                                       *SpaceVim-layer-lang-python*
 
 To make this layer work well, you should install jedi.
+MAPPINGS
 
-Mappings:
 >
-  Mode            Key             Function
-  ----------------------------------------
+  mode            key             function
 <
 
 ==============================================================================
 LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
-SpaceVim does not load this layer by default. If you are a rust developer, 
-you should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|.
+SpaceVim does not load this layer by default. If you are a rust developer, you
+should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
 
 Requirements:
 
+  1. Racer needs a copy of the rust source. The easiest way to do this is with
+    rustup. Once rustup is installed, download the source with:
 
-  1. Racer needs a copy of the rust source. The easiest way to do this is 
-     with rustup. Once rustup is installed, download the source with:
-     `rustup component add rust-src`
+>
+      rustup component add rust-src
+<
+  2. Install racer:
 
-  2. Install racer: 
-     `cargo install racer`
-
+>
+      cargo install racer
+<
   3. Set the RUST_SRC_PATH variable in your .bashrc:
-     `export RUST_SRC_PATH=~/.multirust/toolchains/[your-toolchain]/lib/rustlib/src/ rust/src`
 
+>
+      RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+      export RUST_SRC_PATH
+<
   4. Add racer to your path, or set the path with:
-    `let g:racer_cmd = "/path/to/racer/bin"`
 
-Mappings:
+>
+      let g:racer_cmd = "/path/to/racer/bin"
+<
+
+MAPPINGS
+
 >
   Mode        Key         Function
-  --------------------------------
+  -----------------------------------------------
   normal      gd          rust-definition
   normal      gs          rust-definition-split
   normal      gx          rust-definition-vertical
@@ -658,52 +680,80 @@ Mappings:
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
 
-When editing an xml file, the omni func is `xmlcomplete#CompleteTags`. You can
-read the documentation in `autoload/xmlcomplete.vim` in vim or neovim runtime
-directory.
+When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
+read the documentation in autoload/xmlcomplete.vim in the vim or neovim
+runtime directory.
 
 ==============================================================================
 SHELL                                                   *SpaceVim-layer-shell*
 
-SpaceVim uses deol.nvim for shell support in neovim, and uses vimshell for vim.
+SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
 For more info, read |deol| and |vimshell|.
+
+==============================================================================
+TMUX                                                     *SpaceVim-layer-tmux*
+
+Adds integration between tmux and vim panes. Switch between panes seamlessly.
+This layer is not added by default. To include it, add
+`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`
+
+MAPPINGS
+
+>
+  Key       Mode        Function
+  ------------------------------
+  <C-h>     normal      Switch to pane in left direction
+  <C-j>     normal      Switch to pane in down direction
+  <C-k>     normal      Switch to pane in up direction
+  <C-l>     normal      Switch to pane in right direction
+<
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
 
-1. How to enable YouCompleteMe? (I do not recommend using YouCompleteMe. It
-is too big as a vim plugin. Also, I do not like using submodules in a vim plugin.
-It is hard to manage with a plugin manager.)
+  1. How do I enable YouCompleteMe?
 
-  Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default it
-  should be `~/.SpaceVim.d/init.vim`.
+>
+  I do not recommend using YouCompleteMe.
+  It is too big as a vim plugin. Also, I do not like using submodules in a vim
+  plugin. It is hard to manage with a plugin manager.
 
-  Step 2: Get into the directory of YouCompleteMe's author, by default it
+  Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
+  it should be `~/.SpaceVim/init.vim`.
+
+  Step 2: Get into the directory of YouCompleteMe's author. By default it
   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
-  directory `YouCompleteMe` in it, just get into it, otherwise clone
-  YouCompleteMe repo by `git clone https://github.com/Valloric/YouCompleteMe.git`
-  After cloning, get into it and run `git submodule update --init --recursive`
+  directory `YouCompleteMe` in it, go into it. Otherwise clone
+  YouCompleteMe repo by
+  `git clone https://github.com/Valloric/YouCompleteMe.git`. After cloning,
+  get into it and run `git submodule update --init --recursive`.
 
   Step 3: Compile YouCompleteMe with the features you want. If you just want
-  C family support, run `./install.py --clang-completer`
-
-
-2. How to add a custom snippet?
-
-  SpaceVim uses neosnippet as the default snippet engine. If you want to add 
-  a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-  command.  A buffer will be opened and you can add your custom snippet. By 
-  default this buffer will be saved in `~/.SpaceVim.d/snippets`. 
-  If you want to use a different directory:
->
-  let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+  C family support, run `./install.py --clang-completer`.
 <
-  For more info about how to write snippet, please read ||neosnippet-snippet-syntax|.
 
-3. Where is `<c-f>` in cmdline-mode?
+  2. How to add custom snippet?
 
-  `<c-f>` is the default value of |cedit| option, but in SpaceVim we use same as
-  `<Right>`, so maybe you can change the `cedit` option, or use `<leader>+<c-f>`.
+>
+  SpaceVim uses neosnippet as the default snippet engine. If you want to add
+  a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
+  command. A buffer will be opened and you can add your custom snippet.
+  By default this buffer will be save in `~/.SpaceVim/snippets`.
+  If you want to use another directory:
+
+  let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+
+  For more info about how to write snippet, please
+  read |neosnippet-snippet-syntax|.
+<
+
+  3. Where is `<c-f>` in cmdline-mode?
+
+>
+  `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
+  binding as `<Right>`, so maybe you can change the `cedit` option or use
+  `<leader>+<c-f>`.
+<
 
 
 vim:tw=78:ts=8:ft=help:norl:
