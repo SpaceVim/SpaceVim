@@ -108,10 +108,11 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
 #### File Structure
-- [autoload/SpaceVim.vim](./autoload/SpaceVim.vim) - SpaceVim options init
-- [autoload/SpaceVim/layers](./autoload/SpaceVim/layers) - SpaceVim layers
-- [autoload/SpaceVim/api](./autoload/SpaceVim/api) - SpaceVim apis
-- [autoload/SpaceVim/default.vim](./autoload/SpaceVim/default.vim) - SpaceVim default status
+- [autoload/](./autoload)
+    - [SpaceVim.vim](./autoload/SpaceVim.vim) - SpaceVim options init
+    - [SpaceVim/layers](./autoload/SpaceVim/layers) - SpaceVim layers
+    - [SpaceVim/api](./autoload/SpaceVim/api) - SpaceVim apis
+    - [SpaceVim/default.vim](./autoload/SpaceVim/default.vim) - SpaceVim default status
 - [config](./config)/ - Configuration
   - [general.vim](./config/general.vim) - General configuration
   - [init.vim](./config/init.vim) - `runtimepath` initialization
