@@ -47,6 +47,9 @@ let g:deoplete#omni#input_patterns.php = [
             \'[^. \t0-9]\->\w*',
             \'[^. \t0-9]\::\w*',
             \]
+let g:deoplete#ignore_sources.php = ['omni', 'around', 'member']
+call deoplete#custom#set('phpcd', 'mark', '')
+call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
 
 " lua
 let g:deoplete#omni_patterns.lua = '.'
