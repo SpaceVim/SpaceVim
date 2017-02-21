@@ -108,19 +108,19 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
 #### File Structure
+- [autoload/SpaceVim.vim](./autoload/SpaceVim.vim) - SpaceVim options init
+- [autoload/SpaceVim/layers](./autoload/SpaceVim/layers) - SpaceVim layers
+- [autoload/SpaceVim/api](./autoload/SpaceVim/api) - SpaceVim apis
+- [autoload/SpaceVim/default.vim](./autoload/SpaceVim/default.vim) - SpaceVim default status
 - [config](./config)/ - Configuration
-  - [plugins](./config/plugins)/ - Plugin configurations
-  - [mappings.vim](./config/mappings.vim) - Key mappings
-  - [autocmds.vim](./config/autocmds.vim) - autocmd group
   - [general.vim](./config/general.vim) - General configuration
   - [init.vim](./config/init.vim) - `runtimepath` initialization
   - [neovim.vim](./config/neovim.vim) - Neovim specific setup
-  - [plugins.vim](./config/plugins.vim) - Plugin bundles
   - [commands.vim](./config/commands.vim) - Commands
   - [functions.vim](./config/functions.vim) - Functions
   - [main.vim](./config/main.vim) - Main config
 - [ftplugin](./ftplugin)/ - Language specific custom settings
-- [snippets](../../snippets)/ - Code snippets
+- [snippets](./snippets)/ - Code snippets
 - [filetype.vim](./filetype.vim) - Custom filetype detection
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
