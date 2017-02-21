@@ -64,3 +64,14 @@ function! SpaceVim#mapping#gd() abort
         normal! gd
     endif
 endfunction
+
+function! SpaceVim#mapping#clearBuffers() abort
+    for i in range(1,bufnr('$'))
+        if i != bufnr('%')
+            try 
+                exe 'bw ' . i
+            catch
+            endtry
+        endif
+    endfor
+endfunction
