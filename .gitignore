@@ -7,4 +7,6 @@ doc/tags
 *-rplugin~
 *rplugin.vim
 /config/local.vim
-.SpaceVim.log
+.SpaceVim.logA
+docs/_site/*
+docs/Gemfile.lock

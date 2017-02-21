@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/docs/logo.png" alt="SpaceVim"/></p>
+<p align="center"><img src="https://spacevim.org/logo.png" alt="SpaceVim"/></p>
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
@@ -21,7 +21,7 @@
         - [go support](#go-support)
         - lua support
         - perl support
-        - php support
+        - [php support](#php-support)
         - rust support
     - [Unite centric work-flow](#unite-centric-work-flow)
     - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
@@ -108,19 +108,20 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
 #### File Structure
+- [autoload/](./autoload)
+    - [SpaceVim.vim](./autoload/SpaceVim.vim) - SpaceVim options init
+    - [SpaceVim/layers](./autoload/SpaceVim/layers) - SpaceVim layers
+    - [SpaceVim/api](./autoload/SpaceVim/api) - SpaceVim apis
+    - [SpaceVim/default.vim](./autoload/SpaceVim/default.vim) - SpaceVim default status
 - [config](./config)/ - Configuration
-  - [plugins](./config/plugins)/ - Plugin configurations
-  - [mappings.vim](./config/mappings.vim) - Key mappings
-  - [autocmds.vim](./config/autocmds.vim) - autocmd group
   - [general.vim](./config/general.vim) - General configuration
   - [init.vim](./config/init.vim) - `runtimepath` initialization
   - [neovim.vim](./config/neovim.vim) - Neovim specific setup
-  - [plugins.vim](./config/plugins.vim) - Plugin bundles
   - [commands.vim](./config/commands.vim) - Commands
   - [functions.vim](./config/functions.vim) - Functions
   - [main.vim](./config/main.vim) - Main config
 - [ftplugin](./ftplugin)/ - Language specific custom settings
-- [snippets](../../snippets)/ - Code snippets
+- [snippets](./snippets)/ - Code snippets
 - [filetype.vim](./filetype.vim) - Custom filetype detection
 - [init.vim](./init.vim) - Sources `config/main.vim`
 - [vimrc](./vimrc) - Sources `config/main.vim`
@@ -153,6 +154,10 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
     ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
 2. syntax check:
     ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
+
+###### php support
+1. code completion:
+    [![asciicast](https://asciinema.org/a/4dzyyjymrguylqt21igxlhhqx.png)](https://asciinema.org/a/4dzyyjymrguylqt21igxlhhqx)
 
 ##### Neovim centric - Dark powered mode of SpaceVim.
 
@@ -294,8 +299,8 @@ Name           | Description
 [javascript-indent] | Javascript indent script
 [tern] | Provides Tern-based JavaScript editing support
 [php] | Up-to-date PHP syntax file
+[phpcd] | PHP Completion Daemon for Vim/NeoVim
 [phpfold] | PHP folding
-[phpcomplete] | Improved PHP omnicompletion
 [phpindent] | PHP official indenting
 [phpspec] | PhpSpec integration
 
@@ -674,8 +679,8 @@ If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is usefu
 [javascript-indent]: https://github.com/jiangmiao/simple-javascript-indenter
 [tern]: https://github.com/marijnh/tern_for_vim
 [php]: https://github.com/StanAngeloff/php.vim
-[phpfold]: https://github.com/rayburgemeestre/phpfolding.vim
-[phpcomplete]: https://github.com/shawncplus/phpcomplete.vim
+[phpfold]: https://github.com/lvht/phpfold.vim
+[phpcd]: https://github.com/lvht/phpcd.vim
 [phpindent]: https://github.com/2072/PHP-Indenting-for-VIm
 [phpspec]: https://github.com/rafi/vim-phpspec
 [vimfiler]: https://github.com/Shougo/vimfiler.vim
