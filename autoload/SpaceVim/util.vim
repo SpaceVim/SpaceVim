@@ -5,3 +5,9 @@ function! SpaceVim#util#globpath(path, expr) abort
         return split(globpath(a:path, a:expr), '\n')
     endif
 endfunction
+
+function! SpaceVim#util#echoWarn(msg) abort
+    echohl WarningMsg
+    echo a:msg
+    echohl None
+endfunction

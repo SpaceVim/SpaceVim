@@ -66,10 +66,10 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
                 \ "echo 'Use <leader>S to sourced line.'")
 
     call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
-                \'Open previous buffer in split window' , 'split|wincmd p|e#')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
-                \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':call SpaceVim#mapping#split_previous_buffer()<CR>',
+                \'Open previous buffer in split window' , 'call SpaceVim#mapping#split_previous_buffer()')
+    call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
+                \'Open previous buffer in vsplit window' , 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     if !empty(a:key)

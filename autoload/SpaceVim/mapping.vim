@@ -75,3 +75,24 @@ function! SpaceVim#mapping#clearBuffers() abort
         endif
     endfor
 endfunction
+
+function! SpaceVim#mapping#split_previous_buffer() abort
+    if bufnr('#') == -1
+        call SpaceVim#util#echoWarn('There is no previous buffer')
+    else
+        split
+        wincmd w
+        e#
+    endif
+
+endfunction
+
+function! SpaceVim#mapping#vertical_split_previous_buffer() abort
+    if bufnr('#') == -1
+        call SpaceVim#util#echoWarn('There is no previous buffer')
+    else
+        vsplit
+        wincmd w
+        e#
+    endif
+endfunction
