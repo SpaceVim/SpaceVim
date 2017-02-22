@@ -437,19 +437,22 @@ Key   | Mode | Action
 
 ##### Window Management
 
+default `[Window]` key is `s`, and it is setup by `g:spacevim_windows_leader`.
+
 Key   | Mode | Action
 ----- |:----:| ------------------
-`q` | Normal | Smart buffer close
-`s`+`p` | Normal | Split nicely
-`s`+`v` | Normal | :split
-`s`+`g` | Normal | :vsplit
-`s`+`t` | Normal | Open new tab (:tabnew)
-`s`+`o` | Normal | Close other windows (:only)
-`s`+`x` | Normal | Remove buffer, leave blank window
-`s`+`q` | Normal | Closes current buffer (:close)
-`s`+`Q` | Normal | Removes current buffer (:bdelete)
-`Tab` | Normal | Next window or tab
-`Shift`+`Tab` | Normal | Previous window or tab
+`q` | Normal | Smart close current window
+`[Window]`+`p` | Normal | Split nicely
+`[Window]`+`v` | Normal | :split
+`[Window]`+`g` | Normal | :vsplit
+`[Window]`+`t` | Normal | Open new tab (:tabnew)
+`[Window]`+`o` | Normal | Close other windows (:only)
+`[Window]`+`x` | Normal | Remove buffer, leave blank window
+`[Window]`+`q` | Normal | Closes current buffer (:close)
+`[Widnow]`+`Q` | Normal | Removes current buffer (:bdelete)
+`[Window]`+`c` | Normal | Clear up all of other buffers and windows
+`Tab` | Normal | Next window or tab (:wincmd w)
+`Shift`+`Tab` | Normal | Previous window or tab (:wincmd p)
 `<leader>`+`sv` | Normal | Split with previous buffer
 `<leader>`+`sg` | Normal | Vertical split with previous buffer
 
