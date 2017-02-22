@@ -755,5 +755,11 @@ FAQ                                                             *SpaceVim-faq*
   `<leader>+<c-f>`.
 <
 
+  4. How to use `<space>` as `<leader>`?
+
+>
+  Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+<
+
 
 vim:tw=78:ts=8:ft=help:norl:

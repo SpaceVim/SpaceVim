@@ -58,7 +58,7 @@ For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vi
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 #### Community
-Try these Neovim hangouts for any questions, problems or comments. 
+Try these Neovim hangouts for any questions, problems or comments.
 - Ask
     - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
     - vi StackExchange for "how to" & configuration questions

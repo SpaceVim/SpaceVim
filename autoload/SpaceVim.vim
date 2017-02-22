@@ -378,3 +378,8 @@ endfunction
 "   binding as `<Right>`, so maybe you can change the `cedit` option or use
 "   `<leader>+<c-f>`.
 " <
+"
+" 4. How to use `<space>` as `<leader>`?
+" >
+"   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+" <
