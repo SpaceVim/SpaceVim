@@ -6,7 +6,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['scrooloose/nerdcommenter'],
                 \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],
                 \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-                \ ['easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'}],
+                \ ['easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)', 'on_func' : 'EasyMotion#go'}],
                 \ ['editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'}],
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
                 \ ]

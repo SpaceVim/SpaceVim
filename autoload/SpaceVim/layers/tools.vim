@@ -7,7 +7,6 @@ function! SpaceVim#layers#tools#plugins() abort
                 \ ['junegunn/limelight.vim',    { 'on_cmd' : 'Limelight'}],
                 \ ['Yggdroot/LeaderF', {'merged' : 0, 'on_cmd' : 'LeaderF'}],
                 \ ['MattesGroeger/vim-bookmarks', { 'on_map' : '<Plug>Bookmark', 'loadconf_before' : 1}],
-                \ ['google/vim-searchindex'],
                 \ ['simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'}],
                 \ ['mhinz/vim-grepper' , { 'on_cmd' : 'Grepper', 'loadconf' : 1} ],
                 \ ['tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']}],
