@@ -27,11 +27,11 @@ endfunction
 
 function! SpaceVim#layers#tmux#config() abort
     let g:tmux_navigator_no_mappings = 1
-    augroup custom_config
+    augroup spacevim_layer_tmux
         au!
-        au VimEnter * call s:customMappings()
+        au VimEnter * call s:tmuxMappings()
     augroup END
-    func s:customMappings()
+    func s:tmuxMappings()
         nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
         nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
         nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
