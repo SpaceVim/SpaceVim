@@ -52,6 +52,8 @@ let g:terminal_color_14 = "#8ec07c"
 " light4 + light1
 let g:terminal_color_7 = "#a89984"
 let g:terminal_color_15 = "#ebdbb2"
+nnoremap  <FocusGained> <Nop>
+nnoremap  <FocusLost> <Nop>
 augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
