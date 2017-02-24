@@ -27,6 +27,10 @@ function! SpaceVim#default#SetOptions() abort
     set relativenumber
     set number
 
+    " set fillchar
+    hi VertSplit ctermbg=NONE guibg=NONE
+    set fillchars+=vert:│
+
     " hide cmd
     set noshowcmd
 

@@ -37,8 +37,9 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#python.............................|SpaceVim-layer-lang-python|
       16. lang#rust.................................|SpaceVim-layer-lang-rust|
       17. lang#xml...................................|SpaceVim-layer-lang-xml|
-      18. shell.........................................|SpaceVim-layer-shell|
-      19. tmux...........................................|SpaceVim-layer-tmux|
+      18. operator...................................|SpaceVim-layer-operator|
+      19. shell.........................................|SpaceVim-layer-shell|
+      20. tmux...........................................|SpaceVim-layer-tmux|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -707,6 +708,12 @@ LANG#XML                                             *SpaceVim-layer-lang-xml*
 When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
 read the documentation in autoload/xmlcomplete.vim in the vim or neovim
 runtime directory.
+
+==============================================================================
+OPERATOR                                             *SpaceVim-layer-operator*
+
+With this layer, you can confirm that text is yanked correctly and see yanked
+text by highlighting.
 
 ==============================================================================
 SHELL                                                   *SpaceVim-layer-shell*
