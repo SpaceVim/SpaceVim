@@ -25,19 +25,20 @@ CONTENTS                                                   *SpaceVim-contents*
       3. checkers....................................|SpaceVim-layer-checkers|
       4. colorscheme....................................|SpaceVim-colorscheme|
       5. exprfold....................................|SpaceVim-layer-exprfold|
-      6. indentmove................................|SpaceVim-layer-indentmove|
-      7. lang#c........................................|SpaceVim-layer-lang-c|
-      8. lang#elixir..............................|SpaceVim-layer-lang-elixir|
-      9. lang#go......................................|SpaceVim-layer-lang-go|
-      10. lang#java.................................|SpaceVim-layer-lang-java|
-      11. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      12. lang#php...................................|SpaceVim-layer-lang-php|
-      13. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      14. lang#python.............................|SpaceVim-layer-lang-python|
-      15. lang#rust.................................|SpaceVim-layer-lang-rust|
-      16. lang#xml...................................|SpaceVim-layer-lang-xml|
-      17. shell.........................................|SpaceVim-layer-shell|
-      18. tmux...........................................|SpaceVim-layer-tmux|
+      6. incsearch..................................|SpaceVim-layer-incsearch|
+      7. indentmove................................|SpaceVim-layer-indentmove|
+      8. lang#c........................................|SpaceVim-layer-lang-c|
+      9. lang#elixir..............................|SpaceVim-layer-lang-elixir|
+      10. lang#go.....................................|SpaceVim-layer-lang-go|
+      11. lang#java.................................|SpaceVim-layer-lang-java|
+      12. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      13. lang#php...................................|SpaceVim-layer-lang-php|
+      14. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      15. lang#python.............................|SpaceVim-layer-lang-python|
+      16. lang#rust.................................|SpaceVim-layer-lang-rust|
+      17. lang#xml...................................|SpaceVim-layer-lang-xml|
+      18. shell.........................................|SpaceVim-layer-shell|
+      19. tmux...........................................|SpaceVim-layer-tmux|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -450,6 +451,29 @@ Mappings:
   ZB          normal          Open fold block template
   ZF          normal          Fold block
   ZC          normal          Fold block comment
+<
+
+==============================================================================
+INCSEARCH                                           *SpaceVim-layer-incsearch*
+
+This layer improved incremental searching for neovim/vim
+
+mappings
+>
+  key         mode        description
+  /           n/v         incsearch forward
+  ?           n/v         incsearch backward
+  g/          n/v         incsearch stay
+  n           n           nohlsearch n
+  N           n           nohlsearch N
+  *           n           nohlsearch *
+  g*          n           nohlsearch g*
+  #           n           nohlsearch #
+  g#          n           nohlsearch g#
+  z/          n           incsearch fuzzy /
+  z?          n           incsearch fuzzy ?
+  zg?         n           incsearch fuzzy g?
+  <space>/    n           incsearch easymotion
 <
 
 ==============================================================================

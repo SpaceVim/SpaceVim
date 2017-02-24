@@ -58,7 +58,6 @@ augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
     au BufWinEnter term://* startinsert | IndentLinesDisable
-    "au TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
     au TermClose * exe expand('<abuf>').'bd!'
 augroup END
 augroup nvimrc_aucmd

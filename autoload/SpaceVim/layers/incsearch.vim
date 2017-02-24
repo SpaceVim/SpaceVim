@@ -1,3 +1,27 @@
+""
+" @section incsearch, layer-incsearch
+" @parentsection layers
+" This layer improved incremental searching for neovim/vim
+"
+" mappings
+" >
+"   key         mode        description
+"   /           n/v         incsearch forward
+"   ?           n/v         incsearch backward
+"   g/          n/v         incsearch stay
+"   n           n           nohlsearch n
+"   N           n           nohlsearch N
+"   *           n           nohlsearch *
+"   g*          n           nohlsearch g*
+"   #           n           nohlsearch #
+"   g#          n           nohlsearch g#
+"   z/          n           incsearch fuzzy /
+"   z?          n           incsearch fuzzy ?
+"   zg?         n           incsearch fuzzy g?
+"   <space>/    n           incsearch easymotion
+" <
+
+
 function! SpaceVim#layers#incsearch#plugins() abort
     let plugins = []
     call add(plugins, ['haya14busa/incsearch.vim', {'merged' : 0}])
