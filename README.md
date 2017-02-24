@@ -13,7 +13,7 @@
     - [Linux/Mac](#linuxmac)
     - [Windows support](#windows-support)
 - [File Structure](#file-structure)
-- Features
+- [Features](#features)
     - [Awesome ui](#awesome-ui)
     - [Language specific mode](#language-specific-mode)
         - [c/c++ support](#cc-support)
@@ -29,6 +29,15 @@
     - [Modular configuration](#modular-configuration)
     - Lazy-load 90% of plugins with [dein.vim]
     - Robust, yet light weight
+    - [Unite centric work-flow](#unite-centric-work-flow)
+    - [Awesome ui](#awesome-ui)
+    - [Language specific mode](#language-specific-mode)
+        - [c family support](#c-family-support)
+        - python support
+        - lua support
+        - java support
+        - perl support
+        - php support
     - Extensive Neocomplete setup
     - Central location for tags
     - Lightweight simple status/tabline
@@ -37,6 +46,8 @@
 - [Support SpaceVim](#support-spacevim)
     - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
+- Support SpaceVim
+    - contribute to SpaceVim
     - Write post about SpaceVim
 - [Credits & Thanks](#credits--thanks)
 
@@ -236,6 +247,25 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+
+#### Awesome ui
+- outline + filemanager + checker
+    ![2017-01-03-21 26 03](https://cloud.githubusercontent.com/assets/13142418/21609104/74567ce4-d1fb-11e6-9495-16aa5ad2e42d.png)
+
+#### Language specific mode
+
+##### c family support
+1. code completion
+2. syntax check
+
+- java
+- viml
+- rust
+- php
+- c/c++
+- js
+- python
+
 
 #### Plugin Highlights
 
