@@ -4,14 +4,33 @@ let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:Powerline_sybols = 'unicode'
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#buffer_idx_format = {}
-for i in range(9)
-    call extend(g:airline#extensions#tabline#buffer_idx_format,
-                \ {i : SpaceVim#api#import('messletters').bubble_num(i,
-                \ g:spacevim_buffer_index_type). ' '})
-endfor
-unlet i
+if g:spacevim_buffer_index_type < 3
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#buffer_idx_format = {}
+    for i in range(9)
+        call extend(g:airline#extensions#tabline#buffer_idx_format,
+                    \ {i : SpaceVim#api#import('messletters').bubble_num(i,
+                    \ g:spacevim_buffer_index_type). ' '})
+    endfor
+    unlet i
+elseif g:spacevim_buffer_index_type == 3
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+elseif g:spacevim_buffer_index_type == 4
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#buffer_idx_format = {
+                \ '0': '0 ',
+                \ '1': '1 ',
+                \ '2': '2 ',
+                \ '3': '3 ',
+                \ '4': '4 ',
+                \ '5': '5 ',
+                \ '6': '6 ',
+                \ '7': '7 ',
+                \ '8': '8 ',
+                \ '9': '9 '
+                \}
+
+endif
 let g:airline#extensions#tabline#formatter = 'spacevim'
 "let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:airline#extensions#tabline#buffer_nr_format = '%s:'
