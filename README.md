@@ -46,18 +46,67 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
 ## Features
 
 - **Great documentation:** access documentation in Vim with
-<kbd>:h SpaceVim</kbd>.
+    <kbd>:h SpaceVim</kbd>.
 - **Beautiful GUI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** commands have mnemonic prefixes like
-<kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
-unite work flow commands.
+    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
+    unite work flow commands.
 - **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
-organised in configuration layers following a set of
-[conventions](http://spacevim.org/development/).
+    organised in configuration layers following a set of
+    [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ## Documentation
+
+### Quick start guide
+
+SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`, 
+
+:warning: It is not `~/.SpaceVim/init.vim`, user should not change anything in `~/.SpaceVim/`.
+
+here is an example:
+
+```vim
+" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
+" file for all possible options:
+let g:spacevim_default_indent = 3
+let g:spacevim_max_column     = 80
+let g:spacevim_colorscheme = 'jellybeans'
+let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
+
+" Change the default directory where all miscellaneous persistent files go.
+" By default it is ~/.cache/vimfiles.
+let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+
+" By default, language specific plugins are not loaded. This can be changed
+" with the following, then the plugins for go development will be loaded.
+call SpaceVim#layers#load('lang#go')
+
+" loaded ui layer
+call SpaceVim#layers#load('ui')
+
+" Alternatively, you can set this variable to load exactly what you want:
+let g:spacevim_plugin_groups = ['core', 'web']
+
+" If there is a particular plugin you don't like, you can define this
+" variable to disable them entirely:
+let g:spacevim_disabled_plugins=[
+    \ ['junegunn/fzf.vim'],
+    \ ]
+
+" If you want to add some custom plugins, use these options:
+let g:spacevim_custom_plugins = [
+    \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+    \ ['wsdjeg/GitHub.vim'],
+    \ ]
+
+" set the guifont
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+
+" use space as `<Leader>`
+let mapleader = "\<space>"
+```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
@@ -105,17 +154,17 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
     make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
 
-```sh
-git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-```
+    ```sh
+    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+    ```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
     for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-```sh
-git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-```
+    ```sh
+    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+    ```
 
 
 ## Support SpaceVim
