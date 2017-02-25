@@ -9,9 +9,11 @@
 ### Table of Contents
 - [Introduction](#introduction)
 - [Community](#community)
-- [Install](#install)
-    - [Linux/Mac](#linuxmac)
-    - [Windows support](#windows-support)
+- [Quick start](#quick-start)
+    - [Install](#install)
+        - [Linux/Mac](#linuxmac)
+        - [Windows support](#windows-support)
+- [Custom configuration](#custom-configuration)
 - [File Structure](#file-structure)
 - Features
     - [Awesome ui](#awesome-ui)
@@ -33,7 +35,6 @@
     - Central location for tags
     - Lightweight simple status/tabline
     - Premium color-schemes
-- [Custom configuration](#custom-configuration)
 - [Support SpaceVim](#support-spacevim)
     - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
