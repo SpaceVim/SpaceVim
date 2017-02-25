@@ -16,29 +16,19 @@ See the [documentation](https://spacevim.org/documentation) or [the list of laye
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
-**Table of Contents**
+# Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Documentation](#documentation)
 - [Getting Help](#getting-help)
-- [Prerequisites](#prerequisites)
-    - neovim
-        - Linux distros
-        - macOS
-        - Windows
-    - vim
-        - Linux distros
-        - macOS
-        - Windows
-- Install
-- Update
-- Contributions
+- [Install](#install)
+- [Update](#update)
 - [Community](#community)
 - [Support SpaceVim](#support-spacevim)
     - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
-    - Write post about SpaceVim
+    - [Write post about SpaceVim]()
 - [Credits & Thanks](#credits--thanks)
 
 ## Introduction
@@ -65,8 +55,19 @@ unite work flow commands.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
 organised in configuration layers following a set of
 [conventions](http://spacevim.org/development/).
+- **Neovim centric:** Dark powered mode of SpaceVim
 
-#### Community
+## Documentation
+
+Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
+
+You can also check the [general documentation](http://spacevim.org/documentation/).
+
+## Getting Help
+
+If you need help, ask your question in the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim), a member of the community will help you out.
+
+## Community
 Try these Neovim hangouts for any questions, problems or comments.
 - Ask
     - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
@@ -78,9 +79,9 @@ Try these Neovim hangouts for any questions, problems or comments.
     - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
 - Discuss
 
-#### Install
+## Install
 
-##### Linux/Mac
+### Linux/Mac
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -98,7 +99,7 @@ for more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
-##### windows support
+### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
@@ -117,100 +118,17 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
 
-##### Neovim centric - Dark powered mode of SpaceVim.
+## Support SpaceVim
 
-By default, SpaceVim use these dark powered plugins:
-
-1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
-
-TODO:
-
-1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
-2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
-3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
-
-##### Modular configuration
-
-- SpaceVim will load custom configuration from `~/.local.vim` and `.local.vim` in current directory.
-- SpaceVim support `~/.SpaceVim.d/init.vim` and `./SpaceVim.d/init.vim`.
-
-
-Here is an example:
-
-```viml
-" Here are some basic customizations, please refer to the top of the vimrc
-" file for all possible options:
-let g:spacevim_default_indent = 3
-let g:spacevim_max_column     = 80
-let g:spacevim_colorscheme    = 'my_awesome_colorscheme'
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = "/some/place/else"
-
-" By default, language specific plugins are not loaded. This can be changed
-" with the following:
-let g:spacevim_plugin_groups_exclude = ['ruby', 'python']
-
-" If there are groups you want always loaded, you can use this:
-let g:spacevim_plugin_groups_include = ['go']
-
-" Alternatively, you can set this variable to load exactly what you want:
-let g:spacevim_plugin_groups = ['core', 'web']
-
-" If there is a particular plugin you don't like, you can define this
-" variable to disable them entirely:
-let g:spacevim_disabled_plugins=['vim-foo', 'vim-bar']
-" If you want to add some custom plugins, use these options:
-let g:spacevim_custom_plugins = [
- \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
- \ ['wsdjeg/GitHub.vim'],
- \ ]
-
-" Anything defined here are simply overrides
-set wildignore+=\*/node_modules/\*
-set guifont=Wingdings:h10
-```
-
-
-#### Custom configuration
-SpaceVim use `~/.SpaceVim.d/init.vim` as default global init file. you can set
-SpaceVim-options or config layers in it. SpaceVim also will add `~/.SpaceVim.d/`
-into runtimepath. so you can write your own vim script in it.
-
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
-
-here is an example config file for SpaceVim:
-
-```viml
-" set the options of SpaceVim
-let g:spacevim_colorscheme = 'solarized'
-
-" setting layers, load 'lang#java' layer.
-call SpaceVim#layers#load('lang#java')
-
-" add custom plugins.
-let g:spacevim_custom_plugins = [
- \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
- \ ['wsdjeg/GitHub.vim'],
- \ ]
-
- " custom mappings:
- nnoremap <c-l> :Ydc<cr>
-```
-
-#### Support SpaceVim
-
-##### report bugs
+### report bugs
 
 If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is useful for me to debug for this issue.
 
-##### contribute to SpaceVim
+### contribute to SpaceVim
 
-#### Credits & Thanks
+### Write post about SpaceVim
+
+## Credits & Thanks
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
