@@ -1,10 +1,18 @@
-<p align="center"><img src="https://spacevim.org/logo.png" alt="SpaceVim"/></p>
+[![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
+
+[Documentation](http://spacevim.org/documentation/) |
+[Twitter](https://twitter.com/SpaceVim) |
+[Community](https://spacevim.org/community/) |
+[Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version 0.1.0-dev](https://img.shields.io/badge/version-0.1.0--dev-yellow.svg?style=flat-square)
+![Version 0.2.0-dev](https://img.shields.io/badge/version-0.2.0--dev-yellow.svg?style=flat-square)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
 
+
+See the [website](https://spacevim.org) for more information.
+[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 ### Table of Contents
 - [Introduction](#introduction)
@@ -55,8 +63,6 @@ If you encounter any bugs or have feature requests, just open an issue
 report on Github.
 
 For learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 #### Community
 Try these Neovim hangouts for any questions, problems or comments.
