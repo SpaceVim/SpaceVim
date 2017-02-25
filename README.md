@@ -14,6 +14,8 @@ SpaceVim is a community-driven vim distribution that seeks to provide layer feat
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
+Here is a throughput graph of the repository for the last few weeks:
+
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 # Table of Contents
@@ -21,6 +23,7 @@ See the [documentation](https://spacevim.org/documentation) or [the list of laye
 - [Introduction](#introduction)
 - [Features](#features)
 - [Documentation](#documentation)
+    - [Quick start guide](#quick-start-guide)
 - [Getting Help](#getting-help)
 - [Install](#install)
 - [Update](#update)
@@ -28,7 +31,7 @@ See the [documentation](https://spacevim.org/documentation) or [the list of laye
 - [Support SpaceVim](#support-spacevim)
     - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
-    - [Write post about SpaceVim]()
+    - [Write post about SpaceVim](#write-post-about-spacevim)
 - [Credits & Thanks](#credits--thanks)
 
 ## Introduction
@@ -169,13 +172,28 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 ## Support SpaceVim
 
-### report bugs
+The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the Gitter Chat or sending pull requests.
 
-If you get any issues, please open an issue with the ISSUE_TEMPLATE. It is useful for me to debug for this issue.
+If you want to show your support financially you can contribute to [Bountysource](https://www.bountysource.com/teams/spacevim) or buy a drink for the maintainer by clicking following icon.
+
+<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> 
+
+If you used SpaceVim in a project and you want to show that fact, you can use the SpaceVim badge: 
+
+[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
+
+markdown
+
+```md
+[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
+```
 
 ### contribute to SpaceVim
 
+Before contributing be sure to consult the contribution guidelines and conventions.
+
 ### Write post about SpaceVim
+
 
 ## Credits & Thanks
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
