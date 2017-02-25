@@ -29,7 +29,6 @@ Here is a throughput graph of the repository for the last few weeks:
 - [Update](#update)
 - [Community](#community)
 - [Support SpaceVim](#support-spacevim)
-    - [Report bugs](#report-bugs)
     - [contribute to SpaceVim](#contribute-to-spacevim)
     - [Write post about SpaceVim](#write-post-about-spacevim)
 - [Credits & Thanks](#credits--thanks)
@@ -75,12 +74,25 @@ here is an example:
 " file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
-let g:spacevim_colorscheme = 'jellybeans'
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
 
 " Change the default directory where all miscellaneous persistent files go.
 " By default it is ~/.cache/vimfiles.
 let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+
+" set SpaceVim colorscheme
+let g:spacevim_colorscheme = 'jellybeans'
+
+" Set plugin manager, you want to use, default is dein.vim
+let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
+
+" use space as `<Leader>`
+let mapleader = "\<space>"
+
+" Set windows shortcut leader [Window], default is `s`
+let g:spacevim_windows_leader = 's'
+
+" Set unite work flow shortcut leader [Unite], default is `f`
+let g:spacevim_unite_leader = 'f'
 
 " By default, language specific plugins are not loaded. This can be changed
 " with the following, then the plugins for go development will be loaded.
@@ -88,9 +100,6 @@ call SpaceVim#layers#load('lang#go')
 
 " loaded ui layer
 call SpaceVim#layers#load('ui')
-
-" Alternatively, you can set this variable to load exactly what you want:
-let g:spacevim_plugin_groups = ['core', 'web']
 
 " If there is a particular plugin you don't like, you can define this
 " variable to disable them entirely:
@@ -106,9 +115,6 @@ let g:spacevim_custom_plugins = [
 
 " set the guifont
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
-
-" use space as `<Leader>`
-let mapleader = "\<space>"
 ```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
@@ -193,6 +199,8 @@ markdown
 Before contributing be sure to consult the contribution guidelines and conventions.
 
 ### Write post about SpaceVim
+
+if you want to write something about SpaceVim, and want your post be linked in [SpaceVim's blog page](https://spacevim.org/blog), please show us the link.
 
 
 ## Credits & Thanks
