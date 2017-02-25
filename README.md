@@ -190,13 +190,13 @@ If you used SpaceVim in a project and you want to show that fact, you can use th
 
 markdown
 
-```md
+```markdown
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 
 ### contribute to SpaceVim
 
-Before contributing be sure to consult the contribution guidelines and conventions.
+Before contributing be sure to consult the [contribution guidelines](http://spacevim.org/development/#contribution-guidelines) and [conventions](http://spacevim.org/development/#conventions).
 
 ### Write post about SpaceVim
 
