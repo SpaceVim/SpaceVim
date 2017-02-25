@@ -93,7 +93,6 @@ function! SpaceVim#default#SetOptions() abort
     set pumheight=15 " limit completion menu height
     set scrolloff=7
     set incsearch
-    set autowrite
     set hlsearch
     set laststatus=2
     set completeopt=longest,menu
