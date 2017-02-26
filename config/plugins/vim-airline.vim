@@ -4,13 +4,40 @@ let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:Powerline_sybols = 'unicode'
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s:'
+if g:spacevim_buffer_index_type < 3
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#buffer_idx_format = {}
+    for s:i in range(9)
+        call extend(g:airline#extensions#tabline#buffer_idx_format,
+                    \ {s:i : SpaceVim#api#import('messletters').bubble_num(s:i,
+                    \ g:spacevim_buffer_index_type). ' '})
+    endfor
+    unlet s:i
+elseif g:spacevim_buffer_index_type == 3
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+elseif g:spacevim_buffer_index_type == 4
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#buffer_idx_format = {
+                \ '0': '0 ',
+                \ '1': '1 ',
+                \ '2': '2 ',
+                \ '3': '3 ',
+                \ '4': '4 ',
+                \ '5': '5 ',
+                \ '6': '6 ',
+                \ '7': '7 ',
+                \ '8': '8 ',
+                \ '9': '9 '
+                \}
+
+endif
+let g:airline#extensions#tabline#formatter = 'spacevim'
+"let g:airline#extensions#tabline#buffer_nr_show = 1
+"let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#fnamecollapse = 1
 let g:airline#extensions#tabline#fnametruncate = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+"let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -47,4 +74,8 @@ if get(g:, 'airline_powerline_fonts', 0)
     let g:airline_symbols.linenr = ''
     let g:airline_symbols.maxlinenr= ''
 endif
-
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type= 2
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#buffers_label = 'BUFFERS'
+let g:airline#extensions#tabline#tabs_label = 'TABS'

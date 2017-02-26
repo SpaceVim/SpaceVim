@@ -170,8 +170,21 @@ let g:spacevim_enable_debug            = 0
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
-
-
+""
+" Set SpaceVim buffer index type, default is 0.
+" >
+"   " types:
+"   " 0: 1 ➛ ➊ 
+"   " 1: 1 ➛ ➀
+"   " 2: 1 ➛ ⓵
+"   " 3: 1 ➛ ¹
+"   " 4: 1 ➛ 1
+"   let g:spacevim_buffer_index_type = 1
+" <
+let g:spacevim_buffer_index_type = 0
+""
+" Enable/Disable tabline filetype icon. default is 0.
+let g:spacevim_enable_tabline_filetype_icon = 0
 ""
 " Plugin groups to be loaded.
 " >
