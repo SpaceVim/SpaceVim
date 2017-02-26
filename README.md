@@ -41,7 +41,7 @@ to select the layers they need. It got inspired by [spacemacs](https://github.co
 please star it on github. It's a great way of getting feedback and gives me the kick to
 put more time into development.
 
-![2017-02-05_1359x721](https://cloud.githubusercontent.com/assets/13142418/22622826/f88881a8-eb80-11e6-880b-b12e0430689a.png)
+![2017-02-26_1365x739](https://cloud.githubusercontent.com/assets/13142418/23339920/590f2e9a-fc67-11e6-99ec-794f79ba0902.png)
 
 If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
