@@ -1,3 +1,4 @@
+" @vimlint(EVL103, 1, a:buffers)
 function! airline#extensions#tabline#formatters#spacevim#format(bufnr, buffers) abort
     let id = SpaceVim#api#messletters#get().bubble_num(a:bufnr, g:spacevim_buffer_index_type) . ' '
     let fn = fnamemodify(bufname(a:bufnr), ':t')
@@ -14,5 +15,5 @@ function! airline#extensions#tabline#formatters#spacevim#format(bufnr, buffers) 
     else
         return fn
     endif
-    " @vimlint(EVL105, 0, a:buffers)
 endfunction
+" @vimlint(EVL103, 0, a:buffers)
