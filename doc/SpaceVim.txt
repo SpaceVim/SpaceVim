@@ -199,7 +199,7 @@ Enable/Disable debug mode for SpaceVim. Default is 0.
 Set the debug level of SpaceVim. Default is 1.
 
                                                 *g:spacevim_buffer_index_type*
-Set SpaceVim buffer index type, default is 0
+Set SpaceVim buffer index type, default is 0.
 >
   " types:
   " 0: 1 ➛ ➊
@@ -209,6 +209,9 @@ Set SpaceVim buffer index type, default is 0
   " 4: 1 ➛ 1
   let g:spacevim_buffer_index_type = 1
 <
+
+                                     *g:spacevim_enable_tabline_filetype_icon*
+Enable/Disable tabline filetype icon. default is 0.
 
                                                     *g:spacevim_plugin_groups*
 Plugin groups to be loaded.
