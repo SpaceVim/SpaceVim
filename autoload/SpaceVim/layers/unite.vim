@@ -51,7 +51,6 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['Shougo/unite-session'],
                 \ ['osyo-manga/unite-quickfix'],
                 \ ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
-                \ ['d42/vimfiler_git.vim', {'merged' : 0, 'loadconf' : 1 }],
                 \ ['ujihisa/unite-colorscheme'],
                 \ ['mattn/unite-gist'],
                 \ ['tacroe/unite-mark'],
