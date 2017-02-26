@@ -14,4 +14,5 @@ function! airline#extensions#tabline#formatters#spacevim#format(bufnr, buffers) 
     else
         return fn
     endif
+    " @vimlint(EVL105, 0, a:buffers)
 endfunction

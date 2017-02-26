@@ -7,12 +7,12 @@ let g:Powerline_sybols = 'unicode'
 if g:spacevim_buffer_index_type < 3
     let g:airline#extensions#tabline#buffer_idx_mode = 1
     let g:airline#extensions#tabline#buffer_idx_format = {}
-    for i in range(9)
+    for s:i in range(9)
         call extend(g:airline#extensions#tabline#buffer_idx_format,
-                    \ {i : SpaceVim#api#import('messletters').bubble_num(i,
+                    \ {s:i : SpaceVim#api#import('messletters').bubble_num(s:i,
                     \ g:spacevim_buffer_index_type). ' '})
     endfor
-    unlet i
+    unlet s:i
 elseif g:spacevim_buffer_index_type == 3
     let g:airline#extensions#tabline#buffer_idx_mode = 1
 elseif g:spacevim_buffer_index_type == 4
