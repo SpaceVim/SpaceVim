@@ -19,4 +19,7 @@ if you are a chinese, It will be more easy in wechat.
 These are the companies or individuals contributing a monthly amount to help sustain SpaceVim's development.
 See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for more details.
 
+2017-2-23 | user from wechat contributed ¥40 to SpaceVim
+2017-2-14 | user from wechat contributed ¥100 to SpaceVim
+
 
