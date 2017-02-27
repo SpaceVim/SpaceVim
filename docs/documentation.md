@@ -270,6 +270,10 @@ Key   | Mode | Action
 ----- |:----:| ------------------
 `F2` | _All_ | Toggle tagbar
 `F3` | _All_ | Toggle Vimfiler
+`<leader>` + num | Normal | Jump to the buffer whit the num index
+`<Alt>` + num | Normal | Jump to the buffer whit the num index, this only works in neovim
+`<Alt>` + `h`/`<Left>` | Normal | Jump to left buffer in the tabline, this only works in neovim
+`<Alt>` + `l`/`<Right>` | Normal | Jump to Right buffer in the tabline, this only works in neovim
 `<leader>`+`ts` | Normal | Toggle spell-checker (:setlocal spell!)
 `<leader>`+`tn` | Normal | Toggle line numbers (:setlocal nonumber!)
 `<leader>`+`tl` | Normal | Toggle hidden characters (:setlocal nolist!)
@@ -307,6 +311,18 @@ Key   | Mode | Action
 `Shift`+`Tab` | Normal | Previous window or tab
 `<leader>`+`sv` | Normal | Split with previous buffer
 `<leader>`+`sg` | Normal | Vertical split with previous buffer
+
+SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
+can be get by <kbd>`<leader>` q r</kbd>
+
+##### Native functions
+
+Key   | Mode | Action
+----- |:----:| ------------------
+`<leader>` + `qr` | Normal | Same as native `q`
+`<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin
+`<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin
+`<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin
 
 ##### Plugin: Unite
 
@@ -423,6 +439,8 @@ Key   | Mode | Action
 `m`+`n` | Normal | Jump to next bookmark
 `m`+`p` | Normal | Jump to previous bookmark
 `m`+`i` | Normal | Annotate bookmark
+
+As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
 ##### Plugin: Gita
 
