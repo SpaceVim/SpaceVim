@@ -1,9 +1,10 @@
 let s:save_cpo = &cpo
 set cpo&vim
+scriptencoding utf-8
 
 let s:fish = &shell =~# 'fish'
 
-function! vimfiler#columns#gitstatus#define()
+function! vimfiler#columns#gitstatus#define() abort
     return s:column
 endfunction"}}}
 
@@ -13,9 +14,14 @@ let s:column = {
             \ 'syntax' : 'vimfilerColumn__Git',
             \ }
 
-function! s:column.length(files, context) "{{{
+" @vimlint(EVL103, 1, a:files)
+" @vimlint(EVL103, 1, a:context)
+function! s:column.length(files, context) abort
     return 3
-endfunction "}}}
+endfunction
+" @vimlint(EVL103, 0, a:files)
+" @vimlint(EVL103, 0, a:context)
+
 if !exists('g:VimFilerGitIndicatorMap')
     let g:VimFilerGitIndicatorMap = {
                 \ 'Modified'  : '✹',
@@ -31,9 +37,10 @@ if !exists('g:VimFilerGitIndicatorMap')
                 \ }
 endif
 
-function! s:column.define_syntax(context) "{{{
+" @vimlint(EVL103, 1, a:context)
+function! s:column.define_syntax(context) abort
     for name in keys(g:VimFilerGitIndicatorMap)
-        exe "syntax match   vimfilerColumn__Git" . name
+        exe 'syntax match   vimfilerColumn__Git' . name
                     \ . " '\[" . g:VimFilerGitIndicatorMap[name]
                     \ . "\]' contained containedin=vimfilerColumn__Git"
     endfor
@@ -46,20 +53,21 @@ function! s:column.define_syntax(context) "{{{
     highlight def link  vimfilerColumn__GitDirty    Tag
     highlight def link  vimfilerColumn__GitClean    DiffAdd   
     highlight def link  vimfilerColumn__GitUnknown  Text   
-endfunction "}}}
+endfunction
+" @vimlint(EVL103, 0, a:context)
 
-function s:directory_of_file(file)
+function! s:directory_of_file(file) abort
     return fnamemodify(a:file, ':h')
 endfunction
 
 
-function! s:system(cmd, ...)
+function! s:system(cmd, ...) abort
     silent let output = (a:0 == 0) ? system(a:cmd) : system(a:cmd, a:1)
     return output
 endfunction
 
-function! s:git_shellescape(arg)
-    if a:arg =~ '^[A-Za-z0-9_/.-]\+$'
+function! s:git_shellescape(arg) abort
+    if a:arg =~# '^[A-Za-z0-9_/.-]\+$'
         return a:arg
     elseif &shell =~# 'cmd' || gitgutter#utility#using_xolox_shell()
         return '"' . substitute(substitute(a:arg, '"', '""', 'g'), '%', '"%"', 'g') . '"'
@@ -68,13 +76,13 @@ function! s:git_shellescape(arg)
     endif
 endfunction
 
-function! s:cmd_in_directory_of_file(file, cmd)
+function! s:cmd_in_directory_of_file(file, cmd) abort
     return 'cd '.s:git_shellescape(s:directory_of_file(a:file)) . (s:fish ? '; and ' : ' && ') . a:cmd
 endfunction
 
 
 
-function! s:git_state_to_name(symb)  " TODO: X, Y
+function! s:git_state_to_name(symb)  abort
  if a:symb ==# '?'
         return 'Untracked'
     elseif a:symb ==# ' '
@@ -93,15 +101,16 @@ endif
 
 endfunction
 
-function! s:git_state_to_symbol(s)
+function! s:git_state_to_symbol(s) abort
     let name = s:git_state_to_name(a:s)
     return g:VimFilerGitIndicatorMap[name]
 endfunction
 
 let g:wsd = []
 
-function! s:column.get(file, context) "{{{
-    let cmd = "git -c color.status=false status -s " .  fnamemodify(a:file.action__path, ':.')
+" @vimlint(EVL103, 1, a:context)
+function! s:column.get(file, context) abort
+    let cmd = 'git -c color.status=false status -s ' .  fnamemodify(a:file.action__path, ':.')
     let output = systemlist(cmd)
     if v:shell_error
         return '   '
@@ -120,7 +129,8 @@ function! s:column.get(file, context) "{{{
             return '   '
         endif
     endif
-endfunction "}}}
+endfunction
+" @vimlint(EVL103, 0, a:context)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
