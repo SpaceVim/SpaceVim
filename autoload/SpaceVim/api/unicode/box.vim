@@ -54,9 +54,10 @@ function! s:drawing_table(json) abort
     let tytle = side
     let keys = keys(items[0])
     for key in keys
-        let tytle .= s:string.fill(items[0][key], 15) . side
+        let tytle .= s:string.fill(key , 15) . side
     endfor
     call add(table, tytle)
+    call add(table, middle_line)
     for item in items
         let value_line = side
         for key in keys
