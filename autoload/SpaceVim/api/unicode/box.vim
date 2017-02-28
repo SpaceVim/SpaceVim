@@ -6,7 +6,7 @@ scriptencoding utf-8
 " http://www.alanflavell.org.uk/unicode/unidata.html
 
 " json should be a list of items which have same keys
-function! s:drawing_table(json) abort
+function! s:drawing_table(json, ...) abort
     if empty(a:json)
         return []
     endif
@@ -52,7 +52,11 @@ function! s:drawing_table(json) abort
                 \ . bottom_right_corner
     call add(table, top_line)
     let tytle = side
-    let keys = keys(items[0])
+    if a:0 == 0
+        let keys = keys(items[0])
+    else
+        let keys = a:1
+    endif
     for key in keys
         let tytle .= s:string.fill(key , 15) . side
     endfor
