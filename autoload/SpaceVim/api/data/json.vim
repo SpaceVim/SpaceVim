@@ -9,6 +9,9 @@ endfunction
 let s:json['json_encode'] = function('s:json_encode')
 
 function! s:json_decode(json) abort
+    if empty(a:json) && type(a:json) == type('')
+        return ''
+    endif
     " TODO
     " support old vim version
     return json_decode(a:json)

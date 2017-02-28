@@ -151,6 +151,30 @@ endfunction
 
 let s:file['fticon'] = function('s:filetypeIcon')
 
+function! s:write(msg, fname) abort
+    let flags = filewritable(a:fname) ? 'a' : ''
+    call writefile([a:msg], a:fname, flags)
+endfunction
+
+let s:file['write'] = function('s:write')
+
+function! s:override(msg, fname) abort
+    let flags = filewritable(a:fname) ? 'b' : ''
+    call writefile([a:msg], a:fname, flags)
+endfunction
+
+let s:file['override'] = function('s:override')
+
+function! s:read(fname) abort       
+    if filereadable(a:fname)
+        return readfile(a:fname, '')
+    else
+        return ''
+    endif
+endfunction
+
+let s:file['read'] = function('s:read')
+
 function! SpaceVim#api#file#get() abort
     return deepcopy(s:file)
 endfunction
