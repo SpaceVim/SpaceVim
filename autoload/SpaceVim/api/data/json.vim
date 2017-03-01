@@ -24,7 +24,9 @@ else
     let g:spacevim_api_json_true = [function('s:json_true')]
     let g:spacevim_api_json_false = [function('s:json_false')]
     let g:spacevim_api_json_null = [function('s:json_null')]
-
+    " @vimlint(EVL102, 1, l:true)
+    " @vimlint(EVL102, 1, l:false)
+    " @vimlint(EVL102, 1, l:null)
     function! s:json_decode(json) abort
         let true = g:spacevim_api_json_true
         let false = g:spacevim_api_json_false
@@ -43,6 +45,9 @@ else
 
         return object
     endfunction
+    " @vimlint(EVL102, 0, l:true)
+    " @vimlint(EVL102, 0, l:false)
+    " @vimlint(EVL102, 0, l:null)
 endif
 
 lockvar g:spacevim_api_json_true
