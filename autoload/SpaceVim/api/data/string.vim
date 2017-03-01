@@ -7,6 +7,25 @@ endfunction
 
 let s:file['trim'] = function('s:trim')
 
+function! s:fill(str, length) abort
+    if strwidth(a:str) <= a:length
+        return a:str . repeat(' ', a:length - strwidth(a:str))
+    else
+        let l = 0
+        for i in range(strchars(a:str) - 1)
+            if strwidth(strcharpart(a:str, 0, i)) > a:length
+                break
+            else
+                let l = i
+            endif
+        endfor
+        let str = strcharpart(a:str, 0, l)
+        return str . repeat(' ', a:length - strwidth(str))
+    endif
+endfunction
+
+let s:file['fill'] = function('s:fill')
+
 function! s:trim_start(str) abort
     return substitute(a:str, '^\s*', '', 'g')
 endfunction
