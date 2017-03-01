@@ -186,6 +186,9 @@ let g:spacevim_buffer_index_type = 0
 " Enable/Disable tabline filetype icon. default is 0.
 let g:spacevim_enable_tabline_filetype_icon = 0
 ""
+" Enable/Disable os fileformat icon. default is 0.
+let g:spacevim_enable_os_fileformat_icon = 0
+""
 " Plugin groups to be loaded.
 " >
 "    let g:spacevim_plugin_groups = ['core', 'lang']

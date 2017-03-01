@@ -79,3 +79,7 @@ let g:airline#extensions#tabline#tab_nr_type= 2
 let g:airline#extensions#tabline#show_tab_type = 1
 let g:airline#extensions#tabline#buffers_label = 'BUFFERS'
 let g:airline#extensions#tabline#tabs_label = 'TABS'
+if g:spacevim_enable_os_fileformat_icon
+    let s:sys = SpaceVim#api#import('system')
+    let g:airline_section_y = " %{&fenc . ' ' . SpaceVim#api#import('system').fileformat()} "
+endif
