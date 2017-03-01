@@ -2,11 +2,11 @@
 title:  "Development"
 ---
 
-# Support SpaceVim
+# Development
 
-## Development happens in the GitHub repository.
+Development happens in the GitHub repository. here is a throughput graph of the repository for the last few weeks:
 
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim)
+[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 ## Contribution guidelines
 
