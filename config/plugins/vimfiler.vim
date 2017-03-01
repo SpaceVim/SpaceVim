@@ -23,23 +23,25 @@ if has('mac')
 else
     let g:vimfiler_quick_look_command = 'gloobus-preview'
 endif
-
-call vimfiler#custom#profile('default', 'context', {
-            \ 'explorer' : 1,
-            \ 'winwidth' : g:spacevim_sidebar_width,
-            \ 'winminwidth' : 30,
-            \ 'toggle' : 1,
-            \ 'auto_expand': 1,
-            \ 'direction' : 'rightbelow',
-            \ 'parent': 0,
-            \ 'explorer_columns' : 'gitstatus',
-            \ 'status' : 1,
-            \ 'safe' : 0,
-            \ 'split' : 1,
-            \ 'hidden': 1,
-            \ 'no_quit' : 1,
-            \ 'force_hide' : 0,
-            \ })
+try
+    call vimfiler#custom#profile('default', 'context', {
+                \ 'explorer' : 1,
+                \ 'winwidth' : g:spacevim_sidebar_width,
+                \ 'winminwidth' : 30,
+                \ 'toggle' : 1,
+                \ 'auto_expand': 1,
+                \ 'direction' : 'rightbelow',
+                \ 'parent': 0,
+                \ 'explorer_columns' : 'gitstatus',
+                \ 'status' : 1,
+                \ 'safe' : 0,
+                \ 'split' : 1,
+                \ 'hidden': 1,
+                \ 'no_quit' : 1,
+                \ 'force_hide' : 0,
+                \ })
+catch
+endtry
 augroup vfinit
     au!
     autocmd FileType vimfiler call s:vimfilerinit()
