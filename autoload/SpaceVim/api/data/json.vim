@@ -1,7 +1,7 @@
 let s:json = {}
 
 
-if exists('*json_decode') && 0
+if exists('*json_decode')
     let g:spacevim_api_json_true = v:true
     let g:spacevim_api_json_true = v:false
     let g:spacevim_api_json_true = v:null
@@ -51,10 +51,12 @@ lockvar g:spacevim_api_json_null
 
 let s:json['json_decode'] = function('s:json_decode')
 
-function! s:json_encode(val) abort
-    if exists('*json_decode') && 0
+if exists('*json_encode')
+    function! s:json_encode(val) abort
         return json_encode(a:val)
-    else
+    endfunction
+else
+    function! s:json_encode(val) abort
         if type(a:val) == type(0)
             return a:val
         elseif type(a:val) == type('')
@@ -87,8 +89,8 @@ function! s:json_encode(val) abort
         else
             return string(a:val)
         endif
-    endif
-endfunction
+    endfunction
+endif
 
 let s:json['json_encode'] = function('s:json_encode')
 
