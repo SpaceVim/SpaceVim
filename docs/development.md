@@ -8,7 +8,39 @@ Development happens in the GitHub repository. here is a throughput graph of the 
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
+## Content
+
+- [Contribution guidelines](#contribution-guidelines)
+    - [Asking for help](#asking-for-help)
+    - [Reporting issues](#reporting-issues)
+    - [Contributing code](#contributing-code)
+
 ## Contribution guidelines
+
+SpaceVim is a effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
+We have a few guidelines, which we ask all contributors to follow.
+
+You can only consider reading the sections relevant to what you are going to do:
+
+- [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
+- [Reporting issues](#reporting-issues) if you are about to open a new issue.
+- [Contributing code](#contributing-code) if you are about to send a Pull-Request.
+
+### Asking for help
+
+If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
+- <kbd>:h SpaceVim-faq</kbd> Some of the most frequently asked questions are answered there.
+- [SpaceVim documentation](https://spacevim.org/documentation), It is the general documentation of SpaceVim.
+
+### Reporting issues
+
+issues have to be reported on issues tracker, Please:
+- Check that there is no duplicate issue in the issues tracker, you can search keywords in the issues tracker.
+- Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
+- Use a clear title and follow the issue template.
+- Include details on how to reproduce it, just like a step by step guide.
+
+### Contributing code
 
 ## Conventions
 
