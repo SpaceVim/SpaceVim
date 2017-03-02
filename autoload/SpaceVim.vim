@@ -1,3 +1,11 @@
+"=============================================================================
+" SpaceVim.vim --- Initialization and core files for SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://github.com/syl20bnr/spacemacs
+" License: MIT license
+"=============================================================================
+
 ""
 " @section Introduction, intro
 " @stylized spacevim
