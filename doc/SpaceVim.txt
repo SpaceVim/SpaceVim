@@ -24,22 +24,23 @@ CONTENTS                                                   *SpaceVim-contents*
       2. autocomplete..................................|SpaceVim-autocomplete|
       3. checkers....................................|SpaceVim-layer-checkers|
       4. colorscheme....................................|SpaceVim-colorscheme|
-      5. exprfold....................................|SpaceVim-layer-exprfold|
-      6. incsearch..................................|SpaceVim-layer-incsearch|
-      7. indentmove................................|SpaceVim-layer-indentmove|
-      8. lang#c........................................|SpaceVim-layer-lang-c|
-      9. lang#elixir..............................|SpaceVim-layer-lang-elixir|
-      10. lang#go.....................................|SpaceVim-layer-lang-go|
-      11. lang#java.................................|SpaceVim-layer-lang-java|
-      12. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      13. lang#php...................................|SpaceVim-layer-lang-php|
-      14. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      15. lang#python.............................|SpaceVim-layer-lang-python|
-      16. lang#rust.................................|SpaceVim-layer-lang-rust|
-      17. lang#xml...................................|SpaceVim-layer-lang-xml|
-      18. operator...................................|SpaceVim-layer-operator|
-      19. shell.........................................|SpaceVim-layer-shell|
-      20. tmux...........................................|SpaceVim-layer-tmux|
+      5. core#tabline............................|SpaceVim-layer-core-tabline|
+      6. exprfold....................................|SpaceVim-layer-exprfold|
+      7. incsearch..................................|SpaceVim-layer-incsearch|
+      8. indentmove................................|SpaceVim-layer-indentmove|
+      9. lang#c........................................|SpaceVim-layer-lang-c|
+      10. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      11. lang#go.....................................|SpaceVim-layer-lang-go|
+      12. lang#java.................................|SpaceVim-layer-lang-java|
+      13. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      14. lang#php...................................|SpaceVim-layer-lang-php|
+      15. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      16. lang#python.............................|SpaceVim-layer-lang-python|
+      17. lang#rust.................................|SpaceVim-layer-lang-rust|
+      18. lang#xml...................................|SpaceVim-layer-lang-xml|
+      19. operator...................................|SpaceVim-layer-operator|
+      20. shell.........................................|SpaceVim-layer-shell|
+      21. tmux...........................................|SpaceVim-layer-tmux|
   5. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -457,6 +458,11 @@ https://github.com/SpaceVim/SpaceVim/issues/209#issuecomment-280545818
   yowish
   zellner
 <
+
+==============================================================================
+CORE#TABLINE                                     *SpaceVim-layer-core-tabline*
+
+This layer provides default tabline for SpaceVim
 
 ==============================================================================
 EXPRFOLD                                             *SpaceVim-layer-exprfold*
