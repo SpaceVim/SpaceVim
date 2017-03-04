@@ -35,6 +35,8 @@ for more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
+Before you use SpaceVim, you should install the plugin by executing `:call dein#install()` in (neo-)vim.
+
 ### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
