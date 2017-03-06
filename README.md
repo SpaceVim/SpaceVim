@@ -136,6 +136,7 @@ Try these Neovim hangouts for any questions, problems or comments.
     - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
     - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
 - Discuss
+    - [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
 
 ## Install
 
