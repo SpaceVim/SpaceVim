@@ -180,9 +180,9 @@ Always prefix variables with their scope.
     - Function-local variables with l:
     - Vim-predefined variables with v:
     - Buffer-local variables with b:
-    g:, s:, and a: must always be used.
-    b: changes the variable semantics; use it when you want buffer-local semantics.
-    l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
+    - g:, s:, and a: must always be used.
+    - b: changes the variable semantics; use it when you want buffer-local semantics.
+    - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 
 

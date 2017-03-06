@@ -193,7 +193,7 @@ function! SpaceVim#default#SetMappings() abort
   nnoremap <silent>[<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
   nnoremap <silent>]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-  "Use jk switch to normal model
+  "Use jk switch to normal mode
   inoremap jk <esc>
 
   "]e or [e move current line ,count can be useed
