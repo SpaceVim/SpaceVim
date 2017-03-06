@@ -1,16 +1,16 @@
 function! SpaceVim#options#list() abort
-    let list = []
-    if has('patch-7.4.2010') && 0
-        for var in getcompletion('g:spacevim_','var')
-            call add(list, var . ' = ' . string(get(g:, var[2:] , '')))
-        endfor
-    else
-        redraw
-        for var in filter(map(s:execute('let g:'), "matchstr(v:val, '\\S\\+')"), "v:val =~# '^spacevim_'")
-            call add(list,'g:' . var . ' = ' . string(get(g:, var , '')))
-        endfor
-    endif
-    return list
+  let list = []
+  if has('patch-7.4.2010') && 0
+    for var in getcompletion('g:spacevim_','var')
+      call add(list, var . ' = ' . string(get(g:, var[2:] , '')))
+    endfor
+  else
+    redraw
+    for var in filter(map(s:execute('let g:'), "matchstr(v:val, '\\S\\+')"), "v:val =~# '^spacevim_'")
+      call add(list,'g:' . var . ' = ' . string(get(g:, var , '')))
+    endfor
+  endif
+  return list
 endfunction
 
 function! s:execute(cmd) abort
@@ -23,3 +23,5 @@ function! s:execute(cmd) abort
   redir END
   return split(output, "\n")
 endfunction
+
+" vim:set et sw=2:

@@ -8,52 +8,54 @@ let s:system['isLinux'] = has('unix') && !has('macunix') && !has('win32unix')
 let s:system['isOSX'] = has('macunix')
 
 function! s:isDarwin() abort
-    if exists('s:is_darwin')
-        return s:is_darwin
-    endif
-
-    if has('macunix')
-        let s:is_darwin = 1
-        return s:is_darwin
-    endif
-
-    if ! has('unix')
-        let s:is_darwin = 0
-        return s:is_darwin
-    endif
-
-    if system('uname -s') ==# "Darwin\n"
-        let s:is_darwin = 1
-    else
-        let s:is_darwin = 0
-    endif
-
+  if exists('s:is_darwin')
     return s:is_darwin
+  endif
+
+  if has('macunix')
+    let s:is_darwin = 1
+    return s:is_darwin
+  endif
+
+  if ! has('unix')
+    let s:is_darwin = 0
+    return s:is_darwin
+  endif
+
+  if system('uname -s') ==# "Darwin\n"
+    let s:is_darwin = 1
+  else
+    let s:is_darwin = 0
+  endif
+
+  return s:is_darwin
 endfunction
 
 let s:system['isDarwin'] = function('s:isDarwin')
 
 function! s:fileformat() abort
-    let fileformat = ''
+  let fileformat = ''
 
-    if &fileformat ==? 'dos'
-        let fileformat = ''
-    elseif &fileformat ==? 'unix'
-        if s:isDarwin()
-            let fileformat = ''
-        else
-            let fileformat = ''
-        endif
-    elseif &fileformat ==? 'mac'
-        let fileformat = ''
+  if &fileformat ==? 'dos'
+    let fileformat = ''
+  elseif &fileformat ==? 'unix'
+    if s:isDarwin()
+      let fileformat = ''
+    else
+      let fileformat = ''
     endif
+  elseif &fileformat ==? 'mac'
+    let fileformat = ''
+  endif
 
-    return fileformat
+  return fileformat
 endfunction
 
 let s:system['fileformat'] = function('s:fileformat')
 
 
 function! SpaceVim#api#system#get() abort
-    return deepcopy(s:system)
+  return deepcopy(s:system)
 endfunction
+
+" vim:set et sw=2:
