@@ -18,4 +18,4 @@ Try these SpaceVim hangouts for any questions, problems or comments.
 
 ## Discuss
 
-To report an issue or give feedback to the developers, please use the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues). 
+- [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
