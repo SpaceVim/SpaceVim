@@ -22,6 +22,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['vimperator/vimperator.vim',              { 'on_ft' : 'vimperator'}],
                 \ ['voxpupuli/vim-puppet',                   {'on_ft' : 'puppet'}],
                 \ ['peterhoeg/vim-qml',                      { 'on_ft' : 'qml'}],
+                \ ['cespare/vim-toml',                      { 'on_ft' : 'toml'}],
                 \ ] 
     return plugins
 endfunction
