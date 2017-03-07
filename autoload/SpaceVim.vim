@@ -2,7 +2,7 @@
 " SpaceVim.vim --- Initialization and core files for SpaceVim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
-" URL: https://github.com/syl20bnr/spacemacs
+" URL: https://spacevim.org
 " License: MIT license
 "=============================================================================
 
@@ -72,7 +72,9 @@ let g:spacevim_vim_plug_installed      = 0
 " >
 "   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 " <
-let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], SpaceVim#api#import('file').separator)
+let g:spacevim_plugin_bundle_dir
+      \ = $HOME. join(['', '.cache', 'vimfiles', ''],
+      \ SpaceVim#api#import('file').separator)
 ""
 " Enable/Disable realtime leader guide. Default is 0.
 " >
@@ -160,7 +162,7 @@ let g:spacevim_filemanager             = 'vimfiler'
 ""
 " The default plugin manager of SpaceVim. Default is 'dein'.
 " Options are dein, neobundle, or vim-plug.
-let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
+let g:spacevim_plugin_manager          = 'dein'
 ""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
@@ -249,101 +251,103 @@ let g:spacevim_src_root                = 'E:\sources\'
 ""
 " The host file url. This option is for Chinese users who can not use
 " Google and Twitter.
-let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
-let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
-            \*.ttf,*.TTF,*.png,*/target/*,
-            \.git,.svn,.hg,.DS_Store'
+let g:spacevim_hosts_url
+      \ = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
+let g:spacevim_wildignore
+      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+      \*.ttf,*.TTF,*.png,*/target/*,
+      \.git,.svn,.hg,.DS_Store'
 
 function! SpaceVim#loadCustomConfig() abort
-    let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
-    let custom_confs = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
-    let custom_glob_conf_old = expand('~/.local.vim')
-    let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
-    " the old value will be remove
-    if filereadable(custom_glob_conf_old)
-        exe 'source ' . custom_glob_conf_old
-    endif
-    if !empty(custom_confs_old)
-        exe 'source ' . custom_confs_old[0]
-    endif
+  let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
+  let custom_confs = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
+  let custom_glob_conf_old = expand('~/.local.vim')
+  let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
+  " the old value will be remove
+  if filereadable(custom_glob_conf_old)
+    exe 'source ' . custom_glob_conf_old
+  endif
+  if !empty(custom_confs_old)
+    exe 'source ' . custom_confs_old[0]
+  endif
 
-    if !empty(custom_confs)
-        if isdirectory('.SpaceVim.d')
-            exe 'set rtp ^=' . expand('.SpaceVim.d')
-        endif
-        exe 'source ' . custom_confs[0]
-        if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-            if isdirectory(expand('~/.SpaceVim.d/'))
-                set runtimepath^=~/.SpaceVim.d
-            endif
-            exe 'source ' . custom_glob_conf
-        endif
-    elseif filereadable(custom_glob_conf)
-        if isdirectory(expand('~/.SpaceVim.d/'))
-            set runtimepath^=~/.SpaceVim.d
-        endif
-        exe 'source ' . custom_glob_conf
+  if !empty(custom_confs)
+    if isdirectory('.SpaceVim.d')
+      exe 'set rtp ^=' . expand('.SpaceVim.d')
     endif
+    exe 'source ' . custom_confs[0]
+    if filereadable(custom_glob_conf) && g:spacevim_force_global_config
+      if isdirectory(expand('~/.SpaceVim.d/'))
+        set runtimepath^=~/.SpaceVim.d
+      endif
+      exe 'source ' . custom_glob_conf
+    endif
+  elseif filereadable(custom_glob_conf)
+    if isdirectory(expand('~/.SpaceVim.d/'))
+      set runtimepath^=~/.SpaceVim.d
+    endif
+    exe 'source ' . custom_glob_conf
+  endif
 endfunction
 
 
 function! SpaceVim#end() abort
-    if !empty(g:spacevim_windows_leader)
-        call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
+  if !empty(g:spacevim_windows_leader)
+    call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
+  endif
+  if !empty(g:spacevim_unite_leader)
+    call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
+  endif
+  call SpaceVim#mapping#leader#defindglobalMappings()
+  if g:spacevim_simple_mode
+    let g:spacevim_plugin_groups = ['core']
+  else
+    for s:group in g:spacevim_plugin_groups_exclude
+      let s:i = index(g:spacevim_plugin_groups, s:group)
+      if s:i != -1
+        call remove(g:spacevim_plugin_groups, s:i)
+      endif
+    endfor
+    if g:spacevim_vim_help_language ==# 'cn'
+      call add(g:spacevim_plugin_groups, 'chinese')
     endif
-    if !empty(g:spacevim_unite_leader)
-        call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
+    if g:spacevim_use_colorscheme==1
+      call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
-    call SpaceVim#mapping#leader#defindglobalMappings()
-    if g:spacevim_simple_mode
-        let g:spacevim_plugin_groups = ['core']
+
+    if has('nvim')
+      let g:spacevim_autocomplete_method = 'deoplete'
+    elseif has('lua')
+      let g:spacevim_autocomplete_method = 'neocomplete'
     else
-        for s:group in g:spacevim_plugin_groups_exclude
-            let s:i = index(g:spacevim_plugin_groups, s:group)
-            if s:i != -1
-                call remove(g:spacevim_plugin_groups, s:i)
-            endif
-        endfor
-        if g:spacevim_vim_help_language ==# 'cn'
-            call add(g:spacevim_plugin_groups, 'chinese')
-        endif
-        if g:spacevim_use_colorscheme==1
-            call add(g:spacevim_plugin_groups, 'colorscheme')
-        endif
-
-        if has('nvim')
-            let g:spacevim_autocomplete_method = 'deoplete'
-        elseif has('lua')
-            let g:spacevim_autocomplete_method = 'neocomplete'
-        else
-            let g:spacevim_autocomplete_method = 'neocomplcache'
-        endif
-        if g:spacevim_enable_ycm
-            let g:spacevim_autocomplete_method = 'ycm'
-        endif
-        if g:spacevim_enable_neocomplcache
-            let g:spacevim_autocomplete_method = 'neocomplcache'
-        endif
+      let g:spacevim_autocomplete_method = 'neocomplcache'
     endif
-    ""
-    " generate tags for SpaceVim
-    let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
-    exe 'helptags ' . help
-
-    ""
-    " set language
-    if !empty(g:spacevim_language)
-        silent exec 'lan ' . g:spacevim_language
+    if g:spacevim_enable_ycm
+      let g:spacevim_autocomplete_method = 'ycm'
     endif
+    if g:spacevim_enable_neocomplcache
+      let g:spacevim_autocomplete_method = 'neocomplcache'
+    endif
+  endif
+  ""
+  " generate tags for SpaceVim
+  let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
+  exe 'helptags ' . help
 
-    call SpaceVim#plugins#load()
+  ""
+  " set language
+  if !empty(g:spacevim_language)
+    silent exec 'lan ' . g:spacevim_language
+  endif
+
+  call SpaceVim#plugins#load()
 endfunction
 
 
 function! SpaceVim#default() abort
-    call SpaceVim#default#SetOptions()
-    call SpaceVim#default#SetPlugins()
-    call SpaceVim#default#SetMappings()
+  call SpaceVim#default#SetOptions()
+  call SpaceVim#default#SetPlugins()
+  call SpaceVim#default#SetMappings()
 endfunction
 
 function! SpaceVim#defindFuncs() abort
@@ -351,13 +355,13 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-    if exists(':VimFiler') == 2 && exists(':Startify') == 2
-        if g:spacevim_enable_vimfiler_welcome
-            VimFiler
-        endif
-        wincmd p
-        Startify
+  if exists(':VimFiler') == 2 && exists(':Startify') == 2
+    if g:spacevim_enable_vimfiler_welcome
+      VimFiler
     endif
+    wincmd p
+    Startify
+  endif
 endfunction
 
 ""
@@ -407,3 +411,7 @@ endfunction
 " >
 "   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
 " <
+
+
+
+" vim:set et sw=2 cc=80:

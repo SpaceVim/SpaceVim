@@ -12,15 +12,15 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 "let g:ctrlp_open_multiple_files = 'v'
 "if you have install ag, the g:ctrlp_custom_ignore will not work
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
-            \ 'file': '\v\.(exe|so|dll|ttf|png)$|\-rplugin\~',
-            \ 'link': 'some_bad_symbolic_links',
-            \ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
+      \ 'file': '\v\.(exe|so|dll|ttf|png)$|\-rplugin\~',
+      \ 'link': 'some_bad_symbolic_links',
+      \ }
 if executable('rg')
-    let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
-                \ . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'rg'))
+  let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
+        \ . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'rg'))
 elseif executable('ag')
-    let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag'))
+  let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag'))
 endif
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 "nnoremap <Leader>kk :CtrlPMixed<Cr>
@@ -48,7 +48,9 @@ nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
 ""}}}
 
 augroup Fix_command_in_help_buffer
-    au!
-    autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
-    au FileType help exec "nnoremap <silent><buffer> q :q<CR>"
+  au!
+  autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
+  au FileType help exec "nnoremap <silent><buffer> q :q<CR>"
 augroup END
+
+" vim:set et sw=2:

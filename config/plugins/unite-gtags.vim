@@ -5,5 +5,7 @@ nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags
 "nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
 vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
 let g:unite_source_gtags_project_config = {
-            \ '_':                   { 'treelize': 0 }
-            \ }
+      \ '_':                   { 'treelize': 0 }
+      \ }
+
+" vim:set et sw=2:

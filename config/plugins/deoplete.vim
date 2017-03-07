@@ -13,17 +13,17 @@ let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
 
 " java && jsp
 let g:deoplete#omni#input_patterns.java = [
-            \'[^. \t0-9]\.\w*',
-            \'[^. \t0-9]\->\w*',
-            \'[^. \t0-9]\::\w*',
-            \]
+      \'[^. \t0-9]\.\w*',
+      \'[^. \t0-9]\->\w*',
+      \'[^. \t0-9]\::\w*',
+      \]
 let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
 if g:spacevim_enable_javacomplete2_py
-    let g:deoplete#ignore_sources.java = ['omni']
-    call deoplete#custom#set('javacomplete2', 'mark', '')
+  let g:deoplete#ignore_sources.java = ['omni']
+  call deoplete#custom#set('javacomplete2', 'mark', '')
 else
-    let g:deoplete#ignore_sources.java = ['javacomplete2']
-    call deoplete#custom#set('omni', 'mark', '')
+  let g:deoplete#ignore_sources.java = ['javacomplete2']
+  call deoplete#custom#set('omni', 'mark', '')
 endif
 
 " go
@@ -33,20 +33,20 @@ call deoplete#custom#set('go', 'rank', 9999)
 
 " perl
 let g:deoplete#omni#input_patterns.perl = [
-            \'[^. \t0-9]\.\w*',
-            \'[^. \t0-9]\->\w*',
-            \'[^. \t0-9]\::\w*',
-            \]
+      \'[^. \t0-9]\.\w*',
+      \'[^. \t0-9]\->\w*',
+      \'[^. \t0-9]\::\w*',
+      \]
 
 " javascript
 let g:deoplete#omni#input_patterns.javascript = ['[^. \t0-9]\.\w*']
 
 " php
 let g:deoplete#omni#input_patterns.php = [
-            \'[^. \t0-9]\.\w*',
-            \'[^. \t0-9]\->\w*',
-            \'[^. \t0-9]\::\w*',
-            \]
+      \'[^. \t0-9]\.\w*',
+      \'[^. \t0-9]\->\w*',
+      \'[^. \t0-9]\::\w*',
+      \]
 let g:deoplete#ignore_sources.php = ['omni', 'around', 'member']
 call deoplete#custom#set('phpcd', 'mark', '')
 call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
@@ -68,3 +68,5 @@ let g:deoplete#ignore_sources._ = ['around']
 inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 set isfname-==
+
+" vim:set et sw=2:

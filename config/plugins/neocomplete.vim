@@ -12,18 +12,18 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $CACHE.'/vimshell/command-history',
-            \ 'java' : '~/.vim/dict/java.dict',
-            \ 'ruby' : '~/.vim/dict/ruby.dict',
-            \ 'scala' : '~/.vim/dict/scala.dict',
-            \ }
+      \ 'default' : '',
+      \ 'vimshell' : $CACHE.'/vimshell/command-history',
+      \ 'java' : '~/.vim/dict/java.dict',
+      \ 'ruby' : '~/.vim/dict/ruby.dict',
+      \ 'scala' : '~/.vim/dict/scala.dict',
+      \ }
 
 let g:neocomplete#enable_auto_delimiter = 1
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
 
@@ -32,7 +32,7 @@ let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
 let g:neocomplete#enable_auto_select = 0
 
 if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
+  let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
@@ -45,3 +45,5 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+" vim:set et sw=2:
