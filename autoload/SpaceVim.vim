@@ -348,6 +348,7 @@ function! SpaceVim#default() abort
   call SpaceVim#default#SetOptions()
   call SpaceVim#default#SetPlugins()
   call SpaceVim#default#SetMappings()
+  call SpaceVim#commands#load()
 endfunction
 
 function! SpaceVim#defindFuncs() abort

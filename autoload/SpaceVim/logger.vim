@@ -74,7 +74,22 @@ function! SpaceVim#logger#viewLog(...) abort
           \ . s:levels[l] . "\]'"), "\n")
   endif
   let info .= "\n```\n"
-  return info
+  if a:0 > 0
+    if a:1 == 1
+      tabnew +setl\ nobuflisted
+      nnoremap <buffer><silent> q :bd!<CR>
+      for msg in split(info, "\n")
+        call append(line('$'), msg)
+      endfor
+      normal! "_dd
+      setl nomodifiable
+      setl buftype=nofile
+    else
+      return info
+    endif
+  else
+    return info
+  endif
 endfunction
 
 ""
