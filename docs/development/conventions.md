@@ -10,6 +10,8 @@ permalink: "/conventions"
 
 ## Viml coding style guide
 ### Portability
+Vim is highly configurable. Users can change many of the default settings, including the case sensitivity, the regular expression rules, the substitution rules, and more. In order for your vimscript to work for all users, follow these guidelines:
+
 #### Strings
 **Prefer single quoted strings**
 
@@ -23,9 +25,9 @@ Use double quoted strings when you need an escape sequence (such as "\n") or if 
 The matching behavior depends upon the user's ignorecase and smartcase settings and on whether you compare them with the =~, =~#, or =~? family of operators. Use the =~# and =~? operator families explicitly when comparing strings unless you explicitly need to honor the user's case sensitivity settings.
 
 #### Regular Expressions
-**Prefix all regexes with \m\C.**
+**Prefix all regexes with one of \m, \v, \M, or \V.**
 
-In addition to the case sensitivity settings, regex behavior depends upon the user's nomagic setting. To make regexes act like nomagic and noignorecase are set, prepend all regexes with \m\C.
+In addition to the case sensitivity settings, regex behavior depends upon the user's nomagic setting. To make regexes act like nomagic and noignorecase are set, prepend all regexes with one of \m, \v, \M, or \V.
 
 You are welcome to use other magic levels (\v) and case sensitivities (\c) so long as they are intentional and explicit.
 
@@ -33,6 +35,8 @@ You are welcome to use other magic levels (\v) and case sensitivities (\c) so lo
 **Avoid commands with unintended side effects.**
 
 Avoid using :s[ubstitute] as it moves the cursor and prints error messages. Prefer functions (such as search()) better suited to scripts.
+
+The meaning of the g flag depends upon the gdefault setting. If you do use :substitute you must save gdefault, set it to 0 or 1, perform the substitution, and then restore it.
 
 For many vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
 
@@ -121,6 +125,14 @@ All key mappings should be defined in plugin/mappings.vim.
 
 Partial mappings (see :help using-<Plug>.) should be defined in plugin/plugs.vim.
 
+**Always use the noremap family of commands.**
+
+Your plugins generally shouldn't introduce mappings, but if they do, the map command respects the users existing mappings and could do anything.
+
+#### Errors
+
+When using catch, match the error code rather than the error text.
+
 #### Settings
 **Change settings locally**
 
@@ -150,13 +162,37 @@ Trailing whitespace is allowed in mappings which prep commands for user input, s
 - Indent continued lines by four spaces
 - Do not align arguments of commands
 
-```viml
-command -bang MyCommand  call myplugin#foo()
-command       MyCommand2 call myplugin#bar()
-
-command -bang MyCommand call myplugin#foo()
-command MyCommand2 call myplugin#bar()
+```diff
++command -bang MyCommand call myplugin#foo()
++command MyCommand2 call myplugin#bar()
+-command -bang MyCommand  call myplugin#foo()
+-command       MyCommand2 call myplugin#bar()
 ```
+
+#### Line Continuations
+- Prefer line continuations on semantic boundaries.
+
+```diff
++command SomeLongCommand
++    \ call some#function()
+-command SomeLongCommand call
+-    \ some#function()
+```
+
+- Place one space after the backslash denoting a line continuation.
+
+When continuing a multi-line command a pipe can be substituted for this space as necessary, as follows:
+
+```viml
+autocommand BufEnter <buffer>
+    \ if !empty(s:var)
+    \|  call some#function()
+    \|else
+    \|  call some#function(s:var)
+    \|endif
+```
+
+- Do not continue multi-line commands when you can avoid it. Prefer function calls.
 
 #### Naming
 In general, use plugin-names-like-this, FunctionNamesLikeThis, CommandNamesLikeThis, augroup_names_like_this, variable_names_like_this.
@@ -185,8 +221,7 @@ Always prefix variables with their scope.
     - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 
-
-
-
-author : google
-link : https://google.github.io/styleguide/vimscriptguide.xml
+## Thanks:
+- link : https://google.github.io/styleguide/vimscriptguide.xml
+- link : https://google.github.io/styleguide/vimscriptfull.xml
+- link : https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt

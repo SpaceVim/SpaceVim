@@ -81,21 +81,25 @@ function! SpaceVim#default#SetOptions() abort
   set undodir=$HOME/.data/undofile
   set backupdir=$HOME/.data/backup
   set directory=$HOME/.data/swap
-  set nofoldenable                " no fold enable
+
+  " no fold enable
+  set nofoldenable
   set nowritebackup
   set matchtime=0
   set ruler
   set showmatch
   set showmode
   "menuone: show the pupmenu when only one match
-  set completeopt=menu,menuone,longest " disable preview scratch window,
-  set complete=.,w,b,u,t " h: 'complete'
-  set pumheight=15 " limit completion menu height
+  " disable preview scratch window,
+  set completeopt=menu,menuone,longest
+  " h: 'complete'
+  set complete=.,w,b,u,t
+  " limit completion menu height
+  set pumheight=15
   set scrolloff=7
   set incsearch
   set hlsearch
   set laststatus=2
-  set completeopt=longest,menu
   set wildignorecase
   set mouse=
   set hidden
@@ -154,8 +158,6 @@ endfunction
 function! SpaceVim#default#SetMappings() abort
 
   "mapping
-  "全局映射
-  "也可以通过'za'打开或者关闭折叠
   imap <silent><expr><TAB> SpaceVim#mapping#tab()
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
   inoremap <silent><expr><CR> SpaceVim#mapping#enter()
@@ -165,16 +167,12 @@ function! SpaceVim#default#SetMappings() abort
   inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
   imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-  "Super paste it does not work
-  "ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
-  "对于没有权限的文件使用 :w!!来保存
-  cnoremap w!! %!sudo tee > /dev/null %
-  " cmap W!! w !sudo tee % >/dev/null   " I can not understand
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
+  cnoremap w!! %!sudo tee > /dev/null %
 
 
-  " 映射Ctrl+上下左右来切换窗口
+  " Use Ctrl+* to jump between windows
   nnoremap <silent><C-Right> :<C-u>wincmd l<CR>
   nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
   nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
@@ -207,12 +205,11 @@ function! SpaceVim#default#SetMappings() abort
   vnoremap <silent>]<Home> dggP``
 
 
-  "Ctrl+Shift+上下移动当前行
+  "Ctrl+Shift+Up/Down to move up and down
   nnoremap <silent><C-S-Down> :m .+1<CR>==
   nnoremap <silent><C-S-Up> :m .-2<CR>==
   inoremap <silent><C-S-Down> <Esc>:m .+1<CR>==gi
   inoremap <silent><C-S-Up> <Esc>:m .-2<CR>==gi
-  "上下移动选中的行
   vnoremap <silent><C-S-Down> :m '>+1<CR>gv=gv
   vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
   " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to

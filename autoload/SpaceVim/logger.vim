@@ -63,10 +63,15 @@ function! SpaceVim#logger#viewLog(...) abort
   let l = a:0 > 0 ? a:1 : 1
   if filereadable(s:logger_file)
     let logs = readfile(s:logger_file, '')
-    let info .= join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+    let info .= join(filter(logs,
+          \ "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \["
+          \ . s:levels[l] . "\]'"), "\n")
   else
-    let info .= '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists, only log for current process will be shown!'
-    let info .= join(filter(s:log_temp, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
+    let info .= '[ SpaceVim ] : logger file ' . s:logger_file
+          \ . ' does not exists, only log for current process will be shown!'
+    let info .= join(filter(s:log_temp,
+          \ "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \["
+          \ . s:levels[l] . "\]'"), "\n")
   endif
   let info .= "\n```\n"
   return info
@@ -91,4 +96,4 @@ function! SpaceVim#logger#echoWarn(msg) abort
   echohl None
 endfunction
 
-" vim:set et sw=2:
+" vim:set et sw=2 cc=80:

@@ -12,4 +12,4 @@ function! SpaceVim#util#echoWarn(msg) abort
   echohl None
 endfunction
 
-" vim:set et sw=2:
+" vim:set et sw=2 cc=80:

@@ -72,7 +72,9 @@ let g:spacevim_vim_plug_installed      = 0
 " >
 "   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
 " <
-let g:spacevim_plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''], SpaceVim#api#import('file').separator)
+let g:spacevim_plugin_bundle_dir
+      \ = $HOME. join(['', '.cache', 'vimfiles', ''],
+      \ SpaceVim#api#import('file').separator)
 ""
 " Enable/Disable realtime leader guide. Default is 0.
 " >
@@ -160,7 +162,7 @@ let g:spacevim_filemanager             = 'vimfiler'
 ""
 " The default plugin manager of SpaceVim. Default is 'dein'.
 " Options are dein, neobundle, or vim-plug.
-let g:spacevim_plugin_manager          = 'dein'  " neobundle or dein or vim-plug
+let g:spacevim_plugin_manager          = 'dein'
 ""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
@@ -249,8 +251,10 @@ let g:spacevim_src_root                = 'E:\sources\'
 ""
 " The host file url. This option is for Chinese users who can not use
 " Google and Twitter.
-let g:spacevim_hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
-let g:spacevim_wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+let g:spacevim_hosts_url
+      \ = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
+let g:spacevim_wildignore
+      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
       \*.ttf,*.TTF,*.png,*/target/*,
       \.git,.svn,.hg,.DS_Store'
 
@@ -410,4 +414,4 @@ endfunction
 
 
 
-" vim:set et sw=2:
+" vim:set et sw=2 cc=80:
