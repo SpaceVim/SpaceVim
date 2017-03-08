@@ -32,7 +32,6 @@ function! SpaceVim#layers#core#statusline#get() abort
                 \ s:encoding(),
                 \ s:filetype()
                 \ ], ' ')
-    return s:mode() . s:tabname()
 endfunction
 
 function! s:refresh() abort
