@@ -13,6 +13,18 @@ function! SpaceVim#options#list() abort
   return list
 endfunction
 
+function! SpaceVim#options#set(argv, ...) abort
+  if a:0 > 0
+    if exists('g:spacevim_' . a:argv)
+      exe 'let g:spacevim_' . a:argv . '=' . a:1
+    endif
+  else
+    if exists('g:spacevim_' . a:argv)
+      exe 'echo string(g:spacevim_' . a:argv . ')'
+    endif
+  endif
+endfunction
+
 function! s:execute(cmd) abort
   if exists('*execute')
     return split(execute(a:cmd), "\n")

@@ -18,8 +18,9 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. CONFIGURATION...........................................|SpaceVim-config|
-  3. Functions............................................|SpaceVim-functions|
-  4. Layers..................................................|SpaceVim-layers|
+  3. Commands..............................................|SpaceVim-commands|
+  4. Functions............................................|SpaceVim-functions|
+  5. Layers..................................................|SpaceVim-layers|
       1. Default............................................|SpaceVim-default|
       2. autocomplete..................................|SpaceVim-autocomplete|
       3. checkers....................................|SpaceVim-layer-checkers|
@@ -41,7 +42,7 @@ CONTENTS                                                   *SpaceVim-contents*
       19. operator...................................|SpaceVim-layer-operator|
       20. shell.........................................|SpaceVim-layer-shell|
       21. tmux...........................................|SpaceVim-layer-tmux|
-  5. FAQ........................................................|SpaceVim-faq|
+  6. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -264,6 +265,21 @@ vim to start up slowly if there are too many files in the current directory.
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.
+
+==============================================================================
+COMMANDS                                                   *SpaceVim-commands*
+
+:SPLayer {layers}                                                   *:SPLayer*
+  Load exist layer, {layers} can be a string of a layer name, or a list of
+  layer names.
+
+:SPSet {opt} [value]                                                  *:SPSet*
+  Set or check SpaceVim option. {opt} should be the option name of spacevim,
+  This command will use [value] as the value of option name.
+
+:SPDebugInfo[!]                                                 *:SPDebugInfo*
+  print the debug information of spacevim, [!] forces the output into a new
+  buffer.
 
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
