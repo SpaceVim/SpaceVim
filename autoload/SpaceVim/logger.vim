@@ -84,6 +84,7 @@ function! SpaceVim#logger#viewLog(...) abort
       normal! "_dd
       setl nomodifiable
       setl buftype=nofile
+      setl filetype=markdown
     else
       return info
     endif
