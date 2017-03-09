@@ -55,7 +55,9 @@ function! SpaceVim#layers#tools#config() abort
     function! OpenOrCloseNERDTree() abort
         exec 'normal! A'
     endfunction
-    noremap <silent> <F9> :NERDTreeToggle<CR>
+    if g:spacevim_filemanager ==# 'nerdtree'
+        noremap <silent> <F3> :NERDTreeToggle<CR>
+    endif
     let g:NERDTreeWinPos='right'
     let g:NERDTreeWinSize=31
     let g:NERDTreeChDirMode=1

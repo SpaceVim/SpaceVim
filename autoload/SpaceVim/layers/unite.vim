@@ -50,7 +50,6 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['voi/unite-ctags'],
                 \ ['Shougo/unite-session'],
                 \ ['osyo-manga/unite-quickfix'],
-                \ ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
                 \ ['ujihisa/unite-colorscheme'],
                 \ ['mattn/unite-gist'],
                 \ ['tacroe/unite-mark'],
@@ -70,6 +69,10 @@ function! SpaceVim#layers#unite#plugins() abort
     if g:spacevim_enable_googlesuggest
         call add(plugins, ['mopp/googlesuggest-source.vim'])
         call add(plugins, ['mattn/googlesuggest-complete-vim'])
+    endif
+
+    if g:spacevim_filemanager ==# 'vimfiler'
+        call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
     endif
     return plugins
 endfunction
