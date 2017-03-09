@@ -45,7 +45,7 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['mattn/unite-vim_advent-calendar'],
                 \ ['mattn/unite-remotefile'],
                 \ ['sgur/unite-everything'],
-                \ ['kannokanno/unite-dwm'],
+                \ ['wsdjeg/unite-dwm'],
                 \ ['raw1z/unite-projects'],
                 \ ['voi/unite-ctags'],
                 \ ['Shougo/unite-session'],
