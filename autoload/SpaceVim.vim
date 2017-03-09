@@ -356,11 +356,16 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-  if exists(':VimFiler') == 2 && exists(':Startify') == 2
-    if g:spacevim_enable_vimfiler_welcome
+  if g:spacevim_enable_vimfiler_welcome
+    if exists(':VimFiler') == 2 
       VimFiler
+      wincmd p
+    elseif exists(':NERDTreeToggle') == 2
+      NERDTreeToggle
+      wincmd p
     endif
-    wincmd p
+  endif
+  if exists(':Startify') == 2
     Startify
   endif
 endfunction
