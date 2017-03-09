@@ -13,7 +13,7 @@
 " 
 " Also, there's one thing which everyone should know and pay attention to.
 " NOT all of below colorschemes support spell check very well. For example,
-" a colorscheme called atom doesn't support atom very well. 
+" a colorscheme called atom doesn't support spell check very well. 
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 " You can see a list which has no support of spell check in here:
