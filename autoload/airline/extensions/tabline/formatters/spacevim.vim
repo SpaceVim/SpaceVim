@@ -1,5 +1,6 @@
 " @vimlint(EVL103, 1, a:buffers)
 function! airline#extensions#tabline#formatters#spacevim#format(bufnr, buffers) abort
+  let g:_spacevim_list_buffers = a:buffers
   " unique_tail_improved
   let id = SpaceVim#api#messletters#get().bubble_num(a:bufnr, g:spacevim_buffer_index_type) . ' '
   let fn = airline#extensions#tabline#formatters#unique_tail_improved#format(a:bufnr, a:buffers)

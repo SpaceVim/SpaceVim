@@ -306,7 +306,7 @@ Key   | Mode | Action
 `s`+`o` | Normal | Close other windows (:only)
 `s`+`x` | Normal | Remove buffer, leave blank window
 `s`+`q` | Normal | Closes current buffer (:close)
-`s`+`Q` | Normal | Removes current buffer (:bdelete)
+`s`+`Q` | Normal | Removes current buffer, left buffer in the tabline will be displayed, if there is no buffer on the left, the right buffer will be displayed, if this is the last buffer in the tabline, then an empty buffer will be displayed.
 `Tab` | Normal | Next window or tab
 `Shift`+`Tab` | Normal | Previous window or tab
 `<leader>`+`sv` | Normal | Split with previous buffer

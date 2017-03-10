@@ -86,7 +86,10 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
                     \'Empty current buffer','call zvim#util#BufferEmpty()')
         call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
         call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
-        call zvim#util#defineMap('nnoremap <silent>', '[Window]Q', ':<C-u>bdelete<CR>', 'delete current windows','bdelete')
+        call zvim#util#defineMap('nnoremap <silent>', '[Window]Q',
+                    \ ':<C-u>call SpaceVim#mapping#close_current_buffer()<CR>',
+                    \ 'delete current windows',
+                    \ 'call SpaceVim#mapping#close_current_buffer()')
         call zvim#util#defineMap('nnoremap <silent>', '[Window]c', ':<C-u>call SpaceVim#mapping#clearBuffers()<CR>',
                     \'Clear all the buffers','call SpaceVim#mapping#clearBuffers()')
     endif
@@ -135,3 +138,5 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
         nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
     endif
 endfunction
+
+" vim:set et sw=2 cc=80:

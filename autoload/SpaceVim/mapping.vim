@@ -97,4 +97,28 @@ function! SpaceVim#mapping#vertical_split_previous_buffer() abort
   endif
 endfunction
 
-" vim:set et sw=2:
+function! SpaceVim#mapping#close_current_buffer() abort
+  let buffers = g:_spacevim_list_buffers
+  let bn = bufnr('%')
+  let index = index(buffers, bn) 
+  if index != -1
+    if index == 0
+      if len(buffers) > 1
+        exe 'b' . buffers[1]
+        exe 'bd' . bn
+      else
+        exe 'bd ' . bn
+      endif
+    elseif index > 0
+      if index + 1 == len(buffers)
+        exe 'b' . buffers[index - 1]
+        exe 'bd' . bn
+      else
+        exe 'b' . buffers[index + 1]
+        exe 'bd' . bn
+      endif
+    endif
+  endif
+endfunction
+
+" vim:set et sw=2 cc=80:
