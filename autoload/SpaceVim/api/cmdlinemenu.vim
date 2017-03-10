@@ -42,7 +42,7 @@ function! s:menu(items) abort
   let saved_more = &more
   set nomore
   let items = s:parseItems(a:items)
-  let selected = 1
+  let selected = '1'
   let exit = 0
   let indent = repeat(' ', 7)
   while !exit
