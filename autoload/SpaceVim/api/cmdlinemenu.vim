@@ -30,14 +30,14 @@ endfunction
 
 function! s:parseItems(items) abort
   let items = {}
-  let g:items = items
   for item in a:items
     let id = index(a:items, item) + 1
-    let items[id] = '(' . id . ')' . item
+    let items[id] = ['(' . id . ')' . item[0], item[1]]
   endfor
   return items
 endfunction
 
+" items should be a list of [name, funcrc or string]
 function! s:menu(items) abort
   let saved_more = &more
   set nomore
@@ -48,24 +48,40 @@ function! s:menu(items) abort
   while !exit
     let menu = "Cmdline menu: Use j/k/enter and the shortcuts indicated\n"
     for id in keys(items)
+      let m = items[id]
+      if type(m) == type([])
+        let m = m[0]
+      endif
       if id == selected
-        let menu .= indent . '>' . items[id] . "\n"
+        let menu .= indent . '>' . items[id][0] . "\n"
       else
-        let menu .= indent . ' ' . items[id] . "\n"
+        let menu .= indent . ' ' . items[id][0] . "\n"
       endif
     endfor
     echo menu[:-2]
     let nr = getchar()
     if s:parseInput(nr) ==# '' || nr == 3
       let exit = 1
-    elseif index(keys(items), nr2char(nr)) != -1
-      let selected = nr2char(nr)
+      redraw
+    elseif index(keys(items), nr2char(nr)) != -1  && nr == 49
+      if nr != 49
+        let selected = nr2char(nr)
+      endif
+      let Value =  items[selected][1]
+      redraw
+      if type(Value) == 2
+        call call(Value, [])
+      elseif type(Value) == type('') && !empty(Value)
+        execute Value
+      endif
+      let exit = 1
     elseif nr2char(nr) ==# 'j'
       let selected = s:nextItem(keys(items), selected)
+      redraw
     elseif nr2char(nr) ==# 'k'
       let selected = s:previousItem(keys(items), selected)
+      redraw
     endif
-    redraw
   endwhile
   let &more = saved_more
 endfunction
