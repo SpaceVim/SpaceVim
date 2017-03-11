@@ -256,7 +256,7 @@ let g:spacevim_hosts_url
 let g:spacevim_wildignore
       \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
       \*.ttf,*.TTF,*.png,*/target/*,
-      \.git,.svn,.hg,.DS_Store'
+      \.git,.svn,.hg,.DS_Store,*.svg'
 
 function! SpaceVim#loadCustomConfig() abort
   let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
