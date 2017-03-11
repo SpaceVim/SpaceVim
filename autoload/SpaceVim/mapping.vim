@@ -16,6 +16,10 @@ function! SpaceVim#mapping#def(type,key,value,desc,...) abort
   call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 endfunction
 
+function! SpaceVim#mapping#shift_tab() abort
+  return pumvisible() ? "\<C-p>" : "\<Plug>delimitMateS-Tab"
+endfunction
+
 function! SpaceVim#mapping#tab() abort
   if getline('.')[col('.')-2] ==# '{'&& pumvisible()
     return "\<C-n>"
