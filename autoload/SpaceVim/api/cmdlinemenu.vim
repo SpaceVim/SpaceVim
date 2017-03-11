@@ -63,8 +63,8 @@ function! s:menu(items) abort
     if s:parseInput(nr) ==# '' || nr == 3
       let exit = 1
       redraw
-    elseif index(keys(items), nr2char(nr)) != -1  && nr == 49
-      if nr != 49
+    elseif index(keys(items), nr2char(nr)) != -1  || nr == 13
+      if nr != 13
         let selected = nr2char(nr)
       endif
       let Value =  items[selected][1]
