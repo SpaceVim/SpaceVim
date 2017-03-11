@@ -38,6 +38,16 @@ function! s:parseItems(items) abort
 endfunction
 
 " items should be a list of [name, funcrc or string]
+
+""
+" @section cmdlinemenu, api-cmdlinemenu
+" @parentsection api
+" menu({items})
+"
+" Create a cmdline selection menu from a list of {items}, each item should be a
+" list of two value in it, first one is the description, and the next one
+" should be a funcrc.
+
 function! s:menu(items) abort
   let saved_more = &more
   set nomore
