@@ -1,5 +1,5 @@
 ---
-title:  "中文手册"
+title:  "chinese totur"
 ---
 
 # SpaceVim 中文手册
@@ -139,3 +139,8 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 `g:spacevim_enable_guicolors` | 1 | 启用/禁用终端使用真色彩
 `g:spacevim_windows_leader` | `s` | 窗口管理快捷键前缀
 `g:spacevim_unite_leader` | `f` | Unite快捷键前缀
+`g:spacevim_plugin_bundle_dir` | `~/.cache/vimfiles` | SpaceVim 默认插件缓存位置
+`g:spacevim_realtime_leader_guide` | 0 | 启用/禁用实时快捷键提示
+`g:spacevim_guifont` | '' | 设置SpaceVim字体
+`g:spacevim_sidebar_width` | 30 | 设置边栏宽度，此设置将影响到文件树侧栏和语法树侧栏
+`g:spacevim_custom_plugins` | `[]` | 设置自定义插件
