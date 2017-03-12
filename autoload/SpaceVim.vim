@@ -10,7 +10,7 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro version dicts functions exceptions layers faq
+" @order intro version dicts functions exceptions layers api faq
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -256,7 +256,7 @@ let g:spacevim_hosts_url
 let g:spacevim_wildignore
       \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
       \*.ttf,*.TTF,*.png,*/target/*,
-      \.git,.svn,.hg,.DS_Store'
+      \.git,.svn,.hg,.DS_Store,*.svg'
 
 function! SpaceVim#loadCustomConfig() abort
   let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
