@@ -66,9 +66,9 @@ function! SpaceVim#layers#tools#config() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
-  let g:NERDTreeWinPos='right'
-  let g:NERDTreeWinSize=31
-  let g:NERDTreeChDirMode=1
+  let g:NERDTreeWinPos=get(g:,'NERDTreeWinPos','right')
+  let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
+  let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
   augroup nerdtree_zvim
     autocmd!
     autocmd bufenter *
