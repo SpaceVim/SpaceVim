@@ -1,6 +1,5 @@
 function! SpaceVim#mapping#leader#defindglobalMappings() abort
   inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
-  nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
   "for buftabs
   noremap <silent><Leader>bp :bprev<CR>
