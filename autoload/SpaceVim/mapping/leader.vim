@@ -64,9 +64,9 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
   call SpaceVim#mapping#def('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
         \ "echo 'Use <leader>S to sourced line.'")
 
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','', 'Toggle recording mode')
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':call SpaceVim#mapping#split_previous_buffer()<CR>',
-        \'Open previous buffer in split window' , 'call SpaceVim#mapping#split_previous_buffer()')
+        \'Open previous buffer in split window' , 'call SpaceVim#mapping#split_previous_buffer()', 'Split previout buffer')
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
         \'Open previous buffer in vsplit window' , 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction

@@ -262,7 +262,7 @@ let g:_spacevim_mappings = {}
 "====
 
 if exists('loaded_leaderGuide_vim') || &cp
-    finish
+  finish
 endif
 let loaded_leaderGuide_vim = 1
 
@@ -270,51 +270,51 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if !exists('g:leaderGuide_vertical')
-    let g:leaderGuide_vertical = 0
+  let g:leaderGuide_vertical = 0
 endif
 
 if !exists('g:leaderGuide_sort_horizontal')
-    let g:leaderGuide_sort_horizontal = 0
+  let g:leaderGuide_sort_horizontal = 0
 endif
 
 if !exists('g:leaderGuide_position')
-    let g:leaderGuide_position = 'botright'
+  let g:leaderGuide_position = 'botright'
 endif
 
 if !exists('g:leaderGuide_run_map_on_popup')
-    let g:leaderGuide_run_map_on_popup = 1
+  let g:leaderGuide_run_map_on_popup = 1
 endif
 
 if !exists("g:leaderGuide_hspace")
-    let g:leaderGuide_hspace = 5
+  let g:leaderGuide_hspace = 5
 endif
 
 if !exists("g:leaderGuide_flatten")
-    let g:leaderGuide_flatten = 1
+  let g:leaderGuide_flatten = 1
 endif
 
 if !exists("g:leaderGuide_default_group_name")
-    let g:leaderGuide_default_group_name = ""
+  let g:leaderGuide_default_group_name = ""
 endif
 
 if !exists("g:leaderGuide_max_size")
-    let g:leaderGuide_max_size = 0
+  let g:leaderGuide_max_size = 0
 endif
 
 if !exists("g:leaderGuide_submode_mappings")
-    let g:leaderGuide_submode_mappings = {'<C-C>': "win_close"}
+  let g:leaderGuide_submode_mappings = {'<C-C>': "win_close"}
 endif
 
 if !exists("g:leaderGuide_displayfunc")
-    function! s:leaderGuide_display()
-        let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
-    endfunction
-    let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
+  function! s:leaderGuide_display()
+    let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
+  endfunction
+  let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
 endif
 
 if !SpaceVim#mapping#guide#has_configuration()
-    let g:leaderGuide_map = {}
-    call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
+  let g:leaderGuide_map = {}
+  call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
 endif
 
 command -nargs=1 LeaderGuideD call SpaceVim#mapping#guide#start('0', <args>)
@@ -414,6 +414,17 @@ function! SpaceVim#end() abort
     silent exec 'lan ' . g:spacevim_language
   endif
 
+  if g:spacevim_realtime_leader_guide
+    nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
+    vnoremap <silent> <leader> :<c-u>LeaderGuideVisual get(g:, 'mapleader', '\')<CR>
+  endif
+  let g:leaderGuide_max_size = 15
+  let g:leaderGuide_submode_mappings = 
+        \ { '<C-C>': 'win_close', '<PageDown>': 'page_down', '<PageUp>': 'page_up'}
+  let g:_spacevim_mappings.g = {'name' : 'git function',
+        \ 'd' : ['Gita diff', 'git diff'],
+        \ }
+  call SpaceVim#mapping#guide#register_prefix_descriptions("\\", 'g:_spacevim_mappings')
   call SpaceVim#plugins#load()
 endfunction
 
