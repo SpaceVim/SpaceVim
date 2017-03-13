@@ -202,8 +202,6 @@ call unite#custom#profile('buffer,buffer_tab', 'context', {
       \   'keep_focus'   : 1,
       \ })
 nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
-nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
-nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
 "" Tag search
 """ For searching the word in the cursor in tag file
 nnoremap <silent><leader>f :<c-u>Unite tag/include:<C-R><C-w><CR>
