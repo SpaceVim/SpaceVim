@@ -114,7 +114,7 @@ function! QuoteDelim(char)
     endif
 endf
 function! JspFileTypeInit()
-    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
+    set tags+=~/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     inoremap . <c-r>=OnmiConfigForJsp()<cr>
     nnoremap <F4> :JCimportAdd<cr>
