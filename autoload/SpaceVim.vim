@@ -424,7 +424,6 @@ function! SpaceVim#end() abort
   let g:_spacevim_mappings.g = {'name' : 'git function',
         \ 'd' : ['Gita diff', 'git diff'],
         \ }
-  call SpaceVim#mapping#guide#register_prefix_descriptions("\\", 'g:_spacevim_mappings')
   call SpaceVim#plugins#load()
 endfunction
 

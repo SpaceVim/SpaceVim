@@ -481,6 +481,7 @@ function! SpaceVim#mapping#guide#start(vis, dict) " {{{
   call s:start_buffer()
 endfunction " }}}
 
+call SpaceVim#mapping#guide#register_prefix_descriptions("\\", 'g:_spacevim_mappings')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
