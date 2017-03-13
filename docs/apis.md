@@ -4,7 +4,7 @@ title: "APIs"
 
 # SpaceVim public APIs:
 
-SpaceVim provide many public apis, you can use this apis in your plugins. 
+SpaceVim provide many public apis, you can use this apis in your plugins. SpaceVim api got inspired by [vital.vim](https://github.com/vim-jp/vital.vim)
 
 ## Usage
 
