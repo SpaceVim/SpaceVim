@@ -16,14 +16,19 @@ function! SpaceVim#mapping#_def(type,key,value,desc,...) abort
   call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 endfunction
 
-" a:1 desc
-" a:2 cmd
-" a:3 guide
+" a:1 unite desc
+" a:2 unite cmd
+" a:3 guide desc
 " example  call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
 function! SpaceVim#mapping#def(type, key, value, ...) abort
   let map = split(a:type)[0]
   let lhs = a:key
   let rhs = a:value
+  let gexe = a:value
+  if a:value =~? '^<plug>'
+    let gexe = '\' . a:value
+  else
+  endif
   exec a:type . ' ' . a:key . ' ' . a:value
   if a:0 > 0
     let desc = a:1
@@ -36,12 +41,12 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
     if a:0 == 3
       " enable guide
       if a:key =~? '^<leader>'
-        let group = a:key[8:8]
+        let group = get(g:, 'mapleader', '\')
         if !has_key(g:_spacevim_mappings, group)
           let g:_spacevim_mappings[group] = {'name': 'new group'}
         endif
         call extend(g:_spacevim_mappings[group], {
-              \ a:key[9:] : ['', a:3]
+              \ a:key[8:] : ['call feedkeys(' . gexe . ')', a:3]
               \ })
       endif
     endif

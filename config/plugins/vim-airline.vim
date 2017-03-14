@@ -38,7 +38,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#fnamecollapse = 1
 let g:airline#extensions#tabline#fnametruncate = 0
 "let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-nmap <leader>1 <Plug>AirlineSelectTab1
+call SpaceVim#mapping#def('nmap', '<leader>1', '<Plug>AirlineSelectTab1', 'Switch to airline tab 1', '', 'window 1')
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
 nmap <leader>4 <Plug>AirlineSelectTab4
@@ -49,7 +49,6 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
-let g:_spacevim_mappings.1 = ['', 'window 1']
 let g:_spacevim_mappings.2 = ['', 'window 2']
 let g:_spacevim_mappings.3 = ['', 'window 3']
 let g:_spacevim_mappings.4 = ['', 'window 4']
@@ -58,7 +57,6 @@ let g:_spacevim_mappings.6 = ['', 'window 6']
 let g:_spacevim_mappings.7 = ['', 'window 7']
 let g:_spacevim_mappings.8 = ['', 'window 8']
 let g:_spacevim_mappings.9 = ['', 'window 9']
-let g:_spacevim_mappings.1 = ['', 'window 1']
 let g:_spacevim_mappings['-'] = ['', 'previous window']
 let g:_spacevim_mappings['+'] = ['', 'next window']
 if !exists('g:airline_symbols')
