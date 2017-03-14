@@ -27,6 +27,10 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
   let gexe = a:value
   if a:value =~? '^<plug>'
     let gexe = '\' . a:value
+  elseif a:value =~? ':.\+<cr>$'
+    let gexe = substitute(gexe, '<cr>', "\<cr>", 'g')
+    let gexe = substitute(gexe, '<CR>', "\<CR>", 'g')
+    let gexe = substitute(gexe, '<Esc>', "\<Esc>", 'g')
   else
   endif
   exec a:type . ' ' . a:key . ' ' . a:value
@@ -47,7 +51,7 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
             let g:_spacevim_mappings[group] = {'name': 'new group'}
           endif
           call extend(g:_spacevim_mappings[group], {
-                \ a:key[8:] : ['call feedkeys(' . gexe . ')', a:3]
+                \ a:key[9:] : ['call feedkeys("' . gexe . '")', a:3]
                 \ })
         elseif len(a:key) == 9
           call extend(g:_spacevim_mappings, {

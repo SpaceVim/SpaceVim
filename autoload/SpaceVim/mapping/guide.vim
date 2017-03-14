@@ -322,7 +322,7 @@ function! s:start_buffer() " {{{
     noautocmd execute 'res '.layout.win_dim
   endif
   silent 1put!=string
-  normal! ggdd
+  normal! gg"_dd
   setlocal nomodifiable
   call s:wait_for_input()
 endfunction " }}}
@@ -333,7 +333,7 @@ function! s:handle_input(input) " {{{
     call s:start_buffer()
   else
     call feedkeys(s:vis.s:reg.s:count, 'ti')
-    redraw
+    redraw!
     try
       unsilent execute a:input[0]
     catch
@@ -342,7 +342,7 @@ function! s:handle_input(input) " {{{
   endif
 endfunction " }}}
 function! s:wait_for_input() " {{{
-  redraw
+  redraw!
   let inp = input("")
   if inp ==? ''
     call s:winclose()
@@ -386,21 +386,23 @@ function! s:winclose() " {{{
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
     close
+    redraw!
     exe s:winres
     let s:gwin = -1
     noautocmd execute s:winnr.'wincmd w'
     call winrestview(s:winv)
   endif
-  redraw
 endfunction " }}}
 function! s:page_down() " {{{
   call feedkeys("\<c-c>", "n")
   call feedkeys("\<c-f>", "x")
+  redraw!
   call s:wait_for_input()
 endfunction " }}}
 function! s:page_up() " {{{
   call feedkeys("\<c-c>", "n")
   call feedkeys("\<c-b>", "x")
+  redraw!
   call s:wait_for_input()
 endfunction " }}}
 
@@ -481,7 +483,14 @@ function! SpaceVim#mapping#guide#start(vis, dict) " {{{
   call s:start_buffer()
 endfunction " }}}
 
-call SpaceVim#mapping#guide#register_prefix_descriptions("\\", 'g:_spacevim_mappings')
+if !exists("g:leaderGuide_displayfunc")
+  function! s:leaderGuide_display()
+    let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
+  endfunction
+  let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
+endif
+
+call SpaceVim#mapping#guide#register_prefix_descriptions('\', 'g:_spacevim_mappings')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
