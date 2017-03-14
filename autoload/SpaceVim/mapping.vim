@@ -41,13 +41,20 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
     if a:0 == 3
       " enable guide
       if a:key =~? '^<leader>'
-        let group = get(g:, 'mapleader', '\')
-        if !has_key(g:_spacevim_mappings, group)
-          let g:_spacevim_mappings[group] = {'name': 'new group'}
+        if len(a:key) > 9
+          let group = a:key[8:8]
+          if !has_key(g:_spacevim_mappings, group)
+            let g:_spacevim_mappings[group] = {'name': 'new group'}
+          endif
+          call extend(g:_spacevim_mappings[group], {
+                \ a:key[8:] : ['call feedkeys(' . gexe . ')', a:3]
+                \ })
+        elseif len(a:key) == 9
+          call extend(g:_spacevim_mappings, {
+                \ a:key[8:] : ['call feedkeys("' . gexe . '")', a:3]
+                \ })
+
         endif
-        call extend(g:_spacevim_mappings[group], {
-              \ a:key[8:] : ['call feedkeys(' . gexe . ')', a:3]
-              \ })
       endif
     endif
   endif
