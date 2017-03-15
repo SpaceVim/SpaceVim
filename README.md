@@ -10,7 +10,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer featur, escpecially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, escpecially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
