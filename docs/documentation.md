@@ -26,6 +26,10 @@ title:  "Documentation"
 
 ## Language specific mode
 
+## Key Mapping
+
+<iframe width='853' height='480' src='https://embed.coggle.it/diagram/WMlKuKS0uwABF2j1/a35e36df1d64e7b4f5fd7f956bf97a16b194cadb92d82d83e25aaf489349b0d8' frameborder='0' allowfullscreen></iframe>
+
 ### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
