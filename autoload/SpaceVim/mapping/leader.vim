@@ -21,11 +21,18 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
   cnoremap <Leader><C-F> <C-F>
   "When pressing <leader>cd switch to the directory of the open buffer
   map <Leader>cd :cd %:p:h<CR>:pwd<CR>
-  " Fast saving
-  nnoremap <Leader>w :w<CR>
-  vnoremap <Leader>w <Esc>:w<CR>
 
-  " Toggle editor visuals
+  " Fast saving
+  call SpaceVim#mapping#def('nnoremap', '<Leader>w', ':w<CR>',
+        \ 'Save current file',
+        \ 'w',
+        \ 'Save current file')
+  call SpaceVim#mapping#def('vnoremap', '<Leader>w', '<Esc>:w<CR>',
+        \ 'Save current file',
+        \ 'w',
+        \ 'Save current file')
+
+  let g:_spacevim_mappings.t = {'name' : 'Toggle editor visuals'}
   nmap <Leader>ts :setlocal spell!<cr>
   nmap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
   nmap <Leader>tl :setlocal nolist!<CR>
@@ -33,14 +40,38 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
   nmap <Leader>tw :setlocal wrap! breakindent!<CR>
 
   " Location list movement
-  nmap <silent><Leader>lj :lnext<CR>
-  nmap <silent><Leader>lk :lprev<CR>
-  nmap <silent><Leader>lq :lclose<CR>
+  let g:_spacevim_mappings.l = {'name' : 'Location list movement'}
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lj', ':lnext<CR>',
+        \ 'Jump to next location list position',
+        \ 'lnext',
+        \ 'Next location list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lk', ':lprev<CR>',
+        \ 'Jump to previous location list position',
+        \ 'lprev',
+        \ 'Previous location list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lq', ':lclose<CR>',
+        \ 'Close the window showing the location list',
+        \ 'lclose',
+        \ 'Close location list window')
 
   " quickfix list movement
-  nmap <silent><Leader>qj :cnext<CR>
-  nmap <silent><Leader>qk :cprev<CR>
-  nmap <silent><Leader>qq :cclose<CR>
+  let g:_spacevim_mappings.q = {'name' : 'Quickfix list movement'}
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qj', ':cnext<CR>',
+        \ 'Jump to next quickfix list position',
+        \ 'cnext',
+        \ 'Next quickfix list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qk', ':cprev<CR>',
+        \ 'Jump to previous quickfix list position',
+        \ 'cprev',
+        \ 'Previous quickfix list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qq', ':cclose<CR>',
+        \ 'Close quickfix list window',
+        \ 'cclose',
+        \ 'Close quickfix list window')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q',
+        \ 'Toggle recording',
+        \ '',
+        \ 'Toggle recording mode')
 
   " Duplicate lines
   nnoremap <Leader>d m`YP``
@@ -64,12 +95,12 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
   call SpaceVim#mapping#def('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
         \ "echo 'Use <leader>S to sourced line.'")
 
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','', 'Toggle recording mode')
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':call SpaceVim#mapping#split_previous_buffer()<CR>',
         \'Open previous buffer in split window' , 'call SpaceVim#mapping#split_previous_buffer()', 'Split previout buffer')
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
         \'Open previous buffer in vsplit window' , 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction
+
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   if !empty(a:key)
     call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
