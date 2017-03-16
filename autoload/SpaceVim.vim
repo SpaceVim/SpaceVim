@@ -259,77 +259,69 @@ let g:spacevim_wildignore
       \.git,.svn,.hg,.DS_Store,*.svg'
 " privite options
 let g:_spacevim_mappings = {}
-"====
-
-if exists('loaded_leaderGuide_vim') || &cp
-  finish
-endif
-let loaded_leaderGuide_vim = 1
-
-let s:save_cpo = &cpo
-set cpo&vim
+" TODO merge leader guide
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
 endif
 
+let g:spacevim_leader_guide_vertical = 0
+
 if !exists('g:leaderGuide_sort_horizontal')
   let g:leaderGuide_sort_horizontal = 0
 endif
+
+let g:spacevim_leader_guide_sort_horizontal = 0
 
 if !exists('g:leaderGuide_position')
   let g:leaderGuide_position = 'botright'
 endif
 
+let g:spacevim_leader_guide_position = 'botright'
+
 if !exists('g:leaderGuide_run_map_on_popup')
   let g:leaderGuide_run_map_on_popup = 1
 endif
+
+let g:spacevim_leader_guide_run_map_on_popup = 1
 
 if !exists("g:leaderGuide_hspace")
   let g:leaderGuide_hspace = 5
 endif
 
+let g:spacevim_leader_guide_hspace = 5
+
 if !exists("g:leaderGuide_flatten")
   let g:leaderGuide_flatten = 1
 endif
+
+let g:spacevim_leader_guide_flatten = 1
 
 if !exists("g:leaderGuide_default_group_name")
   let g:leaderGuide_default_group_name = ""
 endif
 
+let g:spacevim_leader_guide_default_group_name = ""
+
 if !exists("g:leaderGuide_max_size")
   let g:leaderGuide_max_size = 0
 endif
+
+let g:spacevim_leader_guide_max_size = 0
 
 if !exists("g:leaderGuide_submode_mappings")
   let g:leaderGuide_submode_mappings = {'<C-C>': "win_close"}
 endif
 
-if !exists("g:leaderGuide_displayfunc")
-  function! s:leaderGuide_display()
-    let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
-  endfunction
-  let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
-endif
+let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
 if !SpaceVim#mapping#guide#has_configuration()
   let g:leaderGuide_map = {}
   call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
 endif
 
-command -nargs=1 LeaderGuideD call SpaceVim#mapping#guide#start('0', <args>)
-command -range -nargs=1 LeaderGuideVisualD call SpaceVim#mapping#guide#start('1', <args>)
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
-command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
-
-nnoremap <silent> <Plug>leaderguide-buffer :<C-U>call leaderGuide#start_by_prefix('0', '<buffer>')<CR>
-vnoremap <silent> <Plug>leaderguide-buffer :<C-U>call leaderGuide#start_by_prefix('1', '<buffer>')<CR>
-nnoremap <silent> <Plug>leaderguide-global :<C-U>call leaderGuide#start_by_prefix('0', '  ')<CR>
-vnoremap <silent> <Plug>leaderguide-global :<C-U>call leaderGuide#start_by_prefix('1', '  ')<CR>
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 "====
 
 function! SpaceVim#loadCustomConfig() abort
