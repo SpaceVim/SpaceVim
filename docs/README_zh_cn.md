@@ -22,15 +22,19 @@ title:  "chinese totur"
 
 项 目 主 页： [spacevim.org](https://spacevim.org)
 
-SpaceVim 是一个社区驱动的模块化vim配置集合，其中包含了多种功能模块，并且正对neovim做了功能优化。spacevim有多种功能模块可供选择，用户只需要选择需要的模块，就可以配置出一个适合自己的开发环境。Github 地址 : [SpaceVim/SpaceVim](https://github.com/SpaceVim/SpaceVim), 欢迎Star或fork，感谢支持!使用过程中遇到问题在github提交issue将更容易被关注和修复。我们也欢迎喜欢vim的用户加入我们的QQ群，一起讨论vim相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
+Github 地址 : [https://github.com/SpaceVim/SpaceVim](https://github.com/SpaceVim/SpaceVim), 欢迎Star或fork。
+
+SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供选择，用户只需要选择需要的模块，就可以配置出一个适合自己的开发环境。
+
+使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
 
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
-### 安装
+## 安装
 
-Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：
+**Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：**
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
@@ -48,28 +52,34 @@ SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim
 
 [从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
-windows系统下的安装步骤：
+**windows系统下的安装步骤：**
 
-Windows 下 vim 用户只需要将本仓库克隆到用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
+Windows 下 vim 用户只需要将本仓库克隆成用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
 
-```sh
+```
 git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 ```
 
-Windows 下 neovim 用户 需要将本仓库克隆到用户 HOME 目录下的 AppData\Local\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
+Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\Local\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
 
-```sh
+```
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
-### 特性
+## 特性
+
+### 优雅的界面
+
+### Unite为主的工作平台
+
+Unite 的快捷键前缀是`f`， 可以通过 `g:spacevim_unite_leader` 来设定，快捷键无需记忆，SpaceVim 有很好的快捷键辅助机制，如下是 Unite 的快捷键键图：
+
+![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
 以neovim为主的新特性实现
 模块化设置
 依赖 dein.vim 的延迟加载，90%插件延迟加载，启动速度极快
 高效，轻量级
-Unite为主的工作平台
-优雅的界面
 针对不同语言开发的优化
 可扩展的补全引擎，vim下为neocomplete， neovim 下为 deoplete
 细致的tags管理
@@ -77,7 +87,7 @@ Unite为主的工作平台
 优雅的主题
 
 
-### 模块化设置
+## 用户配置
 
 SpaceVim 将从 ~/.SpaceVim.d/init.vim 和当前目录的 ./SpaceVim.d/init.vim 载入配置，并且更新 rtp，用户可以在 ~/.SpaceVim.d/ 和 .SpaceVim.d/ 这两个文件夹下编辑自己的脚本，和 SpaceVim 的配置文件。
 
