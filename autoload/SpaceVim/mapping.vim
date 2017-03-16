@@ -21,7 +21,11 @@ endfunction
 " a:3 guide desc
 " example  call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
 function! SpaceVim#mapping#def(type, key, value, ...) abort
+  let feedkeys_mode = 'm'
   let map = split(a:type)[0]
+  if map =~# 'nore'
+    let feedkeys_mode = 'n'
+  endif
   let lhs = a:key
   let rhs = a:value
   let gexe = a:value
@@ -51,11 +55,13 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
             let g:_spacevim_mappings[group] = {'name': 'new group'}
           endif
           call extend(g:_spacevim_mappings[group], {
-                \ a:key[9:] : ['call feedkeys("' . gexe . '")', a:3]
+                \ a:key[9:] : ['call feedkeys("' . gexe . '", "'
+                \ . feedkeys_mode . '")', a:3]
                 \ })
         elseif len(a:key) == 9
           call extend(g:_spacevim_mappings, {
-                \ a:key[8:] : ['call feedkeys("' . gexe . '")', a:3]
+                \ a:key[8:] : ['call feedkeys("' . gexe . '", "'
+                \ . feedkeys_mode . '")', a:3]
                 \ })
 
         endif
