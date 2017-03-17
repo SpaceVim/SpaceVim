@@ -1,5 +1,6 @@
 ---
 title:  "chinese totur"
+redirect_from: "/README_zh_cn/"
 ---
 
 # SpaceVim 中文手册
