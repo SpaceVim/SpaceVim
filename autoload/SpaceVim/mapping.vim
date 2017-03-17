@@ -26,8 +26,9 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
   if map =~# 'nore'
     let feedkeys_mode = 'n'
   endif
-  let lhs = a:key
-  let rhs = a:value
+  " TODO parse lhs and rhs, return list of key
+  "let lhs = a:key
+  "let rhs = a:value
   let gexe = a:value
   if a:value =~? '^<plug>'
     let gexe = '\' . a:value
