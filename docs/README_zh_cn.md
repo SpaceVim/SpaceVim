@@ -23,7 +23,7 @@ redirect_from: "/README_zh_cn/"
 
 项 目 主 页： [spacevim.org](https://spacevim.org)
 
-Github 地址 : [https://github.com/SpaceVim/SpaceVim](https://github.com/SpaceVim/SpaceVim), 欢迎Star或fork。
+Github 地址 : [SpaceVim GitHub](https://github.com/SpaceVim/SpaceVim), 欢迎Star或fork。
 
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供选择，用户只需要选择需要的模块，就可以配置出一个适合自己的开发环境。
 
@@ -32,6 +32,12 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
+
+**目录**
+[安装](#安装)
+[更新](#更新)
+[特性](#特性)
+[用户配置](#用户配置)
 
 ## 安装
 
@@ -71,22 +77,21 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ### 优雅的界面
 
+SpaceVim 的默认界包括 tagbar 、vimfiler 、以及 airline 界面，配色主题采用的 gruvbox。
+
+![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
 ### Unite为主的工作平台
 
 Unite 的快捷键前缀是`f`， 可以通过 `g:spacevim_unite_leader` 来设定，快捷键无需记忆，SpaceVim 有很好的快捷键辅助机制，如下是 Unite 的快捷键键图：
 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
-以neovim为主的新特性实现
-模块化设置
-依赖 dein.vim 的延迟加载，90%插件延迟加载，启动速度极快
-高效，轻量级
-针对不同语言开发的优化
-可扩展的补全引擎，vim下为neocomplete， neovim 下为 deoplete
-细致的tags管理
-轻量级状态栏
-优雅的主题
+### 自动补全
 
+SpaceVim 采用最快补全引擎 deoplete, 该引擎不同与YouCompleteMe的主要一点是支持多源补全，而不单单是语义补全。 而且补全来源拓展非常方便。
+
+### 细致的tags管理
 
 ## 用户配置
 
