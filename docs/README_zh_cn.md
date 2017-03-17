@@ -1,6 +1,5 @@
 ---
 title:  "chinese totur"
-redirect_from: "/README_zh_cn/"
 ---
 
 # SpaceVim 中文手册
@@ -109,7 +108,8 @@ SpaceVim 将从 ~/.SpaceVim.d/init.vim 和当前目录的 ./SpaceVim.d/init.vim 
 示例：
 
 ```vim
-" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
+" Here are some basic customizations,
+" please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
@@ -159,7 +159,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ### SpaceVim选项
 
 选项名称 | 默认值 | 描述
------ |:----:| ------------------
+-------- |:--------:| --------
 `g:spacevim_default_indent` | 2 | 对齐空格
 `g:spacevim_enable_guicolors` | 1 | 启用/禁用终端使用真色彩
 `g:spacevim_windows_leader` | `s` | 窗口管理快捷键前缀
