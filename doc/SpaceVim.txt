@@ -283,6 +283,14 @@ COMMANDS                                                   *SpaceVim-commands*
   print the debug information of spacevim, [!] forces the output into a new
   buffer.
 
+:SPConfig                                                          *:SPConfig*
+  edit custom config file of SpaceVim, by default this command will open
+  global custom configuration file, '-l' option will load local custom
+  configuration file.
+>
+    :SPConfig -g
+<
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
