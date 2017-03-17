@@ -159,13 +159,14 @@ function! SpaceVim#default#SetMappings() abort
 
   "mapping
   imap <silent><expr><TAB> SpaceVim#mapping#tab()
+  imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+  imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
   inoremap <silent><expr><CR> SpaceVim#mapping#enter()
   inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
   inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
   inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
   inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-  imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN

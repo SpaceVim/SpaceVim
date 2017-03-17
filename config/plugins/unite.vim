@@ -202,8 +202,6 @@ call unite#custom#profile('buffer,buffer_tab', 'context', {
       \   'keep_focus'   : 1,
       \ })
 nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
-nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
-nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
 "" Tag search
 """ For searching the word in the cursor in tag file
 nnoremap <silent><leader>f :<c-u>Unite tag/include:<C-R><C-w><CR>
@@ -219,12 +217,6 @@ noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
 noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
 nnoremap <silent><Leader>bl :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 nnoremap <silent><Leader>ta :<C-u>Unite -start-insert -buffer-name=tag tag<cr>
-"" outline
-nnoremap <silent><leader>o :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -no-split outline<cr>
-"" Line search
-nnoremap <silent><leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
-"" Yank history
-nnoremap <silent><leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 " search plugin
 " :Unite neobundle/search
 "for Unite menu{

@@ -32,7 +32,6 @@ try
         \ 'auto_expand': 1,
         \ 'direction' : 'rightbelow',
         \ 'parent': 0,
-        \ 'explorer_columns' : 'gitstatus',
         \ 'status' : 1,
         \ 'safe' : 0,
         \ 'split' : 1,

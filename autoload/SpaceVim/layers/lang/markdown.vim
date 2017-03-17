@@ -7,7 +7,9 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#markdown#config() abort
+    let g:vim_markdown_fenced_languages = [ 'c++=cpp' , 'viml=vim', 'bash=sh', 'ini=dosini']
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
-    let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
+    let g:vim_markdown_frontmatter = 1
+    let g:vim_markdown_toml_frontmatter = 1
 endfunction
