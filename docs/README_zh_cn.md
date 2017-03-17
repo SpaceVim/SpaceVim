@@ -73,6 +73,15 @@ Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 Ap
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
 
+**字体**
+
+SpaceVim 默认启用了Powerline 字体，默认的的字体文件是：[DejaVu Sans Mono](https://github.com/wsdjeg/DotFiles/tree/master/fonts), Windows 用户直接下载下来右键安装即可。
+
+**vimproc.dll**
+
+Windows 下用户如果不方便编译，可以在qq群文件里面下载相应的dll文件放到vimproc
+的lib目录，默认是 `~/.cache/vimfiles/repos/github.com/Shougo/vimproc.vim/lib/`
+
 ## 特性
 
 ### 优雅的界面
@@ -155,8 +164,8 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 `g:spacevim_enable_guicolors` | 1 | 启用/禁用终端使用真色彩
 `g:spacevim_windows_leader` | `s` | 窗口管理快捷键前缀
 `g:spacevim_unite_leader` | `f` | Unite快捷键前缀
-`g:spacevim_plugin_bundle_dir` | `~/.cache/vimfiles` | SpaceVim 默认插件缓存位置
+`g:spacevim_plugin_bundle_dir` | `~/.cache/vimfiles` | 默认插件缓存位置
 `g:spacevim_realtime_leader_guide` | 0 | 启用/禁用实时快捷键提示
 `g:spacevim_guifont` | '' | 设置SpaceVim字体
-`g:spacevim_sidebar_width` | 30 | 设置边栏宽度，此设置将影响到文件树侧栏和语法树侧栏
+`g:spacevim_sidebar_width` | 30 | 设置边栏宽度，文件树以及语法树
 `g:spacevim_custom_plugins` | `[]` | 设置自定义插件
