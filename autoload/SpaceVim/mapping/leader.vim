@@ -128,45 +128,86 @@ endfunction
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
     " The prefix key.
-    nnoremap    [unite]   <Nop>
+    exe 'nnoremap <silent><nowait> [unite] :<c-u>LeaderGuide "' . a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [unite]'
+    let g:_spacevim_mappings_unite = {}
     nnoremap <silent> [unite]r
           \ :<C-u>Unite -buffer-name=resume resume<CR>
+    let g:_spacevim_mappings_unite.r = ['Unite -buffer-name=resume resume',
+          \ 'resume unite window']
     if has('nvim')
       nnoremap <silent> [unite]f  :<C-u>Unite file_rec/neovim<cr>
+      let g:_spacevim_mappings_unite.f = ['Unite file_rec/neovim', 'file_rec']
     else
       nnoremap <silent> [unite]f  :<C-u>Unite file_rec/async<cr>
+      let g:_spacevim_mappings_unite.f = ['Unite file_rec/async', 'file_rec']
     endif
     nnoremap <silent> [unite]i  :<C-u>Unite file_rec/git<cr>
+    let g:_spacevim_mappings_unite.i = ['Unite file_rec/git', 'git files']
     nnoremap <silent> [unite]g  :<C-u>Unite grep<cr>
+    let g:_spacevim_mappings_unite.g = ['Unite grep', 'unite grep']
     nnoremap <silent> [unite]u  :<C-u>Unite source<CR>
+    let g:_spacevim_mappings_unite.u = ['Unite source', 'unite source']
     nnoremap <silent> [unite]t  :<C-u>Unite tag<CR>
+    let g:_spacevim_mappings_unite.t = ['Unite tag', 'unite tag']
     nnoremap <silent> [unite]T  :<C-u>Unite tag/include<CR>
+    let g:_spacevim_mappings_unite.T = ['Unite tag/include',
+          \ 'unite tag/include']
     nnoremap <silent> [unite]l  :<C-u>Unite locationlist<CR>
+    let g:_spacevim_mappings_unite.l = ['Unite locationlist',
+          \ 'unite locationlist']
     nnoremap <silent> [unite]q  :<C-u>Unite quickfix<CR>
+    let g:_spacevim_mappings_unite.q = ['Unite quickfix', 'unite quickfix']
     nnoremap <silent> [unite]e  :<C-u>Unite
           \ -buffer-name=register register<CR>
+    let g:_spacevim_mappings_unite.e = ['Unite register', 'unite register']
     nnoremap <silent> [unite]j  :<C-u>Unite jump<CR>
+    let g:_spacevim_mappings_unite.j = ['Unite jump', 'unite jump']
     nnoremap <silent> [unite]h  :<C-u>Unite history/yank<CR>
+    let g:_spacevim_mappings_unite.h = ['Unite history/yank', 'unite history/yank']
     nnoremap <silent> [unite]<C-h>  :<C-u>UniteWithCursorWord help<CR>
+    let g:_spacevim_mappings_unite['<C-h>'] = ['UniteWithCursorWord help', 'unite with cursor word help']
     nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+    let g:_spacevim_mappings_unite.s = ['Unite session', 'unite session']
     nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
+    let g:_spacevim_mappings_unite.o = ['Unite outline', 'unite outline']
+
+    " menu
     nnoremap <silent> [unite]ma
           \ :<C-u>Unite mapping<CR>
     nnoremap <silent> [unite]me
           \ :<C-u>Unite output:message<CR>
+    let g:_spacevim_mappings_unite.m = {'name' : 'unite menus',
+          \ 'a' : ['Unite mapping', 'unite mappings'],
+          \ 'e' : ['Unite output:message', 'unite messages']
+          \ }
 
     nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
           \ -buffer-name=files buffer bookmark file<CR>
+    let g:_spacevim_mappings_unite.c =
+          \ ['UniteWithCurrentDir -buffer-name=files buffer bookmark file',
+          \ 'unite files in current dir']
     nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
           \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+    let g:_spacevim_mappings_unite.b =
+          \ ['UniteWithBufferDir -buffer-name=files' .
+          \ ' buffer bookmark file',
+          \ 'unite files in current dir']
     nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+    let g:_spacevim_mappings_unite.n = ['Unite session/new', 'unite session/new']
     nnoremap <silent> [unite]/ :Unite -auto-preview grep:.<cr>
+    let g:_spacevim_mappings_unite['/'] = ['Unite -auto-preview grep:.', 'unite grep with preview']
     nnoremap <silent> [unite]w
           \ :<C-u>Unite -buffer-name=files -no-split
           \ jump_point file_point buffer_tab
           \ file_rec:! file file/new<CR>
+    let g:_spacevim_mappings_unite.w= ['Unite -buffer-name=files -no-split' .
+          \ ' jump_point file_point buffer_tab file_rec:! file file/new',
+          \ 'unite all file and jump']
     nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
+    let g:_spacevim_mappings_unite['<space>'] = ['Unite -silent -ignorecase' .
+          \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
+          \ 'unite customkeymaps']
   endif
 endfunction
 
