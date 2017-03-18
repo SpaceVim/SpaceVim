@@ -10,8 +10,8 @@ let s:palette = {
             \   'stlName': {
             \       'gui': 'bold',
             \       'font': 'NONE',
-            \       'guifg': '#005F00',
-            \       'guibg': '#AFDF00',
+            \       'guifg': '#282828',
+            \       'guibg': '#928374',
             \       'cterm': 'bold',
             \       'ctermfg': '22',
             \       'ctermbg': '148'
@@ -19,8 +19,8 @@ let s:palette = {
             \   'stlCategory': {
             \       'gui': 'NONE',
             \       'font': 'NONE',
-            \       'guifg': '#870000',
-            \       'guibg': '#FF8700',
+            \       'guifg': '#3c3836',
+            \       'guibg': '#83a598',
             \       'cterm': 'NONE',
             \       'ctermfg': '88',
             \       'ctermbg': '208'
@@ -28,8 +28,8 @@ let s:palette = {
             \   'stlNameOnlyMode': {
             \       'gui': 'NONE',
             \       'font': 'NONE',
-            \       'guifg': '#005D5D',
-            \       'guibg': '#FFFFFF',
+            \       'guifg': '#665c54',
+            \       'guibg': '#bdae93',
             \       'cterm': 'NONE',
             \       'ctermfg': '23',
             \       'ctermbg': '231'
@@ -64,8 +64,8 @@ let s:palette = {
             \   'stlCwd': {
             \       'gui': 'NONE',
             \       'font': 'NONE',
-            \       'guifg': '#FFFFFF',
-            \       'guibg': '#585858',
+            \       'guifg': '#bdae93',
+            \       'guibg': '#665c54',
             \       'cterm': 'NONE',
             \       'ctermfg': '231',
             \       'ctermbg': '240'
