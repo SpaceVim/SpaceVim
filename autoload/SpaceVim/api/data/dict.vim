@@ -1,5 +1,15 @@
 function! SpaceVim#api#data#dict#get() abort
-  return map({'make' : '',
+  return map({
+        \ 'make' : '',
+        \ 'swap' : '',
+        \ 'make_index' : '',
+        \ 'pick' : '',
+        \ 'omit' : '',
+        \ 'clear' : '',
+        \ 'max_by' : '',
+        \ 'min_by' : '',
+        \ 'foldl' : '',
+        \ 'foldr' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
