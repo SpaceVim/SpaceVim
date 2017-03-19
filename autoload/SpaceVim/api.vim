@@ -1,3 +1,11 @@
+" ============================================================================
+" File:        api.vim
+" Description: SpaceVim api core file
+" Author:      Shidong Wang <wsdjeg@outlook.com>
+" Website:     https://spacevim.org
+" License:     MIT
+" ============================================================================
+
 ""
 " @section API, api
 " SpaceVim contains a variety of public apis. here is a list of all the apis.
