@@ -145,7 +145,7 @@ Try these Neovim hangouts for any questions, problems or comments.
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
-before use SpaceVim, you should install the plugin by `call dein#install()`
+with this command, SpaceVim will be installed. all the plugins will be install automatically when first time run vim/nvim. Please wait for the end of the installation process.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 
