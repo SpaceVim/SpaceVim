@@ -86,7 +86,7 @@ function! SpaceVim#logger#viewLog(...) abort
       setl buftype=nofile
       setl filetype=markdown
     else
-      return info
+      echo info
     endif
   else
     return info

@@ -10,7 +10,7 @@ function! SpaceVim#commands#load() abort
   ""
   " print the debug information of spacevim, [!] forces the output into a
   " new buffer.
-  command! -nargs=0 -bang SPDebugInfo echo SpaceVim#logger#viewLog('<bang>' == '!')
+  command! -nargs=0 -bang SPDebugInfo call SpaceVim#logger#viewLog('<bang>' == '!')
   ""
   " edit custom config file of SpaceVim, by default this command will open
   " global custom configuration file, '-l' option will load local custom
