@@ -17,8 +17,8 @@
 
 ""
 " @section CONFIGURATION, config
-" SpaceVim uses `~/.SpaceVim/init.vim` as its default global config file.
-" You can set all the SpaceVim options and layers in it. `~/.SpaceVim/` will
+" SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file.
+" You can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
 " also be added to runtimepath, so you can write your own scripts in it.
 " SpaceVim also supports local config for each project. Place local config 
 " settings in `.SpaceVim.d/init.vim` in the root directory of your project.
