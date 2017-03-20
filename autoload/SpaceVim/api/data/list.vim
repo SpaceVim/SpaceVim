@@ -18,7 +18,8 @@ function! s:pop(list) abort
 endfunction
 
 function! s:push(list, val) abort
-    echo 'push'
+  call add(a:list, a:val)
+  return a:list
 endfunction
 
 function! s:shift(list) abort

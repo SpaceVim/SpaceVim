@@ -26,6 +26,10 @@ title:  "Documentation"
 
 ## Language specific mode
 
+## Key Mapping
+
+<iframe width='853' height='480' src='https://embed.coggle.it/diagram/WMlKuKS0uwABF2j1/a35e36df1d64e7b4f5fd7f956bf97a16b194cadb92d82d83e25aaf489349b0d8' frameborder='0' allowfullscreen></iframe>
+
 ### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
@@ -82,6 +86,8 @@ For the list of mappings see the [link](#window-management)
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
 ## Unite centric work-flow
+
+![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
 - List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
 ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)

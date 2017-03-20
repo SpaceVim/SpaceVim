@@ -6,7 +6,8 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['junegunn/goyo.vim',               { 'on_cmd' : 'Goyo',
         \ 'loadconf' : 1}],
         \ ['junegunn/limelight.vim',          { 'on_cmd' : 'Limelight'}],
-        \ ['Yggdroot/LeaderF',                { 'on_cmd' : 'LeaderF',
+        \ ['Yggdroot/LeaderF',                { 'on_cmd' : 'LeaderfFile',
+        \ 'loadconf' : 1,
         \ 'merged' : 0}],
         \ ['MattesGroeger/vim-bookmarks',     { 'on_map' : '<Plug>Bookmark',
         \ 'loadconf_before' : 1}],
@@ -37,6 +38,8 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
         \ 'loadconf' : 1}],
         \ ['Xuyuanp/nerdtree-git-plugin'],
+        \ ['lymslive/vimloo'],
+        \ ['lymslive/vnote', {'depends' : 'vimloo'}],
         \ ]
 endfunction
 

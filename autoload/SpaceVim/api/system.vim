@@ -7,6 +7,18 @@ let s:system['isLinux'] = has('unix') && !has('macunix') && !has('win32unix')
 
 let s:system['isOSX'] = has('macunix')
 
+function! s:name() abort
+  if s:system.isLinux
+    return 'Linux'
+  elseif s:system.isWindows
+    return 'Windows'
+  else
+    return 'OSX'
+  endif
+endfunction
+
+let s:system['name'] = function('s:name')
+
 function! s:isDarwin() abort
   if exists('s:is_darwin')
     return s:is_darwin

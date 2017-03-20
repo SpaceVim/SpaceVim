@@ -6,7 +6,7 @@ let g:unite_source_menu_menus.CustomKeyMaps = {'description':
 let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
       \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
 
-function! SpaceVim#mapping#def(type,key,value,desc,...) abort
+function! SpaceVim#mapping#_def(type,key,value,desc,...) abort
   exec a:type . ' ' . a:key . ' ' . a:value
   let description = '➤ '
         \. a:desc
@@ -14,6 +14,61 @@ function! SpaceVim#mapping#def(type,key,value,desc,...) abort
         \. a:key
   let cmd = len(a:000) > 0 ? a:000[0] : a:value
   call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
+endfunction
+
+" a:1 unite desc
+" a:2 unite cmd
+" a:3 guide desc
+" example  call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
+function! SpaceVim#mapping#def(type, key, value, ...) abort
+  let feedkeys_mode = 'm'
+  let map = split(a:type)[0]
+  if map =~# 'nore'
+    let feedkeys_mode = 'n'
+  endif
+  " TODO parse lhs and rhs, return list of key
+  "let lhs = a:key
+  "let rhs = a:value
+  let gexe = a:value
+  if a:value =~? '^<plug>'
+    let gexe = '\' . a:value
+  elseif a:value =~? ':.\+<cr>$'
+    let gexe = substitute(gexe, '<cr>', "\<cr>", 'g')
+    let gexe = substitute(gexe, '<CR>', "\<CR>", 'g')
+    let gexe = substitute(gexe, '<Esc>', "\<Esc>", 'g')
+  else
+  endif
+  exec a:type . ' ' . a:key . ' ' . a:value
+  if a:0 > 0
+    let desc = a:1
+    let description = '➤ '
+          \ . desc
+          \ . repeat(' ', 80 - len(desc) - len(a:key))
+          \ . a:key
+    let cmd = a:0 == 2 ? a:2 : a:value
+    call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
+    if a:0 == 3
+      " enable guide
+      if a:key =~? '^<leader>'
+        if len(a:key) > 9
+          let group = a:key[8:8]
+          if !has_key(g:_spacevim_mappings, group)
+            let g:_spacevim_mappings[group] = {'name': 'new group'}
+          endif
+          call extend(g:_spacevim_mappings[group], {
+                \ a:key[9:] : ['call feedkeys("' . gexe . '", "'
+                \ . feedkeys_mode . '")', a:3]
+                \ })
+        elseif len(a:key) == 9
+          call extend(g:_spacevim_mappings, {
+                \ a:key[8:] : ['call feedkeys("' . gexe . '", "'
+                \ . feedkeys_mode . '")', a:3]
+                \ })
+
+        endif
+      endif
+    endif
+  endif
 endfunction
 
 function! SpaceVim#mapping#shift_tab() abort

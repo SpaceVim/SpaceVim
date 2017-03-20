@@ -1,3 +1,11 @@
+"=============================================================================
+" spacevim.vim --- buffer name formatter for airline
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: MIT license
+"=============================================================================
+
 " @vimlint(EVL103, 1, a:buffers)
 function! airline#extensions#tabline#formatters#spacevim#format(bufnr, buffers) abort
   let g:_spacevim_list_buffers = a:buffers

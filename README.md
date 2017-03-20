@@ -10,7 +10,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer featur, escpecially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, escpecially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
@@ -145,7 +145,7 @@ Try these Neovim hangouts for any questions, problems or comments.
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
-before use SpaceVim, you should install the plugin by `call dein#install()`
+with this command, SpaceVim will be installed. all the plugins will be install automatically when first time run vim/nvim. Please wait for the end of the installation process.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 

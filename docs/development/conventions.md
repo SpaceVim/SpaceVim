@@ -6,7 +6,9 @@ permalink: "/conventions"
 # Conventions
 
 ## Content
+
 - [viml coding style guild](#viml-coding-style-guide)
+- [markdown style guide](#markdown-style-guide)
 
 ## Viml coding style guide
 ### Portability
@@ -139,8 +141,12 @@ When using catch, match the error code rather than the error text.
 Use :setlocal and &l: instead of :set and & unless you have explicit reason to do otherwise.
 
 ### Style
-Follow google style conventions. When in doubt, treat vimscript style like python style.
+
+Follow google style conventions. When in doubt, treat vimscript style like
+python style.
+
 #### Whitespace
+
 **Similar to python.**
 
 - Use two spaces for indents
@@ -156,7 +162,8 @@ command -range=% MyCommand
 
 You need not go out of your way to remove it.
 
-Trailing whitespace is allowed in mappings which prep commands for user input, such as "noremap <leader>gf :grep -f ".
+Trailing whitespace is allowed in mappings which prep commands for user input,
+such as "noremap <leader>gf :grep -f ".
 
 - Restrict lines to 80 columns wide
 - Indent continued lines by four spaces
@@ -220,8 +227,10 @@ Always prefix variables with their scope.
     - b: changes the variable semantics; use it when you want buffer-local semantics.
     - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
+## Markdown style guide
 
 ## Thanks:
 - link : https://google.github.io/styleguide/vimscriptguide.xml
 - link : https://google.github.io/styleguide/vimscriptfull.xml
 - link : https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt
+- [google's markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)

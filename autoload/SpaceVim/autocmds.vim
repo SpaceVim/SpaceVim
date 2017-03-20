@@ -1,6 +1,14 @@
+"=============================================================================
+" autocmd.vim --- main autocmd group for spacevim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: MIT license
+"=============================================================================
+
 "autocmds
 function! SpaceVim#autocmds#init() abort
-  augroup My_autocmds
+  augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
           \   q :cclose<cr>:lclose<cr>
@@ -57,9 +65,6 @@ function! SpaceVim#autocmds#init() abort
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd FileType * set scrolloff=7
-  augroup END
-  augroup SpaceVimInit
-    au!
     autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
   augroup END
 endfunction
