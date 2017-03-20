@@ -164,6 +164,10 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
           \ 'resume denite window']
     nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
     let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
+    nnoremap <silent> [denite]g  :<C-u>Denite grep<cr>
+    let g:_spacevim_mappings_denite.g = ['Denite grep', 'denite grep']
+    nnoremap <silent> [denite]j  :<C-u>Denite jump<CR>
+    let g:_spacevim_mappings_denite.j = ['Denite jump', 'denite jump']
   endif
 endfunction
 
