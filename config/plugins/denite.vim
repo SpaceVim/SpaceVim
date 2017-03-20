@@ -11,7 +11,7 @@ let s:denite_options = {'default' : {
 			\ 'highlight-matched-range' : 'Function',
 			\ 'direction': 'rightbelow',
 			\ 'statusline' : 'false',
-			\'prompt' : '➭',
+			\ 'prompt' : '➭',
 			\ }}
 
 function! s:profile(opts) abort
@@ -23,6 +23,11 @@ function! s:profile(opts) abort
 endfunction
 
 call s:profile(s:denite_options)
+
+" buffer source
+call denite#custom#var(
+			\ 'buffer',
+			\ 'date_format', '%m-%d-%Y %H:%M:%S')
 
 " denite command
 if !s:sys.isWindows
