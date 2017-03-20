@@ -99,6 +99,10 @@ this feature, or you can set to another char.
 Unite work flow leader of SpaceVim. Default is `f`. Set to empty to disable
 this feature, or you can set to another char.
 
+                                                    *g:spacevim_denite_leader*
+Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
+this feature, or you can set to another char.
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >

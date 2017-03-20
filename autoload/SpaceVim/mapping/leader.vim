@@ -125,6 +125,20 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   endif
 endfunction
 
+function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
+  if !empty(a:key)
+    exe 'nnoremap <silent><nowait> [denite] :<c-u>LeaderGuide "' . a:key . '"<CR>'
+    exe 'nmap ' .a:key . ' [denite]'
+    let g:_spacevim_mappings_denite = {}
+    nnoremap <silent> [denite]r
+          \ :<C-u>Denite -buffer-name=resume resume<CR>
+    let g:_spacevim_mappings_denite.r = ['Denite -buffer-name=resume resume',
+          \ 'resume denite window']
+    nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
+    let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
+  endif
+endfunction
+
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
     " The prefix key.
@@ -208,6 +222,16 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
     let g:_spacevim_mappings_unite['<space>'] = ['Unite -silent -ignorecase' .
           \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
           \ 'unite customkeymaps']
+  endif
+endfunction
+
+function! SpaceVim#mapping#leader#getName(key) abort
+  if a:key == g:spacevim_unite_leader
+    return '[unite]'
+  elseif a:key == g:spacevim_denite_leader
+    return '[denite]'
+  else
+    return '<leader>'
   endif
 endfunction
 

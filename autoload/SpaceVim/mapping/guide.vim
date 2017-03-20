@@ -387,8 +387,14 @@ function! s:winopen() " {{{
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
   setlocal winfixwidth winfixheight
-  setlocal statusline=\ Leader\ Guide
+  call s:updateStatusline()
 endfunction " }}}
+
+function! s:updateStatusline() abort
+  exe 'setlocal statusline=\ Leader\ Guide\ for:\ ' .
+        \ SpaceVim#mapping#leader#getName(s:prefix_key)
+endfunction
+
 function! s:winclose() " {{{
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
@@ -463,6 +469,7 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
   let s:toplevel = a:key ==? '  '
+  let s:prefix_key = a:key
 
   if has('nvim') && !exists('s:reg')
     let s:reg = ''
@@ -503,6 +510,9 @@ call SpaceVim#mapping#guide#register_prefix_descriptions('\',
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ g:spacevim_denite_leader,
+      \ 'g:_spacevim_mappings_denite')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
