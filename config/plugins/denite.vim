@@ -32,17 +32,19 @@ call denite#custom#var(
 
 " denite command
 if !s:sys.isWindows
-	if executable('ag')
+	if executable('rg')
+		" For ripgrep
+		" Note: It is slower than ag
+		call denite#custom#var('file_rec', 'command',
+					\ ['rg', '--files', '--glob', '!.git', '']
+					\ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
+                    \ )
+	elseif executable('ag')
 		" Change file_rec command.
 		call denite#custom#var('file_rec', 'command',
 					\ ['ag' , '--nocolor', '--nogroup', '-g', '']
 					\ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
 					\ )
-	elseif executable('rg')
-		" For ripgrep
-		" Note: It is slower than ag
-		call denite#custom#var('file_rec', 'command',
-					\ ['rg', '--files', '--glob', '!.git', ''])
 	endif
 else
 	if executable('pt')
