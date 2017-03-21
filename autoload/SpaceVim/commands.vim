@@ -48,7 +48,7 @@ endfunction
 
 
 function! SpaceVim#commands#version() abort
-  echo 'SpaceVim ' . g:spacevim_version . '-' . "\n" .
+  echo 'SpaceVim ' . g:spacevim_version . '-' . s:SHA() . "\n" .
         \ "\n" .
         \ 'Optional features included (+) or not (-):' . "\n"
         \ s:check_features([
@@ -162,6 +162,10 @@ function! s:check_features(features) abort
     endif
   endfor
   return substitute(rst, '\n*\s*$', '', 'g')
+endfunction
+
+function! s:SHA() abort
+  return system('git --no-pager -C ~/.SpaceVim  log -n 1 --oneline')[:7]
 endfunction
 
 
