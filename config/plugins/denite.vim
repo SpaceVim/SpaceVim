@@ -35,7 +35,9 @@ if !s:sys.isWindows
 	if executable('ag')
 		" Change file_rec command.
 		call denite#custom#var('file_rec', 'command',
-					\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+					\ ['ag' , '--nocolor', '--nogroup', '-g', '']
+					\ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
+					\ )
 	elseif executable('rg')
 		" For ripgrep
 		" Note: It is slower than ag
@@ -107,5 +109,5 @@ endfor
 
 unlet s:m s:insert_mode_mappings s:normal_mode_mappings
 
-" vim: set ts=2 sw=2 tw=80 noet :
 
+" vim:set et sw=2 cc=80:
