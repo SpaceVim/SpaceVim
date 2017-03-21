@@ -276,6 +276,11 @@ COMMANDS                                                   *SpaceVim-commands*
   Load exist layer, {layers} can be a string of a layer name, or a list of
   layer names.
 
+:SPVersion                                                        *:SPVersion*
+  Print the version of SpaceVim.  The following lines contain information
+  about which features were enabled.  When there is a preceding '+', the
+  feature is included, when there is a '-' it is excluded.
+
 :SPSet {opt} [value]                                                  *:SPSet*
   Set or check SpaceVim option. {opt} should be the option name of spacevim,
   This command will use [value] as the value of option name.
