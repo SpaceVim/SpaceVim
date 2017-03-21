@@ -2,13 +2,14 @@ scriptencoding utf-8
 " load api
 let s:sys = SpaceVim#api#import('system')
 
+
 " denite option
 let s:denite_options = {'default' : {
 			\ 'winheight' : 15,
 			\ 'mode' : 'insert',
 			\ 'quit' : 'true',
-			\ 'highlight-matched-char' : 'Function',
-			\ 'highlight-matched-range' : 'Function',
+			\ 'highlight_matched_char' : 'MoreMsg',
+			\ 'highlight_matched_range' : 'MoreMsg',
 			\ 'direction': 'rightbelow',
 			\ 'statusline' : 'false',
 			\ 'prompt' : '➭',
