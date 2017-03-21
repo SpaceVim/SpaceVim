@@ -38,8 +38,9 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
         \ 'loadconf' : 1}],
         \ ['Xuyuanp/nerdtree-git-plugin'],
-        \ ['lymslive/vimloo'],
-        \ ['lymslive/vnote', {'depends' : 'vimloo'}],
+        \ ['lymslive/vimloo', {'merged' : 0}],
+        \ ['lymslive/vnote', {'depends' : 'vimloo',
+        \ 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}],
         \ ]
 endfunction
 
