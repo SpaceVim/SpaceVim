@@ -69,7 +69,7 @@ SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`,
 
 here is an example:
 
-```vim
+```viml
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3
@@ -142,7 +142,7 @@ Try these Neovim hangouts for any questions, problems or comments.
 
 ### Linux/Mac
 
-```sh
+```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 with this command, SpaceVim will be installed. all the plugins will be install automatically when first time run vim/nvim. Please wait for the end of the installation process.
@@ -155,7 +155,7 @@ SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim
 
 for more info about the install script, please check:
 
-```sh
+```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
@@ -173,7 +173,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
     for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-    ```sh
+    ```bash
     git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
     ```
 
@@ -192,7 +192,7 @@ If you used SpaceVim in a project and you want to show that fact, you can use th
 
 markdown
 
-```markdown
+```md
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 

@@ -64,6 +64,10 @@ let g:spacevim_windows_leader          = 's'
 " Unite work flow leader of SpaceVim. Default is `f`.
 " Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_unite_leader            = 'f'
+""
+" Denite work flow leader of SpaceVim. Default is `F`.
+" Set to empty to disable this feature, or you can set to another char.
+let g:spacevim_denite_leader            = 'F'
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -363,6 +367,9 @@ function! SpaceVim#end() abort
   endif
   if !empty(g:spacevim_unite_leader)
     call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
+  endif
+  if !empty(g:spacevim_denite_leader)
+    call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
   endif
   call SpaceVim#mapping#leader#defindglobalMappings()
   if g:spacevim_simple_mode

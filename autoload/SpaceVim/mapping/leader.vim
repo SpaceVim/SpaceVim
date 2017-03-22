@@ -1,3 +1,11 @@
+"=============================================================================
+" leader.vim --- mapping leader definition file for SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: MIT license
+"=============================================================================
+
 function! SpaceVim#mapping#leader#defindglobalMappings() abort
   inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
 
@@ -89,46 +97,97 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
         \ 'Yank the github link of current selection to X11 clipboard',
         \ 'call zvim#util#CopyToClipboard(3)')
-  call SpaceVim#mapping#def('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
+  call SpaceVim#mapping#def('vnoremap', '<Leader>S',
+        \ "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
         \ 'Sourced selection.',
         \ "echo 'Use <leader>S to sourced selection.'")
-  call SpaceVim#mapping#def('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
+  call SpaceVim#mapping#def('nnoremap', '<Leader>S',
+        \ "^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",
+        \ 'Source line',
         \ "echo 'Use <leader>S to sourced line.'")
 
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv', ':call SpaceVim#mapping#split_previous_buffer()<CR>',
-        \'Open previous buffer in split window' , 'call SpaceVim#mapping#split_previous_buffer()', 'Split previout buffer')
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg', ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
-        \'Open previous buffer in vsplit window' , 'call SpaceVim#mapping#vertical_split_previous_buffer()')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv',
+        \ ':call SpaceVim#mapping#split_previous_buffer()<CR>',
+        \ 'Open previous buffer in split window',
+        \ 'call SpaceVim#mapping#split_previous_buffer()',
+        \ 'Split previout buffer')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg',
+        \ ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
+        \ 'Open previous buffer in vsplit window' ,
+        \ 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction
 
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   if !empty(a:key)
-    call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
-    call zvim#util#defineMap('nmap'    , a:key, '[Window]', 'Use ' . a:key . ' as window prefix' ,'normal ' . a:key)
+    call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>',
+          \ 'Defind window prefix', 'normal [Window]')
+    call zvim#util#defineMap('nmap' , a:key, '[Window]',
+          \ 'Use ' . a:key . ' as window prefix', 'normal ' . a:key)
 
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]p', ':<C-u>vsplit<CR>:wincmd w<CR>',
-          \'vsplit vertically,switch to next window','vsplit | wincmd w')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]v', ':<C-u>split<CR>', 'split window','split')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]g', ':<C-u>vsplit<CR>', 'vsplit window','vsplit')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]t', ':<C-u>tabnew<CR>', 'Create new tab','tabnew')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]o', ':<C-u>only<CR>', 'Close other windows','only')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]x', ':<C-u>call zvim#util#BufferEmpty()<CR>',
-          \'Empty current buffer','call zvim#util#BufferEmpty()')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]p',
+          \ ':<C-u>vsplit<CR>:wincmd w<CR>',
+          \ 'vsplit vertically,switch to next window','vsplit | wincmd w')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]v',
+          \ ':<C-u>split<CR>', 'split window', 'split')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]g',
+          \ ':<C-u>vsplit<CR>', 'vsplit window', 'vsplit')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]t',
+          \ ':<C-u>tabnew<CR>', 'Create new tab', 'tabnew')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]o',
+          \ ':<C-u>only<CR>', 'Close other windows', 'only')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]x',
+          \ ':<C-u>call zvim#util#BufferEmpty()<CR>',
+          \ 'Empty current buffer', 'call zvim#util#BufferEmpty()')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]\',
+          \ ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]q',
+          \ ':<C-u>close<CR>', 'Close current windows','close')
     call zvim#util#defineMap('nnoremap <silent>', '[Window]Q',
           \ ':<C-u>call SpaceVim#mapping#close_current_buffer()<CR>',
           \ 'delete current windows',
           \ 'call SpaceVim#mapping#close_current_buffer()')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]c', ':<C-u>call SpaceVim#mapping#clearBuffers()<CR>',
-          \'Clear all the buffers','call SpaceVim#mapping#clearBuffers()')
+    call zvim#util#defineMap('nnoremap <silent>', '[Window]c',
+          \ ':<C-u>call SpaceVim#mapping#clearBuffers()<CR>',
+          \ 'Clear all the buffers', 'call SpaceVim#mapping#clearBuffers()')
+  endif
+endfunction
+
+function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
+  if !empty(a:key)
+    exe 'nnoremap <silent><nowait> [denite] :<c-u>LeaderGuide "' .
+          \ a:key . '"<CR>'
+    exe 'nmap ' .a:key . ' [denite]'
+    let g:_spacevim_mappings_denite = {}
+    nnoremap <silent> [denite]r
+          \ :<C-u>Denite -buffer-name=resume resume<CR>
+    let g:_spacevim_mappings_denite.r = ['Denite -buffer-name=resume resume',
+          \ 'resume denite window']
+    nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
+    let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
+    nnoremap <silent> [denite]g  :<C-u>Denite grep<cr>
+    let g:_spacevim_mappings_denite.g = ['Denite grep', 'denite grep']
+    nnoremap <silent> [denite]j  :<C-u>Denite jump<CR>
+    let g:_spacevim_mappings_denite.j = ['Denite jump', 'denite jump']
+    nnoremap <silent> [denite]<C-h>  :<C-u>DeniteCursorWord help<CR>
+    let g:_spacevim_mappings_denite['<C-h>'] = ['DeniteCursorWord help',
+          \ 'denite with cursor word help']
+    nnoremap <silent> [denite]o  :<C-u>Denite -buffer-name=outline
+          \  -auto-preview outline<CR>
+    let g:_spacevim_mappings_denite.o = ['Denite outline', 'denite outline']
+    nnoremap <silent> [denite]e  :<C-u>Denite
+          \ -buffer-name=register register<CR>
+    let g:_spacevim_mappings_denite.e = ['Denite register', 'denite register']
+    nnoremap <silent> [denite]<Space> :Denite menu:CustomKeyMaps<CR>
+    let g:_spacevim_mappings_denite['<space>'] = ['Denite menu:CustomKeyMaps',
+          \ 'denite customkeymaps']
   endif
 endfunction
 
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
     " The prefix key.
-    exe 'nnoremap <silent><nowait> [unite] :<c-u>LeaderGuide "' . a:key . '"<CR>'
+    exe 'nnoremap <silent><nowait> [unite] :<c-u>LeaderGuide "' .
+          \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [unite]'
     let g:_spacevim_mappings_unite = {}
     nnoremap <silent> [unite]r
@@ -164,12 +223,15 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
     nnoremap <silent> [unite]j  :<C-u>Unite jump<CR>
     let g:_spacevim_mappings_unite.j = ['Unite jump', 'unite jump']
     nnoremap <silent> [unite]h  :<C-u>Unite history/yank<CR>
-    let g:_spacevim_mappings_unite.h = ['Unite history/yank', 'unite history/yank']
+    let g:_spacevim_mappings_unite.h = ['Unite history/yank',
+          \ 'unite history/yank']
     nnoremap <silent> [unite]<C-h>  :<C-u>UniteWithCursorWord help<CR>
-    let g:_spacevim_mappings_unite['<C-h>'] = ['UniteWithCursorWord help', 'unite with cursor word help']
+    let g:_spacevim_mappings_unite['<C-h>'] = ['UniteWithCursorWord help',
+          \ 'unite with cursor word help']
     nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
     let g:_spacevim_mappings_unite.s = ['Unite session', 'unite session']
-    nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
+    nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline
+          \ -start-insert -auto-preview -split outline<CR>
     let g:_spacevim_mappings_unite.o = ['Unite outline', 'unite outline']
 
     " menu
@@ -194,9 +256,11 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
           \ ' buffer bookmark file',
           \ 'unite files in current dir']
     nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-    let g:_spacevim_mappings_unite.n = ['Unite session/new', 'unite session/new']
+    let g:_spacevim_mappings_unite.n = ['Unite session/new',
+          \ 'unite session/new']
     nnoremap <silent> [unite]/ :Unite -auto-preview grep:.<cr>
-    let g:_spacevim_mappings_unite['/'] = ['Unite -auto-preview grep:.', 'unite grep with preview']
+    let g:_spacevim_mappings_unite['/'] = ['Unite -auto-preview grep:.',
+          \ 'unite grep with preview']
     nnoremap <silent> [unite]w
           \ :<C-u>Unite -buffer-name=files -no-split
           \ jump_point file_point buffer_tab
@@ -204,10 +268,21 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
     let g:_spacevim_mappings_unite.w= ['Unite -buffer-name=files -no-split' .
           \ ' jump_point file_point buffer_tab file_rec:! file file/new',
           \ 'unite all file and jump']
-    nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
+    nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17
+          \ -start-insert menu:CustomKeyMaps<CR>
     let g:_spacevim_mappings_unite['<space>'] = ['Unite -silent -ignorecase' .
           \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
           \ 'unite customkeymaps']
+  endif
+endfunction
+
+function! SpaceVim#mapping#leader#getName(key) abort
+  if a:key == g:spacevim_unite_leader
+    return '[unite]'
+  elseif a:key == g:spacevim_denite_leader
+    return '[denite]'
+  else
+    return '<leader>'
   endif
 endfunction
 
