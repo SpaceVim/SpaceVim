@@ -159,8 +159,8 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
     exe 'nmap ' .a:key . ' [denite]'
     let g:_spacevim_mappings_denite = {}
     nnoremap <silent> [denite]r
-          \ :<C-u>Denite -buffer-name=resume resume<CR>
-    let g:_spacevim_mappings_denite.r = ['Denite -buffer-name=resume resume',
+          \ :<C-u>Denite -resume<CR>
+    let g:_spacevim_mappings_denite.r = ['Denite -resume',
           \ 'resume denite window']
     nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
     let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
