@@ -174,6 +174,9 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
     nnoremap <silent> [denite]o  :<C-u>Denite -buffer-name=outline
           \  -auto-preview outline<CR>
     let g:_spacevim_mappings_denite.o = ['Denite outline', 'denite outline']
+    nnoremap <silent> [denite]e  :<C-u>Denite
+          \ -buffer-name=register register<CR>
+    let g:_spacevim_mappings_denite.e = ['Denite register', 'denite register']
   endif
 endfunction
 
