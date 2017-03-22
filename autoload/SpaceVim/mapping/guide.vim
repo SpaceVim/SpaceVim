@@ -344,6 +344,9 @@ function! s:wait_for_input() " {{{
   elseif match(inp, "^<LGCMD>submode") == 0
     call s:submode_mappings()
   else
+    if inp == ' '
+      let inp = '<space>'
+    endif
     let fsel = get(s:lmap, inp)
     call s:handle_input(fsel)
   endif
