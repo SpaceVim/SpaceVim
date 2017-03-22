@@ -102,6 +102,7 @@ function! s:start_parser(key, dict) " {{{
     let mapd.lhs = substitute(mapd.lhs, "<Tab>", "<C-I>", "g")
     let mapd.rhs = substitute(mapd.rhs, "<SID>", "<SNR>".mapd['sid']."_", "g")
     if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
+      let mapd.lhs = s:string_to_keys(mapd.lhs)
       if (visual && match(mapd.mode, "[vx ]") >= 0) ||
             \ (!visual && match(mapd.mode, "[vx]") == -1)
         call s:add_map_to_dict(mapd, 0, a:dict)
