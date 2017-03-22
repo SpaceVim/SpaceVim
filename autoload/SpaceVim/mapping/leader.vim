@@ -168,6 +168,12 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
     let g:_spacevim_mappings_denite.g = ['Denite grep', 'denite grep']
     nnoremap <silent> [denite]j  :<C-u>Denite jump<CR>
     let g:_spacevim_mappings_denite.j = ['Denite jump', 'denite jump']
+    nnoremap <silent> [denite]<C-h>  :<C-u>DeniteCursorWord help<CR>
+    let g:_spacevim_mappings_denite['<C-h>'] = ['DeniteCursorWord help',
+          \ 'denite with cursor word help']
+    nnoremap <silent> [denite]o  :<C-u>Denite -buffer-name=outline
+          \  -auto-preview outline<CR>
+    let g:_spacevim_mappings_denite.o = ['Denite outline', 'denite outline']
   endif
 endfunction
 
