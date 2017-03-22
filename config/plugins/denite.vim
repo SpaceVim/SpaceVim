@@ -96,6 +96,9 @@ elseif executable('ack')
         \ '--nopager', '--nocolor', '--nogroup', '--column'])
 endif
 
+" enable unite menu compatibility
+call denite#custom#var('menu', 'unite_source_menu_compatibility', 1)
+
 " KEY MAPPINGS
 let s:insert_mode_mappings = [
       \  ['jk', '<denite:enter_mode:normal>', 'noremap'],

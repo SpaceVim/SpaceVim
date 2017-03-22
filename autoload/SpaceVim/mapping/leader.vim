@@ -177,6 +177,9 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
     nnoremap <silent> [denite]e  :<C-u>Denite
           \ -buffer-name=register register<CR>
     let g:_spacevim_mappings_denite.e = ['Denite register', 'denite register']
+    nnoremap <silent> [denite]<Space> :Denite menu:CustomKeyMaps<CR>
+    let g:_spacevim_mappings_denite['<space>'] = ['Denite menu:CustomKeyMaps',
+          \ 'denite customkeymaps']
   endif
 endfunction
 
