@@ -104,7 +104,6 @@ function! s:start_parser(key, dict) " {{{
     if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
       if (visual && match(mapd.mode, "[vx ]") >= 0) ||
             \ (!visual && match(mapd.mode, "[vx]") == -1)
-        let mapd.lhs = s:string_to_keys(mapd.lhs)
         call s:add_map_to_dict(mapd, 0, a:dict)
       endif
     endif
@@ -212,17 +211,6 @@ function! s:escape_keys(inp) " {{{
   let ret = substitute(a:inp, "<", "<lt>", "")
   return substitute(ret, "|", "<Bar>", "")
 endfunction " }}}
-function! s:show_displayname(inp) " {{{
-  if has_key(s:displaynames, toupper(a:inp))
-    return s:displaynames[toupper(a:inp)]
-  else
-    return a:inp
-  end
-endfunction " }}}
-" displaynames {{{1 "
-let s:displaynames = {'<C-I>': '<Tab>',
-      \ '<C-H>': '<BS>'}
-" 1}}} "
 
 
 function! s:calc_layout() " {{{
@@ -260,7 +248,7 @@ function! s:create_string(layout) " {{{
   let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'),'1')
   for k in smap
     let desc = type(s:lmap[k]) == type({}) ? s:lmap[k].name : s:lmap[k][1]
-    let displaystring = "[".s:show_displayname(k)."] ".desc
+    let displaystring = "[". k ."] ".desc
     let crow = get(rows, row, [])
     if empty(crow)
       call add(rows, crow)
