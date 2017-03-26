@@ -128,6 +128,18 @@ let g:spacevim_error_symbol            = '✖'
 "   let g:spacevim_warning_symbol = '!'
 " <
 let g:spacevim_warning_symbol          = '⚠'
+""
+" Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
+" changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
+" cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
+" cursor. Host terminal must support the DECSCUSR CSI escape sequence.
+"
+" Depending on the terminal emulator, using this option with nvim under
+" tmux might require adding the following to ~/.tmux.conf:
+" >
+"   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+" <
+let g:spacevim_terminal_cursor_shape = 2
 let g:spacevim_use_colorscheme         = 1
 ""
 " Set the help language of vim. Default is 'en'. 
