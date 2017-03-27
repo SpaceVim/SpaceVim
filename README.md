@@ -142,14 +142,19 @@ Try these Neovim hangouts for any questions, problems or comments.
 
 ### Linux/Mac
 
+**Install SpaceVim with the command below**
+
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
-with this command, SpaceVim will be installed. you need run `:call dein#install()`
-in vim to install all the plugins, you will see
-`[dein] Install started: (2017/03/27 21:14:07)`
-and please wait for
-`[dein] Done: (2017/03/27 21:17:23) `.
+
+**After SpaceVim is installed, launch `vim` and run `:call dein#install()` inside vim to install all the plugins.** 
+
+Once plugins start installing, at the bottom of the vim window, you will see
+`[dein] Install started: (YYYY/MM/DD HH:MM:SS)`
+
+Please wait for all the plugins to complete installing before using vim. Once the plugin installation completes, you will see
+`[dein] Done: (YYYY/MM/DD HH:MM:SS) `. At this point you can start using vim.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 
