@@ -205,9 +205,9 @@ The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
 neobundle, or vim-plug.
 
                                                      *g:spacevim_checkinstall*
-Enable/Disable checkinstall on SpaceVim startup. Default is 1.
+Enable/Disable checkinstall on SpaceVim startup. Default is 0.
 >
-  let g:spacevim_checkinstall = 0
+  let g:spacevim_checkinstall = 1
 <
 
                                                      *g:spacevim_enable_debug*
