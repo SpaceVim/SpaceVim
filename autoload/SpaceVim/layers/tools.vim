@@ -1,7 +1,7 @@
 function! SpaceVim#layers#tools#plugins() abort
   return [
         \ ['tpope/vim-scriptease'],
-        \ ['brookhong/cscope.vim'],
+        \ ['SpaceVim/cscope.vim'],
         \ ['wsdjeg/vim-cheat',                { 'on_cmd' : 'Cheat'}],
         \ ['wsdjeg/SourceCounter.vim',        { 'on_cmd' : 'SourceCounter'}],
         \ ['junegunn/goyo.vim',               { 'on_cmd' : 'Goyo',
