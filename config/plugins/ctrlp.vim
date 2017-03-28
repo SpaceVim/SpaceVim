@@ -16,13 +16,15 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\v\.(exe|so|dll|ttf|png|gif|jpe?g|bpm)$|\-rplugin\~',
       \ 'link': 'some_bad_symbolic_links',
       \ }
-if executable('rg')
+if executable('rg') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
         \ . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'rg'))
-elseif executable('ag')
+elseif executable('ag') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag'))
 endif
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
+if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
+endif
 "nnoremap <Leader>kk :CtrlPMixed<Cr>
 " comment for ctrlp-funky {{{
 nnoremap <Leader>fu :CtrlPFunky<Cr>
