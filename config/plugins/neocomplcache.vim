@@ -47,18 +47,18 @@ if !exists('g:neocomplcache_force_omni_patterns')
 endif
 let g:neocomplcache_enable_auto_close_preview = get(g:, 'neocomplcache_enable_auto_close_preview', 1)
 " let g:neocomplcache_force_omni_patterns.ruby = get(g:, ': ,[^. *\t]\.\w*\|\h\w*::')
-let g:neocomplcache_omni_patterns.ruby = get(g:, 'neocomplcache_omni_patterns',
+let g:neocomplcache_omni_patterns.ruby = get(g:neocomplcache_omni_patterns, 'ruby',
       \ '[^. *\t]\.\w*\|\h\w*::')
-let g:neocomplcache_omni_patterns.java = get(g:, 'neocomplcache_omni_patterns',
+let g:neocomplcache_omni_patterns.java = get(g:neocomplcache_omni_patterns, 'java',
       \ '[^. *\t]\.\w*\|\h\w*::')
-let g:neocomplcache_force_omni_patterns.java = get(g:, 'neocomplcache_force_omni_patterns',
+let g:neocomplcache_force_omni_patterns.java = get(g:neocomplcache_force_omni_patterns, 'java',
       \ '[^. *\t]\.\w*\|\h\w*::')
 
 " For clang_complete.
 let g:neocomplcache_force_overwrite_completefunc = get(g:, 'neocomplcache_force_overwrite_completefunc', 1)
-let g:neocomplcache_force_omni_patterns.c = get(g:, 'neocomplcache_force_omni_patterns',
+let g:neocomplcache_force_omni_patterns.c = get(g:neocomplcache_force_omni_patterns, 'c',
       \ '[^.[:digit:] *\t]\%(\.\|->\)')
-let g:neocomplcache_force_omni_patterns.cpp = get(g:, 'neocomplcache_force_omni_patterns',
+let g:neocomplcache_force_omni_patterns.cpp = get(g:neocomplcache_force_omni_patterns, 'cpp',
       \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::')
 let g:clang_complete_auto = get(g:, 'clang_complete_auto', 0)
 let g:clang_auto_select = get(g:, 'clang_auto_select', 0)

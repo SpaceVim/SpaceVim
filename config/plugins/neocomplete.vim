@@ -1,4 +1,4 @@
-let g:neocomplete#data_directory= get(g:, 'neocomplete#data_directory','~/.cache/neocomplete')
+let g:neocomplete#data_directory= get(g:, 'neocomplete#data_directory', '~/.cache/neocomplete')
 let g:acp_enableAtStartup = get(g:, 'acp_enableAtStartup', 0)
 let g:neocomplete#enable_at_startup = get(g:, 'neocomplete#enable_at_startup', 1)
 " Use smartcase.
@@ -25,8 +25,7 @@ let g:neocomplete#enable_auto_delimiter = get(g:, 'neocomplete#enable_auto_delim
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
-
+let g:neocomplete#keyword_patterns._ = get(g:neocomplete#keyword_pattern, '_', '\h\k*(\?')
 
 " AutoComplPop like behavior.
 let g:neocomplete#enable_auto_select = 0
@@ -35,10 +34,12 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.java ='[^. \t0-9]\.\w*'
-let g:neocomplete#sources#omni#input_patterns.lua ='[^. \t0-9]\.\w*'
-let g:neocomplete#force_omni_input_patterns = {}
+let g:neocomplete#sources#omni#input_patterns.perl = get(g:neocomplete#sources#omni#input_patterns, 'perl', '\h\w*->\h\w*\|\h\w*::')
+let g:neocomplete#sources#omni#input_patterns.java = get(g:neocomplete#sources#omni#input_patterns, 'java','[^. \t0-9]\.\w*')
+let g:neocomplete#sources#omni#input_patterns.lua = get(g:neocomplete#sources#omni#input_patterns, 'lua','[^. \t0-9]\.\w*')
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
 "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
