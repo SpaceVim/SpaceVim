@@ -4,7 +4,8 @@ let s:sys = SpaceVim#api#import('system')
 
 
 " denite option
-let s:denite_options = {'default' : {
+let s:denite_options = {
+      \ 'default' : {
       \ 'winheight' : 15,
       \ 'mode' : 'insert',
       \ 'quit' : 'true',

@@ -23,20 +23,20 @@ call unite#custom#profile('default', 'context', {
 call unite#custom#profile('source/neobundle/update', 'context', {
       \   'start_insert' : 0,
       \ })
-let g:unite_source_codesearch_ignore_case = 1
-let g:unite_source_buffer_time_format = '(%m-%d-%Y %H:%M:%S) '
-let g:unite_source_file_mru_time_format = '(%m-%d-%Y %H:%M:%S) '
-let g:unite_source_directory_mru_time_format = '(%m-%d-%Y %H:%M:%S) '
-let g:unite_source_directory_mru_limit = 80
-let g:unite_source_file_rec_max_depth = 6
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-let g:unite_data_directory='~/.cache/unite'
+let g:unite_source_codesearch_ignore_case = get(g:, 'unite_source_codesearch_ignore_case', 1)
+let g:unite_source_buffer_time_format = get(g:, 'unite_source_buffer_time_format', '(%m-%d-%Y %H:%M:%S) ')
+let g:unite_source_file_mru_time_format = get(g:, 'unite_source_file_mru_time_format', '(%m-%d-%Y %H:%M:%S) ')
+let g:unite_source_directory_mru_time_format = get(g:, 'unite_source_directory_mru_time_format', '(%m-%d-%Y %H:%M:%S) ')
+let g:unite_source_directory_mru_limit = get(g:, 'unite_source_directory_mru_limit', 80)
+let g:unite_source_file_rec_max_depth = get(g:, 'unite_source_file_rec_max_depth', 6)
+let g:unite_enable_ignore_case = get(g:, 'unite_enable_ignore_case', 1)
+let g:unite_enable_smart_case = get(g:, 'unite_enable_smart_case', 1)
+let g:unite_data_directory = get(g:, 'unite_data_directory','~/.cache/unite')
 "let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable=1
-let g:unite_split_rule = 'botright'
-let g:unite_winheight=25
-let g:unite_source_grep_default_opts = '-iRHn'
+let g:unite_source_history_yank_enable = get(g:, 'unite_source_history_yank_enable', 1)
+let g:unite_split_rule = get(g:, 'unite_split_rule', 'botright')
+let g:unite_winheight = get(g:, 'unite_winheight', 25)
+let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts', '-iRHn'
       \ . " --exclude='tags'"
       \ . " --exclude='cscope*'"
       \ . " --exclude='*.svn*'"
@@ -46,13 +46,13 @@ let g:unite_source_grep_default_opts = '-iRHn'
       \ . " --exclude-dir='CVS'"
       \ . " --exclude-dir='.svn'"
       \ . " --exclude-dir='.git'"
-      \ . " --exclude-dir='node_modules'"
-let g:unite_launch_apps = [
+      \ . " --exclude-dir='node_modules'")
+let g:unite_launch_apps = get(g:, 'unite_launch_apps', [
       \ 'rake',
       \ 'make',
       \ 'git pull',
-      \ 'git push']
-let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
+      \ 'git push'])
+let g:unite_source_menu_menus = get(g:, 'unite_source_menu_menus', {})
 let g:unite_source_menu_menus.git = {
       \ 'description' : '            gestionar repositorios git
       \                            ⌘ [espacio]g',
@@ -135,52 +135,52 @@ let g:unite_source_menu_menus.StatusCodeDefinitions.command_candidates = [
       \['➤ 505 HTTP Version Not Supported                                 ', 'echo "HTTP Version Not Supported"'],
       \]
 nnoremap <silent><leader>sc :Unite -silent -winheight=17 -start-insert menu:StatusCodeDefinitions<CR>
-let g:unite_source_grep_max_candidates = 200
+let g:unite_source_grep_max_candidates = get(g:, 'unite_source_grep_max_candidates', 200)
 if executable('hw')
   " Use hw (highway)
   " https://github.com/tkengo/highway
-  let g:unite_source_grep_command = 'hw'
-  let g:unite_source_grep_default_opts = '--no-group --no-color'
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'hw')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts', '--no-group --no-color')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '')
 elseif executable('ag')
   " Use ag (the silver searcher)
   " https://github.com/ggreer/the_silver_searcher
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'ag')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts',
         \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
+        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '')
 elseif executable('pt')
   " Use pt (the platinum searcher)
   " https://github.com/monochromegane/the_platinum_searcher
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'pt')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts', '--nogroup --nocolor')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '')
 elseif executable('ack-grep')
   " Use ack
   " http://beyondgrep.com/
-  let g:unite_source_grep_command = 'ack-grep'
-  let g:unite_source_grep_default_opts =
-        \ '-i --no-heading --no-color -k -H'
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'ack-grep')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts',
+        \ '-i --no-heading --no-color -k -H')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '')
 elseif executable('ack')
-  let g:unite_source_grep_command = 'ack'
-  let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'ack')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts', '-i --no-heading --no-color -k -H')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '')
 elseif executable('jvgrep')
   " Use jvgrep
   " https://github.com/mattn/jvgrep
-  let g:unite_source_grep_command = 'jvgrep'
-  let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-  let g:unite_source_grep_recursive_opt = '-R'
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'jvgrep')
+  let g:unite_source_grep_default_opts = get(g:, 'unite_source_grep_default_opts', '-i --exclude ''\.(git|svn|hg|bzr)''')
+  let g:unite_source_grep_recursive_opt = get(g:, 'unite_source_grep_recursive_opt', '-R')
 elseif executable('beagrep')
   " Use beagrep
   " https://github.com/baohaojun/beagrep
-  let g:unite_source_grep_command = 'beagrep'
+  let g:unite_source_grep_command = get(g:, 'unite_source_grep_command', 'beagrep')
 endif
-let g:unite_source_rec_async_command =
+let g:unite_source_rec_async_command = get(g:, 'unite_source_rec_async_command',
       \ ['ag', '--follow', '--nocolor', '--nogroup',
-      \  '--hidden', '-g', '']
+      \  '--hidden', '-g', ''])
 nnoremap <silent><leader>ufa :<C-u>Unite -no-split -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
 nnoremap <silent><leader>ufr :<C-u>Unite -buffer-name=files file_rec/async:!<cr>
 nnoremap <silent><leader>ufg :<C-u>Unite -buffer-name=git-repo file_rec/git<cr>
