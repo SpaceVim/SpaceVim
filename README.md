@@ -153,7 +153,7 @@ Try these Neovim hangouts for any questions, problems or comments.
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-**After SpaceVim is installed, launch `vim` and run `:call dein#install()` inside vim to install all the plugins.** 
+**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins** 
 
 Once plugins start installing, at the bottom of the vim window, you will see
 `[dein] Install started: (YYYY/MM/DD HH:MM:SS)`

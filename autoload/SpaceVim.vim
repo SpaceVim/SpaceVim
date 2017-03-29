@@ -180,11 +180,11 @@ let g:spacevim_filemanager             = 'vimfiler'
 " Options are dein, neobundle, or vim-plug.
 let g:spacevim_plugin_manager          = 'dein'
 ""
-" Enable/Disable checkinstall on SpaceVim startup. Default is 0.
+" Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
 "   let g:spacevim_checkinstall = 1
 " <
-let g:spacevim_checkinstall            = 0
+let g:spacevim_checkinstall            = 1
 ""
 " Enable/Disable debug mode for SpaceVim. Default is 0.
 " >
