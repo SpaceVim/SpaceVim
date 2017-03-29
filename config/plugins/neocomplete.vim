@@ -1,25 +1,25 @@
-let g:neocomplete#data_directory='~/.cache/neocomplete'
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#data_directory= get(g:, 'neocomplete#data_directory','~/.cache/neocomplete')
+let g:acp_enableAtStartup = get(g:, 'acp_enableAtStartup', 0)
+let g:neocomplete#enable_at_startup = get(g:, 'neocomplete#enable_at_startup', 1)
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_camel_case = 1
+let g:neocomplete#enable_smart_case = get(g:, 'neocomplete#enable_smart_case', 1)
+let g:neocomplete#enable_camel_case = get(g:, 'neocomplete#enable_camel_case', 1)
 "let g:neocomplete#enable_ignore_case = 1
-let g:neocomplete#enable_fuzzy_completion = 1
+let g:neocomplete#enable_fuzzy_completion = get(g:, 'neocomplete#enable_fuzzy_completion', 1)
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplete#sources#syntax#min_keyword_length = get(g:, 'neocomplete#sources#syntax#min_keyword_length', 3)
+let g:neocomplete#lock_buffer_name_pattern = get(g:, 'neocomplete#lock_buffer_name_pattern', '\*ku\*')
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
+let g:neocomplete#sources#dictionary#dictionaries = get(g:, 'neocomplete#sources#dictionary#dictionaries', {
       \ 'default' : '',
       \ 'vimshell' : $CACHE.'/vimshell/command-history',
       \ 'java' : '~/.vim/dict/java.dict',
       \ 'ruby' : '~/.vim/dict/ruby.dict',
       \ 'scala' : '~/.vim/dict/scala.dict',
-      \ }
+      \ })
 
-let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#enable_auto_delimiter = get(g:, 'neocomplete#enable_auto_delimiter', 1)
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')

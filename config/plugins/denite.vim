@@ -4,7 +4,8 @@ let s:sys = SpaceVim#api#import('system')
 
 
 " denite option
-let s:denite_options = {'default' : {
+let s:denite_options = get(g:, 'denite_options', {
+      \ 'default' : {
       \ 'winheight' : 15,
       \ 'mode' : 'insert',
       \ 'quit' : 'true',
@@ -13,7 +14,7 @@ let s:denite_options = {'default' : {
       \ 'direction': 'rightbelow',
       \ 'statusline' : 'false',
       \ 'prompt' : '➭',
-      \ }}
+      \ }})
 
 function! s:profile(opts) abort
   for fname in keys(a:opts)
