@@ -32,8 +32,8 @@ elseif g:spacevim_buffer_index_type == 4
 
 endif
 let g:airline#extensions#tabline#formatter = 'spacevim'
-"let g:airline#extensions#tabline#buffer_nr_show = 1
-"let g:airline#extensions#tabline#buffer_nr_format = '%s:'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#fnamecollapse = 1
 let g:airline#extensions#tabline#fnametruncate = 0
