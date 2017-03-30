@@ -622,9 +622,8 @@ Configuration for `tweekmonster/deoplete-clang2`:
 LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
 
 INTRO
-
-The lang#crystal layer provides filetype detection and syntax highlight for
-Crystal, crystal tool and crystal spec integration.
+The lang#crystal layer provides crystal filetype detection and syntax
+highlight, crystal tool and crystal spec integration.
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
