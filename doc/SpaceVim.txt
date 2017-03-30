@@ -31,18 +31,19 @@ CONTENTS                                                   *SpaceVim-contents*
       8. incsearch..................................|SpaceVim-layer-incsearch|
       9. indentmove................................|SpaceVim-layer-indentmove|
       10. lang#c.......................................|SpaceVim-layer-lang-c|
-      11. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      12. lang#go.....................................|SpaceVim-layer-lang-go|
-      13. lang#java.................................|SpaceVim-layer-lang-java|
-      14. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      15. lang#php...................................|SpaceVim-layer-lang-php|
-      16. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      17. lang#python.............................|SpaceVim-layer-lang-python|
-      18. lang#rust.................................|SpaceVim-layer-lang-rust|
-      19. lang#xml...................................|SpaceVim-layer-lang-xml|
-      20. operator...................................|SpaceVim-layer-operator|
-      21. shell.........................................|SpaceVim-layer-shell|
-      22. tmux...........................................|SpaceVim-layer-tmux|
+      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      13. lang#go.....................................|SpaceVim-layer-lang-go|
+      14. lang#java.................................|SpaceVim-layer-lang-java|
+      15. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      16. lang#php...................................|SpaceVim-layer-lang-php|
+      17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      18. lang#python.............................|SpaceVim-layer-lang-python|
+      19. lang#rust.................................|SpaceVim-layer-lang-rust|
+      20. lang#xml...................................|SpaceVim-layer-lang-xml|
+      21. operator...................................|SpaceVim-layer-operator|
+      22. shell.........................................|SpaceVim-layer-shell|
+      23. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
   7. FAQ........................................................|SpaceVim-faq|
@@ -616,6 +617,14 @@ Configuration for `tweekmonster/deoplete-clang2`:
     to get completions within conditional preprocessor blocks. The default is
     50,  setting it to 0 disables this feature.
 
+
+==============================================================================
+LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
+
+INTRO
+
+The lang#crystal layer provides filetype detection and syntax highlight for
+Crystal, crystal tool and crystal spec integration.
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
