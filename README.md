@@ -59,6 +59,11 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
     [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
+This is the Unite centric work-flow:
+
+![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+
+
 ## Documentation
 
 ### Quick start guide
@@ -148,7 +153,7 @@ Try these Neovim hangouts for any questions, problems or comments.
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-**After SpaceVim is installed, launch `vim` and run `:call dein#install()` inside vim to install all the plugins.** 
+**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins** 
 
 Once plugins start installing, at the bottom of the vim window, you will see
 `[dein] Install started: (YYYY/MM/DD HH:MM:SS)`

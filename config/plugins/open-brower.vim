@@ -1,6 +1,6 @@
 "for open-browser {{{
 " This is my setting.
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
+let g:netrw_nogx = get(g:, 'netrw_nogx', 1) " disable netrw's gx mapping.
 "nmap gx <Plug>(openbrowser-smart-search)
 "vmap gx <Plug>(openbrowser-smart-search)
 "" Open URI under cursor.
