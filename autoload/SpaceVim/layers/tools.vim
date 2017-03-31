@@ -1,6 +1,7 @@
 function! SpaceVim#layers#tools#plugins() abort
   return [
         \ ['tpope/vim-scriptease'],
+        \ ['SpaceVim/cscope.vim'],
         \ ['wsdjeg/vim-cheat',                { 'on_cmd' : 'Cheat'}],
         \ ['wsdjeg/SourceCounter.vim',        { 'on_cmd' : 'SourceCounter'}],
         \ ['junegunn/goyo.vim',               { 'on_cmd' : 'Goyo',
@@ -60,8 +61,12 @@ function! SpaceVim#layers#tools#config() abort
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
   nnoremap <Leader>fz :FZF<CR>
-  vnoremap <silent> <C-l> <Esc>:Ydv<CR>
-  nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+  if maparg('<C-l>', 'v') ==# ''
+    vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+  endif
+  if maparg('<C-l>', 'n') ==# ''
+    nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+  endif
   map <unique> <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
   function! OpenOrCloseNERDTree() abort

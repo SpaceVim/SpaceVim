@@ -16,8 +16,7 @@ endfunction
 command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
 command! REPLSendLine call REPLSend([getline('.')])
 " }}}
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
 "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -56,7 +55,7 @@ augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
     au BufWinEnter term://* startinsert | IndentLinesDisable
-    au TermClose * exe expand('<abuf>').'bd!'
+    au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call SpaceVim#mapping#close_term_buffer()
 augroup END
 augroup nvimrc_aucmd
     autocmd!

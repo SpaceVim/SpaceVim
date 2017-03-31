@@ -31,18 +31,19 @@ CONTENTS                                                   *SpaceVim-contents*
       8. incsearch..................................|SpaceVim-layer-incsearch|
       9. indentmove................................|SpaceVim-layer-indentmove|
       10. lang#c.......................................|SpaceVim-layer-lang-c|
-      11. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      12. lang#go.....................................|SpaceVim-layer-lang-go|
-      13. lang#java.................................|SpaceVim-layer-lang-java|
-      14. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      15. lang#php...................................|SpaceVim-layer-lang-php|
-      16. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      17. lang#python.............................|SpaceVim-layer-lang-python|
-      18. lang#rust.................................|SpaceVim-layer-lang-rust|
-      19. lang#xml...................................|SpaceVim-layer-lang-xml|
-      20. operator...................................|SpaceVim-layer-operator|
-      21. shell.........................................|SpaceVim-layer-shell|
-      22. tmux...........................................|SpaceVim-layer-tmux|
+      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      13. lang#go.....................................|SpaceVim-layer-lang-go|
+      14. lang#java.................................|SpaceVim-layer-lang-java|
+      15. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      16. lang#php...................................|SpaceVim-layer-lang-php|
+      17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      18. lang#python.............................|SpaceVim-layer-lang-python|
+      19. lang#rust.................................|SpaceVim-layer-lang-rust|
+      20. lang#xml...................................|SpaceVim-layer-lang-xml|
+      21. operator...................................|SpaceVim-layer-operator|
+      22. shell.........................................|SpaceVim-layer-shell|
+      23. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
   7. FAQ........................................................|SpaceVim-faq|
@@ -155,6 +156,18 @@ Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
   let g:spacevim_warning_symbol = '!'
 <
 
+                                            *g:spacevim_terminal_cursor_shape*
+Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
+changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
+cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
+cursor. Host terminal must support the DECSCUSR CSI escape sequence.
+
+Depending on the terminal emulator, using this option with nvim under tmux
+might require adding the following to ~/.tmux.conf:
+>
+  set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+<
+
                                                 *g:spacevim_vim_help_language*
 Set the help language of vim. Default is 'en'.  You can change it to Chinese.
 >
@@ -195,7 +208,7 @@ neobundle, or vim-plug.
                                                      *g:spacevim_checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 >
-  let g:spacevim_checkinstall = 0
+  let g:spacevim_checkinstall = 1
 <
 
                                                      *g:spacevim_enable_debug*
@@ -604,6 +617,13 @@ Configuration for `tweekmonster/deoplete-clang2`:
     to get completions within conditional preprocessor blocks. The default is
     50,  setting it to 0 disables this feature.
 
+
+==============================================================================
+LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
+
+INTRO
+The lang#crystal layer provides crystal filetype detection and syntax
+highlight, crystal tool and crystal spec integration.
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*

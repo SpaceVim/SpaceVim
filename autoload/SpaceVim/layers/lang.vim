@@ -6,7 +6,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['hail2u/vim-css3-syntax',                 { 'on_ft' : ['css','scss','sass']}],
                 \ ['ap/vim-css-color',                       { 'on_ft' : ['css','scss','sass','less','styl']}],
                 \ ['othree/html5.vim',                       { 'on_ft' : ['html']}],
-                \ ['wavded/vim-stylus',                      { 'on_ft' : ['styl']}],
+                \ ['wavded/vim-stylus',                      { 'on_ft' : ['stylus']}],
                 \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
                 \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],

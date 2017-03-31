@@ -26,6 +26,10 @@ if !empty(g:spacevim_guifont)
     exe 'set guifont=' . g:spacevim_guifont
 endif
 if g:spacevim_enable_guicolors == 1
+    if !has('nvim') && has('patch-7.4.1770')
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    endif
     if exists('+termguicolors')
         set termguicolors
     elseif exists('+guicolors')
