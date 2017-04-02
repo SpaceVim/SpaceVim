@@ -22,7 +22,7 @@ if g:neosnippet#enable_complete_done
 endif
 augroup neosnippet_complete_done
   autocmd!
-  autocmd CompleteDone * call s:my_complete_done()
+  "autocmd CompleteDone * call s:my_complete_done()
 augroup END
 function! s:my_complete_done() abort "{{{
   if !empty(get(v:,'completed_item',''))

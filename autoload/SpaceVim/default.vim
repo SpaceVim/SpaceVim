@@ -158,7 +158,7 @@ endfunction
 function! SpaceVim#default#SetMappings() abort
 
   "mapping
-  imap <silent><expr><TAB> SpaceVim#mapping#tab()
+  imap <silent><expr><TAB> SpaceVim#mapping#tab#i_tab()
   imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
