@@ -4,7 +4,9 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
     if has('nvim')
         call add(plugins,['carlitux/deoplete-ternjs',           { 'on_ft' : ['javascript']}])
     else
-        call add(plugins,['ternjs/tern_for_vim',                { 'on_ft' : ['javascript']}])
+        call add(plugins,['ternjs/tern_for_vim',                { 'on_ft' : ['javascript'],
+                    \ 'build' : 'npm install',
+                    \ }])
     endif
     call add(plugins,['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript','coffee','ls','typescript']}])
     call add(plugins,['mmalecki/vim-node.js',                   { 'on_ft' : ['javascript']}])
