@@ -64,7 +64,6 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
-    autocmd FileType * set scrolloff=7
     autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
   augroup END
 endfunction
