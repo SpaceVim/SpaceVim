@@ -12,5 +12,12 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
     endif
   endfunction
 elseif g:spacevim_snippet_engine ==# 'ultisnips'
+  function! SpaceVim#mapping#enter#i_enter() abort
+    if pumvisible()
+      return "\<c-y>"
+    else
+      return "\<Enter>"
+    endif
+  endfunction
 endif
 " vim:set et sw=2 cc=80:
