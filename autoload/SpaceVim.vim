@@ -109,6 +109,13 @@ let g:spacevim_enable_ycm              = 0
 " Set the width of the SpaceVim sidebar. Default is 30.
 " This value will be used by tagbar and vimfiler.
 let g:spacevim_sidebar_width           = 30
+""
+" Set the snippet engine of SpaceVim, default is neosnippet. to enable
+" ultisnips:
+" >
+"   let g:spacevim_snippet_engine = 'ultisnips'
+" <
+let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
 ""
 " Enable/Disable cursorline. Default is 0.

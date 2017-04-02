@@ -138,6 +138,13 @@ Enable/Disable YouCompleteMe. Default is 0.
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
 
+                                                   *g:spacevim_snippet_engine*
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  let g:spacevim_snippet_engine = 'ultisnips'
+<
+
                                                 *g:spacevim_enable_cursorline*
 Enable/Disable cursorline. Default is 0.
 >
