@@ -25,7 +25,7 @@ let g:neocomplete#enable_auto_delimiter = get(g:, 'neocomplete#enable_auto_delim
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplete#keyword_patterns._ = get(g:neocomplete#keyword_pattern, '_', '\h\k*(\?')
+let g:neocomplete#keyword_patterns._ = get(g:neocomplete#keyword_patterns, '_', '\h\k*(\?')
 
 " AutoComplPop like behavior.
 let g:neocomplete#enable_auto_select = 0
