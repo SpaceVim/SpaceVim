@@ -2,8 +2,10 @@
 if g:spacevim_snippet_engine ==# 'neosnippet'
   function! SpaceVim#mapping#enter#i_enter() abort
     if pumvisible()
-      if neosnippet#expandable_or_jumpable()
-        return "\<plug>(neosnippet_expand_or_jump)"
+      if neosnippet#expandable()
+        return "\<plug>(neosnippet_expand)"
+      else
+        return "\<c-y>"
       endif
     else
       return "\<Enter>"
