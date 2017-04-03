@@ -38,7 +38,11 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
     let gexe = substitute(gexe, '<Esc>', "\<Esc>", 'g')
   else
   endif
-  exec a:type . ' ' . a:key . ' ' . a:value
+  if g:spacevim_enable_key_frequency
+    exec a:type . ' <expr> ' . a:key . " SpaceVim#mapping#frequency#update('" . a:key . "', '" . a:value . "')"
+  else
+    exec a:type . ' ' . a:key . ' ' . a:value
+  endif
   if a:0 > 0
     let desc = a:1
     let description = '➤ '
