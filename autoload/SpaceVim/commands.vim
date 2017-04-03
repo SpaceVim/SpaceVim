@@ -26,7 +26,20 @@ function! SpaceVim#commands#load() abort
   command! -nargs=*
         \ -complete=customlist,SpaceVim#commands#complete_SPConfig
         \ SPConfig call SpaceVim#commands#config(<f-args>)
+  command! -nargs=*
+        \ -complete=custom,SpaceVim#commands#complete_plugin
+        \ SPUpdate call SpaceVim#commands#update_plugin(<f-args>)
 endfunction
+
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
+function! SpaceVim#commands#complete_plugin(ArgLead, CmdLine, CursorPos) abort
+  return join(g:_spacevim_plugins, "\n")
+endfunction
+" @vimlint(EVL103, 0, a:ArgLead)
+" @vimlint(EVL103, 0, a:CmdLine)
+" @vimlint(EVL103, 0, a:CursorPos)
 
 " @vimlint(EVL103, 1, a:ArgLead)
 " @vimlint(EVL103, 1, a:CmdLine)
@@ -43,6 +56,14 @@ function! SpaceVim#commands#config(...) abort
     tabnew ~/.SpaceVim.d/init.vim
   elseif  a:0 > 0 && a:1 ==# '-l'
     tabnew .SpaceVim.d/init.vim
+  endif
+endfunction
+
+function! SpaceVim#commands#update_plugin(plug) abort
+  if g:spacevim_plugin_manager ==# 'neobundle'
+  elseif g:spacevim_plugin_manager ==# 'dein'
+    call dein#update([a:plug])
+  elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
 endfunction
 
