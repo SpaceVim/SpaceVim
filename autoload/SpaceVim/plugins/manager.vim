@@ -6,6 +6,8 @@
 " License: MIT license
 "=============================================================================
 
+" Load SpaceVim api
+let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 " install plugin manager 
 function! s:install_manager() abort
     " Fsep && Psep
@@ -23,18 +25,14 @@ function! s:install_manager() abort
                     \ . 'neobundle.vim'. s:Fsep. 'README.md')
             let g:spacevim_neobundle_installed = 1
         else
-            if executable('git')
-                exec '!git clone '
-                            \ .'https://github.com/'
-                            \ .'Shougo/neobundle.vim'
-                            \ . ' '
-                            \ . fnameescape(g:spacevim_plugin_bundle_dir)
-                            \ . 'neobundle.vim'
+            if s:need_cmd('git')
+                call s:VIM_CO.system([
+                            \ 'git',
+                            \ 'clone',
+                            \ 'https://github.com/Shougo/neobundle.vim',
+                            \ expand(g:spacevim_plugin_bundle_dir) . 'neobundle.vim'
+                            \ ])
                 let g:spacevim_neobundle_installed = 1
-            else
-                echohl WarningMsg
-                echom 'You need install git!'
-                echohl None
             endif
         endif
         exec 'set runtimepath+='
@@ -48,16 +46,16 @@ function! s:install_manager() abort
                     \ s:Fsep))
             let g:spacevim_dein_installed = 1
         else
-            if executable('git')
-                exec '!git clone https://github.com/Shougo/dein.vim "'
-                            \ . expand(g:spacevim_plugin_bundle_dir)
+            if s:need_cmd('git')
+                call s:VIM_CO.system([
+                            \ 'git',
+                            \ 'clone',
+                            \ 'https://github.com/Shougo/dein.vim',
+                            \ expand(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim"'], s:Fsep)
+                            \ ])
                 let g:spacevim_dein_installed = 1
-            else
-                echohl WarningMsg
-                echom 'You need install git!'
-                echohl None
             endif
         endif
         exec 'set runtimepath+='. fnameescape(g:spacevim_plugin_bundle_dir)
@@ -84,3 +82,14 @@ function! s:install_manager() abort
         exec 'set runtimepath+=~/.cache/vim-plug/'
     endif
 endf
+
+function! s:need_cmd(cmd) abort
+    if executable(a:cmd)
+        return 1
+    else
+        echohl WarningMsg
+        echom '[SpaceVim] [plugin manager] You need install ' . a:cmd . '!'
+        echohl None
+        return 0
+    endif
+endfunction
