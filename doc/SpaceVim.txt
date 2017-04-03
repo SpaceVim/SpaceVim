@@ -116,6 +116,9 @@ Enable/Disable realtime leader guide. Default is 0.
   let g:spacevim_realtime_leader_guide = 1
 <
 
+                                             *g:spacevim_enable_key_frequency*
+Enable/Disable key frequency catching of SpaceVim.
+
                                                    *g:spacevim_enable_neomake*
 SpaceVim default checker is neomake. If you want to use syntastic, use:
 >
