@@ -26,6 +26,11 @@ function! SpaceVim#commands#load() abort
   command! -nargs=*
         \ -complete=customlist,SpaceVim#commands#complete_SPConfig
         \ SPConfig call SpaceVim#commands#config(<f-args>)
+  ""
+  " Command for update plugin, support completion of plugin name.
+  " >
+  "     :SPUpdate vim-airline
+  " <
   command! -nargs=*
         \ -complete=custom,SpaceVim#commands#complete_plugin
         \ SPUpdate call SpaceVim#commands#update_plugin(<f-args>)

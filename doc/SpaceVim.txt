@@ -328,6 +328,12 @@ COMMANDS                                                   *SpaceVim-commands*
     :SPConfig -g
 <
 
+:SPUpdate                                                          *:SPUpdate*
+  Command for update plugin, support completion of plugin name.
+>
+      :SPUpdate vim-airline
+<
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
