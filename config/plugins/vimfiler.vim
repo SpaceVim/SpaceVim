@@ -31,6 +31,7 @@ try
         \ 'toggle' : 1,
         \ 'auto_expand': 1,
         \ 'direction' : 'rightbelow',
+        \ 'explorer_columns' : 'filetypeicon',
         \ 'parent': 0,
         \ 'status' : 1,
         \ 'safe' : 0,
