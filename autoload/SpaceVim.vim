@@ -273,6 +273,12 @@ let g:spacevim_lint_on_save            = 1
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
 let g:spacevim_enable_vimfiler_welcome = 1
+""
+" Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_gitstatus = 0
+""
+" Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
