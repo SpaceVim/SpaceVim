@@ -148,7 +148,7 @@ let s:plugins = []
 fu! s:parser(args) abort
     return a:args
 endf
-
+let g:_spacevim_plugins = []
 function! zvim#plug#add(repo,...) abort
     let g:spacevim_plugin_name = ''
     if g:spacevim_plugin_manager ==# 'neobundle'
@@ -161,6 +161,7 @@ function! zvim#plug#add(repo,...) abort
             call dein#add(a:repo)
         endif
         let g:spacevim_plugin_name = g:dein#name
+        call add(g:_spacevim_plugins, g:dein#name)
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
         if len(a:000) > 0
             exec "Plug '".a:repo."', ".join(a:000,',')

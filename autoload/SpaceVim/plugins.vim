@@ -16,9 +16,9 @@ function! s:load_plugins() abort
         call zvim#plug#add(plugin[0], plugin[1])
         if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
           call zvim#plug#defind_hooks(split(plugin[0], '/')[-1])
-          if get(plugin[1], 'loadconf_before', 0 )
-            call zvim#plug#loadPluginBefore(split(plugin[0], '/')[-1])
-          endif
+        endif
+        if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf_before', 0 )
+          call zvim#plug#loadPluginBefore(split(plugin[0], '/')[-1])
         endif
       else
         call zvim#plug#add(plugin[0])

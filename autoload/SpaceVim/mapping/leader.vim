@@ -154,6 +154,9 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
   if !empty(a:key)
+    if a:key == 'F'
+      nnoremap <leader>F F
+    endif
     exe 'nnoremap <silent><nowait> [denite] :<c-u>LeaderGuide "' .
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [denite]'
@@ -185,6 +188,9 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
+    if a:key == 'f'
+      nnoremap <leader>f f
+    endif
     " The prefix key.
     exe 'nnoremap <silent><nowait> [unite] :<c-u>LeaderGuide "' .
           \ a:key . '"<CR>'

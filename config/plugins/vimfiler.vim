@@ -23,24 +23,37 @@ if has('mac')
 else
   let g:vimfiler_quick_look_command = 'gloobus-preview'
 endif
-try
-  call vimfiler#custom#profile('default', 'context', {
-        \ 'explorer' : 1,
-        \ 'winwidth' : g:spacevim_sidebar_width,
-        \ 'winminwidth' : 30,
-        \ 'toggle' : 1,
-        \ 'auto_expand': 1,
-        \ 'direction' : 'rightbelow',
-        \ 'parent': 0,
-        \ 'status' : 1,
-        \ 'safe' : 0,
-        \ 'split' : 1,
-        \ 'hidden': 1,
-        \ 'no_quit' : 1,
-        \ 'force_hide' : 0,
-        \ })
-catch
-endtry
+function! s:setcolum() abort
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+    return 'filetypeicon'
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'gitstatus'
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'filetypeicon:gitstatus'
+  else
+    return ''
+  endif
+endfunction
+"try
+call vimfiler#custom#profile('default', 'context', {
+      \ 'explorer' : 1,
+      \ 'winwidth' : g:spacevim_sidebar_width,
+      \ 'winminwidth' : 30,
+      \ 'toggle' : 1,
+      \ 'auto_expand': 1,
+      \ 'direction' : 'rightbelow',
+      \ 'explorer_columns' : s:setcolum(),
+      \ 'parent': 0,
+      \ 'status' : 1,
+      \ 'safe' : 0,
+      \ 'split' : 1,
+      \ 'hidden': 1,
+      \ 'no_quit' : 1,
+      \ 'force_hide' : 0,
+      \ })
+
+"catch
+"endtry
 augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()

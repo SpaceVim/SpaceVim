@@ -262,10 +262,6 @@ call unite#custom#profile('buffer,buffer_tab', 'context', {
       \   'keep_focus'   : 1,
       \ })
 nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
-"" Tag search
-""" For searching the word in the cursor in tag file
-nnoremap <silent><leader>f :<c-u>Unite tag/include:<C-R><C-w><CR>
-nnoremap <silent><leader>ff :<c-u>Unite tag/include -start-insert<CR>
 "" grep dictionay
 """ For searching the word in the cursor in the current directory
 nnoremap <silent><leader>v :Unite

@@ -116,6 +116,13 @@ Enable/Disable realtime leader guide. Default is 0.
   let g:spacevim_realtime_leader_guide = 1
 <
 
+                                             *g:spacevim_enable_key_frequency*
+Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+enable it:
+>
+  let g:spacevim_enable_key_frequency = 1
+<
+
                                                    *g:spacevim_enable_neomake*
 SpaceVim default checker is neomake. If you want to use syntastic, use:
 >
@@ -137,6 +144,13 @@ Enable/Disable YouCompleteMe. Default is 0.
                                                     *g:spacevim_sidebar_width*
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
+
+                                                   *g:spacevim_snippet_engine*
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  let g:spacevim_snippet_engine = 'ultisnips'
+<
 
                                                 *g:spacevim_enable_cursorline*
 Enable/Disable cursorline. Default is 0.
@@ -282,6 +296,12 @@ vim to start up slowly if there are too many files in the current directory.
   let g:spacevim_enable_vimfiler_welcome = 0
 <
 
+                                        *g:spacevim_enable_vimfiler_gitstatus*
+Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+
+                                     *g:spacevim_enable_vimfiler_filetypeicon*
+Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.
@@ -312,6 +332,12 @@ COMMANDS                                                   *SpaceVim-commands*
   configuration file.
 >
     :SPConfig -g
+<
+
+:SPUpdate                                                          *:SPUpdate*
+  Command for update plugin, support completion of plugin name.
+>
+      :SPUpdate vim-airline
 <
 
 ==============================================================================

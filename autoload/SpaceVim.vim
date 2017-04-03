@@ -85,6 +85,13 @@ let g:spacevim_plugin_bundle_dir
 "   let g:spacevim_realtime_leader_guide = 1
 " <
 let g:spacevim_realtime_leader_guide   = 0
+""
+" Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+" enable it:
+" >
+"   let g:spacevim_enable_key_frequency = 1
+" <
+let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
 ""
@@ -109,6 +116,13 @@ let g:spacevim_enable_ycm              = 0
 " Set the width of the SpaceVim sidebar. Default is 30.
 " This value will be used by tagbar and vimfiler.
 let g:spacevim_sidebar_width           = 30
+""
+" Set the snippet engine of SpaceVim, default is neosnippet. to enable
+" ultisnips:
+" >
+"   let g:spacevim_snippet_engine = 'ultisnips'
+" <
+let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
 ""
 " Enable/Disable cursorline. Default is 0.
@@ -259,6 +273,12 @@ let g:spacevim_lint_on_save            = 1
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
 let g:spacevim_enable_vimfiler_welcome = 1
+""
+" Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_gitstatus = 0
+""
+" Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
