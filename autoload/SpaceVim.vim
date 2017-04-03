@@ -86,8 +86,12 @@ let g:spacevim_plugin_bundle_dir
 " <
 let g:spacevim_realtime_leader_guide   = 0
 ""
-" Enable/Disable key frequency catching of SpaceVim.
-let g:spacevim_enable_key_frequency = 1
+" Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+" enable it:
+" >
+"   let g:spacevim_enable_key_frequency = 1
+" <
+let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
 ""
