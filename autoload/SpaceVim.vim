@@ -351,10 +351,6 @@ endif
 
 let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
-if !SpaceVim#mapping#guide#has_configuration()
-  let g:leaderGuide_map = {}
-  call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
-endif
 
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
@@ -402,6 +398,10 @@ function! SpaceVim#end() abort
   endif
   if !empty(g:spacevim_denite_leader)
     call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
+  endif
+  if !SpaceVim#mapping#guide#has_configuration()
+    let g:leaderGuide_map = {}
+    call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   call SpaceVim#mapping#leader#defindglobalMappings()
   if g:spacevim_simple_mode
