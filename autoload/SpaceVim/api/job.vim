@@ -1,5 +1,5 @@
 
-function! SpaceVim#api#data#list#get() abort
+function! SpaceVim#api#job#get() abort
     return map({'start' : '',
                 \ 'stop' : '',
                 \ 'send' : '',

@@ -219,6 +219,9 @@ The default file manager of SpaceVim. Default is 'vimfiler'.
 The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
 neobundle, or vim-plug.
 
+                                     *g:spacevim_plugin_manager_max_processes*
+Set the max process of SpaceVim plugin manager
+
                                                      *g:spacevim_checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 >

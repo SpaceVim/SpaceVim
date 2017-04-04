@@ -194,6 +194,9 @@ let g:spacevim_filemanager             = 'vimfiler'
 " Options are dein, neobundle, or vim-plug.
 let g:spacevim_plugin_manager          = 'dein'
 ""
+" Set the max process of SpaceVim plugin manager
+let g:spacevim_plugin_manager_max_processes = 8
+""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
 "   let g:spacevim_checkinstall = 1

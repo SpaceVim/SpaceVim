@@ -8,6 +8,14 @@
 
 " Load SpaceVim api
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
+let s:JOB = SpaceVim#api#import('job')
+let s:LIST = SpaceVim#api#import('data#list')
+
+
+" init values
+let s:plugins = []
+let s:pulling_repos = {}
+
 " install plugin manager 
 function! s:install_manager() abort
     " Fsep && Psep
@@ -91,4 +99,51 @@ function! s:need_cmd(cmd) abort
         echohl None
         return 0
     endif
+endfunction
+
+" @vimlint(EVL102, 1, l:i)
+function! SpaceVim#plugins#manager#update() abort
+    let s:plugins = keys(dein#get())
+    for i in range(g:spacevim_plugin_manager_max_processes)
+        call s:pull(dein#get(s:LIST.shift(s:plugins)))
+    endfor
+endfunction
+" @vimlint(EVL102, 0, l:i)
+
+" here if a:data == 0, git pull succeed
+function! s:on_pull_exit(id, data, event) abort
+    "echom a:id . string(a:data) . string(a:event) . string(s:pulling_repos)
+    if a:data == 0
+        echom 'succeed to update ' . s:pulling_repos[a:id].name
+    else
+        echom 'failed to update ' . s:pulling_repos[a:id].name
+    endif
+    call s:msg_on_updated_done(s:pulling_repos[a:id].name)
+    call remove(s:pulling_repos, string(a:id))
+    if !empty(s:plugins)
+        call s:pull(dein#get(s:LIST.shift(s:plugins)))
+    endif
+    if empty(s:pulling_repos)
+        echom 'SpaceVim update done'
+    endif
+
+endfunction
+
+function! s:pull(repo) abort
+    let argv = ['git', '-C', a:repo.path, 'pull']
+    let jobid = s:JOB.start(argv,{
+                \ 'on_exit' : function('s:on_pull_exit')
+                \ })
+    if jobid != 0
+        let s:pulling_repos[jobid] = a:repo
+        call s:msg_on_start(a:repo.name)
+    endif
+endfunction
+
+function! s:msg_on_start(name) abort
+    " TODO update plugin manager ui
+endfunction
+
+function! s:msg_on_updated_done(name) abort
+    " TODO update plugin manager ui
 endfunction
