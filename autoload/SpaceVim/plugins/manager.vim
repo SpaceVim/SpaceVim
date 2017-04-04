@@ -15,6 +15,8 @@ let s:LIST = SpaceVim#api#import('data#list')
 " init values
 let s:plugins = []
 let s:pulling_repos = {}
+" key : plugin name, value : buf line number in manager buffer.
+let s:ui_buf = {}
 
 " install plugin manager 
 function! s:install_manager() abort
@@ -103,22 +105,43 @@ endfunction
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update() abort
+    call s:new_window()
+    let s:plugin_manager_buffer = bufnr('%')
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
+    setf spacevim
+    if exists('g:syntax_on')
+        call s:syntax()
+    endif
+    nnoremap <silent> <buffer> q :bd<CR>
+    let s:pct = 0
     let s:plugins = keys(dein#get())
+    let s:total = len(s:plugins)
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
     for i in range(g:spacevim_plugin_manager_max_processes)
         call s:pull(dein#get(s:LIST.shift(s:plugins)))
     endfor
 endfunction
 " @vimlint(EVL102, 0, l:i)
 
+function! s:status_bar() abort
+    let bar = '['
+    let ct = 50 * (s:pct / s:total)
+    let bar .= repeat('=', ct)
+    let bar .= repeat(' ', 50 - ct)
+    let bar .= ']'
+    return bar
+endfunction
+
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-    "echom a:id . string(a:data) . string(a:event) . string(s:pulling_repos)
-    if a:data == 0
-        echom 'succeed to update ' . s:pulling_repos[a:id].name
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_updated_done(s:pulling_repos[a:id].name)
     else
-        echom 'failed to update ' . s:pulling_repos[a:id].name
+        call s:msg_on_updated_failed(s:pulling_repos[a:id].name)
     endif
-    call s:msg_on_updated_done(s:pulling_repos[a:id].name)
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
         call s:pull(dein#get(s:LIST.shift(s:plugins)))
@@ -130,6 +153,8 @@ function! s:on_pull_exit(id, data, event) abort
 endfunction
 
 function! s:pull(repo) abort
+    let s:pct += 1
+    let s:ui_buf[a:repo.name] = s:pct
     let argv = ['git', '-C', a:repo.path, 'pull']
     let jobid = s:JOB.start(argv,{
                 \ 'on_exit' : function('s:on_pull_exit')
@@ -139,11 +164,84 @@ function! s:pull(repo) abort
         call s:msg_on_start(a:repo.name)
     endif
 endfunction
-
+" + foo.vim: Updating...
 function! s:msg_on_start(name) abort
-    " TODO update plugin manager ui
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
 endfunction
 
+" - foo.vim: Updating done.
 function! s:msg_on_updated_done(name) abort
-    " TODO update plugin manager ui
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
+endfunction
+
+" - foo.vim: Updating failed.
+function! s:msg_on_updated_failed(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating failed.')
+endfunction
+
+function! s:new_window() abort
+    execute get(g:, 'spacevim_window', 'vertical topleft new')
+endfunction
+
+function! s:syntax() abort
+  syntax clear
+  syntax region plug1 start=/\%1l/ end=/\%2l/ contains=plugNumber
+  syntax region plug2 start=/\%2l/ end=/\%3l/ contains=plugBracket,plugX
+  syn match plugNumber /[0-9]\+[0-9.]*/ contained
+  syn match plugBracket /[[\]]/ contained
+  syn match plugX /x/ contained
+  syn match plugDash /^-/
+  syn match plugPlus /^+/
+  syn match plugStar /^*/
+  syn match plugMessage /\(^- \)\@<=.*/
+  syn match plugName /\(^- \)\@<=[^ ]*:/
+  syn match plugSha /\%(: \)\@<=[0-9a-f]\{4,}$/
+  syn match plugTag /(tag: [^)]\+)/
+  syn match plugInstall /\(^+ \)\@<=[^:]*/
+  syn match plugUpdate /\(^* \)\@<=[^:]*/
+  syn match plugCommit /^  \X*[0-9a-f]\{7,9} .*/ contains=plugRelDate,plugEdge,plugTag
+  syn match plugEdge /^  \X\+$/
+  syn match plugEdge /^  \X*/ contained nextgroup=plugSha
+  syn match plugSha /[0-9a-f]\{7,9}/ contained
+  syn match plugRelDate /([^)]*)$/ contained
+  syn match plugNotLoaded /(not loaded)$/
+  syn match plugError /^x.*/
+  syn region plugDeleted start=/^\~ .*/ end=/^\ze\S/
+  syn match plugH2 /^.*:\n-\+$/
+  syn keyword Function PlugInstall PlugStatus PlugUpdate PlugClean
+  hi def link plug1       Title
+  hi def link plug2       Repeat
+  hi def link plugH2      Type
+  hi def link plugX       Exception
+  hi def link plugBracket Structure
+  hi def link plugNumber  Number
+
+  hi def link plugDash    Special
+  hi def link plugPlus    Constant
+  hi def link plugStar    Boolean
+
+  hi def link plugMessage Function
+  hi def link plugName    Label
+  hi def link plugInstall Function
+  hi def link plugUpdate  Type
+
+  hi def link plugError   Error
+  hi def link plugDeleted Ignore
+  hi def link plugRelDate Comment
+  hi def link plugEdge    PreProc
+  hi def link plugSha     Identifier
+  hi def link plugTag     Constant
+
+  hi def link plugNotLoaded Comment
+endfunction
+
+" change modifiable before setline
+function! s:set_buf_line(bufnr, nr, line) abort
+    if has('nvim')
+        call setbufvar(s:plugin_manager_buffer,'&ma', 1)
+        call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
+        call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    else
+        echom 'try to set bufer ' . a:bufnr . "'s " . a:nr  . 'line to ' . a:line
+    endif
 endfunction
