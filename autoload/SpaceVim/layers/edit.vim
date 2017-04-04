@@ -3,6 +3,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['tpope/vim-surround'],
                 \ ['junegunn/vim-emoji'],
                 \ ['terryma/vim-multiple-cursors'],
+                \ ['terryma/vim-expand-region'],
                 \ ['scrooloose/nerdcommenter'],
                 \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],
                 \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
@@ -35,4 +36,6 @@ function! SpaceVim#layers#edit#config() abort
     if empty(maparg('<leader><leader>', ''))
         map <Leader><Leader> <Plug>(easymotion-prefix)
     endif
+    xmap v <Plug>(expand_region_expand)
+    xmap V <Plug>(expand_region_shrink)
 endfunction
