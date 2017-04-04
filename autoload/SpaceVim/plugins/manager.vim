@@ -66,17 +66,16 @@ function! s:install_manager() abort
         if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
             let g:spacevim_vim_plug_installed = 1
         else
-            if executable('curl')
-                exec '!curl -fLo '
-                            \ . '~/.cache/vim-plug/autoload/plug.vim'
-                            \ . ' --create-dirs '
-                            \ . 'https://raw.githubusercontent.com/'
-                            \ . 'junegunn/vim-plug/master/plug.vim'
+            if s:need_cmd('curl')
+
+                call s:VIM_CO.system([
+                            \ 'curl',
+                            \ '-fLo',
+                            \ expand('~/.cache/vim-plug/autoload/plug.vim'),
+                            \ '--create-dirs',
+                            \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+                            \ ])
                 let g:spacevim_vim_plug_installed = 1
-            else
-                echohl WarningMsg
-                echom 'You need install curl!'
-                echohl None
             endif
         endif
         exec 'set runtimepath+=~/.cache/vim-plug/'
