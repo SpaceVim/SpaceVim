@@ -127,7 +127,7 @@ endfunction
 
 function! s:status_bar() abort
     let bar = '['
-    let ct = 50 * (s:pct / s:total)
+    let ct = 50 * s:pct / s:total
     let bar .= repeat('=', ct)
     let bar .= repeat(' ', 50 - ct)
     let bar .= ']'
@@ -141,13 +141,15 @@ function! s:on_pull_exit(id, data, event) abort
     else
         call s:msg_on_updated_failed(s:pulling_repos[a:id].name)
     endif
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
         call s:pull(dein#get(s:LIST.shift(s:plugins)))
     endif
     if empty(s:pulling_repos)
-        echom 'SpaceVim update done'
+        " TODO add elapsed time info.
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time:')
     endif
 
 endfunction
