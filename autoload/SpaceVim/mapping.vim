@@ -189,7 +189,6 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let buffers = g:_spacevim_list_buffers
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
-  let g:wsd = [index, abuf, buffers]
   if index != -1
     if index == 0
       if len(buffers) > 1

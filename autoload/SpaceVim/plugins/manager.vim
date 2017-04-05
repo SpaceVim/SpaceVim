@@ -103,8 +103,11 @@ function! s:need_cmd(cmd) abort
     endif
 endfunction
 
+function! SpaceVim#plugins#manager#install(...) abort
+endfunction
+
 " @vimlint(EVL102, 1, l:i)
-function! SpaceVim#plugins#manager#update() abort
+function! SpaceVim#plugins#manager#update(...) abort
     call s:new_window()
     let s:plugin_manager_buffer = bufnr('%')
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
@@ -114,7 +117,7 @@ function! SpaceVim#plugins#manager#update() abort
     endif
     nnoremap <silent> <buffer> q :bd<CR>
     let s:pct = 0
-    let s:plugins = keys(dein#get())
+    let s:plugins = a:0 == 0 ? keys(dein#get()) : copy(a:1)
     let s:total = len(s:plugins)
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
     if has('nvim')
@@ -125,7 +128,12 @@ function! SpaceVim#plugins#manager#update() abort
         call s:append_buf_line(s:plugin_manager_buffer, 3, '')
     endif
     for i in range(g:spacevim_plugin_manager_max_processes)
-        call s:pull(dein#get(s:LIST.shift(s:plugins)))
+        if !empty(s:plugins)
+            let repo = dein#get(s:LIST.shift(s:plugins))
+            if !empty(repo)
+                call s:pull(repo)
+            endif
+        endif
     endfor
 endfunction
 " @vimlint(EVL102, 0, l:i)
@@ -141,7 +149,6 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-    let g:wsd = a:data
     if a:data == 0 && a:event ==# 'exit'
         call s:msg_on_updated_done(s:pulling_repos[a:id].name)
     else

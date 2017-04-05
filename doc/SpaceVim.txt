@@ -344,6 +344,9 @@ COMMANDS                                                   *SpaceVim-commands*
       :SPUpdate vim-airline
 <
 
+:SPInstall                                                        *:SPInstall*
+  Command for install plugins.
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
