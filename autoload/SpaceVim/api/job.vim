@@ -30,19 +30,19 @@ function! s:warp(argv, opts) abort
 
     function! obj._out_cb(job_id, data) abort
         if has_key(self._opts, 'on_stdout')
-            call self._opts.on_stdout(a:job_id, [a:data], 'stdout')
+            call self._opts.on_stdout(self._opts.jobpid, [a:data], 'stdout')
         endif
     endfunction
 
     function! obj._err_cb(job_id, data) abort
         if has_key(self._opts, 'on_stderr')
-            call self._opts.on_stderr(a:job_id, [a:data], 'stderr')
+            call self._opts.on_stderr(self._opts.jobpid, [a:data], 'stderr')
         endif
     endfunction
 
     function! obj._exit_cb(job_id, data) abort
         if has_key(self._opts, 'on_exit')
-            call self._opts.on_exit(a:job_id, a:data, 'exit')
+            call self._opts.on_exit(self._opts.jobpid, a:data, 'exit')
         endif
     endfunction
 
@@ -76,9 +76,10 @@ function! s:start(argv, ...) abort
         else
             let opts = {}
         endif
+        let id = len(s:jobs) + 1
+        let opts.jobpid = id
         let wrapped = s:warp(a:argv, opts)
         let job = job_start(wrapped.argv, wrapped.opts)
-        let id = len(s:jobs) + 1
         call extend(s:jobs, {id : job})
         return id
     else
