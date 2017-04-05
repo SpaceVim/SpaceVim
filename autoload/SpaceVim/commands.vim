@@ -27,7 +27,8 @@ function! SpaceVim#commands#load() abort
         \ -complete=customlist,SpaceVim#commands#complete_SPConfig
         \ SPConfig call SpaceVim#commands#config(<f-args>)
   ""
-  " Command for update plugin, support completion of plugin name.
+  " Command for update plugin, support completion of plugin name. If run
+  " without argv, All the plugin will be updated.
   " >
   "     :SPUpdate vim-airline
   " <
@@ -64,10 +65,14 @@ function! SpaceVim#commands#config(...) abort
   endif
 endfunction
 
-function! SpaceVim#commands#update_plugin(plug) abort
+function! SpaceVim#commands#update_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
   elseif g:spacevim_plugin_manager ==# 'dein'
-    call dein#update([a:plug])
+    if a:0 == 0
+      call SpaceVim#plugins#manager#update()
+    else
+      call dein#update(a:000)
+    endif
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
 endfunction

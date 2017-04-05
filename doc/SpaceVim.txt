@@ -338,7 +338,8 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPUpdate                                                          *:SPUpdate*
-  Command for update plugin, support completion of plugin name.
+  Command for update plugin, support completion of plugin name. If run without
+  argv, All the plugin will be updated.
 >
       :SPUpdate vim-airline
 <

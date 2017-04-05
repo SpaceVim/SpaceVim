@@ -156,6 +156,9 @@ function! s:on_pull_exit(id, data, event) abort
     if empty(s:pulling_repos)
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time:')
+        if g:spacevim_plugin_manager ==# 'dein'
+            call dein#recache_runtimepath()
+        endif
     endif
 
 endfunction
