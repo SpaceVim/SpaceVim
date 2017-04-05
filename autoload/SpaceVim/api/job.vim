@@ -42,7 +42,7 @@ function! s:warp(argv, opts) abort
 
     function! obj._exit_cb(job_id, data) abort
         if has_key(self._opts, 'on_exit')
-            call self._opts.on_exit(a:job_id, [a:data], 'exit')
+            call self._opts.on_exit(a:job_id, a:data, 'exit')
         endif
     endfunction
 

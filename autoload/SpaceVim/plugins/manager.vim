@@ -117,8 +117,13 @@ function! SpaceVim#plugins#manager#update() abort
     let s:plugins = keys(dein#get())
     let s:total = len(s:plugins)
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    if has('nvim')
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    else
+        call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    endif
     for i in range(g:spacevim_plugin_manager_max_processes)
         call s:pull(dein#get(s:LIST.shift(s:plugins)))
     endfor
@@ -136,6 +141,7 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
+    let g:wsd = a:data
     if a:data == 0 && a:event ==# 'exit'
         call s:msg_on_updated_done(s:pulling_repos[a:id].name)
     else
@@ -167,9 +173,15 @@ function! s:pull(repo) abort
     endif
 endfunction
 " + foo.vim: Updating...
-function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-endfunction
+if has('nvim')
+    function! s:msg_on_start(name) abort
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    endfunction
+else
+    function! s:msg_on_start(name) abort
+        call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    endfunction
+endif
 
 " - foo.vim: Updating done.
 function! s:msg_on_updated_done(name) abort
@@ -186,64 +198,82 @@ function! s:new_window() abort
 endfunction
 
 function! s:syntax() abort
-  syntax clear
-  syntax region plug1 start=/\%1l/ end=/\%2l/ contains=plugNumber
-  syntax region plug2 start=/\%2l/ end=/\%3l/ contains=plugBracket,plugX
-  syn match plugNumber /[0-9]\+[0-9.]*/ contained
-  syn match plugBracket /[[\]]/ contained
-  syn match plugX /x/ contained
-  syn match plugDash /^-/
-  syn match plugPlus /^+/
-  syn match plugStar /^*/
-  syn match plugMessage /\(^- \)\@<=.*/
-  syn match plugName /\(^- \)\@<=[^ ]*:/
-  syn match plugSha /\%(: \)\@<=[0-9a-f]\{4,}$/
-  syn match plugTag /(tag: [^)]\+)/
-  syn match plugInstall /\(^+ \)\@<=[^:]*/
-  syn match plugUpdate /\(^* \)\@<=[^:]*/
-  syn match plugCommit /^  \X*[0-9a-f]\{7,9} .*/ contains=plugRelDate,plugEdge,plugTag
-  syn match plugEdge /^  \X\+$/
-  syn match plugEdge /^  \X*/ contained nextgroup=plugSha
-  syn match plugSha /[0-9a-f]\{7,9}/ contained
-  syn match plugRelDate /([^)]*)$/ contained
-  syn match plugNotLoaded /(not loaded)$/
-  syn match plugError /^x.*/
-  syn region plugDeleted start=/^\~ .*/ end=/^\ze\S/
-  syn match plugH2 /^.*:\n-\+$/
-  syn keyword Function PlugInstall PlugStatus PlugUpdate PlugClean
-  hi def link plug1       Title
-  hi def link plug2       Repeat
-  hi def link plugH2      Type
-  hi def link plugX       Exception
-  hi def link plugBracket Structure
-  hi def link plugNumber  Number
+    syntax clear
+    syntax region plug1 start=/\%1l/ end=/\%2l/ contains=plugNumber
+    syntax region plug2 start=/\%2l/ end=/\%3l/ contains=plugBracket,plugX
+    syn match plugNumber /[0-9]\+[0-9.]*/ contained
+    syn match plugBracket /[[\]]/ contained
+    syn match plugX /x/ contained
+    syn match plugDash /^-/
+    syn match plugPlus /^+/
+    syn match plugStar /^*/
+    syn match plugMessage /\(^- \)\@<=.*/
+    syn match plugName /\(^- \)\@<=[^ ]*:/
+    syn match plugSha /\%(: \)\@<=[0-9a-f]\{4,}$/
+    syn match plugTag /(tag: [^)]\+)/
+    syn match plugInstall /\(^+ \)\@<=[^:]*/
+    syn match plugUpdate /\(^* \)\@<=[^:]*/
+    syn match plugCommit /^  \X*[0-9a-f]\{7,9} .*/ contains=plugRelDate,plugEdge,plugTag
+    syn match plugEdge /^  \X\+$/
+    syn match plugEdge /^  \X*/ contained nextgroup=plugSha
+    syn match plugSha /[0-9a-f]\{7,9}/ contained
+    syn match plugRelDate /([^)]*)$/ contained
+    syn match plugNotLoaded /(not loaded)$/
+    syn match plugError /^x.*/
+    syn region plugDeleted start=/^\~ .*/ end=/^\ze\S/
+    syn match plugH2 /^.*:\n-\+$/
+    syn keyword Function PlugInstall PlugStatus PlugUpdate PlugClean
+    hi def link plug1       Title
+    hi def link plug2       Repeat
+    hi def link plugH2      Type
+    hi def link plugX       Exception
+    hi def link plugBracket Structure
+    hi def link plugNumber  Number
 
-  hi def link plugDash    Special
-  hi def link plugPlus    Constant
-  hi def link plugStar    Boolean
+    hi def link plugDash    Special
+    hi def link plugPlus    Constant
+    hi def link plugStar    Boolean
 
-  hi def link plugMessage Function
-  hi def link plugName    Label
-  hi def link plugInstall Function
-  hi def link plugUpdate  Type
+    hi def link plugMessage Function
+    hi def link plugName    Label
+    hi def link plugInstall Function
+    hi def link plugUpdate  Type
 
-  hi def link plugError   Error
-  hi def link plugDeleted Ignore
-  hi def link plugRelDate Comment
-  hi def link plugEdge    PreProc
-  hi def link plugSha     Identifier
-  hi def link plugTag     Constant
+    hi def link plugError   Error
+    hi def link plugDeleted Ignore
+    hi def link plugRelDate Comment
+    hi def link plugEdge    PreProc
+    hi def link plugSha     Identifier
+    hi def link plugTag     Constant
 
-  hi def link plugNotLoaded Comment
+    hi def link plugNotLoaded Comment
 endfunction
 
 " change modifiable before setline
-function! s:set_buf_line(bufnr, nr, line) abort
-    if has('nvim')
+if has('nvim')
+    function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
-    else
-        echom 'try to set bufer ' . a:bufnr . "'s " . a:nr  . 'line to ' . a:line
-    endif
-endfunction
+    endfunction
+else
+    py import vim
+    py import string
+    function! s:set_buf_line(bufnr, nr, line) abort
+        call setbufvar(s:plugin_manager_buffer,'&ma', 1)
+        py bufnr = string.atoi(vim.eval("a:bufnr"))
+        py linr = string.atoi(vim.eval("a:nr")) - 1
+        py str = vim.eval("a:line")
+        py vim.buffers[bufnr][linr] = str
+        call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    endfunction
+
+    function! s:append_buf_line(bufnr, nr, line) abort
+        call setbufvar(s:plugin_manager_buffer,'&ma', 1)
+        py bufnr = string.atoi(vim.eval("a:bufnr"))
+        py linr = string.atoi(vim.eval("a:nr")) - 1
+        py str = vim.eval("a:line")
+        py vim.buffers[bufnr].append(str)
+        call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    endfunction
+endif
