@@ -6,6 +6,9 @@
 " License: MIT license
 "=============================================================================
 
+" TODO add airline support for plugin manager
+" TODO add install function for plugin manager
+
 " Load SpaceVim api
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
@@ -17,6 +20,7 @@ let s:plugins = []
 let s:pulling_repos = {}
 " key : plugin name, value : buf line number in manager buffer.
 let s:ui_buf = {}
+let s:plugin_manager_buffer = 0
 
 " install plugin manager 
 function! s:install_manager() abort
@@ -108,13 +112,17 @@ endfunction
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
-    call s:new_window()
-    let s:plugin_manager_buffer = bufnr('%')
+    if !s:new_window()
+        echohl WarningMsg
+        echom '[SpaceVim] [plugin manager] plugin updating is not finished.'
+        echohl None
+        return
+    endif
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     let s:pct = 0
-    let s:plugins = a:0 == 0 ? keys(dein#get()) : copy(a:1)
+    let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
     let s:total = len(s:plugins)
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
     if has('nvim')
@@ -201,7 +209,13 @@ function! s:msg_on_updated_failed(name) abort
 endfunction
 
 function! s:new_window() abort
-    execute get(g:, 'spacevim_window', 'vertical topleft new')
+    if s:plugin_manager_buffer != 0 && bufexists(s:plugin_manager_buffer)
+        return 0
+    else
+        execute get(g:, 'spacevim_window', 'vertical topleft new')
+        let s:plugin_manager_buffer = bufnr('%')
+        return 1
+    endif
 endfunction
 
 " change modifiable before setline
