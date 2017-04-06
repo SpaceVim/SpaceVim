@@ -136,6 +136,9 @@ function! SpaceVim#plugins#manager#update(...) abort
         if !empty(s:plugins)
             let repo = dein#get(s:LIST.shift(s:plugins))
             if !empty(repo)
+                if !exists('s:start_time')
+                    let s:start_time = reltime()
+                endif
                 call s:pull(repo)
             endif
         endif
@@ -167,7 +170,8 @@ function! s:on_pull_exit(id, data, event) abort
     endif
     if empty(s:pulling_repos)
         " TODO add elapsed time info.
-        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time:')
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
+                    \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
         if g:spacevim_plugin_manager ==# 'dein'
             call dein#recache_runtimepath()
         endif
