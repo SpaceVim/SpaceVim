@@ -47,9 +47,9 @@ let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'ph
       \'[^. \t0-9]\->\w*',
       \'[^. \t0-9]\::\w*',
       \])
-let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['omni', 'around', 'member'])
-call deoplete#custom#set('phpcd', 'mark', '')
-call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
+let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpcd', 'around', 'member'])
+"call deoplete#custom#set('phpcd', 'mark', '')
+"call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
 
 " lua
 let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
