@@ -115,8 +115,8 @@ let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
 " Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+" By default it is ~/.cache/vimfiles/.
+let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles/'
 
 " set SpaceVim colorscheme
 let g:spacevim_colorscheme = 'jellybeans'

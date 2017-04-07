@@ -43,7 +43,7 @@ function! s:install_manager() abort
         else
             if executable('git')
                 exec '!git clone https://github.com/Shougo/dein.vim "'
-                            \ . g:spacevim_plugin_bundle_dir
+                            \ . expand(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim"'], s:Fsep)
                 let g:spacevim_dein_installed = 1
