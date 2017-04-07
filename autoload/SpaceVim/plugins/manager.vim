@@ -22,7 +22,7 @@ let s:pulling_repos = {}
 let s:ui_buf = {}
 let s:plugin_manager_buffer = 0
 
-" install plugin manager 
+" install plugin manager
 function! s:install_manager() abort
     " Fsep && Psep
     if has('win16') || has('win32') || has('win64')
@@ -212,6 +212,8 @@ function! s:on_pull_exit(id, data, event) abort
     endif
 
 endfunction
+
+" @vimlint(EVL103, 1, a:event)
 function! s:on_install_stdout(id, data, event) abort
     for str in a:data
         let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
@@ -220,6 +222,7 @@ function! s:on_install_stdout(id, data, event) abort
         endif
     endfor
 endfunction
+" @vimlint(EVL103, 0, a:event)
 
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
@@ -326,7 +329,7 @@ function! s:new_window() abort
 endfunction
 
 " change modifiable before setline
-if has('nvim') && exists('*nvim_buf_set_lines') 
+if has('nvim') && exists('*nvim_buf_set_lines')
     function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
