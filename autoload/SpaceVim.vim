@@ -27,7 +27,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.2.0-dev'
+let g:spacevim_version = '0.3.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -64,6 +64,10 @@ let g:spacevim_windows_leader          = 's'
 " Unite work flow leader of SpaceVim. Default is `f`.
 " Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_unite_leader            = 'f'
+""
+" Denite work flow leader of SpaceVim. Default is `F`.
+" Set to empty to disable this feature, or you can set to another char.
+let g:spacevim_denite_leader            = 'F'
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -81,6 +85,13 @@ let g:spacevim_plugin_bundle_dir
 "   let g:spacevim_realtime_leader_guide = 1
 " <
 let g:spacevim_realtime_leader_guide   = 0
+""
+" Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+" enable it:
+" >
+"   let g:spacevim_enable_key_frequency = 1
+" <
+let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
 let g:spacevim_enable_cursorcolumn     = 0
 ""
@@ -105,6 +116,13 @@ let g:spacevim_enable_ycm              = 0
 " Set the width of the SpaceVim sidebar. Default is 30.
 " This value will be used by tagbar and vimfiler.
 let g:spacevim_sidebar_width           = 30
+""
+" Set the snippet engine of SpaceVim, default is neosnippet. to enable
+" ultisnips:
+" >
+"   let g:spacevim_snippet_engine = 'ultisnips'
+" <
+let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
 ""
 " Enable/Disable cursorline. Default is 0.
@@ -124,6 +142,18 @@ let g:spacevim_error_symbol            = '✖'
 "   let g:spacevim_warning_symbol = '!'
 " <
 let g:spacevim_warning_symbol          = '⚠'
+""
+" Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
+" changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
+" cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
+" cursor. Host terminal must support the DECSCUSR CSI escape sequence.
+"
+" Depending on the terminal emulator, using this option with nvim under
+" tmux might require adding the following to ~/.tmux.conf:
+" >
+"   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+" <
+let g:spacevim_terminal_cursor_shape = 2
 let g:spacevim_use_colorscheme         = 1
 ""
 " Set the help language of vim. Default is 'en'. 
@@ -166,7 +196,7 @@ let g:spacevim_plugin_manager          = 'dein'
 ""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
-"   let g:spacevim_checkinstall = 0
+"   let g:spacevim_checkinstall = 1
 " <
 let g:spacevim_checkinstall            = 1
 ""
@@ -243,6 +273,12 @@ let g:spacevim_lint_on_save            = 1
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
 let g:spacevim_enable_vimfiler_welcome = 1
+""
+" Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_gitstatus = 0
+""
+" Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
@@ -315,10 +351,6 @@ endif
 
 let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
-if !SpaceVim#mapping#guide#has_configuration()
-  let g:leaderGuide_map = {}
-  call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
-endif
 
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
@@ -363,6 +395,13 @@ function! SpaceVim#end() abort
   endif
   if !empty(g:spacevim_unite_leader)
     call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
+  endif
+  if !empty(g:spacevim_denite_leader)
+    call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
+  endif
+  if !SpaceVim#mapping#guide#has_configuration()
+    let g:leaderGuide_map = {}
+    call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   call SpaceVim#mapping#leader#defindglobalMappings()
   if g:spacevim_simple_mode

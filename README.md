@@ -59,6 +59,11 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
     [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
+This is the Unite centric work-flow:
+
+![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+
+
 ## Documentation
 
 ### Quick start guide
@@ -69,15 +74,15 @@ SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`,
 
 here is an example:
 
-```vim
+```viml
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
 " Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+" By default it is ~/.cache/vimfiles/.
+let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles/'
 
 " set SpaceVim colorscheme
 let g:spacevim_colorscheme = 'jellybeans'
@@ -142,10 +147,19 @@ Try these Neovim hangouts for any questions, problems or comments.
 
 ### Linux/Mac
 
-```sh
+**Install SpaceVim with the command below**
+
+```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
-with this command, SpaceVim will be installed. all the plugins will be install automatically when first time run vim/nvim. Please wait for the end of the installation process.
+
+**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins** 
+
+Once plugins start installing, at the bottom of the vim window, you will see
+`[dein] Install started: (YYYY/MM/DD HH:MM:SS)`
+
+Please wait for all the plugins to complete installing before using vim. Once the plugin installation completes, you will see
+`[dein] Done: (YYYY/MM/DD HH:MM:SS) `. At this point you can start using vim.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 
@@ -155,7 +169,7 @@ SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim
 
 for more info about the install script, please check:
 
-```sh
+```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
@@ -173,7 +187,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
     for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
     by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-    ```sh
+    ```bash
     git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
     ```
 
@@ -192,7 +206,7 @@ If you used SpaceVim in a project and you want to show that fact, you can use th
 
 markdown
 
-```markdown
+```md
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 

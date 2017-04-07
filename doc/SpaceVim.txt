@@ -31,18 +31,19 @@ CONTENTS                                                   *SpaceVim-contents*
       8. incsearch..................................|SpaceVim-layer-incsearch|
       9. indentmove................................|SpaceVim-layer-indentmove|
       10. lang#c.......................................|SpaceVim-layer-lang-c|
-      11. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      12. lang#go.....................................|SpaceVim-layer-lang-go|
-      13. lang#java.................................|SpaceVim-layer-lang-java|
-      14. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      15. lang#php...................................|SpaceVim-layer-lang-php|
-      16. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      17. lang#python.............................|SpaceVim-layer-lang-python|
-      18. lang#rust.................................|SpaceVim-layer-lang-rust|
-      19. lang#xml...................................|SpaceVim-layer-lang-xml|
-      20. operator...................................|SpaceVim-layer-operator|
-      21. shell.........................................|SpaceVim-layer-shell|
-      22. tmux...........................................|SpaceVim-layer-tmux|
+      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      13. lang#go.....................................|SpaceVim-layer-lang-go|
+      14. lang#java.................................|SpaceVim-layer-lang-java|
+      15. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      16. lang#php...................................|SpaceVim-layer-lang-php|
+      17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      18. lang#python.............................|SpaceVim-layer-lang-python|
+      19. lang#rust.................................|SpaceVim-layer-lang-rust|
+      20. lang#xml...................................|SpaceVim-layer-lang-xml|
+      21. operator...................................|SpaceVim-layer-operator|
+      22. shell.........................................|SpaceVim-layer-shell|
+      23. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
   7. FAQ........................................................|SpaceVim-faq|
@@ -99,6 +100,10 @@ this feature, or you can set to another char.
 Unite work flow leader of SpaceVim. Default is `f`. Set to empty to disable
 this feature, or you can set to another char.
 
+                                                    *g:spacevim_denite_leader*
+Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
+this feature, or you can set to another char.
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >
@@ -109,6 +114,13 @@ Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 Enable/Disable realtime leader guide. Default is 0.
 >
   let g:spacevim_realtime_leader_guide = 1
+<
+
+                                             *g:spacevim_enable_key_frequency*
+Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+enable it:
+>
+  let g:spacevim_enable_key_frequency = 1
 <
 
                                                    *g:spacevim_enable_neomake*
@@ -133,6 +145,13 @@ Enable/Disable YouCompleteMe. Default is 0.
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
 
+                                                   *g:spacevim_snippet_engine*
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  let g:spacevim_snippet_engine = 'ultisnips'
+<
+
                                                 *g:spacevim_enable_cursorline*
 Enable/Disable cursorline. Default is 0.
 >
@@ -149,6 +168,18 @@ Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 >
   let g:spacevim_warning_symbol = '!'
+<
+
+                                            *g:spacevim_terminal_cursor_shape*
+Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
+changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
+cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
+cursor. Host terminal must support the DECSCUSR CSI escape sequence.
+
+Depending on the terminal emulator, using this option with nvim under tmux
+might require adding the following to ~/.tmux.conf:
+>
+  set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 <
 
                                                 *g:spacevim_vim_help_language*
@@ -191,7 +222,7 @@ neobundle, or vim-plug.
                                                      *g:spacevim_checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 >
-  let g:spacevim_checkinstall = 0
+  let g:spacevim_checkinstall = 1
 <
 
                                                      *g:spacevim_enable_debug*
@@ -265,6 +296,12 @@ vim to start up slowly if there are too many files in the current directory.
   let g:spacevim_enable_vimfiler_welcome = 0
 <
 
+                                        *g:spacevim_enable_vimfiler_gitstatus*
+Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+
+                                     *g:spacevim_enable_vimfiler_filetypeicon*
+Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.
@@ -275,6 +312,11 @@ COMMANDS                                                   *SpaceVim-commands*
 :SPLayer {layers}                                                   *:SPLayer*
   Load exist layer, {layers} can be a string of a layer name, or a list of
   layer names.
+
+:SPVersion                                                        *:SPVersion*
+  Print the version of SpaceVim.  The following lines contain information
+  about which features were enabled.  When there is a preceding '+', the
+  feature is included, when there is a '-' it is excluded.
 
 :SPSet {opt} [value]                                                  *:SPSet*
   Set or check SpaceVim option. {opt} should be the option name of spacevim,
@@ -290,6 +332,12 @@ COMMANDS                                                   *SpaceVim-commands*
   configuration file.
 >
     :SPConfig -g
+<
+
+:SPUpdate                                                          *:SPUpdate*
+  Command for update plugin, support completion of plugin name.
+>
+      :SPUpdate vim-airline
 <
 
 ==============================================================================
@@ -595,6 +643,13 @@ Configuration for `tweekmonster/deoplete-clang2`:
     to get completions within conditional preprocessor blocks. The default is
     50,  setting it to 0 disables this feature.
 
+
+==============================================================================
+LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
+
+INTRO
+The lang#crystal layer provides crystal filetype detection and syntax
+highlight, crystal tool and crystal spec integration.
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*

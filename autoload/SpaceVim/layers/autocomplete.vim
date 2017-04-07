@@ -31,8 +31,17 @@ function! SpaceVim#layers#autocomplete#plugins() abort
         \ ['Shougo/neopairs.vim',         { 'on_i' : 1}],
         \ ['Raimondi/delimitMate',        { 'merged' : 0}],
         \ ]
+  " snippet
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call add(plugins,  ['Shougo/neosnippet.vim', { 'on_i'  : 1 ,
+          \ 'on_ft' : 'neosnippet',
+          \ 'loadconf' : 1,
+          \ 'on_cmd' : 'NeoSnippetEdit'}])
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call add(plugins, ['SirVer/ultisnips',{ 'loadconf_before' : 1,
+          \ 'merged' : 0}])
+  endif
   if g:spacevim_autocomplete_method ==# 'ycm'
-    call add(plugins, ['SirVer/ultisnips',                  { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['ervandew/supertab',                 { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
