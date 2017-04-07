@@ -28,6 +28,7 @@ function! s:warp(argv, opts) abort
     let obj._argv = a:argv
     let obj._opts = a:opts
 
+    " @vimlint(EVL103, 1, a:job_id)
     function! obj._out_cb(job_id, data) abort
         if has_key(self._opts, 'on_stdout')
             call self._opts.on_stdout(self._opts.jobpid, [a:data], 'stdout')
@@ -45,6 +46,7 @@ function! s:warp(argv, opts) abort
             call self._opts.on_exit(self._opts.jobpid, a:data, 'exit')
         endif
     endfunction
+    " @vimlint(EVL103, 0, a:job_id)
 
     let obj = {
                 \ 'argv': a:argv,

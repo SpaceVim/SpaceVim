@@ -108,9 +108,10 @@ function! s:need_cmd(cmd) abort
 endfunction
 
 function! s:get_uninstalled_plugins() abort
-        return filter(values(dein#get()), '!isdirectory(v:val.path)')
+    return filter(values(dein#get()), '!isdirectory(v:val.path)')
 endfunction
 
+" @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
     let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
     if !s:new_window() || empty(s:plugins)
@@ -142,6 +143,7 @@ function! SpaceVim#plugins#manager#install(...) abort
         endif
     endfor
 endfunction
+" @vimlint(EVL102, 0, l:i)
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
@@ -319,6 +321,9 @@ if has('nvim') && exists('*nvim_buf_set_lines')
 elseif has('python')
     py import vim
     py import string
+    " @vimlint(EVL103, 1, a:bufnr)
+    " @vimlint(EVL103, 1, a:nr)
+    " @vimlint(EVL103, 1, a:line)
     function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         py bufnr = string.atoi(vim.eval("a:bufnr"))
@@ -327,7 +332,13 @@ elseif has('python')
         py vim.buffers[bufnr][linr] = str
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
+    " @vimlint(EVL103, 0, a:bufnr)
+    " @vimlint(EVL103, 0, a:nr)
+    " @vimlint(EVL103, 0, a:line)
 
+    " @vimlint(EVL103, 1, a:bufnr)
+    " @vimlint(EVL103, 1, a:nr)
+    " @vimlint(EVL103, 1, a:line)
     function! s:append_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         py bufnr = string.atoi(vim.eval("a:bufnr"))
@@ -336,4 +347,7 @@ elseif has('python')
         py vim.buffers[bufnr].append(str)
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
+    " @vimlint(EVL103, 0, a:bufnr)
+    " @vimlint(EVL103, 0, a:nr)
+    " @vimlint(EVL103, 0, a:line)
 endif
