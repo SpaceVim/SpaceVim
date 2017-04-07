@@ -1,6 +1,6 @@
 let s:logger_level = g:spacevim_debug_level
 let s:levels = ['Info', 'Warn', 'Error']
-let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
+let s:logger_file = expand('~/.cache/SpaceVim/SpaceVim.log')
 let s:log_temp = []
 
 ""
