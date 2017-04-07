@@ -212,6 +212,14 @@ function! s:on_pull_exit(id, data, event) abort
     endif
 
 endfunction
+function! s:on_install_stdout(id, data, event) abort
+    for str in a:data
+        let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
+        if !empty(status)
+            call s:msg_on_install_process(s:pulling_repos[a:id].name, status)
+        endif
+    endfor
+endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
@@ -254,8 +262,9 @@ function! s:install(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
     let url = 'https://github.com/' . a:repo.repo
-    let argv = ['git', 'clone', url, a:repo.path]
+    let argv = ['git', 'clone', '--progress', url, a:repo.path]
     let jobid = s:JOB.start(argv,{
+                \ 'on_stderr' : function('s:on_install_stdout'),
                 \ 'on_exit' : function('s:on_install_exit')
                 \ })
     if jobid != 0
