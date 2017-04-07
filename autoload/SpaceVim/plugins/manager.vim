@@ -22,7 +22,7 @@ let s:pulling_repos = {}
 let s:ui_buf = {}
 let s:plugin_manager_buffer = 0
 
-" install plugin manager 
+" install plugin manager
 function! s:install_manager() abort
     " Fsep && Psep
     if has('win16') || has('win32') || has('win64')
@@ -213,6 +213,17 @@ function! s:on_pull_exit(id, data, event) abort
 
 endfunction
 
+" @vimlint(EVL103, 1, a:event)
+function! s:on_install_stdout(id, data, event) abort
+    for str in a:data
+        let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
+        if !empty(status)
+            call s:msg_on_install_process(s:pulling_repos[a:id].name, status)
+        endif
+    endfor
+endfunction
+" @vimlint(EVL103, 0, a:event)
+
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
     if a:data == 0 && a:event ==# 'exit'
@@ -254,8 +265,9 @@ function! s:install(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
     let url = 'https://github.com/' . a:repo.repo
-    let argv = ['git', 'clone', url, a:repo.path]
+    let argv = ['git', 'clone', '--progress', url, a:repo.path]
     let jobid = s:JOB.start(argv,{
+                \ 'on_stderr' : function('s:on_install_stdout'),
                 \ 'on_exit' : function('s:on_install_exit')
                 \ })
     if jobid != 0
@@ -291,6 +303,11 @@ function! s:msg_on_updated_failed(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating failed.')
 endfunction
 
+function! s:msg_on_install_process(name, status) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+                \ '- ' . a:name . ': Installing ' . a:status)
+endfunction
+
 " - foo.vim: Updating done.
 function! s:msg_on_install_done(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
@@ -312,7 +329,7 @@ function! s:new_window() abort
 endfunction
 
 " change modifiable before setline
-if has('nvim') && exists('*nvim_buf_set_lines') 
+if has('nvim') && exists('*nvim_buf_set_lines')
     function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
