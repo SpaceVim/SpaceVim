@@ -41,6 +41,9 @@ function! SpaceVim#logger#error(msg) abort
 endfunction
 
 function! s:wite(msg) abort
+  if !isdirectory(expand('~/.cache/SpaceVim/'))
+    call mkdir('~/.cache/SpaceVim/', 'p')
+  endif
   let flags = filewritable(s:logger_file) ? 'a' : ''
   call writefile([a:msg], s:logger_file, flags)
 endfunction

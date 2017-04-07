@@ -235,7 +235,8 @@ Enable/Disable debug mode for SpaceVim. Default is 0.
 <
 
                                                       *g:spacevim_debug_level*
-Set the debug level of SpaceVim. Default is 1.
+Set the debug level of SpaceVim. Default is 1. see
+|SpaceVim#logger#setLevel()|
 
                                                 *g:spacevim_buffer_index_type*
 Set SpaceVim buffer index type, default is 0.
