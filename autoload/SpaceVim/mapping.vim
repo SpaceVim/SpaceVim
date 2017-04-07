@@ -162,7 +162,7 @@ function! SpaceVim#mapping#vertical_split_previous_buffer() abort
 endfunction
 
 function! SpaceVim#mapping#close_current_buffer() abort
-  let buffers = g:_spacevim_list_buffers
+  let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
   let index = index(buffers, bn) 
   if index != -1
@@ -186,7 +186,7 @@ function! SpaceVim#mapping#close_current_buffer() abort
 endfunction
 
 function! SpaceVim#mapping#close_term_buffer(...) abort
-  let buffers = g:_spacevim_list_buffers
+  let buffers = get(g:, '_spacevim_list_buffers', [])
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
   if index != -1
