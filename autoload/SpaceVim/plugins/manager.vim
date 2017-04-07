@@ -107,7 +107,40 @@ function! s:need_cmd(cmd) abort
     endif
 endfunction
 
+function! s:get_uninstalled_plugins() abort
+        return filter(values(dein#get()), '!isdirectory(v:val.path)')
+endfunction
+
 function! SpaceVim#plugins#manager#install(...) abort
+    let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
+    if !s:new_window() || empty(s:plugins)
+        echohl WarningMsg
+        echom '[SpaceVim] [plugin manager] plugin manager process is not finished.'
+        echohl None
+        return
+    endif
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
+    setf SpaceVimPlugManager
+    nnoremap <silent> <buffer> q :bd<CR>
+    let s:pct = 0
+    let s:total = len(s:plugins)
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct . '/' . s:total . ')')
+    if has('nvim')
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    else
+        call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    endif
+    let s:start_time = reltime()
+    for i in range(g:spacevim_plugin_manager_max_processes)
+        if !empty(s:plugins)
+            let repo = dein#get(s:LIST.shift(s:plugins))
+            if !empty(repo)
+                call s:install(repo)
+            endif
+        endif
+    endfor
 endfunction
 
 " @vimlint(EVL102, 1, l:i)
@@ -178,6 +211,30 @@ function! s:on_pull_exit(id, data, event) abort
 
 endfunction
 
+" here if a:data == 0, git pull succeed
+function! s:on_install_exit(id, data, event) abort
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_install_done(s:pulling_repos[a:id].name)
+    else
+        call s:msg_on_install_failed(s:pulling_repos[a:id].name)
+    endif
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call remove(s:pulling_repos, string(a:id))
+    if !empty(s:plugins)
+        call s:install(dein#get(s:LIST.shift(s:plugins)))
+    endif
+    if empty(s:pulling_repos)
+        " TODO add elapsed time info.
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
+                    \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
+        let s:plugin_manager_buffer = 0
+        if g:spacevim_plugin_manager ==# 'dein'
+            call dein#recache_runtimepath()
+        endif
+    endif
+endfunction
+
 function! s:pull(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
@@ -190,14 +247,35 @@ function! s:pull(repo) abort
         call s:msg_on_start(a:repo.name)
     endif
 endfunction
+
+function! s:install(repo) abort
+    let s:pct += 1
+    let s:ui_buf[a:repo.name] = s:pct
+    let url = 'https://github.com/' . a:repo.repo
+    let argv = ['git', 'clone', url, a:repo.path]
+    let jobid = s:JOB.start(argv,{
+                \ 'on_exit' : function('s:on_install_exit')
+                \ })
+    if jobid != 0
+        let s:pulling_repos[jobid] = a:repo
+        call s:msg_on_install_start(a:repo.name)
+    endif
+endfunction
+
 " + foo.vim: Updating...
 if has('nvim')
     function! s:msg_on_start(name) abort
         call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
     endfunction
+    function! s:msg_on_install_start(name) abort
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
+    endfunction
 else
     function! s:msg_on_start(name) abort
         call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    endfunction
+    function! s:msg_on_install_start(name) abort
+        call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
     endfunction
 endif
 
@@ -209,6 +287,16 @@ endfunction
 " - foo.vim: Updating failed.
 function! s:msg_on_updated_failed(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating failed.')
+endfunction
+
+" - foo.vim: Updating done.
+function! s:msg_on_install_done(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
+endfunction
+
+" - foo.vim: Updating failed.
+function! s:msg_on_install_failed(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing failed.')
 endfunction
 
 function! s:new_window() abort

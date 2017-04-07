@@ -112,7 +112,7 @@ function! zvim#plug#end() abort
             if flag
                 augroup SpaceVimCheckInstall
                     au!
-                    au VimEnter * call dein#install()
+                    au VimEnter * SPInstall
                 augroup END
             endif
         endif
