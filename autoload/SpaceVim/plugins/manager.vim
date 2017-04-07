@@ -132,13 +132,11 @@ function! SpaceVim#plugins#manager#update(...) abort
         call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:append_buf_line(s:plugin_manager_buffer, 3, '')
     endif
+    let s:start_time = reltime()
     for i in range(g:spacevim_plugin_manager_max_processes)
         if !empty(s:plugins)
             let repo = dein#get(s:LIST.shift(s:plugins))
             if !empty(repo)
-                if !exists('s:start_time')
-                    let s:start_time = reltime()
-                endif
                 call s:pull(repo)
             endif
         endif
@@ -172,6 +170,7 @@ function! s:on_pull_exit(id, data, event) abort
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
                     \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
+        let s:plugin_manager_buffer = 0
         if g:spacevim_plugin_manager ==# 'dein'
             call dein#recache_runtimepath()
         endif
@@ -223,13 +222,13 @@ function! s:new_window() abort
 endfunction
 
 " change modifiable before setline
-if has('nvim')
+if has('nvim') && exists('*nvim_buf_set_lines') 
     function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
-else
+elseif has('python')
     py import vim
     py import string
     function! s:set_buf_line(bufnr, nr, line) abort
