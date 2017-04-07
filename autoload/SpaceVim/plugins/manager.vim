@@ -291,6 +291,11 @@ function! s:msg_on_updated_failed(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating failed.')
 endfunction
 
+function! s:msg_on_install_process(name, status) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+                \ '- ' . a:name . ': Installing ' . a:status)
+endfunction
+
 " - foo.vim: Updating done.
 function! s:msg_on_install_done(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
