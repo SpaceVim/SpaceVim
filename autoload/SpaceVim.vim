@@ -270,6 +270,12 @@ let g:spacevim_enable_powerline_fonts  = 1
 " <
 let g:spacevim_lint_on_save            = 1
 ""
+" Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
+" >
+"   let g:spacevim_lint_on_the_fly = 0
+" <
+let g:spacevim_lint_on_the_fly         = 0
+""
 " Enable/Disable vimfiler in the welcome windows. Default is 1. 
 " This will cause vim to start up slowly if there are too many files in the
 " current directory. 
