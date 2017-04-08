@@ -129,9 +129,12 @@ function! SpaceVim#plugins#manager#install(...) abort
     if has('nvim')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-    else
+    elseif has('python')
         call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    else
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:set_buf_line(s:plugin_manager_buffer, 3, '')
     endif
     let s:start_time = reltime()
     for i in range(g:spacevim_plugin_manager_max_processes)
@@ -163,9 +166,12 @@ function! SpaceVim#plugins#manager#update(...) abort
     if has('nvim')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-    else
+    elseif has('python')
         call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    else
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+        call s:set_buf_line(s:plugin_manager_buffer, 3, '')
     endif
     let s:start_time = reltime()
     for i in range(g:spacevim_plugin_manager_max_processes)
@@ -284,12 +290,19 @@ if has('nvim')
     function! s:msg_on_install_start(name) abort
         call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
     endfunction
-else
+elseif has('python')
     function! s:msg_on_start(name) abort
         call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
     endfunction
     function! s:msg_on_install_start(name) abort
         call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
+    endfunction
+else
+    function! s:msg_on_start(name) abort
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    endfunction
+    function! s:msg_on_install_start(name) abort
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
     endfunction
 endif
 
@@ -349,13 +362,7 @@ elseif has('python')
         py vim.buffers[bufnr][linr] = str
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
-    " @vimlint(EVL103, 0, a:bufnr)
-    " @vimlint(EVL103, 0, a:nr)
-    " @vimlint(EVL103, 0, a:line)
 
-    " @vimlint(EVL103, 1, a:bufnr)
-    " @vimlint(EVL103, 1, a:nr)
-    " @vimlint(EVL103, 1, a:line)
     function! s:append_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         py bufnr = string.atoi(vim.eval("a:bufnr"))
@@ -367,4 +374,19 @@ elseif has('python')
     " @vimlint(EVL103, 0, a:bufnr)
     " @vimlint(EVL103, 0, a:nr)
     " @vimlint(EVL103, 0, a:line)
+else
+    function! s:focus_main_win() abort
+        let winnr = winbufnr(s:plugin_manager_buffer)
+        if winnr > 0
+            exe winnr . 'wincmd w'
+        endif
+        return winnr
+    endfunction
+    function! s:set_buf_line(bufnr, nr, line) abort
+        call setbufvar(a:bufnr,'&ma', 1)
+        if s:focus_main_win() >= 0
+            call setline(a:nr, a:line)
+        endif
+        call setbufvar(a:bufnr,'&ma', 0)
+    endfunction
 endif
