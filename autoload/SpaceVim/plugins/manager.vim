@@ -393,7 +393,11 @@ elseif has('python')
             py str = vim.eval("a:line")
             py vim.buffers[bufnr][linr] = str
         endif
-        let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+        if len(s:plugin_manager_buffer_lines) >= a:nr
+            let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+        else
+            call add(s:plugin_manager_buffer_lines, a:line)
+        endif
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
 
