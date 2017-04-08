@@ -476,6 +476,7 @@ function! SpaceVim#welcome() abort
     Startify
   endif
   if g:spacevim_enable_vimfiler_welcome
+        \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2 
       VimFiler
       wincmd p
