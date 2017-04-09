@@ -5,6 +5,7 @@ function! SpaceVim#layers#ui#plugins() abort
                 \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['lvht/tagbar-markdown',{'merged' : 0}],
+                \ ['t9md/vim-choosewin', {'merged' : 0}],
                 \ ['vim-airline/vim-airline',                { 'merged' : 0,  'loadconf' : 1}],
                 \ ['vim-airline/vim-airline-themes',         { 'merged' : 0}],
                 \ ['mhinz/vim-startify', {'loadconf' : 1}],
