@@ -7,8 +7,19 @@ permalink: "/conventions"
 
 ## Content
 
+- [commit emoji convention](#commit-emoji-convention)
 - [viml coding style guild](#viml-coding-style-guide)
 - [markdown style guide](#markdown-style-guide)
+
+## Commit emoji convention
+
+- :memo: Add comment or doc
+- :gift: New feature.
+- :bug: Bug fix
+- :bomb: Breaking compatibility.
+- :white_check_mark: Write test.
+- :fire: Remove something.
+- :beer: I'm happy like reduced code complexity.
 
 ## Viml coding style guide
 ### Portability
