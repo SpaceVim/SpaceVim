@@ -24,6 +24,9 @@ else
     if s:uname ==# "Darwin\n"
         " in mac-terminal
         silent exec 'language en_US'
+    elseif s:uname ==# "SunOS\n"
+        " in Sun-OS terminal
+        silent exec 'lan en_US.UTF-8'
     else
         " in linux-terminal
         silent exec 'lan en_US.utf8'
