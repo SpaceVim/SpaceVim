@@ -166,6 +166,9 @@ function! SpaceVim#plugins#manager#update(...) abort
     endif
     let s:pct = 0
     let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
+    if a:0 == 0
+        call add(s:plugins, 'SpaceVim')
+    endif
     let s:total = len(s:plugins)
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct . '/' . s:total . ')')
     if has('nvim')
@@ -181,9 +184,17 @@ function! SpaceVim#plugins#manager#update(...) abort
     let s:start_time = reltime()
     for i in range(g:spacevim_plugin_manager_max_processes)
         if !empty(s:plugins)
-            let repo = dein#get(s:LIST.shift(s:plugins))
+            let reponame = s:LIST.shift(s:plugins)
+            let repo = dein#get(reponame)
             if !empty(repo)
                 call s:pull(repo)
+            elseif reponame ==# 'SpaceVim'
+                let repo = {
+                            \ 'name' : 'SpaceVim',
+                            \ 'path' : expand('~/.SpaceVim')
+                            \ }
+                call s:pull(repo)
+
             endif
         endif
     endfor

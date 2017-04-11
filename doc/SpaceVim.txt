@@ -40,10 +40,11 @@ CONTENTS                                                   *SpaceVim-contents*
       17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
       18. lang#python.............................|SpaceVim-layer-lang-python|
       19. lang#rust.................................|SpaceVim-layer-lang-rust|
-      20. lang#xml...................................|SpaceVim-layer-lang-xml|
-      21. operator...................................|SpaceVim-layer-operator|
-      22. shell.........................................|SpaceVim-layer-shell|
-      23. tmux...........................................|SpaceVim-layer-tmux|
+      20. lang#scala...............................|SpaceVim-layer-lang-scala|
+      21. lang#xml...................................|SpaceVim-layer-lang-xml|
+      22. operator...................................|SpaceVim-layer-operator|
+      23. shell.........................................|SpaceVim-layer-shell|
+      24. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
   7. FAQ........................................................|SpaceVim-faq|
@@ -832,6 +833,9 @@ MAPPINGS
   normal      gx          rust-definition-vertical
   normal      <leader>gd  rust-doc
 <
+
+==============================================================================
+LANG#SCALA                                         *SpaceVim-layer-lang-scala*
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
