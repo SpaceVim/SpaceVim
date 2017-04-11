@@ -55,7 +55,11 @@ augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
     au BufWinEnter term://* startinsert | IndentLinesDisable
-    au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call SpaceVim#mapping#close_term_buffer()
+    if has('timers')
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
+    else
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call SpaceVim#mapping#close_term_buffer()
+    endif
 augroup END
 augroup nvimrc_aucmd
     autocmd!
