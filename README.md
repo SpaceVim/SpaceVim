@@ -191,6 +191,13 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
     git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
     ```
 
+## Update
+
+you can update SpaceVim with the command below:
+
+```viml
+:SPUpdate SpaceVim
+```
 
 ## Support SpaceVim
 
