@@ -44,7 +44,7 @@ endfunction
 " @vimlint(EVL103, 1, a:CmdLine)
 " @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#commands#complete_plugin(ArgLead, CmdLine, CursorPos) abort
-  return join(keys(dein#get()), "\n")
+  return join(keys(dein#get()) + ['SpaceVim'], "\n")
 endfunction
 " @vimlint(EVL103, 0, a:ArgLead)
 " @vimlint(EVL103, 0, a:CmdLine)
