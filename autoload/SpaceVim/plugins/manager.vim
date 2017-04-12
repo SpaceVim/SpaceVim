@@ -247,7 +247,8 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! s:lock_revision(repo) abort
-    let cmd = ['git', 'checkout', '-C', a:repo.path, 'a:repo.rev']
+    let cmd = ['git', '-C', a:repo.path, 'checkout', a:repo.rev]
+    let g:wsd = cmd
     call s:VIM_CO.system(cmd)
 endfunction
 
