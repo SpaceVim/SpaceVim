@@ -329,6 +329,7 @@ function! s:handle_input(input) " {{{
     let s:lmap = a:input
     call s:start_buffer()
   else
+    let s:prefix_key_inp = ''
     call feedkeys(s:vis.s:reg.s:count, 'ti')
     redraw!
     try
@@ -342,6 +343,7 @@ function! s:wait_for_input() " {{{
   redraw!
   let inp = input("")
   if inp ==? ''
+    let s:prefix_key_inp = ''
     call s:winclose()
   elseif match(inp, "^<LGCMD>submode") == 0
     call s:submode_mappings()
@@ -350,6 +352,9 @@ function! s:wait_for_input() " {{{
       let inp = '<space>'
     endif
     let fsel = get(s:lmap, inp)
+    if !empty(fsel)
+      let s:prefix_key_inp = inp
+    endif
     call s:handle_input(fsel)
   endif
 endfunction " }}}
@@ -392,7 +397,9 @@ function! s:updateStatusline() abort
   exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Leader\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' .
         \ '%#LeaderGuiderName#' .
-        \ SpaceVim#mapping#leader#getName(s:prefix_key) . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ SpaceVim#mapping#leader#getName(s:prefix_key)
+        \ . get(s:, 'prefix_key_inp', '')
+        \ . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
 endfunction
 
 function! s:winclose() " {{{
