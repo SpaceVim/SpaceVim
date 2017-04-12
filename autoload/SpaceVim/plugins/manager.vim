@@ -246,6 +246,12 @@ function! s:on_install_stdout(id, data, event) abort
 endfunction
 " @vimlint(EVL103, 0, a:event)
 
+function! s:lock_revision(repo) abort
+    let cmd = ['git', '-C', a:repo.path, 'checkout', a:repo.rev]
+    let g:wsd = cmd
+    call s:VIM_CO.system(cmd)
+endfunction
+
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
     if a:data == 0 && a:event ==# 'exit'
@@ -255,6 +261,9 @@ function! s:on_install_exit(id, data, event) abort
     endif
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct . '/' . s:total . ')')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    if get(s:pulling_repos[a:id], 'rev', '') !=# ''
+        call s:lock_revision(s:pulling_repos[a:id])
+    endif
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
         call s:install(dein#get(s:LIST.shift(s:plugins)))
