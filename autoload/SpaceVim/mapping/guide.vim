@@ -9,6 +9,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+
 function! SpaceVim#mapping#guide#has_configuration() "{{{
   return exists('s:desc_lookup')
 endfunction "}}}
@@ -383,8 +384,15 @@ function! s:winopen() " {{{
 endfunction " }}}
 
 function! s:updateStatusline() abort
-  exe 'setlocal statusline=\ Leader\ Guide\ for:\ ' .
-        \ SpaceVim#mapping#leader#getName(s:prefix_key)
+  hi! LeaderGuiderPrompt cterm=bold gui=bold guifg=#282828 guibg=#a89984
+  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#fe8019
+  hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
+  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
+  hi! LeaderGuiderFill guifg=#7c6f64 guibg=#3c3836
+  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Leader\ Guide:\ ' .
+        \ '%#LeaderGuiderSep1#' .
+        \ '%#LeaderGuiderName#' .
+        \ SpaceVim#mapping#leader#getName(s:prefix_key) . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
 endfunction
 
 function! s:winclose() " {{{
