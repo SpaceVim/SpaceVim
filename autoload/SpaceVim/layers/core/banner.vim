@@ -1,3 +1,4 @@
+scriptencoding utf-8
 function! SpaceVim#layers#core#banner#config() abort
   let g:_spacevim_welcome_banners = [
         \ [
@@ -16,6 +17,17 @@ function! SpaceVim#layers#core#banner#config() abort
         \'               |__/                                                           ',
         \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
         \'',
+        \ ],
+        \ [
+        \ '     ┏━━━┓',
+        \ '     ┃┏━┓┃ Welcome to',
+        \ '     ┃┗━━┓╋╋╋╋┏━━┓╋╋╋╋┏━━┓╋╋╋╋┏━━┓╋╋╋╋┏━━┓╋╋╋╋┏┓┏┓╋╋╋╋┏━┓╋╋╋╋┏┓┏┓',
+        \ '     ┗━━┓┃┏━━┓┃┏┓┃┏━━┓┃┏┓┃┏━━┓┃┏━┛┏━━┓┃┃━┫┏━━┓┃┃┃┃┏━━┓┃ ┃┏━━┓┃┗┛┃',
+        \ '     ┃┗━┛┃┗━━┛┃┗┛┃┗━━┛┃┏┓┃┗━━┛┃┗━┓┗━━┛┃┃━┫┗━━┛┃┗┛┃┗━━┛┃ ┃┗━━┛┃┃┃┃',
+        \ '     ┗━━━┛╋╋╋╋┃┏━┛╋╋╋╋┗┛┗┛╋╋╋╋┗━━┛╋╋╋╋┗━━┛╋╋╋╋┗━━┛╋╋╋╋┗━┛╋╋╋╋┗┻┻┛',
+        \ '     ╋╋╋╋╋╋╋╋╋┃┃',
+        \ '     ╋╋╋╋╋╋╋╋╋┗┛',
+        \'                 version : ' . g:spacevim_version . '   by : spacevim.org',
         \ ],
         \ ]
 endfunction
