@@ -1,20 +1,26 @@
-let g:startify_custom_header = get(g:, 'startify_custom_header', [
-      \'',
-      \'',
-      \'        /######                                     /##    /##/##             ',
-      \'       /##__  ##                                   | ##   | #|__/             ',
-      \'      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### ',
-      \'      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##',
-      \'       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##',
-      \'       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##',
-      \'      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##',
-      \'       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/',
-      \'               | ##                                                           ',
-      \'               | ##                                                           ',
-      \'               |__/                                                           ',
-      \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
-      \'',
-      \ ])
+let s:NUM = SpaceVim#api#import('data#number')
+
+if !exists('g:startify_custom_header') && !exists('g:_spacevim_welcome_banners')
+  let g:startify_custom_header = [
+        \'',
+        \'',
+        \'        /######                                     /##    /##/##             ',
+        \'       /##__  ##                                   | ##   | #|__/             ',
+        \'      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### ',
+        \'      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##',
+        \'       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##',
+        \'       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##',
+        \'      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##',
+        \'       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/',
+        \'               | ##                                                           ',
+        \'               | ##                                                           ',
+        \'               |__/                                                           ',
+        \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
+        \'',
+        \ ]
+elseif exists('g:_spacevim_welcome_banners')
+  let g:startify_custom_header = g:_spacevim_welcome_banners[s:NUM.random(0, len(g:_spacevim_welcome_banners))]
+endif
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
 let g:startify_files_number = 6
 let g:startify_list_order = [
