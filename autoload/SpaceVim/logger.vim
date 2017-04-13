@@ -42,7 +42,7 @@ endfunction
 
 function! s:wite(msg) abort
   if !isdirectory(expand('~/.cache/SpaceVim/'))
-    call mkdir('~/.cache/SpaceVim/', 'p')
+    call mkdir(expand('~/.cache/SpaceVim/'), 'p')
   endif
   let flags = filewritable(s:logger_file) ? 'a' : ''
   call writefile([a:msg], s:logger_file, flags)
@@ -63,7 +63,7 @@ function! SpaceVim#logger#viewLog(...) abort
   let info .= "### SpaceVim runtime log :\n\n"
   let info .= "```log\n"
 
-  let l = a:0 > 0 ? a:1 : 1
+  let l = s:logger_level
   if filereadable(s:logger_file)
     let logs = readfile(s:logger_file, '')
     let info .= join(filter(logs,
