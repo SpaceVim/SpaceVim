@@ -221,7 +221,16 @@ function! s:on_pull_exit(id, data, event) abort
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
-        call s:pull(dein#get(s:LIST.shift(s:plugins)))
+        let name = s:LIST.shift(s:plugins)
+        if name ==# 'SpaceVim'
+            let repo = {
+                        \ 'name' : 'SpaceVim',
+                        \ 'path' : expand('~/.SpaceVim')
+                        \ }
+        else
+            let repo = dein#get(name)
+        endif
+        call s:pull(repo)
     endif
     if empty(s:pulling_repos)
         " TODO add elapsed time info.
