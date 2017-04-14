@@ -1,0 +1,21 @@
+Execute (Clear search history):
+  for _ in range(&history)
+    call histdel('/', -1)
+  endfor
+
+Given (Search and destroy):
+  I'm a street walking cheetah with a heart full of napalm
+  I'm a runaway son of the nuclear A-bomb
+  I'm a world's forgotten boy
+  The one who searches and destroys
+
+Do (Searches):
+  /street\<CR>
+  /walking\<CR>
+  /cheetah\<CR>
+  /runaway\<CR>
+  /search\<CR>
+
+Execute (Assertions):
+  Log string(map(range(1, &history), 'histget("/", - v:val)'))
+  AssertEqual 'search', histget('/', -1)
