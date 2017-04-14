@@ -2,20 +2,27 @@
 let s:self = {
             \ 'name' : '',
             \ 'silent' : 1,
+            \ 'level' : 1,
             \ 'file' : '',
             \ 'temp' : [],
             \ }
 
+"1 : log all messages
+"2 : log warning and error messages
+"3 : log error messages only
 let s:levels = ['Info', 'Warn', 'Error']
 
 function! SpaceVim#api#logger#get() abort
     return deepcopy(s:self)
 endfunction
 
+function! s:self.set_level(l) abort
+    let self.level = a:l
+endfunction
 
 function! s:self.error(msg) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ ' . self.name . ' ] [' . time . '] [ Error ] ' . a:msg
+    let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[2] . ' ] ' . a:msg
     if !self.silent
         echoerr log
     endif
@@ -35,8 +42,11 @@ function! s:self.write(msg) abort
 endfunction
 
 function! s:self.warn(msg) abort
+    if self.level > 2
+        return
+    endif
     let time = strftime('%H:%M:%S')
-    let log = '[ ' . self.name . ' ] [' . time . '] [ Warn ] ' . a:msg
+    let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[1] . ' ] ' . a:msg
     if !self.silent
         echohl WarningMsg
         echom log
@@ -46,8 +56,11 @@ function! s:self.warn(msg) abort
 endfunction
 
 function! s:self.info(msg) abort
+    if self.level > 1
+        return
+    endif
     let time = strftime('%H:%M:%S')
-    let log = '[ ' . self.name . ' ] [' . time . '] [ Info ] ' . a:msg
+    let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[0] . ' ] ' . a:msg
     if !self.silent
         echom log
     endif
