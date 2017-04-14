@@ -9,11 +9,16 @@ env:
     - LINT=vimlint
     - LINT=vint-errors
     - LINT=vint
+    - LINT=vader
 
 matrix:
   allow_failures:
     - env: LINT=vimlint
     - env: LINT=vint
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y vim-gtk
 
 install:
   - |
@@ -22,6 +27,8 @@ install:
       git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
     elif [ "${LINT#vint}" != "$LINT" ]; then
       virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
+    elif [ "${LINT#vader}" != "$LINT" ]; then
+      git clone https://github.com/junegunn/vader.vim.git /tmp/vader
     fi
 script:
   - |
@@ -33,4 +40,13 @@ script:
       vint .
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
+    elif [ "$LINT" = "vader" ]; then
+      vim -Nu <(cat << VIMRC
+      filetype off
+      set rtp+=/tmp/vader
+      set rtp+=.
+      set rtp+=after
+      filetype plugin indent on
+      syntax enable
+      VIMRC) -c 'Vader! test/*' > /dev/null
     fi
