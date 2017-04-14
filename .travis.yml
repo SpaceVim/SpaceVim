@@ -41,12 +41,13 @@ script:
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
-      vim -Nu <(cat << VIMRC
-      filetype off
-      set rtp+=vader.vim
-      set rtp+=.
-      set rtp+=after
-      filetype plugin indent on
-      syntax enable
-      VIMRC) -c 'Vader! test/*' > /dev/null
+      vim -Nu <(cat <<-EOF
+      filetype off |
+      set rtp+=vader.vim |
+      set rtp+=. |
+      set rtp+=after |
+      filetype plugin indent on |
+      syntax enable |
+      EOF
+      ) -c 'Vader! test/*' > /dev/null
     fi
