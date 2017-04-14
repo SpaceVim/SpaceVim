@@ -83,15 +83,32 @@ function! s:self.view(l) abort
     let info = ''
     if filereadable(self.file)
         let logs = readfile(self.file, '')
-        let info .= join(filter(logs,
-                    \ "v:val =~# '\[ " . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \['
-                    \ . s:levels[a:l] . "\]'"), "\n")
+        let info .= join(filter(logs, 'self._comp(v:val, a:l)'), "\n")
     else
         let info .= '[ ' . self.name . ' ] : logger file ' . self.file
                     \ . ' does not exists, only log for current process will be shown!'
-        let info .= join(filter(self.temp,
-                    \ "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \["
-                    \ . s:levels[a:l] . "\]'"), "\n")
+        let info .= "\n"
+        let info .= join(filter(deepcopy(self.temp), 'self._comp(v:val, a:l)'), "\n")
     endif
     return info
+endfunction
+
+function! s:self._comp(msg, l) abort
+    if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
+                \ . s:levels[2] . ' \]'
+        return 1
+    elseif a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
+                \ . s:levels[1] . ' \]'
+        if a:l > 2
+            return 0
+        else
+            return 1
+        endif
+    else
+        if a:l > 1
+            return 0
+        else
+            return 1
+        endif
+    endif
 endfunction

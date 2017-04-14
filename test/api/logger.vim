@@ -15,7 +15,7 @@ call log.info('info test')
 call log.warn('info test')
 call log.error('info test')
 " len(log.temp) == 6
-" len(log.view(1)) == 6
-" len(log.view(2)) == 5
-" len(log.view(3)) == 3
+" len(split(log.view(1), "\n")) == 7
+" len(split(log.view(2), "\n")) == 6
+" len(split(log.view(3), "\n")) == 4
 
