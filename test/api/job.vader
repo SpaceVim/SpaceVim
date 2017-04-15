@@ -2,20 +2,27 @@ Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
   let argv = ['echo', 'foo']
   let stdout = ''
+  let stderr = ''
   let exit = 1
   function! s:on_stdout(id, data, event) abort
     if a:event ==# 'stdout'
       let g:stdout = a:data[0]
     elseif a:event ==# 'exit'
       let g:exit = a:data
+    else
+      let g:stderr = a:data
     endif
   endfunction
   let opt = {
     \ 'on_stdout' : function('s:on_stdout'),
+    \ 'on_stderr' : function('s:on_stdout'),
     \ 'on_exit' : function('s:on_stdout'),
     \ }
   call job.start(argv,opt)
   sleep 10m
+  Log stdout
+  Log exit
+  Log string(stderr)
   AssertEqual stdout, 'foo'
   AssertEqual exit, 0
 
