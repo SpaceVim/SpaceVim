@@ -132,8 +132,9 @@ function! SpaceVim#plugins#manager#install(...) abort
         return
     endif
     let s:pct = 0
+    let s:pct_done = 0
     let s:total = len(s:plugins)
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
     if has('nvim')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:set_buf_line(s:plugin_manager_buffer, 3, '')
@@ -216,14 +217,18 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-    let s:pct_done += 1
     if a:data == 0 && a:event ==# 'exit'
         call s:msg_on_updated_done(s:pulling_repos[a:id].name)
     else
         call s:msg_on_updated_failed(s:pulling_repos[a:id].name)
     endif
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    if get(s:pulling_repos[a:id], 'build', '') !=# ''
+        call s:build(s:pulling_repos[a:id])
+    else
+        let s:pct_done += 1
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    endif
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
         let name = s:LIST.shift(s:plugins)
@@ -237,7 +242,7 @@ function! s:on_pull_exit(id, data, event) abort
         endif
         call s:pull(repo)
     endif
-    if empty(s:pulling_repos)
+    if empty(s:pulling_repos) && empty(s:building_repos)
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
                     \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
@@ -271,6 +276,10 @@ function! s:on_build_exit(id, data, event) abort
     else
         call s:msg_on_build_failed(s:building_repos[a:id].name)
     endif
+    let s:pct_done += 1
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call remove(s:building_repos, string(a:id))
     if empty(s:pulling_repos) && empty(s:building_repos)
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
@@ -289,13 +298,15 @@ function! s:on_install_exit(id, data, event) abort
     else
         call s:msg_on_install_failed(s:pulling_repos[a:id].name)
     endif
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     if get(s:pulling_repos[a:id], 'rev', '') !=# ''
         call s:lock_revision(s:pulling_repos[a:id])
     endif
     if get(s:pulling_repos[a:id], 'build', '') !=# ''
         call s:build(s:pulling_repos[a:id])
+    else
+        let s:pct_done += 1
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+        call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     endif
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
