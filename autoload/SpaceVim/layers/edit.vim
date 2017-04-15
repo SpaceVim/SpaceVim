@@ -16,7 +16,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
                 \ ]
     if executable('fcitx')
-        call add(plugins,['lilydjwg/fcitx.vim',        { 'on_i' : 1}])
+        call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
     endif
     return plugins
 endfunction
