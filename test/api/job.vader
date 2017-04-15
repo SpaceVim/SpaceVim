@@ -1,6 +1,6 @@
 Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
-  let argv = ['echo', 'foo']
+  let argv = ['cat']
   let g:stdout = ''
   let stderr = ''
   let exit = 1
@@ -22,13 +22,12 @@ Execute ( SpaceVim api: job ):
     \ 'on_stderr' : function('s:on_stdout'),
     \ 'on_exit' : function('s:on_stdout'),
     \ }
-  call job.start(argv,opt)
-  sleep 100m
-  Log g:stdout
-  Log exit
-  Log string(stderr)
-  Log system('echo foo')
-  AssertEqual g:stdout, 'foo'
-  AssertEqual exit, 0
+  let jobid = job.start(argv,opt)
+  call job.send(jobid, 'foo')
+  sleep 10m
+  AssertEqual stdout, 'foo'
+  AssertEqual job.status(jobid), 'run'
+  call job.stop(jobid)
+  AssertEqual exit, 1
 
 
