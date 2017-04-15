@@ -365,7 +365,7 @@ endfunction
 
 function! s:msg_on_build_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
-                \ '- ' . a:name . ': Building ')
+                \ '* ' . a:name . ': Building ')
 endfunction
 
 function! s:get_build_argv(build) abort
@@ -403,12 +403,12 @@ endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_updated_failed(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '* ' . a:name . ': Updating failed.')
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed.')
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
-                \ '- ' . a:name . ': Installing ' . a:status)
+                \ '* ' . a:name . ': Installing ' . a:status)
 endfunction
 
 " - foo.vim: Updating done.
@@ -418,7 +418,7 @@ endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '* ' . a:name . ': Installing failed.')
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
 endfunction
 
 " - foo.vim: Updating done.
@@ -428,7 +428,7 @@ endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_build_failed(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '* ' . a:name . ': Building failed.')
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
 endfunction
 
 function! s:new_window() abort
