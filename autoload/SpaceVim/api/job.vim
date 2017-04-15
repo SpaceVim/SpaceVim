@@ -1,21 +1,13 @@
-
 function! SpaceVim#api#job#get() abort
-    return map({'start' : '',
-                \ 'stop' : '',
-                \ 'send' : '',
-                \ 'status' : '',
-                \ 'list' : '',
-                \ 'info' : ''
-                \ },
-                \ "function('s:' . v:key)"
-                \ )
+    return deepcopy(s:self)
 endfunction
 
 " make vim and neovim use same job func.
-let s:jobs = {}
-let s:nvim_job = has('nvim')
-let s:vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
-function! s:warn(...) abort
+let s:self = {}
+let s:self.jobs = {}
+let s:self.nvim_job = has('nvim')
+let s:self.vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
+function! s:self.warn(...) abort
     if len(a:000) == 0
         echohl WarningMsg | echom 'Current version do not support job feature!' | echohl None
     elseif len(a:000) == 1 && type(a:1) == type('')
@@ -23,7 +15,7 @@ function! s:warn(...) abort
     else
     endif
 endfunction
-function! s:warp(argv, opts) abort
+function! s:self.warp(argv, opts) abort
     let obj = {}
     let obj._argv = a:argv
     let obj._opts = a:opts
@@ -63,25 +55,25 @@ function! s:warp(argv, opts) abort
 endfunction
 
 " start a job, and return the job_id.
-function! s:start(argv, ...) abort
-    if s:nvim_job
+function! s:self.start(argv, ...) abort
+    if self.nvim_job
         if len(a:000) > 0
             let job = jobstart(a:argv, a:1)
         else
             let job = jobstart(a:argv)
         endi
         let msg = ['process '. jobpid(job), ' run']
-        call extend(s:jobs, {job : msg})
+        call extend(self.jobs, {job : msg})
         return job
-    elseif s:vim_job
+    elseif self.vim_job
         if len(a:000) > 0
             let opts = a:1
         else
             let opts = {}
         endif
-        let id = len(s:jobs) + 1
+        let id = len(self.jobs) + 1
         let opts.jobpid = id
-        let wrapped = s:warp(a:argv, opts)
+        let wrapped = self.warp(a:argv, opts)
         if has_key(wrapped.opts, 'cwd')
             let old_wd = getcwd()
             let cwd = expand(wrapped.opts.cwd, 1)
@@ -93,86 +85,86 @@ function! s:start(argv, ...) abort
         if exists('old_wd')
             exe 'cd' fnameescape(old_wd)
         endif
-        call extend(s:jobs, {id : job})
+        call extend(self.jobs, {id : job})
         return id
     else
-        call s:warn()
+        call self.warn()
     endif
 endfunction
 
-function! s:stop(id) abort
-    if s:nvim_job
-        if has_key(s:jobs, a:id)
+function! s:self.stop(id) abort
+    if self.nvim_job
+        if has_key(self.jobs, a:id)
             call jobstop(a:id)
-            call remove(s:jobs, a:id)
+            call remove(self.jobs, a:id)
         else
-            call s:warn('No job with such id')
+            call self.warn('No job with such id')
         endif
-    elseif s:vim_job
-        if has_key(s:jobs, a:id)
-            call job_stop(get(s:jobs, a:id))
-            call remove(s:jobs, a:id)
+    elseif self.vim_job
+        if has_key(self.jobs, a:id)
+            call job_stop(get(self.jobs, a:id))
+            call remove(self.jobs, a:id)
         endif
     else
-        call s:warn()
+        call self.warn()
     endif
 endfunction
 
-function! s:send(id, data) abort
-    if s:nvim_job
-        if has_key(s:jobs, a:id)
+function! s:self.send(id, data) abort
+    if self.nvim_job
+        if has_key(self.jobs, a:id)
             if type(a:data) == type('')
                 call jobsend(a:id, [a:data, ''])
             else
                 call jobsend(a:id, a:data)
             endif
         else
-            call s:warn('No job with such id')
+            call self.warn('No job with such id')
         endif
-    elseif s:vim_job
-        if has_key(s:jobs, a:id)
-            let job = get(s:jobs, a:id)
+    elseif self.vim_job
+        if has_key(self.jobs, a:id)
+            let job = get(self.jobs, a:id)
             let chanel = job_getchannel(job)
             call ch_sendraw(chanel, a:data . "\n")
         else
-            call s:warn('No job with such id')
+            call self.warn('No job with such id')
         endif
     else
-        call s:warn()
+        call self.warn()
     endif
 endfunction
 
-function! s:status(id) abort
-    if s:nvim_job
-        if has_key(s:jobs, a:id)
-            return get(s:jobs, a:id)[1]
+function! s:self.status(id) abort
+    if self.nvim_job
+        if has_key(self.jobs, a:id)
+            return get(self.jobs, a:id)[1]
         endif
-    elseif s:vim_job
-        if has_key(s:jobs, a:id)
-            return job_status(get(s:jobs, a:id))
+    elseif self.vim_job
+        if has_key(self.jobs, a:id)
+            return job_status(get(self.jobs, a:id))
         endif
     else
-        call s:warn('No job with such id!')
+        call self.warn('No job with such id!')
     endif
 endfunction
 
-function! s:list() abort
-    return copy(s:jobs)
+function! s:self.list() abort
+    return copy(self.jobs)
 endfunction
 
-function! s:info(id) abort
+function! s:self.info(id) abort
     let info = {}
-    if s:nvim_job
-        let info.status = s:status(a:id)
+    if self.nvim_job
+        let info.status = self.status(a:id)
         let info.job_id = a:id
         return info
-    elseif s:vim_job
-        if has_key(s:jobs, a:id)
-            return job_info(get(s:jobs, a:id))
+    elseif self.vim_job
+        if has_key(self.jobs, a:id)
+            return job_info(get(self.jobs, a:id))
         else
-            call s:warn('No job with such id!')
+            call self.warn('No job with such id!')
         endif
     else
-        call s:warn()
+        call self.warn()
     endif
 endfunction
