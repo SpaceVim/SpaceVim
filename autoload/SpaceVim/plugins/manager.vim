@@ -116,12 +116,13 @@ endfunction
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
     let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
-    if s:new_window() == 0
+    let status = s:new_window()
+    if status == 0
         echohl WarningMsg
         echom '[SpaceVim] [plugin manager] plugin manager process is not finished.'
         echohl None
         return
-    elseif s:new_window() == 1
+    elseif status == 1
         " resume window
         return
     elseif empty(s:plugins)
@@ -157,12 +158,13 @@ endfunction
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
-    if s:new_window() == 0
+    let status = s:new_window()
+    if status == 0
         echohl WarningMsg
         echom '[SpaceVim] [plugin manager] plugin updating is not finished.'
         echohl None
         return
-    elseif s:new_window() == 1
+    elseif status == 1
         return
     endif
     let s:pct = 0
