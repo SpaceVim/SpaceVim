@@ -6,7 +6,11 @@ Execute ( SpaceVim api: job ):
   let exit = 1
   function! s:on_stdout(id, data, event) abort
     if a:event ==# 'stdout'
-      let g:stdout = a:data[0]
+      for a in a:data
+        if !empty(a)
+          let g:stdout = a
+        endif
+      endfor
     elseif a:event ==# 'exit'
       let g:exit = a:data
     else
@@ -19,10 +23,11 @@ Execute ( SpaceVim api: job ):
     \ 'on_exit' : function('s:on_stdout'),
     \ }
   call job.start(argv,opt)
-  sleep 10m
+  sleep 100m
   Log stdout
   Log exit
   Log string(stderr)
+  Log system('echo foo')
   AssertEqual stdout, 'foo'
   AssertEqual exit, 0
 
