@@ -19,22 +19,6 @@ matrix:
   allow_failures:
     - env: LINT=vimlint
     - env: LINT=vint
-  include:
-    - env: ENV=vim72
-      rvm: 1.8.7
-      addons: { apt: { packages: [vim-nox] } }
-    - env: ENV=python
-      rvm: 1.8.7
-      addons: { apt: { packages: [python2.7-dev] } }
-    - env: ENV=python3
-      rvm: 1.8.7
-      addons: { apt: { packages: [python3-dev] } }
-    - env: ENV=ruby18
-      rvm: 1.8.7
-    - env: ENV=ruby20
-      rvm: 2.0.0
-    - env: ENV=neovim
-    - env: ENV=vim8
 
 install:
   - |
@@ -45,36 +29,14 @@ install:
       virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
     elif [ "${LINT#vader}" != "$LINT" ]; then
       git clone https://github.com/junegunn/vader.vim.git /tmp/vader
+      C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
+      git clone --depth 1 https://github.com/vim/vim
+      cd vim
+      ./configure $C_OPTS
+      make
+      make install
+      cd -
     fi
-  if [ "$ENV" == "vim72" ]; then
-    mkdir -p ${DEPS}/bin
-    ln -s /usr/bin/vim.nox ${DEPS}/bin/vim
-    return
-  elif [ "$ENV" == "neovim" ]; then
-    # https://github.com/neovim/bot-ci#nightly-builds
-    eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
-    mkdir -p ${DEPS}/bin
-    ln -s $(which nvim) ${DEPS}/bin/vim
-    return
-  fi
-  C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui "
-  case "$ENV" in
-    python)
-      C_OPTS+=--enable-pythoninterp
-      ;;
-    python3)
-      C_OPTS+=--enable-python3interp
-      ;;
-    ruby*)
-      C_OPTS+=--enable-rubyinterp
-      ;;
-  esac
-  git clone --depth 1 https://github.com/vim/vim
-  cd vim
-  ./configure $C_OPTS
-  make
-  make install
-  cd -
 script:
   - |
     if [ "$LINT" = "vimlint" ]; then
