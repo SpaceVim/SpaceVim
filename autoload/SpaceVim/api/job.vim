@@ -27,7 +27,6 @@ function! s:warp(argv, opts) abort
     let obj = {}
     let obj._argv = a:argv
     let obj._opts = a:opts
-
     " @vimlint(EVL103, 1, a:job_id)
     function! obj._out_cb(job_id, data) abort
         if has_key(self._opts, 'on_stdout')
@@ -57,7 +56,9 @@ function! s:warp(argv, opts) abort
                 \ 'exit_cb': obj._exit_cb,
                 \ }
                 \ }
-
+    if has_key(a:opts, 'cwd')
+        call extend(obj.opts, {'cwd' : a:opts.cwd})
+    endif
     return obj
 endfunction
 
@@ -81,7 +82,17 @@ function! s:start(argv, ...) abort
         let id = len(s:jobs) + 1
         let opts.jobpid = id
         let wrapped = s:warp(a:argv, opts)
+        if has_key(wrapped.opts, 'cwd')
+            let old_wd = getcwd()
+            let cwd = expand(wrapped.opts.cwd, 1)
+            " Avoid error E475: Invalid argument: cwd
+            call remove(wrapped.opts, 'cwd')
+            exe 'cd' fnameescape(cwd)
+        endif
         let job = job_start(wrapped.argv, wrapped.opts)
+        if exists('old_wd')
+            exe 'cd' fnameescape(old_wd)
+        endif
         call extend(s:jobs, {id : job})
         return id
     else

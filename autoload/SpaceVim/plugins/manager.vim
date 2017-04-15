@@ -18,6 +18,7 @@ let s:LIST = SpaceVim#api#import('data#list')
 " init values
 let s:plugins = []
 let s:pulling_repos = {}
+let s:building_repos = {}
 " key : plugin name, value : buf line number in manager buffer.
 let s:ui_buf = {}
 let s:plugin_manager_buffer = 0
@@ -261,6 +262,23 @@ function! s:lock_revision(repo) abort
     call s:VIM_CO.system(cmd)
 endfunction
 
+function! s:on_build_exit(id, data, event) abort
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_build_done(s:building_repos[a:id].name)
+    else
+        call s:msg_on_build_failed(s:building_repos[a:id].name)
+    endif
+    if empty(s:pulling_repos) && empty(s:building_repos)
+        " TODO add elapsed time info.
+        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
+                    \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
+        let s:plugin_manager_buffer = 0
+        if g:spacevim_plugin_manager ==# 'dein'
+            call dein#recache_runtimepath()
+        endif
+    endif
+endfunction
+
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
     if a:data == 0 && a:event ==# 'exit'
@@ -273,11 +291,14 @@ function! s:on_install_exit(id, data, event) abort
     if get(s:pulling_repos[a:id], 'rev', '') !=# ''
         call s:lock_revision(s:pulling_repos[a:id])
     endif
+    if get(s:pulling_repos[a:id], 'build', '') !=# ''
+        call s:build(s:pulling_repos[a:id])
+    endif
     call remove(s:pulling_repos, string(a:id))
     if !empty(s:plugins)
         call s:install(dein#get(s:LIST.shift(s:plugins)))
     endif
-    if empty(s:pulling_repos)
+    if empty(s:pulling_repos) && empty(s:building_repos)
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
                     \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
@@ -316,6 +337,27 @@ function! s:install(repo) abort
     endif
 endfunction
 
+function! s:build(repo) abort
+    let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
+    let jobid = s:JOB.start(argv,{
+                \ 'on_exit' : function('s:on_build_exit'),
+                \ 'cwd' : a:repo.path,
+                \ })
+    if jobid != 0
+        let s:building_repos[jobid] = a:repo
+        call s:msg_on_build_start(a:repo.name)
+    endif
+endfunction
+
+function! s:msg_on_build_start(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+                \ '- ' . a:name . ': Building ')
+endfunction
+
+function! s:get_build_argv(build) abort
+    " TODO check os
+    return a:build
+endfunction
 " + foo.vim: Updating...
 if has('nvim')
     function! s:msg_on_start(name) abort
@@ -363,6 +405,16 @@ endfunction
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing failed.')
+endfunction
+
+" - foo.vim: Updating done.
+function! s:msg_on_build_done(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
+endfunction
+
+" - foo.vim: Updating failed.
+function! s:msg_on_build_failed(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building failed.')
 endfunction
 
 function! s:new_window() abort
