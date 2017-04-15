@@ -24,6 +24,10 @@ Execute ( SpaceVim api: job ):
     \ }
   call job.start(argv,opt)
   sleep 100m
+  Log g:stdout
+  Log exit
+  Log string(stderr)
+  Log system('echo foo')
   AssertEqual g:stdout, 'foo'
   AssertEqual exit, 0
 

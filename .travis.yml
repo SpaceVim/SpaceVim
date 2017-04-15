@@ -1,4 +1,4 @@
-language: python
+language: vim
 
 cache:
   pip: true
@@ -15,10 +15,6 @@ matrix:
   allow_failures:
     - env: LINT=vimlint
     - env: LINT=vint
-
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y vim-gtk
 
 install:
   - |
