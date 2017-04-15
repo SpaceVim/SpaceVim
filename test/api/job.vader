@@ -15,7 +15,7 @@ Execute ( SpaceVim api: job ):
     \ 'on_exit' : function('s:on_stdout'),
     \ }
   call job.start(argv,opt)
-  sleep 100m
+  sleep 10m
   AssertEqual stdout, 'foo'
   AssertEqual exit, 0
 
