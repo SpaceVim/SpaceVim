@@ -512,8 +512,8 @@ elseif has('python') && 0
     " @vimlint(EVL103, 0, a:line)
 else
     function! s:focus_main_win() abort
-        let winnr = winbufnr(s:plugin_manager_buffer)
-        if winnr > 0
+        let winnr = bufwinnr(s:plugin_manager_buffer)
+        if winnr > -1
             exe winnr . 'wincmd w'
         endif
         return winnr
