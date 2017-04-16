@@ -176,10 +176,10 @@ function! SpaceVim#plugins#manager#update(...) abort
     endif
     let s:total = len(s:plugins)
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    if has('nvim') && 0
+    if has('nvim')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-    elseif has('python') && 0
+    elseif has('python')
         call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
         call s:append_buf_line(s:plugin_manager_buffer, 3, '')
     else
@@ -373,14 +373,14 @@ function! s:get_build_argv(build) abort
     return a:build
 endfunction
 " + foo.vim: Updating...
-if has('nvim') && 0
+if has('nvim')
     function! s:msg_on_start(name) abort
         call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
     endfunction
     function! s:msg_on_install_start(name) abort
         call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
     endfunction
-elseif has('python') && 0
+elseif has('python')
     function! s:msg_on_start(name) abort
         call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
     endfunction
@@ -461,7 +461,7 @@ function! s:resume_window() abort
 endfunction
 
 " change modifiable before setline
-if has('nvim') && exists('*nvim_buf_set_lines') && 0
+if has('nvim') && exists('*nvim_buf_set_lines')
     function! s:set_buf_line(bufnr, nr, line) abort
         call setbufvar(s:plugin_manager_buffer,'&ma', 1)
         if bufexists(s:plugin_manager_buffer)
@@ -474,7 +474,7 @@ if has('nvim') && exists('*nvim_buf_set_lines') && 0
         endif
         call setbufvar(s:plugin_manager_buffer,'&ma', 0)
     endfunction
-elseif has('python') && 0
+elseif has('python')
     py import vim
     py import string
     " @vimlint(EVL103, 1, a:bufnr)
