@@ -65,6 +65,7 @@ function! SpaceVim#autocmds#init() abort
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
+    autocmd ColorScheme gruvbox call s:fix_gruvbox()
   augroup END
 endfunction
 function! s:reload_touchpad_status() abort
@@ -98,6 +99,10 @@ function! s:generate_doc() abort
   if filereadable('./addon-info.json') && executable('vimdoc')
     call system('vimdoc .')
   endif
+endfunction
+
+function! s:fix_gruvbox() abort
+  hi VertSplit guibg=#282828 guifg=#181A1F
 endfunction
 
 " vim:set et sw=2:
