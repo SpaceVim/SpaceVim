@@ -414,6 +414,7 @@ function! SpaceVim#end() abort
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   call SpaceVim#mapping#leader#defindglobalMappings()
+  call SpaceVim#mapping#space#init()
   if g:spacevim_simple_mode
     let g:spacevim_plugin_groups = ['core']
   else

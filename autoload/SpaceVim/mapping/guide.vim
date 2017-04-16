@@ -394,7 +394,7 @@ function! s:updateStatusline() abort
   hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
   hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
   hi! LeaderGuiderFill guifg=#7c6f64 guibg=#3c3836
-  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Leader\ Guide:\ ' .
+  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Mapping\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' .
         \ '%#LeaderGuiderName#' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
@@ -514,6 +514,8 @@ endif
 
 call SpaceVim#mapping#guide#register_prefix_descriptions('\',
       \ 'g:_spacevim_mappings')
+call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
+      \ 'g:_spacevim_mappings_space')
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')
