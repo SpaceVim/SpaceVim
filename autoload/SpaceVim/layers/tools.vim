@@ -46,6 +46,7 @@ function! SpaceVim#layers#tools#plugins() abort
 endfunction
 
 function! SpaceVim#layers#tools#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calendar', 'vim calendar', 1)
   nmap mm <Plug>BookmarkToggle
   nmap mi <Plug>BookmarkAnnotate
   nmap ma <Plug>BookmarkShowAll
