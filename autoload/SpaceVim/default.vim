@@ -132,6 +132,7 @@ function! SpaceVim#default#SetPlugins() abort
   call add(g:spacevim_plugin_groups, 'misc')
 
   call add(g:spacevim_plugin_groups, 'core')
+  call add(g:spacevim_plugin_groups, 'default')
   call add(g:spacevim_plugin_groups, 'unite')
   call add(g:spacevim_plugin_groups, 'github')
   if has('python3')
