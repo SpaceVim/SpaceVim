@@ -102,7 +102,13 @@ function! s:generate_doc() abort
 endfunction
 
 function! s:fix_gruvbox() abort
-  hi VertSplit guibg=#282828 guifg=#181A1F
+  if &background ==# 'dark'
+    hi VertSplit guibg=#282828 guifg=#181A1F
+    hi EndOfBuffer guibg=#282828 guifg=#282828
+  else
+    hi VertSplit guibg=#fbf1c7 guifg=#e7e9e1
+    hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+  endif
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
 

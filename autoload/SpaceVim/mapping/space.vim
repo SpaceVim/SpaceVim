@@ -5,6 +5,12 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.t = {'name' : '+Toggle editor visuals'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
+    nnoremap <silent> [SPC]bn :bnext<CR>
+    let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
+    nnoremap <silent> [SPC]bp :bp<CR>
+    nnoremap <silent> [SPC]bN :bN<CR>
+    let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
+    let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
     let g:_spacevim_mappings_space.e = {'name' : '+Errors'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
     nnoremap <silent> [SPC]tn  :<C-u>set nu!<CR>
