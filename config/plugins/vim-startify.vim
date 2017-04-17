@@ -58,4 +58,6 @@ augroup startify_map
   autocmd FileType startify set scrolloff=0
 augroup END
 
+call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify', 'fancy start screen',1)
+
 " vim:set et sw=2:
