@@ -103,6 +103,7 @@ endfunction
 
 function! s:fix_gruvbox() abort
   hi VertSplit guibg=#282828 guifg=#181A1F
+  hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
 
 " vim:set et sw=2:
