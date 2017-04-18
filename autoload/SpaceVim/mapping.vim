@@ -207,7 +207,16 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
       endif
     endif
   endif
+endfunction
 
+function! SpaceVim#mapping#menu(desc, key, cmd) abort
+  let description = '➤ '
+        \. a:desc
+        \. repeat(' ', 80 - len(a:desc) - len(a:key))
+        \. a:key
+  call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates,
+        \ [description ,
+        \ a:cmd])
 endfunction
 
 " vim:set et sw=2 cc=80:
