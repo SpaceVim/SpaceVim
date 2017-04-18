@@ -6,7 +6,8 @@ function! SpaceVim#mapping#space#init() abort
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
-    let g:_spacevim_mappings_space.t = {'name' : '+Toggle editor visuals'}
+    let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
+    let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
