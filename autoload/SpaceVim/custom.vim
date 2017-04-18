@@ -12,3 +12,11 @@ function! s:set(key,val) abort
         exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
     endif
 endfunction
+
+" What is your preferred editing style?
+" - Among the stars aboard the Evil flagship (vim)
+" - On the planet Emacs in the Holy control tower (emacs)
+"
+" What distribution of spacemacs would you like to start with?
+" The standard distribution, recommended (spacemacs)
+" A minimalist distribution that you can build on (spacemacs-base)
