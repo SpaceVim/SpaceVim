@@ -9,6 +9,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.t = {'name' : '+Toggle editor visuals'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
+    let g:_spacevim_mappings_space.f = {'name' : '+Files'}
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
