@@ -176,11 +176,15 @@ endfunction
 
 let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans']
 let s:Number = SpaceVim#api#import('data#number')
+
 function! SpaceVim#layers#colorscheme#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
                 \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
                 \ . ', [])', 'cycle-spacevim-theme', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'unite-colorschemes', 1)
 endfunction
+
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
     function! s:_function(fstr) abort
