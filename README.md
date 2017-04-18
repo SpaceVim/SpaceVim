@@ -1,5 +1,6 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
+[Wiki](https://github.com/SpaceVim/SpaceVim/wiki) |
 [Documentation](http://spacevim.org/documentation/) |
 [Twitter](https://twitter.com/SpaceVim) |
 [Community](https://spacevim.org/community/) |
