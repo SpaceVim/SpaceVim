@@ -22,4 +22,24 @@ function! SpaceVim#layers#ui#config() abort
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
     noremap <silent> <F2> :TagbarToggle<CR>
+    " Ui toggles
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>', 'fullscreen-frame', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call(' . string(s:_function('s:toggle_menu_bar')) . ', [])', 'menu-bar', 1)
+endfunction
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
+function! s:toggle_menu_bar() abort
+ echom 1
 endfunction

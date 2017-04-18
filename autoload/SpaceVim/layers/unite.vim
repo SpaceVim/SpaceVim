@@ -78,4 +78,5 @@ function! SpaceVim#layers#unite#plugins() abort
 endfunction
 
 function! SpaceVim#layers#unite#config() abort
+        call SpaceVim#mapping#space#def('nnoremap', ['!'], 'Unite output/shellcmd -start-insert', 'shell cmd', 1)
 endfunction

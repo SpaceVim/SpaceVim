@@ -287,6 +287,8 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[unite]'
   elseif a:key == g:spacevim_denite_leader
     return '[denite]'
+  elseif a:key == ' '
+    return '[SPC]'
   else
     return '<leader>'
   endif

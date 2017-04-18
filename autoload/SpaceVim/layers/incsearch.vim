@@ -66,4 +66,5 @@ function! SpaceVim#layers#incsearch#config() abort
     endfunction
 
     noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+    call SpaceVim#mapping#space#def('nnoremap', ['/',], 'call feedkeys("\<Space>/", "m")', 'incsearch-fuzzy', 1)
 endfunction

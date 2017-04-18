@@ -23,7 +23,7 @@ function! SpaceVim#layers#git#config() abort
     nnoremap <silent> <Leader>gp :Gina push<CR>
     nnoremap <silent> <Leader>ga :Gina add %<CR>
     nnoremap <silent> <Leader>gA :Gina add .<CR>
-    let g:_spacevim_mappings.g = {'name' : 'git function',
+    let g:_spacevim_mappings.g = {'name' : '+git function',
           \ 'd' : ['Gina diff', 'git diff'],
           \ 's' : ['Gina status', 'git status'],
           \ 'c' : ['Gina commit', 'git commit'],
