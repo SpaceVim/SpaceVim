@@ -512,10 +512,15 @@ if !exists("g:leaderGuide_displayfunc")
   let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
 endif
 
-call SpaceVim#mapping#guide#register_prefix_descriptions('\',
-      \ 'g:_spacevim_mappings')
-call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
-      \ 'g:_spacevim_mappings_space')
+if get(g:, 'mapleader', '\') == ' '
+  call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
+        \ 'g:_spacevim_mappings')
+else
+  call SpaceVim#mapping#guide#register_prefix_descriptions('\',
+        \ 'g:_spacevim_mappings')
+  call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
+        \ 'g:_spacevim_mappings_space')
+endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')

@@ -52,8 +52,5 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
 endfunction
 
 function! s:has_map_to_spc() abort
-    if !exists('s:flag')
-        let s:flag = !empty(maparg('<space>', '',0,1))
-    endif
-    return s:flag
+        return get(g:, 'mapleader', '\') == ' '
 endfunction
