@@ -1,4 +1,7 @@
 function! SpaceVim#mapping#space#init() abort
+    if s:has_map_to_spc()
+        return
+    endif
     nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
@@ -18,6 +21,9 @@ function! SpaceVim#mapping#space#init() abort
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
+    if s:has_map_to_spc()
+        return
+    endif
     if a:is_cmd
         let cmd = ':<C-u>' . a:cmd . '<CR>' 
         let lcmd = a:cmd
@@ -36,4 +42,11 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     elseif len(a:keys) == 1
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif
+endfunction
+
+function! s:has_map_to_spc() abort
+    if !exists('s:flag')
+        let s:flag = !empty(maparg('<space>', '',0,1))
+    endif
+    return s:flag
 endfunction
