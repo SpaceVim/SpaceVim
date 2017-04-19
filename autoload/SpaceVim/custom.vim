@@ -20,3 +20,33 @@ endfunction
 " What distribution of spacemacs would you like to start with?
 " The standard distribution, recommended (spacemacs)
 " A minimalist distribution that you can build on (spacemacs-base)
+
+function! SpaceVim#custom#autoconfig(...) abort
+    let menu = SpaceVim#api#import('cmdlinemenu')
+    let ques = [
+                \ ['dark powered mode', function('s:awesome_mode')],
+                \ ['basic mode', function('s:basic_mode')],
+                \ ]
+    call menu.menu(ques)
+endfunction
+
+function! s:awesome_mode() abort
+    let config = []
+    call s:write_to_config(config)
+endfunction
+
+function! s:basic_mode() abort
+    let config = []
+    call s:write_to_config(config)
+endfunction
+
+function! s:write_to_config(config) abort
+    let cf = expand('~/.SpaceVim.d/init.vim')
+    if filereadable(cf)
+        return
+    endif
+    if !isdirectory(fnamemodify(cf, ':p:h'))
+        call mkdir(expand(fnamemodify(cf, ':p:h')), 'p')
+    endif
+    call writefile(a:config, cf, '')
+endfunction
