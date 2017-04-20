@@ -167,7 +167,7 @@ function! zvim#util#BufferEmpty() abort
 endfunction
 
 function! zvim#util#loadMusics() abort
-    let musics = globpath('~/Musics', '*.mp3', 0, 1)
+    let musics = SpaceVim#util#globpath('~/Musics', '*.mp3')
     let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
     for m in musics
         call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
