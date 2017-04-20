@@ -11,6 +11,20 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
+    let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
+    " Windows
+    let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
+    call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
+    let g:_spacevim_mappings_space.w['+'] = ['wincmd w', 'windows-layout-toggle']
+    call SpaceVim#mapping#menu('window-layout-toggle', '[SPC]w+', 'wincmd w')
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h', 'window-left', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j', 'window-down', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k', 'window-up', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'], 'wincmd l', 'window-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'], 'wincmd H', 'window-far-left', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J', 'window-far-down', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K', 'window-far-up', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L', 'window-far-right', 1)
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
