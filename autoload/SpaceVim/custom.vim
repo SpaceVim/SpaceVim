@@ -31,12 +31,16 @@ function! SpaceVim#custom#autoconfig(...) abort
 endfunction
 
 function! s:awesome_mode() abort
-    let config = []
+    let sep = SpaceVim#api#import('file').separator
+    let f = fnamemodify(g:Config_Main_Home, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
+    let config = readfile(f, '')
     call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
-    let config = []
+    let sep = SpaceVim#api#import('file').separator
+    let f = fnamemodify(g:Config_Main_Home, ':h') . join(['', 'mode', 'basic.vim'], sep)
+    let config = readfile(f, '')
     call s:write_to_config(config)
 endfunction
 
