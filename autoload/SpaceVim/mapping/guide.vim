@@ -327,6 +327,8 @@ function! s:handle_input(input) " {{{
   call s:winclose()
   if type(a:input) ==? type({})
     let s:lmap = a:input
+    let s:guide_group = a:input
+    let g:guide_group = a:input
     call s:start_buffer()
   else
     let s:prefix_key_inp = ''
@@ -394,11 +396,16 @@ function! s:updateStatusline() abort
   hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
   hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
   hi! LeaderGuiderFill guifg=#7c6f64 guibg=#3c3836
+  let gname = get(s:guide_group, 'name', '')
+  if !empty(gname)
+    let gname = ' - ' . gname[1:]
+    let gname = substitute(gname,' ', '\\ ', 'g')
+  endif
   exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Mapping\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' .
         \ '%#LeaderGuiderName#' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . get(s:, 'prefix_key_inp', '')
+        \ . get(s:, 'prefix_key_inp', '') . gname
         \ . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
 endfunction
 
@@ -477,6 +484,7 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
   let s:count = v:count != 0 ? v:count : ''
   let s:toplevel = a:key ==? '  '
   let s:prefix_key = a:key
+  let s:guide_group = {}
 
   if has('nvim') && !exists('s:reg')
     let s:reg = ''
