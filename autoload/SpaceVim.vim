@@ -469,7 +469,7 @@ function! SpaceVim#end() abort
   endif
   let g:leaderGuide_max_size = 15
   let g:leaderGuide_submode_mappings = 
-        \ { '<C-C>': 'win_close', '<PageDown>': 'page_down', '<PageUp>': 'page_up'}
+        \ { '<C-C>': 'win_close', '<PageDown>': 'page_down', '<PageUp>': 'page_up', 'u' : 'undo'}
   call SpaceVim#plugins#load()
 endfunction
 

@@ -292,7 +292,7 @@ function! s:create_string(layout) " {{{
   call insert(r, '')
   let output = join(r, "\n ")
   cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <c-c> <LGCMD>submode<CR>
+  cnoremap <nowait> <buffer> <silent> <c-h> <LGCMD>paging_help<CR>
   return output
 endfunction " }}}
 
@@ -328,7 +328,6 @@ function! s:handle_input(input) " {{{
   if type(a:input) ==? type({})
     let s:lmap = a:input
     let s:guide_group = a:input
-    let g:guide_group = a:input
     call s:start_buffer()
   else
     let s:prefix_key_inp = ''
@@ -347,7 +346,7 @@ function! s:wait_for_input() " {{{
   if inp ==? ''
     let s:prefix_key_inp = ''
     call s:winclose()
-  elseif match(inp, "^<LGCMD>submode") == 0
+  elseif match(inp, "^<LGCMD>paging_help") == 0
     call s:submode_mappings()
   else
     if inp == ' '
@@ -407,6 +406,12 @@ function! s:updateStatusline() abort
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
         \ . get(s:, 'prefix_key_inp', '') . gname
         \ . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ . s:guide_help_msg()
+endfunction
+
+function! s:guide_help_msg() abort
+  let msg = '[C-h\ paging/help]'
+  return msg
 endfunction
 
 function! s:winclose() " {{{
@@ -426,6 +431,12 @@ function! s:page_down() " {{{
   redraw!
   call s:wait_for_input()
 endfunction " }}}
+function! s:page_undo() " {{{
+  call feedkeys("\<c-c>", "n")
+  redraw!
+  let s:lmap = s:lmap_undo
+  call s:start_buffer()
+endfunction " }}}
 function! s:page_up() " {{{
   call feedkeys("\<c-c>", "n")
   call feedkeys("\<c-b>", "x")
@@ -438,6 +449,8 @@ function! s:handle_submode_mapping(cmd) " {{{
     call s:page_down()
   elseif a:cmd ==? '<LGCMD>page_up'
     call s:page_up()
+  elseif a:cmd ==? '<LGCMD>undo'
+    call s:page_undo()
   elseif a:cmd ==? '<LGCMD>win_close'
     call s:winclose()
   endif
@@ -504,6 +517,7 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
     let rundict = s:cached_dicts[a:key]
   endif
   let s:lmap = rundict
+  let s:lmap_undo = rundict
 
   call s:start_buffer()
 endfunction " }}}
