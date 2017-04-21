@@ -347,6 +347,7 @@ function! s:wait_for_input() " {{{
     let s:prefix_key_inp = ''
     call s:winclose()
   elseif match(inp, "^<LGCMD>paging_help") == 0
+    let s:guide_help_mode = 1
     call s:submode_mappings()
   else
     if inp == ' '
@@ -410,8 +411,12 @@ function! s:updateStatusline() abort
 endfunction
 
 function! s:guide_help_msg() abort
-  let msg = '[C-h\ paging/help]'
-  return msg
+  if s:guide_help_mode == 1
+    let msg = 'n -> next-page, p -> previous-page, u -> undo-key, h -> help, a -> abort'
+  else
+    let msg = '[C-h paging/help]'
+  endif
+  return substitute(msg,' ', '\\ ', 'g')
 endfunction
 
 function! s:winclose() " {{{
@@ -456,6 +461,7 @@ function! s:handle_submode_mapping(cmd) " {{{
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
+  call s:updateStatusline()
   let submodestring = ""
   let maplist = []
   for key in items(g:leaderGuide_submode_mappings)
@@ -466,7 +472,7 @@ function! s:submode_mappings() " {{{
     execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
     let submodestring = submodestring.' '.key[0].': '.key[1].','
   endfor
-  let inp = input(strpart(submodestring, 0, strlen(submodestring)-1))
+  let inp = input('')
   for map in maplist
     call s:mapmaparg(map)
   endfor
@@ -493,6 +499,7 @@ function! s:get_register() "{{{
   return clip
 endfunction "}}}
 function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
+  let s:guide_help_mode = 0
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
   let s:toplevel = a:key ==? '  '
