@@ -292,7 +292,7 @@ function! s:create_string(layout) " {{{
   call insert(r, '')
   let output = join(r, "\n ")
   cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <c-h> <LGCMD>paging_help<CR>
+  cnoremap <nowait> <buffer> <silent> <C-h> <LGCMD>paging_help<CR>
   return output
 endfunction " }}}
 
@@ -348,6 +348,8 @@ function! s:wait_for_input() " {{{
     call s:winclose()
   elseif match(inp, "^<LGCMD>paging_help") == 0
     let s:guide_help_mode = 1
+    call s:updateStatusline()
+    redraw!
     call s:submode_mappings()
   else
     if inp == ' '
@@ -412,9 +414,9 @@ endfunction
 
 function! s:guide_help_msg() abort
   if s:guide_help_mode == 1
-    let msg = 'n -> next-page, p -> previous-page, u -> undo-key, h -> help, a -> abort'
+    let msg = ' n -> next-page, p -> previous-page, u -> undo-key, h -> help, a -> abort'
   else
-    let msg = '[C-h paging/help]'
+    let msg = ' [C-h paging/help]'
   endif
   return substitute(msg,' ', '\\ ', 'g')
 endfunction
@@ -437,8 +439,7 @@ function! s:page_down() " {{{
   call s:wait_for_input()
 endfunction " }}}
 function! s:page_undo() " {{{
-  call feedkeys("\<c-c>", "n")
-  redraw!
+  call s:winclose()
   let s:lmap = s:lmap_undo
   call s:start_buffer()
 endfunction " }}}
@@ -450,6 +451,7 @@ function! s:page_up() " {{{
 endfunction " }}}
 
 function! s:handle_submode_mapping(cmd) " {{{
+  let s:guide_help_mode = 0
   if a:cmd ==? '<LGCMD>page_down'
     call s:page_down()
   elseif a:cmd ==? '<LGCMD>page_up'
@@ -461,8 +463,6 @@ function! s:handle_submode_mapping(cmd) " {{{
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
-  call s:updateStatusline()
-  let submodestring = ""
   let maplist = []
   for key in items(g:leaderGuide_submode_mappings)
     let map = maparg(key[0], "c", 0, 1)
@@ -470,7 +470,6 @@ function! s:submode_mappings() " {{{
       call add(maplist, map)
     endif
     execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-    let submodestring = submodestring.' '.key[0].': '.key[1].','
   endfor
   let inp = input('')
   for map in maplist
