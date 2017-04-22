@@ -95,7 +95,15 @@ function! s:self.start(argv, ...) abort
         else
             let opts = {}
         endif
+        if has_key(opts, 'cwd')
+            let old_wd = getcwd()
+            let cwd = expand(opts.cwd, 1)
+            exe 'cd' fnameescape(cwd)
+        endif
         let output = self.vim_co.systemlist(a:argv)
+        if exists('old_wd')
+            exe 'cd' fnameescape(old_wd)
+        endif
         let id = -1
         if v:shell_error
             if has_key(opts,'on_stderr')

@@ -396,7 +396,8 @@ function! s:build(repo) abort
         call s:msg_on_build_start(a:repo.name)
         redraw!
         call s:JOB.start(argv,{
-                    \ 'on_exit' : function('s:on_build_exit')
+                    \ 'on_exit' : function('s:on_build_exit'),
+                    \ 'cwd' : a:repo.path,
                     \ })
 
     endif
