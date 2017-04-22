@@ -6,9 +6,6 @@
 " License: MIT license
 "=============================================================================
 
-" TODO add airline support for plugin manager
-" TODO add install function for plugin manager
-
 " Load SpaceVim api
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
@@ -277,10 +274,15 @@ endfunction
 
 " @vimlint(EVL103, 1, a:event)
 function! s:on_install_stdout(id, data, event) abort
+    if a:id == -1
+        let id = s:jobpid
+    else
+        let id = a:id
+    endif
     for str in a:data
         let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
         if !empty(status)
-            call s:msg_on_install_process(s:pulling_repos[a:id].name, status)
+            call s:msg_on_install_process(s:pulling_repos[id].name, status)
         endif
     endfor
 endfunction
@@ -311,34 +313,31 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
-    if a:data == 0 && a:event ==# 'exit'
-        call s:msg_on_install_done(s:pulling_repos[a:id].name)
+    if a:id == -1
+        let id = s:jobpid
     else
-        call s:msg_on_install_failed(s:pulling_repos[a:id].name)
+        let id = a:id
     endif
-    if get(s:pulling_repos[a:id], 'rev', '') !=# ''
-        call s:lock_revision(s:pulling_repos[a:id])
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_install_done(s:pulling_repos[id].name)
+    else
+        call s:msg_on_install_failed(s:pulling_repos[id].name)
     endif
-    if get(s:pulling_repos[a:id], 'build', '') !=# ''
-        call s:build(s:pulling_repos[a:id])
+    if get(s:pulling_repos[id], 'rev', '') !=# ''
+        call s:lock_revision(s:pulling_repos[id])
+    endif
+    if get(s:pulling_repos[id], 'build', '') !=# ''
+        call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     endif
-    call remove(s:pulling_repos, string(a:id))
+    call remove(s:pulling_repos, string(id))
     if !empty(s:plugins)
         call s:install(dein#get(s:LIST.shift(s:plugins)))
     endif
-    if empty(s:pulling_repos) && empty(s:building_repos)
-        " TODO add elapsed time info.
-        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
-                    \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
-        let s:plugin_manager_buffer = 0
-        if g:spacevim_plugin_manager ==# 'dein'
-            call dein#recache_runtimepath()
-        endif
-    endif
+    call s:recache_rtp(a:id)
 endfunction
 
 function! s:pull(repo) abort
@@ -370,13 +369,25 @@ function! s:install(repo) abort
     let s:ui_buf[a:repo.name] = s:pct
     let url = 'https://github.com/' . a:repo.repo
     let argv = ['git', 'clone', '--progress', url, a:repo.path]
-    let jobid = s:JOB.start(argv,{
-                \ 'on_stderr' : function('s:on_install_stdout'),
-                \ 'on_exit' : function('s:on_install_exit')
-                \ })
-    if jobid != 0
-        let s:pulling_repos[jobid] = a:repo
-        call s:msg_on_install_start(a:repo.name)
+    if s:JOB.vim_job || s:JOB.nvim_job
+        let jobid = s:JOB.start(argv,{
+                    \ 'on_stderr' : function('s:on_install_stdout'),
+                    \ 'on_exit' : function('s:on_install_exit')
+                    \ })
+        if jobid != 0
+            let s:pulling_repos[jobid] = a:repo
+            call s:msg_on_install_start(a:repo.name)
+        endif
+    else
+        let s:jobpid += 1
+        let s:pulling_repos[s:jobpid] = a:repo
+        call s:msg_on_start(a:repo.name)
+        redraw!
+        call s:JOB.start(argv,{
+                    \ 'on_stderr' : function('s:on_install_stdout'),
+                    \ 'on_exit' : function('s:on_install_exit')
+                    \ })
+
     endif
 endfunction
 
