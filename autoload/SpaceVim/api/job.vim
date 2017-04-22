@@ -5,11 +5,10 @@ endfunction
 " make vim and neovim use same job func.
 let s:self = {}
 let s:self.jobs = {}
-let s:self.nvim_job = has('nvim')
-let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
-if !s:self.nvim_job && !s:self.vim_job
-    let s:self.vim_co = SpaceVim#api#import('vim#compatible')
-endif
+let s:self.nvim_job = has('nvim') && 0
+let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027') && 0
+let s:self.vim_co = SpaceVim#api#import('vim#compatible')
+
 function! s:self.warn(...) abort
     if len(a:000) == 0
         echohl WarningMsg | echom 'Current version do not support job feature, fallback to sync system()' | echohl None
@@ -98,15 +97,18 @@ function! s:self.start(argv, ...) abort
             let opts = {}
         endif
         let output = self.vim_co.systemlist(a:argv)
-        let id = len(self.jobs) + 1
+        let id = -1
         if v:shell_error
             if has_key(opts,'on_stderr')
-                call call(opts.on_stderr, [id, output, 'on_stderr'])
+                call call(opts.on_stderr, [id, output, 'stderr'])
             endif
         else
             if has_key(opts,'on_stdout')
-                call call(opts.on_stderr, [id, output, 'on_stdout'])
+                call call(opts.on_stdout, [id, output, 'stdout'])
             endif
+        endif
+        if has_key(opts,'on_exit')
+            call call(opts.on_exit, [id, v:shell_error, 'exit'])
         endif
         return id
     endif

@@ -2,6 +2,7 @@ function! SpaceVim#api#vim#compatible#get() abort
   return map({
         \ 'execute' : '',
         \ 'system' : '',
+        \ 'systemlist' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
