@@ -172,6 +172,9 @@ function! SpaceVim#plugins#manager#update(...) abort
     redraw!
     let s:pct = 0
     let s:pct_done = 0
+    if exists('s:recache_done')
+        unlet s:recache_done
+    endif
     let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
     if a:0 == 0
         call add(s:plugins, 'SpaceVim')
@@ -252,6 +255,11 @@ function! s:on_pull_exit(id, data, event) abort
         endif
         call s:pull(repo)
     endif
+    call s:recache_rtp(a:id)
+endfunction
+
+
+function! s:recache_rtp(id) abort
     if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
@@ -284,24 +292,21 @@ function! s:lock_revision(repo) abort
 endfunction
 
 function! s:on_build_exit(id, data, event) abort
-    if a:data == 0 && a:event ==# 'exit'
-        call s:msg_on_build_done(s:building_repos[a:id].name)
+    if a:id == -1
+        let id = s:jobpid
     else
-        call s:msg_on_build_failed(s:building_repos[a:id].name)
+        let id = a:id
+    endif
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_build_done(s:building_repos[id].name)
+    else
+        call s:msg_on_build_failed(s:building_repos[id].name)
     endif
     let s:pct_done += 1
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call remove(s:building_repos, string(a:id))
-    if empty(s:pulling_repos) && empty(s:building_repos)
-        " TODO add elapsed time info.
-        call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installed. Elapsed time: '
-                    \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
-        let s:plugin_manager_buffer = 0
-        if g:spacevim_plugin_manager ==# 'dein'
-            call dein#recache_runtimepath()
-        endif
-    endif
+    call remove(s:building_repos, string(id))
+    call s:recache_rtp(a:id)
 endfunction
 
 " here if a:data == 0, git pull succeed
@@ -378,14 +383,14 @@ endfunction
 function! s:build(repo) abort
     let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
     if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-                \ 'on_exit' : function('s:on_build_exit'),
-                \ 'cwd' : a:repo.path,
-                \ })
-    if jobid != 0
-        let s:building_repos[jobid] = a:repo
-        call s:msg_on_build_start(a:repo.name)
-    endif
+        let jobid = s:JOB.start(argv,{
+                    \ 'on_exit' : function('s:on_build_exit'),
+                    \ 'cwd' : a:repo.path,
+                    \ })
+        if jobid != 0
+            let s:building_repos[jobid] = a:repo
+            call s:msg_on_build_start(a:repo.name)
+        endif
     else
         let s:building_repos[s:jobpid] = a:repo
         call s:msg_on_build_start(a:repo.name)
