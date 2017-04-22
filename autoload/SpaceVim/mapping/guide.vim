@@ -397,9 +397,9 @@ endfunction " }}}
 
 function! s:updateStatusline() abort
   hi! LeaderGuiderPrompt cterm=bold gui=bold guifg=#282828 guibg=#a89984
-  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#fe8019
-  hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
-  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
+  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#504945
+  hi! LeaderGuiderName cterm=bold gui=bold guifg=#a89984 guibg=#504945
+  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#504945 guibg=#3c3836
   hi! LeaderGuiderFill guifg=#a89984 guibg=#3c3836
   let gname = get(s:guide_group, 'name', '')
   if !empty(gname)
