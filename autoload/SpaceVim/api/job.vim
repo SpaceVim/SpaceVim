@@ -6,10 +6,12 @@ endfunction
 let s:self = {}
 let s:self.jobs = {}
 let s:self.nvim_job = has('nvim')
-let s:self.vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
+let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
+let s:self.vim_co = SpaceVim#api#import('vim#compatible')
+
 function! s:self.warn(...) abort
     if len(a:000) == 0
-        echohl WarningMsg | echom 'Current version do not support job feature!' | echohl None
+        echohl WarningMsg | echom 'Current version do not support job feature, fallback to sync system()' | echohl None
     elseif len(a:000) == 1 && type(a:1) == type('')
         echohl WarningMsg | echom a:1| echohl None
     else
@@ -88,7 +90,34 @@ function! s:self.start(argv, ...) abort
         call extend(self.jobs, {id : job})
         return id
     else
-        call self.warn()
+        if len(a:000) > 0
+            let opts = a:1
+        else
+            let opts = {}
+        endif
+        if has_key(opts, 'cwd')
+            let old_wd = getcwd()
+            let cwd = expand(opts.cwd, 1)
+            exe 'cd' fnameescape(cwd)
+        endif
+        let output = self.vim_co.systemlist(a:argv)
+        if exists('old_wd')
+            exe 'cd' fnameescape(old_wd)
+        endif
+        let id = -1
+        if v:shell_error
+            if has_key(opts,'on_stderr')
+                call call(opts.on_stderr, [id, output, 'stderr'])
+            endif
+        else
+            if has_key(opts,'on_stdout')
+                call call(opts.on_stdout, [id, output, 'stdout'])
+            endif
+        endif
+        if has_key(opts,'on_exit')
+            call call(opts.on_exit, [id, v:shell_error, 'exit'])
+        endif
+        return id
     endif
 endfunction
 

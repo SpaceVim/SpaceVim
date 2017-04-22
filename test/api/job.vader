@@ -3,7 +3,7 @@ Execute ( SpaceVim api: job ):
   let argv = ['cat']
   let g:stdout = ''
   let stderr = ''
-  let exit = 1
+  let exit_data = 1
   function! s:on_stdout(id, data, event) abort
     if a:event ==# 'stdout'
       for a in a:data
@@ -12,7 +12,7 @@ Execute ( SpaceVim api: job ):
         endif
       endfor
     elseif a:event ==# 'exit'
-      let g:exit = a:data
+      let g:exit_data = a:data
     else
       let g:stderr = a:data
     endif
@@ -23,11 +23,17 @@ Execute ( SpaceVim api: job ):
     \ 'on_exit' : function('s:on_stdout'),
     \ }
   let jobid = job.start(argv,opt)
-  call job.send(jobid, 'foo')
-  sleep 10m
-  AssertEqual stdout, 'foo'
-  AssertEqual job.status(jobid), 'run'
-  call job.stop(jobid)
-  AssertEqual exit, 1
+  if jobid >= 0
+    call job.send(jobid, 'foo')
+    sleep 10m
+    AssertEqual stdout, 'foo'
+    AssertEqual job.status(jobid), 'run'
+    call job.stop(jobid)
+    AssertEqual exit_data, 1
+  else
+    let jobid = job.start(['echo', 'foo'],opt)
+    AssertEqual stdout, 'foo'
+    AssertEqual exit_data, 0
+  endif
 
 
