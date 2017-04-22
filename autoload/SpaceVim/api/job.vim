@@ -5,8 +5,8 @@ endfunction
 " make vim and neovim use same job func.
 let s:self = {}
 let s:self.jobs = {}
-let s:self.nvim_job = has('nvim') && 0
-let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027') && 0
+let s:self.nvim_job = has('nvim')
+let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
 let s:self.vim_co = SpaceVim#api#import('vim#compatible')
 
 function! s:self.warn(...) abort
