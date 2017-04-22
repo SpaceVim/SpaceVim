@@ -356,7 +356,8 @@ endif
 let g:spacevim_leader_guide_max_size = 0
 
 if !exists("g:leaderGuide_submode_mappings")
-  let g:leaderGuide_submode_mappings = {'<C-C>': "win_close"}
+  let g:leaderGuide_submode_mappings = 
+        \ { '<C-C>': 'win_close', 'n': 'page_down', 'p': 'page_up', 'u' : 'undo'}
 endif
 
 let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
@@ -468,8 +469,6 @@ function! SpaceVim#end() abort
     vnoremap <silent> <leader> :<c-u>LeaderGuideVisual get(g:, 'mapleader', '\')<CR>
   endif
   let g:leaderGuide_max_size = 15
-  let g:leaderGuide_submode_mappings = 
-        \ { '<C-C>': 'win_close', '<PageDown>': 'page_down', '<PageUp>': 'page_up'}
   call SpaceVim#plugins#load()
 endfunction
 

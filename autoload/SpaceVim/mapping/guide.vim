@@ -292,7 +292,7 @@ function! s:create_string(layout) " {{{
   call insert(r, '')
   let output = join(r, "\n ")
   cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <c-c> <LGCMD>submode<CR>
+  cnoremap <nowait> <buffer> <silent> <C-h> <LGCMD>paging_help<CR>
   return output
 endfunction " }}}
 
@@ -319,6 +319,9 @@ function! s:start_buffer() " {{{
   silent 1put!=string
   normal! gg"_dd
   setlocal nomodifiable
+  if empty(maparg("<c-c>", "c", 0, 1))
+    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
+  endif
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -328,7 +331,6 @@ function! s:handle_input(input) " {{{
   if type(a:input) ==? type({})
     let s:lmap = a:input
     let s:guide_group = a:input
-    let g:guide_group = a:input
     call s:start_buffer()
   else
     let s:prefix_key_inp = ''
@@ -347,7 +349,10 @@ function! s:wait_for_input() " {{{
   if inp ==? ''
     let s:prefix_key_inp = ''
     call s:winclose()
-  elseif match(inp, "^<LGCMD>submode") == 0
+  elseif match(inp, "^<LGCMD>paging_help") == 0
+    let s:guide_help_mode = 1
+    call s:updateStatusline()
+    redraw!
     call s:submode_mappings()
   else
     if inp == ' '
@@ -392,21 +397,31 @@ endfunction " }}}
 
 function! s:updateStatusline() abort
   hi! LeaderGuiderPrompt cterm=bold gui=bold guifg=#282828 guibg=#a89984
-  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#fe8019
-  hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
-  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
-  hi! LeaderGuiderFill guifg=#7c6f64 guibg=#3c3836
+  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#504945
+  hi! LeaderGuiderName cterm=bold gui=bold guifg=#a89984 guibg=#504945
+  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#504945 guibg=#3c3836
+  hi! LeaderGuiderFill guifg=#a89984 guibg=#3c3836
   let gname = get(s:guide_group, 'name', '')
   if !empty(gname)
     let gname = ' - ' . gname[1:]
     let gname = substitute(gname,' ', '\\ ', 'g')
   endif
-  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Mapping\ Guide:\ ' .
+  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' .
-        \ '%#LeaderGuiderName#' .
+        \ '%#LeaderGuiderName#\ ' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
         \ . get(s:, 'prefix_key_inp', '') . gname
-        \ . '%#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ . '\ %#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ . s:guide_help_msg()
+endfunction
+
+function! s:guide_help_msg() abort
+  if s:guide_help_mode == 1
+    let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
+  else
+    let msg = ' [C-h paging/help]'
+  endif
+  return substitute(msg,' ', '\\ ', 'g')
 endfunction
 
 function! s:winclose() " {{{
@@ -426,6 +441,13 @@ function! s:page_down() " {{{
   redraw!
   call s:wait_for_input()
 endfunction " }}}
+function! s:page_undo() " {{{
+  call s:winclose()
+  let s:guide_group = {}
+  let s:prefix_key_inp = ''
+  let s:lmap = s:lmap_undo
+  call s:start_buffer()
+endfunction " }}}
 function! s:page_up() " {{{
   call feedkeys("\<c-c>", "n")
   call feedkeys("\<c-b>", "x")
@@ -434,16 +456,23 @@ function! s:page_up() " {{{
 endfunction " }}}
 
 function! s:handle_submode_mapping(cmd) " {{{
+  let s:guide_help_mode = 0
+  call s:updateStatusline()
   if a:cmd ==? '<LGCMD>page_down'
     call s:page_down()
   elseif a:cmd ==? '<LGCMD>page_up'
     call s:page_up()
+  elseif a:cmd ==? '<LGCMD>undo'
+    call s:page_undo()
   elseif a:cmd ==? '<LGCMD>win_close'
     call s:winclose()
+  else
+  call feedkeys("\<c-c>", "n")
+  redraw!
+  call s:wait_for_input()
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
-  let submodestring = ""
   let maplist = []
   for key in items(g:leaderGuide_submode_mappings)
     let map = maparg(key[0], "c", 0, 1)
@@ -451,9 +480,8 @@ function! s:submode_mappings() " {{{
       call add(maplist, map)
     endif
     execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-    let submodestring = submodestring.' '.key[0].': '.key[1].','
   endfor
-  let inp = input(strpart(submodestring, 0, strlen(submodestring)-1))
+  let inp = input('')
   for map in maplist
     call s:mapmaparg(map)
   endfor
@@ -480,6 +508,7 @@ function! s:get_register() "{{{
   return clip
 endfunction "}}}
 function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
+  let s:guide_help_mode = 0
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
   let s:toplevel = a:key ==? '  '
@@ -504,6 +533,7 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
     let rundict = s:cached_dicts[a:key]
   endif
   let s:lmap = rundict
+  let s:lmap_undo = rundict
 
   call s:start_buffer()
 endfunction " }}}
