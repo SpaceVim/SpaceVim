@@ -29,6 +29,9 @@ if has('nvim')
   function! s:system(cmd, ...) abort
     return a:0 == 0 ? system(a:cmd) : system(a:cmd, a:1)
   endfunction
+  function! s:systemlist(cmd, ...) abort
+    return a:0 == 0 ? systemlist(a:cmd) : systemlist(a:cmd, a:1)
+  endfunction
 else
   function! s:system(cmd, ...) abort
     if type(a:cmd) == 3
@@ -37,6 +40,15 @@ else
       return a:0 == 0 ? system(cmd) : system(cmd, a:1)
     else
       return a:0 == 0 ? system(a:cmd) : system(a:cmd, a:1)
+    endif
+  endfunction
+  function! s:systemlist(cmd, ...) abort
+    if type(a:cmd) == 3
+      let cmd = map(a:cmd, 'shellescape(v:val)')
+      let cmd = join(cmd, ' ')
+      return a:0 == 0 ? systemlist(cmd) : systemlist(cmd, a:1)
+    else
+      return a:0 == 0 ? systemlist(a:cmd) : systemlist(a:cmd, a:1)
     endif
   endfunction
 endif

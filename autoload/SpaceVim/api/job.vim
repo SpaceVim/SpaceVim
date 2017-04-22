@@ -7,9 +7,12 @@ let s:self = {}
 let s:self.jobs = {}
 let s:self.nvim_job = has('nvim')
 let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
+if !s:self.nvim_job && !s:self.vim_job
+    let s:self.vim_co = SpaceVim#api#import('vim#compatible')
+endif
 function! s:self.warn(...) abort
     if len(a:000) == 0
-        echohl WarningMsg | echom 'Current version do not support job feature!' | echohl None
+        echohl WarningMsg | echom 'Current version do not support job feature, fallback to sync system()' | echohl None
     elseif len(a:000) == 1 && type(a:1) == type('')
         echohl WarningMsg | echom a:1| echohl None
     else
@@ -89,6 +92,23 @@ function! s:self.start(argv, ...) abort
         return id
     else
         call self.warn()
+        if len(a:000) > 0
+            let opts = a:1
+        else
+            let opts = {}
+        endif
+        let output = self.vim_co.systemlist(a:argv)
+        let id = len(self.jobs) + 1
+        if v:shell_error
+            if has_key(opts,'on_stderr')
+                call call(opts.on_stderr, [id, output, 'on_stderr'])
+            endif
+        else
+            if has_key(opts,'on_stdout')
+                call call(opts.on_stderr, [id, output, 'on_stdout'])
+            endif
+        endif
+        return id
     endif
 endfunction
 
