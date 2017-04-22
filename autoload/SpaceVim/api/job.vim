@@ -6,7 +6,7 @@ endfunction
 let s:self = {}
 let s:self.jobs = {}
 let s:self.nvim_job = has('nvim')
-let s:self.vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
+let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
 function! s:self.warn(...) abort
     if len(a:000) == 0
         echohl WarningMsg | echom 'Current version do not support job feature!' | echohl None
