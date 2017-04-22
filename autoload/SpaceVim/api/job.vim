@@ -90,7 +90,6 @@ function! s:self.start(argv, ...) abort
         call extend(self.jobs, {id : job})
         return id
     else
-        call self.warn()
         if len(a:000) > 0
             let opts = a:1
         else

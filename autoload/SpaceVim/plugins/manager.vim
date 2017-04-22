@@ -23,6 +23,7 @@ let s:building_repos = {}
 let s:ui_buf = {}
 let s:plugin_manager_buffer = 0
 let s:plugin_manager_buffer_lines = []
+let s:jobpid = 0
 
 " install plugin manager
 function! s:install_manager() abort
@@ -168,6 +169,7 @@ function! SpaceVim#plugins#manager#update(...) abort
     elseif status == 1
         return
     endif
+    redraw!
     let s:pct = 0
     let s:pct_done = 0
     let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
@@ -217,19 +219,27 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-    if a:data == 0 && a:event ==# 'exit'
-        call s:msg_on_updated_done(s:pulling_repos[a:id].name)
+    if a:id == -1
+        let id = s:jobpid
     else
-        call s:msg_on_updated_failed(s:pulling_repos[a:id].name)
+        let id = a:id
     endif
-    if get(s:pulling_repos[a:id], 'build', '') !=# ''
-        call s:build(s:pulling_repos[a:id])
+    if a:data == 0 && a:event ==# 'exit'
+        call s:msg_on_updated_done(s:pulling_repos[id].name)
+    else
+        call s:msg_on_updated_failed(s:pulling_repos[id].name)
+    endif
+    if a:id == -1
+        redraw!
+    endif
+    if get(s:pulling_repos[id], 'build', '') !=# ''
+        call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
         call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     endif
-    call remove(s:pulling_repos, string(a:id))
+    call remove(s:pulling_repos, string(id))
     if !empty(s:plugins)
         let name = s:LIST.shift(s:plugins)
         if name ==# 'SpaceVim'
@@ -242,13 +252,16 @@ function! s:on_pull_exit(id, data, event) abort
         endif
         call s:pull(repo)
     endif
-    if empty(s:pulling_repos) && empty(s:building_repos)
+    if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
         " TODO add elapsed time info.
         call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
                     \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
         let s:plugin_manager_buffer = 0
         if g:spacevim_plugin_manager ==# 'dein'
             call dein#recache_runtimepath()
+        endif
+        if a:id == -1
+            let s:recache_done = 1
         endif
     endif
 
@@ -327,12 +340,23 @@ function! s:pull(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
     let argv = ['git', '-C', a:repo.path, 'pull']
-    let jobid = s:JOB.start(argv,{
-                \ 'on_exit' : function('s:on_pull_exit')
-                \ })
-    if jobid != 0
-        let s:pulling_repos[jobid] = a:repo
+    if s:JOB.vim_job || s:JOB.nvim_job
+        let jobid = s:JOB.start(argv,{
+                    \ 'on_exit' : function('s:on_pull_exit')
+                    \ })
+        if jobid != 0
+            let s:pulling_repos[jobid] = a:repo
+            call s:msg_on_start(a:repo.name)
+        endif
+    else
+        let s:jobpid += 1
+        let s:pulling_repos[s:jobpid] = a:repo
         call s:msg_on_start(a:repo.name)
+        redraw!
+        call s:JOB.start(argv,{
+                    \ 'on_exit' : function('s:on_pull_exit')
+                    \ })
+
     endif
 endfunction
 
@@ -353,6 +377,7 @@ endfunction
 
 function! s:build(repo) abort
     let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
+    if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
                 \ 'on_exit' : function('s:on_build_exit'),
                 \ 'cwd' : a:repo.path,
@@ -360,6 +385,15 @@ function! s:build(repo) abort
     if jobid != 0
         let s:building_repos[jobid] = a:repo
         call s:msg_on_build_start(a:repo.name)
+    endif
+    else
+        let s:building_repos[s:jobpid] = a:repo
+        call s:msg_on_build_start(a:repo.name)
+        redraw!
+        call s:JOB.start(argv,{
+                    \ 'on_exit' : function('s:on_build_exit')
+                    \ })
+
     endif
 endfunction
 
