@@ -8,9 +8,10 @@ title:  "Documentation"
 
 - Features
     - [Modular configuration](#modular-configuration)
+    - [Awesome ui](#awesome-ui)
+    - [Mnemonic key bindings](#mnemonic-key-bindings)
     - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
     - [Language specific mode](#language-specific-mode)
-    - [Awesome ui](#awesome-ui)
     - [Unite centric work-flow](#unite-centric-work-flow)
     - [multiple leader mode](#multiple-leader-mode)
 - [Custom configuration](#custom-configuration)
@@ -23,6 +24,10 @@ title:  "Documentation"
 
 - outline + filemanager + checker
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+## Mnemonic key bindings
+
+Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
 ## Language specific mode
 

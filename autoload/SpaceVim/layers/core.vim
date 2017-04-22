@@ -8,5 +8,5 @@ endfunction
 
 function! SpaceVim#layers#core#config() abort
     let g:rooter_silent_chdir = 1
-
+    call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'Rooter', 'find-project-root', 1)
 endfunction
