@@ -400,7 +400,7 @@ function! s:updateStatusline() abort
   hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#fe8019
   hi! LeaderGuiderName cterm=bold gui=bold guifg=#282828 guibg=#fe8019
   hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#fe8019 guibg=#3c3836
-  hi! LeaderGuiderFill guifg=#7c6f64 guibg=#3c3836
+  hi! LeaderGuiderFill guifg=#a89984 guibg=#3c3836
   let gname = get(s:guide_group, 'name', '')
   if !empty(gname)
     let gname = ' - ' . gname[1:]
