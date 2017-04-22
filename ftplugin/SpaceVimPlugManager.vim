@@ -14,4 +14,7 @@ function! MyPlugin(...)
         "let w:airline_render_right = 0
     endif
 endfunction
-call airline#add_statusline_func('MyPlugin')
+try
+    call airline#add_statusline_func('MyPlugin')
+catch
+endtry
