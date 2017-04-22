@@ -319,6 +319,9 @@ function! s:start_buffer() " {{{
   silent 1put!=string
   normal! gg"_dd
   setlocal nomodifiable
+  if empty(maparg("<c-c>", "c", 0, 1))
+    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
+  endif
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -452,6 +455,7 @@ endfunction " }}}
 
 function! s:handle_submode_mapping(cmd) " {{{
   let s:guide_help_mode = 0
+  call s:updateStatusline()
   if a:cmd ==? '<LGCMD>page_down'
     call s:page_down()
   elseif a:cmd ==? '<LGCMD>page_up'
