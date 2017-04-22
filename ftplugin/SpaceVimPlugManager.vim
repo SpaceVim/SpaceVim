@@ -1,3 +1,8 @@
+if exists('g:_SpaceVimPlugManager_ftplugin')
+  finish
+else
+  let g:_SpaceVimPlugManager_ftplugin = 1
+endif
 function! MyPlugin(...)
     if &ft ==# 'SpaceVimPlugManager'
         call airline#extensions#apply_left_override('SpaceVimPlugins', '')
