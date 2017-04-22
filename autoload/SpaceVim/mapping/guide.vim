@@ -417,7 +417,7 @@ endfunction
 
 function! s:guide_help_msg() abort
   if s:guide_help_mode == 1
-    let msg = ' n -> next-page, p -> previous-page, u -> undo-key, h -> help, a -> abort'
+    let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
   else
     let msg = ' [C-h paging/help]'
   endif
@@ -443,6 +443,8 @@ function! s:page_down() " {{{
 endfunction " }}}
 function! s:page_undo() " {{{
   call s:winclose()
+  let s:guide_group = {}
+  let s:prefix_key_inp = ''
   let s:lmap = s:lmap_undo
   call s:start_buffer()
 endfunction " }}}
@@ -464,6 +466,10 @@ function! s:handle_submode_mapping(cmd) " {{{
     call s:page_undo()
   elseif a:cmd ==? '<LGCMD>win_close'
     call s:winclose()
+  else
+  call feedkeys("\<c-c>", "n")
+  redraw!
+  call s:wait_for_input()
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
