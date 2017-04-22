@@ -40,6 +40,13 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+let s:tmflag = 0
 function! s:toggle_menu_bar() abort
- echom 1
+    if !s:tmflag
+        set go+=m
+        let s:tmflag = 1
+    else
+        set go-=m
+        let s:tmflag = 0
+    endif
 endfunction
