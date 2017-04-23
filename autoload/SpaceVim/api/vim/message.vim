@@ -7,7 +7,7 @@
 " ============================================================================
 
 ""
-" @section cmdlinemenu, api-cmdlinemenu
+" @section vim#message, api-vim-message
 " @parentsection api
 
 function! SpaceVim#api#vim#compatible#get() abort
