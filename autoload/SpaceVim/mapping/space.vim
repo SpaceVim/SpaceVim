@@ -28,7 +28,9 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J', 'window-far-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K', 'window-far-up', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L', 'window-far-right', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs \| wincmd w', 'window-far-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs | wincmd w', 'split-window-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'bel vs | wincmd w', 'split-window-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'], 'bel vs', 'split-window-right-focus', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', '='], 'wincmd =', 'balance-windows', 1)
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
@@ -62,7 +64,7 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
             let lcmd = 'call feedkeys("' . a:cmd . '", "' . feedkey_m . '")'
         endif
     endif
-    exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . cmd
+    exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     if len(a:keys) == 2
         let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
     elseif len(a:keys) == 1
