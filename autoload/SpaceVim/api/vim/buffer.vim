@@ -1,3 +1,5 @@
+let s:self = {}
+
 fu! SpaceVim#api#vim#buffer#get()
    return deepcopy(s:self)
 endf
