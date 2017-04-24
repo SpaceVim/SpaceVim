@@ -16,8 +16,10 @@ function! SpaceVim#mapping#space#init() abort
     " Windows
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
-    let g:_spacevim_mappings_space.w['+'] = ['wincmd w', 'windows-layout-toggle']
-    call SpaceVim#mapping#menu('window-layout-toggle', '[SPC]w+', 'wincmd w')
+    call SpaceVim#mapping#space#def('nnoremap', ['w', '+'], 
+                \ 'call call('
+                \ . string(function('s:windows_layout_toggle'))
+                \ . ', [])', 'windows-layout-toggle', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h', 'window-left', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j', 'window-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k', 'window-up', 1)
@@ -71,4 +73,27 @@ endfunction
 
 function! s:has_map_to_spc() abort
         return get(g:, 'mapleader', '\') == ' '
+endfunction
+
+function! s:windows_layout_toggle() abort
+    if winnr('$') != 2
+        echohl WarningMsg
+        echom "Can't toggle window layout when the number of windows isn't two."
+        echohl None
+    else 
+        if winnr() == 1
+           let b = winbufnr(2)
+       else
+           let b = winbufnr(1)
+       endif
+       if winwidth(1) == &columns
+           only
+           vsplit
+       else
+           only
+           split
+       endif
+       exe 'b'.b
+       wincmd w
+    endif
 endfunction
