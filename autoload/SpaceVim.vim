@@ -372,12 +372,15 @@ function! SpaceVim#loadCustomConfig() abort
   let custom_confs = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
   let custom_glob_conf_old = expand('~/.local.vim')
   let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
-  if !filereadable(custom_glob_conf_old) && !filereadable(custom_glob_conf)
-    " if there is no custom config auto generate it.
-    augroup SpaceVimBootstrap
-      au!
-      au VimEnter * call timer_start(10, function('SpaceVim#custom#autoconfig'))
-    augroup END
+
+  if has('timers')
+    if !filereadable(custom_glob_conf_old) && !filereadable(custom_glob_conf)
+      " if there is no custom config auto generate it.
+      augroup SpaceVimBootstrap
+        au!
+        au VimEnter * call timer_start(10, function('SpaceVim#custom#autoconfig'))
+      augroup END
+    endif
   endif
   " the old value will be remove
   if filereadable(custom_glob_conf_old)
