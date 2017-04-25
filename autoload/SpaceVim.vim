@@ -488,7 +488,7 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-  if exists('g:_spacevim_checking_flag')
+  if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
   endif
   if exists(':Startify') == 2
