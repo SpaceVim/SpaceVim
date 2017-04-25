@@ -171,10 +171,11 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['romainl/Apprentice'],
                 \ ['icymind/NeoSolarized'],
                 \ ['jacoborus/tender'],
+                \ ['rakr/vim-one'],
                 \ ]
 endfunction
 
-let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans']
+let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one']
 let s:Number = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#colorscheme#config() abort
