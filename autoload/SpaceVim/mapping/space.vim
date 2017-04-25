@@ -12,11 +12,14 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
     let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
+    let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
     " Windows
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
-    let g:_spacevim_mappings_space.w['+'] = ['wincmd w', 'windows-layout-toggle']
-    call SpaceVim#mapping#menu('window-layout-toggle', '[SPC]w+', 'wincmd w')
+    call SpaceVim#mapping#space#def('nnoremap', ['w', '+'], 
+                \ 'call call('
+                \ . string(function('s:windows_layout_toggle'))
+                \ . ', [])', 'windows-layout-toggle', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h', 'window-left', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j', 'window-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k', 'window-up', 1)
@@ -25,6 +28,10 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J', 'window-far-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K', 'window-far-up', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L', 'window-far-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs | wincmd w', 'split-window-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'bel vs | wincmd w', 'split-window-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'], 'bel vs', 'split-window-right-focus', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', '='], 'wincmd =', 'balance-windows', 1)
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
@@ -57,7 +64,7 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
             let lcmd = 'call feedkeys("' . a:cmd . '", "' . feedkey_m . '")'
         endif
     endif
-    exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . cmd
+    exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     if len(a:keys) == 2
         let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
     elseif len(a:keys) == 1
@@ -68,4 +75,27 @@ endfunction
 
 function! s:has_map_to_spc() abort
         return get(g:, 'mapleader', '\') == ' '
+endfunction
+
+function! s:windows_layout_toggle() abort
+    if winnr('$') != 2
+        echohl WarningMsg
+        echom "Can't toggle window layout when the number of windows isn't two."
+        echohl None
+    else 
+        if winnr() == 1
+           let b = winbufnr(2)
+       else
+           let b = winbufnr(1)
+       endif
+       if winwidth(1) == &columns
+           only
+           vsplit
+       else
+           only
+           split
+       endif
+       exe 'b'.b
+       wincmd w
+    endif
 endfunction

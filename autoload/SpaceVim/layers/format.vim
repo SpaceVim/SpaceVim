@@ -17,3 +17,7 @@ function! SpaceVim#layers#format#plugins() abort
                 \ ['sbdchd/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
                 \ ]
 endfunction
+
+function! SpaceVim#layers#format#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-codo', 1)
+endfunction
