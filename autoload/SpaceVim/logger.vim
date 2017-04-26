@@ -33,7 +33,7 @@ function! SpaceVim#logger#warn(msg) abort
 endfunction
 
 function! SpaceVim#logger#error(msg) abort
-  if g:spacevim_enable_debug && s:logger_level <= 3
+  if get(g:, 'spacevim_enable_debug', 1) && s:logger_level <= 3
     call s:wite(s:warpMsg(a:msg, 3))
   else
     call add(s:log_temp,s:warpMsg(a:msg,3))
