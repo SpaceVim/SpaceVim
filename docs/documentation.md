@@ -29,6 +29,14 @@ title:  "Documentation"
 
 Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
+** SPC mapping root **
+Key           | Description
+------------- | ----------------------
+<kbd>SPC a</kbd> | +applications
+<kbd>SPC b</kbd> | +buffers
+
+
+
 ## Language specific mode
 
 ## Key Mapping
