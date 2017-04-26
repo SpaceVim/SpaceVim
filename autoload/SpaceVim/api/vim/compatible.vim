@@ -46,8 +46,8 @@ else
   function! s:systemlist(cmd, ...) abort
     if type(a:cmd) == 3
       let cmd = map(a:cmd, 'shellescape(v:val)')
-      let cmd = join(cmd, ' ')
-      return a:0 == 0 ? systemlist(cmd) : systemlist(cmd, a:1)
+      let excmd = join(cmd, ' ')
+      return a:0 == 0 ? systemlist(excmd) : systemlist(excmd, a:1)
     else
       return a:0 == 0 ? systemlist(a:cmd) : systemlist(a:cmd, a:1)
     endif
