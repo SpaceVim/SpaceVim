@@ -140,7 +140,7 @@ function! s:drawing_box(data, h, w, bw) abort
   else
     let box[-1] = bottom_line
   endif
-  return join(box, "\n")
+  return box
 endfunction
 
 let s:box['drawing_box'] = function('s:drawing_box')
