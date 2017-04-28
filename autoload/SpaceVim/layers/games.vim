@@ -1,6 +1,6 @@
 function! SpaceVim#layers#games#plugins() abort
     let plugins = []
-    call add(plugins, ['wsdjeg/2048.vim', {'merged' : 0}])
+    call add(plugins, ['wsdjeg/vim2048', {'merged' : 0}])
     return plugins
 endfunction
 
