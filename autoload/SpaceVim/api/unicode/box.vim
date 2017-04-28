@@ -76,6 +76,7 @@ endfunction
 
 let s:box['drawing_table'] = function('s:drawing_table')
 
+" @vimlint(EVL102, 1, l:j)
 function! s:drawing_box(data, h, w, bw) abort
   if &encoding ==# 'utf-8'
     let top_left_corner = '╭'
@@ -142,6 +143,7 @@ function! s:drawing_box(data, h, w, bw) abort
   endif
   return box
 endfunction
+" @vimlint(EVL102, 0, l:j)
 
 let s:box['drawing_box'] = function('s:drawing_box')
 
