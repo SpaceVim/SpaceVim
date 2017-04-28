@@ -177,6 +177,21 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '                   version : ' . g:spacevim_version . '   by : spacevim.org',
         \ '',
         \ ],
+        \ [
+        \ '',
+        \ '',
+        \ '     ______                                                 ',
+        \ '     \  ___)                                                ',
+        \ '      \ \   ______  __  ____   __ ___  ____  _   _   _      ',
+        \ '       > > (  __  )/  \/ /\ \ / // __)/ ___)| | | | | |     ',
+        \ '      / /__ | || |( ()  <  \ v / > _)( (__  | | | |_| |     ',
+        \ '     /_____)|_||_| \__/\_\  > <  \___)\__ \  \_)| ._,_|     ',
+        \ '                           / ^ \        _) )    | |         ',
+        \ '                          /_/ \_\      (__/     |_|         ',
+        \ '                                                                         ',
+        \ '            version : ' . g:spacevim_version . '   by : spacevim.org',
+        \ '',
+        \ ],
         \ ]
 endfunction
 
