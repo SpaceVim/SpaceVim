@@ -29,7 +29,7 @@ title:  "Documentation"
 
 Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
-** SPC mapping root **
+**SPC mapping root** : SPC means `<Space>` on the keyboard.
 
 Key           | Description
 ------------- | ----------------------
