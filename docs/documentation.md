@@ -33,8 +33,11 @@ Key bindings are organized using mnemonic prefixes like b for buffer, p for proj
 
 Key           | Description
 ------------- | ----------------------
+<kbd>SPC !</kbd> | shell cmd
 <kbd>SPC a</kbd> | +applications
 <kbd>SPC b</kbd> | +buffers
+<kbd>SPC 1...9</kbd> | windows 1...9
+
 
 
 
