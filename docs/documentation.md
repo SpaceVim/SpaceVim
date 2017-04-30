@@ -11,6 +11,15 @@ title:  "Documentation"
     - [Discoverable](#discoverable)
     - [Consistent](#consistent)
     - [Crowd-Configured](#crowd-configured)
+- [Highlighted features](#highlighted-features)
+- [Screenshots](#screenshots)
+- [Who can benefit from this?](#who-can-benefit-from-this)
+- [Update and Rollback](#update-and-rollback)
+    - [Update SpaceVim itself](#update-spacevim-itself)
+        - [Automatic Updates](#automatic-updates)
+        - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
+        - [Updating Manually with git](#updating-manually-with-git)
+    - [Update plugins](#update-plugins)
 - Features
     - [Modular configuration](#modular-configuration)
     - [Awesome ui](#awesome-ui)
@@ -44,6 +53,54 @@ Similar functionalities have the same key binding everywhere thanks to a clearly
 ### Crowd-Configured
 
 Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
+
+## Highlighted features
+
+- **Great documentation:** access documentation in Vim with
+    <kbd>:h SpaceVim</kbd>.
+- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Mnemonic key bindings:** commands have mnemonic prefixes like
+    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
+    unite work flow commands.
+- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
+- **Batteries included:** discover hundreds of ready-to-use packages nicely
+    organised in configuration layers following a set of
+    [conventions](http://spacevim.org/development/).
+- **Neovim centric:** Dark powered mode of SpaceVim
+
+## Screenshots
+
+## Who can benefit from this?
+
+- the **elementary** vim users.
+- Vim users pursuing a beautiful appearance.
+- Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
+- Vim users wanting to learn a different way to edit files.
+- Vim users wanting a simple but deep configuration system.
+
+## Update and Rollback
+
+### Update SpaceVim itself
+
+There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+
+#### Automatic Updates
+
+NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
+
+SpaceVim will automatically check for a new version every startup. You must restart Vim after updating. 
+
+#### Updating from the SpaceVim Buffer
+
+Use `:SPUpdate SpaceVim` in SpaceVim buffer, This command will open a buffer to show the process of updating.
+
+#### Updating Manually with git
+
+To update manually close Vim and update the git repository:
+
+`git -C ~/.SpaceVim pull`.
+
+### Update plugins
 
 # Features
 
