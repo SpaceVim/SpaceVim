@@ -6,6 +6,11 @@ title:  "Documentation"
 
 ---
 
+- [Core Pillars](#core-pillars)
+    - [Mnemonic](#mnemonic)
+    - [Discoverable](#discoverable)
+    - [Consistent](#consistent)
+    - [Crowd-Configured](#crowd-configured)
 - Features
     - [Modular configuration](#modular-configuration)
     - [Awesome ui](#awesome-ui)
@@ -17,6 +22,28 @@ title:  "Documentation"
 - [Custom configuration](#custom-configuration)
 - [Layers](https://spacevim.org/layers)
 - [APIs](#apis)
+
+## Core Pillars
+
+Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.
+
+If any of these core pillars is violated open an issue and we’ll try our best to fix it.
+
+### Mnemonic
+
+Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
+
+### Discoverable
+
+Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
+
+### Consistent
+
+Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with Spacemacs.
+
+### Crowd-Configured
+
+Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
 
 # Features
 
