@@ -33,6 +33,11 @@ title:  "Documentation"
         - [Disabling layer services in other layers](#disabling-layer-services-in-other-layers)
         - [Selecting/Ignoring packages of a layer](#selectingignoring-packages-of-a-layer)
         - [Excluding packages](#excluding-packages)
+- [Awesome ui](#awesome-ui)
+    - [Colorscheme](#colorscheme)
+    - [Font](#font)
+    - [UI Toggles](#ui-toggles)
+    - [statusline](#statusline)
 
 - Features
     - [Modular configuration](#modular-configuration)
@@ -236,6 +241,42 @@ all the included colorscheme can be found in [colorscheme layer](http://spacevim
 
 SpaceVim use true colors by default, so you should make sure your terminal support true colors. for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
 
+### Font
+
+The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended to install it on your system if you wish to use it.
+
+To change the default font set the variable `g:spacevim_guifont` in your `~/.SpaceVim.d/init.vim` file. By default its value is:
+
+```vim
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```
+
+If the specified font is not found, the fallback one will be used (depends on your system). Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+
+### UI Toggles
+
+Some UI indicators can be toggled on and off (toggles start with t and T):
+
+Key Binding	| Description
+----------- | -----------
+SPC t 8	| highlight any character past the 80th column
+SPC t f	| display the fill column (by default the fill column is set to 80)
+SPC t h h	| toggle highlight of the current line
+SPC t h i	| toggle highlight indentation levels
+SPC t h c	| toggle highlight indentation current column
+SPC t h s	| toggle syntax highlighting
+SPC t i	| toggle indentation guide at point
+SPC t l	| toggle truncate lines
+SPC t L	| toggle visual lines
+SPC t n	| toggle line numbers
+SPC t v	| toggle smooth scrolling
+SPC T ~	| display ~ in the fringe on empty lines
+SPC T F	| toggle frame fullscreen
+SPC T f	| toggle display of the fringe
+SPC T m	| toggle menu bar
+SPC T M	| toggle frame maximize
+SPC T t	| toggle tool bar
+SPC T T	| toggle frame transparency and enter transparency transient state
 
 # Features
 
