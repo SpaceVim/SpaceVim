@@ -20,6 +20,20 @@ title:  "Documentation"
         - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
         - [Updating Manually with git](#updating-manually-with-git)
     - [Update plugins](#update-plugins)
+- [Custom Configuration](#custom-configuration)
+    [Automatic Generation](#automatic-generation)
+    [Alternative dotdirectory](#alternative-dotdirectory)
+    [Synchronization of dotfile changes](#synchronization-of-dotfile-changes)
+    Testing the dotfile
+    [Dotfile Contents](#dotfile-contents)
+        [Configuration functions](#configuration-functions)
+        [Custom variables](#custom-variables)
+    [Declaring Configuration layers](#declaring-configuration-layers)
+        [Setting configuration layers variables](#setting-configuration-layers-variables)
+        [Disabling layer services in other layers](#disabling-layer-services-in-other-layers)
+        [Selecting/Ignoring packages of a layer](#selectingignoring-packages-of-a-layer)
+        [Excluding packages](#excluding-packages)
+
 - Features
     - [Modular configuration](#modular-configuration)
     - [Awesome ui](#awesome-ui)
@@ -101,6 +115,44 @@ To update manually close Vim and update the git repository:
 `git -C ~/.SpaceVim pull`.
 
 ### Update plugins
+
+Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
+
+## Configuration layers
+
+This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!). 
+
+## Custom Configuration
+
+User configuration can be stored in your ~/.SpaceVim.d directory. 
+
+### Automatic Generation
+
+The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.vim` in your `HOME` directory.
+
+### Alternative dotdirectory
+
+### Synchronization of dotfile changes
+
+### Testing the dotfile
+
+### Dotfile Contents
+
+#### Configuration functions
+
+#### Custom variables
+
+### Declaring Configuration layers
+
+#### Setting configuration layers variables
+
+#### Disabling layer services in other layers
+
+#### Selecting/Ignoring packages of a layer
+
+#### Excluding packages
+
+
 
 # Features
 
