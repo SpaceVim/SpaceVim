@@ -84,6 +84,22 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ## Screenshots
 
+### welcome page
+
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
+
+### working flow
+
+![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+
+Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
+
+Depicts a common frontend development scenario with JavaScript (jQuery), SASS, and PHP buffers.
+
+Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
+
+to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+
 ## Who can benefit from this?
 
 - the **elementary** vim users.
