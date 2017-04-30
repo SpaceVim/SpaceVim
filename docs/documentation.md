@@ -211,9 +211,8 @@ Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd
 
 SpaceVim has a minimalistic and distraction free UI:
 
-- custom powerline mode-line with color feedback according to current Flycheck status
-- Unicode symbols for minor mode lighters which appear in the mode-line
-- custom fringe bitmaps and error feedbacks for Flycheck
+- custom airline with color feedback according to current check status
+- custom icon in sign column and error feedbacks for checker.
 
 ### Colorschemes
 
@@ -226,9 +225,16 @@ let g:spacevim_colorscheme = 'one'
 let g:spacevim_colorscheme_bg = 'dark'
 ```
 
+Mappings	| Description
+------------- | ----------------------
+<kbd>SPC T n</kbd> | switch to next random colorscheme listed in colorscheme layer.
+<kbd>SPC T s</kbd> | select a theme using a unite buffer.
 
+all the included colorscheme can be found in [colorscheme layer](http://spacevim.org/layers/colorscheme/).
 
+**NOTE**:
 
+SpaceVim use true colors by default, so you should make sure your terminal support true colors. for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
 
 
 # Features
