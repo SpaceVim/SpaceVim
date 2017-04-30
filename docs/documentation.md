@@ -207,6 +207,30 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
+## Awesome ui
+
+SpaceVim has a minimalistic and distraction free UI:
+
+- custom powerline mode-line with color feedback according to current Flycheck status
+- Unicode symbols for minor mode lighters which appear in the mode-line
+- custom fringe bitmaps and error feedbacks for Flycheck
+
+### Colorschemes
+
+The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruvbox). There are two variants of this colorscheme, a dark one and a light one. Some aspects of these colorscheme can be customized in the custom configuration file, read <kbd>:h gruvbox</kbd>.
+
+It is possible to define your default themes in your `~/.SpaceVim.d/init.vim` with the variable colorschemes. For instance, to specify [vim-one with dark colorscheme](https://github.com/rakr/vim-one):
+
+```vim
+let g:spacevim_colorscheme = 'one'
+let g:spacevim_colorscheme_bg = 'dark'
+```
+
+
+
+
+
+
 # Features
 
 ## Awesome ui

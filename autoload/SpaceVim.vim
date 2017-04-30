@@ -172,6 +172,9 @@ let g:spacevim_language                = ''
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
+" The background of colorscheme. Default is 'dark'.
+let g:spacevim_colorscheme_bg             = 'dark'
+""
 " The default colorscheme of SpaceVim. Default is 'desert'. 
 " This colorscheme will be used if the colorscheme set by 
 " `g:spacevim_colorscheme` is not installed.

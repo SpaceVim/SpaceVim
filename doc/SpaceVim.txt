@@ -198,6 +198,9 @@ Set the message language of vim. Default is 'en_US.UTF-8'.
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim. Default is 'gruvbox'.
 
+                                                   *g:spacevim_colorscheme_bg*
+The background of colorscheme. Default is 'dark'.
+
                                               *g:spacevim_colorscheme_default*
 The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
 will be used if the colorscheme set by  `g:spacevim_colorscheme` is not
