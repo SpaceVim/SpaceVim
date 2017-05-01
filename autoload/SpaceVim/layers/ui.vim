@@ -27,6 +27,8 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
                 \ . string(s:_function('s:toggle_fill_column')) . ', [])',
                 \ 'toggle-colorcolume', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
+                \ 'toggle background', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
                 \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
                 \ 'toggle-colorcolume', 1)
