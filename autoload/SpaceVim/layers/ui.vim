@@ -48,20 +48,23 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
                 \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
                 \ 'menu-bar', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
+                \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
+                \ 'menu-bar', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
-  function! s:_function(fstr) abort
-    return function(a:fstr)
-  endfunction
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
 else
-  function! s:_SID() abort
-    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
-  endfunction
-  let s:_s = '<SNR>' . s:_SID() . '_'
-  function! s:_function(fstr) abort
-    return function(substitute(a:fstr, 's:', s:_s, 'g'))
-  endfunction
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
 endif
 let s:tmflag = 0
 function! s:toggle_menu_bar() abort
@@ -115,5 +118,24 @@ function! s:toggle_syntax_hi() abort
     else
         syntax on
         let s:shflag = 0
+    endif
+endfunction
+
+let s:ebflag = 0
+function! s:toggle_end_of_buffer() abort
+    if !s:ebflag
+        if &background ==# 'dark'
+            hi EndOfBuffer guibg=#282828
+        else
+            hi EndOfBuffer guibg=#fbf1c7
+        endif
+        let s:ebflag = 1
+    else
+        if &background ==# 'dark'
+            hi EndOfBuffer guibg=#282828 guifg=#282828
+        else
+            hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+        endif
+        let s:ebflag = 0
     endif
 endfunction
