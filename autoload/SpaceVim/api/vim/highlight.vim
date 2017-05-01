@@ -18,6 +18,46 @@ function! s:self.group2dict(name) abort
     return rst
 endfunction
 
+function! s:self.unite(base, target, part) abort
+    let base = self.group2dict(a:base)
+    let target = self.group2dict(a:target)
+    if empty(base) || empty(target)
+        return
+    elseif get(base,a:part, '') ==# get(target, a:part, '')
+        return
+    else
+        let target[a:part] = base[a:part]
+        call self.hi(target)
+    endif
+endfunction
+
+function! s:self.hi(info) abort
+    if empty(a:info)
+        return
+    endif
+   let cmd = 'hi! ' .  a:info.name
+               \ . ' ctermbg=' . a:info.ctermbg
+               \ . ' ctermfg=' . a:info.ctermfg
+               \ . ' guibg=' . a:info.guibg
+               \ . ' guifg=' . a:info.guifg
+   let style = []
+   for sty in ['hold', 'italic', 'underline']
+       if a:info[sty] ==# '1'
+           call add(style, sty)
+       endif
+   endfor
+
+   if !empty(style)
+       let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
+   endif
+
+   try
+       exe cmd
+   catch
+   endtry
+
+endfunction
+
 function! SpaceVim#api#vim#highlight#get() abort
     return deepcopy(s:self)
 endfunction

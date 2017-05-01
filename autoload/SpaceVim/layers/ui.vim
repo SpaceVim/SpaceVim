@@ -122,6 +122,7 @@ function! s:toggle_syntax_hi() abort
 endfunction
 
 let s:ebflag = 0
+let s:HI = SpaceVim#api#import('vim#highlight')
 function! s:toggle_end_of_buffer() abort
     if !s:ebflag
         if &background ==# 'dark'
@@ -131,11 +132,12 @@ function! s:toggle_end_of_buffer() abort
         endif
         let s:ebflag = 1
     else
-        if &background ==# 'dark'
-            hi EndOfBuffer guibg=#282828 guifg=#282828
+        if &termguicolors || has('gui_running')
+            let normalbg = s:HI.group2dict('Normal').guibg
         else
-            hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+            let normalbg = s:HI.group2dict('Normal').ctermbg
         endif
+        exe 'hi! EndOfBuffer guifg=' . normalbg . ' guibg=' . normalbg
         let s:ebflag = 0
     endif
 endfunction
