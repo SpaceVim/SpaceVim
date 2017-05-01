@@ -30,6 +30,8 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
                 \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
                 \ 'toggle-colorcolume', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'set cursorline!',
+                \ 'toggle highlight of the current line', 1)
 
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
                 \ 'fullscreen-frame', 0)
@@ -79,7 +81,7 @@ function! s:toggle_fill_column() abort
         let &colorcolumn=join(range(80,999),",")
         let s:ccflag = 1
     else
-        let &colorcolumn=
+        set cc=
         let s:ccflag = 0
     endif
 endfunction

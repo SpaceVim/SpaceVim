@@ -71,6 +71,8 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     if len(a:keys) == 2
         let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    elseif len(a:keys) == 3
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
     elseif len(a:keys) == 1
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif
