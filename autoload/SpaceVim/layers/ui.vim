@@ -35,6 +35,11 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
                 \ . string(s:_function('s:toggle_indentline')) . ', [])',
                 \ 'menu-bar', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'c'], 'set cursorcolumn!',
+                \ 'toggle highlight indentation current column', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 's'], 'call call('
+                \ . string(s:_function('s:toggle_syntax_hi')) . ', [])',
+                \ 'toggle syntax highlighting', 1)
 
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
                 \ 'fullscreen-frame', 0)
@@ -97,5 +102,16 @@ function! s:toggle_indentline() abort
     else
         IndentLinesEnable
         let s:idflag = 0
+    endif
+endfunction
+
+let s:shflag = 0
+function! s:toggle_syntax_hi() abort
+    if !s:shflag
+        syntax off
+        let s:shflag = 1
+    else
+        syntax on
+        let s:shflag = 0
     endif
 endfunction
