@@ -36,26 +36,49 @@ function! s:self.hi(info) abort
         return
     endif
    let cmd = 'hi! ' .  a:info.name
-               \ . ' ctermbg=' . a:info.ctermbg
-               \ . ' ctermfg=' . a:info.ctermfg
-               \ . ' guibg=' . a:info.guibg
-               \ . ' guifg=' . a:info.guifg
+   if !empty(a:info.ctermbg)
+       let cmd .= ' ctermbg=' . a:info.ctermbg
+   endif
+   if !empty(a:info.ctermfg)
+       let cmd .= ' ctermfg=' . a:info.ctermfg
+   endif
+   if !empty(a:info.guibg)
+       let cmd .= ' guibg=' . a:info.guibg
+   endif
+   if !empty(a:info.guifg)
+       let cmd .= ' guifg=' . a:info.guifg
+   endif
    let style = []
    for sty in ['hold', 'italic', 'underline']
-       if a:info[sty] ==# '1'
+       if get(a:info, sty, '') ==# '1'
            call add(style, sty)
        endif
    endfor
-
    if !empty(style)
        let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
    endif
-
    try
        exe cmd
    catch
    endtry
+endfunction
 
+function! s:self.hide_in_normal(name) abort
+    let group = self.group2dict(a:name)
+    if empty(group)
+        return
+    endif
+    if &termguicolors || has('gui_running')
+        let g:wsd = self.group2dict('Normal')
+        let bg = self.group2dict('Normal').guibg
+        let group.guifg = bg
+        let group.guibg = bg
+    else
+        let bg = self.group2dict('Normal').ctermbg
+        let group.ctermfg = bg
+        let group.ctermbg = bg
+    endif
+    call self.hi(group)
 endfunction
 
 function! SpaceVim#api#vim#highlight#get() abort
