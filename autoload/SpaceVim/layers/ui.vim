@@ -50,7 +50,7 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'menu-bar', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
                 \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
-                \ 'menu-bar', 1)
+                \ 'display ~ in the fringe on empty lines', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
@@ -125,9 +125,9 @@ let s:ebflag = 0
 function! s:toggle_end_of_buffer() abort
     if !s:ebflag
         if &background ==# 'dark'
-            hi EndOfBuffer guibg=#282828
+            hi EndOfBuffer guifg=white
         else
-            hi EndOfBuffer guibg=#fbf1c7
+            hi EndOfBuffer guifg=gray
         endif
         let s:ebflag = 1
     else
