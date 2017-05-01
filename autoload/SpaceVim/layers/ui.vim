@@ -6,7 +6,8 @@ function! SpaceVim#layers#ui#plugins() abort
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['lvht/tagbar-markdown',{'merged' : 0}],
                 \ ['t9md/vim-choosewin', {'merged' : 0}],
-                \ ['vim-airline/vim-airline',                { 'merged' : 0,  'loadconf' : 1}],
+                \ ['vim-airline/vim-airline',                { 'merged' : 0, 
+                \ 'loadconf' : 1}],
                 \ ['vim-airline/vim-airline-themes',         { 'merged' : 0}],
                 \ ['mhinz/vim-startify', {'loadconf' : 1}],
                 \ ]
@@ -23,8 +24,18 @@ function! SpaceVim#layers#ui#config() abort
     let g:signify_line_highlight = 0
     noremap <silent> <F2> :TagbarToggle<CR>
     " Ui toggles
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>', 'fullscreen-frame', 0)
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call(' . string(s:_function('s:toggle_menu_bar')) . ', [])', 'menu-bar', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
+                \ . string(s:_function('s:toggle_fill_column')) . ', [])',
+                \ 'toggle-colorcolume', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
+                \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
+                \ 'toggle-colorcolume', 1)
+
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
+                \ 'fullscreen-frame', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
+                \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
+                \ 'menu-bar', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
@@ -48,5 +59,27 @@ function! s:toggle_menu_bar() abort
     else
         set go-=m
         let s:tmflag = 0
+    endif
+endfunction
+
+let s:ccflag = 0
+function! s:toggle_colorcolumn() abort
+    if !s:ccflag
+        set cc=80
+        let s:ccflag = 1
+    else
+        set cc=
+        let s:ccflag = 0
+    endif
+endfunction
+
+let s:fcflag = 0
+function! s:toggle_fill_column() abort
+    if !s:ccflag
+        let &colorcolumn=join(range(80,999),",")
+        let s:ccflag = 1
+    else
+        let &colorcolumn=
+        let s:ccflag = 0
     endif
 endfunction
