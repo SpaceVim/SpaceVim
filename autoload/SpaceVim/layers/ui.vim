@@ -32,6 +32,9 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'toggle-colorcolume', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'set cursorline!',
                 \ 'toggle highlight of the current line', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
+                \ . string(s:_function('s:toggle_indentline')) . ', [])',
+                \ 'menu-bar', 1)
 
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
                 \ 'fullscreen-frame', 0)
@@ -77,11 +80,22 @@ endfunction
 
 let s:fcflag = 0
 function! s:toggle_fill_column() abort
-    if !s:ccflag
+    if !s:fcflag
         let &colorcolumn=join(range(80,999),",")
-        let s:ccflag = 1
+        let s:fcflag = 1
     else
         set cc=
-        let s:ccflag = 0
+        let s:fcflag = 0
+    endif
+endfunction
+
+let s:idflag = 0
+function! s:toggle_indentline() abort
+    if !s:idflag
+        IndentLinesDisable
+        let s:idflag = 1
+    else
+        IndentLinesEnable
+        let s:idflag = 0
     endif
 endfunction
