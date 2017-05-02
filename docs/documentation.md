@@ -266,17 +266,12 @@ SPC t h i	| toggle highlight indentation levels
 SPC t h c	| toggle highlight indentation current column
 SPC t h s	| toggle syntax highlighting
 SPC t i	| toggle indentation guide at point
-SPC t l	| toggle truncate lines
-SPC t L	| toggle visual lines
 SPC t n	| toggle line numbers
-SPC t v	| toggle smooth scrolling
 SPC T ~	| display ~ in the fringe on empty lines
 SPC T F	| toggle frame fullscreen
 SPC T f	| toggle display of the fringe
 SPC T m	| toggle menu bar
-SPC T M	| toggle frame maximize
 SPC T t	| toggle tool bar
-SPC T T	| toggle frame transparency and enter transparency transient state
 
 # Features
 

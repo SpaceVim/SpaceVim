@@ -48,6 +48,9 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
                 \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
                 \ 'toggle-menu-bar', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'f'], 'call call('
+                \ . string(s:_function('s:toggle_win_fringe')) . ', [])',
+                \ 'toggle-win-fringe', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['T', 't'], 'call call('
                 \ . string(s:_function('s:toggle_tool_bar')) . ', [])',
                 \ 'toggle-tool-bar', 1)
@@ -153,5 +156,18 @@ function! s:toggle_end_of_buffer() abort
         endif
         exe 'hi! EndOfBuffer guifg=' . normalbg . ' guibg=' . normalbg
         let s:ebflag = 0
+    endif
+endfunction
+
+let s:tfflag = 0
+function! s:toggle_win_fringe() abort
+    if !s:tfflag
+        set guioptions+=L
+        set guioptions+=r
+        let s:tfflag = 1
+    else
+        set guioptions-=L
+        set guioptions-=r
+        let s:tfflag = 0
     endif
 endfunction
