@@ -47,7 +47,10 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'fullscreen-frame', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
                 \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
-                \ 'menu-bar', 1)
+                \ 'toggle-menu-bar', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 't'], 'call call('
+                \ . string(s:_function('s:toggle_tool_bar')) . ', [])',
+                \ 'toggle-tool-bar', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
                 \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
                 \ 'display ~ in the fringe on empty lines', 1)
@@ -74,6 +77,17 @@ function! s:toggle_menu_bar() abort
     else
         set go-=m
         let s:tmflag = 0
+    endif
+endfunction
+
+let s:ttflag = 0
+function! s:toggle_tool_bar() abort
+    if !s:ttflag
+        set go+=T
+        let s:ttflag = 1
+    else
+        set go-=T
+        let s:ttflag = 0
     endif
 endfunction
 
