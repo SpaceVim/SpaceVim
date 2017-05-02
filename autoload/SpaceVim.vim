@@ -494,6 +494,13 @@ function! SpaceVim#welcome() abort
   if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
   endif
+  let f = ''
+  if argc()
+    let f = expand(argv(0))
+    if isdirectory(f)
+      exe 'lcd ' . f
+    endif
+  endif
   if exists(':Startify') == 2
     Startify
   endif
@@ -501,7 +508,9 @@ function! SpaceVim#welcome() abort
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2 
       VimFiler
-      wincmd p
+      if empty(f)
+        wincmd p
+      endif
     elseif exists(':NERDTreeToggle') == 2
       NERDTreeToggle
       wincmd p
