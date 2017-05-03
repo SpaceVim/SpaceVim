@@ -288,6 +288,25 @@ Key Binding | Description
 `SPC [1-9]` | jump to the index of tabline.
 
 
+## Manual
+
+### Discovering
+
+#### Mappings
+
+##### Mappings guide
+
+A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
+The prefix can be `[SPC]`, `[Window]`, `denite`, `<leader>` and `[unite]`.
+
+The default key of these prefix is:
+
+Prefix name | custom option and default value | description
+----------- | ------------------------------- | -----------
+`[SPC]`     | NONE / `<Space>`                | default mapping prefix of SpaceVim
+
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+
 # Features
 
 ## Awesome ui
