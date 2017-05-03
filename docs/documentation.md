@@ -273,6 +273,21 @@ SPC T f	| toggle display of the fringe
 SPC T m	| toggle menu bar
 SPC T t	| toggle tool bar
 
+### Statusline && tabline
+
+The statusline and tabline is a heavily customized [airline](https://github.com/vim-airline/vim-airline) with the following capabilities:
+
+- tabline index of each buffer or tab.
+- vim mode (INSERT/NORMAL etc.)
+- git info : diff/branch
+- checker info: numbers of errors and warnings.
+- trailing line number.
+
+Key Binding | Description
+----------- | -----------
+`SPC [1-9]` | jump to the index of tabline.
+
+
 # Features
 
 ## Awesome ui
