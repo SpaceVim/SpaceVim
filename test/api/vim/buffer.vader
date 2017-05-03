@@ -1,9 +1,6 @@
 Execute ( SpaceVim api: vim#buffer ):
   new
   let buffer = SpaceVim#api#import('vim#buffer')
-  normal! g:
-  AssertEqual buffer.is_cmdwin(), 1
-  Log bufname('%')
-  new
-  Log bufname('%')
-  AssertEqual buffer.is_cmdwin(), 0
+  call buffer.open({'bufname':'foo', 'cmd' : 'setl buftype=nofile bufhidden=wipe'})
+  AssertEqual bufname('%'), 'foo'
+  AssertEqual &buftype, 'nofile'
