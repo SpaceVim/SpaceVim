@@ -14,11 +14,11 @@ function! SpaceVim#layers#ui#plugins() abort
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
-    let g:indentLine_color_term = 239
-    let g:indentLine_color_gui = '#09AA08'
-    let g:indentLine_char = '¦'
-    let g:indentLine_concealcursor = 'niv' " (default 'inc')
-    let g:indentLine_conceallevel = 2  " (default 2)
+    let g:indentLine_color_term = get(g:, 'indentLine_color_term', 239)
+    let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#09AA08')
+    let g:indentLine_char = get(g:, 'indentLine_char', '¦')
+    let g:indentLine_concealcursor = 'niv'
+    let g:indentLine_conceallevel = 2
     let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
