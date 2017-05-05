@@ -22,7 +22,9 @@ fu! s:update_logo()
     let g:startify_custom_header = g:_spacevim_welcome_banners[s:NUM.random(0, len(g:_spacevim_welcome_banners))]
   endif
 endf
-call s:update_logo()
+if !exists('g:startify_custom_header')
+  call s:update_logo()
+endif
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
 let g:startify_files_number = 6
 let g:startify_list_order = [
