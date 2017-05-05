@@ -105,6 +105,7 @@ function! SpaceVim#default#SetOptions() abort
   set hidden
   set ttimeout
   set ttimeoutlen=50
+  set lazyredraw
 endfunction
 
 function! SpaceVim#default#SetPlugins() abort
