@@ -62,7 +62,7 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
 
 This is the Unite centric work-flow:
 
-![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+![unite](docs/img/unite_mappings.png)
 
 
 ## Documentation
