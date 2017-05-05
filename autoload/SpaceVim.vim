@@ -508,9 +508,7 @@ function! SpaceVim#welcome() abort
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2 
       VimFiler
-      if empty(f)
-        wincmd p
-      endif
+      wincmd p
     elseif exists(':NERDTreeToggle') == 2
       NERDTreeToggle
       wincmd p
