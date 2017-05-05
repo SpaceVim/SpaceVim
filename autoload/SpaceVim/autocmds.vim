@@ -64,9 +64,19 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
-    autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
+    autocmd VimEnter * if !s:with_file() | call SpaceVim#welcome() | endif
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
   augroup END
+endfunction
+
+function! s:with_file() abort
+  if !argc()
+    return 0
+  elseif isdirectory(expand(argv(0)))
+    return 0
+  else
+    return 1
+  endif
 endfunction
 function! s:reload_touchpad_status() abort
   if s:touchpadoff
@@ -104,11 +114,12 @@ endfunction
 function! s:fix_gruvbox() abort
   if &background ==# 'dark'
     hi VertSplit guibg=#282828 guifg=#181A1F
-    hi EndOfBuffer guibg=#282828 guifg=#282828
+    "hi EndOfBuffer guibg=#282828 guifg=#282828
   else
     hi VertSplit guibg=#fbf1c7 guifg=#e7e9e1
-    hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+    "hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
   endif
+  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
 

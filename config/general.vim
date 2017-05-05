@@ -6,7 +6,8 @@ if has('filterpipe')
 endif
 if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# '' "{{{
     try
-        exec 'colorscheme '. g:spacevim_colorscheme
+        exec 'colorscheme ' . g:spacevim_colorscheme
+        exec 'set background=' . g:spacevim_colorscheme_bg
     catch
         exec 'colorscheme '. g:spacevim_colorscheme_default
     endtry

@@ -7,6 +7,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space = {}
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
+    let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
     let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
@@ -46,8 +47,8 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
-    nnoremap <silent> [SPC]tn  :<C-u>set nu!<CR>
-    let g:_spacevim_mappings_space.t.n = ['set nu!', 'toggle line number']
+    nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
+    let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
 endfunction
 
@@ -70,6 +71,8 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     if len(a:keys) == 2
         let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    elseif len(a:keys) == 3
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
     elseif len(a:keys) == 1
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif

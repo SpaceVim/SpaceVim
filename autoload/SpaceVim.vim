@@ -172,6 +172,9 @@ let g:spacevim_language                = ''
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
+" The background of colorscheme. Default is 'dark'.
+let g:spacevim_colorscheme_bg             = 'dark'
+""
 " The default colorscheme of SpaceVim. Default is 'desert'. 
 " This colorscheme will be used if the colorscheme set by 
 " `g:spacevim_colorscheme` is not installed.
@@ -490,6 +493,13 @@ endfunction
 function! SpaceVim#welcome() abort
   if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
+  endif
+  let f = ''
+  if argc()
+    let f = expand(argv(0))
+    if isdirectory(f)
+      exe 'lcd ' . f
+    endif
   endif
   if exists(':Startify') == 2
     Startify
