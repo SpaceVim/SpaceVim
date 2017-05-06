@@ -47,17 +47,11 @@ let g:startify_skiplist = [
       \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
       \ 'bundle/.*/doc',
       \ ]
-fu! <SID>startify_mapping()
-  if getcwd() == $VIM || getcwd() == expand('~')
-    nnoremap <silent><buffer> <c-p> :<c-u>CtrlP ~\DotFiles<cr>
-  endif
-  call s:update_logo()
-endf
 augroup startify_map
   au!
-  autocmd FileType startify nnoremap <buffer><F2> <Nop>
+  autocmd FileType startify nnoremap <buffer> <F2> <Nop>
   if !exists('g:startify_custom_header')
-    autocmd FileType startify call <SID>startify_mapping()
+    autocmd FileType startify call <SID>update_logo()
   endif
   autocmd FileType startify setl scrolloff=0 nowrap
 augroup END
