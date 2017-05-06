@@ -50,6 +50,7 @@ function! SpaceVim#mapping#space#init() abort
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort

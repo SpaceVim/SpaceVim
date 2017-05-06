@@ -19,6 +19,7 @@ endfunction
 function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'lopen', 'error-transient-state', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'lnext', 'next-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'lopen', 'toggle showing the error list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'lprevious', 'previous-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'lNext', 'previous-error', 1)
 endfunction
