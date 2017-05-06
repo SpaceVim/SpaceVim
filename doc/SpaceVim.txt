@@ -161,10 +161,10 @@ normal mode.To disable this feature:
 <
 
                                               *g:spacevim_enable_cursorcolumn*
-Enable/Disable cursorcolumn. Default is 1, cursorcolumn will be highlighted in
-normal mode. To disable this feature:
+Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
+normal mode. To enable this feature:
 >
-  let g:spacevim_enable_cursorcolumn = 0
+  let g:spacevim_enable_cursorcolumn = 1
 <
 
                                                      *g:spacevim_error_symbol*

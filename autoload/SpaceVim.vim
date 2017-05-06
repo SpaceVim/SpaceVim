@@ -131,12 +131,12 @@ let g:spacevim_enable_neocomplcache    = 0
 " <
 let g:spacevim_enable_cursorline       = 1
 ""
-" Enable/Disable cursorcolumn. Default is 1, cursorcolumn will be
-" highlighted in normal mode. To disable this feature:
+" Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
+" highlighted in normal mode. To enable this feature:
 " >
-"   let g:spacevim_enable_cursorcolumn = 0
+"   let g:spacevim_enable_cursorcolumn = 1
 " <
-let g:spacevim_enable_cursorcolumn     = 1
+let g:spacevim_enable_cursorcolumn     = 0
 ""
 " Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 " >
