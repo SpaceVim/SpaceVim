@@ -93,7 +93,6 @@ let g:spacevim_realtime_leader_guide   = 0
 " <
 let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
-let g:spacevim_enable_cursorcolumn     = 0
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
@@ -125,11 +124,19 @@ let g:spacevim_sidebar_width           = 30
 let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
 ""
-" Enable/Disable cursorline. Default is 0.
+" Enable/Disable cursorline. Default is 1, cursorline will be
+" highlighted in normal mode.To disable this feature:
 " >
-"   let g:spacevim_enable_cursorline = 1
+"   let g:spacevim_enable_cursorline = 0
 " <
-let g:spacevim_enable_cursorline       = 0
+let g:spacevim_enable_cursorline       = 1
+""
+" Enable/Disable cursorcolumn. Default is 1, cursorcolumn will be
+" highlighted in normal mode. To disable this feature:
+" >
+"   let g:spacevim_enable_cursorcolumn = 0
+" <
+let g:spacevim_enable_cursorcolumn     = 1
 ""
 " Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 " >

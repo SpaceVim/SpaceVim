@@ -18,8 +18,14 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType jsp call JspFileTypeInit()
     autocmd FileType html,css,jsp EmmetInstall
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
-    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+    if g:spacevim_enable_cursorline == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorline
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorline
+    endif
+    if g:spacevim_enable_cursorcolumn == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
+    endif
     autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal! g`\"" |

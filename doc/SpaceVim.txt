@@ -154,9 +154,17 @@ ultisnips:
 <
 
                                                 *g:spacevim_enable_cursorline*
-Enable/Disable cursorline. Default is 0.
+Enable/Disable cursorline. Default is 1, cursorline will be highlighted in
+normal mode.To disable this feature:
 >
-  let g:spacevim_enable_cursorline = 1
+  let g:spacevim_enable_cursorline = 0
+<
+
+                                              *g:spacevim_enable_cursorcolumn*
+Enable/Disable cursorcolumn. Default is 1, cursorcolumn will be highlighted in
+normal mode. To disable this feature:
+>
+  let g:spacevim_enable_cursorcolumn = 0
 <
 
                                                      *g:spacevim_error_symbol*
