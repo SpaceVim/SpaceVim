@@ -22,9 +22,6 @@ fu! s:update_logo()
     let g:startify_custom_header = g:_spacevim_welcome_banners[s:NUM.random(0, len(g:_spacevim_welcome_banners))]
   endif
 endf
-if !exists('g:startify_custom_header')
-  call s:update_logo()
-endif
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
 let g:startify_files_number = 6
 let g:startify_list_order = [
@@ -59,10 +56,15 @@ endf
 augroup startify_map
   au!
   autocmd FileType startify nnoremap <buffer><F2> <Nop>
-  autocmd FileType startify call <SID>startify_mapping()
+  if !exists('g:startify_custom_header')
+    autocmd FileType startify call <SID>startify_mapping()
+  endif
   autocmd FileType startify setl scrolloff=0 nowrap
 augroup END
 
+if !exists('g:startify_custom_header')
+  call s:update_logo()
+endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify', 'fancy start screen',1)
 
 " vim:set et sw=2:
