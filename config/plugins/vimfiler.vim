@@ -61,8 +61,8 @@ augroup vfinit
         \ q | endif
 augroup END
 function! s:vimfilerinit()
-  set nonumber
-  set norelativenumber
+  setl nonumber
+  setl norelativenumber
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
