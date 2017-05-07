@@ -4,6 +4,11 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
+# Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Documentation](#documentation)
 - [Core Pillars](#core-pillars)
     - [Mnemonic](#mnemonic)
     - [Discoverable](#discoverable)
