@@ -339,7 +339,7 @@ Mappings | Description
 SPC h SPC | discover SpaceVim documentation, layers and packages using unite
 SPC h i	| get help with the symbol at point
 SPC h k	| show top-level bindings with which-key
-SPC h m	| search available man pages (only available in neovim)
+SPC h m	| search available man pages
 
 Reporting an issue:
 

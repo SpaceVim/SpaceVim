@@ -6,6 +6,7 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['ujihisa/unite-equery'],
                 \ ['m2mdas/unite-file-vcs'],
                 \ ['Shougo/neomru.vim'],
+                \ ['andreicristianpetcu/vim-van'],
                 \ ['kmnk/vim-unite-svn'],
                 \ ['basyura/unite-rails'],
                 \ ['nobeans/unite-grails'],
