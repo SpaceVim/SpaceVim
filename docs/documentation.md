@@ -4,8 +4,6 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
----
-
 - [Core Pillars](#core-pillars)
     - [Mnemonic](#mnemonic)
     - [Discoverable](#discoverable)
@@ -24,7 +22,6 @@ title:  "Documentation"
     - [Automatic Generation](#automatic-generation)
     - [Alternative directory](#alternative-directory)
     - [Synchronization of dotfile changes](#synchronization-of-dotfile-changes)
-    - Testing the dotfile
     - [Dotfile Contents](#dotfile-contents)
         - [Configuration functions](#configuration-functions)
         - [Custom variables](#custom-variables)
