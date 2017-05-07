@@ -6,7 +6,6 @@ function! SpaceVim#mapping#space#init() abort
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
     let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
     let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
@@ -54,6 +53,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
@@ -81,6 +81,7 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif
     call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! s:has_map_to_spc() abort
