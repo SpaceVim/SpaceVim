@@ -356,7 +356,7 @@ function! s:wait_for_input() " {{{
     call s:submode_mappings()
   else
     if inp == ' '
-      let inp = '<space>'
+      let inp = '[SPC]'
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
