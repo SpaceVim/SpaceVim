@@ -4,11 +4,8 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
-# Table of Contents
+## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Documentation](#documentation)
 - [Core Pillars](#core-pillars)
     - [Mnemonic](#mnemonic)
     - [Discoverable](#discoverable)
@@ -40,7 +37,6 @@ title:  "Documentation"
     - [Font](#font)
     - [UI Toggles](#ui-toggles)
     - [statusline](#statusline)
-
 - Features
     - [Modular configuration](#modular-configuration)
     - [Awesome ui](#awesome-ui)
