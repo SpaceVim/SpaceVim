@@ -84,6 +84,9 @@ endfunction " }}}
 
 
 function! s:start_parser(key, dict) " {{{
+  if a:key ==# '[KEYs]'
+    return
+  endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
   let readmap = ""
   redir => readmap
@@ -356,7 +359,7 @@ function! s:wait_for_input() " {{{
     call s:submode_mappings()
   else
     if inp == ' '
-      let inp = '<space>'
+      let inp = '[SPC]'
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
@@ -565,6 +568,9 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ '[KEYs]',
+      \ 'g:_spacevim_mappings_prefixs')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

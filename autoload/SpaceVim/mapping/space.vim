@@ -5,6 +5,7 @@ function! SpaceVim#mapping#space#init() abort
     nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
+    let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
     let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
@@ -14,6 +15,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
     let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
     let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
+    let g:_spacevim_mappings_space.h = {'name' : '+Help'}
     " Windows
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
@@ -51,6 +53,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
@@ -78,10 +81,11 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif
     call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! s:has_map_to_spc() abort
-        return get(g:, 'mapleader', '\') == ' '
+    return get(g:, 'mapleader', '\') == ' '
 endfunction
 
 function! s:windows_layout_toggle() abort
@@ -91,18 +95,18 @@ function! s:windows_layout_toggle() abort
         echohl None
     else 
         if winnr() == 1
-           let b = winbufnr(2)
-       else
-           let b = winbufnr(1)
-       endif
-       if winwidth(1) == &columns
-           only
-           vsplit
-       else
-           only
-           split
-       endif
-       exe 'b'.b
-       wincmd w
+            let b = winbufnr(2)
+        else
+            let b = winbufnr(1)
+        endif
+        if winwidth(1) == &columns
+            only
+            vsplit
+        else
+            only
+            split
+        endif
+        exe 'b'.b
+        wincmd w
     endif
 endfunction
