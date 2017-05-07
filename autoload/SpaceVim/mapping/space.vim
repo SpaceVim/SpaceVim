@@ -5,6 +5,8 @@ function! SpaceVim#mapping#space#init() abort
     nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
+    let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
     let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
@@ -82,7 +84,7 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
 endfunction
 
 function! s:has_map_to_spc() abort
-        return get(g:, 'mapleader', '\') == ' '
+    return get(g:, 'mapleader', '\') == ' '
 endfunction
 
 function! s:windows_layout_toggle() abort
@@ -92,18 +94,18 @@ function! s:windows_layout_toggle() abort
         echohl None
     else 
         if winnr() == 1
-           let b = winbufnr(2)
-       else
-           let b = winbufnr(1)
-       endif
-       if winwidth(1) == &columns
-           only
-           vsplit
-       else
-           only
-           split
-       endif
-       exe 'b'.b
-       wincmd w
+            let b = winbufnr(2)
+        else
+            let b = winbufnr(1)
+        endif
+        if winwidth(1) == &columns
+            only
+            vsplit
+        else
+            only
+            split
+        endif
+        exe 'b'.b
+        wincmd w
     endif
 endfunction

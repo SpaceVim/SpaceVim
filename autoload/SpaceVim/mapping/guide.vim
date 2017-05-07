@@ -565,6 +565,9 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ '[KEYs]',
+      \ 'g:_spacevim_mappings_prefixs')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

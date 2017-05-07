@@ -294,4 +294,11 @@ function! SpaceVim#mapping#leader#getName(key) abort
   endif
 endfunction
 
+function! SpaceVim#mapping#leader#defindKEYs() abort
+  let g:_spacevim_mappings_prefixs = {}
+  let g:_spacevim_mappings_prefixs[g:spacevim_unite_leader] = {'name' : '+Unite prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_unite_leader], g:_spacevim_mappings_unite)
+endfunction
+
+
 " vim:set et sw=2 cc=80:

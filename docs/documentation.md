@@ -334,41 +334,12 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 
 Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
 
-Mappings |	Description
---------- | --------------
-SPC h d b	describe bindings in a helm buffer
-SPC h d c	describe current character under point
-SPC h d d	describe current expression under point
-SPC h d f	describe a function
-SPC h d F	describe a face
-SPC h d k	describe a key
-SPC h d K	describe a keymap
-SPC h d l	copy last pressed keys that you can paste in gitter chat
-SPC h d m	describe current modes
-SPC h d p	describe a package (Emacs built-in function)
-SPC h d P	describe a package (Spacemacs layer information)
-SPC h d s	copy system information that you can paste in gitter chat
-SPC h d t	describe a theme
-SPC h d v	describe a variable
-
-
-Other help key bindings:
-
 Mappings | Description
 -------- | ------------
 SPC h SPC | discover SpaceVim documentation, layers and packages using unite
-SPC h i	| search in info pages with the symbol at point
+SPC h i	| get help with the symbol at point
 SPC h k	| show top-level bindings with which-key
-SPC h m	| search available man pages
-SPC h n	| browse emacs news
-
-Navigation key bindings in help-mode:
-
-Mappings | Description
--------- | ------------
-g b or [ | go back (same as clicking on [back] button)
-g f or ] | go forward (same as clicking on [forward] button)
-g h	| go to help for symbol under point
+SPC h m	| search available man pages (only available in neovim)
 
 Reporting an issue:
 
