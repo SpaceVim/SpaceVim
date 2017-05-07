@@ -54,6 +54,10 @@ call vimfiler#custom#profile('default', 'context', {
 
 "catch
 "endtry
+function! s:buf_handle() abort
+  echom 1
+endfunction
+call SpaceVim#buffer#def_handle_func('vimfiler', function('s:buf_handle'))
 augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()
