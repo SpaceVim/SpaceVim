@@ -4,8 +4,6 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
-## Table of Contents
-
 - [Core Pillars](#core-pillars)
     - [Mnemonic](#mnemonic)
     - [Discoverable](#discoverable)
