@@ -1,0 +1,6 @@
+Execute ( SpaceVim api: vim#buffer ):
+  new
+  let buffer = SpaceVim#api#import('vim#buffer')
+  call buffer.open({'bufname':'foo', 'cmd' : 'setl buftype=nofile bufhidden=wipe'})
+  AssertEqual bufname('%'), 'foo'
+  AssertEqual &buftype, 'nofile'
