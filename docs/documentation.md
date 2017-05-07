@@ -119,7 +119,7 @@ There are several methods of updating the core files of SpaceVim. It is recommen
 
 NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
 
-SpaceVim will automatically check for a new version every startup. You must restart Vim after updating. 
+SpaceVim will automatically check for a new version every startup. You must restart Vim after updating.
 
 #### Updating from the SpaceVim Buffer
 
@@ -137,11 +137,11 @@ Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `
 
 ## Configuration layers
 
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!). 
+This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
 
 ## Custom Configuration
 
-User configuration can be stored in your ~/.SpaceVim.d directory. 
+User configuration can be stored in your ~/.SpaceVim.d directory.
 
 ### Automatic Generation
 
@@ -293,15 +293,25 @@ Key Binding | Description
 ##### Mappings guide
 
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
-The prefix can be `[SPC]`, `[Window]`, `denite`, `<leader>` and `[unite]`.
+The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-Prefix name | custom option and default value | description
------------ | ------------------------------- | -----------
-`[SPC]`     | NONE / `<Space>`                | default mapping prefix of SpaceVim
+Prefix name | custom option and default value        | description
+----------- | -------------------------------------- | -----------
+`[SPC]`     | NONE / `<Space>`                       | default mapping prefix of SpaceVim
+`[Window]`  | `g:spacevim_windows_leader` / `s`      | window mapping prefix of SpaceVim
+`[denite]`  | `g:spacevim_denite_leader` / `F`       | denite mapping prefix of SpaceVim
+`[unite]`   | `g:spacevim_unite_leader` / `f`        | unite mapping prefix of SpaceVim
+`<leader>`  | `mapleader` / ``\``                    | default leader prefix of vim/neovim
 
-By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds). 
+
+for example, after pressing `<Space>` in normal mode, you will see :
+
+![2017-05-07_1365x157](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 
 # Features
 
