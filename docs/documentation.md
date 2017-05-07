@@ -311,7 +311,14 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 ![2017-05-07_1365x157](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
-this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+
+key | description
+---- | -----
+`u` | undo pressing
+`n` | next page of guide buffer
+`p` | previous page of guide buffer
+
 
 # Features
 
