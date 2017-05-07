@@ -84,6 +84,9 @@ endfunction " }}}
 
 
 function! s:start_parser(key, dict) " {{{
+  if a:key ==# '[KEYs]'
+    return
+  endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
   let readmap = ""
   redir => readmap
