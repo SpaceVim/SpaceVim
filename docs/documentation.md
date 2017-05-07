@@ -320,6 +320,16 @@ key | description
 `p` | previous page of guide buffer
 
 
+##### Unide/Denite describe key bindings
+
+It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
+
+To narrow the list, just insert the mapping keys or description of what mapping you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
+
+![2017-05-07_1363x365](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+
+then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
+
 # Features
 
 ## Awesome ui
