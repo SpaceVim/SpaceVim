@@ -41,8 +41,16 @@ function! s:find_layers() abort
     if layer =~# pattern
       let name = layer[matchend(layer, pattern):-5]
       let status = index(g:spacevim_plugin_groups, substitute(name, '/', '#','g')) ? 'loaded' : 'not loaded'
-      let website = 'https://spacevim.org/layers/' . name
-      call add(rst, name . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
+      if filereadable(expand('~/.SpaceVim/docs/layers/' . name . '.md'))
+        let website = 'https://spacevim.org/layers/' . name
+      else
+        let website = 'no exists'
+      endif
+      if status == 'loaded'
+        call add(rst, '+ ' . name . ':' . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
+      else
+        call add(rst, '- ' . name . ':' . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
+      endif
     endif
   endfor
   return rst
