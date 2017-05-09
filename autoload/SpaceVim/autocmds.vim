@@ -10,7 +10,6 @@
 function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
     au!
-    autocmd BufLeave * let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
           \   q :cclose<cr>:lclose<cr>
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |

@@ -13,4 +13,13 @@ function! SpaceVim#layers#lang#markdown#config() abort
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_frontmatter = 1
     let g:vim_markdown_toml_frontmatter = 1
+    augroup SpaceVim_lang_markdown
+        au!
+        autocmd BufEnter *.md call s:mappings()
+    augroup END
+endfunction
+
+function! s:mappings() abort
+    let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
 endfunction
