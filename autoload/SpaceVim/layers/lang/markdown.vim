@@ -1,6 +1,7 @@
 function! SpaceVim#layers#lang#markdown#plugins() abort
     let plugins = []
     call add(plugins, ['plasticboy/vim-markdown',{ 'on_ft' : 'markdown'}])
+    call add(plugins, ['mzlogin/vim-markdown-toc',{ 'on_ft' : 'markdown'}])
     call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
     call add(plugins, ['iamcco/markdown-preview.vim',{ 'on_ft' : 'markdown'}])
     return plugins
