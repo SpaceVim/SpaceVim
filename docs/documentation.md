@@ -337,19 +337,18 @@ please checkout the documentation of unite and denite via `:h unite` and `:h den
 Mappings         | Mode          | description
 --------         | ----          | -----------
 `Ctrl`+`h/k/l/r` | Normal        | Un-map
-`Ctrl`+`r`       | Normal        | Redraw
+`Ctrl`+`l`       | Normal        | Redraw
 `Tab`            | Insert        | Select next line
+`Tab`            | Normal        | Select actions
 `Shift` + `Tab`  | Insert        | Select previous line
-`'`              | Normal        | Toggle mark current candidate, up
-`e`              | Normal        | Run default action
+`Space`          | Normal        | Toggle mark current candidate, up
+`Enter`          | Normal        | Run default action
 `Ctrl`+`v`       | Normal        | Open in a split
 `Ctrl`+`s`       | Normal        | Open in a vertical split
 `Ctrl`+`t`       | Normal        | Open in a new tab
-`Tab`            | Normal        | `Ctrl`+`w`+`w`
-`Escape`         | Normal        | Exit unite
-`jj`             | Insert        | Leave Insert mode
+`Ctrl` + `g`     | Normal        | Exit unite
+`jk`             | Insert        | Leave Insert mode
 `r`              | Normal        | Replace ('search' profile) or rename
-`Tab`            | Insert        | Unite autocompletion
 `Ctrl`+`z`       | Normal/insert | Toggle transpose window
 `Ctrl`+`w`       | Insert        | Delete backward path
 
@@ -786,23 +785,6 @@ Key   | Mode | Action
 `<leader>`+`ta` | Normal | Opens Unite tab
 `<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
 `<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
-| **Within _Unite_ buffers** |||
-`Ctrl`+`h/k/l/r` | Normal | Un-map
-`Ctrl`+`r` | Normal | Redraw
-`Ctrl`+`j` | Insert | Select next line
-`Ctrl`+`k` | Insert | Select previous line
-`'` | Normal | Toggle mark current candidate, up
-`e` | Normal | Run default action
-`Ctrl`+`v` | Normal | Open in a split
-`Ctrl`+`s` | Normal | Open in a vertical split
-`Ctrl`+`t` | Normal | Open in a new tab
-`Tab` | Normal | `Ctrl`+`w`+`w`
-`Escape` | Normal | Exit unite
-`jj` | Insert | Leave Insert mode
-`r` | Normal | Replace ('search' profile) or rename
-`Tab` | Insert | Unite autocompletion
-`Ctrl`+`z` | Normal/insert | Toggle transpose window
-`Ctrl`+`w` | Insert | Delete backward path
 
 ##### Plugin: VimFiler
 
