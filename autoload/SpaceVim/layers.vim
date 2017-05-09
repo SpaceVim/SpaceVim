@@ -6,6 +6,9 @@
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
 function! SpaceVim#layers#load(layer, ...) abort
+  if a:layer == '-l'
+    call s:list_layers()
+  endif
   if index(g:spacevim_plugin_groups, a:layer) == -1
     call add(g:spacevim_plugin_groups, a:layer)
   endif
@@ -15,5 +18,36 @@ function! SpaceVim#layers#load(layer, ...) abort
     endfor
   endif
 endfunction
+
+function! s:list_layers() abort
+  tabnew SpaceVimLayers
+  nnoremap <buffer> q :q<cr>
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
+  setf SpaceVimLayerManager
+  nnoremap <silent> <buffer> q :bd<CR>
+  let info = [
+        \ 'SpaceVim layers:',
+        \ '',
+        \ ]
+  call setline(1,info + s:find_layers())
+  setl nomodifiable
+endfunction
+
+function! s:find_layers() abort
+  let layers = SpaceVim#util#globpath(&rtp, "autoload/SpaceVim/layers/**/*.vim")
+  let pattern = '/autoload/SpaceVim/layers/'
+  let rst = []
+  for layer in layers
+    if layer =~# pattern
+      let name = layer[matchend(layer, pattern):-5]
+      let status = index(g:spacevim_plugin_groups, substitute(name, '/', '#','g')) ? 'loaded' : 'not loaded'
+      let website = 'https://spacevim.org/layers/' . name
+      call add(rst, name . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
+    endif
+  endfor
+  return rst
+endfunction
+
+
 
 " vim:set et sw=2:

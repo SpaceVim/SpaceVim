@@ -349,6 +349,9 @@ SPC h I	| Open SpaceVim GitHub issue page with pre-filled information
 
 #### Available layers
 
+All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
+
+
 ##### Available packages in Spacemacs
 
 ##### New packages from ELPA repositories
