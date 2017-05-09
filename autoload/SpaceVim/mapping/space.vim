@@ -16,6 +16,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
     let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
     let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+    let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     " Windows
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
@@ -109,4 +110,31 @@ function! s:windows_layout_toggle() abort
         exe 'b'.b
         wincmd w
     endif
+endfunction
+function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
+    if s:has_map_to_spc()
+        return
+    endif
+    if a:is_cmd
+        let cmd = ':<C-u>' . a:cmd . '<CR>' 
+        let lcmd = a:cmd
+    else
+        let cmd = a:cmd
+        let feedkey_m = a:m =~# 'nore' ? 'n' : 'm'
+        if a:cmd =~? '^<plug>'
+            let lcmd = 'call feedkeys("\' . a:cmd . '", "' . feedkey_m . '")'
+        else
+            let lcmd = 'call feedkeys("' . a:cmd . '", "' . feedkey_m . '")'
+        endif
+    endif
+    exe a:m . ' <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    if len(a:keys) == 2
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    elseif len(a:keys) == 3
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
+    elseif len(a:keys) == 1
+        let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
+    endif
+    call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
