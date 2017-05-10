@@ -9,11 +9,9 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#markdown#config() abort
-    let g:vim_markdown_fenced_languages = [ 'c++=cpp' , 'viml=vim', 'bash=sh', 'ini=dosini']
-    let g:vim_markdown_conceal = 0
-    let g:vim_markdown_folding_disabled = 1
-    let g:vim_markdown_frontmatter = 1
-    let g:vim_markdown_toml_frontmatter = 1
+    let g:markdown_enable_mappings = 0
+    let g:markdown_enable_insert_mode_leader_mappings = 0
+    let g:markdown_enable_spell_checking = 0
     let g:markdown_quote_syntax_filetypes = {
                 \ "vim" : {
                 \   "start" : "\\%(vim\\|viml\\)",
@@ -23,9 +21,13 @@ function! SpaceVim#layers#lang#markdown#config() abort
         au!
         autocmd BufEnter *.md call s:mappings()
     augroup END
+    if executable('firefox')
+        let g:mkdp_path_to_chrome= 'firefox'
+    endif
 endfunction
 
 function! s:mappings() abort
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)
 endfunction
