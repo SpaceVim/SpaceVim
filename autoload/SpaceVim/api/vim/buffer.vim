@@ -16,7 +16,7 @@ function! s:self.open(opts) abort
     let mode = get(a:opts, 'mode', 'vertical topleft split')
     let cmd = get(a:opts, 'cmd', '')
     if empty(buf)
-        exe mode bufopt
+        exe mode buf
     else
         exe mode buf
     endif
