@@ -13,5 +13,9 @@ function! s:self._update() abort
 endfunction
 
 function! s:self._jump(tabnr, bufid) abort
-    
+    exe 'tabnext' . a:tabnr
+    if index(tabpagebuflist(a:tabnr), a:bufid) != -1
+        let winnr = bufwinnr(bufname(a:bufid))
+        exe winnr .  'wincmd w'
+    endif
 endfunction

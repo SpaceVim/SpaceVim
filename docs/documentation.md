@@ -4,48 +4,88 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
-- [Core Pillars](#core-pillars)
-    - [Mnemonic](#mnemonic)
-    - [Discoverable](#discoverable)
-    - [Consistent](#consistent)
-    - [Crowd-Configured](#crowd-configured)
-- [Highlighted features](#highlighted-features)
-- [Screenshots](#screenshots)
-- [Who can benefit from this?](#who-can-benefit-from-this)
-- [Update and Rollback](#update-and-rollback)
-    - [Update SpaceVim itself](#update-spacevim-itself)
-        - [Automatic Updates](#automatic-updates)
-        - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
-        - [Updating Manually with git](#updating-manually-with-git)
-    - [Update plugins](#update-plugins)
-- [Custom Configuration](#custom-configuration)
-    - [Automatic Generation](#automatic-generation)
-    - [Alternative directory](#alternative-directory)
-    - [Synchronization of dotfile changes](#synchronization-of-dotfile-changes)
-    - [Dotfile Contents](#dotfile-contents)
-        - [Configuration functions](#configuration-functions)
-        - [Custom variables](#custom-variables)
-    - [Declaring Configuration layers](#declaring-configuration-layers)
-        - [Setting configuration layers variables](#setting-configuration-layers-variables)
-        - [Disabling layer services in other layers](#disabling-layer-services-in-other-layers)
-        - [Selecting/Ignoring packages of a layer](#selectingignoring-packages-of-a-layer)
-        - [Excluding packages](#excluding-packages)
-- [Awesome ui](#awesome-ui)
-    - [Colorscheme](#colorscheme)
-    - [Font](#font)
-    - [UI Toggles](#ui-toggles)
-    - [statusline](#statusline)
-- Features
-    - [Modular configuration](#modular-configuration)
-    - [Awesome ui](#awesome-ui)
-    - [Mnemonic key bindings](#mnemonic-key-bindings)
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [Language specific mode](#language-specific-mode)
-    - [Unite centric work-flow](#unite-centric-work-flow)
-    - [multiple leader mode](#multiple-leader-mode)
-- [Custom configuration](#custom-configuration)
-- [Layers](https://spacevim.org/layers)
-- [APIs](#apis)
+
+<!-- vim-markdown-toc GFM -->
+* [Core Pillars](#core-pillars)
+    * [Mnemonic](#mnemonic)
+    * [Discoverable](#discoverable)
+    * [Consistent](#consistent)
+    * [Crowd-Configured](#crowd-configured)
+* [Highlighted features](#highlighted-features)
+* [Screenshots](#screenshots)
+    * [welcome page](#welcome-page)
+    * [working flow](#working-flow)
+* [Who can benefit from this?](#who-can-benefit-from-this)
+* [Update and Rollback](#update-and-rollback)
+    * [Update SpaceVim itself](#update-spacevim-itself)
+        * [Automatic Updates](#automatic-updates)
+        * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
+        * [Updating Manually with git](#updating-manually-with-git)
+    * [Update plugins](#update-plugins)
+* [Configuration layers](#configuration-layers)
+* [Custom Configuration](#custom-configuration)
+    * [Automatic Generation](#automatic-generation)
+    * [Alternative directory](#alternative-directory)
+* [Awesome ui](#awesome-ui)
+    * [Colorschemes](#colorschemes)
+    * [Font](#font)
+    * [UI Toggles](#ui-toggles)
+    * [Statusline && tabline](#statusline--tabline)
+* [Manual](#manual)
+    * [Completion](#completion)
+        * [Unite/Denite](#unitedenite)
+            * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
+    * [Discovering](#discovering)
+        * [Mappings](#mappings)
+            * [Mappings guide](#mappings-guide)
+            * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
+        * [Getting help](#getting-help)
+        * [Available layers](#available-layers)
+            * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
+            * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
+        * [Toggles](#toggles)
+* [Features](#features)
+    * [Awesome ui](#awesome-ui-1)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+* [Language specific mode](#language-specific-mode)
+* [Key Mapping](#key-mapping)
+    * [c/c++ support](#cc-support)
+    * [go support](#go-support)
+    * [python support](#python-support)
+* [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
+* [Modular configuration](#modular-configuration)
+* [Multiple leader mode](#multiple-leader-mode)
+    * [Global origin vim leader](#global-origin-vim-leader)
+    * [Local origin vim leader](#local-origin-vim-leader)
+    * [Windows function leader](#windows-function-leader)
+    * [Unite work flow leader](#unite-work-flow-leader)
+* [Unite centric work-flow](#unite-centric-work-flow)
+        * [Plugin Highlights](#plugin-highlights)
+        * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+        * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+            * [Language](#language)
+            * [Commands](#commands)
+            * [Commands](#commands-1)
+            * [Completion](#completion-1)
+            * [Unite](#unite)
+            * [Operators & Text Objects](#operators--text-objects)
+        * [Custom Key bindings](#custom-key-bindings)
+            * [File Operations](#file-operations)
+            * [Editor UI](#editor-ui)
+            * [Window Management](#window-management)
+            * [Native functions](#native-functions)
+            * [Plugin: Unite](#plugin-unite)
+            * [Plugin: VimFiler](#plugin-vimfiler)
+            * [Plugin: neocomplete](#plugin-neocomplete)
+            * [Plugin: NERD Commenter](#plugin-nerd-commenter)
+            * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+            * [Plugin: ChooseWin](#plugin-choosewin)
+            * [Plugin: Bookmarks](#plugin-bookmarks)
+            * [Plugin: Gita](#plugin-gita)
+            * [Plugin: vim-signify](#plugin-vim-signify)
+            * [Misc Plugins](#misc-plugins)
+
+<!-- vim-markdown-toc -->
 
 ## Core Pillars
 
@@ -63,7 +103,7 @@ Innovative real-time display of available key bindings. Simple query system to q
 
 ### Consistent
 
-Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with Spacemacs.
+Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
 
 ### Crowd-Configured
 
@@ -193,14 +233,14 @@ call SpaceVim#layers#load('ui')
 " If there is a particular plugin you don't like, you can define this
 " variable to disable them entirely:
 let g:spacevim_disabled_plugins=[
-    \ ['junegunn/fzf.vim'],
-    \ ]
+\ ['junegunn/fzf.vim'],
+\ ]
 
 " If you want to add some custom plugins, use these options:
 let g:spacevim_custom_plugins = [
-    \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
-    \ ['wsdjeg/GitHub.vim'],
-    \ ]
+\ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+\ ['wsdjeg/GitHub.vim'],
+\ ]
 
 " set the guifont
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
@@ -279,12 +319,38 @@ The statusline and tabline is a heavily customized [airline](https://github.com/
 - checker info: numbers of errors and warnings.
 - trailing line number.
 
-Key Binding | Description
------------ | -----------
-`SPC [1-9]` | jump to the index of tabline.
+    Key Binding | Description
+    ----------- | -----------
+    `SPC [1-9]` | jump to the index of tabline.
 
 
 ## Manual
+
+### Completion
+
+#### Unite/Denite
+
+please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
+
+##### Mappings within unite/denite buffer
+
+Mappings         | Mode          | description
+--------         | ----          | -----------
+`Ctrl`+`h/k/l/r` | Normal        | Un-map
+`Ctrl`+`l`       | Normal        | Redraw
+`Tab`            | Insert        | Select next line
+`Tab`            | Normal        | Select actions
+`Shift` + `Tab`  | Insert        | Select previous line
+`Space`          | Normal        | Toggle mark current candidate, up
+`Enter`          | Normal        | Run default action
+`Ctrl`+`v`       | Normal        | Open in a split
+`Ctrl`+`s`       | Normal        | Open in a vertical split
+`Ctrl`+`t`       | Normal        | Open in a new tab
+`Ctrl` + `g`     | Normal        | Exit unite
+`jk`             | Insert        | Leave Insert mode
+`r`              | Normal        | Replace ('search' profile) or rename
+`Ctrl`+`z`       | Normal/insert | Toggle transpose window
+`Ctrl`+`w`       | Insert        | Delete backward path
 
 ### Discovering
 
@@ -313,11 +379,11 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
 
-key | description
+key  | description
 ---- | -----
-`u` | undo pressing
-`n` | next page of guide buffer
-`p` | previous page of guide buffer
+`u`  | undo pressing
+`n`  | next page of guide buffer
+`p`  | previous page of guide buffer
 
 
 ##### Unide/Denite describe key bindings
@@ -349,22 +415,26 @@ SPC h I	| Open SpaceVim GitHub issue page with pre-filled information
 
 #### Available layers
 
-##### Available packages in Spacemacs
+All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
+
+##### Available plugins in SpaceVim
+
+All plugins can be easily discovered via `<leader> l p`.
 
 ##### New packages from ELPA repositories
 
-####Toggles
+#### Toggles
 
 
 
-# Features
+## Features
 
-## Awesome ui
+### Awesome ui
 
 - outline + filemanager + checker
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-## Mnemonic key bindings
+### Mnemonic key bindings
 
 Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
@@ -424,20 +494,20 @@ TODO:
 
 ## Multiple leader mode
 
-### Global origin vim leader, default : `\`
+### Global origin vim leader
 
 Vim's origin global leader can be used in all modes.
 
-### Local origin vim leader, default : `,`
+### Local origin vim leader
 
 Vim's origin local leader can be used in all the mode.
 
-### Windows function leader, default : `s`
+### Windows function leader
 
 Windows function leader can only be used in normal mode.
 For the list of mappings see the [link](#window-management)
 
-### Unite work flow leader, default : `f`
+### Unite work flow leader
 
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
@@ -446,13 +516,13 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
 - List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
+    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
@@ -715,23 +785,6 @@ Key   | Mode | Action
 `<leader>`+`ta` | Normal | Opens Unite tab
 `<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
 `<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
-| **Within _Unite_ buffers** |||
-`Ctrl`+`h/k/l/r` | Normal | Un-map
-`Ctrl`+`r` | Normal | Redraw
-`Ctrl`+`j` | Insert | Select next line
-`Ctrl`+`k` | Insert | Select previous line
-`'` | Normal | Toggle mark current candidate, up
-`e` | Normal | Run default action
-`Ctrl`+`v` | Normal | Open in a split
-`Ctrl`+`s` | Normal | Open in a vertical split
-`Ctrl`+`t` | Normal | Open in a new tab
-`Tab` | Normal | `Ctrl`+`w`+`w`
-`Escape` | Normal | Exit unite
-`jj` | Insert | Leave Insert mode
-`r` | Normal | Replace ('search' profile) or rename
-`Tab` | Insert | Unite autocompletion
-`Ctrl`+`z` | Normal/insert | Toggle transpose window
-`Ctrl`+`w` | Insert | Delete backward path
 
 ##### Plugin: VimFiler
 

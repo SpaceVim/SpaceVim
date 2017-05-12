@@ -46,7 +46,7 @@ put more time into development.
 
 ![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
 
-If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
+If you are new to vim, you should learn about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
 ## Features
 
@@ -77,7 +77,7 @@ SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`,
 
 here is an example:
 
-```viml
+```vim
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3
