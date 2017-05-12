@@ -1,4 +1,4 @@
-sy match TabManTName '^Tab #\d\+$\|^".*\zsTab#'
+sy match TabManTName '^[▷▼] Tab #\d\+$\|^".*\zsTab#'
 sy match TabManCurTName '^Tab #\d\+\ze\*$'
 sy match TabManAtv '\*$'
 sy match TabManLead '[|`]-'
