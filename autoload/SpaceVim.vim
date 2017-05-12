@@ -504,6 +504,9 @@ function! SpaceVim#welcome() abort
   endif
   if exists(':Startify') == 2
     Startify
+    if isdirectory(bufname(1))
+      bwipeout! 1
+    endif
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
