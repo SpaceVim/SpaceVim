@@ -5,7 +5,7 @@ else
 endif
 function! SpaceVimTabsManager#statusline(...)
     if &ft ==# 'SpaceVimTabsManager'
-        call airline#extensions#apply_left_override('SpaceVimTabs', '')
+        call airline#extensions#apply_left_override('SpaceVimTabsManager', '')
         " Alternatively, set the various w:airline_section variables
         "let w:airline_section_a = 'SpaceVimPluginManager'
         "let w:airline_section_b = ''

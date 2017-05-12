@@ -40,7 +40,7 @@ function! s:update_context() abort
             call add(ctx, '▼ Tab #' . page)
             for _buf in tree[page]
                 if getbufvar(_buf, '&buflisted')
-                    call add(ctx, '    ' . _buf . ':' . bufname(_buf))
+                    call add(ctx, '    ' . _buf . ':' . fnamemodify(bufname(_buf), ':t'))
                 endif
             endfor
         else
