@@ -1,6 +1,12 @@
+scriptencoding utf-8
 " APIs
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:TABs = SpaceVim#api#import('vim#tab')
+
+" init val
+
+let s:open_tabs = []
+
 
 " Interface
 function! SpaceVim#plugins#tabmanager#open() abort
@@ -21,19 +27,25 @@ function! s:init_buffer() abort
     setf SpaceVimTabsManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> <CR> :call <SID>jump()<CR>
+    nnoremap <silent> <buffer> o :call <SID>toggle()<CR>
 endfunction
 
 function! s:update_context() abort
     setl modifiable
+    normal! gg"_dG
     let tree = s:TABs.get_tree()
     let ctx = []
     for page in keys(tree)
-        call add(ctx, 'Tab #' . page)
-        for _buf in tree[page]
-            if getbufvar(_buf, '&buflisted')
-                call add(ctx, '    ' . _buf . ':' . bufname(_buf))
-            endif
-        endfor
+        if index(s:open_tabs, page) != -1
+            call add(ctx, '▼ Tab #' . page)
+            for _buf in tree[page]
+                if getbufvar(_buf, '&buflisted')
+                    call add(ctx, '    ' . _buf . ':' . bufname(_buf))
+                endif
+            endfor
+        else
+            call add(ctx, '▷ Tab #' . page)
+        endif
     endfor
     call setline(1, ctx)
     setl nomodifiable
@@ -48,7 +60,7 @@ endfunction
 
 function! s:tabid() abort
     for i in range(0, line('.'))
-        if getline(line('.') - i) =~# '^Tab'
+        if getline(line('.') - i) =~# '^[▷▼] Tab #'
             return matchstr(getline(line('.') - i), '\d\+$')
         endif
     endfor
@@ -59,3 +71,16 @@ function! s:bufid() abort
     return id
 endfunction
 
+function! s:toggle() abort
+    let line = line('.')
+    if getline('.') =~# '^[▷▼] Tab #'
+        let tabid = matchstr(getline('.'), '\d\+$')
+        if index(s:open_tabs, tabid) != -1
+            call remove(s:open_tabs, index(s:open_tabs, tabid))
+        else
+            call add(s:open_tabs, tabid)
+        endif
+    endif
+    call s:update_context()
+    exe line
+endfunction
