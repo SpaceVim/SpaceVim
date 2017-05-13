@@ -507,6 +507,9 @@ function! SpaceVim#welcome() abort
     if isdirectory(bufname(1))
       bwipeout! 1
     endif
+    if exists(':IndentLinesDisable')
+      IndentLinesDisable
+    endif
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
