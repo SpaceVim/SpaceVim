@@ -15,6 +15,7 @@ function! s:self.open(opts) abort
     let buf = get(a:opts, 'bufname', '')
     let mode = get(a:opts, 'mode', 'vertical topleft split')
     let Initfunc = get(a:opts, 'initfunc', '')
+    let cmd = get(a:opts, 'cmd', '')
     if empty(buf)
         exe mode | enew
     else
@@ -22,6 +23,10 @@ function! s:self.open(opts) abort
     endif
     if !empty(Initfunc)
         call call(Initfunc, [])
+    endif
+
+    if !empty(cmd)
+        exe cmd
     endif
 endfunction
 
