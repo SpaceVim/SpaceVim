@@ -23,10 +23,10 @@ endfunction
 
 " local functions
 function! s:init_buffer() abort
-    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell number norelativenumber
     setf SpaceVimTabsManager
     nnoremap <silent> <buffer> q :bd<CR>
-    nnoremap <silent> <buffer> <CR> :call <SID>jump()<CR>
+    nnoremap <silent> <buffer> <CR> <esc>:<c-u>cal <SID>jump()<CR>
     nnoremap <silent> <buffer> o :call <SID>toggle()<CR>
 endfunction
 
@@ -52,6 +52,9 @@ function! s:update_context() abort
 endfunction
 
 function! s:jump() abort
+    if v:prevcount
+        exe 'keepj' v:prevcount
+    en
     let t = s:tabid()
     let b = s:bufid()
     q
