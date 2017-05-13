@@ -1,5 +1,5 @@
 function! SpaceVim#mapping#guide#theme#hi() abort
-    let name = get(g:, 'color_name', 'gruvbox')
+    let name = get(g:, 'colors_name', 'gruvbox')
     try
         let t = SpaceVim#mapping#guide#theme#{name}#palette()
     catch /^Vim\%((\a\+)\)\=:E117/
