@@ -8,6 +8,8 @@ syn match plugDash /^-/
 syn match plugPlus /^+/
 syn match plugStar /^*/
 syn match plugMessage /\(^- \)\@<=.*/
+syntax match  rdocInlineURL /https\?:\/\/\(\w\+\(:\w\+\)\?@\)\?\([A-Za-z][-_0-9A-Za-z]*\.\)\{1,}\(\w\{2,}\.\?\)\{1,}\(:[0-9]\{1,5}\)\?\S*/
+hi def link rdocInlineURL htmlLink
 syn match plugName /\(^- \)\@<=[^ ]*:/
 syn match plugSha /\%(: \)\@<=[0-9a-f]\{4,}$/
 syn match plugTag /(tag: [^)]\+)/
