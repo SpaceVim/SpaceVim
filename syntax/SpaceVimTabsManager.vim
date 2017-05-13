@@ -1,3 +1,4 @@
+scriptencoding utf-8
 sy match TabManTName '^[▷▼] Tab #\d\+$\|^".*\zsTab#'
 sy match TabManCurTName '^Tab #\d\+\ze\*$'
 sy match TabManAtv '\*$'
