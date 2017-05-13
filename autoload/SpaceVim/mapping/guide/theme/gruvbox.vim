@@ -1,4 +1,4 @@
-function! SpaceVim#mapping#guide#theme#gruvbox#template() abort
+function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
     return [
                 \ ['#282828', '#a89984'],
                 \ ['#a89984', '#504945'],
