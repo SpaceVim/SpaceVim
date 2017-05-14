@@ -387,6 +387,12 @@ key  | description
 `n`  | next page of guide buffer
 `p`  | previous page of guide buffer
 
+to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
+
+```vim
+call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
+```
+
 
 ##### Unide/Denite describe key bindings
 

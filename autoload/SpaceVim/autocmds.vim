@@ -120,6 +120,9 @@ function! s:fix_gruvbox() abort
 endfunction
 function! SpaceVim#autocmds#VimEnter() abort
   call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+  for argv in g:_spacevim_mappings_space_custom
+    call call('SpaceVim#mapping#space#def', argv)
+  endfor
 endfunction
 
 
