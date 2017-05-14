@@ -316,6 +316,7 @@ let g:spacevim_wildignore
 " privite options
 let g:_spacevim_mappings = {}
 " TODO merge leader guide
+let g:_spacevim_mappings_space_custom = []
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
