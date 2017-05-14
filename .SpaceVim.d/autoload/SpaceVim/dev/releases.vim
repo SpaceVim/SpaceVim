@@ -2,7 +2,7 @@ function! s:body() abort
     return 'SpaceVim development (pre-release) build.'
 endfunction
 
-function! SpaceVim#dev#release#open() abort
+function! SpaceVim#dev#releases#open() abort
     let username = input('github username:')
     let password = input('github password:')
     let releases = {
