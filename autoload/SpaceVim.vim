@@ -93,7 +93,6 @@ let g:spacevim_realtime_leader_guide   = 0
 " <
 let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
-let g:spacevim_enable_cursorcolumn     = 0
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
@@ -125,11 +124,19 @@ let g:spacevim_sidebar_width           = 30
 let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
 ""
-" Enable/Disable cursorline. Default is 0.
+" Enable/Disable cursorline. Default is 1, cursorline will be
+" highlighted in normal mode.To disable this feature:
 " >
-"   let g:spacevim_enable_cursorline = 1
+"   let g:spacevim_enable_cursorline = 0
 " <
-let g:spacevim_enable_cursorline       = 0
+let g:spacevim_enable_cursorline       = 1
+""
+" Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
+" highlighted in normal mode. To enable this feature:
+" >
+"   let g:spacevim_enable_cursorcolumn = 1
+" <
+let g:spacevim_enable_cursorcolumn     = 0
 ""
 " Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 " >
@@ -171,6 +178,9 @@ let g:spacevim_language                = ''
 ""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
+""
+" The background of colorscheme. Default is 'dark'.
+let g:spacevim_colorscheme_bg             = 'dark'
 ""
 " The default colorscheme of SpaceVim. Default is 'desert'. 
 " This colorscheme will be used if the colorscheme set by 
@@ -420,12 +430,13 @@ function! SpaceVim#end() abort
   if !empty(g:spacevim_denite_leader)
     call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
   endif
+  call SpaceVim#mapping#leader#defindglobalMappings()
+  call SpaceVim#mapping#leader#defindKEYs()
+  call SpaceVim#mapping#space#init()
   if !SpaceVim#mapping#guide#has_configuration()
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
-  call SpaceVim#mapping#leader#defindglobalMappings()
-  call SpaceVim#mapping#space#init()
   if g:spacevim_simple_mode
     let g:spacevim_plugin_groups = ['core']
   else
@@ -493,14 +504,17 @@ function! SpaceVim#welcome() abort
   endif
   if exists(':Startify') == 2
     Startify
+    if isdirectory(bufname(1))
+      bwipeout! 1
+    endif
+    if exists(':IndentLinesDisable')
+      IndentLinesDisable
+    endif
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2 
       VimFiler
-      wincmd p
-    elseif exists(':NERDTreeToggle') == 2
-      NERDTreeToggle
       wincmd p
     endif
   endif

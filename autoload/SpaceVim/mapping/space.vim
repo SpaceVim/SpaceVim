@@ -5,14 +5,18 @@ function! SpaceVim#mapping#space#init() abort
     nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
     nmap <Space> [SPC]
     let g:_spacevim_mappings_space = {}
+    let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
+    let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
     let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
     let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
     let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
+    let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+    let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     " Windows
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
@@ -46,9 +50,11 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
-    nnoremap <silent> [SPC]tn  :<C-u>set nu!<CR>
-    let g:_spacevim_mappings_space.t.n = ['set nu!', 'toggle line number']
+    nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
+    let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
@@ -70,14 +76,17 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     if len(a:keys) == 2
         let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    elseif len(a:keys) == 3
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
     elseif len(a:keys) == 1
         let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
     endif
     call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
 function! s:has_map_to_spc() abort
-        return get(g:, 'mapleader', '\') == ' '
+    return get(g:, 'mapleader', '\') == ' '
 endfunction
 
 function! s:windows_layout_toggle() abort
@@ -87,18 +96,46 @@ function! s:windows_layout_toggle() abort
         echohl None
     else 
         if winnr() == 1
-           let b = winbufnr(2)
-       else
-           let b = winbufnr(1)
-       endif
-       if winwidth(1) == &columns
-           only
-           vsplit
-       else
-           only
-           split
-       endif
-       exe 'b'.b
-       wincmd w
+            let b = winbufnr(2)
+        else
+            let b = winbufnr(1)
+        endif
+        if winwidth(1) == &columns
+            only
+            vsplit
+        else
+            only
+            split
+        endif
+        exe 'b'.b
+        wincmd w
     endif
 endfunction
+function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
+    if s:has_map_to_spc()
+        return
+    endif
+    if a:is_cmd
+        let cmd = ':<C-u>' . a:cmd . '<CR>' 
+        let lcmd = a:cmd
+    else
+        let cmd = a:cmd
+        let feedkey_m = a:m =~# 'nore' ? 'n' : 'm'
+        if a:cmd =~? '^<plug>'
+            let lcmd = 'call feedkeys("\' . a:cmd . '", "' . feedkey_m . '")'
+        else
+            let lcmd = 'call feedkeys("' . a:cmd . '", "' . feedkey_m . '")'
+        endif
+    endif
+    exe a:m . ' <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    if len(a:keys) == 2
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    elseif len(a:keys) == 3
+        let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
+    elseif len(a:keys) == 1
+        let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
+    endif
+    call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+    call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
+endfunction
+

@@ -57,12 +57,12 @@ call vimfiler#custom#profile('default', 'context', {
 augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()
-  autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
+  autocmd BufEnter * if (!has('vim_starting') && winnr('$') == 1 && &filetype ==# 'vimfiler') |
         \ q | endif
 augroup END
 function! s:vimfilerinit()
-  set nonumber
-  set norelativenumber
+  setl nonumber
+  setl norelativenumber
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>

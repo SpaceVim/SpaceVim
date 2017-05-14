@@ -18,8 +18,14 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType jsp call JspFileTypeInit()
     autocmd FileType html,css,jsp EmmetInstall
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
-    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+    if g:spacevim_enable_cursorline == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorline
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorline
+    endif
+    if g:spacevim_enable_cursorcolumn == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
+    endif
     autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal! g`\"" |
@@ -64,10 +70,11 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
-    autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
+    autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
   augroup END
 endfunction
+
 function! s:reload_touchpad_status() abort
   if s:touchpadoff
     call s:disable_touchpad()
@@ -104,12 +111,16 @@ endfunction
 function! s:fix_gruvbox() abort
   if &background ==# 'dark'
     hi VertSplit guibg=#282828 guifg=#181A1F
-    hi EndOfBuffer guibg=#282828 guifg=#282828
+    "hi EndOfBuffer guibg=#282828 guifg=#282828
   else
     hi VertSplit guibg=#fbf1c7 guifg=#e7e9e1
-    hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+    "hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
   endif
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
+function! SpaceVim#autocmds#VimEnter() abort
+  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+endfunction
+
 
 " vim:set et sw=2:

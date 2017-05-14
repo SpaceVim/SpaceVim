@@ -17,8 +17,7 @@ title:  "chinese totur"
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-02-26_1365x739](https://cloud.githubusercontent.com/assets/13142418/23339920/590f2e9a-fc67-11e6-99ec-794f79ba0902.png)
-
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
 
 项 目 主 页： [spacevim.org](https://spacevim.org)
 

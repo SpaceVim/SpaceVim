@@ -6,6 +6,7 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['ujihisa/unite-equery'],
                 \ ['m2mdas/unite-file-vcs'],
                 \ ['Shougo/neomru.vim'],
+                \ ['andreicristianpetcu/vim-van'],
                 \ ['kmnk/vim-unite-svn'],
                 \ ['basyura/unite-rails'],
                 \ ['nobeans/unite-grails'],
@@ -72,7 +73,7 @@ function! SpaceVim#layers#unite#plugins() abort
     endif
 
     if g:spacevim_filemanager ==# 'vimfiler'
-        call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+        call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : 'VimFiler'}])
     endif
     return plugins
 endfunction

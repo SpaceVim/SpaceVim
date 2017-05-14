@@ -6,18 +6,13 @@ if has('filterpipe')
 endif
 if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# '' "{{{
     try
-        exec 'colorscheme '. g:spacevim_colorscheme
+        exec 'colorscheme ' . g:spacevim_colorscheme
+        exec 'set background=' . g:spacevim_colorscheme_bg
     catch
         exec 'colorscheme '. g:spacevim_colorscheme_default
     endtry
 else
     exec 'colorscheme '. g:spacevim_colorscheme_default
-endif
-if g:spacevim_enable_cursorline == 1
-    set cursorline                  "显示当前行
-endif
-if g:spacevim_enable_cursorcolumn == 1
-    set cursorcolumn                "显示当前列
 endif
 if g:spacevim_hiddenfileinfo == 1 && has('patch-7.4.1570')
     set shortmess=filnxtToOFs

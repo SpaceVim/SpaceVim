@@ -8,14 +8,14 @@ title:  "Home"
 ![Version 0.3.0-dev](https://img.shields.io/badge/version-0.3.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://raw.githubusercontent.com/SpaceVim/SpaceVim/dev/doc/SpaceVim.txt)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-[SpaceVim](https://github.com/SpaceVim/SpaceVim) is a modular configuration for neovim and vim, 
-here we call all of the modules layers, each layer has different plugins and config, users just need
-to select the layers they need. It got inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). If you use SpaceVim,
-please star it on github. It's a great way of getting feedback and gives me the kick to
-put more time into development.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, especially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
 
-![2017-04-12-19 36 27](https://cloud.githubusercontent.com/assets/13142418/24955849/bab3e0fa-1fb7-11e7-86b4-e4b3e64b19a6.png)
+See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information. [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim) will tell you how to hack SpaceVim.
+
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
 
 If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
@@ -28,14 +28,12 @@ If you are using linux or mac os, it is recommenced to use this command to insta
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
-with this command, SpaceVim will be installed. all the plugins will be install automatically when first time run vim/nvim.
+with this command, SpaceVim will be installed. all the plugins will be install **automatically** when first time run vim/nvim.
 for more info about the install script, please check:
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
-
-Before you use SpaceVim, you should install the plugin by executing `:call dein#install()` in (neo-)vim.
 
 ### windows support
 

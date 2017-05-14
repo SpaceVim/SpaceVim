@@ -8,8 +8,10 @@
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version 0.2.0-dev](https://img.shields.io/badge/version-0.3.0--dev-FF00CC.svg)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
 SpaceVim is a community-driven vim distribution that seeks to provide layer feature, especially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
 
@@ -42,9 +44,9 @@ to select the layers they need. It got inspired by [spacemacs](https://github.co
 please star it on github. It's a great way of getting feedback and gives me the kick to
 put more time into development.
 
-![2017-04-19-00 17 33](https://cloud.githubusercontent.com/assets/13142418/25141441/220b3a54-2496-11e7-9462-fcfdccb7aad8.png)
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
 
-If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
+If you are new to vim, you should learn about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
 ## Features
 
@@ -62,7 +64,7 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
 
 This is the Unite centric work-flow:
 
-![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+![unite](docs/img/unite_mappings.png)
 
 
 ## Documentation
@@ -75,7 +77,7 @@ SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`,
 
 here is an example:
 
-```viml
+```vim
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3

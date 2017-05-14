@@ -276,7 +276,7 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
           \ 'unite all file and jump']
     nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17
           \ -start-insert menu:CustomKeyMaps<CR>
-    let g:_spacevim_mappings_unite['<space>'] = ['Unite -silent -ignorecase' .
+    let g:_spacevim_mappings_unite['[SPC]'] = ['Unite -silent -ignorecase' .
           \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
           \ 'unite customkeymaps']
   endif
@@ -293,5 +293,14 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '<leader>'
   endif
 endfunction
+
+function! SpaceVim#mapping#leader#defindKEYs() abort
+  let g:_spacevim_mappings_prefixs = {}
+  let g:_spacevim_mappings_prefixs[g:spacevim_unite_leader] = {'name' : '+Unite prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_unite_leader], g:_spacevim_mappings_unite)
+  let g:_spacevim_mappings_prefixs[g:spacevim_denite_leader] = {'name' : '+Denite prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_denite_leader], g:_spacevim_mappings_denite)
+endfunction
+
 
 " vim:set et sw=2 cc=80:

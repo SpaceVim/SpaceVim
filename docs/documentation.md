@@ -4,32 +4,443 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
----
 
-- Features
-    - [Modular configuration](#modular-configuration)
-    - [Awesome ui](#awesome-ui)
-    - [Mnemonic key bindings](#mnemonic-key-bindings)
-    - [Neovim centric - Dark powered mode](#neovim-centric---dark-powered-mode-of-spacevim)
-    - [Language specific mode](#language-specific-mode)
-    - [Unite centric work-flow](#unite-centric-work-flow)
-    - [multiple leader mode](#multiple-leader-mode)
-- [Custom configuration](#custom-configuration)
-- [Layers](https://spacevim.org/layers)
-- [APIs](#apis)
+<!-- vim-markdown-toc GFM -->
+* [Core Pillars](#core-pillars)
+  * [Mnemonic](#mnemonic)
+  * [Discoverable](#discoverable)
+  * [Consistent](#consistent)
+  * [Crowd-Configured](#crowd-configured)
+* [Highlighted features](#highlighted-features)
+* [Screenshots](#screenshots)
+  * [welcome page](#welcome-page)
+  * [working flow](#working-flow)
+* [Who can benefit from this?](#who-can-benefit-from-this)
+* [Update and Rollback](#update-and-rollback)
+  * [Update SpaceVim itself](#update-spacevim-itself)
+    * [Automatic Updates](#automatic-updates)
+    * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
+    * [Updating Manually with git](#updating-manually-with-git)
+  * [Update plugins](#update-plugins)
+* [Configuration layers](#configuration-layers)
+* [Custom Configuration](#custom-configuration)
+  * [Automatic Generation](#automatic-generation)
+  * [Alternative directory](#alternative-directory)
+* [Awesome ui](#awesome-ui)
+  * [Colorschemes](#colorschemes)
+  * [Font](#font)
+  * [UI Toggles](#ui-toggles)
+  * [Statusline && tabline](#statusline--tabline)
+* [Manual](#manual)
+  * [Completion](#completion)
+    * [Unite/Denite](#unitedenite)
+      * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
+  * [Discovering](#discovering)
+    * [Mappings](#mappings)
+      * [Mappings guide](#mappings-guide)
+      * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
+    * [Getting help](#getting-help)
+    * [Available layers](#available-layers)
+      * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
+      * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
+    * [Toggles](#toggles)
+* [Features](#features)
+  * [Awesome ui](#awesome-ui-1)
+  * [Mnemonic key bindings](#mnemonic-key-bindings)
+* [Language specific mode](#language-specific-mode)
+* [Key Mapping](#key-mapping)
+  * [c/c++ support](#cc-support)
+  * [go support](#go-support)
+  * [python support](#python-support)
+* [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
+* [Modular configuration](#modular-configuration)
+* [Multiple leader mode](#multiple-leader-mode)
+  * [Global origin vim leader](#global-origin-vim-leader)
+  * [Local origin vim leader](#local-origin-vim-leader)
+  * [Windows function leader](#windows-function-leader)
+  * [Unite work flow leader](#unite-work-flow-leader)
+* [Unite centric work-flow](#unite-centric-work-flow)
+    * [Plugin Highlights](#plugin-highlights)
+    * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+      * [Language](#language)
+      * [Commands](#commands)
+      * [Commands](#commands-1)
+      * [Completion](#completion-1)
+      * [Unite](#unite)
+      * [Operators & Text Objects](#operators--text-objects)
+    * [Custom Key bindings](#custom-key-bindings)
+      * [File Operations](#file-operations)
+      * [Editor UI](#editor-ui)
+      * [Window Management](#window-management)
+      * [Native functions](#native-functions)
+      * [Plugin: Unite](#plugin-unite)
+      * [Plugin: VimFiler](#plugin-vimfiler)
+      * [Plugin: neocomplete](#plugin-neocomplete)
+      * [Plugin: NERD Commenter](#plugin-nerd-commenter)
+      * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+      * [Plugin: ChooseWin](#plugin-choosewin)
+      * [Plugin: Bookmarks](#plugin-bookmarks)
+      * [Plugin: Gita](#plugin-gita)
+      * [Plugin: vim-signify](#plugin-vim-signify)
+      * [Misc Plugins](#misc-plugins)
 
-# Features
+<!-- vim-markdown-toc -->
+
+## Core Pillars
+
+Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.
+
+If any of these core pillars is violated open an issue and we’ll try our best to fix it.
+
+### Mnemonic
+
+Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
+
+### Discoverable
+
+Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
+
+### Consistent
+
+Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
+
+### Crowd-Configured
+
+Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
+
+## Highlighted features
+
+- **Great documentation:** access documentation in Vim with
+    <kbd>:h SpaceVim</kbd>.
+- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Mnemonic key bindings:** commands have mnemonic prefixes like
+    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
+    unite work flow commands.
+- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
+- **Batteries included:** discover hundreds of ready-to-use packages nicely
+    organised in configuration layers following a set of
+    [conventions](http://spacevim.org/development/).
+- **Neovim centric:** Dark powered mode of SpaceVim
+
+## Screenshots
+
+### welcome page
+
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
+
+### working flow
+
+![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+
+Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
+
+Depicts a common frontend development scenario with JavaScript (jQuery), SASS, and PHP buffers.
+
+Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
+
+to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+
+## Who can benefit from this?
+
+- the **elementary** vim users.
+- Vim users pursuing a beautiful appearance.
+- Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
+- Vim users wanting to learn a different way to edit files.
+- Vim users wanting a simple but deep configuration system.
+
+## Update and Rollback
+
+### Update SpaceVim itself
+
+There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+
+#### Automatic Updates
+
+NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
+
+SpaceVim will automatically check for a new version every startup. You must restart Vim after updating.
+
+#### Updating from the SpaceVim Buffer
+
+Use `:SPUpdate SpaceVim` in SpaceVim buffer, This command will open a buffer to show the process of updating.
+
+#### Updating Manually with git
+
+To update manually close Vim and update the git repository:
+
+`git -C ~/.SpaceVim pull`.
+
+### Update plugins
+
+Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
+
+## Configuration layers
+
+This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+
+## Custom Configuration
+
+User configuration can be stored in your ~/.SpaceVim.d directory.
+
+### Automatic Generation
+
+The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.vim` in your `HOME` directory.
+
+### Alternative directory
+
+`~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read <kbd>:h rtp</kbd>.
+
+It is also possible to override the location of `~/.SpaceVim.d/` using the environment variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of this directory.
+
+SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
+in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+
+here is an example config file for SpaceVim:
+
+```vim
+" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
+" file for all possible options:
+let g:spacevim_default_indent = 3
+let g:spacevim_max_column     = 80
+
+" Change the default directory where all miscellaneous persistent files go.
+" By default it is ~/.cache/vimfiles.
+let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+
+" set SpaceVim colorscheme
+let g:spacevim_colorscheme = 'jellybeans'
+
+" Set plugin manager, you want to use, default is dein.vim
+let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
+
+" use space as `<Leader>`
+let mapleader = "\<space>"
+
+" Set windows shortcut leader [Window], default is `s`
+let g:spacevim_windows_leader = 's'
+
+" Set unite work flow shortcut leader [Unite], default is `f`
+let g:spacevim_unite_leader = 'f'
+
+" By default, language specific plugins are not loaded. This can be changed
+" with the following, then the plugins for go development will be loaded.
+call SpaceVim#layers#load('lang#go')
+
+" loaded ui layer
+call SpaceVim#layers#load('ui')
+
+" If there is a particular plugin you don't like, you can define this
+" variable to disable them entirely:
+let g:spacevim_disabled_plugins=[
+\ ['junegunn/fzf.vim'],
+\ ]
+
+" If you want to add some custom plugins, use these options:
+let g:spacevim_custom_plugins = [
+\ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+\ ['wsdjeg/GitHub.vim'],
+\ ]
+
+" set the guifont
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```
+
+Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
 ## Awesome ui
+
+SpaceVim has a minimalistic and distraction free UI:
+
+- custom airline with color feedback according to current check status
+- custom icon in sign column and error feedbacks for checker.
+
+### Colorschemes
+
+The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruvbox). There are two variants of this colorscheme, a dark one and a light one. Some aspects of these colorscheme can be customized in the custom configuration file, read <kbd>:h gruvbox</kbd>.
+
+It is possible to define your default themes in your `~/.SpaceVim.d/init.vim` with the variable colorschemes. For instance, to specify [vim-one with dark colorscheme](https://github.com/rakr/vim-one):
+
+```vim
+let g:spacevim_colorscheme = 'one'
+let g:spacevim_colorscheme_bg = 'dark'
+```
+
+Mappings	| Description
+------------- | ----------------------
+<kbd>SPC T n</kbd> | switch to next random colorscheme listed in colorscheme layer.
+<kbd>SPC T s</kbd> | select a theme using a unite buffer.
+
+all the included colorscheme can be found in [colorscheme layer](http://spacevim.org/layers/colorscheme/).
+
+**NOTE**:
+
+SpaceVim use true colors by default, so you should make sure your terminal support true colors. for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
+
+### Font
+
+The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended to install it on your system if you wish to use it.
+
+To change the default font set the variable `g:spacevim_guifont` in your `~/.SpaceVim.d/init.vim` file. By default its value is:
+
+```vim
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```
+
+If the specified font is not found, the fallback one will be used (depends on your system). Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+
+### UI Toggles
+
+Some UI indicators can be toggled on and off (toggles start with t and T):
+
+Key Binding	| Description
+----------- | -----------
+SPC t 8	| highlight any character past the 80th column
+SPC t f	| display the fill column (by default the fill column is set to 80)
+SPC t h h	| toggle highlight of the current line
+SPC t h i	| toggle highlight indentation levels
+SPC t h c	| toggle highlight indentation current column
+SPC t h s	| toggle syntax highlighting
+SPC t i	| toggle indentation guide at point
+SPC t n	| toggle line numbers
+SPC t b	| toggle background
+SPC t t	| open tabs manager
+SPC T ~	| display ~ in the fringe on empty lines
+SPC T F	| toggle frame fullscreen
+SPC T f	| toggle display of the fringe
+SPC T m	| toggle menu bar
+SPC T t	| toggle tool bar
+
+### Statusline && tabline
+
+The statusline and tabline is a heavily customized [airline](https://github.com/vim-airline/vim-airline) with the following capabilities:
+
+- tabline index of each buffer or tab.
+- vim mode (INSERT/NORMAL etc.)
+- git info : diff/branch
+- checker info: numbers of errors and warnings.
+- trailing line number.
+
+    Key Binding | Description
+    ----------- | -----------
+    `SPC [1-9]` | jump to the index of tabline.
+
+
+## Manual
+
+### Completion
+
+#### Unite/Denite
+
+please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
+
+##### Mappings within unite/denite buffer
+
+Mappings         | Mode          | description
+--------         | ----          | -----------
+`Ctrl`+`h/k/l/r` | Normal        | Un-map
+`Ctrl`+`l`       | Normal        | Redraw
+`Tab`            | Insert        | Select next line
+`Tab`            | Normal        | Select actions
+`Shift` + `Tab`  | Insert        | Select previous line
+`Space`          | Normal        | Toggle mark current candidate, up
+`Enter`          | Normal        | Run default action
+`Ctrl`+`v`       | Normal        | Open in a split
+`Ctrl`+`s`       | Normal        | Open in a vertical split
+`Ctrl`+`t`       | Normal        | Open in a new tab
+`Ctrl` + `g`     | Normal        | Exit unite
+`jk`             | Insert        | Leave Insert mode
+`r`              | Normal        | Replace ('search' profile) or rename
+`Ctrl`+`z`       | Normal/insert | Toggle transpose window
+`Ctrl`+`w`       | Insert        | Delete backward path
+
+### Discovering
+
+#### Mappings
+
+##### Mappings guide
+
+A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
+The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
+
+The default key of these prefix is:
+
+Prefix name | custom option and default value        | description
+----------- | -------------------------------------- | -----------
+`[SPC]`     | NONE / `<Space>`                       | default mapping prefix of SpaceVim
+`[Window]`  | `g:spacevim_windows_leader` / `s`      | window mapping prefix of SpaceVim
+`[denite]`  | `g:spacevim_denite_leader` / `F`       | denite mapping prefix of SpaceVim
+`[unite]`   | `g:spacevim_unite_leader` / `f`        | unite mapping prefix of SpaceVim
+`<leader>`  | `mapleader` / ``\``                    | default leader prefix of vim/neovim
+
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds). 
+
+for example, after pressing `<Space>` in normal mode, you will see :
+
+![2017-05-07_1365x157](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+
+key  | description
+---- | -----
+`u`  | undo pressing
+`n`  | next page of guide buffer
+`p`  | previous page of guide buffer
+
+
+##### Unide/Denite describe key bindings
+
+It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
+
+To narrow the list, just insert the mapping keys or description of what mapping you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
+
+![2017-05-07_1363x365](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+
+then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
+
+#### Getting help
+
+Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
+
+Mappings | Description
+-------- | ------------
+SPC h SPC | discover SpaceVim documentation, layers and packages using unite
+SPC h i	| get help with the symbol at point
+SPC h k	| show top-level bindings with which-key
+SPC h m	| search available man pages
+
+Reporting an issue:
+
+Mappings | Description
+-------- | ------------
+SPC h I	| Open SpaceVim GitHub issue page with pre-filled information
+
+#### Available layers
+
+All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
+
+##### Available plugins in SpaceVim
+
+All plugins can be easily discovered via `<leader> l p`.
+
+##### New packages from ELPA repositories
+
+#### Toggles
+
+
+
+## Features
+
+### Awesome ui
 
 - outline + filemanager + checker
     ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-## Mnemonic key bindings
+### Mnemonic key bindings
 
 Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
-** SPC mapping root **
+**SPC mapping root** : SPC means `<Space>` on the keyboard.
 
 Key           | Description
 ------------- | ----------------------
@@ -85,20 +496,20 @@ TODO:
 
 ## Multiple leader mode
 
-### Global origin vim leader, default : `\`
+### Global origin vim leader
 
 Vim's origin global leader can be used in all modes.
 
-### Local origin vim leader, default : `,`
+### Local origin vim leader
 
 Vim's origin local leader can be used in all the mode.
 
-### Windows function leader, default : `s`
+### Windows function leader
 
 Windows function leader can only be used in normal mode.
 For the list of mappings see the [link](#window-management)
 
-### Unite work flow leader, default : `f`
+### Unite work flow leader
 
 Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
 
@@ -107,13 +518,13 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
 - List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
+    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
 - List all the mappings and description: `f<space>`
-![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
@@ -376,23 +787,6 @@ Key   | Mode | Action
 `<leader>`+`ta` | Normal | Opens Unite tab
 `<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
 `<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
-| **Within _Unite_ buffers** |||
-`Ctrl`+`h/k/l/r` | Normal | Un-map
-`Ctrl`+`r` | Normal | Redraw
-`Ctrl`+`j` | Insert | Select next line
-`Ctrl`+`k` | Insert | Select previous line
-`'` | Normal | Toggle mark current candidate, up
-`e` | Normal | Run default action
-`Ctrl`+`v` | Normal | Open in a split
-`Ctrl`+`s` | Normal | Open in a vertical split
-`Ctrl`+`t` | Normal | Open in a new tab
-`Tab` | Normal | `Ctrl`+`w`+`w`
-`Escape` | Normal | Exit unite
-`jj` | Insert | Leave Insert mode
-`r` | Normal | Replace ('search' profile) or rename
-`Tab` | Insert | Unite autocompletion
-`Ctrl`+`z` | Normal/insert | Toggle transpose window
-`Ctrl`+`w` | Insert | Delete backward path
 
 ##### Plugin: VimFiler
 
@@ -496,65 +890,6 @@ Key   | Mode | Action
 `<leader>`+`W` | Normal | Wiki
 `<leader>`+`K` | Normal | Thesaurus
 
-#### Custom configuration
-SpaceVim use `~/.SpaceVim.d/init.vim` as default global init file. you can set
-SpaceVim-options or config layers in it. SpaceVim also will add `~/.SpaceVim.d/`
-into runtimepath. so you can write your own vim script in it.
-
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
-
-here is an example config file for SpaceVim:
-
-```vim
-" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
-" file for all possible options:
-let g:spacevim_default_indent = 3
-let g:spacevim_max_column     = 80
-
-" Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
-
-" set SpaceVim colorscheme
-let g:spacevim_colorscheme = 'jellybeans'
-
-" Set plugin manager, you want to use, default is dein.vim
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" use space as `<Leader>`
-let mapleader = "\<space>"
-
-" Set windows shortcut leader [Window], default is `s`
-let g:spacevim_windows_leader = 's'
-
-" Set unite work flow shortcut leader [Unite], default is `f`
-let g:spacevim_unite_leader = 'f'
-
-" By default, language specific plugins are not loaded. This can be changed
-" with the following, then the plugins for go development will be loaded.
-call SpaceVim#layers#load('lang#go')
-
-" loaded ui layer
-call SpaceVim#layers#load('ui')
-
-" If there is a particular plugin you don't like, you can define this
-" variable to disable them entirely:
-let g:spacevim_disabled_plugins=[
-    \ ['junegunn/fzf.vim'],
-    \ ]
-
-" If you want to add some custom plugins, use these options:
-let g:spacevim_custom_plugins = [
-    \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
-    \ ['wsdjeg/GitHub.vim'],
-    \ ]
-
-" set the guifont
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
-```
-
-Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
 <!-- plublic links -->
 [dein.vim]: https://github.com/Shougo/dein.vim

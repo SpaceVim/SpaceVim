@@ -47,6 +47,8 @@ CONTENTS                                                   *SpaceVim-contents*
       24. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
+      2. sid............................................|SpaceVim-api-vim-sid|
+      3. vim#message................................|SpaceVim-api-vim-message|
   7. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -154,9 +156,17 @@ ultisnips:
 <
 
                                                 *g:spacevim_enable_cursorline*
-Enable/Disable cursorline. Default is 0.
+Enable/Disable cursorline. Default is 1, cursorline will be highlighted in
+normal mode.To disable this feature:
 >
-  let g:spacevim_enable_cursorline = 1
+  let g:spacevim_enable_cursorline = 0
+<
+
+                                              *g:spacevim_enable_cursorcolumn*
+Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
+normal mode. To enable this feature:
+>
+  let g:spacevim_enable_cursorcolumn = 1
 <
 
                                                      *g:spacevim_error_symbol*
@@ -197,6 +207,9 @@ Set the message language of vim. Default is 'en_US.UTF-8'.
 
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim. Default is 'gruvbox'.
+
+                                                   *g:spacevim_colorscheme_bg*
+The background of colorscheme. Default is 'dark'.
 
                                               *g:spacevim_colorscheme_default*
 The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
@@ -897,6 +910,14 @@ menu({items})
 Create a cmdline selection menu from a list of {items}, each item should be a
 list of two value in it, first one is the description, and the next one should
 be a funcrc.
+
+==============================================================================
+SID                                                     *SpaceVim-api-vim-sid*
+
+" Capture command
+
+==============================================================================
+VIM#MESSAGE                                         *SpaceVim-api-vim-message*
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*

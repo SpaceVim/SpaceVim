@@ -84,6 +84,9 @@ endfunction " }}}
 
 
 function! s:start_parser(key, dict) " {{{
+  if a:key ==# '[KEYs]'
+    return
+  endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
   let readmap = ""
   redir => readmap
@@ -356,7 +359,7 @@ function! s:wait_for_input() " {{{
     call s:submode_mappings()
   else
     if inp == ' '
-      let inp = '<space>'
+      let inp = '[SPC]'
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
@@ -396,11 +399,7 @@ function! s:winopen() " {{{
 endfunction " }}}
 
 function! s:updateStatusline() abort
-  hi! LeaderGuiderPrompt cterm=bold gui=bold guifg=#282828 guibg=#a89984
-  hi! LeaderGuiderSep1 cterm=bold gui=bold guifg=#a89984 guibg=#504945
-  hi! LeaderGuiderName cterm=bold gui=bold guifg=#a89984 guibg=#504945
-  hi! LeaderGuiderSep2 cterm=bold gui=bold guifg=#504945 guibg=#3c3836
-  hi! LeaderGuiderFill guifg=#a89984 guibg=#3c3836
+  call SpaceVim#mapping#guide#theme#hi()
   let gname = get(s:guide_group, 'name', '')
   if !empty(gname)
     let gname = ' - ' . gname[1:]
@@ -565,6 +564,9 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ '[KEYs]',
+      \ 'g:_spacevim_mappings_prefixs')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
