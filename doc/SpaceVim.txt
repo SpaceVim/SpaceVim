@@ -114,9 +114,9 @@ Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 <
 
                                             *g:spacevim_realtime_leader_guide*
-Enable/Disable realtime leader guide. Default is 0.
+Enable/Disable realtime leader guide. Default is 1. to disable it:
 >
-  let g:spacevim_realtime_leader_guide = 1
+  let g:spacevim_realtime_leader_guide = 0
 <
 
                                              *g:spacevim_enable_key_frequency*

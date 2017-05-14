@@ -80,11 +80,11 @@ let g:spacevim_plugin_bundle_dir
       \ = $HOME. join(['', '.cache', 'vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
 ""
-" Enable/Disable realtime leader guide. Default is 0.
+" Enable/Disable realtime leader guide. Default is 1. to disable it:
 " >
-"   let g:spacevim_realtime_leader_guide = 1
+"   let g:spacevim_realtime_leader_guide = 0
 " <
-let g:spacevim_realtime_leader_guide   = 0
+let g:spacevim_realtime_leader_guide   = 1
 ""
 " Enable/Disable key frequency catching of SpaceVim. default value is 0. to
 " enable it:
