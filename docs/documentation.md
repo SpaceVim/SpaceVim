@@ -449,10 +449,18 @@ All plugins can be easily discovered via `<leader> l p`.
 
 SpaceVim use utf-8 as default encoding. there are four options for these case:
 
-- fileencodings (fencs)
-- fileencoding (fenc)
-- encoding (enc)
-- termencoding (tenc)
+- fileencodings (fencs): ucs-bom,utf-8,default,latin1
+- fileencoding (fenc): utf-8
+- encoding (enc): utf-8
+- termencoding (tenc): utf-8 (only supported in vim)
+
+to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
+
+```vim
+set enc=utf-8
+write
+```
+
 
 
 
