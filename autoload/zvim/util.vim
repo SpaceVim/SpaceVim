@@ -277,7 +277,7 @@ fu! zvim#util#Generate_ignore(ignore,tool) abort
     elseif a:tool ==# 'rg'
         for ig in split(a:ignore,',')
             call add(ignore, '-g')
-            call add(ignore, '!' . ig)
+            call add(ignore, "'!" . ig . "'")
         endfor
     endif
     return ignore
