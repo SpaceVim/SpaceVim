@@ -48,6 +48,7 @@ title:  "Documentation"
     * [Searching](#searching)
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
+    * [Errors handling](#errors-handling)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -461,9 +462,31 @@ set enc=utf-8
 write
 ```
 
+### Errors handling
 
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
 
+Errors management mappings (start with e):
 
+Mappings | Description
+-------- | -----------
+`SPC t s` | toggle syntax checker
+`SPC e c` | clear all errors
+`SPC e h` | describe a syntax checker
+`SPC e l` | toggle the display of the list of errors/warnings
+`SPC e n` | go to the next error
+`SPC e p` | go to the previous error
+`SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration)
+`SPC e .` | error transient state
+
+The next/previous error mappings and the error transient state can be used to browse errors from syntax checkers as well as errors from location list buffers, and indeed anything that supports vim's location list. This includes for example search results that have been saved to a location list buffer.
+
+Custom sign symbol:
+
+Symbol | Description | Custom option
+------ | ----------- | -------------
+`✖` | Error | `g:spacevim_error_symbol`
+`➤` | warning | `g:spacevim_warning_symbol`
 
 ## Features
 
