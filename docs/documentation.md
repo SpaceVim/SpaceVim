@@ -43,6 +43,11 @@ title:  "Documentation"
             * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
             * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
         * [Toggles](#toggles)
+    * [Navigating](#navigating)
+    * [Auto-saving](#auto-saving)
+    * [Searching](#searching)
+    * [Editing](#editing)
+        * [Multi-Encodings](#multi-encodings)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -432,6 +437,24 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
+### Navigating
+
+### Auto-saving
+
+### Searching
+
+### Editing
+
+#### Multi-Encodings
+
+SpaceVim use utf-8 as default encoding. there are four options for these case:
+
+- fileencodings (fencs)
+- fileencoding (fenc)
+- encoding (enc)
+- termencoding (tenc)
+
+
 
 
 ## Features
@@ -439,7 +462,8 @@ All plugins can be easily discovered via `<leader> l p`.
 ### Awesome ui
 
 - outline + filemanager + checker
-    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
 ### Mnemonic key bindings
 
