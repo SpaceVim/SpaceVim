@@ -479,6 +479,10 @@ function! SpaceVim#end() abort
     silent exec 'lan ' . g:spacevim_language
   endif
 
+  if index(g:spacevim_plugin_groups, 'core#statusline') != -1
+    call SpaceVim#layers#core#statusline#init()
+  endif
+
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
     vnoremap <silent> <leader> :<c-u>LeaderGuideVisual get(g:, 'mapleader', '\')<CR>

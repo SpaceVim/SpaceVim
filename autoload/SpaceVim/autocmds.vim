@@ -123,6 +123,14 @@ function! SpaceVim#autocmds#VimEnter() abort
   for argv in g:_spacevim_mappings_space_custom
     call call('SpaceVim#mapping#space#def', argv)
   endfor
+  if get(g:, '_spacevim_statusline_loaded', 0) == 1
+    set laststatus=2
+    set statusline=%!ActiveStatus()
+    hi User1 guibg=#afd700 guifg=#005f00
+    hi User2 guibg=#005f00 guifg=#afd700
+    hi User3 guibg=#222222 guifg=#005f00
+    hi User4 guibg=#222222 guifg=#d0d0d0
+  endif
 endfunction
 
 

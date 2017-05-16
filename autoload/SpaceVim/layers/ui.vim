@@ -1,16 +1,21 @@
 scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
-    return [
+    let plugins = [
                 \ ['Yggdroot/indentLine'],
                 \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['lvht/tagbar-markdown',{'merged' : 0}],
                 \ ['t9md/vim-choosewin', {'merged' : 0}],
-                \ ['vim-airline/vim-airline',                { 'merged' : 0, 
-                \ 'loadconf' : 1}],
-                \ ['vim-airline/vim-airline-themes',         { 'merged' : 0}],
                 \ ['mhinz/vim-startify', {'loadconf' : 1}],
                 \ ]
+    if get(g:, '_spacevim_statusline_loaded', 0) == 0
+        call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
+                \ 'loadconf' : 1}])
+        call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
+    endif
+
+    return plugins
+
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
