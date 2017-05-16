@@ -188,7 +188,9 @@ endfunction
 function! zvim#util#OpenVimfiler() abort
     if bufnr('vimfiler') == -1
         VimFiler
-        AirlineRefresh
+        if exists(':AirlineRefresh')
+            AirlineRefresh
+        endif
         wincmd p
         if &filetype !=# 'startify'
             IndentLinesToggle
@@ -197,7 +199,9 @@ function! zvim#util#OpenVimfiler() abort
         wincmd p
     else
         VimFiler
-        AirlineRefresh
+        if exists(':AirlineRefresh')
+            AirlineRefresh
+        endif
     endif
 endfunction
 

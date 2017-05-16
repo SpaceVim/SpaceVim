@@ -125,11 +125,8 @@ function! SpaceVim#autocmds#VimEnter() abort
   endfor
   if get(g:, '_spacevim_statusline_loaded', 0) == 1
     set laststatus=2
-    set statusline=%!ActiveStatus()
-    hi User1 guibg=#afd700 guifg=#005f00
-    hi User2 guibg=#005f00 guifg=#afd700
-    hi User3 guibg=#222222 guifg=#005f00
-    hi User4 guibg=#222222 guifg=#d0d0d0
+    call SpaceVim#layers#core#statusline#def_colors()
+    set statusline=%!SpaceVim#layers#core#statusline#get(1)
   endif
 endfunction
 

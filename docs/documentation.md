@@ -30,6 +30,7 @@ title:  "Documentation"
     * [Font](#font)
     * [UI Toggles](#ui-toggles)
     * [Statusline && tabline](#statusline--tabline)
+        * [statusline](#statusline)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -326,9 +327,23 @@ The statusline and tabline is a heavily customized [airline](https://github.com/
 - checker info: numbers of errors and warnings.
 - trailing line number.
 
-    Key Binding | Description
-    ----------- | -----------
-    `SPC [1-9]` | jump to the index of tabline.
+Key Binding | Description
+----------- | -----------
+`SPC [1-9]` | jump to the index of tabline.
+
+#### statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+
+- show the window number
+- color code for current state
+- show the number of search occurrences via anzu
+- toggle flycheck info
+- toggle battery info
+- toggle minor mode lighters
+
+Reminder of the color codes for the states:
 
 
 ## Manual
