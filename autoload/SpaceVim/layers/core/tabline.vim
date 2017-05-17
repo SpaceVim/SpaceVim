@@ -17,6 +17,7 @@ let s:file = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 let g:_spacevim_tabline_loaded = 1
+let s:buffers = s:BUFFER.listed_buffers()
 
 function! s:tabname(id) abort
     let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
@@ -68,23 +69,23 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= '%=%#SpaceVim_tabline_a_b#'
         let t .= '%#SpaceVim_tabline_a# Tabs'
     else
-        let buffers = s:BUFFER.listed_buffers()
-        if len(buffers) == 0
+        let s:buffers = s:BUFFER.listed_buffers()
+        if len(s:buffers) == 0
             return ''
         endif
         let ct = bufnr('%')
-        let pt = index(buffers, ct) > 0 ? buffers[index(buffers, ct) - 1] : -1
-        if ct == get(buffers, 0, -1)
+        let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
+        if ct == get(s:buffers, 0, -1)
             let t = '%#SpaceVim_tabline_a#  '
         else
             let t = '%#SpaceVim_tabline_b#  '
         endif
-        for i in buffers
+        for i in s:buffers
             if i == ct
                 let t .= '%#SpaceVim_tabline_a#'
             endif
             let name = fnamemodify(bufname(i), ':t')
-            let id = s:messletters.bubble_num(index(buffers, i) + 1, g:spacevim_buffer_index_type)
+            let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
             let icon = s:file.fticon(name)
             if !empty(icon)
                 let name = icon . ' ' . name
@@ -105,6 +106,18 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
     set tabline=%!SpaceVim#layers#core#tabline#get()
+    for i in range(1, 9)
+        exe "call SpaceVim#mapping#space#def('nmap', [" . i . "], 'b" . i . "', 'window " . i . "', 1)"
+    endfor
+    call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
+    call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
+endfunction
+
+function! SpaceVim#layers#core#tabline#jump(id) abort
+    if len(s:buffers) > a:id + 1
+        let bid = s:buffers[a:id - 1]
+        exe 'b' . bid
+    endif
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort

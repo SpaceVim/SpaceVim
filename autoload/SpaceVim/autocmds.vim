@@ -126,7 +126,7 @@ function! SpaceVim#autocmds#VimEnter() abort
   if get(g:, '_spacevim_statusline_loaded', 0) == 1
     set laststatus=2
     call SpaceVim#layers#core#statusline#def_colors()
-    set statusline=%!SpaceVim#layers#core#statusline#get(1)
+    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
   endif
   if get(g:, '_spacevim_tabline_loaded', 0) == 1
     call SpaceVim#layers#core#tabline#def_colors()

@@ -62,6 +62,13 @@ function! s:filesize() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
+    if &filetype ==# 'vimfiler'
+        return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
+                \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_c#'
+    elseif &filetype ==# 'tagbar'
+        return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
+                \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
+    endif
     if a:0 > 0
         return s:active()
     else
@@ -104,8 +111,8 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
     augroup status
         autocmd!
-        autocmd WinEnter * setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
-        autocmd WinLeave * setlocal statusline=%!SpaceVim#layers#core#statusline#get()
+        autocmd BufWinEnter,WinEnter * setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+        autocmd BufWinLeave,WinLeave * setlocal statusline=%!SpaceVim#layers#core#statusline#get()
     augroup END
 endfunction
 

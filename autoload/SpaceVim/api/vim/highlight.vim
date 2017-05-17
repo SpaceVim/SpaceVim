@@ -69,7 +69,6 @@ function! s:self.hide_in_normal(name) abort
         return
     endif
     if &termguicolors || has('gui_running')
-        let g:wsd = self.group2dict('Normal')
         let bg = self.group2dict('Normal').guibg
         let group.guifg = bg
         let group.guibg = bg
