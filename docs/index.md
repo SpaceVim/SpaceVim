@@ -57,9 +57,20 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ## News
 
+[Newsletter #1 - A New Hope]()
+>    Published on: 2017-5-31 
+
+More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
+
+[Follow @SpaceVim](https://twitter.com/SpaceVim) 
+
 ## Impressions
 
 ## Get Involved
+
+Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim), IRC (**#spacevim** on **irc.freenode.net**) or the [mailing list](https://groups.google.com/forum/#!forum/spacevim). 
+
+Contribute code, report bugs and request features at [GitHub](https://github.com/SpaceVim/SpaceVim). 
 
 ## FAQ
 
