@@ -52,3 +52,17 @@ git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 ```
+
+## Features
+
+## News
+
+## Impressions
+
+## Get Involved
+
+## FAQ
+
+1. What is the project status?
+
+The current stable version is 0.2.0. See the milestones page for development progress and the roadmap for high-level plans. 
