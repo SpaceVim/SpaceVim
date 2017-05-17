@@ -19,3 +19,12 @@ function! s:self._jump(tabnr, bufid) abort
         exe winnr .  'wincmd w'
     endif
 endfunction
+
+function! s:self.get_tree() abort
+    call self._update()
+    return self._tree
+endfunction
+
+function! SpaceVim#api#vim#tab#get() abort
+    return deepcopy(s:self)
+endfunction

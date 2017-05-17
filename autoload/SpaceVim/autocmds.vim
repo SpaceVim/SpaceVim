@@ -71,6 +71,7 @@ function! SpaceVim#autocmds#init() abort
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
+    autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
   augroup END
 endfunction
 
@@ -115,8 +116,14 @@ function! s:fix_gruvbox() abort
     hi VertSplit guibg=#fbf1c7 guifg=#e7e9e1
     "hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
   endif
-  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
+function! SpaceVim#autocmds#VimEnter() abort
+  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+  for argv in g:_spacevim_mappings_space_custom
+    call call('SpaceVim#mapping#space#def', argv)
+  endfor
+endfunction
+
 
 " vim:set et sw=2:

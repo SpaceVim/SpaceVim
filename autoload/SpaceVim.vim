@@ -80,11 +80,11 @@ let g:spacevim_plugin_bundle_dir
       \ = $HOME. join(['', '.cache', 'vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
 ""
-" Enable/Disable realtime leader guide. Default is 0.
+" Enable/Disable realtime leader guide. Default is 1. to disable it:
 " >
-"   let g:spacevim_realtime_leader_guide = 1
+"   let g:spacevim_realtime_leader_guide = 0
 " <
-let g:spacevim_realtime_leader_guide   = 0
+let g:spacevim_realtime_leader_guide   = 1
 ""
 " Enable/Disable key frequency catching of SpaceVim. default value is 0. to
 " enable it:
@@ -316,6 +316,7 @@ let g:spacevim_wildignore
 " privite options
 let g:_spacevim_mappings = {}
 " TODO merge leader guide
+let g:_spacevim_mappings_space_custom = []
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
@@ -504,6 +505,12 @@ function! SpaceVim#welcome() abort
   endif
   if exists(':Startify') == 2
     Startify
+    if isdirectory(bufname(1))
+      bwipeout! 1
+    endif
+    if exists(':IndentLinesDisable')
+      IndentLinesDisable
+    endif
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0

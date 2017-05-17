@@ -4,7 +4,6 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
-
 <!-- vim-markdown-toc GFM -->
 * [Core Pillars](#core-pillars)
     * [Mnemonic](#mnemonic)
@@ -44,6 +43,12 @@ title:  "Documentation"
             * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
             * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
         * [Toggles](#toggles)
+    * [Navigating](#navigating)
+    * [Auto-saving](#auto-saving)
+    * [Searching](#searching)
+    * [Editing](#editing)
+        * [Multi-Encodings](#multi-encodings)
+    * [Errors handling](#errors-handling)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -303,6 +308,8 @@ SPC t h c	| toggle highlight indentation current column
 SPC t h s	| toggle syntax highlighting
 SPC t i	| toggle indentation guide at point
 SPC t n	| toggle line numbers
+SPC t b	| toggle background
+SPC t t	| open tabs manager
 SPC T ~	| display ~ in the fringe on empty lines
 SPC T F	| toggle frame fullscreen
 SPC T f	| toggle display of the fringe
@@ -385,6 +392,12 @@ key  | description
 `n`  | next page of guide buffer
 `p`  | previous page of guide buffer
 
+to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
+
+```vim
+call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
+```
+
 
 ##### Unide/Denite describe key bindings
 
@@ -425,14 +438,63 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
+### Navigating
 
+### Auto-saving
+
+### Searching
+
+### Editing
+
+#### Multi-Encodings
+
+SpaceVim use utf-8 as default encoding. there are four options for these case:
+
+- fileencodings (fencs): ucs-bom,utf-8,default,latin1
+- fileencoding (fenc): utf-8
+- encoding (enc): utf-8
+- termencoding (tenc): utf-8 (only supported in vim)
+
+to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
+
+```vim
+set enc=utf-8
+write
+```
+
+### Errors handling
+
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
+
+Errors management mappings (start with e):
+
+Mappings | Description
+-------- | -----------
+`SPC t s` | toggle syntax checker
+`SPC e c` | clear all errors
+`SPC e h` | describe a syntax checker
+`SPC e l` | toggle the display of the list of errors/warnings
+`SPC e n` | go to the next error
+`SPC e p` | go to the previous error
+`SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration)
+`SPC e .` | error transient state
+
+The next/previous error mappings and the error transient state can be used to browse errors from syntax checkers as well as errors from location list buffers, and indeed anything that supports vim's location list. This includes for example search results that have been saved to a location list buffer.
+
+Custom sign symbol:
+
+Symbol | Description | Custom option
+------ | ----------- | -------------
+`✖` | Error | `g:spacevim_error_symbol`
+`➤` | warning | `g:spacevim_warning_symbol`
 
 ## Features
 
 ### Awesome ui
 
 - outline + filemanager + checker
-    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
 ### Mnemonic key bindings
 

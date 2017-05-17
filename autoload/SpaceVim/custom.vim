@@ -54,3 +54,6 @@ function! s:write_to_config(config) abort
     endif
     call writefile(a:config, cf, '')
 endfunction
+function! SpaceVim#custom#SPC(m, keys, cmd, desc, is_cmd) abort
+    call add(g:_spacevim_mappings_space_custom,[a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+endfunction

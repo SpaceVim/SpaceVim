@@ -14,13 +14,20 @@ endif
 function! s:self.open(opts) abort
     let buf = get(a:opts, 'bufname', '')
     let mode = get(a:opts, 'mode', 'vertical topleft split')
+    let Initfunc = get(a:opts, 'initfunc', '')
     let cmd = get(a:opts, 'cmd', '')
     if empty(buf)
-        exe mode buf
+        exe mode | enew
     else
         exe mode buf
     endif
-    exe cmd
+    if !empty(Initfunc)
+        call call(Initfunc, [])
+    endif
+
+    if !empty(cmd)
+        exe cmd
+    endif
 endfunction
 
 
@@ -29,6 +36,6 @@ func! s:self.resize(size, ...) abort
 	exe cmd 'resize' a:size
 endf
 
-fu! SpaceVim#api#vim#buffer#get()
+fu! SpaceVim#api#vim#buffer#get() abort
    return deepcopy(s:self)
 endf

@@ -29,6 +29,8 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'toggle-colorcolume', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
                 \ 'toggle background', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
+                \ 'Open tabs manager', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
                 \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
                 \ 'toggle-colorcolume', 1)
@@ -57,6 +59,9 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
                 \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
                 \ 'display ~ in the fringe on empty lines', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
+                \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+                \ 'toggle syntax checker', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
@@ -108,7 +113,7 @@ endfunction
 let s:fcflag = 0
 function! s:toggle_fill_column() abort
     if !s:fcflag
-        let &colorcolumn=join(range(80,999),",")
+        let &colorcolumn=join(range(80,999),',')
         let s:fcflag = 1
     else
         set cc=
@@ -170,4 +175,8 @@ function! s:toggle_win_fringe() abort
         set guioptions-=r
         let s:tfflag = 0
     endif
+endfunction
+
+function! s:toggle_syntax_checker() abort
+    let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
 endfunction
