@@ -65,4 +65,16 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 1. What is the project status?
 
-The current stable version is 0.2.0. See the milestones page for development progress and the roadmap for high-level plans. 
+The current stable version is 0.2.0. See the milestones page for development progress and the roadmap for high-level plans.
+
+2. Is SpaceVim trying to turn Vim/Neovim into an IDE?
+
+With layers feature, this [version]() of vim distribution to tern vim/neovim into an IDE for many language.
+
+3. Will SpaceVim deprecate Vimscript?
+
+No, the custom configration file is written in vim script.
+
+4. Which version of vim/neovim is needed?
+
+vim 7.4/neovim v0.1.7 
