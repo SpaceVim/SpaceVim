@@ -69,9 +69,12 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= '%#SpaceVim_tabline_a# Tabs'
     else
         let buffers = s:BUFFER.listed_buffers()
+        if len(buffers) == 0
+            return ''
+        endif
         let ct = bufnr('%')
         let pt = index(buffers, ct) > 0 ? buffers[index(buffers, ct) - 1] : -1
-        if ct == buffers[0]
+        if ct == get(buffers, 0, -1)
             let t = '%#SpaceVim_tabline_a#  '
         else
             let t = '%#SpaceVim_tabline_b#  '
