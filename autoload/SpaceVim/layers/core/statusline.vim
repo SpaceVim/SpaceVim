@@ -5,13 +5,21 @@ let g:_spacevim_statusline_loaded = 1
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 
 " init
-let s:loaded_modes = ['⊝']
-let s:modes = [
-            \ {
-            \ 'name' : '⊝',
+let s:loaded_modes = ['center-cursor']
+let s:modes = {
+            \ 'center-cursor': {
+            \ 'icon' : '⊝',
             \ 'desc' : 'centered-cursor mode',
+            \ },
+            \ 'hi-characters-for-long-lines' :{
+            \ 'icon' : '⑧',
+            \ 'desc' : 'toggle highlight of characters for long lines',
+            \ },
+            \ 'fill-column-indicator' :{
+            \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+            \ 'desc' : 'fill-column-indicator mode',
+            \ },
             \ }
-            \ ]
 
 function! s:winnr() abort
     return s:MESSLETTERS.circled_num(winnr(), g:spacevim_buffer_index_type)
@@ -32,7 +40,7 @@ endfunction
 function! s:modes() abort
     let m = '❖ '
     for mode in s:loaded_modes
-        let m .= mode . ' '
+        let m .= s:modes[mode].icon . ' '
     endfor
     return m
 endfunction
@@ -62,11 +70,6 @@ function! SpaceVim#layers#core#statusline#get(...) abort
 endfunction
 
 function! s:active() abort
-    let l:m_r_f = '%7* %m%r%y %*'
-    let l:ff = '%8* %{&ff} |'
-    let l:enc = " %{''.(&fenc!=''?&fenc:&enc).''} | %{(&bomb?\",BOM\":\"\")}"
-    let l:pos = '%l:%c%V %*'
-    let l:pct = '%9* %P %*'
     return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
                 \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#'
                 \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' 
@@ -79,9 +82,16 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-
+    return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
+                \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' '
+                \ . ' ' . &filetype . ' ' 
+                \ . ' ' . s:modes() . ' '
+                \ . ' ' . s:git_branch() . ' '
+                \ . ' %='
+                \ . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
+                \ . ' %P '
 endfunction
-function! s:gitgutter()
+function! s:gitgutter() abort
     if exists('b:gitgutter_summary')
         let l:summary = get(b:, 'gitgutter_summary')
         if l:summary[0] != 0 || l:summary[1] != 0 || l:summary[2] != 0
@@ -106,4 +116,17 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     hi! SpaceVim_statusline_b_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#504945
     hi! SpaceVim_statusline_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#a89984
     hi! SpaceVim_statusline_c_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#3c3836
+endfunction
+
+function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
+    if index(s:loaded_modes, a:name) != -1
+        call remove(s:loaded_modes, index(s:loaded_modes, a:name))
+    else
+        call add(s:loaded_modes, a:name)
+    endif
+    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+endfunction
+
+function! Test() abort
+    echo s:loaded_modes
 endfunction

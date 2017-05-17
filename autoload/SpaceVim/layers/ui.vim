@@ -113,6 +113,7 @@ function! s:toggle_colorcolumn() abort
         set cc=
         let s:ccflag = 0
     endif
+    call SpaceVim#layers#core#statusline#toggle_mode('fill-column-indicator')
 endfunction
 
 let s:fcflag = 0
@@ -124,6 +125,7 @@ function! s:toggle_fill_column() abort
         set cc=
         let s:fcflag = 0
     endif
+    call SpaceVim#layers#core#statusline#toggle_mode('hi-characters-for-long-lines')
 endfunction
 
 let s:idflag = 0
