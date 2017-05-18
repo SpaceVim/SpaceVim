@@ -185,4 +185,6 @@ function! SpaceVim#layers#core#statusline#config() abort
                 \ 'toggle the battery status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
                 \ 'toggle the time', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
+                \ 'toggle the statuline itself', 1)
 endfunction
