@@ -107,14 +107,14 @@ endfunction
 function! SpaceVim#layers#core#tabline#config() abort
     set tabline=%!SpaceVim#layers#core#tabline#get()
     for i in range(1, 9)
-        exe "call SpaceVim#mapping#space#def('nmap', [" . i . "], 'b" . i . "', 'window " . i . "', 1)"
+        exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#tabline#jump(" . i . ")', 'window " . i . "', 1)"
     endfor
     call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
     call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id) abort
-    if len(s:buffers) > a:id + 1
+    if len(s:buffers) >= a:id
         let bid = s:buffers[a:id - 1]
         exe 'b' . bid
     endif
