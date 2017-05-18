@@ -3,6 +3,7 @@ scriptencoding utf-8
 let g:_spacevim_statusline_loaded = 1
 " APIs
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
+let s:TIME = SpaceVim#api#import('time')
 
 " init
 let s:loaded_modes = ['center-cursor']
@@ -21,6 +22,24 @@ let s:modes = {
             \ },
             \ }
 
+let s:loaded_sections = []
+
+function! s:battery_status() abort
+    if executable('acpi')
+        return substitute(split(system('acpi'))[-1], '%', '%%', 'g')
+    else
+        return ''
+    endif
+endfunction
+
+function! s:time() abort
+    return s:TIME.current_time()
+endfunction
+
+let s:sections = {
+            \ 'battery status' : function('s:battery_status'),
+            \ }
+
 function! s:winnr() abort
     return s:MESSLETTERS.circled_num(winnr(), g:spacevim_buffer_index_type)
 endfunction
@@ -36,6 +55,7 @@ function! s:git_branch() abort
     endif
     return ''
 endfunction
+
 
 function! s:modes() abort
     let m = '❖ '
@@ -77,15 +97,23 @@ function! SpaceVim#layers#core#statusline#get(...) abort
 endfunction
 
 function! s:active() abort
-    return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
+    let l = '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
                 \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#'
                 \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' 
                 \ . '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#'
-                \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_b#'
-                \ . '%#SpaceVim_statusline_b# %='
-                \ . '%#SpaceVim_statusline_c_b#%#SpaceVim_statusline_c#%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
+                \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#'
+                \ . '%#SpaceVim_statusline_z#%='
+    if index(s:loaded_sections, 'battery status') != -1
+        let l .= '%#SpaceVim_statusline_z_b#%#SpaceVim_statusline_b# ' . s:battery_status() . ' %#SpaceVim_statusline_c_b#'
+    else
+        let l .= '%#SpaceVim_statusline_c_z#'
+    endif
+    let l .= '%#SpaceVim_statusline_c#%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
                 \ . '%#SpaceVim_statusline_b_c#%#SpaceVim_statusline_b# %P '
-
+    if index(s:loaded_sections, 'time') != -1
+        let l .= '%#SpaceVim_statusline_c_b#%#SpaceVim_statusline_c# ' . s:time() . ' '
+    endif
+    return l
 endfunction
 
 function! s:inactive() abort
@@ -123,6 +151,11 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     hi! SpaceVim_statusline_b_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#504945
     hi! SpaceVim_statusline_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#a89984
     hi! SpaceVim_statusline_c_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#3c3836
+    hi! SpaceVim_statusline_c_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#3c3836
+    hi! SpaceVim_statusline_z_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#665c54
+    hi! SpaceVim_statusline_z_b ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#504945
+    hi! SpaceVim_statusline_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#665c54
+
 endfunction
 
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
@@ -134,6 +167,22 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
+function! SpaceVim#layers#core#statusline#toggle_section(name) abort
+    if index(s:loaded_sections, a:name) != -1
+        call remove(s:loaded_sections, index(s:loaded_sections, a:name))
+    else
+        call add(s:loaded_sections, a:name)
+    endif
+    let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+endfunction
+
 function! Test() abort
     echo s:loaded_modes
+endfunction
+
+function! SpaceVim#layers#core#statusline#config() abort
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'b'], 'call SpaceVim#layers#core#statusline#toggle_section("battery status")',
+                \ 'toggle the battery status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
+                \ 'toggle the time', 1)
 endfunction

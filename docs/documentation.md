@@ -338,13 +338,46 @@ The `core#statusline` layer provide a heavily customized powerline with the foll
 
 - show the window number
 - color code for current state
-- show the number of search occurrences via anzu
-- toggle flycheck info
+- show the number of search results
+- toggle syntax checking info
 - toggle battery info
 - toggle minor mode lighters
 
 Reminder of the color codes for the states:
 
+Mode | Color
+--- |  ---
+Normal | Orange
+Insert | Green
+Visual | Grey
+
+all the colors based on the current colorscheme
+
+Some elements can be dynamically toggled:
+
+Key Binding	| Description
+----------- | -----------
+`SPC t m b` | toggle the battery status (need to install acpi)
+`SPC t m c` | toggle the org task clock (available in org layer)
+`SPC t m m` | toggle the minor mode lighters
+`SPC t m M` | toggle the major mode
+`SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
+`SPC t m p` | toggle the point character position
+`SPC t m t` | toggle the time
+`SPC t m T` | toggle the mode line itself
+`SPC t m v` | toggle the version control info
+
+**Battery status integration:**
+
+__acpi__ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+
+A color code is used for the battery status:
+
+Battery State | Color
+------------ | ----
+Charging | Green
+Discharging | Orange
+Critical | Red
 
 ## Manual
 
