@@ -199,6 +199,7 @@ function! zvim#util#OpenVimfiler() abort
         wincmd p
     else
         VimFiler
+        doautocmd WinEnter
         if exists(':AirlineRefresh')
             AirlineRefresh
         endif
