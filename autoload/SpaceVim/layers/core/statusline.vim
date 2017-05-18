@@ -111,8 +111,8 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
     augroup status
         autocmd!
-        autocmd BufWinEnter,WinEnter * setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
-        autocmd BufWinLeave,WinLeave * setlocal statusline=%!SpaceVim#layers#core#statusline#get()
+        autocmd BufWinEnter,WinEnter * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+        autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
     augroup END
 endfunction
 
@@ -131,7 +131,7 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     else
         call add(s:loaded_modes, a:name)
     endif
-    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+    let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
 function! Test() abort
