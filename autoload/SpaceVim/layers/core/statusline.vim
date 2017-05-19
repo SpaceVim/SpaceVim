@@ -18,6 +18,7 @@ let s:separators = {
             \ 'arrow' : ["\ue0b0", "\ue0b2"],
             \ 'curve' : ["\ue0b4", "\ue0b6"],
             \ 'slant' : ["\ue0b8", "\ue0ba"],
+            \ 'nil' : ['', '']
             \ }
 let s:loaded_modes = ['center-cursor']
 let s:modes = {
