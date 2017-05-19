@@ -26,7 +26,7 @@ let s:loaded_sections = []
 
 function! s:battery_status() abort
     if executable('acpi')
-        return substitute(split(system('acpi'))[-1], '%', '%%', 'g')
+        return '⚡ ' . substitute(split(system('acpi'))[-1], '%', '%%', 'g')
     else
         return ''
     endif
