@@ -411,6 +411,7 @@ Separator | Screenshot
 --------- | ----------
 `arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
 `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
+`slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
 `alternate` | 
 arrow-fade |
 bar |
@@ -421,7 +422,6 @@ chamfer |
 contour |
 rounded |
 roundstub |
-slant |
 wave |
 zigzag |
 nil |
