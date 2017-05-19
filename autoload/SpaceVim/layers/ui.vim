@@ -10,7 +10,7 @@ function! SpaceVim#layers#ui#plugins() abort
                 \ ]
     if get(g:, '_spacevim_statusline_loaded', 0) == 0
         call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
-                \ 'loadconf' : 1}])
+                    \ 'loadconf' : 1}])
         call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
     endif
 
@@ -66,6 +66,9 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'display ~ in the fringe on empty lines', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
                 \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+                \ 'toggle syntax checker', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
+                \ . string(s:_function('s:toggle_spell_check')) . ', [])',
                 \ 'toggle syntax checker', 1)
 endfunction
 " function() wrapper
@@ -185,5 +188,16 @@ function! s:toggle_win_fringe() abort
 endfunction
 
 function! s:toggle_syntax_checker() abort
+    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
     let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
+endfunction
+
+function! s:toggle_spell_check() abort
+    if &l:spell
+        let &l:spell = 0
+    else
+        let &l:spell = 1
+    endif
+    call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
 endfunction

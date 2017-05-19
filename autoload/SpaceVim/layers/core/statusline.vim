@@ -18,7 +18,8 @@ let s:separators = {
             \ 'arrow' : ["\ue0b0", "\ue0b2"],
             \ 'curve' : ["\ue0b4", "\ue0b6"],
             \ 'slant' : ["\ue0b8", "\ue0ba"],
-            \ 'nil' : ['', '']
+            \ 'brace' : ["\ue0d2", "\ue0d4"],
+            \ 'nil' : ['', ''],
             \ }
 let s:loaded_modes = ['center-cursor']
 let s:modes = {
@@ -34,6 +35,14 @@ let s:modes = {
             \ 'icon' : s:MESSLETTERS.circled_letter('f'),
             \ 'desc' : 'fill-column-indicator mode',
             \ },
+            \ 'syntax-checking' :{
+            \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+            \ 'desc' : 'syntax-checking mode',
+            \ },
+            \ 'spell-checking' :{
+            \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+            \ 'desc' : 'spell-checking mode',
+            \ },
             \ }
 
 let s:loaded_sections = []
@@ -46,9 +55,24 @@ function! s:battery_status() abort
     endif
 endfunction
 
+
 function! s:time() abort
     return s:TIME.current_time()
 endfunction
+
+if g:spacevim_enable_neomake
+    function! s:syntax_checking_warn() abort
+        let counts = neomake#statusline#LoclistCounts()
+        let warnings = get(counts, 'W', 0)
+        return warnings ?  '●' . warnings : ''
+    endfunction
+    function! s:syntax_checking_error() abort
+        let counts = neomake#statusline#LoclistCounts()
+        let errors = get(counts, 'E', 0)
+        return errors ?  '●' . errors : ''
+    endfunction
+else
+endif
 
 let s:sections = {
             \ 'battery status' : function('s:battery_status'),
@@ -98,10 +122,10 @@ endfunction
 function! SpaceVim#layers#core#statusline#get(...) abort
     if &filetype ==# 'vimfiler'
         return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
-                \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_c#'
+                    \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_c#'
     elseif &filetype ==# 'tagbar'
         return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
-                \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
+                    \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
     endif
     if a:0 > 0
         return s:active()
@@ -114,7 +138,10 @@ function! s:active() abort
     let l = '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#' . s:lsep
                 \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#' . s:lsep
                 \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' . s:lsep 
-                \ . '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#' . s:lsep
+    if index(s:loaded_sections, 'syntax checking')
+        " TODO : add syntax_checking_warn and syntax_checking_error
+    endif
+    let l .= '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#' . s:lsep
                 \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#' . s:lsep
                 \ . '%#SpaceVim_statusline_z#%='
     if index(s:loaded_sections, 'battery status') != -1
