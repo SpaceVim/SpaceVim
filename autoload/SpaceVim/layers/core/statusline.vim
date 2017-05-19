@@ -49,7 +49,7 @@ let s:loaded_sections = ['syntax checking']
 
 function! s:battery_status() abort
     if executable('acpi')
-        return '⚡ ' . substitute(split(system('acpi'))[-1], '%', '%%', 'g')
+        return '⚡' . substitute(split(system('acpi'))[-1], '%', '%%', 'g')
     else
         return ''
     endif
@@ -84,7 +84,7 @@ endfunction
 function! s:git_branch() abort
     if exists('g:loaded_fugitive')
         let l:head = fugitive#head()
-        return empty(l:head) ? '' : ''.l:head . ' '
+        return empty(l:head) ? '' : ' '.l:head . ' '
     endif
     return ''
 endfunction
