@@ -395,6 +395,23 @@ Charging | Green
 Discharging | Orange
 Critical | Red
 
+all the colors based on the current colorscheme
+
+**Statusline separators:**
+
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+
+```vim
+let g:spacevim_statusline_separator = 'arrow'
+```
+
+here is an exhaustive set of screenshots for all the available separator:
+
+Separator | Screenshot
+--------- | ----------
+`arrow` (default) | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+
+
 ## Manual
 
 ### Completion
