@@ -21,7 +21,7 @@ let s:separators = {
             \ 'brace' : ["\ue0d2", "\ue0d4"],
             \ 'nil' : ['', ''],
             \ }
-let s:loaded_modes = ['center-cursor']
+let s:loaded_modes = ['syntax-checking']
 let s:modes = {
             \ 'center-cursor': {
             \ 'icon' : '⊝',
@@ -45,7 +45,7 @@ let s:modes = {
             \ },
             \ }
 
-let s:loaded_sections = []
+let s:loaded_sections = ['syntax checking']
 
 function! s:battery_status() abort
     if executable('acpi')
@@ -61,22 +61,17 @@ function! s:time() abort
 endfunction
 
 if g:spacevim_enable_neomake
-    function! s:syntax_checking_warn() abort
+    function! s:syntax_checking()
         let counts = neomake#statusline#LoclistCounts()
         let warnings = get(counts, 'W', 0)
-        return warnings ?  '●' . warnings : ''
-    endfunction
-    function! s:syntax_checking_error() abort
+        let l =  warnings ?  '%#SpaceVim_statusline_warn#●' . warnings : ''
         let counts = neomake#statusline#LoclistCounts()
         let errors = get(counts, 'E', 0)
-        return errors ?  '●' . errors : ''
+        let l .=  errors ?  ' %#SpaceVim_statusline_error#●' . errors : ''
+        return l
     endfunction
 else
 endif
-
-let s:sections = {
-            \ 'battery status' : function('s:battery_status'),
-            \ }
 
 function! s:winnr() abort
     return s:MESSLETTERS.circled_num(winnr(), g:spacevim_buffer_index_type)
@@ -138,12 +133,18 @@ function! s:active() abort
     let l = '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#' . s:lsep
                 \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#' . s:lsep
                 \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' . s:lsep 
-    if index(s:loaded_sections, 'syntax checking')
-        " TODO : add syntax_checking_warn and syntax_checking_error
+    if index(s:loaded_sections, 'syntax checking') != -1 && s:syntax_checking() != ''
+        let l .= '%#SpaceVim_statusline_b# '
+                    \ . s:syntax_checking()
+                    \ . ' %#SpaceVim_statusline_b_c#' . s:lsep
+        let l .= '%#SpaceVim_statusline_c# ' . s:modes() . ' %#SpaceVim_statusline_c_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# ' . s:git_branch() . ' %#SpaceVim_statusline_z_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_z#%='
+    else
+        let l .= '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#' . s:lsep
+                    \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#' . s:lsep
+                    \ . '%#SpaceVim_statusline_z#%='
     endif
-    let l .= '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#' . s:lsep
-                \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#' . s:lsep
-                \ . '%#SpaceVim_statusline_z#%='
     if index(s:loaded_sections, 'battery status') != -1
         let l .= '%#SpaceVim_statusline_z_b#' . s:rsep . '%#SpaceVim_statusline_b# ' . s:battery_status() . ' %#SpaceVim_statusline_c_b#'
     else
@@ -195,8 +196,10 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     hi! SpaceVim_statusline_c_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#3c3836
     hi! SpaceVim_statusline_z_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#665c54
     hi! SpaceVim_statusline_z_b ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#504945
+    hi! SpaceVim_statusline_b_z ctermbg=003 ctermfg=Black guibg=#504945 guifg=#665c54
     hi! SpaceVim_statusline_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#665c54
-
+    hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
+    hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
 endfunction
 
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
