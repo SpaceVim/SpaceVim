@@ -131,6 +131,9 @@ let g:spacevim_enable_neocomplcache    = 0
 " <
 let g:spacevim_enable_cursorline       = 1
 ""
+" Set the statusline separators of statusline, default is 'arrow'
+let g:spacevim_statusline_separator = 'arrow'
+""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
 " >

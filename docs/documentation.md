@@ -410,8 +410,8 @@ here is an exhaustive set of screenshots for all the available separator:
 Separator | Screenshot
 --------- | ----------
 `arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
 `alternate` | 
-arrow |
 arrow-fade |
 bar |
 box |
@@ -419,7 +419,6 @@ brace |
 butt |
 chamfer |
 contour |
-curve |
 rounded |
 roundstub |
 slant |

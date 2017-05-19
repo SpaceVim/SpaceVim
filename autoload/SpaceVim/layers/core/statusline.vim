@@ -14,6 +14,10 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:TIME = SpaceVim#api#import('time')
 
 " init
+let s:separators = {
+            \ 'arrow' : ["\ue0b0", "\ue0b2"],
+            \ 'curve' : ["\ue0b4", "\ue0b6"],
+            \ }
 let s:loaded_modes = ['center-cursor']
 let s:modes = {
             \ 'center-cursor': {
@@ -105,21 +109,21 @@ function! SpaceVim#layers#core#statusline#get(...) abort
 endfunction
 
 function! s:active() abort
-    let l = '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
-                \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#'
-                \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' 
-                \ . '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#'
-                \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#'
+    let l = '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#' . s:lsep
+                \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' %#SpaceVim_statusline_b_c#' . s:lsep
+                \ . '%#SpaceVim_statusline_c# ' . &filetype . ' %#SpaceVim_statusline_c_b#' . s:lsep 
+                \ . '%#SpaceVim_statusline_b# ' . s:modes() . ' %#SpaceVim_statusline_b_c#' . s:lsep
+                \ . '%#SpaceVim_statusline_c# ' . s:git_branch() . ' %#SpaceVim_statusline_c_z#' . s:lsep
                 \ . '%#SpaceVim_statusline_z#%='
     if index(s:loaded_sections, 'battery status') != -1
-        let l .= '%#SpaceVim_statusline_z_b#%#SpaceVim_statusline_b# ' . s:battery_status() . ' %#SpaceVim_statusline_c_b#'
+        let l .= '%#SpaceVim_statusline_z_b#' . s:rsep . '%#SpaceVim_statusline_b# ' . s:battery_status() . ' %#SpaceVim_statusline_c_b#'
     else
         let l .= '%#SpaceVim_statusline_c_z#'
     endif
-    let l .= '%#SpaceVim_statusline_c#%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
-                \ . '%#SpaceVim_statusline_b_c#%#SpaceVim_statusline_b# %P '
+    let l .= s:rsep . '%#SpaceVim_statusline_c#%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
+                \ . '%#SpaceVim_statusline_b_c#' . s:rsep . '%#SpaceVim_statusline_b# %P '
     if index(s:loaded_sections, 'time') != -1
-        let l .= '%#SpaceVim_statusline_c_b#%#SpaceVim_statusline_c# ' . s:time() . ' '
+        let l .= '%#SpaceVim_statusline_c_b#' . s:rsep . '%#SpaceVim_statusline_c# ' . s:time() . ' '
     endif
     return l
 endfunction
@@ -189,6 +193,7 @@ function! Test() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
+    let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'b'], 'call SpaceVim#layers#core#statusline#toggle_section("battery status")',
                 \ 'toggle the battery status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
