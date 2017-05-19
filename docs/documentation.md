@@ -367,9 +367,25 @@ Key Binding	| Description
 `SPC t m T` | toggle the mode line itself
 `SPC t m v` | toggle the version control info
 
+**Powerline font installation:**
+
+By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font.
+
+**syntax checking integration:**
+
+When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
+
+syntax checking integration in statusline.
+
+**Search status integration:**
+
+Search status shows the number of occurrence when performing a search via `/`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 5/6 segment on the screenshot below.
+
+_Anzu integration in mode-line_
+
 **Battery status integration:**
 
-__acpi__ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+_acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
 
 A color code is used for the battery status:
 
