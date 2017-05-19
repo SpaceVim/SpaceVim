@@ -369,7 +369,7 @@ Key Binding	| Description
 
 **Powerline font installation:**
 
-By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font.
+By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
 
 **syntax checking integration:**
 
@@ -409,7 +409,23 @@ here is an exhaustive set of screenshots for all the available separator:
 
 Separator | Screenshot
 --------- | ----------
-`arrow` (default) | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`alternate` | 
+arrow |
+arrow-fade |
+bar |
+box |
+brace |
+butt |
+chamfer |
+contour |
+curve |
+rounded |
+roundstub |
+slant |
+wave |
+zigzag |
+nil |
 
 
 ## Manual
