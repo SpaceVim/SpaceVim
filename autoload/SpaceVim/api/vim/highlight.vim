@@ -1,7 +1,7 @@
 let s:self = {}
 
 function! s:self.group2dict(name) abort
-    let id = index(map(range(999), 'synIDattr(v:val, "name")'), a:name)
+    let id = index(map(range(999), "synIDattr(v:val, 'name')"), a:name)
     if id == -1
         return {}
     endif
@@ -78,6 +78,28 @@ function! s:self.hide_in_normal(name) abort
         let group.ctermbg = bg
     endif
     call self.hi(group)
+endfunction
+
+
+function! s:self.hi_separator(a, b) abort
+    let hi_a = self.group2dict(a:a)
+    let hi_b = self.group2dict(a:b)
+    let hi_a_b = {
+                \ 'name' : a:a . '_' . a:b,
+                \ 'guibg' : hi_b.guibg,
+                \ 'guifg' : hi_a.guibg,
+                \ 'ctermbg' : hi_b.ctermbg,
+                \ 'ctermfg' : hi_a.ctermbg,
+                \ }
+    let hi_b_a = {
+                \ 'name' : a:b . '_' . a:a,
+                \ 'guibg' : hi_a.guibg,
+                \ 'guifg' : hi_b.guibg,
+                \ 'ctermbg' : hi_a.ctermbg,
+                \ 'ctermfg' : hi_b.ctermbg,
+                \ }
+    call self.hi(hi_a_b)
+    call self.hi(hi_b_a)
 endfunction
 
 function! SpaceVim#api#vim#highlight#get() abort
