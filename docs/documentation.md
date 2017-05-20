@@ -30,6 +30,7 @@ title:  "Documentation"
     * [Font](#font)
     * [UI Toggles](#ui-toggles)
     * [Statusline && tabline](#statusline--tabline)
+        * [statusline](#statusline)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -326,9 +327,105 @@ The statusline and tabline is a heavily customized [airline](https://github.com/
 - checker info: numbers of errors and warnings.
 - trailing line number.
 
-    Key Binding | Description
-    ----------- | -----------
-    `SPC [1-9]` | jump to the index of tabline.
+Key Binding | Description
+----------- | -----------
+`SPC [1-9]` | jump to the index of tabline.
+
+#### statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+Reminder of the color codes for the states:
+
+Mode | Color
+--- |  ---
+Normal | Orange
+Insert | Green
+Visual | Grey
+
+all the colors based on the current colorscheme
+
+Some elements can be dynamically toggled:
+
+Key Binding	| Description
+----------- | -----------
+`SPC t m b` | toggle the battery status (need to install acpi)
+`SPC t m c` | toggle the org task clock (available in org layer)
+`SPC t m m` | toggle the minor mode lighters
+`SPC t m M` | toggle the major mode
+`SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
+`SPC t m p` | toggle the point character position
+`SPC t m t` | toggle the time
+`SPC t m T` | toggle the mode line itself
+`SPC t m v` | toggle the version control info
+
+**Powerline font installation:**
+
+By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+
+**syntax checking integration:**
+
+When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
+
+syntax checking integration in statusline.
+
+**Search status integration:**
+
+Search status shows the number of occurrence when performing a search via `/`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 5/6 segment on the screenshot below.
+
+_Anzu integration in mode-line_
+
+**Battery status integration:**
+
+_acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+
+A color code is used for the battery status:
+
+Battery State | Color
+------------ | ----
+Charging | Green
+Discharging | Orange
+Critical | Red
+
+all the colors based on the current colorscheme
+
+**Statusline separators:**
+
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+
+```vim
+let g:spacevim_statusline_separator = 'arrow'
+```
+
+here is an exhaustive set of screenshots for all the available separator:
+
+Separator | Screenshot
+--------- | ----------
+`arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
+`slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
+`nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
+`fire` | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
+`alternate` | 
+arrow-fade |
+bar |
+box |
+brace |
+butt |
+chamfer |
+contour |
+rounded |
+roundstub |
+wave |
+zigzag |
 
 
 ## Manual

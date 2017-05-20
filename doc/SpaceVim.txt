@@ -162,6 +162,9 @@ normal mode.To disable this feature:
   let g:spacevim_enable_cursorline = 0
 <
 
+                                             *g:spacevim_statusline_separator*
+Set the statusline separators of statusline, default is 'arrow'
+
                                               *g:spacevim_enable_cursorcolumn*
 Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
 normal mode. To enable this feature:

@@ -10,6 +10,7 @@ endfunction
 
 function! SpaceVim#layers#lang#markdown#config() abort
     let g:markdown_minlines = 100
+    let g:markdown_syntax_conceal = 0
     let g:markdown_enable_mappings = 0
     let g:markdown_enable_insert_mode_leader_mappings = 0
     let g:markdown_enable_spell_checking = 0
