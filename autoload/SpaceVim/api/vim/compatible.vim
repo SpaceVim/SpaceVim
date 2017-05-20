@@ -8,23 +8,30 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ )
 endfunction
 
-function! s:execute(cmd, ...) abort
-  if a:0 == 0
-    let s = 'silent'
-  else
-    let s = a:1
-  endif
-  redir => output
-  if s ==# 'silent'
-    silent execute a:cmd
-  elseif s ==# 'silent!'
-    silent! execute a:cmd
-  else
-    execute a:cmd
-  endif
-  redir END
-  return output
-endfunction
+
+if exists('*execute')
+  function! s:execute(cmd, ...) abort
+    return call('execute', [a:cmd] + a:000)
+  endfunction
+else
+  function! s:execute(cmd, ...) abort
+    if a:0 == 0
+      let s = 'silent'
+    else
+      let s = a:1
+    endif
+    redir => output
+    if s ==# 'silent'
+      silent execute a:cmd
+    elseif s ==# 'silent!'
+      silent! execute a:cmd
+    else
+      execute a:cmd
+    endif
+    redir END
+    return output
+  endfunction
+endif
 
 if has('nvim')
   function! s:system(cmd, ...) abort

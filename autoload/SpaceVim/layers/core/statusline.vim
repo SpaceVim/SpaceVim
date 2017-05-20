@@ -14,6 +14,7 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:TIME = SpaceVim#api#import('time')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
+let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 
 " init
 let s:separators = {
@@ -58,6 +59,19 @@ function! s:battery_status() abort
     endif
 endfunction
 
+function! s:search_status() abort
+    let ct = 0
+    let tt = 0
+    let ctl = split(s:VIMCOMP.execute('.,$s/' . @/ . '//gn', 'silent!'), "\n")
+    if !empty(ctl)
+        let ct = split(ctl[0])[0]
+    endif
+    let ttl = split(s:VIMCOMP.execute('%s/' . @/ . '//gn', 'silent!'), "\n")
+    if !empty(ctl)
+        let tt = split(ttl[0])[0]
+    endif
+    return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
+endfunction
 
 function! s:time() abort
     return ' ' . s:TIME.current_time() . ' '
@@ -134,7 +148,9 @@ endfunction
 
 function! s:active() abort
     let lsec = [s:winnr(), s:filename()]
-
+    if index(s:loaded_sections, 'search status') != -1
+        call add(lsec, s:search_status())
+    endif
     if index(s:loaded_sections, 'major mode') != -1
         call add(lsec, ' ' . &filetype . ' ')
     endif
