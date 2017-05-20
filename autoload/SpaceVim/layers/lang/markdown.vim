@@ -24,7 +24,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         autocmd BufEnter *.md call s:mappings()
     augroup END
     if executable('firefox')
-        let g:mkdp_path_to_chrome= 'firefox'
+        let g:mkdp_path_to_chrome= get(g:, 'mkdp_path_to_chrome', 'firefox')
     endif
 endfunction
 
