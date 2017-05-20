@@ -119,8 +119,8 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
     if &filetype ==# 'vimfiler'
-        return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
-                    \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_c#'
+        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'tagbar'
         return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
                     \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
@@ -161,11 +161,11 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-    return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
-                \ . '%#SpaceVim_statusline_b# ' . s:filename() . ' '
+    return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_b#'
+                \ . '%#SpaceVim_statusline_b#' . s:filename() . ''
                 \ . ' ' . &filetype . ' ' 
-                \ . ' ' . s:modes() . ' '
-                \ . ' ' . s:git_branch() . ' '
+                \ . s:modes() . ''
+                \ . s:git_branch() . ''
                 \ . ' %='
                 \ . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
                 \ . ' %P '
