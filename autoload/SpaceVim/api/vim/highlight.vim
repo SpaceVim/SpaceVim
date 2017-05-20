@@ -7,8 +7,8 @@ function! s:self.group2dict(name) abort
     endif
     let rst = {
                 \ 'name' : synIDattr(id, 'name'),
-                \ 'ctermbg' : synIDattr(id, 'bg'),
-                \ 'ctermfg' : synIDattr(id, 'fg'),
+                \ 'ctermbg' : synIDattr(id, 'bg', 'cterm'),
+                \ 'ctermfg' : synIDattr(id, 'fg', 'cterm'),
                 \ 'bold' : synIDattr(id, 'bold'),
                 \ 'italic' : synIDattr(id, 'italic'),
                 \ 'underline' : synIDattr(id, 'underline'),
