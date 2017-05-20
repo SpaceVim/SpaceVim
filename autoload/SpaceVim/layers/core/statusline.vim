@@ -48,7 +48,7 @@ let s:modes = {
             \ },
             \ }
 
-let s:loaded_sections = ['syntax checking']
+let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters']
 
 function! s:battery_status() abort
     if executable('acpi')
@@ -133,13 +133,19 @@ function! SpaceVim#layers#core#statusline#get(...) abort
 endfunction
 
 function! s:active() abort
-    let lsec = [s:winnr(), s:filename(), ' ' . &filetype . ' ']
+    let lsec = [s:winnr(), s:filename()]
+
+    if index(s:loaded_sections, 'major mode') != -1
+        call add(lsec, ' ' . &filetype . ' ')
+    endif
     let rsec = []
     if index(s:loaded_sections, 'syntax checking') != -1 && s:syntax_checking() != ''
         call add(lsec, s:syntax_checking())
     endif
 
-    call add(lsec, s:modes())
+    if index(s:loaded_sections, 'minor mode lighters') != -1
+        call add(lsec, s:modes())
+    endif
     call add(lsec, s:git_branch())
     if index(s:loaded_sections, 'battery status') != -1
         call add(rsec, s:battery_status())
