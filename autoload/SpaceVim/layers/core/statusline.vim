@@ -138,6 +138,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     elseif &filetype ==# 'tagbar'
         return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
                     \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
+    elseif &filetype ==# 'startify'
+        call fugitive#detect(getcwd())
     endif
     if a:0 > 0
         return s:active()
