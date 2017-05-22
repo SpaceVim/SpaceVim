@@ -16,6 +16,13 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, hi_a, hi_b, hi
         let flag = flag * -1
     endfor
     let l = l[:-4]
+    if empty(a:right_sections)
+        if flag == 1
+            return l . '%#' . a:hi_c . '#'
+        else
+            return l . '%#' . a:hi_b . '#'
+        endif
+    endif
     if flag == 1
         let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . '%='
     else

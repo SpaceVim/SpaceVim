@@ -256,4 +256,9 @@ function! SpaceVim#layers#core#statusline#config() abort
                 \ 'toggle the time', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
                 \ 'toggle the statuline itself', 1)
+    function! TagbarStatusline(a,b,c,d) abort
+        return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . a:c . ' '], [], s:lsep, s:rsep,
+                    \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+    endfunction
+    let g:tagbar_status_func = 'TagbarStatusline'
 endfunction
