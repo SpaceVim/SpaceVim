@@ -377,11 +377,13 @@ When syntax checking minor mode is enabled, a new element appears showing the nu
 
 syntax checking integration in statusline.
 
-**Search status integration:**
+**Search index integration:**
 
-Search status shows the number of occurrence when performing a search via `/`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 5/6 segment on the screenshot below.
+Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
 
-_Anzu integration in mode-line_
+![search status](https://cloud.githubusercontent.com/assets/13142418/26312559/9449da62-3f3a-11e7-92dc-3c82ee8b16bd.png)
+
+_search index in statusline_
 
 **Battery status integration:**
 
@@ -413,7 +415,7 @@ Separator | Screenshot
 `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
 `slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
 `nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
-`fire` | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
+`fire` | ![2017-05-20_1365x26](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
 `alternate` | 
 arrow-fade |
 bar |
