@@ -49,7 +49,7 @@ let s:modes = {
             \ },
             \ }
 
-let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters']
+let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info']
 
 function! s:battery_status() abort
     if executable('acpi')
@@ -167,7 +167,9 @@ function! s:active() abort
     if index(s:loaded_sections, 'minor mode lighters') != -1
         call add(lsec, s:modes())
     endif
-    call add(lsec, s:git_branch())
+    if index(s:loaded_sections, 'version control info') != -1
+        call add(lsec, s:git_branch())
+    endif
     if index(s:loaded_sections, 'battery status') != -1
         call add(rsec, s:battery_status())
     endif
@@ -248,6 +250,8 @@ function! SpaceVim#layers#core#statusline#config() abort
     let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
                 \ 'toggle the minor mode lighters', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("version control info")',
+                \ 'version control info', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'M'], 'call SpaceVim#layers#core#statusline#toggle_section("major mode")',
                 \ 'toggle the major mode', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'b'], 'call SpaceVim#layers#core#statusline#toggle_section("battery status")',
