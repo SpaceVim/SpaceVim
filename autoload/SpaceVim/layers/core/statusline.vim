@@ -79,6 +79,9 @@ endfunction
 
 if g:spacevim_enable_neomake
     function! s:syntax_checking()
+        if !exists('g:loaded_neomake')
+            return ''
+        endif
         let counts = neomake#statusline#LoclistCounts()
         let warnings = get(counts, 'W', 0)
         let l =  warnings ?  '%#SpaceVim_statusline_warn#●' . warnings : ''
