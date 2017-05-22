@@ -381,7 +381,7 @@ syntax checking integration in statusline.
 
 Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
 
-![search status](https://cloud.githubusercontent.com/assets/13142418/26312559/9449da62-3f3a-11e7-92dc-3c82ee8b16bd.png)
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 _search index in statusline_
 
@@ -416,19 +416,22 @@ Separator | Screenshot
 `slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
 `nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
 `fire` | ![2017-05-20_1365x26](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
-`alternate` | 
-arrow-fade |
-bar |
-box |
-brace |
-butt |
-chamfer |
-contour |
-rounded |
-roundstub |
-wave |
-zigzag |
 
+**Minor Modes:**
+
+The minor mode area can be toggled on and off with `SPC t m m`
+
+Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to nil in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+
+The letters displayed in the statusline correspond to the key bindings used to toggle them.
+
+Key Binding | Unicode | ASCII | Mode
+----------- | ------- | ----- | ----
+`SPC t 8` | ⑧ | 8 | toggle highlight of characters for long lines
+`SPC t f` | ⓕ | f | fill-column-indicator mode
+`SPC t s` | ⓢ | s | syntax checking (neomake)
+`SPC t S` | Ⓢ | S | enabled in spell checking
+`SPC t w` | ⓦ | w | whitespace mode
 
 ## Manual
 
