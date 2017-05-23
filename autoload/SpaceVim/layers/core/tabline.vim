@@ -15,6 +15,7 @@ scriptencoding utf-8
 let s:messletters = SpaceVim#api#import('messletters')
 let s:file = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
@@ -59,14 +60,14 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
             let t .= id . ' ' . name
             if i == ct - 1
-                let t .= ' %#SpaceVim_tabline_b_a# '
+                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a# '
             elseif i == ct
-                let t .= ' %#SpaceVim_tabline_a_b# '
+                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b# '
             else
                 let t .= '  '
             endif
         endfor
-        let t .= '%=%#SpaceVim_tabline_a_b#'
+        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#'
         let t .= '%#SpaceVim_tabline_a# Tabs'
     else
         let s:buffers = s:BUFFER.listed_buffers()
@@ -92,14 +93,14 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
             let t .= id . ' ' . name
             if i == ct
-                let t .= ' %#SpaceVim_tabline_a_b# '
+                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b# '
             elseif i == pt
-                let t .= ' %#SpaceVim_tabline_b_a# '
+                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a# '
             else
                 let t .= '  '
             endif
         endfor
-        let t .= '%=%#SpaceVim_tabline_a_b#'
+        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#'
         let t .= '%#SpaceVim_tabline_a# Buffers'
     endif
     return t
@@ -121,8 +122,13 @@ function! SpaceVim#layers#core#tabline#jump(id) abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
-    hi! SpaceVim_tabline_a ctermbg=003 ctermfg=Black guibg=#a89984 guifg=#282828
-    hi! SpaceVim_tabline_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#a89984
-    hi! SpaceVim_tabline_a_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#a89984
-    hi! SpaceVim_tabline_b_a ctermbg=003 ctermfg=Black guibg=#a89984 guifg=#504945
+    let name = get(g:, 'colors_name', 'gruvbox')
+    try
+        let t = SpaceVim#mapping#guide#theme#{name}#palette()
+    catch /^Vim\%((\a\+)\)\=:E117/
+        let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
+    endtry
+    exe 'hi! SpaceVim_tabline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+    exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+    call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
 endfunction
