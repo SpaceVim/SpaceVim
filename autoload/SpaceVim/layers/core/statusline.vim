@@ -212,9 +212,15 @@ function! SpaceVim#layers#core#statusline#init() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#def_colors() abort
-    hi! SpaceVim_statusline_a ctermbg=003 ctermfg=Black guibg=#a89984 guifg=#282828
-    hi! SpaceVim_statusline_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#a89984
-    hi! SpaceVim_statusline_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#a89984
+    let name = get(g:, 'colors_name', 'gruvbox')
+    try
+        let t = SpaceVim#mapping#guide#theme#{name}#palette()
+    catch /^Vim\%((\a\+)\)\=:E117/
+        let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
+    endtry
+    exe 'hi! SpaceVim_statusline_a ctermbg=003 ctermfg=Black guibg=' . t[0][1] . ' guifg=' . t[0][0]
+    exe 'hi! SpaceVim_statusline_b ctermbg=003 ctermfg=Black guibg=' . t[1][1] . ' guifg=' . t[1][0]
+    exe 'hi! SpaceVim_statusline_c ctermbg=003 ctermfg=Black guibg=' . t[2][1] . ' guifg=' . t[2][0]
     hi! SpaceVim_statusline_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#665c54
     hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
     hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
