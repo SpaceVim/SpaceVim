@@ -70,6 +70,9 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
                 \ . string(s:_function('s:toggle_spell_check')) . ', [])',
                 \ 'toggle syntax checker', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
+                \ . string(s:_function('s:toggle_whitespace')) . ', [])',
+                \ 'toggle the whitespace', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
@@ -200,4 +203,9 @@ function! s:toggle_spell_check() abort
         let &l:spell = 1
     endif
     call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
+endfunction
+
+function! s:toggle_whitespace() abort
+    call SpaceVim#layers#core#statusline#toggle_section('whitespace')
+    call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction

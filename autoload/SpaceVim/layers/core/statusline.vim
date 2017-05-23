@@ -47,6 +47,10 @@ let s:modes = {
             \ 'icon' : s:MESSLETTERS.circled_letter('S'),
             \ 'desc' : 'spell-checking mode',
             \ },
+            \ 'whitespace' :{
+            \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+            \ 'desc' : 'whitespace mode',
+            \ },
             \ }
 
 let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info']
@@ -109,13 +113,22 @@ function! s:git_branch() abort
     return ''
 endfunction
 
+function! s:whitespace() abort
+    let ln = search('\s\+$', 'n')
+    if ln != 0
+        return ' trailing[' . ln . '] '
+    else
+        return ''
+    endif
+endfunction
+
 
 function! s:modes() abort
     let m = ' ❖ '
     for mode in s:loaded_modes
         let m .= s:modes[mode].icon . ' '
     endfor
-    return m
+    return m . ' '
 endfunction
 
 function! s:filesize() abort
@@ -179,6 +192,9 @@ function! s:active() abort
         call add(rsec, s:time())
     endif
 
+    if index(s:loaded_sections, 'whitespace') != -1
+        call add(rsec, s:whitespace())
+    endif
     return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep,
                 \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
@@ -212,10 +228,16 @@ function! SpaceVim#layers#core#statusline#init() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#def_colors() abort
-    hi! SpaceVim_statusline_a ctermbg=003 ctermfg=Black guibg=#a89984 guifg=#282828
-    hi! SpaceVim_statusline_b ctermbg=003 ctermfg=Black guibg=#504945 guifg=#a89984
-    hi! SpaceVim_statusline_c ctermbg=003 ctermfg=Black guibg=#3c3836 guifg=#a89984
-    hi! SpaceVim_statusline_z ctermbg=003 ctermfg=Black guibg=#665c54 guifg=#665c54
+    let name = get(g:, 'colors_name', 'gruvbox')
+    try
+        let t = SpaceVim#mapping#guide#theme#{name}#palette()
+    catch /^Vim\%((\a\+)\)\=:E117/
+        let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
+    endtry
+    exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+    exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+    exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
+    exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[3][1] . ' guibg=' . t[3][0] . ' guifg=' . t[3][0]
     hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
     hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
     call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
@@ -260,8 +282,8 @@ function! SpaceVim#layers#core#statusline#config() abort
                 \ 'toggle the time', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
                 \ 'toggle the statuline itself', 1)
-    function! TagbarStatusline(a,b,c,d) abort
-        return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . a:c . ' '], [], s:lsep, s:rsep,
+    function! TagbarStatusline(...) abort
+        return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . a:3 . ' '], [], s:lsep, s:rsep,
                     \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
     endfunction
     let g:tagbar_status_func = 'TagbarStatusline'
