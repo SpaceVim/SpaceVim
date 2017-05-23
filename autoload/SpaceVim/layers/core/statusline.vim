@@ -184,7 +184,7 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-    return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_b#'
+    return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                 \ . '%#SpaceVim_statusline_b#' . s:filename() . ''
                 \ . ' ' . &filetype . ' ' 
                 \ . s:modes() . ''
