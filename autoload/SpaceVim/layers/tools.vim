@@ -1,6 +1,7 @@
 function! SpaceVim#layers#tools#plugins() abort
   return [
         \ ['tpope/vim-scriptease'],
+        \ ['mbbill/fencview',                 { 'on_cmd' : 'FencAutoDetect'}],
         \ ['SpaceVim/cscope.vim'],
         \ ['wsdjeg/vim-cheat',                { 'on_cmd' : 'Cheat'}],
         \ ['wsdjeg/SourceCounter.vim',        { 'on_cmd' : 'SourceCounter'}],
@@ -47,6 +48,8 @@ endfunction
 
 function! SpaceVim#layers#tools#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calendar', 'vim calendar', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
+        \ 'Auto detect the file encoding', 1)
   nmap mm <Plug>BookmarkToggle
   nmap mi <Plug>BookmarkAnnotate
   nmap ma <Plug>BookmarkShowAll

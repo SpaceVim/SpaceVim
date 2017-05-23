@@ -80,11 +80,11 @@ let g:spacevim_plugin_bundle_dir
       \ = $HOME. join(['', '.cache', 'vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
 ""
-" Enable/Disable realtime leader guide. Default is 0.
+" Enable/Disable realtime leader guide. Default is 1. to disable it:
 " >
-"   let g:spacevim_realtime_leader_guide = 1
+"   let g:spacevim_realtime_leader_guide = 0
 " <
-let g:spacevim_realtime_leader_guide   = 0
+let g:spacevim_realtime_leader_guide   = 1
 ""
 " Enable/Disable key frequency catching of SpaceVim. default value is 0. to
 " enable it:
@@ -130,6 +130,9 @@ let g:spacevim_enable_neocomplcache    = 0
 "   let g:spacevim_enable_cursorline = 0
 " <
 let g:spacevim_enable_cursorline       = 1
+""
+" Set the statusline separators of statusline, default is 'arrow'
+let g:spacevim_statusline_separator = 'arrow'
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
@@ -316,6 +319,7 @@ let g:spacevim_wildignore
 " privite options
 let g:_spacevim_mappings = {}
 " TODO merge leader guide
+let g:_spacevim_mappings_space_custom = []
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
@@ -476,6 +480,10 @@ function! SpaceVim#end() abort
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
+  endif
+
+  if index(g:spacevim_plugin_groups, 'core#statusline') != -1
+    call SpaceVim#layers#core#statusline#init()
   endif
 
   if g:spacevim_realtime_leader_guide

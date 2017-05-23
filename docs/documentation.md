@@ -4,86 +4,92 @@ title:  "Documentation"
 
 # SpaceVim Documentation
 
-
 <!-- vim-markdown-toc GFM -->
 * [Core Pillars](#core-pillars)
-  * [Mnemonic](#mnemonic)
-  * [Discoverable](#discoverable)
-  * [Consistent](#consistent)
-  * [Crowd-Configured](#crowd-configured)
+    * [Mnemonic](#mnemonic)
+    * [Discoverable](#discoverable)
+    * [Consistent](#consistent)
+    * [Crowd-Configured](#crowd-configured)
 * [Highlighted features](#highlighted-features)
 * [Screenshots](#screenshots)
-  * [welcome page](#welcome-page)
-  * [working flow](#working-flow)
+    * [welcome page](#welcome-page)
+    * [working flow](#working-flow)
 * [Who can benefit from this?](#who-can-benefit-from-this)
 * [Update and Rollback](#update-and-rollback)
-  * [Update SpaceVim itself](#update-spacevim-itself)
-    * [Automatic Updates](#automatic-updates)
-    * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
-    * [Updating Manually with git](#updating-manually-with-git)
-  * [Update plugins](#update-plugins)
+    * [Update SpaceVim itself](#update-spacevim-itself)
+        * [Automatic Updates](#automatic-updates)
+        * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
+        * [Updating Manually with git](#updating-manually-with-git)
+    * [Update plugins](#update-plugins)
 * [Configuration layers](#configuration-layers)
 * [Custom Configuration](#custom-configuration)
-  * [Automatic Generation](#automatic-generation)
-  * [Alternative directory](#alternative-directory)
+    * [Automatic Generation](#automatic-generation)
+    * [Alternative directory](#alternative-directory)
 * [Awesome ui](#awesome-ui)
-  * [Colorschemes](#colorschemes)
-  * [Font](#font)
-  * [UI Toggles](#ui-toggles)
-  * [Statusline && tabline](#statusline--tabline)
+    * [Colorschemes](#colorschemes)
+    * [Font](#font)
+    * [UI Toggles](#ui-toggles)
+    * [Statusline && tabline](#statusline--tabline)
+        * [statusline](#statusline)
 * [Manual](#manual)
-  * [Completion](#completion)
-    * [Unite/Denite](#unitedenite)
-      * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
-  * [Discovering](#discovering)
-    * [Mappings](#mappings)
-      * [Mappings guide](#mappings-guide)
-      * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
-    * [Getting help](#getting-help)
-    * [Available layers](#available-layers)
-      * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
-      * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
-    * [Toggles](#toggles)
+    * [Completion](#completion)
+        * [Unite/Denite](#unitedenite)
+            * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
+    * [Discovering](#discovering)
+        * [Mappings](#mappings)
+            * [Mappings guide](#mappings-guide)
+            * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
+        * [Getting help](#getting-help)
+        * [Available layers](#available-layers)
+            * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
+            * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
+        * [Toggles](#toggles)
+    * [Navigating](#navigating)
+    * [Auto-saving](#auto-saving)
+    * [Searching](#searching)
+    * [Editing](#editing)
+        * [Multi-Encodings](#multi-encodings)
+    * [Errors handling](#errors-handling)
 * [Features](#features)
-  * [Awesome ui](#awesome-ui-1)
-  * [Mnemonic key bindings](#mnemonic-key-bindings)
+    * [Awesome ui](#awesome-ui-1)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
 * [Language specific mode](#language-specific-mode)
 * [Key Mapping](#key-mapping)
-  * [c/c++ support](#cc-support)
-  * [go support](#go-support)
-  * [python support](#python-support)
+    * [c/c++ support](#cc-support)
+    * [go support](#go-support)
+    * [python support](#python-support)
 * [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
 * [Modular configuration](#modular-configuration)
 * [Multiple leader mode](#multiple-leader-mode)
-  * [Global origin vim leader](#global-origin-vim-leader)
-  * [Local origin vim leader](#local-origin-vim-leader)
-  * [Windows function leader](#windows-function-leader)
-  * [Unite work flow leader](#unite-work-flow-leader)
+    * [Global origin vim leader](#global-origin-vim-leader)
+    * [Local origin vim leader](#local-origin-vim-leader)
+    * [Windows function leader](#windows-function-leader)
+    * [Unite work flow leader](#unite-work-flow-leader)
 * [Unite centric work-flow](#unite-centric-work-flow)
-    * [Plugin Highlights](#plugin-highlights)
-    * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-      * [Language](#language)
-      * [Commands](#commands)
-      * [Commands](#commands-1)
-      * [Completion](#completion-1)
-      * [Unite](#unite)
-      * [Operators & Text Objects](#operators--text-objects)
-    * [Custom Key bindings](#custom-key-bindings)
-      * [File Operations](#file-operations)
-      * [Editor UI](#editor-ui)
-      * [Window Management](#window-management)
-      * [Native functions](#native-functions)
-      * [Plugin: Unite](#plugin-unite)
-      * [Plugin: VimFiler](#plugin-vimfiler)
-      * [Plugin: neocomplete](#plugin-neocomplete)
-      * [Plugin: NERD Commenter](#plugin-nerd-commenter)
-      * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
-      * [Plugin: ChooseWin](#plugin-choosewin)
-      * [Plugin: Bookmarks](#plugin-bookmarks)
-      * [Plugin: Gita](#plugin-gita)
-      * [Plugin: vim-signify](#plugin-vim-signify)
-      * [Misc Plugins](#misc-plugins)
+        * [Plugin Highlights](#plugin-highlights)
+        * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+        * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+            * [Language](#language)
+            * [Commands](#commands)
+            * [Commands](#commands-1)
+            * [Completion](#completion-1)
+            * [Unite](#unite)
+            * [Operators & Text Objects](#operators--text-objects)
+        * [Custom Key bindings](#custom-key-bindings)
+            * [File Operations](#file-operations)
+            * [Editor UI](#editor-ui)
+            * [Window Management](#window-management)
+            * [Native functions](#native-functions)
+            * [Plugin: Unite](#plugin-unite)
+            * [Plugin: VimFiler](#plugin-vimfiler)
+            * [Plugin: neocomplete](#plugin-neocomplete)
+            * [Plugin: NERD Commenter](#plugin-nerd-commenter)
+            * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+            * [Plugin: ChooseWin](#plugin-choosewin)
+            * [Plugin: Bookmarks](#plugin-bookmarks)
+            * [Plugin: Gita](#plugin-gita)
+            * [Plugin: vim-signify](#plugin-vim-signify)
+            * [Misc Plugins](#misc-plugins)
 
 <!-- vim-markdown-toc -->
 
@@ -321,10 +327,111 @@ The statusline and tabline is a heavily customized [airline](https://github.com/
 - checker info: numbers of errors and warnings.
 - trailing line number.
 
-    Key Binding | Description
-    ----------- | -----------
-    `SPC [1-9]` | jump to the index of tabline.
+Key Binding | Description
+----------- | -----------
+`SPC [1-9]` | jump to the index of tabline.
 
+#### statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+Reminder of the color codes for the states:
+
+Mode | Color
+--- |  ---
+Normal | Orange
+Insert | Green
+Visual | Grey
+
+all the colors based on the current colorscheme
+
+Some elements can be dynamically toggled:
+
+Key Binding	| Description
+----------- | -----------
+`SPC t m b` | toggle the battery status (need to install acpi)
+`SPC t m c` | toggle the org task clock (available in org layer)
+`SPC t m m` | toggle the minor mode lighters
+`SPC t m M` | toggle the major mode
+`SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
+`SPC t m p` | toggle the point character position
+`SPC t m t` | toggle the time
+`SPC t m T` | toggle the mode line itself
+`SPC t m v` | toggle the version control info
+
+**Powerline font installation:**
+
+By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+
+**syntax checking integration:**
+
+When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
+
+syntax checking integration in statusline.
+
+**Search index integration:**
+
+Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+
+_search index in statusline_
+
+**Battery status integration:**
+
+_acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+
+A color code is used for the battery status:
+
+Battery State | Color
+------------ | ----
+Charging | Green
+Discharging | Orange
+Critical | Red
+
+all the colors based on the current colorscheme
+
+**Statusline separators:**
+
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+
+```vim
+let g:spacevim_statusline_separator = 'arrow'
+```
+
+here is an exhaustive set of screenshots for all the available separator:
+
+Separator | Screenshot
+--------- | ----------
+`arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
+`slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
+`nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
+`fire` | ![2017-05-20_1365x26](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
+
+**Minor Modes:**
+
+The minor mode area can be toggled on and off with `SPC t m m`
+
+Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to nil in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+
+The letters displayed in the statusline correspond to the key bindings used to toggle them.
+
+Key Binding | Unicode | ASCII | Mode
+----------- | ------- | ----- | ----
+`SPC t 8` | ⑧ | 8 | toggle highlight of characters for long lines
+`SPC t f` | ⓕ | f | fill-column-indicator mode
+`SPC t s` | ⓢ | s | syntax checking (neomake)
+`SPC t S` | Ⓢ | S | enabled in spell checking
+`SPC t w` | ⓦ | w | whitespace mode
 
 ## Manual
 
@@ -387,6 +494,12 @@ key  | description
 `n`  | next page of guide buffer
 `p`  | previous page of guide buffer
 
+to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
+
+```vim
+call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
+```
+
 
 ##### Unide/Denite describe key bindings
 
@@ -427,14 +540,63 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
+### Navigating
 
+### Auto-saving
+
+### Searching
+
+### Editing
+
+#### Multi-Encodings
+
+SpaceVim use utf-8 as default encoding. there are four options for these case:
+
+- fileencodings (fencs): ucs-bom,utf-8,default,latin1
+- fileencoding (fenc): utf-8
+- encoding (enc): utf-8
+- termencoding (tenc): utf-8 (only supported in vim)
+
+to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
+
+```vim
+set enc=utf-8
+write
+```
+
+### Errors handling
+
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
+
+Errors management mappings (start with e):
+
+Mappings | Description
+-------- | -----------
+`SPC t s` | toggle syntax checker
+`SPC e c` | clear all errors
+`SPC e h` | describe a syntax checker
+`SPC e l` | toggle the display of the list of errors/warnings
+`SPC e n` | go to the next error
+`SPC e p` | go to the previous error
+`SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration)
+`SPC e .` | error transient state
+
+The next/previous error mappings and the error transient state can be used to browse errors from syntax checkers as well as errors from location list buffers, and indeed anything that supports vim's location list. This includes for example search results that have been saved to a location list buffer.
+
+Custom sign symbol:
+
+Symbol | Description | Custom option
+------ | ----------- | -------------
+`✖` | Error | `g:spacevim_error_symbol`
+`➤` | warning | `g:spacevim_warning_symbol`
 
 ## Features
 
 ### Awesome ui
 
 - outline + filemanager + checker
-    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
 ### Mnemonic key bindings
 

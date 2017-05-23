@@ -36,6 +36,10 @@ func! s:self.resize(size, ...) abort
 	exe cmd 'resize' a:size
 endf
 
+function! s:self.listed_buffers() abort
+    return filter(range(1, bufnr('$')), 'buflisted(v:val)')
+endfunction
+
 fu! SpaceVim#api#vim#buffer#get() abort
    return deepcopy(s:self)
 endf

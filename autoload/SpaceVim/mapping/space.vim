@@ -9,6 +9,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
     let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
     let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
+    let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
     let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
@@ -48,7 +49,7 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bp', 'bp')
     let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
-    let g:_spacevim_mappings_space.e = {'name' : '+Errors'}
+    let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
@@ -86,7 +87,7 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
 endfunction
 
 function! s:has_map_to_spc() abort
-    return get(g:, 'mapleader', '\') == ' '
+    return get(g:, 'mapleader', '\') ==# ' '
 endfunction
 
 function! s:windows_layout_toggle() abort

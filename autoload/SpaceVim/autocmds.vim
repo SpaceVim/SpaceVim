@@ -120,6 +120,18 @@ function! s:fix_gruvbox() abort
 endfunction
 function! SpaceVim#autocmds#VimEnter() abort
   call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+  for argv in g:_spacevim_mappings_space_custom
+    call call('SpaceVim#mapping#space#def', argv)
+  endfor
+  if get(g:, '_spacevim_statusline_loaded', 0) == 1
+    set laststatus=2
+    call SpaceVim#layers#core#statusline#def_colors()
+    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+  endif
+  if get(g:, '_spacevim_tabline_loaded', 0) == 1
+    call SpaceVim#layers#core#tabline#def_colors()
+    set showtabline=2
+  endif
 endfunction
 
 
