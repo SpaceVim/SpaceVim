@@ -47,6 +47,10 @@ let s:modes = {
             \ 'icon' : s:MESSLETTERS.circled_letter('S'),
             \ 'desc' : 'spell-checking mode',
             \ },
+            \ 'whitespace' :{
+            \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+            \ 'desc' : 'whitespace mode',
+            \ },
             \ }
 
 let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info']
@@ -109,13 +113,22 @@ function! s:git_branch() abort
     return ''
 endfunction
 
+function! s:whitespace() abort
+    let ln = search('\s\+$', 'n')
+    if ln != 0
+        return ' trailing[' . ln . '] '
+    else
+        return ''
+    endif
+endfunction
+
 
 function! s:modes() abort
     let m = ' ❖ '
     for mode in s:loaded_modes
         let m .= s:modes[mode].icon . ' '
     endfor
-    return m
+    return m . ' '
 endfunction
 
 function! s:filesize() abort
@@ -179,6 +192,9 @@ function! s:active() abort
         call add(rsec, s:time())
     endif
 
+    if index(s:loaded_sections, 'whitespace') != -1
+        call add(rsec, s:whitespace())
+    endif
     return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep,
                 \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
