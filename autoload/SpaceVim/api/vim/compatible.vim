@@ -3,6 +3,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'execute' : '',
         \ 'system' : '',
         \ 'systemlist' : '',
+        \ 'globpath' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
@@ -73,6 +74,16 @@ else
       endif
     endfunction
   endif
+endif
+
+if has('patch-7.4.279')
+  function! s:globpath(dir, expr) abort
+    return globpath(a:dir, a:expr, 1, 1)
+  endfunction
+else
+  function! s:globpath(dir, expr) abort
+    return split(globpath(a:dir, a:expr), '\n')
+  endfunction
 endif
 
 " vim:set et sw=2 cc=80:

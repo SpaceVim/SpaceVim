@@ -191,16 +191,9 @@ function! SpaceVim#default#SetMappings() abort
     exe 'tnoremap <silent><esc>     <C-\><C-n>'
   endif
 
-  "Quickly add empty lines
-  nnoremap <silent>[<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent>]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
   "Use jk switch to normal mode
   inoremap jk <esc>
-
-  "]e or [e move current line ,count can be useed
-  nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
-  nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
   "]<End> or ]<Home> move current line to the end or the begin of current buffer
   nnoremap <silent>]<End> ddGp``

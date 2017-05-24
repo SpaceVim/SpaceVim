@@ -46,6 +46,9 @@ title:  "Documentation"
         * [Toggles](#toggles)
     * [Navigating](#navigating)
         * [Point/Cursor](#pointcursor)
+        * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
+            * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
+        * [Unimpaired bindings](#unimpaired-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -562,6 +565,44 @@ Key Binding | Description
 `SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
 `SPC j $` | go to the end of line (and set a mark at the previous location in the line)
 `SPC t -` | lock the cursor at the center of the screen
+
+#### Vim motions with vim-easymotion
+
+##### quick-jump-link mode (TODO)
+
+https://github.com/easymotion/vim-easymotion/issues/315
+
+Similar to easymotion or `f` in vimperator for firefox, this mode allows one to jump to any link in help file with two key strokes.
+
+mapping | description
+------- | -----------
+`o` | initiate quick jump link mode in help buffer
+
+#### Unimpaired bindings
+
+Mappings | Description
+-------- | -----------
+`[ SPC` | Insert space above
+`] SPC` | Insert space below
+`[ b` | Go to previous buffer
+`] b` | Go to next buffer
+`[ f` | Go to previous file in directory
+`] f` | Go to next file in directory
+`[ l` | Go to the previous error
+`] l` | Go to the next error
+`[ h` | Go to the previous vcs hunk
+`] h` | Go to the next vcs hunk
+`[ q` | Go to the previous error
+`] q` | Go to the next error
+`[ t` | Go to the previous frame
+`] t` | Go to the next frame
+`[ w` | Go to the previous window
+`] w` | Go to the next window
+`[ e` | Move line up
+`] e` | Move line down
+`[ p` | Paste above current line
+`] p` | Paste below current line
+`g p` | Select pasted text
 
 ### Auto-saving
 
