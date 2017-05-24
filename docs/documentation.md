@@ -590,8 +590,8 @@ Mappings | Description
 `] f` | Go to next file in directory
 `[ l` | Go to the previous error
 `] l` | Go to the next error
-`[ h` | Go to the previous vcs hunk
-`] h` | Go to the next vcs hunk
+`[ c` | Go to the previous vcs hunk
+`] c` | Go to the next vcs hunk
 `[ q` | Go to the previous error
 `] q` | Go to the next error
 `[ t` | Go to the previous frame
