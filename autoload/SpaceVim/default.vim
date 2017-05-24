@@ -132,6 +132,8 @@ function! SpaceVim#default#SetPlugins() abort
   call add(g:spacevim_plugin_groups, 'misc')
 
   call add(g:spacevim_plugin_groups, 'core')
+  call SpaceVim#layers#load('core#statusline')
+  call SpaceVim#layers#load('core#tabline')
   call add(g:spacevim_plugin_groups, 'default')
   call add(g:spacevim_plugin_groups, 'unite')
   call add(g:spacevim_plugin_groups, 'github')
