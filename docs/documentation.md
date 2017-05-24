@@ -45,6 +45,7 @@ title:  "Documentation"
             * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
         * [Toggles](#toggles)
     * [Navigating](#navigating)
+        * [Point/Cursor](#pointcursor)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -119,11 +120,13 @@ Community-driven configuration provides curated packages tuned by power users an
 
 - **Great documentation:** access documentation in Vim with
     <kbd>:h SpaceVim</kbd>.
-- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
+- **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
 - **Mnemonic key bindings:** commands have mnemonic prefixes like
     <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
     unite work flow commands.
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
+- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
+- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
     [conventions](http://spacevim.org/development/).
@@ -133,7 +136,7 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ### welcome page
 
-![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
+![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
 ### working flow
 
@@ -415,7 +418,7 @@ Separator | Screenshot
 `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
 `slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
 `nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
-`fire` | ![2017-05-20_1365x26](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
+`fire` | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
 
 **Minor Modes:**
 
@@ -540,7 +543,25 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
+both the toggles mappings started with `[SPC] t` or `[SPC] T`. you can find it in the mapping guide.
+
 ### Navigating
+
+#### Point/Cursor
+
+Navigation is performed using the Vi key bindings `hjkl`.
+
+Key Binding | Description
+----------- | -----------
+`h` | move cursor left (origin vim key, no mappings)
+`j` | move cursor down (origin vim key, no mappings)
+`k` | move cursor up (origin vim key, no mappings)
+`l` | move cursor right (origin vim key, no mappings)
+`H` | move cursor to the top of the screen (origin vim key, no mappings)
+`L` | move cursor to the bottom of the screen (origin vim key, no mappings)
+`SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
+`SPC j $` | go to the end of line (and set a mark at the previous location in the line)
+`SPC t -` | lock the cursor at the center of the screen
 
 ### Auto-saving
 

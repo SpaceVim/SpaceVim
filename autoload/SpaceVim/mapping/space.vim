@@ -14,6 +14,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
     let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
     let g:_spacevim_mappings_space.f = {'name' : '+Files'}
+    let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
     let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
     let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
     let g:_spacevim_mappings_space.h = {'name' : '+Help'}
