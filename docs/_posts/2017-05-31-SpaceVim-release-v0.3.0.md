@@ -16,7 +16,18 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 for more information about mapping guide, please read the [documentation](http://spacevim.org/documentation/#mappings-guide).
 
+- **Statusline:** A modulue statusline will displayed all the status of SpaceVim. all the sections in the statusline can be toggled.
+
+here is an picture for this feature:
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+
+please checkout statusline documentation for all the shortcuts.
+
 ## CHANGES
+
+SpaceVim now use Space as [SPC] only in normal mode. and do not change the default value of mapleader.
 
 ## FIXES
 
+please checkout our issue list.
