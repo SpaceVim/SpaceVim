@@ -12,7 +12,7 @@ function! s:self.group2dict(name) abort
                 \ 'bold' : synIDattr(id, 'bold'),
                 \ 'italic' : synIDattr(id, 'italic'),
                 \ 'underline' : synIDattr(id, 'underline'),
-                \ 'guibg' :synIDattr(id, 'bg#'),
+                \ 'guibg' : synIDattr(id, 'bg#'),
                 \ 'guifg' : synIDattr(id, 'fg#'),
                 \ }
     return rst
