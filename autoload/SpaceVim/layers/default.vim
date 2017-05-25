@@ -32,6 +32,10 @@ function! SpaceVim#layers#default#config() abort
 
     " [c or ]c go to next or previous vcs hunk
 
+    " [w or ]w go to next or previous window
+    nnoremap <silent> [w :call <SID>previous_window()<cr>
+    nnoremap <silent> ]w :call <SID>next_window()<cr>
+
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')", 'Find files in the directory of the current buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
@@ -85,4 +89,24 @@ function! s:previous_file() abort
             exe 'e ' . dir . s:file.separator . file[index(file, f) - 1]
         endif
     endif
+endfunction
+
+function! s:next_window() abort
+    try
+        exe (winnr() + 1 ) . 'wincmd w'
+    catch
+        exe 1 . 'wincmd w'
+    endtry
+endfunction
+
+function! s:previous_window() abort
+    try
+        if winnr() == 1
+            exe winnr('$') . 'wincmd w'
+        else
+            exe (winnr() - 1 ) . 'wincmd w'
+        endif
+    catch
+        exe winnr('$') . 'wincmd w'
+    endtry
 endfunction
