@@ -22,7 +22,7 @@ here is an picture for this feature:
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
-please checkout statusline documentation for all the shortcuts.
+please checkout statusline [documentation](http://spacevim.org/documentation/#statusline) for all the shortcuts.
 
 ## CHANGES
 
