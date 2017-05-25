@@ -36,6 +36,17 @@ function! SpaceVim#layers#default#config() abort
     nnoremap <silent> [w :call <SID>previous_window()<cr>
     nnoremap <silent> ]w :call <SID>next_window()<cr>
 
+    " [t or ]t for next and previous tab
+    nnoremap <silent> [t :tabprevious<cr>
+    nnoremap <silent> ]t :tabnext<cr>
+
+    " [p or ]p for p and P
+    nnoremap <silent> [p P
+    nnoremap <silent> ]p p
+
+    " Select last paste
+    nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')", 'Find files in the directory of the current buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)

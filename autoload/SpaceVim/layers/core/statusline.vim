@@ -102,12 +102,20 @@ function! s:winnr() abort
 endfunction
 
 function! s:filename() abort
-    return (&modified ? ' * ' : ' - ') . s:filesize() . fnamemodify(bufname('%'), ':t') . ' '
+    let name = fnamemodify(bufname('%'), ':t')
+    if empty(name)
+        let name = 'No Name'
+    endif
+    return (&modified ? ' * ' : ' - ') . s:filesize() . name . ' '
 endfunction
 
 function! s:git_branch() abort
     if exists('g:loaded_fugitive')
         let l:head = fugitive#head()
+        if empty(l:head)
+            call fugitive#detect(getcwd())
+            let l:head = fugitive#head()
+        endif
         return empty(l:head) ? '' : '  '.l:head . ' '
     endif
     return ''
@@ -169,7 +177,7 @@ function! s:active() abort
     if index(s:loaded_sections, 'search status') != -1
         call add(lsec, s:search_status())
     endif
-    if index(s:loaded_sections, 'major mode') != -1
+    if index(s:loaded_sections, 'major mode') != -1 && !empty(&filetype)
         call add(lsec, ' ' . &filetype . ' ')
     endif
     let rsec = []

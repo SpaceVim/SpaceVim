@@ -240,8 +240,6 @@ function! SpaceVim#default#SetMappings() abort
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
 
-  " Select last paste
-  nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
   " Use Q format lines
   map Q gq

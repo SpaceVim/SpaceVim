@@ -53,6 +53,9 @@ function! SpaceVim#layers#core#tabline#get() abort
             let buflist = tabpagebuflist(i)
             let winnr = tabpagewinnr(i)
             let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+            if empty(name)
+                let name = 'No Name'
+            endif
             let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
             let icon = s:file.fticon(name)
             if !empty(icon)
@@ -86,6 +89,9 @@ function! SpaceVim#layers#core#tabline#get() abort
                 let t .= '%#SpaceVim_tabline_a#'
             endif
             let name = fnamemodify(bufname(i), ':t')
+            if empty(name)
+                let name = 'No Name'
+            endif
             let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
             let icon = s:file.fticon(name)
             if !empty(icon)
