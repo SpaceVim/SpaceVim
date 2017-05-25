@@ -37,8 +37,8 @@ function! SpaceVim#layers#incsearch#config() abort
     map g/ <Plug>(incsearch-stay)
     set hlsearch
     let g:incsearch#auto_nohlsearch = 1
-    map n  <Plug>(incsearch-nohl-n)
-    map N  <Plug>(incsearch-nohl-N)
+    noremap <silent> n  :call <SID>update_search_index('n')<cr>
+    noremap <silent> N  :call <SID>update_search_index('N')<cr>
     map *  <Plug>(incsearch-nohl-*)
     map #  <Plug>(incsearch-nohl-#)
     map g* <Plug>(incsearch-nohl-g*)
@@ -67,4 +67,23 @@ function! SpaceVim#layers#incsearch#config() abort
 
     noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
     call SpaceVim#mapping#space#def('nnoremap', ['/',], 'call feedkeys("\<Space>/", "m")', 'incsearch-fuzzy', 1)
+endfunction
+
+
+let s:si_flag = 0
+function! s:update_search_index(key) abort
+    if a:key == 'n'
+        normal! n
+        normal! ml
+    elseif a:key == 'N'
+        normal! N
+        normal! ml
+    endif
+    if s:si_flag == 0
+        call SpaceVim#layers#core#statusline#toggle_section('search status') 
+        let s:si_flag = 1
+    else
+        let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    endif
+    normal! `l
 endfunction

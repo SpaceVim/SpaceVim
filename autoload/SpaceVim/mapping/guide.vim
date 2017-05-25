@@ -337,6 +337,7 @@ function! s:handle_input(input) " {{{
     call s:start_buffer()
   else
     let s:prefix_key_inp = ''
+    doautocmd WinEnter
     call feedkeys(s:vis.s:reg.s:count, 'ti')
     redraw!
     try
@@ -352,6 +353,7 @@ function! s:wait_for_input() " {{{
   if inp ==? ''
     let s:prefix_key_inp = ''
     call s:winclose()
+    doautocmd WinEnter
   elseif match(inp, "^<LGCMD>paging_help") == 0
     let s:guide_help_mode = 1
     call s:updateStatusline()

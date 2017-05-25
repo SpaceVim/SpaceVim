@@ -59,6 +59,6 @@ augroup END
 if !exists('g:startify_custom_header')
   call s:update_logo()
 endif
-call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify', 'fancy start screen',1)
+call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
 
 " vim:set et sw=2:

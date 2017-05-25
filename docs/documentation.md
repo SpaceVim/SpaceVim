@@ -30,6 +30,7 @@ title:  "Documentation"
     * [Font](#font)
     * [UI Toggles](#ui-toggles)
     * [Statusline && tabline](#statusline--tabline)
+        * [statusline](#statusline)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -44,6 +45,10 @@ title:  "Documentation"
             * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
         * [Toggles](#toggles)
     * [Navigating](#navigating)
+        * [Point/Cursor](#pointcursor)
+        * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
+            * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
+        * [Unimpaired bindings](#unimpaired-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -118,11 +123,13 @@ Community-driven configuration provides curated packages tuned by power users an
 
 - **Great documentation:** access documentation in Vim with
     <kbd>:h SpaceVim</kbd>.
-- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
+- **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
 - **Mnemonic key bindings:** commands have mnemonic prefixes like
     <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
     unite work flow commands.
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
+- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
+- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
     [conventions](http://spacevim.org/development/).
@@ -132,7 +139,7 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ### welcome page
 
-![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
+![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
 ### working flow
 
@@ -326,10 +333,111 @@ The statusline and tabline is a heavily customized [airline](https://github.com/
 - checker info: numbers of errors and warnings.
 - trailing line number.
 
-    Key Binding | Description
-    ----------- | -----------
-    `SPC [1-9]` | jump to the index of tabline.
+Key Binding | Description
+----------- | -----------
+`SPC [1-9]` | jump to the index of tabline.
 
+#### statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+Reminder of the color codes for the states:
+
+Mode | Color
+--- |  ---
+Normal | Orange
+Insert | Green
+Visual | Grey
+
+all the colors based on the current colorscheme
+
+Some elements can be dynamically toggled:
+
+Key Binding	| Description
+----------- | -----------
+`SPC t m b` | toggle the battery status (need to install acpi)
+`SPC t m c` | toggle the org task clock (available in org layer)
+`SPC t m m` | toggle the minor mode lighters
+`SPC t m M` | toggle the major mode
+`SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
+`SPC t m p` | toggle the point character position
+`SPC t m t` | toggle the time
+`SPC t m T` | toggle the mode line itself
+`SPC t m v` | toggle the version control info
+
+**Powerline font installation:**
+
+By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+
+**syntax checking integration:**
+
+When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
+
+syntax checking integration in statusline.
+
+**Search index integration:**
+
+Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+
+_search index in statusline_
+
+**Battery status integration:**
+
+_acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+
+A color code is used for the battery status:
+
+Battery State | Color
+------------ | ----
+Charging | Green
+Discharging | Orange
+Critical | Red
+
+all the colors based on the current colorscheme
+
+**Statusline separators:**
+
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+
+```vim
+let g:spacevim_statusline_separator = 'arrow'
+```
+
+here is an exhaustive set of screenshots for all the available separator:
+
+Separator | Screenshot
+--------- | ----------
+`arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png)
+`curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png)
+`slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png)
+`nil` | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)
+`fire` | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)
+
+**Minor Modes:**
+
+The minor mode area can be toggled on and off with `SPC t m m`
+
+Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to nil in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+
+The letters displayed in the statusline correspond to the key bindings used to toggle them.
+
+Key Binding | Unicode | ASCII | Mode
+----------- | ------- | ----- | ----
+`SPC t 8` | ⑧ | 8 | toggle highlight of characters for long lines
+`SPC t f` | ⓕ | f | fill-column-indicator mode
+`SPC t s` | ⓢ | s | syntax checking (neomake)
+`SPC t S` | Ⓢ | S | enabled in spell checking
+`SPC t w` | ⓦ | w | whitespace mode
 
 ## Manual
 
@@ -378,7 +486,7 @@ Prefix name | custom option and default value        | description
 `[unite]`   | `g:spacevim_unite_leader` / `f`        | unite mapping prefix of SpaceVim
 `<leader>`  | `mapleader` / ``\``                    | default leader prefix of vim/neovim
 
-By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds). 
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
 for example, after pressing `<Space>` in normal mode, you will see :
 
@@ -438,7 +546,63 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
+both the toggles mappings started with `[SPC] t` or `[SPC] T`. you can find it in the mapping guide.
+
 ### Navigating
+
+#### Point/Cursor
+
+Navigation is performed using the Vi key bindings `hjkl`.
+
+Key Binding | Description
+----------- | -----------
+`h` | move cursor left (origin vim key, no mappings)
+`j` | move cursor down (origin vim key, no mappings)
+`k` | move cursor up (origin vim key, no mappings)
+`l` | move cursor right (origin vim key, no mappings)
+`H` | move cursor to the top of the screen (origin vim key, no mappings)
+`L` | move cursor to the bottom of the screen (origin vim key, no mappings)
+`SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
+`SPC j $` | go to the end of line (and set a mark at the previous location in the line)
+`SPC t -` | lock the cursor at the center of the screen
+
+#### Vim motions with vim-easymotion
+
+##### quick-jump-link mode (TODO)
+
+https://github.com/easymotion/vim-easymotion/issues/315
+
+Similar to easymotion or `f` in vimperator for firefox, this mode allows one to jump to any link in help file with two key strokes.
+
+mapping | description
+------- | -----------
+`o` | initiate quick jump link mode in help buffer
+
+#### Unimpaired bindings
+
+Mappings | Description
+-------- | -----------
+`[ SPC` | Insert space above
+`] SPC` | Insert space below
+`[ b` | Go to previous buffer
+`] b` | Go to next buffer
+`[ f` | Go to previous file in directory
+`] f` | Go to next file in directory
+`[ l` | Go to the previous error
+`] l` | Go to the next error
+`[ c` | Go to the previous vcs hunk
+`] c` | Go to the next vcs hunk
+`[ q` | Go to the previous error
+`] q` | Go to the next error
+`[ t` | Go to the previous frame
+`] t` | Go to the next frame
+`[ w` | Go to the previous window
+`] w` | Go to the next window
+`[ e` | Move line up
+`] e` | Move line down
+`[ p` | Paste above current line
+`] p` | Paste below current line
+`g p` | Select pasted text
 
 ### Auto-saving
 

@@ -1,16 +1,21 @@
 scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
-    return [
+    let plugins = [
                 \ ['Yggdroot/indentLine'],
                 \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['lvht/tagbar-markdown',{'merged' : 0}],
                 \ ['t9md/vim-choosewin', {'merged' : 0}],
-                \ ['vim-airline/vim-airline',                { 'merged' : 0, 
-                \ 'loadconf' : 1}],
-                \ ['vim-airline/vim-airline-themes',         { 'merged' : 0}],
                 \ ['mhinz/vim-startify', {'loadconf' : 1}],
                 \ ]
+    if get(g:, '_spacevim_statusline_loaded', 0) == 0
+        call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
+                    \ 'loadconf' : 1}])
+        call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
+    endif
+
+    return plugins
+
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
@@ -62,6 +67,12 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
                 \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
                 \ 'toggle syntax checker', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
+                \ . string(s:_function('s:toggle_spell_check')) . ', [])',
+                \ 'toggle syntax checker', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
+                \ . string(s:_function('s:toggle_whitespace')) . ', [])',
+                \ 'toggle the whitespace', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
@@ -108,6 +119,7 @@ function! s:toggle_colorcolumn() abort
         set cc=
         let s:ccflag = 0
     endif
+    call SpaceVim#layers#core#statusline#toggle_mode('fill-column-indicator')
 endfunction
 
 let s:fcflag = 0
@@ -119,6 +131,7 @@ function! s:toggle_fill_column() abort
         set cc=
         let s:fcflag = 0
     endif
+    call SpaceVim#layers#core#statusline#toggle_mode('hi-characters-for-long-lines')
 endfunction
 
 let s:idflag = 0
@@ -178,5 +191,21 @@ function! s:toggle_win_fringe() abort
 endfunction
 
 function! s:toggle_syntax_checker() abort
+    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
     let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
+endfunction
+
+function! s:toggle_spell_check() abort
+    if &l:spell
+        let &l:spell = 0
+    else
+        let &l:spell = 1
+    endif
+    call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
+endfunction
+
+function! s:toggle_whitespace() abort
+    call SpaceVim#layers#core#statusline#toggle_section('whitespace')
+    call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction

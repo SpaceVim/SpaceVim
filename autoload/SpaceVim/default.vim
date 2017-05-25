@@ -132,6 +132,8 @@ function! SpaceVim#default#SetPlugins() abort
   call add(g:spacevim_plugin_groups, 'misc')
 
   call add(g:spacevim_plugin_groups, 'core')
+  call SpaceVim#layers#load('core#statusline')
+  call SpaceVim#layers#load('core#tabline')
   call add(g:spacevim_plugin_groups, 'default')
   call add(g:spacevim_plugin_groups, 'unite')
   call add(g:spacevim_plugin_groups, 'github')
@@ -189,16 +191,9 @@ function! SpaceVim#default#SetMappings() abort
     exe 'tnoremap <silent><esc>     <C-\><C-n>'
   endif
 
-  "Quickly add empty lines
-  nnoremap <silent>[<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent>]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
   "Use jk switch to normal mode
   inoremap jk <esc>
-
-  "]e or [e move current line ,count can be useed
-  nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
-  nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
   "]<End> or ]<Home> move current line to the end or the begin of current buffer
   nnoremap <silent>]<End> ddGp``
@@ -245,8 +240,6 @@ function! SpaceVim#default#SetMappings() abort
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
 
-  " Select last paste
-  nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
   " Use Q format lines
   map Q gq

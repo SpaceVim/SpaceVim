@@ -113,6 +113,9 @@ endfunction
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
+    if !s:JOB.vim_job && !s:JOB.nvim_job
+        let &maxfuncdepth = 2000
+    endif
     let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
     let status = s:new_window()
     if status == 0
@@ -152,11 +155,17 @@ function! SpaceVim#plugins#manager#install(...) abort
             endif
         endif
     endfor
+    if !s:JOB.vim_job && !s:JOB.nvim_job
+        let &maxfuncdepth = 100
+    endif
 endfunction
 " @vimlint(EVL102, 0, l:i)
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
+    if !s:JOB.vim_job && !s:JOB.nvim_job
+        let &maxfuncdepth = 2000
+    endif
     let status = s:new_window()
     if status == 0
         echohl WarningMsg
@@ -205,6 +214,9 @@ function! SpaceVim#plugins#manager#update(...) abort
             endif
         endif
     endfor
+    if !s:JOB.vim_job && !s:JOB.nvim_job
+        let &maxfuncdepth = 100
+    endif
 endfunction
 " @vimlint(EVL102, 0, l:i)
 

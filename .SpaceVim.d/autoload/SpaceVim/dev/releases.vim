@@ -1,5 +1,5 @@
 function! s:body() abort
-    return 'SpaceVim development (pre-release) build.'
+    return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
 endfunction
 
 function! SpaceVim#dev#releases#open() abort
