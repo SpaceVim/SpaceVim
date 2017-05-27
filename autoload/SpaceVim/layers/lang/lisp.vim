@@ -6,17 +6,91 @@ endfunction
 
 
 function! SpaceVim#layers#lang#lisp#config() abort
-    "lisp            Normal Lisp source file.
-    "vlime_sldb      The debugger buffer.
-    "vlime_repl      The REPL buffer.
-    "vlime_inspector The inspector buffer.
-    "vlime_xref      The cross reference buffer.
-    "vlime_notes     The compiler notes buffer.
-    "vlime_threads   The threads buffer.
-    "vlime_server    The server output buffer.
-    "vlime_preview   The preview buffer.
-    "vlime_arglist   The arglist buffer.
-    "vlime_input     The input buffer.
+    let g:vlime_default_mappings = {
+                \ 'lisp': [
+                \ ['i', '<space>', '<space><c-r>=VlimeKey("space")<cr>'],
+                \ ['i', '<cr>', '<cr><c-r>=VlimeKey("cr")<cr>'],
+                \ ['i', '<tab>', '<c-r>=VlimeKey("tab")<cr>'],
+                \
+                \ ['n', '<LocalLeader>wp', ':call VlimeCloseWindow("preview")<cr>'],
+                \ ['n', '<LocalLeader>wr', ':call VlimeCloseWindow("arglist")<cr>'],
+                \ ['n', '<LocalLeader>wn', ':call VlimeCloseWindow("notes")<cr>'],
+                \ ['n', '<LocalLeader>wR', ':call VlimeCloseWindow("repl")<cr>'],
+                \ ['n', '<LocalLeader>wA', ':call VlimeCloseWindow("")<cr>'],
+                \ ['n', '<LocalLeader>wl', ':call VlimeCloseWindow()<cr>'],
+                \
+                \ ['n', '<LocalLeader>i', ':call VlimeInteractionMode()<cr>'],
+                \ ['n', '<LocalLeader>l', ':call VlimeLoadFile(expand("%:p"))<cr>'],
+                \ ['n', '<LocalLeader>a', ':call VlimeDisassembleForm(vlime#ui#CurExpr())<cr>'],
+                \ ['n', '<LocalLeader>p', ':call VlimeSetPackage()<cr>'],
+                \ ['n', '<LocalLeader>b', ':call VlimeSetBreakpoint()<cr>'],
+                \ ['n', '<LocalLeader>t', ':call VlimeListThreads()<cr>'],
+                \ ],
+                \
+                \ 'sldb': [
+                \ ['n', '<cr>', ':call vlime#ui#sldb#ChooseCurRestart()<cr>'],
+                \ ['n', 'd', ':call vlime#ui#sldb#ShowFrameDetails()<cr>'],
+                \ ['n', 'S', ':<c-u>call vlime#ui#sldb#OpenFrameSource()<cr>'],
+                \ ['n', 'T', ':call vlime#ui#sldb#OpenFrameSource("tabedit")<cr>'],
+                \ ['n', 'r', ':call vlime#ui#sldb#RestartCurFrame()<cr>'],
+                \ ['n', 's', ':call vlime#ui#sldb#StepCurOrLastFrame("step")<cr>'],
+                \ ['n', 'x', ':call vlime#ui#sldb#StepCurOrLastFrame("next")<cr>'],
+                \ ['n', 'o', ':call vlime#ui#sldb#StepCurOrLastFrame("out")<cr>'],
+                \ ['n', 'c', ':call b:vlime_conn.SLDBContinue()<cr>'],
+                \ ['n', 'a', ':call b:vlime_conn.SLDBAbort()<cr>'],
+                \ ['n', 'C', ':call vlime#ui#sldb#InspectCurCondition()<cr>'],
+                \ ['n', 'i', ':call vlime#ui#sldb#InspectInCurFrame()<cr>'],
+                \ ['n', 'e', ':call vlime#ui#sldb#EvalStringInCurFrame()<cr>'],
+                \ ['n', 'D', ':call vlime#ui#sldb#DisassembleCurFrame()<cr>'],
+                \ ['n', 'R', ':call vlime#ui#sldb#ReturnFromCurFrame()<cr>'],
+                \ ],
+                \
+                \ 'repl': [
+                \ ['n', '<c-c>', ':call b:vlime_conn.Interrupt({"name": "REPL-THREAD", "package": "KEYWORD"})<cr>'],
+                \ ['n', '<LocalLeader>I', ':call vlime#ui#repl#InspectCurREPLPresentation()<cr>'],
+                \ ['n', '<LocalLeader>y', ':call vlime#ui#repl#YankCurREPLPresentation()<cr>'],
+                \ ['n', '<LocalLeader>C', ':call vlime#ui#repl#ClearREPLBuffer()<cr>'],
+                \ ],
+                \
+                \ 'inspector': [
+                \ ['n', ['<cr>', '<space>'], ':call vlime#ui#inspector#InspectorSelect()<cr>'],
+                \ ['n', ['<c-n>', '<tab>'], ':call vlime#ui#inspector#NextField(v:true)<cr>'],
+                \ ['n', '<c-p>', ':call vlime#ui#inspector#NextField(v:false)<cr>'],
+                \ ['n', 'p', ':call vlime#ui#inspector#InspectorPop()<cr>'],
+                \ ['n', 'R', ':call b:vlime_conn.InspectorReinspect({c, r -> c.ui.OnInspect(c, r, v:null, v:null)})<cr>'],
+                \ ],
+                \
+                \ 'xref': [
+                \ ['n', '<cr>', ':<c-u>call vlime#ui#xref#OpenCurXref()<cr>'],
+                \ ['n', 't', ':<c-u>call vlime#ui#xref#OpenCurXref(v:true, "tabedit")<cr>'],
+                \ ['n', 's', ':<c-u>call vlime#ui#xref#OpenCurXref(v:true, "split")<cr>'],
+                \ ['n', 'S', ':<c-u>call vlime#ui#xref#OpenCurXref(v:true, "vsplit")<cr>'],
+                \ ],
+                \
+                \ 'notes': [
+                \ ['n', '<cr>', ':<c-u>call vlime#ui#compiler_notes#OpenCurNote()<cr>'],
+                \ ['n', 't', ':<c-u>call vlime#ui#compiler_notes#OpenCurNote("tabedit")<cr>'],
+                \ ['n', 's', ':<c-u>call vlime#ui#compiler_notes#OpenCurNote("split")<cr>'],
+                \ ['n', 'S', ':<c-u>call vlime#ui#compiler_notes#OpenCurNote("vsplit")<cr>'],
+                \ ],
+                \
+                \ 'threads': [
+                \ ['n', '<c-c>', ':call vlime#ui#threads#InterruptCurThread()<cr>'],
+                \ ['n', 'K', ':call vlime#ui#threads#KillCurThread()<cr>'],
+                \ ['n', 'D', ':call vlime#ui#threads#DebugCurThread()<cr>'],
+                \ ['n', 'r', ':call vlime#ui#threads#Refresh()<cr>'],
+                \ ],
+                \
+                \ 'server': [
+                \ ['n', '<LocalLeader>c', ':call VlimeConnectToCurServer()<cr>'],
+                \ ['n', '<LocalLeader>s', ':call VlimeStopCurServer()<cr>'],
+                \ ],
+                \
+                \ 'input': [
+                \ ['n', '<c-p>', ':call vlime#ui#input#NextHistoryItem("backward")<cr>'],
+                \ ['n', '<c-n>', ':call vlime#ui#input#NextHistoryItem("forward")<cr>'],
+                \ ],
+                \ }
     augroup LocalVlimeKeys
         autocmd!
         autocmd FileType lisp call s:lisp()
@@ -77,6 +151,65 @@ fu! s:lisp()
     call SpaceVim#mapping#space#langSPC('vmap', ['l','o','v'], "call VlimeCompile(vlime#ui#CurSelection(v:true))",
                 \ 'Compile the current selection', 1)
 
+    let g:_spacevim_mappings_space.l.x = {'name' : '+Cross references'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','c'], "call VlimeXRefSymbol('CALLS', vlime#ui#CurAtom())",
+                \ 'Show callers of the function under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','C'], "call VlimeXRefSymbol('CALLS-WHO', vlime#ui#CurAtom())",
+                \ 'Show callees of the function under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','r'], 'call VlimeXRefSymbol("REFERENCES", vlime#ui#CurAtom())',
+                \ 'Show references of the variable under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','b'], 'call VlimeXRefSymbol("BINDS", vlime#ui#CurAtom())',
+                \ 'Show bindings of the variable under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','s'], 'call VlimeXRefSymbol("SETS", vlime#ui#CurAtom())',
+                \ 'Show who sets the value of the variable under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','e'], 'call VlimeXRefSymbol("MACROEXPANDS", vlime#ui#CurAtom())',
+                \ 'Show who expands the macro under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','m'], 'call VlimeXRefSymbol("SPECIALIZES", vlime#ui#CurAtom())',
+                \ 'Show specialized methods for the class under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','d'], 'call VlimeFindDefinition(vlime#ui#CurAtom())',
+                \ 'Show the definition for the name under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','x','i'], 'call VlimeXRefSymbolWrapper()',
+                \ 'Interactively prompt for the symbol to search', 1)
+
+    let g:_spacevim_mappings_space.l.d = {'name' : '+Describing things'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','o'], 'call VlimeDescribeSymbol(vlime#ui#CurOperator())',
+                \ 'Describe the "operator"', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','a'], 'call VlimeDescribeSymbol(vlime#ui#CurAtom())',
+                \ 'Describe the atom under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','i'], 'call VlimeDescribeSymbol()',
+                \ 'Prompt for the symbol to describe', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','s'], 'call VlimeAproposList()',
+                \ 'apropos search', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','r'], 'call VlimeShowOperatorArgList(vlime#ui#CurOperator())',
+                \ 'Show the arglist for the s-expression under the cursor', 1)
+
+    let g:_spacevim_mappings_space.l.d.d = {'name' : '+Documentation'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','d', 'o'], 'call VlimeDocumentationSymbol(vlime#ui#CurOperator())',
+                \ 'Show the documentation for the "operator"', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','d', 'a'], 'call VlimeDocumentationSymbol(vlime#ui#CurAtom())',
+                \ 'Show the documentation for atom', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','d','d', 'i'], 'call VlimeDocumentationSymbol()',
+                \ 'Show the documentation for the symbol entered in an input buffer', 1)
+
+    let g:_spacevim_mappings_space.l.u = {'name' : '+Undefining'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','u','f'], 'call VlimeUndefineFunction(vlime#ui#CurAtom())',
+                \ 'Undefine the function under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','u','s'], 'call VlimeUninternSymbol(vlime#ui#CurAtom())',
+                \ 'Unintern the symbol under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','u','i'], 'call VlimeUndefineUninternWrapper()',
+                \ 'Interactively prompt for the function/symbol to undefine/unintern', 1)
+
+    let g:_spacevim_mappings_space.l.I = {'name' : '+Inspection'}
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','I','i'], 'call VlimeInspect(vlime#ui#CurExprOrAtom())',
+                \ 'evaluate the s-expr or atom under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','I','e'], 'call VlimeInspect(vlime#ui#CurExpr())',
+                \ 'evaluate and inspect the s-expr under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','I','t'], 'call VlimeInspect(vlime#ui#CurTopExpr())',
+                \ 'evaluate and inspect the top-level s-expr under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','I','a'], 'call VlimeInspect(vlime#ui#CurAtom())',
+                \ 'Evaluate and inspect the atom under the cursor', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','I','n'], 'call VlimeInspect()',
+                \ 'Prompt for the expression to inspect', 1)
 endf
 
 fu! s:vlime_sldb()
