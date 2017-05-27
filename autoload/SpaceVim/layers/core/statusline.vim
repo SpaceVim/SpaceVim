@@ -88,13 +88,23 @@ if g:spacevim_enable_neomake
         endif
         let counts = neomake#statusline#LoclistCounts()
         let warnings = get(counts, 'W', 0)
-        let l =  warnings ?  '%#SpaceVim_statusline_warn#●' . warnings : ''
-        let counts = neomake#statusline#LoclistCounts()
         let errors = get(counts, 'E', 0)
+        let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings : ''
         let l .=  errors ?  ' %#SpaceVim_statusline_error#●' . errors : ''
-        return l
+        return l . ' '
     endfunction
 else
+    function! s:syntax_checking()
+        if !exists(':SyntasticCheck')
+            return ''
+        endif
+        let l = SyntasticStatuslineFlag()
+        if strlen(l) > 0
+            return l
+        else
+            return ''
+        endif
+    endfunction
 endif
 
 function! s:winnr() abort

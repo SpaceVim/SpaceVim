@@ -81,9 +81,9 @@ function! SpaceVim#layers#core#tabline#get() abort
         let ct = bufnr('%')
         let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
         if ct == get(s:buffers, 0, -1)
-            let t = '%#SpaceVim_tabline_a#  '
+            let t = '%#SpaceVim_tabline_a# '
         else
-            let t = '%#SpaceVim_tabline_b#  '
+            let t = '%#SpaceVim_tabline_b# '
         endif
         for i in s:buffers
             if i == ct
