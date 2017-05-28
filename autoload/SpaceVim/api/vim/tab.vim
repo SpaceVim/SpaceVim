@@ -4,12 +4,10 @@ let s:self._tree = {}
 
 function! s:self._update() abort
     let tabnr = tabpagenr('$')
-    if tabnr > 1
-        for i in range(1, tabnr)
-            let buffers = tabpagebuflist(i)
-            let self._tree[i] = buffers
-        endfor
-    endif
+    for i in range(1, tabnr)
+        let buffers = tabpagebuflist(i)
+        let self._tree[i] = buffers
+    endfor
 endfunction
 
 function! s:self._jump(tabnr, bufid) abort

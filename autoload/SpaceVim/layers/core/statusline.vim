@@ -174,6 +174,15 @@ function! SpaceVim#layers#core#statusline#get(...) abort
                     \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
     elseif &filetype ==# 'startify'
         call fugitive#detect(getcwd())
+    elseif &filetype ==# 'SpaceVimLayerManager'
+        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+    elseif &filetype ==# 'SpaceVimPlugManager'
+        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+    elseif &filetype ==# 'SpaceVimTabsManager'
+        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     endif
     if a:0 > 0
         return s:active()
@@ -240,7 +249,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
     augroup status
         autocmd!
-        autocmd BufWinEnter,WinEnter * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+        autocmd BufWinEnter,WinEnter,FileType * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
         autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
     augroup END
 endfunction
