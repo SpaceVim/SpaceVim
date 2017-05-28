@@ -621,7 +621,7 @@ Key Binding | Description
 `SPC j b` | undo a jump (go back to previous location)
 `SPC j d` | jump to a listing of the current directory
 `SPC j D` | jump to a listing of the current directory (other window)
-`SPC j f` | jump to the definition of an Emacs Lisp function
+`SPC j f` | jump to the definition of an vim script function
 `SPC j i` | jump to a definition in buffer (imenu)
 `SPC j I` | jump to a definition in any buffer (imenu)
 `SPC j j` | jump to a character in the buffer (works as an evil motion)

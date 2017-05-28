@@ -310,7 +310,8 @@ function! SpaceVim#layers#core#statusline#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
                 \ 'toggle the statuline itself', 1)
     function! TagbarStatusline(...) abort
-        return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . a:3 . ' '], [], s:lsep, s:rsep,
+        let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
+        return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep,
                     \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
     endfunction
     let g:tagbar_status_func = 'TagbarStatusline'
