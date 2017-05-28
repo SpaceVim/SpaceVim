@@ -1,13 +1,23 @@
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
     if a:findstart
-        return strridx(getline('.'), ' ')
+        let line = getline('.')
+        let start = col('.') - 1
+        while start > 0 && line[start - 1] != ' '
+            let start -= 1
+        endwhile
+        return start
     else
-        return s:cache_commits(a:base)
+        let res = []
+        for m in s:cache_commits()
+            if m =~ a:base
+                call add(res, m)
+            endif
+        endfor
+        return res
     endif
 endfunction
 
-function! s:cache_commits(base) abort
-    let rst = systemlist("git log --oneline -n 20 --pretty=format:'%h %s' --abbrev-commit")
+function! s:cache_commits() abort
+    let rst = systemlist("git log --oneline -n 50 --pretty=format:'%h %s' --abbrev-commit")
     return rst
 endfunction
-
