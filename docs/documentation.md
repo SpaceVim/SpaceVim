@@ -49,6 +49,9 @@ title:  "Documentation"
         * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
             * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
         * [Unimpaired bindings](#unimpaired-bindings)
+        * [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
+            * [Jumping](#jumping)
+            * [Joining and splitting](#joining-and-splitting)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -603,6 +606,42 @@ Mappings | Description
 `[ p` | Paste above current line
 `] p` | Paste below current line
 `g p` | Select pasted text
+
+
+#### Jumping, Joining and Splitting
+
+The `SPC j` prefix is for jumping, joining and splitting.
+
+##### Jumping
+
+Key Binding | Description
+----------- | -----------
+`SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
+`SPC j $` | go to the end of line (and set a mark at the previous location in the line)
+`SPC j b` | undo a jump (go back to previous location)
+`SPC j d` | jump to a listing of the current directory
+`SPC j D` | jump to a listing of the current directory (other window)
+`SPC j f` | jump to the definition of an Emacs Lisp function
+`SPC j i` | jump to a definition in buffer (imenu)
+`SPC j I` | jump to a definition in any buffer (imenu)
+`SPC j j` | jump to a character in the buffer (works as an evil motion)
+`SPC j J` | jump to a suite of two characters in the buffer (works as an evil motion)
+`SPC j k` | jump to next line and indent it using auto-indent rules
+`SPC j l` | jump to a line with avy (works as an evil motion)
+`SPC j q` | show the dumb-jump quick look tooltip
+`SPC j u` | jump to a URL in the current buffer
+`SPC j v` | jump to the definition/declaration of an Emacs Lisp variable
+`SPC j w` | jump to a word in the current buffer (works as an evil motion)
+
+##### Joining and splitting
+
+Key Binding | Description
+----------- | -----------
+`J` | join the current line with the next line
+`SPC j k` | go to next line and indent it using auto-indent rules
+`SPC j n` | split the current line at point, insert a new line and auto-indent
+`SPC j s` | split a quoted string or s-expression in place
+`SPC j S` | split a quoted string or s-expression, insert a new line and auto-indent
 
 ### Auto-saving
 
