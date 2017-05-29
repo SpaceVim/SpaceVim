@@ -11,6 +11,7 @@ function! SpaceVim#plugins#load() abort
 endfunction
 function! s:load_plugins() abort
   for group in g:spacevim_plugin_groups
+    let g:_spacevim_plugin_layer = group
     for plugin in s:getLayerPlugins(group)
       if len(plugin) == 2
         call zvim#plug#add(plugin[0], plugin[1])
@@ -26,6 +27,7 @@ function! s:load_plugins() abort
     endfor
     call s:loadLayerConfig(group)
   endfor
+  unlet g:_spacevim_plugin_layer
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
       call zvim#plug#add(plugin[0], plugin[1])

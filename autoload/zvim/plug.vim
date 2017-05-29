@@ -170,7 +170,7 @@ function! zvim#plug#add(repo,...) abort
         endif
         let g:spacevim_plugin_name = split(a:repo, '/')[-1]
     endif
-    let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
+    let str = get(g:,'_spacevim_plugin_layer', 'custom plugin')
     let str = '[' . str . ']'
     let str = str . repeat(' ', 25 - len(str))
     exec 'call add(g:unite_source_menu_menus'
