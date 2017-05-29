@@ -68,6 +68,9 @@ let g:spacevim_unite_leader            = 'f'
 " Denite work flow leader of SpaceVim. Default is `F`.
 " Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_denite_leader            = 'F'
+""
+" Enable/Disable spacevim's insert mode leader, default is enable
+let g:spacevim_enable_insert_leader    = 1
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0

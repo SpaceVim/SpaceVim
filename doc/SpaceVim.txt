@@ -107,6 +107,9 @@ this feature, or you can set to another char.
 Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
 this feature, or you can set to another char.
 
+                                             *g:spacevim_enable_insert_leader*
+Enable/Disable spacevim's insert mode leader, default is enable
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >
