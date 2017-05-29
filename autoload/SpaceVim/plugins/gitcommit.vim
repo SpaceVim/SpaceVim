@@ -27,14 +27,14 @@ endfunction
 
 function! s:complete_pr() abort
     let [user,repo] = s:current_repo()
-    let prs = github#api#pulls#ListAllPRs(user, repo)
+    let prs = github#api#issues#List_All_for_Repo(user, repo)
     let rst = []
     for pr in prs
         let item = {
                     \ 'word' : '#' . pr.number,
                     \ 'abbr' : '#' . pr.number,
                     \ 'menu' : pr.title,
-                    \ 'kind' : pr.state,
+                    \ 'kind' : (has_key(pr, 'pull_request') ? 'pull request' : 'issue       '),
                     \ }
         call add(rst, item)
     endfor
