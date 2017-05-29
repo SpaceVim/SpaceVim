@@ -31,6 +31,7 @@ title:  "Documentation"
     * [UI Toggles](#ui-toggles)
     * [Statusline && tabline](#statusline--tabline)
         * [statusline](#statusline)
+        * [tabline](#tabline)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -52,6 +53,10 @@ title:  "Documentation"
         * [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
             * [Jumping](#jumping)
             * [Joining and splitting](#joining-and-splitting)
+        * [Window manipulation](#window-manipulation)
+            * [Window manipulation key bindings](#window-manipulation-key-bindings)
+        * [Buffers and Files](#buffers-and-files)
+            * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -75,8 +80,8 @@ title:  "Documentation"
 * [Unite centric work-flow](#unite-centric-work-flow)
         * [Plugin Highlights](#plugin-highlights)
         * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-        * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-            * [Language](#language)
+    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+        * [Language](#language)
             * [Commands](#commands)
             * [Commands](#commands-1)
             * [Completion](#completion-1)
@@ -328,7 +333,7 @@ SPC T t	| toggle tool bar
 
 ### Statusline && tabline
 
-The statusline and tabline is a heavily customized [airline](https://github.com/vim-airline/vim-airline) with the following capabilities:
+The statusline and tabline are heavily customized with the following capabilities:
 
 - tabline index of each buffer or tab.
 - vim mode (INSERT/NORMAL etc.)
@@ -442,6 +447,22 @@ Key Binding | Unicode | ASCII | Mode
 `SPC t S` | Ⓢ | S | enabled in spell checking
 `SPC t w` | ⓦ | w | whitespace mode
 
+#### tabline
+
+Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
+
+Key Binding | Description
+----------- | -----------
+`<Leader> 1` | jump to index 1 on tabline
+`<Leader> 2` | jump to index 2 on tabline
+`<Leader> 3` | jump to index 3 on tabline
+`<Leader> 4` | jump to index 4 on tabline
+`<Leader> 5` | jump to index 5 on tabline
+`<Leader> 6` | jump to index 6 on tabline
+`<Leader> 7` | jump to index 7 on tabline
+`<Leader> 8` | jump to index 8 on tabline
+`<Leader> 9` | jump to index 9 on tabline
+
 ## Manual
 
 ### Completion
@@ -493,7 +514,7 @@ By default the guide buffer will be displayed 1000ms after the key has been pres
 
 for example, after pressing `<Space>` in normal mode, you will see :
 
-![2017-05-07_1365x157](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
 
@@ -516,7 +537,7 @@ It is possible to search for specific key bindings by pressing `?` in the root o
 
 To narrow the list, just insert the mapping keys or description of what mapping you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
 
-![2017-05-07_1363x365](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
 
@@ -642,6 +663,36 @@ Key Binding | Description
 `SPC j n` | split the current line at point, insert a new line and auto-indent
 `SPC j s` | split a quoted string or s-expression in place
 `SPC j S` | split a quoted string or s-expression, insert a new line and auto-indent
+
+#### Window manipulation
+
+##### Window manipulation key bindings
+
+Every window has a number displayed at the start of the statusline and can be quickly accessed using `SPC number`.
+
+Key Binding | Description
+----------- | -----------
+`SPC 1` | go to window number 1
+`SPC 2` | go to window number 2
+`SPC 3` | go to window number 3
+`SPC 4` | go to window number 4
+`SPC 5` | go to window number 5
+`SPC 6` | go to window number 6
+`SPC 7` | go to window number 7
+`SPC 8` | go to window number 8
+`SPC 9` | go to window number 9
+
+Windows manipulation commands (start with `w`):
+
+Key Binding | Description
+----------- | -----------
+`SPC w TAB` | switch to alternate window in the current frame (switch back and forth)
+
+#### Buffers and Files
+
+##### Buffers manipulation key bindings
+
+Buffer manipulation commands (start with `b`):
 
 ### Auto-saving
 
@@ -822,9 +873,9 @@ Name           | Description
 [bookmarks] | Bookmarks, works independently from vim marks
 [tmux-navigator] | Seamless navigation between tmux panes and vim splits
 
-#### Lazy-Loaded Plugins
+### Lazy-Loaded Plugins
 
-##### Language
+#### Language
 
 Name           | Description
 -------------- | ----------------------

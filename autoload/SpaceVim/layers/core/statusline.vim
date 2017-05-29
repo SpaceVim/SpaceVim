@@ -316,3 +316,9 @@ function! SpaceVim#layers#core#statusline#config() abort
     endfunction
     let g:tagbar_status_func = 'TagbarStatusline'
 endfunction
+
+function! SpaceVim#layers#core#statusline#jump(i) abort
+    if winnr('$') >= a:i
+        exe a:i . 'wincmd w'
+    endif
+endfunction
