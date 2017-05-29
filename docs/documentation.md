@@ -621,17 +621,17 @@ Key Binding | Description
 `SPC j b` | undo a jump (go back to previous location)
 `SPC j d` | jump to a listing of the current directory
 `SPC j D` | jump to a listing of the current directory (other window)
-`SPC j f` | jump to the definition of an vim script function
-`SPC j i` | jump to a definition in buffer (imenu)
-`SPC j I` | jump to a definition in any buffer (imenu)
-`SPC j j` | jump to a character in the buffer (works as an evil motion)
-`SPC j J` | jump to a suite of two characters in the buffer (works as an evil motion)
+`SPC j f` | jump to the definition of an vim script function (TODO)
+`SPC j i` | jump to a definition in buffer (denite outline)
+`SPC j I` | jump to a definition in any buffer (denite outline)
+`SPC j j` | jump to a character in the buffer (easymotion)
+`SPC j J` | jump to a suite of two characters in the buffer (easymotion)
 `SPC j k` | jump to next line and indent it using auto-indent rules
-`SPC j l` | jump to a line with avy (works as an evil motion)
-`SPC j q` | show the dumb-jump quick look tooltip
-`SPC j u` | jump to a URL in the current buffer
-`SPC j v` | jump to the definition/declaration of an Emacs Lisp variable
-`SPC j w` | jump to a word in the current buffer (works as an evil motion)
+`SPC j l` | jump to a line with avy (easymotion)
+`SPC j q` | show the dumb-jump quick look tooltip (TODO)
+`SPC j u` | jump to a URL in the current buffer (TODO)
+`SPC j v` | jump to the definition/declaration of an Emacs Lisp variable (TODO)
+`SPC j w` | jump to a word in the current buffer (easymotion)(TODO)
 
 ##### Joining and splitting
 
