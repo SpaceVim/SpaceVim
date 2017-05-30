@@ -53,8 +53,10 @@ function! SpaceVim#autocmds#init() abort
           \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
           \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
           \|  else
-            \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-            \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    if empty(maparg('<leader>[', 'n', 0, 1)) && empty(maparg('<leader>]', 'n', 0, 1))
+            \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+            \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    endif
             \|  endif
     "}}}
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
