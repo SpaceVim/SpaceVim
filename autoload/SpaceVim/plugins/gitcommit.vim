@@ -12,10 +12,8 @@ function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
         endwhile
         if line[start - 1] == '#'
             let s:complete_ol = 1
-            return start + 1
-        else
-            return start
         endif
+        return start
     else
         if s:complete_ol == 1
             return s:complete_pr(a:base)

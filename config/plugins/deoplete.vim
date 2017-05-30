@@ -53,8 +53,10 @@ let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpc
 
 " gitcommit
 let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_patterns, 'gitcommit', [
-      \'[ ]#.*',
+      \'[ ]#[ 0-9a-zA-Z]*',
       \])
+
+let g:deoplete#ignore_sources.gitcommit = ['neosnippet']
 
 " lua
 let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
