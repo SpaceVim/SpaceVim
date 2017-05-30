@@ -114,6 +114,10 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
     set tabline=%!SpaceVim#layers#core#tabline#get()
+    augroup SpaceVim_tabline
+        autocmd!
+        autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
+    augroup END
     for i in range(1, 9)
         exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
                     \ . "', ':call SpaceVim#layers#core#tabline#jump("

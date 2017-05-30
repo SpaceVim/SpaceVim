@@ -82,6 +82,12 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'S'], 'call call('
                 \ . string(s:_function('s:split_string')) . ', [1])',
                 \ 'split-and-add-newline', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'r'], 'call call('
+                \ . string(s:_function('s:next_window')) . ', [])',
+                \ 'rotate windows forward', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'R'], 'call call('
+                \ . string(s:_function('s:previous_window')) . ', [])',
+                \ 'rotate windows backward', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
