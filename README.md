@@ -23,18 +23,27 @@ Here is a throughput graph of the repository for the last few weeks:
 
 # Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Documentation](#documentation)
-    - [Quick start guide](#quick-start-guide)
-- [Getting Help](#getting-help)
-- [Install](#install)
-- [Update](#update)
-- [Community](#community)
-- [Support SpaceVim](#support-spacevim)
-    - [contribute to SpaceVim](#contribute-to-spacevim)
-    - [Write post about SpaceVim](#write-post-about-spacevim)
-- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc GFM -->
+* [Introduction](#introduction)
+* [Features](#features)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+    * [Unite work flow](#unite-work-flow)
+    * [module statusline](#module-statusline)
+* [Documentation](#documentation)
+    * [Quick start guide](#quick-start-guide)
+* [Getting Help](#getting-help)
+* [Community](#community)
+* [Install](#install)
+    * [Linux/Mac](#linuxmac)
+    * [windows support](#windows-support)
+* [Update](#update)
+* [Support SpaceVim](#support-spacevim)
+    * [contribute to SpaceVim](#contribute-to-spacevim)
+    * [Write post about SpaceVim](#write-post-about-spacevim)
+* [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
 
 ## Introduction
 
@@ -62,10 +71,24 @@ If you are new to vim, you should learn about Vim in general, read [vim-galore](
     [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
-This is the Unite centric work-flow:
+### Mnemonic key bindings
+
+### Unite work flow
 
 ![unite](docs/img/unite_mappings.png)
 
+### module statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 ## Documentation
 
