@@ -73,6 +73,14 @@ If you are new to vim, you should learn about Vim in general, read [vim-galore](
 
 ### Mnemonic key bindings
 
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+
+for example, after pressing `<Space>` in normal mode, you will see :
+
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+
 ### Unite work flow
 
 ![unite](docs/img/unite_mappings.png)
