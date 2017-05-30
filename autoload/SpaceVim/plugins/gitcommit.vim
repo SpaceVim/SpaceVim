@@ -1,3 +1,6 @@
+let s:pr_kind = g:spacevim_gitcommit_pr_icon
+let s:issue_kind = g:spacevim_gitcommit_issue_icon
+
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
     if a:findstart
         let line = getline('.')
@@ -34,7 +37,7 @@ function! s:complete_pr() abort
                     \ 'word' : '#' . pr.number,
                     \ 'abbr' : '#' . pr.number,
                     \ 'menu' : pr.title,
-                    \ 'kind' : (has_key(pr, 'pull_request') ? 'pull request' : 'issue       '),
+                    \ 'kind' : (has_key(pr, 'pull_request') ? s:pr_kind : s:issue_kind),
                     \ }
         call add(rst, item)
     endfor
