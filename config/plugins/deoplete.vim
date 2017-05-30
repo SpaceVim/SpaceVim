@@ -51,6 +51,11 @@ let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpc
 "call deoplete#custom#set('phpcd', 'mark', '')
 "call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
 
+" gitcommit
+let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_patterns, 'gitcommit', [
+      \'[ ]#.*',
+      \])
+
 " lua
 let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
 
