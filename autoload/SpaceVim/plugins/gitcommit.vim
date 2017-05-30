@@ -49,7 +49,7 @@ function! s:complete_pr(base) abort
                     \ 'menu' : pr.title,
                     \ 'kind' : (has_key(pr, 'pull_request') ? s:pr_kind : s:issue_kind),
                     \ }
-        if pr.number . pr.title =~ a:base
+        if pr.number . pr.title =~? a:base
             call add(rst, item)
         endif
     endfor
