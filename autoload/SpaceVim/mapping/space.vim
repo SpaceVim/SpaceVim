@@ -55,7 +55,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
-    let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
+    let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
