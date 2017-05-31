@@ -715,8 +715,8 @@ Key Binding | Description
 `SPC w R` | rotate windows backward
 `SPC w s or SPC w -` | horizontal split
 `SPC w S` | horizontal split and focus new window
-SPC w u	undo window layout (used to effectively undo a closed window)
-SPC w U	redo window layout
+`SPC w u` | undo window layout (used to effectively undo a closed window) (TODO)
+`SPC w U` | redo window layout (TODO)
 `SPC w v or SPC w /` | vertical split
 `SPC w V` | vertical split and focus new window
 `SPC w w` | cycle and focus between windows
