@@ -8,9 +8,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 
 ## Current
 
-### [0.3](https://github.com/SpaceVim/SpaceVim/milestone/3)
-- statusline with mode support
-- Plugin manager ui for dein
+### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
 
 ## Meta
 
@@ -23,6 +21,13 @@ There are release milestones and meta milestones ("buckets").
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
 ## Completed
+
+### [0.3](https://github.com/SpaceVim/SpaceVim/milestone/3)
+- statusline with mode support
+- Plugin manager ui for dein
+- Improve mapping guide
+- Tabs manager
+- Layers manager
 
 ### [0.2](https://github.com/SpaceVim/SpaceVim/milestone/2)
 - Mnemonic key bindings
