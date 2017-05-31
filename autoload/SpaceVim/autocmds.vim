@@ -64,7 +64,7 @@ function! SpaceVim#autocmds#init() abort
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     autocmd InsertEnter * call s:fixindentline()
-    if executable('synclient')
+    if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
       autocmd InsertEnter * call s:disable_touchpad()
       autocmd InsertLeave * call s:enable_touchpad()

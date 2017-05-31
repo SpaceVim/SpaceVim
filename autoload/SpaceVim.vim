@@ -225,6 +225,9 @@ let g:spacevim_checkinstall            = 1
 " <
 let g:spacevim_enable_debug            = 0
 ""
+" Auto disable touchpad when switch to insert mode or focuslost in neovim.
+let g:spacevim_auto_disable_touchpad   = 1
+""
 " Set the debug level of SpaceVim. Default is 1. see
 " |SpaceVim#logger#setLevel()|
 let g:spacevim_debug_level             = 1
