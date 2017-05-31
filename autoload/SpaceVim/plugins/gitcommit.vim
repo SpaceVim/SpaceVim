@@ -1,17 +1,22 @@
 let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
+let s:cache = {}
 
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
     if a:findstart
+        let s:complete_ol = 0
         let line = getline('.')
         let start = col('.') - 1
-        while start > 0 && line[start - 1] != ' '
+        while start > 0 && line[start - 1] != ' ' && line[start - 1] != '#'
             let start -= 1
         endwhile
+        if line[start - 1] == '#'
+            let s:complete_ol = 1
+        endif
         return start
     else
-        if a:base =~ '^#\d*'
-            return s:complete_pr()
+        if s:complete_ol == 1
+            return s:complete_pr(a:base)
         endif
         let res = []
         for m in s:cache_commits()
@@ -28,18 +33,25 @@ function! s:cache_commits() abort
     return rst
 endfunction
 
-function! s:complete_pr() abort
+function! s:complete_pr(base) abort
     let [user,repo] = s:current_repo()
-    let prs = github#api#issues#List_All_for_Repo(user, repo)
+    if !has_key(s:cache, user . '_' . repo)
+        let prs = github#api#issues#List_All_for_Repo(user, repo)
+        let s:cache[user . '_' . repo] = prs
+    else
+        let prs = s:cache[user . '_' . repo]
+    endif
     let rst = []
     for pr in prs
         let item = {
-                    \ 'word' : '#' . pr.number,
+                    \ 'word' : pr.number . '',
                     \ 'abbr' : '#' . pr.number,
                     \ 'menu' : pr.title,
                     \ 'kind' : (has_key(pr, 'pull_request') ? s:pr_kind : s:issue_kind),
                     \ }
-        call add(rst, item)
+        if pr.number . pr.title =~? a:base
+            call add(rst, item)
+        endif
     endfor
     return rst
 endfunction
