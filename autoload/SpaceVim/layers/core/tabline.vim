@@ -21,7 +21,13 @@ let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
 
 function! s:tabname(id) abort
-    let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    if g:spacevim_buffer_index_type == 3
+        let id = s:messletters.index_num(a:id)
+    elseif g:spacevim_buffer_index_type == 4
+        let id = a:id
+    else
+        let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    endif
     let fn = fnamemodify(bufname(a:id), ':t')
     if g:spacevim_enable_tabline_filetype_icon
         let icon = s:file.fticon(fn)
@@ -56,7 +62,13 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
-            let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
+            if g:spacevim_buffer_index_type == 3
+                let id = s:messletters.index_num(i)
+            elseif g:spacevim_buffer_index_type == 4
+                let id = i
+            else
+                let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
+            endif
             let icon = s:file.fticon(name)
             if !empty(icon)
                 let name = icon . ' ' . name
@@ -93,7 +105,13 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
-            let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+            if g:spacevim_buffer_index_type == 3
+                let id = s:messletters.index_num(index(s:buffers, i) + 1)
+            elseif g:spacevim_buffer_index_type == 4
+                let id = index(s:buffers, i) + 1
+            else
+                let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+            endif
             let icon = s:file.fticon(name)
             if !empty(icon)
                 let name = icon . ' ' . name

@@ -108,7 +108,7 @@ else
 endif
 
 function! s:winnr() abort
-    return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_buffer_index_type) . ' '
+    return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
 endfunction
 
 function! s:filename() abort
