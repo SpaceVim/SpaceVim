@@ -10,6 +10,11 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 
 ### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
 
+- Improve git work  flow
+  - completion in commit message buffer
+  - manager github issues annd PRs
+- Improve autocomplete layer
+
 ## Meta
 
 There are release milestones and meta milestones ("buckets"). 
@@ -23,6 +28,7 @@ There are release milestones and meta milestones ("buckets").
 ## Completed
 
 ### [0.3](https://github.com/SpaceVim/SpaceVim/milestone/3)
+
 - statusline with mode support
 - Plugin manager ui for dein
 - Improve mapping guide
@@ -30,11 +36,13 @@ There are release milestones and meta milestones ("buckets").
 - Layers manager
 
 ### [0.2](https://github.com/SpaceVim/SpaceVim/milestone/2)
+
 - Mnemonic key bindings
 - Denite support
 - Unite work flow
 - Windows support
 
 ### [0.1](https://github.com/SpaceVim/SpaceVim/milestone/1)
+
 - The primary goal of the 0.1 release ("first public release") is to reach a stable, functional baseline that can be built upon and used as a benchmark for further progress.
 - Layers feature
