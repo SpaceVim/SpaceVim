@@ -717,10 +717,10 @@ Key Binding | Description
 `SPC w S` | horizontal split and focus new window
 SPC w u	undo window layout (used to effectively undo a closed window)
 SPC w U	redo window layout
-SPC w v or SPC w /	vertical split
-SPC w V	vertical split and focus new window
-SPC w w	cycle and focus between windows
-SPC w W	select window using ace-window
+`SPC w v or SPC w /` | vertical split
+`SPC w V` | vertical split and focus new window
+`SPC w w` | cycle and focus between windows
+`SPC w W` | select window using vim-choosewin
 
 #### Buffers and Files
 
