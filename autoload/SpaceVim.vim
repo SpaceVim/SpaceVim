@@ -270,6 +270,10 @@ let g:spacevim_enable_os_fileformat_icon = 0
 " <
 let g:spacevim_plugin_groups           = []
 ""
+" Set the github username, It will be used for getting your starred repos, and
+" fuzzy find the repo you want.
+let g:spacevim_github_username         = ''
+""
 " Disable plugins by name.
 " >
 "   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']

@@ -295,6 +295,10 @@ Plugin groups to be loaded.
    let g:spacevim_plugin_groups = ['core', 'lang']
 <
 
+                                                  *g:spacevim_github_username*
+Set the github username, It will be used for getting your starred repos, and
+fuzzy find the repo you want.
+
                                                  *g:spacevim_disabled_plugins*
 Disable plugins by name.
 >
