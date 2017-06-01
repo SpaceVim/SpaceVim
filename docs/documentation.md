@@ -639,9 +639,9 @@ Key Binding | Description
 ----------- | -----------
 `SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
 `SPC j $` | go to the end of line (and set a mark at the previous location in the line)
-`SPC j b` | undo a jump (go back to previous location)
-`SPC j f` | jump backward
-`SPC j d` | jump forward
+`SPC j b` | jump backward
+`SPC j f` | jump forward
+`SPC j d` | jump to a listing of the current directory
 `SPC j D` | jump to a listing of the current directory (other window)
 `SPC j i` | jump to a definition in buffer (denite outline)
 `SPC j I` | jump to a definition in any buffer (denite outline)
@@ -661,6 +661,7 @@ Key Binding | Description
 `J` | join the current line with the next line
 `SPC j k` | go to next line and indent it using auto-indent rules
 `SPC j n` | split the current line at point, insert a new line and auto-indent
+`SPC j o` | split the current line at point but let point on current line
 `SPC j s` | split a quoted string or s-expression in place
 `SPC j S` | split a quoted string or s-expression, insert a new line and auto-indent
 

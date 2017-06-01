@@ -77,6 +77,7 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
                 \ . string(s:_function('s:split_string')) . ', [0])',
                 \ 'split sexp', 1)
