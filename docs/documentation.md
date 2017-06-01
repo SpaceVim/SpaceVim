@@ -640,9 +640,9 @@ Key Binding | Description
 `SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
 `SPC j $` | go to the end of line (and set a mark at the previous location in the line)
 `SPC j b` | undo a jump (go back to previous location)
-`SPC j d` | jump to a listing of the current directory
+`SPC j f` | jump backward
+`SPC j d` | jump forward
 `SPC j D` | jump to a listing of the current directory (other window)
-`SPC j f` | jump to the definition of an vim script function (TODO)
 `SPC j i` | jump to a definition in buffer (denite outline)
 `SPC j I` | jump to a definition in any buffer (denite outline)
 `SPC j j` | jump to a character in the buffer (easymotion)
