@@ -69,9 +69,11 @@ function! SpaceVim#layers#core#tabline#get() abort
             else
                 let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
             endif
-            let icon = s:file.fticon(name)
-            if !empty(icon)
-                let name = icon . ' ' . name
+            if g:spacevim_enable_tabline_filetype_icon
+                let icon = s:file.fticon(name)
+                if !empty(icon)
+                    let name = icon . ' ' . name
+                endif
             endif
             let t .= id . ' ' . name
             if i == ct - 1
@@ -112,9 +114,11 @@ function! SpaceVim#layers#core#tabline#get() abort
             else
                 let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
             endif
-            let icon = s:file.fticon(name)
-            if !empty(icon)
-                let name = icon . ' ' . name
+            if g:spacevim_enable_tabline_filetype_icon
+                let icon = s:file.fticon(name)
+                if !empty(icon)
+                    let name = icon . ' ' . name
+                endif
             endif
             let t .= id . ' ' . name
             if i == ct
