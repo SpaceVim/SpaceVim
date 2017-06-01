@@ -29,12 +29,35 @@
 scriptencoding utf-8
 let g:spacevim_version = '0.4.0-dev'
 lockvar g:spacevim_version
+" fullScreen
+fun! ToggleFullscreen()
+	call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)
+endf
+map <silent> <F11> :call ToggleFullscreen()<CR>
+autocmd VimEnter * call ToggleFullscreen()
+" vimproc
+let g:vimproc_dll_path=$VIMRUNTIME."/vimproc.dll"
+" disable blink cursor
+set gcr=n-v-c:block-Cursor/lCursor-blinkon0,ve:ver35-Cursor-blinkon0,o:hor50-Cursor-blinkon0,i-ci:ver25-Cursor/lCursor-blinkon0,r-cr:hor20-Cursor/lCursor-blinkon0,sm:block-Cursor-blinkon0
+" scroll buffer
+set so=3
+" disable compatible vi
+set nocompatible
+" disable plugin warning
+let g:ale_emit_conflict_warnings = 0
+let g:indexer_disableCtagsWarning = 1
+let g:cscope_silent = 1
 ""
 " Change the default indentation of SpaceVim. Default is 2.
 " >
 "   let g:spacevim_default_indent = 2
 " <
-let g:spacevim_default_indent          = 2
+let g:spacevim_default_indent          = 4
+filetype indent on
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 ""
 " Change the max number of columns for SpaceVim. Default is 120.
 " >
@@ -53,6 +76,8 @@ let g:spacevim_enable_guicolors = 1
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
+" global mapleader
+let mapleader = "\<space>"
 ""
 " Window functions leader for SpaceVim. Default is `s`. 
 " Set to empty to disable this feature, or you can set to another char.
@@ -98,16 +123,19 @@ let g:spacevim_enable_key_frequency = 0
 let g:spacevim_autocomplete_method     = ''
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
+" 0:Neomake|1:syntastic|2:ale
 " >
-"   let g:spacevim_enable_neomake = 0
+"   let g:spacevim_enable_lint_type = 0
 " <
-let g:spacevim_enable_neomake          = 1
+" 
+let g:spacevim_enable_lint_type = 0
+let g:spacevim_min_keyword_length = 2
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
 "   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 " <
-let g:spacevim_guifont                 = ''
+let g:spacevim_guifont = 'Consolas\ for\ Powerline\ FixedD:h13'
 ""
 " Enable/Disable YouCompleteMe. Default is 0.
 " >
@@ -148,13 +176,13 @@ let g:spacevim_enable_cursorcolumn     = 0
 " >
 "   let g:spacevim_error_symbol = '+'
 " <
-let g:spacevim_error_symbol            = '✖'
+let g:spacevim_error_symbol            = '»»'
 ""
 " Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 " >
 "   let g:spacevim_warning_symbol = '!'
 " <
-let g:spacevim_warning_symbol          = '⚠'
+let g:spacevim_warning_symbol          = 'ΔΔ'
 ""
 " Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
 " changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
@@ -246,7 +274,7 @@ let g:spacevim_gitcommit_issue_icon    = 'i'
 "   " 4: 1 ➛ 1
 "   let g:spacevim_buffer_index_type = 1
 " <
-let g:spacevim_buffer_index_type = 0
+let g:spacevim_buffer_index_type = 3
 ""
 " Set SpaceVim windows index type, default is 0.
 " >
@@ -278,7 +306,12 @@ let g:spacevim_github_username         = ''
 " >
 "   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
 " <
-let g:spacevim_disabled_plugins        = []
+let g:spacevim_disabled_plugins=[
+    \ ['junegunn/fzf.vim'],
+	\ ['szw/vim-tags'],
+	\ ['w0rp/ale'],
+	\ ['tpope/vim-dispatch'],
+    \ ]
 ""
 " Add custom plugins.
 " >
@@ -287,7 +320,18 @@ let g:spacevim_disabled_plugins        = []
 "               \ ['wsdjeg/GitHub.vim'],
 "               \ ]
 " <
-let g:spacevim_custom_plugins          = []
+let g:spacevim_custom_plugins = [
+    \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+    \ ['wsdjeg/GitHub.vim'],
+	\ ['easymotion/vim-easymotion'],
+	\ ['derekwyatt/vim-fswitch'],
+	\ ['tpope/vim-surround'],
+	\ ['vim-scripts/indexer.tar.gz'],
+	\ ['vim-scripts/DfrankUtil'],
+	\ ['vim-scripts/vimprj'],
+	\ ['w0rp/ale'],
+	\ ['brookhong/cscope.vim'],
+    \ ]
 ""
 " SpaceVim will load the global config after local config if set to 1. Default
 " is 0. If you have a local config, the global config will not be loaded. 
@@ -328,6 +372,7 @@ let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
+let g:spacevim_java_javac_options	   = '-encoding UTF-8'
 let g:spacevim_src_root                = 'E:\sources\'
 ""
 " The host file url. This option is for Chinese users who can not use
@@ -549,6 +594,23 @@ function! SpaceVim#welcome() abort
     endif
   endif
 endfunction
+
+"====================================custom===============================================
+" 文件操作
+nnoremap Q :qa!<CR>
+nnoremap E :e!<CR>
+
+" *.cpp 和 *.h 间切换
+nnoremap <silent> <Leader>sw :FSHere<cr>
+
+" 快速移动
+map <Leader><Leader>w <Plug>(easymotion-bd-w)
+
+nnoremap <leader><leader>c :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader><leader>l :call ToggleLocationList()<CR>
+nnoremap gd <C-]>
+nnoremap  <C-g> :call CscopeFind('s', expand('<cword>'))<CR>
+nnoremap  <C-m> :call CscopeFind('c', expand('<cword>'))<CR>
 
 ""
 " @section FAQ, faq
