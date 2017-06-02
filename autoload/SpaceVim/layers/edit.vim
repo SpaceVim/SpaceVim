@@ -11,7 +11,8 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['scrooloose/nerdcommenter'],
                 \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],
                 \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-                \ ['easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)', 'on_func' : 'EasyMotion#go'}],
+                \ ['easymotion/vim-easymotion'],
+                \ ['haya14busa/vim-easyoperator-line'],
                 \ ['editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'}],
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
                 \ ]
@@ -37,7 +38,4 @@ function! SpaceVim#layers#edit#config() abort
     "noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
-    if empty(maparg('<leader><leader>', ''))
-        map <Leader><Leader> <Plug>(easymotion-prefix)
-    endif
 endfunction

@@ -64,6 +64,32 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['j', '0'], 'm`^', 'push mark and goto beginning of line', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', '$'], 'm`g_', 'push mark and goto beginning of line', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-prefix)s', 'jump to a character', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-s2)', 'jump to a suite of two characters', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'u'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
+                \ . string(s:_function('s:split_string')) . ', [0])',
+                \ 'split sexp', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'S'], 'call call('
+                \ . string(s:_function('s:split_string')) . ', [1])',
+                \ 'split-and-add-newline', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'r'], 'call call('
+                \ . string(s:_function('s:next_window')) . ', [])',
+                \ 'rotate windows forward', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'R'], 'call call('
+                \ . string(s:_function('s:previous_window')) . ', [])',
+                \ 'rotate windows backward', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
@@ -121,3 +147,49 @@ function! s:previous_window() abort
         exe winnr('$') . 'wincmd w'
     endtry
 endfunction
+
+function! s:split_string(newline) abort
+    let syn_name = synIDattr(synID(line("."), col("."), 1), "name")
+    if syn_name == &filetype . 'String'
+        let c = col('.')
+        let sep = ''
+        while c > 0
+            if s:is_string(line('.'), c)
+                let c = c - 1
+            else
+                let sep = getline('.')[c]
+                break
+            endif
+        endwhile
+        if a:newline
+            let save_register_m = @m
+            let @m = sep . "\n" . sep
+            normal! "mp
+            let @m = save_register_m
+        else
+            let save_register_m = @m
+            let @m = sep . sep
+            normal! "mp
+            let @m = save_register_m
+        endif
+    endif
+endfunction
+
+function! s:is_string(l,c) abort
+    return synIDattr(synID(a:l, a:c, 1), "name") == &filetype . 'String'
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
+else
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
+endif

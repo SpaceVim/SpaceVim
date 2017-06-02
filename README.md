@@ -7,7 +7,7 @@
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version 0.2.0-dev](https://img.shields.io/badge/version-0.3.0--dev-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.4.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
@@ -23,18 +23,27 @@ Here is a throughput graph of the repository for the last few weeks:
 
 # Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Documentation](#documentation)
-    - [Quick start guide](#quick-start-guide)
-- [Getting Help](#getting-help)
-- [Install](#install)
-- [Update](#update)
-- [Community](#community)
-- [Support SpaceVim](#support-spacevim)
-    - [contribute to SpaceVim](#contribute-to-spacevim)
-    - [Write post about SpaceVim](#write-post-about-spacevim)
-- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc GFM -->
+* [Introduction](#introduction)
+* [Features](#features)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+    * [Unite work flow](#unite-work-flow)
+    * [module statusline](#module-statusline)
+* [Documentation](#documentation)
+    * [Quick start guide](#quick-start-guide)
+* [Getting Help](#getting-help)
+* [Community](#community)
+* [Install](#install)
+    * [Linux/Mac](#linuxmac)
+    * [windows support](#windows-support)
+* [Update](#update)
+* [Support SpaceVim](#support-spacevim)
+    * [contribute to SpaceVim](#contribute-to-spacevim)
+    * [Write post about SpaceVim](#write-post-about-spacevim)
+* [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
 
 ## Introduction
 
@@ -62,10 +71,32 @@ If you are new to vim, you should learn about Vim in general, read [vim-galore](
     [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
-This is the Unite centric work-flow:
+### Mnemonic key bindings
+
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+
+for example, after pressing `<Space>` in normal mode, you will see :
+
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+
+### Unite work flow
 
 ![unite](docs/img/unite_mappings.png)
 
+### module statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 ## Documentation
 

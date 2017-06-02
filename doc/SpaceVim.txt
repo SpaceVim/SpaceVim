@@ -107,6 +107,9 @@ this feature, or you can set to another char.
 Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
 this feature, or you can set to another char.
 
+                                             *g:spacevim_enable_insert_leader*
+Enable/Disable spacevim's insert mode leader, default is enable
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >
@@ -251,6 +254,9 @@ Enable/Disable debug mode for SpaceVim. Default is 0.
   let g:spacevim_enable_debug = 1
 <
 
+                                            *g:spacevim_auto_disable_touchpad*
+Auto disable touchpad when switch to insert mode or focuslost in neovim.
+
                                                       *g:spacevim_debug_level*
 Set the debug level of SpaceVim. Default is 1. see
 |SpaceVim#logger#setLevel()|
@@ -267,6 +273,16 @@ Set SpaceVim buffer index type, default is 0.
   let g:spacevim_buffer_index_type = 1
 <
 
+                                               *g:spacevim_windows_index_type*
+Set SpaceVim windows index type, default is 0.
+>
+  " types:
+  " 0: 1 ➛ ➊
+  " 1: 1 ➛ ➀
+  " 2: 1 ➛ ⓵
+  let g:spacevim_windows_index_type = 1
+<
+
                                      *g:spacevim_enable_tabline_filetype_icon*
 Enable/Disable tabline filetype icon. default is 0.
 
@@ -278,6 +294,10 @@ Plugin groups to be loaded.
 >
    let g:spacevim_plugin_groups = ['core', 'lang']
 <
+
+                                                  *g:spacevim_github_username*
+Set the github username, It will be used for getting your starred repos, and
+fuzzy find the repo you want.
 
                                                  *g:spacevim_disabled_plugins*
 Disable plugins by name.

@@ -7,7 +7,9 @@
 "=============================================================================
 
 function! SpaceVim#mapping#leader#defindglobalMappings() abort
-  inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+  if g:spacevim_enable_insert_leader
+    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+  endif
 
   "for buftabs
   noremap <silent><Leader>bp :bprev<CR>

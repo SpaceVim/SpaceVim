@@ -57,6 +57,7 @@ function! SpaceVim#layers#git#config() abort
   augroup spacevim_layer_git
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
+    autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
   augroup END
 endfunction
 

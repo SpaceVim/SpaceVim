@@ -283,9 +283,16 @@ nnoremap <silent><Leader>ta :<C-u>Unite -start-insert -buffer-name=tag tag<cr>
 nnoremap <silent><leader>ugg :Unite -silent -start-insert menu:git<CR>
 nnoremap <silent><leader>ugf :UniteWithCursorWord file_rec/async<CR>
 nnoremap <silent><leader>ugt :UniteWithCursorWord tag<CR>
-nnoremap <silent><Leader>ls :Unite
-      \ -silent -ignorecase -winheight=17
-      \ -start-insert menu:MyStarredrepos<CR>
+nnoremap <silent><Leader>ls :call <SID>view_github_starred_repos()<CR>
+function! s:view_github_starred_repos() abort
+  if empty(g:unite_source_menu_menus.MyStarredrepos.command_candidates)
+    if UpdateStarredRepos()
+      Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
+    endif
+  else
+    Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
+  endif
+endfunction
 nnoremap <silent><Leader>lm :Unite
       \ -silent -ignorecase -winheight=17 -start-insert menu:MpvPlayer<CR>
 call zvim#util#loadMusics()

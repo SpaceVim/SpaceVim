@@ -25,6 +25,10 @@ function! SpaceVim#logger#info(msg) abort
 endfunction
 
 function! SpaceVim#logger#warn(msg) abort
+  let msg = s:warpMsg(a:msg, 2)
+  echohl WarningMsg
+  echomsg msg
+  echohl NONE
   if g:spacevim_enable_debug && s:logger_level <= 2
     call s:wite(s:warpMsg(a:msg, 2))
   else

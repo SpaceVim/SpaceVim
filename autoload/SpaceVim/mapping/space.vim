@@ -20,12 +20,21 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.h = {'name' : '+Help'}
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     " Windows
+    for i in range(1, 9)
+        exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#statusline#jump(" . i . ")', 'window " . i . "', 1)"
+    endfor
     let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
+    nnoremap <silent> [SPC]w<tab> :wincmd w<cr>
     call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
     call SpaceVim#mapping#space#def('nnoremap', ['w', '+'], 
                 \ 'call call('
                 \ . string(function('s:windows_layout_toggle'))
                 \ . ', [])', 'windows-layout-toggle', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'], 'Goyo', 'centered-buffer-mode', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'], 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'], 'close', 'delete window', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'tabnew', 'create new tab', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h', 'window-left', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j', 'window-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k', 'window-up', 1)
@@ -34,6 +43,9 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J', 'window-far-down', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K', 'window-far-up', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L', 'window-far-right', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'only', 'maximize/minimize window', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap', 'swap window', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext', 'other tabs', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs | wincmd w', 'split-window-right', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'bel vs | wincmd w', 'split-window-right', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w', 'split-window-below', 1)
@@ -41,6 +53,8 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H', 'split-window-below', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'], 'bel vs', 'split-window-right-focus', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', '='], 'wincmd =', 'balance-windows', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'], 'wincmd w', 'cycle and focus between windows', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'], 'ChooseWin', 'select window', 1)
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
@@ -51,7 +65,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
-    let g:_spacevim_mappings_space.B = {'name' : '+Global-uffers'}
+    let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')

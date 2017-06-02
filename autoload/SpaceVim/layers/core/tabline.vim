@@ -21,7 +21,13 @@ let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
 
 function! s:tabname(id) abort
-    let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    if g:spacevim_buffer_index_type == 3
+        let id = s:messletters.index_num(a:id)
+    elseif g:spacevim_buffer_index_type == 4
+        let id = a:id
+    else
+        let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    endif
     let fn = fnamemodify(bufname(a:id), ':t')
     if g:spacevim_enable_tabline_filetype_icon
         let icon = s:file.fticon(fn)
@@ -56,10 +62,18 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
-            let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
-            let icon = s:file.fticon(name)
-            if !empty(icon)
-                let name = icon . ' ' . name
+            if g:spacevim_buffer_index_type == 3
+                let id = s:messletters.index_num(i)
+            elseif g:spacevim_buffer_index_type == 4
+                let id = i
+            else
+                let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
+            endif
+            if g:spacevim_enable_tabline_filetype_icon
+                let icon = s:file.fticon(name)
+                if !empty(icon)
+                    let name = icon . ' ' . name
+                endif
             endif
             let t .= id . ' ' . name
             if i == ct - 1
@@ -74,15 +88,16 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= '%#SpaceVim_tabline_a# Tabs'
     else
         let s:buffers = s:BUFFER.listed_buffers()
+        let g:_spacevim_list_buffers = s:buffers
         if len(s:buffers) == 0
             return ''
         endif
         let ct = bufnr('%')
         let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
         if ct == get(s:buffers, 0, -1)
-            let t = '%#SpaceVim_tabline_a#  '
+            let t = '%#SpaceVim_tabline_a# '
         else
-            let t = '%#SpaceVim_tabline_b#  '
+            let t = '%#SpaceVim_tabline_b# '
         endif
         for i in s:buffers
             if i == ct
@@ -92,10 +107,18 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
-            let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
-            let icon = s:file.fticon(name)
-            if !empty(icon)
-                let name = icon . ' ' . name
+            if g:spacevim_buffer_index_type == 3
+                let id = s:messletters.index_num(index(s:buffers, i) + 1)
+            elseif g:spacevim_buffer_index_type == 4
+                let id = index(s:buffers, i) + 1
+            else
+                let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+            endif
+            if g:spacevim_enable_tabline_filetype_icon
+                let icon = s:file.fticon(name)
+                if !empty(icon)
+                    let name = icon . ' ' . name
+                endif
             endif
             let t .= id . ' ' . name
             if i == ct
@@ -113,11 +136,20 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
     set tabline=%!SpaceVim#layers#core#tabline#get()
+    augroup SpaceVim_tabline
+        autocmd!
+        autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
+    augroup END
     for i in range(1, 9)
-        exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#tabline#jump(" . i . ")', 'window " . i . "', 1)"
+        exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
+                    \ . "', ':call SpaceVim#layers#core#tabline#jump("
+                    \ . i . ")<cr>', 'Switch to airline tab " . i
+                    \ . "', '', 'tabline index " . i . "')"
     endfor
-    call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
-    call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
+    call SpaceVim#mapping#def('nmap', '<leader>-', ':bprevious<cr>', 'Switch to previous airline tag', '', 'window previous')
+    call SpaceVim#mapping#def('nmap', '<leader>+', ':bnext<cr>', 'Switch to next airline tag', '', 'window next')
+    "call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
+    "call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id) abort

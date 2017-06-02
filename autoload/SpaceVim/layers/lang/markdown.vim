@@ -29,6 +29,9 @@ function! SpaceVim#layers#lang#markdown#config() abort
 endfunction
 
 function! s:mappings() abort
+    if !exists('g:_spacevim_mappings_space')
+        let g:_spacevim_mappings_space = {}
+    endif
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
     call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)

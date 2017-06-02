@@ -53,8 +53,10 @@ function! SpaceVim#autocmds#init() abort
           \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
           \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
           \|  else
-            \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-            \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    if empty(maparg('<leader>[', 'n', 0, 1)) && empty(maparg('<leader>]', 'n', 0, 1))
+            \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+            \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    endif
             \|  endif
     "}}}
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
@@ -62,7 +64,7 @@ function! SpaceVim#autocmds#init() abort
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     autocmd InsertEnter * call s:fixindentline()
-    if executable('synclient')
+    if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
       autocmd InsertEnter * call s:disable_touchpad()
       autocmd InsertLeave * call s:enable_touchpad()

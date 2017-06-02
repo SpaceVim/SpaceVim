@@ -27,7 +27,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.3.0-dev'
+let g:spacevim_version = '0.4.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -68,6 +68,9 @@ let g:spacevim_unite_leader            = 'f'
 " Denite work flow leader of SpaceVim. Default is `F`.
 " Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_denite_leader            = 'F'
+""
+" Enable/Disable spacevim's insert mode leader, default is enable
+let g:spacevim_enable_insert_leader    = 1
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
@@ -222,11 +225,16 @@ let g:spacevim_checkinstall            = 1
 " <
 let g:spacevim_enable_debug            = 0
 ""
+" Auto disable touchpad when switch to insert mode or focuslost in neovim.
+let g:spacevim_auto_disable_touchpad   = 1
+""
 " Set the debug level of SpaceVim. Default is 1. see
 " |SpaceVim#logger#setLevel()|
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
+let g:spacevim_gitcommit_pr_icon       = 'p'
+let g:spacevim_gitcommit_issue_icon    = 'i'
 ""
 " Set SpaceVim buffer index type, default is 0.
 " >
@@ -240,6 +248,16 @@ let g:spacevim_plugin_groups_exclude   = []
 " <
 let g:spacevim_buffer_index_type = 0
 ""
+" Set SpaceVim windows index type, default is 0.
+" >
+"   " types:
+"   " 0: 1 ➛ ➊ 
+"   " 1: 1 ➛ ➀
+"   " 2: 1 ➛ ⓵
+"   let g:spacevim_windows_index_type = 1
+" <
+let g:spacevim_windows_index_type = 0
+""
 " Enable/Disable tabline filetype icon. default is 0.
 let g:spacevim_enable_tabline_filetype_icon = 0
 ""
@@ -251,6 +269,10 @@ let g:spacevim_enable_os_fileformat_icon = 0
 "    let g:spacevim_plugin_groups = ['core', 'lang']
 " <
 let g:spacevim_plugin_groups           = []
+""
+" Set the github username, It will be used for getting your starred repos, and
+" fuzzy find the repo you want.
+let g:spacevim_github_username         = ''
 ""
 " Disable plugins by name.
 " >

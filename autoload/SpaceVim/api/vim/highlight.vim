@@ -1,7 +1,7 @@
 let s:self = {}
 
 function! s:self.group2dict(name) abort
-    let id = index(map(range(999), "synIDattr(v:val, 'name')"), a:name)
+    let id = index(map(range(1999), "synIDattr(v:val, 'name')"), a:name)
     if id == -1
         return {}
     endif

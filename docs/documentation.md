@@ -31,6 +31,7 @@ title:  "Documentation"
     * [UI Toggles](#ui-toggles)
     * [Statusline && tabline](#statusline--tabline)
         * [statusline](#statusline)
+        * [tabline](#tabline)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -49,6 +50,13 @@ title:  "Documentation"
         * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
             * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
         * [Unimpaired bindings](#unimpaired-bindings)
+        * [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
+            * [Jumping](#jumping)
+            * [Joining and splitting](#joining-and-splitting)
+        * [Window manipulation](#window-manipulation)
+            * [Window manipulation key bindings](#window-manipulation-key-bindings)
+        * [Buffers and Files](#buffers-and-files)
+            * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -72,8 +80,8 @@ title:  "Documentation"
 * [Unite centric work-flow](#unite-centric-work-flow)
         * [Plugin Highlights](#plugin-highlights)
         * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-        * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-            * [Language](#language)
+    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+        * [Language](#language)
             * [Commands](#commands)
             * [Commands](#commands-1)
             * [Completion](#completion-1)
@@ -325,7 +333,7 @@ SPC T t	| toggle tool bar
 
 ### Statusline && tabline
 
-The statusline and tabline is a heavily customized [airline](https://github.com/vim-airline/vim-airline) with the following capabilities:
+The statusline and tabline are heavily customized with the following capabilities:
 
 - tabline index of each buffer or tab.
 - vim mode (INSERT/NORMAL etc.)
@@ -439,6 +447,22 @@ Key Binding | Unicode | ASCII | Mode
 `SPC t S` | Ⓢ | S | enabled in spell checking
 `SPC t w` | ⓦ | w | whitespace mode
 
+#### tabline
+
+Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
+
+Key Binding | Description
+----------- | -----------
+`<Leader> 1` | jump to index 1 on tabline
+`<Leader> 2` | jump to index 2 on tabline
+`<Leader> 3` | jump to index 3 on tabline
+`<Leader> 4` | jump to index 4 on tabline
+`<Leader> 5` | jump to index 5 on tabline
+`<Leader> 6` | jump to index 6 on tabline
+`<Leader> 7` | jump to index 7 on tabline
+`<Leader> 8` | jump to index 8 on tabline
+`<Leader> 9` | jump to index 9 on tabline
+
 ## Manual
 
 ### Completion
@@ -490,7 +514,7 @@ By default the guide buffer will be displayed 1000ms after the key has been pres
 
 for example, after pressing `<Space>` in normal mode, you will see :
 
-![2017-05-07_1365x157](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
 
@@ -513,7 +537,7 @@ It is possible to search for specific key bindings by pressing `?` in the root o
 
 To narrow the list, just insert the mapping keys or description of what mapping you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
 
-![2017-05-07_1363x365](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
 
@@ -603,6 +627,107 @@ Mappings | Description
 `[ p` | Paste above current line
 `] p` | Paste below current line
 `g p` | Select pasted text
+
+
+#### Jumping, Joining and Splitting
+
+The `SPC j` prefix is for jumping, joining and splitting.
+
+##### Jumping
+
+Key Binding | Description
+----------- | -----------
+`SPC j 0` | go to the beginning of line (and set a mark at the previous location in the line)
+`SPC j $` | go to the end of line (and set a mark at the previous location in the line)
+`SPC j b` | jump backward
+`SPC j f` | jump forward
+`SPC j d` | jump to a listing of the current directory
+`SPC j D` | jump to a listing of the current directory (other window)
+`SPC j i` | jump to a definition in buffer (denite outline)
+`SPC j I` | jump to a definition in any buffer (denite outline)
+`SPC j j` | jump to a character in the buffer (easymotion)
+`SPC j J` | jump to a suite of two characters in the buffer (easymotion)
+`SPC j k` | jump to next line and indent it using auto-indent rules
+`SPC j l` | jump to a line with avy (easymotion)
+`SPC j q` | show the dumb-jump quick look tooltip (TODO)
+`SPC j u` | jump to a URL in the current buffer (TODO)
+`SPC j v` | jump to the definition/declaration of an Emacs Lisp variable (TODO)
+`SPC j w` | jump to a word in the current buffer (easymotion)(TODO)
+
+##### Joining and splitting
+
+Key Binding | Description
+----------- | -----------
+`J` | join the current line with the next line
+`SPC j k` | go to next line and indent it using auto-indent rules
+`SPC j n` | split the current line at point, insert a new line and auto-indent
+`SPC j o` | split the current line at point but let point on current line
+`SPC j s` | split a quoted string or s-expression in place
+`SPC j S` | split a quoted string or s-expression, insert a new line and auto-indent
+
+#### Window manipulation
+
+##### Window manipulation key bindings
+
+Every window has a number displayed at the start of the statusline and can be quickly accessed using `SPC number`.
+
+Key Binding | Description
+----------- | -----------
+`SPC 1` | go to window number 1
+`SPC 2` | go to window number 2
+`SPC 3` | go to window number 3
+`SPC 4` | go to window number 4
+`SPC 5` | go to window number 5
+`SPC 6` | go to window number 6
+`SPC 7` | go to window number 7
+`SPC 8` | go to window number 8
+`SPC 9` | go to window number 9
+
+Windows manipulation commands (start with `w`):
+
+Key Binding | Description
+----------- | -----------
+`SPC w TAB` | switch to alternate window in the current frame (switch back and forth)
+`SPC w =` | balance split windows
+`SPC w b` | force the focus back to the minibuffer (TODO)
+`SPC w c` | Distraction-free reading current window
+`SPC w C` | Distraction-free reading other windows via vim-choosewin
+`SPC w d` | delete a window
+`SPC u SPC w d` | delete a window and its current buffer (does not delete the file) (TODO)
+`SPC w D` | delete another window using vim-choosewin
+`SPC u SPC w D` | delete another window and its current buffer using vim-choosewin (TODO)
+`SPC w t` | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)
+`SPC w f` | toggle follow mode (TODO)
+`SPC w F` | create new tab(frame)
+`SPC w h` | move to window on the left
+`SPC w H` | move window to the left
+`SPC w j` | move to window below
+`SPC w J` | move window to the bottom
+`SPC w k` | move to window above
+`SPC w K` | move window to the top
+`SPC w l` | move to window on the right
+`SPC w L` | move window to the right
+`SPC w m` | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize)
+`SPC w M` | swap windows using vim-choosewin
+`SPC w o` | cycle and focus between tabs
+`SPC w p m` | open messages buffer in a popup window (TODO)
+`SPC w p p` | close the current sticky popup window (TODO)
+`SPC w r` | rotate windows forward
+`SPC w R` | rotate windows backward
+`SPC w s or SPC w -` | horizontal split
+`SPC w S` | horizontal split and focus new window
+`SPC w u` | undo window layout (used to effectively undo a closed window) (TODO)
+`SPC w U` | redo window layout (TODO)
+`SPC w v or SPC w /` | vertical split
+`SPC w V` | vertical split and focus new window
+`SPC w w` | cycle and focus between windows
+`SPC w W` | select window using vim-choosewin
+
+#### Buffers and Files
+
+##### Buffers manipulation key bindings
+
+Buffer manipulation commands (start with `b`):
 
 ### Auto-saving
 
@@ -783,9 +908,9 @@ Name           | Description
 [bookmarks] | Bookmarks, works independently from vim marks
 [tmux-navigator] | Seamless navigation between tmux panes and vim splits
 
-#### Lazy-Loaded Plugins
+### Lazy-Loaded Plugins
 
-##### Language
+#### Language
 
 Name           | Description
 -------------- | ----------------------

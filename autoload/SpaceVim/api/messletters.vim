@@ -1,7 +1,7 @@
 scriptencoding utf-8
 let s:chars = {}
 " type :
-" 0: 1 ➛ ➊ 
+" 0: 1 ➛ ➊
 " 1: 1 ➛ ➀
 " 2: 1 ➛ ⓵
 function! s:bubble_num(num, type) abort
@@ -11,7 +11,7 @@ function! s:bubble_num(num, type) abort
   call add(list,['⓵', '⓶', '⓷', '⓸', '⓹', '⓺', '⓻', '⓼', '⓽', '⓾'])
   let n = ''
   try
-    let n = list[a:type][a:num-1] 
+    let n = list[a:type][a:num-1]
   catch
   endtry
   return  n
@@ -20,7 +20,7 @@ endfunction
 let s:chars['bubble_num'] = function('s:bubble_num')
 
 " type :
-" 0: 1 ➛ ➊ 
+" 0: 1 ➛ ➊
 " 1: 1 ➛ ➀
 " 2: 1 ➛ ⓵
 function! s:circled_num(num, type) abort
@@ -55,6 +55,18 @@ function! s:circled_num(num, type) abort
 endfunction
 
 let s:chars['circled_num'] = function('s:circled_num')
+
+
+function! s:index_num(num) abort
+  let nums = [8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313]
+  if index(range(10) , a:num) != -1
+    return nr2char(nums[a:num])
+  endif
+  return ''
+endfunction
+
+let s:chars['index_num'] = function('s:index_num')
+
 
 function! s:parenthesized_num(num) abort
   " http://www.unicode.org/charts/beta/nameslist/n_2460.html
