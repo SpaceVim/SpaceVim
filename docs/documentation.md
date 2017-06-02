@@ -650,9 +650,9 @@ Key Binding | Description
 `SPC j k` | jump to next line and indent it using auto-indent rules
 `SPC j l` | jump to a line with avy (easymotion)
 `SPC j q` | show the dumb-jump quick look tooltip (TODO)
-`SPC j u` | jump to a URL in the current buffer (TODO)
+`SPC j u` | jump to a URL in the current window
 `SPC j v` | jump to the definition/declaration of an Emacs Lisp variable (TODO)
-`SPC j w` | jump to a word in the current buffer (easymotion)(TODO)
+`SPC j w` | jump to a word in the current buffer (easymotion)
 
 ##### Joining and splitting
 
@@ -810,9 +810,9 @@ Key           | Description
 ### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
-![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
 2. syntax check: Asynchronous linting and make framework.
-![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
 ### go support
 

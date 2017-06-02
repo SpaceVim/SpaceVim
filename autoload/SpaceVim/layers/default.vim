@@ -72,9 +72,8 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-s2)', 'jump to a suite of two characters', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
-    call SpaceVim#mapping#space#def('nmap', ['j', 'u'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
-    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-bd-w)', 'jump to a word', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
@@ -90,6 +89,9 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'R'], 'call call('
                 \ . string(s:_function('s:previous_window')) . ', [])',
                 \ 'rotate windows backward', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
+                \ . string(s:_function('s:jump_to_url')) . ', [])',
+                \ 'jump to url', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
@@ -193,3 +195,8 @@ else
         return function(substitute(a:fstr, 's:', s:_s, 'g'))
     endfunction
 endif
+
+function! s:jump_to_url() abort
+    let g:EasyMotion_re_anywhere = 'http[s]*://'
+    call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
+endfunction
