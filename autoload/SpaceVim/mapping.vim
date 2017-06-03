@@ -209,6 +209,18 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   endif
 endfunction
 
+function! SpaceVim#mapping#kill_visible_buffer_choosewin()
+  ChooseWin
+  let nr = bufnr('%')
+  for i in range(1, winnr('$'))
+    if winbufnr(i) == nr
+      exe i .  'wincmd w'
+      enew
+    endif
+  endfor
+  exe 'bwipeout ' . nr
+endfunction
+
 function! SpaceVim#mapping#menu(desc, key, cmd) abort
   let description = '➤ '
         \. a:desc
