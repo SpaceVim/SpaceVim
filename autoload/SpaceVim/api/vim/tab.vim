@@ -23,6 +23,10 @@ function! s:self.get_tree() abort
     return self._tree
 endfunction
 
+function! s:self.realTabBuffers(id) abort
+    return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") == ""')
+endfunction
+
 function! SpaceVim#api#vim#tab#get() abort
     return deepcopy(s:self)
 endfunction
