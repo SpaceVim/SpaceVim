@@ -2,12 +2,17 @@ let s:TAB = SpaceVim#api#import('vim#tab')
 
 let s:restore_windows_stack = []
 
+let s:unmarked = 0
+
 
 function! s:get_window_restore_data() abort
     let win_data = {
-                \ 'bufid':  bufnr('%'),
+                \ 'bufname':  fnamemodify(bufname('%'), ':p'),
                 \ 'tabpagenr': tabpagenr(),
                 \ 'view':      winsaveview(),
+                \ 'newtab':0,
+                \ 'oldwinid' : -1,
+                \ 'same_w' : 0,
                 \ }
     return win_data
 endfunction
@@ -16,10 +21,16 @@ function! SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo() abort
     if !&buflisted
         return
     endif
+    let s:unmarked = 1
     let win_data = s:get_window_restore_data()
     if len(tabpagebuflist()) == 1
-        let win_data.neighbour_buffer = ''
+        let win_data.newtab = 1
         let win_data.open_command     = (tabpagenr() - 1).'tabnew'
+    else
+        if winwidth(winnr()) == &columns
+            let win_data.same_w = 1
+        endif
+        let win_data.oldwinid = winnr()
     endif
     call add(s:restore_windows_stack, win_data)
 endfunction
@@ -29,7 +40,31 @@ function! SpaceVim#plugins#windowsmanager#UndoQuitWin()
         return
     endif
     let win_data = remove(s:restore_windows_stack, -1)
-    if win_data.neighbour_buffer != ''
+    if win_data.newtab
+        exe win_data.open_command . ' ' . win_data.bufname
+    else
+        exe win_data.open_command
     endif
-    exe win_data.open_command . ' | b ' win_data.bufid
+endfunction
+
+function! SpaceVim#plugins#windowsmanager#MarkBaseWin()
+    if s:unmarked
+        let win_data = s:restore_windows_stack[-1]
+        if win_data.same_w
+            " split
+            if win_data.oldwinid == winnr()
+                let win_data.open_command = 'topleft split ' . win_data.bufname
+            else
+                let win_data.open_command = 'rightbelow split ' . win_data.bufname
+            endif
+        else
+            " vsplit
+            if win_data.oldwinid == winnr()
+                let win_data.open_command = 'topleft vsplit ' . win_data.bufname
+            else
+                let win_data.open_command = 'rightbelow vsplit ' . win_data.bufname
+            endif
+        endif
+        let s:unmarked = 0
+    endif
 endfunction
