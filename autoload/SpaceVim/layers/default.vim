@@ -97,6 +97,7 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
                 \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
                 \ 'kill-this-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', '<C-d>'], 'call SpaceVim#mapping#clearBuffers()', 'kill-other-buffers', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')

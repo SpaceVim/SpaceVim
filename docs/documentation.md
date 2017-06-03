@@ -736,8 +736,8 @@ Key Binding | Description
 `SPC b d` | kill the current buffer (does not delete the visited file)
 `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)
 `SPC b D` | kill a visible buffer using vim-choosewin
-SPC u SPC b D	kill a visible buffer and its window using ace-window
-SPC b C-d	kill other buffers
+`SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)
+`SPC b C-d` | kill other buffers
 SPC b C-D	kill buffers using a regular expression
 SPC b e	erase the content of the buffer (ask for confirmation)
 SPC b h	open *spacemacs* home buffer
