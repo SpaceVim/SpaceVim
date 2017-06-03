@@ -46,7 +46,7 @@ fu! zvim#util#SmartClose() abort
     endfor
     if num == 1
     else
-        close
+        quit
     endif
 endf
 
