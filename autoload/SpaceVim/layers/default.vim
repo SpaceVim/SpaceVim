@@ -92,9 +92,29 @@ function! SpaceVim#layers#default#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
                 \ . string(s:_function('s:jump_to_url')) . ', [])',
                 \ 'jump to url', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'], 'call SpaceVim#mapping#close_current_buffer()', 'kill-this-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
+                \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
+                \ 'kill-this-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', '<C-d>'], 'call SpaceVim#mapping#clearBuffers()', 'kill-other-buffers', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'e'], 'call call('
+                \ . string(s:_function('s:safe_erase_buffer')) . ', [])',
+                \ 'safe-erase-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'h'], 'Startify', 'home', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'm'], 'call call('
+                \ . string(s:_function('s:open_message_buffer')) . ', [])',
+                \ 'open-message-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'P'], 'normal! ggdG"+P', 'copy-clipboard-to-whole-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'R'], 'call call('
+                \ . string(s:_function('s:safe_revert_buffer')) . ', [])',
+                \ 'safe-revert-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'Y'], 'normal! ggVG"+y``', 'copy-whole-buffer-to-clipboard', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'w'], 'setl readonly!', 'read-only-mode', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
+let s:MESSAGE = SpaceVim#api#import('vim#message')
 
 function! s:next_file() abort
     let dir = expand('%:p:h')
@@ -199,4 +219,29 @@ endif
 function! s:jump_to_url() abort
     let g:EasyMotion_re_anywhere = 'http[s]*://'
     call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
+endfunction
+
+function! s:safe_erase_buffer() abort
+    if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
+        normal! ggdG
+    endif
+    redraw!
+endfunction
+
+function! s:open_message_buffer() abort
+    vertical topleft edit __Message_Buffer__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
+    setf message
+    normal! ggdG
+    silent put =execute(':message')
+    normal! G
+    setlocal nomodifiable
+    nnoremap <silent> <buffer> q :silent bd<CR>
+endfunction
+
+function! s:safe_revert_buffer() abort
+    if s:MESSAGE.confirm('Revert buffer form ' . expand('%:p'))
+        edit!
+    endif
+    redraw!
 endfunction
