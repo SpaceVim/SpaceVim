@@ -106,6 +106,11 @@ function! SpaceVim#layers#default#config() abort
                 \ . string(s:_function('s:open_message_buffer')) . ', [])',
                 \ 'open-message-buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'P'], 'normal! ggdG"+P', 'copy-clipboard-to-whole-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'R'], 'call call('
+                \ . string(s:_function('s:safe_revert_buffer')) . ', [])',
+                \ 'safe-revert-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'Y'], 'normal! ggVG"+y``', 'copy-whole-buffer-to-clipboard', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'w'], 'setl readonly!', 'read-only-mode', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
@@ -219,9 +224,8 @@ endfunction
 function! s:safe_erase_buffer() abort
     if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
         normal! ggdG
-    else
-        redraw!
     endif
+    redraw!
 endfunction
 
 function! s:open_message_buffer() abort
@@ -235,3 +239,9 @@ function! s:open_message_buffer() abort
     nnoremap <silent> <buffer> q :silent bd<CR>
 endfunction
 
+function! s:safe_revert_buffer() abort
+    if s:MESSAGE.confirm('Revert buffer form ' . expand('%:p'))
+        edit!
+    endif
+    redraw!
+endfunction
