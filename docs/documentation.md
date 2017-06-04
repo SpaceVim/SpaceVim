@@ -738,15 +738,14 @@ Key Binding | Description
 `SPC b D` | kill a visible buffer using vim-choosewin
 `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)
 `SPC b C-d` | kill other buffers
-SPC b C-D	kill buffers using a regular expression
-SPC b e	erase the content of the buffer (ask for confirmation)
-SPC b h	open *spacemacs* home buffer
-SPC b n	switch to next buffer avoiding special buffers
-SPC b m	open *Messages* buffer
-SPC u SPC b m	kill all buffers and windows except the current one
-SPC b M	kill all buffers matching the regexp
-SPC b p	switch to previous buffer avoiding special buffers
-SPC b P	copy clipboard and replace buffer (useful when pasting from a browser)
+`SPC b C-D` | kill buffers using a regular expression(TODO)
+`SPC b e` | erase the content of the buffer (ask for confirmation)
+`SPC b h` | open *SpaceVim* home buffer
+`SPC b n` | switch to next buffer avoiding special buffers
+`SPC b m` | open *Messages* buffer
+`SPC u SPC b m` | kill all buffers and windows except the current one(TODO)
+`SPC b p` | switch to previous buffer avoiding special buffers
+`SPC b P` | copy clipboard and replace buffer (useful when pasting from a browser)
 SPC b R	revert the current buffer (reload from disk)
 SPC b s	switch to the *scratch* buffer (create it if needed)
 SPC b w	toggle read-only (writable state)

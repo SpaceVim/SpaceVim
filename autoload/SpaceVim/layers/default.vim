@@ -98,9 +98,18 @@ function! SpaceVim#layers#default#config() abort
                 \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
                 \ 'kill-this-buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', '<C-d>'], 'call SpaceVim#mapping#clearBuffers()', 'kill-other-buffers', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'e'], 'call call('
+                \ . string(s:_function('s:safe_erase_buffer')) . ', [])',
+                \ 'safe-erase-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'h'], 'Startify', 'home', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'm'], 'call call('
+                \ . string(s:_function('s:open_message_buffer')) . ', [])',
+                \ 'open-message-buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'P'], 'normal! ggdG"+P', 'copy-clipboard-to-whole-buffer', 1)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
+let s:MESSAGE = SpaceVim#api#import('vim#message')
 
 function! s:next_file() abort
     let dir = expand('%:p:h')
@@ -206,3 +215,23 @@ function! s:jump_to_url() abort
     let g:EasyMotion_re_anywhere = 'http[s]*://'
     call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
 endfunction
+
+function! s:safe_erase_buffer() abort
+    if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
+        normal! ggdG
+    else
+        redraw!
+    endif
+endfunction
+
+function! s:open_message_buffer() abort
+    vertical topleft edit __Message_Buffer__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
+    setf message
+    normal! ggdG
+    silent put =execute(':message')
+    normal! G
+    setlocal nomodifiable
+    nnoremap <silent> <buffer> q :silent bd<CR>
+endfunction
+

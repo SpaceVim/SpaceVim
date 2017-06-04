@@ -10,18 +10,10 @@
 " @section vim#message, api-vim-message
 " @parentsection api
 
-function! SpaceVim#api#vim#compatible#get() abort
-  return map({
-        \ 'echo' : '',
-        \ 'echomsg': '',
-        \ 'error': '',
-        \ 'warn': '',
-        \ },
-        \ "function('s:' . v:key)"
-        \ )
-endfunction
 
-function! s:echo(hl, msg) abort
+let s:self = {}
+
+function! s:self.echo(hl, msg) abort
   execute 'echohl' a:hl
   try
     echo a:msg
@@ -30,7 +22,7 @@ function! s:echo(hl, msg) abort
   endtry
 endfunction
 
-function! s:echomsg(hl, msg) abort
+function! s:self.echomsg(hl, msg) abort
   execute 'echohl' a:hl
   try
     for m in split(a:msg, "\n")
@@ -41,10 +33,27 @@ function! s:echomsg(hl, msg) abort
   endtry
 endfunction
 
-function! s:error(msg) abort
-  call s:echomsg('ErrorMsg', a:msg)
+function! s:self.error(msg) abort
+  call self.echomsg('ErrorMsg', a:msg)
 endfunction
 
-function! s:warn(msg) abort
-  call s:echomsg('WarningMsg', a:msg)
+function! s:self.warn(msg) abort
+  call self.echomsg('WarningMsg', a:msg)
+endfunction
+
+function! s:self.confirm(msg) abort
+    echohl WarningMsg
+    echon a:msg . '? (y or n) '
+    echohl NONE
+    let rst = nr2char(getchar())
+    if rst =~? 'y' || rst == nr2char(13)
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+
+function! SpaceVim#api#vim#message#get() abort
+    return deepcopy(s:self)
 endfunction
