@@ -61,11 +61,8 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
     nnoremap <silent> [SPC]bp :bp<CR>
-    nnoremap <silent> [SPC]bN :bN<CR>
     let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bp', 'bp')
-    let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
-    call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
