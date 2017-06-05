@@ -57,6 +57,7 @@ title:  "Documentation"
             * [Window manipulation key bindings](#window-manipulation-key-bindings)
         * [Buffers and Files](#buffers-and-files)
             * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+            * [Create a new empty buffer](#create-a-new-empty-buffer)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -751,6 +752,16 @@ Key Binding | Description
 `SPC b w` | toggle read-only (writable state)
 `SPC b Y` | copy whole buffer to clipboard (useful when copying to a browser)
 `z f` | Make current function or comments visible in buffer as much as possible (TODO)
+
+##### Create a new empty buffer
+
+Key Binding | Description
+----------- | -----------
+`SPC b N h` | create new empty buffer in a new window on the left
+`SPC b N j` | create new empty buffer in a new window at the bottom
+`SPC b N k` | create new empty buffer in a new window above
+`SPC b N l` | create new empty buffer in a new window below
+`SPC b N n` | create new empty buffer in current window
 
 ### Auto-saving
 
