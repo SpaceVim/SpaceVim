@@ -58,6 +58,8 @@ title:  "Documentation"
         * [Buffers and Files](#buffers-and-files)
             * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
             * [Create a new empty buffer](#create-a-new-empty-buffer)
+            * [Special Buffers](#special-buffers)
+            * [Files manipulations key bindings](#files-manipulations-key-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -762,6 +764,14 @@ Key Binding | Description
 `SPC b N k` | create new empty buffer in a new window above
 `SPC b N l` | create new empty buffer in a new window below
 `SPC b N n` | create new empty buffer in current window
+
+##### Special Buffers
+
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+
+##### Files manipulations key bindings
+
+Files manipulation commands (start with f):
 
 ### Auto-saving
 
