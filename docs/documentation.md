@@ -773,6 +773,25 @@ In SpaceVim, there are many special buffers, these buffers are created by plugin
 
 Files manipulation commands (start with f):
 
+Key Binding | Description
+----------- | -----------
+`SPC f b` | go to file bookmarks
+`SPC f c` | copy current file to a different location(TODO)
+`SPC f C d` | convert file from unix to dos encoding
+`SPC f C u` | convert file from dos to unix encoding
+`SPC f D` | delete a file and the associated buffer (ask for confirmation)
+`SPC f E` | open a file with elevated privileges (sudo edit)(TODO)
+`SPC f f` | open file
+`SPC f F` | try to open the file under point
+`SPC f o` | open a file using the default external program(TODO)
+`SPC f R` | rename the current file(TODO)
+`SPC f s` | save a file
+`SPC f S` | save all files
+`SPC f r` | open a recent file
+`SPC f t` | toggle file tree side bar
+`SPC f T` | show file tree side bar
+`SPC f y` | show and copy current file absolute path in the cmdline
+
 ### Auto-saving
 
 ### Searching

@@ -112,7 +112,7 @@ fu! zvim#util#CopyToClipboard(...) abort
     else
         try
             let @+=expand('%:p')
-            echo 'Copied to clipboard'
+            echo 'Copied to clipboard ' . @+
         catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
                 echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
