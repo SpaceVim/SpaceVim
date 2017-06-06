@@ -129,15 +129,17 @@ function! SpaceVim#mapping#gd() abort
 endfunction
 
 function! SpaceVim#mapping#clearBuffers() abort
-  let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val)')
-  for i in blisted
-    if i != bufnr('%')
-      try 
-        exe 'bw ' . i
-      catch
-      endtry
-    endif
-  endfor
+  if confirm('Kill all other buffers?', "&Yes\n&No\n&Cancel") == 1
+    let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    for i in blisted
+      if i != bufnr('%')
+        try 
+          exe 'bw ' . i
+        catch
+        endtry
+      endif
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#mapping#split_previous_buffer() abort
@@ -207,6 +209,18 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
       endif
     endif
   endif
+endfunction
+
+function! SpaceVim#mapping#kill_visible_buffer_choosewin() abort
+  ChooseWin
+  let nr = bufnr('%')
+  for i in range(1, winnr('$'))
+    if winbufnr(i) == nr
+      exe i .  'wincmd w'
+      enew
+    endif
+  endfor
+  exe 'bwipeout ' . nr
 endfunction
 
 function! SpaceVim#mapping#menu(desc, key, cmd) abort

@@ -55,15 +55,14 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#space#def('nnoremap', ['w', '='], 'wincmd =', 'balance-windows', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'], 'wincmd w', 'cycle and focus between windows', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'], 'ChooseWin', 'select window', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
     nnoremap <silent> [SPC]bn :bnext<CR>
     let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
     call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
     nnoremap <silent> [SPC]bp :bp<CR>
-    nnoremap <silent> [SPC]bN :bN<CR>
     let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
     call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bp', 'bp')
-    let g:_spacevim_mappings_space.b.N = ['bN', 'previous buffer']
-    call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bN', 'bp')
     let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
     let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>

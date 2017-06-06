@@ -57,6 +57,9 @@ title:  "Documentation"
             * [Window manipulation key bindings](#window-manipulation-key-bindings)
         * [Buffers and Files](#buffers-and-files)
             * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+            * [Create a new empty buffer](#create-a-new-empty-buffer)
+            * [Special Buffers](#special-buffers)
+            * [Files manipulations key bindings](#files-manipulations-key-bindings)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -650,9 +653,9 @@ Key Binding | Description
 `SPC j k` | jump to next line and indent it using auto-indent rules
 `SPC j l` | jump to a line with avy (easymotion)
 `SPC j q` | show the dumb-jump quick look tooltip (TODO)
-`SPC j u` | jump to a URL in the current buffer (TODO)
+`SPC j u` | jump to a URL in the current window
 `SPC j v` | jump to the definition/declaration of an Emacs Lisp variable (TODO)
-`SPC j w` | jump to a word in the current buffer (easymotion)(TODO)
+`SPC j w` | jump to a word in the current buffer (easymotion)
 
 ##### Joining and splitting
 
@@ -728,6 +731,47 @@ Key Binding | Description
 ##### Buffers manipulation key bindings
 
 Buffer manipulation commands (start with `b`):
+
+Key Binding | Description
+----------- | -----------
+`SPC TAB` | switch to alternate buffer in the current window (switch back and forth)
+`SPC b b` | switch to a buffer (via denite/unite)
+`SPC b d` | kill the current buffer (does not delete the visited file)
+`SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)
+`SPC b D` | kill a visible buffer using vim-choosewin
+`SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)
+`SPC b C-d` | kill other buffers
+`SPC b C-D` | kill buffers using a regular expression(TODO)
+`SPC b e` | erase the content of the buffer (ask for confirmation)
+`SPC b h` | open *SpaceVim* home buffer
+`SPC b n` | switch to next buffer avoiding special buffers
+`SPC b m` | open *Messages* buffer
+`SPC u SPC b m` | kill all buffers and windows except the current one(TODO)
+`SPC b p` | switch to previous buffer avoiding special buffers
+`SPC b P` | copy clipboard and replace buffer (useful when pasting from a browser)
+`SPC b R` | revert the current buffer (reload from disk)
+`SPC b s` | switch to the *scratch* buffer (create it if needed)
+`SPC b w` | toggle read-only (writable state)
+`SPC b Y` | copy whole buffer to clipboard (useful when copying to a browser)
+`z f` | Make current function or comments visible in buffer as much as possible (TODO)
+
+##### Create a new empty buffer
+
+Key Binding | Description
+----------- | -----------
+`SPC b N h` | create new empty buffer in a new window on the left
+`SPC b N j` | create new empty buffer in a new window at the bottom
+`SPC b N k` | create new empty buffer in a new window above
+`SPC b N l` | create new empty buffer in a new window below
+`SPC b N n` | create new empty buffer in current window
+
+##### Special Buffers
+
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+
+##### Files manipulations key bindings
+
+Files manipulation commands (start with f):
 
 ### Auto-saving
 
@@ -810,9 +854,9 @@ Key           | Description
 ### c/c++ support
 
 1. code completion: autocompletion and fuzzy match.
-![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
 2. syntax check: Asynchronous linting and make framework.
-![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
 ### go support
 

@@ -67,7 +67,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             elseif g:spacevim_buffer_index_type == 4
                 let id = i
             else
-                let id = s:messletters.bubble_num(i, g:spacevim_buffer_index_type)
+                let id = s:messletters.circled_num(i, g:spacevim_buffer_index_type)
             endif
             if g:spacevim_enable_tabline_filetype_icon
                 let icon = s:file.fticon(name)
@@ -112,7 +112,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             elseif g:spacevim_buffer_index_type == 4
                 let id = index(s:buffers, i) + 1
             else
-                let id = s:messletters.bubble_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+                let id = s:messletters.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
             endif
             if g:spacevim_enable_tabline_filetype_icon
                 let icon = s:file.fticon(name)
