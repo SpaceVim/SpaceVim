@@ -60,6 +60,7 @@ title:  "Documentation"
             * [Create a new empty buffer](#create-a-new-empty-buffer)
             * [Special Buffers](#special-buffers)
             * [Files manipulations key bindings](#files-manipulations-key-bindings)
+            * [Vim and SpaceVim files](#vim-and-spacevim-files)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -791,6 +792,17 @@ Key Binding | Description
 `SPC f t` | toggle file tree side bar
 `SPC f T` | show file tree side bar
 `SPC f y` | show and copy current file absolute path in the cmdline
+
+
+##### Vim and SpaceVim files
+
+Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
+
+Key Binding | Description
+----------- | -----------
+`SPC f v v` | display and copy SpaceVim version
+`SPC f v d` | open SpaceVim custom configuration file
+
 
 ### Auto-saving
 
