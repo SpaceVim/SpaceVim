@@ -32,7 +32,7 @@ function! zvim#enter() abort
 endfunction
 
 function! zvim#format() abort
-  let save_cursor = getcurpos()
+  let save_cursor = getpos('.')
   normal! gg=G
   call setpos('.', save_cursor)
 endfunction
