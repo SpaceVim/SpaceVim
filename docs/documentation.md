@@ -61,6 +61,9 @@ title:  "Documentation"
             * [Special Buffers](#special-buffers)
             * [Files manipulations key bindings](#files-manipulations-key-bindings)
             * [Vim and SpaceVim files](#vim-and-spacevim-files)
+        * [File tree](#file-tree)
+            * [File tree navigation](#file-tree-navigation)
+                * [Plugin: VimFiler](#plugin-vimfiler)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -97,7 +100,6 @@ title:  "Documentation"
             * [Window Management](#window-management)
             * [Native functions](#native-functions)
             * [Plugin: Unite](#plugin-unite)
-            * [Plugin: VimFiler](#plugin-vimfiler)
             * [Plugin: neocomplete](#plugin-neocomplete)
             * [Plugin: NERD Commenter](#plugin-nerd-commenter)
             * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
@@ -803,6 +805,42 @@ Key Binding | Description
 `SPC f v v` | display and copy SpaceVim version
 `SPC f v d` | open SpaceVim custom configuration file
 
+#### File tree
+
+SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree.
+
+VCS integration is supported, there will be a colum status, this feature maybe make vimfiler slow, so it is not enabled by default. to enable this feature, add `let g:spacevim_enable_vimfiler_gitstatus = 1` to your custom config. here is any picture for this feature:
+
+![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+
+##### File tree navigation
+
+Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
+
+###### Plugin: VimFiler
+
+Key Binding | Description
+-----------| -----------
+`<F3>` or `SPC f t` | Toggle file explorer
+| **Within _VimFiler_ buffers** | |
+`h` or `RET`        | go to parent node and collapse expanded directory
+`<Down>` or `j`     | select next file or directory
+`<Up>` or `k`       | select previous file or directory
+`l`                 | open selected file
+`Ctrl`+`j`          | Un-map
+`Ctrl`+`l`          | Un-map
+`E`                 | Un-map
+`sv`                | Split edit
+`sg`                | Vertical split edit
+`p`                 | Preview
+`i`                 | Switch to directory history
+`v`                 | Quick look
+`gx`                | Execute with vimfiler associated
+`'`                 | Toggle mark current line
+`V`                 | Clear all marks
+`Ctrl`+`r`          | Redraw
+
+
 
 ### Auto-saving
 
@@ -1212,24 +1250,6 @@ Key   | Mode | Action
 `<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
 `<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
 
-##### Plugin: VimFiler
-
-Key   | Mode | Action
------ |:----:| ------------------
-`<F3>` | Normal | Toggle file explorer
-| **Within _VimFiler_ buffers** |||
-`Ctrl`+`j` | Normal | Un-map
-`Ctrl`+`l` | Normal | Un-map
-`E` | Normal | Un-map
-`sv` | Normal | Split edit
-`sg` | Normal | Vertical split edit
-`p` | Normal | Preview
-`i` | Normal | Switch to directory history
-`v` | Normal | Quick look
-`gx` | Normal | Execute with vimfiler associated
-`'` | Normal | Toggle mark current line
-`V` | Normal | Clear all marks
-`Ctrl`+`r` | Normal | Redraw
 
 ##### Plugin: neocomplete
 
