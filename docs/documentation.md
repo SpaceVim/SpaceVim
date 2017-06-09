@@ -63,7 +63,7 @@ title:  "Documentation"
             * [Vim and SpaceVim files](#vim-and-spacevim-files)
         * [File tree](#file-tree)
             * [File tree navigation](#file-tree-navigation)
-                * [Plugin: VimFiler](#plugin-vimfiler)
+            * [Open file with file tree.](#open-file-with-file-tree)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -807,7 +807,12 @@ Key Binding | Description
 
 #### File tree
 
-SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree.
+SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
+
+```vim
+" the default value is vimfiler
+let g:spacevim_filemanager = 'nerdtree'
+```
 
 VCS integration is supported, there will be a colum status, this feature maybe make vimfiler slow, so it is not enabled by default. to enable this feature, add `let g:spacevim_enable_vimfiler_gitstatus = 1` to your custom config. here is any picture for this feature:
 
@@ -817,7 +822,6 @@ VCS integration is supported, there will be a colum status, this feature maybe m
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-###### Plugin: VimFiler
 
 Key Binding | Description
 -----------| -----------
@@ -826,7 +830,7 @@ Key Binding | Description
 `h` or `RET`        | go to parent node and collapse expanded directory
 `<Down>` or `j`     | select next file or directory
 `<Up>` or `k`       | select previous file or directory
-`l`                 | open selected file
+`l`                 | open selected file or expand directory
 `Ctrl`+`j`          | Un-map
 `Ctrl`+`l`          | Un-map
 `E`                 | Un-map
@@ -840,7 +844,9 @@ Key Binding | Description
 `V`                 | Clear all marks
 `Ctrl`+`r`          | Redraw
 
+##### Open file with file tree.
 
+By default a file is opened in the last active window, 
 
 ### Auto-saving
 

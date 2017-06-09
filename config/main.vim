@@ -12,6 +12,8 @@ function! s:parser_argv() abort
         else
             return [1, getcwd()]
         endif
+    elseif argv(0) ==# '.'
+        return [1, getcwd()]
     elseif isdirectory(expand(argv(0)))
         return [1, expand(argv(0)) ]
     else
@@ -20,7 +22,7 @@ function! s:parser_argv() abort
 endfunction
 let s:status = s:parser_argv()
 if s:status[0]
-    exe 'cd ' . s:status[1]
+    let g:_spacevim_enter_dir = s:status[1]
     augroup SPwelcom
         au!
         autocmd VimEnter * call SpaceVim#welcome()
