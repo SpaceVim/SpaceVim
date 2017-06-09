@@ -187,7 +187,7 @@ endfunction
 
 function! zvim#util#OpenVimfiler() abort
     if bufnr('vimfiler') == -1
-        VimFiler
+        silent VimFiler
         if exists(':AirlineRefresh')
             AirlineRefresh
         endif
@@ -198,7 +198,7 @@ function! zvim#util#OpenVimfiler() abort
         endif
         wincmd p
     else
-        VimFiler
+        silent VimFiler
         doautocmd WinEnter
         if exists(':AirlineRefresh')
             AirlineRefresh

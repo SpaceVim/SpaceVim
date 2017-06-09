@@ -827,13 +827,14 @@ Key Binding | Description
 -----------| -----------
 `<F3>` or `SPC f t` | Toggle file explorer
 | **Within _VimFiler_ buffers** | |
-`h` or `RET`        | go to parent node and collapse expanded directory
+`<Left>` or `h`     | go to parent node and collapse expanded directory
 `<Down>` or `j`     | select next file or directory
 `<Up>` or `k`       | select previous file or directory
-`l`                 | open selected file or expand directory
+`<Right>` or `l`    | open selected file or expand directory
 `Ctrl`+`j`          | Un-map
 `Ctrl`+`l`          | Un-map
 `E`                 | Un-map
+`.`                 | toggle visible ignored files
 `sv`                | Split edit
 `sg`                | Vertical split edit
 `p`                 | Preview
@@ -846,7 +847,13 @@ Key Binding | Description
 
 ##### Open file with file tree.
 
-By default a file is opened in the last active window, 
+If there is only one file buffer opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
+
+Key Binding | Description
+-----------| -----------
+`l` or `Enter` | open file in one window
+`sg` | open file in an vertically split window
+`sv` | open file in an horizontally split window
 
 ### Auto-saving
 
