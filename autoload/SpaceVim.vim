@@ -529,6 +529,7 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
+  exe 'cd ' . g:_spacevim_enter_dir
   if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
   endif
