@@ -64,6 +64,7 @@ title:  "Documentation"
         * [File tree](#file-tree)
             * [File tree navigation](#file-tree-navigation)
             * [Open file with file tree.](#open-file-with-file-tree)
+    * [Commands starting with `g`](#commands-starting-with-g)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -854,6 +855,20 @@ Key Binding | Description
 `l` or `Enter` | open file in one window
 `sg` | open file in an vertically split window
 `sv` | open file in an horizontally split window
+
+### Commands starting with `g`
+
+after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
+
+Key Binding | Description
+-----------| -----------
+`gd` | go to definition
+`g=` | format current buffer
+`g#` | search unbounded word backward
+`g*` | search unbounded word forward
+`g&` | repeat last `:s` on all lines
+``g``` | like `````, but without changing the jumplist
+`g'` | like `'`, but without changing the jumplist
 
 ### Auto-saving
 

@@ -6,5 +6,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap g<c-g> g<c-g>
     let g:_spacevim_mappings_g['&'] = ['call feedkeys("g&", "n")', 'repeat last ":s" on all lines']
     nnoremap g& g&
+    let g:_spacevim_mappings_g['#'] = ['call feedkeys("\<Plug>(incsearch-nohl-g#)")', 'search under cursor']
+    let g:_spacevim_mappings_g['$'] = ['call feedkeys("g$", "n")', 'go to rightmost character']
+
 
 endfunction
