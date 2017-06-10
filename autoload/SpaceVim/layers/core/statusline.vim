@@ -183,6 +183,12 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     elseif &filetype ==# 'SpaceVimTabsManager'
         return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+    elseif &filetype ==# 'denite'
+        return '%#SpaceVim_statusline_a#%{denite#get_status_mode()}%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()}%#SpaceVim_statusline_b_SpaceVim_statusline_z#'
+                    \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#'
+                    \ . '%#SpaceVim_statusline_c#%{denite#get_status_path() . denite#get_status_linenr()}'
+
     endif
     if a:0 > 0
         return s:active()
