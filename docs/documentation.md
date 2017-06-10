@@ -867,7 +867,7 @@ Key Binding | Description
 `g#` | search unbounded word backward
 `g*` | search unbounded word forward
 `g&` | repeat last `:s` on all lines
-``g``` | like `````, but without changing the jumplist
+`` g` `` | like `` ` ``, but without changing the jumplist
 `g'` | like `'`, but without changing the jumplist
 
 ### Auto-saving
