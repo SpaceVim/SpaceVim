@@ -568,6 +568,10 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')
+
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ 'g',
+      \ 'g:_spacevim_mappings_g')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
