@@ -869,6 +869,8 @@ Key Binding | Description
 `g&` | repeat last `:s` on all lines
 `` g` `` | like `` ` ``, but without changing the jumplist
 `g'` | like `'`, but without changing the jumplist
+`ge` | go backwards to the end of the previous word
+`g+` | go to newer text state
 
 ### Auto-saving
 
