@@ -871,6 +871,16 @@ Key Binding | Description
 `g'` | like `'`, but without changing the jumplist
 `ge` | go backwards to the end of the previous word
 `g+` | go to newer text state
+`g<` | last page of previous command output
+`gf` | edit file under cursor
+`gF` | edit file under cursor with linenr
+`gj` | move cursor down screen line
+`gk` | move cursor up screen line
+`gu` | Make `motion` text lowercase
+`gU` | Make `motion` text uppercase
+
+
+<!--gf gF ga gj gk gT gu gU g<c-f> g<-->
 
 ### Auto-saving
 
