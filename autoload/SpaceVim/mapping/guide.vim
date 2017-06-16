@@ -365,8 +365,12 @@ function! s:wait_for_input() " {{{
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
       let s:prefix_key_inp = inp
+      call s:handle_input(fsel)
+    else
+      let s:prefix_key_inp = ''
+      call s:winclose()
+      doautocmd WinEnter
     endif
-    call s:handle_input(fsel)
   endif
 endfunction " }}}
 function! s:winopen() " {{{
@@ -467,9 +471,9 @@ function! s:handle_submode_mapping(cmd) " {{{
   elseif a:cmd ==? '<LGCMD>win_close'
     call s:winclose()
   else
-  call feedkeys("\<c-c>", "n")
-  redraw!
-  call s:wait_for_input()
+    call feedkeys("\<c-c>", "n")
+    redraw!
+    call s:wait_for_input()
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
