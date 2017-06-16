@@ -63,6 +63,13 @@ function! s:battery_status() abort
     endif
 endfunction
 
+function! s:check_mode() abort
+    if mode() =~ 'n'
+    elseif mode() =~ 'i'
+    elseif mode() =~ 'v'
+    endif
+endfunction
+
 function! s:search_status() abort
     let ct = 0
     let tt = 0
@@ -255,6 +262,8 @@ function! SpaceVim#layers#core#statusline#init() abort
     augroup END
 endfunction
 
+let s:colors_template = SpaceVim#mapping#guide#theme#gruvbox#palette()
+
 function! SpaceVim#layers#core#statusline#def_colors() abort
     let name = get(g:, 'colors_name', 'gruvbox')
     try
@@ -262,6 +271,7 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     catch /^Vim\%((\a\+)\)\=:E117/
         let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
     endtry
+    let s:colors_template = t
     exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
     exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
     exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
