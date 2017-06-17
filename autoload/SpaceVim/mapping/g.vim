@@ -6,6 +6,17 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap g<c-g> g<c-g>
     let g:_spacevim_mappings_g['&'] = ['call feedkeys("g&", "n")', 'repeat last ":s" on all lines']
     nnoremap g& g&
+
+    let g:_spacevim_mappings_g["'"] = ['call feedkeys("g' . "'" . '", "n")', 'jump to mark']
+    nnoremap g' g'
+    let g:_spacevim_mappings_g["`"] = ['call feedkeys("g' . "`" . '", "n")', 'jump to mark']
+    nnoremap g` g`
+
+    let g:_spacevim_mappings_g['+'] = ['call feedkeys("g+", "n")', 'newer text state']
+    nnoremap g+ g+
+    let g:_spacevim_mappings_g['-'] = ['call feedkeys("g-", "n")', 'older text state']
+    nnoremap g- g-
+
     let g:_spacevim_mappings_g['#'] = ['call feedkeys("\<Plug>(incsearch-nohl-g#)")', 'search under cursor backward']
     let g:_spacevim_mappings_g['*'] = ['call feedkeys("\<Plug>(incsearch-nohl-g*)")', 'search under cursor forward']
     let g:_spacevim_mappings_g['/'] = ['call feedkeys("\<Plug>(incsearch-stay)")', 'stay incsearch']
