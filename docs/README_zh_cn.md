@@ -174,4 +174,12 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 #### Vim 8 新特新之旅
 
+<ul>
+    {% for post in site.categories.tutorials_cn %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
+
 
