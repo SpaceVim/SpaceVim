@@ -15,7 +15,15 @@ Vim 的定时器是指在指定时间后重复指定次数执行某个命令，�
 
 `timer_start({毫秒}, {回调函数｝[,{选项}])`
 
-Vim 中这个方法将创建一个计时器，并且返回这个定时器的 ID, 这个 ID 可以被以下方法使用：
+Vim 中这个方法将创建一个计时器，并且返回这个定时器的 ID。 回调函数接受一个参数，可以是字符串，表示方法具体名称，也可以是 `Funcref` 变量。 下面是一个示例：
+
+```vim
+func MyHandler(id)
+  echo 'This is handler called for timer-' . a:id
+endfunc
+let timer = timer_start(500, 'MyHandler',
+  \ {'repeat': 3})
+```
 
 #### 获取定时器信息
 
