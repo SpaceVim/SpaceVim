@@ -291,6 +291,8 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[denite]'
   elseif a:key == ' '
     return '[SPC]'
+  elseif a:key == 'g'
+    return '[g]'
   else
     return '<leader>'
   endif

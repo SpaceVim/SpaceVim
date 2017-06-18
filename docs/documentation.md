@@ -64,6 +64,7 @@ title:  "Documentation"
         * [File tree](#file-tree)
             * [File tree navigation](#file-tree-navigation)
             * [Open file with file tree.](#open-file-with-file-tree)
+    * [Commands starting with `g`](#commands-starting-with-g)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -854,6 +855,59 @@ Key Binding | Description
 `l` or `Enter` | open file in one window
 `sg` | open file in an vertically split window
 `sv` | open file in an horizontally split window
+
+### Commands starting with `g`
+
+after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
+
+Key Binding | Description
+-----------| -----------
+`g#` | search under cursor backward
+`g$` | go to rightmost character
+`g&` | repeat last ":s" on all lines
+`g'` | jump to mark
+`g*` | search under cursor forward
+`g+` | newer text state
+`g,` | newer position in change list
+`g-` | older text state
+`g/` | stay incsearch
+`g0` | go to leftmost character
+`g;` | older position in change list
+`g<` | last page of previous command output
+`g<Home>` | go to leftmost character
+`gE` | end of previous word
+`gF` | edit file under cursor(jump to line after name)
+`gH` | select line mode
+`gI` | insert text in column 1
+`gJ` | join lines without space
+`gN` | visually select previous match
+`gQ` | switch to Ex mode
+`gR` | enter VREPLACE mode
+`gT` | previous tag page
+`gU` | make motion text uppercase
+`g]` | tselect cursor tag
+`g^` | go to leftmost no-white character
+`g_` | go to last char
+`` g` `` | jump to mark
+`ga` | print ascii value of cursor character
+`gd` | goto definition
+`ge` | go to end of previous word
+`gf` | edit file under cursor
+`gg` | go to line N
+`gh` | select mode
+`gi` | insert text after '^ mark
+`gj` | move cursor down screen line
+`gk` | move cursor up screen line
+`gm` | go to middle of screenline
+`gn` | visually select next match
+`go` | goto byte N in the buffer
+`gs` | sleep N seconds
+`gt` | next tag page
+`gu` | make motion text lowercase
+`g~` | swap case for Nmove text
+`g<End>` | go to rightmost character
+`g<C-G>` | show cursor info
+
 
 ### Auto-saving
 

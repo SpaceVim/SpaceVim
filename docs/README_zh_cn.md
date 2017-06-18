@@ -168,3 +168,18 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 `g:spacevim_guifont` | '' | 设置SpaceVim字体
 `g:spacevim_sidebar_width` | 30 | 设置边栏宽度，文件树以及语法树
 `g:spacevim_custom_plugins` | `[]` | 设置自定义插件
+
+
+### 延伸阅读
+
+#### Vim 8 新特新之旅
+
+<ul>
+    {% for post in site.categories.tutorials_cn %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
+
+
