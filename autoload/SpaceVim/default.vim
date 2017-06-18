@@ -301,8 +301,6 @@ function! SpaceVim#default#SetMappings() abort
   call SpaceVim#mapping#def('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
         \ 'Smart close windows',
         \ 'call zvim#util#SmartClose()')
-  call SpaceVim#mapping#def('nnoremap <silent>', 'gf', ':call zvim#gf()<CR>', 'Jump to a file under cursor', '')
-  call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
 endfunction
 
 fu! s:tobur(num) abort
