@@ -862,25 +862,52 @@ after pressing prefix `g` in normal mode, if you do not remember the mappings, y
 
 Key Binding | Description
 -----------| -----------
-`gd` | go to definition
-`g=` | format current buffer
-`g#` | search unbounded word backward
-`g*` | search unbounded word forward
-`g&` | repeat last `:s` on all lines
-`` g` `` | like `` ` ``, but without changing the jumplist
-`g'` | like `'`, but without changing the jumplist
-`ge` | go backwards to the end of the previous word
-`g+` | go to newer text state
+`g#` | search under cursor backward
+`g$` | go to rightmost character
+`g&` | repeat last ":s" on all lines
+`g'` | jump to mark
+`g*` | search under cursor forward
+`g+` | newer text state
+`g,` | newer position in change list
+`g-` | older text state
+`g/` | stay incsearch
+`g0` | go to leftmost character
+`g;` | older position in change list
 `g<` | last page of previous command output
+`g<Home>` | go to leftmost character
+`gE` | end of previous word
+`gF` | edit file under cursor(jump to line after name)
+`gH` | select line mode
+`gI` | insert text in column 1
+`gJ` | join lines without space
+`gN` | visually select previous match
+`gQ` | switch to Ex mode
+`gR` | enter VREPLACE mode
+`gT` | previous tag page
+`gU` | make motion text uppercase
+`g]` | tselect cursor tag
+`g^` | go to leftmost no-white character
+`g_` | go to last char
+`` g` `` | jump to mark
+`ga` | print ascii value of cursor character
+`gd` | goto definition
+`ge` | go to end of previous word
 `gf` | edit file under cursor
-`gF` | edit file under cursor with linenr
+`gg` | go to line N
+`gh` | select mode
+`gi` | insert text after '^ mark
 `gj` | move cursor down screen line
 `gk` | move cursor up screen line
-`gu` | Make `motion` text lowercase
-`gU` | Make `motion` text uppercase
+`gm` | go to middle of screenline
+`gn` | visually select next match
+`go` | goto byte N in the buffer
+`gs` | sleep N seconds
+`gt` | next tag page
+`gu` | make motion text lowercase
+`g~` | swap case for Nmove text
+`g<End>` | go to rightmost character
+`g<C-G>` | show cursor info
 
-
-<!--gf gF ga gj gk gT gu gU g<c-f> g<-->
 
 ### Auto-saving
 
