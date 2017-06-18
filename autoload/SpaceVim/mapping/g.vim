@@ -16,6 +16,10 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap g+ g+
     let g:_spacevim_mappings_g['-'] = ['call feedkeys("g-", "n")', 'older text state']
     nnoremap g- g-
+    let g:_spacevim_mappings_g[','] = ['call feedkeys("g,", "n")', 'newer position in change list']
+    nnoremap g, g,
+    let g:_spacevim_mappings_g[';'] = ['call feedkeys("g;", "n")', 'older position in change list']
+    nnoremap g; g;
 
     let g:_spacevim_mappings_g['#'] = ['call feedkeys("\<Plug>(incsearch-nohl-g#)")', 'search under cursor backward']
     let g:_spacevim_mappings_g['*'] = ['call feedkeys("\<Plug>(incsearch-nohl-g*)")', 'search under cursor forward']
@@ -40,10 +44,28 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap gk gk
     let g:_spacevim_mappings_g['u'] = ['call feedkeys("gu", "n")', 'make motion text lowercase']
     nnoremap gu gu
+    let g:_spacevim_mappings_g['E'] = ['call feedkeys("gE", "n")', 'end of previous word']
+    nnoremap gE gE
     let g:_spacevim_mappings_g['U'] = ['call feedkeys("gU", "n")', 'make motion text uppercase']
     nnoremap gU gU
     let g:_spacevim_mappings_g['H'] = ['call feedkeys("gH", "n")', 'select line mode']
     nnoremap gH gH
+    let g:_spacevim_mappings_g['I'] = ['call feedkeys("gI", "n")', 'insert text in column 1']
+    nnoremap gI gI
+    let g:_spacevim_mappings_g['J'] = ['call feedkeys("gJ", "n")', 'join lines without space']
+    nnoremap gJ gJ
+    let g:_spacevim_mappings_g['N'] = ['call feedkeys("gN", "n")', 'visually select previous match']
+    nnoremap gN gN
+    let g:_spacevim_mappings_g['Q'] = ['call feedkeys("gQ", "n")', 'switch to Ex mode']
+    nnoremap gQ gQ
+    let g:_spacevim_mappings_g['R'] = ['call feedkeys("gR", "n")', 'enter VREPLACE mode']
+    nnoremap gR gR
+    let g:_spacevim_mappings_g['T'] = ['call feedkeys("gT", "n")', 'previous tag page']
+    nnoremap gT gT
+    let g:_spacevim_mappings_g[']'] = ['call feedkeys("g]", "n")', 'tselect cursor tag']
+    nnoremap g] g]
+
+
 
     let g:_spacevim_mappings_g['d'] = ['call SpaceVim#mapping#gd()', 'goto definition']
     call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
