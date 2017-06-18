@@ -368,9 +368,10 @@ Reminder of the color codes for the states:
 
 Mode | Color
 --- |  ---
-Normal | Orange
-Insert | Green
-Visual | Grey
+Normal | Grey
+Insert | Blus
+Visual | Orange
+Replace | Aqua
 
 all the colors based on the current colorscheme
 
