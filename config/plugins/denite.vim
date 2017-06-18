@@ -12,6 +12,7 @@ let s:denite_options = {
       \ 'highlight_matched_char' : 'MoreMsg',
       \ 'highlight_matched_range' : 'MoreMsg',
       \ 'direction': 'rightbelow',
+      \ 'statusline' : 0,
       \ 'prompt' : '➭',
       \ }}
 
