@@ -64,9 +64,14 @@ function! s:battery_status() abort
 endfunction
 
 function! s:check_mode() abort
-    if mode() =~ 'n'
-    elseif mode() =~ 'i'
+    if mode() == 'n'
+        return 'n'
+    elseif mode() =='i'
+        return 'i'
     elseif mode() =~ 'v'
+        return 'v'
+    elseif mode() =~ 'R'
+        return 'R'
     endif
 endfunction
 
@@ -115,7 +120,7 @@ else
 endif
 
 function! s:winnr() abort
-    return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
 endfunction
 
 function! s:filename() abort
@@ -262,7 +267,8 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
     augroup SpaceVim_statusline
         autocmd!
-        autocmd BufWinEnter,WinEnter,FileType * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+        autocmd BufWinEnter,WinEnter,FileType,InsertEnter,InsertLeave
+                    \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
         autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
         autocmd ColorScheme * call SpaceVim#layers#core#statusline#def_colors()
     augroup END
@@ -338,4 +344,19 @@ function! SpaceVim#layers#core#statusline#jump(i) abort
     if winnr('$') >= a:i
         exe a:i . 'wincmd w'
     endif
+endfunction
+
+function! SpaceVim#layers#core#statusline#mode(mode)
+    let t = s:colors_template
+    if a:mode == 'n'
+        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+    elseif a:mode == 'i'
+        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+    elseif a:mode == 'R'
+        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
+    elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
+        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
+    endif
+    call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
+    return ''
 endfunction
