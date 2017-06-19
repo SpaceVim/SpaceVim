@@ -119,8 +119,12 @@ else
     endfunction
 endif
 
-function! s:winnr() abort
-    return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+function! s:winnr(...) abort
+    if a:0 > 1
+        return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    else
+        return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
 endfunction
 
 function! s:filename() abort
@@ -179,21 +183,21 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
     if &filetype ==# 'vimfiler'
-        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+        return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'tagbar'
-        return '%#SpaceVim_statusline_a# ' . s:winnr() . ' %#SpaceVim_statusline_a_b#'
+        return '%#SpaceVim_statusline_ia# ' . s:winnr(1) . ' %#SpaceVim_statusline_a_b#'
                     \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
     elseif &filetype ==# 'startify'
         call fugitive#detect(getcwd())
     elseif &filetype ==# 'SpaceVimLayerManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'SpaceVimPlugManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'SpaceVimTabsManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr() . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'denite'
         return '%#SpaceVim_statusline_a# %{split(denite#get_status_mode())[1]} %#SpaceVim_statusline_a_SpaceVim_statusline_b# '
@@ -337,7 +341,7 @@ function! SpaceVim#layers#core#statusline#config() abort
     function! TagbarStatusline(...) abort
         let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
         return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep,
-                    \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+                    \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
     endfunction
     let g:tagbar_status_func = 'TagbarStatusline'
 endfunction
