@@ -23,7 +23,7 @@ endfunction
 let s:status = s:parser_argv()
 if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
-    augroup SPwelcom
+    augroup SPwelcome
         au!
         autocmd VimEnter * call SpaceVim#welcome()
     augroup END
