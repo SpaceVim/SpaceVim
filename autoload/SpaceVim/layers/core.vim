@@ -2,7 +2,7 @@ function! SpaceVim#layers#core#plugins() abort
     return [
                 \ ['Shougo/vimproc.vim', {'build' : 'make'}],
                 \ ['benizi/vim-automkdir'],
-                \ ['airblade/vim-rooter'],
+                \ ['airblade/vim-rooter', {'on_cmd' : 'Rooter'}],
                 \ ]
 endfunction
 

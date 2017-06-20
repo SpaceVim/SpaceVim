@@ -117,6 +117,12 @@ function! SpaceVim#plugins#manager#install(...) abort
         let &maxfuncdepth = 2000
     endif
     let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
+    if empty(s:plugins)
+        echohl WarningMsg
+        echom '[SpaceVim] Wrong plugin name, or all of the plugins are already installed.'
+        echohl None
+        return
+    endif
     let status = s:new_window()
     if status == 0
         echohl WarningMsg
@@ -125,11 +131,6 @@ function! SpaceVim#plugins#manager#install(...) abort
         return
     elseif status == 1
         " resume window
-        return
-    elseif empty(s:plugins)
-        echohl WarningMsg
-        echom '[SpaceVim] Wrong plugin name, or all of the plugins are already installed.'
-        echohl None
         return
     endif
     let s:pct = 0
