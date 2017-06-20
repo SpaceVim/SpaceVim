@@ -2,20 +2,49 @@ scriptencoding utf-8
 function! SpaceVim#default#SetOptions() abort
   " basic vim settiing
   if has('gui_running')
+    augroup spacevim_gui_font
+      " check and determine the gui font after GUIEnter.
+      " NOTE: getfontname function only works after GUIEnter.
+      au!
+      au GUIEnter * call s:set_gui_font()
+    augroup END
     set guioptions-=m " Hide menu bar.
     set guioptions-=T " Hide toolbar
     set guioptions-=L " Hide left-hand scrollbar
     set guioptions-=r " Hide right-hand scrollbar
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
-    if WINDOWS()
-      " please install the font in 'Dotfiles\font'
-      set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif OSX()
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-    else
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
-    endif
+    " set guifont
+    function! s:set_gui_font()
+      if has('gui_gtk2')
+        if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
+          set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+        elseif getfontname( 'DejaVu Sans Mono' ) != ''
+          set guifont=DejaVu\ Sans\ Mono\ 11
+        else
+          set guifont=Luxi\ Mono\ 11
+        endif
+      elseif has('x11')
+        " Also for GTK 1
+        set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
+      elseif OSX()
+        if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
+          set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+        elseif getfontname( 'DejaVu Sans Mono' ) != ''
+          set guifont=DejaVu\ Sans\ Mono:h11
+        endif
+      elseif WINDOWS()
+        if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
+          set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11:cANSI
+        elseif getfontname( 'DejaVu Sans Mono' ) != ''
+          set guifont=DejaVu\ Sans\ Mono:h11:cANSI
+        elseif getfontname( 'Consolas' ) != ''
+          set guifont=Consolas:h11:cANSI " this is the default visual studio font
+        else
+          set guifont=Lucida_Console:h11:cANSI
+        endif
+      endif
+    endfunction
   endif
 
   " indent use backspace delete indent, eol use backspace delete line at
