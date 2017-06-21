@@ -8,6 +8,7 @@ function! SpaceVim#default#SetOptions() abort
     set guioptions-=r " Hide right-hand scrollbar
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
+    set guioptions-=e " Hide tab
     if WINDOWS()
       " please install the font in 'Dotfiles\font'
       set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
