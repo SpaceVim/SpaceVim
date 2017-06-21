@@ -354,15 +354,18 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#mode(mode)
     let t = s:colors_template
-    if a:mode == 'n'
-        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-    elseif a:mode == 'i'
-        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
-    elseif a:mode == 'R'
-        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
-    elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
-        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
+    if get(w:, 'spacevim_statusline_mode', '') != a:mode
+        if a:mode == 'n'
+            exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+        elseif a:mode == 'i'
+            exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+        elseif a:mode == 'R'
+            exe 'hi! SpaceVim_statusline_a ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
+        elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
+            exe 'hi! SpaceVim_statusline_a ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
+        endif
+        call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
+        let w:spacevim_statusline_mode = a:mode
     endif
-    call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
     return ''
 endfunction
