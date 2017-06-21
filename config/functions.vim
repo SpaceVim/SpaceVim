@@ -189,7 +189,14 @@ fu! UpdateStarredRepos()
         call SpaceVim#logger#warn('You need to set g:spacevim_github_username')
         return 0
     endif
-    let repos = github#api#users#GetStarred(g:spacevim_github_username)
+    let cache_file = expand('~/.data/github' . g:spacevim_github_username)
+    if filereadable(cache_file)
+        let repos = json_encode(readfile(cache_file, '')[0])
+    else
+        let repos = github#api#users#GetStarred(g:spacevim_github_username)
+        echom writefile([json_decode(repos)], cache_file, '')
+    endif
+
     for repo in repos
         let description = repo.full_name . repeat(' ', 40 - len(repo.full_name)) . repo.description
         let cmd = 'OpenBrowser ' . repo.html_url
