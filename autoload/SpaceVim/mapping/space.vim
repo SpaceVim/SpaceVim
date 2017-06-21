@@ -19,6 +19,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
     let g:_spacevim_mappings_space.h = {'name' : '+Help'}
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+    let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
     " Windows
     for i in range(1, 9)
         exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#statusline#jump(" . i . ")', 'window " . i . "', 1)"

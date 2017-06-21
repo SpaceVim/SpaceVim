@@ -67,6 +67,7 @@ title:  "Documentation"
     * [Commands starting with `g`](#commands-starting-with-g)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
+        * [With an external tool](#with-an-external-tool)
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
@@ -913,6 +914,46 @@ Key Binding | Description
 ### Auto-saving
 
 ### Searching
+
+#### With an external tool
+
+SpaceVim can be interfaced with different searching tools like:
+
+- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+- [ack](https://beyondgrep.com/)
+- grep
+
+The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
+
+If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
+
+If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+
+The tool keys are:
+Tool | Key
+-----------| -----------
+ag | a
+grep | g
+ack | k
+rg | r
+pt | t
+
+The available scopes and corresponding keys are:
+
+Scope | Key
+-----------| -----------
+opened buffers | b
+files in a given directory | f
+current project | p
+
+It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
+
+Notes:
+
+- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
+- It is also possible to search in several directories at once by marking them in the unite buffer (not available in Ivy).
 
 ### Editing
 
