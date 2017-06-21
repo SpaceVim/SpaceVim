@@ -135,6 +135,17 @@ let g:spacevim_enable_neocomplcache    = 0
 let g:spacevim_enable_cursorline       = 1
 ""
 " Set the statusline separators of statusline, default is 'arrow'
+" >
+"   Separatos options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
 let g:spacevim_statusline_separator = 'arrow'
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be

@@ -167,6 +167,17 @@ normal mode.To disable this feature:
 
                                              *g:spacevim_statusline_separator*
 Set the statusline separators of statusline, default is 'arrow'
+>
+  Separatos options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
 
                                               *g:spacevim_enable_cursorcolumn*
 Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
