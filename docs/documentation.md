@@ -70,6 +70,7 @@ title:  "Documentation"
         * [With an external tool](#with-an-external-tool)
         * [Useful key bindings](#useful-key-bindings)
         * [Searching in current file](#searching-in-current-file)
+        * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
@@ -979,6 +980,23 @@ Key Binding	Description
 `SPC s g G` | grep with default input
 `SPC s r r` | rg
 `SPC s r R` | rg with default input
+
+#### Searching in all loaded buffers
+
+Key Binding	Description
+-----------| -----------
+`SPC s b` | search with the first found tool
+`SPC s B` | search with the first found tool with default input
+`SPC s a b` | ag
+`SPC s a B` | ag with default input
+`SPC s g b` | grep
+`SPC s g B` | grep with default input
+`SPC s k b` | ack
+`SPC s k B` | ack with default input
+`SPC s r b` | rg
+`SPC s r B` | rg with default input
+`SPC s t b` | pt
+`SPC s t B` | pt with default input
 
 ### Editing
 

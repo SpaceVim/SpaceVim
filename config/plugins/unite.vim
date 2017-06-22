@@ -306,6 +306,7 @@ augroup unite_buffer_feature
 augroup END
 function! s:unite_my_settings()
   " Overwrite settings.
+  setlocal nowrap
 
   " Play nice with supertab
   let b:SuperTabDisabled=1
