@@ -108,7 +108,7 @@ function! s:fixindentline() abort
 endfunction
 function! s:generate_doc() abort
   if filereadable('./addon-info.json') && executable('vimdoc')
-    call system('vimdoc .')
+    call SpaceVim#api#import('job').start(['vimdoc', '.'])
   endif
 endfunction
 
