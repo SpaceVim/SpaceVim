@@ -200,7 +200,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
         return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
                     \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     elseif &filetype ==# 'denite'
-        return '%#SpaceVim_statusline_a# %{split(denite#get_status_mode())[1]} %#SpaceVim_statusline_a_SpaceVim_statusline_b# '
+        return '%#SpaceVim_statusline_a_bold# %{SpaceVim#layers#core#statusline#denite_mode()} '
+                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b# '
                     \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_z# '
                     \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#'
                     \ . '%#SpaceVim_statusline_c# %{denite#get_status_path() . denite#get_status_linenr()}'
@@ -289,6 +290,7 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     endtry
     let s:colors_template = t
     exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+    exe 'hi! SpaceVim_statusline_a_bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
     exe 'hi! SpaceVim_statusline_ia ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
     exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
     exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
@@ -296,6 +298,7 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
     hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
     hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
     call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
+    call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
     call s:HI.hi_separator('SpaceVim_statusline_ia', 'SpaceVim_statusline_b')
     call s:HI.hi_separator('SpaceVim_statusline_b', 'SpaceVim_statusline_c')
     call s:HI.hi_separator('SpaceVim_statusline_b', 'SpaceVim_statusline_z')
@@ -368,4 +371,19 @@ function! SpaceVim#layers#core#statusline#mode(mode)
         let w:spacevim_statusline_mode = a:mode
     endif
     return ''
+endfunction
+
+function! SpaceVim#layers#core#statusline#denite_mode()
+    let t = s:colors_template
+    let dmode = split(denite#get_status_mode())[1]
+    if get(w:, 'spacevim_statusline_mode', '') != dmode
+        if dmode == 'NORMAL'
+            exe 'hi! SpaceVim_statusline_a_bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+        elseif dmode == 'INSERT'
+            exe 'hi! SpaceVim_statusline_a_bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+        endif
+        call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
+        let w:spacevim_statusline_mode = dmode
+    endif
+    return dmode
 endfunction
