@@ -20,6 +20,7 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.h = {'name' : '+Help'}
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
+    let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
     " Windows
     for i in range(1, 9)
         exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#statusline#jump(" . i . ")', 'window " . i . "', 1)"
@@ -71,6 +72,7 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
     call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
+    call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort

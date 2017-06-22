@@ -68,6 +68,8 @@ title:  "Documentation"
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
         * [With an external tool](#with-an-external-tool)
+        * [Useful key bindings](#useful-key-bindings)
+        * [Searching in current file](#searching-in-current-file)
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
@@ -953,7 +955,30 @@ It is possible to search in the current file by double pressing the second key o
 Notes:
 
 - `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
-- It is also possible to search in several directories at once by marking them in the unite buffer (not available in Ivy).
+- It is also possible to search in several directories at once by marking them in the unite buffer.
+
+**Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
+
+#### Useful key bindings
+
+Key Binding | Description
+-----------| -----------
+`SPC r l` | resume the last completion buffer
+`` SPC s ` `` | go back to the previous place before jump
+Prefix argument | will ask for file extensions
+
+#### Searching in current file
+
+Key Binding	Description
+-----------| -----------
+`SPC s s` | search with the first found tool
+`SPC s S` | search with the first found tool with default input
+`SPC s a a` | ag
+`SPC s a A` | ag with default input
+`SPC s g g` | grep
+`SPC s g G` | grep with default input
+`SPC s r r` | rg
+`SPC s r R` | rg with default input
 
 ### Editing
 
