@@ -6,6 +6,25 @@ let s:search_tools.a.default_opts =
             \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
 let s:search_tools.a.recursive_opt = ''
 
+let s:search_tools.t = {}
+let s:search_tools.t.command = 'pt'
+let s:search_tools.t.default_opts = '--nogroup --nocolor'
+let s:search_tools.t.recursive_opt = ''
+
+let s:search_tools.r = {}
+let s:search_tools.r.command = 'rg'
+let s:search_tools.r.default_opts = '--hidden --no-heading --vimgrep -S'
+let s:search_tools.r.recursive_opt = ''
+
+let s:search_tools.k = {}
+let s:search_tools.k.command = 'ack'
+let s:search_tools.k.default_opts = '-i --no-heading --no-color -k -H'
+let s:search_tools.k.recursive_opt = ''
+
+let s:search_tools.g = {}
+let s:search_tools.g.command = 'grep'
+let s:search_tools.g.default_opts = '-inH'
+let s:search_tools.g.recursive_opt = ''
 
 function! SpaceVim#mapping#search#grep(key, scope)
     let save_cmd = g:unite_source_grep_command
