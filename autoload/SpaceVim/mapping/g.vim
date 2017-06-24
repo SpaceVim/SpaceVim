@@ -90,6 +90,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap go go
     let g:_spacevim_mappings_g.s = ['call feedkeys("gs", "n")', 'sleep N seconds']
     nnoremap gs gs
+    let g:_spacevim_mappings_g['v'] = ['call feedkeys("gv", "n")', 'reselect the previous Visual area']
+    nnoremap gv gv
 
 
 

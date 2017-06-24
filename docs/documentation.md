@@ -67,6 +67,14 @@ title:  "Documentation"
     * [Commands starting with `g`](#commands-starting-with-g)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
+        * [With an external tool](#with-an-external-tool)
+            * [Useful key bindings](#useful-key-bindings)
+            * [Searching in current file](#searching-in-current-file)
+            * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
+            * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
+            * [Searching in a project](#searching-in-a-project)
+            * [Searching the web](#searching-the-web)
+        * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
@@ -913,6 +921,135 @@ Key Binding | Description
 ### Auto-saving
 
 ### Searching
+
+#### With an external tool
+
+SpaceVim can be interfaced with different searching tools like:
+
+- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+- [ack](https://beyondgrep.com/)
+- grep
+
+The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
+
+If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
+
+If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+
+The tool keys are:
+
+Tool | Key
+-----------| -----------
+ag | a
+grep | g
+ack | k
+rg | r
+pt | t
+
+The available scopes and corresponding keys are:
+
+Scope | Key
+-----------| -----------
+opened buffers | b
+files in a given directory | f
+current project | p
+
+It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
+
+Notes:
+
+- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
+- It is also possible to search in several directories at once by marking them in the unite buffer.
+
+**Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
+
+##### Useful key bindings
+
+Key Binding | Description
+-----------| -----------
+`SPC r l` | resume the last completion buffer
+`` SPC s ` `` | go back to the previous place before jump
+Prefix argument | will ask for file extensions
+
+##### Searching in current file
+
+Key Binding | Description
+-----------| -----------
+`SPC s s` | search with the first found tool
+`SPC s S` | search with the first found tool with default input
+`SPC s a a` | ag
+`SPC s a A` | ag with default input
+`SPC s g g` | grep
+`SPC s g G` | grep with default input
+`SPC s r r` | rg
+`SPC s r R` | rg with default input
+
+##### Searching in all loaded buffers
+
+Key Binding | Description
+-----------| -----------
+`SPC s b` | search with the first found tool
+`SPC s B` | search with the first found tool with default input
+`SPC s a b` | ag
+`SPC s a B` | ag with default input
+`SPC s g b` | grep
+`SPC s g B` | grep with default input
+`SPC s k b` | ack
+`SPC s k B` | ack with default input
+`SPC s r b` | rg
+`SPC s r B` | rg with default input
+`SPC s t b` | pt
+`SPC s t B` | pt with default input
+
+##### Searching in an arbitrary directory
+
+Key Binding | Description
+-----------| -----------
+`SPC s f` | search with the first found tool
+`SPC s F` | search with the first found tool with default input
+`SPC s a f` | ag
+`SPC s a F` | ag with default text
+`SPC s g f` | grep
+`SPC s g F` | grep with default text
+`SPC s k f` | ack
+`SPC s k F` | ack with default text
+`SPC s r f` | rg
+`SPC s r F` | rg with default text
+`SPC s t f` | pt
+`SPC s t F` | pt with default text
+
+##### Searching in a project
+
+Key Binding | Description
+-----------| -----------
+`SPC /` or `SPC s p` | search with the first found tool
+`SPC *` or `SPC s P` | search with the first found tool with default input
+`SPC s a p` | ag
+`SPC s a P` | ag with default text
+`SPC s g p` | grep with default text
+`SPC s k p` | ack
+`SPC s k P` | ack with default text
+`SPC s t p` | pt
+`SPC s t P` | pt with default text
+`SPC s r p` | rg
+`SPC s r P` | rg with default text
+
+**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+
+##### Searching the web
+
+Key Binding	Description
+-----------| -----------
+`SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.
+`SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO)
+
+**Note**: to enable google suggestions in vim, you need to add `let g:spacevim_enable_googlesuggest = 1` to your custom Configuration file.
+
+#### Persistent highlighting
+
+SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
 ### Editing
 

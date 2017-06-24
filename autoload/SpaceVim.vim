@@ -315,6 +315,7 @@ let g:spacevim_enable_powerline_fonts  = 1
 "   let g:spacevim_lint_on_save = 0
 " <
 let g:spacevim_lint_on_save            = 1
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep']
 ""
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 " >
