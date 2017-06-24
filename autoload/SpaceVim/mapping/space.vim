@@ -154,7 +154,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'F'], 'call SpaceVim#mapping#search#grep("t", "F")',
         \ 'search cursor word in arbitrary directory  with pt', 1)
 
-
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
+        \ 'clear search highlight', 1)
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
