@@ -65,6 +65,7 @@ title:  "Documentation"
             * [File tree navigation](#file-tree-navigation)
             * [Open file with file tree.](#open-file-with-file-tree)
     * [Commands starting with `g`](#commands-starting-with-g)
+    * [Commands starting with `z`](#commands-starting-with-z)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
         * [With an external tool](#with-an-external-tool)
@@ -917,6 +918,13 @@ Key Binding | Description
 `g<End>` | go to rightmost character
 `g<C-G>` | show cursor info
 
+### Commands starting with `z`
+
+after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `z`.
+
+Key Binding | Description
+-----------| -----------
+`z<Cr>` | redraw, cursor line to top
 
 ### Auto-saving
 
