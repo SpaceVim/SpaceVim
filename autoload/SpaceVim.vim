@@ -573,7 +573,7 @@ endfunction
 "   plugin. It is hard to manage with a plugin manager.
 "
 "   Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
-"   it should be `~/.SpaceVim/init.vim`.
+"   it should be `~/.SpaceVim.d/init.vim`.
 "
 "   Step 2: Get into the directory of YouCompleteMe's author. By default it
 "   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
