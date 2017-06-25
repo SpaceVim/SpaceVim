@@ -44,6 +44,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   if g:spacevim_autocomplete_method ==# 'ycm'
     call add(plugins, ['ervandew/supertab',                 { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
+    call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
           \ 'on_event' : 'InsertEnter',
