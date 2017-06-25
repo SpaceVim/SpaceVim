@@ -251,8 +251,8 @@ call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
       \   'keep_focus'   : 1,
       \   'winheight'    : 20,
       \ })
-call unite#custom#source('file_rec/async', 'ignore_globs',
-      \ ['*.png','.git/','*.ttf'])
+call unite#custom#source('file_rec/async,file_rec/neovim', 'ignore_globs',
+      \ ['*.png','.git/','*.ttf', '*.eot', '*.woff', '*.svg'])
 nnoremap <silent><leader>uf  :<C-u>Unite
       \ -no-split -buffer-name=files -start-insert file<cr>
 nnoremap <silent><leader>ufm :<C-u>Unite
