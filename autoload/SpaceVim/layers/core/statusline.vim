@@ -205,7 +205,11 @@ function! SpaceVim#layers#core#statusline#get(...) abort
                     \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_z# '
                     \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#'
                     \ . '%#SpaceVim_statusline_c# %{denite#get_status_path() . denite#get_status_linenr()}'
-
+    elseif &filetype ==# 'unite'
+        return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
+                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b# %{get(unite#get_context(), "buffer_name", "")} '
+                    \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c# '
+                    \ . '%#SpaceVim_statusline_c# %{unite#get_status_string()} '
     endif
     if a:0 > 0
         return s:active()
@@ -347,6 +351,7 @@ function! SpaceVim#layers#core#statusline#config() abort
                     \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
     endfunction
     let g:tagbar_status_func = 'TagbarStatusline'
+    let g:unite_force_overwrite_statusline = 0
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
@@ -386,4 +391,19 @@ function! SpaceVim#layers#core#statusline#denite_mode()
         let w:spacevim_statusline_mode = dmode
     endif
     return dmode
+endfunction
+
+function! SpaceVim#layers#core#statusline#unite_mode()
+    let t = s:colors_template
+    let dmode = mode()
+    if get(w:, 'spacevim_statusline_mode', '') != dmode
+        if dmode == 'NORMAL'
+            exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+        elseif dmode == 'INSERT'
+            exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+        endif
+        call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
+        let w:spacevim_statusline_mode = dmode
+    endif
+    return ''
 endfunction
