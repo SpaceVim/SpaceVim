@@ -397,9 +397,9 @@ function! SpaceVim#layers#core#statusline#unite_mode()
     let t = s:colors_template
     let dmode = mode()
     if get(w:, 'spacevim_statusline_mode', '') != dmode
-        if dmode == 'NORMAL'
+        if dmode == 'n'
             exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-        elseif dmode == 'INSERT'
+        elseif dmode == 'i'
             exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
         endif
         call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
