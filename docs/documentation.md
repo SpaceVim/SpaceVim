@@ -924,7 +924,12 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 
 Key Binding | Description
 -----------| -----------
-`z<Cr>` | redraw, cursor line to top
+`zA` | toggle folds recursively
+`zC` | close folds recursively
+`zD` | delete folds recursively
+`zE` | eliminate all folds
+`zF` | create a fold for N lines
+`zG` | mark good spelled
 
 ### Auto-saving
 
