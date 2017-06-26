@@ -83,7 +83,7 @@ this guide show you all the available key bindings begin with `[SPC]`, you can t
 
 here is the guide for the default mappings in SpaceVim:
 
-![spc](https://user-images.githubusercontent.com/13142418/27545241-f0d696e2-5ac1-11e7-9187-127c03dd35ae.png)
+![spc](https://user-images.githubusercontent.com/13142418/27549426-8141bd86-5ace-11e7-9082-eb86b398acdc.png)
 
 ### Unite work flow
 
