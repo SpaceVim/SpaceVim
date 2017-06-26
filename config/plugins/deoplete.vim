@@ -39,7 +39,10 @@ let g:deoplete#omni#input_patterns.perl = get(g:deoplete#omni#input_patterns, 'p
       \])
 
 " javascript
-let g:deoplete#omni#input_patterns.javascript = get(g:deoplete#omni#input_patterns, 'javascript', ['[^. \t0-9]\.\w*'])
+"let g:deoplete#omni#input_patterns.javascript = get(g:deoplete#omni#input_patterns, 'javascript', ['[^. \t0-9]\.\w*'])
+let g:deoplete#ignore_sources.javascript = get(g:deoplete#ignore_sources, 'javascript', ['omni'])
+call deoplete#custom#set('ternjs', 'mark', 'tern')
+call deoplete#custom#set('ternjs', 'rank', 9999)
 
 " php
 let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'php', [
