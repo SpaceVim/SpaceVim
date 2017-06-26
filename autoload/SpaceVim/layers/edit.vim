@@ -8,7 +8,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['kana/vim-textobj-indent'],
                 \ ['kana/vim-textobj-line'],
                 \ ['kana/vim-textobj-entire'],
-                \ ['scrooloose/nerdcommenter'],
+                \ ['scrooloose/nerdcommenter', { 'loadconf' : 1}],
                 \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],
                 \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
                 \ ['easymotion/vim-easymotion'],

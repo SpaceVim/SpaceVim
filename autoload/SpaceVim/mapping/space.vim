@@ -13,6 +13,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
   let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
   let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
+  let g:_spacevim_mappings_space.c = {'name' : '+Comments'}
   let g:_spacevim_mappings_space.f = {'name' : '+Files'}
   let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
   let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
@@ -65,6 +66,16 @@ function! SpaceVim#mapping#space#init() abort
   nnoremap <silent> [SPC]bp :bp<CR>
   let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
   call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bp', 'bp')
+
+  "
+  " Comments sections
+  "
+  " Toggles the comment state of the selected line(s). If the topmost selected
+  " line is commented, all selected lines are uncommented and vice versa.
+  let g:_spacevim_mappings_space.c.c = ['cl', 'Toggle commment line(s)']
+  call SpaceVim#mapping#menu('Toggle comment line(s)', '[SPC]cl', '')
+  nnoremap <silent> [SPC]cl  :call NERDComment("n", "Toggle")<CR>
+
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
   nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
