@@ -81,6 +81,7 @@ title:  "Documentation"
     * [Errors handling](#errors-handling)
 * [Achievements](#achievements)
     * [issues](#issues)
+    * [Stars, forks and watchers](#stars-forks-and-watchers)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -1156,6 +1157,12 @@ Symbol | Description | Custom option
 Achievements | Account
 ----- | -----
 [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+
+### Stars, forks and watchers
+
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/)monkeydterry
 
 <!-- SpaceVim Achievements end -->
 

@@ -1,7 +1,8 @@
 function! s:generate_content() abort
-  let content = ['## Achievements', '']
-  let content += s:issues_ac()
-  return content
+    let content = ['## Achievements', '']
+    let content += s:issues_ac()
+    let content += s:stargazers_ac()
+    return content
 endfunction
 
 function! s:find_position() abort
@@ -35,10 +36,31 @@ function! s:issues_ac() abort
     return line
 endfunction
 
+function! s:stargazers_ac() abort
+    let line = ['### Stars, forks and watchers']
+    call add(line, '')
+    call add(line, 'Achievements | Account')
+    call add(line, '----- | -----')
+    let stc = [1, 100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    for id in stc
+        if id == 1
+            let user = github#api#activity#List_stargazers('SpaceVim','SpaceVim')[0]
+            call add(line, 'First stargazers | [' . user.login  . '](https://github.com/)' . user.login)
+        else
+        endif
+    endfor
+    if line[-1] != ''
+        let line += ['']
+    endif
+    return line
+endfunction
+
 function! SpaceVim#dev#Achievements#update()
     let [start, end] = s:find_position()
     if start != 0 && end != 0
-        exe (start + 1) . ',' . (end - 1) . 'delete'
+        if end - start > 1
+            exe (start + 1) . ',' . (end - 1) . 'delete'
+        endif
         call append(start, s:generate_content())
     endif
 endfunction
