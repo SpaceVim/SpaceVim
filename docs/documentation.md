@@ -1146,6 +1146,10 @@ Symbol | Description | Custom option
 `✖` | Error | `g:spacevim_error_symbol`
 `➤` | warning | `g:spacevim_warning_symbol`
 
+<!-- SpaceVim Achievements -->
+
+<!-- SpaceVim Achievements -->
+
 ## Features
 
 ### Awesome ui
