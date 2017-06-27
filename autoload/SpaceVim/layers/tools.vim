@@ -71,7 +71,7 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-l>', 'n') ==# ''
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
   endif
-  map <unique> <Leader>td <Plug>TaskList
+  map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
   function! OpenOrCloseNERDTree() abort
     exec 'normal! A'
