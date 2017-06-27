@@ -75,6 +75,9 @@ Change the default indentation of SpaceVim. Default is 2.
   let g:spacevim_default_indent = 2
 <
 
+                                                   *g:spacevim_relativenumber*
+Enable/Disable relativenumber, by default it is enabled.
+
                                                        *g:spacevim_max_column*
 Change the max number of columns for SpaceVim. Default is 120.
 >

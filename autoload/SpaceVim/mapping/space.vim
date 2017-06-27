@@ -78,9 +78,15 @@ function! SpaceVim#mapping#space#init() abort
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
-  nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
-  let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
-  call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
+  if g:spacevim_relativenumber
+    nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
+    let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
+    call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'set nu!')
+  else
+    nnoremap <silent> [SPC]tn  :<C-u>setlocal number!<CR>
+    let g:_spacevim_mappings_space.t.n = ['setlocal number!', 'toggle line number']
+    call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'setlocal number!')
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)

@@ -36,6 +36,9 @@ lockvar g:spacevim_version
 " <
 let g:spacevim_default_indent          = 2
 ""
+" Enable/Disable relativenumber, by default it is enabled.
+let g:spacevim_relativenumber          = 1
+""
 " Change the max number of columns for SpaceVim. Default is 120.
 " >
 "   let g:spacevim_max_column = 120
@@ -520,6 +523,10 @@ function! SpaceVim#end() abort
 
   if index(g:spacevim_plugin_groups, 'core#statusline') != -1
     call SpaceVim#layers#core#statusline#init()
+  endif
+
+  if !g:spacevim_relativenumber
+    set norelativenumber
   endif
 
   if g:spacevim_realtime_leader_guide
