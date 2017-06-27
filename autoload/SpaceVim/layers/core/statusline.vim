@@ -78,11 +78,11 @@ endfunction
 function! s:search_status() abort
     let ct = 0
     let tt = 0
-    let ctl = split(s:VIMCOMP.execute('.,$s/' . @/ . '//gn', 'silent!'), "\n")
+    let ctl = split(s:VIMCOMP.execute('keeppatterns .,$s/' . @/ . '//gn', 'silent!'), "\n")
     if !empty(ctl)
         let ct = split(ctl[0])[0]
     endif
-    let ttl = split(s:VIMCOMP.execute('%s/' . @/ . '//gn', 'silent!'), "\n")
+    let ttl = split(s:VIMCOMP.execute('keeppatterns %s/' . @/ . '//gn', 'silent!'), "\n")
     if !empty(ctl)
         let tt = split(ttl[0])[0]
     endif
