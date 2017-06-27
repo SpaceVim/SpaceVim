@@ -924,12 +924,49 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 
 Key Binding | Description
 -----------| -----------
+`z<Right>` | scroll screen N characters to left
+`z+` | cursor to screen top line N
+`z-` | cursor to screen bottom line N
+`z.` | cursor line to center
+`z<CR>` | cursor line to top
+`z=` | spelling suggestions
 `zA` | toggle folds recursively
 `zC` | close folds recursively
 `zD` | delete folds recursively
 `zE` | eliminate all folds
 `zF` | create a fold for N lines
-`zG` | mark good spelled
+`zG` | mark good spelled(update internal-wordlist)
+`zH` | scroll half a screenwidth to the right
+`zL` | scroll half a screenwidth to the left
+`zM` | set `foldlevel` to zero
+`zN` | set `foldenable`
+`zO` | open folds recursively
+`zR` | set `foldlevel` to deepest fold
+`zW` | mark wrong spelled
+`zX` | re-apply `foldleve`
+`z^` | cursor to screen bottom line N
+`za` | toggle a fold
+`zb` | redraw, cursor line at bottom
+`zc` | close a fold
+`zd` | delete a fold
+`ze` | right scroll horizontally to cursor position
+`zf` | create a fold for motion
+`zg` | mark good spelled
+`zh` | scroll screen N characters to right
+`zi` | toggle foldenable
+`zj` | mode to start of next fold
+`zk` | mode to end of previous fold
+`zl` | scroll screen N characters to left
+`zm` | subtract one from `foldlevel`
+`zn` | reset `foldenable`
+`zo` | open fold
+`zr` | add one to `foldlevel`
+`zs` | left scroll horizontally to cursor position
+`zt` | cursor line at top of window
+`zv` | open enough folds to view cursor line
+`zx` | re-apply foldlevel and do "zV"
+`zz` | smart scroll
+`z<Left>` | scroll screen N characters to right
 
 ### Auto-saving
 
