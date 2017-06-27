@@ -865,6 +865,7 @@ Key Binding | Description
 `l` or `Enter` | open file in one window
 `sg` | open file in an vertically split window
 `sv` | open file in an horizontally split window
+<<<<<<< HEAD
 
 ### Commands starting with `g`
 
