@@ -35,17 +35,18 @@ CONTENTS                                                   *SpaceVim-contents*
       12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       13. lang#go.....................................|SpaceVim-layer-lang-go|
       14. lang#java.................................|SpaceVim-layer-lang-java|
-      15. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      16. lang#php...................................|SpaceVim-layer-lang-php|
-      17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      18. lang#python.............................|SpaceVim-layer-lang-python|
-      19. lang#rust.................................|SpaceVim-layer-lang-rust|
-      20. lang#scala...............................|SpaceVim-layer-lang-scala|
-      21. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      22. lang#xml...................................|SpaceVim-layer-lang-xml|
-      23. operator...................................|SpaceVim-layer-operator|
-      24. shell.........................................|SpaceVim-layer-shell|
-      25. tmux...........................................|SpaceVim-layer-tmux|
+      15. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      16. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      17. lang#php...................................|SpaceVim-layer-lang-php|
+      18. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      19. lang#python.............................|SpaceVim-layer-lang-python|
+      20. lang#rust.................................|SpaceVim-layer-lang-rust|
+      21. lang#scala...............................|SpaceVim-layer-lang-scala|
+      22. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      23. lang#xml...................................|SpaceVim-layer-lang-xml|
+      24. operator...................................|SpaceVim-layer-operator|
+      25. shell.........................................|SpaceVim-layer-shell|
+      26. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. sid............................................|SpaceVim-api-vim-sid|
@@ -794,6 +795,11 @@ download google's formater jar from:
 https://github.com/google/google-java-format
 
 and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+
+==============================================================================
+LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
+
+This layer is for kotlin development.
 
 ==============================================================================
 LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
