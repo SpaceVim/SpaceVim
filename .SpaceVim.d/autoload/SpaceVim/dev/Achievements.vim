@@ -45,7 +45,7 @@ function! s:stargazers_ac() abort
     for id in stc
         if id == 1
             let user = github#api#activity#List_stargazers('SpaceVim','SpaceVim')[0]
-            call add(line, 'First stargazers | [' . user.login  . '](https://github.com/)' . user.login)
+            call add(line, 'First stargazers | [' . user.login  . '](https://github.com/' . user.login . ')')
         else
         endif
     endfor
