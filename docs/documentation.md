@@ -79,6 +79,8 @@ title:  "Documentation"
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
+* [Achievements](#achievements)
+    * [issues](#issues)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -1147,6 +1149,13 @@ Symbol | Description | Custom option
 `➤` | warning | `g:spacevim_warning_symbol`
 
 <!-- SpaceVim Achievements start -->
+## Achievements
+
+### issues
+
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
 
 <!-- SpaceVim Achievements end -->
 

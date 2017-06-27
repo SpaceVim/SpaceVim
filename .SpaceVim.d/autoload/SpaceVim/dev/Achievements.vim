@@ -1,13 +1,13 @@
 function! s:generate_content() abort
-  let content = []
+  let content = ['## Achievements', '']
   let content += s:issues_ac()
   return content
 endfunction
 
 function! s:find_position() abort
-    let start = search('<!-- SpaceVim Achievements start -->','bwnc')
-    let end = search('<!-- SpaceVim Achievements end -->','bnwc')
-    return [start, end]
+    let start = search('^<!-- SpaceVim Achievements start -->$','bwnc')
+    let end = search('^<!-- SpaceVim Achievements end -->$','bnwc')
+    return sort([start, end])
 endfunction
 
 function! s:issues_ac() abort
@@ -20,11 +20,18 @@ function! s:issues_ac() abort
         let issue = github#api#issues#Get_issue('SpaceVim', 'SpaceVim', id)
         if has_key(issue, 'id')
             let is_pr = has_key(issue, 'pull_request')
-            call add(line, id . 'th issue(' . (is_pr ? 'PR' : 'issue') . ') | ' . issue.user.login)
+            call add(line, '[' . id . 'th issue(' .
+                        \ (is_pr ? 'PR' : 'issue') .
+                        \ ')](https://github.com/SpaceVim/SpaceVim/issues/' . id . ') | [' . issue.user.login
+                        \ . '](https://github.com/' . issue.user.login . ')'
+                        \ )
         else
             break
         endif
     endfor
+    if line[-1] != ''
+        let line += ['']
+    endif
     return line
 endfunction
 
