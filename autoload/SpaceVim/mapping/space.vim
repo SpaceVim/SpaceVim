@@ -72,9 +72,7 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  let g:_spacevim_mappings_space.c.c = ['cl', 'Toggle commment line(s)']
-  call SpaceVim#mapping#menu('Toggle comment line(s)', '[SPC]cl', '')
-  nnoremap <silent> [SPC]cl  :call NERDComment("n", "Toggle")<CR>
+  call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call NERDComment("n", "Toggle")', 'Toggle comment line(s)', 1)
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
