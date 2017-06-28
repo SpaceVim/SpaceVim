@@ -38,4 +38,8 @@ function! SpaceVim#layers#edit#config() abort
     "noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
+    let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+    let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
+    let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], '', 'insert simple password', 1)
 endfunction
