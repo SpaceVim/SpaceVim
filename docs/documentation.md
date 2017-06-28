@@ -1162,7 +1162,11 @@ Achievements | Account
 
 Achievements | Account
 ----- | -----
-First stargazers | [monkeydterry](https://github.com/)monkeydterry
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [naraj](https://github.com/naraj)
+1000th stargazers | [icecity96](https://github.com/icecity96)
+2000th stargazers | [frowhy](https://github.com/frowhy)
+3000th stargazers | [purkylin](https://github.com/purkylin)
 
 <!-- SpaceVim Achievements end -->
 

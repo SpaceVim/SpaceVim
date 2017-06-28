@@ -47,6 +47,18 @@ function! s:stargazers_ac() abort
             let user = github#api#activity#List_stargazers('SpaceVim','SpaceVim')[0]
             call add(line, 'First stargazers | [' . user.login  . '](https://github.com/' . user.login . ')')
         else
+            let index = id % 30
+            if index == 0
+                let page = id/30
+                let index = 30
+            else
+                let page = id/30 + 1
+            endif
+            let users = github#api#activity#List_stargazers('SpaceVim','SpaceVim', page)
+            if type(users) == type([]) && len(users) >= index
+                let user = users[index - 1]
+                call add(line, id . 'th stargazers | [' . user.login  . '](https://github.com/' . user.login . ')')
+            endif
         endif
     endfor
     if line[-1] != ''
