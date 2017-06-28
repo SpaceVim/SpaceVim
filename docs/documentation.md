@@ -1115,6 +1115,62 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 Text related commands (start with `x`):
 
+Key Binding | Description
+---------- | ------------
+`SPC x a &` | align region at &
+`SPC x a (` | align region at (
+`SPC x a )` | align region at )
+`SPC x a [` | align region at [
+`SPC x a ]` | align region at ]
+`SPC x a {` | align region at {
+`SPC x a }` | align region at }
+`SPC x a ,` | align region at ,
+`SPC x a .` | align region at . (for numeric tables)
+`SPC x a :` | align region at :
+`SPC x a ;` | align region at ;
+`SPC x a =` | align region at =
+`SPC x a a` | align region (or guessed section) using default rules
+`SPC x a c` | align current indentation region using default rules
+`SPC x a l` | left-align with evil-lion
+`SPC x a L` | right-align with evil-lion
+`SPC x a r` | align region using user-specified regexp
+`SPC x a m` | align region at arithmetic operators `` (+-*/) ``
+`SPC x a ¦` | align region at ¦
+`SPC x c` | cunt the number of chars/words/lines in the selection region
+`SPC x d w` | delete trailing whitespaces
+`SPC x d SPC` | Delete all spaces and tabs around point, leaving one space
+`SPC x g l` | set languages used by translate commands
+`SPC x g t` | translate current word using Google Translate
+`SPC x g T` | reverse source and target languages
+`SPC x i c` | change symbol style to lowerCamelCase
+`SPC x i C` | change symbol style to UpperCamelCase
+`SPC x i i` | cycle symbol naming styles (i to keep cycling)
+`SPC x i -` | change symbol style to kebab-case
+`SPC x i k` | change symbol style to kebab-case
+`SPC x i _` | change symbol style to under_score
+`SPC x i u` | change symbol style to under_score
+`SPC x i U` | change symbol style to UP_CASE
+`SPC x j c` | set the justification to center
+`SPC x j f` | set the justification to full
+`SPC x j l` | set the justification to left
+`SPC x j n` | set the justification to none
+`SPC x j r` | set the justification to right
+`SPC x J` | move down a line of text (enter transient state)
+`SPC x K` | move up a line of text (enter transient state)
+`SPC x l d` | duplicate line or region
+`SPC x l s` | sort lines
+`SPC x l u` | uniquify lines
+`SPC x o` | use avy to select a link in the frame and open it
+`SPC x O` | use avy to select multiple links in the frame and open them
+`SPC x t c` | swap (transpose) the current character with the previous one
+`SPC x t w` | swap (transpose) the current word with the previous one
+`SPC x t l` | swap (transpose) the current line with the previous one
+`SPC x u` | set the selected text to lower case
+`SPC x U` | set the selected text to upper case
+`SPC x w c` | count the number of occurrences per word in the select region
+`SPC x w d` | show dictionary entry of word from wordnik.com
+`SPC x TAB` | indent or dedent a region rigidly
+
 #### Multi-Encodings
 
 SpaceVim use utf-8 as default encoding. there are four options for these case:
