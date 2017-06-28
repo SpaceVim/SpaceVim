@@ -77,6 +77,9 @@ title:  "Documentation"
             * [Searching the web](#searching-the-web)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
+        * [Paste text](#paste-text)
+            * [Auto-indent pasted text](#auto-indent-pasted-text)
+        * [Text manipulation commands](#text-manipulation-commands)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
 * [Features](#features)
@@ -1103,6 +1106,14 @@ Key Binding	Description
 SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
 ### Editing
+
+#### Paste text
+
+##### Auto-indent pasted text
+
+#### Text manipulation commands
+
+Text related commands (start with `x`):
 
 #### Multi-Encodings
 
