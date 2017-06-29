@@ -41,5 +41,66 @@ function! SpaceVim#layers#edit#config() abort
     let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
     let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
     let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], '', 'insert simple password', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], 'call call('
+                \ . string(s:_function('s:insert_simple_password')) . ', [])',
+                \ 'insert simple password', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 2], 'call call('
+                \ . string(s:_function('s:insert_stronger_password')) . ', [])',
+                \ 'insert stronger password', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 3], 'call call('
+                \ . string(s:_function('s:insert_paranoid_password')) . ', [])',
+                \ 'insert password for paranoids', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'p'], 'call call('
+                \ . string(s:_function('s:insert_phonetically_password')) . ', [])',
+                \ 'insert a phonetically easy password', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
+                \ . string(s:_function('s:insert_numerical_password')) . ', [])',
+                \ 'insert a numerical password', 1)
 endfunction
+
+let s:PASSWORD = SpaceVim#api#import('password')
+function! s:insert_simple_password() abort
+    let save_register = @k
+    let @k = s:PASSWORD.generate_simple(8)
+    normal! "kPl
+    let @k = save_register
+endfunction
+function! s:insert_stronger_password() abort
+    let save_register = @k
+    let @k = s:PASSWORD.generate_strong(12)
+    normal! "kPl
+    let @k = save_register
+endfunction
+function! s:insert_paranoid_password() abort
+    let save_register = @k
+    let @k = s:PASSWORD.generate_paranoid(20)
+    normal! "kPl
+    let @k = save_register
+endfunction
+function! s:insert_numerical_password() abort
+    let save_register = @k
+    let @k = s:PASSWORD.generate_numeric(4)
+    normal! "kPl
+    let @k = save_register
+endfunction
+function! s:insert_phonetically_password() abort
+    let save_register = @k
+    let @k = s:PASSWORD.generate_phonetic(8)
+    normal! "kPl
+    let @k = save_register
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
+else
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
+endif
