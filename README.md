@@ -81,13 +81,17 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
 
+here is the guide for the default mappings in SpaceVim:
+
+![spc](https://user-images.githubusercontent.com/13142418/27549426-8141bd86-5ace-11e7-9082-eb86b398acdc.png)
+
 ### Unite work flow
 
 ![unite](docs/img/unite_mappings.png)
 
 ### module statusline
 
-The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line. and this layer is loaded by default.
 
 - show the window number
 - color code for current state
@@ -210,20 +214,20 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-    make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
 
-    ```sh
-    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-    ```
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
-    for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-    ```bash
-    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-    ```
+```bash
+git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+```
 
 ## Update
 

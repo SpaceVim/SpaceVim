@@ -65,6 +65,7 @@ title:  "Documentation"
             * [File tree navigation](#file-tree-navigation)
             * [Open file with file tree.](#open-file-with-file-tree)
     * [Commands starting with `g`](#commands-starting-with-g)
+    * [Commands starting with `z`](#commands-starting-with-z)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
         * [With an external tool](#with-an-external-tool)
@@ -78,6 +79,9 @@ title:  "Documentation"
     * [Editing](#editing)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
+* [Achievements](#achievements)
+    * [issues](#issues)
+    * [Stars, forks and watchers](#stars-forks-and-watchers)
 * [Features](#features)
     * [Awesome ui](#awesome-ui-1)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
@@ -864,6 +868,7 @@ Key Binding | Description
 `l` or `Enter` | open file in one window
 `sg` | open file in an vertically split window
 `sv` | open file in an horizontally split window
+<<<<<<< HEAD
 
 ### Commands starting with `g`
 
@@ -917,6 +922,55 @@ Key Binding | Description
 `g<End>` | go to rightmost character
 `g<C-G>` | show cursor info
 
+### Commands starting with `z`
+
+after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `z`.
+
+Key Binding | Description
+-----------| -----------
+`z<Right>` | scroll screen N characters to left
+`z+` | cursor to screen top line N
+`z-` | cursor to screen bottom line N
+`z.` | cursor line to center
+`z<CR>` | cursor line to top
+`z=` | spelling suggestions
+`zA` | toggle folds recursively
+`zC` | close folds recursively
+`zD` | delete folds recursively
+`zE` | eliminate all folds
+`zF` | create a fold for N lines
+`zG` | mark good spelled(update internal-wordlist)
+`zH` | scroll half a screenwidth to the right
+`zL` | scroll half a screenwidth to the left
+`zM` | set `foldlevel` to zero
+`zN` | set `foldenable`
+`zO` | open folds recursively
+`zR` | set `foldlevel` to deepest fold
+`zW` | mark wrong spelled
+`zX` | re-apply `foldleve`
+`z^` | cursor to screen bottom line N
+`za` | toggle a fold
+`zb` | redraw, cursor line at bottom
+`zc` | close a fold
+`zd` | delete a fold
+`ze` | right scroll horizontally to cursor position
+`zf` | create a fold for motion
+`zg` | mark good spelled
+`zh` | scroll screen N characters to right
+`zi` | toggle foldenable
+`zj` | mode to start of next fold
+`zk` | mode to end of previous fold
+`zl` | scroll screen N characters to left
+`zm` | subtract one from `foldlevel`
+`zn` | reset `foldenable`
+`zo` | open fold
+`zr` | add one to `foldlevel`
+`zs` | left scroll horizontally to cursor position
+`zt` | cursor line at top of window
+`zv` | open enough folds to view cursor line
+`zx` | re-apply foldlevel and do "zV"
+`zz` | smart scroll
+`z<Left>` | scroll screen N characters to right
 
 ### Auto-saving
 
@@ -1094,6 +1148,27 @@ Symbol | Description | Custom option
 ------ | ----------- | -------------
 `✖` | Error | `g:spacevim_error_symbol`
 `➤` | warning | `g:spacevim_warning_symbol`
+
+<!-- SpaceVim Achievements start -->
+## Achievements
+
+### issues
+
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+
+### Stars, forks and watchers
+
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [naraj](https://github.com/naraj)
+1000th stargazers | [icecity96](https://github.com/icecity96)
+2000th stargazers | [frowhy](https://github.com/frowhy)
+3000th stargazers | [purkylin](https://github.com/purkylin)
+
+<!-- SpaceVim Achievements end -->
 
 ## Features
 

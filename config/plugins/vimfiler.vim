@@ -8,6 +8,7 @@ let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '▷')
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
+let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
 "let g:vimfiler_preview_action = 'auto_preview'
 let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.git$',
@@ -41,7 +42,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'winminwidth' : 30,
       \ 'toggle' : 1,
       \ 'auto_expand': 1,
-      \ 'direction' : 'rightbelow',
+      \ 'direction' : g:vimfiler_direction,
       \ 'explorer_columns' : s:setcolum(),
       \ 'parent': 0,
       \ 'status' : 1,

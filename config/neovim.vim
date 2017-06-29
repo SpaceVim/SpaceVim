@@ -16,7 +16,24 @@ endfunction
 command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
 command! REPLSendLine call REPLSend([getline('.')])
 " }}}
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
+" https://github.com/syngan/vim-vimlint/issues/102
+function! s:has(version) abort
+    return has(a:version)
+endfunction
+if !s:has('nvim-0.2.0')
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
+else
+    if g:spacevim_terminal_cursor_shape == 0
+        " prevent nvim from changing the cursor shape
+        set guicursor=
+    elseif g:spacevim_terminal_cursor_shape == 1
+        " enable non-blinking mode-sensitive cursor
+        set guicursor=a:block-blinkon0
+    elseif g:spacevim_terminal_cursor_shape == 2
+        " enable blinking mode-sensitive cursor
+        set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
+    endif
+endif
 "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
