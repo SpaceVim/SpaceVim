@@ -118,7 +118,7 @@ title:  "Documentation"
       * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
       * [Plugin: ChooseWin](#plugin-choosewin)
       * [Plugin: Bookmarks](#plugin-bookmarks)
-      * [Plugin: Gita](#plugin-gita)
+      * [Plugin: Gina/Gita](#plugin-ginagita)
       * [Plugin: vim-signify](#plugin-vim-signify)
       * [Misc Plugins](#misc-plugins)
 
@@ -1583,7 +1583,7 @@ Key   | Mode | Action
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
-##### Plugin: Gita
+##### Plugin: Gina/Gita
 
 Key   | Mode | Action
 ----- |:----:| ------------------
