@@ -41,6 +41,7 @@ function! SpaceVim#layers#edit#config() abort
     let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
     let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
     let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
+    let g:_spacevim_mappings_space.i.U = {'name' : '+UUID'}
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], 'call call('
                 \ . string(s:_function('s:insert_simple_password')) . ', [])',
                 \ 'insert simple password', 1)
@@ -56,6 +57,10 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
                 \ . string(s:_function('s:insert_numerical_password')) . ', [])',
                 \ 'insert a numerical password', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search and insert unicode', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'U', 'U'], 'call call('
+                \ . string(s:_function('s:uuidgen_U')) . ', [])',
+                \ 'uuidgen-4', 1)
 endfunction
 
 let s:PASSWORD = SpaceVim#api#import('password')
@@ -86,6 +91,14 @@ endfunction
 function! s:insert_phonetically_password() abort
     let save_register = @k
     let @k = s:PASSWORD.generate_phonetic(8)
+    normal! "kPl
+    let @k = save_register
+endfunction
+
+function! s:uuidgen_U() abort
+    let uuid = system('uuidgen')
+    let save_register = @k
+    let @k = uuid
     normal! "kPl
     let @k = save_register
 endfunction
