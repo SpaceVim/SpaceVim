@@ -77,6 +77,7 @@ title:  "Documentation"
             * [Searching the web](#searching-the-web)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
+        * [Text insertion commands](#text-insertion-commands)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
 * [Achievements](#achievements)
@@ -1106,6 +1107,24 @@ Key Binding	Description
 SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
 ### Editing
+
+#### Text insertion commands
+
+Text insertion commands (start with `i`):
+
+Key binding | Description
+`SPC i l l` | insert lorem-ipsum list
+`SPC i l p` | insert lorem-ipsum paragraph
+`SPC i l s` | insert lorem-ipsum sentence
+`SPC i p 1` | insert simple password
+`SPC i p 2` | insert stronger password
+`SPC i p 3` | insert password for paranoids
+`SPC i p p` | insert a phonetically easy password
+`SPC i p n` | insert a numerical password
+`SPC i u` | Search for Unicode characters and insert them into the active buffer.
+`SPC i U 1` | insert UUIDv1 (use universal argument to insert with CID format)
+`SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)
+`SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)
 
 #### Multi-Encodings
 

@@ -63,6 +63,15 @@ endfunction
 
 let s:file['trim_end'] = function('s:trim_end')
 
+function! s:string2chars(str) abort
+  let chars = []
+  for i in range(len(a:str))
+    call add(chars, a:str[i : i])
+  endfor
+  return chars
+endfunction
+let s:file['string2chars'] = function('s:string2chars')
+
 function! SpaceVim#api#data#string#get() abort
   return deepcopy(s:file)
 endfunction
