@@ -72,6 +72,9 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'p'], 'call call('
                 \ . string(s:_function('s:insert_lorem_ipsum_paragraph')) . ', [])',
                 \ 'insert lorem-ipsum paragraph', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
+                \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
+                \ 'insert lorem-ipsum sentence', 1)
 endfunction
 let s:local_lorem_ipsum = [
             \ 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
@@ -154,8 +157,14 @@ function! s:insert_lorem_ipsum_paragraph() abort
     normal! "kgP
     let @k = save_register
 endfunction
-"
-"
+
+function! s:insert_lorem_ipsum_sentence() abort
+    let save_register = @k
+    let @k =  s:local_lorem_ipsum[s:NUMBER.random(0, len(s:local_lorem_ipsum))] . s:lorem_ipsum_sentence_separator
+    normal! "kgP
+    let @k = save_register
+endfunction
+
 function! s:insert_simple_password() abort
     let save_register = @k
     let @k = s:PASSWORD.generate_simple(8)
