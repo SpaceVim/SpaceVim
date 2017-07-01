@@ -1,5 +1,6 @@
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
+let s:LIST = SpaceVim#api#import('data#list')
 
 
 function! SpaceVim#layers#edit#plugins() abort
@@ -68,6 +69,9 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'l'], 'call call('
                 \ . string(s:_function('s:insert_lorem_ipsum_list')) . ', [])',
                 \ 'insert lorem-ipsum list', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'p'], 'call call('
+                \ . string(s:_function('s:insert_lorem_ipsum_paragraph')) . ', [])',
+                \ 'insert lorem-ipsum paragraph', 1)
 endfunction
 let s:local_lorem_ipsum = [
             \ 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
@@ -81,68 +85,77 @@ let s:local_lorem_ipsum = [
             \ 'Cras placerat accumsan nulla.',
             \ 'Nullam rutrum.',
             \ 'Nam vestibulum accumsan nisl.',
+            \ 'Pellentesque dapibus suscipit ligula.',
+            \ 'Donec posuere augue in quam.',
+            \ 'Etiam vel tortor sodales tellus ultricies commodo.',
+            \ 'Suspendisse potenti.',
+            \ 'Aenean in sem ac leo mollis blandit.',
+            \ 'Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi.',
+            \ 'Phasellus lacus.',
+            \ 'Etiam laoreet quam sed arcu.',
+            \ 'Phasellus at dui in ligula mollis ultricies.',
+            \ 'Integer placerat tristique nisl.',
+            \ 'Praesent augue.',
+            \ 'Fusce commodo.',
+            \ 'Vestibulum convallis, lorem a tempus semper, dui dui euismod elit, vitae placerat urna tortor vitae lacus.',
+            \ 'Nullam libero mauris, consequat quis, varius et, dictum id, arcu.',
+            \ 'Mauris mollis tincidunt felis.',
+            \ 'Aliquam feugiat tellus ut neque.',
+            \ 'Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.',
+            \ 'Aliquam erat volutpat.',
+            \ 'Nunc eleifend leo vitae magna.',
+            \ 'In id erat non orci commodo lobortis.',
+            \ 'Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.',
+            \ 'Sed diam.',
+            \ 'Praesent fermentum tempor tellus.',
+            \ 'Nullam tempus.',
+            \ 'Mauris ac felis vel velit tristique imperdiet.',
+            \ 'Donec at pede.',
+            \ 'Etiam vel neque nec dui dignissim bibendum.',
+            \ 'Vivamus id enim.',
+            \ 'Phasellus neque orci, porta a, aliquet quis, semper a, massa.',
+            \ 'Phasellus purus.',
+            \ 'Pellentesque tristique imperdiet tortor.',
+            \ 'Nam euismod tellus id erat.',
+            \ 'Nullam eu ante vel est convallis dignissim.',
+            \ 'Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio.',
+            \ 'Nunc porta vulputate tellus.',
+            \ 'Nunc rutrum turpis sed pede.',
+            \ 'Sed bibendum.',
+            \ 'Aliquam posuere.',
+            \ 'Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio.',
+            \ 'Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna.',
+            \ 'Curabitur vulputate vestibulum lorem.',
+            \ 'Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.',
+            \ 'Sed id ligula quis est convallis tempor.',
+            \ 'Curabitur lacinia pulvinar nibh.',
+            \ 'Nam a sapien.',
             \ ]
+
+let s:lorem_ipsum_paragraph_separator = "\n\n"
+let s:lorem_ipsum_sentence_separator = '  '
+let s:lorem_ipsum_list_beginning = ''
+let s:lorem_ipsum_list_bullet = '* '
+let s:lorem_ipsum_list_item_end = "\n"
+let s:lorem_ipsum_list_end = ''
+
 function! s:insert_lorem_ipsum_list() abort
     let save_register = @k
     let @k =  '* ' . s:local_lorem_ipsum[s:NUMBER.random(0, len(s:local_lorem_ipsum))] . "\n"
     normal! "kgP
     let @k = save_register
 endfunction
+
+function! s:insert_lorem_ipsum_paragraph() abort
+    let save_register = @k
+    let pids = len(s:local_lorem_ipsum) / 11
+    let pid = s:NUMBER.random(0, pids) * 11
+    let @k = join(s:LIST.listpart(s:local_lorem_ipsum, pid, 11), s:lorem_ipsum_sentence_separator) . s:lorem_ipsum_paragraph_separator
+    normal! "kgP
+    let @k = save_register
+endfunction
 "
-"     ("Pellentesque dapibus suscipit ligula."
-"      "Donec posuere augue in quam."
-"      "Etiam vel tortor sodales tellus ultricies commodo."
-"      "Suspendisse potenti."
-"      "Aenean in sem ac leo mollis blandit."
-"      "Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi."
-"      "Phasellus lacus."
-"      "Etiam laoreet quam sed arcu."
-"      "Phasellus at dui in ligula mollis ultricies."
-"      "Integer placerat tristique nisl."
-"      "Praesent augue."
-"      "Fusce commodo."
-"      "Vestibulum convallis, lorem a tempus semper, dui dui euismod elit, vitae placerat urna tortor vitae lacus."
-"      "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
-"      "Mauris mollis tincidunt felis."
-"      "Aliquam feugiat tellus ut neque."
-"      "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.")
 "
-"     ("Aliquam erat volutpat."
-"      "Nunc eleifend leo vitae magna."
-"      "In id erat non orci commodo lobortis."
-"      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
-"      "Sed diam."
-"      "Praesent fermentum tempor tellus."
-"      "Nullam tempus."
-"      "Mauris ac felis vel velit tristique imperdiet."
-"      "Donec at pede."
-"      "Etiam vel neque nec dui dignissim bibendum."
-"      "Vivamus id enim."
-"      "Phasellus neque orci, porta a, aliquet quis, semper a, massa."
-"      "Phasellus purus."
-"      "Pellentesque tristique imperdiet tortor."
-"      "Nam euismod tellus id erat.")
-"
-"     ("Nullam eu ante vel est convallis dignissim."
-"      "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
-"      "Nunc porta vulputate tellus."
-"      "Nunc rutrum turpis sed pede."
-"      "Sed bibendum."
-"      "Aliquam posuere."
-"      "Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio."
-"      "Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna."
-"      "Curabitur vulputate vestibulum lorem."
-"      "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
-"      "Sed id ligula quis est convallis tempor."
-"      "Curabitur lacinia pulvinar nibh."
-"      "Nam a sapien.")))
-"
-" (defvar lorem-ipsum-paragraph-separator "\n\n")
-" (defvar lorem-ipsum-sentence-separator "  ")
-" (defvar lorem-ipsum-list-beginning "")
-" (defvar lorem-ipsum-list-bullet "* ")
-" (defvar lorem-ipsum-list-item-end "\n")
-" (defvar lorem-ipsum-list-end "")
 function! s:insert_simple_password() abort
     let save_register = @k
     let @k = s:PASSWORD.generate_simple(8)
