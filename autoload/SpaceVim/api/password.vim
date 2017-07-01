@@ -7,9 +7,11 @@ function! s:self.generate_simple(len) abort
     let temp = s:STRING.string2chars('abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     let ps = []
     " random(0,len_temp)
-    for i in range(str2nr(a:len))
+    let i = 0
+    while i < str2nr(a:len)
         call add(ps, temp[s:NUMBER.random(0, len(temp))])
-    endfor
+        let i += 1
+    endwhile
     return join(ps, '')
 endfunction
 
@@ -17,9 +19,11 @@ function! s:self.generate_strong(len) abort
     let temp = s:STRING.string2chars('abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ_@!.^%,&-')
     let ps = []
     " random(0,len_temp)
-    for i in range(str2nr(a:len))
+    let i = 0
+    while i < str2nr(a:len)
         call add(ps, temp[s:NUMBER.random(0, len(temp))])
-    endfor
+        let i += 1
+    endwhile
     return join(ps, '')
 endfunction
 
@@ -27,9 +31,11 @@ function! s:self.generate_paranoid(len) abort
     let temp = s:STRING.string2chars('abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=/?,.><[]{}~')
     let ps = []
     " random(0,len_temp)
-    for i in range(str2nr(a:len))
+    let i = 0
+    while i < str2nr(a:len)
         call add(ps, temp[s:NUMBER.random(0, len(temp))])
-    endfor
+        let i += 1
+    endwhile
     return join(ps, '')
 endfunction
 
@@ -37,9 +43,11 @@ function! s:self.generate_numeric(len) abort
     let temp = s:STRING.string2chars('0123456789')
     let ps = []
     " random(0,len_temp)
-    for i in range(str2nr(a:len))
+    let i = 0
+    while i < str2nr(a:len)
         call add(ps, temp[s:NUMBER.random(0, len(temp))])
-    endfor
+        let i += 1
+    endwhile
     return join(ps, '')
 endfunction
 
@@ -51,7 +59,8 @@ function! s:self.generate_phonetic(len) abort
 
     let ps = []
     " random(0,len_temp)
-    for i in range(str2nr(a:len))
+    let i = 0
+    while i < str2nr(a:len)
         if type == 1
             call add(ps, temp_A[s:NUMBER.random(0, len(temp_A))])
             let type = 2
@@ -62,7 +71,8 @@ function! s:self.generate_phonetic(len) abort
             call add(ps, temp_N[s:NUMBER.random(0, len(temp_N))])
             let type = 1
         endif
-    endfor
+        let i += 1
+    endwhile
     return join(ps, '')
 endfunction
 

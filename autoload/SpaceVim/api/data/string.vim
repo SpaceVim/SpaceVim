@@ -66,7 +66,7 @@ let s:file['trim_end'] = function('s:trim_end')
 function! s:string2chars(str) abort
   let chars = []
   for i in range(len(a:str))
-    call add(chars, a:str[i:i])
+    call add(chars, a:str[i : i])
   endfor
   return chars
 endfunction
