@@ -28,6 +28,8 @@ endfunction
 function! s:get_search_cmd(exe, expr) abort
     if a:exe == 'grep'
         return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
+    elseif a:exe == 'rg'
+        return ['rg', '-n', a:expr]
     else
         return [a:exe, a:expr]
     endif
