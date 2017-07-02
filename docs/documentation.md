@@ -1084,6 +1084,7 @@ Key Binding | Description
 `SPC *` or `SPC s P` | search with the first found tool with default input
 `SPC s a p` | ag
 `SPC s a P` | ag with default text
+`SPC s g p` | grep
 `SPC s g p` | grep with default text
 `SPC s k p` | ack
 `SPC s k P` | ack with default text
