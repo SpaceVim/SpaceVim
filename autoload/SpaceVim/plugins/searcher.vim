@@ -1,12 +1,16 @@
+let s:JOB = SpaceVim#api#import('job')
+
 let s:rst = []
+
 function! SpaceVim#plugins#searcher#find(expr, exe)
     if empty(a:expr)
         let expr = input('search expr: ')
     else
         let expr = a:expr
     endif
-    call jobstart(s:get_search_cmd(a:exe, expr), {
+    call s:JOB.start(s:get_search_cmd(a:exe, expr), {
                 \ 'on_stdout' : function('s:search_stdout'),
+                \ 'in_io' : 'null',
                 \ 'on_exit' : function('s:search_exit'),
                 \ })
 endfunction
