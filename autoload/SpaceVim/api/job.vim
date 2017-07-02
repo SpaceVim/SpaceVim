@@ -21,6 +21,7 @@ function! s:self.warp(argv, opts) abort
     let obj = {}
     let obj._argv = a:argv
     let obj._opts = a:opts
+    let obj.in_io = get(a:opts, 'in_io', 'pipe')
     " @vimlint(EVL103, 1, a:job_id)
     function! obj._out_cb(job_id, data) abort
         if has_key(self._opts, 'on_stdout')
@@ -45,6 +46,7 @@ function! s:self.warp(argv, opts) abort
                 \ 'argv': a:argv,
                 \ 'opts': {
                 \ 'mode': 'nl',
+                \ 'in_io' : obj.in_io,
                 \ 'out_cb': obj._out_cb,
                 \ 'err_cb': obj._err_cb,
                 \ 'exit_cb': obj._exit_cb,

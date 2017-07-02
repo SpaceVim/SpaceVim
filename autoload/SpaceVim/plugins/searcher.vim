@@ -10,6 +10,7 @@ function! SpaceVim#plugins#searcher#find(expr, exe)
     endif
     call s:JOB.start(s:get_search_cmd(a:exe, expr), {
                 \ 'on_stdout' : function('s:search_stdout'),
+                \ 'in_io' : 'null',
                 \ 'on_exit' : function('s:search_exit'),
                 \ })
 endfunction
