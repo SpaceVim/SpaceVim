@@ -74,6 +74,7 @@ title:  "Documentation"
             * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
             * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
             * [Searching in a project](#searching-in-a-project)
+            * [Background searching in a project](#background-searching-in-a-project)
             * [Searching the web](#searching-the-web)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
@@ -1092,6 +1093,26 @@ Key Binding | Description
 `SPC s r P` | rg with default text
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+
+##### Background searching in a project
+
+Background search keyword in a project, when searching done, the count will be shown on the statusline.
+
+Key Binding	| Description
+----------- | -----------
+`SPC s j` | searching input expr background with the first found tool
+`SPC s J` | searching cursor word background with the first found tool
+`SPC s l` | List all searching result in quickfix buffer
+`SPC s a j` | ag
+`SPC s a J` | ag with default text
+`SPC s g j` | grep
+`SPC s g J` | grep with default text
+`SPC s k j` | ack
+`SPC s k J` | ack with default text
+`SPC s t j` | pt
+`SPC s t J` | pt with default text
+`SPC s r j` | rg
+`SPC s r J` | rg with default text
 
 ##### Searching the web
 

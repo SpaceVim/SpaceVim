@@ -1,11 +1,11 @@
 let s:rst = []
-function! SpaceVim#plugins#searcher#find(...)
-    if a:0 == 0
+function! SpaceVim#plugins#searcher#find(expr, exe)
+    if empty(a:expr)
         let expr = input('search expr: ')
     else
-        let expr = a:1
+        let expr = a:expr
     endif
-    call jobstart(['ag', expr], {
+    call jobstart(s:get_search_cmd(a:exe, expr), {
                 \ 'on_stdout' : function('s:search_stdout'),
                 \ 'on_exit' : function('s:search_exit'),
                 \ })
@@ -23,6 +23,14 @@ function! s:search_stdout(id, data, event) abort
                         \ })
         endif
     endfor
+endfunction
+
+function! s:get_search_cmd(exe, expr) abort
+    if a:exe == 'grep'
+        return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
+    else
+        return [a:exe, a:expr]
+    endif
 endfunction
 
 function! s:search_exit(id, data, event) abort
