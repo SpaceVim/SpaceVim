@@ -397,7 +397,7 @@ Key Binding	| Description
 `SPC t m m` | toggle the minor mode lighters
 `SPC t m M` | toggle the major mode
 `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
-`SPC t m p` | toggle the point character position
+`SPC t m p` | toggle the cursor position
 `SPC t m t` | toggle the time
 `SPC t m T` | toggle the mode line itself
 `SPC t m v` | toggle the version control info
