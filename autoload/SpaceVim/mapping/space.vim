@@ -105,6 +105,11 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], 'Unite grep:.', 'grep in project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "execute 'Unite grep:.::' . expand(\"<cword>\") . '  -start-insert'",
         \ 'grep in project', 1)
+  " Searching background
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'], 'call SpaceVim#plugins#searcher#find()', 'Background search keywords in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"))',
+        \ 'Background search cursor words in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'l'], 'call SpaceVim#plugins#searcher#list()', 'List all searching results', 1)
 
   " Searching tools
   " ag

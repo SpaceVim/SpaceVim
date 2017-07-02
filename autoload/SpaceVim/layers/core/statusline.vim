@@ -241,6 +241,7 @@ function! s:active() abort
     if index(s:loaded_sections, 'version control info') != -1
         call add(lsec, s:git_branch())
     endif
+    call add(lsec, SpaceVim#plugins#searcher#count())
     if index(s:loaded_sections, 'battery status') != -1
         call add(rsec, s:battery_status())
     endif
