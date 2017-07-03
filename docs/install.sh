@@ -29,10 +29,7 @@ msg() {
 }
 
 success() {
-    if [ "$ret" -eq '0' ];
-    then
-        msg "${Green}[✔]${Color_off} ${1}${2}"
-    fi
+    msg "${Green}[✔]${Color_off} ${1}${2}"
 }
 
 info() {
