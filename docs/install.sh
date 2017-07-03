@@ -154,13 +154,13 @@ usage () {
 if [ $# -gt 0 ]
 then
     case $1 in
-        --uninstall)
+        --uninstall|-u)
             info "Trying to uninstall SpaceVim"
             uninstall_vim
             uninstall_neovim
             exit 0
             ;;
-        --install)
+        --install|-i)
             need_cmd 'git'
             fetch_repo
             if [ $# -eq 2 ]
@@ -179,19 +179,11 @@ then
             install_neovim
             exit 0
             ;;
-        -h)
+        --help|-h)
             usage
             exit 0
             ;;
-        --help)
-            usage
-            exit 0
-            ;;
-        -v)
-            msg "${Version}"
-            exit 0
-            ;;
-        --version)
+        --version|-v)
             msg "${Version}"
             exit 0
     esac
