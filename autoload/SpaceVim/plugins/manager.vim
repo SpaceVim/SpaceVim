@@ -356,9 +356,10 @@ endfunction
 function! s:pull(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
-    let argv = ['git', '-C', a:repo.path, 'pull']
+    let argv = ['git', '-C', a:repo.path, 'pull', '--progress']
     if s:JOB.vim_job || s:JOB.nvim_job
         let jobid = s:JOB.start(argv,{
+                    \ 'on_stderr' : function('s:on_install_stdout'),
                     \ 'on_exit' : function('s:on_pull_exit')
                     \ })
         if jobid != 0
