@@ -11,6 +11,7 @@
 
 # Reset
 Color_off='\033[0m'       # Text Reset
+Version='0.4.0-dev'
 
 # Regular Colors
 Red='\033[0;31m'
@@ -121,27 +122,44 @@ uninstall_neovim () {
 }
 
 usage () {
-    echo "SpaceVim install script : V 0.1.0-dev"
+    echo "SpaceVim install script : V ${Version}"
+    echo ""
+    echo "Usage : curl -sLf https://spacevim.org/install.sh [option] [target]"
+    echo ""
+    echo "  This is bootstrap script for SpaceVim."
+    echo ""
+    echo "OPTIONS"
+    echo ""
+    echo " -i, --install            install spacevim for vim or neovim"
+    echo " -v, --version            Show version information and exit"
+    echo " -u, --uninstall          Uninstall SpaceVim"
+    echo ""
+    echo "EXAMPLE"
+    echo ""
     echo "    Install SpaceVim for vim and neovim"
+    echo ""
     echo "        curl -sLf https://spacevim.org/install.sh | bash"
+    echo ""
     echo "    Install SpaceVim for vim only or neovim only"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install vim"
-    echo "        or"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install neovim"
+    echo ""
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --install vim"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim"
+    echo ""
     echo "    Uninstall SpaceVim"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- uninstall"
+    echo ""
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall"
 }
 
 
 if [ $# -gt 0 ]
 then
     case $1 in
-        uninstall)
+        --uninstall)
             uninstall_vim
             uninstall_neovim
             exit 0
             ;;
-        install)
+        --install)
             need_cmd 'git'
             fetch_repo
             if [ $# -eq 2 ]
@@ -162,6 +180,18 @@ then
             ;;
         -h)
             usage
+            exit 0
+            ;;
+        --help)
+            usage
+            exit 0
+            ;;
+        -v)
+            msg "${Version}"
+            exit 0
+            ;;
+        --version)
+            msg "${Version}"
             exit 0
     esac
 fi
