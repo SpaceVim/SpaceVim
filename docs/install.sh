@@ -124,7 +124,7 @@ uninstall_neovim () {
 usage () {
     echo "SpaceVim install script : V ${Version}"
     echo ""
-    echo "Usage : curl -sLf https://spacevim.org/install.sh [option] [target]"
+    echo "Usage : curl -sLf https://spacevim.org/install.sh | bash -s -- [option] [target]"
     echo ""
     echo "  This is bootstrap script for SpaceVim."
     echo ""
