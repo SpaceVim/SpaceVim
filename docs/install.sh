@@ -1,30 +1,58 @@
 #!/usr/bin/env bash
-# 
 
-# A guarding function to avoid executing an incompletely downloaded script
-guard () {
+#=============================================================================
+# install.sh --- bootstrap script for SpaceVim
+# Copyright (c) 2016-2017 Shidong Wang & Contributors
+# Author: Shidong Wang < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: MIT license
+#=============================================================================
+
 
 # Reset
 Color_off='\033[0m'       # Text Reset
 
 # Regular Colors
-Red='\033[0;31m'          # Red
-Blue='\033[0;34m'         # Blue
+Red='\033[0;31m'
+Blue='\033[0;34m'
+Green='\033[0;32m'
 
 need_cmd () {
     if ! hash "$1" &>/dev/null; then
-        echo -e "${Red}need '$1' (command not found)${Color_off}"
+        error "Need '$1' (command not fount)"
         exit 1
     fi
 }
 
+msg() {
+    printf '%b\n' "$1" >&2
+}
+
+success() {
+    if [ "$ret" -eq '0' ];
+    then
+        msg "${Green}[✔]${Color_off} ${1}${2}"
+    fi
+}
+
+info() {
+    msg "${Blue}==>${Color_off} ${1}${2}"
+}
+
+error() {
+    msg "${Red}[✘]${Color_off} ${1}${2}"
+    exit 1
+}
+
 fetch_repo () {
     if [[ -d "$HOME/.SpaceVim" ]]; then
+        info "Trying to update SpaceVim"
         git --git-dir "$HOME/.SpaceVim/.git" pull
-        echo -e "${Blue}Successfully update SpaceVim${Color_off}"
+        success "Successfully update SpaceVim"
     else
+        info "Trying to clone SpaceVim"
         git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
-        echo -e "${Blue}Successfully clone SpaceVim${Color_off}"
+        success "Successfully clone SpaceVim"
     fi
 }
 
@@ -145,9 +173,3 @@ need_cmd 'git'
 fetch_repo
 install_vim
 install_neovim
-
-# end of guard
-}
-
-# download finished fine
-guard $@
