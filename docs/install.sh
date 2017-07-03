@@ -57,37 +57,37 @@ fetch_repo () {
 install_vim () {
     if [[ -f "$HOME/.vimrc" ]]; then
         mv "$HOME/.vimrc" "$HOME/.vimrc_back"
-        echo -e "${Blue}BackUp $HOME/.vimrc${Color_off}"
+        success "Backup $HOME/.vimrc to $HOME/.vimrc_back"
     fi
 
     if [[ -d "$HOME/.vim" ]]; then
         if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
-            echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+            success "Installed SpaceVim for vim"
         else
             mv "$HOME/.vim" "$HOME/.vim_back"
-            echo -e "${Blue}BackUp $HOME/.vim${Color_off}"
+            success "BackUp $HOME/.vim to $HOME/.vim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-            echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+            success "Installed SpaceVim for vim"
         fi
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-        echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+        success "Installed SpaceVim for vim"
     fi
 }
 
 install_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
-            echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+            success "Installed SpaceVim for neovim"
         else
             mv "$HOME/.config/nvim" "$HOME/.config/nvim_back"
-            echo -e "${Blue}BackUp $HOME/.config/nvim${Color_off}"
+            success "BackUp $HOME/.config/nvim to $HOME/.config/nvim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-            echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+            success "Installed SpaceVim for neovim"
         fi
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-        echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+        success "Installed SpaceVim for neovim"
     fi
 }
 
@@ -95,16 +95,16 @@ uninstall_vim () {
     if [[ -d "$HOME/.vim" ]]; then
         if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.vim"
-            echo -e "${Blue}Uninstall SpaceVim for vim${Color_off}"
+            success "Uninstall SpaceVim for vim"
             if [[ -d "$HOME/.vim_back" ]]; then
                 mv "$HOME/.vim_back" "$HOME/.vim"
-                echo -e "${Blue}Recover $HOME/.vim${Color_off}"
+                success "Recover from $HOME/.vim_back"
             fi
         fi
     fi
     if [[ -f "$HOME/.vimrc_back" ]]; then
         mv "$HOME/.vimrc_back" "$HOME/.vimrc"
-        echo -e "${Blue}Recover $HOME/.vimrc${Color_off}"
+        success "Recover from $HOME/.vimrc_back"
     fi
 }
 
@@ -112,10 +112,10 @@ uninstall_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.config/nvim"
-            echo -e "${Blue}Uninstall SpaceVim for neovim${Color_off}"
+            success "Uninstall SpaceVim for neovim"
             if [[ -d "$HOME/.config/nvim_back" ]]; then
                 mv "$HOME/.config/nvim_back" "$HOME/.config/nvim"
-                echo -e "${Blue}Recover $HOME/.config/nvim${Color_off}"
+                success "Recover from $HOME/.config/nvim_back"
             fi
         fi
     fi
@@ -155,6 +155,7 @@ if [ $# -gt 0 ]
 then
     case $1 in
         --uninstall)
+            info "Trying to uninstall SpaceVim"
             uninstall_vim
             uninstall_neovim
             exit 0
