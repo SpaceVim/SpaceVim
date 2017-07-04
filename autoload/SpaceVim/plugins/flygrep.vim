@@ -13,6 +13,9 @@ endfunction
 
 function! s:flygrep(expr) abort
     normal! "_ggdG
+    if a:expr ==# ''
+        return
+    endif
     call s:JOB.start(s:get_search_cmd('ag', a:expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
                 \ 'in_io' : 'null',
