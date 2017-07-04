@@ -1,5 +1,6 @@
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
+let s:grepid = 0
 
 
 function! SpaceVim#plugins#flygrep#open()
@@ -16,7 +17,10 @@ function! s:flygrep(expr) abort
     if a:expr ==# ''
         return
     endif
-    call s:JOB.start(s:get_search_cmd('ag', a:expr), {
+    if s:grepid != 0
+        call s:JOB.stop(s:grepid)
+    endif
+    let s:grepid =  s:JOB.start(s:get_search_cmd('ag', a:expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
                 \ 'in_io' : 'null',
                 \ 'on_exit' : function('s:grep_exit'),
@@ -38,7 +42,7 @@ function! s:grep_stdout(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
-    
+    let s:grepid = 0
 endfunction
 
 

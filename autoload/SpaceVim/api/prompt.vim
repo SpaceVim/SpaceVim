@@ -52,6 +52,12 @@ func! s:self._handle_input() abort
             if self._handle_fly !=# ''
                 call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
             endif
+        elseif char ==# "\<bs>"
+            let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
+            call self._build_prompt()
+            if self._handle_fly !=# ''
+                call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
+            endif
         elseif char == self._keys.close
             let self.__closed = 0
             if self._onclose !=# ''
