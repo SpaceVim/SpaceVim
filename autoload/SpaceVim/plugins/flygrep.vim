@@ -6,6 +6,7 @@ function! SpaceVim#plugins#flygrep#open()
     rightbelow split __flygrep__
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
     " setlocal nomodifiable
+    setf SpaceVimFlyGrep
     redraw!
     call s:MPT.open()
 endfunction
@@ -21,8 +22,14 @@ endfunction
 
 let s:MPT._handle_fly = function('s:flygrep')
 
+function! s:close_buffer() abort
+    q
+endfunction
+
+let s:MPT._onclose = function('s:close_buffer')
+
 function! s:grep_stdout(id, data, event) abort
-    for data in a:data
+    for data in filter(a:data, '!empty(v:val)')
         call append('$', data)
     endfor
 endfunction
