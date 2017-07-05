@@ -18,6 +18,12 @@ function! s:flygrep(expr) abort
         redrawstatus
         return
     endif
+    try 
+        syn clear FileNames
+    catch
+    endtr
+    exe 'syn match FileNames /' . a:expr . '/'
+    hi def link FileNames MoreMsg
     let exe = SpaceVim#mapping#search#default_tool()
     let s:grepid =  s:JOB.start(s:get_search_cmd(exe, a:expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
@@ -101,7 +107,8 @@ function! s:open_item() abort
         normal! gF
         let nr = bufnr('%')
         q
-        exe 'b' . nr
+        exe 'silent b' . nr
+        normal! :
     endif
 endfunction
 
