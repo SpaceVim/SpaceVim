@@ -22,7 +22,7 @@ function! s:flygrep(expr) abort
         syn clear FileNames
     catch
     endtr
-    exe 'syn match FileNames /' . a:expr . '/'
+    exe 'syn match FileNames /' . substitute(a:expr, '\([/\\]\)', '\\\1', 'g') . '/'
     hi def link FileNames MoreMsg
     let exe = SpaceVim#mapping#search#default_tool()
     let s:grepid =  s:JOB.start(s:get_search_cmd(exe, a:expr), {
