@@ -13,6 +13,7 @@ function! SpaceVim#plugins#flygrep#open()
 endfunction
 
 function! s:flygrep(expr) abort
+    call s:MPT._build_prompt()
     if a:expr ==# ''
         return
     endif
@@ -34,10 +35,10 @@ let s:MPT._onclose = function('s:close_buffer')
 
 
 function! s:close_grep_job() abort
-    normal! "_ggdG
     if s:grepid != 0
         call s:JOB.stop(s:grepid)
     endif
+    normal! "_ggdG
 endfunction
 
 let s:MPT._oninputpro = function('s:close_grep_job')
