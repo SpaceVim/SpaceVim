@@ -5,7 +5,7 @@ let s:grepid = 0
 
 function! SpaceVim#plugins#flygrep#open()
     rightbelow split __flygrep__
-    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
     " setlocal nomodifiable
     setf SpaceVimFlyGrep
     redraw!
@@ -16,9 +16,6 @@ function! s:flygrep(expr) abort
     normal! "_ggdG
     if a:expr ==# ''
         return
-    endif
-    if s:grepid != 0
-        call s:JOB.stop(s:grepid)
     endif
     let s:grepid =  s:JOB.start(s:get_search_cmd('ag', a:expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
@@ -35,10 +32,20 @@ endfunction
 
 let s:MPT._onclose = function('s:close_buffer')
 
+
+function! s:close_grep_job() abort
+    if s:grepid != 0
+        call s:JOB.stop(s:grepid)
+    endif
+endfunction
+
+let s:MPT._oninputpro = function('s:close_grep_job')
+
 function! s:grep_stdout(id, data, event) abort
     for data in filter(a:data, '!empty(v:val)')
         call append('$', data)
     endfor
+    call s:MPT._build_prompt()
 endfunction
 
 function! s:grep_exit(id, data, event) abort

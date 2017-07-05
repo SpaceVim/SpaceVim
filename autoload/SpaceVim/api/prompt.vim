@@ -18,6 +18,7 @@ let s:self.__closed = 1
 
 let s:self._handle_fly = ''
 let s:self._onclose = ''
+let s:self._oninputpro = ''
 
 
 
@@ -68,6 +69,9 @@ func! s:self._handle_input() abort
         else
             let self._prompt.begin .= char
             call self._build_prompt()
+            if self._oninputpro !=# ''
+                call call(self._oninputpro, [])
+            endif
             if self._handle_fly !=# ''
                 call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
             endif
@@ -77,7 +81,7 @@ func! s:self._handle_input() abort
 endf
 
 func! s:self._build_prompt() abort
-    redraw!
+    redraw
     echohl Comment | echon self._prompt.mpt
     echohl None | echon self._prompt.begin
     echohl Wildmenu | echon self._prompt.cursor
