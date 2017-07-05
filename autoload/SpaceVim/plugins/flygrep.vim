@@ -15,6 +15,7 @@ endfunction
 function! s:flygrep(expr) abort
     call s:MPT._build_prompt()
     if a:expr ==# ''
+        redrawstatus
         return
     endif
     let exe = SpaceVim#mapping#search#default_tool()
@@ -55,6 +56,7 @@ function! s:grep_stdout(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+    redrawstatus
     let s:grepid = 0
 endfunction
 
@@ -63,7 +65,7 @@ function! s:get_search_cmd(exe, expr) abort
     if a:exe == 'grep'
         return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
     elseif a:exe == 'rg'
-        return ['rg', '-n', a:expr]
+        return ['rg', '-n', '-i', a:expr]
     else
         return [a:exe, a:expr]
     endif
@@ -75,6 +77,7 @@ function! s:next_item() abort
     else
         normal! j
     endif
+    redrawstatus
     call s:MPT._build_prompt()
 endfunction
 
@@ -84,6 +87,7 @@ function! s:previous_item() abort
     else
         normal! k
     endif
+    redrawstatus
     call s:MPT._build_prompt()
 endfunction
 
@@ -106,3 +110,12 @@ let s:MPT._function_key = {
             \ "\<S-tab>" : function('s:previous_item'),
             \ "\<Return>" : function('s:open_item'),
             \ }
+
+" statusline api
+function! SpaceVim#plugins#flygrep#lineNr()
+    if getline(1) == ''
+        return ''
+    else
+        return line('.') . '/' . line('$')
+    endif
+endfunction
