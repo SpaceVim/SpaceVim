@@ -53,7 +53,7 @@ let s:modes = {
             \ },
             \ }
 
-let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info']
+let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info', 'cursorpos']
 
 function! s:battery_status() abort
     if executable('acpi')
@@ -156,6 +156,10 @@ function! s:whitespace() abort
     endif
 endfunction
 
+function! s:cursorpos() abort
+    return ' %l:%c '
+endfunction
+
 
 function! s:modes() abort
     let m = ' ❖ '
@@ -237,10 +241,14 @@ function! s:active() abort
     if index(s:loaded_sections, 'version control info') != -1
         call add(lsec, s:git_branch())
     endif
+    call add(lsec, SpaceVim#plugins#searcher#count())
     if index(s:loaded_sections, 'battery status') != -1
         call add(rsec, s:battery_status())
     endif
-    call add(rsec, '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}')
+    call add(rsec, '%{" " . &ff . " | " . (&fenc!=""?&fenc:&enc) . " "}')
+    if index(s:loaded_sections, 'cursorpos') != -1
+        call add(rsec, s:cursorpos())
+    endif
     call add(rsec, ' %P ')
     if index(s:loaded_sections, 'time') != -1
         call add(rsec, s:time())
@@ -343,6 +351,8 @@ function! SpaceVim#layers#core#statusline#config() abort
                 \ 'toggle the battery status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
                 \ 'toggle the time', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
+                \ 'toggle the cursor position', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
                 \ 'toggle the statuline itself', 1)
     function! TagbarStatusline(...) abort

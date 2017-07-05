@@ -1,67 +1,93 @@
 #!/usr/bin/env bash
-# 
 
-# A guarding function to avoid executing an incompletely downloaded script
-guard () {
+#=============================================================================
+# install.sh --- bootstrap script for SpaceVim
+# Copyright (c) 2016-2017 Shidong Wang & Contributors
+# Author: Shidong Wang < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: MIT license
+#=============================================================================
+
 
 # Reset
 Color_off='\033[0m'       # Text Reset
+Version='0.4.0-dev'
 
 # Regular Colors
-Red='\033[0;31m'          # Red
-Blue='\033[0;34m'         # Blue
+Red='\033[0;31m'
+Blue='\033[0;34m'
+Green='\033[0;32m'
 
 need_cmd () {
     if ! hash "$1" &>/dev/null; then
-        echo -e "${Red}need '$1' (command not found)${Color_off}"
+        error "Need '$1' (command not fount)"
         exit 1
     fi
 }
 
+msg() {
+    printf '%b\n' "$1" >&2
+}
+
+success() {
+    msg "${Green}[✔]${Color_off} ${1}${2}"
+}
+
+info() {
+    msg "${Blue}==>${Color_off} ${1}${2}"
+}
+
+error() {
+    msg "${Red}[✘]${Color_off} ${1}${2}"
+    exit 1
+}
+
 fetch_repo () {
     if [[ -d "$HOME/.SpaceVim" ]]; then
+        info "Trying to update SpaceVim"
         git --git-dir "$HOME/.SpaceVim/.git" pull
-        echo -e "${Blue}Successfully update SpaceVim${Color_off}"
+        success "Successfully update SpaceVim"
     else
+        info "Trying to clone SpaceVim"
         git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
-        echo -e "${Blue}Successfully clone SpaceVim${Color_off}"
+        success "Successfully clone SpaceVim"
     fi
 }
 
 install_vim () {
     if [[ -f "$HOME/.vimrc" ]]; then
         mv "$HOME/.vimrc" "$HOME/.vimrc_back"
-        echo -e "${Blue}BackUp $HOME/.vimrc${Color_off}"
+        success "Backup $HOME/.vimrc to $HOME/.vimrc_back"
     fi
 
     if [[ -d "$HOME/.vim" ]]; then
         if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
-            echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+            success "Installed SpaceVim for vim"
         else
             mv "$HOME/.vim" "$HOME/.vim_back"
-            echo -e "${Blue}BackUp $HOME/.vim${Color_off}"
+            success "BackUp $HOME/.vim to $HOME/.vim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-            echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+            success "Installed SpaceVim for vim"
         fi
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-        echo -e "${Blue}Installed SpaceVim for vim${Color_off}"
+        success "Installed SpaceVim for vim"
     fi
 }
 
 install_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
-            echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+            success "Installed SpaceVim for neovim"
         else
             mv "$HOME/.config/nvim" "$HOME/.config/nvim_back"
-            echo -e "${Blue}BackUp $HOME/.config/nvim${Color_off}"
+            success "BackUp $HOME/.config/nvim to $HOME/.config/nvim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-            echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+            success "Installed SpaceVim for neovim"
         fi
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-        echo -e "${Blue}Installed SpaceVim for neovim${Color_off}"
+        success "Installed SpaceVim for neovim"
     fi
 }
 
@@ -69,16 +95,16 @@ uninstall_vim () {
     if [[ -d "$HOME/.vim" ]]; then
         if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.vim"
-            echo -e "${Blue}Uninstall SpaceVim for vim${Color_off}"
+            success "Uninstall SpaceVim for vim"
             if [[ -d "$HOME/.vim_back" ]]; then
                 mv "$HOME/.vim_back" "$HOME/.vim"
-                echo -e "${Blue}Recover $HOME/.vim${Color_off}"
+                success "Recover from $HOME/.vim_back"
             fi
         fi
     fi
     if [[ -f "$HOME/.vimrc_back" ]]; then
         mv "$HOME/.vimrc_back" "$HOME/.vimrc"
-        echo -e "${Blue}Recover $HOME/.vimrc${Color_off}"
+        success "Recover from $HOME/.vimrc_back"
     fi
 }
 
@@ -86,37 +112,55 @@ uninstall_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.config/nvim"
-            echo -e "${Blue}Uninstall SpaceVim for neovim${Color_off}"
+            success "Uninstall SpaceVim for neovim"
             if [[ -d "$HOME/.config/nvim_back" ]]; then
                 mv "$HOME/.config/nvim_back" "$HOME/.config/nvim"
-                echo -e "${Blue}Recover $HOME/.config/nvim${Color_off}"
+                success "Recover from $HOME/.config/nvim_back"
             fi
         fi
     fi
 }
 
 usage () {
-    echo "SpaceVim install script : V 0.1.0-dev"
+    echo "SpaceVim install script : V ${Version}"
+    echo ""
+    echo "Usage : curl -sLf https://spacevim.org/install.sh | bash -s -- [option] [target]"
+    echo ""
+    echo "  This is bootstrap script for SpaceVim."
+    echo ""
+    echo "OPTIONS"
+    echo ""
+    echo " -i, --install            install spacevim for vim or neovim"
+    echo " -v, --version            Show version information and exit"
+    echo " -u, --uninstall          Uninstall SpaceVim"
+    echo ""
+    echo "EXAMPLE"
+    echo ""
     echo "    Install SpaceVim for vim and neovim"
+    echo ""
     echo "        curl -sLf https://spacevim.org/install.sh | bash"
+    echo ""
     echo "    Install SpaceVim for vim only or neovim only"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install vim"
-    echo "        or"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- install neovim"
+    echo ""
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --install vim"
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim"
+    echo ""
     echo "    Uninstall SpaceVim"
-    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- uninstall"
+    echo ""
+    echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall"
 }
 
 
 if [ $# -gt 0 ]
 then
     case $1 in
-        uninstall)
+        --uninstall|-u)
+            info "Trying to uninstall SpaceVim"
             uninstall_vim
             uninstall_neovim
             exit 0
             ;;
-        install)
+        --install|-i)
             need_cmd 'git'
             fetch_repo
             if [ $# -eq 2 ]
@@ -135,8 +179,12 @@ then
             install_neovim
             exit 0
             ;;
-        -h)
+        --help|-h)
             usage
+            exit 0
+            ;;
+        --version|-v)
+            msg "${Version}"
             exit 0
     esac
 fi
@@ -145,9 +193,3 @@ need_cmd 'git'
 fetch_repo
 install_vim
 install_neovim
-
-# end of guard
-}
-
-# download finished fine
-guard $@
