@@ -13,11 +13,11 @@ function! SpaceVim#plugins#flygrep#open()
 endfunction
 
 function! s:flygrep(expr) abort
-    normal! "_ggdG
     if a:expr ==# ''
         return
     endif
-    let s:grepid =  s:JOB.start(s:get_search_cmd('ag', a:expr), {
+    let exe = SpaceVim#mapping#search#default_tool()
+    let s:grepid =  s:JOB.start(s:get_search_cmd(exe, a:expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
                 \ 'in_io' : 'null',
                 \ 'on_exit' : function('s:grep_exit'),
@@ -34,6 +34,7 @@ let s:MPT._onclose = function('s:close_buffer')
 
 
 function! s:close_grep_job() abort
+    normal! "_ggdG
     if s:grepid != 0
         call s:JOB.stop(s:grepid)
     endif
@@ -43,7 +44,11 @@ let s:MPT._oninputpro = function('s:close_grep_job')
 
 function! s:grep_stdout(id, data, event) abort
     for data in filter(a:data, '!empty(v:val)')
-        call append('$', data)
+        if getline(1) == ''
+            call setline(1, data)
+        else
+            call append('$', data)
+        endif
     endfor
     call s:MPT._build_prompt()
 endfunction
