@@ -68,3 +68,41 @@ function! s:get_search_cmd(exe, expr) abort
         return [a:exe, a:expr]
     endif
 endfunction
+
+function! s:next_item() abort
+    if line('.') == line('$')
+        normal! gg
+    else
+        normal! j
+    endif
+    call s:MPT._build_prompt()
+endfunction
+
+function! s:previous_item() abort
+    if line('.') == 1
+        normal! G
+    else
+        normal! k
+    endif
+    call s:MPT._build_prompt()
+endfunction
+
+function! s:open_item() abort
+    if line('.') != ''
+        if s:grepid != 0
+            call s:JOB.stop(s:grepid)
+        endif
+        call s:MPT._clear_prompt()
+        let s:MPT._quit = 1
+        normal! gF
+        let nr = bufnr('%')
+        q
+        exe 'b' . nr
+    endif
+endfunction
+
+let s:MPT._function_key = {
+            \ "\<Tab>" : function('s:next_item'),
+            \ "\<S-tab>" : function('s:previous_item'),
+            \ "\<Return>" : function('s:open_item'),
+            \ }

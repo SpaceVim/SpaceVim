@@ -12,6 +12,9 @@ let s:self._prompt = {
             \ 'cursor' : '',
             \ 'end' : '',
             \ }
+let s:self._function_key = {}
+
+let s:self._quit = 1
 
 let s:self._handle_fly = ''
 let s:self._onclose = ''
@@ -20,6 +23,7 @@ let s:self._oninputpro = ''
 
 
 func! s:self.open() abort
+    let self._quit = 0
     let save_redraw = &lazyredraw
     set nolazyredraw
     call self._build_prompt()
@@ -33,8 +37,12 @@ function! s:self._getchar(...) abort
 endfunction
 
 func! s:self._handle_input() abort
-    while 1
+    while self._quit == 0
         let char = self._getchar()
+        if has_key(self._function_key, char)
+            call call(self._function_key[char], [])
+            continue
+        endif
         if char ==# "\<Right>" || char == 6
             let self._prompt.begin = self._prompt.begin . self._prompt.cursor
             let self._prompt.cursor = matchstr(self._prompt.end, '^.')
@@ -59,11 +67,7 @@ func! s:self._handle_input() abort
             let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
             call self._build_prompt()
         elseif char == self._keys.close
-            if self._onclose !=# ''
-                call call(self._onclose, [])
-            endif
-            call self._clear_prompt()
-            normal! :
+            call self.close()
             break
         else
             let self._prompt.begin .= char
@@ -93,6 +97,15 @@ function! s:self._clear_prompt() abort
                 \ 'cursor' : '',
                 \ 'end' : '',
                 \ }
+endfunction
+
+function! s:self.close() abort
+    if self._onclose !=# ''
+        call call(self._onclose, [])
+    endif
+    call self._clear_prompt()
+    normal! :
+    let self._quit = 1
 endfunction
 
 function! SpaceVim#api#prompt#get() abort
