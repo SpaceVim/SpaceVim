@@ -76,6 +76,7 @@ title:  "Documentation"
             * [Searching in a project](#searching-in-a-project)
             * [Background searching in a project](#background-searching-in-a-project)
             * [Searching the web](#searching-the-web)
+        * [Searching on the fly](#searching-on-the-fly)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
         * [Text insertion commands](#text-insertion-commands)
@@ -1123,6 +1124,12 @@ Key Binding	Description
 `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO)
 
 **Note**: to enable google suggestions in vim, you need to add `let g:spacevim_enable_googlesuggest = 1` to your custom Configuration file.
+
+#### Searching on the fly
+
+Key Binding	Description
+-----------| -----------
+`SPC s g G` | Searching in project on the fly with default tools
 
 #### Persistent highlighting
 
