@@ -6,10 +6,13 @@ let s:grepid = 0
 function! SpaceVim#plugins#flygrep#open() abort
     rightbelow split __flygrep__
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+    let save_tve = &t_ve
+    setlocal t_ve=
     " setlocal nomodifiable
     setf SpaceVimFlyGrep
     redraw!
     call s:MPT.open()
+    let &t_ve = save_tve
 endfunction
 
 function! s:flygrep(expr) abort
