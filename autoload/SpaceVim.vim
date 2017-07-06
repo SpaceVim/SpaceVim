@@ -416,6 +416,7 @@ let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
+command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#loadCustomConfig() abort
   let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
