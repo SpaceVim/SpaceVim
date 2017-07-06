@@ -51,13 +51,12 @@ endfunction
 let s:MPT._oninputpro = function('s:close_grep_job')
 
 function! s:grep_stdout(id, data, event) abort
-    for data in filter(a:data, '!empty(v:val)')
-        if getline(1) == ''
-            call setline(1, data)
-        else
-            call append('$', data)
-        endif
-    endfor
+    let datas =filter(a:data, '!empty(v:val)')
+    if getline(1) == ''
+        call setline(1, datas)
+    else
+        call append('$', datas)
+    endif
     call s:MPT._build_prompt()
 endfunction
 
