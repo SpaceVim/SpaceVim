@@ -3,7 +3,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:grepid = 0
 
 
-function! SpaceVim#plugins#flygrep#open()
+function! SpaceVim#plugins#flygrep#open() abort
     rightbelow split __flygrep__
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
     " setlocal nomodifiable
@@ -50,9 +50,12 @@ endfunction
 
 let s:MPT._oninputpro = function('s:close_grep_job')
 
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:event)
 function! s:grep_stdout(id, data, event) abort
     let datas =filter(a:data, '!empty(v:val)')
-    if getline(1) == ''
+    if getline(1) ==# ''
         call setline(1, datas)
     else
         call append('$', datas)
@@ -65,11 +68,14 @@ function! s:grep_exit(id, data, event) abort
     let s:grepid = 0
 endfunction
 
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:event)
 
 function! s:get_search_cmd(exe, expr) abort
-    if a:exe == 'grep'
+    if a:exe ==# 'grep'
         return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
-    elseif a:exe == 'rg'
+    elseif a:exe ==# 'rg'
         return ['rg', '-n', '-i', a:expr]
     else
         return [a:exe, a:expr]
@@ -97,7 +103,7 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
-    if line('.') != ''
+    if line('.') !=# ''
         if s:grepid != 0
             call s:JOB.stop(s:grepid)
         endif
@@ -118,8 +124,8 @@ let s:MPT._function_key = {
             \ }
 
 " statusline api
-function! SpaceVim#plugins#flygrep#lineNr()
-    if getline(1) == ''
+function! SpaceVim#plugins#flygrep#lineNr() abort
+    if getline(1) ==# ''
         return ''
     else
         return line('.') . '/' . line('$')
