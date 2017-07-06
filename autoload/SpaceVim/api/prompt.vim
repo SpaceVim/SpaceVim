@@ -63,8 +63,24 @@ func! s:self._handle_input() abort
         elseif char ==# "\<C-w>"
             let self._prompt.begin = substitute(self._prompt.begin,'[^\ .*]\+\s*$','','g')
             call self._build_prompt()
+        elseif char ==# "\<C-a>"  || char ==# "\<Home>"
+            let self._prompt.end = substitute(self._prompt.begin . self._prompt.cursor . self._prompt.end, '^.', '', 'g')
+            let self._prompt.cursor = matchstr(self._prompt.begin, '^.')
+            let self._prompt.begin = ''
+            call self._build_prompt()
+            continue
+        elseif char ==# "\<C-e>"  || char ==# "\<End>"
+            let self._prompt.begin = self._prompt.begin . self._prompt.cursor . self._prompt.end
+            let self._prompt.cursor = ''
+            let self._prompt.end = ''
+            call self._build_prompt()
+            continue
         elseif char ==# "\<C-u>"
             let self._prompt.begin = ''
+            call self._build_prompt()
+        elseif char ==# "\<C-k>"
+            let self._prompt.cursor = ''
+            let self._prompt.end = ''
             call self._build_prompt()
         elseif char ==# "\<bs>"
             let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
