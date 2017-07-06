@@ -65,6 +65,7 @@ function! SpaceVim#autocmds#init() abort
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
     if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
@@ -136,6 +137,12 @@ function! SpaceVim#autocmds#VimEnter() abort
     call SpaceVim#layers#core#tabline#def_colors()
     set showtabline=2
   endif
+endfunction
+
+function! s:disable_welcome() abort
+    augroup SPwelcome
+        au!
+    augroup END
 endfunction
 
 
