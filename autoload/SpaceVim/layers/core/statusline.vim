@@ -214,6 +214,10 @@ function! SpaceVim#layers#core#statusline#get(...) abort
                     \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b# %{get(unite#get_context(), "buffer_name", "")} '
                     \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c# '
                     \ . '%#SpaceVim_statusline_c# %{unite#get_status_string()} '
+    elseif &filetype ==# 'SpaceVimFlyGrep'
+        return '%#SpaceVim_statusline_a# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+                    \ . '%#SpaceVim_statusline_b# %{getcwd()}%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+                    \ . '%#SpaceVim_statusline_c# %{SpaceVim#plugins#flygrep#lineNr()}'
     endif
     if a:0 > 0
         return s:active()

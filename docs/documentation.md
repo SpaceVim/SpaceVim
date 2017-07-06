@@ -76,6 +76,7 @@ title:  "Documentation"
             * [Searching in a project](#searching-in-a-project)
             * [Background searching in a project](#background-searching-in-a-project)
             * [Searching the web](#searching-the-web)
+        * [Searching on the fly](#searching-on-the-fly)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
         * [Text insertion commands](#text-insertion-commands)
@@ -1117,12 +1118,34 @@ Key Binding	| Description
 
 ##### Searching the web
 
-Key Binding	Description
+Key Binding	| Description
 -----------| -----------
 `SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.
 `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO)
 
 **Note**: to enable google suggestions in vim, you need to add `let g:spacevim_enable_googlesuggest = 1` to your custom Configuration file.
+
+#### Searching on the fly
+
+Key Binding	| Description
+-----------| -----------
+`SPC s g G` | Searching in project on the fly with default tools
+
+key binding in FlyGrep buffer:
+
+Key Binding	Description
+-----------| -----------
+`<Esc>` | close FlyGrep buffer
+`<Enter>` | open file at the cursor line
+`<Tab>` | move cursor line down
+`<S-Tab>` | move cursor line up
+`<Bs>` | remove last character
+`<C-w>` | remove the Word before the cursor
+`<C-u>` | remove the Line before the cursor
+`<C-k>` | remove the Line after the cursor
+`<C-a>`/`<Home>` | Go to the beginning of the line
+`<C-e>`/`<End>` | Go to the end of the line
+
 
 #### Persistent highlighting
 

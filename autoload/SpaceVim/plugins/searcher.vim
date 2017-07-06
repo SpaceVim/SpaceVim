@@ -2,7 +2,7 @@ let s:JOB = SpaceVim#api#import('job')
 
 let s:rst = []
 
-function! SpaceVim#plugins#searcher#find(expr, exe)
+function! SpaceVim#plugins#searcher#find(expr, exe) abort
     if empty(a:expr)
         let expr = input('search expr: ')
     else
@@ -14,6 +14,8 @@ function! SpaceVim#plugins#searcher#find(expr, exe)
                 \ 'on_exit' : function('s:search_exit'),
                 \ })
 endfunction
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:event)
 function! s:search_stdout(id, data, event) abort
     for data in a:data
         let info = split(data, '\:\d\+\:')
@@ -30,27 +32,31 @@ function! s:search_stdout(id, data, event) abort
 endfunction
 
 function! s:get_search_cmd(exe, expr) abort
-    if a:exe == 'grep'
+    if a:exe ==# 'grep'
         return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
-    elseif a:exe == 'rg'
+    elseif a:exe ==# 'rg'
         return ['rg', '-n', a:expr]
     else
         return [a:exe, a:expr]
     endif
 endfunction
 
+" @vimlint(EVL103, 1, a:data)
 function! s:search_exit(id, data, event) abort
     let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:event)
 
-function! SpaceVim#plugins#searcher#list()
+function! SpaceVim#plugins#searcher#list() abort
     call setqflist(s:rst)
     let s:rst = []
     copen
 endfunction
 
-function! SpaceVim#plugins#searcher#count()
+function! SpaceVim#plugins#searcher#count() abort
     if empty(s:rst)
         return ''
     else
