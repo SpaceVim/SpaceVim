@@ -19,6 +19,7 @@ let s:grep_expr = ''
 let s:grep_exe = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 
+" @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
     let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_exe, s:grep_expr), {
                 \ 'on_stdout' : function('s:grep_stdout'),
@@ -26,6 +27,7 @@ function! s:grep_timer(timer) abort
                 \ 'on_exit' : function('s:grep_exit'),
                 \ })
 endfunction
+" @vimlint(EVL103, 0, a:timer)
 
 function! s:flygrep(expr) abort
     call s:MPT._build_prompt()
