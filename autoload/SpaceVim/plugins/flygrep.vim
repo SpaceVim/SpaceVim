@@ -15,6 +15,20 @@ function! SpaceVim#plugins#flygrep#open() abort
     let &t_ve = save_tve
 endfunction
 
+let s:grep_expr = ''
+let s:grep_exe = SpaceVim#mapping#search#default_tool()
+let s:grep_timer_id = 0
+
+" @vimlint(EVL103, 1, a:timer)
+function! s:grep_timer(timer) abort
+    let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_exe, s:grep_expr), {
+                \ 'on_stdout' : function('s:grep_stdout'),
+                \ 'in_io' : 'null',
+                \ 'on_exit' : function('s:grep_exit'),
+                \ })
+endfunction
+" @vimlint(EVL103, 0, a:timer)
+
 function! s:flygrep(expr) abort
     call s:MPT._build_prompt()
     if a:expr ==# ''
@@ -27,12 +41,7 @@ function! s:flygrep(expr) abort
     endtr
     exe 'syn match FileNames /' . substitute(a:expr, '\([/\\]\)', '\\\1', 'g') . '/'
     hi def link FileNames MoreMsg
-    let exe = SpaceVim#mapping#search#default_tool()
-    let s:grepid =  s:JOB.start(s:get_search_cmd(exe, a:expr), {
-                \ 'on_stdout' : function('s:grep_stdout'),
-                \ 'in_io' : 'null',
-                \ 'on_exit' : function('s:grep_exit'),
-                \ })
+    let s:grep_timer_id = timer_start(500, funcref('s:grep_timer'), {'repeat' : 1})
 endfunction
 
 let s:MPT._handle_fly = function('s:flygrep')
@@ -47,6 +56,9 @@ let s:MPT._onclose = function('s:close_buffer')
 function! s:close_grep_job() abort
     if s:grepid != 0
         call s:JOB.stop(s:grepid)
+    endif
+    if s:grep_timer_id != 0
+        call timer_stop(s:grep_timer_id)
     endif
     normal! "_ggdG
 endfunction
