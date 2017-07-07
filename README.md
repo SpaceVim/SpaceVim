@@ -123,19 +123,19 @@ let g:spacevim_max_column     = 80
 let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles/'
 
 " set SpaceVim colorscheme
-let g:spacevim_colorscheme = 'jellybeans'
+let g:spacevim_colorscheme = 'gruvbox'
 
 " Set plugin manager, you want to use, default is dein.vim
 let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" use space as `<Leader>`
-let mapleader = "\<space>"
 
 " Set windows shortcut leader [Window], default is `s`
 let g:spacevim_windows_leader = 's'
 
 " Set unite work flow shortcut leader [Unite], default is `f`
 let g:spacevim_unite_leader = 'f'
+
+" Set Denite work flow shortcut leader [Denite], default is `F`
+let g:spacevim_denite_leader = 'F'
 
 " By default, language specific plugins are not loaded. This can be changed
 " with the following, then the plugins for go development will be loaded.
@@ -193,11 +193,6 @@ curl -sLf https://spacevim.org/install.sh | bash
 
 **After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins**
 
-Once plugins start installing, at the bottom of the vim window, you will see
-`[dein] Install started: (YYYY/MM/DD HH:MM:SS)`
-
-Please wait for all the plugins to complete installing before using vim. Once the plugin installation completes, you will see
-`[dein] Done: (YYYY/MM/DD HH:MM:SS) `. At this point you can start using vim.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 
