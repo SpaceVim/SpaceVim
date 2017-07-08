@@ -43,9 +43,6 @@ func! s:self._handle_input() abort
             call call(self._function_key[char], [])
             continue
         endif
-        if char ==# "\<FocusLost>" || char ==# "\<FocusGained>"
-            continue
-        endif
         if char ==# "\<Right>" || char == 6
             let self._prompt.begin = self._prompt.begin . self._prompt.cursor
             let self._prompt.cursor = matchstr(self._prompt.end, '^.')
@@ -88,6 +85,8 @@ func! s:self._handle_input() abort
         elseif char == self._keys.close
             call self.close()
             break
+        elseif char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
+            continue
         else
             let self._prompt.begin .= char
             call self._build_prompt()
