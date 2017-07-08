@@ -139,10 +139,46 @@ function! s:open_item() abort
     endif
 endfunction
 
+function! s:double_click() abort
+    if line('.') !=# ''
+        if s:grepid != 0
+            call s:JOB.stop(s:grepid)
+        endif
+        call s:MPT._clear_prompt()
+        let s:MPT._quit = 1
+        let isfname = &isfname
+        if s:SYS.isWindows
+            set isfname-=:
+        endif
+        normal! gF
+        let nr = bufnr('%')
+        q
+        exe 'silent b' . nr
+        normal! :
+        let &isfname = isfname
+    endif
+endfunction
+
+function! s:move_cursor() abort
+    if v:mouse_win == winnr()
+        let cl = line('.')
+        if cl < v:mouse_lnum
+            exe 'normal! ' . (v:mouse_lnum - cl) . 'j'
+        elseif cl > v:mouse_lnum
+            exe 'normal! ' . (cl - v:mouse_lnum) . 'k'
+        endif
+    endif
+    call s:MPT._build_prompt()
+endfunction
+
 let s:MPT._function_key = {
             \ "\<Tab>" : function('s:next_item'),
+            \ "\<ScrollWheelDown>" : function('s:next_item'),
             \ "\<S-tab>" : function('s:previous_item'),
+            \ "\<ScrollWheelUp>" : function('s:previous_item'),
             \ "\<Return>" : function('s:open_item'),
+            \ "\<LeftMouse>" : function('s:move_cursor'),
+            \ "\<2-LeftMouse>" : function('s:double_click'),
             \ }
 
 " statusline api

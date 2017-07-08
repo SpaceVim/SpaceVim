@@ -43,7 +43,7 @@ func! s:self._handle_input() abort
             call call(self._function_key[char], [])
             continue
         endif
-        if char ==# "\<FocusLost>" || char ==# "\<FocusGained>"
+        if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
             continue
         endif
         if char ==# "\<Right>" || char == 6
