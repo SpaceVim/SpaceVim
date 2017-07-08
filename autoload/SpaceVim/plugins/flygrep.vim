@@ -1,5 +1,6 @@
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
+let s:SYS = SpaceVim#api#import('system')
 let s:grepid = 0
 
 
@@ -125,11 +126,16 @@ function! s:open_item() abort
         endif
         call s:MPT._clear_prompt()
         let s:MPT._quit = 1
+        let isfname = &isfname
+        if s:SYS.isWindows
+            set isfname-=:
+        endif
         normal! gF
         let nr = bufnr('%')
         q
         exe 'silent b' . nr
         normal! :
+        let &isfname = isfname
     endif
 endfunction
 
