@@ -5,6 +5,14 @@
 "
 " Create a cmdline prompt, use while loop to get the input from user. The
 " default mapping for prompt is:
+" >
+"   <Bs>            remove last character
+"   <C-w>           remove the Word before the cursor
+"   <C-u>           remove the Line before the cursor
+"   <C-k>           remove the Line after the cursor
+"   <C-a> / <Home>  Go to the beginning of the line
+"   <C-e> / <End>   Go to the end of the line
+" <
 
 let s:self = {}
 
