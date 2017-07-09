@@ -15,20 +15,27 @@ else
     let s:Fsep = '/'
 endif
 "Use English for anything in vim
-if WINDOWS()
-    silent exec 'lan mes en_US.UTF-8'
-elseif OSX()
-    silent exec 'language en_US'
-else
-    let s:uname = system('uname -s')
-    if s:uname ==# "Darwin\n"
-        " in mac-terminal
+try
+    if WINDOWS()
+        silent exec 'lan mes en_US.UTF-8'
+    elseif OSX()
         silent exec 'language en_US'
     else
-        " in linux-terminal
-        silent exec 'lan en_US.utf8'
+        let s:uname = system('uname -s')
+        if s:uname ==# "Darwin\n"
+            " in mac-terminal
+            silent exec 'language en_US'
+        elseif s:uname ==# "SunOS\n"
+            " in Sun-OS terminal
+            silent exec 'lan en_US.UTF-8'
+        else
+            " in linux-terminal
+            silent exec 'lan en_US.utf8'
+        endif
     endif
-endif
+catch /^Vim\%((\a\+)\)\=:E197/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8')
+endtry
 
 " try to set encoding to utf-8
 if WINDOWS()

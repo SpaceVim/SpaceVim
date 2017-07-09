@@ -17,8 +17,7 @@ title:  "chinese totur"
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-02-26_1365x739](https://cloud.githubusercontent.com/assets/13142418/23339920/590f2e9a-fc67-11e6-99ec-794f79ba0902.png)
-
+![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
 
 项 目 主 页： [spacevim.org](https://spacevim.org)
 
@@ -115,8 +114,8 @@ let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
 " Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+" By default it is ~/.cache/vimfiles/.
+let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles/'
 
 " set SpaceVim colorscheme
 let g:spacevim_colorscheme = 'jellybeans'
@@ -169,3 +168,18 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 `g:spacevim_guifont` | '' | 设置SpaceVim字体
 `g:spacevim_sidebar_width` | 30 | 设置边栏宽度，文件树以及语法树
 `g:spacevim_custom_plugins` | `[]` | 设置自定义插件
+
+
+### 延伸阅读
+
+#### Vim 8 新特新之旅
+
+<ul>
+    {% for post in site.categories.tutorials_cn %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
+
+

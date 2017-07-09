@@ -1,16 +1,19 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
+[Wiki](https://github.com/SpaceVim/SpaceVim/wiki) |
 [Documentation](http://spacevim.org/documentation/) |
 [Twitter](https://twitter.com/SpaceVim) |
 [Community](https://spacevim.org/community/) |
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version 0.2.0-dev](https://img.shields.io/badge/version-0.2.0--dev-yellow.svg?style=flat-square)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](doc/SpaceVim.txt)
+![Version](https://img.shields.io/badge/version-0.4.0--dev-FF00CC.svg)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature, escpecially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, especially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers.
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
@@ -20,18 +23,27 @@ Here is a throughput graph of the repository for the last few weeks:
 
 # Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Documentation](#documentation)
-    - [Quick start guide](#quick-start-guide)
-- [Getting Help](#getting-help)
-- [Install](#install)
-- [Update](#update)
-- [Community](#community)
-- [Support SpaceVim](#support-spacevim)
-    - [contribute to SpaceVim](#contribute-to-spacevim)
-    - [Write post about SpaceVim](#write-post-about-spacevim)
-- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc GFM -->
+* [Introduction](#introduction)
+* [Features](#features)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+    * [Unite work flow](#unite-work-flow)
+    * [module statusline](#module-statusline)
+* [Documentation](#documentation)
+    * [Quick start guide](#quick-start-guide)
+* [Getting Help](#getting-help)
+* [Community](#community)
+* [Install](#install)
+    * [Linux/Mac](#linuxmac)
+    * [windows support](#windows-support)
+* [Update](#update)
+* [Support SpaceVim](#support-spacevim)
+    * [contribute to SpaceVim](#contribute-to-spacevim)
+    * [Write post about SpaceVim](#write-post-about-spacevim)
+* [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
 
 ## Introduction
 
@@ -41,9 +53,9 @@ to select the layers they need. It got inspired by [spacemacs](https://github.co
 please star it on github. It's a great way of getting feedback and gives me the kick to
 put more time into development.
 
-![2017-02-26_1365x739](https://cloud.githubusercontent.com/assets/13142418/23339920/590f2e9a-fc67-11e6-99ec-794f79ba0902.png)
+![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
+If you are new to vim, you should learn about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
 
 ## Features
 
@@ -59,10 +71,36 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
     [conventions](http://spacevim.org/development/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
-This is the Unite centric work-flow:
+### Mnemonic key bindings
 
-![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
+for example, after pressing `<Space>` in normal mode, you will see :
+
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+
+here is the guide for the default mappings in SpaceVim:
+
+![spc](https://user-images.githubusercontent.com/13142418/27549426-8141bd86-5ace-11e7-9082-eb86b398acdc.png)
+
+### Unite work flow
+
+![unite](docs/img/unite_mappings.png)
+
+### module statusline
+
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line. and this layer is loaded by default.
+
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
+
+![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 ## Documentation
 
@@ -74,7 +112,7 @@ SpaceVim load custom configuration from `~/.SpaceVim.d/init.vim`,
 
 here is an example:
 
-```viml
+```vim
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
 " file for all possible options:
 let g:spacevim_default_indent = 3
@@ -85,19 +123,19 @@ let g:spacevim_max_column     = 80
 let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles/'
 
 " set SpaceVim colorscheme
-let g:spacevim_colorscheme = 'jellybeans'
+let g:spacevim_colorscheme = 'gruvbox'
 
 " Set plugin manager, you want to use, default is dein.vim
 let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" use space as `<Leader>`
-let mapleader = "\<space>"
 
 " Set windows shortcut leader [Window], default is `s`
 let g:spacevim_windows_leader = 's'
 
 " Set unite work flow shortcut leader [Unite], default is `f`
 let g:spacevim_unite_leader = 'f'
+
+" Set Denite work flow shortcut leader [Denite], default is `F`
+let g:spacevim_denite_leader = 'F'
 
 " By default, language specific plugins are not loaded. This can be changed
 " with the following, then the plugins for go development will be loaded.
@@ -153,13 +191,8 @@ Try these Neovim hangouts for any questions, problems or comments.
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins** 
+**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins**
 
-Once plugins start installing, at the bottom of the vim window, you will see
-`[dein] Install started: (YYYY/MM/DD HH:MM:SS)`
-
-Please wait for all the plugins to complete installing before using vim. Once the plugin installation completes, you will see
-`[dein] Done: (YYYY/MM/DD HH:MM:SS) `. At this point you can start using vim.
 
 SpaceVim required Vim7.4 above or neovim, here is the installation of neovim/vim with python support:
 
@@ -176,21 +209,28 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-    make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
 
-    ```sh
-    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-    ```
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
-    for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
-    ```bash
-    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-    ```
+```bash
+git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+```
 
+## Update
+
+you can update SpaceVim with the command below:
+
+```viml
+:SPUpdate SpaceVim
+```
 
 ## Support SpaceVim
 

@@ -199,8 +199,13 @@ elseif executable('ag')
   " Use ag (the silver searcher)
   " https://github.com/ggreer/the_silver_searcher
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+  let g:unite_source_grep_default_opts =
+        \ '-i --vimgrep --hidden --ignore ' .
         \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt = ''
+elseif executable('rg') && 0
+  let g:unite_source_grep_command = 'rg'
+  let g:unite_source_grep_default_opts = ''
   let g:unite_source_grep_recursive_opt = ''
 elseif executable('pt')
   " Use pt (the platinum searcher)
@@ -246,8 +251,8 @@ call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
       \   'keep_focus'   : 1,
       \   'winheight'    : 20,
       \ })
-call unite#custom#source('file_rec/async', 'ignore_globs',
-      \ ['*.png','.git/','*.ttf'])
+call unite#custom#source('file_rec/async,file_rec/neovim', 'ignore_globs',
+      \ ['*.png','.git/','*.ttf', '*.eot', '*.woff', '*.svg'])
 nnoremap <silent><leader>uf  :<C-u>Unite
       \ -no-split -buffer-name=files -start-insert file<cr>
 nnoremap <silent><leader>ufm :<C-u>Unite
@@ -283,9 +288,16 @@ nnoremap <silent><Leader>ta :<C-u>Unite -start-insert -buffer-name=tag tag<cr>
 nnoremap <silent><leader>ugg :Unite -silent -start-insert menu:git<CR>
 nnoremap <silent><leader>ugf :UniteWithCursorWord file_rec/async<CR>
 nnoremap <silent><leader>ugt :UniteWithCursorWord tag<CR>
-nnoremap <silent><Leader>ls :Unite
-      \ -silent -ignorecase -winheight=17
-      \ -start-insert menu:MyStarredrepos<CR>
+nnoremap <silent><Leader>ls :call <SID>view_github_starred_repos()<CR>
+function! s:view_github_starred_repos() abort
+  if empty(g:unite_source_menu_menus.MyStarredrepos.command_candidates)
+    if UpdateStarredRepos()
+      Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
+    endif
+  else
+    Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
+  endif
+endfunction
 nnoremap <silent><Leader>lm :Unite
       \ -silent -ignorecase -winheight=17 -start-insert menu:MpvPlayer<CR>
 call zvim#util#loadMusics()
@@ -294,6 +306,7 @@ augroup unite_buffer_feature
 augroup END
 function! s:unite_my_settings()
   " Overwrite settings.
+  setlocal nowrap
 
   " Play nice with supertab
   let b:SuperTabDisabled=1

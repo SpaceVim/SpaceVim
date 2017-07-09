@@ -11,7 +11,6 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
             \ && !neosnippet#expandable()
         return "\<plug>(neosnippet_jump)"
       elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !=#'('
-        let g:wsd = 1
         return "\<plug>(neosnippet_expand_or_jump)"
       elseif pumvisible()
         return "\<C-n>"

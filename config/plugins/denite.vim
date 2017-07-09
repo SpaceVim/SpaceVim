@@ -12,7 +12,7 @@ let s:denite_options = {
       \ 'highlight_matched_char' : 'MoreMsg',
       \ 'highlight_matched_range' : 'MoreMsg',
       \ 'direction': 'rightbelow',
-      \ 'statusline' : 'false',
+      \ 'statusline' : 0,
       \ 'prompt' : '➭',
       \ }}
 
@@ -37,7 +37,7 @@ if !s:sys.isWindows
     " For ripgrep
     " Note: It is slower than ag
     call denite#custom#var('file_rec', 'command',
-          \ ['rg', '--hidden', '--files', '--glob', '!.git', '']
+          \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
           \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
           \ )
   elseif executable('ag')

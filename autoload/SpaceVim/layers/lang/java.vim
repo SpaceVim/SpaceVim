@@ -60,10 +60,13 @@ endfunction
 
 function! SpaceVim#layers#lang#java#config() abort
   function! s:java_mappings() abort
-    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+    let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+    if g:spacevim_enable_insert_leader
+      inoremap <silent> <buffer> <leader>UU <esc>bgUwea
+      inoremap <silent> <buffer> <leader>uu <esc>bguwea
+      inoremap <silent> <buffer> <leader>ua <esc>bgulea
+      inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+    endif
     nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
     imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
     nmap <silent><buffer> <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
@@ -79,6 +82,7 @@ function! SpaceVim#layers#lang#java#config() abort
     nmap <silent><buffer> <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
 
     imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','M'], '<Plug>(JavaComplete-Generate-AbstractMethods)', 'Generate abstract methods', 0)
 
     nmap <silent><buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
     nmap <silent><buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)

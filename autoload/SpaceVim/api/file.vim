@@ -1,6 +1,7 @@
 scriptencoding utf-8
 let s:file = {}
 let s:system = SpaceVim#api#import('system')
+let s:vim_comp = SpaceVim#api#import('vim#compatible')
 
 if s:system.isWindows
   let s:file['separator'] = '\'
@@ -174,6 +175,16 @@ function! s:read(fname) abort
 endfunction
 
 let s:file['read'] = function('s:read')
+
+function! s:ls(dir, if_file_only) abort
+  let items = s:vim_comp.globpath(a:dir, '*')
+  if a:if_file_only
+    let items = filter(items, '!isdirectory(v:val)')
+  endif
+  return map(items, "fnamemodify(v:val, ':t')")
+endfunction
+
+let s:file['ls'] = function('s:ls')
 
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)

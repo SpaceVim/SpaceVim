@@ -8,6 +8,7 @@
 
 let s:save_cpo = &cpo
 set cpo&vim
+scriptencoding utf-8
 
 function! SpaceVim#mapping#guide#has_configuration() "{{{
   return exists('s:desc_lookup')
@@ -83,6 +84,9 @@ endfunction " }}}
 
 
 function! s:start_parser(key, dict) " {{{
+  if a:key ==# '[KEYs]'
+    return
+  endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
   let readmap = ""
   redir => readmap
@@ -291,7 +295,7 @@ function! s:create_string(layout) " {{{
   call insert(r, '')
   let output = join(r, "\n ")
   cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <c-c> <LGCMD>submode<CR>
+  cnoremap <nowait> <buffer> <silent> <C-h> <LGCMD>paging_help<CR>
   return output
 endfunction " }}}
 
@@ -318,6 +322,9 @@ function! s:start_buffer() " {{{
   silent 1put!=string
   normal! gg"_dd
   setlocal nomodifiable
+  if empty(maparg("<c-c>", "c", 0, 1))
+    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
+  endif
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -326,8 +333,10 @@ function! s:handle_input(input) " {{{
   call s:winclose()
   if type(a:input) ==? type({})
     let s:lmap = a:input
+    let s:guide_group = a:input
     call s:start_buffer()
   else
+    let s:prefix_key_inp = ''
     call feedkeys(s:vis.s:reg.s:count, 'ti')
     redraw!
     try
@@ -341,15 +350,27 @@ function! s:wait_for_input() " {{{
   redraw!
   let inp = input("")
   if inp ==? ''
+    let s:prefix_key_inp = ''
     call s:winclose()
-  elseif match(inp, "^<LGCMD>submode") == 0
+    doautocmd WinEnter
+  elseif match(inp, "^<LGCMD>paging_help") == 0
+    let s:guide_help_mode = 1
+    call s:updateStatusline()
+    redraw!
     call s:submode_mappings()
   else
     if inp == ' '
-      let inp = '<space>'
+      let inp = '[SPC]'
     endif
     let fsel = get(s:lmap, inp)
-    call s:handle_input(fsel)
+    if !empty(fsel)
+      let s:prefix_key_inp = inp
+      call s:handle_input(fsel)
+    else
+      let s:prefix_key_inp = ''
+      call s:winclose()
+      doautocmd WinEnter
+    endif
   endif
 endfunction " }}}
 function! s:winopen() " {{{
@@ -383,14 +404,34 @@ function! s:winopen() " {{{
 endfunction " }}}
 
 function! s:updateStatusline() abort
-  exe 'setlocal statusline=\ Leader\ Guide\ for:\ ' .
+  call SpaceVim#mapping#guide#theme#hi()
+  let gname = get(s:guide_group, 'name', '')
+  if !empty(gname)
+    let gname = ' - ' . gname[1:]
+    let gname = substitute(gname,' ', '\\ ', 'g')
+  endif
+  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
+        \ '%#LeaderGuiderSep1#' .
+        \ '%#LeaderGuiderName#\ ' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
+        \ . get(s:, 'prefix_key_inp', '') . gname
+        \ . '\ %#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ . s:guide_help_msg()
+endfunction
+
+function! s:guide_help_msg() abort
+  if s:guide_help_mode == 1
+    let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
+  else
+    let msg = ' [C-h paging/help]'
+  endif
+  return substitute(msg,' ', '\\ ', 'g')
 endfunction
 
 function! s:winclose() " {{{
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
-    close
+    noautocmd close
     redraw!
     exe s:winres
     let s:gwin = -1
@@ -404,6 +445,13 @@ function! s:page_down() " {{{
   redraw!
   call s:wait_for_input()
 endfunction " }}}
+function! s:page_undo() " {{{
+  call s:winclose()
+  let s:guide_group = {}
+  let s:prefix_key_inp = ''
+  let s:lmap = s:lmap_undo
+  call s:start_buffer()
+endfunction " }}}
 function! s:page_up() " {{{
   call feedkeys("\<c-c>", "n")
   call feedkeys("\<c-b>", "x")
@@ -412,16 +460,23 @@ function! s:page_up() " {{{
 endfunction " }}}
 
 function! s:handle_submode_mapping(cmd) " {{{
+  let s:guide_help_mode = 0
+  call s:updateStatusline()
   if a:cmd ==? '<LGCMD>page_down'
     call s:page_down()
   elseif a:cmd ==? '<LGCMD>page_up'
     call s:page_up()
+  elseif a:cmd ==? '<LGCMD>undo'
+    call s:page_undo()
   elseif a:cmd ==? '<LGCMD>win_close'
     call s:winclose()
+  else
+    call feedkeys("\<c-c>", "n")
+    redraw!
+    call s:wait_for_input()
   endif
 endfunction " }}}
 function! s:submode_mappings() " {{{
-  let submodestring = ""
   let maplist = []
   for key in items(g:leaderGuide_submode_mappings)
     let map = maparg(key[0], "c", 0, 1)
@@ -429,9 +484,8 @@ function! s:submode_mappings() " {{{
       call add(maplist, map)
     endif
     execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-    let submodestring = submodestring.' '.key[0].': '.key[1].','
   endfor
-  let inp = input(strpart(submodestring, 0, strlen(submodestring)-1))
+  let inp = input('')
   for map in maplist
     call s:mapmaparg(map)
   endfor
@@ -458,10 +512,12 @@ function! s:get_register() "{{{
   return clip
 endfunction "}}}
 function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
+  let s:guide_help_mode = 0
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
   let s:toplevel = a:key ==? '  '
   let s:prefix_key = a:key
+  let s:guide_group = {}
 
   if has('nvim') && !exists('s:reg')
     let s:reg = ''
@@ -481,6 +537,7 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
     let rundict = s:cached_dicts[a:key]
   endif
   let s:lmap = rundict
+  let s:lmap_undo = rundict
 
   call s:start_buffer()
 endfunction " }}}
@@ -497,14 +554,30 @@ if !exists("g:leaderGuide_displayfunc")
   let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
 endif
 
-call SpaceVim#mapping#guide#register_prefix_descriptions('\',
-      \ 'g:_spacevim_mappings')
+if get(g:, 'mapleader', '\') == ' '
+  call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
+        \ 'g:_spacevim_mappings')
+else
+  call SpaceVim#mapping#guide#register_prefix_descriptions('\',
+        \ 'g:_spacevim_mappings')
+  call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
+        \ 'g:_spacevim_mappings_space')
+endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ '[KEYs]',
+      \ 'g:_spacevim_mappings_prefixs')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ 'g',
+      \ 'g:_spacevim_mappings_g')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ 'z',
+      \ 'g:_spacevim_mappings_z')
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

@@ -181,14 +181,26 @@ func! Show_Log_for_current_plugin()
     exe "nnoremap <buffer><CR> :call <SID>Opencommit('". plug ."', strpart(split(getline('.'),'[33m')[1],0,7))<CR>"
 endf
 fu! s:Opencommit(repo,commit)
-    exe "OpenBrowser https://github.com/" . a:repo ."/commit/". a:commit
+    exe 'OpenBrowser https://github.com/' . a:repo .'/commit/'. a:commit
 endf
 
 fu! UpdateStarredRepos()
-    let repos = github#api#users#GetStarred('wsdjeg')
+    if empty(g:spacevim_github_username)
+        call SpaceVim#logger#warn('You need to set g:spacevim_github_username')
+        return 0
+    endif
+    let cache_file = expand('~/.data/github' . g:spacevim_github_username)
+    if filereadable(cache_file)
+        let repos = json_encode(readfile(cache_file, '')[0])
+    else
+        let repos = github#api#users#GetStarred(g:spacevim_github_username)
+        echom writefile([json_decode(repos)], cache_file, '')
+    endif
+
     for repo in repos
         let description = repo.full_name . repeat(' ', 40 - len(repo.full_name)) . repo.description
-        let cmd = "OpenBrowser " . repo.html_url
+        let cmd = 'OpenBrowser ' . repo.html_url
         call add(g:unite_source_menu_menus.MyStarredrepos.command_candidates, [description,cmd])
     endfor
+    return 1
 endf

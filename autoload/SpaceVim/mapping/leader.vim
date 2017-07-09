@@ -7,7 +7,9 @@
 "=============================================================================
 
 function! SpaceVim#mapping#leader#defindglobalMappings() abort
-  inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+  if g:spacevim_enable_insert_leader
+    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+  endif
 
   "for buftabs
   noremap <silent><Leader>bp :bprev<CR>
@@ -276,7 +278,7 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
           \ 'unite all file and jump']
     nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17
           \ -start-insert menu:CustomKeyMaps<CR>
-    let g:_spacevim_mappings_unite['<space>'] = ['Unite -silent -ignorecase' .
+    let g:_spacevim_mappings_unite['[SPC]'] = ['Unite -silent -ignorecase' .
           \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
           \ 'unite customkeymaps']
   endif
@@ -287,9 +289,24 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[unite]'
   elseif a:key == g:spacevim_denite_leader
     return '[denite]'
+  elseif a:key == ' '
+    return '[SPC]'
+  elseif a:key == 'g'
+    return '[g]'
+  elseif a:key == 'z'
+    return '[z]'
   else
     return '<leader>'
   endif
 endfunction
+
+function! SpaceVim#mapping#leader#defindKEYs() abort
+  let g:_spacevim_mappings_prefixs = {}
+  let g:_spacevim_mappings_prefixs[g:spacevim_unite_leader] = {'name' : '+Unite prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_unite_leader], g:_spacevim_mappings_unite)
+  let g:_spacevim_mappings_prefixs[g:spacevim_denite_leader] = {'name' : '+Denite prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_denite_leader], g:_spacevim_mappings_denite)
+endfunction
+
 
 " vim:set et sw=2 cc=80:

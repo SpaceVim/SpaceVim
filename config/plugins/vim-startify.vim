@@ -1,20 +1,27 @@
-let g:startify_custom_header = get(g:, 'startify_custom_header', [
-      \'',
-      \'',
-      \'        /######                                     /##    /##/##             ',
-      \'       /##__  ##                                   | ##   | #|__/             ',
-      \'      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### ',
-      \'      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##',
-      \'       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##',
-      \'       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##',
-      \'      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##',
-      \'       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/',
-      \'               | ##                                                           ',
-      \'               | ##                                                           ',
-      \'               |__/                                                           ',
-      \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
-      \'',
-      \ ])
+let s:NUM = SpaceVim#api#import('data#number')
+fu! s:update_logo()
+  if !exists('g:startify_custom_header') && !exists('g:_spacevim_welcome_banners')
+    let g:startify_custom_header = [
+          \'',
+          \'',
+          \'        /######                                     /##    /##/##             ',
+          \'       /##__  ##                                   | ##   | #|__/             ',
+          \'      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### ',
+          \'      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##',
+          \'       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##',
+          \'       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##',
+          \'      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##',
+          \'       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/',
+          \'               | ##                                                           ',
+          \'               | ##                                                           ',
+          \'               |__/                                                           ',
+          \'                      version : ' . g:spacevim_version . '   by : spacevim.org',
+          \'',
+          \ ]
+  elseif exists('g:_spacevim_welcome_banners')
+    let g:startify_custom_header = g:_spacevim_welcome_banners[s:NUM.random(0, len(g:_spacevim_welcome_banners))]
+  endif
+endf
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
 let g:startify_files_number = 6
 let g:startify_list_order = [
@@ -40,16 +47,18 @@ let g:startify_skiplist = [
       \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
       \ 'bundle/.*/doc',
       \ ]
-fu! <SID>startify_mapping()
-  if getcwd() == $VIM || getcwd() == expand('~')
-    nnoremap <silent><buffer> <c-p> :<c-u>CtrlP ~\DotFiles<cr>
-  endif
-endf
 augroup startify_map
   au!
-  autocmd FileType startify nnoremap <buffer><F2> <Nop>
-  autocmd FileType startify call <SID>startify_mapping()
-  autocmd FileType startify set scrolloff=0
+  autocmd FileType startify nnoremap <buffer> <F2> <Nop>
+  if !exists('g:startify_custom_header')
+    autocmd FileType startify call <SID>update_logo()
+  endif
+  autocmd FileType startify setl scrolloff=0 nowrap
 augroup END
+
+if !exists('g:startify_custom_header')
+  call s:update_logo()
+endif
+call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
 
 " vim:set et sw=2:

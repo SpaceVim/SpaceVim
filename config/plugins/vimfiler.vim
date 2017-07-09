@@ -8,14 +8,15 @@ let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '▷')
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
+let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
 "let g:vimfiler_preview_action = 'auto_preview'
-let g:vimfiler_ignore_pattern = [
+let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.git$',
       \ '^\.DS_Store$',
       \ '^\.init\.vim-rplugin\~$',
       \ '^\.netrwhist$',
       \ '\.class$'
-      \]
+      \])
 
 if has('mac')
   let g:vimfiler_quick_look_command =
@@ -41,7 +42,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'winminwidth' : 30,
       \ 'toggle' : 1,
       \ 'auto_expand': 1,
-      \ 'direction' : 'rightbelow',
+      \ 'direction' : g:vimfiler_direction,
       \ 'explorer_columns' : s:setcolum(),
       \ 'parent': 0,
       \ 'status' : 1,
@@ -57,12 +58,12 @@ call vimfiler#custom#profile('default', 'context', {
 augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()
-  autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
+  autocmd BufEnter * if (!has('vim_starting') && winnr('$') == 1 && &filetype ==# 'vimfiler') |
         \ q | endif
 augroup END
 function! s:vimfilerinit()
-  set nonumber
-  set norelativenumber
+  setl nonumber
+  setl norelativenumber
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
@@ -79,14 +80,16 @@ function! s:vimfilerinit()
   nnoremap <silent><buffer><expr> sg  vimfiler#do_action('vsplit')
   nnoremap <silent><buffer><expr> sv  vimfiler#do_action('split')
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
-  nmap <buffer> gx     <Plug>(vimfiler_execute_vimfiler_associated)
-  nmap <buffer> '      <Plug>(vimfiler_toggle_mark_current_line)
-  nmap <buffer> v      <Plug>(vimfiler_quick_look)
-  nmap <buffer> p      <Plug>(vimfiler_preview_file)
-  nmap <buffer> V      <Plug>(vimfiler_clear_mark_all_lines)
-  nmap <buffer> i      <Plug>(vimfiler_switch_to_history_directory)
-  nmap <buffer> <Tab>  <Plug>(vimfiler_switch_to_other_window)
-  nmap <buffer> <C-r>  <Plug>(vimfiler_redraw_screen)
+  nmap <buffer> gx      <Plug>(vimfiler_execute_vimfiler_associated)
+  nmap <buffer> '       <Plug>(vimfiler_toggle_mark_current_line)
+  nmap <buffer> v       <Plug>(vimfiler_quick_look)
+  nmap <buffer> p       <Plug>(vimfiler_preview_file)
+  nmap <buffer> V       <Plug>(vimfiler_clear_mark_all_lines)
+  nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
+  nmap <buffer> <Tab>   <Plug>(vimfiler_switch_to_other_window)
+  nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
+  nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
+  nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
 endf
 
 " vim:set et sw=2:

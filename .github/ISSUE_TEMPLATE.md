@@ -1,4 +1,5 @@
-## Expected behavior, english is recommend
+<!-- please remove the issue template when request for a feature -->
+## Expected behavior, english is recommended
 
 
 ## Environment Information
@@ -9,7 +10,11 @@
 ## The reproduce ways from Vim starting (Required!)
 
 
-## Output of the ":message" command, and ":echo SpaceVim#logger#viewLog()"
+## Output of the ':SPDebugInfo!'
 
-please post log below, if you want me reproduce your issue quickly, post your custom config here will be better.
+please post log below, if you want me to reproduce your issue quickly, including your custom config here will be better.
+
+## Screenshots
+
+If you have any screenshots for this issue, please upload here. BTW you can use https://asciinema.org/ for recording video in terminal.
 

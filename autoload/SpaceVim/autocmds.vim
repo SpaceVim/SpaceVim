@@ -16,10 +16,18 @@ function! SpaceVim#autocmds#init() abort
           \   bd|
           \   q | endif
     autocmd FileType jsp call JspFileTypeInit()
+    autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
+    autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
     autocmd FileType html,css,jsp EmmetInstall
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
-    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+    if g:spacevim_enable_cursorline == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorline
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorline
+    endif
+    if g:spacevim_enable_cursorcolumn == 1
+      autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
+      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
+    endif
     autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal! g`\"" |
@@ -47,16 +55,19 @@ function! SpaceVim#autocmds#init() abort
           \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
           \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
           \|  else
-            \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-            \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    if empty(maparg('<leader>[', 'n', 0, 1)) && empty(maparg('<leader>]', 'n', 0, 1))
+            \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+            \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+            \|    endif
             \|  endif
     "}}}
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
-    if executable('synclient')
+    if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
       autocmd InsertEnter * call s:disable_touchpad()
       autocmd InsertLeave * call s:enable_touchpad()
@@ -64,9 +75,11 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
-    autocmd VimEnter * if !argc() | call SpaceVim#welcome() | endif
+    autocmd ColorScheme gruvbox call s:fix_gruvbox()
+    autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
   augroup END
 endfunction
+
 function! s:reload_touchpad_status() abort
   if s:touchpadoff
     call s:disable_touchpad()
@@ -96,8 +109,41 @@ function! s:fixindentline() abort
 endfunction
 function! s:generate_doc() abort
   if filereadable('./addon-info.json') && executable('vimdoc')
-    call system('vimdoc .')
+    call SpaceVim#api#import('job').start(['vimdoc', '.'])
   endif
 endfunction
+
+function! s:fix_gruvbox() abort
+  if &background ==# 'dark'
+    hi VertSplit guibg=#282828 guifg=#181A1F
+    "hi EndOfBuffer guibg=#282828 guifg=#282828
+  else
+    hi VertSplit guibg=#fbf1c7 guifg=#e7e9e1
+    "hi EndOfBuffer guibg=#fbf1c7 guifg=#fbf1c7
+  endif
+  hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
+endfunction
+function! SpaceVim#autocmds#VimEnter() abort
+  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+  for argv in g:_spacevim_mappings_space_custom
+    call call('SpaceVim#mapping#space#def', argv)
+  endfor
+  if get(g:, '_spacevim_statusline_loaded', 0) == 1
+    set laststatus=2
+    call SpaceVim#layers#core#statusline#def_colors()
+    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+  endif
+  if get(g:, '_spacevim_tabline_loaded', 0) == 1
+    call SpaceVim#layers#core#tabline#def_colors()
+    set showtabline=2
+  endif
+endfunction
+
+function! s:disable_welcome() abort
+    augroup SPwelcome
+        au!
+    augroup END
+endfunction
+
 
 " vim:set et sw=2:

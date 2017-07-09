@@ -129,15 +129,17 @@ function! SpaceVim#mapping#gd() abort
 endfunction
 
 function! SpaceVim#mapping#clearBuffers() abort
-  let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val)')
-  for i in blisted
-    if i != bufnr('%')
-      try 
-        exe 'bw ' . i
-      catch
-      endtry
-    endif
-  endfor
+  if confirm('Kill all other buffers?', "&Yes\n&No\n&Cancel") == 1
+    let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    for i in blisted
+      if i != bufnr('%')
+        try 
+          exe 'bw ' . i
+        catch
+        endtry
+      endif
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#mapping#split_previous_buffer() abort
@@ -162,7 +164,7 @@ function! SpaceVim#mapping#vertical_split_previous_buffer() abort
 endfunction
 
 function! SpaceVim#mapping#close_current_buffer() abort
-  let buffers = g:_spacevim_list_buffers
+  let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
   let index = index(buffers, bn) 
   if index != -1
@@ -186,10 +188,9 @@ function! SpaceVim#mapping#close_current_buffer() abort
 endfunction
 
 function! SpaceVim#mapping#close_term_buffer(...) abort
-  let buffers = g:_spacevim_list_buffers
+  let buffers = get(g:, '_spacevim_list_buffers', [])
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
-  let g:wsd = [index, abuf, buffers]
   if index != -1
     if index == 0
       if len(buffers) > 1
@@ -208,7 +209,28 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
       endif
     endif
   endif
+endfunction
 
+function! SpaceVim#mapping#kill_visible_buffer_choosewin() abort
+  ChooseWin
+  let nr = bufnr('%')
+  for i in range(1, winnr('$'))
+    if winbufnr(i) == nr
+      exe i .  'wincmd w'
+      enew
+    endif
+  endfor
+  exe 'bwipeout ' . nr
+endfunction
+
+function! SpaceVim#mapping#menu(desc, key, cmd) abort
+  let description = '➤ '
+        \. a:desc
+        \. repeat(' ', 80 - len(a:desc) - len(a:key))
+        \. a:key
+  call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates,
+        \ [description ,
+        \ a:cmd])
 endfunction
 
 " vim:set et sw=2 cc=80:

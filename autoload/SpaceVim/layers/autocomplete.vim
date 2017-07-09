@@ -22,18 +22,18 @@
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
-        \ ['honza/vim-snippets',          { 'on_i' : 1, 'loadconf_before' : 1}],
-        \ ['Shougo/neco-syntax',          { 'on_i' : 1}],
-        \ ['ujihisa/neco-look',           { 'on_i' : 1}],
-        \ ['Shougo/context_filetype.vim', { 'on_i' : 1}],
-        \ ['Shougo/neoinclude.vim',       { 'on_i' : 1}],
+        \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
+        \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
+        \ ['ujihisa/neco-look',           { 'on_event' : 'InsertEnter'}],
+        \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
+        \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],
-        \ ['Shougo/neopairs.vim',         { 'on_i' : 1}],
+        \ ['Shougo/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
         \ ['Raimondi/delimitMate',        { 'merged' : 0}],
         \ ]
   " snippet
   if g:spacevim_snippet_engine ==# 'neosnippet'
-    call add(plugins,  ['Shougo/neosnippet.vim', { 'on_i'  : 1 ,
+    call add(plugins,  ['Shougo/neosnippet.vim', { 'on_event' : 'InsertEnter',
           \ 'on_ft' : 'neosnippet',
           \ 'loadconf' : 1,
           \ 'on_cmd' : 'NeoSnippetEdit'}])
@@ -44,19 +44,20 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   if g:spacevim_autocomplete_method ==# 'ycm'
     call add(plugins, ['ervandew/supertab',                 { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
+    call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
-          \ 'on_i' : 1,
+          \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
     call add(plugins, ['Shougo/neocomplcache.vim', {
-          \ 'on_i' : 1,
+          \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
-          \ 'on_i' : 1,
+          \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
   endif

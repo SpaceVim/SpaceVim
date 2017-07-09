@@ -19,11 +19,11 @@ function! SpaceVim#layers#git#config() abort
     nnoremap <silent> <Leader>gd :Gina diff<CR>
     nnoremap <silent> <Leader>gs :Gina status<CR>
     nnoremap <silent> <Leader>gc :Gina commit<CR>
-    nnoremap <silent> <Leader>gb :Gina blame<CR>
+    nnoremap <silent> <Leader>gb :Gina blame :<CR>
     nnoremap <silent> <Leader>gp :Gina push<CR>
     nnoremap <silent> <Leader>ga :Gina add %<CR>
     nnoremap <silent> <Leader>gA :Gina add .<CR>
-    let g:_spacevim_mappings.g = {'name' : 'git function',
+    let g:_spacevim_mappings.g = {'name' : '+git function',
           \ 'd' : ['Gina diff', 'git diff'],
           \ 's' : ['Gina status', 'git status'],
           \ 'c' : ['Gina commit', 'git commit'],
@@ -36,7 +36,7 @@ function! SpaceVim#layers#git#config() abort
     nnoremap <silent> <Leader>gd :Gita diff<CR>
     nnoremap <silent> <Leader>gs :Gita status<CR>
     nnoremap <silent> <Leader>gc :Gita commit<CR>
-    nnoremap <silent> <Leader>gb :Gita blame<CR>
+    nnoremap <silent> <Leader>gb :Gita blame :<CR>
     nnoremap <silent> <Leader>gp :Gita push<CR>
     nnoremap <silent> <Leader>ga :Gita add %<CR>
     nnoremap <silent> <Leader>gA :Gita add .<CR>
@@ -57,6 +57,7 @@ function! SpaceVim#layers#git#config() abort
   augroup spacevim_layer_git
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
+    autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
   augroup END
 endfunction
 

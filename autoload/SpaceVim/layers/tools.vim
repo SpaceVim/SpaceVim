@@ -1,6 +1,7 @@
 function! SpaceVim#layers#tools#plugins() abort
   return [
         \ ['tpope/vim-scriptease'],
+        \ ['mbbill/fencview',                 { 'on_cmd' : 'FencAutoDetect'}],
         \ ['SpaceVim/cscope.vim'],
         \ ['wsdjeg/vim-cheat',                { 'on_cmd' : 'Cheat'}],
         \ ['wsdjeg/SourceCounter.vim',        { 'on_cmd' : 'SourceCounter'}],
@@ -33,9 +34,9 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['wsdjeg/job.vim',              { 'merged' : 0}],
         \ ['junegunn/fzf',                { 'on_cmd' : 'FZF'}],
         \ ['ianva/vim-youdao-translater', { 'on_cmd' : ['Ydv','Ydc','Yde']}],
-        \ ['TaskList.vim',                { 'on_cmd' : 'TaskList'}],
+        \ ['vim-scripts/TaskList.vim',                { 'on_cmd' : 'TaskList'}],
         \ ['MarcWeber/vim-addon-mw-utils'],
-        \ ['taglist.vim',         { 'on_cmd' : 'TlistToggle', 'loadconf' : 1}],
+        \ ['vim-scripts/taglist.vim',         { 'on_cmd' : 'TlistToggle', 'loadconf' : 1}],
         \ ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
         \ 'loadconf' : 1}],
         \ ['Xuyuanp/nerdtree-git-plugin'],
@@ -46,6 +47,9 @@ function! SpaceVim#layers#tools#plugins() abort
 endfunction
 
 function! SpaceVim#layers#tools#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calendar', 'vim calendar', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
+        \ 'Auto detect the file encoding', 1)
   nmap mm <Plug>BookmarkToggle
   nmap mi <Plug>BookmarkAnnotate
   nmap ma <Plug>BookmarkShowAll
@@ -67,7 +71,7 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-l>', 'n') ==# ''
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
   endif
-  map <unique> <Leader>td <Plug>TaskList
+  map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
   function! OpenOrCloseNERDTree() abort
     exec 'normal! A'

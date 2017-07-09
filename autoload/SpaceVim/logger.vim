@@ -1,6 +1,6 @@
-let s:logger_level = g:spacevim_debug_level
+let s:logger_level = get(g:, 'spacevim_debug_level', 1)
 let s:levels = ['Info', 'Warn', 'Error']
-let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
+let s:logger_file = expand('~/.cache/SpaceVim/SpaceVim.log')
 let s:log_temp = []
 
 ""
@@ -25,6 +25,10 @@ function! SpaceVim#logger#info(msg) abort
 endfunction
 
 function! SpaceVim#logger#warn(msg) abort
+  let msg = s:warpMsg(a:msg, 2)
+  echohl WarningMsg
+  echomsg msg
+  echohl NONE
   if g:spacevim_enable_debug && s:logger_level <= 2
     call s:wite(s:warpMsg(a:msg, 2))
   else
@@ -33,7 +37,7 @@ function! SpaceVim#logger#warn(msg) abort
 endfunction
 
 function! SpaceVim#logger#error(msg) abort
-  if g:spacevim_enable_debug && s:logger_level <= 3
+  if get(g:, 'spacevim_enable_debug', 1) && s:logger_level <= 3
     call s:wite(s:warpMsg(a:msg, 3))
   else
     call add(s:log_temp,s:warpMsg(a:msg,3))
@@ -41,6 +45,9 @@ function! SpaceVim#logger#error(msg) abort
 endfunction
 
 function! s:wite(msg) abort
+  if !isdirectory(expand('~/.cache/SpaceVim/'))
+    call mkdir(expand('~/.cache/SpaceVim/'), 'p')
+  endif
   let flags = filewritable(s:logger_file) ? 'a' : ''
   call writefile([a:msg], s:logger_file, flags)
 endfunction
@@ -60,7 +67,7 @@ function! SpaceVim#logger#viewLog(...) abort
   let info .= "### SpaceVim runtime log :\n\n"
   let info .= "```log\n"
 
-  let l = a:0 > 0 ? a:1 : 1
+  let l = s:logger_level
   if filereadable(s:logger_file)
     let logs = readfile(s:logger_file, '')
     let info .= join(filter(logs,

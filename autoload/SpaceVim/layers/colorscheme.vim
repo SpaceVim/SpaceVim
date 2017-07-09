@@ -171,5 +171,38 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['romainl/Apprentice'],
                 \ ['icymind/NeoSolarized'],
                 \ ['jacoborus/tender'],
+                \ ['rakr/vim-one'],
+                \ ['arcticicestudio/nord-vim'],
+                \ ['KeitaNakamura/neodark.vim'],
                 \ ]
+endfunction
+
+let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one']
+let s:Number = SpaceVim#api#import('data#number')
+
+function! SpaceVim#layers#colorscheme#config() abort
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
+                \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
+                \ . ', [])', 'cycle-spacevim-theme', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'unite-colorschemes', 1)
+endfunction
+
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
+else
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
+endif
+function! s:cycle_spacevim_theme() abort
+    let id = s:Number.random(0, len(s:cs))
+    exe 'colorscheme ' . s:cs[id]
 endfunction

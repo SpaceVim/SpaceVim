@@ -7,6 +7,8 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
       else
         return "\<c-y>"
       endif
+    elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
+      return "\<Enter>\<esc>ko"
     else
       return "\<Enter>"
     endif
@@ -15,6 +17,8 @@ elseif g:spacevim_snippet_engine ==# 'ultisnips'
   function! SpaceVim#mapping#enter#i_enter() abort
     if pumvisible()
       return "\<c-y>"
+    elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
+      return "\<Enter>\<esc>ko"
     else
       return "\<Enter>"
     endif

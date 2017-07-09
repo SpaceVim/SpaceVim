@@ -35,17 +35,24 @@ CONTENTS                                                   *SpaceVim-contents*
       12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       13. lang#go.....................................|SpaceVim-layer-lang-go|
       14. lang#java.................................|SpaceVim-layer-lang-java|
-      15. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      16. lang#php...................................|SpaceVim-layer-lang-php|
-      17. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      18. lang#python.............................|SpaceVim-layer-lang-python|
-      19. lang#rust.................................|SpaceVim-layer-lang-rust|
-      20. lang#xml...................................|SpaceVim-layer-lang-xml|
-      21. operator...................................|SpaceVim-layer-operator|
-      22. shell.........................................|SpaceVim-layer-shell|
-      23. tmux...........................................|SpaceVim-layer-tmux|
+      15. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      16. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      17. lang#php...................................|SpaceVim-layer-lang-php|
+      18. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      19. lang#python.............................|SpaceVim-layer-lang-python|
+      20. lang#rust.................................|SpaceVim-layer-lang-rust|
+      21. lang#scala...............................|SpaceVim-layer-lang-scala|
+      22. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      23. lang#xml...................................|SpaceVim-layer-lang-xml|
+      24. operator...................................|SpaceVim-layer-operator|
+      25. shell.........................................|SpaceVim-layer-shell|
+      26. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
+      2. data#list....................................|SpaceVim-api-data-list|
+      3. prompt..........................................|SpaceVim-api-prompt|
+      4. sid............................................|SpaceVim-api-vim-sid|
+      5. vim#message................................|SpaceVim-api-vim-message|
   7. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -70,6 +77,9 @@ Change the default indentation of SpaceVim. Default is 2.
 >
   let g:spacevim_default_indent = 2
 <
+
+                                                   *g:spacevim_relativenumber*
+Enable/Disable relativenumber, by default it is enabled.
 
                                                        *g:spacevim_max_column*
 Change the max number of columns for SpaceVim. Default is 120.
@@ -104,6 +114,9 @@ this feature, or you can set to another char.
 Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
 this feature, or you can set to another char.
 
+                                             *g:spacevim_enable_insert_leader*
+Enable/Disable spacevim's insert mode leader, default is enable
+
                                                 *g:spacevim_plugin_bundle_dir*
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 >
@@ -111,9 +124,9 @@ Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 <
 
                                             *g:spacevim_realtime_leader_guide*
-Enable/Disable realtime leader guide. Default is 0.
+Enable/Disable realtime leader guide. Default is 1. to disable it:
 >
-  let g:spacevim_realtime_leader_guide = 1
+  let g:spacevim_realtime_leader_guide = 0
 <
 
                                              *g:spacevim_enable_key_frequency*
@@ -153,9 +166,31 @@ ultisnips:
 <
 
                                                 *g:spacevim_enable_cursorline*
-Enable/Disable cursorline. Default is 0.
+Enable/Disable cursorline. Default is 1, cursorline will be highlighted in
+normal mode.To disable this feature:
 >
-  let g:spacevim_enable_cursorline = 1
+  let g:spacevim_enable_cursorline = 0
+<
+
+                                             *g:spacevim_statusline_separator*
+Set the statusline separators of statusline, default is 'arrow'
+>
+  Separatos options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
+
+                                              *g:spacevim_enable_cursorcolumn*
+Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
+normal mode. To enable this feature:
+>
+  let g:spacevim_enable_cursorcolumn = 1
 <
 
                                                      *g:spacevim_error_symbol*
@@ -197,6 +232,9 @@ Set the message language of vim. Default is 'en_US.UTF-8'.
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim. Default is 'gruvbox'.
 
+                                                   *g:spacevim_colorscheme_bg*
+The background of colorscheme. Default is 'dark'.
+
                                               *g:spacevim_colorscheme_default*
 The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
 will be used if the colorscheme set by  `g:spacevim_colorscheme` is not
@@ -219,6 +257,9 @@ The default file manager of SpaceVim. Default is 'vimfiler'.
 The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
 neobundle, or vim-plug.
 
+                                     *g:spacevim_plugin_manager_max_processes*
+Set the max process of SpaceVim plugin manager
+
                                                      *g:spacevim_checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 >
@@ -231,8 +272,12 @@ Enable/Disable debug mode for SpaceVim. Default is 0.
   let g:spacevim_enable_debug = 1
 <
 
+                                            *g:spacevim_auto_disable_touchpad*
+Auto disable touchpad when switch to insert mode or focuslost in neovim.
+
                                                       *g:spacevim_debug_level*
-Set the debug level of SpaceVim. Default is 1.
+Set the debug level of SpaceVim. Default is 1. see
+|SpaceVim#logger#setLevel()|
 
                                                 *g:spacevim_buffer_index_type*
 Set SpaceVim buffer index type, default is 0.
@@ -246,6 +291,16 @@ Set SpaceVim buffer index type, default is 0.
   let g:spacevim_buffer_index_type = 1
 <
 
+                                               *g:spacevim_windows_index_type*
+Set SpaceVim windows index type, default is 0.
+>
+  " types:
+  " 0: 1 ➛ ➊
+  " 1: 1 ➛ ➀
+  " 2: 1 ➛ ⓵
+  let g:spacevim_windows_index_type = 1
+<
+
                                      *g:spacevim_enable_tabline_filetype_icon*
 Enable/Disable tabline filetype icon. default is 0.
 
@@ -257,6 +312,10 @@ Plugin groups to be loaded.
 >
    let g:spacevim_plugin_groups = ['core', 'lang']
 <
+
+                                                  *g:spacevim_github_username*
+Set the github username, It will be used for getting your starred repos, and
+fuzzy find the repo you want.
 
                                                  *g:spacevim_disabled_plugins*
 Disable plugins by name.
@@ -287,6 +346,12 @@ Enable/Disable powerline symbols. Default is 1.
 Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
 >
   let g:spacevim_lint_on_save = 0
+<
+
+                                                  *g:spacevim_lint_on_the_fly*
+Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
+>
+  let g:spacevim_lint_on_the_fly = 0
 <
 
                                           *g:spacevim_enable_vimfiler_welcome*
@@ -335,10 +400,14 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPUpdate                                                          *:SPUpdate*
-  Command for update plugin, support completion of plugin name.
+  Command for update plugin, support completion of plugin name. If run without
+  argv, All the plugin will be updated.
 >
       :SPUpdate vim-airline
 <
+
+:SPInstall                                                        *:SPInstall*
+  Command for install plugins.
 
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
@@ -730,6 +799,11 @@ https://github.com/google/google-java-format
 and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 
 ==============================================================================
+LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
+
+This layer is for kotlin development.
+
+==============================================================================
 LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
 
 OCaml autocompletion provided by merlin.
@@ -820,6 +894,17 @@ MAPPINGS
 <
 
 ==============================================================================
+LANG#SCALA                                         *SpaceVim-layer-lang-scala*
+
+==============================================================================
+LANG#TMUX                                           *SpaceVim-layer-lang-tmux*
+
+INTRO
+The lang#tmux layer provides syntax highlighting, commenting, man page
+navigation and ability to execute lines as tmux commands.
+|SpaceVim-layer-checkers|
+
+==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
 
 When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
@@ -881,6 +966,48 @@ list of two value in it, first one is the description, and the next one should
 be a funcrc.
 
 ==============================================================================
+DATA#LIST                                             *SpaceVim-api-data-list*
+
+pop({list})
+
+Removes the last element from {list} and returns the element, as if the {list}
+is a stack.
+
+push({list})
+
+Appends {val} to the end of {list} and returns the list itself, as if the
+{list} is a stack.
+
+listpart({list}, {start}[, {len}])
+
+The result is a List, which is part of {list}, starting from index {start},
+with the length {len}
+
+==============================================================================
+PROMPT                                                   *SpaceVim-api-prompt*
+
+open()
+
+Create a cmdline prompt, use while loop to get the input from user. The
+default mapping for prompt is:
+>
+  <Bs>            remove last character
+  <C-w>           remove the Word before the cursor
+  <C-u>           remove the Line before the cursor
+  <C-k>           remove the Line after the cursor
+  <C-a> / <Home>  Go to the beginning of the line
+  <C-e> / <End>   Go to the end of the line
+<
+
+==============================================================================
+SID                                                     *SpaceVim-api-vim-sid*
+
+" Capture command
+
+==============================================================================
+VIM#MESSAGE                                         *SpaceVim-api-vim-message*
+
+==============================================================================
 FAQ                                                             *SpaceVim-faq*
 
   1. How do I enable YouCompleteMe?
@@ -891,7 +1018,7 @@ FAQ                                                             *SpaceVim-faq*
   plugin. It is hard to manage with a plugin manager.
 
   Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
-  it should be `~/.SpaceVim/init.vim`.
+  it should be `~/.SpaceVim.d/init.vim`.
 
   Step 2: Get into the directory of YouCompleteMe's author. By default it
   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the

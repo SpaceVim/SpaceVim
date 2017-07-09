@@ -46,7 +46,7 @@ fu! zvim#util#SmartClose() abort
     endfor
     if num == 1
     else
-        close
+        quit
     endif
 endf
 
@@ -112,7 +112,7 @@ fu! zvim#util#CopyToClipboard(...) abort
     else
         try
             let @+=expand('%:p')
-            echo 'Copied to clipboard'
+            echo 'Copied to clipboard ' . @+
         catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
                 echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
@@ -167,7 +167,7 @@ function! zvim#util#BufferEmpty() abort
 endfunction
 
 function! zvim#util#loadMusics() abort
-    let musics = globpath('~/Musics', '*.mp3', 0, 1)
+    let musics = SpaceVim#util#globpath('~/Musics', '*.mp3')
     let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
     for m in musics
         call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
@@ -187,8 +187,10 @@ endfunction
 
 function! zvim#util#OpenVimfiler() abort
     if bufnr('vimfiler') == -1
-        VimFiler
-        AirlineRefresh
+        silent VimFiler
+        if exists(':AirlineRefresh')
+            AirlineRefresh
+        endif
         wincmd p
         if &filetype !=# 'startify'
             IndentLinesToggle
@@ -196,8 +198,11 @@ function! zvim#util#OpenVimfiler() abort
         endif
         wincmd p
     else
-        VimFiler
-        AirlineRefresh
+        silent VimFiler
+        doautocmd WinEnter
+        if exists(':AirlineRefresh')
+            AirlineRefresh
+        endif
     endif
 endfunction
 
@@ -267,7 +272,7 @@ function! zvim#util#UpdateHosts(...) abort
         echo 'successfully!'
     endif
 endfunction
-fu! zvim#util#Generate_ignore(ignore,tool) abort
+fu! zvim#util#Generate_ignore(ignore,tool, ...) abort
     let ignore = []
     if a:tool ==# 'ag'
         for ig in split(a:ignore,',')
@@ -277,7 +282,11 @@ fu! zvim#util#Generate_ignore(ignore,tool) abort
     elseif a:tool ==# 'rg'
         for ig in split(a:ignore,',')
             call add(ignore, '-g')
-            call add(ignore, '!' . ig)
+            if a:0 > 0
+                call add(ignore, "'!" . ig . "'")
+            else
+                call add(ignore, '!' . ig)
+            endif
         endfor
     endif
     return ignore

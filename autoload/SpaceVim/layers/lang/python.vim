@@ -15,5 +15,6 @@ function! SpaceVim#layers#lang#python#plugins() abort
     else
         call add(plugins, ['davidhalter/jedi-vim',                   { 'on_ft' : 'python'}])
     endif
+    call add(plugins, ['Vimjas/vim-python-pep8-indent',                   { 'on_ft' : 'python'}])
     return plugins
 endfunction

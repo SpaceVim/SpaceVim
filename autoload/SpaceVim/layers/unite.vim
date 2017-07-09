@@ -3,9 +3,11 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
                 \ ['Shougo/neoyank.vim'],
                 \ ['soh335/unite-qflist'],
+                \ ['SpaceVim/unite-unicode'],
                 \ ['ujihisa/unite-equery'],
                 \ ['m2mdas/unite-file-vcs'],
                 \ ['Shougo/neomru.vim'],
+                \ ['andreicristianpetcu/vim-van'],
                 \ ['kmnk/vim-unite-svn'],
                 \ ['basyura/unite-rails'],
                 \ ['nobeans/unite-grails'],
@@ -72,10 +74,11 @@ function! SpaceVim#layers#unite#plugins() abort
     endif
 
     if g:spacevim_filemanager ==# 'vimfiler'
-        call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+        call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : 'VimFiler'}])
     endif
     return plugins
 endfunction
 
 function! SpaceVim#layers#unite#config() abort
+        call SpaceVim#mapping#space#def('nnoremap', ['!'], 'Unite output/shellcmd -no-start-insert', 'shell cmd', 1)
 endfunction

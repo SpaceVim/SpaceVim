@@ -43,7 +43,7 @@ function! s:install_manager() abort
         else
             if executable('git')
                 exec '!git clone https://github.com/Shougo/dein.vim "'
-                            \ . g:spacevim_plugin_bundle_dir
+                            \ . expand(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim"'], s:Fsep)
                 let g:spacevim_dein_installed = 1
@@ -108,11 +108,11 @@ function! zvim#plug#end() abort
     elseif g:spacevim_plugin_manager ==# 'dein'
         call dein#end()
         if g:spacevim_checkinstall == 1
-            silent! let flag = dein#check_install()
-            if flag
+            silent! let g:_spacevim_checking_flag = dein#check_install()
+            if g:_spacevim_checking_flag
                 augroup SpaceVimCheckInstall
                     au!
-                    au VimEnter * call dein#install()
+                    au VimEnter * SPInstall
                 augroup END
             endif
         endif
@@ -170,7 +170,7 @@ function! zvim#plug#add(repo,...) abort
         endif
         let g:spacevim_plugin_name = split(a:repo, '/')[-1]
     endif
-    let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
+    let str = get(g:,'_spacevim_plugin_layer', 'custom plugin')
     let str = '[' . str . ']'
     let str = str . repeat(' ', 25 - len(str))
     exec 'call add(g:unite_source_menu_menus'

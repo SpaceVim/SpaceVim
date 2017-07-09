@@ -106,8 +106,6 @@ function! s:git_state_to_symbol(s) abort
   return g:VimFilerGitIndicatorMap[name]
 endfunction
 
-let g:wsd = []
-
 " @vimlint(EVL103, 1, a:context)
 function! s:column.get(file, context) abort
   let cmd = 'git -c color.status=false status -s ' .  fnamemodify(a:file.action__path, ':.')
