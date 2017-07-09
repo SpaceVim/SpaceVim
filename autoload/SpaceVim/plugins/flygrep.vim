@@ -49,6 +49,12 @@ endfunction
 let s:MPT._handle_fly = function('s:flygrep')
 
 function! s:close_buffer() abort
+    if s:grepid != 0
+        call s:JOB.stop(s:grepid)
+    endif
+    if s:grep_timer_id != 0
+        call timer_stop(s:grep_timer_id)
+    endif
     q
 endfunction
 
