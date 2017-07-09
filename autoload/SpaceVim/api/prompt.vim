@@ -1,11 +1,10 @@
 ""
-" @section cmdlinemenu, api-cmdlinemenu
+" @section prompt, api-prompt
 " @parentsection api
-" menu({items})
+" open()
 "
-" Create a cmdline selection menu from a list of {items}, each item should be a
-" list of two value in it, first one is the description, and the next one
-" should be a funcrc.
+" Create a cmdline prompt, use while loop to get the input from user. The
+" default mapping for prompt is:
 
 let s:self = {}
 
