@@ -3,7 +3,9 @@ function! SpaceVim#mapping#space#init() abort
     return
   endif
   nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
+  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
+  vmap <Space> [SPC]
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
