@@ -107,6 +107,10 @@ function! SpaceVim#default#SetOptions() abort
   set ttimeout
   set ttimeoutlen=50
   set lazyredraw
+  if has('patch-7.4.314')
+    " don't give ins-completion-menu messages.
+    set shortmess+=c
+  endif
 endfunction
 
 function! SpaceVim#default#SetPlugins() abort

@@ -74,7 +74,9 @@ title:  "Documentation"
             * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
             * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
             * [Searching in a project](#searching-in-a-project)
+            * [Background searching in a project](#background-searching-in-a-project)
             * [Searching the web](#searching-the-web)
+        * [Searching on the fly](#searching-on-the-fly)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
         * [Text insertion commands](#text-insertion-commands)
@@ -120,7 +122,7 @@ title:  "Documentation"
             * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
             * [Plugin: ChooseWin](#plugin-choosewin)
             * [Plugin: Bookmarks](#plugin-bookmarks)
-            * [Plugin: Gita](#plugin-gita)
+            * [Plugin: Gina/Gita](#plugin-ginagita)
             * [Plugin: vim-signify](#plugin-vim-signify)
             * [Misc Plugins](#misc-plugins)
 
@@ -398,7 +400,7 @@ Key Binding	| Description
 `SPC t m m` | toggle the minor mode lighters
 `SPC t m M` | toggle the major mode
 `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)
-`SPC t m p` | toggle the point character position
+`SPC t m p` | toggle the cursor position
 `SPC t m t` | toggle the time
 `SPC t m T` | toggle the mode line itself
 `SPC t m v` | toggle the version control info
@@ -1084,6 +1086,7 @@ Key Binding | Description
 `SPC *` or `SPC s P` | search with the first found tool with default input
 `SPC s a p` | ag
 `SPC s a P` | ag with default text
+`SPC s g p` | grep
 `SPC s g p` | grep with default text
 `SPC s k p` | ack
 `SPC s k P` | ack with default text
@@ -1094,14 +1097,56 @@ Key Binding | Description
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
+##### Background searching in a project
+
+Background search keyword in a project, when searching done, the count will be shown on the statusline.
+
+Key Binding	| Description
+----------- | -----------
+`SPC s j` | searching input expr background with the first found tool
+`SPC s J` | searching cursor word background with the first found tool
+`SPC s l` | List all searching result in quickfix buffer
+`SPC s a j` | ag
+`SPC s a J` | ag with default text
+`SPC s g j` | grep
+`SPC s g J` | grep with default text
+`SPC s k j` | ack
+`SPC s k J` | ack with default text
+`SPC s t j` | pt
+`SPC s t J` | pt with default text
+`SPC s r j` | rg
+`SPC s r J` | rg with default text
+
 ##### Searching the web
 
-Key Binding	Description
+Key Binding	| Description
 -----------| -----------
 `SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.
 `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO)
 
 **Note**: to enable google suggestions in vim, you need to add `let g:spacevim_enable_googlesuggest = 1` to your custom Configuration file.
+
+#### Searching on the fly
+
+Key Binding	| Description
+-----------| -----------
+`SPC s g G` | Searching in project on the fly with default tools
+
+key binding in FlyGrep buffer:
+
+Key Binding	Description
+-----------| -----------
+`<Esc>` | close FlyGrep buffer
+`<Enter>` | open file at the cursor line
+`<Tab>` | move cursor line down
+`<S-Tab>` | move cursor line up
+`<Bs>` | remove last character
+`<C-w>` | remove the Word before the cursor
+`<C-u>` | remove the Line before the cursor
+`<C-k>` | remove the Line after the cursor
+`<C-a>`/`<Home>` | Go to the beginning of the line
+`<C-e>`/`<End>` | Go to the end of the line
+
 
 #### Persistent highlighting
 
@@ -1623,7 +1668,7 @@ Key   | Mode | Action
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
-##### Plugin: Gita
+##### Plugin: Gina/Gita
 
 Key   | Mode | Action
 ----- |:----:| ------------------
@@ -1632,6 +1677,8 @@ Key   | Mode | Action
 `<leader>`+`gc` | Normal | Git commit
 `<leader>`+`gb` | Normal | Git blame
 `<leader>`+`gp` | Normal | Git push
+`<leader>`+`ga` | Normal | Git add current buffer
+`<leader>`+`gA` | Normal | Git add all files
 
 ##### Plugin: vim-signify
 

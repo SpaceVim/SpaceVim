@@ -50,3 +50,16 @@ function! SpaceVim#mapping#search#grep(key, scope)
     let g:unite_source_grep_default_opts = save_opt
     let g:unite_source_grep_recursive_opt = save_ropt
 endfunction
+
+function! SpaceVim#mapping#search#default_tool()
+    if has_key(s:search_tools, 'default_exe')
+        return s:search_tools.default_exe
+    else
+        for t in g:spacevim_search_tools
+            if executable(t)
+                let s:search_tools.default_exe = t
+                return t
+            endif
+        endfor
+    endif
+endfunction
