@@ -67,10 +67,18 @@ endfunction
 let s:si_flag = 0
 function! s:update_search_index(key) abort
     if a:key == 'n'
-        normal! n
+        if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+            call feedkeys("\<Plug>(incsearch-nohl-n)")
+        else
+            normal! n
+        endif
         normal! ml
     elseif a:key == 'N'
-        normal! N
+        if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+            call feedkeys("\<Plug>(incsearch-nohl-N)")
+        else
+            normal! N
+        endif
         normal! ml
     endif
     if s:si_flag == 0
