@@ -76,6 +76,8 @@ function! SpaceVim#mapping#space#init() abort
   " line is commented, all selected lines are uncommented and vice versa.
   call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call feedkeys("\<Plug>NERDCommenterComment")', 'Toggle comment line(s)', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['c', 'L'], 'call feedkeys("\<Plug>NERDCommenterInvert")', 'Toggle comment line(s)', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['c', 'p'], 'call feedkeys("vip\<Plug>NERDCommenterComment")', 'Toggle comment line(s)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['c', 'P'], 'call feedkeys("vip\<Plug>NERDCommenterInvert")', 'Toggle comment line(s)', 1)
   " in nerdcomment if has map to <plug>... the default mapping will be
   " disable, so we add it for compatibility
   nnoremap <Leader>cc :call feedkeys("\<Plug>NERDCommenterComment")<Cr>
