@@ -75,6 +75,13 @@ function! SpaceVim#mapping#space#init() abort
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
   call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call feedkeys("\<Plug>NERDCommenterComment")', 'Toggle comment line(s)', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['c', 'L'], 'call feedkeys("\<Plug>NERDCommenterInvert")', 'Toggle comment line(s)', 1, 1)
+  " in nerdcomment if has map to <plug>... the default mapping will be
+  " disable, so we add it for compatibility
+  nnoremap <Leader>cc :call feedkeys("\<Plug>NERDCommenterComment")<Cr>
+  xnoremap <Leader>cc :call feedkeys("\<Plug>NERDCommenterComment")<Cr>
+  nnoremap <Leader>ci :call feedkeys("\<Plug>NERDCommenterInvert")<Cr>
+  xnoremap <Leader>ci :call feedkeys("\<Plug>NERDCommenterInvert")<Cr>
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
