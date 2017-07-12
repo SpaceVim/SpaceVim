@@ -80,8 +80,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
 
   nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
-  let g:_spacevim_mappings_space.c[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
-  nmap <silent> [SPC]c; <Plug>CommentOperator
+  let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
+  nmap <silent> [SPC]; <Plug>CommentOperator
 
   " in nerdcomment if has map to <plug>... the default mapping will be
   " disable, so we add it for compatibility
