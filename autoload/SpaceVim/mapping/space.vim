@@ -78,6 +78,11 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+
+  nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
+  let g:_spacevim_mappings_space.c[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
+  nmap <silent> [SPC]c; <Plug>CommentOperator
+
   " in nerdcomment if has map to <plug>... the default mapping will be
   " disable, so we add it for compatibility
   nmap <Leader>cc <Plug>NERDCommenterComment
@@ -302,6 +307,27 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   endif
   call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
+endfunction
+
+function! s:commentOperator(type, ...)
+  let sel_save = &selection
+  let &selection = "inclusive"
+  let reg_save = @@
+
+  if a:0  " Invoked from Visual mode, use gv command.
+    silent exe "normal! gv"
+    call feedkeys("\<Plug>NERDCommenterComment")
+  elseif a:type == 'line'
+    call feedkeys('`[V`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  else
+    call feedkeys('`[v`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+
+  let &selection = sel_save
+  let @@ = reg_save
+  set opfunc=
 endfunction
 
 " vim:set et sw=2 cc=80:

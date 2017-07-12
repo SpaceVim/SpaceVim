@@ -20,6 +20,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap g, g,
     let g:_spacevim_mappings_g[';'] = ['call feedkeys("g;", "n")', 'older position in change list']
     nnoremap g; g;
+    let g:_spacevim_mappings_g['@'] = ['call feedkeys("g@", "n")', 'call operatorfunc']
+    nnoremap g@ g@
 
     let g:_spacevim_mappings_g['#'] = ['call feedkeys("\<Plug>(incsearch-nohl-g#)")', 'search under cursor backward']
     let g:_spacevim_mappings_g['*'] = ['call feedkeys("\<Plug>(incsearch-nohl-g*)")', 'search under cursor forward']
