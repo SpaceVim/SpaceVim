@@ -74,16 +74,16 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call feedkeys("\<Plug>NERDCommenterComment")', 'Toggle comment line(s)', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'L'], 'call feedkeys("\<Plug>NERDCommenterInvert")', 'Toggle comment line(s)', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'p'], 'call feedkeys("vip\<Plug>NERDCommenterComment")', 'Toggle comment line(s)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'P'], 'call feedkeys("vip\<Plug>NERDCommenterInvert")', 'Toggle comment line(s)', 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip\<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip\<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
   " in nerdcomment if has map to <plug>... the default mapping will be
   " disable, so we add it for compatibility
-  nnoremap <Leader>cc :call feedkeys("\<Plug>NERDCommenterComment")<Cr>
-  xnoremap <Leader>cc :call feedkeys("\<Plug>NERDCommenterComment")<Cr>
-  nnoremap <Leader>ci :call feedkeys("\<Plug>NERDCommenterInvert")<Cr>
-  xnoremap <Leader>ci :call feedkeys("\<Plug>NERDCommenterInvert")<Cr>
+  nmap <Leader>cc <Plug>NERDCommenterComment
+  xmap <Leader>cc <Plug>NERDCommenterComment
+  nmap <Leader>ci <Plug>NERDCommenterInvert
+  xmap <Leader>ci <Plug>NERDCommenterInvert
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
@@ -235,6 +235,8 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   if is_visual
     if a:m ==# 'nnoremap'
       exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    elseif a:m ==# 'nmap'
+      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
     endif
   endif
   if len(a:keys) == 2
