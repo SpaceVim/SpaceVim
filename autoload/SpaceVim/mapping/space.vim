@@ -79,8 +79,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
 
-  nnoremap <silent> <Plug>CommentToLine :<SID>comment_to_line(0)<Cr>
-  nnoremap <silent> <Plug>CommentToLineInvert :<SID>comment_to_line(1)<Cr>
+  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment to line', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment to line', 0, 1)
 
@@ -336,13 +336,17 @@ function! s:commentOperator(type, ...)
 endfunction
 
 function! s:comment_to_line(invert) abort
-  let line = str2nr(input('line number :'))
+  let input = input('line number :')
+  if empty(input)
+    return
+  endif
+  let line = str2nr(input)
   let ex = line - line('.')
   if ex > 0
     exe 'normal! V'. ex .'j'
   elseif ex == 0
   else
-    exe 'normal! V'. ex .'k'
+    exe 'normal! V'. abs(ex) .'k'
   endif
   if a:invert
     call feedkeys("\<Plug>NERDCommenterInvert")
