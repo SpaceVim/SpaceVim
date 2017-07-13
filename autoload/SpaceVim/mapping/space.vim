@@ -79,6 +79,11 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
 
+  nnoremap <silent> <Plug>CommentToLine :<SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :<SID>comment_to_line(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment to line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment to line', 0, 1)
+
   nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
   let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
   nmap <silent> [SPC]; <Plug>CommentOperator
@@ -328,6 +333,22 @@ function! s:commentOperator(type, ...)
   let &selection = sel_save
   let @@ = reg_save
   set opfunc=
+endfunction
+
+function! s:comment_to_line(invert) abort
+  let line = str2nr(input('line number :'))
+  let ex = line - line('.')
+  if ex > 0
+    exe 'normal! V'. ex .'j'
+  elseif ex == 0
+  else
+    exe 'normal! V'. ex .'k'
+  endif
+  if a:invert
+    call feedkeys("\<Plug>NERDCommenterInvert")
+  else
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
 endfunction
 
 " vim:set et sw=2 cc=80:
