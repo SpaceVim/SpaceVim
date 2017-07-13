@@ -80,6 +80,7 @@ title:  "Documentation"
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
         * [Text insertion commands](#text-insertion-commands)
+        * [Commenting](#commenting)
         * [Multi-Encodings](#multi-encodings)
     * [Errors handling](#errors-handling)
 * [Achievements](#achievements)
@@ -1158,6 +1159,7 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 Text insertion commands (start with `i`):
 
 Key binding | Description
+----------- | -----------
 `SPC i l l` | insert lorem-ipsum list
 `SPC i l p` | insert lorem-ipsum paragraph
 `SPC i l s` | insert lorem-ipsum sentence
@@ -1170,6 +1172,25 @@ Key binding | Description
 `SPC i U 1` | insert UUIDv1 (use universal argument to insert with CID format)
 `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)
 `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)
+
+#### Commenting
+
+Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
+
+Key Binding | Description
+----------- | -----------
+`SPC ;` | comment operator
+`SPC c h` | hide/show comments
+`SPC c l` | comment lines
+`SPC c L` | invert comment lines
+`SPC c p` | comment paragraphs
+`SPC c P` | invert comment paragraphs
+`SPC c t` | comment to line
+`SPC c T` | invert comment to line
+`SPC c y` | comment and yank
+`SPC c Y` | invert comment and yank
+
+**Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
 
 #### Multi-Encodings
 
