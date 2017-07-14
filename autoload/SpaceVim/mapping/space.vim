@@ -81,8 +81,8 @@ function! SpaceVim#mapping#space#init() abort
 
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment to line', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment to line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
 
   nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
   let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
@@ -336,7 +336,7 @@ function! s:commentOperator(type, ...)
 endfunction
 
 function! s:comment_to_line(invert) abort
-  let input = input('line number :')
+  let input = input('line number: ')
   if empty(input)
     return
   endif
