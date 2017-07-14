@@ -77,7 +77,7 @@ function! s:self.hide_in_normal(name) abort
     if empty(group)
         return
     endif
-    if &termguicolors || has('gui_running')
+    if (exists('+termguicolors') && &termguicolors ) || has('gui_running')
         let bg = self.group2dict('Normal').guibg
         if empty(bg)
             return
