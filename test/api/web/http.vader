@@ -1,0 +1,4 @@
+Execute (Test web#http api):
+    let g:test_api_web_http = SpaceVim#api#import('web#http')
+    let g:test_api_web_http_getresult = g:test_api_web_http.get('spacevim.org')
+    AssertEqual g:test_api_web_http_getresult.status, '200'
