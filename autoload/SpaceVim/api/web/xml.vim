@@ -192,7 +192,8 @@ function! s:parse_tree(ctx, top) abort
     let node = a:top
     let stack = [a:top]
     " content accumulates the text only tags
-    exe 'let content = ""'
+    " @vimlint(EVL102, 1, l:content)
+    let content = ""
     let append_content_to_parent = 'if len(stack) && content != "" | call add(stack[-1].child, content) | let content ="" | endif'
 
     let mx = '^\s*\(<?xml[^>]\+>\)'
@@ -284,6 +285,7 @@ function! s:parse_tree(ctx, top) abort
             call add(stack, node)
         endif
     endwhile
+    " @vimlint(EVL102, 0, l:content)
 endfunction
 
 
