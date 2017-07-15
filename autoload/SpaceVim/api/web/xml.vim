@@ -17,7 +17,7 @@ function! s:nr2byte(nr) abort
 endfunction
 
 function! s:nr2enc_char(charcode) abort
-    if &encoding == 'utf-8'
+    if &encoding ==# 'utf-8'
         return nr2char(a:charcode)
     endif
     let char = s:nr2byte(a:charcode)
@@ -29,7 +29,7 @@ endfunction
 
 function! s:nr2hex(nr) abort
     let n = a:nr
-    let r = ""
+    let r = ''
     while n
         let r = '0123456789ABCDEF'[n % 16] . r
         let n = n / 16
@@ -188,12 +188,12 @@ function! s:self.createElement(name) abort
     return node
 endfunction
 
+" @vimlint(EVL102, 1, l:content)
 function! s:parse_tree(ctx, top) abort
     let node = a:top
     let stack = [a:top]
     " content accumulates the text only tags
-    " @vimlint(EVL102, 1, l:content)
-    let content = ""
+    let content = ''
     let append_content_to_parent = 'if len(stack) && content != "" | call add(stack[-1].child, content) | let content ="" | endif'
 
     let mx = '^\s*\(<?xml[^>]\+>\)'
@@ -228,8 +228,8 @@ function! s:parse_tree(ctx, top) abort
         let m = matchlist(a:ctx.xml, tag_mx)
         if empty(m) | break | endif
         let a:ctx.xml = a:ctx.xml[len(m[0]) :]
-        let is_end_tag = m[2] == '/' && m[5] == ''
-        let is_start_and_end_tag = m[2] == '' && m[5] == '/'
+        let is_end_tag = m[2] ==# '/' && m[5] ==# ''
+        let is_start_and_end_tag = m[2] ==# '' && m[5] ==# '/'
         let tag_name = m[3]
         let attrs = m[4]
 
@@ -248,12 +248,12 @@ function! s:parse_tree(ctx, top) abort
         endif
 
         " comment tag
-        if m[8] != ''
+        if m[8] !=# ''
             continue
         endif
 
         " if element is a CDATA
-        if m[6] != ''
+        if m[6] !=# ''
             let content .= m[7]
             continue
         endif
@@ -267,8 +267,8 @@ function! s:parse_tree(ctx, top) abort
                 break
             endif
             let name = attr_match[1]
-            let value = len(attr_match[2]) ? attr_match[2] : len(attr_match[3]) ? attr_match[3] : len(attr_match[4]) ? attr_match[4] : ""
-            if value == ""
+            let value = len(attr_match[2]) ? attr_match[2] : len(attr_match[3]) ? attr_match[3] : len(attr_match[4]) ? attr_match[4] : ''
+            if value ==# ''
                 let value = name
             endif
             let node.attr[name] = s:decodeEntityReference(value)
@@ -285,8 +285,8 @@ function! s:parse_tree(ctx, top) abort
             call add(stack, node)
         endif
     endwhile
-    " @vimlint(EVL102, 0, l:content)
 endfunction
+" @vimlint(EVL102, 0, l:content)
 
 
 function! s:self.parse(xml) abort
@@ -307,7 +307,7 @@ function! s:self.parse(xml) abort
     "endtry
     let &maxmempattern=oldmaxmempattern
     let &maxfuncdepth=oldmaxfuncdepth
-    throw "Parse Error"
+    throw 'Parse Error'
 endfunction
 
 function! s:self.parseFile(file) abort
@@ -318,7 +318,7 @@ function! s:self.parseURL(url) abort
     return self.parse(s:HTTP.get(a:url).content)
 endfunction
 
-function! SpaceVim#api#web#xml#get()
+function! SpaceVim#api#web#xml#get() abort
     return deepcopy(s:self)
 endfunction
 
