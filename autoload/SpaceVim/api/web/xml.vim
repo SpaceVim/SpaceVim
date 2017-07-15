@@ -182,7 +182,7 @@ function! s:template.toString() dict abort
     return xml
 endfunction
 
-function! webapi#xml#createElement(name) abort
+function! s:self.createElement(name) abort
     let node = deepcopy(s:template)
     let node.name = a:name
     return node
