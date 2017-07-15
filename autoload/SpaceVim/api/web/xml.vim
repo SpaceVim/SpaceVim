@@ -191,9 +191,8 @@ endfunction
 function! s:parse_tree(ctx, top) abort
     let node = a:top
     let stack = [a:top]
-    let pos = 0
     " content accumulates the text only tags
-    let content = ""
+    exe 'let content = ""'
     let append_content_to_parent = 'if len(stack) && content != "" | call add(stack[-1].child, content) | let content ="" | endif'
 
     let mx = '^\s*\(<?xml[^>]\+>\)'
