@@ -70,6 +70,23 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'C'], 'silent call call('
                 \ . string(s:_function('s:UpperCamelCase')) . ', [])',
                 \ 'change symbol style to UpperCamelCase', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', '_'], 'silent call call('
+                \ . string(s:_function('s:under_score')) . ', [])',
+                \ 'change symbol style to under_score', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'u'], 'silent call call('
+                \ . string(s:_function('s:under_score')) . ', [])',
+                \ 'change symbol style to under_score', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'U'], 'silent call call('
+                \ . string(s:_function('s:up_case')) . ', [])',
+                \ 'change symbol style to UP_CACE', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'k'], 'silent call call('
+                \ . string(s:_function('s:kebab_case')) . ', [])',
+                \ 'change symbol style to kebab-case', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', '-'], 'silent call call('
+                \ . string(s:_function('s:kebab_case')) . ', [])',
+                \ 'change symbol style to kebab-case', 1)
+
+
     let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
     let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
     let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
@@ -126,8 +143,14 @@ endfunction
 
 function! s:kebab_case() abort
     " foo-fzz
+endfunction
 
+function! s:under_score() abort
+    
+endfunction
 
+function! s:up_case() abort
+    
 endfunction
 
 let s:STRING = SpaceVim#api#import('data#string')
