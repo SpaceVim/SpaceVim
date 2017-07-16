@@ -91,16 +91,33 @@ endfunction
 function! s:kebab_case() abort
     " foo-fzz
 
-    
+
 endfunction
 
+let s:STRING = SpaceVim#api#import('data#string')
 function! s:parse_symbol(symbol) abort
     if a:symbol =~ '^[a-z]\+\(-[a-zA-Z]\+\)*$'
         return split(a:symbol, '-')
     elseif a:symbol =~ '^[a-z]\+\(_[a-zA-Z]\+\)*$'
         return split(a:symbol, '_')
     elseif a:symbol =~ '^[a-z]\+\([A-Z][a-z]\+\)*$'
+        let chars = s:STRING.str2chars(a:symbol)
+        let rst = []
+        let word = ''
+        for char in chars
+            if char =~# '[a-z]'
+                let word .= char
+            else
+                call add(rst, word)
+                let word = char
+            endif
+        endfor
+        if !empty(word)
+            call add(rst, word)
+        endif
+        return rst
     else
+        return [a:symbol]
     endif
 endfunction
 
