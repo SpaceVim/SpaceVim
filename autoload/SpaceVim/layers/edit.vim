@@ -69,6 +69,7 @@ function! SpaceVim#layers#edit#config() abort
 endfunction
 
 function! s:lowerCamelCase() abort
+    " fooFzz
     let cword = expand('<cword>')
     if !empty(cword) && cword[0:0] =~# '[A-Z]'
         let save_cursor = getcurpos()
@@ -78,11 +79,28 @@ function! s:lowerCamelCase() abort
 endfunction
 
 function! s:UpperCamelCase() abort
+    " FooFzz
     let cword = expand('<cword>')
     if !empty(cword) && cword[0:0] =~# '[a-z]'
         let save_cursor = getcurpos()
         normal! b~
         call setpos('.', save_cursor)
+    endif
+endfunction
+
+function! s:kebab_case() abort
+    " foo-fzz
+
+    
+endfunction
+
+function! s:parse_symbol(symbol) abort
+    if a:symbol =~ '^[a-z]\+\(-[a-zA-Z]\+\)*$'
+        return split(a:symbol, '-')
+    elseif a:symbol =~ '^[a-z]\+\(_[a-zA-Z]\+\)*$'
+        return split(a:symbol, '_')
+    elseif a:symbol =~ '^[a-z]\+\([A-Z][a-z]\+\)*$'
+    else
     endif
 endfunction
 
