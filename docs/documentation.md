@@ -1129,13 +1129,13 @@ Key Binding | Description
 `SPC x a :` | align region at :
 `SPC x a ;` | align region at ;
 `SPC x a =` | align region at =
+`SPC x a ¦` | align region at ¦
 `SPC x a a` | align region (or guessed section) using default rules
 `SPC x a c` | align current indentation region using default rules
 `SPC x a l` | left-align with evil-lion
 `SPC x a L` | right-align with evil-lion
 `SPC x a r` | align region using user-specified regexp
 `SPC x a m` | align region at arithmetic operators `` (+-*/) ``
-`SPC x a ¦` | align region at ¦
 `SPC x c` | cunt the number of chars/words/lines in the selection region
 `SPC x d w` | delete trailing whitespaces
 `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space

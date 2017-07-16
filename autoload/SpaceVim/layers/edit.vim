@@ -1,3 +1,4 @@
+scriptencoding utf-8
 function! SpaceVim#layers#edit#plugins() abort
     let plugins = [
                 \ ['tpope/vim-surround'],
@@ -40,6 +41,8 @@ function! SpaceVim#layers#edit#config() abort
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
     let g:_spacevim_mappings_space.x = {'name' : '+Text'}
     let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
+    let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
+    let g:_spacevim_mappings_space.x.i = {'name' : '+change symbol style'}
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
@@ -50,5 +53,59 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align region at ,', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align region at .', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align region at :', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align region at ;', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /=', 'align region at =', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align region at ¦', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
+                \ . string(s:_function('s:delete_extra_space')) . ', [])',
+                \ 'delete extra space arround cursor', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
+                \ . string(s:_function('s:lowerCamelCase')) . ', [])',
+                \ 'change symbol style to lowerCamelCase', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'C'], 'silent call call('
+                \ . string(s:_function('s:UpperCamelCase')) . ', [])',
+                \ 'change symbol style to UpperCamelCase', 1)
 endfunction
+
+function! s:lowerCamelCase() abort
+    let cword = expand('<cword>')
+    if !empty(cword) && cword[0:0] =~# '[A-Z]'
+        let save_cursor = getcurpos()
+        normal! b~
+        call setpos('.', save_cursor)
+    endif
+endfunction
+
+function! s:UpperCamelCase() abort
+    let cword = expand('<cword>')
+    if !empty(cword) && cword[0:0] =~# '[a-z]'
+        let save_cursor = getcurpos()
+        normal! b~
+        call setpos('.', save_cursor)
+    endif
+endfunction
+
+
+function! s:delete_extra_space() abort
+    if !empty(getline('.'))
+        if getline('.')[col('.')-1] ==# ' '
+            exe "normal! viw\"_di\<Space>\<Esc>"
+        endif
+    endif
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
+else
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
+endif
