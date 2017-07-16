@@ -8,13 +8,41 @@ function! SpaceVim#api#data#list#get() abort
                 \ 'char_range' : '',
                 \ 'has' : '',
                 \ 'has_index' : '',
+                \ 'listpart' : '',
                 \ },
                 \ "function('s:' . v:key)"
                 \ )
 endfunction
 
+""
+" @section data#list, api-data-list
+" @parentsection api
+" pop({list})
+"
+" Removes the last element from {list} and returns the element,
+" as if the {list} is a stack.
+"
+" push({list})
+"
+" Appends {val} to the end of {list} and returns the list itself,
+" as if the {list} is a stack.
+"
+" listpart({list}, {start}[, {len}])
+" 
+" The result is a List, which is part of {list}, starting from
+" index {start}, with the length {len}
+
 function! s:pop(list) abort
     return remove(a:list, -1)
+endfunction
+
+function! s:listpart(list, start, ...)
+  let idx = range(a:start, a:start + get(a:000, 0, 0))
+  let rst = []
+  for i in idx
+    call add(rst, get(a:list, i))
+  endfor
+  return rst
 endfunction
 
 function! s:push(list, val) abort

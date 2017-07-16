@@ -3,6 +3,7 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
                 \ ['Shougo/neoyank.vim'],
                 \ ['soh335/unite-qflist'],
+                \ ['SpaceVim/unite-unicode'],
                 \ ['ujihisa/unite-equery'],
                 \ ['m2mdas/unite-file-vcs'],
                 \ ['Shougo/neomru.vim'],

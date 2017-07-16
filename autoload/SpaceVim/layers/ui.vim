@@ -169,7 +169,7 @@ function! s:toggle_end_of_buffer() abort
         endif
         let s:ebflag = 1
     else
-        if &termguicolors || has('gui_running')
+        if (exists('+termguicolors') && &termguicolors) || has('gui_running')
             let normalbg = s:HI.group2dict('Normal').guibg
         else
             let normalbg = s:HI.group2dict('Normal').ctermbg

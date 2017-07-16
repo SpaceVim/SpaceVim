@@ -3,7 +3,9 @@ function! SpaceVim#mapping#space#init() abort
     return
   endif
   nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
+  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
+  vmap <Space> [SPC]
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
@@ -72,7 +74,26 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call NERDComment("n", "Toggle")', 'Toggle comment line(s)', 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+
+  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
+
+  nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
+  let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
+  nmap <silent> [SPC]; <Plug>CommentOperator
+
+  " in nerdcomment if has map to <plug>... the default mapping will be
+  " disable, so we add it for compatibility
+  nmap <Leader>cc <Plug>NERDCommenterComment
+  xmap <Leader>cc <Plug>NERDCommenterComment
+  nmap <Leader>ci <Plug>NERDCommenterInvert
+  xmap <Leader>ci <Plug>NERDCommenterInvert
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
@@ -105,6 +126,13 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], 'Unite grep:.', 'grep in project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "execute 'Unite grep:.::' . expand(\"<cword>\") . '  -start-insert'",
         \ 'grep in project', 1)
+  " Searching background
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
+        \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool())', 'Background search keywords in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'J'],
+        \ 'call SpaceVim#plugins#searcher#find(expand("<cword>"),SpaceVim#mapping#search#default_tool())',
+        \ 'Background search cursor words in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'l'], 'call SpaceVim#plugins#searcher#list()', 'List all searching results', 1)
 
   " Searching tools
   " ag
@@ -119,6 +147,10 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'F'], 'call SpaceVim#mapping#search#grep("a", "F")',
         \ 'search cursor word in arbitrary directory  with ag', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'j'], 'call SpaceVim#plugins#searcher#find("", "ag")',
+        \ 'Background search cursor words in project with ag', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ag")',
+        \ 'Background search cursor words in project with ag', 1)
   " grep
   let g:_spacevim_mappings_space.s.g = {'name' : '+grep'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'b'], 'call SpaceVim#mapping#search#grep("g", "b")',
@@ -132,6 +164,10 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'F'], 'call SpaceVim#mapping#search#grep("g", "F")',
         \ 'search cursor word in arbitrary directory  with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'j'], 'call SpaceVim#plugins#searcher#find("", "grep")',
+        \ 'Background search cursor words in project with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "grep")',
+        \ 'Background search cursor words in project with grep', 1)
   " ack
   let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
@@ -144,6 +180,10 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with ack', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'F'], 'call SpaceVim#mapping#search#grep("k", "F")',
         \ 'search cursor word in arbitrary directory  with ack', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'j'], 'call SpaceVim#plugins#searcher#find("", "ack")',
+        \ 'Background search cursor words in project with ack', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ack")',
+        \ 'Background search cursor words in project with ack', 1)
   " rg
   let g:_spacevim_mappings_space.s.r = {'name' : '+rg'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rt', 1)
@@ -156,6 +196,10 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with rt', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'F'], 'call SpaceVim#mapping#search#grep("r", "F")',
         \ 'search cursor word in arbitrary directory  with rt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'j'], 'call SpaceVim#plugins#searcher#find("", "rg")',
+        \ 'Background search cursor words in project with rg', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
+        \ 'Background search cursor words in project with rg', 1)
   " pt
   let g:_spacevim_mappings_space.s.t = {'name' : '+pt'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)
@@ -168,15 +212,23 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with pt', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'F'], 'call SpaceVim#mapping#search#grep("t", "F")',
         \ 'search cursor word in arbitrary directory  with pt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'j'], 'call SpaceVim#plugins#searcher#find("", "pt")',
+        \ 'Background search cursor words in project with pt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
+        \ 'Background search cursor words in project with pt', 1)
+
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open()',
+        \ 'grep on the fly', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
         \ 'clear search highlight', 1)
 endfunction
 
-function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
+function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   if s:has_map_to_spc()
     return
   endif
+  let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
     let lcmd = a:cmd
@@ -190,6 +242,13 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     endif
   endif
   exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+  if is_visual
+    if a:m ==# 'nnoremap'
+      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    elseif a:m ==# 'nmap'
+      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    endif
+  endif
   if len(a:keys) == 2
     let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
   elseif len(a:keys) == 3
@@ -253,6 +312,47 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   endif
   call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
+endfunction
+
+function! s:commentOperator(type, ...)
+  let sel_save = &selection
+  let &selection = "inclusive"
+  let reg_save = @@
+
+  if a:0  " Invoked from Visual mode, use gv command.
+    silent exe "normal! gv"
+    call feedkeys("\<Plug>NERDCommenterComment")
+  elseif a:type == 'line'
+    call feedkeys('`[V`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  else
+    call feedkeys('`[v`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+
+  let &selection = sel_save
+  let @@ = reg_save
+  set opfunc=
+endfunction
+
+function! s:comment_to_line(invert) abort
+  let input = input('line number: ')
+  if empty(input)
+    return
+  endif
+  let line = str2nr(input)
+  let ex = line - line('.')
+  if ex > 0
+    exe 'normal! V'. ex .'j'
+  elseif ex == 0
+  else
+    exe 'normal! V'. abs(ex) .'k'
+  endif
+  if a:invert
+    call feedkeys("\<Plug>NERDCommenterInvert")
+  else
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
 endfunction
 
 " vim:set et sw=2 cc=80:
