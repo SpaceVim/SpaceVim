@@ -23,7 +23,7 @@ If you are new to vim, you should learning about Vim in general, read [vim-galor
 
 ### Linux/Mac
 
-If you are using linux or mac os, it is recommenced to use this command to install SpaceVim:
+If you are using linux or mac os, it is recommended to use this command to install SpaceVim:
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
