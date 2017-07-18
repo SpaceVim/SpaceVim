@@ -1180,26 +1180,26 @@ Key Binding | Description
 `SPC x a ;` | align region at ;
 `SPC x a =` | align region at =
 `SPC x a ¦` | align region at ¦
-`SPC x a a` | align region (or guessed section) using default rules
-`SPC x a c` | align current indentation region using default rules
-`SPC x a l` | left-align with evil-lion
-`SPC x a L` | right-align with evil-lion
-`SPC x a r` | align region using user-specified regexp
-`SPC x a m` | align region at arithmetic operators `` (+-*/) ``
+`SPC x a a` | align region (or guessed section) using default rules (TODO)
+`SPC x a c` | align current indentation region using default rules (TODO)
+`SPC x a l` | left-align with evil-lion (TODO)
+`SPC x a L` | right-align with evil-lion (TODO)
+`SPC x a r` | align region using user-specified regexp (TODO)
+`SPC x a m` | align region at arithmetic operators `` (+-*/) `` (TODO)
 `SPC x c` | cunt the number of chars/words/lines in the selection region
 `SPC x d w` | delete trailing whitespaces
 `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space
-`SPC x g l` | set languages used by translate commands
+`SPC x g l` | set languages used by translate commands (TODO)
 `SPC x g t` | translate current word using Google Translate
-`SPC x g T` | reverse source and target languages
-`SPC x i c` | change symbol style to lowerCamelCase
-`SPC x i C` | change symbol style to UpperCamelCase
+`SPC x g T` | reverse source and target languages (TODO)
+`SPC x i c` | change symbol style to `lowerCamelCase`
+`SPC x i C` | change symbol style to `UpperCamelCase`
 `SPC x i i` | cycle symbol naming styles (i to keep cycling)
-`SPC x i -` | change symbol style to kebab-case
-`SPC x i k` | change symbol style to kebab-case
-`SPC x i _` | change symbol style to under_score
-`SPC x i u` | change symbol style to under_score
-`SPC x i U` | change symbol style to UP_CASE
+`SPC x i -` | change symbol style to `kebab-case`
+`SPC x i k` | change symbol style to `kebab-case`
+`SPC x i _` | change symbol style to `under_score`
+`SPC x i u` | change symbol style to `under_score`
+`SPC x i U` | change symbol style to `UP_CASE`
 `SPC x j c` | set the justification to center
 `SPC x j f` | set the justification to full
 `SPC x j l` | set the justification to left

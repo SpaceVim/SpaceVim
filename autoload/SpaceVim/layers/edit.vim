@@ -47,6 +47,9 @@ function! SpaceVim#layers#edit#config() abort
     let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
     let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
     let g:_spacevim_mappings_space.x.i = {'name' : '+change symbol style'}
+    nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
+    xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
+    call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'cunt in the selection region', 0, 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
@@ -119,6 +122,8 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
                 \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
                 \ 'insert lorem-ipsum sentence', 1)
+    let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc', 'translate current word', 1)
 endfunction
 
 function! s:lowerCamelCase() abort
@@ -230,6 +235,10 @@ function! s:parse_symbol(symbol) abort
     else
         return [a:symbol]
     endif
+endfunction
+
+function! s:count_selection_region() abort
+    call feedkeys("gvg\<c-g>\<Esc>", 'ti')
 endfunction
 
 
