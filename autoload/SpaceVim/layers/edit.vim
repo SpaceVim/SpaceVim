@@ -123,34 +123,72 @@ endfunction
 
 function! s:lowerCamelCase() abort
     " fooFzz
-    let cword = expand('<cword>')
-    if !empty(cword) && cword[0:0] =~# '[A-Z]'
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let rst = [cword[0]]
+        if len(cword) > 1
+            let rst += map(cword[1:], "substitute(v:val, '^.', '\\u&', 'g')")
+        endif
+        let save_register = @k
         let save_cursor = getcurpos()
-        normal! b~
+        let @k = join(rst, '')
+        normal! viw"kp
         call setpos('.', save_cursor)
+        let @k = save_register
     endif
 endfunction
 
 function! s:UpperCamelCase() abort
     " FooFzz
-    let cword = expand('<cword>')
-    if !empty(cword) && cword[0:0] =~# '[a-z]'
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let rst = map(cword, "substitute(v:val, '^.', '\\u&', 'g')")
+        let save_register = @k
         let save_cursor = getcurpos()
-        normal! b~
+        let @k = join(rst, '')
+        normal! viw"kp
         call setpos('.', save_cursor)
+        let @k = save_register
     endif
 endfunction
 
 function! s:kebab_case() abort
     " foo-fzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '-')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
 endfunction
 
 function! s:under_score() abort
-    
+    " foo_fzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '_')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
 endfunction
 
 function! s:up_case() abort
-    
+    " FOO_FZZ
+    let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '_')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
 endfunction
 
 let s:STRING = SpaceVim#api#import('data#string')
@@ -160,20 +198,34 @@ function! s:parse_symbol(symbol) abort
     elseif a:symbol =~ '^[a-z]\+\(_[a-zA-Z]\+\)*$'
         return split(a:symbol, '_')
     elseif a:symbol =~ '^[a-z]\+\([A-Z][a-z]\+\)*$'
-        let chars = s:STRING.str2chars(a:symbol)
+        let chars = s:STRING.string2chars(a:symbol)
         let rst = []
         let word = ''
         for char in chars
             if char =~# '[a-z]'
                 let word .= char
             else
-                call add(rst, word)
+                call add(rst, tolower(word))
                 let word = char
             endif
         endfor
-        if !empty(word)
-            call add(rst, word)
-        endif
+        call add(rst, tolower(word))
+        return rst
+    elseif a:symbol =~ '^[A-Z][a-z]\+\([A-Z][a-z]\+\)*$'
+        let chars = s:STRING.string2chars(a:symbol)
+        let rst = []
+        let word = ''
+        for char in chars
+            if char =~# '[a-z]'
+                let word .= char
+            else
+                if !empty(word)
+                    call add(rst, tolower(word))
+                endif
+                let word = char
+            endif
+        endfor
+        call add(rst, tolower(word))
         return rst
     else
         return [a:symbol]
