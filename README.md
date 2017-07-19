@@ -198,13 +198,13 @@ By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/pow
 
 ### Linux/Mac
 
-**Install SpaceVim with the command below**
+Install SpaceVim with the command below:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-**After SpaceVim is installed, launch `vim` and SpaceVim will automatically install plugins**
+After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
 for more info about the install script, please check:
 
