@@ -383,7 +383,7 @@ function! SpaceVim#layers#core#statusline#mode(mode)
             exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
         elseif a:mode == 'R'
             exe 'hi! SpaceVim_statusline_a ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
-        elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
+        elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
             exe 'hi! SpaceVim_statusline_a ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
         endif
         call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
