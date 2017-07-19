@@ -28,12 +28,12 @@ function! SpaceVim#layers#edit#plugins() abort
 endfunction
 
 function! SpaceVim#layers#edit#config() abort
-    let g:multi_cursor_next_key='<C-j>'
-    let g:multi_cursor_prev_key='<C-k>'
-    let g:multi_cursor_skip_key='<C-x>'
-    let g:multi_cursor_quit_key='<Esc>'
+    let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-j>')
+    let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-k>')
+    let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
+    let g:multi_cursor_quit_key=get(g:, 'multi_cursor_quit_key', '<Esc>')
     let g:user_emmet_install_global = 0
-    let g:user_emmet_leader_key='<C-e>'
+    let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
     let g:user_emmet_mode='a'
     let g:user_emmet_settings = {
                 \  'jsp' : {
