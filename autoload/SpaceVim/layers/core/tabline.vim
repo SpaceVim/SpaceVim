@@ -20,6 +20,22 @@ let s:HI = SpaceVim#api#import('vim#highlight')
 let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
 
+" init
+let s:separators = {
+            \ 'arrow' : ["\ue0b0", "\ue0b2"],
+            \ 'curve' : ["\ue0b4", "\ue0b6"],
+            \ 'slant' : ["\ue0b8", "\ue0ba"],
+            \ 'brace' : ["\ue0d2", "\ue0d4"],
+            \ 'fire' : ["\ue0c0", "\ue0c2"],
+            \ 'nil' : ['', ''],
+            \ }
+
+let s:i_separators = {
+            \ 'arrow' : ["\ue0b1", "\ue0b3"],
+            \ 'bar' : ["|", "|"],
+            \ 'nil' : ['', ''],
+            \ }
+
 function! s:tabname(id) abort
     if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(a:id)
@@ -77,14 +93,14 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
             let t .= id . ' ' . name
             if i == ct - 1
-                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a# '
+                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
             elseif i == ct
-                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b# '
+                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
             else
-                let t .= '  '
+                let t .= ' ' . s:ilsep . ' '
             endif
         endfor
-        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#'
+        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
         let t .= '%#SpaceVim_tabline_a# Tabs'
     else
         let s:buffers = s:BUFFER.listed_buffers()
@@ -122,19 +138,21 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
             let t .= id . ' ' . name
             if i == ct
-                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b# '
+                let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
             elseif i == pt
-                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a# '
+                let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
             else
-                let t .= '  '
+                let t .= ' ' . s:ilsep . ' '
             endif
         endfor
-        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#'
+        let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
         let t .= '%#SpaceVim_tabline_a# Buffers'
     endif
     return t
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
+    let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+    let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:separators['arrow'])
     set tabline=%!SpaceVim#layers#core#tabline#get()
     augroup SpaceVim_tabline
         autocmd!

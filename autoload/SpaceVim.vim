@@ -150,6 +150,7 @@ let g:spacevim_enable_cursorline       = 1
 " See more details in: http://spacevim.org/documentation/#statusline
 "
 let g:spacevim_statusline_separator = 'arrow'
+let g:spacevim_statusline_inactive_separator = 'arrow'
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:

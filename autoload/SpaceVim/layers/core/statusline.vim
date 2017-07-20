@@ -25,6 +25,11 @@ let s:separators = {
             \ 'fire' : ["\ue0c0", "\ue0c2"],
             \ 'nil' : ['', ''],
             \ }
+let s:i_separators = {
+            \ 'arrow' : ["\ue0b1", "\ue0b3"],
+            \ 'bar' : ["|", "|"],
+            \ 'nil' : ['', ''],
+            \ }
 let s:loaded_modes = ['syntax-checking']
 let s:modes = {
             \ 'center-cursor': {
@@ -187,36 +192,33 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
     if &filetype ==# 'vimfiler'
-        return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
-                    \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
-    elseif &filetype ==# 'tagbar'
-        return '%#SpaceVim_statusline_ia# ' . s:winnr(1) . ' %#SpaceVim_statusline_a_b#'
-                    \ . '%#SpaceVim_statusline_b# tagbar %#SpaceVim_statusline_b_c#'
+        return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     elseif &filetype ==# 'startify'
         call fugitive#detect(getcwd())
     elseif &filetype ==# 'SpaceVimLayerManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
-                    \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     elseif &filetype ==# 'SpaceVimPlugManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
-                    \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     elseif &filetype ==# 'SpaceVimTabsManager'
-        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
-                    \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+        return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     elseif &filetype ==# 'denite'
         return '%#SpaceVim_statusline_a_bold# %{SpaceVim#layers#core#statusline#denite_mode()} '
-                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b# '
-                    \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_z# '
-                    \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#'
+                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' '
+                    \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
+                    \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:rsep
                     \ . '%#SpaceVim_statusline_c# %{denite#get_status_path() . denite#get_status_linenr()}'
     elseif &filetype ==# 'unite'
         return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
-                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b# %{get(unite#get_context(), "buffer_name", "")} '
-                    \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c# '
+                    \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' %{get(unite#get_context(), "buffer_name", "")} '
+                    \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
                     \ . '%#SpaceVim_statusline_c# %{unite#get_status_string()} '
     elseif &filetype ==# 'SpaceVimFlyGrep'
-        return '%#SpaceVim_statusline_a# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
-                    \ . '%#SpaceVim_statusline_b# %{getcwd()}%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+        return '%#SpaceVim_statusline_a# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+                    \ . '%#SpaceVim_statusline_b# %{getcwd()}%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
                     \ . '%#SpaceVim_statusline_c# %{SpaceVim#plugins#flygrep#lineNr()}'
     endif
     if a:0 > 0
@@ -345,6 +347,7 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
     let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+    let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
                 \ 'toggle the minor mode lighters', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("version control info")',
