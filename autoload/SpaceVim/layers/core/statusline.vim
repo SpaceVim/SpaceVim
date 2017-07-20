@@ -268,14 +268,14 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-    return '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
-                \ . '%#SpaceVim_statusline_b#' . s:filename() . ''
-                \ . ' ' . &filetype . ' ' 
-                \ . s:modes() . ''
-                \ . s:git_branch() . ''
+    return '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+                \ . '%#SpaceVim_statusline_b#' . s:filename() . s:ilsep
+                \ . ' ' . &filetype . ' ' . s:ilsep 
+                \ . s:modes() . s:ilsep
+                \ . s:git_branch() . s:ilsep
                 \ . ' %='
-                \ . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
-                \ . ' %P '
+                \ . s:irsep . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
+                \ . s:irsep . ' %P '
 endfunction
 function! s:gitgutter() abort
     if exists('b:gitgutter_summary')
@@ -341,8 +341,8 @@ function! SpaceVim#layers#core#statusline#toggle_section(name) abort
     let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
-function! Test() abort
-    echo s:loaded_modes
+function! SpaceVim#layers#core#statusline#rsep()
+    return get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
