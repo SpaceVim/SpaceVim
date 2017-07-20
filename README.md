@@ -30,15 +30,14 @@ Here is a throughput graph of the repository for the last few weeks:
     * [Mnemonic key bindings](#mnemonic-key-bindings)
     * [Unite work flow](#unite-work-flow)
     * [module statusline](#module-statusline)
-* [Documentation](#documentation)
-    * [Quick start guide](#quick-start-guide)
-* [Getting Help](#getting-help)
-* [Community](#community)
 * [Install](#install)
     * [1. Requirements](#1-requirements)
     * [2. Install SpaceVim in Linux/Mac](#2-install-spacevim-in-linuxmac)
     * [3. Install SpaceVim in windows](#3-install-spacevim-in-windows)
 * [Update](#update)
+* [Documentation](#documentation)
+    * [Quick start guide](#quick-start-guide)
+* [Community](#community)
 * [Support SpaceVim](#support-spacevim)
     * [contribute to SpaceVim](#contribute-to-spacevim)
     * [Write post about SpaceVim](#write-post-about-spacevim)
@@ -103,6 +102,66 @@ The `core#statusline` layer provide a heavily customized powerline with the foll
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
+## Install
+
+### 1. Requirements
+
+**nerd fonts and true colors:**
+
+SpaceVim provides basic and awesome mode, if you want to use awesome mode, you need to install the [nerd-fonts](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal support [true colors](https://gist.github.com/XVilka/8346728).
+
+**Vim 7.4 above or neovim:**
+
+- [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+
+- [install vim with python, python3 and lua support](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
+
+**git:**
+
+SpaceVim will download all plugins via git.
+
+### 2. Install SpaceVim in Linux/Mac
+
+Install SpaceVim with the command below:
+
+```bash
+curl -sLf https://spacevim.org/install.sh | bash
+```
+
+After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
+
+for more info about the install script, please check:
+
+```bash
+curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+```
+
+### 3. Install SpaceVim in windows
+
+- For vim in windows, please just clone this repo as vimfiles in you Home directory.
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
+
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+```
+
+- For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
+for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+
+```bash
+git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+```
+
+## Update
+
+you can update SpaceVim with the command below:
+
+```viml
+:SPUpdate SpaceVim
+```
+
 ## Documentation
 
 ### Quick start guide
@@ -165,82 +224,20 @@ Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd
 
 You can also check the [general documentation](http://spacevim.org/documentation/).
 
-## Getting Help
-
-If you need help, ask your question in the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim), a member of the community will help you out.
-
 ## Community
-Try these Neovim hangouts for any questions, problems or comments.
-- Ask
-    - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
-    - vi StackExchange for "how to" & configuration questions
-    - [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim) for hugs & pithy comments
+
+Try these SpaceVim hangouts for any questions, problems or comments.
 - Chat
     - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
     - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
     - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
+- Ask
+    - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+    - vi StackExchange for "how to" & configuration questions
+    - [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim) for hugs & pithy comments
 - Discuss
     - [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
 
-## Install
-
-### 1. Requirements
-
-**1) Powerline font:**
-
-By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed. To show the filetype icon in the tabline, you need to install [nerd-fonts](https://github.com/ryanoasis/nerd-fonts).
-
-**2) Vim 7.4 above or neovim:**
-
-- [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
-
-- [install vim with python, python3 and lua support](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
-
-**3) git:**
-
-SpaceVim will download all plugins via git.
-
-### 2. Install SpaceVim in Linux/Mac
-
-Install SpaceVim with the command below:
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash
-```
-
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
-
-for more info about the install script, please check:
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
-```
-
-### 3. Install SpaceVim in windows
-
-- For vim in windows, please just clone this repo as vimfiles in you Home directory.
-by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-make sure you have a backup of your own vimfiles. also you need remove `~/_vimrc` in your home directory.
-
-```sh
-git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-```
-
-- For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
-for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-
-```bash
-git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-```
-
-## Update
-
-you can update SpaceVim with the command below:
-
-```viml
-:SPUpdate SpaceVim
-```
 
 ## Support SpaceVim
 
@@ -256,7 +253,7 @@ If you used SpaceVim in a project and you want to show that fact, you can use th
 
 markdown
 
-```md
+```markdown
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 
@@ -266,11 +263,13 @@ Before contributing be sure to consult the [contribution guidelines](http://spac
 
 ### Write post about SpaceVim
 
-if you want to write something about SpaceVim, and want your post be linked in [SpaceVim's blog page](https://spacevim.org/blog), please show us the link.
+if you want to write something about SpaceVim, and want your post to be posted in [SpaceVim's blog page](https://spacevim.org/blog), please show us the link.
 
 
 ## Credits & Thanks
+
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
+- authors of all the plugins used in SpaceVim.
