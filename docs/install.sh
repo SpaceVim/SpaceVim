@@ -79,6 +79,14 @@ install_vim () {
     fi
 }
 
+install_package_manager () {
+    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
+        info "Install dein.vim"
+        git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+        success "dein.vim installation done"
+    fi
+}
+
 install_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
@@ -238,3 +246,4 @@ need_cmd 'git'
 fetch_repo
 install_vim
 install_neovim
+install_package_manager
