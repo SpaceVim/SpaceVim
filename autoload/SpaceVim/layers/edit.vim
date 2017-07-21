@@ -145,9 +145,32 @@ function! s:move_text_up_transient_state() abort
 endfunction
 
 function! s:text_transient_state() abort
-   let state = SpaceVim#api#import('transient_state') 
-   call state.set_title('Move Text Transient State')
-   call state.open()
+    let state = SpaceVim#api#import('transient_state') 
+    call state.set_title('Move Text Transient State')
+    call state.defind_keys(
+                \ {
+                    \ 'layout' : 'vertical split',
+                    \ 'left' : [
+                        \ {
+                        \ 'key' : 'J',
+                        \ 'desc' : 'move text down',
+                        \ 'func' : '',
+                        \ 'cmd' : 'normal! "_ddp',
+                        \ 'exit' : 0,
+                        \ },
+                    \ ],
+                    \ 'right' : [
+                        \ {
+                        \ 'key' : 'K',
+                        \ 'desc' : 'move text up',
+                        \ 'func' : '',
+                        \ 'cmd' : 'normal! "_ddkP',
+                        \ 'exit' : 0,
+                        \ },
+                    \ ],
+                \ }
+                \ )
+    call state.open()
 endfunction
 
 function! s:lowerCamelCase() abort

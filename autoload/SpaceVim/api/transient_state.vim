@@ -68,7 +68,22 @@ function! s:self.highlight_title() abort
 endfunction
 
 function! s:self._update_content() abort
-    
+    if self._keys.layout == 'vertical split'
+        let linenum = max([len(self._keys.right), len(self._keys.left)])
+        for i in range(linenum)
+            let left = get(self._keys.left, i)
+            let right = get(self._keys.right, i)
+            let line = ''
+            if !empty(left)
+                let line .= '[' . left.key . '] ' . left.desc 
+            endif
+            let line .= repeat(' ', 40 - len(line))
+            if !empty(right)
+                let line .= '[' . right.key . '] ' . right.desc 
+            endif
+            call append(line('$'), line)
+        endfor
+    endif
 endfunction
 
 function! SpaceVim#api#transient_state#get() abort
