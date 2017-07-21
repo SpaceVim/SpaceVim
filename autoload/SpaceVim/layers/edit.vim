@@ -124,6 +124,30 @@ function! SpaceVim#layers#edit#config() abort
                 \ 'insert lorem-ipsum sentence', 1)
     let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc', 'translate current word', 1)
+
+    " move line
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'J'], 'call call('
+                \ . string(s:_function('s:move_text_down_transient_state')) . ', [])',
+                \ 'move text down(enter transient state)', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'K'], 'call call('
+                \ . string(s:_function('s:move_text_up_transient_state')) . ', [])',
+                \ 'move text up(enter transient state)', 1)
+endfunction
+
+function! s:move_text_down_transient_state() abort   
+    normal! "_ddp
+    call s:text_transient_state()
+endfunction
+
+function! s:move_text_up_transient_state() abort
+    normal! "_ddkP
+    call s:text_transient_state()
+endfunction
+
+function! s:text_transient_state() abort
+   let state = SpaceVim#api#import('transient_state') 
+   call state.set_title('Move Text Transient State')
+   call state.open()
 endfunction
 
 function! s:lowerCamelCase() abort

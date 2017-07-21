@@ -1189,7 +1189,7 @@ Key Binding | Description
 `SPC x c` | cunt the number of chars/words/lines in the selection region
 `SPC x d w` | delete trailing whitespaces
 `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space
-`SPC x g l` | set languages used by translate commands (TODO)
+`SPC x g l` | set lanuages used by translate commands (TODO)
 `SPC x g t` | translate current word using Google Translate
 `SPC x g T` | reverse source and target languages (TODO)
 `SPC x i c` | change symbol style to `lowerCamelCase`
@@ -1200,11 +1200,11 @@ Key Binding | Description
 `SPC x i _` | change symbol style to `under_score`
 `SPC x i u` | change symbol style to `under_score`
 `SPC x i U` | change symbol style to `UP_CASE`
-`SPC x j c` | set the justification to center
-`SPC x j f` | set the justification to full
-`SPC x j l` | set the justification to left
-`SPC x j n` | set the justification to none
-`SPC x j r` | set the justification to right
+`SPC x j c` | set the justification to center (TODO)
+`SPC x j f` | set the justification to full (TODO)
+`SPC x j l` | set the justification to left (TODO)
+`SPC x j n` | set the justification to none (TODO)
+`SPC x j r` | set the justification to right (TODO)
 `SPC x J` | move down a line of text (enter transient state)
 `SPC x K` | move up a line of text (enter transient state)
 `SPC x l d` | duplicate line or region
