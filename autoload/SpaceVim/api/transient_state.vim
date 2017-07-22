@@ -3,6 +3,7 @@ let s:self = {}
 let s:self._keys = {}
 let s:self._on_syntax = ''
 let s:self._title = 'Transient State'
+let s:self._handle_inputs = {}
 
 function! s:self.open() abort
     noautocmd rightbelow split __transient_state__
@@ -28,19 +29,35 @@ function! s:self.open() abort
     call append(line('$'), '[KEY] exits state   [KEY] will not exit')
     call self.highlight_keys(1, line('$') - 1, 1, 4)
     call self.highlight_keys(0, line('$') - 1, 21, 24)
+    if winheight(0) > line('$')
+        exe 'resize ' .  line('$')
+    endif
     " move to prvious window
     wincmd w
     redraw!
     while 1
-        let char = getchar()
+        let char = self._getchar()
         if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
             continue
         endif
-        if !has_key(self._keys, char)
+        if !has_key(self._handle_inputs, char)
             break
+        else
+            if type(self._handle_inputs[char]) == 2
+                call call(self._handle_inputs[char], [])
+            else
+            if type(self._handle_inputs[char]) == 1
+                exe self._handle_inputs[char]
+            endif
         endif
     endwhile
     exe 'bd ' . self._bufid
+endfunction
+
+
+function! s:self._getchar(...) abort
+    let ret = call('getchar', a:000)
+    return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
 function! s:self.defind_keys(dict) abort
@@ -76,10 +93,22 @@ function! s:self._update_content() abort
             let line = ''
             if !empty(left)
                 let line .= '[' . left.key . '] ' . left.desc 
+                call self.highlight_keys(left.exit, i + 2, 1, 1 + len(left.key))
+                if !empty(left.cmd)
+                    call extend(self._handle_inputs, {left.key : left.cmd})
+                elseif !empty(left.func)
+                    call extend(self._handle_inputs, {left.key : left.func})
+                endif
             endif
             let line .= repeat(' ', 40 - len(line))
             if !empty(right)
                 let line .= '[' . right.key . '] ' . right.desc 
+                call self.highlight_keys(right.exit, i + 2, 41, 41 + len(right.key))
+                if !empty(right.cmd)
+                    call extend(self._handle_inputs, {right.key : right.cmd})
+                elseif !empty(right.func)
+                    call extend(self._handle_inputs, {right.key : right.func})
+                endif
             endif
             call append(line('$'), line)
         endfor

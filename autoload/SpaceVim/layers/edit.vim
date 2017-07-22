@@ -135,12 +135,12 @@ function! SpaceVim#layers#edit#config() abort
 endfunction
 
 function! s:move_text_down_transient_state() abort   
-    normal! "_ddp
+    normal! ddp
     call s:text_transient_state()
 endfunction
 
 function! s:move_text_up_transient_state() abort
-    normal! "_ddkP
+    normal! ddkP
     call s:text_transient_state()
 endfunction
 
