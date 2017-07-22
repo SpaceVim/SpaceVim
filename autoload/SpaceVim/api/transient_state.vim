@@ -9,6 +9,7 @@ function! s:self.open() abort
     noautocmd rightbelow split __transient_state__
     let self._bufid = bufnr('%')
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+    set filetype=TransientState
     " let save_tve = &t_ve
     " setlocal t_ve=
     " setlocal nomodifiable
@@ -22,6 +23,7 @@ function! s:self.open() abort
         hi def link SpaceVim_Transient_State_Title Title
     endif
     call setline(1, self._title)
+    let b:transient_state_title = self._title
     call append(line('$'), '')
     call self.highlight_title()
     call self._update_content()
@@ -45,8 +47,7 @@ function! s:self.open() abort
         else
             if type(self._handle_inputs[char]) == 2
                 call call(self._handle_inputs[char], [])
-            else
-            if type(self._handle_inputs[char]) == 1
+            elseif type(self._handle_inputs[char]) == 1
                 exe self._handle_inputs[char]
             endif
         endif
