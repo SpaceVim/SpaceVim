@@ -289,6 +289,29 @@ function! s:delete_current_buffer_file() abort
     
 endfunction
 
+function! s:swap_buffer_with_nth_win(nr) abort
+    if a:nr <= winnr('$') && a:nr != winnr()
+        let cb = bufnr('%')
+        let tb = winbufnr(a:nr)
+        if cb != tb
+            exe a:nr . 'wincmd w'
+            exe 'b' . cb
+            wincmd p
+            exe 'b' . tb
+        endif
+    endif
+endfunction
+
+function! s:move_buffer_to_nth_win(nr) abort
+    if a:nr <= winnr('$') && a:nr != winnr()
+        let cb = bufnr('%')
+        bp
+        exe a:nr . 'wincmd w'
+        exe 'b' . cb
+        wincmd p
+    endif
+endfunction
+
 function! s:buffer_transient_state() abort
     let state = SpaceVim#api#import('transient_state') 
     call state.set_title('Buffer Selection Transient State')
@@ -297,10 +320,45 @@ function! s:buffer_transient_state() abort
                     \ 'layout' : 'vertical split',
                     \ 'left' : [
                         \ {
-                        \ 'key' : 'J',
-                        \ 'desc' : 'move text down',
+                        \ 'key' : {
+                                \ 'name' : 'C-1..C-9',
+                                \ 'pos' : [[1,4], [6,9]],
+                                \ 'handles' : [
+                                        \ ["\<C-1>" , ''],
+                                        \ ["\<C-2>" , ''],
+                                        \ ["\<C-3>" , ''],
+                                        \ ["\<C-4>" , ''],
+                                        \ ["\<C-5>" , ''],
+                                        \ ["\<C-6>" , ''],
+                                        \ ["\<C-7>" , ''],
+                                        \ ["\<C-8>" , ''],
+                                        \ ["\<C-9>" , ''],
+                                        \ ],
+                                \ },
+                        \ 'desc' : 'goto nth window',
                         \ 'func' : '',
-                        \ 'cmd' : 'normal! "_ddp',
+                        \ 'cmd' : '',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                        \ 'key' : {
+                                \ 'name' : '1..9',
+                                \ 'pos' : [[1,2], [4,5]],
+                                \ 'handles' : [
+                                        \ ['1' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [1])'],
+                                        \ ['2' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [2])'],
+                                        \ ['3' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [3])'],
+                                        \ ['4' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [4])'],
+                                        \ ['5' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [5])'],
+                                        \ ['6' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [6])'],
+                                        \ ['7' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [7])'],
+                                        \ ['8' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [8])'],
+                                        \ ['9' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [9])'],
+                                        \ ],
+                                \ },
+                        \ 'desc' : 'move buffer to nth window',
+                        \ 'func' : '',
+                        \ 'cmd' : '',
                         \ 'exit' : 0,
                         \ },
                     \ ],

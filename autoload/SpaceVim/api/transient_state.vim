@@ -35,7 +35,7 @@ function! s:self.open() abort
         exe 'resize ' .  line('$')
     endif
     " move to prvious window
-    wincmd w
+    wincmd p
     while 1
         redraw!
         let char = self._getchar()
@@ -94,7 +94,7 @@ function! s:self._update_content() abort
             let right = get(self._keys.right, i)
             let line = ''
             if !empty(left)
-                if type(left.key) ==# type('')
+                if type(left.key) == 1
                     let line .= '[' . left.key . '] ' . left.desc 
                     call self.highlight_keys(left.exit, i + 2, 1, 1 + len(left.key))
                     if !empty(left.cmd)
@@ -102,6 +102,15 @@ function! s:self._update_content() abort
                     elseif !empty(left.func)
                         call extend(self._handle_inputs, {left.key : left.func})
                     endif
+                elseif type(left.key) == 3
+                elseif type(left.key) == 4
+                    let line .= '[' . left.key.name . '] ' . left.desc 
+                    for pos in left.key.pos
+                        call self.highlight_keys(left.exit, i + 2, pos[0], pos[1])
+                    endfor
+                    for handles in left.key.handles
+                        call extend(self._handle_inputs, {handles[0] : handles[1]})
+                    endfor
                 endif
             endif
             let line .= repeat(' ', 40 - len(line))
