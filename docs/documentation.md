@@ -25,6 +25,8 @@ title:  "Documentation"
 * [Custom Configuration](#custom-configuration)
     * [Automatic Generation](#automatic-generation)
     * [Alternative directory](#alternative-directory)
+* [Concepts](#concepts)
+    * [Transient-states](#transient-states)
 * [Awesome ui](#awesome-ui)
     * [Colorschemes](#colorschemes)
     * [Font](#font)
@@ -79,6 +81,9 @@ title:  "Documentation"
         * [Searching on the fly](#searching-on-the-fly)
         * [Persistent highlighting](#persistent-highlighting)
     * [Editing](#editing)
+        * [Paste text](#paste-text)
+            * [Auto-indent pasted text](#auto-indent-pasted-text)
+        * [Text manipulation commands](#text-manipulation-commands)
         * [Text insertion commands](#text-insertion-commands)
         * [Commenting](#commenting)
         * [Multi-Encodings](#multi-encodings)
@@ -290,6 +295,19 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
+
+## Concepts
+
+### Transient-states
+
+SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
+
+When a transient state is active, a documentation is displayed in the transient state buffer. Additional information may as well be displayed in it.
+
+
+Move Text Transient State:
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
 ## Awesome ui
 
@@ -756,6 +774,7 @@ Buffer manipulation commands (start with `b`):
 Key Binding | Description
 ----------- | -----------
 `SPC TAB` | switch to alternate buffer in the current window (switch back and forth)
+`SPC b .` | buffer transient state
 `SPC b b` | switch to a buffer (via denite/unite)
 `SPC b d` | kill the current buffer (does not delete the visited file)
 `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)
@@ -1154,6 +1173,70 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 ### Editing
 
+#### Paste text
+
+##### Auto-indent pasted text
+
+#### Text manipulation commands
+
+Text related commands (start with `x`):
+
+Key Binding | Description
+---------- | ------------
+`SPC x a &` | align region at &
+`SPC x a (` | align region at (
+`SPC x a )` | align region at )
+`SPC x a [` | align region at [
+`SPC x a ]` | align region at ]
+`SPC x a {` | align region at {
+`SPC x a }` | align region at }
+`SPC x a ,` | align region at ,
+`SPC x a .` | align region at . (for numeric tables)
+`SPC x a :` | align region at :
+`SPC x a ;` | align region at ;
+`SPC x a =` | align region at =
+`SPC x a ¦` | align region at ¦
+`SPC x a a` | align region (or guessed section) using default rules (TODO)
+`SPC x a c` | align current indentation region using default rules (TODO)
+`SPC x a l` | left-align with evil-lion (TODO)
+`SPC x a L` | right-align with evil-lion (TODO)
+`SPC x a r` | align region using user-specified regexp (TODO)
+`SPC x a m` | align region at arithmetic operators `` (+-*/) `` (TODO)
+`SPC x c` | cunt the number of chars/words/lines in the selection region
+`SPC x d w` | delete trailing whitespaces
+`SPC x d SPC` | Delete all spaces and tabs around point, leaving one space
+`SPC x g l` | set lanuages used by translate commands (TODO)
+`SPC x g t` | translate current word using Google Translate
+`SPC x g T` | reverse source and target languages (TODO)
+`SPC x i c` | change symbol style to `lowerCamelCase`
+`SPC x i C` | change symbol style to `UpperCamelCase`
+`SPC x i i` | cycle symbol naming styles (i to keep cycling)
+`SPC x i -` | change symbol style to `kebab-case`
+`SPC x i k` | change symbol style to `kebab-case`
+`SPC x i _` | change symbol style to `under_score`
+`SPC x i u` | change symbol style to `under_score`
+`SPC x i U` | change symbol style to `UP_CASE`
+`SPC x j c` | set the justification to center (TODO)
+`SPC x j f` | set the justification to full (TODO)
+`SPC x j l` | set the justification to left (TODO)
+`SPC x j n` | set the justification to none (TODO)
+`SPC x j r` | set the justification to right (TODO)
+`SPC x J` | move down a line of text (enter transient state)
+`SPC x K` | move up a line of text (enter transient state)
+`SPC x l d` | duplicate line or region
+`SPC x l s` | sort lines
+`SPC x l u` | uniquify lines
+`SPC x o` | use avy to select a link in the frame and open it
+`SPC x O` | use avy to select multiple links in the frame and open them
+`SPC x t c` | swap (transpose) the current character with the previous one
+`SPC x t w` | swap (transpose) the current word with the previous one
+`SPC x t l` | swap (transpose) the current line with the previous one
+`SPC x u` | set the selected text to lower case
+`SPC x U` | set the selected text to upper case
+`SPC x w c` | count the number of occurrences per word in the select region
+`SPC x w d` | show dictionary entry of word from wordnik.com
+`SPC x TAB` | indent or dedent a region rigidly
+
 #### Text insertion commands
 
 Text insertion commands (start with `i`):
@@ -1191,6 +1274,7 @@ Key Binding | Description
 `SPC c Y` | invert comment and yank
 
 **Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
+>>>>>>> dev
 
 #### Multi-Encodings
 

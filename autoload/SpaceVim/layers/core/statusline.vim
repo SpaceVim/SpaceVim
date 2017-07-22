@@ -220,6 +220,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
         return '%#SpaceVim_statusline_a# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
                     \ . '%#SpaceVim_statusline_b# %{getcwd()}%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
                     \ . '%#SpaceVim_statusline_c# %{SpaceVim#plugins#flygrep#lineNr()}'
+    elseif &filetype ==# 'TransientState'
+        return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
     endif
     if a:0 > 0
         return s:active()

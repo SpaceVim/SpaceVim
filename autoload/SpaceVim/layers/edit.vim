@@ -1,7 +1,7 @@
+scriptencoding utf-8
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
-
 
 function! SpaceVim#layers#edit#plugins() abort
     let plugins = [
@@ -43,6 +43,53 @@ function! SpaceVim#layers#edit#config() abort
     "noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
+    let g:_spacevim_mappings_space.x = {'name' : '+Text'}
+    let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
+    let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
+    let g:_spacevim_mappings_space.x.i = {'name' : '+change symbol style'}
+    nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
+    xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
+    call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'cunt in the selection region', 0, 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '['], 'Tabularize /[', 'align region at [', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ']'], 'Tabularize /]', 'align region at ]', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align region at {', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align region at }', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align region at ,', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align region at .', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align region at :', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align region at ;', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /=', 'align region at =', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align region at ¦', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
+                \ . string(s:_function('s:delete_extra_space')) . ', [])',
+                \ 'delete extra space arround cursor', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
+                \ . string(s:_function('s:lowerCamelCase')) . ', [])',
+                \ 'change symbol style to lowerCamelCase', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'C'], 'silent call call('
+                \ . string(s:_function('s:UpperCamelCase')) . ', [])',
+                \ 'change symbol style to UpperCamelCase', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', '_'], 'silent call call('
+                \ . string(s:_function('s:under_score')) . ', [])',
+                \ 'change symbol style to under_score', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'u'], 'silent call call('
+                \ . string(s:_function('s:under_score')) . ', [])',
+                \ 'change symbol style to under_score', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'U'], 'silent call call('
+                \ . string(s:_function('s:up_case')) . ', [])',
+                \ 'change symbol style to UP_CACE', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'k'], 'silent call call('
+                \ . string(s:_function('s:kebab_case')) . ', [])',
+                \ 'change symbol style to kebab-case', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', '-'], 'silent call call('
+                \ . string(s:_function('s:kebab_case')) . ', [])',
+                \ 'change symbol style to kebab-case', 1)
+
+
     let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
     let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
     let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
@@ -75,6 +122,179 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
                 \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
                 \ 'insert lorem-ipsum sentence', 1)
+    let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc', 'translate current word', 1)
+
+    " move line
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'J'], 'call call('
+                \ . string(s:_function('s:move_text_down_transient_state')) . ', [])',
+                \ 'move text down(enter transient state)', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 'K'], 'call call('
+                \ . string(s:_function('s:move_text_up_transient_state')) . ', [])',
+                \ 'move text up(enter transient state)', 1)
+endfunction
+
+function! s:move_text_down_transient_state() abort   
+    normal! ddp
+    call s:text_transient_state()
+endfunction
+
+function! s:move_text_up_transient_state() abort
+    normal! ddkP
+    call s:text_transient_state()
+endfunction
+
+function! s:text_transient_state() abort
+    let state = SpaceVim#api#import('transient_state') 
+    call state.set_title('Move Text Transient State')
+    call state.defind_keys(
+                \ {
+                    \ 'layout' : 'vertical split',
+                    \ 'left' : [
+                        \ {
+                        \ 'key' : 'J',
+                        \ 'desc' : 'move text down',
+                        \ 'func' : '',
+                        \ 'cmd' : 'normal! "_ddp',
+                        \ 'exit' : 0,
+                        \ },
+                    \ ],
+                    \ 'right' : [
+                        \ {
+                        \ 'key' : 'K',
+                        \ 'desc' : 'move text up',
+                        \ 'func' : '',
+                        \ 'cmd' : 'normal! "_ddkP',
+                        \ 'exit' : 0,
+                        \ },
+                    \ ],
+                \ }
+                \ )
+    call state.open()
+endfunction
+
+function! s:lowerCamelCase() abort
+    " fooFzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let rst = [cword[0]]
+        if len(cword) > 1
+            let rst += map(cword[1:], "substitute(v:val, '^.', '\\u&', 'g')")
+        endif
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(rst, '')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
+endfunction
+
+function! s:UpperCamelCase() abort
+    " FooFzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let rst = map(cword, "substitute(v:val, '^.', '\\u&', 'g')")
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(rst, '')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
+endfunction
+
+function! s:kebab_case() abort
+    " foo-fzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '-')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
+endfunction
+
+function! s:under_score() abort
+    " foo_fzz
+    let cword = s:parse_symbol(expand('<cword>'))
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '_')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
+endfunction
+
+function! s:up_case() abort
+    " FOO_FZZ
+    let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
+    if !empty(cword)
+        let save_register = @k
+        let save_cursor = getcurpos()
+        let @k = join(cword, '_')
+        normal! viw"kp
+        call setpos('.', save_cursor)
+        let @k = save_register
+    endif
+endfunction
+
+let s:STRING = SpaceVim#api#import('data#string')
+function! s:parse_symbol(symbol) abort
+    if a:symbol =~ '^[a-z]\+\(-[a-zA-Z]\+\)*$'
+        return split(a:symbol, '-')
+    elseif a:symbol =~ '^[a-z]\+\(_[a-zA-Z]\+\)*$'
+        return split(a:symbol, '_')
+    elseif a:symbol =~ '^[a-z]\+\([A-Z][a-z]\+\)*$'
+        let chars = s:STRING.string2chars(a:symbol)
+        let rst = []
+        let word = ''
+        for char in chars
+            if char =~# '[a-z]'
+                let word .= char
+            else
+                call add(rst, tolower(word))
+                let word = char
+            endif
+        endfor
+        call add(rst, tolower(word))
+        return rst
+    elseif a:symbol =~ '^[A-Z][a-z]\+\([A-Z][a-z]\+\)*$'
+        let chars = s:STRING.string2chars(a:symbol)
+        let rst = []
+        let word = ''
+        for char in chars
+            if char =~# '[a-z]'
+                let word .= char
+            else
+                if !empty(word)
+                    call add(rst, tolower(word))
+                endif
+                let word = char
+            endif
+        endfor
+        call add(rst, tolower(word))
+        return rst
+    else
+        return [a:symbol]
+    endif
+endfunction
+
+function! s:count_selection_region() abort
+    call feedkeys("gvg\<c-g>\<Esc>", 'ti')
+endfunction
+
+
+function! s:delete_extra_space() abort
+    if !empty(getline('.'))
+        if getline('.')[col('.')-1] ==# ' '
+            exe "normal! viw\"_di\<Space>\<Esc>"
+        endif
+    endif
 endfunction
 let s:local_lorem_ipsum = [
             \ 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
