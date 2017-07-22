@@ -759,6 +759,7 @@ Buffer manipulation commands (start with `b`):
 Key Binding | Description
 ----------- | -----------
 `SPC TAB` | switch to alternate buffer in the current window (switch back and forth)
+`SPC b .` | buffer transient state
 `SPC b b` | switch to a buffer (via denite/unite)
 `SPC b d` | kill the current buffer (does not delete the visited file)
 `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)

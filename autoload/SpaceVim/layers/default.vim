@@ -93,6 +93,9 @@ function! SpaceVim#layers#default#config() abort
                 \ . string(s:_function('s:jump_to_url')) . ', [])',
                 \ 'jump to url', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
+                \ . string(s:_function('s:buffer_transient_state')) . ', [])',
+                \ 'buffer transient state', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'], 'call SpaceVim#mapping#close_current_buffer()', 'kill-this-buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
                 \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
@@ -284,4 +287,11 @@ function! s:delete_current_buffer_file() abort
     endif
     redraw!
     
+endfunction
+
+function! s:buffer_transient_state() abort
+    let state = SpaceVim#api#import('transient_state') 
+    call state.set_title('Buffer Selection Transient State')
+    call state.defind_keys({})
+    call state.open()
 endfunction

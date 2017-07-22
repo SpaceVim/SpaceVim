@@ -87,7 +87,7 @@ function! s:self.highlight_title() abort
 endfunction
 
 function! s:self._update_content() abort
-    if self._keys.layout == 'vertical split'
+    if get(self._keys, 'layout', '') == 'vertical split'
         let linenum = max([len(self._keys.right), len(self._keys.left)])
         for i in range(linenum)
             let left = get(self._keys.left, i)
