@@ -36,8 +36,8 @@ function! s:self.open() abort
     endif
     " move to prvious window
     wincmd w
-    redraw!
     while 1
+        redraw!
         let char = self._getchar()
         if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
             continue
