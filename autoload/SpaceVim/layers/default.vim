@@ -292,6 +292,42 @@ endfunction
 function! s:buffer_transient_state() abort
     let state = SpaceVim#api#import('transient_state') 
     call state.set_title('Buffer Selection Transient State')
-    call state.defind_keys({})
+    call state.defind_keys(
+                \ {
+                    \ 'layout' : 'vertical split',
+                    \ 'left' : [
+                        \ {
+                        \ 'key' : 'J',
+                        \ 'desc' : 'move text down',
+                        \ 'func' : '',
+                        \ 'cmd' : 'normal! "_ddp',
+                        \ 'exit' : 0,
+                        \ },
+                    \ ],
+                    \ 'right' : [
+                        \ {
+                        \ 'key' : 'n',
+                        \ 'desc' : 'next buffer',
+                        \ 'func' : '',
+                        \ 'cmd' : 'bnext',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                        \ 'key' : 'd',
+                        \ 'desc' : 'kill buffer',
+                        \ 'func' : '',
+                        \ 'cmd' : 'call SpaceVim#mapping#close_current_buffer()',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                        \ 'key' : 'q',
+                        \ 'desc' : 'quit',
+                        \ 'func' : '',
+                        \ 'cmd' : '',
+                        \ 'exit' : 1,
+                        \ },
+                    \ ],
+                \ }
+                \ )
     call state.open()
 endfunction
