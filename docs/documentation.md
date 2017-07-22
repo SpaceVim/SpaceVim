@@ -25,6 +25,8 @@ title:  "Documentation"
 * [Custom Configuration](#custom-configuration)
     * [Automatic Generation](#automatic-generation)
     * [Alternative directory](#alternative-directory)
+* [Concepts](#concepts)
+    * [Transient-states](#transient-states)
 * [Awesome ui](#awesome-ui)
     * [Colorschemes](#colorschemes)
     * [Font](#font)
@@ -293,6 +295,19 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
+
+## Concepts
+
+### Transient-states
+
+SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
+
+When a transient state is active, a documentation is displayed in the transient state buffer. Additional information may as well be displayed in it.
+
+
+Move Text Transient State:
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
 ## Awesome ui
 
