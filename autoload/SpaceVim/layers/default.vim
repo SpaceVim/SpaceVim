@@ -361,6 +361,27 @@ function! s:buffer_transient_state() abort
                         \ 'cmd' : '',
                         \ 'exit' : 0,
                         \ },
+                        \ {
+                        \ 'key' : {
+                                \ 'name' : 'M-1..M-9',
+                                \ 'pos' : [[1,4], [6,9]],
+                                \ 'handles' : [
+                                        \ ["\<M-1>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [1])'],
+                                        \ ["\<M-2>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [2])'],
+                                        \ ["\<M-3>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [3])'],
+                                        \ ["\<M-4>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [4])'],
+                                        \ ["\<M-5>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [5])'],
+                                        \ ["\<M-6>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [6])'],
+                                        \ ["\<M-7>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [7])'],
+                                        \ ["\<M-8>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [8])'],
+                                        \ ["\<M-9>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [9])'],
+                                        \ ],
+                                \ },
+                        \ 'desc' : 'swap buffer with nth window',
+                        \ 'func' : '',
+                        \ 'cmd' : '',
+                        \ 'exit' : 0,
+                        \ },
                     \ ],
                     \ 'right' : [
                         \ {
