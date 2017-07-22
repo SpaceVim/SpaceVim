@@ -6,7 +6,7 @@ let s:self._title = 'Transient State'
 let s:self._handle_inputs = {}
 
 function! s:self.open() abort
-    noautocmd rightbelow split __transient_state__
+    noautocmd botright split __transient_state__
     let self._bufid = bufnr('%')
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
     set filetype=TransientState
