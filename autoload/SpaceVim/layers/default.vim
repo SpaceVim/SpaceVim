@@ -313,6 +313,13 @@ function! s:buffer_transient_state() abort
                         \ 'exit' : 0,
                         \ },
                         \ {
+                        \ 'key' : ['N', 'p'],
+                        \ 'desc' : 'previous buffer',
+                        \ 'func' : '',
+                        \ 'cmd' : 'bp',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
                         \ 'key' : 'd',
                         \ 'desc' : 'kill buffer',
                         \ 'func' : '',

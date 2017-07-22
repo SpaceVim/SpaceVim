@@ -94,22 +94,42 @@ function! s:self._update_content() abort
             let right = get(self._keys.right, i)
             let line = ''
             if !empty(left)
-                let line .= '[' . left.key . '] ' . left.desc 
-                call self.highlight_keys(left.exit, i + 2, 1, 1 + len(left.key))
-                if !empty(left.cmd)
-                    call extend(self._handle_inputs, {left.key : left.cmd})
-                elseif !empty(left.func)
-                    call extend(self._handle_inputs, {left.key : left.func})
+                if type(left.key) ==# type('')
+                    let line .= '[' . left.key . '] ' . left.desc 
+                    call self.highlight_keys(left.exit, i + 2, 1, 1 + len(left.key))
+                    if !empty(left.cmd)
+                        call extend(self._handle_inputs, {left.key : left.cmd})
+                    elseif !empty(left.func)
+                        call extend(self._handle_inputs, {left.key : left.func})
+                    endif
                 endif
             endif
             let line .= repeat(' ', 40 - len(line))
             if !empty(right)
-                let line .= '[' . right.key . '] ' . right.desc 
-                call self.highlight_keys(right.exit, i + 2, 41, 41 + len(right.key))
-                if !empty(right.cmd)
-                    call extend(self._handle_inputs, {right.key : right.cmd})
-                elseif !empty(right.func)
-                    call extend(self._handle_inputs, {right.key : right.func})
+                if type(right.key) == 1
+                    let line .= '[' . right.key . '] ' . right.desc 
+                    call self.highlight_keys(right.exit, i + 2, 41, 41 + len(right.key))
+                    if !empty(right.cmd)
+                        call extend(self._handle_inputs, {right.key : right.cmd})
+                    elseif !empty(right.func)
+                        call extend(self._handle_inputs, {right.key : right.func})
+                    endif
+                elseif type(right.key) == 3
+                    let line .= '[' . join(right.key, '/') . '] ' . right.desc 
+                    let begin = 41
+                    for key in right.key
+                        call self.highlight_keys(right.exit, i + 2, begin, begin + len(key))
+                        let begin = begin + len(key) + 1
+                    endfor
+                    if !empty(right.cmd)
+                        for key in right.key
+                            call extend(self._handle_inputs, {key : right.cmd})
+                        endfor
+                    elseif !empty(right.func)
+                        for key in right.key
+                            call extend(self._handle_inputs, {key : right.func})
+                        endfor
+                    endif
                 endif
             endif
             call append(line('$'), line)
