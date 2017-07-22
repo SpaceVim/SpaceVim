@@ -53,6 +53,7 @@ function! s:self.open() abort
         endif
     endwhile
     exe 'bd ' . self._bufid
+    doautocmd WinEnter
 endfunction
 
 
