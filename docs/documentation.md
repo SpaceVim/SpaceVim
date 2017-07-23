@@ -1223,19 +1223,19 @@ Key Binding | Description
 `SPC x j r` | set the justification to right (TODO)
 `SPC x J` | move down a line of text (enter transient state)
 `SPC x K` | move up a line of text (enter transient state)
-`SPC x l d` | duplicate line or region
-`SPC x l s` | sort lines
-`SPC x l u` | uniquify lines
-`SPC x o` | use avy to select a link in the frame and open it
-`SPC x O` | use avy to select multiple links in the frame and open them
+`SPC x l d` | duplicate line or region (TODO)
+`SPC x l s` | sort lines (TODO)
+`SPC x l u` | uniquify lines (TODO)
+`SPC x o` | use avy to select a link in the frame and open it (TODO)
+`SPC x O` | use avy to select multiple links in the frame and open them (TODO)
 `SPC x t c` | swap (transpose) the current character with the previous one
 `SPC x t w` | swap (transpose) the current word with the previous one
 `SPC x t l` | swap (transpose) the current line with the previous one
-`SPC x u` | set the selected text to lower case
-`SPC x U` | set the selected text to upper case
-`SPC x w c` | count the number of occurrences per word in the select region
-`SPC x w d` | show dictionary entry of word from wordnik.com
-`SPC x TAB` | indent or dedent a region rigidly
+`SPC x u` | set the selected text to lower case (TODO)
+`SPC x U` | set the selected text to upper case (TODO)
+`SPC x w c` | count the number of occurrences per word in the select region (TODO)
+`SPC x w d` | show dictionary entry of word from wordnik.com (TODO)
+`SPC x TAB` | indent or dedent a region rigidly (TODO)
 
 #### Text insertion commands
 
