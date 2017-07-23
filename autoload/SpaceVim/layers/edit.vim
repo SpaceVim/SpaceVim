@@ -132,6 +132,48 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'K'], 'call call('
                 \ . string(s:_function('s:move_text_up_transient_state')) . ', [])',
                 \ 'move text up(enter transient state)', 1)
+
+    " transpose
+    let g:_spacevim_mappings_space.x.t = {'name' : '+transpose'}
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
+                \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
+                \ 'swap current character with previous one', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'w'], 'call call('
+                \ . string(s:_function('s:transpose_with_previous')) . ', ["word"])',
+                \ 'swap current word with previous one', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
+                \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
+                \ 'swap current line with previous one', 1)
+
+endfunction
+
+function! s:transpose_with_previous(type) abort
+    if a:type ==# 'line'
+        if line('.') > 1
+            normal! kddp
+        endif
+    elseif a:type ==# 'word'
+        let save_register = @k
+        normal! "kyiw
+        let cw = @k
+        normal! ge"kyiw
+        let tw = @k
+        if cw !=# tw
+            let @k = cw
+            normal! viw"kp
+            let @k = tw
+            normal! eviw"kp
+        endif
+        let @k =save_register
+    elseif a:type ==# 'character'
+        if col('.') > 1
+            let save_register_k = @k
+            let save_register_m = @m
+            normal! v"kyhv"myv"kplv"mp
+            let @k =save_register_k
+            let @m =save_register_m
+        endif
+    endif
 endfunction
 
 function! s:move_text_down_transient_state() abort   
@@ -149,25 +191,25 @@ function! s:text_transient_state() abort
     call state.set_title('Move Text Transient State')
     call state.defind_keys(
                 \ {
-                    \ 'layout' : 'vertical split',
-                    \ 'left' : [
-                        \ {
-                        \ 'key' : 'J',
-                        \ 'desc' : 'move text down',
-                        \ 'func' : '',
-                        \ 'cmd' : 'normal! "_ddp',
-                        \ 'exit' : 0,
-                        \ },
-                    \ ],
-                    \ 'right' : [
-                        \ {
-                        \ 'key' : 'K',
-                        \ 'desc' : 'move text up',
-                        \ 'func' : '',
-                        \ 'cmd' : 'normal! "_ddkP',
-                        \ 'exit' : 0,
-                        \ },
-                    \ ],
+                \ 'layout' : 'vertical split',
+                \ 'left' : [
+                \ {
+                \ 'key' : 'J',
+                \ 'desc' : 'move text down',
+                \ 'func' : '',
+                \ 'cmd' : 'normal! "_ddp',
+                \ 'exit' : 0,
+                \ },
+                \ ],
+                \ 'right' : [
+                \ {
+                \ 'key' : 'K',
+                \ 'desc' : 'move text up',
+                \ 'func' : '',
+                \ 'cmd' : 'normal! "_ddkP',
+                \ 'exit' : 0,
+                \ },
+                \ ],
                 \ }
                 \ )
     call state.open()
@@ -245,11 +287,11 @@ endfunction
 
 let s:STRING = SpaceVim#api#import('data#string')
 function! s:parse_symbol(symbol) abort
-    if a:symbol =~ '^[a-z]\+\(-[a-zA-Z]\+\)*$'
+    if a:symbol =~# '^[a-z]\+\(-[a-zA-Z]\+\)*$'
         return split(a:symbol, '-')
-    elseif a:symbol =~ '^[a-z]\+\(_[a-zA-Z]\+\)*$'
+    elseif a:symbol =~# '^[a-z]\+\(_[a-zA-Z]\+\)*$'
         return split(a:symbol, '_')
-    elseif a:symbol =~ '^[a-z]\+\([A-Z][a-z]\+\)*$'
+    elseif a:symbol =~# '^[a-z]\+\([A-Z][a-z]\+\)*$'
         let chars = s:STRING.string2chars(a:symbol)
         let rst = []
         let word = ''
@@ -263,7 +305,7 @@ function! s:parse_symbol(symbol) abort
         endfor
         call add(rst, tolower(word))
         return rst
-    elseif a:symbol =~ '^[A-Z][a-z]\+\([A-Z][a-z]\+\)*$'
+    elseif a:symbol =~# '^[A-Z][a-z]\+\([A-Z][a-z]\+\)*$'
         let chars = s:STRING.string2chars(a:symbol)
         let rst = []
         let word = ''
