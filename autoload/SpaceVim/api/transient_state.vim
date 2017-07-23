@@ -74,17 +74,33 @@ function! s:self.set_title(title) abort
     let self._title = a:title
 endfunction
 
-function! s:self.highlight_keys(exit, line, begin, end) abort
-    if a:exit
-        call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Exit', a:line, a:begin, a:end)
-    else
-        call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Notexit', a:line, a:begin, a:end)
-    endif
-endfunction
+if has('nvim')
+    function! s:self.highlight_keys(exit, line, begin, end) abort
+        if a:exit
+            call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Exit', a:line, a:begin, a:end)
+        else
+            call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Notexit', a:line, a:begin, a:end)
+        endif
+    endfunction
+else
+    function! s:self.highlight_keys(exit, line, begin, end) abort
+        if a:exit
+            call matchaddpos('SpaceVim_Transient_State_Exit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+        else
+            call matchaddpos('SpaceVim_Transient_State_Notexit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+        endif
+    endfunction
+endif
 
-function! s:self.highlight_title() abort
-    call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Title', 0, 0, len(self._title))
-endfunction
+if has('nvim')
+    function! s:self.highlight_title() abort
+        call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Title', 0, 0, len(self._title))
+    endfunction
+else
+    function! s:self.highlight_title() abort
+        call matchaddpos('SpaceVim_Transient_State_Title', [1])
+    endfunction
+endif
 
 function! s:self._update_content() abort
     if get(self._keys, 'layout', '') == 'vertical split'
