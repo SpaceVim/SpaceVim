@@ -126,22 +126,18 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
-    if line('.') !=# ''
+    if getline('.') !=# ''
         if s:grepid != 0
             call s:JOB.stop(s:grepid)
         endif
         call s:MPT._clear_prompt()
         let s:MPT._quit = 1
-        let isfname = &isfname
-        if s:SYS.isWindows
-            set isfname-=:
-        endif
-        normal! gF
-        let nr = bufnr('%')
+        let line = getline('.')
+        let filename = fnameescape(split(line, ':\d\+:')[0])
+        let linenr = matchstr(line, ':\d\+:')[1:-2]
         q
-        exe 'silent b' . nr
-        normal! :
-        let &isfname = isfname
+        exe 'e ' . filename
+        exe linenr
     endif
 endfunction
 
