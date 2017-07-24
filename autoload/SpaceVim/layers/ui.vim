@@ -196,6 +196,11 @@ function! s:toggle_syntax_checker() abort
     call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
     call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
     let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
+    if g:_spacevim_toggle_syntax_flag == 1
+        echo "syntax-checking enabled."
+    else
+        echo "syntax-checking disabled."
+    endif
 endfunction
 
 function! s:toggle_spell_check() abort
