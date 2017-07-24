@@ -44,7 +44,7 @@ function! s:error_transient_state() abort
                 \ 'key' : 'n',
                 \ 'desc' : 'next error',
                 \ 'func' : '',
-                \ 'cmd' : 'lnext',
+                \ 'cmd' : 'try | lnext | catch | endtry',
                 \ 'exit' : 0,
                 \ },
                 \ ],
@@ -53,7 +53,7 @@ function! s:error_transient_state() abort
                 \ 'key' : ['p', 'N'],
                 \ 'desc' : 'previous error',
                 \ 'func' : '',
-                \ 'cmd' : 'lprevious',
+                \ 'cmd' : 'try | lprevious | catch | endtry',
                 \ 'exit' : 0,
                 \ },
                 \ {
