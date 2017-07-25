@@ -67,6 +67,7 @@ function! SpaceVim#autocmds#init() abort
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
+    autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
     if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
       autocmd InsertEnter * call s:disable_touchpad()

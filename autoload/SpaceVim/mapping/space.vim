@@ -286,6 +286,20 @@ function! s:windows_layout_toggle() abort
     wincmd w
   endif
 endfunction
+
+
+let s:language_specified_mappings = {}
+function! SpaceVim#mapping#space#refrashLSPC()
+  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+  if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
+    call call(s:language_specified_mappings[&filetype], [])
+  endif
+endfunction
+
+function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func)
+  call extend(s:language_specified_mappings, {a:ft : a:func})
+endfunction
+
 function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   if s:has_map_to_spc()
     return

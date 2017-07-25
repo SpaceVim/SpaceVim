@@ -91,9 +91,9 @@ function! SpaceVim#layers#lang#lisp#config() abort
                 \ ['n', '<c-n>', ':call vlime#ui#input#NextHistoryItem("forward")<cr>'],
                 \ ],
                 \ }
+    call SpaceVim#mapping#space#regesit_lang_mappings('lisp', funcref('s:lisp'))
     augroup LocalVlimeKeys
         autocmd!
-        autocmd FileType lisp call s:lisp()
         autocmd FileType vlime_sldb call s:vlime_sldb()
         autocmd FileType vlime_repl call s:vlime_repl()
         autocmd FileType vlime_inspector call s:vlime_inspector()
@@ -109,7 +109,6 @@ endfunction
 
 
 fu! s:lisp()
-    let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     let g:_spacevim_mappings_space.l.c = {'name' : '+Connection Management'}
     call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'c'], "call VlimeConnectREPL()", 'Connect to Vlime server', 1)
     call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'], "call VlimeSelectCurConnection()", 'Switch Vlime connections', 1)
