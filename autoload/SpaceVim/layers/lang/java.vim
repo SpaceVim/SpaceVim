@@ -71,6 +71,18 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','M'], '<Plug>(JavaComplete-Generate-AbstractMethods)', 'Generate abstract methods', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','I'], '<Plug>(JavaComplete-Imports-AddMissing)', 'Import missing classes', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','R'], '<Plug>(JavaComplete-Imports-RemoveUnused)', 'Remove unused classes', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'], '<Plug>(JavaComplete-Imports-AddSmart)', 'Smart import class under cursor', 0)
+
+  " execute
+  let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
+  " run main methon
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'm'], 'JavaUnitTestMain', 'Run main method', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'JavaUnitExec', 'Run current method', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'a'], 'JavaUnitTestAll', 'Run all test methods', 1)
+  " debug
+  let g:_spacevim_mappings_space.l.d = {'name' : '+Debug'}
 endfunction
 
 function! s:java_mappings() abort
@@ -83,19 +95,13 @@ function! s:java_mappings() abort
   endif
   nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
   imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-  nmap <silent><buffer> <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
-  nmap <silent><buffer> <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
-  nmap <silent><buffer> <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
-  nmap <silent><buffer> <leader>jii <Plug>(JavaComplete-Imports-Add)
 
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-  imap <silent><buffer> <C-j>ii <Plug>(JavaComplete-Imports-Add)
-
-  nmap <silent><buffer> <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
-
   imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+
+
 
   nmap <silent><buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
   nmap <silent><buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
