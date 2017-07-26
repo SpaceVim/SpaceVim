@@ -67,6 +67,18 @@ function! SpaceVim#layers#lang#java#config() abort
   augroup END
   set tags +=~/others/openjdksrc/java/tags
   set tags +=~/others/openjdksrc/javax/tags
+  let g:neoformat_enabled_java = ['googlefmt']
+  let g:neoformat_java_googlefmt = {
+        \ 'exe': 'java',
+        \ 'args': ['-jar', get(g:,'spacevim_layer_lang_java_formatter', '')],
+        \ 'replace': 0,
+        \ 'stdin': 0,
+        \ 'no_append': 0,
+        \ }
+  try
+    let g:neoformat_enabled_java += neoformat#formatters#java#enabled()
+  catch
+  endtry
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -74,6 +86,8 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'], '<Plug>(JavaComplete-Imports-AddMissing)', 'Import missing classes', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','R'], '<Plug>(JavaComplete-Imports-RemoveUnused)', 'Remove unused classes', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','i'], '<Plug>(JavaComplete-Imports-AddSmart)', 'Smart import class under cursor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s'], '<Plug>(JavaComplete-Generate-AccessorSetter)', 'generate setter accessor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'], '<Plug>(JavaComplete-Generate-AccessorSetterGetter)', 'generate setter and getter accessor', 0)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a'], 'A', 'jump to alternate file', 1)
 
   " execute
@@ -111,38 +125,25 @@ function! s:java_mappings() abort
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
   imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
 
 
 
   nmap <silent><buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
-  nmap <silent><buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
   nmap <silent><buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
   nmap <silent><buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
   nmap <silent><buffer> <leader>jts <Plug>(JavaComplete-Generate-ToString)
   nmap <silent><buffer> <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
   nmap <silent><buffer> <leader>jc <Plug>(JavaComplete-Generate-Constructor)
   nmap <silent><buffer> <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
-
-  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-
   vmap <silent><buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
   vmap <silent><buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
   vmap <silent><buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-  let g:neoformat_enabled_java = ['googlefmt']
-  let g:neoformat_java_googlefmt = {
-        \ 'exe': 'java',
-        \ 'args': ['-jar', get(g:,'spacevim_layer_lang_java_formatter', '')],
-        \ 'replace': 0,
-        \ 'stdin': 0,
-        \ 'no_append': 0,
-        \ }
-  try
-    let g:neoformat_enabled_java += neoformat#formatters#java#enabled()
-  catch
-  endtry
+
+
 endfunction
 
 function! s:execCMD(cmd) abort

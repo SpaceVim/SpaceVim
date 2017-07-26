@@ -59,7 +59,7 @@ normal | `SPC l C` | generate default constructor
 
 **Code formatting:**
 
-the default key bindings for format current buffer is `g=`.
+the default key bindings for format current buffer is `SPC b f`. and this key bindings is defined in [format layer](). you can also use `g=` to indent current buffer.
 
 To make neoformat support java file, you should install uncrustify. or
 download [google's formater jar](https://github.com/google/google-java-format)
