@@ -64,9 +64,9 @@ function! SpaceVim#layers#lang#java#config() abort
     au!
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
     autocmd FileType java call s:java_mappings()
-    set tags +=~/others/openjdksrc/java/tags
-    set tags +=~/others/openjdksrc/javax/tags
   augroup END
+  set tags +=~/others/openjdksrc/java/tags
+  set tags +=~/others/openjdksrc/javax/tags
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -74,6 +74,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'], '<Plug>(JavaComplete-Imports-AddMissing)', 'Import missing classes', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','R'], '<Plug>(JavaComplete-Imports-RemoveUnused)', 'Remove unused classes', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','i'], '<Plug>(JavaComplete-Imports-AddSmart)', 'Smart import class under cursor', 0)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a'], 'A', 'jump to alternate file', 1)
 
   " execute
   let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
@@ -86,14 +87,14 @@ function! s:language_specified_mappings() abort
   " maven
   let g:_spacevim_mappings_space.l.m = {'name' : '+Maven'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'i'], 'call call('
-                \ . string(function('s:execCMD')) . ', ["mvn clean install"])',
-                \ 'Run maven clean install', 1)
+        \ . string(function('s:execCMD')) . ', ["mvn clean install"])',
+        \ 'Run maven clean install', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'I'], 'call call('
-                \ . string(function('s:execCMD')) . ', ["mvn install"])',
-                \ 'Run maven install', 1)
+        \ . string(function('s:execCMD')) . ', ["mvn install"])',
+        \ 'Run maven install', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
-                \ . string(function('s:execCMD')) . ', ["mvn test"])',
-                \ 'Run maven test', 1)
+        \ . string(function('s:execCMD')) . ', ["mvn test"])',
+        \ 'Run maven test', 1)
 endfunction
 
 function! s:java_mappings() abort
