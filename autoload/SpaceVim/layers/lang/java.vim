@@ -83,6 +83,17 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'a'], 'JavaUnitTestAll', 'Run all test methods', 1)
   " debug
   let g:_spacevim_mappings_space.l.d = {'name' : '+Debug'}
+  " maven
+  let g:_spacevim_mappings_space.l.m = {'name' : '+Maven'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'i'], 'call call('
+                \ . string(function('s:execCMD')) . ', ["mvn clean install"])',
+                \ 'Run maven clean install', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'I'], 'call call('
+                \ . string(function('s:execCMD')) . ', ["mvn install"])',
+                \ 'Run maven install', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
+                \ . string(function('s:execCMD')) . ', ["mvn test"])',
+                \ 'Run maven test', 1)
 endfunction
 
 function! s:java_mappings() abort
@@ -131,5 +142,9 @@ function! s:java_mappings() abort
     let g:neoformat_enabled_java += neoformat#formatters#java#enabled()
   catch
   endtry
+endfunction
+
+function! s:execCMD(cmd) abort
+  call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
 endfunction
 " vim:set et sw=2 cc=80:
