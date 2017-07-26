@@ -293,7 +293,9 @@ function! SpaceVim#mapping#space#refrashLSPC()
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
     call call(s:language_specified_mappings[&filetype], [])
+    let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
   endif
+
 endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func)

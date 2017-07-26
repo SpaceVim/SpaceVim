@@ -512,6 +512,9 @@ function! s:get_register() "{{{
   return clip
 endfunction "}}}
 function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
+  if a:key == ' ' && exists('b:spacevim_lang_specified_mappings')
+    let g:_spacevim_mappings_space.l = b:spacevim_lang_specified_mappings
+  endif
   let s:guide_help_mode = 0
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
