@@ -414,7 +414,7 @@ FUNCTIONS                                                 *SpaceVim-functions*
 
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
-  |SpaceVim-layers|.
+  |SpaceVim-layers|. the second argv is the layer variable.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim. Default is 1.
@@ -922,6 +922,9 @@ SHELL                                                   *SpaceVim-layer-shell*
 
 SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
 For more info, read |deol| and |vimshell|.
+VARIABLE
+default_shell
+
 
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
