@@ -266,8 +266,8 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
     nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
     let g:_spacevim_mappings_unite.n = ['Unite session/new',
           \ 'unite session/new']
-    nnoremap <silent> [unite]/ :Unite grep:.<cr>
-    let g:_spacevim_mappings_unite['/'] = ['Unite grep:.',
+    nnoremap <silent> [unite]/ :Unite -auto-preview grep:.<cr>
+    let g:_spacevim_mappings_unite['/'] = ['Unite -auto-preview grep:.',
           \ 'unite grep with preview']
     nnoremap <silent> [unite]w
           \ :<C-u>Unite -buffer-name=files -no-split
