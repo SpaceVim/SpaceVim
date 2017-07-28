@@ -6,5 +6,5 @@ function! SpaceVim#layers#lang#perl#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#perl#config() abort
-    
+
 endfunction
