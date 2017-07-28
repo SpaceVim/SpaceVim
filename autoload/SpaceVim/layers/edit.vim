@@ -480,3 +480,18 @@ else
         return function(substitute(a:fstr, 's:', s:_s, 'g'))
     endfunction
 endif
+
+augroup spacevim_layer_edit
+    au!
+    autocmd BufNewFile *.py call <SID>add_buffer_head()
+augroup END
+let s:ft_head_tp = {}
+function! s:add_buffer_head() abort
+    if has_key(s:ft_head_tp, &ft)
+        call setline(1, s:ft_head_tp[&ft])
+    endif
+endfunction
+
+function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp)
+    call extend(s:ft_head_tp, {a:ft : a:tamp})
+endfunction

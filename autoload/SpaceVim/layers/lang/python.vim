@@ -18,3 +18,13 @@ function! SpaceVim#layers#lang#python#plugins() abort
     call add(plugins, ['Vimjas/vim-python-pep8-indent',                   { 'on_ft' : 'python'}])
     return plugins
 endfunction
+
+function! SpaceVim#layers#lang#python#config()
+
+call SpaceVim#layers#edit#add_ft_head_tamplate('python',
+            \ ['#!/usr/bin/env python',
+            \ '# -*- coding: utf-8 -*-',
+            \ '']
+            \ )
+
+endfunction
