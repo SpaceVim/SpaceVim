@@ -44,9 +44,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   if g:spacevim_autocomplete_method ==# 'ycm'
     call add(plugins, ['ervandew/supertab',                 { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
-    call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
-    let delimitMate_matchpairs = "[:],{:},<:>"
-    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
           \ 'on_event' : 'InsertEnter',
@@ -57,17 +54,13 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
-    let delimitMate_matchpairs = "[:],{:},<:>"
-    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
-    call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
-    let delimitMate_matchpairs = "[:],{:},<:>"
-    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
   endif
+  call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
   return plugins
 endfunction
 
@@ -77,6 +70,8 @@ function! SpaceVim#layers#autocomplete#config() abort
     sunmap <S-TAB>
     iunmap <S-TAB>
   endif
+  let g:delimitMate_matchpairs = '[:],{:},<:>'
+  inoremap <silent><expr> ( complete_parameter#pre_complete("()")
 endfunction
 
 
