@@ -60,6 +60,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+    call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
   endif
   return plugins
 endfunction
