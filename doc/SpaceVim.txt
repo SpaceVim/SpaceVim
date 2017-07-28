@@ -50,8 +50,9 @@ CONTENTS                                                   *SpaceVim-contents*
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
-      3. sid............................................|SpaceVim-api-vim-sid|
-      4. vim#message................................|SpaceVim-api-vim-message|
+      3. prompt..........................................|SpaceVim-api-prompt|
+      4. sid............................................|SpaceVim-api-vim-sid|
+      5. vim#message................................|SpaceVim-api-vim-message|
   7. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
@@ -413,7 +414,7 @@ FUNCTIONS                                                 *SpaceVim-functions*
 
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
-  |SpaceVim-layers|.
+  |SpaceVim-layers|. the second argv is the layer variable.
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim. Default is 1.
@@ -921,6 +922,9 @@ SHELL                                                   *SpaceVim-layer-shell*
 
 SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
 For more info, read |deol| and |vimshell|.
+VARIABLE
+default_shell
+
 
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
@@ -981,6 +985,22 @@ listpart({list}, {start}[, {len}])
 
 The result is a List, which is part of {list}, starting from index {start},
 with the length {len}
+
+==============================================================================
+PROMPT                                                   *SpaceVim-api-prompt*
+
+open()
+
+Create a cmdline prompt, use while loop to get the input from user. The
+default mapping for prompt is:
+>
+  <Bs>            remove last character
+  <C-w>           remove the Word before the cursor
+  <C-u>           remove the Line before the cursor
+  <C-k>           remove the Line after the cursor
+  <C-a> / <Home>  Go to the beginning of the line
+  <C-e> / <End>   Go to the end of the line
+<
 
 ==============================================================================
 SID                                                     *SpaceVim-api-vim-sid*

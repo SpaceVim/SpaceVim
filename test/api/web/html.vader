@@ -1,0 +1,4 @@
+Execute (Test web#http api):
+    let g:test_api_web_html = SpaceVim#api#import('web#html')
+    let g:test_api_web_html_paser = g:test_api_web_html.parseURL('spacevim.org')
+    AssertEqual g:test_api_web_html_paser.child[1].find('title').child[0], 'Home - SpaceVim'

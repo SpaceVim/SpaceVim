@@ -21,7 +21,7 @@
 
 function! SpaceVim#layers#tmux#plugins() abort
     let plugins = []
-    call add(plugins,['christoomey/vim-tmux-navigator'])
+    call add(plugins,['christoomey/vim-tmux-navigator', {'merged' : 0}])
     return plugins
 endfunction
 

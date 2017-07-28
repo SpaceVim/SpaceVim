@@ -26,7 +26,7 @@ else
     exec 'colorscheme '. g:spacevim_colorscheme_default
 endif
 if g:spacevim_hiddenfileinfo == 1 && has('patch-7.4.1570')
-    set shortmess=filnxtToOFs
+    set shortmess+=F
 endif
 if !empty(g:spacevim_guifont)
     exe 'set guifont=' . g:spacevim_guifont

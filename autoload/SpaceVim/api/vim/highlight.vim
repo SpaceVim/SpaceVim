@@ -3,7 +3,16 @@ let s:self = {}
 function! s:self.group2dict(name) abort
     let id = index(map(range(1999), "synIDattr(v:val, 'name')"), a:name)
     if id == -1
-        return {}
+        return {
+                    \ 'name' : '',
+                    \ 'ctermbg' : '',
+                    \ 'ctermfg' : '',
+                    \ 'bold' : '',
+                    \ 'italic' : '',
+                    \ 'underline' : '',
+                    \ 'guibg' : '',
+                    \ 'guifg' : '',
+                    \ }
     endif
     let rst = {
                 \ 'name' : synIDattr(id, 'name'),
@@ -32,35 +41,35 @@ function! s:self.unite(base, target, part) abort
 endfunction
 
 function! s:self.hi(info) abort
-    if empty(a:info)
+    if empty(a:info) || get(a:info, 'name', '') ==# ''
         return
     endif
-   let cmd = 'hi! ' .  a:info.name
-   if !empty(a:info.ctermbg)
-       let cmd .= ' ctermbg=' . a:info.ctermbg
-   endif
-   if !empty(a:info.ctermfg)
-       let cmd .= ' ctermfg=' . a:info.ctermfg
-   endif
-   if !empty(a:info.guibg)
-       let cmd .= ' guibg=' . a:info.guibg
-   endif
-   if !empty(a:info.guifg)
-       let cmd .= ' guifg=' . a:info.guifg
-   endif
-   let style = []
-   for sty in ['hold', 'italic', 'underline']
-       if get(a:info, sty, '') ==# '1'
-           call add(style, sty)
-       endif
-   endfor
-   if !empty(style)
-       let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
-   endif
-   try
-       exe cmd
-   catch
-   endtry
+    let cmd = 'hi! ' .  a:info.name
+    if !empty(a:info.ctermbg)
+        let cmd .= ' ctermbg=' . a:info.ctermbg
+    endif
+    if !empty(a:info.ctermfg)
+        let cmd .= ' ctermfg=' . a:info.ctermfg
+    endif
+    if !empty(a:info.guibg)
+        let cmd .= ' guibg=' . a:info.guibg
+    endif
+    if !empty(a:info.guifg)
+        let cmd .= ' guifg=' . a:info.guifg
+    endif
+    let style = []
+    for sty in ['hold', 'italic', 'underline']
+        if get(a:info, sty, '') ==# '1'
+            call add(style, sty)
+        endif
+    endfor
+    if !empty(style)
+        let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
+    endif
+    try
+        exe cmd
+    catch
+    endtry
 endfunction
 
 function! s:self.hide_in_normal(name) abort
@@ -68,7 +77,7 @@ function! s:self.hide_in_normal(name) abort
     if empty(group)
         return
     endif
-    if &termguicolors || has('gui_running')
+    if (exists('+termguicolors') && &termguicolors ) || has('gui_running')
         let bg = self.group2dict('Normal').guibg
         if empty(bg)
             return

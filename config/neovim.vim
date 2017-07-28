@@ -71,7 +71,7 @@ let g:terminal_color_15 = '#ebdbb2'
 augroup Terminal
     au!
     au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
-    au BufWinEnter term://* startinsert | IndentLinesDisable
+    au WinEnter,BufWinEnter term://* startinsert | IndentLinesDisable
     if has('timers')
         au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
     else

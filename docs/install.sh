@@ -42,6 +42,10 @@ error() {
     exit 1
 }
 
+warn () {
+    msg "${Red}[✘]${Color_off} ${1}${2}"
+}
+
 fetch_repo () {
     if [[ -d "$HOME/.SpaceVim" ]]; then
         info "Trying to update SpaceVim"
@@ -72,6 +76,14 @@ install_vim () {
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.vim"
         success "Installed SpaceVim for vim"
+    fi
+}
+
+install_package_manager () {
+    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
+        info "Install dein.vim"
+        git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+        success "dein.vim installation done"
     fi
 }
 
@@ -121,6 +133,42 @@ uninstall_neovim () {
     fi
 }
 
+check_requirements () {
+    info "Checking Requirements for SpaceVim"
+    if hash "git" &>/dev/null; then
+        git_version=$(git --version)
+        success "Check Requirements: ${git_version}"
+    else
+        warn "Check Requirements : git"
+    fi
+    if hash "vim" &>/dev/null; then
+        is_vim8=$(vim --version | grep "Vi IMproved 8.0")
+        is_vim74=$(vim --version | grep "Vi IMproved 7.4")
+        if [ -n "$is_vim8" ]; then
+            success "Check Requirements: vim 8.0"
+        elif [ -n "$is_vim74" ]; then
+            success "Check Requirements: vim 7.4"
+        else
+            if hash "nvim" &>/dev/null; then
+                success "Check Requirements: nvim"
+            else
+                warn "SpaceVim need vim 7.4 or above"
+            fi
+        fi
+        if hash "nvim" &>/dev/null; then
+            success "Check Requirements: nvim"
+        fi
+    else
+        if hash "nvim" &>/dev/null; then
+            success "Check Requirements: nvim"
+        else
+            warn "Check Requirements : vim or nvim"
+        fi
+    fi
+    info "Checking true colors support in terminal:"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
+}
+
 usage () {
     echo "SpaceVim install script : V ${Version}"
     echo ""
@@ -133,6 +181,7 @@ usage () {
     echo " -i, --install            install spacevim for vim or neovim"
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
+    echo " -c, --checkRequirements  checkRequirements for SpaceVim"
     echo ""
     echo "EXAMPLE"
     echo ""
@@ -158,6 +207,10 @@ then
             info "Trying to uninstall SpaceVim"
             uninstall_vim
             uninstall_neovim
+            exit 0
+            ;;
+        --checkRequirements|-c)
+            check_requirements
             exit 0
             ;;
         --install|-i)
@@ -193,3 +246,4 @@ need_cmd 'git'
 fetch_repo
 install_vim
 install_neovim
+install_package_manager

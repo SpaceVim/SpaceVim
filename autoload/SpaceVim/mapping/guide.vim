@@ -411,11 +411,11 @@ function! s:updateStatusline() abort
     let gname = substitute(gname,' ', '\\ ', 'g')
   endif
   exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
-        \ '%#LeaderGuiderSep1#' .
+        \ '%#LeaderGuiderSep1#' . s:lsep .
         \ '%#LeaderGuiderName#\ ' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
         \ . get(s:, 'prefix_key_inp', '') . gname
-        \ . '\ %#LeaderGuiderSep2#%#LeaderGuiderFill#'
+        \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
         \ . s:guide_help_msg()
 endfunction
 
@@ -512,6 +512,9 @@ function! s:get_register() "{{{
   return clip
 endfunction "}}}
 function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
+  if a:key == ' ' && exists('b:spacevim_lang_specified_mappings')
+    let g:_spacevim_mappings_space.l = b:spacevim_lang_specified_mappings
+  endif
   let s:guide_help_mode = 0
   let s:vis = a:vis ? 'gv' : ''
   let s:count = v:count != 0 ? v:count : ''
@@ -578,6 +581,7 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ 'z',
       \ 'g:_spacevim_mappings_z')
+let [s:lsep, s:rsep] = SpaceVim#layers#core#statusline#rsep()
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

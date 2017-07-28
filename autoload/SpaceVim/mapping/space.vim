@@ -3,7 +3,9 @@ function! SpaceVim#mapping#space#init() abort
     return
   endif
   nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
+  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
+  vmap <Space> [SPC]
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
@@ -72,7 +74,26 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nnoremap', ['c', 'l'], 'call NERDComment("n", "Toggle")', 'Toggle comment line(s)', 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+
+  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
+
+  nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
+  let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
+  nmap <silent> [SPC]; <Plug>CommentOperator
+
+  " in nerdcomment if has map to <plug>... the default mapping will be
+  " disable, so we add it for compatibility
+  nmap <Leader>cc <Plug>NERDCommenterComment
+  xmap <Leader>cc <Plug>NERDCommenterComment
+  nmap <Leader>ci <Plug>NERDCommenterInvert
+  xmap <Leader>ci <Plug>NERDCommenterInvert
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
@@ -196,14 +217,18 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
         \ 'Background search cursor words in project with pt', 1)
 
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open()',
+        \ 'grep on the fly', 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
         \ 'clear search highlight', 1)
 endfunction
 
-function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
+function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   if s:has_map_to_spc()
     return
   endif
+  let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
     let lcmd = a:cmd
@@ -217,6 +242,13 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd) abort
     endif
   endif
   exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+  if is_visual
+    if a:m ==# 'nnoremap'
+      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    elseif a:m ==# 'nmap'
+      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    endif
+  endif
   if len(a:keys) == 2
     let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
   elseif len(a:keys) == 3
@@ -254,6 +286,22 @@ function! s:windows_layout_toggle() abort
     wincmd w
   endif
 endfunction
+
+
+let s:language_specified_mappings = {}
+function! SpaceVim#mapping#space#refrashLSPC()
+  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+  if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
+    call call(s:language_specified_mappings[&filetype], [])
+    let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
+  endif
+
+endfunction
+
+function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func)
+  call extend(s:language_specified_mappings, {a:ft : a:func})
+endfunction
+
 function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   if s:has_map_to_spc()
     return
@@ -280,6 +328,47 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   endif
   call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
+endfunction
+
+function! s:commentOperator(type, ...)
+  let sel_save = &selection
+  let &selection = "inclusive"
+  let reg_save = @@
+
+  if a:0  " Invoked from Visual mode, use gv command.
+    silent exe "normal! gv"
+    call feedkeys("\<Plug>NERDCommenterComment")
+  elseif a:type == 'line'
+    call feedkeys('`[V`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  else
+    call feedkeys('`[v`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+
+  let &selection = sel_save
+  let @@ = reg_save
+  set opfunc=
+endfunction
+
+function! s:comment_to_line(invert) abort
+  let input = input('line number: ')
+  if empty(input)
+    return
+  endif
+  let line = str2nr(input)
+  let ex = line - line('.')
+  if ex > 0
+    exe 'normal! V'. ex .'j'
+  elseif ex == 0
+  else
+    exe 'normal! V'. abs(ex) .'k'
+  endif
+  if a:invert
+    call feedkeys("\<Plug>NERDCommenterInvert")
+  else
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
 endfunction
 
 " vim:set et sw=2 cc=80:

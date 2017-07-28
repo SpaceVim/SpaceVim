@@ -26,6 +26,12 @@ function! SpaceVim#layers#lang#markdown#config() abort
     if executable('firefox')
         let g:mkdp_path_to_chrome= get(g:, 'mkdp_path_to_chrome', 'firefox')
     endif
+    let g:neoformat_enabled_markdown = ['remark']
+    let g:neoformat_markdown_remark = {
+            \ 'exe': 'remark',
+            \ 'args': ['--no-color', '--silent', '--use', 'remark-frontmatter'],
+            \ 'stdin': 1,
+            \ }
 endfunction
 
 function! s:mappings() abort
