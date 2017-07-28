@@ -94,6 +94,8 @@ function! SpaceVim#mapping#tab() abort
       return "\<plug>(neosnippet_expand_or_jump)"
     elseif pumvisible()
       return "\<C-n>"
+    elseif complete_parameter#jumpable(1)
+      return "\<plug>(complete_parameter#goto_next_parameter)"
     else
       return "\<tab>"
     endif

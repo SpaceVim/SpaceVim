@@ -169,7 +169,7 @@ function! SpaceVim#default#SetMappings() abort
   imap <silent><expr><TAB> SpaceVim#mapping#tab#i_tab()
   imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (complete_parameter#jumpable(1) ? "\<plug>(complete_parameter#goto_next_parameter)" : "\<TAB>")
   imap <silent><expr><CR> SpaceVim#mapping#enter#i_enter()
   inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
   inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
