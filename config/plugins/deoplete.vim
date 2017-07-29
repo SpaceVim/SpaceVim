@@ -22,8 +22,9 @@ if g:spacevim_enable_javacomplete2_py
   let g:deoplete#ignore_sources.java = get(g:deoplete#ignore_sources, 'java', ['omni'])
   call deoplete#custom#set('javacomplete2', 'mark', '')
 else
-  let g:deoplete#ignore_sources.java = get(g:deoplete#ignore_sources, 'java', ['javacomplete2'])
+  let g:deoplete#ignore_sources.java = get(g:deoplete#ignore_sources, 'java', ['javacomplete2', 'around', 'member'])
   call deoplete#custom#set('omni', 'mark', '')
+  call deoplete#custom#set('omni', 'rank', 9999)
 endif
 
 " go
