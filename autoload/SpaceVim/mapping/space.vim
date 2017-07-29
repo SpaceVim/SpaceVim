@@ -222,6 +222,16 @@ function! SpaceVim#mapping#space#init() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
         \ 'clear search highlight', 1)
+
+  " Getting help
+  let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
+        \ 'call SpaceVim#plugins#help#describe_bindings()',
+        \ 'describe key bindings', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
+        \ 'call SpaceVim#plugins#help#describe_key()',
+        \ 'describe key bindings', 1)
+
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort

@@ -565,6 +565,7 @@ else
         \ 'g:_spacevim_mappings')
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
+  call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
