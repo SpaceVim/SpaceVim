@@ -1,18 +1,36 @@
-# [Layers](https://spacevim.org/layers) > autocomplete
+---
+title: "SpaceVim autocomplete layer"
+---
 
-SpaceVim uses neocomplete as the default completion engine if vim has lua
-support. If there is no lua support, neocomplcache will be used for the
-completion engine. Spacevim uses deoplete as the default completion engine
-for neovim. Deoplete requires neovim to be compiled with python support. For
-more information about python support in neovim, please read neovim's documentation `:h provider-python`.
+# [SpaceVim Layers:](https://spacevim.org/layers) autocomplete
 
-SpaceVim includes YouCompleteMe, but it is disabled by default. To enable
-ycm, see `:h g:spacevim_enable_ycm`.
+<!-- vim-markdown-toc GFM -->
+* [Description](#description)
+* [Install](#install)
+* [Key Mappings](#key-mappings)
 
-SpaceVim use neosnippet as the default snippet engine. The default snippets
-are provided by `Shougo/neosnippet-snippets`. For more information, please read
-`:h neosnippet`. Neosnippet support custom snippets, and the default snippets
-directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
-SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
+<!-- vim-markdown-toc -->
+
+## Description
+
+
+This layer provides auto-completion to SpaceVim.
+
+The following completion engines are supported:
+
+- [neocomplete](https://github.com/Shougo/neocomplete.vim) - vim with `+lua`
+- [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - vim without `+lua`
+- [deoplete](https://github.com/Shougo/deoplete.nvim) - neovim with `+python3`
+- [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - disabled by default, to enable ycm, see `:h g:spacevim_enable_ycm`
+
+Snippets are supported via [neosnippet](https://github.com/Shougo/neosnippet.vim).
+
+## Install
+
+To use this configuration layer, add it to your custom configuration file.
+
+```vim
+call SpaceVim#layers#load('autocomplete')
+```
 
 ## Key Mappings
