@@ -82,13 +82,52 @@ function! SpaceVim#layers#lang#java#config() abort
 endfunction
 
 function! s:language_specified_mappings() abort
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','M'], '<Plug>(JavaComplete-Generate-AbstractMethods)', 'Generate abstract methods', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','I'], '<Plug>(JavaComplete-Imports-AddMissing)', 'Import missing classes', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','R'], '<Plug>(JavaComplete-Imports-RemoveUnused)', 'Remove unused classes', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'], '<Plug>(JavaComplete-Imports-AddSmart)', 'Smart import class under cursor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','s'], '<Plug>(JavaComplete-Generate-AccessorSetter)', 'generate setter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'], '<Plug>(JavaComplete-Generate-AccessorSetterGetter)', 'generate setter and getter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a'], 'A', 'jump to alternate file', 1)
+
+  " Import key bindings
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
+        \ '<Plug>(JavaComplete-Imports-AddMissing)',
+        \ 'Import missing classes', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','R'],
+        \ '<Plug>(JavaComplete-Imports-RemoveUnused)',
+        \ 'Remove unused classes', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'],
+        \ '<Plug>(JavaComplete-Imports-AddSmart)',
+        \ 'Smart import class under cursor', 0)
+
+  " Generate key bindings
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','A'],
+        \ '<Plug>(JavaComplete-Generate-Accessors)',
+        \ 'generate setter accessor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
+        \ '<Plug>(JavaComplete-Generate-AccessorSetter)',
+        \ 'generate setter accessor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
+        \ '<Plug>(JavaComplete-Generate-AccessorGetter)',
+        \ 'generate getter accessor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
+        \ '<Plug>(JavaComplete-Generate-AccessorSetterGetter)',
+        \ 'generate setter and getter accessor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
+        \ '<Plug>(JavaComplete-Generate-AbstractMethods)',
+        \ 'Generate abstract methods', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
+        \ '<Plug>(JavaComplete-Generate-Constructor)',
+        \ 'Generate constructor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','C'],
+        \ '<Plug>(JavaComplete-Generate-DefaultConstructor)',
+        \ 'Generate default constructor', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','eq'],
+        \ '<Plug>(JavaComplete-Generate-EqualsAndHashCode)',
+        \ 'Generate equals functions', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','ts'],
+        \ '<Plug>(JavaComplete-Generate-ToString)',
+        \ 'Generate toString function', 0)
+
+  " Jump
+  let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','j', 'a'], 'call call('
+        \ . string(function('s:jump_to_alternate')) . ', [])',
+        \ 'jump to alternate file', 1)
 
   " execute
   let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
@@ -96,6 +135,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'm'], 'JavaUnitTestMain', 'Run main method', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'JavaUnitExec', 'Run current method', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'a'], 'JavaUnitTestAll', 'Run all test methods', 1)
+
   " debug
   let g:_spacevim_mappings_space.l.d = {'name' : '+Debug'}
   " maven
@@ -130,23 +170,18 @@ function! s:java_mappings() abort
   imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
   imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
 
-
-
-  nmap <silent><buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
-  nmap <silent><buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-  nmap <silent><buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-  nmap <silent><buffer> <leader>jts <Plug>(JavaComplete-Generate-ToString)
-  nmap <silent><buffer> <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-  nmap <silent><buffer> <leader>jc <Plug>(JavaComplete-Generate-Constructor)
-  nmap <silent><buffer> <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
-  vmap <silent><buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
-  vmap <silent><buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-  vmap <silent><buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-
-
 endfunction
 
 function! s:execCMD(cmd) abort
   call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
 endfunction
+
+function! s:jump_to_alternate() abort
+  try
+    A
+  catch /^Vim\%((\a\+)\)\=:E464/
+    echom 'no alternate file'
+  endtry
+endfunction
+
 " vim:set et sw=2 cc=80:

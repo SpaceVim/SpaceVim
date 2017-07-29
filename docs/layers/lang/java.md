@@ -10,6 +10,7 @@ title: "SpaceVim lang#java layer"
 * [Key bindings](#key-bindings)
     * [Java language specified key bindings](#java-language-specified-key-bindings)
         * [Maven](#maven)
+        * [Jump](#jump)
     * [Problems buffer](#problems-buffer)
     * [Project buffer](#project-buffer)
 
@@ -47,11 +48,12 @@ To use this configuration layer, add `SPLayer 'lang#java'` to your custom config
 | normal/visual | `SPC l s`   | generate setter accessor              |
 | normal/visual | `SPC l g`   | generate getter accessor              |
 | normal/visual | `SPC l a`   | generate setter and getter accessor   |
+| normal        | `SPC l M`   | generate abstract methods             |
 | insert        | `<c-j>s`    | generate setter accessor              |
 | insert        | `<c-j>g`    | generate getter accessor              |
 | insert        | `<c-j>a`    | generate getter and setter accessor   |
-| normal        | `SPC l t s` | generate toString function            |
-| normal        | `SPC l e q` | generate equals and hashcode function |
+| normal        | `SPC l ts`  | generate toString function            |
+| normal        | `SPC l eq`  | generate equals and hashcode function |
 | normal        | `SPC l c`   | generate constructor                  |
 | normal        | `SPC l C`   | generate default constructor          |
 
@@ -74,6 +76,12 @@ to SpaceVim custom configuration file.
 | `SPC l m r` | Run maven goals                |
 | `SPC l m R` | Run one maven goal             |
 | `SPC l m t` | Run maven test                 |
+
+#### Jump
+
+| Key Binding | Description            |
+| ----------- | ---------------------- |
+| `SPC l j a` | jump to alternate file |
 
 ### Problems buffer
 
