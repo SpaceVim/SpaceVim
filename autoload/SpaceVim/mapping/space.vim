@@ -63,7 +63,13 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
   nnoremap <silent> [SPC]bn :bnext<CR>
-  let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer']
+  let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer',
+        \ [
+        \ 'SPC b n is running :bnext, jump to next buffer',
+        \ 'which is a vim build in command',
+        \ 'It is bound to SPC b n, ] b,',
+        \ ]
+        \ ]
   call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
   nnoremap <silent> [SPC]bp :bp<CR>
   let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
@@ -222,6 +228,16 @@ function! SpaceVim#mapping#space#init() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
         \ 'clear search highlight', 1)
+
+  " Getting help
+  let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
+        \ 'call SpaceVim#plugins#help#describe_bindings()',
+        \ 'describe key bindings', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
+        \ 'call SpaceVim#plugins#help#describe_key()',
+        \ 'describe key bindings', 1)
+
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
@@ -250,13 +266,29 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
     endif
   endif
   if len(a:keys) == 2
-    let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    if type(a:desc) == 1
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
+    else
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc[0], a:desc[1]]
+    endif
   elseif len(a:keys) == 3
-    let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
+    if type(a:desc) == 1
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc]
+    else
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = [lcmd, a:desc[0], a:desc[1]]
+    endif
   elseif len(a:keys) == 1
-    let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
+    if type(a:desc) == 1
+      let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc]
+    else
+      let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc[0], a:desc[1]]
+    endif
   endif
-  call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+  if type(a:desc) == 1
+    call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
+  else
+    call SpaceVim#mapping#menu(a:desc[0], '[SPC]' . join(a:keys, ''), lcmd)
+  endif
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
