@@ -412,8 +412,8 @@ function! s:build(repo) abort
                     \ 'on_exit' : function('s:on_build_exit'),
                     \ 'cwd' : a:repo.path,
                     \ })
-        let s:building_repos[jobid . ''] = a:repo
         if jobid > 0
+            let s:building_repos[jobid . ''] = a:repo
             call s:msg_on_build_start(a:repo.name)
         elseif jobid == 0
             call s:msg_on_build_failed(a:repo.name)
