@@ -245,7 +245,7 @@ function! s:on_pull_exit(id, data, event) abort
     if a:id == -1
         redraw!
     endif
-    if get(s:pulling_repos[id], 'build', '') !=# ''
+    if !empty(get(s:pulling_repos[id], 'build', ''))
         call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
@@ -412,9 +412,17 @@ function! s:build(repo) abort
                     \ 'on_exit' : function('s:on_build_exit'),
                     \ 'cwd' : a:repo.path,
                     \ })
-        if jobid != 0
-            let s:building_repos[jobid] = a:repo
+        let s:building_repos[jobid . ''] = a:repo
+        if jobid > 0
             call s:msg_on_build_start(a:repo.name)
+        elseif jobid == 0
+            call s:msg_on_build_failed(a:repo.name)
+        elseif jobid == -1
+            if type(argv) == type([])
+                call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
+            else
+                call s:msg_on_build_failed(a:repo.name)
+            endif
         endif
     else
         let s:building_repos[s:jobpid] = a:repo
@@ -492,8 +500,12 @@ function! s:msg_on_build_done(name) abort
 endfunction
 
 " - foo.vim: Updating failed.
-function! s:msg_on_build_failed(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
+function! s:msg_on_build_failed(name, ...) abort
+    if a:0 == 1
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
+    else
+        call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
+    endif
 endfunction
 
 function! s:new_window() abort

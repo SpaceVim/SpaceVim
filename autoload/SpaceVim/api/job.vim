@@ -66,8 +66,10 @@ function! s:self.start(argv, ...) abort
         else
             let job = jobstart(a:argv)
         endi
-        let msg = ['process '. jobpid(job), ' run']
-        call extend(self.jobs, {job : msg})
+        if job > 0
+            let msg = ['process '. jobpid(job), ' run']
+            call extend(self.jobs, {job : msg})
+        endif
         return job
     elseif self.vim_job
         if len(a:000) > 0
