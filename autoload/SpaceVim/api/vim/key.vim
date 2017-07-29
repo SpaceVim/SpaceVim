@@ -10,6 +10,12 @@ function! s:self.nr2name(nr) abort
     if type(a:nr) == 0
         if a:nr == 32
             return 'SPC'
+        elseif a:nr == 4
+            return '<C-d>'
+        elseif a:nr == 9
+            return '<Tab>'
+        elseif a:nr == 27
+            return '<Esc>'
         else
             return nr2char(a:nr)
         endif

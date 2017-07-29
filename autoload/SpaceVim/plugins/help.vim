@@ -26,6 +26,7 @@ function! SpaceVim#plugins#help#describe_key()
             let root = root[name]
             if type(root) == 3
                 if len(root) == 3
+                    redraw!
                     call s:open_describe_buffer(root[-1])
                 else
                     call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
@@ -36,7 +37,9 @@ function! SpaceVim#plugins#help#describe_key()
             endif
         else
             redraw!
+            echohl Comment
             echo   join(keys, ' - ') . ' is undfinded'
+            echohl NONE
             let definded = 0
         endif
     endwhile
@@ -44,14 +47,23 @@ endfunction
 
 function! s:build_mpt(mpt) abort
     redraw!
+    echohl Comment
     if type(a:mpt) == 1
         echo a:mpt
     elseif type(a:mpt) == 3
         echo join(a:mpt)
     endif
+    echohl NONE
 endfunction
 
 
 function! s:open_describe_buffer(desc) abort
-
+    noautocmd botright split __help_describe__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
+    set filetype=HelpDescribe
+    call setline(1, a:desc)
+    let lines = &lines * 30 / 100
+    if lines < winheight(0)
+        exe 'resize ' . lines
+    endif
 endfunction
