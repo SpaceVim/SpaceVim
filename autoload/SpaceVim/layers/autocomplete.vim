@@ -84,6 +84,11 @@ function! SpaceVim#layers#autocomplete#config() abort
   inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
   inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
   inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+  " in origin vim or neovim Alt + / will insert a /, this should be disabled.
+  imap <expr> <M-/>
+        \ neosnippet#expandable() ?
+        \ "\<Plug>(neosnippet_expand)" : ""
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
 endfunction
 
 function! SpaceVim#layers#autocomplete#set_variable(var)
