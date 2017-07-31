@@ -80,46 +80,11 @@ function! SpaceVim#mapping#shift_tab() abort
 endfunction
 
 function! SpaceVim#mapping#tab() abort
-  if getline('.')[col('.')-2] ==# '{'&& pumvisible()
-    return "\<C-n>"
-  endif
-  if index(g:spacevim_plugin_groups, 'autocomplete') != -1
-    if neosnippet#expandable() && getline('.')[col('.')-2] ==# '(' && !pumvisible()
-      return "\<Plug>(neosnippet_expand)"
-    elseif neosnippet#jumpable()
-          \ && getline('.')[col('.')-2] ==# '(' && !pumvisible() 
-          \ && !neosnippet#expandable()
-      return "\<plug>(neosnippet_jump)"
-    elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !=#'('
-      return "\<plug>(neosnippet_expand_or_jump)"
-    elseif pumvisible()
-      return "\<C-n>"
-    elseif complete_parameter#jumpable(1)
-      return "\<plug>(complete_parameter#goto_next_parameter)"
-    else
-      return "\<tab>"
-    endif
-  elseif pumvisible()
-    return "\<C-n>"
-  else
-    return "\<tab>"
-  endif
+  return SpaceVim#mapping#tab#i_tab()
 endfunction
 
 function! SpaceVim#mapping#enter() abort
-  if pumvisible()
-    if getline('.')[col('.') - 2]==# '{'
-      return "\<Enter>"
-    elseif g:spacevim_autocomplete_method ==# 'neocomplete'||g:spacevim_autocomplete_method ==# 'deoplete'
-      return "\<C-y>"
-    else
-      return "\<esc>a"
-    endif
-  elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
-    return "\<Enter>\<esc>ko"
-  else
-    return "\<Enter>"
-  endif
+  return SpaceVim#mapping#enter#i_enter()
 endfunction
 
 function! SpaceVim#mapping#gd() abort
