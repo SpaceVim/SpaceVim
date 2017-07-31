@@ -165,17 +165,6 @@ endfunction
 
 function! SpaceVim#default#SetMappings() abort
 
-  "mapping
-  imap <silent><expr><TAB> SpaceVim#mapping#tab#i_tab()
-  imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-  imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (complete_parameter#jumpable(1) ? "\<plug>(complete_parameter#goto_next_parameter)" : "\<TAB>")
-  imap <silent><expr><CR> SpaceVim#mapping#enter#i_enter()
-  inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-  inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-  inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-  inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-  smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
   cnoremap w!! %!sudo tee > /dev/null %
