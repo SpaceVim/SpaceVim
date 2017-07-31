@@ -339,7 +339,7 @@ function! s:on_install_exit(id, data, event) abort
     if get(s:pulling_repos[id], 'rev', '') !=# ''
         call s:lock_revision(s:pulling_repos[id])
     endif
-    if get(s:pulling_repos[id], 'build', '') !=# ''
+    if !empty(get(s:pulling_repos[id], 'build', ''))
         call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
