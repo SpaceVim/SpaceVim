@@ -15,6 +15,13 @@ title: "SpaceVim tags layer"
             * [Install with recommended features](#install-with-recommended-features)
             * [Configure your environment to use pygments and ctags](#configure-your-environment-to-use-pygments-and-ctags)
     * [Load tags layer](#load-tags-layer)
+* [Usage](#usage)
+    * [Language Support](#language-support)
+        * [Built-in languages](#built-in-languages)
+        * [Exuberant ctags languages](#exuberant-ctags-languages)
+        * [Universal ctags languages](#universal-ctags-languages)
+        * [Pygments languages (plus symbol and reference tags)](#pygments-languages-plus-symbol-and-reference-tags)
+* [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -107,3 +114,93 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
 ```vim
 call SpaceVim#layers#load('tags')
 ```
+
+## Usage
+
+Before using the gtags, remember to create a GTAGS database by the following methods:
+
+-   From within SpaceVim, press `SPC m g c` to generate GTAGS database. If the language is not directly supported by GNU Global, you can choose ctags or pygments as a backend to generate tag database.
+-   From inside terminal, runs gtags at your project root in terminal:
+
+```sh
+cd /path/to/project/root
+gtags
+```
+
+If the language is not directly supported by gtags, and you have not set the GTAGSLABEL environment variable, use this command instead:
+
+```sh
+gtags --gtagslabel=pygments
+```
+
+### Language Support
+
+#### Built-in languages
+
+If you do not have `ctags` or `pygments` enabled gtags will only produce tags for the following languages:
+
+-   asm
+-   c/c++
+-   java
+-   php
+-   yacc
+
+#### Exuberant ctags languages
+
+If you have enabled `exuberant ctags` and use that as the backend (i.e., GTAGSLABEL=ctags or –gtagslabel=ctags) the following additional languages will have tags created for them:
+
+-   c#
+-   erlang
+-   javascript
+-   common-lisp
+-   emacs-lisp
+-   lua
+-   ocaml
+-   python
+-   ruby
+-   scheme
+-   vimscript
+-   windows-scripts (.bat .cmd files)
+
+#### Universal ctags languages
+
+Instead, If you have installed the newer/beta [universal ctags](https://github.com/universal-ctags/ctags) and use that as the backend (i.e., GTAGSLABEL=ctags or –gtagslabel=ctags) the following additional languages will have tags created for them:
+
+-   clojure
+-   d
+-   go
+-   rust
+
+#### Pygments languages (plus symbol and reference tags)
+
+In order to look up symbol references for any language not in the built in parser you must use the pygments backend. When this backend is used global actually uses both ctags and pygments to find the definitions and uses of functions and variables as well as “other symbols”.
+
+If you enabled pygments (the best choice) and use that as the backend (i.e., GTAGSLABEL=pygments or –gtagslabel=pygments) the following additional languages will have tags created for them:
+
+-   elixir
+-   fsharp
+-   haskell
+-   octave
+-   racket
+-   scala
+-   shell-scripts
+-   tex
+
+## Key bindings
+
+| Key Binding | Description                                               |
+| ----------- | --------------------------------------------------------- |
+| `SPC m g c` | create a tag database                                     |
+| `SPC m g f` | jump to a file in tag database                            |
+| `SPC m g g` | jump to a location based on context                       |
+| `SPC m g G` | jump to a location based on context (open another window) |
+| `SPC m g d` | find definitions                                          |
+| `SPC m g i` | present tags in current function only                     |
+| `SPC m g l` | jump to definitions in file                               |
+| `SPC m g n` | jump to next location in context stack                    |
+| `SPC m g p` | jump to previous location in context stack                |
+| `SPC m g r` | find references                                           |
+| `SPC m g R` | resume previous helm-gtags session                        |
+| `SPC m g s` | select any tag in a project retrieved by gtags            |
+| `SPC m g S` | show stack of visited locations                           |
+| `SPC m g u` | manually update tag database                              |
