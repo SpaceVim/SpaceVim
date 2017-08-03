@@ -1,7 +1,7 @@
 let g:ctrlp_map = get(g:,'ctrlp_map', '<c-p>')
 let g:ctrlp_cmd = get(g:, 'ctrlp_cmd', 'CtrlP')
 let g:ctrlp_working_path_mode = get(g:, 'ctrlp_working_path_mode', 'ra')
-let g:ctrlp_root_markers = get(g:, 'ctrlp_root_markers', 'pom.xml')
+let g:ctrlp_root_markers = get(g:, 'ctrlp_root_markers', ['pom.xml'])
 let g:ctrlp_match_window = get(g:, 'ctrlp_match_window', 'bottom,order:btt,min:1,max:15,results:15')
 let g:ctrlp_show_hidden = get(g:, 'ctrlp_show_hidden', 1)
 "for caching
