@@ -311,17 +311,20 @@ function! s:unite_my_settings()
   " Play nice with supertab
   let b:SuperTabDisabled=1
   " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-n>   <Plug>(unite_select_next_line)
-  nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-  nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+  imap <buffer> <C-n>     <Plug>(unite_select_next_line)
+  nmap <buffer> <C-n>     <Plug>(unite_select_next_line)
+  imap <buffer> <TAB>     <Plug>(unite_select_next_line)
+  nmap <buffer> <TAB>     <Plug>(unite_select_next_line)
+  imap <buffer> <C-p>     <Plug>(unite_select_previous_line)
+  nmap <buffer> <C-p>     <Plug>(unite_select_previous_line)
+  imap <buffer> <S-Tab>   <Plug>(unite_select_previous_line)
+  nmap <buffer> <S-Tab>   <Plug>(unite_select_previous_line)
 
 
   imap <buffer> jj      <Plug>(unite_insert_leave)
   "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 
   imap <buffer><expr> j unite#smart_map('j', '')
-  imap <buffer> <TAB>   <Plug>(unite_select_next_line)
   imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
   imap <buffer> '     <Plug>(unite_quick_match_default_action)
   nmap <buffer> '     <Plug>(unite_quick_match_default_action)
