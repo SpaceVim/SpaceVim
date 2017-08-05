@@ -1,4 +1,3 @@
-tags
 doc/tags
 *.class
 .floo
@@ -6,7 +5,22 @@ doc/tags
 *.netrwhist
 *-rplugin~
 *rplugin.vim
-/config/local.vim
-.SpaceVim.logA
+.SpaceVim.log
 docs/_site/*
 docs/Gemfile.lock
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
