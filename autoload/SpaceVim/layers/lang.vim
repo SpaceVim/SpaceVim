@@ -10,7 +10,7 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
                 \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
-                \ ['leshill/vim-json',                       { 'on_ft' : ['javascript','json']}],
+                \ ['elzr/vim-json',                          { 'on_ft' : ['javascript','json']}],
                 \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
                 \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
                 \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],
