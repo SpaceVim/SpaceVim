@@ -49,7 +49,6 @@ function! SpaceVim#layers#unite#plugins() abort
                 \ ['sgur/unite-everything'],
                 \ ['wsdjeg/unite-dwm'],
                 \ ['raw1z/unite-projects'],
-                \ ['voi/unite-ctags'],
                 \ ['Shougo/unite-session'],
                 \ ['osyo-manga/unite-quickfix'],
                 \ ['ujihisa/unite-colorscheme'],
