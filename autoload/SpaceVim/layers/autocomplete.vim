@@ -65,8 +65,10 @@ endfunction
 
 
 function! SpaceVim#layers#autocomplete#config() abort
-  let g:delimitMate_matchpairs = '[:],{:},<:>'
-  inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+  imap <expr>( 
+        \ pumvisible() ? 
+        \ complete_parameter#pre_complete("()") : 
+        \ "\<Plug>delimitMate("
 
   "mapping
   imap <silent><expr><TAB> SpaceVim#mapping#tab()
