@@ -7,7 +7,7 @@
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version](https://img.shields.io/badge/version-0.4.0--dev-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
