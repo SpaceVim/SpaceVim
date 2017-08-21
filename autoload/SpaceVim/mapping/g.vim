@@ -94,10 +94,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap gs gs
     let g:_spacevim_mappings_g['v'] = ['call feedkeys("gv", "n")', 'reselect the previous Visual area']
     nnoremap gv gv
-
-
-
-
+    let g:_spacevim_mappings_g['<C-]>'] = ['call feedkeys("g<c-]>", "n")', 'jump to tag under cursor']
+    nnoremap g<c-]> g<c-]>
     let g:_spacevim_mappings_g['d'] = ['call SpaceVim#mapping#gd()', 'goto definition']
     call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
 
