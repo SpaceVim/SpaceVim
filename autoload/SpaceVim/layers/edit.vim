@@ -49,7 +49,7 @@ function! SpaceVim#layers#edit#config() abort
     let g:_spacevim_mappings_space.x.i = {'name' : '+change symbol style'}
     nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
     xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
-    call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'cunt in the selection region', 0, 1)
+    call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
