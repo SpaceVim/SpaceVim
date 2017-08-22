@@ -1195,7 +1195,7 @@ Text related commands (start with `x`):
 | `SPC x a L`   | right-align with evil-lion (TODO)                                    |
 | `SPC x a r`   | align region using user-specified regexp (TODO)                      |
 | `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |
-| `SPC x c`     | cunt the number of chars/words/lines in the selection region         |
+| `SPC x c`     | count the number of chars/words/lines in the selection region         |
 | `SPC x d w`   | delete trailing whitespaces                                          |
 | `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
 | `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
