@@ -47,13 +47,8 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 - **Great documentation:** access documentation in Vim with
     <kbd>:h SpaceVim</kbd>.
 - **Beautiful GUI:** you'll love the awesome UI and its useful features.
-- **Mnemonic key bindings:** commands have mnemonic prefixes like
-    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
-    unite work flow commands.
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
-- **Batteries included:** discover hundreds of ready-to-use packages nicely
-    organised in configuration layers following a set of
-    [conventions](http://spacevim.org/development/).
+- **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
+- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ### Support SpaceVim
