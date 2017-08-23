@@ -4,7 +4,8 @@
 [Documentation](http://spacevim.org/documentation/) |
 [Twitter](https://twitter.com/SpaceVim) |
 [Community](https://spacevim.org/community/) |
-[Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim)
+[Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) |
+[中文文档](http://spacevim.org/README_zh_cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
@@ -21,17 +22,6 @@ put more time into development.
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-- **Great documentation:** access documentation in Vim with
-    <kbd>:h SpaceVim</kbd>.
-- **Beautiful GUI:** you'll love the awesome UI and its useful features.
-- **Mnemonic key bindings:** commands have mnemonic prefixes like
-    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
-    unite work flow commands.
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
-- **Batteries included:** discover hundreds of ready-to-use packages nicely
-    organised in configuration layers following a set of
-    [conventions](http://spacevim.org/development/).
-- **Neovim centric:** Dark powered mode of SpaceVim
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
@@ -40,7 +30,7 @@ Here is a throughput graph of the repository for the last few weeks:
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 
-## Install
+### Install
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
@@ -54,46 +44,29 @@ for more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
+### Features
 
+- **Great documentation:** access documentation in Vim with
+    <kbd>:h SpaceVim</kbd>.
+- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Mnemonic key bindings:** commands have mnemonic prefixes like
+    <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
+    unite work flow commands.
+- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim]
+- **Batteries included:** discover hundreds of ready-to-use packages nicely
+    organised in configuration layers following a set of
+    [conventions](http://spacevim.org/development/).
+- **Neovim centric:** Dark powered mode of SpaceVim
 
-## Community
-
-Try these SpaceVim hangouts for any questions, problems or comments.
-- Chat
-    - [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-    - [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-    - [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
-- Ask
-    - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
-    - vi StackExchange for "how to" & configuration questions
-    - [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim) for hugs & pithy comments
-- Discuss
-    - [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
-
-
-## Support SpaceVim
+### Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the Gitter Chat or sending pull requests.
 
-If you want to show your support financially you can contribute to [Bountysource](https://www.bountysource.com/teams/spacevim) or buy a drink for the maintainer by clicking following icon.
+If you want to show your support financially you can  buy a drink for the maintainer by clicking following icon.
 
 <a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-If you used SpaceVim in a project and you want to show that fact, you can use the SpaceVim badge:
-
-[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
-
-markdown
-
-```markdown
-[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
-```
-
-### contribute to SpaceVim
-
-Before contributing be sure to consult the [contribution guidelines](http://spacevim.org/development/#contribution-guidelines) and [conventions](http://spacevim.org/development/#conventions).
-
-## Credits & Thanks
+### Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
