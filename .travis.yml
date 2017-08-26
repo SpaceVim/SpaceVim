@@ -1,6 +1,11 @@
 language: python
 sudo: false
 
+notifications:
+  slack:
+    on_success: never
+    on_failure: never
+
 cache:
   pip: true
 
