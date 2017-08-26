@@ -51,8 +51,15 @@ function! SpaceVim#layers#default#config() abort
     nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
     let lnum = expand('<slnum>') + s:lnum - 1
+    if has('python3')
+        let cmd =  'DeniteBufferDir file_rec'
+    elseif has('python')
+        let cmd =  "exe 'LeaderfFile ' . fnamemodify(bufname('%'), ':h')"
+    else
+        let cmd =  "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')"
+    endif
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-                \ "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')",
+                \ cmd,
                 \ ['Find files in the directory of the current buffer',
                 \ [
                 \ '[SPC f f] is to find files in the directory of the current buffer',
