@@ -2,12 +2,15 @@
 " @section Default, default
 " @parentsection layers
 
+let s:filename = expand('<sfile>:~')
+
 function! SpaceVim#layers#default#plugins() abort
     let plugins = []
 
     return plugins
 endfunction
 
+let s:lnum = expand('<slnum>') + 3
 function! SpaceVim#layers#default#config() abort
     " Unimpaired bindings
     " Quickly add empty lines
@@ -47,7 +50,27 @@ function! SpaceVim#layers#default#config() abort
     " Select last paste
     nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')", 'Find files in the directory of the current buffer', 1)
+    let lnum = expand('<slnum>') + s:lnum - 1
+    if has('python3')
+        let cmd =  'DeniteBufferDir file_rec'
+    elseif has('python')
+        let cmd =  "exe 'LeaderfFile ' . fnamemodify(bufname('%'), ':h')"
+    else
+        let cmd =  "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')"
+    endif
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
+                \ cmd,
+                \ ['Find files in the directory of the current buffer',
+                \ [
+                \ '[SPC f f] is to find files in the directory of the current buffer',
+                \ 'vim with +python3 support will use denite',
+                \ 'vim with +python support will use leaderf',
+                \ 'otherwise will use ctrlp',
+                \ '',
+                \ 'Definition: ' . s:filename . ':' . lnum,
+                \ ]
+                \ ]
+                \ , 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
@@ -286,7 +309,7 @@ function! s:delete_current_buffer_file() abort
         endif
     endif
     redraw!
-    
+
 endfunction
 
 function! s:swap_buffer_with_nth_win(nr) abort
@@ -317,102 +340,102 @@ function! s:buffer_transient_state() abort
     call state.set_title('Buffer Selection Transient State')
     call state.defind_keys(
                 \ {
-                    \ 'layout' : 'vertical split',
-                    \ 'left' : [
-                        \ {
-                        \ 'key' : {
-                                \ 'name' : 'C-1..C-9',
-                                \ 'pos' : [[1,4], [6,9]],
-                                \ 'handles' : [
-                                        \ ["\<C-1>" , ''],
-                                        \ ["\<C-2>" , ''],
-                                        \ ["\<C-3>" , ''],
-                                        \ ["\<C-4>" , ''],
-                                        \ ["\<C-5>" , ''],
-                                        \ ["\<C-6>" , ''],
-                                        \ ["\<C-7>" , ''],
-                                        \ ["\<C-8>" , ''],
-                                        \ ["\<C-9>" , ''],
-                                        \ ],
-                                \ },
-                        \ 'desc' : 'goto nth window',
-                        \ 'func' : '',
-                        \ 'cmd' : '',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                        \ 'key' : {
-                                \ 'name' : '1..9',
-                                \ 'pos' : [[1,2], [4,5]],
-                                \ 'handles' : [
-                                        \ ['1' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [1])'],
-                                        \ ['2' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [2])'],
-                                        \ ['3' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [3])'],
-                                        \ ['4' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [4])'],
-                                        \ ['5' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [5])'],
-                                        \ ['6' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [6])'],
-                                        \ ['7' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [7])'],
-                                        \ ['8' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [8])'],
-                                        \ ['9' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [9])'],
-                                        \ ],
-                                \ },
-                        \ 'desc' : 'move buffer to nth window',
-                        \ 'func' : '',
-                        \ 'cmd' : '',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                        \ 'key' : {
-                                \ 'name' : 'M-1..M-9',
-                                \ 'pos' : [[1,4], [6,9]],
-                                \ 'handles' : [
-                                        \ ["\<M-1>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [1])'],
-                                        \ ["\<M-2>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [2])'],
-                                        \ ["\<M-3>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [3])'],
-                                        \ ["\<M-4>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [4])'],
-                                        \ ["\<M-5>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [5])'],
-                                        \ ["\<M-6>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [6])'],
-                                        \ ["\<M-7>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [7])'],
-                                        \ ["\<M-8>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [8])'],
-                                        \ ["\<M-9>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [9])'],
-                                        \ ],
-                                \ },
-                        \ 'desc' : 'swap buffer with nth window',
-                        \ 'func' : '',
-                        \ 'cmd' : '',
-                        \ 'exit' : 0,
-                        \ },
-                    \ ],
-                    \ 'right' : [
-                        \ {
-                        \ 'key' : 'n',
-                        \ 'desc' : 'next buffer',
-                        \ 'func' : '',
-                        \ 'cmd' : 'bnext',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                        \ 'key' : ['N', 'p'],
-                        \ 'desc' : 'previous buffer',
-                        \ 'func' : '',
-                        \ 'cmd' : 'bp',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                        \ 'key' : 'd',
-                        \ 'desc' : 'kill buffer',
-                        \ 'func' : '',
-                        \ 'cmd' : 'call SpaceVim#mapping#close_current_buffer()',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                        \ 'key' : 'q',
-                        \ 'desc' : 'quit',
-                        \ 'func' : '',
-                        \ 'cmd' : '',
-                        \ 'exit' : 1,
-                        \ },
-                    \ ],
+                \ 'layout' : 'vertical split',
+                \ 'left' : [
+                \ {
+                \ 'key' : {
+                \ 'name' : 'C-1..C-9',
+                \ 'pos' : [[1,4], [6,9]],
+                \ 'handles' : [
+                \ ["\<C-1>" , ''],
+                \ ["\<C-2>" , ''],
+                \ ["\<C-3>" , ''],
+                \ ["\<C-4>" , ''],
+                \ ["\<C-5>" , ''],
+                \ ["\<C-6>" , ''],
+                \ ["\<C-7>" , ''],
+                \ ["\<C-8>" , ''],
+                \ ["\<C-9>" , ''],
+                \ ],
+                \ },
+                \ 'desc' : 'goto nth window',
+                \ 'func' : '',
+                \ 'cmd' : '',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                \ 'key' : {
+                \ 'name' : '1..9',
+                \ 'pos' : [[1,2], [4,5]],
+                \ 'handles' : [
+                \ ['1' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [1])'],
+                \ ['2' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [2])'],
+                \ ['3' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [3])'],
+                \ ['4' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [4])'],
+                \ ['5' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [5])'],
+                \ ['6' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [6])'],
+                \ ['7' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [7])'],
+                \ ['8' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [8])'],
+                \ ['9' , 'call call(' . string(s:_function('s:move_buffer_to_nth_win')) . ', [9])'],
+                \ ],
+                \ },
+                \ 'desc' : 'move buffer to nth window',
+                \ 'func' : '',
+                \ 'cmd' : '',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                \ 'key' : {
+                \ 'name' : 'M-1..M-9',
+                \ 'pos' : [[1,4], [6,9]],
+                \ 'handles' : [
+                \ ["\<M-1>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [1])'],
+                \ ["\<M-2>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [2])'],
+                \ ["\<M-3>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [3])'],
+                \ ["\<M-4>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [4])'],
+                \ ["\<M-5>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [5])'],
+                \ ["\<M-6>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [6])'],
+                \ ["\<M-7>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [7])'],
+                \ ["\<M-8>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [8])'],
+                \ ["\<M-9>" , 'call call(' . string(s:_function('s:swap_buffer_with_nth_win')) . ', [9])'],
+                \ ],
+                \ },
+                \ 'desc' : 'swap buffer with nth window',
+                \ 'func' : '',
+                \ 'cmd' : '',
+                \ 'exit' : 0,
+                \ },
+                \ ],
+                \ 'right' : [
+                \ {
+                \ 'key' : 'n',
+                \ 'desc' : 'next buffer',
+                \ 'func' : '',
+                \ 'cmd' : 'bnext',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                \ 'key' : ['N', 'p'],
+                \ 'desc' : 'previous buffer',
+                \ 'func' : '',
+                \ 'cmd' : 'bp',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                \ 'key' : 'd',
+                \ 'desc' : 'kill buffer',
+                \ 'func' : '',
+                \ 'cmd' : 'call SpaceVim#mapping#close_current_buffer()',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                \ 'key' : 'q',
+                \ 'desc' : 'quit',
+                \ 'func' : '',
+                \ 'cmd' : '',
+                \ 'exit' : 1,
+                \ },
+                \ ],
                 \ }
                 \ )
     call state.open()
