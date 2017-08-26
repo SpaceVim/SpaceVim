@@ -1,3 +1,4 @@
+let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
   if s:has_map_to_spc()
     return
@@ -63,19 +64,28 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'], 'ChooseWin', 'select window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
-  nnoremap <silent> [SPC]bn :bnext<CR>
-  let g:_spacevim_mappings_space.b.n = ['bnext', 'next buffer',
+  let s:lnum = expand('<slnum>') + 3
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'bnext', ['next buffer',
         \ [
-        \ 'SPC b n is running :bnext, jump to next buffer',
+        \ '[SPC b n] is running :bnext, jump to next buffer',
         \ 'which is a vim build in command',
         \ 'It is bound to SPC b n, ] b,',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ]
-  call SpaceVim#mapping#menu('Open next buffer', '[SPC]bn', 'bp')
-  nnoremap <silent> [SPC]bp :bp<CR>
-  let g:_spacevim_mappings_space.b.p = ['bp', 'previous buffer']
-  call SpaceVim#mapping#menu('Open previous buffer', '[SPC]bp', 'bp')
-
+        \ , 1)
+  let s:lnum = expand('<slnum>') + 3
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'bp', ['previous buffer',
+        \ [
+        \ 'SPC b p is running :bp, jump to previous buffer',
+        \ 'which is a vim build in command',
+        \ 'It is bound to SPC b p, [ b,',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   "
   " Comments sections
   "
