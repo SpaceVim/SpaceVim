@@ -68,7 +68,9 @@ function! SpaceVim#layers#autocomplete#config() abort
   imap <expr>( 
         \ pumvisible() ? 
         \ complete_parameter#pre_complete("()") : 
-        \ "\<Plug>delimitMate("
+        \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
+        \ "\<Plug>delimitMate(" :
+        \ '('
 
   "mapping
   imap <silent><expr><TAB> SpaceVim#mapping#tab()
