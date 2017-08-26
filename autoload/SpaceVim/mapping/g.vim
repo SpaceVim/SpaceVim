@@ -68,6 +68,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap gn gn
     let g:_spacevim_mappings_g['Q'] = ['call feedkeys("gQ", "n")', 'switch to Ex mode']
     nnoremap gQ gQ
+    let g:_spacevim_mappings_g['q'] = ['call feedkeys("gq", "n")', 'format Nmove text']
+    nnoremap gq gq
     let g:_spacevim_mappings_g['R'] = ['call feedkeys("gR", "n")', 'enter VREPLACE mode']
     nnoremap gR gR
     let g:_spacevim_mappings_g['T'] = ['call feedkeys("gT", "n")', 'previous tag page']
