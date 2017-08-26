@@ -44,17 +44,18 @@ call SpaceVim#layers#load('autocomplete')
 
 You can customize the user experience of auto-completion with the following layer variables:
 
-1.  `auto-completion-return-key-behavior` set the action to perform when the `RET` key is pressed, the possible values are:
+1.  `auto-completion-return-key-behavior` set the action to perform when the `Return`/`Enter` key is pressed, the possible values are:
 
 -   `complete` completes with the current selection
--   `nil` does nothing
+-   `smart` completes with current selection and expand snippet or argvs
+-   `nil` 
 
 2.  `auto-completion-tab-key-behavior` set the action to perform when the `TAB` key is pressed, the possible values are:
 
 -   `smart` cycle candidates, expand snippets, jump parameters
 -   `complete` completes with the current selection
 -   `cycle` completes the common prefix and cycle between candidates
--   `nil` does nothing
+-   `nil` insert a carriage return
 
 3.  `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
 4.  `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
@@ -98,13 +99,13 @@ call SpaceVim#layers#load('autocomplete', {
 
 ### auto-complete
 
-| Key bindings | Description                                                          |
-| ------------ | -------------------------------------------------------------------- |
-| `<C-n>`      | select next candidate                                                |
-| `<C-p>`      | select previous candidate                                            |
-| `<Tab>`      | expand selection or select next candidate                            |
-| `<S-Tab>`    | select previous candidate                                            |
-| `<Return>`   | complete word, if word is already completed insert a carriage return |
+| Key bindings | Description                                   |
+| ------------ | --------------------------------------------- |
+| `<C-n>`      | select next candidate                         |
+| `<C-p>`      | select previous candidate                     |
+| `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
+| `<S-Tab>`    | select previous candidate                     |
+| `<Return>`   | base on `auto-completion-return-key-behavior` |
 
 ### Neosnippet
 
@@ -112,4 +113,3 @@ call SpaceVim#layers#load('autocomplete', {
 | ----------- | -------------------------------------------------------------- |
 | `M-/`       | Expand a snippet if text before point is a prefix of a snippet |
 | `SPC i s`   | List all current yasnippets for inserting                      |
-
