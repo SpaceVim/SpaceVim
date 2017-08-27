@@ -1,12 +1,12 @@
 ---
-title:  "chinese totur"
+title:  "SpaceVim 中文手册"
 ---
 
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version 0.2.0-dev](https://img.shields.io/badge/version-0.2.0--dev-yellow.svg?style=flat-square)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)]()
+![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://github.com/SpaceVim/SpaceVim/blob/dev/doc/SpaceVim.txt)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -17,13 +17,13 @@ title:  "chinese totur"
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![2017-04-29-20 54 49](https://cloud.githubusercontent.com/assets/13142418/25555650/d7d2c07e-2d1e-11e7-975d-646a07b38a62.png)
+![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-项 目 主 页： [spacevim.org](https://spacevim.org)
+项 目 主 页： <https://spacevim.org>
 
-Github 地址 : [SpaceVim GitHub](https://github.com/SpaceVim/SpaceVim), 欢迎Star或fork。
+Github 地址 : <https://github.com/SpaceVim/SpaceVim>
 
-SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供选择，用户只需要选择需要的模块，就可以配置出一个适合自己的开发环境。
+SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供用户选择，针对不同语言选择特定的模块，就可以配置出一个适合特定语言开发的环境。
 
 使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
 
@@ -31,11 +31,21 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
-**目录**
-[安装](#安装)
-[更新](#更新)
-[特性](#特性)
-[用户配置](#用户配置)
+<!-- vim-markdown-toc GFM -->
+* [安装](#安装)
+* [更新](#更新)
+* [特性](#特性)
+    * [优雅的界面](#优雅的界面)
+    * [快捷键导航](#快捷键导航)
+    * [Unite为主的工作平台](#unite为主的工作平台)
+    * [自动补全](#自动补全)
+    * [细致的tags管理](#细致的tags管理)
+* [快速](#快速)
+    * [SpaceVim选项](#spacevim选项)
+    * [延伸阅读](#延伸阅读)
+        * [Vim 8 新特新之旅](#vim-8-新特新之旅)
+
+<!-- vim-markdown-toc -->
 
 ## 安装
 
@@ -61,15 +71,11 @@ SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim
 
 Windows 下 vim 用户只需要将本仓库克隆成用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
 
-```
-git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-```
+    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 
-Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\Local\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
+Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\\Local\\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
 
-```
-git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-```
+    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 **字体**
 
@@ -80,13 +86,31 @@ SpaceVim 默认启用了Powerline 字体，默认的的字体文件是：[DejaVu
 Windows 下用户如果不方便编译，可以在qq群文件里面下载相应的dll文件放到vimproc
 的lib目录，默认是 `~/.cache/vimfiles/repos/github.com/Shougo/vimproc.vim/lib/`
 
+## 更新
+
+可以通过 `:SPUpdate` 命令来更新spacevim 以及包含的插件，如果需要更新指定的插件，如：startuptime.vim，只需要执行 `:SPUpdate startuptime.vim`，也可以通过 `:SPUpdate SpaceVim` 来更新 SpaceVim.
+
 ## 特性
 
 ### 优雅的界面
 
-SpaceVim 的默认界包括 tagbar 、vimfiler 、以及 airline 界面，配色主题采用的 gruvbox。
+SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
 ![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+### 快捷键导航
+
+SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航系统来提示每一个按键的具体功能，比如 Normal 模式下按下空格键，将出现如下提示：
+
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+这一导航提示将所有以空格为前缀的快捷键分组展示，比如 `b` 是所以 buffer 相关的快捷键， `p` 是所有工程管理相关的快捷键。在导航模式下按下 `<C-h>` 你将在状态栏上看见相应的帮助信息，按键介绍如下：
+
+| 按键  | 描述      |
+| --- | ------- |
+| `u` | 撤销前一按键  |
+| `n` | 导航系统下一页 |
+| `p` | 导航系统前一页 |
 
 ### Unite为主的工作平台
 
@@ -100,7 +124,7 @@ SpaceVim 采用最快补全引擎 deoplete, 该引擎不同与YouCompleteMe的�
 
 ### 细致的tags管理
 
-## 用户配置
+## 快速
 
 SpaceVim 将从 ~/.SpaceVim.d/init.vim 和当前目录的 ./SpaceVim.d/init.vim 载入配置，并且更新 rtp，用户可以在 ~/.SpaceVim.d/ 和 .SpaceVim.d/ 这两个文件夹下编辑自己的脚本，和 SpaceVim 的配置文件。
 
@@ -157,18 +181,17 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 ### SpaceVim选项
 
-选项名称 | 默认值 | 描述
--------- |:--------:| --------
-`g:spacevim_default_indent` | 2 | 对齐空格
-`g:spacevim_enable_guicolors` | 1 | 启用/禁用终端使用真色彩
-`g:spacevim_windows_leader` | `s` | 窗口管理快捷键前缀
-`g:spacevim_unite_leader` | `f` | Unite快捷键前缀
-`g:spacevim_plugin_bundle_dir` | `~/.cache/vimfiles` | 默认插件缓存位置
-`g:spacevim_realtime_leader_guide` | 0 | 启用/禁用实时快捷键提示
-`g:spacevim_guifont` | '' | 设置SpaceVim字体
-`g:spacevim_sidebar_width` | 30 | 设置边栏宽度，文件树以及语法树
-`g:spacevim_custom_plugins` | `[]` | 设置自定义插件
-
+| 选项名称                               |         默认值         | 描述              |
+| ---------------------------------- | :-----------------: | --------------- |
+| `g:spacevim_default_indent`        |          2          | 对齐空格            |
+| `g:spacevim_enable_guicolors`      |          1          | 启用/禁用终端使用真色彩    |
+| `g:spacevim_windows_leader`        |         `s`         | 窗口管理快捷键前缀       |
+| `g:spacevim_unite_leader`          |         `f`         | Unite快捷键前缀      |
+| `g:spacevim_plugin_bundle_dir`     | `~/.cache/vimfiles` | 默认插件缓存位置        |
+| `g:spacevim_realtime_leader_guide` |          0          | 启用/禁用实时快捷键提示    |
+| `g:spacevim_guifont`               |          ''         | 设置SpaceVim字体    |
+| `g:spacevim_sidebar_width`         |          30         | 设置边栏宽度，文件树以及语法树 |
+| `g:spacevim_custom_plugins`        |         `[]`        | 设置自定义插件         |
 
 ### 延伸阅读
 
@@ -181,5 +204,3 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
             </li>
     {% endfor %}
 </ul>
-
-
