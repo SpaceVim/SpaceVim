@@ -34,10 +34,12 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 <!-- vim-markdown-toc GFM -->
 * [安装](#安装)
 * [更新](#更新)
-* [特性](#特性)
+* [文档](#文档)
     * [优雅的界面](#优雅的界面)
+        * [主题](#主题)
     * [快捷键导航](#快捷键导航)
-    * [Unite为主的工作平台](#unite为主的工作平台)
+    * [模块化配置](#模块化配置)
+    * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
     * [自动补全](#自动补全)
     * [细致的tags管理](#细致的tags管理)
 * [快速](#快速)
@@ -90,13 +92,35 @@ Windows 下用户如果不方便编译，可以在qq群文件里面下载相应�
 
 可以通过 `:SPUpdate` 命令来更新spacevim 以及包含的插件，如果需要更新指定的插件，如：startuptime.vim，只需要执行 `:SPUpdate startuptime.vim`，也可以通过 `:SPUpdate SpaceVim` 来更新 SpaceVim.
 
-## 特性
+## 文档
 
 ### 优雅的界面
 
 SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
 ![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+
+#### 主题
+
+SpaceVim 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 <kbd>:h gruvbox</kbd>.
+
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.vim` 中修改 `g:g:spacevim_colorscheme`。例如，使用 [vim-one with dark colorscheme](https://github.com/rakr/vim-one)
+
+```vim
+let g:spacevim_colorscheme = 'one'
+let g:spacevim_colorscheme_bg = 'dark'
+```
+
+| 快捷键           | 描述                                                    |
+| ------------------ | -------------------------------------------------------------- |
+| <kbd>SPC T n</kbd> | 切换至下一个随机主题 |
+| <kbd>SPC T s</kbd> | 通过 Unite 选择主题                           |
+
+可以在[主题模块](http://spacevim.org/layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
+
+**注意**:
+
+SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色，可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
 
 ### 快捷键导航
 
@@ -112,17 +136,26 @@ SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航�
 | `n` | 导航系统下一页 |
 | `p` | 导航系统前一页 |
 
-### Unite为主的工作平台
+### 模块化配置
+
+SpaceVim 是由多个独立模块组成的配置集合，针对不同的功能需求，设计了多个模块，用户在使用的时候只需要载入相应的模块即可。比如对于 Java 开发者，载入 `lang#java`、`autocomplete`、`checker`、`tags`模块即可配置出一个适合 Java 开发的 Vim 环境。
+
+SpaceVim 支持的模：[http://spacevim.org/layers/](http://spacevim.org/layers/)
+
+### Denite/Unite为主的工作平台
 
 Unite 的快捷键前缀是`f`， 可以通过 `g:spacevim_unite_leader` 来设定，快捷键无需记忆，SpaceVim 有很好的快捷键辅助机制，如下是 Unite 的快捷键键图：
 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
+
+Denite 是新一代的插件，相比 Unite 速度更加快，安装也更加方便。 的快捷键前缀是`F`， 可以通过 `g:spacevim_denite_leader` 来设定。
 
 ### 自动补全
 
 SpaceVim 采用最快补全引擎 deoplete, 该引擎不同与YouCompleteMe的主要一点是支持多源补全，而不单单是语义补全。 而且补全来源拓展非常方便。
 
 ### 细致的tags管理
+
 
 ## 快速
 
@@ -192,6 +225,8 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `g:spacevim_guifont`               |          ''         | 设置SpaceVim字体    |
 | `g:spacevim_sidebar_width`         |          30         | 设置边栏宽度，文件树以及语法树 |
 | `g:spacevim_custom_plugins`        |         `[]`        | 设置自定义插件         |
+
+
 
 ### 延伸阅读
 
