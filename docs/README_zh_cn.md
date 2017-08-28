@@ -37,6 +37,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 * [文档](#文档)
     * [优雅的界面](#优雅的界面)
         * [主题](#主题)
+        * [字体](#字体)
     * [快捷键导航](#快捷键导航)
     * [模块化配置](#模块化配置)
     * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
@@ -121,6 +122,16 @@ let g:spacevim_colorscheme_bg = 'dark'
 **注意**:
 
 SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色，可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
+
+#### 字体
+
+在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline. 如果你也喜欢这一字体，建议将这一字体安装到系统中。如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `g:spacevim_guifont`，默认值为:
+
+```vim
+let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```
+
+如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
 
 ### 快捷键导航
 
