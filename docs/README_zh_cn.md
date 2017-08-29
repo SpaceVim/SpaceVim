@@ -31,6 +31,13 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
+**捐助SpaceVim**
+
+|  微信                | 支付宝            |
+| ------------------ | ------------- |
+| ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png)    |
+
+
 <!-- vim-markdown-toc GFM -->
     * [安装](#安装)
     * [更新](#更新)
