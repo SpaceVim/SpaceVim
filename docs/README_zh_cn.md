@@ -33,155 +33,153 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 **捐助SpaceVim**
 
-|  微信                | 支付宝            |
-| ------------------ | ------------- |
-| ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png)    |
-
+| 微信                        | 支付宝                           |
+| ------------------------- | ----------------------------- |
+| ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
 
 <!-- vim-markdown-toc GFM -->
-    * [安装](#安装)
-    * [更新](#更新)
-    * [文档](#文档)
-        * [优雅的界面](#优雅的界面)
-            * [主题](#主题)
-            * [字体](#字体)
-            * [界面元素切换](#界面元素切换)
-        * [快捷键导航](#快捷键导航)
-* [SpaceVim Documentation](#spacevim-documentation)
-    * [Core Pillars](#core-pillars)
-        * [Mnemonic](#mnemonic)
-        * [Discoverable](#discoverable)
-        * [Consistent](#consistent)
-        * [Crowd-Configured](#crowd-configured)
-    * [Highlighted features](#highlighted-features)
-    * [Screenshots](#screenshots)
-        * [welcome page](#welcome-page)
-        * [working flow](#working-flow)
-    * [Who can benefit from this?](#who-can-benefit-from-this)
-    * [Update and Rollback](#update-and-rollback)
-        * [Update SpaceVim itself](#update-spacevim-itself)
-            * [Automatic Updates](#automatic-updates)
-            * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
-            * [Updating Manually with git](#updating-manually-with-git)
-        * [Update plugins](#update-plugins)
-    * [Configuration layers](#configuration-layers)
-    * [Custom Configuration](#custom-configuration)
-        * [Automatic Generation](#automatic-generation)
-        * [Alternative directory](#alternative-directory)
-    * [Concepts](#concepts)
-        * [Transient-states](#transient-states)
-    * [Awesome ui](#awesome-ui)
-        * [Colorschemes](#colorschemes)
-        * [Font](#font)
-        * [UI Toggles](#ui-toggles)
-        * [Statusline && tabline](#statusline--tabline)
-            * [statusline](#statusline)
-            * [tabline](#tabline)
-    * [Manual](#manual)
-        * [Completion](#completion)
-            * [Unite/Denite](#unitedenite)
-                * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
-        * [Discovering](#discovering)
-            * [Mappings](#mappings)
-                * [Mappings guide](#mappings-guide)
-                * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
-            * [Getting help](#getting-help)
-            * [Available layers](#available-layers)
-                * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
-                * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
-            * [Toggles](#toggles)
-        * [Navigating](#navigating)
-            * [Point/Cursor](#pointcursor)
-            * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
-                * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
-            * [Unimpaired bindings](#unimpaired-bindings)
-            * [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
-                * [Jumping](#jumping)
-                * [Joining and splitting](#joining-and-splitting)
-            * [Window manipulation](#window-manipulation)
-                * [Window manipulation key bindings](#window-manipulation-key-bindings)
-            * [Buffers and Files](#buffers-and-files)
-                * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
-                * [Create a new empty buffer](#create-a-new-empty-buffer)
-                * [Special Buffers](#special-buffers)
-                * [Files manipulations key bindings](#files-manipulations-key-bindings)
-                * [Vim and SpaceVim files](#vim-and-spacevim-files)
-            * [File tree](#file-tree)
-                * [File tree navigation](#file-tree-navigation)
-                * [Open file with file tree.](#open-file-with-file-tree)
-        * [Commands starting with `g`](#commands-starting-with-g)
-        * [Commands starting with `z`](#commands-starting-with-z)
-        * [Auto-saving](#auto-saving)
-        * [Searching](#searching)
-            * [With an external tool](#with-an-external-tool)
-                * [Useful key bindings](#useful-key-bindings)
-                * [Searching in current file](#searching-in-current-file)
-                * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
-                * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
-                * [Searching in a project](#searching-in-a-project)
-                * [Background searching in a project](#background-searching-in-a-project)
-                * [Searching the web](#searching-the-web)
-            * [Searching on the fly](#searching-on-the-fly)
-            * [Persistent highlighting](#persistent-highlighting)
-        * [Editing](#editing)
-            * [Paste text](#paste-text)
-                * [Auto-indent pasted text](#auto-indent-pasted-text)
-            * [Text manipulation commands](#text-manipulation-commands)
-            * [Text insertion commands](#text-insertion-commands)
-            * [Commenting](#commenting)
-            * [Multi-Encodings](#multi-encodings)
-        * [Errors handling](#errors-handling)
-        * [Managing projects](#managing-projects)
-    * [Achievements](#achievements)
-        * [issues](#issues)
-        * [Stars, forks and watchers](#stars-forks-and-watchers)
-    * [Features](#features)
-        * [Awesome ui](#awesome-ui-1)
-        * [Mnemonic key bindings](#mnemonic-key-bindings)
-    * [Language specific mode](#language-specific-mode)
-    * [Key Mapping](#key-mapping)
-        * [c/c++ support](#cc-support)
-        * [go support](#go-support)
-        * [python support](#python-support)
-    * [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
-    * [Modular configuration](#modular-configuration)
-    * [Multiple leader mode](#multiple-leader-mode)
-        * [Global origin vim leader](#global-origin-vim-leader)
-        * [Local origin vim leader](#local-origin-vim-leader)
-        * [Windows function leader](#windows-function-leader)
-        * [Unite work flow leader](#unite-work-flow-leader)
-    * [Unite centric work-flow](#unite-centric-work-flow)
-            * [Plugin Highlights](#plugin-highlights)
-            * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-        * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-            * [Language](#language)
-                * [Commands](#commands)
-                * [Commands](#commands-1)
-                * [Completion](#completion-1)
-                * [Unite](#unite)
-                * [Operators & Text Objects](#operators--text-objects)
-            * [Custom Key bindings](#custom-key-bindings)
-                * [File Operations](#file-operations)
-                * [Editor UI](#editor-ui)
-                * [Window Management](#window-management)
-                * [Native functions](#native-functions)
-                * [Plugin: Unite](#plugin-unite)
-                * [Plugin: neocomplete](#plugin-neocomplete)
-                * [Plugin: NERD Commenter](#plugin-nerd-commenter)
-                * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
-                * [Plugin: ChooseWin](#plugin-choosewin)
-                * [Plugin: Bookmarks](#plugin-bookmarks)
-                * [Plugin: Gina/Gita](#plugin-ginagita)
-                * [Plugin: vim-signify](#plugin-vim-signify)
-                * [Misc Plugins](#misc-plugins)
-        * [模块化配置](#模块化配置)
-        * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
-        * [自动补全](#自动补全)
-        * [细致的tags管理](#细致的tags管理)
-    * [快速](#快速)
-        * [SpaceVim选项](#spacevim选项)
-        * [延伸阅读](#延伸阅读)
-            * [Vim 8 新特新之旅](#vim-8-新特新之旅)
+* [安装](#安装)
+* [更新](#更新)
+* [文档](#文档)
+    * [核心思想](#核心思想)
+        * [记忆辅助](#记忆辅助)
+        * [可视化交互](#可视化交互)
+        * [一致性](#一致性)
+        * [社区驱动](#社区驱动)
+    * [显著特性](#显著特性)
+    * [优雅的界面](#优雅的界面)
+        * [主题](#主题)
+        * [字体](#字体)
+        * [界面元素切换](#界面元素切换)
+    * [快捷键导航](#快捷键导航)
+* [Screenshots](#screenshots)
+    * [welcome page](#welcome-page)
+    * [working flow](#working-flow)
+* [Who can benefit from this?](#who-can-benefit-from-this)
+* [Update and Rollback](#update-and-rollback)
+    * [Update SpaceVim itself](#update-spacevim-itself)
+        * [Automatic Updates](#automatic-updates)
+        * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
+        * [Updating Manually with git](#updating-manually-with-git)
+    * [Update plugins](#update-plugins)
+* [Configuration layers](#configuration-layers)
+* [Custom Configuration](#custom-configuration)
+    * [Automatic Generation](#automatic-generation)
+    * [Alternative directory](#alternative-directory)
+* [Concepts](#concepts)
+    * [Transient-states](#transient-states)
+* [Awesome ui](#awesome-ui)
+    * [Colorschemes](#colorschemes)
+    * [Font](#font)
+    * [UI Toggles](#ui-toggles)
+    * [Statusline && tabline](#statusline--tabline)
+        * [statusline](#statusline)
+        * [tabline](#tabline)
+* [Manual](#manual)
+    * [Completion](#completion)
+        * [Unite/Denite](#unitedenite)
+            * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
+    * [Discovering](#discovering)
+        * [Mappings](#mappings)
+            * [Mappings guide](#mappings-guide)
+            * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
+        * [Getting help](#getting-help)
+        * [Available layers](#available-layers)
+            * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
+            * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
+        * [Toggles](#toggles)
+    * [Navigating](#navigating)
+        * [Point/Cursor](#pointcursor)
+        * [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
+            * [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
+        * [Unimpaired bindings](#unimpaired-bindings)
+        * [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
+            * [Jumping](#jumping)
+            * [Joining and splitting](#joining-and-splitting)
+        * [Window manipulation](#window-manipulation)
+            * [Window manipulation key bindings](#window-manipulation-key-bindings)
+        * [Buffers and Files](#buffers-and-files)
+            * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+            * [Create a new empty buffer](#create-a-new-empty-buffer)
+            * [Special Buffers](#special-buffers)
+            * [Files manipulations key bindings](#files-manipulations-key-bindings)
+            * [Vim and SpaceVim files](#vim-and-spacevim-files)
+        * [File tree](#file-tree)
+            * [File tree navigation](#file-tree-navigation)
+            * [Open file with file tree.](#open-file-with-file-tree)
+    * [Commands starting with `g`](#commands-starting-with-g)
+    * [Commands starting with `z`](#commands-starting-with-z)
+    * [Auto-saving](#auto-saving)
+    * [Searching](#searching)
+        * [With an external tool](#with-an-external-tool)
+            * [Useful key bindings](#useful-key-bindings)
+            * [Searching in current file](#searching-in-current-file)
+            * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
+            * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
+            * [Searching in a project](#searching-in-a-project)
+            * [Background searching in a project](#background-searching-in-a-project)
+            * [Searching the web](#searching-the-web)
+        * [Searching on the fly](#searching-on-the-fly)
+        * [Persistent highlighting](#persistent-highlighting)
+    * [Editing](#editing)
+        * [Paste text](#paste-text)
+            * [Auto-indent pasted text](#auto-indent-pasted-text)
+        * [Text manipulation commands](#text-manipulation-commands)
+        * [Text insertion commands](#text-insertion-commands)
+        * [Commenting](#commenting)
+        * [Multi-Encodings](#multi-encodings)
+    * [Errors handling](#errors-handling)
+    * [Managing projects](#managing-projects)
+* [Achievements](#achievements)
+    * [issues](#issues)
+    * [Stars, forks and watchers](#stars-forks-and-watchers)
+* [Features](#features)
+    * [Awesome ui](#awesome-ui-1)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+* [Language specific mode](#language-specific-mode)
+* [Key Mapping](#key-mapping)
+    * [c/c++ support](#cc-support)
+    * [go support](#go-support)
+    * [python support](#python-support)
+* [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
+* [Modular configuration](#modular-configuration)
+* [Multiple leader mode](#multiple-leader-mode)
+    * [Global origin vim leader](#global-origin-vim-leader)
+    * [Local origin vim leader](#local-origin-vim-leader)
+    * [Windows function leader](#windows-function-leader)
+    * [Unite work flow leader](#unite-work-flow-leader)
+* [Unite centric work-flow](#unite-centric-work-flow)
+        * [Plugin Highlights](#plugin-highlights)
+        * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+        * [Language](#language)
+            * [Commands](#commands)
+            * [Commands](#commands-1)
+            * [Completion](#completion-1)
+            * [Unite](#unite)
+            * [Operators & Text Objects](#operators--text-objects)
+        * [Custom Key bindings](#custom-key-bindings)
+            * [File Operations](#file-operations)
+            * [Editor UI](#editor-ui)
+            * [Window Management](#window-management)
+            * [Native functions](#native-functions)
+            * [Plugin: Unite](#plugin-unite)
+            * [Plugin: neocomplete](#plugin-neocomplete)
+            * [Plugin: NERD Commenter](#plugin-nerd-commenter)
+            * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+            * [Plugin: ChooseWin](#plugin-choosewin)
+            * [Plugin: Bookmarks](#plugin-bookmarks)
+            * [Plugin: Gina/Gita](#plugin-ginagita)
+            * [Plugin: vim-signify](#plugin-vim-signify)
+            * [Misc Plugins](#misc-plugins)
+    * [模块化配置](#模块化配置)
+    * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
+    * [自动补全](#自动补全)
+    * [细致的tags管理](#细致的tags管理)
+* [快速](#快速)
+    * [SpaceVim选项](#spacevim选项)
+    * [延伸阅读](#延伸阅读)
+        * [Vim 8 新特新之旅](#vim-8-新特新之旅)
 
 <!-- vim-markdown-toc -->
 
@@ -230,6 +228,39 @@ Windows 下用户如果不方便编译，可以在qq群文件里面下载相应�
 
 ## 文档
 
+### 核心思想
+
+四大核心思想: 记忆辅助, 可视化交互, 一致性，社区驱动.
+
+如果违背了以上四大核心思想，我们将会尽力修复。
+
+#### 记忆辅助
+
+所有快捷键，根据其功能的不同分为不同的组，以相应的按键作为前缀，例如 `b` 为 buffer 相关快捷键前缀，`p` 为 project 相关快捷键前缀， `s` 为 search 相关快捷键前缀，`h` 为 help 相关快捷键前缀。
+
+#### 可视化交互
+
+创新的实时快捷键辅助系统，以及查询系统，方便快捷查询到可用的模块、插件以及其他更多信息。
+
+#### 一致性
+
+相似的功能使用同样的快捷键，这在 SpaceVim 中随处可见。这得益于明确的约定。其他模块的文档都以此为基础。
+
+#### 社区驱动
+
+社区驱动，保证了 bug 修复的速度，以及新特性更新的速度。
+
+### 显著特性
+
+-   **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
+-   **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
+-   **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
+-   **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
+-   **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
+-   **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
+-   **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
+-   **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+
 ### 优雅的界面
 
 SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
@@ -272,23 +303,23 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| 快捷键       | 描述                                          |
-| --------- | ------------------------------------------- |
-| `SPC t 8` | 高亮所有超过80列的字符                                |
+| 快捷键         | 描述                                          |
+| ----------- | ------------------------------------------- |
+| `SPC t 8`   | 高亮所有超过80列的字符                                |
 | `SPC t f`   | 高亮临界列，默认是第80列                               |
-| `SPC t h h` | 高亮当前行        |
-| `SPC t h i` | 高亮代码对齐线         |
-| SPC t h c | toggle highlight indentation current column |
-| SPC t h s | toggle syntax highlighting                  |
-| SPC t i   | toggle indentation guide at point           |
-| SPC t n   | toggle line numbers                         |
-| SPC t b   | toggle background                           |
-| SPC t t   | open tabs manager                           |
-| SPC T ~   | display ~ in the fringe on empty lines      |
-| SPC T F   | toggle frame fullscreen                     |
-| SPC T f   | toggle display of the fringe                |
-| SPC T m   | toggle menu bar                             |
-| SPC T t   | toggle tool bar                             |
+| `SPC t h h` | 高亮当前行                                       |
+| `SPC t h i` | 高亮代码对齐线                                     |
+| SPC t h c   | toggle highlight indentation current column |
+| SPC t h s   | toggle syntax highlighting                  |
+| SPC t i     | toggle indentation guide at point           |
+| SPC t n     | toggle line numbers                         |
+| SPC t b     | toggle background                           |
+| SPC t t     | open tabs manager                           |
+| SPC T ~     | display ~ in the fringe on empty lines      |
+| SPC T F     | toggle frame fullscreen                     |
+| SPC T f     | toggle display of the fringe                |
+| SPC T m     | toggle menu bar                             |
+| SPC T t     | toggle tool bar                             |
 
 ### 快捷键导航
 
@@ -303,48 +334,6 @@ SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航�
 | `u` | 撤销前一按键  |
 | `n` | 导航系统下一页 |
 | `p` | 导航系统前一页 |
-
-
-
-# SpaceVim Documentation
-
-## Core Pillars
-
-Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.
-
-If any of these core pillars is violated open an issue and we’ll try our best to fix it.
-
-### Mnemonic
-
-Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
-
-### Discoverable
-
-Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
-
-### Consistent
-
-Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
-
-### Crowd-Configured
-
-Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
-
-## Highlighted features
-
--   **Great documentation:** access documentation in Vim with
-      <kbd>:h SpaceVim</kbd>.
--   **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
--   **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
--   **Mnemonic key bindings:** commands have mnemonic prefixes like
-      <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
-      unite work flow commands.
--   **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
--   **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
--   **Batteries included:** discover hundreds of ready-to-use packages nicely
-      organised in configuration layers following a set of
-      [conventions](http://spacevim.org/development/).
--   **Neovim centric:** Dark powered mode of SpaceVim
 
 ## Screenshots
 
@@ -1369,7 +1358,7 @@ Text related commands (start with `x`):
 | `SPC x a L`   | right-align with evil-lion (TODO)                                    |
 | `SPC x a r`   | align region using user-specified regexp (TODO)                      |
 | `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |
-| `SPC x c`     | count the number of chars/words/lines in the selection region         |
+| `SPC x c`     | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`   | delete trailing whitespaces                                          |
 | `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
 | `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
@@ -2125,7 +2114,6 @@ As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` 
 [textobj-user]: https://github.com/kana/vim-textobj-user
 
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
-
 
 ### 模块化配置
 
