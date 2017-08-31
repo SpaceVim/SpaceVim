@@ -29,7 +29,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
     let g:neoformat_enabled_markdown = ['remark']
     let g:neoformat_markdown_remark = {
             \ 'exe': 'remark',
-            \ 'args': ['--no-color', '--silent', '--use', 'remark-frontmatter'],
+            \ 'args': ['--no-color', '--silent', '--use', 'remark-frontmatter', "-s '\"listItemIndent\": \"1\"'"],
             \ 'stdin': 1,
             \ }
 endfunction

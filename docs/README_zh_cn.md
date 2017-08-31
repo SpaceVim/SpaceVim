@@ -252,14 +252,14 @@ Windows 下用户如果不方便编译，可以在qq群文件里面下载相应�
 
 ### 显著特性
 
--   **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
--   **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
--   **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
--   **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
--   **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
--   **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
--   **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
--   **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+- **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
+- **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
+- **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
+- **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
+- **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
+- **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
+- **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
+- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ### 优雅的界面
 
@@ -303,23 +303,23 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| 快捷键         | 描述                                          |
-| ----------- | ------------------------------------------- |
-| `SPC t 8`   | 高亮所有超过80列的字符                                |
-| `SPC t f`   | 高亮临界列，默认是第80列                               |
-| `SPC t h h` | 高亮当前行                                       |
-| `SPC t h i` | 高亮代码对齐线                                     |
-| SPC t h c   | toggle highlight indentation current column |
-| SPC t h s   | toggle syntax highlighting                  |
-| SPC t i     | toggle indentation guide at point           |
-| SPC t n     | toggle line numbers                         |
-| SPC t b     | toggle background                           |
-| SPC t t     | open tabs manager                           |
-| SPC T ~     | display ~ in the fringe on empty lines      |
-| SPC T F     | toggle frame fullscreen                     |
-| SPC T f     | toggle display of the fringe                |
-| SPC T m     | toggle menu bar                             |
-| SPC T t     | toggle tool bar                             |
+| 快捷键         | 描述                                     |
+| ----------- | -------------------------------------- |
+| `SPC t 8`   | 高亮所有超过80列的字符                           |
+| `SPC t f`   | 高亮临界列，默认是第80列                          |
+| `SPC t h h` | 高亮当前行                                  |
+| `SPC t h i` | 高亮代码对齐线                                |
+| `SPC t h c` | 高亮光标所在列                                |
+| `SPC t h s` | 启用/禁用语法高亮                              |
+| SPC t i     | toggle indentation guide at point      |
+| `SPC t n`   | 显示/隐藏行号                                |
+| SPC t b     | toggle background                      |
+| SPC t t     | open tabs manager                      |
+| SPC T ~     | display ~ in the fringe on empty lines |
+| SPC T F     | toggle frame fullscreen                |
+| SPC T f     | toggle display of the fringe           |
+| SPC T m     | toggle menu bar                        |
+| SPC T t     | toggle tool bar                        |
 
 ### 快捷键导航
 
@@ -355,11 +355,11 @@ to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 ## Who can benefit from this?
 
--   the **elementary** vim users.
--   Vim users pursuing a beautiful appearance.
--   Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
--   Vim users wanting to learn a different way to edit files.
--   Vim users wanting a simple but deep configuration system.
+- the **elementary** vim users.
+- Vim users pursuing a beautiful appearance.
+- Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
+- Vim users wanting to learn a different way to edit files.
+- Vim users wanting a simple but deep configuration system.
 
 ## Update and Rollback
 
@@ -476,8 +476,8 @@ Move Text Transient State:
 
 SpaceVim has a minimalistic and distraction free UI:
 
--   custom airline with color feedback according to current check status
--   custom icon in sign column and error feedbacks for checker.
+- custom airline with color feedback according to current check status
+- custom icon in sign column and error feedbacks for checker.
 
 ### Colorschemes
 
@@ -539,11 +539,11 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 
 The statusline and tabline are heavily customized with the following capabilities:
 
--   tabline index of each buffer or tab.
--   vim mode (INSERT/NORMAL etc.)
--   git info : diff/branch
--   checker info: numbers of errors and warnings.
--   trailing line number.
+- tabline index of each buffer or tab.
+- vim mode (INSERT/NORMAL etc.)
+- git info : diff/branch
+- checker info: numbers of errors and warnings.
+- trailing line number.
 
 | Key Binding | Description                   |
 | ----------- | ----------------------------- |
@@ -553,12 +553,12 @@ The statusline and tabline are heavily customized with the following capabilitie
 
 The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
 
--   show the window number
--   color code for current state
--   show the number of search results
--   toggle syntax checking info
--   toggle battery info
--   toggle minor mode lighters
+- show the window number
+- color code for current state
+- show the number of search results
+- toggle syntax checking info
+- toggle battery info
+- toggle minor mode lighters
 
 Reminder of the color codes for the states:
 
@@ -1160,11 +1160,11 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 
 SpaceVim can be interfaced with different searching tools like:
 
--   [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
--   [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
--   [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
--   [ack](https://beyondgrep.com/)
--   grep
+- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+- [ack](https://beyondgrep.com/)
+- grep
 
 The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
 
@@ -1194,8 +1194,8 @@ It is possible to search in the current file by double pressing the second key o
 
 Notes:
 
--   `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
--   It is also possible to search in several directories at once by marking them in the unite buffer.
+- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
+- It is also possible to search in several directories at once by marking them in the unite buffer.
 
 **Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
 
@@ -1437,10 +1437,10 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 
 SpaceVim use utf-8 as default encoding. there are four options for these case:
 
--   fileencodings (fencs): ucs-bom,utf-8,default,latin1
--   fileencoding (fenc): utf-8
--   encoding (enc): utf-8
--   termencoding (tenc): utf-8 (only supported in vim)
+- fileencodings (fencs): ucs-bom,utf-8,default,latin1
+- fileencoding (fenc): utf-8
+- encoding (enc): utf-8
+- termencoding (tenc): utf-8 (only supported in vim)
 
 to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
 
@@ -1511,7 +1511,7 @@ project manager commands start with `p`:
 
 ### Awesome ui
 
--   outline + filemanager + checker
+- outline + filemanager + checker
 
 ![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
@@ -1536,37 +1536,37 @@ Key bindings are organized using mnemonic prefixes like b for buffer, p for proj
 
 ### c/c++ support
 
-1.  code completion: autocompletion and fuzzy match.
-    ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
-2.  syntax check: Asynchronous linting and make framework.
-    ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+1. code completion: autocompletion and fuzzy match.
+   ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+2. syntax check: Asynchronous linting and make framework.
+   ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
 ### go support
 
-1.  code completion:
-    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
-2.  syntax check:
-    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+1. code completion:
+   ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+2. syntax check:
+   ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
 ### python support
 
-1.  code completion:
-    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
-2.  syntax check:
-    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
+1. code completion:
+   ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
+2. syntax check:
+   ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
 ## Neovim centric - Dark powered mode of SpaceVim.
 
 By default, SpaceVim use these dark powered plugins:
 
-1.  [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-2.  [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
+1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
+2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
 
 TODO:
 
-1.  [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
-2.  [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
-3.  [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
+1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
+2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
+3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
 
 ## Modular configuration
 
@@ -1593,31 +1593,31 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
--   List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-      ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
+- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
+    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
--   List all the mappings and description: `f<space>`
-      ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
+- List all the mappings and description: `f<space>`
+    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
--   List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-      ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
+    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
--   Package management with caching enabled and lazy loading
--   Project-aware tabs and label
--   Vimfiler as file-manager + SSH connections
--   Go completion via vim-go and gocode
--   Javascript completion via Tern
--   PHP completion, indent, folds, syntax
--   Python jedi completion, pep8 convention
--   Languages: Ansible, css3, csv, json, less, markdown, mustache
--   Helpers: Undo tree, bookmarks, git, tmux navigation,
-      hex editor, sessions, and much more.
+- Package management with caching enabled and lazy loading
+- Project-aware tabs and label
+- Vimfiler as file-manager + SSH connections
+- Go completion via vim-go and gocode
+- Javascript completion via Tern
+- PHP completion, indent, folds, syntax
+- Python jedi completion, pep8 convention
+- Languages: Ansible, css3, csv, json, less, markdown, mustache
+- Helpers: Undo tree, bookmarks, git, tmux navigation,
+    hex editor, sessions, and much more.
 
-      _Note_ that 90% of the plugins are **[lazy-loaded]**.
+    _Note_ that 90% of the plugins are **[lazy-loaded]**.
 
-      [lazy-loaded]&#x3A; ./config/plugins.vim
+    [lazy-loaded]&#x3A; ./config/plugins.vim
 
 #### Non Lazy-Loaded Plugins
 
