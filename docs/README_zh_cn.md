@@ -38,6 +38,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 | ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
 
 <!-- vim-markdown-toc GFM -->
+
 * [安装](#安装)
 * [更新](#更新)
 * [文档](#文档)
@@ -52,16 +53,16 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [字体](#字体)
         * [界面元素切换](#界面元素切换)
     * [快捷键导航](#快捷键导航)
-* [Screenshots](#screenshots)
-    * [welcome page](#welcome-page)
-    * [working flow](#working-flow)
-* [Who can benefit from this?](#who-can-benefit-from-this)
-* [Update and Rollback](#update-and-rollback)
-    * [Update SpaceVim itself](#update-spacevim-itself)
-        * [Automatic Updates](#automatic-updates)
-        * [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
-        * [Updating Manually with git](#updating-manually-with-git)
-    * [Update plugins](#update-plugins)
+    * [运行截图](#运行截图)
+        * [欢迎页面](#欢迎页面)
+        * [工作界面](#工作界面)
+    * [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
+    * [更新和回滚](#更新和回滚)
+        * [SpaceVim 自身更新](#spacevim-自身更新)
+            * [自动更新](#自动更新)
+            * [通过插件管理器更新](#通过插件管理器更新)
+            * [通过 git 进行更新](#通过-git-进行更新)
+        * [更新插件](#更新插件)
 * [Configuration layers](#configuration-layers)
 * [Custom Configuration](#custom-configuration)
     * [Automatic Generation](#automatic-generation)
@@ -335,57 +336,57 @@ SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航�
 | `n` | 导航系统下一页 |
 | `p` | 导航系统前一页 |
 
-## Screenshots
+### 运行截图
 
-### welcome page
+#### 欢迎页面
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-### working flow
+#### 工作界面
 
-![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
-Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
+Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-dark_
 
-Depicts a common frontend development scenario with JavaScript (jQuery), SASS, and PHP buffers.
+展示了一个通用的前端开发界面，用于开发： JavaScript (jQuery), SASS, and PHP buffers.
 
-Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
+图中包含了一个 Neovim 的终端， 一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
 
-to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+想要查阅更多截图，清阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
-## Who can benefit from this?
+### 谁将从 SpaceVim 中获益？
 
-- the **elementary** vim users.
-- Vim users pursuing a beautiful appearance.
-- Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
+- **初级** Vim 用户.
+- 追求优雅界面的 Vim 用户
+- 追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
 - Vim users wanting to learn a different way to edit files.
-- Vim users wanting a simple but deep configuration system.
+- 想要学习一种不一样的编辑文件方式的 Vim 用户
+- 追求简单但是可高度配置系统的 Vim 用户
 
-## Update and Rollback
+### 更新和回滚
 
-### Update SpaceVim itself
+#### SpaceVim 自身更新
 
-There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+可通过很多种方式来更新 SpaceVim 的核心文件。建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
 
-#### Automatic Updates
+##### 自动更新
 
-NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
+注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：`let g:spacevim_automatic_update = 1`。
 
-SpaceVim will automatically check for a new version every startup. You must restart Vim after updating.
+启用这一特性后，SpaceVim 将会在每次启动时候检测是否有新版本。更新后需重启 SpaceVim。
 
-#### Updating from the SpaceVim Buffer
+##### 通过插件管理器更新
 
-Use `:SPUpdate SpaceVim` in SpaceVim buffer, This command will open a buffer to show the process of updating.
+使用 `:SPUpdate SpaceVim` 这一命令，将会打开 SpaceVim 的插件管理器，更新 SpaceVim， 具体进度会在插件管理器 buffer 中展示。
 
-#### Updating Manually with git
+##### 通过 git 进行更新
 
-To update manually close Vim and update the git repository:
-
+可通过在 SpaceVim 目录中手动执行 `git pull`， SpaceVim 在 windows 下默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
 `git -C ~/.SpaceVim pull`.
 
-### Update plugins
+#### 更新插件
 
-Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
+使用 `:SPUpdate` 这一命令将会更新所有插件，包括 SpaceVim 自身。当然这一命令也支持参数，参数为插件名称，可同时添加多个插件名称作为参数，同时可以使用 <kbd>Tab</kbd> 键来补全插件名称。
 
 ## Configuration layers
 
