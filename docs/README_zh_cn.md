@@ -63,11 +63,11 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
             * [通过插件管理器更新](#通过插件管理器更新)
             * [通过 git 进行更新](#通过-git-进行更新)
         * [更新插件](#更新插件)
-* [Configuration layers](#configuration-layers)
-* [Custom Configuration](#custom-configuration)
-    * [Automatic Generation](#automatic-generation)
-    * [Alternative directory](#alternative-directory)
-* [Concepts](#concepts)
+    * [配置模块](#配置模块)
+    * [用户配置](#用户配置)
+        * [自动生成用户配置](#自动生成用户配置)
+        * [用户配置目录](#用户配置目录)
+    * [概念](#概念)
     * [Transient-states](#transient-states)
 * [Awesome ui](#awesome-ui)
     * [Colorschemes](#colorschemes)
@@ -359,7 +359,6 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 - **初级** Vim 用户.
 - 追求优雅界面的 Vim 用户
 - 追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
-- Vim users wanting to learn a different way to edit files.
 - 想要学习一种不一样的编辑文件方式的 Vim 用户
 - 追求简单但是可高度配置系统的 Vim 用户
 
@@ -388,28 +387,27 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 使用 `:SPUpdate` 这一命令将会更新所有插件，包括 SpaceVim 自身。当然这一命令也支持参数，参数为插件名称，可同时添加多个插件名称作为参数，同时可以使用 <kbd>Tab</kbd> 键来补全插件名称。
 
-## Configuration layers
+### 配置模块
 
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+这里仅仅是大致罗列了下常用的模块，若要了解关于配置模块更加详细的信息，可阅读 [SpaceVim's layers page](http://spacevim.org/layers/)，（强烈建议阅读！）
 
-## Custom Configuration
+### 用户配置
 
-User configuration can be stored in your ~/.SpaceVim.d directory.
+用户配置保存在 `~/.SpaceVim.d/` 文件夹。
 
-### Automatic Generation
+#### 自动生成用户配置
 
-The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.vim` in your `HOME` directory.
+初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.vim`。
 
-### Alternative directory
+#### 用户配置目录
 
-`~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read <kbd>:h rtp</kbd>.
+`~/.SpaceVim.d/` 将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 <kbd>:h rtp</kbd>.
 
-It is also possible to override the location of `~/.SpaceVim.d/` using the environment variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of this directory.
+当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，执定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
 
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+SpaceVim 同时还支持项目本地配置，配置出世文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
-here is an example config file for SpaceVim:
+这是一个用户配置文件示例：
 
 ```vim
 " Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
@@ -459,9 +457,9 @@ let g:spacevim_custom_plugins = [
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
-Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
+更加详细的 SpaceVim 选项可以查阅 <kbd>:h SpaceVim</kbd>.
 
-## Concepts
+### 概念
 
 ### Transient-states
 
