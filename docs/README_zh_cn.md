@@ -71,7 +71,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [界面元素切换](#界面元素切换)
         * [状态栏 & 标签栏](#状态栏--标签栏)
             * [状态栏](#状态栏)
-        * [tabline](#tabline)
+            * [标签栏](#标签栏)
 * [Manual](#manual)
     * [Completion](#completion)
         * [Unite/Denite](#unitedenite)
@@ -570,37 +570,35 @@ SpaceVim 所支持的分割符以及截图如下：
 | `nil`   | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
 | `fire`  | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
-**Minor Modes:**
+**SpaceVim 功能模块:**
 
-The minor mode area can be toggled on and off with `SPC t m m`
+功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `let g:spacevim_statusline_unicode_symbols = 0` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
 
-Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to nil in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+状态栏中功能模块内的字符显示与否，同如下快捷键功能保持一致：
 
-The letters displayed in the statusline correspond to the key bindings used to toggle them.
+| 快捷键       | Unicode | ASCII | 功能        |
+| --------- | ------- | ----- | --------- |
+| `SPC t 8` | ⑧       | 8     | 高亮80列之后信息 |
+| `SPC t f` | ⓕ       | f     | 高亮第80列    |
+| `SPC t s` | ⓢ       | s     | 语法检查      |
+| `SPC t S` | Ⓢ       | S     | 拼写检查      |
+| `SPC t w` | ⓦ       | w     | 行尾空格检查    |
 
-| Key Binding | Unicode | ASCII | Mode                                          |
-| ----------- | ------- | ----- | --------------------------------------------- |
-| `SPC t 8`   | ⑧       | 8     | toggle highlight of characters for long lines |
-| `SPC t f`   | ⓕ       | f     | fill-column-indicator mode                    |
-| `SPC t s`   | ⓢ       | s     | syntax checking (neomake)                     |
-| `SPC t S`   | Ⓢ       | S     | enabled in spell checking                     |
-| `SPC t w`   | ⓦ       | w     | whitespace mode                               |
+##### 标签栏
 
-#### tabline
+如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Baffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
-Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
-
-| Key Binding  | Description                |
+| 快捷键  | 描述                |
 | ------------ | -------------------------- |
-| `<Leader> 1` | jump to index 1 on tabline |
-| `<Leader> 2` | jump to index 2 on tabline |
-| `<Leader> 3` | jump to index 3 on tabline |
-| `<Leader> 4` | jump to index 4 on tabline |
-| `<Leader> 5` | jump to index 5 on tabline |
-| `<Leader> 6` | jump to index 6 on tabline |
-| `<Leader> 7` | jump to index 7 on tabline |
-| `<Leader> 8` | jump to index 8 on tabline |
-| `<Leader> 9` | jump to index 9 on tabline |
+| `<Leader> 1` | 跳至标签栏序号 1 |
+| `<Leader> 2` | 跳至标签栏序号 2 |
+| `<Leader> 3` | 跳至标签栏序号 3 |
+| `<Leader> 4` | 跳至标签栏序号 4 |
+| `<Leader> 5` | 跳至标签栏序号 5 |
+| `<Leader> 6` | 跳至标签栏序号 6 |
+| `<Leader> 7` | 跳至标签栏序号 7 |
+| `<Leader> 8` | 跳至标签栏序号 8 |
+| `<Leader> 9` | 跳至标签栏序号 9 |
 
 ## Manual
 
