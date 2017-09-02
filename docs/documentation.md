@@ -5,6 +5,7 @@ title:  "Documentation"
 # SpaceVim Documentation
 
 <!-- vim-markdown-toc GFM -->
+
 * [Core Pillars](#core-pillars)
     * [Mnemonic](#mnemonic)
     * [Discoverable](#discoverable)
@@ -887,8 +888,6 @@ If there is only one file buffer opened, a file is opened in the active window, 
 | `sg`           | open file in an vertically split window   |
 | `sv`           | open file in an horizontally split window |
 
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-
 ### Commands starting with `g`
 
 after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
@@ -1269,8 +1268,6 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c Y`   | invert comment and yank   |
 
 **Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
-
-> > > > > > > dev
 
 #### Multi-Encodings
 
