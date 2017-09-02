@@ -360,7 +360,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | SPC t 8     | highlight any character past the 80th column                      |
 | SPC t f     | display the fill column (by default the fill column is set to 80) |
 | SPC t h h   | toggle highlight of the current line                              |
-| SPC t h i   | toggle highlight indentation levels                               |
+| SPC t h i   | toggle highlight indentation levels (TODO)                               |
 | SPC t h c   | toggle highlight indentation current column                       |
 | SPC t h s   | toggle syntax highlighting                                        |
 | SPC t i     | toggle indentation guide at point                                 |
@@ -414,17 +414,17 @@ all the colors based on the current colorscheme
 
 Some elements can be dynamically toggled:
 
-| Key Binding | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| `SPC t m b` | toggle the battery status (need to install acpi)              |
-| `SPC t m c` | toggle the org task clock (available in org layer)            |
-| `SPC t m m` | toggle the minor mode lighters                                |
-| `SPC t m M` | toggle the major mode                                         |
-| `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile) |
-| `SPC t m p` | toggle the cursor position                                    |
-| `SPC t m t` | toggle the time                                               |
-| `SPC t m T` | toggle the mode line itself                                   |
-| `SPC t m v` | toggle the version control info                               |
+| Key Binding | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `SPC t m b` | toggle the battery status (need to install acpi)                    |
+| `SPC t m c` | toggle the org task clock (available in org layer)(TODO)            |
+| `SPC t m m` | toggle the minor mode lighters                                      |
+| `SPC t m M` | toggle the major mode                                               |
+| `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
+| `SPC t m p` | toggle the cursor position                                          |
+| `SPC t m t` | toggle the time                                                     |
+| `SPC t m T` | toggle the mode line itself                                         |
+| `SPC t m v` | toggle the version control info                                     |
 
 **Powerline font installation:**
 

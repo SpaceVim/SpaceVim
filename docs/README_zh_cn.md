@@ -70,7 +70,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [字体](#字体)
         * [界面元素切换](#界面元素切换)
         * [状态栏 & 标签栏](#状态栏--标签栏)
-        * [statusline](#statusline)
+            * [状态栏](#状态栏)
         * [tabline](#tabline)
 * [Manual](#manual)
     * [Completion](#completion)
@@ -482,91 +482,93 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | ----------- | --------- |
 | `SPC [1-9]` | 跳至制定序号的窗口 |
 
-#### statusline
+##### 状态栏
 
-The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+`core#statusline` 模块提供了一个高度定制的状态栏，提供如下特性，这一模块的灵感来自于 spacemacs 的状态栏。
 
-- show the window number
-- color code for current state
-- show the number of search results
-- toggle syntax checking info
-- toggle battery info
-- toggle minor mode lighters
+- 展示窗口序列号
+- 通过不同颜色展示当前模式
+- 展示搜索结果序列号
+- 显示/隐藏语法检查信息
+- 显示/隐藏电池信息
+- 显示/隐藏 SpaceVim 功能启用状态
 
-Reminder of the color codes for the states:
+默认主题 gruvbox 的状态栏颜色和模式对照表：
 
-| Mode    | Color  |
-| ------- | ------ |
-| Normal  | Grey   |
-| Insert  | Blus   |
-| Visual  | Orange |
-| Replace | Aqua   |
+| 模式      | 颜色  |
+| ------- | --- |
+| Normal  | 灰色  |
+| Insert  | 蓝色  |
+| Visual  | 橙色  |
+| Replace | 浅绿色 |
 
-all the colors based on the current colorscheme
+以上的这几种模式所对应的颜色取决于不同的主题模式。
 
-Some elements can be dynamically toggled:
+一些状态栏元素可以进行动态的切换：
 
-| Key Binding | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| `SPC t m b` | toggle the battery status (need to install acpi)              |
-| `SPC t m c` | toggle the org task clock (available in org layer)            |
-| `SPC t m m` | toggle the minor mode lighters                                |
-| `SPC t m M` | toggle the major mode                                         |
-| `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile) |
-| `SPC t m p` | toggle the cursor position                                    |
-| `SPC t m t` | toggle the time                                               |
-| `SPC t m T` | toggle the mode line itself                                   |
-| `SPC t m v` | toggle the version control info                               |
+| 快捷键         | 描述                                                                  |
+| ----------- | ------------------------------------------------------------------- |
+| `SPC t m b` | 显示/隐藏电池状态 (需要安装 acpi)                                               |
+| `SPC t m c` | toggle the org task clock (available in org layer)(TODO)            |
+| `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                                |
+| `SPC t m M` | 显示/隐藏文件类型                                                           |
+| `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
+| `SPC t m p` | 显示/隐藏鼠标位置信息                                                         |
+| `SPC t m t` | 显示/隐藏时间                                                             |
+| `SPC t m T` | 显示/隐藏状态栏                                                            |
+| `SPC t m v` | 显示/隐藏版本控制信息                                                         |
 
-**Powerline font installation:**
+**Powerline 字体安装:**
 
-By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+SpaceVim 默认使用 [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), 为了使状态栏得以正常显示，你需要安装这一字体。如果需要在状态栏中展示其他类型的分割符，则需要安装 [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols).
 
-**syntax checking integration:**
+**语法检查信息:**
 
-When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
+状态栏中语法检查信息元素如果被启用了，当语法检查结束后，会在状态栏中展示当前语法错误和警告的数量。
 
-syntax checking integration in statusline.
+TODO： add a picture
 
-**Search index integration:**
+_语法检查信息_
 
-Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+**搜索结果信息:**
+
+当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，类似于 `20/22` 显示搜索结果总数以及当前结果的序号。具体的效果图如下：
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 _search index in statusline_
 
-**Battery status integration:**
+**电池状态信息:**
 
-_acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
+_acpi_ 可展示电池电量剩余百分比.
 
-A color code is used for the battery status:
+使用不同颜色展示不同的电池状态:
 
-| Battery State | Color  |
-| ------------- | ------ |
-| Charging      | Green  |
-| Discharging   | Orange |
-| Critical      | Red    |
+| 电池状态       | 颜色  |
+| ---------- | --- |
+| 75% - 100% | 绿色  |
+| 30% - 75%  | 黄色  |
+| 0 - 30%    | 红色  |
 
-all the colors based on the current colorscheme
+所有的颜色都取决于不同的主题。
 
-**Statusline separators:**
+**状态栏分割符:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+可通过使用 `g:spacevim_statusline_separator` 来定制状态栏分割符，例如使用非常常用的方向箭头作为状态栏分割符：
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
 ```
 
-here is an exhaustive set of screenshots for all the available separator:
+SpaceVim 所支持的分割符以及截图如下：
 
-| Separator | Screenshot                                                                                                                |
-| --------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `arrow`   | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
-| `curve`   | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
-| `slant`   | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
-| `nil`     | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
-| `fire`    | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
+| 分割符     | 截图                                                                                                                        |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
+| `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
+| `slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
+| `nil`   | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
+| `fire`  | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
 **Minor Modes:**
 
