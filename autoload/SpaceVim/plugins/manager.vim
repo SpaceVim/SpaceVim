@@ -208,7 +208,7 @@ function! SpaceVim#plugins#manager#update(...) abort
             elseif reponame ==# 'SpaceVim'
                 let repo = {
                             \ 'name' : 'SpaceVim',
-                            \ 'path' : expand('~/.SpaceVim')
+                            \ 'path' : fnamemodify(g:Config_Main_Home, ':h')
                             \ }
                 call s:pull(repo)
 

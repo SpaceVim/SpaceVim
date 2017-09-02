@@ -65,19 +65,36 @@ endfunction
 
 
 function! SpaceVim#layers#autocomplete#config() abort
-  let g:delimitMate_matchpairs = '[:],{:},<:>'
-  inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+  imap <expr>( 
+        \ pumvisible() ? 
+        \ complete_parameter#pre_complete("()") : 
+        \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
+        \ "\<Plug>delimitMate(" :
+        \ '('
 
   "mapping
-  imap <silent><expr><TAB> SpaceVim#mapping#tab()
-  imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
-  imap <silent><expr><CR> SpaceVim#mapping#enter()
-  smap <expr><TAB>
-        \ neosnippet#expandable_or_jumpable() ?
-        \ "\<Plug>(neosnippet_expand_or_jump)" :
-        \ (complete_parameter#jumpable(1) ?
-        \ "\<plug>(complete_parameter#goto_next_parameter)" :
-        \ "\<TAB>")
+  if s:tab_key_behavior ==# 'smart'
+    imap <silent><expr><TAB> SpaceVim#mapping#tab()
+    smap <expr><TAB>
+          \ neosnippet#expandable_or_jumpable() ?
+          \ "\<Plug>(neosnippet_expand_or_jump)" :
+          \ (complete_parameter#jumpable(1) ?
+          \ "\<plug>(complete_parameter#goto_next_parameter)" :
+          \ "\<TAB>")
+    imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+  elseif s:tab_key_behavior ==# 'complete'
+    inoremap <expr> <Tab>       pumvisible() ? "\<C-y>" : "\<C-n>"
+  elseif s:tab_key_behavior ==# 'cycle'
+    inoremap <expr> <Tab>       pumvisible() ? "\<Down>" : "\<Tab>"
+    inoremap <expr> <S-Tab>       pumvisible() ? "\<Up>" : ""
+  elseif s:tab_key_behavior ==# 'nil'
+  endif
+  if s:return_key_behavior ==# 'smart'
+    imap <silent><expr><CR> SpaceVim#mapping#enter()
+  elseif s:return_key_behavior ==# 'complete'
+    imap <silent><expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
+  elseif s:return_key_behavior ==# 'nil'
+  endif
 
   inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
   inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
@@ -87,10 +104,15 @@ function! SpaceVim#layers#autocomplete#config() abort
   imap <expr> <M-/>
         \ neosnippet#expandable() ?
         \ "\<Plug>(neosnippet_expand)" : ""
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
 endfunction
 
-function! SpaceVim#layers#autocomplete#set_variable(var)
+let s:return_key_behavior = 'smart'
+let s:tab_key_behavior = 'smart'
+let s:key_sequence = 'nil'
+let s:key_sequence_delay = 0.1
+
+function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
   let s:return_key_behavior = get(a:var,
         \ 'auto-completion-return-key-behavior',

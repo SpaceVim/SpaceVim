@@ -12,9 +12,12 @@ function! SpaceVim#layers#load(layer, ...) abort
   endif
   if index(g:spacevim_plugin_groups, a:layer) == -1
     call add(g:spacevim_plugin_groups, a:layer)
-    if a:0 == 1 && type(a:1) == 4
+  endif
+  if a:0 == 1 && type(a:1) == 4
+    try
       call SpaceVim#layers#{a:layer}#set_variable(a:1)
-    endif
+    catch /^Vim\%((\a\+)\)\=:E117/
+    endtry
   endif
   if a:0 > 0 && type(a:1) == 1 
     for l in a:000

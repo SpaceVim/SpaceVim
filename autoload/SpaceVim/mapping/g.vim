@@ -68,6 +68,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap gn gn
     let g:_spacevim_mappings_g['Q'] = ['call feedkeys("gQ", "n")', 'switch to Ex mode']
     nnoremap gQ gQ
+    let g:_spacevim_mappings_g['q'] = ['call feedkeys("gq", "n")', 'format Nmove text']
+    nnoremap gq gq
     let g:_spacevim_mappings_g['R'] = ['call feedkeys("gR", "n")', 'enter VREPLACE mode']
     nnoremap gR gR
     let g:_spacevim_mappings_g['T'] = ['call feedkeys("gT", "n")', 'previous tag page']
@@ -94,10 +96,8 @@ function! SpaceVim#mapping#g#init() abort
     nnoremap gs gs
     let g:_spacevim_mappings_g['v'] = ['call feedkeys("gv", "n")', 'reselect the previous Visual area']
     nnoremap gv gv
-
-
-
-
+    let g:_spacevim_mappings_g['<C-]>'] = ['call feedkeys("g<c-]>", "n")', 'jump to tag under cursor']
+    nnoremap g<c-]> g<c-]>
     let g:_spacevim_mappings_g['d'] = ['call SpaceVim#mapping#gd()', 'goto definition']
     call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
 
