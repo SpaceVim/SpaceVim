@@ -48,10 +48,6 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [一致性](#一致性)
         * [社区驱动](#社区驱动)
     * [显著特性](#显著特性)
-    * [优雅的界面](#优雅的界面)
-        * [主题](#主题)
-        * [字体](#字体)
-        * [界面元素切换](#界面元素切换)
     * [快捷键导航](#快捷键导航)
     * [运行截图](#运行截图)
         * [欢迎页面](#欢迎页面)
@@ -68,12 +64,12 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [自动生成用户配置](#自动生成用户配置)
         * [用户配置目录](#用户配置目录)
     * [概念](#概念)
-    * [Transient-states](#transient-states)
-* [Awesome ui](#awesome-ui)
-    * [Colorschemes](#colorschemes)
-    * [Font](#font)
-    * [UI Toggles](#ui-toggles)
-    * [Statusline && tabline](#statusline--tabline)
+        * [临时快捷键](#临时快捷键)
+    * [优雅的界面](#优雅的界面)
+        * [主题](#主题)
+        * [字体](#字体)
+        * [界面元素切换](#界面元素切换)
+        * [状态栏 & 标签栏](#状态栏--标签栏)
         * [statusline](#statusline)
         * [tabline](#tabline)
 * [Manual](#manual)
@@ -135,7 +131,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
     * [issues](#issues)
     * [Stars, forks and watchers](#stars-forks-and-watchers)
 * [Features](#features)
-    * [Awesome ui](#awesome-ui-1)
+    * [Awesome ui](#awesome-ui)
     * [Mnemonic key bindings](#mnemonic-key-bindings)
 * [Language specific mode](#language-specific-mode)
 * [Key Mapping](#key-mapping)
@@ -261,66 +257,6 @@ Windows 下用户如果不方便编译，可以在qq群文件里面下载相应�
 - **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
 - **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
 - **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
-
-### 优雅的界面
-
-SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
-
-![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
-
-#### 主题
-
-SpaceVim 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 <kbd>:h gruvbox</kbd>.
-
-如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.vim` 中修改 `g:g:spacevim_colorscheme`。例如，使用 [vim-one with dark colorscheme](https://github.com/rakr/vim-one)
-
-```vim
-let g:spacevim_colorscheme = 'one'
-let g:spacevim_colorscheme_bg = 'dark'
-```
-
-| 快捷键                | 描述            |
-| ------------------ | ------------- |
-| <kbd>SPC T n</kbd> | 切换至下一个随机主题    |
-| <kbd>SPC T s</kbd> | 通过 Unite 选择主题 |
-
-可以在[主题模块](http://spacevim.org/layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
-
-**注意**:
-
-SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色，可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
-
-#### 字体
-
-在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline. 如果你也喜欢这一字体，建议将这一字体安装到系统中。如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `g:spacevim_guifont`，默认值为:
-
-```vim
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
-```
-
-如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
-
-#### 界面元素切换
-
-大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
-
-| 快捷键         | 描述                                     |
-| ----------- | -------------------------------------- |
-| `SPC t 8`   | 高亮所有超过80列的字符                           |
-| `SPC t f`   | 高亮临界列，默认是第80列                          |
-| `SPC t h h` | 高亮当前行                                  |
-| `SPC t h i` | 高亮代码对齐线                                |
-| `SPC t h c` | 高亮光标所在列                                |
-| `SPC t h s` | 启用/禁用语法高亮                              |
-| SPC t i     | toggle indentation guide at point      |
-| `SPC t n`   | 显示/隐藏行号                                |
-| SPC t b     | toggle background                      |
-| SPC t t     | open tabs manager                      |
-| SPC T ~     | display ~ in the fringe on empty lines |
-| SPC T F     | toggle frame fullscreen                |
-| SPC T f     | toggle display of the fringe           |
-| SPC T m     | toggle menu bar                        |
-| SPC T t     | toggle tool bar                        |
 
 ### 快捷键导航
 
@@ -461,92 +397,90 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 ### 概念
 
-### Transient-states
+#### 临时快捷键
 
-SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
+SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
 
-When a transient state is active, a documentation is displayed in the transient state buffer. Additional information may as well be displayed in it.
-
-Move Text Transient State:
+文本移动临时快捷键:
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
-## Awesome ui
+### 优雅的界面
 
-SpaceVim has a minimalistic and distraction free UI:
+SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
-- custom airline with color feedback according to current check status
-- custom icon in sign column and error feedbacks for checker.
+![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-### Colorschemes
+#### 主题
 
-The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruvbox). There are two variants of this colorscheme, a dark one and a light one. Some aspects of these colorscheme can be customized in the custom configuration file, read <kbd>:h gruvbox</kbd>.
+SpaceVim 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 <kbd>:h gruvbox</kbd>.
 
-It is possible to define your default themes in your `~/.SpaceVim.d/init.vim` with the variable colorschemes. For instance, to specify [vim-one with dark colorscheme](https://github.com/rakr/vim-one):
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.vim` 中修改 `g:g:spacevim_colorscheme`。例如，使用 [vim-one with dark colorscheme](https://github.com/rakr/vim-one)
 
 ```vim
 let g:spacevim_colorscheme = 'one'
 let g:spacevim_colorscheme_bg = 'dark'
 ```
 
-| Mappings           | Description                                                    |
-| ------------------ | -------------------------------------------------------------- |
-| <kbd>SPC T n</kbd> | switch to next random colorscheme listed in colorscheme layer. |
-| <kbd>SPC T s</kbd> | select a theme using a unite buffer.                           |
+| 快捷键                | 描述            |
+| ------------------ | ------------- |
+| <kbd>SPC T n</kbd> | 切换至下一个随机主题    |
+| <kbd>SPC T s</kbd> | 通过 Unite 选择主题 |
 
-all the included colorscheme can be found in [colorscheme layer](http://spacevim.org/layers/colorscheme/).
+可以在[主题模块](http://spacevim.org/layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
-**NOTE**:
+**注意**:
 
-SpaceVim use true colors by default, so you should make sure your terminal support true colors. for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
+SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色，可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
 
-### Font
+#### 字体
 
-The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended to install it on your system if you wish to use it.
-
-To change the default font set the variable `g:spacevim_guifont` in your `~/.SpaceVim.d/init.vim` file. By default its value is:
+在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline. 如果你也喜欢这一字体，建议将这一字体安装到系统中。如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `g:spacevim_guifont`，默认值为:
 
 ```vim
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
-If the specified font is not found, the fallback one will be used (depends on your system). Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
 
-### UI Toggles
+#### 界面元素切换
 
-Some UI indicators can be toggled on and off (toggles start with t and T):
+大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| Key Binding | Description                                                       |
-| ----------- | ----------------------------------------------------------------- |
-| SPC t 8     | highlight any character past the 80th column                      |
-| SPC t f     | display the fill column (by default the fill column is set to 80) |
-| SPC t h h   | toggle highlight of the current line                              |
-| SPC t h i   | toggle highlight indentation levels                               |
-| SPC t h c   | toggle highlight indentation current column                       |
-| SPC t h s   | toggle syntax highlighting                                        |
-| SPC t i     | toggle indentation guide at point                                 |
-| SPC t n     | toggle line numbers                                               |
-| SPC t b     | toggle background                                                 |
-| SPC t t     | open tabs manager                                                 |
-| SPC T ~     | display ~ in the fringe on empty lines                            |
-| SPC T F     | toggle frame fullscreen                                           |
-| SPC T f     | toggle display of the fringe                                      |
-| SPC T m     | toggle menu bar                                                   |
-| SPC T t     | toggle tool bar                                                   |
+| 快捷键         | 描述                       |
+| ----------- | ------------------------ |
+| `SPC t 8`   | 高亮所有超过80列的字符             |
+| `SPC t f`   | 高亮临界列，默认是第80列            |
+| `SPC t h h` | 高亮当前行                    |
+| `SPC t h i` | 高亮代码对齐线                  |
+| `SPC t h c` | 高亮光标所在列                  |
+| `SPC t h s` | 启用/禁用语法高亮                |
+| `SPC t i`   | 切换显示当前对齐(TODO)           |
+| `SPC t n`   | 显示/隐藏行号                  |
+| `SPC t b`   | 切换背景色                    |
+| `SPC t t`   | 打开 Tab 管理器               |
+| `SPC T ~`   | 显示/隐藏 buffer 结尾空行行首的 `~` |
+| `SPC T F`   | 切换全屏(TODO)               |
+| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)        |
+| `SPC T m`   | 显示/隐藏菜单栏                 |
+| `SPC T t`   | 显示/隐藏工具栏                 |
 
-### Statusline && tabline
+#### 状态栏 & 标签栏
 
-The statusline and tabline are heavily customized with the following capabilities:
+状态栏和工具栏是高度定制的模块，提供了如下特性：
 
-- tabline index of each buffer or tab.
-- vim mode (INSERT/NORMAL etc.)
-- git info : diff/branch
-- checker info: numbers of errors and warnings.
-- trailing line number.
+- 展示 buffer 或者 Tab 的序列号
+- 展示当前模式
+- 展示 git 相关信息
+- 展示语法检查信息
+- 展示 trailing line 的行号
+- 展示当前 SpaceVim 已启用的功能
+- 展示文件信息
+- 展示搜索结果序号
 
-| Key Binding | Description                   |
-| ----------- | ----------------------------- |
-| `SPC [1-9]` | jump to the index of tabline. |
+| 快捷键         | 描述        |
+| ----------- | --------- |
+| `SPC [1-9]` | 跳至制定序号的窗口 |
 
 #### statusline
 
