@@ -26,6 +26,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
     if executable('firefox')
         let g:mkdp_path_to_chrome= get(g:, 'mkdp_path_to_chrome', 'firefox')
     endif
+    let remarkrc = s:generate_remarkrc()
     let g:neoformat_enabled_markdown = ['remark']
     let g:neoformat_markdown_remark = {
             \ 'exe': 'remark',
@@ -41,4 +42,8 @@ function! s:mappings() abort
     let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
     call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
     call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)
+endfunction
+
+function! s:generate_remarkrc() abort
+    return ''
 endfunction
