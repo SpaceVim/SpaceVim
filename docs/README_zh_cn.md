@@ -72,13 +72,13 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [状态栏 & 标签栏](#状态栏--标签栏)
             * [状态栏](#状态栏)
             * [标签栏](#标签栏)
-* [Manual](#manual)
-    * [Completion](#completion)
-        * [Unite/Denite](#unitedenite)
-            * [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
-    * [Discovering](#discovering)
-        * [Mappings](#mappings)
-            * [Mappings guide](#mappings-guide)
+    * [手册](#手册)
+        * [自动补全](#自动补全)
+            * [Unite/Denite](#unitedenite)
+            * [Unite/Denite buffer 中的快捷键](#unitedenite-buffer-中的快捷键)
+        * [交互](#交互)
+            * [快捷键](#快捷键)
+                * [快捷键导航](#快捷键导航-1)
             * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
         * [Getting help](#getting-help)
         * [Available layers](#available-layers)
@@ -152,7 +152,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [Language](#language)
             * [Commands](#commands)
             * [Commands](#commands-1)
-            * [Completion](#completion-1)
+            * [Completion](#completion)
             * [Unite](#unite)
             * [Operators & Text Objects](#operators--text-objects)
         * [Custom Key bindings](#custom-key-bindings)
@@ -171,7 +171,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
             * [Misc Plugins](#misc-plugins)
     * [模块化配置](#模块化配置)
     * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
-    * [自动补全](#自动补全)
+    * [自动补全](#自动补全-1)
     * [细致的tags管理](#细致的tags管理)
 * [快速](#快速)
     * [SpaceVim选项](#spacevim选项)
@@ -588,8 +588,8 @@ SpaceVim 所支持的分割符以及截图如下：
 
 如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Baffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
-| 快捷键  | 描述                |
-| ------------ | -------------------------- |
+| 快捷键          | 描述        |
+| ------------ | --------- |
 | `<Leader> 1` | 跳至标签栏序号 1 |
 | `<Leader> 2` | 跳至标签栏序号 2 |
 | `<Leader> 3` | 跳至标签栏序号 3 |
@@ -600,52 +600,51 @@ SpaceVim 所支持的分割符以及截图如下：
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-## Manual
+### 手册
 
-### Completion
+#### 自动补全
 
-#### Unite/Denite
+##### Unite/Denite
 
-please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
+请阅读 unite 和 denite 文档： `:h unite` 和 `:h denite`。
 
-##### Mappings within unite/denite buffer
+##### Unite/Denite buffer 中的快捷键
 
-| Mappings         | Mode          | description                          |
-| ---------------- | ------------- | ------------------------------------ |
-| `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Insert        | Select next line                     |
-| `Tab`            | Normal        | Select actions                       |
-| `Shift` + `Tab`  | Insert        | Select previous line                 |
-| `Space`          | Normal        | Toggle mark current candidate, up    |
-| `Enter`          | Normal        | Run default action                   |
-| `Ctrl`+`v`       | Normal        | Open in a split                      |
-| `Ctrl`+`s`       | Normal        | Open in a vertical split             |
-| `Ctrl`+`t`       | Normal        | Open in a new tab                    |
-| `Ctrl` + `g`     | Normal        | Exit unite                           |
-| `jk`             | Insert        | Leave Insert mode                    |
-| `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
-| `Ctrl`+`w`       | Insert        | Delete backward path                 |
+| 快捷键              | 模式            | 功能描述            |
+| ---------------- | ------------- | --------------- |
+| `Ctrl`+`h/k/l/r` | Normal        | 无效              |
+| `Ctrl`+`l`       | Normal        | 刷新界面            |
+| `Tab`            | Insert        | 下一结果            |
+| `Tab`            | Normal        | 选择操作            |
+| `Shift` + `Tab`  | Insert        | 上一结果            |
+| `Space`          | Normal        | 标记当前结果          |
+| `Enter`          | Normal        | 执行默认操作          |
+| `Ctrl`+`v`       | Normal        | 在分割窗口中打开        |
+| `Ctrl`+`s`       | Normal        | 在垂直分割窗口打开       |
+| `Ctrl`+`t`       | Normal        | 在新 Tab 中打开      |
+| `Ctrl` + `g`     | Normal        | 推出 Unite/Denite |
+| `jk`             | Insert        | 离开 Insert 模式    |
+| `r`              | Normal        | 重命名或者替换搜索内容     |
+| `Ctrl`+`z`       | Normal/insert | 切换窗口布局          |
+| `Ctrl`+`w`       | Insert        | 删除前一单词          |
 
-### Discovering
+#### 交互
 
-#### Mappings
+##### 快捷键
 
-##### Mappings guide
+###### 快捷键导航
 
-A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
-The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
+当 Normal 模式下按下前缀键后出现输入延迟，则会在屏幕下方打开一个快捷键导航窗口，提示当前可用的快捷键及其功能描述，目前支持的前缀键有：`[SPC]`、`[Window]`、`[Denite]`、`[Unite]`、`<Leader>`、`g`、`z`。
 
-The default key of these prefix is:
+这些前缀的按键为：
 
-| Prefix name | custom option and default value                                             | description                        |
-| ----------- | --------------------------------------------------------------------------- | ---------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                                                            | default mapping prefix of SpaceVim |
-| `[Window]`  | `g:spacevim_windows_leader` / `s`                                           | window mapping prefix of SpaceVim  |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`                                            | denite mapping prefix of SpaceVim  |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`                                             | unite mapping prefix of SpaceVim   |
-| `<leader>`  | `mapleader` / `\`                    \| default leader prefix of vim/neovim |                                    |
+| 前缀名称       | 用户选项以及默认值                                                                     | 描述                     |
+| ---------- | ----------------------------------------------------------------------------- | ---------------------- |
+| `[SPC]`    | 空格键                                                                           | SpaceVim 默认前缀键         |
+| `[Window]` | `g:spacevim_windows_leader` / `s`                                             | SpaceVim 默认窗口前缀键       |
+| `[denite]` | `g:spacevim_denite_leader` / `F`                                              | SpaceVim 默认 Denite 前缀键 |
+| `[unite]`  | `g:spacevim_unite_leader` / `f`                                               | SpaceVim 默认 Unite 前缀键  |
+| `<leader>` | `mapleader` / `\`                      \|                    Vim/neovim 默认前缀键 |                        |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
