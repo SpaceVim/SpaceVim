@@ -1,3 +1,17 @@
+"=============================================================================
+" markdown.vim --- lang#markdown layer for SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: MIT license
+"=============================================================================
+
+let s:md_listItemIndent = 1
+let s:md_enableWcwidth = 0
+function! SpaceVim#layers#lang#markdown#set_variable(var) abort
+    let s:md_listItemIndent
+endfunction
+
 function! SpaceVim#layers#lang#markdown#plugins() abort
     let plugins = []
     call add(plugins, ['tpope/vim-markdown',{ 'on_ft' : 'markdown'}])
@@ -29,10 +43,10 @@ function! SpaceVim#layers#lang#markdown#config() abort
     let remarkrc = s:generate_remarkrc()
     let g:neoformat_enabled_markdown = ['remark']
     let g:neoformat_markdown_remark = {
-            \ 'exe': 'remark',
-            \ 'args': ['--no-color', '--silent', '--use', 'remark-frontmatter', "-s '\"listItemIndent\": \"1\"'"],
-            \ 'stdin': 1,
-            \ }
+                \ 'exe': 'remark',
+                \ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),
+                \ 'stdin': 1,
+                \ }
 endfunction
 
 function! s:mappings() abort
@@ -45,5 +59,24 @@ function! s:mappings() abort
 endfunction
 
 function! s:generate_remarkrc() abort
-    return ''
+    let conf = [
+                \ 'module.exports = {',
+                \ '  settings: {',
+                \ ]
+    " TODO add settings
+    call add(conf, "    listItemIndent: '" . s:md_listItemIndent . "'")
+    if s:md_enableWcwidth
+        call add(conf, "    stringLength: require('wcwidth'),")
+    endif
+    call add(conf, '  },')
+    call add(conf, '  plugins: [')
+    " TODO add plugins
+    call add(conf, "    require('remark-frontmatter'),")
+    call add(conf, '  ]')
+    call add(conf, '};')
+    let f  = tempname()
+    call writefile(conf, f)
+    return f
 endfunction
+
+

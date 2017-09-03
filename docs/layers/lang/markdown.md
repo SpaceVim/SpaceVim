@@ -5,9 +5,11 @@ title: "SpaceVim lang#markdown layer"
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#markdown
 
 <!-- vim-markdown-toc GFM -->
+
 * [Description](#description)
 * [Layer Installation](#layer-installation)
 * [formatting](#formatting)
+    * [options](#options)
 * [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -29,6 +31,17 @@ npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
 ```
+
+### options
+
+**listItemIndent**
+
+How to indent the content from list items (`tab`, `mixed` or 1 , default: 1).
+
+**enableWcwidth**
+
+Enable/Disable wcwidth for detecting the length of a table cell
+
 
 ## Key bindings
 

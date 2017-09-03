@@ -33,7 +33,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 **捐助SpaceVim**
 
-| 微信                        | 支付宝                           |
+| 微信                      | 支付宝                        |
 | ------------------------- | ----------------------------- |
 | ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
 
@@ -249,14 +249,14 @@ Windows 下用户如果不方便编译，可以在qq群文件里面下载相应�
 
 ### 显著特性
 
-- **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
-- **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
-- **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
-- **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
-- **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
-- **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
-- **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+-   **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
+-   **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
+-   **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
+-   **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
+-   **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
+-   **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
+-   **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
+-   **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ### 快捷键导航
 
@@ -266,11 +266,11 @@ SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航�
 
 这一导航提示将所有以空格为前缀的快捷键分组展示，比如 `b` 是所以 buffer 相关的快捷键， `p` 是所有工程管理相关的快捷键。在导航模式下按下 `<C-h>` 你将在状态栏上看见相应的帮助信息，按键介绍如下：
 
-| 按键  | 描述      |
-| --- | ------- |
-| `u` | 撤销前一按键  |
-| `n` | 导航系统下一页 |
-| `p` | 导航系统前一页 |
+| 按键 | 描述           |
+| ---- | -------------- |
+| `u`  | 撤销前一按键   |
+| `n`  | 导航系统下一页 |
+| `p`  | 导航系统前一页 |
 
 ### 运行截图
 
@@ -292,11 +292,11 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 ### 谁将从 SpaceVim 中获益？
 
-- **初级** Vim 用户.
-- 追求优雅界面的 Vim 用户
-- 追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
-- 想要学习一种不一样的编辑文件方式的 Vim 用户
-- 追求简单但是可高度配置系统的 Vim 用户
+-   **初级** Vim 用户.
+-   追求优雅界面的 Vim 用户
+-   追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
+-   想要学习一种不一样的编辑文件方式的 Vim 用户
+-   追求简单但是可高度配置系统的 Vim 用户
 
 ### 更新和回滚
 
@@ -422,10 +422,10 @@ let g:spacevim_colorscheme = 'one'
 let g:spacevim_colorscheme_bg = 'dark'
 ```
 
-| 快捷键                | 描述            |
-| ------------------ | ------------- |
-| <kbd>SPC T n</kbd> | 切换至下一个随机主题    |
-| <kbd>SPC T s</kbd> | 通过 Unite 选择主题 |
+| 快捷键             | 描述                 |
+| ------------------ | -------------------- |
+| <kbd>SPC T n</kbd> | 切换至下一个随机主题 |
+| <kbd>SPC T s</kbd> | 通过 Unite 选择主题  |
 
 可以在[主题模块](http://spacevim.org/layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
@@ -447,76 +447,76 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| 快捷键         | 描述                       |
-| ----------- | ------------------------ |
-| `SPC t 8`   | 高亮所有超过80列的字符             |
+| 快捷键      | 描述                                |
+| ----------- | ----------------------------------- |
+| `SPC t 8`   | 高亮所有超过80列的字符              |
 | `SPC t f`   | 高亮临界列，默认是第80列            |
-| `SPC t h h` | 高亮当前行                    |
-| `SPC t h i` | 高亮代码对齐线                  |
-| `SPC t h c` | 高亮光标所在列                  |
-| `SPC t h s` | 启用/禁用语法高亮                |
-| `SPC t i`   | 切换显示当前对齐(TODO)           |
-| `SPC t n`   | 显示/隐藏行号                  |
-| `SPC t b`   | 切换背景色                    |
-| `SPC t t`   | 打开 Tab 管理器               |
+| `SPC t h h` | 高亮当前行                          |
+| `SPC t h i` | 高亮代码对齐线                      |
+| `SPC t h c` | 高亮光标所在列                      |
+| `SPC t h s` | 启用/禁用语法高亮                   |
+| `SPC t i`   | 切换显示当前对齐(TODO)              |
+| `SPC t n`   | 显示/隐藏行号                       |
+| `SPC t b`   | 切换背景色                          |
+| `SPC t t`   | 打开 Tab 管理器                     |
 | `SPC T ~`   | 显示/隐藏 buffer 结尾空行行首的 `~` |
-| `SPC T F`   | 切换全屏(TODO)               |
-| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)        |
-| `SPC T m`   | 显示/隐藏菜单栏                 |
-| `SPC T t`   | 显示/隐藏工具栏                 |
+| `SPC T F`   | 切换全屏(TODO)                      |
+| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)             |
+| `SPC T m`   | 显示/隐藏菜单栏                     |
+| `SPC T t`   | 显示/隐藏工具栏                     |
 
 #### 状态栏 & 标签栏
 
 状态栏和工具栏是高度定制的模块，提供了如下特性：
 
-- 展示 buffer 或者 Tab 的序列号
-- 展示当前模式
-- 展示 git 相关信息
-- 展示语法检查信息
-- 展示 trailing line 的行号
-- 展示当前 SpaceVim 已启用的功能
-- 展示文件信息
-- 展示搜索结果序号
+-   展示 buffer 或者 Tab 的序列号
+-   展示当前模式
+-   展示 git 相关信息
+-   展示语法检查信息
+-   展示 trailing line 的行号
+-   展示当前 SpaceVim 已启用的功能
+-   展示文件信息
+-   展示搜索结果序号
 
-| 快捷键         | 描述        |
-| ----------- | --------- |
+| 快捷键      | 描述               |
+| ----------- | ------------------ |
 | `SPC [1-9]` | 跳至制定序号的窗口 |
 
 ##### 状态栏
 
 `core#statusline` 模块提供了一个高度定制的状态栏，提供如下特性，这一模块的灵感来自于 spacemacs 的状态栏。
 
-- 展示窗口序列号
-- 通过不同颜色展示当前模式
-- 展示搜索结果序列号
-- 显示/隐藏语法检查信息
-- 显示/隐藏电池信息
-- 显示/隐藏 SpaceVim 功能启用状态
+-   展示窗口序列号
+-   通过不同颜色展示当前模式
+-   展示搜索结果序列号
+-   显示/隐藏语法检查信息
+-   显示/隐藏电池信息
+-   显示/隐藏 SpaceVim 功能启用状态
 
 默认主题 gruvbox 的状态栏颜色和模式对照表：
 
-| 模式      | 颜色  |
-| ------- | --- |
-| Normal  | 灰色  |
-| Insert  | 蓝色  |
-| Visual  | 橙色  |
+| 模式    | 颜色   |
+| ------- | ------ |
+| Normal  | 灰色   |
+| Insert  | 蓝色   |
+| Visual  | 橙色   |
 | Replace | 浅绿色 |
 
 以上的这几种模式所对应的颜色取决于不同的主题模式。
 
 一些状态栏元素可以进行动态的切换：
 
-| 快捷键         | 描述                                                                  |
+| 快捷键      | 描述                                                                |
 | ----------- | ------------------------------------------------------------------- |
-| `SPC t m b` | 显示/隐藏电池状态 (需要安装 acpi)                                               |
+| `SPC t m b` | 显示/隐藏电池状态 (需要安装 acpi)                                   |
 | `SPC t m c` | toggle the org task clock (available in org layer)(TODO)            |
-| `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                                |
-| `SPC t m M` | 显示/隐藏文件类型                                                           |
+| `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
+| `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
-| `SPC t m p` | 显示/隐藏鼠标位置信息                                                         |
-| `SPC t m t` | 显示/隐藏时间                                                             |
-| `SPC t m T` | 显示/隐藏状态栏                                                            |
-| `SPC t m v` | 显示/隐藏版本控制信息                                                         |
+| `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
+| `SPC t m t` | 显示/隐藏时间                                                       |
+| `SPC t m T` | 显示/隐藏状态栏                                                     |
+| `SPC t m v` | 显示/隐藏版本控制信息                                               |
 
 **Powerline 字体安装:**
 
@@ -544,11 +544,11 @@ _acpi_ 可展示电池电量剩余百分比.
 
 使用不同颜色展示不同的电池状态:
 
-| 电池状态       | 颜色  |
-| ---------- | --- |
-| 75% - 100% | 绿色  |
-| 30% - 75%  | 黄色  |
-| 0 - 30%    | 红色  |
+| 电池状态   | 颜色 |
+| ---------- | ---- |
+| 75% - 100% | 绿色 |
+| 30% - 75%  | 黄色 |
+| 0 - 30%    | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -562,7 +562,7 @@ let g:spacevim_statusline_separator = 'arrow'
 
 SpaceVim 所支持的分割符以及截图如下：
 
-| 分割符     | 截图                                                                                                                        |
+| 分割符  | 截图                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
 | `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
@@ -576,20 +576,20 @@ SpaceVim 所支持的分割符以及截图如下：
 
 状态栏中功能模块内的字符显示与否，同如下快捷键功能保持一致：
 
-| 快捷键       | Unicode | ASCII | 功能        |
-| --------- | ------- | ----- | --------- |
+| 快捷键    | Unicode | ASCII | 功能             |
+| --------- | ------- | ----- | ---------------- |
 | `SPC t 8` | ⑧       | 8     | 高亮80列之后信息 |
-| `SPC t f` | ⓕ       | f     | 高亮第80列    |
-| `SPC t s` | ⓢ       | s     | 语法检查      |
-| `SPC t S` | Ⓢ       | S     | 拼写检查      |
-| `SPC t w` | ⓦ       | w     | 行尾空格检查    |
+| `SPC t f` | ⓕ       | f     | 高亮第80列       |
+| `SPC t s` | ⓢ       | s     | 语法检查         |
+| `SPC t S` | Ⓢ       | S     | 拼写检查         |
+| `SPC t w` | ⓦ       | w     | 行尾空格检查     |
 
 ##### 标签栏
 
 如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Baffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
-| 快捷键          | 描述        |
-| ------------ | --------- |
+| 快捷键       | 描述             |
+| ------------ | ---------------- |
 | `<Leader> 1` | 跳至标签栏序号 1 |
 | `<Leader> 2` | 跳至标签栏序号 2 |
 | `<Leader> 3` | 跳至标签栏序号 3 |
@@ -610,23 +610,23 @@ SpaceVim 所支持的分割符以及截图如下：
 
 ##### Unite/Denite buffer 中的快捷键
 
-| 快捷键              | 模式            | 功能描述            |
-| ---------------- | ------------- | --------------- |
-| `Ctrl`+`h/k/l/r` | Normal        | 无效              |
-| `Ctrl`+`l`       | Normal        | 刷新界面            |
-| `Tab`            | Insert        | 下一结果            |
-| `Tab`            | Normal        | 选择操作            |
-| `Shift` + `Tab`  | Insert        | 上一结果            |
-| `Space`          | Normal        | 标记当前结果          |
-| `Enter`          | Normal        | 执行默认操作          |
-| `Ctrl`+`v`       | Normal        | 在分割窗口中打开        |
-| `Ctrl`+`s`       | Normal        | 在垂直分割窗口打开       |
-| `Ctrl`+`t`       | Normal        | 在新 Tab 中打开      |
-| `Ctrl` + `g`     | Normal        | 推出 Unite/Denite |
-| `jk`             | Insert        | 离开 Insert 模式    |
-| `r`              | Normal        | 重命名或者替换搜索内容     |
-| `Ctrl`+`z`       | Normal/insert | 切换窗口布局          |
-| `Ctrl`+`w`       | Insert        | 删除前一单词          |
+| 快捷键           | 模式          | 功能描述               |
+| ---------------- | ------------- | ---------------------- |
+| `Ctrl`+`h/k/l/r` | Normal        | 无效                   |
+| `Ctrl`+`l`       | Normal        | 刷新界面               |
+| `Tab`            | Insert        | 下一结果               |
+| `Tab`            | Normal        | 选择操作               |
+| `Shift` + `Tab`  | Insert        | 上一结果               |
+| `Space`          | Normal        | 标记当前结果           |
+| `Enter`          | Normal        | 执行默认操作           |
+| `Ctrl`+`v`       | Normal        | 在分割窗口中打开       |
+| `Ctrl`+`s`       | Normal        | 在垂直分割窗口打开     |
+| `Ctrl`+`t`       | Normal        | 在新 Tab 中打开        |
+| `Ctrl` + `g`     | Normal        | 推出 Unite/Denite      |
+| `jk`             | Insert        | 离开 Insert 模式       |
+| `r`              | Normal        | 重命名或者替换搜索内容 |
+| `Ctrl`+`z`       | Normal/insert | 切换窗口布局           |
+| `Ctrl`+`w`       | Insert        | 删除前一单词           |
 
 #### 交互
 
@@ -638,13 +638,13 @@ SpaceVim 所支持的分割符以及截图如下：
 
 这些前缀的按键为：
 
-| 前缀名称       | 用户选项以及默认值                                                                     | 描述                     |
-| ---------- | ----------------------------------------------------------------------------- | ---------------------- |
-| `[SPC]`    | 空格键                                                                           | SpaceVim 默认前缀键         |
-| `[Window]` | `g:spacevim_windows_leader` / `s`                                             | SpaceVim 默认窗口前缀键       |
-| `[denite]` | `g:spacevim_denite_leader` / `F`                                              | SpaceVim 默认 Denite 前缀键 |
-| `[unite]`  | `g:spacevim_unite_leader` / `f`                                               | SpaceVim 默认 Unite 前缀键  |
-| `<leader>` | `mapleader` / `\`                      \|                    Vim/neovim 默认前缀键 |                        |
+| 前缀名称   | 用户选项以及默认值                                                                 | 描述                        |
+| ---------- | ---------------------------------------------------------------------------------- | --------------------------- |
+| `[SPC]`    | 空格键                                                                             | SpaceVim 默认前缀键         |
+| `[Window]` | `g:spacevim_windows_leader` / `s`                                                  | SpaceVim 默认窗口前缀键     |
+| `[denite]` | `g:spacevim_denite_leader` / `F`                                                   | SpaceVim 默认 Denite 前缀键 |
+| `[unite]`  | `g:spacevim_unite_leader` / `f`                                                    | SpaceVim 默认 Unite 前缀键  |
+| `<leader>` | `mapleader` / `\`                      \|                    Vim/neovim 默认前缀键 |                             |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -1092,11 +1092,11 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 
 SpaceVim can be interfaced with different searching tools like:
 
-- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
-- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
-- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
-- [ack](https://beyondgrep.com/)
-- grep
+-   [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+-   [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+-   [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+-   [ack](https://beyondgrep.com/)
+-   grep
 
 The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
 
@@ -1126,8 +1126,8 @@ It is possible to search in the current file by double pressing the second key o
 
 Notes:
 
-- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
-- It is also possible to search in several directories at once by marking them in the unite buffer.
+-   `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
+-   It is also possible to search in several directories at once by marking them in the unite buffer.
 
 **Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
 
@@ -1369,10 +1369,10 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 
 SpaceVim use utf-8 as default encoding. there are four options for these case:
 
-- fileencodings (fencs): ucs-bom,utf-8,default,latin1
-- fileencoding (fenc): utf-8
-- encoding (enc): utf-8
-- termencoding (tenc): utf-8 (only supported in vim)
+-   fileencodings (fencs): ucs-bom,utf-8,default,latin1
+-   fileencoding (fenc): utf-8
+-   encoding (enc): utf-8
+-   termencoding (tenc): utf-8 (only supported in vim)
 
 to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
 
@@ -1443,7 +1443,7 @@ project manager commands start with `p`:
 
 ### Awesome ui
 
-- outline + filemanager + checker
+-   outline + filemanager + checker
 
 ![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
@@ -1468,37 +1468,37 @@ Key bindings are organized using mnemonic prefixes like b for buffer, p for proj
 
 ### c/c++ support
 
-1. code completion: autocompletion and fuzzy match.
-   ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
-2. syntax check: Asynchronous linting and make framework.
-   ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
+1.  code completion: autocompletion and fuzzy match.
+    ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
+2.  syntax check: Asynchronous linting and make framework.
+    ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
 ### go support
 
-1. code completion:
-   ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
-2. syntax check:
-   ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
+1.  code completion:
+    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
+2.  syntax check:
+    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
 ### python support
 
-1. code completion:
-   ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
-2. syntax check:
-   ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
+1.  code completion:
+    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
+2.  syntax check:
+    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
 ## Neovim centric - Dark powered mode of SpaceVim.
 
 By default, SpaceVim use these dark powered plugins:
 
-1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
+1.  [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
+2.  [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
 
 TODO:
 
-1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
-2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
-3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
+1.  [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
+2.  [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
+3.  [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
 
 ## Modular configuration
 
@@ -1525,31 +1525,31 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
-- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
+-   List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
+      ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
-- List all the mappings and description: `f<space>`
-    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
+-   List all the mappings and description: `f<space>`
+      ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
-- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
+-   List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
+      ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### Plugin Highlights
 
-- Package management with caching enabled and lazy loading
-- Project-aware tabs and label
-- Vimfiler as file-manager + SSH connections
-- Go completion via vim-go and gocode
-- Javascript completion via Tern
-- PHP completion, indent, folds, syntax
-- Python jedi completion, pep8 convention
-- Languages: Ansible, css3, csv, json, less, markdown, mustache
-- Helpers: Undo tree, bookmarks, git, tmux navigation,
-    hex editor, sessions, and much more.
+-   Package management with caching enabled and lazy loading
+-   Project-aware tabs and label
+-   Vimfiler as file-manager + SSH connections
+-   Go completion via vim-go and gocode
+-   Javascript completion via Tern
+-   PHP completion, indent, folds, syntax
+-   Python jedi completion, pep8 convention
+-   Languages: Ansible, css3, csv, json, less, markdown, mustache
+-   Helpers: Undo tree, bookmarks, git, tmux navigation,
+      hex editor, sessions, and much more.
 
-    _Note_ that 90% of the plugins are **[lazy-loaded]**.
+      _Note_ that 90% of the plugins are **[lazy-loaded]**.
 
-    [lazy-loaded]&#x3A; ./config/plugins.vim
+      [lazy-loaded]&#x3A; ./config/plugins.vim
 
 #### Non Lazy-Loaded Plugins
 
@@ -2124,17 +2124,17 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 ### SpaceVim选项
 
-| 选项名称                               |         默认值         | 描述              |
-| ---------------------------------- | :-----------------: | --------------- |
-| `g:spacevim_default_indent`        |          2          | 对齐空格            |
-| `g:spacevim_enable_guicolors`      |          1          | 启用/禁用终端使用真色彩    |
-| `g:spacevim_windows_leader`        |         `s`         | 窗口管理快捷键前缀       |
-| `g:spacevim_unite_leader`          |         `f`         | Unite快捷键前缀      |
-| `g:spacevim_plugin_bundle_dir`     | `~/.cache/vimfiles` | 默认插件缓存位置        |
-| `g:spacevim_realtime_leader_guide` |          0          | 启用/禁用实时快捷键提示    |
-| `g:spacevim_guifont`               |          ''         | 设置SpaceVim字体    |
+| 选项名称                           |        默认值       | 描述                           |
+| ---------------------------------- | :-----------------: | ------------------------------ |
+| `g:spacevim_default_indent`        |          2          | 对齐空格                       |
+| `g:spacevim_enable_guicolors`      |          1          | 启用/禁用终端使用真色彩        |
+| `g:spacevim_windows_leader`        |         `s`         | 窗口管理快捷键前缀             |
+| `g:spacevim_unite_leader`          |         `f`         | Unite快捷键前缀                |
+| `g:spacevim_plugin_bundle_dir`     | `~/.cache/vimfiles` | 默认插件缓存位置               |
+| `g:spacevim_realtime_leader_guide` |          0          | 启用/禁用实时快捷键提示        |
+| `g:spacevim_guifont`               |          ''         | 设置SpaceVim字体               |
 | `g:spacevim_sidebar_width`         |          30         | 设置边栏宽度，文件树以及语法树 |
-| `g:spacevim_custom_plugins`        |         `[]`        | 设置自定义插件         |
+| `g:spacevim_custom_plugins`        |         `[]`        | 设置自定义插件                 |
 
 ### 延伸阅读
 
