@@ -9,7 +9,8 @@
 let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
 function! SpaceVim#layers#lang#markdown#set_variable(var) abort
-    let s:md_listItemIndent
+   let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
+   let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
@@ -74,7 +75,7 @@ function! s:generate_remarkrc() abort
     call add(conf, "    require('remark-frontmatter'),")
     call add(conf, '  ]')
     call add(conf, '};')
-    let f  = tempname()
+    let f  = tempname() . '.js'
     call writefile(conf, f)
     return f
 endfunction
