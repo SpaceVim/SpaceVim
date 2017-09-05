@@ -638,13 +638,13 @@ SpaceVim 所支持的分割符以及截图如下：
 
 这些前缀的按键为：
 
-| 前缀名称   | 用户选项以及默认值                                                                 | 描述                        |
-| ---------- | ---------------------------------------------------------------------------------- | --------------------------- |
-| `[SPC]`    | 空格键                                                                             | SpaceVim 默认前缀键         |
-| `[Window]` | `g:spacevim_windows_leader` / `s`                                                  | SpaceVim 默认窗口前缀键     |
-| `[denite]` | `g:spacevim_denite_leader` / `F`                                                   | SpaceVim 默认 Denite 前缀键 |
-| `[unite]`  | `g:spacevim_unite_leader` / `f`                                                    | SpaceVim 默认 Unite 前缀键  |
-| `<leader>` | `mapleader` / `\`                      \|                    Vim/neovim 默认前缀键 |                             |
+| 前缀名称   | 用户选项以及默认值                | 描述                        |
+| ---------- | --------------------------------- | --------------------------- |
+| `[SPC]`    | 空格键                            | SpaceVim 默认前缀键         |
+| `[Window]` | `g:spacevim_windows_leader` / `s` | SpaceVim 默认窗口前缀键     |
+| `[denite]` | `g:spacevim_denite_leader` / `F`  | SpaceVim 默认 Denite 前缀键 |
+| `[unite]`  | `g:spacevim_unite_leader` / `f`   | SpaceVim 默认 Unite 前缀键  |
+| `<leader>` | `mapleader` / `\\`                | Vim/neovim 默认前缀键       |
 
 默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
