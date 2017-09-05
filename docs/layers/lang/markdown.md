@@ -6,11 +6,11 @@ title: "SpaceVim lang#markdown layer"
 
 <!-- vim-markdown-toc GFM -->
 
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-* [formatting](#formatting)
-    * [options](#options)
-* [Key bindings](#key-bindings)
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+- [formatting](#formatting)
+  - [options](#options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -38,9 +38,13 @@ npm -g install remark-stringify
 
 How to indent the content from list items (`tab`, `mixed` or 1 , default: 1).
 
+- `'tab'`: use tab stops (4 spaces)
+- `'1'`: use one space
+- `'mixed'`: use `1` for tight and `tab` for loose list items
+
 **enableWcwidth**
 
-Enable/Disable wcwidth for detecting the length of a table cell
+Enable/Disable wcwidth for detecting the length of a table cell, default is 0.
 
 
 ## Key bindings
