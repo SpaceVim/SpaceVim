@@ -79,11 +79,11 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         * [交互](#交互)
             * [快捷键](#快捷键)
                 * [快捷键导航](#快捷键导航-1)
-            * [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
-        * [Getting help](#getting-help)
-        * [Available layers](#available-layers)
-            * [Available plugins in SpaceVim](#available-plugins-in-spacevim)
-            * [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
+                * [通过 Unite/Denite 浏览快捷键](#通过-unitedenite-浏览快捷键)
+            * [获取帮助信息](#获取帮助信息)
+            * [可用模块](#可用模块)
+                * [可用的插件](#可用的插件)
+                * [添加用户自定义插件](#添加用户自定义插件)
         * [Toggles](#toggles)
     * [Navigating](#navigating)
         * [Point/Cursor](#pointcursor)
@@ -646,62 +646,69 @@ SpaceVim 所支持的分割符以及截图如下：
 | `[unite]`  | `g:spacevim_unite_leader` / `f`                                                    | SpaceVim 默认 Unite 前缀键  |
 | `<leader>` | `mapleader` / `\`                      \|                    Vim/neovim 默认前缀键 |                             |
 
-By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
-for example, after pressing `<Space>` in normal mode, you will see :
+例如，Normal 模式下按下空格键，你将会看到：
 
 ![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
-this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+这一导航窗口将提示所有以空格键为前缀的快捷键，并且根据功能将这些快捷键进行了分组，例如 buffer 相关的快捷键都是 `b`，工程相关的快捷键都是 `p`。在代码导航窗口内，按下 `<C-h>` 键，可以获取一些帮助信息，这些信息将被显示在状态栏上，提示的是一些翻页和撤销按键的快捷键。
 
-| key | description                   |
-| --- | ----------------------------- |
-| `u` | undo pressing                 |
-| `n` | next page of guide buffer     |
-| `p` | previous page of guide buffer |
+| 按键 | 描述     |
+| ---- | -------- |
+| `u`  | 撤销按键 |
+| `n`  | 向下翻页 |
+| `p`  | 向上翻页 |
 
-to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
+如果要自定义以 `[SPC]` 为前缀的快捷键，可以使用 `SpaceVim#custom#SPC()`，示例如下：
 
 ```vim
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
-##### Unide/Denite describe key bindings
+###### 通过 Unite/Denite 浏览快捷键
 
-It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
-
-To narrow the list, just insert the mapping keys or description of what mapping you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
+可以通过 `SPC ？` 使用 Unite 将当前快捷键罗列出来。然后可以输入快捷键按键字母或者描述，Unite 可以通过模糊匹配，并展示结果。
 
 ![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
-then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
+使用 `<Tab>` 键或者上下方向键选择你需要的快捷键，回车将执行这一快捷键。
 
-#### Getting help
+##### 获取帮助信息
 
-Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
+Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| Mappings  | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| SPC h SPC | discover SpaceVim documentation, layers and packages using unite |
-| SPC h i   | get help with the symbol at point                                |
-| SPC h k   | show top-level bindings with which-key                           |
-| SPC h m   | search available man pages                                       |
+| 快捷键      | 描述                                         |
+| ----------- | -------------------------------------------- |
+| `SPC h SPC` | 使用 Unite 展示 SpaceVim 帮助文档章节目录    |
+| `SPC h i`   | 获取光标下单词的帮助信息                     |
+| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
+| `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |
 
-Reporting an issue:
+报告一个问题：
 
-| Mappings | Description                                                 |
-| -------- | ----------------------------------------------------------- |
-| SPC h I  | Open SpaceVim GitHub issue page with pre-filled information |
+| 快捷键    | 描述                            |
+| --------- | ------------------------------- |
+| `SPC h I` | 根据模板展示 Issue 所必须的信息 |
 
-#### Available layers
+##### 可用模块
 
-All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
+所有可用模块可以通过命令 `SPLayer -l` 或者快捷键 `SPC h l` 来展示。
 
-##### Available plugins in SpaceVim
+###### 可用的插件
 
-All plugins can be easily discovered via `<leader> l p`.
+可通过快捷键 `<leader> l p` 列出所有已安装的插件，支持模糊搜索，回车将使用浏览器打开该插件的官网。
 
-##### New packages from ELPA repositories
+###### 添加用户自定义插件
+
+如果添加来自于 github.com 的插件，可以 `用户名/仓库名` 这一格式，将该插件添加到 `g:spacevim_custom_plugins`，示例如下：
+
+```vim
+let g:spacevim_custom_plugins = [
+    \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
+    \ ['wsdjeg/GitHub.vim'],
+    \ ]
+```
 
 #### Toggles
 
