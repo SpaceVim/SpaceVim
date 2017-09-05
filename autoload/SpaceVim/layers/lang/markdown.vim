@@ -65,7 +65,7 @@ function! s:generate_remarkrc() abort
                 \ '  settings: {',
                 \ ]
     " TODO add settings
-    call add(conf, "    listItemIndent: '" . s:md_listItemIndent . "'")
+    call add(conf, "    listItemIndent: '" . s:md_listItemIndent . "',")
     if s:md_enableWcwidth
         call add(conf, "    stringLength: require('wcwidth'),")
     endif
