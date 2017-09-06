@@ -7,13 +7,13 @@
 " >
 "   let g:spacevim_colorscheme = 'solarized'
 " <
-" 
+"
 " The following colorschemes are include in SpaceVim. If the colorscheme you
 " want is not included in the list below, a PR is welcome.
-" 
+"
 " Also, there's one thing which everyone should know and pay attention to.
 " NOT all of below colorschemes support spell check very well. For example,
-" a colorscheme called atom doesn't support spell check very well. 
+" a colorscheme called atom doesn't support spell check very well.
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 " You can see a list which has no support of spell check in here:
@@ -177,7 +177,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ]
 endfunction
 
-let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one']
+let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one', 'nord']
 let s:Number = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#colorscheme#config() abort
