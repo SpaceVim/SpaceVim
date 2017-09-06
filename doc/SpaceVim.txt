@@ -35,18 +35,20 @@ CONTENTS                                                   *SpaceVim-contents*
       12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       13. lang#go.....................................|SpaceVim-layer-lang-go|
       14. lang#java.................................|SpaceVim-layer-lang-java|
-      15. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      16. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      17. lang#php...................................|SpaceVim-layer-lang-php|
-      18. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      19. lang#python.............................|SpaceVim-layer-lang-python|
-      20. lang#rust.................................|SpaceVim-layer-lang-rust|
-      21. lang#scala...............................|SpaceVim-layer-lang-scala|
-      22. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      23. lang#xml...................................|SpaceVim-layer-lang-xml|
-      24. operator...................................|SpaceVim-layer-operator|
-      25. shell.........................................|SpaceVim-layer-shell|
-      26. tmux...........................................|SpaceVim-layer-tmux|
+      15. lang#julia...............................|SpaceVim-layer-lang-julia|
+      16. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      17. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      18. lang#php...................................|SpaceVim-layer-lang-php|
+      19. lang#pony.................................|SpaceVim-layer-lang-pony|
+      20. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      21. lang#python.............................|SpaceVim-layer-lang-python|
+      22. lang#rust.................................|SpaceVim-layer-lang-rust|
+      23. lang#scala...............................|SpaceVim-layer-lang-scala|
+      24. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      25. lang#xml...................................|SpaceVim-layer-lang-xml|
+      26. operator...................................|SpaceVim-layer-operator|
+      27. shell.........................................|SpaceVim-layer-shell|
+      28. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -799,6 +801,14 @@ https://github.com/google/google-java-format
 and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 
 ==============================================================================
+LANG#JULIA                                         *SpaceVim-layer-lang-julia*
+
+The layer provides synatax highlight and linting for julia.  The completeion
+only works in nvim with deoplete. However, the julia-vim could not be load
+on-demanding  due to its LaTeXToUnicode feature.
+
+
+==============================================================================
 LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
 
 This layer is for kotlin development.
@@ -828,6 +838,9 @@ Requirements:
   JSON(for Vim 7.4+)Extension
   Composer Project
 <
+
+==============================================================================
+LANG#PONY                                           *SpaceVim-layer-lang-pony*
 
 ==============================================================================
 LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
