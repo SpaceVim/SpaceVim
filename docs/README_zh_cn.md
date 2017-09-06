@@ -1,12 +1,8 @@
----
-title:  "SpaceVim 中文手册"
----
-
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://github.com/SpaceVim/SpaceVim/blob/dev/doc/SpaceVim.txt)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -84,7 +80,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
       - [可用模块](#可用模块)
         - [可用的插件](#可用的插件)
         - [添加用户自定义插件](#添加用户自定义插件)
-    - [Toggles](#toggles)
+      - [界面元素显示切换](#界面元素显示切换)
   - [Navigating](#navigating)
     - [Point/Cursor](#pointcursor)
     - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
@@ -710,9 +706,9 @@ let g:spacevim_custom_plugins = [
     \ ]
 ```
 
-#### Toggles
+##### 界面元素显示切换
 
-both the toggles mappings started with `[SPC] t` or `[SPC] T`. you can find it in the mapping guide.
+所有的界面元素切换快捷键都是已 `[SPC] t` 或者 `[SPC] T` 开头的，你可以在快捷键导航中查阅所有快捷键。
 
 ### Navigating
 
