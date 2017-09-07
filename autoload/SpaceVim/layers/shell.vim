@@ -17,11 +17,18 @@ function! SpaceVim#layers#shell#plugins() abort
     return plugins
 endfunction
 
+let s:file = expand('<sfile>:~')
+let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
-
     call SpaceVim#mapping#space#def('nnoremap', ["'"], 'call call('
                 \ . string(function('s:open_default_shell')) . ', [])',
-                \ 'open shell', 1)
+                \ ['open shell',
+                \ [
+                \ "[SPC '] is to open or jump to default shell window",
+                \ '',
+                \ 'Definition: ' . s:file . ':' . s:lnum,
+                \ ]
+                \ ], 1)
 
 endfunction
 
