@@ -56,6 +56,7 @@ function! s:open_default_shell() abort
         if exists(':te')
             exe 'te'
             let s:shell_win_nr = winnr()
+            let w:shell_layer_win = 1
         else
             echo ':terminal is not supported in this version'
         endif

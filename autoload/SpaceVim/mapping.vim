@@ -158,6 +158,10 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
+  if get(w:, 'shell_layer_win', 0) == 1
+    exe 'bd!' . abuf
+    return
+  endif
   if index != -1
     if index == 0
       if len(buffers) > 1
