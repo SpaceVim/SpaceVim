@@ -81,13 +81,13 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         - [可用的插件](#可用的插件)
         - [添加用户自定义插件](#添加用户自定义插件)
       - [界面元素显示切换](#界面元素显示切换)
-  - [Navigating](#navigating)
-    - [Point/Cursor](#pointcursor)
-    - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
-      - [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
-    - [Unimpaired bindings](#unimpaired-bindings)
-    - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
-      - [Jumping](#jumping)
+    - [常规操作](#常规操作)
+      - [光标移动](#光标移动)
+      - [快速移动光标](#快速移动光标)
+        - [快速跳到网址 (TODO)](#快速跳到网址-todo)
+      - [常用的成对快捷键](#常用的成对快捷键)
+      - [跳转，合并，拆分](#跳转合并拆分)
+        - [跳转](#跳转)
       - [Joining and splitting](#joining-and-splitting)
     - [Window manipulation](#window-manipulation)
       - [Window manipulation key bindings](#window-manipulation-key-bindings)
@@ -710,86 +710,84 @@ let g:spacevim_custom_plugins = [
 
 所有的界面元素切换快捷键都是已 `[SPC] t` 或者 `[SPC] T` 开头的，你可以在快捷键导航中查阅所有快捷键。
 
-### Navigating
+#### 常规操作
 
-#### Point/Cursor
+##### 光标移动
 
-Navigation is performed using the Vi key bindings `hjkl`.
+光标的移动默认采用 vi 的默认形式：`hjkl`。
 
-| Key Binding | Description                                                                       |
-| ----------- | --------------------------------------------------------------------------------- |
-| `h`         | move cursor left (origin vim key, no mappings)                                    |
-| `j`         | move cursor down (origin vim key, no mappings)                                    |
-| `k`         | move cursor up (origin vim key, no mappings)                                      |
-| `l`         | move cursor right (origin vim key, no mappings)                                   |
-| `H`         | move cursor to the top of the screen (origin vim key, no mappings)                |
-| `L`         | move cursor to the bottom of the screen (origin vim key, no mappings)             |
-| `SPC j 0`   | go to the beginning of line (and set a mark at the previous location in the line) |
-| `SPC j $`   | go to the end of line (and set a mark at the previous location in the line)       |
-| `SPC t -`   | lock the cursor at the center of the screen                                       |
+| 快捷键    | 描述                                       |
+| --------- | ------------------------------------------ |
+| `h`       | 向左移动光标（Vim 原生功能，无映射）       |
+| `j`       | 向下移动光标（Vim 原生功能，无映射）       |
+| `k`       | 向上移动光标（Vim 原生功能，无映射）       |
+| `l`       | 向右移动光标（Vim 原生功能，无映射）       |
+| `H`       | 光标移至屏幕最上方（Vim 原生功能，无映射） |
+| `L`       | 光标移至屏幕最下方（Vim 原生功能，无映射） |
+| `SPC j 0` | 跳至行首（并且标记原始位置）               |
+| `SPC j $` | 跳至行尾（并且标记原始位置）               |
+| `SPC t -` | 锁定光标在屏幕中间（TODO）                 |
 
-#### Vim motions with vim-easymotion
+##### 快速移动光标
 
-##### quick-jump-link mode (TODO)
+###### 快速跳到网址 (TODO)
 
-<https://github.com/easymotion/vim-easymotion/issues/315>
+类似于 Firefox 的 vimperator 的 `f` 键的功能。
 
-Similar to easymotion or `f` in vimperator for firefox, this mode allows one to jump to any link in help file with two key strokes.
+| 快捷键                          | 描述             |
+| ------------------------------- | ---------------- |
+| `SPC j u`/(`o` for help buffer) | 快速跳到/打开url |
 
-| mapping | description                                  |
-| ------- | -------------------------------------------- |
-| `o`     | initiate quick jump link mode in help buffer |
+##### 常用的成对快捷键
 
-#### Unimpaired bindings
+| 快捷键  | 描述                           |
+| ------- | ------------------------------ |
+| `[ SPC` | 在当前行或已选区域上方添加空行 |
+| `] SPC` | 在当前行或已选区域下方添加空行 |
+| `[ b`   | 跳至前一 buffer                |
+| `] b`   | 跳至下一 buffer                |
+| `[ f`   | 跳至文件夹中的前一个文件       |
+| `] f`   | 跳至文件夹中的下一个文件       |
+| `[ l`   | 跳至前一个错误处               |
+| `] l`   | 跳至下一个错误处               |
+| `[ c`   | 跳至前一个 vcs hunk            |
+| `] c`   | 跳至下一个 vcs hunk            |
+| `[ q`   | 跳至前一个错误                 |
+| `] q`   | 跳至下一个错误                 |
+| `[ t`   | 跳至前一个标签页               |
+| `] t`   | 跳至下一个标签页               |
+| `[ w`   | 跳至前一个窗口                 |
+| `] w`   | 跳至下一个窗口                 |
+| `[ e`   | 向上移动当前行或者已选择行     |
+| `] e`   | 向下移动当前行或者已选择行     |
+| `[ p`   | 粘贴至当前行上方               |
+| `] p`   | 粘贴至当前行下方               |
+| `g p`   | 选择粘贴的区域                 |
 
-| Mappings | Description                      |
-| -------- | -------------------------------- |
-| `[ SPC`  | Insert space above               |
-| `] SPC`  | Insert space below               |
-| `[ b`    | Go to previous buffer            |
-| `] b`    | Go to next buffer                |
-| `[ f`    | Go to previous file in directory |
-| `] f`    | Go to next file in directory     |
-| `[ l`    | Go to the previous error         |
-| `] l`    | Go to the next error             |
-| `[ c`    | Go to the previous vcs hunk      |
-| `] c`    | Go to the next vcs hunk          |
-| `[ q`    | Go to the previous error         |
-| `] q`    | Go to the next error             |
-| `[ t`    | Go to the previous frame         |
-| `] t`    | Go to the next frame             |
-| `[ w`    | Go to the previous window        |
-| `] w`    | Go to the next window            |
-| `[ e`    | Move line up                     |
-| `] e`    | Move line down                   |
-| `[ p`    | Paste above current line         |
-| `] p`    | Paste below current line         |
-| `g p`    | Select pasted text               |
+##### 跳转，合并，拆分
 
-#### Jumping, Joining and Splitting
+以 `SPC j` 为前缀的快捷键主要用作：跳转（jumping），合并（joining），拆分（splitting）。
 
-The `SPC j` prefix is for jumping, joining and splitting.
+###### 跳转
 
-##### Jumping
-
-| Key Binding | Description                                                                       |
-| ----------- | --------------------------------------------------------------------------------- |
-| `SPC j 0`   | go to the beginning of line (and set a mark at the previous location in the line) |
-| `SPC j $`   | go to the end of line (and set a mark at the previous location in the line)       |
-| `SPC j b`   | jump backward                                                                     |
-| `SPC j f`   | jump forward                                                                      |
-| `SPC j d`   | jump to a listing of the current directory                                        |
-| `SPC j D`   | jump to a listing of the current directory (other window)                         |
-| `SPC j i`   | jump to a definition in buffer (denite outline)                                   |
-| `SPC j I`   | jump to a definition in any buffer (denite outline)                               |
-| `SPC j j`   | jump to a character in the buffer (easymotion)                                    |
-| `SPC j J`   | jump to a suite of two characters in the buffer (easymotion)                      |
-| `SPC j k`   | jump to next line and indent it using auto-indent rules                           |
-| `SPC j l`   | jump to a line with avy (easymotion)                                              |
-| `SPC j q`   | show the dumb-jump quick look tooltip (TODO)                                      |
-| `SPC j u`   | jump to a URL in the current window                                               |
-| `SPC j v`   | jump to the definition/declaration of an Emacs Lisp variable (TODO)               |
-| `SPC j w`   | jump to a word in the current buffer (easymotion)                                 |
+| 快捷键    | 描述                                             |
+| --------- | ------------------------------------------------ |
+| `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
+| `SPC j $` | 跳至行尾，并且在原始位置留下标签，以便跳回       |
+| `SPC j b` | 向后回跳                                         |
+| `SPC j f` | 向前跳                                           |
+| `SPC j d` | 跳至当前目录某个文件夹                           |
+| `SPC j D` | 跳至当前目录某个文件夹（在另外窗口展示文件列表） |
+| `SPC j i` | 跳至当前文件的某个函数，使用 Denite 打开语法树   |
+| `SPC j I` | 跳至所有 Buffer 的语法树（TODO）                 |
+| `SPC j j` | 跳至当前窗口的某个字符 (easymotion)              |
+| `SPC j J` | 跳至当前窗口的某两个字符的组合 (easymotion)      |
+| `SPC j k` | 跳至下一行，并且对齐下一行                       |
+| `SPC j l` | 跳至某一行 (easymotion)                          |
+| `SPC j q` | show the dumb-jump quick look tooltip (TODO)     |
+| `SPC j u` | 跳至窗口某个 url （TODO）                        |
+| `SPC j v` | 跳至某个 vim 函数的定义处 (TODO)                 |
+| `SPC j w` | 跳至 Buffer 中某个单词 (easymotion)              |
 
 ##### Joining and splitting
 
