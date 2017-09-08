@@ -1,4 +1,8 @@
 scriptencoding utf-8
+
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+
 let g:unite_source_menu_menus =
       \ get(g:,'unite_source_menu_menus',{})
 let g:unite_source_menu_menus.CustomKeyMaps = {'description':
@@ -199,5 +203,19 @@ function! SpaceVim#mapping#menu(desc, key, cmd) abort
         \ [description ,
         \ a:cmd])
 endfunction
+
+function! SpaceVim#mapping#clear_saved_buffers()
+  call s:BUFFER.filter_do(
+        \ {
+        \ 'expr' : [
+        \ 'buflisted(v:val)',
+        \ 'index(tabpagebuflist(), v:val) == -1',
+        \ 'getbufvar(v:val, "&mod") == 0',
+        \ ],
+        \ 'do' : 'bd %d'
+        \ }
+        \ )
+endfunction
+
 
 " vim:set et sw=2 cc=80:

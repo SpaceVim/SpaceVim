@@ -124,6 +124,7 @@ function! SpaceVim#layers#default#config() abort
                 \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
                 \ 'kill-this-buffer', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', '<C-d>'], 'call SpaceVim#mapping#clearBuffers()', 'kill-other-buffers', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'c'], 'call SpaceVim#mapping#clear_saved_buffers()', 'clear all saved buffers', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'e'], 'call call('
                 \ . string(s:_function('s:safe_erase_buffer')) . ', [])',
                 \ 'safe-erase-buffer', 1)
