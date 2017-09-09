@@ -83,14 +83,14 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
       - [界面元素显示切换](#界面元素显示切换)
     - [常规操作](#常规操作)
       - [光标移动](#光标移动)
-      - [快速移动光标](#快速移动光标)
+      - [快速跳转](#快速跳转)
         - [快速跳到网址 (TODO)](#快速跳到网址-todo)
       - [常用的成对快捷键](#常用的成对快捷键)
       - [跳转，合并，拆分](#跳转合并拆分)
         - [跳转](#跳转)
-      - [Joining and splitting](#joining-and-splitting)
-    - [Window manipulation](#window-manipulation)
-      - [Window manipulation key bindings](#window-manipulation-key-bindings)
+        - [合并，拆分](#合并拆分)
+      - [窗口操作](#窗口操作)
+        - [窗口操作常用快捷键](#窗口操作常用快捷键)
     - [Buffers and Files](#buffers-and-files)
       - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
       - [Create a new empty buffer](#create-a-new-empty-buffer)
@@ -728,7 +728,7 @@ let g:spacevim_custom_plugins = [
 | `SPC j $` | 跳至行尾（并且标记原始位置）               |
 | `SPC t -` | 锁定光标在屏幕中间（TODO）                 |
 
-##### 快速移动光标
+##### 快速跳转
 
 ###### 快速跳到网址 (TODO)
 
@@ -789,53 +789,53 @@ let g:spacevim_custom_plugins = [
 | `SPC j v` | 跳至某个 vim 函数的定义处 (TODO)                 |
 | `SPC j w` | 跳至 Buffer 中某个单词 (easymotion)              |
 
-##### Joining and splitting
+###### 合并，拆分
 
-| Key Binding | Description                                                              |
-| ----------- | ------------------------------------------------------------------------ |
-| `J`         | join the current line with the next line                                 |
-| `SPC j k`   | go to next line and indent it using auto-indent rules                    |
-| `SPC j n`   | split the current line at point, insert a new line and auto-indent       |
-| `SPC j o`   | split the current line at point but let point on current line            |
-| `SPC j s`   | split a quoted string or s-expression in place                           |
-| `SPC j S`   | split a quoted string or s-expression, insert a new line and auto-indent |
+| 快捷键    | 描述                                         |
+| --------- | -------------------------------------------- |
+| `J`       | 合并当前行和下一行                           |
+| `SPC j k` | 跳至下一行，并且对齐该行                     |
+| `SPC j n` | 从光标处断开当前行，并且插入空行以及进行对齐 |
+| `SPC j o` | 从光标处拆分该行，光标留在当前行             |
+| `SPC j s` | 从光标处进行拆分 String                      |
+| `SPC j S` | 从光标处进行拆分 String，并插入对齐的空行    |
 
-#### Window manipulation
+##### 窗口操作
 
-##### Window manipulation key bindings
+###### 窗口操作常用快捷键
 
-Every window has a number displayed at the start of the statusline and can be quickly accessed using `SPC number`.
+每一个窗口，都有一个编号，该编号显示在状态栏的最前端，可通过 `SPC 编号` 进行快速窗口跳转。
 
-| Key Binding | Description           |
-| ----------- | --------------------- |
-| `SPC 1`     | go to window number 1 |
-| `SPC 2`     | go to window number 2 |
-| `SPC 3`     | go to window number 3 |
-| `SPC 4`     | go to window number 4 |
-| `SPC 5`     | go to window number 5 |
-| `SPC 6`     | go to window number 6 |
-| `SPC 7`     | go to window number 7 |
-| `SPC 8`     | go to window number 8 |
-| `SPC 9`     | go to window number 9 |
+| 快捷键  | 描述       |
+| ------- | ---------- |
+| `SPC 1` | 跳至窗口 1 |
+| `SPC 2` | 跳至窗口 2 |
+| `SPC 3` | 跳至窗口 3 |
+| `SPC 4` | 跳至窗口 4 |
+| `SPC 5` | 跳至窗口 5 |
+| `SPC 6` | 跳至窗口 6 |
+| `SPC 7` | 跳至窗口 7 |
+| `SPC 8` | 跳至窗口 8 |
+| `SPC 9` | 跳至窗口 9 |
 
-Windows manipulation commands (start with `w`):
+窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| Key Binding          | Description                                                                                                   |
+| 快捷键          | 描述                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w TAB`          | switch to alternate window in the current frame (switch back and forth)                                       |
-| `SPC w =`            | balance split windows                                                                                         |
+| `SPC w TAB`/`<Tab>`          | 在统一标签内进行窗口切换                                       |
+| `SPC w =`            | 对齐分离的窗口                                                                                         |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`            | Distraction-free reading current window                                                                       |
-| `SPC w C`            | Distraction-free reading other windows via vim-choosewin                                                      |
-| `SPC w d`            | delete a window                                                                                               |
+| `SPC w c`            | 进入阅读模式，浏览当前窗口                                                                       |
+| `SPC w C`            | 选择某一个窗口，并且进入阅读模式                                                      |
+| `SPC w d`            | 删除一个窗口                                                                                               |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)                                      |
-| `SPC w D`            | delete another window using vim-choosewin                                                                     |
+| `SPC w D`            | 选择一个窗口，并且关闭                                                                     |
 | `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)                                       |
 | `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
 | `SPC w f`            | toggle follow mode (TODO)                                                                                     |
-| `SPC w F`            | create new tab(frame)                                                                                         |
-| `SPC w h`            | move to window on the left                                                                                    |
-| `SPC w H`            | move window to the left                                                                                       |
+| `SPC w F`            | 新建一个新的标签页                                                                                         |
+| `SPC w h`            | 移至左边窗口                                                                                    |
+| `SPC w H`            | 将窗口向左移动                                                                                       |
 | `SPC w j`            | move to window below                                                                                          |
 | `SPC w J`            | move window to the bottom                                                                                     |
 | `SPC w k`            | move to window above                                                                                          |
