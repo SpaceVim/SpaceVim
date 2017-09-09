@@ -32,6 +32,9 @@ let g:deoplete#ignore_sources.go = get(g:deoplete#ignore_sources, 'go', ['omni']
 call deoplete#custom#set('go', 'mark', '')
 call deoplete#custom#set('go', 'rank', 9999)
 
+" markdown
+let g:deoplete#ignore_sources.markdown = get(g:deoplete#ignore_sources, 'markdown', ['tag'])
+
 " perl
 let g:deoplete#omni#input_patterns.perl = get(g:deoplete#omni#input_patterns, 'perl', [
       \'[^. \t0-9]\.\w*',
