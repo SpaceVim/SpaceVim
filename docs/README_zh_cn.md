@@ -29,9 +29,9 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 **捐助SpaceVim**
 
-| 微信                      | 支付宝                        |
-| ------------------------- | ----------------------------- |
-| ![weixin](img/weixin.png){width=200px height=200px} | ![zhifubao](img/zhifubao.png){width=200px height=200px} |
+| 微信                                              | 支付宝                                              |
+| ------------------------------------------------- | --------------------------------------------------- |
+| <img src="img/weixin.png" height="48" width="48"> | <img src="img/zhifubao.png" height="48" width="48"> |
 
 **以下为SpaceVim中文手册，部分内容还未完成翻译，为了方便大家查询相关信息，已提前发布官网上，后面会逐渐更新完成，感谢大家一直以来的支持！**
 
