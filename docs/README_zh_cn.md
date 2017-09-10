@@ -31,9 +31,9 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 | 微信                      | 支付宝                        |
 | ------------------------- | ----------------------------- |
-| ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
+| ![weixin](img/weixin.png =200x200) | ![zhifubao](img/zhifubao.png =200x200) |
 
-** 以下为SpaceVim中文手册，部分内容还未完成翻译，为了方便大家查询相关信息，已提前发布官网上，后面会逐渐更新完成，感谢大家一直以来的支持！**
+**以下为SpaceVim中文手册，部分内容还未完成翻译，为了方便大家查询相关信息，已提前发布官网上，后面会逐渐更新完成，感谢大家一直以来的支持！**
 
 <!-- vim-markdown-toc GFM -->
 
@@ -93,15 +93,15 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
         - [合并，拆分](#合并拆分)
       - [窗口操作](#窗口操作)
         - [窗口操作常用快捷键](#窗口操作常用快捷键)
-    - [Buffers and Files](#buffers-and-files)
-      - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
-      - [Create a new empty buffer](#create-a-new-empty-buffer)
-      - [Special Buffers](#special-buffers)
-      - [Files manipulations key bindings](#files-manipulations-key-bindings)
-      - [Vim and SpaceVim files](#vim-and-spacevim-files)
-    - [File tree](#file-tree)
-      - [File tree navigation](#file-tree-navigation)
-      - [Open file with file tree.](#open-file-with-file-tree)
+      - [文件和 Buffer 操作](#文件和-buffer-操作)
+        - [Buffer 操作相关快捷键](#buffer-操作相关快捷键)
+        - [新建空白 buffer](#新建空白-buffer)
+        - [特殊 buffer](#特殊-buffer)
+        - [文件操作相关快捷键](#文件操作相关快捷键)
+        - [Vim 和 SpaceVim 相关文件](#vim-和-spacevim-相关文件)
+      - [文件树](#文件树)
+        - [文件树中的常用操作](#文件树中的常用操作)
+        - [文件树中打开文件](#文件树中打开文件)
   - [Commands starting with `g`](#commands-starting-with-g)
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Auto-saving](#auto-saving)
@@ -822,168 +822,168 @@ let g:spacevim_custom_plugins = [
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键          | 描述                                                                                                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w TAB`/`<Tab>`          | 在统一标签内进行窗口切换                                       |
-| `SPC w =`            | 对齐分离的窗口                                                                                         |
-| `SPC w b`            | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`            | 进入阅读模式，浏览当前窗口                                                                       |
-| `SPC w C`            | 选择某一个窗口，并且进入阅读模式                                                      |
-| `SPC w d`            | 删除一个窗口                                                                                               |
-| `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)                                      |
-| `SPC w D`            | 选择一个窗口，并且关闭                                                                     |
-| `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)                                       |
-| `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`            | toggle follow mode (TODO)                                                                                     |
-| `SPC w F`            | 新建一个新的标签页                                                                                         |
-| `SPC w h`            | 移至左边窗口                                                                                    |
-| `SPC w H`            | 将窗口向左移动                                                                                       |
-| `SPC w j`            | move to window below                                                                                          |
-| `SPC w J`            | move window to the bottom                                                                                     |
-| `SPC w k`            | move to window above                                                                                          |
-| `SPC w K`            | move window to the top                                                                                        |
-| `SPC w l`            | move to window on the right                                                                                   |
-| `SPC w L`            | move window to the right                                                                                      |
-| `SPC w m`            | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
-| `SPC w M`            | swap windows using vim-choosewin                                                                              |
-| `SPC w o`            | cycle and focus between tabs                                                                                  |
-| `SPC w p m`          | open messages buffer in a popup window (TODO)                                                                 |
-| `SPC w p p`          | close the current sticky popup window (TODO)                                                                  |
-| `SPC w r`            | rotate windows forward                                                                                        |
-| `SPC w R`            | rotate windows backward                                                                                       |
-| `SPC w s or SPC w -` | horizontal split                                                                                              |
-| `SPC w S`            | horizontal split and focus new window                                                                         |
-| `SPC w u`            | undo window layout (used to effectively undo a closed window) (TODO)                                          |
-| `SPC w U`            | redo window layout (TODO)                                                                                     |
-| `SPC w v or SPC w /` | vertical split                                                                                                |
-| `SPC w V`            | vertical split and focus new window                                                                           |
-| `SPC w w`            | cycle and focus between windows                                                                               |
-| `SPC w W`            | select window using vim-choosewin                                                                             |
+| 快捷键               | 描述                                                                           |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `SPC w TAB`/`<Tab>`  | 在统一标签内进行窗口切换                                                       |
+| `SPC w =`            | 对齐分离的窗口                                                                 |
+| `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
+| `SPC w c`            | 进入阅读模式，浏览当前窗口                                                     |
+| `SPC w C`            | 选择某一个窗口，并且进入阅读模式                                               |
+| `SPC w d`            | 删除一个窗口                                                                   |
+| `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
+| `SPC w D`            | 选择一个窗口，并且关闭                                                         |
+| `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)        |
+| `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
+| `SPC w f`            | toggle follow mode (TODO)                                                      |
+| `SPC w F`            | 新建一个新的标签页                                                             |
+| `SPC w h`            | 移至左边窗口                                                                   |
+| `SPC w H`            | 将窗口向左移动                                                                 |
+| `SPC w j`            | 移至下方窗口                                                                   |
+| `SPC w J`            | 将窗口移至下方                                                                 |
+| `SPC w k`            | 移至上方窗口                                                                   |
+| `SPC w K`            | 将窗口移至上方                                                                 |
+| `SPC w l`            | 移至右方窗口                                                                   |
+| `SPC w L`            | 将窗口移至右方                                                                 |
+| `SPC w m`            | 最大化/最小化窗口（最大化相当于关闭其他窗口）(TODO, now only support maximize) |
+| `SPC w M`            | 选择窗口进行替换                                                               |
+| `SPC w o`            | 按序切换标签页                                                                 |
+| `SPC w p m`          | open messages buffer in a popup window (TODO)                                  |
+| `SPC w p p`          | close the current sticky popup window (TODO)                                   |
+| `SPC w r`            | 按序切换窗口                                                                   |
+| `SPC w R`            | 逆序切换窗口                                                                   |
+| `SPC w s or SPC w -` | 水平分割窗口                                                                   |
+| `SPC w S`            | 水平分割窗口，并切换至新窗口                                                   |
+| `SPC w u`            | undo window layout (used to effectively undo a closed window) (TODO)           |
+| `SPC w U`            | redo window layout (TODO)                                                      |
+| `SPC w v or SPC w /` | 垂直分离窗口                                                                   |
+| `SPC w V`            | 垂直分离窗口，并切换至新窗口                                                   |
+| `SPC w w`            | 切换至前一窗口                                                                 |
+| `SPC w W`            | 选择一个窗口                                                                   |
 
-#### Buffers and Files
+##### 文件和 Buffer 操作
 
-##### Buffers manipulation key bindings
+###### Buffer 操作相关快捷键
 
-Buffer manipulation commands (start with `b`):
+Buffer 操作相关快捷键都是已 `SPC b` 为前缀的：
 
-| Key Binding     | Description                                                                    |
+| 快捷键          | 描述                                                                           |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC TAB`       | switch to alternate buffer in the current window (switch back and forth)       |
-| `SPC b .`       | buffer transient state                                                         |
-| `SPC b b`       | switch to a buffer (via denite/unite)                                          |
-| `SPC b d`       | kill the current buffer (does not delete the visited file)                     |
+| `SPC TAB`       | 切换至前一buffer，可用于两个 buffer 来回切换                                   |
+| `SPC b .`       | 启用 buffer 临时快捷键                                                         |
+| `SPC b b`       | 切换至某一 buffer，通过 Unite/Denite 进行筛选                                  |
+| `SPC b d`       | 删除当前 buffer，但保留 Vim 窗口                                               |
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
+| `SPC b D`       | 选择一个窗口，并删除其 buffer                                                  |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | kill other buffers                                                             |
+| `SPC b C-d`     | 删除其他 buffer                                                                |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
-| `SPC b h`       | open _SpaceVim_ home buffer                                                    |
-| `SPC b n`       | switch to next buffer avoiding special buffers                                 |
-| `SPC b m`       | open _Messages_ buffer                                                         |
+| `SPC b e`       | 清除当前 buffer 内容，需要手动确认                                             |
+| `SPC b h`       | 打开 _SpaceVim_ 欢迎界面                                                       |
+| `SPC b n`       | 切换至下一个 buffer，排除特殊插件的 buffer                                     |
+| `SPC b m`       | 打开 _Messages_ buffer                                                         |
 | `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | switch to previous buffer avoiding special buffers                             |
-| `SPC b P`       | copy clipboard and replace buffer (useful when pasting from a browser)         |
-| `SPC b R`       | revert the current buffer (reload from disk)                                   |
-| `SPC b s`       | switch to the _scratch_ buffer (create it if needed)                           |
-| `SPC b w`       | toggle read-only (writable state)                                              |
-| `SPC b Y`       | copy whole buffer to clipboard (useful when copying to a browser)              |
+| `SPC b p`       | 切换至前一个 buffer，排除特殊插件的 buffer                                     |
+| `SPC b P`       | 使用剪切板内容替换当前 buffer                                                  |
+| `SPC b R`       | 从磁盘重新读取当前 buffer 所对应的文件                                         |
+| `SPC b s`       | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
+| `SPC b w`       | 切换只读权限                                                                   |
+| `SPC b Y`       | 将整个 buffer 复制到剪切板                                                     |
 | `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
 
-##### Create a new empty buffer
+###### 新建空白 buffer
 
-| Key Binding | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `SPC b N h` | create new empty buffer in a new window on the left   |
-| `SPC b N j` | create new empty buffer in a new window at the bottom |
-| `SPC b N k` | create new empty buffer in a new window above         |
-| `SPC b N l` | create new empty buffer in a new window below         |
-| `SPC b N n` | create new empty buffer in current window             |
+| 快捷键      | 描述                                        |
+| ----------- | ------------------------------------------- |
+| `SPC b N h` | 在左侧新建一个窗口，并在其中新建空白 buffer |
+| `SPC b N j` | 在下方新建一个窗口，并在其中新建空白 buffer |
+| `SPC b N k` | 在上方新建一个窗口，并在其中新建空白 buffer |
+| `SPC b N l` | 在右侧新建一个窗口，并在其中新建空白 buffer |
+| `SPC b N n` | 在当前窗口新建一个空白 buffer               |
 
-##### Special Buffers
+###### 特殊 buffer
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+在 SpaceVim 中，有很多特殊的 buffer，这些 buffer 是由插件或者 SpaceVim 自身新建的，并不会被列出。
 
-##### Files manipulations key bindings
+###### 文件操作相关快捷键
 
-Files manipulation commands (start with f):
+文件操作相关的快捷键都是以 `SPC f` 为前缀的：
 
-| Key Binding | Description                                                    |
-| ----------- | -------------------------------------------------------------- |
-| `SPC f b`   | go to file bookmarks                                           |
-| `SPC f c`   | copy current file to a different location(TODO)                |
-| `SPC f C d` | convert file from unix to dos encoding                         |
-| `SPC f C u` | convert file from dos to unix encoding                         |
-| `SPC f D`   | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO)         |
-| `SPC f f`   | open file                                                      |
-| `SPC f F`   | try to open the file under point                               |
-| `SPC f o`   | open a file using the default external program(TODO)           |
-| `SPC f R`   | rename the current file(TODO)                                  |
-| `SPC f s`   | save a file                                                    |
-| `SPC f S`   | save all files                                                 |
-| `SPC f r`   | open a recent file                                             |
-| `SPC f t`   | toggle file tree side bar                                      |
-| `SPC f T`   | show file tree side bar                                        |
-| `SPC f y`   | show and copy current file absolute path in the cmdline        |
+| 快捷键      | 描述                                                   |
+| ----------- | ------------------------------------------------------ |
+| `SPC f b`   | 跳至文件书签                                           |
+| `SPC f c`   | copy current file to a different location(TODO)        |
+| `SPC f C d` | 修改文件编码 unix -> dos                               |
+| `SPC f C u` | 修改文件编码 dos -> unix                               |
+| `SPC f D`   | 删除文件以及 buffer，需要手动确认                      |
+| `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO) |
+| `SPC f f`   | 打开文件                                               |
+| `SPC f F`   | 打开光标下的文件                                       |
+| `SPC f o`   | open a file using the default external program(TODO)   |
+| `SPC f R`   | rename the current file(TODO)                          |
+| `SPC f s`   | 保存文件                                               |
+| `SPC f S`   | 保存所有文件                                           |
+| `SPC f r`   | 打开文件历史                                           |
+| `SPC f t`   | 切换侧栏文件树                                         |
+| `SPC f T`   | 打开文件树侧栏                                         |
+| `SPC f y`   | 复制当前文件，并且显示当前文件路径                     |
 
-##### Vim and SpaceVim files
+###### Vim 和 SpaceVim 相关文件
 
-Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
+SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 SpaceVim 的配置文件：
 
-| Key Binding | Description                             |
-| ----------- | --------------------------------------- |
-| `SPC f v v` | display and copy SpaceVim version       |
-| `SPC f v d` | open SpaceVim custom configuration file |
+| 快捷键      | 描述                           |
+| ----------- | ------------------------------ |
+| `SPC f v v` | 复制并显示当前 SpaceVim 的版本 |
+| `SPC f v d` | 打开 SpaceVim 的用户配置文件   |
 
-#### File tree
+##### 文件树
 
-SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
+SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要设置：
 
 ```vim
 " the default value is vimfiler
 let g:spacevim_filemanager = 'nerdtree'
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default. to enable this feature, add `let g:spacevim_enable_vimfiler_gitstatus = 1` to your custom config. here is any picture for this feature:
+SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性需要分析文件夹内容，会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，可向配置文件中加入 `let g:spacevim_enable_vimfiler_gitstatus = 1`，启用后的截图如下：
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
 
-##### File tree navigation
+###### 文件树中的常用操作
 
-Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
+文件树中主要以 `hjkl` 为核心，这类似于 [vifm](https://github.com/vifm) 中常用的快捷键：
 
-| Key Binding                   | Description                                       |
-| ----------------------------- | ------------------------------------------------- |
-| `<F3>` or `SPC f t`           | Toggle file explorer                              |
-| **Within _VimFiler_ buffers** |                                                   |
-| `<Left>` or `h`               | go to parent node and collapse expanded directory |
-| `<Down>` or `j`               | select next file or directory                     |
-| `<Up>` or `k`                 | select previous file or directory                 |
-| `<Right>` or `l`              | open selected file or expand directory            |
-| `Ctrl`+`j`                    | Un-map                                            |
-| `Ctrl`+`l`                    | Un-map                                            |
-| `E`                           | Un-map                                            |
-| `.`                           | toggle visible ignored files                      |
-| `sv`                          | Split edit                                        |
-| `sg`                          | Vertical split edit                               |
-| `p`                           | Preview                                           |
-| `i`                           | Switch to directory history                       |
-| `v`                           | Quick look                                        |
-| `gx`                          | Execute with vimfiler associated                  |
-| `'`                           | Toggle mark current line                          |
-| `V`                           | Clear all marks                                   |
-| `Ctrl`+`r`                    | Redraw                                            |
+| 快捷键               | 描述                         |
+| -------------------- | ---------------------------- |
+| `<F3>` or `SPC f t`  | 切换文件树                   |
+| **文件树内的快捷键** |                              |
+| `<Left>` or `h`      | 移至父目录，并关闭文件夹     |
+| `<Down>` or `j`      | 向下移动光标                 |
+| `<Up>` or `k`        | 向上移动光标                 |
+| `<Right>` or `l`     | 展开目录，或打开文件         |
+| `Ctrl`+`j`           | 未使用                       |
+| `Ctrl`+`l`           | 未使用                       |
+| `E`                  | 未使用                       |
+| `.`                  | 切换显示隐藏文件             |
+| `sv`                 | 分屏编辑该文件               |
+| `sg`                 | 垂直分屏编辑该文件           |
+| `p`                  | 预览文件                     |
+| `i`                  | 切换至文件夹历史             |
+| `v`                  | 快速查看                     |
+| `gx`                 | 使用相关程序执行该文件(TODO) |
+| `'`                  | 切换标签                     |
+| `V`                  | 标记该文件                   |
+| `Ctrl`+`r`           | 刷新页面                     |
 
-##### Open file with file tree.
+###### 文件树中打开文件
 
-If there is only one file buffer opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
+如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要制定窗口来打开文件：
 
-| Key Binding    | Description                               |
-| -------------- | ----------------------------------------- |
-| `l` or `Enter` | open file in one window                   |
-| `sg`           | open file in an vertically split window   |
-| `sv`           | open file in an horizontally split window |
+| 快捷键         | 描述             |
+| -------------- | ---------------- |
+| `l` or `Enter` | 打开文件         |
+| `sg`           | 分屏打开文件     |
+| `sv`           | 垂直分屏打开文件 |
 
 ### Commands starting with `g`
 
