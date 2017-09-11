@@ -24,3 +24,17 @@ function! SpaceVim#layers#lang#typescript#config() abort
         autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
     endif
 endfunction
+
+function! SpaceVim#layers#typescript#set_variable(var) abort
+    if has('nvim')
+        let  g:nvim_typescript#server_path =
+                    \ get(a:var, 'typescript_server_path',
+                    \ './node_modules/.bin/tsserver')
+    else
+        let tsserver_path = get(a:var, 'typescript_server_path', '')
+        if !empty(tsserver_path)
+            let g:tsuquyomi_use_dev_node_module = 2
+            let g:tsuquyomi_tsserver_path = tsserver_path
+        endif
+    endif
+endfunction
