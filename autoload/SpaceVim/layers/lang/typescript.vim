@@ -10,7 +10,11 @@
 function! SpaceVim#layers#lang#typescript#plugins() abort
     let plugins = []
     call add(plugins, ['leafgarland/typescript-vim'])
-    call add(plugins, ['Quramy/tsuquyomi'])
+    if has('nvim')
+        call add(plugins, ['mhartington/nvim-typescript'])
+    else
+        call add(plugins, ['Quramy/tsuquyomi'])
+    endif
     return plugins
 endfunction
 

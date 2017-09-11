@@ -48,6 +48,11 @@ let g:deoplete#ignore_sources.javascript = get(g:deoplete#ignore_sources, 'javas
 call deoplete#custom#set('ternjs', 'mark', 'tern')
 call deoplete#custom#set('ternjs', 'rank', 9999)
 
+" typescript
+let g:deoplete#ignore_sources.typescript = get(g:deoplete#ignore_sources, 'typescript', ['tag','omni', 'syntax'])
+call deoplete#custom#set('typescript', 'rank', 9999)
+
+
 " php
 let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'php', [
       \'[^. \t0-9]\.\w*',
