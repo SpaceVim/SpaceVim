@@ -8,7 +8,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['wavded/vim-stylus',                      { 'on_ft' : ['stylus']}],
                 \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
-                \ ['leafgarland/typescript-vim',             { 'on_ft' : ['typescript']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
                 \ ['elzr/vim-json',                          { 'on_ft' : ['javascript','json']}],
                 \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
