@@ -20,5 +20,7 @@ endfunction
 
 
 function! SpaceVim#layers#lang#typescript#config() abort
-    
+    if !has('nvim')
+        autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
+    endif
 endfunction
