@@ -25,7 +25,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
     endif
 endfunction
 
-function! SpaceVim#layers#typescript#set_variable(var) abort
+function! SpaceVim#layers#lang#typescript#set_variable(var) abort
     if has('nvim')
         let  g:nvim_typescript#server_path =
                     \ get(a:var, 'typescript_server_path',
