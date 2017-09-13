@@ -28,6 +28,7 @@ If you are using linux or mac os, it is recommended to use this command to insta
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
+
 with this command, SpaceVim will be installed. All the plugins will be installed **automatically** when vim/nvim is run for the first time.
 For more info about the install script, please check:
 
@@ -38,16 +39,16 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### windows support
 
 - For vim in windows, please just clone this repo as vimfiles in you Home directory.
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
-    make sure you have a backup of your own vimfiles.
+  by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+  make sure you have a backup of your own vimfiles.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
 ```
 
 - For neovim in windows, please clone this repo as `AppData\Local\nvim` in your home directory.
-    for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
-    by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
+  for more info, please check out [neovim's wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+  by default, when open a cmd, the current dir is your Home directory, run this command in cmd.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
@@ -57,18 +58,17 @@ git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
 
 ## News
 
-[Newsletter #1 - A New Hope]()
+[Newsletter #1 - A New Hope](https://spacevim.org/SpaceVim-Newsletter-A-New-Hope/)
+
 >    Published on: 2017-5-31 
 
 More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 [Follow @SpaceVim](https://twitter.com/SpaceVim) 
 
-## Impressions
-
 ## Get Involved
 
-Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim), IRC (**#spacevim** on **irc.freenode.net**) or the [mailing list](https://groups.google.com/forum/#!forum/spacevim). 
+Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
 
 Contribute code, report bugs and request features at [GitHub](https://github.com/SpaceVim/SpaceVim). 
 
@@ -80,7 +80,7 @@ The current stable version is 0.2.0. See the milestones page for development pro
 
 2. Is SpaceVim trying to turn Vim/Neovim into an IDE?
 
-With layers feature, this [version]() of vim distribution to tern vim/neovim into an IDE for many language.
+With layers feature, this [version](<>) of vim distribution to tern vim/neovim into an IDE for many language.
 
 3. Will SpaceVim deprecate Vimscript?
 

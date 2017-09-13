@@ -1,7 +1,5 @@
 ---
 title:  "Development"
-permalink: "/development"
-redirect_from: "/development/index.html"
 ---
 
 # Development
