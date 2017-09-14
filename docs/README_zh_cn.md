@@ -34,145 +34,144 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 | ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
 
 <!-- vim-markdown-toc GFM -->
-
-- [安装](#安装)
-- [更新](#更新)
-- [文档](#文档)
-  - [核心思想](#核心思想)
-    - [记忆辅助](#记忆辅助)
-    - [可视化交互](#可视化交互)
-    - [一致性](#一致性)
-    - [社区驱动](#社区驱动)
-  - [显著特性](#显著特性)
-  - [快捷键导航](#快捷键导航)
-  - [运行截图](#运行截图)
-    - [欢迎页面](#欢迎页面)
-    - [工作界面](#工作界面)
-  - [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
-  - [更新和回滚](#更新和回滚)
-    - [SpaceVim 自身更新](#spacevim-自身更新)
-      - [自动更新](#自动更新)
-      - [通过插件管理器更新](#通过插件管理器更新)
-      - [通过 git 进行更新](#通过-git-进行更新)
-    - [更新插件](#更新插件)
-  - [配置模块](#配置模块)
-  - [用户配置](#用户配置)
-    - [自动生成用户配置](#自动生成用户配置)
-    - [用户配置目录](#用户配置目录)
-  - [概念](#概念)
-    - [临时快捷键](#临时快捷键)
-  - [优雅的界面](#优雅的界面)
-    - [主题](#主题)
-    - [字体](#字体)
-    - [界面元素切换](#界面元素切换)
-    - [状态栏 & 标签栏](#状态栏--标签栏)
-      - [状态栏](#状态栏)
-      - [标签栏](#标签栏)
-  - [手册](#手册)
-    - [自动补全](#自动补全)
-      - [Unite/Denite](#unitedenite)
-      - [Unite/Denite buffer 中的快捷键](#unitedenite-buffer-中的快捷键)
-    - [交互](#交互)
-      - [快捷键](#快捷键)
-        - [快捷键导航](#快捷键导航-1)
-        - [通过 Unite/Denite 浏览快捷键](#通过-unitedenite-浏览快捷键)
-      - [获取帮助信息](#获取帮助信息)
-      - [可用模块](#可用模块)
-        - [可用的插件](#可用的插件)
-        - [添加用户自定义插件](#添加用户自定义插件)
-      - [界面元素显示切换](#界面元素显示切换)
-    - [常规操作](#常规操作)
-      - [光标移动](#光标移动)
-      - [快速跳转](#快速跳转)
-        - [快速跳到网址 (TODO)](#快速跳到网址-todo)
-      - [常用的成对快捷键](#常用的成对快捷键)
-      - [跳转，合并，拆分](#跳转合并拆分)
-        - [跳转](#跳转)
-        - [合并，拆分](#合并拆分)
-      - [窗口操作](#窗口操作)
-        - [窗口操作常用快捷键](#窗口操作常用快捷键)
-    - [Buffers and Files](#buffers-and-files)
-      - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
-      - [Create a new empty buffer](#create-a-new-empty-buffer)
-      - [Special Buffers](#special-buffers)
-      - [Files manipulations key bindings](#files-manipulations-key-bindings)
-      - [Vim and SpaceVim files](#vim-and-spacevim-files)
-    - [File tree](#file-tree)
-      - [File tree navigation](#file-tree-navigation)
-      - [Open file with file tree.](#open-file-with-file-tree)
-  - [Commands starting with `g`](#commands-starting-with-g)
-  - [Commands starting with `z`](#commands-starting-with-z)
-  - [Auto-saving](#auto-saving)
-  - [Searching](#searching)
-    - [With an external tool](#with-an-external-tool)
-      - [Useful key bindings](#useful-key-bindings)
-      - [Searching in current file](#searching-in-current-file)
-      - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
-      - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
-      - [Searching in a project](#searching-in-a-project)
-      - [Background searching in a project](#background-searching-in-a-project)
-      - [Searching the web](#searching-the-web)
-    - [Searching on the fly](#searching-on-the-fly)
-    - [Persistent highlighting](#persistent-highlighting)
-  - [Editing](#editing)
-    - [Paste text](#paste-text)
-      - [Auto-indent pasted text](#auto-indent-pasted-text)
-    - [Text manipulation commands](#text-manipulation-commands)
-    - [Text insertion commands](#text-insertion-commands)
-    - [Commenting](#commenting)
-    - [Multi-Encodings](#multi-encodings)
-  - [Errors handling](#errors-handling)
-  - [Managing projects](#managing-projects)
-- [Achievements](#achievements)
-  - [issues](#issues)
-  - [Stars, forks and watchers](#stars-forks-and-watchers)
-- [Features](#features)
-  - [Awesome ui](#awesome-ui)
-  - [Mnemonic key bindings](#mnemonic-key-bindings)
-- [Language specific mode](#language-specific-mode)
-- [Key Mapping](#key-mapping)
-  - [c/c++ support](#cc-support)
-  - [go support](#go-support)
-  - [python support](#python-support)
-- [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
-- [Modular configuration](#modular-configuration)
-- [Multiple leader mode](#multiple-leader-mode)
-  - [Global origin vim leader](#global-origin-vim-leader)
-  - [Local origin vim leader](#local-origin-vim-leader)
-  - [Windows function leader](#windows-function-leader)
-  - [Unite work flow leader](#unite-work-flow-leader)
-- [Unite centric work-flow](#unite-centric-work-flow)
-    - [Plugin Highlights](#plugin-highlights)
-    - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-  - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-    - [Language](#language)
-      - [Commands](#commands)
-      - [Commands](#commands-1)
-      - [Completion](#completion)
-      - [Unite](#unite)
-      - [Operators & Text Objects](#operators--text-objects)
-    - [Custom Key bindings](#custom-key-bindings)
-      - [File Operations](#file-operations)
-      - [Editor UI](#editor-ui)
-      - [Window Management](#window-management)
-      - [Native functions](#native-functions)
-      - [Plugin: Unite](#plugin-unite)
-      - [Plugin: neocomplete](#plugin-neocomplete)
-      - [Plugin: NERD Commenter](#plugin-nerd-commenter)
-      - [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
-      - [Plugin: ChooseWin](#plugin-choosewin)
-      - [Plugin: Bookmarks](#plugin-bookmarks)
-      - [Plugin: Gina/Gita](#plugin-ginagita)
-      - [Plugin: vim-signify](#plugin-vim-signify)
-      - [Misc Plugins](#misc-plugins)
-  - [模块化配置](#模块化配置)
-  - [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
-  - [自动补全](#自动补全-1)
-  - [细致的tags管理](#细致的tags管理)
-- [快速](#快速)
-  - [SpaceVim选项](#spacevim选项)
-  - [延伸阅读](#延伸阅读)
-    - [Vim 8 新特新之旅](#vim-8-新特新之旅)
+* [安装](#安装)
+* [更新](#更新)
+* [文档](#文档)
+    * [核心思想](#核心思想)
+        * [记忆辅助](#记忆辅助)
+        * [可视化交互](#可视化交互)
+        * [一致性](#一致性)
+        * [社区驱动](#社区驱动)
+    * [显著特性](#显著特性)
+    * [快捷键导航](#快捷键导航)
+    * [运行截图](#运行截图)
+        * [欢迎页面](#欢迎页面)
+        * [工作界面](#工作界面)
+    * [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
+    * [更新和回滚](#更新和回滚)
+        * [SpaceVim 自身更新](#spacevim-自身更新)
+            * [自动更新](#自动更新)
+            * [通过插件管理器更新](#通过插件管理器更新)
+            * [通过 git 进行更新](#通过-git-进行更新)
+        * [更新插件](#更新插件)
+    * [配置模块](#配置模块)
+    * [用户配置](#用户配置)
+        * [自动生成用户配置](#自动生成用户配置)
+        * [用户配置目录](#用户配置目录)
+    * [概念](#概念)
+        * [临时快捷键](#临时快捷键)
+    * [优雅的界面](#优雅的界面)
+        * [主题](#主题)
+        * [字体](#字体)
+        * [界面元素切换](#界面元素切换)
+        * [状态栏 & 标签栏](#状态栏--标签栏)
+            * [状态栏](#状态栏)
+            * [标签栏](#标签栏)
+    * [手册](#手册)
+        * [自动补全](#自动补全)
+            * [Unite/Denite](#unitedenite)
+            * [Unite/Denite buffer 中的快捷键](#unitedenite-buffer-中的快捷键)
+        * [交互](#交互)
+            * [快捷键](#快捷键)
+                * [快捷键导航](#快捷键导航-1)
+                * [通过 Unite/Denite 浏览快捷键](#通过-unitedenite-浏览快捷键)
+            * [获取帮助信息](#获取帮助信息)
+            * [可用模块](#可用模块)
+                * [可用的插件](#可用的插件)
+                * [添加用户自定义插件](#添加用户自定义插件)
+            * [界面元素显示切换](#界面元素显示切换)
+        * [常规操作](#常规操作)
+            * [光标移动](#光标移动)
+            * [快速跳转](#快速跳转)
+                * [快速跳到网址 (TODO)](#快速跳到网址-todo)
+            * [常用的成对快捷键](#常用的成对快捷键)
+            * [跳转，合并，拆分](#跳转合并拆分)
+                * [跳转](#跳转)
+                * [合并，拆分](#合并拆分)
+            * [窗口操作](#窗口操作)
+                * [窗口操作常用快捷键](#窗口操作常用快捷键)
+        * [Buffers and Files](#buffers-and-files)
+            * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+            * [Create a new empty buffer](#create-a-new-empty-buffer)
+            * [Special Buffers](#special-buffers)
+            * [Files manipulations key bindings](#files-manipulations-key-bindings)
+            * [Vim and SpaceVim files](#vim-and-spacevim-files)
+        * [File tree](#file-tree)
+            * [File tree navigation](#file-tree-navigation)
+            * [Open file with file tree.](#open-file-with-file-tree)
+    * [Commands starting with `g`](#commands-starting-with-g)
+    * [Commands starting with `z`](#commands-starting-with-z)
+    * [Auto-saving](#auto-saving)
+    * [Searching](#searching)
+        * [With an external tool](#with-an-external-tool)
+            * [Useful key bindings](#useful-key-bindings)
+            * [Searching in current file](#searching-in-current-file)
+            * [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
+            * [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
+            * [Searching in a project](#searching-in-a-project)
+            * [Background searching in a project](#background-searching-in-a-project)
+            * [Searching the web](#searching-the-web)
+        * [Searching on the fly](#searching-on-the-fly)
+        * [Persistent highlighting](#persistent-highlighting)
+    * [Editing](#editing)
+        * [Paste text](#paste-text)
+            * [Auto-indent pasted text](#auto-indent-pasted-text)
+        * [Text manipulation commands](#text-manipulation-commands)
+        * [Text insertion commands](#text-insertion-commands)
+        * [Commenting](#commenting)
+        * [Multi-Encodings](#multi-encodings)
+    * [Errors handling](#errors-handling)
+    * [Managing projects](#managing-projects)
+* [Achievements](#achievements)
+    * [issues](#issues)
+    * [Stars, forks and watchers](#stars-forks-and-watchers)
+* [Features](#features)
+    * [Awesome ui](#awesome-ui)
+    * [Mnemonic key bindings](#mnemonic-key-bindings)
+* [Language specific mode](#language-specific-mode)
+* [Key Mapping](#key-mapping)
+    * [c/c++ support](#cc-support)
+    * [go support](#go-support)
+    * [python support](#python-support)
+* [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
+* [Modular configuration](#modular-configuration)
+* [Multiple leader mode](#multiple-leader-mode)
+    * [Global origin vim leader](#global-origin-vim-leader)
+    * [Local origin vim leader](#local-origin-vim-leader)
+    * [Windows function leader](#windows-function-leader)
+    * [Unite work flow leader](#unite-work-flow-leader)
+* [Unite centric work-flow](#unite-centric-work-flow)
+        * [Plugin Highlights](#plugin-highlights)
+        * [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+    * [Lazy-Loaded Plugins](#lazy-loaded-plugins)
+        * [Language](#language)
+            * [Commands](#commands)
+            * [Commands](#commands-1)
+            * [Completion](#completion)
+            * [Unite](#unite)
+            * [Operators & Text Objects](#operators--text-objects)
+        * [Custom Key bindings](#custom-key-bindings)
+            * [File Operations](#file-operations)
+            * [Editor UI](#editor-ui)
+            * [Window Management](#window-management)
+            * [Native functions](#native-functions)
+            * [Plugin: Unite](#plugin-unite)
+            * [Plugin: neocomplete](#plugin-neocomplete)
+            * [Plugin: NERD Commenter](#plugin-nerd-commenter)
+            * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+            * [Plugin: ChooseWin](#plugin-choosewin)
+            * [Plugin: Bookmarks](#plugin-bookmarks)
+            * [Plugin: Gina/Gita](#plugin-ginagita)
+            * [Plugin: vim-signify](#plugin-vim-signify)
+            * [Misc Plugins](#misc-plugins)
+    * [模块化配置](#模块化配置)
+    * [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
+    * [自动补全](#自动补全-1)
+    * [细致的tags管理](#细致的tags管理)
+* [快速](#快速)
+    * [SpaceVim选项](#spacevim选项)
+    * [延伸阅读](#延伸阅读)
+        * [Vim 8 新特新之旅](#vim-8-新特新之旅)
 
 <!-- vim-markdown-toc -->
 
@@ -824,47 +823,47 @@ let g:spacevim_custom_plugins = [
 | -------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `SPC w TAB`/`<Tab>`          | 在统一标签内进行窗口切换                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                                         |
-| `SPC w b`            | force the focus back to the minibuffer (TODO)                                                                 |
+| `SPC w b`            | 强制焦点返回minibuffer (TODO)                                                                 |
 | `SPC w c`            | 进入阅读模式，浏览当前窗口                                                                       |
 | `SPC w C`            | 选择某一个窗口，并且进入阅读模式                                                      |
 | `SPC w d`            | 删除一个窗口                                                                                               |
-| `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)                                      |
+| `SPC u SPC w d`      | 删除一个窗口以及其Buffer(并不会删除文件) (TODO)                                      |
 | `SPC w D`            | 选择一个窗口，并且关闭                                                                     |
-| `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)                                       |
-| `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`            | toggle follow mode (TODO)                                                                                     |
+| `SPC u SPC w D`      | 利用vim-choosewin删除一个窗口以及其所在Buffer(TODO)                                       |
+| `SPC w t`            | 切换窗口锁定(被锁定的窗口不能被一个模式重用) (TODO)                                 |
+| `SPC w f`            | 切换跟随模式 (TODO)                                                                                     |
 | `SPC w F`            | 新建一个新的标签页                                                                                         |
 | `SPC w h`            | 移至左边窗口                                                                                    |
 | `SPC w H`            | 将窗口向左移动                                                                                       |
-| `SPC w j`            | move to window below                                                                                          |
-| `SPC w J`            | move window to the bottom                                                                                     |
-| `SPC w k`            | move to window above                                                                                          |
-| `SPC w K`            | move window to the top                                                                                        |
-| `SPC w l`            | move to window on the right                                                                                   |
-| `SPC w L`            | move window to the right                                                                                      |
-| `SPC w m`            | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
-| `SPC w M`            | swap windows using vim-choosewin                                                                              |
-| `SPC w o`            | cycle and focus between tabs                                                                                  |
-| `SPC w p m`          | open messages buffer in a popup window (TODO)                                                                 |
-| `SPC w p p`          | close the current sticky popup window (TODO)                                                                  |
-| `SPC w r`            | rotate windows forward                                                                                        |
-| `SPC w R`            | rotate windows backward                                                                                       |
-| `SPC w s or SPC w -` | horizontal split                                                                                              |
-| `SPC w S`            | horizontal split and focus new window                                                                         |
-| `SPC w u`            | undo window layout (used to effectively undo a closed window) (TODO)                                          |
-| `SPC w U`            | redo window layout (TODO)                                                                                     |
-| `SPC w v or SPC w /` | vertical split                                                                                                |
-| `SPC w V`            | vertical split and focus new window                                                                           |
-| `SPC w w`            | cycle and focus between windows                                                                               |
-| `SPC w W`            | select window using vim-choosewin                                                                             |
+| `SPC w j`            | 移至下方窗口                                                                                         |
+| `SPC w J`            | 将窗口移至底端                                                                                    |
+| `SPC w k`            | 移至上方窗口                                                                                          |
+| `SPC w K`            | 将窗口移至顶端                                                                                       |
+| `SPC w l`            | 移至右方窗口                                                                                   |
+| `SPC w L`            | 将窗口向右移动                                                                                      |
+| `SPC w m`            | 最小化/最大化窗口(最大化窗口等同于删除其他窗口) (TODO, 目前仅仅支持最大化) |
+| `SPC w M`            | 利用vim-choosewin交换窗口                                                                              |
+| `SPC w o`            | 循环切换标签                                                                                 |
+| `SPC w p m`          | 在弹出框中打开Message Buffer (TODO)                                                                 |
+| `SPC w p p`          | 关闭当前置顶弹出框 (TODO)                                                                  |
+| `SPC w r`            | 顺时针切换窗口                                                                                        |
+| `SPC w R`            | 逆时针切换窗口                                                                                       |
+| `SPC w s or SPC w -` | 水平切分窗口                                                                                              |
+| `SPC w S`            | 水平切分窗口并聚焦新窗口                                                                         |
+| `SPC w u`            | 撤销窗口布局操作(可以有效地撤销一次关闭窗口的操作) (TODO)                                          |
+| `SPC w U`            | 重做窗口布局操作 (TODO)                                                                                     |
+| `SPC w v or SPC w /` | 垂直切分窗口                                                                                                |
+| `SPC w V`            | 垂直切分窗口并聚焦新窗口                                                                           |
+| `SPC w w`            | 循环切换窗口                                                                               |
+| `SPC w W`            | 使用vim-choosewin选择窗口                                                                             |
 
 #### Buffers and Files
 
 ##### Buffers manipulation key bindings
 
-Buffer manipulation commands (start with `b`):
+Buffer操作相关快捷键 (以`SPC b`为前缀):
 
-| Key Binding     | Description                                                                    |
+| 快捷键     | 描述                                                                    |
 | --------------- | ------------------------------------------------------------------------------ |
 | `SPC TAB`       | switch to alternate buffer in the current window (switch back and forth)       |
 | `SPC b .`       | buffer transient state                                                         |
