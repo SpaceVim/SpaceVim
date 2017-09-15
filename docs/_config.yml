@@ -8,6 +8,8 @@ url: https://spacevim.org
 
 permalink: /:title/
 
-gems:
+plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
+
+github: [metadata]
