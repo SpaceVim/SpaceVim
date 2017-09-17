@@ -17,6 +17,17 @@ endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
   call SpaceVim#mapping#gd#add('javascript', function('s:gotodef'))
+  if !exists(g:spacevim_javascript_autofix)
+    let g:spacevim_javascript_autofix = 1
+  endif
+  if (g:spacevim_javascript_autofix) 
+    " Only use eslint
+    let g:neomake_javascript_enabled_makers = ['eslint']
+    " Use the fix option of eslint
+    let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
+    au User NeomakeFinished checktime
+    au FocusGained * checktime
+  endif
 endfunction
 
 function! s:gotodef() abort
