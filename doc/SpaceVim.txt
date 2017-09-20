@@ -188,6 +188,9 @@ Set the statusline separators of statusline, default is 'arrow'
 See more details in: http://spacevim.org/documentation/#statusline
 
 
+                                       *g:spacevim_statusline_unicode_symbols*
+Enable/Disable unicode symbols in statusline
+
                                               *g:spacevim_enable_cursorcolumn*
 Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
 normal mode. To enable this feature:

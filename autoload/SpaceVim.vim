@@ -152,6 +152,9 @@ let g:spacevim_enable_cursorline       = 1
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
 ""
+" Enable/Disable unicode symbols in statusline
+let g:spacevim_statusline_unicode_symbols = 1
+""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
 " >
