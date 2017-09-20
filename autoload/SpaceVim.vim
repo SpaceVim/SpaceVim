@@ -272,6 +272,7 @@ let g:spacevim_buffer_index_type = 0
 "   " 0: 1 ➛ ➊ 
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
+"   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
 let g:spacevim_windows_index_type = 0

@@ -132,9 +132,17 @@ endif
 
 function! s:winnr(...) abort
   if a:0 > 1
-    return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    if g:spacevim_windows_index_type == 3
+      return ' ' . winnr() . ' '
+    else
+      return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
   else
-    return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    if g:spacevim_windows_index_type == 3
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
+    else
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
   endif
 endfunction
 
@@ -406,17 +414,17 @@ endfunction
 " +- a:marked  : The number of marked files, or a comma separated list of
 "                the marked filenames.
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
-    return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
-          \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep,
-          \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+  return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
+        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
 " a:str : Either the number of files scanned so far, or a string indicating
 "         the current directory is being scanned with a user_command.
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
-    return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
-          \ [' ' . getcwd() . ' '], s:lsep, s:rsep,
-          \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+  return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
+        \ [' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
