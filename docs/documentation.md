@@ -360,7 +360,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | SPC t 8     | highlight any character past the 80th column                      |
 | SPC t f     | display the fill column (by default the fill column is set to 80) |
 | SPC t h h   | toggle highlight of the current line                              |
-| SPC t h i   | toggle highlight indentation levels (TODO)                               |
+| SPC t h i   | toggle highlight indentation levels (TODO)                        |
 | SPC t h c   | toggle highlight indentation current column                       |
 | SPC t h s   | toggle syntax highlighting                                        |
 | SPC t i     | toggle indentation guide at point                                 |
@@ -480,7 +480,7 @@ here is an exhaustive set of screenshots for all the available separator:
 
 The minor mode area can be toggled on and off with `SPC t m m`
 
-Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to nil in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to 0 in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
 
 The letters displayed in the statusline correspond to the key bindings used to toggle them.
 
