@@ -13,3 +13,7 @@ plugins:
   - jekyll-sitemap
 
 github: [metadata]
+
+sass:
+ sass_dir: _sass
+ style: compressed
