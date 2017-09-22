@@ -18,11 +18,11 @@
                     "@type": "Person",
                     "name": "Shidong Wang"
                 },
-                "description": "{{ site.description }}",
+                "description": "{{ page.description | site.description }}",
                 "publisher": "Shidong Wang",
                 "potentialAction": { 
                     "@type": "SearchAction", 
-                    "target": "https://spacevim.org/?s={search_term}", 
+                    "target": "https://www.google.com/search?q={search_term}+site:spacevim.org", 
                     "query-input": "required name=search_term" } 
             }
         </script>
