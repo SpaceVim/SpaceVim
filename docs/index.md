@@ -1,5 +1,6 @@
 ---
 title:  "Home"
+description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
 ---
 
 # Introduction
