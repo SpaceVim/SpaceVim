@@ -1,3 +1,9 @@
+---
+title:  "SpaceVim 中文手册"
+description: "SpaceVim 是一个社区驱动的 Vim 配置，内含多种语言模块，提供了代码补全、语法检查、跳转等多种 IDE 特性。"
+---
+
+
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
