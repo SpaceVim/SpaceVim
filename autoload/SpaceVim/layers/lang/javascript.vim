@@ -15,12 +15,15 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
   return plugins
 endfunction
 
+let s:auto_fix = 0
+
+function! SpaceVim#layers#lang#javascript#set_variable(var) abort
+   let s:auto_fix = get(a:var, 'auto_fix', s:auto_fix)
+endfunction
+
 function! SpaceVim#layers#lang#javascript#config() abort
   call SpaceVim#mapping#gd#add('javascript', function('s:gotodef'))
-  if !exists(g:spacevim_javascript_autofix)
-    let g:spacevim_javascript_autofix = 1
-  endif
-  if (g:spacevim_javascript_autofix) 
+  if s:auto_fix
     " Only use eslint
     let g:neomake_javascript_enabled_makers = ['eslint']
     " Use the fix option of eslint
