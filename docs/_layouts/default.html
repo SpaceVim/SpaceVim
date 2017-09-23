@@ -9,25 +9,7 @@
             enable_page_level_ads: true
         });
     </script>
-    <script type="application/ld+json">
-        {
-            "@context": "http://schema.org",
-            "@type": "WebSite",
-            "url": "{{ page.url }}",
-            "name": "{{ page.title | default: Home }} - SpaceVim",
-            "author": {
-                "@type": "Person",
-                "name": "Shidong Wang"
-            },
-            "description": "{{ page.description | site.description }}",
-            "publisher": "Shidong Wang",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://www.google.com/search?q={search_term}+site:spacevim.org",
-                "query-input": "required name=search_term"
-            }
-        }
-    </script>
+    {% seo %}
     <script>
         var _hmt = _hmt || [];
         (function() {
