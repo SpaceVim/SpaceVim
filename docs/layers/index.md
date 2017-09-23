@@ -1,4 +1,25 @@
-# SpaceVim Layers
+---
+title:  Available layers
+description: A list of available layers in SpaceVim.
+keywords: layer,layers
+---
+
+## Introduction
+
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature. here is an example for loadding a layer with some specified options:
+
+```vim
+call SpaceVim#layers#load('shell',
+        \ {
+        \ 'default_position' : 'top',
+        \ 'default_height' : 30,
+        \ }
+        \ )
+```
+
+## Available layers
+
+this a list of buildin layers:
 
 | Name          |            Description            | Documentation                                              |
 | ------------- | :-------------------------------: | ---------------------------------------------------------- |
