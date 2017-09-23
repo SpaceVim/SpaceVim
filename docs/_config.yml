@@ -1,6 +1,6 @@
 theme: jekyll-theme-midnight
 title: SpaceVim
-description: A community-driven Vim distribution
+description: SpaceVim is a community-driven vim distribution that seeks to provide layer feature
 show_downloads: false
 google_analytics: UA-89745542-1
 project_repo_url: https://github.com/SpaceVim/SpaceVim
@@ -14,3 +14,6 @@ plugins:
   - jekyll-seo-tag
 
 github: [metadata]
+
+twitter:
+    username: SpaceVim
