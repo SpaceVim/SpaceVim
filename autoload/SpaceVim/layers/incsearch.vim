@@ -38,8 +38,8 @@ function! SpaceVim#layers#incsearch#config() abort
     map g/ <Plug>(incsearch-stay)
     set hlsearch
     let g:incsearch#auto_nohlsearch = get(g:, 'incsearch#auto_nohlsearch', 1)
-    noremap <silent> n  :call <SID>update_search_index('d')<cr>
-    noremap <silent> N  :call <SID>update_search_index('r')<cr>
+    nnoremap <silent> n  :call <SID>update_search_index('d')<cr>
+    nnoremap <silent> N  :call <SID>update_search_index('r')<cr>
     map *  <Plug>(incsearch-nohl-*)
     map #  <Plug>(incsearch-nohl-#)
     map g* <Plug>(incsearch-nohl-g*)

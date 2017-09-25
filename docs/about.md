@@ -1,5 +1,6 @@
 ---
 title:  "About"
+description: "Introduction about SpaceVim organization."
 ---
 
 # About SpaceVim

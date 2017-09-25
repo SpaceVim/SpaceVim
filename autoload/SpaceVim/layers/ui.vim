@@ -46,7 +46,11 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'toggle highlight of the current line', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
                 \ . string(s:_function('s:toggle_indentline')) . ', [])',
-                \ 'toggle highlight indentation levels', 1)
+                \ ['toggle highlight indentation levels',
+                \ [
+                \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
+                \ ]
+                \ ], 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'c'], 'set cursorcolumn!',
                 \ 'toggle highlight indentation current column', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 's'], 'call call('
