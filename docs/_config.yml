@@ -1,15 +1,29 @@
 theme: jekyll-theme-midnight
 title: SpaceVim
-description: A community-driven Vim distribution
+description: A community-driven vim distribution
 show_downloads: false
 google_analytics: UA-89745542-1
 project_repo_url: https://github.com/SpaceVim/SpaceVim
 url: https://spacevim.org
-
+logo: https://spacevim.org/SpaceVim.png
 permalink: /:title/
 
 plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 github: [metadata]
+
+author:
+      name: Shidong Wang
+      twitter: SpaceVim
+twitter:
+    username: "@SpaceVim"
+
+social:
+  name: SpaceVim
+  links:
+      - https://twitter.com/SpaceVim
+      - https://github.com/SpaceVim/SpaceVim
+      - https://www.reddit.com/r/SpaceVim/

@@ -1,5 +1,6 @@
 ---
 title:  "Development"
+description: "A guide for contributing to SpaceVim."
 ---
 
 # Development
