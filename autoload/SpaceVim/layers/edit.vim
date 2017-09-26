@@ -6,6 +6,7 @@ let s:LIST = SpaceVim#api#import('data#list')
 function! SpaceVim#layers#edit#plugins() abort
     let plugins = [
                 \ ['tpope/vim-surround'],
+                \ ['tpope/vim-repeat'],
                 \ ['junegunn/vim-emoji'],
                 \ ['terryma/vim-multiple-cursors'],
                 \ ['terryma/vim-expand-region', { 'loadconf' : 1}],

@@ -32,6 +32,9 @@ let g:deoplete#ignore_sources.go = get(g:deoplete#ignore_sources, 'go', ['omni']
 call deoplete#custom#set('go', 'mark', '')
 call deoplete#custom#set('go', 'rank', 9999)
 
+" markdown
+let g:deoplete#ignore_sources.markdown = get(g:deoplete#ignore_sources, 'markdown', ['tag'])
+
 " perl
 let g:deoplete#omni#input_patterns.perl = get(g:deoplete#omni#input_patterns, 'perl', [
       \'[^. \t0-9]\.\w*',
@@ -44,6 +47,11 @@ let g:deoplete#omni#input_patterns.perl = get(g:deoplete#omni#input_patterns, 'p
 let g:deoplete#ignore_sources.javascript = get(g:deoplete#ignore_sources, 'javascript', ['omni'])
 call deoplete#custom#set('ternjs', 'mark', 'tern')
 call deoplete#custom#set('ternjs', 'rank', 9999)
+
+" typescript
+let g:deoplete#ignore_sources.typescript = get(g:deoplete#ignore_sources, 'typescript', ['tag','omni', 'syntax'])
+call deoplete#custom#set('typescript', 'rank', 9999)
+
 
 " php
 let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'php', [

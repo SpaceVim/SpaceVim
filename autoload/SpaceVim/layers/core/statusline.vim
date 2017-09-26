@@ -34,26 +34,32 @@ let s:loaded_modes = ['syntax-checking']
 let s:modes = {
       \ 'center-cursor': {
       \ 'icon' : '⊝',
+      \ 'icon_asc' : '-',
       \ 'desc' : 'centered-cursor mode',
       \ },
       \ 'hi-characters-for-long-lines' :{
       \ 'icon' : '⑧',
+      \ 'icon_asc' : '8',
       \ 'desc' : 'toggle highlight of characters for long lines',
       \ },
       \ 'fill-column-indicator' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+      \ 'icon_asc' : 'f',
       \ 'desc' : 'fill-column-indicator mode',
       \ },
       \ 'syntax-checking' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+      \ 'icon_asc' : 's',
       \ 'desc' : 'syntax-checking mode',
       \ },
       \ 'spell-checking' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+      \ 'icon_asc' : 'S',
       \ 'desc' : 'spell-checking mode',
       \ },
       \ 'whitespace' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+      \ 'icon_asc' : 'w',
       \ 'desc' : 'whitespace mode',
       \ },
       \ }
@@ -126,9 +132,17 @@ endif
 
 function! s:winnr(...) abort
   if a:0 > 1
-    return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    if g:spacevim_windows_index_type == 3
+      return ' ' . winnr() . ' '
+    else
+      return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
   else
-    return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    if g:spacevim_windows_index_type == 3
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
+    else
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
   endif
 endfunction
 
@@ -169,7 +183,11 @@ endfunction
 function! s:modes() abort
   let m = ' ❖ '
   for mode in s:loaded_modes
-    let m .= s:modes[mode].icon . ' '
+    if g:spacevim_statusline_unicode_symbols == 1
+      let m .= s:modes[mode].icon . ' '
+    else
+      let m .= s:modes[mode].icon_asc . ' '
+    endif
   endfor
   return m . ' '
 endfunction
@@ -396,17 +414,17 @@ endfunction
 " +- a:marked  : The number of marked files, or a comma separated list of
 "                the marked filenames.
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
-    return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
-          \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep,
-          \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+  return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
+        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
 " a:str : Either the number of files scanned so far, or a string indicating
 "         the current directory is being scanned with a user_command.
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
-    return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
-          \ [' ' . getcwd() . ' '], s:lsep, s:rsep,
-          \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+  return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
+        \ [' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort

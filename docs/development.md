@@ -1,7 +1,6 @@
 ---
 title:  "Development"
-permalink: "/development"
-redirect_from: "/development/index.html"
+description: "A guide for contributing to SpaceVim."
 ---
 
 # Development

@@ -56,6 +56,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs | wincmd w', 'split-window-right', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'bel vs | wincmd w', 'split-window-right', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w', 'split-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w', 'split-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'bel split', 'split-focus-window-below', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vs | wincmd w', 'layout-double-columns', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H', 'split-window-below', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'], 'bel vs', 'split-window-right-focus', 1)

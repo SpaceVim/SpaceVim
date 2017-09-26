@@ -40,6 +40,18 @@ function! s:self.listed_buffers() abort
     return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
 
+
+function! s:self.filter_do(expr) abort
+    let buffers = range(1, bufnr('$'))
+    for f_expr in a:expr.expr
+        let buffers = filter(buffers, f_expr)
+    endfor
+    for b in buffers
+        exe printf(a:expr.do, b)
+    endfor
+endfunction
+
+
 fu! SpaceVim#api#vim#buffer#get() abort
    return deepcopy(s:self)
 endf

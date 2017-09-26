@@ -53,7 +53,7 @@ augroup startify_map
   if !exists('g:startify_custom_header')
     autocmd FileType startify call <SID>update_logo()
   endif
-  autocmd FileType startify setl scrolloff=0 nowrap
+  autocmd FileType startify setl nowrap
 augroup END
 
 if !exists('g:startify_custom_header')
