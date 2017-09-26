@@ -88,6 +88,8 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', '#'], 'buffer #', 'Previously active buffer (:b #)', 1)
+
   "
   " Comments sections
   "
