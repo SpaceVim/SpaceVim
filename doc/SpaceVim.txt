@@ -412,6 +412,9 @@ COMMANDS                                                   *SpaceVim-commands*
       :SPUpdate vim-airline
 <
 
+:SPReinstall                                                    *:SPReinstall*
+  Command for reinstall plugin, support completion of plugin anme.
+
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
 

@@ -111,6 +111,12 @@ function! s:get_uninstalled_plugins() abort
     return filter(values(dein#get()), '!isdirectory(v:val.path)')
 endfunction
 
+
+function! SpaceVim#plugins#manager#reinstall(...)
+    call dein#reinstall(a:1)
+endfunction
+
+
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
     if !s:JOB.vim_job && !s:JOB.nvim_job

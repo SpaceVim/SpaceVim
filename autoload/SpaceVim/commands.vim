@@ -35,6 +35,13 @@ function! SpaceVim#commands#load() abort
   command! -nargs=*
         \ -complete=custom,SpaceVim#commands#complete_plugin
         \ SPUpdate call SpaceVim#commands#update_plugin(<f-args>)
+
+  ""
+  " Command for reinstall plugin, support completion of plugin anme. 
+  command! -nargs=+
+        \ -complete=custom,SpaceVim#commands#complete_plugin
+        \ SPReinstall call SpaceVim#commands#reinstall_plugin(<f-args>)
+
   ""
   " Command for install plugins.
   command! -nargs=* SPInstall call SpaceVim#commands#install_plugin(<f-args>)
@@ -76,6 +83,14 @@ function! SpaceVim#commands#update_plugin(...) abort
     else
       call SpaceVim#plugins#manager#update(a:000)
     endif
+  elseif g:spacevim_plugin_manager ==# 'vim-plug'
+  endif
+endfunction
+
+function! SpaceVim#commands#reinstall_plugin(...)
+  if g:spacevim_plugin_manager ==# 'dein'
+    call SpaceVim#plugins#manager#reinstall(a:000)
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
 endfunction
