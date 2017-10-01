@@ -14,9 +14,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature, especially for neovim. It offers a variety of layers to choose from. to create a suitable vim development environment, you just need to select the required layers. If you use SpaceVim,
-please star it on github. It's a great way of getting feedback and gives me the kick to
-put more time into development.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, compatible with vim and neoVim. Layers help collect related packages together to provide features. For example, the [lang#java layer](http://spacevim.org/layers/lang/java/) provides auto-completion, syntax checking, and debug support for java files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the java features the user has just to add the `lang#java` layer to their dotfile. If you use SpaceVim, please star it on github. It's a great way of getting feedback and gives me the kick to put more time into development.
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
@@ -27,6 +25,10 @@ Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
+
+### Requirements
+
+SpaceVim's basic mode only requests `git` comamnd in your `$PATH`, but if you want to get better user experience, you need to install [nerd-font](https://github.com/ryanoasis/nerd-fonts). And make sure your terminal support [true colors](https://gist.github.com/XVilka/8346728).
 
 ### Install
 
