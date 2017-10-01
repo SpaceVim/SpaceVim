@@ -1,4 +1,4 @@
 if [ ! -e /tmp/vader ]; then
-    git clone https://github.com/junegunn/vader.vim.git /tmp/vader
+    git clone --depth 1 https://github.com/junegunn/vader.vim.git /tmp/vader
 fi
 vim -Nu test/vimrc -c 'Vader! test/**'
