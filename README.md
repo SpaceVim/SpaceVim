@@ -14,7 +14,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature, compatible with vim and neoVim. Layers help collect related packages together to provide features. For example, the [lang#java layer](http://spacevim.org/layers/lang/java/) provides auto-completion, syntax checking, and debug support for java files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the java features the user has just to add the `lang#java` layer to their dotfile. If you use SpaceVim, please star it on github. It's a great way of getting feedback and gives me the kick to put more time into development.
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature, compatible with vim and neoVim. Layers help collect related plugins together to provide features. Also help keep configuration organized and reduces overhead for the user by keeping them from having to think about what plugins to install. star it on github is a great way of getting feedback and gives me the kick to put more time into development.
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
@@ -64,6 +64,7 @@ If you want to show your support financially you can  buy a drink for the mainta
 ### Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
+- [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
