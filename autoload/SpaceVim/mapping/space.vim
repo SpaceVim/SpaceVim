@@ -1,12 +1,5 @@
 let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
-  if s:has_map_to_spc()
-    return
-  endif
-  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
-  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
-  nmap <Space> [SPC]
-  vmap <Space> [SPC]
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
@@ -26,6 +19,13 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
   let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+  if s:has_map_to_spc()
+    return
+  endif
+  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
+  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
+  nmap <Space> [SPC]
+  vmap <Space> [SPC]
   " Windows
   for i in range(1, 9)
     exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#statusline#jump(" . i . ")', 'window " . i . "', 1)"
