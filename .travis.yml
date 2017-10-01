@@ -61,5 +61,5 @@ script:
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
-      vim -Nu test/test.vim -c 'Vader! test/**'
+      vim -Nu test/vimrc -c 'Vader! test/**'
     fi
