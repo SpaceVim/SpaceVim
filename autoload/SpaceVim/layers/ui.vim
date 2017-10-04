@@ -30,7 +30,7 @@ function! SpaceVim#layers#ui#config() abort
     let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
-    noremap <silent> <F2> :TagbarToggle<CR>
+    noremap <silent> <F2> :silent TagbarToggle<CR>
     " Ui toggles
     call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
                 \ . string(s:_function('s:toggle_fill_column')) . ', [])',
