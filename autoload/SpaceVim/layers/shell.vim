@@ -33,7 +33,7 @@ function! SpaceVim#layers#shell#config() abort
 endfunction
 
 function! SpaceVim#layers#shell#set_variable(var) abort
-   let s:default_shell = get(a:var, 'defaut_shell', 'terminal')
+   let s:default_shell = get(a:var, 'default_shell', 'terminal')
    let s:default_position = get(a:var, 'default_position', 'top')
    let s:default_height = get(a:var, 'default_height', 30)
 endfunction
@@ -61,8 +61,12 @@ function! s:open_default_shell() abort
         exe 'resize ' . lines
     endif
     if s:default_shell ==# 'terminal'
-        if exists(':te')
-            exe 'te'
+        if exists(':terminal')
+          if has('nvim')
+            exe 'terminal'
+          else
+            call term_start('bash', {'curwin' : 1, 'term_finish' : 'close'})
+          endif
             let s:shell_win_nr = winnr()
             let w:shell_layer_win = 1
             startinsert
