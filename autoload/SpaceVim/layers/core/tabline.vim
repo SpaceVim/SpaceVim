@@ -101,7 +101,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
         endfor
         let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-        let t .= '%#SpaceVim_tabline_a# Tabs'
+        let t .= '%#SpaceVim_tabline_a# Tabs '
     else
         let s:buffers = s:BUFFER.listed_buffers()
         let g:_spacevim_list_buffers = s:buffers
@@ -146,7 +146,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
         endfor
         let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-        let t .= '%#SpaceVim_tabline_a# Buffers'
+        let t .= '%#SpaceVim_tabline_a# Buffers '
     endif
     return t
 endfunction
