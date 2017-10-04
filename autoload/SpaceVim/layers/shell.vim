@@ -11,9 +11,8 @@ function! SpaceVim#layers#shell#plugins() abort
     let plugins = []
     if has('nvim')
         call add(plugins,['Shougo/deol.nvim'])
-    else
-        call add(plugins,['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}])
     endif
+    call add(plugins,['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}])
     return plugins
 endfunction
 
@@ -75,5 +74,6 @@ function! s:open_default_shell() abort
         endif
     elseif s:default_shell ==# 'VimShell'
         VimShell
+        imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
     endif
 endfunction
