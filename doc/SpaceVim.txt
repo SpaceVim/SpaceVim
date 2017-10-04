@@ -234,6 +234,9 @@ Set the message language of vim. Default is 'en_US.UTF-8'.
   let g:spacevim_language = 'en_CA.utf8'
 <
 
+                                                *g:spacevim_keep_server_alive*
+Option for keep the spacevim server ailive
+
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim. Default is 'gruvbox'.
 

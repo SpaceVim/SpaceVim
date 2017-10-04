@@ -7,6 +7,8 @@
 "=============================================================================
 
 
+
+
 function! SpaceVim#server#connect()
     if empty($SPACEVIM_SERVER_ADDRESS)
         let $SPACEVIM_SERVER_ADDRESS = serverlist()[0]
@@ -14,6 +16,24 @@ function! SpaceVim#server#connect()
     else
         call sockconnect('pipe',  $SPACEVIM_SERVER_ADDRESS, {'rpc' : 1})
         return 1
+    endif
+endfunction
+
+
+function! SpaceVim#server#export_server()
+
+   call system('export $TEST_SPACEVIM="test"') 
+
+endfunction
+
+function! SpaceVim#server#terminate()
+
+endfunction
+
+function! SpaceVim#server#list()
+    if has('nvim')
+        return join(serverlist(), "\n")
+    else
     endif
 endfunction
 
