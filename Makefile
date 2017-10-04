@@ -6,3 +6,8 @@ build/vader:
 
 build:
 	mkdir -p $@
+
+clean:
+	$(RM) -r build
+
+.PHONY: clean test
