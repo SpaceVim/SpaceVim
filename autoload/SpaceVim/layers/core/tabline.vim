@@ -188,7 +188,7 @@ endfunction
 function! SpaceVim#layers#core#tabline#jump(id) abort
     if len(s:buffers) >= a:id
         let bid = s:buffers[a:id - 1]
-        exe 'b' . bid
+        exe 'silent b' . bid
     endif
 endfunction
 

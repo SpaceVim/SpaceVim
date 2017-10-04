@@ -42,6 +42,7 @@ let s:shell_win_nr = 0
 function! s:open_default_shell() abort
     if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
         exe s:shell_win_nr .  'wincmd w'
+        startinsert
         return
     endif
     if &buftype ==# 'terminal'
@@ -64,6 +65,7 @@ function! s:open_default_shell() abort
             exe 'te'
             let s:shell_win_nr = winnr()
             let w:shell_layer_win = 1
+            startinsert
         else
             echo ':terminal is not supported in this version'
         endif
