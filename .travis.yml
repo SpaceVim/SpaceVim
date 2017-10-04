@@ -58,5 +58,8 @@ script:
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
-      make test
+      make test_coverage
+      build/covimerage/bin/covimerage xml
+      pip install codecov
+      codecov -X search gcov pycov -f coverage.xml
     fi
