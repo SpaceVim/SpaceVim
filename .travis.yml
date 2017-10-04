@@ -34,7 +34,6 @@ install:
     elif [ "${LINT#vint}" != "$LINT" ]; then
       virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
     elif [ "${LINT#vader}" != "$LINT" ]; then
-      git clone --depth 1 https://github.com/junegunn/vader.vim.git /tmp/vader
       C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
       git clone --depth 1 https://github.com/vim/vim
       cd vim
@@ -61,5 +60,5 @@ script:
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
-      vim -Nu test/vimrc -c 'Vader! test/**'
+      make test
     fi
