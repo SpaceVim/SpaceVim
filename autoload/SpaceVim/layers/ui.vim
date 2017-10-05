@@ -215,6 +215,11 @@ function! s:toggle_spell_check() abort
         let &l:spell = 1
     endif
     call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
+    if &l:spell == 1
+      echo 'spell-checking enabled.'
+    else
+      echo 'spell-checking disabled.'
+    endif
 endfunction
 
 function! s:toggle_whitespace() abort
