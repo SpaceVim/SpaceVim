@@ -22,7 +22,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#python#config() abort
-
+  call SpaceVim#plugins#runner#reg_runner('python', 'python %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('python', funcref('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python',
         \ ['#!/usr/bin/env python',
