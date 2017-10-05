@@ -44,7 +44,7 @@ install:
     fi
 script:
   - |
-    set -e
+    set -ex
     if [ "$LINT" = "vimlint" ]; then
       for file in $(find . -name "*.vim");
       do
