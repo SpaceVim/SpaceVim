@@ -76,7 +76,7 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'toggle syntax checker', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
                 \ . string(s:_function('s:toggle_spell_check')) . ', [])',
-                \ 'toggle syntax checker', 1)
+                \ 'toggle spell checker', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
                 \ . string(s:_function('s:toggle_whitespace')) . ', [])',
                 \ 'toggle the whitespace', 1)
@@ -202,9 +202,9 @@ function! s:toggle_syntax_checker() abort
     call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
     let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
     if g:_spacevim_toggle_syntax_flag == 1
-        echo "syntax-checking enabled."
+        echo 'syntax-checking enabled.'
     else
-        echo "syntax-checking disabled."
+        echo 'syntax-checking disabled.'
     endif
 endfunction
 
