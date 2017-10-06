@@ -423,11 +423,16 @@ endfunction
 " |
 " +- a:marked  : The number of marked files, or a comma separated list of
 "                the marked filenames.
+
+" @vimlint(EVL103, 1, a:regex)
+" @vimlint(EVL103, 1, a:marked)
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
         \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '',
         \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
+" @vimlint(EVL103, 0, a:regex)
+" @vimlint(EVL103, 0, a:marked)
 
 " a:str : Either the number of files scanned so far, or a string indicating
 "         the current directory is being scanned with a user_command.
