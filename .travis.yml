@@ -27,6 +27,7 @@ matrix:
 
 install:
   - |
+    set -e
     if [ "${LINT#vimlint}" != "$LINT" ]; then
       git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
       git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
@@ -44,18 +45,17 @@ install:
     fi
 script:
   - |
+    set -e
     if [ "$LINT" = "vimlint" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./config
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./autoload
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./ftplugin
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./syntax
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./mode
+      for file in $(find . -name "*.vim");
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
     elif [ "$LINT" = "vimlint-errors" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./config
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./autoload
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./ftplugin
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./syntax
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./mode
+      for file in $(find . -name "*.vim");
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
     elif [ "$LINT" = "vint" ]; then
       vint .
     elif [ "$LINT" = "vint-errors" ]; then
