@@ -10,12 +10,11 @@ let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
 let s:self.vim_co = SpaceVim#api#import('vim#compatible')
 
 if !s:self.nvim_job && !s:self.vim_job
-  let s:self.job_argv = ['', '', '']
   augroup SpaceVim_job
     au!
-    au! User SpaceVim_job_stdout call call(self.opts.on_stdout, self.job_argv)
-    au! User SpaceVim_job_stderr call call(self.opts.on_stderr, self.job_argv)
-    au! User SpaceVim_job_exit call call(self.opts.on_exit, self.job_argv)
+    au! User SpaceVim_job_stdout nested call call(s:self.opts.on_stdout, s:self.job_argv)
+    au! User SpaceVim_job_stderr nested call call(s:self.opts.on_stderr, s:self.job_argv)
+    au! User SpaceVim_job_exit nested call call(s:self.opts.on_exit, s:self.job_argv)
   augroup ENd
 endif
 
@@ -119,21 +118,33 @@ function! s:self.start(argv, ...) abort
       exe 'cd' fnameescape(old_wd)
     endif
     let id = -1
-    let self.opts = opts
+    let s:self.opts = opts
     if v:shell_error
       if has_key(opts,'on_stderr')
-        let self.job_argv = [id, output, 'stderr']
-        doautocmd User SpaceVim_job_stderr
+        let s:self.job_argv = [id, output, 'stderr']
+        try
+          doautocmd User SpaceVim_job_stderr
+        catch
+          doautocmd User SpaceVim_job_stderr
+        endtry
       endif
     else
       if has_key(opts,'on_stdout')
-        let self.job_argv = [id, output, 'stdout']
-        doautocmd User SpaceVim_job_stdout
+        let s:self.job_argv = [id, output, 'stdout']
+        try
+          doautocmd User SpaceVim_job_stdout
+        catch
+          doautocmd User SpaceVim_job_stdout
+        endtry
       endif
     endif
     if has_key(opts,'on_exit')
-      let self.job_argv = [id, output, 'exit']
+      let s:self.job_argv = [id, v:shell_error, 'exit']
+      try
         doautocmd User SpaceVim_job_exit
+      catch 
+        doautocmd User SpaceVim_job_exit
+      endtry
     endif
     return id
   endif
