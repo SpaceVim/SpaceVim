@@ -1,12 +1,15 @@
 test: build/vader | build
 	vim -Nu test/vimrc -c 'Vader! test/**'
 
-test_coverage: build/covimerage build/vader | build
-	build/covimerage/bin/covimerage run vim -Nu test/vimrc -c 'Vader! test/**'
+COVIMERAGE=$(shell command -v ccovimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
+
+test_coverage: $(COVIMERAGE) build/vader | build
+	$(COVIMERAGE) run vim -Nu test/vimrc -c 'Vader! test/**'
 
 build/covimerage:
 	virtualenv $@
-	. $@/bin/activate && pip install --no-cache-dir https://github.com/Vimjas/covimerage/archive/develop.zip
+build/covimerage/bin/covimerage: | build/covimerage
+	. build/covimerage/bin/activate && pip install covimerage
 
 build/vader:
 	git clone --depth 1 https://github.com/junegunn/vader.vim.git $@
