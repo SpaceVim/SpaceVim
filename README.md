@@ -1,10 +1,10 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
-[Wiki](https://github.com/SpaceVim/SpaceVim/wiki) |
-[Documentation](http://spacevim.org/documentation/) |
-[Twitter](https://twitter.com/SpaceVim) |
-[Community](https://spacevim.org/community/) |
-[Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) |
+[Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
+[Documentation](http://spacevim.org/documentation/) \|
+[Twitter](https://twitter.com/SpaceVim) \|
+[Community](https://spacevim.org/community/) \|
+[Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文文档](http://spacevim.org/README_zh_cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
@@ -19,13 +19,11 @@ SpaceVim is a community-driven vim distribution that seeks to provide layer feat
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
 Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
 
 ### Requirements
 
@@ -47,11 +45,11 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 ### Features
 
-- **Great documentation:** access documentation in Vim with
-    <kbd>:h SpaceVim</kbd>.
+- **Great documentation:** access documentation in Vim with <kbd>:h SpaceVim</kbd>.
 - **Beautiful GUI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
 - **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
+  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ### Support SpaceVim
