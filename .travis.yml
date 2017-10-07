@@ -58,8 +58,9 @@ script:
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
+      pip install --no-cache-dir https://github.com/Vimjas/covimerage/archive/develop.zip
       make test_coverage
-      build/covimerage/bin/covimerage xml
+      covimerage xml
       pip install codecov
       codecov -X search gcov pycov -f coverage.xml
     fi
