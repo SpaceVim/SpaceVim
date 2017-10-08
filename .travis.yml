@@ -60,7 +60,7 @@ script:
     elif [ "$LINT" = "vader" ]; then
       pip install --no-cache-dir https://github.com/Vimjas/covimerage/archive/develop.zip
       make test_coverage
-      covimerage xml
+      covimerage -vv xml --omit 'build/*'
       pip install codecov
       codecov -X search gcov pycov -f coverage.xml
     fi
