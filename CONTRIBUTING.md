@@ -1,13 +1,13 @@
 # Contributing guide
 
-SpaceVim is a effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
+SpaceVim is an volunteer effort; we encourage you to pitch in. The community makes SpaceVim what it is.
 We have a few guidelines, which we ask all contributors to follow.
 
-You can only consider reading the sections relevant to what you are going to do:
+You need only consider reading the sections relevant to what you are going to do:
 
 - [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
 - [Reporting issues](#reporting-issues) if you are about to open a new issue.
-- [Contributing code](#contributing-code) if you are about to send a Pull-Request.
+- [Contributing code](#contributing-code) if you are about to send a Pull Request (PR).
 
 ### Asking for help
 
@@ -17,11 +17,11 @@ If you want to ask an usage question, be sure to look first into some places as 
 
 ### Reporting issues
 
-issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
-- Check that there is no duplicate issue in the issues tracker, you can search keywords in the issues tracker.
-- Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
+Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
+- Check that there is no duplicate issue in the issues tracker. You can search the issue tracker by keyword.
+- Make sure the issue has not been fixed in latest version of SpaceVim by updating your version of SpaceVim. Try to reproduce the bug latest version of SpaceVim.
 - Use a clear title and follow the issue template.
-- Include details on how to reproduce it, just like a step by step guide.
+- Include step by step details on how to reproduce it.
 
 ### Contributing code
 
@@ -30,10 +30,10 @@ Code contributions are welcome. Please read the following sections carefully. In
 #### License
 
 The license is MIT for all the parts of SpaceVim. this includes:
-- The initialization and core files
+- The initialization and core files.
 - All the layer files.
 
-For files not belonging to Spacemacs like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+For files not belonging to Spacemacs, such as local packages and libraries, refer to the header file. Those files should not have an empty header. We may not accept code without a proper header file.
 
 #### Conventions
 
@@ -45,22 +45,20 @@ Submit your contribution against the `dev` branch. You should not use your maste
 
 You may want to read our beginner’s guide for Pull Requests.
 
-PR = Pull-Request
-
 ##### Ideally for simple PRs (most of them):
 
-- Branch from `dev`
-- One topic per PR
-- One commit per PR
-- If you have several commits on different topics, close the PR and create one PR per topic
-- If you still have several commits, squash them into only one commit
-- Rebase your PR branch on top of upstream develop before submitting the PR
+- Branch from `dev`.
+- One topic per PR.
+- One commit per PR.
+- If you have several commits on different topics, close the PR and create one PR per topic.
+- If you still have several commits, squash them into only one commit.
+- Rebase your PR branch on top of upstream develop before submitting the PR.
 
 Those PRs are usually cherry-picked.
 
 ##### For complex PRs (big refactoring, etc):
 
-Squash only the commits with uninteresting changes like typos, syntax fixes, etc… and keep the important and isolated steps in different commits.
+Squash only the commits with uninteresting changes like typos and syntax fixes. Keep the important and isolated steps in different commits.
 
 Those PRs are merged and explicitly not fast-forwarded.
 Commit messages
@@ -126,11 +124,11 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 
 In the files header, change the default author name (Shidong Wang) to your name.
 
-here is an example for creating a new layer names `foo`:
+Here is an example for creating a new layer names `foo`:
 
-1. fork SpaceVim repo
-2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
-3. edit layer file, check out the example below:
+1. Fork the SpaceVim repo.
+2. Add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
+3. Edit layer file, check out the example below:
 
 ```vim
 "=============================================================================
@@ -178,7 +176,7 @@ function! SpaceVim#layers#foo#config() abort
 endfunction
 ```
 
-4. send PR to SpaceVim.
+4. Send PR to SpaceVim.
 
 ##### Contributor to an existing layer
 
