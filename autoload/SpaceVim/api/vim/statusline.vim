@@ -1,7 +1,7 @@
 let s:self = {}
 
 
-function! s:self.build(left_sections, right_sections, lsep, rsep, hi_a, hi_b, hi_c, hi_z) abort
+function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z) abort
     let l = '%#' . a:hi_a . '#' . a:left_sections[0]
     let l .= '%#' . a:hi_a . '_' . a:hi_b . '#' . a:lsep
     let flag = 1
@@ -24,9 +24,9 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, hi_a, hi_b, hi
         endif
     endif
     if flag == 1
-        let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . '%='
+        let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
     else
-        let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%='
+        let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
     endif
     let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep
     let flag = 1

@@ -27,39 +27,36 @@ matrix:
 
 install:
   - |
+    set -e
     if [ "${LINT#vimlint}" != "$LINT" ]; then
       git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
       git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
     elif [ "${LINT#vint}" != "$LINT" ]; then
       virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
     elif [ "${LINT#vader}" != "$LINT" ]; then
-      git clone https://github.com/junegunn/vader.vim.git /tmp/vader
       C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
-      git clone --depth 1 https://github.com/vim/vim
-      cd vim
-      ./configure $C_OPTS
-      make
-      make install
-      cd -
+      (git clone --depth 1 https://github.com/vim/vim /tmp/vim &&
+       cd /tmp/vim &&
+       ./configure $C_OPTS &&
+       make install)
     fi
 script:
   - |
+    set -ex
     if [ "$LINT" = "vimlint" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./config
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./autoload
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./ftplugin
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./syntax
-      sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser ./mode
+      for file in $(find . -name "*.vim");
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
     elif [ "$LINT" = "vimlint-errors" ]; then
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./config
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./autoload
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./ftplugin
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./syntax
-      sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser ./mode
+      for file in $(find . -name "*.vim");
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
     elif [ "$LINT" = "vint" ]; then
       vint .
     elif [ "$LINT" = "vint-errors" ]; then
       vint --error .
     elif [ "$LINT" = "vader" ]; then
-      vim -Nu test/test.vim -c 'Vader! test/**'
+      make test
     fi

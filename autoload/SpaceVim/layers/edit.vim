@@ -19,7 +19,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
                 \ ['easymotion/vim-easymotion'],
                 \ ['haya14busa/vim-easyoperator-line'],
-                \ ['editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'}],
+                \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
                 \ ]
     if executable('fcitx')

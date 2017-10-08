@@ -86,6 +86,15 @@ function! s:check_mode() abort
   endif
 endfunction
 
+" only when there are more than two buffers have same name.
+function! s:buffer_name() abort
+  if get(b:, '_spacevim_statusline_showbfname', 0) == 1
+    return  ' ' . bufname('%')
+  else
+    return ''
+  endif
+endfunction
+
 function! s:search_status() abort
   let ct = 0
   let tt = 0
@@ -242,6 +251,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'HelpDescribe'
     return '%#SpaceVim_statusline_a# HelpDescribe %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'SpaceVimRunner'
+    return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
   endif
   if a:0 > 0
     return s:active()
@@ -285,7 +296,8 @@ function! s:active() abort
   if index(s:loaded_sections, 'whitespace') != -1
     call add(rsec, s:whitespace())
   endif
-  return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep,
+  let fname = s:buffer_name()
+  return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname,
         \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
@@ -386,7 +398,7 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the statuline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
-    return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep,
+    return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',
           \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
   endfunction
   let g:tagbar_status_func = 'TagbarStatusline'
@@ -413,17 +425,22 @@ endfunction
 " |
 " +- a:marked  : The number of marked files, or a comma separated list of
 "                the marked filenames.
+
+" @vimlint(EVL103, 1, a:regex)
+" @vimlint(EVL103, 1, a:marked)
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
-        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '',
         \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
+" @vimlint(EVL103, 0, a:regex)
+" @vimlint(EVL103, 0, a:marked)
 
 " a:str : Either the number of files scanned so far, or a string indicating
 "         the current directory is being scanned with a user_command.
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
-        \ [' ' . getcwd() . ' '], s:lsep, s:rsep,
+        \ [' ' . getcwd() . ' '], s:lsep, s:rsep, '',
         \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 

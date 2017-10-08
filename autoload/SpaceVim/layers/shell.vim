@@ -11,9 +11,8 @@ function! SpaceVim#layers#shell#plugins() abort
     let plugins = []
     if has('nvim')
         call add(plugins,['Shougo/deol.nvim'])
-    else
-        call add(plugins,['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}])
     endif
+    call add(plugins,['Shougo/vimshell.vim',                { 'on_cmd':['VimShell']}])
     return plugins
 endfunction
 
@@ -33,7 +32,7 @@ function! SpaceVim#layers#shell#config() abort
 endfunction
 
 function! SpaceVim#layers#shell#set_variable(var) abort
-   let s:default_shell = get(a:var, 'defaut_shell', 'terminal')
+   let s:default_shell = get(a:var, 'default_shell', 'terminal')
    let s:default_position = get(a:var, 'default_position', 'top')
    let s:default_height = get(a:var, 'default_height', 30)
 endfunction
@@ -42,6 +41,7 @@ let s:shell_win_nr = 0
 function! s:open_default_shell() abort
     if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
         exe s:shell_win_nr .  'wincmd w'
+        startinsert
         return
     endif
     if &buftype ==# 'terminal'
@@ -60,14 +60,20 @@ function! s:open_default_shell() abort
         exe 'resize ' . lines
     endif
     if s:default_shell ==# 'terminal'
-        if exists(':te')
-            exe 'te'
+        if exists(':terminal')
+          if has('nvim')
+            exe 'terminal'
+          else
+            call term_start('bash', {'curwin' : 1, 'term_finish' : 'close'})
+          endif
             let s:shell_win_nr = winnr()
             let w:shell_layer_win = 1
+            startinsert
         else
             echo ':terminal is not supported in this version'
         endif
     elseif s:default_shell ==# 'VimShell'
         VimShell
+        imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
     endif
 endfunction

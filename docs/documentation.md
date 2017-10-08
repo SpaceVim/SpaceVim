@@ -407,7 +407,7 @@ Reminder of the color codes for the states:
 | Mode    | Color  |
 | ------- | ------ |
 | Normal  | Grey   |
-| Insert  | Blus   |
+| Insert  | Blue   |
 | Visual  | Orange |
 | Replace | Aqua   |
 
@@ -461,7 +461,7 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
@@ -809,7 +809,7 @@ Buffer manipulation commands (start with `b`):
 
 ##### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
 
 ##### Files manipulations key bindings
 
@@ -969,7 +969,7 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 | `zO`        | open folds recursively                       |
 | `zR`        | set `foldlevel` to deepest fold              |
 | `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldleve`                          |
+| `zX`        | re-apply `foldlevel`                          |
 | `z^`        | cursor to screen bottom line N               |
 | `za`        | toggle a fold                                |
 | `zb`        | redraw, cursor line at bottom                |

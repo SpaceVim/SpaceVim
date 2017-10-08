@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#lang#ruby#plugins() abort
     let plugins = []
-    
+    call add(plugins, ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby'}])
     return plugins
 endfunction
 

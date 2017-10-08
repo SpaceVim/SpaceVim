@@ -58,9 +58,20 @@ function! s:tabname(id) abort
     endif
 endfunction
 
+function! s:need_show_bfname(stack, nr) abort
+    let dupbufs = filter(a:stack, "fnamemodify(bufname(v:val), ':t') ==# fnamemodify(bufname(a:nr), ':t')")
+    if len(dupbufs) >= 2
+        for i in dupbufs
+            call setbufvar(i, '_spacevim_statusline_showbfname', 1)
+        endfor
+    endif
+endfunction
+
 function! SpaceVim#layers#core#tabline#get() abort
     let nr = tabpagenr('$')
     let t = ''
+    " the stack should be the bufnr stack of tabline
+    let stack = []
     if nr > 1
         let ct = tabpagenr()
         if ct == 1
@@ -78,6 +89,8 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
+            call add(stack, buflist[winnr - 1])
+            call s:need_show_bfname(stack, buflist[winnr - 1])
             if g:spacevim_buffer_index_type == 3
                 let id = s:messletters.index_num(i)
             elseif g:spacevim_buffer_index_type == 4
@@ -101,7 +114,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
         endfor
         let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-        let t .= '%#SpaceVim_tabline_a# Tabs'
+        let t .= '%#SpaceVim_tabline_a# Tabs '
     else
         let s:buffers = s:BUFFER.listed_buffers()
         let g:_spacevim_list_buffers = s:buffers
@@ -123,6 +136,8 @@ function! SpaceVim#layers#core#tabline#get() abort
             if empty(name)
                 let name = 'No Name'
             endif
+            call add(stack, i)
+            call s:need_show_bfname(stack, i)
             if g:spacevim_buffer_index_type == 3
                 let id = s:messletters.index_num(index(s:buffers, i) + 1)
             elseif g:spacevim_buffer_index_type == 4
@@ -146,7 +161,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
         endfor
         let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-        let t .= '%#SpaceVim_tabline_a# Buffers'
+        let t .= '%#SpaceVim_tabline_a# Buffers '
     endif
     return t
 endfunction
@@ -173,7 +188,7 @@ endfunction
 function! SpaceVim#layers#core#tabline#jump(id) abort
     if len(s:buffers) >= a:id
         let bid = s:buffers[a:id - 1]
-        exe 'b' . bid
+        exe 'silent b' . bid
     endif
 endfunction
 

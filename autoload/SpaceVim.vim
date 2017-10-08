@@ -200,6 +200,9 @@ let g:spacevim_vim_help_language       = 'en'
 " <
 let g:spacevim_language                = ''
 ""
+" Option for keep the spacevim server ailive
+let g:spacevim_keep_server_alive = 1
+""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
 ""
@@ -345,7 +348,7 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 " Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler']
+let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
@@ -467,6 +470,10 @@ endfunction
 
 
 function! SpaceVim#end() abort
+
+  if g:spacevim_keep_server_alive
+    call SpaceVim#server#export_server()
+  endif
   if !empty(g:spacevim_windows_leader)
     call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
   endif
