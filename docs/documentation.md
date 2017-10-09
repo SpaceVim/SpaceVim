@@ -1,6 +1,6 @@
 ---
 title:  "Documentation"
-description: "A guide for using SpaceVim."
+description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
 # SpaceVim Documentation
