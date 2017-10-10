@@ -64,5 +64,4 @@ endif
 call zvim#util#source_rc('commands.vim')
 filetype plugin indent on
 syntax on
-
 " vim:set et sw=2 cc=80:

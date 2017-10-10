@@ -8,7 +8,8 @@
 [中文文档](http://spacevim.org/README_zh_cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-[![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
+[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
+[![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
 ![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
@@ -41,6 +42,18 @@ for more info about the install script, please check:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+```
+
+### Project layout
+
+```
+├─ autoload/SpaceVim/api/               SpaceVim APIs
+├─ autoload/SpaceVim/layers/            SpaceVim layers
+├─ autoload/SpaceVim/plugins/           SpaceVim plugins
+├─ autoload/SpaceVim/mapping/           SpaceVim mapping guide
+├─ doc/SpaceVim.txt                     SpaceVim help
+├─ docs/                                website of SpaceVim
+└─ test/                                tests
 ```
 
 ### Features

@@ -1,0 +1,3 @@
+Execute ( SpaceVim api: vim#buffer open ):
+  source init.vim
+  AssertEqual fnamemodify(g:Config_Main_Home, ':.'), 'config'
