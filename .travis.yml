@@ -34,6 +34,7 @@ install:
     elif [ "${LINT#vint}" != "$LINT" ]; then
       virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
     elif [ "${LINT#vader}" != "$LINT" ]; then
+      git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
       C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
       (git clone --depth 1 https://github.com/vim/vim /tmp/vim &&
        cd /tmp/vim &&
@@ -44,12 +45,12 @@ script:
   - |
     set -ex
     if [ "$LINT" = "vimlint" ]; then
-      for file in $(find . -name "*.vim");
+      for file in $(git diff --name-only HEAD dev | grep .vim$);
       do
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
       done
     elif [ "$LINT" = "vimlint-errors" ]; then
-      for file in $(find . -name "*.vim");
+      for file in $(git diff --name-only HEAD dev | grep .vim$);
       do
         sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
       done
