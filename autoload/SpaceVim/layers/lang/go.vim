@@ -39,16 +39,36 @@ function! SpaceVim#layers#lang#go#config() abort
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
     let g:go_snippet_engine = 'neosnippet'
 
-    augroup SpaceVim_go
-        au!
-        au FileType go nmap <Buffer><silent><Leader>s <Plug>(go-implements)
-        au FileType go nmap <Buffer><silent><Leader>i <Plug>(go-info)
-        au FileType go nmap <Buffer><silent><Leader>e <Plug>(go-rename)
-        au FileType go nmap <Buffer><silent><Leader>r <Plug>(go-run)
-        au FileType go nmap <Buffer><silent><Leader>b <Plug>(go-build)
-        au FileType go nmap <Buffer><silent><Leader>t <Plug>(go-test)
-        au FileType go nmap <Buffer><silent><Leader>gd <Plug>(go-doc)
-        au FileType go nmap <Buffer><silent><Leader>gv <Plug>(go-doc-vertical)
-        au FileType go nmap <Buffer><silent><Leader>co <Plug>(go-coverage)
-    augroup END
+    call SpaceVim#mapping#space#regesit_lang_mappings('go', funcref('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'],
+        \ '<Plug>(go-implements)',
+        \ 'go implements', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','f'],
+        \ '<Plug>(go-info)',
+        \ 'go info', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
+        \ '<Plug>(go-rename)',
+        \ 'go rename', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ '<Plug>(go-run)',
+        \ 'go run', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','b'],
+        \ '<Plug>(go-build)',
+        \ 'go build', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
+        \ '<Plug>(go-test)',
+        \ 'go test', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','d'],
+        \ '<Plug>(go-doc)',
+        \ 'go doc', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
+        \ '<Plug>(go-doc-vertical)',
+        \ 'go doc (vertical)', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
+        \ '<Plug>(go-coverage)',
+        \ 'go coverage', 0)
 endfunction
