@@ -46,12 +46,13 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### Project layout
 
 ```
-autoload/SpaceVim/api                  SpaceVim APIs
-autoload/SpaceVim/layers               SpaceVim layers
-autoload/SpaceVim/plugins              SpaceVim plugins
-autoload/SpaceVim/mapping              SpaceVim mapping guide
-doc/SpaceVim.txt                       SpaceVim help
-docs/                                  website of SpaceVim
+├─ autoload/SpaceVim/api/               SpaceVim APIs
+├─ autoload/SpaceVim/layers/            SpaceVim layers
+├─ autoload/SpaceVim/plugins/           SpaceVim plugins
+├─ autoload/SpaceVim/mapping/           SpaceVim mapping guide
+├─ doc/SpaceVim.txt                     SpaceVim help
+├─ docs/                                website of SpaceVim
+└─ test/                                tests
 ```
 
 ### Features
