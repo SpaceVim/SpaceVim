@@ -5,6 +5,7 @@ function! SpaceVim#api#data#list#get() abort
                 \ 'unshift' : '',
                 \ 'uniq' : '',
                 \ 'uniq_by' : '',
+                \ 'clear' : '',
                 \ 'char_range' : '',
                 \ 'has' : '',
                 \ 'has_index' : '',
