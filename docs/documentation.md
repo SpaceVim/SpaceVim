@@ -1326,24 +1326,23 @@ project manager commands start with `p`:
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
 
 <!-- SpaceVim Achievements start -->
-
 ## Achievements
 
 ### issues
 
-| Achievements                                                          | Account                                     |
-| --------------------------------------------------------------------- | ------------------------------------------- |
-| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                         |
-| ----------------- | ----------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry) |
-| 100th stargazers  | [naraj](https://github.com/naraj)               |
-| 1000th stargazers | [icecity96](https://github.com/icecity96)       |
-| 2000th stargazers | [frowhy](https://github.com/frowhy)             |
-| 3000th stargazers | [purkylin](https://github.com/purkylin)         |
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [iwillalwaysbe](https://github.com/iwillalwaysbe)
+1000th stargazers | [elvin-du](https://github.com/elvin-du)
+2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)
+3000th stargazers | [WellerQu](https://github.com/WellerQu)
 
 <!-- SpaceVim Achievements end -->
 
