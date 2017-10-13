@@ -46,21 +46,20 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 ### Project layout
 
-```
-├─ autoload/SpaceVim/api/               SpaceVim APIs
-├─ autoload/SpaceVim/layers/            SpaceVim layers
-├─ autoload/SpaceVim/plugins/           SpaceVim plugins
-├─ autoload/SpaceVim/mapping/           SpaceVim mapping guide
-├─ doc/SpaceVim.txt                     SpaceVim help
-├─ docs/                                website of SpaceVim
-└─ test/                                tests
-```
+    ├─ autoload/SpaceVim/api/               SpaceVim APIs
+    ├─ autoload/SpaceVim/layers/            SpaceVim layers
+    ├─ autoload/SpaceVim/plugins/           SpaceVim plugins
+    ├─ autoload/SpaceVim/mapping/           SpaceVim mapping guide
+    ├─ doc/SpaceVim.txt                     SpaceVim help
+    ├─ docs/                                website of SpaceVim
+    └─ test/                                tests
 
 ### Features
 
 - **Great documentation:** access documentation in Vim with <kbd>:h SpaceVim</kbd>.
 - **Beautiful GUI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
+  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
 - **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
   ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
 - **Neovim centric:** Dark powered mode of SpaceVim
