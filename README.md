@@ -38,7 +38,7 @@ curl -sLf https://spacevim.org/install.sh | bash
 
 After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
-for more info about the install script, please check:
+For more info about the install script, please check:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
@@ -68,7 +68,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the Gitter Chat or sending pull requests.
 
-If you want to show your support financially you can  buy a drink for the maintainer by clicking following icon.
+If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
 
 <a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
