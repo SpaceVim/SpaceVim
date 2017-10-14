@@ -1,0 +1,6 @@
+Execute ( SpaceVim api: SpaceVim main code ):
+  source init.vim
+  SPInstall
+  exe "func! Close() \n qa! \n endf"
+  call timer_start(2000, 'Close')
+  AssertEqual fnamemodify(g:Config_Main_Home, ':.'), 'config'

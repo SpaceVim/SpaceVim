@@ -1,27 +1,29 @@
 ---
 title: "SpaceVim tags layer"
+description: "This layer provide tags manager for project"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) tags
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Features](#features)
-* [Install](#install)
-    * [GNU Global (gtags)](#gnu-global-gtags)
-        * [Install on OSX using Homebrew](#install-on-osx-using-homebrew)
-        * [Install on \*nix from source](#install-on-nix-from-source)
-            * [Install recommended dependencies](#install-recommended-dependencies)
-            * [Install with recommended features](#install-with-recommended-features)
-            * [Configure your environment to use pygments and ctags](#configure-your-environment-to-use-pygments-and-ctags)
-    * [Load tags layer](#load-tags-layer)
-* [Usage](#usage)
-    * [Language Support](#language-support)
-        * [Built-in languages](#built-in-languages)
-        * [Exuberant ctags languages](#exuberant-ctags-languages)
-        * [Universal ctags languages](#universal-ctags-languages)
-        * [Pygments languages (plus symbol and reference tags)](#pygments-languages-plus-symbol-and-reference-tags)
-* [Key bindings](#key-bindings)
+
+- [Description](#description)
+- [Features](#features)
+- [Install](#install)
+  - [GNU Global (gtags)](#gnu-global-gtags)
+    - [Install on OSX using Homebrew](#install-on-osx-using-homebrew)
+    - [Install on \*nix from source](#install-on-nix-from-source)
+      - [Install recommended dependencies](#install-recommended-dependencies)
+      - [Install with recommended features](#install-with-recommended-features)
+      - [Configure your environment to use pygments and ctags](#configure-your-environment-to-use-pygments-and-ctags)
+  - [Load tags layer](#load-tags-layer)
+- [Usage](#usage)
+  - [Language Support](#language-support)
+    - [Built-in languages](#built-in-languages)
+    - [Exuberant ctags languages](#exuberant-ctags-languages)
+    - [Universal ctags languages](#universal-ctags-languages)
+    - [Pygments languages (plus symbol and reference tags)](#pygments-languages-plus-symbol-and-reference-tags)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 

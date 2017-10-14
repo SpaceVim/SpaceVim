@@ -1,6 +1,6 @@
 ---
 title:  "Documentation"
-description: "A guide for using SpaceVim."
+description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
 # SpaceVim Documentation
@@ -110,8 +110,8 @@ description: "A guide for using SpaceVim."
   - [Windows function leader](#windows-function-leader)
   - [Unite work flow leader](#unite-work-flow-leader)
 - [Unite centric work-flow](#unite-centric-work-flow)
-    - [Plugin Highlights](#plugin-highlights)
-    - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+  - [Plugin Highlights](#plugin-highlights)
+  - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
   - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
     - [Language](#language)
       - [Commands](#commands)
@@ -407,7 +407,7 @@ Reminder of the color codes for the states:
 | Mode    | Color  |
 | ------- | ------ |
 | Normal  | Grey   |
-| Insert  | Blus   |
+| Insert  | Blue   |
 | Visual  | Orange |
 | Replace | Aqua   |
 
@@ -461,7 +461,7 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
@@ -809,7 +809,7 @@ Buffer manipulation commands (start with `b`):
 
 ##### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
 
 ##### Files manipulations key bindings
 
@@ -969,7 +969,7 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 | `zO`        | open folds recursively                       |
 | `zR`        | set `foldlevel` to deepest fold              |
 | `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldleve`                          |
+| `zX`        | re-apply `foldlevel`                         |
 | `z^`        | cursor to screen bottom line N               |
 | `za`        | toggle a fold                                |
 | `zb`        | redraw, cursor line at bottom                |
@@ -1326,24 +1326,23 @@ project manager commands start with `p`:
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
 
 <!-- SpaceVim Achievements start -->
-
 ## Achievements
 
 ### issues
 
-| Achievements                                                          | Account                                     |
-| --------------------------------------------------------------------- | ------------------------------------------- |
-| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                         |
-| ----------------- | ----------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry) |
-| 100th stargazers  | [naraj](https://github.com/naraj)               |
-| 1000th stargazers | [icecity96](https://github.com/icecity96)       |
-| 2000th stargazers | [frowhy](https://github.com/frowhy)             |
-| 3000th stargazers | [purkylin](https://github.com/purkylin)         |
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [iwillalwaysbe](https://github.com/iwillalwaysbe)
+1000th stargazers | [elvin-du](https://github.com/elvin-du)
+2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)
+3000th stargazers | [WellerQu](https://github.com/WellerQu)
 
 <!-- SpaceVim Achievements end -->
 
@@ -1442,7 +1441,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
-#### Plugin Highlights
+### Plugin Highlights
 
 - Package management with caching enabled and lazy loading
 - Project-aware tabs and label
@@ -1459,7 +1458,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
     [lazy-loaded]&#x3A; ./config/plugins.vim
 
-#### Non Lazy-Loaded Plugins
+### Non Lazy-Loaded Plugins
 
 | Name             | Description                                           |
 | ---------------- | ----------------------------------------------------- |

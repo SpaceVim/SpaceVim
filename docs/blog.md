@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+description: "A list of latest blog about the feature of SpaceVim and tutorials of using vim."
 ---
 
 # Blog

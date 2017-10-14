@@ -1,5 +1,6 @@
 ---
 title:  "Conventions"
+description: "conventions of contribute to SpaceVim, including the coding style guide about vim script and markdown"
 permalink: "/conventions"
 ---
 

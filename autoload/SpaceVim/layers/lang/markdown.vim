@@ -8,9 +8,13 @@
 
 let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
+let s:md_listItemChar = '-'
+let g:vmt_list_indent_text = '  '
 function! SpaceVim#layers#lang#markdown#set_variable(var) abort
    let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
    let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
+   let s:md_listItemChar = get(a:var, 'listItemChar', s:md_listItemChar)
+   let g:vmt_list_item_char = s:md_listItemChar
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort

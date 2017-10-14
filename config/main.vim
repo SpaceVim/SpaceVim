@@ -1,3 +1,7 @@
+if SpaceVim#server#connect()
+  finish
+endif
+
 let g:Config_Main_Home = fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
       \ || has('win64'))?'\':'/') . '?')
@@ -60,5 +64,4 @@ endif
 call zvim#util#source_rc('commands.vim')
 filetype plugin indent on
 syntax on
-
 " vim:set et sw=2 cc=80:
