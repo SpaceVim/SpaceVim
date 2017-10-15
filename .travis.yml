@@ -65,3 +65,4 @@ script:
       pip install codecov
       codecov -X search gcov pycov -f coverage.xml
     fi
+    set +x
