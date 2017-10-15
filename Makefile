@@ -9,7 +9,7 @@ test_coverage: $(COVIMERAGE) build/vader | build
 build/covimerage:
 	virtualenv $@
 build/covimerage/bin/covimerage: | build/covimerage
-	. build/covimerage/bin/activate && pip install covimerage
+	build/covimerage/bin/pip install covimerage
 
 build/vader:
 	git clone --depth 1 https://github.com/junegunn/vader.vim.git $@
