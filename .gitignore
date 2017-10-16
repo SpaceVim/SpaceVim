@@ -25,3 +25,4 @@ cscope.out
 cscope.in.out
 cscope.po.out
 build/
+.coverage.covimerage
