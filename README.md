@@ -56,7 +56,8 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 ### Features
 
-- **Great documentation:** access documentation in Vim with <kbd>:h SpaceVim</kbd>.
+- **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
+  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
 - **Beautiful GUI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
   ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
