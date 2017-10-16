@@ -68,7 +68,7 @@ let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_pattern
       \'[ ]#[ 0-9a-zA-Z]*',
       \])
 
-let g:deoplete#ignore_sources.gitcommit = ['neosnippet']
+let g:deoplete#ignore_sources.gitcommit = get(g:deoplete#ignore_sources, 'gitcommit', ['neosnippet'])
 
 " lua
 let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
