@@ -7,8 +7,17 @@
 "=============================================================================
 
 
-" option        Description                                          Required
-" -f/-format    Report format type. Default format is `text`.         -
+let s:options = {
+      \ '-f' : {
+      \ 'description' : '',
+      \ 'values' : ['text'],
+      \ },
+      \ '-d' : {
+      \ 'description' : 'Root directory for sources',
+      \ 'values' : [],
+      \ },
+      \ }
+
 
 function! SpaceVim#plugins#pmd#run(...)
 
