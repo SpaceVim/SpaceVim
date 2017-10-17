@@ -16,6 +16,7 @@ let s:self.options = {}
 let s:self._message = []
 
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
+  let argvs = split(a:CmdLine)
   let last_argv = split(a:CmdLine)[-1]
   let msg = 'ArgLead: ' . a:ArgLead . ' CmdLine: ' . a:CmdLine . ' CursorPos: ' . a:CursorPos . ' LastArgv: ' . last_argv
   call add(self._message, msg)
@@ -28,7 +29,15 @@ function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
     else
       return join(getcompletion(a:ArgLead, complete), "\n")
     endif
+  elseif !empty(a:ArgLead) && len(argvs) >= 3 && index(keys(self.options), argvs[-2]) != -1
+    let complete = self.options[argvs[-2]].complete
+    if type(complete) == type([])
+      return join(complete, "\n")
+    else
+      return join(getcompletion(a:ArgLead, complete), "\n")
+    endif
   endif
+
 endfunction
 
 function! s:self.debug() abort
