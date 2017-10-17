@@ -11,11 +11,11 @@
 let s:options = {
       \ '-f' : {
       \ 'description' : '',
-      \ 'values' : ['text'],
+      \ 'complete' : ['text'],
       \ },
       \ '-d' : {
       \ 'description' : 'Root directory for sources',
-      \ 'values' : [],
+      \ 'complete' : 'file',
       \ },
       \ }
 
@@ -64,8 +64,10 @@ function! SpaceVim#plugins#pmd#run(...)
         \ )
 endfunction
 
-let s:CMD = SpaceVim#api#import('vim#command')
-let s:CMD.options = s:options
+function! SpaceVim#plugins#pmd#debug()
+  call s:CMD.debug()
+endfunction
+
 
 function! SpaceVim#plugins#pmd#complete(ArgLead, CmdLine, CursorPos)
   return s:CMD.complete(a:ArgLead, a:CmdLine, a:CursorPos)
