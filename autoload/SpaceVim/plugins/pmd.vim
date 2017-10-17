@@ -32,11 +32,15 @@ if !exists('Pmd_Cmd')
 endif
 
 if !exists('Pmd_Cache_Dir')
-  let g:Pmd_Cache_Dir = '~/.cache/pmd/'
+  let g:Pmd_Cache_Dir = expand('~/.cache/pmd/')
 endif
 
 if !exists('Pmd_Rulesets')
     let g:Pmd_Rulesets = ["-R", "java-basic,java-design", "-property", "xsltFilename=my-own.xs"]
+endif
+
+if !exists('Pmd_silent_stderr')
+  let g:Pmd_silent_stderr = 1
 endif
 
 " load SpaceVim APIs
@@ -48,22 +52,39 @@ let s:CMD = SpaceVim#api#import('vim#command')
 
 let s:CMD.options = s:options
 
+let s:rst = []
+
 function! s:on_pmd_stdout(id, data, event) abort
-  echom string(a:data)
+    for data in a:data
+        let info = split(data, '\:\d\+\:')
+        if len(info) == 2
+            let [fname, text] = info
+            let lnum = matchstr(data, '\:\d\+\:')[1:-2]
+            call add(s:rst, {
+                        \ 'filename' : fnamemodify(fname, ':p'),
+                        \ 'lnum' : lnum,
+                        \ 'text' : text,
+                        \ })
+        endif
+    endfor
 endfunction
 
 function! s:on_pmd_stderr(id, data, event) abort
-  echom string(a:data)
+  if g:Pmd_silent_stderr == 0
+    echom string(a:data)
+  endif
 endfunction
 
 function! s:on_pmd_exit(id, data, event) abort
-  echom string(a:data)
+    call setqflist(s:rst)
+    let s:rst = []
+    copen
 endfunction
 
 function! SpaceVim#plugins#pmd#run(...)
-  let argv = []
+  let argv = g:Pmd_Cmd
   if isdirectory(g:Pmd_Cache_Dir) && index(a:000, '-cache') == -1
-    let argv = g:Pmd_Cmd + ['-cache', g:Pmd_Cache_Dir]
+    let argv += ['-cache', g:Pmd_Cache_Dir]
   endif
   let argv += a:000
   if index(a:000, '-R') == -1
@@ -73,7 +94,7 @@ function! SpaceVim#plugins#pmd#run(...)
     echohl ErrorMsg | echo 'you need to run PMD with -d option!'
     return
   endif
-  echom s:JOB.start(argv,
+  call s:JOB.start(argv,
         \ {
         \ 'on_stdout' : function('s:on_pmd_stdout'),
         \ 'on_stderr' : function('s:on_pmd_stderr'),
@@ -90,3 +111,4 @@ endfunction
 function! SpaceVim#plugins#pmd#complete(ArgLead, CmdLine, CursorPos)
   return s:CMD.complete(a:ArgLead, a:CmdLine, a:CursorPos)
 endfunction
+
