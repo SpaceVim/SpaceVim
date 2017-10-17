@@ -9,6 +9,10 @@
 " init plugin values
 
 let s:options = {
+      \ '-R' : {
+      \ 'description' : 'Comma separated list of ruleset names to use',
+      \ 'complete' : [],
+      \ },
       \ '-f' : {
       \ 'description' : '',
       \ 'complete' : ['text'],
@@ -16,6 +20,10 @@ let s:options = {
       \ '-d' : {
       \ 'description' : 'Root directory for sources',
       \ 'complete' : 'file',
+      \ },
+      \ '-cache' : {
+      \ 'description' : 'Set cache directory',
+      \ 'complete' : 'dir',
       \ },
       \ }
 
@@ -53,8 +61,18 @@ function! s:on_pmd_exit(id, data, event) abort
 endfunction
 
 function! SpaceVim#plugins#pmd#run(...)
-  let argv = g:Pmd_Cmd + ['-cache', g:Pmd_Cache_Dir]
-  let argv += a:000 + g:Pmd_Rulesets
+  let argv = []
+  if isdirectory(g:Pmd_Cache_Dir) && index(a:000, '-cache') == -1
+    let argv = g:Pmd_Cmd + ['-cache', g:Pmd_Cache_Dir]
+  endif
+  let argv += a:000
+  if index(a:000, '-R') == -1
+    let argv += g:Pmd_Rulesets
+  endif
+  if index(argv, '-d') == -1
+    echohl ErrorMsg | echo 'you need to run PMD with -d option!'
+    return
+  endif
   echom s:JOB.start(argv,
         \ {
         \ 'on_stdout' : function('s:on_pmd_stdout'),
