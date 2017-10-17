@@ -26,6 +26,7 @@ function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
     if type(complete) == type([])
       return join(complete, "\n")
     else
+      return join(getcompletion(a:ArgLead, complete), "\n")
     endif
   endif
 endfunction
