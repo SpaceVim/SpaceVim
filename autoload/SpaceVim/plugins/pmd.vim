@@ -22,17 +22,13 @@ let s:options = {
       \ 'complete' : 'file',
       \ },
       \ '-cache' : {
-      \ 'description' : 'Set cache directory',
-      \ 'complete' : 'dir',
+      \ 'description' : 'Set cache file',
+      \ 'complete' : 'file',
       \ },
       \ }
 
 if !exists('Pmd_Cmd')
     let g:Pmd_Cmd = ['pmd']
-endif
-
-if !exists('Pmd_Cache_Dir')
-  let g:Pmd_Cache_Dir = expand('~/.cache/pmd/')
 endif
 
 if !exists('Pmd_Rulesets')
@@ -70,6 +66,7 @@ function! s:on_pmd_stdout(id, data, event) abort
 endfunction
 
 function! s:on_pmd_stderr(id, data, event) abort
+  let s:JOB._message += a:data
   if g:Pmd_silent_stderr == 0
     echom string(a:data)
   endif
@@ -82,11 +79,7 @@ function! s:on_pmd_exit(id, data, event) abort
 endfunction
 
 function! SpaceVim#plugins#pmd#run(...)
-  let argv = g:Pmd_Cmd
-  if isdirectory(g:Pmd_Cache_Dir) && index(a:000, '-cache') == -1
-    let argv += ['-cache', g:Pmd_Cache_Dir]
-  endif
-  let argv += a:000
+  let argv = g:Pmd_Cmd + a:000
   if index(a:000, '-R') == -1
     let argv += g:Pmd_Rulesets
   endif
@@ -105,6 +98,7 @@ endfunction
 
 function! SpaceVim#plugins#pmd#debug()
   call s:CMD.debug()
+  call s:JOB.debug()
 endfunction
 
 

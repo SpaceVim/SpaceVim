@@ -8,6 +8,7 @@ let s:self.jobs = {}
 let s:self.nvim_job = has('nvim')
 let s:self.vim_job = !has('nvim') && has('job') && has('patch-8.0.0027')
 let s:self.vim_co = SpaceVim#api#import('vim#compatible')
+let s:self._message = []
 
 if !s:self.nvim_job && !s:self.vim_job
   augroup SpaceVim_job
@@ -78,6 +79,12 @@ function! s:self.start(argv, ...) abort
     if job > 0
       let msg = ['process '. jobpid(job), ' run']
       call extend(self.jobs, {job : msg})
+    else
+      if job == -1
+        call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executeable')
+      elseif job == 0
+        call add(self._message, 'Failed to start job: invalid arguments')
+      endif
     endif
     return job
   elseif self.vim_job
@@ -225,4 +232,8 @@ function! s:self.info(id) abort
   else
     call self.warn()
   endif
+endfunction
+
+function! s:self.debug() abort
+  echo join(self._message, "\n")
 endfunction
