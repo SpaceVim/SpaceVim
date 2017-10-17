@@ -6,6 +6,7 @@
 " License: MIT license
 "=============================================================================
 
+" init plugin values
 
 let s:options = {
       \ '-f' : {
@@ -18,15 +19,54 @@ let s:options = {
       \ },
       \ }
 
+if !exists('Pmd_Cmd')
+    let g:Pmd_Cmd = ['pmd']
+endif
 
-function! SpaceVim#plugins#pmd#run(...)
+if !exists('Pmd_Cache_Dir')
+  let g:Pmd_Cache_Dir = '~/.cache/pmd/'
+endif
 
-  
+if !exists('Pmd_Rulesets')
+    let g:Pmd_Rulesets = ["-R", "java-basic,java-design", "-property", "xsltFilename=my-own.xs"]
+endif
 
+" load SpaceVim APIs
+
+let s:JOB = SpaceVim#api#import('job')
+let s:CMD = SpaceVim#api#import('vim#command')
+
+" set APIs
+
+let s:CMD.options = s:options
+
+function! s:on_pmd_stdout(id, data, event) abort
+  echom string(a:data)
 endfunction
 
+function! s:on_pmd_stderr(id, data, event) abort
+  echom string(a:data)
+endfunction
 
-function! SpaceVim#plugins#pmd#complete(...)
+function! s:on_pmd_exit(id, data, event) abort
+  echom string(a:data)
+endfunction
 
-return '-f'
+function! SpaceVim#plugins#pmd#run(...)
+  let argv = g:Pmd_Cmd + ['-cache', g:Pmd_Cache_Dir]
+  let argv += a:000 + g:Pmd_Rulesets
+  echom s:JOB.start(argv,
+        \ {
+        \ 'on_stdout' : function('s:on_pmd_stdout'),
+        \ 'on_stderr' : function('s:on_pmd_stderr'),
+        \ 'on_exit' : function('s:on_pmd_exit'),
+        \ }
+        \ )
+endfunction
+
+let s:CMD = SpaceVim#api#import('vim#command')
+let s:CMD.options = s:options
+
+function! SpaceVim#plugins#pmd#complete(ArgLead, CmdLine, CursorPos)
+  return s:CMD.complete(a:ArgLead, a:CmdLine, a:CursorPos)
 endfunction

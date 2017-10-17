@@ -1,0 +1,4 @@
+Execute ( SpaceVim api: data#list ):
+  let cmd = SpaceVim#api#import('vim#command')
+  let cmd.options = {}
+  AssertEqual cmd.complete('', '', ''), ''
