@@ -1,6 +1,5 @@
 function! SpaceVim#layers#mail#plugins() abort
     return [
-            \ ['vim-mail/vim-mail',{ 'merged' : 0, 'loadconf' : 1}],
             \ ]
 endfunction
 
