@@ -371,10 +371,10 @@ vim to start up slowly if there are too many files in the current directory.
 <
 
                                         *g:spacevim_enable_vimfiler_gitstatus*
-Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 
                                      *g:spacevim_enable_vimfiler_filetypeicon*
-Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
