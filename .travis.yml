@@ -5,7 +5,15 @@ notifications:
   slack:
     on_success: never
     on_failure: never
-
+  email:
+    on_success: change # default: change
+    on_failure: never # default: always
+  irc:
+    channels:
+      - "chat.freenode.net#spacevim"
+    template:
+      - "%{repository} (%{commit}) : %{message} %{foo} "
+      - "Build details: %{build_url}"
 cache:
   pip: true
 
