@@ -313,6 +313,9 @@ Set SpaceVim windows index type, default is 0.
                                      *g:spacevim_enable_tabline_filetype_icon*
 Enable/Disable tabline filetype icon. default is 0.
 
+                                   *g:spacevim_enable_statusline_display_mode*
+Enable/Disable statusline display mode. default is 0.
+
                                         *g:spacevim_enable_os_fileformat_icon*
 Enable/Disable os fileformat icon. default is 0.
 
