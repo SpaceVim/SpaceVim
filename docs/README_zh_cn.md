@@ -34,6 +34,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 | ![weixin](img/weixin.png) | ![zhifubao](img/zhifubao.png) |
 
 <!-- vim-markdown-toc GFM -->
+
 * [安装](#安装)
 * [更新](#更新)
 * [文档](#文档)
@@ -92,10 +93,10 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
                 * [窗口操作常用快捷键](#窗口操作常用快捷键)
         * [Buffers and Files](#buffers-and-files)
             * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
-            * [Create a new empty buffer](#create-a-new-empty-buffer)
-            * [Special Buffers](#special-buffers)
-            * [Files manipulations key bindings](#files-manipulations-key-bindings)
-            * [Vim and SpaceVim files](#vim-and-spacevim-files)
+            * [新建一个空Buffer](#新建一个空buffer)
+            * [特殊Buffer](#特殊buffer)
+            * [文件操作快捷键](#文件操作快捷键)
+            * [Vim以及SpaceVim文件](#vim以及spacevim文件)
         * [File tree](#file-tree)
             * [File tree navigation](#file-tree-navigation)
             * [Open file with file tree.](#open-file-with-file-tree)
@@ -865,73 +866,73 @@ Buffer操作相关快捷键 (以`SPC b`为前缀):
 
 | 快捷键     | 描述                                                                    |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC TAB`       | switch to alternate buffer in the current window (switch back and forth)       |
-| `SPC b .`       | buffer transient state                                                         |
-| `SPC b b`       | switch to a buffer (via denite/unite)                                          |
-| `SPC b d`       | kill the current buffer (does not delete the visited file)                     |
-| `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
-| `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | kill other buffers                                                             |
-| `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
-| `SPC b h`       | open _SpaceVim_ home buffer                                                    |
-| `SPC b n`       | switch to next buffer avoiding special buffers                                 |
-| `SPC b m`       | open _Messages_ buffer                                                         |
-| `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | switch to previous buffer avoiding special buffers                             |
-| `SPC b P`       | copy clipboard and replace buffer (useful when pasting from a browser)         |
-| `SPC b R`       | revert the current buffer (reload from disk)                                   |
-| `SPC b s`       | switch to the _scratch_ buffer (create it if needed)                           |
-| `SPC b w`       | toggle read-only (writable state)                                              |
-| `SPC b Y`       | copy whole buffer to clipboard (useful when copying to a browser)              |
-| `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
+| `SPC TAB`       | 在当前窗口中切换到另一个Buffer(循环切换)       |
+| `SPC b .`       | Buffer临时动作条
+| `SPC b b`       | 切换Buffer (通过 denite/unite)                                          |
+| `SPC b d`       | 关闭当前Buffer (不会删除访问的文件)                     |
+| `SPC u SPC b d` | 关闭当前Buffer以及窗口 (不会删除访问的文件) (TODO)   |
+| `SPC b D`       | 通过vim-choosewin关闭一个可见Buffer                                      |
+| `SPC u SPC b D` | 通过ace-window关闭一个可见Buffer以及其窗口(TODO)                   |
+| `SPC b C-d`     | 关闭其他Buffer                                                             |
+| `SPC b C-D`     | 利用正则表达式关闭Buffer(TODO)                                  |
+| `SPC b e`       | 清楚Buffer中的内容r (将询问确认请求)                         |
+| `SPC b h`       | 打开 _SpaceVim_ 家目录Buffer                                                    |
+| `SPC b n`       | 切换到特殊Buffer以外的下一个Buffer                                 |
+| `SPC b m`       | 打开 _Messages_ Buffer                                                         |
+| `SPC u SPC b m` | 删除除了当前Buffer以外的所有Buffer以及Window(TODO)                      |
+| `SPC b p`       | 切换到除特殊Buffer以外的前一个Buffer                             |
+| `SPC b P`       | 复制剪切板并粘贴覆盖当前Buffer内容（当从浏览器粘贴时很有用）        |
+| `SPC b R`       | 恢复当前Buffer内容（从硬盘中重载）                                   |
+| `SPC b s`       | 切换到 _scratch_ Buffer (若需要则创建)                           |
+| `SPC b w`       | 切换只读/读写模式                                              |
+| `SPC b Y`       | 将当前整个Buffer内容拷贝到剪切板中（当拷贝到浏览器中时很有用）          |
+| `z f`           | 使当前Buffer中的函数以及评论尽可能可见(TODO) |
 
-##### Create a new empty buffer
+##### 新建一个空Buffer 
 
-| Key Binding | Description                                           |
+| 快捷键 | 描述                                           |
 | ----------- | ----------------------------------------------------- |
-| `SPC b N h` | create new empty buffer in a new window on the left   |
-| `SPC b N j` | create new empty buffer in a new window at the bottom |
-| `SPC b N k` | create new empty buffer in a new window above         |
-| `SPC b N l` | create new empty buffer in a new window below         |
-| `SPC b N n` | create new empty buffer in current window             |
+| `SPC b N h` | 在左侧新窗口中新建一个Buffer   |
+| `SPC b N j` | 在下方新窗口中新建一个Buffer |
+| `SPC b N k` | 在上方新窗口中新建一个Buffer         |
+| `SPC b N l` | 在右侧新窗口中新建一个Buffer         |
+| `SPC b N n` | 在当前窗口中新建一个Buffer             |
 
-##### Special Buffers
+##### 特殊Buffer
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+在SpaceVim中，有一些由插件以及SpaceVim自身创建的Buffer，这些Buffer被称为特殊Buffer。这里并没有列出这些特殊Buffer。
 
-##### Files manipulations key bindings
+##### 文件操作快捷键
 
-Files manipulation commands (start with f):
+文件操作指令 (以`SPC f`为前缀):
 
-| Key Binding | Description                                                    |
+| 快捷键 | 描述                                                    |
 | ----------- | -------------------------------------------------------------- |
-| `SPC f b`   | go to file bookmarks                                           |
-| `SPC f c`   | copy current file to a different location(TODO)                |
-| `SPC f C d` | convert file from unix to dos encoding                         |
-| `SPC f C u` | convert file from dos to unix encoding                         |
-| `SPC f D`   | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO)         |
-| `SPC f f`   | open file                                                      |
-| `SPC f F`   | try to open the file under point                               |
-| `SPC f o`   | open a file using the default external program(TODO)           |
-| `SPC f R`   | rename the current file(TODO)                                  |
-| `SPC f s`   | save a file                                                    |
-| `SPC f S`   | save all files                                                 |
-| `SPC f r`   | open a recent file                                             |
-| `SPC f t`   | toggle file tree side bar                                      |
-| `SPC f T`   | show file tree side bar                                        |
-| `SPC f y`   | show and copy current file absolute path in the cmdline        |
+| `SPC f b`   | 前往文件书签                                           |
+| `SPC f c`   | 复制当前文件至其他位置(TODO)                |
+| `SPC f C d` | 将文件从unix格式转换到dos格式                         |
+| `SPC f C u` | 将文件从dos格式转换为unix格式                         |
+| `SPC f D`   | 删除文件以及相关Buffer(请求确认) |
+| `SPC f E`   | 以更高的权限打开文件（sudo编辑）         |
+| `SPC f f`   | 打开文件                                                      |
+| `SPC f F`   | 尝试打开光标下的文件                               |
+| `SPC f o`   | 以默认的外部软件打开文件(TODO)           |
+| `SPC f R`   | 重命名当前文件(TODO)                                  |
+| `SPC f s`   | 保存文件                                                    |
+| `SPC f S`   | 保存所有文件                                                 |
+| `SPC f r`   | 打开最近的文件                                             |
+| `SPC f t`   | 打开/关闭侧栏文件列表                                      |
+| `SPC f T`   | 显示侧栏文件列表                                        |
+| `SPC f y`   | 在命令栏中显示并复制当前文件绝对路径到剪切板        |
 
-##### Vim and SpaceVim files
+##### Vim以及SpaceVim文件
 
-Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
+以`SPC f v`为前缀定义的快捷键可以用来在Vim以及SpaceVim文件之间起快捷向导作用。
 
-| Key Binding | Description                             |
+| 快捷键 | 描述                             |
 | ----------- | --------------------------------------- |
-| `SPC f v v` | display and copy SpaceVim version       |
-| `SPC f v d` | open SpaceVim custom configuration file |
+| `SPC f v v` | 显示以及复制SpaceVim版本       |
+| `SPC f v d` | 打开SpaceVim的自定义配置文件 |
 
 #### File tree
 
