@@ -6,8 +6,12 @@ Execute ( SpaceVim api: vim#buffer open ):
   AssertEqual &buftype, 'nofile'
 
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
-  new
   let buffer = SpaceVim#api#import('vim#buffer')
+  let os = SpaceVim#api#import('system')
+  if os.isWindows
+    finish
+  endif
+  new
   let nr = bufnr('%')
   new
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3'])

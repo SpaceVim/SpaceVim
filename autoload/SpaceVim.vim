@@ -155,6 +155,13 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 " Enable/Disable unicode symbols in statusline
 let g:spacevim_statusline_unicode_symbols = 1
 ""
+" Enable/Disable display mode. Default is 0, mode will be
+" displayed in statusline. To enable this feature:
+" >
+"   let g:spacevim_enable_statusline_display_mode = 1
+" <
+let g:spacevim_enable_statusline_display_mode     = 0
+""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
 " >
@@ -342,10 +349,10 @@ let g:spacevim_lint_on_the_fly         = 0
 " <
 let g:spacevim_enable_vimfiler_welcome = 1
 ""
-" Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+" Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_gitstatus = 0
 ""
-" Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+" Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner']
