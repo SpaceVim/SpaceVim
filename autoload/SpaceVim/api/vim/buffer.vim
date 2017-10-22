@@ -81,6 +81,9 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     for i in range(len(a:replacement))
       call setbufline(bufname(a:buffer), line + i, a:replacement[i])
     endfor
+  else
+    exe 'b' . a:buffer
+    call setline(a:start, a:replacement)
   endif
 endfunction
 
