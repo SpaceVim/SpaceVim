@@ -1,5 +1,9 @@
 Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
+  let os = SpaceVim#api#import('system')
+  if os.isWindows
+    finish
+  endif
   let argv = ['cat']
   let g:stdout = ''
   let stderr = ''
