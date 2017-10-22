@@ -4,16 +4,11 @@ cache: C:\Users\appveyor\.cache\vimfiles
 environment:
   matrix:
     - CONDITION: Official latest-32
-    - CONDITION: Official 8.0.0069-32
-    - CONDITION: Kaoriya latest-32
-    - CONDITION: Kaoriya latest-64
-    - CONDITION: Kaoriya 8.0.0082-32
-    - CONDITION: Kaoriya 8.0.0082-64
     - CONDITION: Neovim latest-32
     - CONDITION: Neovim latest-64
-    - CONDITION: Neovim 0.2.0-32
-    - CONDITION: Neovim 0.2.0-64
 install:
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
   - 'git config --global user.name "Appveyor"'
   - 'git config --global user.email appveyor@example.com'
   - 'git clone -q --depth 1 --single-branch https://github.com/junegunn/vader.vim.git build/vader'
