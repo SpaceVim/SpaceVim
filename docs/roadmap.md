@@ -8,12 +8,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 
 ## Current
 
-### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
-
-- Improve git work  flow
-  - completion in commit message buffer
-  - manager github issues annd PRs
-- Improve autocomplete layer
+### [0.5](https://github.com/SpaceVim/SpaceVim/milestone/8)
 
 ## Meta
 
@@ -26,6 +21,13 @@ There are release milestones and meta milestones ("buckets").
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
 ## Completed
+
+### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
+
+- Improve git work  flow
+  - completion in commit message buffer
+  - manager github issues annd PRs
+- Improve autocomplete layer
 
 ### [0.3](https://github.com/SpaceVim/SpaceVim/milestone/3)
 
