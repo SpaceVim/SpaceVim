@@ -396,6 +396,7 @@ The statusline and tabline are heavily customized with the following capabilitie
 The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
 
 - show the window number
+- show the current mode
 - color code for current state
 - show the number of search results
 - toggle syntax checking info
