@@ -1,9 +1,29 @@
-version: 1.0.{build}
-pull_requests:
-  do_not_increment_build_number: true
-skip_tags: true
+version: '{build}'
 clone_depth: 1
+environment:
+  matrix:
+    - CONDITION: Official latest-32
+    - CONDITION: Official 8.0.0069-32
+    - CONDITION: Kaoriya latest-32
+    - CONDITION: Kaoriya latest-64
+    - CONDITION: Kaoriya 8.0.0082-32
+    - CONDITION: Kaoriya 8.0.0082-64
+    - CONDITION: Neovim latest-32
+    - CONDITION: Neovim latest-64
+    - CONDITION: Neovim 0.2.0-32
+    - CONDITION: Neovim 0.2.0-64
+install:
+  - 'git config --global user.name "Appveyor"'
+  - 'git config --global user.email appveyor@example.com'
+  - 'git clone -q --depth 1 --single-branch https://github.com/junegunn/vader.vim.git build/vader'
+  - 'set THEMIS_HOME=%TEMP%\vim-themis'
+  - 'set PATH=%THEMIS_HOME%\bin;%PATH%'
+  - ps: .ci/install.ps1
 test_script:
-- ps: make test
+  - 'echo %PATH%'
+  - 'echo %THEMIS_HOME%'
+  - 'echo %THEMIS_VIM%'
+  - 'echo %THEMIS_ARGS%'
+  - '%THEMIS_VIM% --version'
 build: off
 deploy: off
