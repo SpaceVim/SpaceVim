@@ -17,6 +17,7 @@ install:
   - 'git config --global user.name "Appveyor"'
   - 'git config --global user.email appveyor@example.com'
   - 'git clone -q --depth 1 --single-branch https://github.com/junegunn/vader.vim.git build/vader'
+  - 'git clone -q --depth 1 --single-branch https://github.com/Shougo/dein.vim C:\Users\appveyor\.cache\vimfiles\repos\github.com\Shougo\dein.vim'
   - 'set THEMIS_HOME=%TEMP%\vim-themis'
   - 'set PATH=%THEMIS_HOME%\bin;%PATH%'
   - ps: .ci/install.ps1
