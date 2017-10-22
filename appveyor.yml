@@ -1,5 +1,6 @@
 version: '{build}'
 clone_depth: 1
+cache: C:\Users\appveyor\.cache\vimfiles
 environment:
   matrix:
     - CONDITION: Official latest-32
