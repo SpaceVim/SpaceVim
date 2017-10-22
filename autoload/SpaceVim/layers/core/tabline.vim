@@ -193,12 +193,16 @@ function! SpaceVim#layers#core#tabline#jump(id) abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
-    let name = get(g:, 'colors_name', 'gruvbox')
-    try
+    if !empty(g:spacevim_custom_color_palette)
+      let t = g:spacevim_custom_color_palette
+    else
+      let name = get(g:, 'colors_name', 'gruvbox')
+      try
         let t = SpaceVim#mapping#guide#theme#{name}#palette()
-    catch /^Vim\%((\a\+)\)\=:E117/
+      catch /^Vim\%((\a\+)\)\=:E117/
         let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
-    endtry
+      endtry
+    endif
     exe 'hi! SpaceVim_tabline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
     exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
     call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')

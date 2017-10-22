@@ -162,6 +162,21 @@ let g:spacevim_statusline_unicode_symbols = 1
 " <
 let g:spacevim_enable_statusline_display_mode     = 0
 ""
+" Set the statusline/tabline palette of color, default values depends on the theme
+" >
+"   let g:spacevim_custom_color_palette = [
+"     \ ['#282828', '#b8bb26', 246, 235],
+"     \ ['#a89984', '#504945', 239, 246],
+"     \ ['#a89984', '#3c3836', 237, 246],
+"     \ ['#665c54', 241],
+"     \ ['#282828', '#83a598', 235, 109],
+"     \ ['#282828', '#fe8019', 235, 208],
+"     \ ['#282828', '#8ec07c', 235, 108],
+"     \ ]
+" <
+"
+let g:spacevim_custom_color_palette = []
+""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
 " >
