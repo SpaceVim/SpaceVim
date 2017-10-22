@@ -6,7 +6,7 @@ Execute ( SpaceVim api: vim#buffer open ):
   AssertEqual &buftype, 'nofile'
 
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
-  Log "setbuflin: " . exist('*setbufline')
+  Log "setbuflin: " . exists('*setbufline')
   Log "has py: "   . has('python')
   new
   let buffer = SpaceVim#api#import('vim#buffer')
