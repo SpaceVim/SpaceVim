@@ -8,9 +8,12 @@ Execute ( SpaceVim api: vim#buffer open ):
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
   Log "setbuflin: " . exists('*setbufline')
   Log "has py: "   . has('python')
-  new
+  Log "has py3: "   . has('python3')
   let buffer = SpaceVim#api#import('vim#buffer')
+  new
   let nr = bufnr('%')
   new
+  let cb = bufnr('%')
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3'])
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'line 2', 'line 3']
+  Log getbufline(cb, 1, '$')

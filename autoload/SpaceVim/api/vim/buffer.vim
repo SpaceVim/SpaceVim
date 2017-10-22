@@ -83,7 +83,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     endfor
   else
     exe 'b' . a:buffer
-    call setline(a:start, a:replacement)
+    call setline(a:start - 1, a:replacement)
   endif
 endfunction
 
