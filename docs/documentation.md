@@ -293,6 +293,17 @@ let g:spacevim_custom_plugins = [
 \ ['wsdjeg/GitHub.vim'],
 \ ]
 
+" If you want to add custom color palette for statusline and tabline, use these options:
+let g:spacevim_custom_color_palette = [
+\ ['#282828', '#b8bb26', 246, 235],
+\ ['#a89984', '#504945', 239, 246],
+\ ['#a89984', '#3c3836', 237, 246],
+\ ['#665c54', 241],
+\ ['#282828', '#83a598', 235, 109],
+\ ['#282828', '#fe8019', 235, 208],
+\ ['#282828', '#8ec07c', 235, 108],
+\ ]
+
 " set the guifont
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```

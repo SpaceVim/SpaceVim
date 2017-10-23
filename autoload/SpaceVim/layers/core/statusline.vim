@@ -338,12 +338,16 @@ endfunction
 let s:colors_template = SpaceVim#mapping#guide#theme#gruvbox#palette()
 
 function! SpaceVim#layers#core#statusline#def_colors() abort
-  let name = get(g:, 'colors_name', 'gruvbox')
-  try
-    let t = SpaceVim#mapping#guide#theme#{name}#palette()
-  catch /^Vim\%((\a\+)\)\=:E117/
-    let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
-  endtry
+  if !empty(g:spacevim_custom_color_palette)
+    let t = g:spacevim_custom_color_palette
+  else
+    let name = get(g:, 'colors_name', 'gruvbox')
+    try
+      let t = SpaceVim#mapping#guide#theme#{name}#palette()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
+    endtry
+  endif
   let s:colors_template = t
   exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
   exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
