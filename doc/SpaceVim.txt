@@ -246,7 +246,7 @@ might require adding the following to ~/.tmux.conf:
                                                 *g:spacevim_vim_help_language*
 Set the help language of vim. Default is 'en'.  You can change it to Chinese.
 >
-  let g:spacevim_vim_help_language = 'chinese'
+  let g:spacevim_vim_help_language = 'cn'
 <
 
                                                          *g:spacevim_language*
