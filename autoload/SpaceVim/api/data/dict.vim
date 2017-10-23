@@ -10,9 +10,18 @@ function! SpaceVim#api#data#dict#get() abort
         \ 'min_by' : '',
         \ 'foldl' : '',
         \ 'foldr' : '',
+        \ 'entrys' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
+endfunction
+
+function! s:entrys(dict) abort
+  let entrys = []
+  for key in keys(a:dict)
+    call add(entrys, {key : a:dict[key]})
+  endfor
+  return entrys
 endfunction
 
 function! s:make(keys, values, ...) abort
