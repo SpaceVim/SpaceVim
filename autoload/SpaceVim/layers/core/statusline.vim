@@ -147,7 +147,9 @@ function! s:winnr(...) abort
       return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
     endif
   else
-    if g:spacevim_windows_index_type == 3
+    if g:spacevim_enable_statusline_display_mode == 1
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())}' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    elseif g:spacevim_windows_index_type == 3
       return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
     else
       return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
@@ -468,6 +470,20 @@ function! SpaceVim#layers#core#statusline#mode(mode)
     let w:spacevim_statusline_mode = a:mode
   endif
   return ''
+endfunction
+
+function! SpaceVim#layers#core#statusline#mode_text(mode)
+  let t = s:colors_template
+  if a:mode == 'n'
+    return 'NORMAL '
+  elseif a:mode == 'i'
+    return 'INSERT '
+  elseif a:mode == 'R'
+    return 'REPLACE '
+  elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
+    return 'VISUAL '
+  endif
+  return ' '
 endfunction
 
 function! SpaceVim#layers#core#statusline#denite_mode()

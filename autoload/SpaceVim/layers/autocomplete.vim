@@ -59,6 +59,13 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ }])
   endif
+  if has('patch-7.4.774')
+    call add(plugins, ['Shougo/echodoc.vim', {
+          \ 'on_cmd' : ['EchoDocEnable', 'EchoDocDisable'],
+          \ 'on_event' : 'CompleteDone',
+          \ 'loadconf_before' : 1,
+          \ }])
+  endif
   call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
   return plugins
 endfunction

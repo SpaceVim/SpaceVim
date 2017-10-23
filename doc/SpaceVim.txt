@@ -191,6 +191,13 @@ See more details in: http://spacevim.org/documentation/#statusline
                                        *g:spacevim_statusline_unicode_symbols*
 Enable/Disable unicode symbols in statusline
 
+                                   *g:spacevim_enable_statusline_display_mode*
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  let g:spacevim_enable_statusline_display_mode = 1
+<
+
                                               *g:spacevim_enable_cursorcolumn*
 Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
 normal mode. To enable this feature:
@@ -371,10 +378,10 @@ vim to start up slowly if there are too many files in the current directory.
 <
 
                                         *g:spacevim_enable_vimfiler_gitstatus*
-Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 
                                      *g:spacevim_enable_vimfiler_filetypeicon*
-Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and

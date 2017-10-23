@@ -76,7 +76,14 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py3 lines = vim.eval("a:replacement")
       py3 vim.buffers[bufnr][start_line:end_line] = lines
     endif
+  elseif exists('*setbufline')
+    let line = a:start
+    for i in range(len(a:replacement))
+      call setbufline(bufname(a:buffer), line + i, a:replacement[i])
+    endfor
   else
+    exe 'b' . a:buffer
+    call setline(a:start - 1, a:replacement)
   endif
 endfunction
 
