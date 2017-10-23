@@ -473,7 +473,6 @@ function! SpaceVim#layers#core#statusline#mode(mode)
 endfunction
 
 function! SpaceVim#layers#core#statusline#mode_text(mode)
-  let t = s:colors_template
   if a:mode == 'n'
     return 'NORMAL '
   elseif a:mode == 'i'
