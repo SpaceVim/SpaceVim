@@ -525,7 +525,7 @@ function! SpaceVim#end() abort
     endfor
     if g:spacevim_vim_help_language ==# 'cn'
       call add(g:spacevim_plugin_groups, 'chinese')
-    elseif g:spacevim_vim_help_language ==# 'japanese'
+    elseif g:spacevim_vim_help_language ==# 'ja'
       call add(g:spacevim_plugin_groups, 'japanese')
     endif
     if g:spacevim_use_colorscheme==1
