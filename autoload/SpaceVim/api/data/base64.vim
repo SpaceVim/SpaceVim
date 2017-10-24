@@ -2,6 +2,7 @@ let s:self = {}
 
 
 if has('python')
+  " @vimlint(EVL103, 1, a:text)
   function! s:self.encode(text) abort
     py import vim
     py import base64
@@ -24,6 +25,7 @@ except TypeError, e:
     vim.command("return '{}'".format(ret))
 EOF
 endfunction
+  " @vimlint(EVL103, 0, a:text)
 else
   function! s:self.encode(data) abort
     let b64 = self._b64encode(self._str2bytes(a:data), self.standard_table, '=')
