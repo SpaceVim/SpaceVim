@@ -1,0 +1,3 @@
+Execute ( SpaceVim api: data#json ):
+  let json = SpaceVim#api#import('data#json')
+  AssertEqual json.json_decode(json.json_encode({'foo' : 'zaa'})), {'foo' : 'zaa'}
