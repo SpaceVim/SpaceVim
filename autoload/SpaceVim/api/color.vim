@@ -54,8 +54,20 @@ let s:self._color_map = {
     \ '250': '#bcbcbc', '251': '#c6c6c6', '252': '#d0d0d0', '253': '#dadada', '254': '#e4e4e4',
     \ '255': '#eeeeee', 'fg': 'fg', 'bg': 'bg', 'NONE': 'NONE' }
 
+let s:self._deps = SpaceVim#api#import('data#dict')
+function! s:self.nr2str(nr) abort
+  return get(self._color_map, a:nr, '')
+endfunction
 
 
+function! s:self.str2nr(str) abort
+  let nr = get(self._deps.swap(self._color_map), a:str, -1)
+  if nr =~ 'fg\|bg\|NONE'
+    return nr
+  else
+    return str2nr(nr)
+  endif
+endfunction
 
 
 function! SpaceVim#api#color#get() abort
