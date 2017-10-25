@@ -34,7 +34,14 @@ function! SpaceVim#layers#checkers#config() abort
 endfunction
 
 function! s:error_transient_state() abort
-  if empty(neomake#statusline#LoclistCounts())
+  if g:spacevim_enable_neomake
+    let has_errors = neomake#statusline#LoclistCounts()
+  elseif g:spacevim_enable_ale
+    let has_errors = ''
+  else
+    let has_errors = ''
+  endif
+  if empty(has_errors)
     echo 'no buffers contain error message locations'
     return
   endif
@@ -88,7 +95,7 @@ else
   endfunction
 endif
 
-
+" TODO clear errors
 function! s:clear_errors() abort
   sign unplace *
 endfunction

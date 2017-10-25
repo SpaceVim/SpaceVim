@@ -1,17 +1,32 @@
-# [Layers](https://spacevim.org/layers) > checkers
+---
+title: "SpaceVim checkers layer"
+---
+
+# [SpaceVim Layers:](https://spacevim.org/layers) checkers
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+- [Configuration](#configuration)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
+## Description
 
 This layer provides syntax checking feature.
 
-## Install
+## Layer Installation
 
 checkers layer is loaded by default.
 
-## options
+## Configuration
 
 | Name                         | default value | description                                              |
 | ---------------------------- | ------------- | -------------------------------------------------------- |
 | `g:spacevim_enable_neomake`  | 1             | Use neomake as default checking tools                    |
-| `g:spacevim_enable_ale`      | 1             | Use ale as default checking tools                        |
+| `g:spacevim_enable_ale`      | 0             | Use ale as default checking tools                        |
 | `g:spacevim_lint_on_the_fly` | 0             | Syntax checking on the fly feature, disabled by default. |
 
 **NOTE:** if you want to use  ale, you need:
@@ -23,10 +38,11 @@ let g:spacevim_enable_ale = 1
 
 and if you want to use syntastic, set this two options to 0.
 
-## Mappings
+## Key bindings
 
 | Key       | mode   | description                                                  |
 | --------- | ------ | ------------------------------------------------------------ |
+| `SPC e .` | Normal | open error-transient-state                                   |
 | `SPC e c` | Normal | clear errors                                                 |
 | `SPC e h` | Normal | describe current checker                                     |
 | `SPC e n` | Normal | jump to the position of next error                           |
