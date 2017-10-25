@@ -51,7 +51,7 @@ and if you want to use syntastic, set this two options to 0.
 | `SPC e l` | Normal | display a list of all the errors                             |
 | `SPC e L` | Normal | display a list of all the errors and focus the errors buffer |
 | `SPC e e` | Normal | explain the error at point                                   |
-| `SPC e s` | Normal | set syntax checker                                           |
-| `SPC e S` | Normal | set syntax checker executable                                |
+| `SPC e s` | Normal | set syntax checker (TODO)                                           |
+| `SPC e S` | Normal | set syntax checker executable (TODO)                                |
 | `SPC e v` | Normal | verify syntax setup                                          |
 | `SPC t s` | Normal | toggle syntax                                                |

@@ -29,9 +29,21 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'lopen', 'toggle showing the error list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'lprevious', 'previous-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'lNext', 'previous-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
+        \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
+        \ 'verify syntax setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
+endfunction
+
+
+function! s:verify_syntax_setup() abort
+  if g:spacevim_enable_neomake
+    NeomakeInfo
+  elseif g:spacevim_enable_ale
+  else
+  endif
 endfunction
 
 function! s:error_transient_state() abort
