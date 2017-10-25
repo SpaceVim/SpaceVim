@@ -125,6 +125,18 @@ if g:spacevim_enable_neomake
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
     return l
   endfunction
+elseif g:spacevim_enable_ale
+  function! s:syntax_checking()
+    if !exists('g:ale_enabled')
+      return ''
+    endif
+    let counts = ale#statusline#Count(bufnr(''))
+    let warnings = counts.warning + counts.style_warning
+    let errors = counts.error + counts.style_error
+    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    return l
+  endfunction
 else
   function! s:syntax_checking()
     if !exists(':SyntasticCheck')
