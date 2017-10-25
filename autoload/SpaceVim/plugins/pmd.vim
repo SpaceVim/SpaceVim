@@ -50,6 +50,9 @@ let s:CMD.options = s:options
 
 let s:rst = []
 
+
+let s:parserdir = ''
+
 function! s:on_pmd_stdout(id, data, event) abort
     for data in a:data
         let info = split(data, '\:\d\+\:')
@@ -58,6 +61,7 @@ function! s:on_pmd_stdout(id, data, event) abort
             let lnum = matchstr(data, '\:\d\+\:')[1:-2]
             call add(s:rst, {
                         \ 'filename' : fnamemodify(fname, ':p'),
+                        \ 'abbr' : substitute(s:parserdir, 'dir', '', 'g'),
                         \ 'lnum' : lnum,
                         \ 'text' : text,
                         \ })
@@ -73,9 +77,9 @@ function! s:on_pmd_stderr(id, data, event) abort
 endfunction
 
 function! s:on_pmd_exit(id, data, event) abort
-    call setqflist(s:rst)
+    call SpaceVim#plugins#quickfix#setqflist(s:rst)
     let s:rst = []
-    copen
+    call SpaceVim#plugins#quickfix#openwin()
 endfunction
 
 function! SpaceVim#plugins#pmd#run(...)
@@ -86,7 +90,10 @@ function! SpaceVim#plugins#pmd#run(...)
   if index(argv, '-d') == -1
     echohl ErrorMsg | echo 'you need to run PMD with -d option!'
     return
+  else
+    let s:parserdir = fnamemodify(argv[index(argv, '-d') + 1], ':p')
   endif
+
   call s:JOB.start(argv,
         \ {
         \ 'on_stdout' : function('s:on_pmd_stdout'),

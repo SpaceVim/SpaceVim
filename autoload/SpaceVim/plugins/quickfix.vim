@@ -1,5 +1,8 @@
 let s:qflist = []
 
+
+let s:filestack = []
+
 " Create or replace or add to the quickfix list using the items
 " in {list}.  Each item in {list} is a dictionary.
 " Non-dictionary items in {list} are ignored.  Each dictionary
@@ -107,5 +110,33 @@ function! SpaceVim#plugins#quickfix#openwin()
         \ 'mode' : 'rightbelow split ',
         \ })
   call s:BUFFER.resize(10, '')
+  call s:update_stack()
+  let lines = []
+  for file in s:filestack
+    let line = ''
+    if has_key(file, 'abbr')
+      let line .= file.abbr
+    elseif has_key(file, 'filename')
+      let line .= file.name
+    else
+      let line .= bufname(file.bufnr)
+    endif
+    let line .= '|' . file.type . '|' . file.text
+    call add(lines, line)
+  endfor
+  call s:BUFFER.buf_set_lines(bufnr('%'), 0, '$', 0, lines)
+endfunction
 
+function! s:update_stack() abort
+  let s:filestack = []
+  for item in s:qflist
+    let file = {}
+    if has_key(item, 'bufnr') && bufexists(item.bufnr)
+    elseif has_key(item, 'bufname')
+      let file.name = item.bufname
+    endif
+    let file.lnum = item.lnum
+    let file.col = item.col
+    call add(s:filestack, file)
+  endfor
 endfunction
