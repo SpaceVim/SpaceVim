@@ -1,4 +1,16 @@
 scriptencoding utf-8
+let s:neomake_automake_events = {}
+if get(g:, 'spacevim_lint_on_save', 0)
+    let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
+endif
+
+if get(g:, 'spacevim_lint_on_the_fly', 0)
+    let s:neomake_automake_events['TextChanged'] = {'delay': 750}
+endif
+
+if !empty(s:neomake_automake_events)
+    call neomake#configure#automake(s:neomake_automake_events)
+endif
 " 1 open list and move cursor 2 open list without move cursor
 let g:neomake_open_list = get(g:, 'neomake_open_list', 2)
 let g:neomake_verbose = get(g:, 'neomake_verbose', 0)
