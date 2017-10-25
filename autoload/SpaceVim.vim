@@ -106,6 +106,12 @@ let g:spacevim_autocomplete_method     = ''
 " <
 let g:spacevim_enable_neomake          = 1
 ""
+" Use ale for syntax checking, disabled by default.
+" >
+"   let g:spacevim_enable_ale = 1
+" <
+let g:spacevim_enable_ale          = 0
+""
 " Set the guifont of SpaceVim. Default is empty.
 " >
 "   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'

@@ -144,6 +144,12 @@ SpaceVim default checker is neomake. If you want to use syntastic, use:
   let g:spacevim_enable_neomake = 0
 <
 
+                                                       *g:spacevim_enable_ale*
+Use ale for syntax checking, disabled by default.
+>
+  let g:spacevim_enable_ale = 1
+<
+
                                                           *g:spacevim_guifont*
 Set the guifont of SpaceVim. Default is empty.
 >
