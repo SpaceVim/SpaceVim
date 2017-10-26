@@ -43,7 +43,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 function! SpaceVim#plugins#quickfix#openwin()
   call s:BUFFER.open({
         \ 'bufname' : '__quickfix__',
-        \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable nowrap nolist',
+        \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable nowrap nobuflisted',
         \ 'mode' : 'rightbelow split ',
         \ })
   call s:BUFFER.resize(10, '')
@@ -73,6 +73,7 @@ endfunction
 
 function! s:mappings() abort
   nnoremap <buffer><silent> <cr> :call SpaceVim#plugins#quickfix#enter()<cr>
+  nnoremap <buffer><silent> q :close<cr>
 endfunction
 
 function! s:update_stack() abort
