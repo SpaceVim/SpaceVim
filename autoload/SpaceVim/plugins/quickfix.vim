@@ -31,30 +31,39 @@ endfunction
 
 function! SpaceVim#plugins#quickfix#enter()
 
-
-
+  let file = get(s:filestack, line('.') - 1, {})
+  if !empty(file)
+    wincmd p
+    exe 'e' file.name
+    exe file.lnum
+  endif
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 function! SpaceVim#plugins#quickfix#openwin()
   call s:BUFFER.open({
         \ 'bufname' : '__quickfix__',
-        \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable',
+        \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable nowrap nolist',
         \ 'mode' : 'rightbelow split ',
         \ })
   call s:BUFFER.resize(10, '')
+  call s:mappings()
   call s:update_stack()
   let lines = []
-  for file in s:filestack
+  for file in s:qflist
     let line = ''
     if has_key(file, 'abbr')
       let line .= file.abbr
     elseif has_key(file, 'filename')
       let line .= file.name
-    else
+    elseif has_key(file, 'bufnr')
       let line .= bufname(file.bufnr)
     endif
-    let line .= '|' . file.type . '|' . file.text
+    let line .= '    '
+    if has_key(file, 'type')
+      let line .= '|' . file.type . '|'
+    endif
+    let line .= file.text
     call add(lines, line)
   endfor
   call setbufvar(bufnr('%'),'&ma', 1)
@@ -62,11 +71,16 @@ function! SpaceVim#plugins#quickfix#openwin()
   call setbufvar(bufnr('%'),'&ma', 0)
 endfunction
 
+function! s:mappings() abort
+  nnoremap <buffer><silent> <cr> :call SpaceVim#plugins#quickfix#enter()<cr>
+endfunction
+
 function! s:update_stack() abort
   let s:filestack = []
   for item in s:qflist
     let file = {}
     if has_key(item, 'bufnr') && bufexists(item.bufnr)
+      let file.name = bufname(item.bufnr)
     elseif has_key(item, 'bufname')
       let file.name = item.bufname
     endif

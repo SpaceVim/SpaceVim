@@ -63,7 +63,7 @@ function! s:on_pmd_stdout(id, data, event) abort
       let lnum = matchstr(data, '\:\d\+\:')[1:-2]
       call add(s:rst, {
             \ 'filename' : fnamemodify(fname, ':p'),
-            \ 'abbr' : substitute(fname, s:parserdir . 'main/java/', '', 'g'),
+            \ 'abbr' : substitute(fname, s:parserdir, '', 'g'),
             \ 'lnum' : lnum,
             \ 'col' : 0,
             \ 'text' : text,
