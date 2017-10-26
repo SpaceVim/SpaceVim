@@ -43,6 +43,7 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['lymslive/vimloo', {'merged' : 0}],
         \ ['lymslive/vnote', {'depends' : 'vimloo',
         \ 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}],
+        \ ['thinca/vim-quickrun', { 'on_cmd': 'QuickRun', 'on_map' : '<Plug>(quickrun' }],
         \ ]
 endfunction
 
@@ -93,6 +94,11 @@ function! SpaceVim#layers#tools#config() abort
     autocmd FileType nerdtree nnoremap <silent><buffer><Space>
           \ :call OpenOrCloseNERDTree()<cr>
   augroup END
+
+  " thinca/vim-quickrun
+  let g:quickrun_no_default_key_mappings = 0
+  nmap <silent> <Leader>r <Plug>(quickrun)
+  vmap <silent> <Leader>r <Plug>(quickrun-op)
 endfunction
 
 " vim:set et sw=2 cc=80:
