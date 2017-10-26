@@ -81,7 +81,7 @@ The current stable version is 0.2.0. See the milestones page for development pro
 
 2. Is SpaceVim trying to turn Vim/Neovim into an IDE?
 
-With layers feature, this [version](<>) of vim distribution to tern vim/neovim into an IDE for many language.
+With layers feature, this [version](<>) of vim distribution to turn vim/neovim into an IDE for many language.
 
 3. Will SpaceVim deprecate Vimscript?
 
