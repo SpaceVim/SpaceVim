@@ -28,11 +28,11 @@ let s:options = {
       \ }
 
 if !exists('Pmd_Cmd')
-    let g:Pmd_Cmd = ['pmd']
+  let g:Pmd_Cmd = ['pmd']
 endif
 
 if !exists('Pmd_Rulesets')
-    let g:Pmd_Rulesets = ["-R", "java-basic,java-design", "-property", "xsltFilename=my-own.xs"]
+  let g:Pmd_Rulesets = ["-R", "java-basic,java-design", "-property", "xsltFilename=my-own.xs"]
 endif
 
 if !exists('Pmd_silent_stderr')
@@ -43,6 +43,7 @@ endif
 
 let s:JOB = SpaceVim#api#import('job')
 let s:CMD = SpaceVim#api#import('vim#command')
+let s:STRING = SpaceVim#api#import('data#string')
 
 " set APIs
 
@@ -52,21 +53,27 @@ let s:rst = []
 
 
 let s:parserdir = ''
-
+" /home/wsdjeg/sources/Mysql.vim/libs/mysqlvim/src/main/java/com/wsdjeg/mysqlvim/MysqlVi.java:18:^IDocument empty method body
 function! s:on_pmd_stdout(id, data, event) abort
-    for data in a:data
-        let info = split(data, '\:\d\+\:')
-        if len(info) == 2
-            let [fname, text] = info
-            let lnum = matchstr(data, '\:\d\+\:')[1:-2]
-            call add(s:rst, {
-                        \ 'filename' : fnamemodify(fname, ':p'),
-                        \ 'abbr' : substitute(s:parserdir, 'dir', '', 'g'),
-                        \ 'lnum' : lnum,
-                        \ 'text' : text,
-                        \ })
-        endif
-    endfor
+  for data in a:data
+    let info = split(data, '\:\d\+\:')
+    if len(info) == 2
+      let [fname, text] = info
+      let text = s:STRING.trim(text)
+      let lnum = matchstr(data, '\:\d\+\:')[1:-2]
+      call add(s:rst, {
+            \ 'filename' : fnamemodify(fname, ':p'),
+            \ 'abbr' : substitute(fname, s:parserdir . 'main/java/', '', 'g'),
+            \ 'lnum' : lnum,
+            \ 'col' : 0,
+            \ 'text' : text,
+            \ })
+    endif
+  endfor
+endfunction
+
+function! Test() abort
+  return s:rst
 endfunction
 
 function! s:on_pmd_stderr(id, data, event) abort
@@ -77,9 +84,8 @@ function! s:on_pmd_stderr(id, data, event) abort
 endfunction
 
 function! s:on_pmd_exit(id, data, event) abort
-    call SpaceVim#plugins#quickfix#setqflist(s:rst)
-    let s:rst = []
-    call SpaceVim#plugins#quickfix#openwin()
+  call SpaceVim#plugins#quickfix#setqflist(s:rst)
+  call SpaceVim#plugins#quickfix#openwin()
 endfunction
 
 function! SpaceVim#plugins#pmd#run(...)
