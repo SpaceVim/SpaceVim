@@ -43,7 +43,7 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['lymslive/vimloo', {'merged' : 0}],
         \ ['lymslive/vnote', {'depends' : 'vimloo',
         \ 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}],
-        \ ['vimwiki/vimwiki', { 'on_map' : { 'n' : '<Plug>Vimwiki' } }]
+        \ ['vimwiki/vimwiki', { 'on_map' : '<Plug>Vimwiki' }]
         \ ]
 endfunction
 
