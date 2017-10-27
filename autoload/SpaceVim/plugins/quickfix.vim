@@ -96,6 +96,10 @@ function! s:update_stack() abort
 endfunction
 
 function! SpaceVim#plugins#quickfix#swapqf()
+  try
+    cclose
+  catch
+  endtry
   call SpaceVim#plugins#quickfix#setqflist(getqflist())
   call SpaceVim#plugins#quickfix#openwin()
 endfunction
