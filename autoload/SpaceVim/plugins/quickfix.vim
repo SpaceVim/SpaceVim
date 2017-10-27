@@ -94,3 +94,8 @@ function! s:update_stack() abort
     call add(s:filestack, file)
   endfor
 endfunction
+
+function! SpaceVim#plugins#quickfix#swapqf()
+  call SpaceVim#plugins#quickfix#setqflist(getqflist())
+  call SpaceVim#plugins#quickfix#openwin()
+endfunction
