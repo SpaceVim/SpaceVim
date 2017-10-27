@@ -72,10 +72,6 @@ function! s:on_pmd_stdout(id, data, event) abort
   endfor
 endfunction
 
-function! Test() abort
-  return s:rst
-endfunction
-
 function! s:on_pmd_stderr(id, data, event) abort
   let s:JOB._message += a:data
   if g:Pmd_silent_stderr == 0

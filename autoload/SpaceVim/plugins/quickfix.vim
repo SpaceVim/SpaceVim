@@ -84,6 +84,10 @@ function! s:update_stack() abort
       let file.name = bufname(item.bufnr)
     elseif has_key(item, 'bufname')
       let file.name = item.bufname
+    elseif has_key(item, 'filename') 
+      let file.name = item.filename
+    else
+      let file.name = ''
     endif
     let file.lnum = item.lnum
     let file.col = item.col
