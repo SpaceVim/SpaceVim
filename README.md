@@ -16,7 +16,9 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature, compatible with vim and neoVim. Layers help collect related plugins together to provide features. Also help keep configuration organized and reduces overhead for the user by keeping them from having to think about what plugins to install. star it on github is a great way of getting feedback and gives me the kick to put more time into development.
+SpaceVim is a community-driven vim distribution that supports vim and Neovim.  SpaceVim manages collections of plugins in layers.  Layers make it easy for you, the user, to enable a new language or feature by grouping all the related plugins together.
+
+Please star the project on github - it is a great way to show your appreciation while providing us motivation to continue working on this project.  The extra visibility for the project doesn't hurt either!
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
@@ -28,7 +30,7 @@ Here is a throughput graph of the repository for the last few weeks:
 
 ### Requirements
 
-SpaceVim's basic mode only requests `git` comamnd in your `$PATH`, but if you want to get better user experience, you need to install [nerd-font](https://github.com/ryanoasis/nerd-fonts). And make sure your terminal support [true colors](https://gist.github.com/XVilka/8346728).
+At a minimum, SpaceVim requires `git` to be installed.  For a better graphical experience, install [nerd-font](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal supports [true colors](https://gist.github.com/XVilka/8346728).
 
 ### Install
 
