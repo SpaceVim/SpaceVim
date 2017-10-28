@@ -1,4 +1,5 @@
 doc/tags
+wiki/.git
 *.class
 .floo
 .flooignore

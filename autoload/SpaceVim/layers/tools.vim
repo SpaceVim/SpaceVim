@@ -66,11 +66,11 @@ function! SpaceVim#layers#tools#config() abort
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
   nnoremap <Leader>fz :FZF<CR>
-  if maparg('<C-l>', 'v') ==# ''
-    vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+  if maparg('<C-_>', 'v') ==# ''
+    vnoremap <silent> <C-_> <Esc>:Ydv<CR>
   endif
-  if maparg('<C-l>', 'n') ==# ''
-    nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+  if maparg('<C-_>', 'n') ==# ''
+    nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
   map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
