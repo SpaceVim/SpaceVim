@@ -10,7 +10,4 @@ Execute ( SpaceVim plugin: quickfix ):
   \ }
   \ ]
   call SpaceVim#plugins#quickfix#setqflist(qflist)
-  call SpaceVim#plugins#quickfix#openwin()
-  AssertEqual bufname('%'), '__quickfix__'
-  AssertEqual getbufline('__quickfix__', 1)[-1], 'test-abbr  |E|  test-text'
-  call SpaceVim#plugins#quickfix#closewin()
+  AssertEqual SpaceVim#plugins#quickfix#getqflist()[0].abbr, 'test-abbr'
