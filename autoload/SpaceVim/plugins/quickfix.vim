@@ -4,6 +4,8 @@ let s:qf_title = ''
 
 let s:filestack = []
 
+let s:qf_index = 0
+
 
 " like setqflist()
 
@@ -14,11 +16,11 @@ function! SpaceVim#plugins#quickfix#setqflist(list, ...)
     call extend(s:qflist, a:list)
   elseif action ==# 'r'
     let s:qflist = a:list
-  elseif empty(action)
+  elseif empty(action) || action ==# ' '
     let s:qflist = a:list
   else
     echohl Error
-    echo 'wrong args for SpaceVim setqflist'
+    echo 'wrong args for SpaceVim setqflist: ' . action
     echohl NONE
   endif
   let what = get(a:000, 1, {})
@@ -37,21 +39,33 @@ endfunction
 
 function! SpaceVim#plugins#quickfix#next()
 
-
+  let s:qf_index += 1
+  let file = get(s:filestack, s:qf_index, {})
+  if !empty(file)
+    wincmd p
+    exe 'e' file.name
+    exe file.lnum
+  endif
 
 endfunction
 
 
 function! SpaceVim#plugins#quickfix#pre()
 
-
+  let s:qf_index -= 1
+  let file = get(s:filestack, s:qf_index, {})
+  if !empty(file)
+    wincmd p
+    exe 'e' file.name
+    exe file.lnum
+  endif
 
 endfunction
 
 
 function! SpaceVim#plugins#quickfix#enter()
-
-  let file = get(s:filestack, line('.') - 1, {})
+  let s:qf_index = line('.') - 1
+  let file = get(s:filestack, s:qf_index, {})
   if !empty(file)
     wincmd p
     exe 'e' file.name
