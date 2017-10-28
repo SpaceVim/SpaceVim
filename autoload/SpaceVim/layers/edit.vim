@@ -30,7 +30,7 @@ endfunction
 
 function! SpaceVim#layers#edit#config() abort
     let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
-    let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-u>')
+    let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-m>')
     let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
     let g:multi_cursor_quit_key=get(g:, 'multi_cursor_quit_key', '<Esc>')
     let g:user_emmet_install_global = 0
