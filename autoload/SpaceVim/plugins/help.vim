@@ -66,4 +66,6 @@ function! s:open_describe_buffer(desc) abort
     if lines < winheight(0)
         exe 'resize ' . lines
     endif
+    setlocal nofoldenable
+    nnoremap <buffer><silent> q :bd<cr>
 endfunction
