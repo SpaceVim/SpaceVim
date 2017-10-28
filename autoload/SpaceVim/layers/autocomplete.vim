@@ -81,14 +81,18 @@ function! SpaceVim#layers#autocomplete#config() abort
 
   "mapping
   if s:tab_key_behavior ==# 'smart'
-    imap <silent><expr><TAB> SpaceVim#mapping#tab()
-    smap <expr><TAB>
-          \ neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)" :
-          \ (complete_parameter#jumpable(1) ?
-          \ "\<plug>(complete_parameter#goto_next_parameter)" :
-          \ "\<TAB>")
-    imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+    if has('patch-7.4.774')
+      imap <silent><expr><TAB> SpaceVim#mapping#tab()
+      smap <expr><TAB>
+            \ neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)" :
+            \ (complete_parameter#jumpable(1) ?
+            \ "\<plug>(complete_parameter#goto_next_parameter)" :
+            \ "\<TAB>")
+      imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+    else
+      call SpaceVim#logger#warn('smart tab in autocomplete layer need patch 7.4.774')
+    endif
   elseif s:tab_key_behavior ==# 'complete'
     inoremap <expr> <Tab>       pumvisible() ? "\<C-y>" : "\<C-n>"
   elseif s:tab_key_behavior ==# 'cycle'
