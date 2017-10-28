@@ -1,10 +1,30 @@
 let s:qflist = []
 
+let s:qf_title = ''
 
 let s:filestack = []
 
+
+" like setqflist()
+
+
 function! SpaceVim#plugins#quickfix#setqflist(list, ...)
-  let s:qflist = a:list
+  let action = get(a:000, 0, ' ')
+  if action ==# 'a'
+    call extend(s:qflist, a:list)
+  elseif action ==# 'r'
+    let s:qflist = a:list
+  elseif empty(action)
+    let s:qflist = a:list
+  else
+    echohl Error
+    echo 'wrong args for SpaceVim setqflist'
+    echohl NONE
+  endif
+  let what = get(a:000, 1, {})
+  if has_key(what, 'title')
+    let s:qf_title = what.title
+  endif
 endfunction
 
 
