@@ -6,6 +6,7 @@ let s:filestack = []
 
 let s:qf_index = 0
 
+let s:qf_bufnr = -1
 
 " like setqflist()
 
@@ -80,6 +81,7 @@ function! SpaceVim#plugins#quickfix#openwin()
         \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable nowrap nobuflisted',
         \ 'mode' : 'rightbelow split ',
         \ })
+  let s:qf_bufnr = bufnr('%')
   call s:BUFFER.resize(10, '')
   call s:mappings()
   call s:update_stack()
@@ -93,9 +95,9 @@ function! SpaceVim#plugins#quickfix#openwin()
     elseif has_key(file, 'bufnr')
       let line .= bufname(file.bufnr)
     endif
-    let line .= '    '
+    let line .= '  '
     if has_key(file, 'type')
-      let line .= '|' . file.type . '|'
+      let line .= '|' . file.type . '|  '
     endif
     let line .= file.text
     call add(lines, line)
@@ -129,11 +131,34 @@ function! s:update_stack() abort
   endfor
 endfunction
 
-function! SpaceVim#plugins#quickfix#swapqf()
+function! SpaceVim#plugins#quickfix#swapqf() abort
   try
     cclose
   catch
   endtry
   call SpaceVim#plugins#quickfix#setqflist(getqflist())
   call SpaceVim#plugins#quickfix#openwin()
+endfunction
+
+" :cclose only close quickfix windows on current tab, this func can close all
+" qucikfix windows in all tabs when pass an argv to this func.
+
+function! SpaceVim#plugins#quickfix#closewin(...) abort
+  let close_all = get(a:000, 1, 0)
+  let has_qf = bufexists('__quickfix__')
+  if !has_qf
+    return
+  endif
+  if close_all
+  else
+    call s:close_qfwin()
+  endif
+endfunction
+
+function! s:close_qfwin() abort
+  let wr = bufwinnr(s:qf_bufnr)
+  if wr > -1
+    exe wr . 'wincmd w'
+    close
+  endif
 endfunction

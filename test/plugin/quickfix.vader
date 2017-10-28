@@ -5,10 +5,12 @@ Execute ( SpaceVim plugin: quickfix ):
     \ 'filename' : '~/test/Foo.java',
     \ 'lnum' : 1,
     \ 'col' : 1,
+    \ 'type' : 'E',
     \ 'text' : 'test-text'
   \ }
   \ ]
   call SpaceVim#plugins#quickfix#setqflist(qflist)
   call SpaceVim#plugins#quickfix#openwin()
   AssertEqual bufname('%'), '__quickfix__'
-  AssertEqual getline('.'), 'test-abbr    test-text'
+  AssertEqual getbufline('__quickfix__', 1)[-1], 'test-abbr  |E|  test-text'
+  call SpaceVim#plugins#quickfix#closewin()
