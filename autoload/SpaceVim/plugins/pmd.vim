@@ -54,6 +54,9 @@ let s:rst = []
 
 let s:parserdir = ''
 " /home/wsdjeg/sources/Mysql.vim/libs/mysqlvim/src/main/java/com/wsdjeg/mysqlvim/MysqlVi.java:18:^IDocument empty method body
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:event)
 function! s:on_pmd_stdout(id, data, event) abort
   for data in a:data
     let info = split(data, '\:\d\+\:')
@@ -83,6 +86,10 @@ function! s:on_pmd_exit(id, data, event) abort
   call SpaceVim#plugins#quickfix#setqflist(s:rst)
   call SpaceVim#plugins#quickfix#openwin()
 endfunction
+
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:event)
 
 function! SpaceVim#plugins#pmd#run(...)
   let argv = g:Pmd_Cmd + a:000
