@@ -15,17 +15,61 @@
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-项 目 主 页： <https://spacevim.org>
+项 目 主 页：<https://spacevim.org>
 
-码云地址 : <https://gitee.com/spacevim/SpaceVim/>
+码 云 地 址：<https://gitee.com/spacevim/SpaceVim/>
 
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供用户选择，针对不同语言选择特定的模块，就可以配置出一个适合特定语言开发的环境。
 
-使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
+使用过程中遇到问题或者有什么功能需求可以[提交issue](https://gitee.com/spacevim/SpaceVim/issues/new)，这将帮助我们一起提升产品。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
 
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
+
+## 安装
+
+**Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：**
+
+```sh
+curl -sLf https://spacevim.org/install.sh | bash
+```
+
+想要获取更多的自定义的安装方式，请参考：
+
+```sh
+curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+```
+
+SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim以及neovim的安装，请参考以下链接：
+
+[安装neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+
+[从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
+
+**windows系统下的安装步骤：**
+
+Windows 下 vim 用户只需要将本仓库克隆成用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
+
+    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
+
+Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\\Local\\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
+
+    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
+
+**字体**
+
+SpaceVim 默认启用了Powerline 字体，默认的的字体文件是：[DejaVu Sans Mono](https://github.com/wsdjeg/DotFiles/tree/master/fonts), Windows 用户直接下载下来右键安装即可。
+
+**vimproc.dll**
+
+Windows 下用户如果不方便编译，可以在qq群文件里面下载相应的dll文件放到vimproc
+的lib目录，默认是 `~/.cache/vimfiles/repos/github.com/Shougo/vimproc.vim/lib/`
+
+## 更新
+
+可以通过 `:SPUpdate` 命令来更新spacevim 以及包含的插件，如果需要更新指定的插件，如：startuptime.vim，只需要执行 `:SPUpdate startuptime.vim`，也可以通过 `:SPUpdate SpaceVim` 来更新 SpaceVim.
+
 
 **捐助SpaceVim**
 
