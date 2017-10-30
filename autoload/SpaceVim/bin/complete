@@ -21,7 +21,6 @@ send "bind 'set completion-display-width 0'\r"
 expect $prompt
 
 # run the completion
-log $prompt
 send "$cmd\t $prompt"
 expect {
    # multiple matches, printed on separate lines, followed by prompt
