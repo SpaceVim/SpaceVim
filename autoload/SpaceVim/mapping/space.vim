@@ -236,16 +236,16 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with ack', 1)
   " rg
   let g:_spacevim_mappings_space.s.r = {'name' : '+rg'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'B'], 'call SpaceVim#mapping#search#grep("r", "B")',
-        \ 'search cursor word in all buffers with rt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rt', 1)
+        \ 'search cursor word in all buffers with rg', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'P'], 'call SpaceVim#mapping#search#grep("r", "P")',
-        \ 'search cursor word in project with rt', 1)
+        \ 'search cursor word in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'f'], 'call SpaceVim#mapping#search#grep("r", "f")',
-        \ 'search in arbitrary directory  with rt', 1)
+        \ 'search in arbitrary directory  with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'F'], 'call SpaceVim#mapping#search#grep("r", "F")',
-        \ 'search cursor word in arbitrary directory  with rt', 1)
+        \ 'search cursor word in arbitrary directory  with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'j'], 'call SpaceVim#plugins#searcher#find("", "rg")',
         \ 'Background search cursor words in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
