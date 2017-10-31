@@ -1,13 +1,8 @@
-let s:completer = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/autoload/SpaceVim/bin/get_complete'
+
+let s:BASH_COMPLETE = SpaceVim#api#import('bash#complete')
+
 function! SpaceVim#plugins#bashcomplete#complete(ArgLead, CmdLine, CursorPos)
-  let result = systemlist([s:completer, a:CmdLine])
-  if a:ArgLead == ''
-    let result = map(result, 'a:CmdLine . v:val')
-  else
-    let leader = substitute(a:CmdLine, '[^ ]*$', '', 'g')
-    let result = map(result, 'leader . v:val')
-  endif
-  return result
+  return s:BASH_COMPLETE.complete_input(a:ArgLead, a:CmdLine, a:CursorPos)
 endfunction
 
 function! SpaceVim#plugins#bashcomplete#test()
