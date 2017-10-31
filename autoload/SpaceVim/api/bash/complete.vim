@@ -11,6 +11,9 @@ endfunction
 " this is for vim input()
 
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
+  if a:CmdLine =~ '^[^ ]*$'
+    return systemlist('compgen -c ' . a:CmdLine)
+  endif
   let result = systemlist([s:completer, a:CmdLine])
   if a:ArgLead == ''
     let result = map(result, 'a:CmdLine . v:val')
