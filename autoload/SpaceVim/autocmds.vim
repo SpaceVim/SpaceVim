@@ -46,6 +46,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType sh setlocal omnifunc=SpaceVim#plugins#bashcomplete#omnicomplete
     autocmd FileType xml call XmlFileTypeInit()
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS

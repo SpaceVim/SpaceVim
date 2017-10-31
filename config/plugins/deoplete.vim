@@ -27,6 +27,9 @@ else
   call deoplete#custom#set('omni', 'rank', 9999)
 endif
 
+" sh
+let g:deoplete#ignore_sources.sh = get(g:deoplete#ignore_sources, 'sh', ['around', 'member', 'tag', 'syntax'])
+
 " go
 let g:deoplete#ignore_sources.go = get(g:deoplete#ignore_sources, 'go', ['omni'])
 call deoplete#custom#set('go', 'mark', '')

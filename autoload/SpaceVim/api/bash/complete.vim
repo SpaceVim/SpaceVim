@@ -4,7 +4,12 @@ let s:completer = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/autoload/SpaceVi
 
 " this is for vim command completion 
 
-function! s:self.comeplete(Leader, CmdLine, CursorPos) abort
+function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
+  if a:CmdLine =~ '^[^ ]*$'
+    return systemlist('compgen -c ' . a:CmdLine)
+  endif
+  let result = systemlist([s:completer, a:CmdLine])
+  return map(result, 'substitute(v:val, "[ ]*$", "", "g")')
 endfunction
 
 
