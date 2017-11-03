@@ -19,6 +19,8 @@ let s:pos = 0
 
 let s:str = ''
 
+let s:base = ''
+
 function! SpaceVim#plugins#bashcomplete#omnicomplete(findstart, base) abort
   if a:findstart
     let str = getline('.')[:col('.') - 2]
@@ -27,12 +29,13 @@ function! SpaceVim#plugins#bashcomplete#omnicomplete(findstart, base) abort
     if g:bashcomplete_debug
       echom 'pos is ' . s:pos
     endif
+    let s:base = str[s:pos :]
     return s:pos
   else
     if g:bashcomplete_debug
-      echom 'a:base is : "' . a:base . '" '  . 'cmdline is "' . s:str . a:base . '"'
+      echom 's:base is : "' . s:base . '" '  . 'cmdline is "' . s:str . s:base . '"'
     endif
-    return s:BASH_COMPLETE.complete(a:base, s:str . a:base, col('.'))
+    return s:BASH_COMPLETE.complete(a:base, s:str . s:base, col('.'))
   endif
   
 
