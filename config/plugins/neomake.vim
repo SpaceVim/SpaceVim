@@ -10,7 +10,10 @@ if get(g:, 'spacevim_lint_on_the_fly', 0)
 endif
 
 if !empty(s:neomake_automake_events)
+  try
     call neomake#configure#automake(s:neomake_automake_events)
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
 endif
 " 1 open list and move cursor 2 open list without move cursor
 let g:neomake_open_list = get(g:, 'neomake_open_list', 2)
