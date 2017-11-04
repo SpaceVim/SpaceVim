@@ -41,16 +41,25 @@
 
 
 function! SpaceVim#layers#lang#c#plugins() abort
-    let plugins = []
-    if has('nvim')
-        call add(plugins, ['tweekmonster/deoplete-clang2'])
-    else
-        call add(plugins, ['Rip-Rip/clang_complete'])
-    endif
-    call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python3')}])
-    return plugins
+  let plugins = []
+  if has('nvim')
+    call add(plugins, ['tweekmonster/deoplete-clang2'])
+  else
+    call add(plugins, ['Rip-Rip/clang_complete'])
+  endif
+  call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python3')}])
+  return plugins
 endfunction
 
 function! SpaceVim#layers#lang#c#config() abort
-
+  call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('c', funcref('s:language_specified_mappings'))
 endfunction
+
+function! s:language_specified_mappings() abort
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'execute current file', 1)
+endfunction
+

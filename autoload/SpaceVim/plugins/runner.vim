@@ -28,17 +28,38 @@ function! s:open_win() abort
   wincmd p
 endfunction
 
+let s:target = ''
 
 function! s:async_run(runner) abort
-  let cmd = printf(a:runner, bufname('%'))
-  let s:start_time = reltime()
-  let s:job_id =  s:JOB.start(cmd,{
-        \ 'on_stdout' : function('s:on_stdout'),
-        \ 'on_stderr' : function('s:on_stderr'),
-        \ 'on_exit' : function('s:on_exit'),
-        \ })
+  if type(a:runner) == type('')
+    let cmd = printf(a:runner, bufname('%'))
+    let s:start_time = reltime()
+    let s:job_id =  s:JOB.start(cmd,{
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ 'on_exit' : function('s:on_exit'),
+          \ })
+  elseif type(a:runner) == type([])
+    let s:target = tempname()
+    let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    let s:start_time = reltime()
+    let s:job_id =  s:JOB.start(compile_cmd,{
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ 'on_exit' : function('s:on_compile_exit'),
+          \ })
+  endif
 endfunction
 
+function! s:on_compile_exit(id, data, event) abort
+  if a:data == 0
+    let s:job_id =  s:JOB.start(s:target,{
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ 'on_exit' : function('s:on_exit'),
+          \ })
+  endif
+endfunction
 
 function! s:update_statusline() abort
   redrawstatus!
