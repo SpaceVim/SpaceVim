@@ -124,8 +124,9 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines invert', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
 
