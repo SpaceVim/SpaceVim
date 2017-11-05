@@ -34,6 +34,8 @@ At a minimum, SpaceVim requires `git` to be installed.  For a better graphical e
 
 ### Install
 
+#### Linux and macOS
+
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
@@ -45,6 +47,10 @@ For more info about the install script, please check:
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
+
+#### Windows
+
+The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
 ### Project layout
 
