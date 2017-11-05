@@ -68,14 +68,3 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
-
-" Called once right before you start selecting multiple cursors
-function! Multiple_cursors_before()
-    NeoCompleteLock
-endfunction
-
-" Called once only when the multiple selection is canceled (default <Esc>)
-function! Multiple_cursors_after()
-    NeoCompleteUnlock
-endfunction
-" vim:set et sw=2 cc=80:
