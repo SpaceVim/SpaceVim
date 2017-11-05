@@ -14,10 +14,10 @@ elseif g:spacevim_autocomplete_method ==# 'neocomplete'
   endfunction
 elseif g:spacevim_autocomplete_method ==# 'neocomplcache' "{{{
   function! s:disable_autocomplete() abort
-
+    NeoComplCacheDisable
   endfunction
   function! s:enable_autocomplete() abort
-
+    NeoComplCacheEnable
   endfunction
 elseif g:spacevim_autocomplete_method ==# 'deoplete'
   function! s:disable_autocomplete() abort
