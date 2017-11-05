@@ -8,7 +8,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['tpope/vim-surround'],
                 \ ['tpope/vim-repeat'],
                 \ ['junegunn/vim-emoji'],
-                \ ['terryma/vim-multiple-cursors'],
+                \ ['terryma/vim-multiple-cursors', { 'loadconf' : 1}],
                 \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
                 \ ['kana/vim-textobj-user'],
                 \ ['kana/vim-textobj-indent'],
