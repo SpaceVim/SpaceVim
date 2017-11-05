@@ -1,13 +1,17 @@
+function! s:body() abort
+    return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
+endfunction
 function! SpaceVim#dev#releases#open() abort
     let username = input('github username:')
     let password = input('github password:')
+    let is_dev = g:spacevim_version =~ 'dev'
     let releases = {
-                \ 'tag_name': g:spacevim_version,
+                \ 'tag_name': (is_dev ? 'nightly' : g:spacevim_version),
                 \ 'target_commitish': 'dev',
-                \ 'name': 'SpaceVim v' . g:spacevim_version,
-                \ 'body': SpaceVim#dev#releases#content(),
+                \ 'name': (is_dev ? 'nightly' : 'SpaceVim v' . g:spacevim_version),
+                \ 'body': (is_dev ? s:body() : SpaceVim#dev#releases#content()),
                 \ 'draft': v:false,
-                \ 'prerelease': v:false
+                \ 'prerelease': (is_dev ? v:true : v:false)
                 \ }
     let response = github#api#repos#releases#Create('SpaceVim', 'SpaceVim',
                 \ username, password, releases)
