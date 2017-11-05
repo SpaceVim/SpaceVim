@@ -6,9 +6,11 @@ notifications:
     on_success: never
     on_failure: never
   email:
-    on_success: change # default: change
+    on_success: never # default: change
     on_failure: never # default: always
   irc:
+    on_success: change # default: change
+    on_failure: never # default: always
     channels:
       - "chat.freenode.net#spacevim"
     template:
