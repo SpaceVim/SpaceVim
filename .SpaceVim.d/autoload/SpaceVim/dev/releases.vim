@@ -21,3 +21,17 @@ function! SpaceVim#dev#releases#open() abort
         echom 'releases failed!'
     endif
 endfunction
+
+function! s:get_list_of_PRs() abort
+  
+endfunction
+
+function! s:time_of_last_release() abort
+  
+endfunction
+
+function! SpaceVim#dev#releases#content()
+
+  
+
+endfunction
