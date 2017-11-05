@@ -6,6 +6,10 @@ function! SpaceVim#layers#lang#clojure#plugins() abort
     call add(plugins, ['clojure-vim/async-clj-omni'])
   else
   endif
+  if !g:spacevim_enable_neomake && !g:spacevim_enable_ale
+    call add(plugins, ['venantius/vim-eastwood', {'merged' : 0}])
+  endif
+  call add(plugins, ['venantius/vim-cljfmt', {'merged' : 0}])
   return plugins
 endfunction
 

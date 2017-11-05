@@ -10,6 +10,7 @@ let g:deoplete#max_menu_width = get(g:, 'deoplete#max_menu_width', 0)
 let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
 let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
+let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
 
 " java && jsp
 let g:deoplete#omni#input_patterns.java = get(g:deoplete#omni#input_patterns, 'java', [
@@ -83,6 +84,9 @@ let g:deoplete#ignore_sources.c = get(g:deoplete#ignore_sources, 'c', ['omni'])
 " rust
 let g:deoplete#ignore_sources.rust = get(g:deoplete#ignore_sources, 'rust', ['omni'])
 call deoplete#custom#set('racer', 'mark', '')
+
+" clojure
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " public settings
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
