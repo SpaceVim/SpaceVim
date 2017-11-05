@@ -43,6 +43,7 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['lymslive/vimloo', {'merged' : 0}],
         \ ['lymslive/vnote', {'depends' : 'vimloo',
         \ 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}],
+        \ ['vimwiki/vimwiki', { 'on_map' : '<Plug>Vimwiki' }]
         \ ]
 endfunction
 
@@ -93,6 +94,10 @@ function! SpaceVim#layers#tools#config() abort
     autocmd FileType nerdtree nnoremap <silent><buffer><Space>
           \ :call OpenOrCloseNERDTree()<cr>
   augroup END
+
+  " vimwiki/vimwiki
+  let g:vimwiki_map_prefix = '<Nop>'
+  nmap <silent><unique> <Leader>W <Plug>VimwikiIndex
 endfunction
 
 " vim:set et sw=2 cc=80:
