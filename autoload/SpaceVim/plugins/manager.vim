@@ -388,7 +388,7 @@ function! s:install(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
     let url = 'https://github.com/' . a:repo.repo
-    let argv = ['git', 'clone', '--progress', url, a:repo.path]
+    let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
     if s:JOB.vim_job || s:JOB.nvim_job
         let jobid = s:JOB.start(argv,{
                     \ 'on_stderr' : function('s:on_install_stdout'),
