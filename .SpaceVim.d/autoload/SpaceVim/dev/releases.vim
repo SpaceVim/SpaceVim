@@ -1,17 +1,13 @@
-function! s:body() abort
-    return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
-endfunction
-
 function! SpaceVim#dev#releases#open() abort
     let username = input('github username:')
     let password = input('github password:')
     let releases = {
-                \ 'tag_name': 'nightly',
+                \ 'tag_name': g:spacevim_version,
                 \ 'target_commitish': 'dev',
-                \ 'name': g:spacevim_version,
-                \ 'body': s:body(),
+                \ 'name': 'SpaceVim v' . g:spacevim_version,
+                \ 'body': SpaceVim#dev#releases#content(),
                 \ 'draft': v:false,
-                \ 'prerelease': v:true
+                \ 'prerelease': v:false
                 \ }
     let response = github#api#repos#releases#Create('SpaceVim', 'SpaceVim',
                 \ username, password, releases)
@@ -83,6 +79,6 @@ function! SpaceVim#dev#releases#content()
     call add(md, '#### Unmarked PRs')
     call add(md, '')
   endif
-  return md
+  return join(md, "\n")
 
 endfunction
