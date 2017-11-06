@@ -29,10 +29,21 @@ function! SpaceVim#layers#edit#plugins() abort
 endfunction
 
 function! SpaceVim#layers#edit#config() abort
-    let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
-    let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-m>')
-    let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
-    let g:multi_cursor_quit_key=get(g:, 'multi_cursor_quit_key', '<Esc>')
+    " terryma/vim-multiple-cursors {{{
+    let g:multi_cursor_next_key = get(g:, 'multi_cursor_next_key', '<C-n>')
+    let g:multi_cursor_prev_key = get(g:, 'multi_cursor_prev_key', '<C-m>')
+    let g:multi_cursor_skip_key = get(g:, 'multi_cursor_skip_key', '<C-x>')
+    let g:multi_cursor_quit_key = get(g:, 'multi_cursor_quit_key', '<Esc>')
+
+    function! g:Multiple_cursors_before() abort
+        let b:deoplete_disable_auto_complete = 1
+    endfunction
+
+    function! g:Multiple_cursors_after() abort
+        let b:deoplete_disable_auto_complete = 0
+    endfunction
+    " }}}
+
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
     let g:user_emmet_mode='a'
