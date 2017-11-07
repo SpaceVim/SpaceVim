@@ -33,7 +33,8 @@
 "   normal      gd          rust-definition
 "   normal      gs          rust-definition-split
 "   normal      gx          rust-definition-vertical
-"   normal      <leader>gd  rust-doc
+"   normal      SPC l d     rust-doc
+"   normal      SPC l r     execute current file
 " <
 
 function! SpaceVim#layers#lang#rust#plugins() abort
