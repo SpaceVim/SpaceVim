@@ -18,9 +18,6 @@ function! SpaceVim#layers#lang#haskell#config() abort
   augroup END
 endfunction
 
-function! SpaceVim#layers#lang#c#config() abort
-endfunction
-
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
