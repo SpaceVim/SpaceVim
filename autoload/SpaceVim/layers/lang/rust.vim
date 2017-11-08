@@ -55,8 +55,8 @@ function! SpaceVim#layers#lang#rust#config() abort
 endfunction
 
 function! s:language_specified_mappings() abort
-  nmap gs <Plug>(rust-def-split)
-  nmap gx <Plug>(rust-def-vertical)
+  nmap <buffer> gs <Plug>(rust-def-split)
+  nmap <buffer> gx <Plug>(rust-def-vertical)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'], '<Plug>(rust-doc)', 'show documentation', 0)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
