@@ -1,6 +1,4 @@
-if SpaceVim#server#connect()
-  finish
-endif
+call SpaceVim#server#connect()
 
 let g:Config_Main_Home = fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')

@@ -11,12 +11,13 @@
 
 function! SpaceVim#server#connect()
     if empty($SPACEVIM_SERVER_ADDRESS)
-        let $SPACEVIM_SERVER_ADDRESS = serverlist()[0]
-        return 0
-    else
-        call sockconnect('pipe',  $SPACEVIM_SERVER_ADDRESS, {'rpc' : 1})
-        return 1
+        let $SPACEVIM_SERVER_ADDRESS = fnamemodify('~/.cache/SpaceVim/server', ':p')
     endif
+    try
+      call serverstart($SPACEVIM_SERVER_ADDRESS)
+      call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
+    catch /Failed to start server: address already in use/
+    endtry
 endfunction
 
 
