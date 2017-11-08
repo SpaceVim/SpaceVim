@@ -11,7 +11,7 @@
 
 function! SpaceVim#server#connect()
   if empty($SPACEVIM_SERVER_ADDRESS)
-    let $SPACEVIM_SERVER_ADDRESS = fnamemodify('~/.cache/SpaceVim/server', ':p')
+    let $SPACEVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'spacevim_nvim_' : 'spacevim_vim_') . 'server', ':p')
   endif
   if has('nvim')
     try
@@ -19,6 +19,11 @@ function! SpaceVim#server#connect()
       call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
     catch /Failed to start server: address already in use/
     endtry
+  elseif exists('*remote_startserver')
+    if index(split(serverlist(), "\n"), $SPACEVIM_SERVER_ADDRESS) == -1
+      call remote_startserver($SPACEVIM_SERVER_ADDRESS)
+      call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
+    endif
   endif
 endfunction
 

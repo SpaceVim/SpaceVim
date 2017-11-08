@@ -8,4 +8,4 @@
 # License: MIT license
 #=============================================================================
 
-/usr/bin/vim --servername /tmp/spacevim_vim_server --remote-silent $@
+nvr --servername /tmp/spacevim_nvim_server --remote $@
