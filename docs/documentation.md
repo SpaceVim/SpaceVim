@@ -91,6 +91,9 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
+- [EditorConfig](#editorconfig)
+- [Vim Server](#vim-server)
+  - [Connecting to the Vim server](#connecting-to-the-vim-server)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -1336,6 +1339,29 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
+
+
+## EditorConfig
+
+SpaceVim has support for [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+
+To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
+
+## Vim Server
+
+SpaceVim starts a server at launch. This server is killed whenever you close your Vim windows.
+
+### Connecting to the Vim server
+
+If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
+
+```
+export PATH=$PATH:$HOME/.SpaceVim/bin
+```
+
+Use `svc` to open a file in the existing Vim server.
+
+![server-and-client](https://user-images.githubusercontent.com/13142418/32551888-f44eedfe-c4cc-11e7-9fcc-80750444c5d1.gif)
 
 <!-- SpaceVim Achievements start -->
 ## Achievements
