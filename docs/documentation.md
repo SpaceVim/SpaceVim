@@ -1359,9 +1359,9 @@ If you are using neovim, you need to install [neovim-remote](https://github.com/
 export PATH=$PATH:$HOME/.SpaceVim/bin
 ```
 
-Use `svc` to open a file in the existing Vim server.
+Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
 
-![server-and-client](https://user-images.githubusercontent.com/13142418/32551888-f44eedfe-c4cc-11e7-9fcc-80750444c5d1.gif)
+![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
 ## Achievements
