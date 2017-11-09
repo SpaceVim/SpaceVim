@@ -8,14 +8,6 @@ notifications:
   email:
     on_success: never # default: change
     on_failure: never # default: always
-  irc:
-    on_success: change # default: change
-    on_failure: never # default: always
-    channels:
-      - "chat.freenode.net#spacevim"
-    template:
-      - "%{repository} (%{commit}) : %{message} %{foo} "
-      - "Build details: %{build_url}"
 cache:
   pip: true
 
