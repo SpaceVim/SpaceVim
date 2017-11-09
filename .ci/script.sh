@@ -12,9 +12,9 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
 elif [ "$LINT" = "vint" ]; then
-    vint .
+    /tmp/vint/bin/vint .
 elif [ "$LINT" = "vint-errors" ]; then
-    vint --error .
+    /tmp/vint/bin/vint --error .
 elif [ "$LINT" = "vader" ]; then
     pip install covimerage
     make test_coverage
