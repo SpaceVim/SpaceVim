@@ -27,7 +27,7 @@ function! SpaceVim#server#connect()
         try
           call remote_startserver($SPACEVIM_SERVER_ADDRESS)
           call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
-        catch /^Vim\%((\a\+)\)\=:E941/
+        catch
         endtry
       endif
     endif
