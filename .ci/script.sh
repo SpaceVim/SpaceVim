@@ -7,9 +7,10 @@ if [ "$LINT" = "vimlint" ]; then
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
 elif [ "$LINT" = "vimlint-errors" ]; then
+    VIMLINT_LOG=""
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
-        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
+        VIMLINT_LOG=$VIMLINT_LOG"\n"$(sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file);
     done
 elif [ "$LINT" = "vint" ]; then
     /tmp/vint/bin/vint .
