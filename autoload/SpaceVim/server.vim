@@ -24,8 +24,11 @@ function! SpaceVim#server#connect()
       endtry
     elseif has('clientserver') && exists('*remote_startserver')
       if index(split(serverlist(), "\n"), $SPACEVIM_SERVER_ADDRESS) == -1
-        call remote_startserver($SPACEVIM_SERVER_ADDRESS)
-        call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
+        try
+          call remote_startserver($SPACEVIM_SERVER_ADDRESS)
+          call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
+        catch /^Vim\%((\a\+)\)\=:E941/
+        endtry
       endif
     endif
     let s:flag = 1
