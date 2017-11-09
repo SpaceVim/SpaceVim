@@ -204,3 +204,8 @@ fu! UpdateStarredRepos()
     endfor
     return 1
 endf
+
+
+function! TestBot(argv) abort
+  
+endfunction
