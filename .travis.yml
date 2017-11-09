@@ -29,3 +29,6 @@ matrix:
 
 install: .ci/install.sh
 script: .ci/script.sh
+after_success: .ci/after_success.sh
+# $TRAVIS_TEST_RESULT is the log
+after_failure: .ci/after_failure.sh
