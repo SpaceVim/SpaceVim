@@ -17,6 +17,7 @@ elif [ "$LINT" = "vimlint-errors" ]; then
     done
     log=`cat build_log`
     if [ -n "$log" ]; then
+        cat build_log
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
