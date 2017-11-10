@@ -1,7 +1,6 @@
 let s:LOGGER = SpaceVim#api#import('logger')
 
 call s:LOGGER.set_name('SpaceVim')
-call s:LOGGER.set_file(expand('~/.cache/SpaceVim/SpaceVim.log'))
 call s:LOGGER.set_level(1)
 
 function! SpaceVim#logger#info(msg)
@@ -75,7 +74,7 @@ endfunction
 
 ""
 " @public
-" Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
+" Set the log output file of SpaceVim. Default is empty.
 function! SpaceVim#logger#setOutput(file) abort
   call s:LOGGER.set_file(a:file)
 endfunction
