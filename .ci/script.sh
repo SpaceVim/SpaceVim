@@ -13,6 +13,9 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         export VIMLINT_LOG="$VIMLINT_LOG$(sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file)\n";
     done
     export VIMLINT_LOG="$VIMLINT_LOG\n</ditails>"
+    if [ "$VIMLINT_LOG" != "<ditails>\n</ditails>" ]; then
+        exit 2
+    fi
 elif [ "$LINT" = "vint" ]; then
     /tmp/vint/bin/vint .
 elif [ "$LINT" = "vint-errors" ]; then
