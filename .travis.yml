@@ -1,5 +1,9 @@
-language: python
+dist: trusty
 sudo: false
+language: generic
+
+git:
+  depth: 3
 
 notifications:
   slack:

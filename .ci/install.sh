@@ -6,6 +6,13 @@ set -ue -o pipefail
 # Prevent commands misbehaving due to locale differences
 export LC_ALL=C
 
+
+git config --global user.name "Travis"
+
+git config --global user.email travis@example.com
+
+export PYTHONUSERBASE="$HOME/.local"
+
 # Get root path of the script
 root=$(cd $(dirname $0); pwd)
 
