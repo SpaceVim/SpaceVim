@@ -3,7 +3,9 @@
 if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
     source .ci/common/github_commenter
     if [ "$LINT" = "vimlint-errors" ] ; then
-        add_comment_to_pr $VIMLINT_LOG
+        if [ -n "$VIMLINT_LOG" ]; then
+            add_comment_to_pr $VIMLINT_LOG
+        fi
     elif [ "$LINT" = "vint-errors" ] ; then
         add_comment_to_pr $TRAVIS_TEST_RESULT
     elif [ "$LINT" = "vader" ] ; then
