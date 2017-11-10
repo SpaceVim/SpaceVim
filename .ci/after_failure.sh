@@ -5,6 +5,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
     if [ "$LINT" = "vimlint-errors" ] ; then
         VIMLINT_LOG=`cat build_log`
         if [ -n "$VIMLINT_LOG" ]; then
+            rm -rf build/GitHub.vim
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             vim -u .ci/common/github_commenter.vim
         fi

@@ -3,6 +3,8 @@ set rtp+=build/GitHub.vim
 so build/GitHub.vim/plugin/github.vim
 let log = system('cat build_log')
 if !empty(log)
+  let summary = $LINT . ' build log'
+  let log = "<details><summary>" . summary . "</summary>" . log . "</details>"
   let comments = github#api#issues#List_comments('SpaceVim', 'SpaceVim',$TRAVIS_PULL_REQUEST ,'')
   if empty(comments)
     call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': log}, 'SpaceVimBot', $BOTSECET)
