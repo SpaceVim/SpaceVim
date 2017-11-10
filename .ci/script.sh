@@ -8,9 +8,10 @@ if [ "$LINT" = "vimlint" ]; then
     done
 elif [ "$LINT" = "vimlint-errors" ]; then
     rm build/log
+    touch build/log
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
-        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build/log;
+        /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build/log;
     done
     log=`cat build/log`
     if [ -n "$log" ]; then
