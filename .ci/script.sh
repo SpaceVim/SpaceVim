@@ -7,13 +7,13 @@ if [ "$LINT" = "vimlint" ]; then
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
 elif [ "$LINT" = "vimlint-errors" ]; then
-    export VIMLINT_LOG="<ditails>"
+    rm build/log
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
-        export VIMLINT_LOG="$VIMLINT_LOG$(sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file)\n";
+        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build/log;
     done
-    export VIMLINT_LOG="$VIMLINT_LOG\n</ditails>"
-    if [ "$VIMLINT_LOG" != "<ditails>\n</ditails>" ]; then
+    log=`cat build/log`
+    if [ -n "$log" ]; then
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
