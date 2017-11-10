@@ -7,7 +7,9 @@ if [ "$LINT" = "vimlint" ]; then
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
 elif [ "$LINT" = "vimlint-errors" ]; then
-    rm build/log
+    if [[ -f build/log ]]; then
+        rm build/log
+    fi
     touch build/log
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
