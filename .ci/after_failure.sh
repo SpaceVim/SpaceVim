@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
-    source .ci/common/github_commenter
     if [ "$LINT" = "vimlint-errors" ] ; then
         VIMLINT_LOG=`cat build_log`
         if [ -n "$VIMLINT_LOG" ]; then
