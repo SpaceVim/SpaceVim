@@ -20,3 +20,4 @@ if !empty(log)
     endif
   endif
 endif
+quit
