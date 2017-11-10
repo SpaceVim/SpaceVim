@@ -207,5 +207,8 @@ endf
 
 
 function! TestBot(argv) abort
+endfunction
+  
+function! TestBot(argv) abort
   
 endfunction
