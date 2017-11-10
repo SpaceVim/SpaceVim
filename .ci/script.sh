@@ -7,15 +7,15 @@ if [ "$LINT" = "vimlint" ]; then
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
 elif [ "$LINT" = "vimlint-errors" ]; then
-    if [[ -f build/log ]]; then
-        rm build/log
+    if [[ -f build_log ]]; then
+        rm build_log
     fi
-    touch build/log
+    touch build_log
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
-        /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build/log;
+        /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log;
     done
-    log=`cat build/log`
+    log=`cat build_log`
     if [ -n "$log" ]; then
         exit 2
     fi
