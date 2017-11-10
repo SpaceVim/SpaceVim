@@ -2,6 +2,6 @@
 
 add_comment_to_pr () {
     curl -u "SpaceVimBot:${BOTSECRET}" -X POST \
-        -d "{\"body\": \"$1\"}" \
+        -d '{\"body\": \"$1\"}' \
         "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 }
