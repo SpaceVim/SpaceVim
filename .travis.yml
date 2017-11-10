@@ -22,11 +22,11 @@ env:
     - DEPS=$HOME/deps
     - PATH=$DEPS/bin:$PATH
   matrix:
-    - LINT=vimlint-errors       VIM=nvim   VIM_VERSION=HEAD
-    - LINT=vimlint              VIM=nvim   VIM_VERSION=HEAD
-    - LINT=vint-errors          VIM=nvim   VIM_VERSION=HEAD
-    - LINT=vint                 VIM=nvim   VIM_VERSION=HEAD
-    - LINT=vader                VIM=vim    VIM_VERSION=HEAD
+    - LINT=vimlint-errors       VIM=nvim   VIM_VERSION=v0.2.0
+    - LINT=vimlint              VIM=nvim   VIM_VERSION=v0.2.0
+    - LINT=vint-errors          VIM=nvim   VIM_VERSION=v0.2.0
+    - LINT=vint                 VIM=nvim   VIM_VERSION=v0.2.0
+    - LINT=vader                VIM=vim    VIM_VERSION=v0.2.0
     - LINT=vader                VIM=vim    VIM_VERSION=v8.0.0027
     - LINT=vader                VIM=nvim   VIM_VERSION=HEAD
     - LINT=vader                VIM=nvim   VIM_VERSION=v0.2.0
