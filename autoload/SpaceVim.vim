@@ -471,11 +471,11 @@ function! SpaceVim#loadCustomConfig() abort
   endif
   " the old value will be remove
   if filereadable(custom_glob_conf_old)
-    SpaceVim#logger#warn('~/.local.vim is deprecated!')
+    call SpaceVim#logger#warn('~/.local.vim is deprecated!')
     exe 'source ' . custom_glob_conf_old
   endif
   if !empty(custom_confs_old)
-    SpaceVim#logger#warn('.local.vim is deprecated!')
+    call SpaceVim#logger#warn('.local.vim is deprecated!')
     exe 'source ' . custom_confs_old[0]
   endif
 

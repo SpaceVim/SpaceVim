@@ -2,13 +2,14 @@ let s:LOGGER = SpaceVim#api#import('logger')
 
 call s:LOGGER.set_name('SpaceVim')
 call s:LOGGER.set_level(1)
+call s:LOGGER.set_silent(0)
+call s:LOGGER.set_verbose(2)
 
 function! SpaceVim#logger#info(msg)
 
   call s:LOGGER.info(a:msg)
 
 endfunction
-
 
 function! SpaceVim#logger#warn(msg)
 

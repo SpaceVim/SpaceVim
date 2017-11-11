@@ -100,9 +100,7 @@ function! s:need_cmd(cmd) abort
     if executable(a:cmd)
         return 1
     else
-        echohl WarningMsg
-        echom '[SpaceVim] [plugin manager] You need install ' . a:cmd . '!'
-        echohl None
+      call SpaceVim#logger#warn(' [ plug manager ] need command: ' . a:cmd)
         return 0
     endif
 endfunction
@@ -124,16 +122,12 @@ function! SpaceVim#plugins#manager#install(...) abort
     endif
     let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
     if empty(s:plugins)
-        echohl WarningMsg
-        echom '[SpaceVim] Wrong plugin name, or all of the plugins are already installed.'
-        echohl None
+        call SpaceVim#logger#warn(' [ plug manager ] Wrong plugin name, or all of the plugins are already installed.')
         return
     endif
     let status = s:new_window()
     if status == 0
-        echohl WarningMsg
-        echom '[SpaceVim] [plugin manager] plugin manager process is not finished.'
-        echohl None
+        call SpaceVim#logger#warn(' [ plug manager ] plugin manager process is not finished.')
         return
     elseif status == 1
         " resume window

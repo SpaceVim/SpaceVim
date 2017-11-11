@@ -3,6 +3,7 @@ let s:self = {
       \ 'name' : '',
       \ 'silent' : 1,
       \ 'level' : 1,
+      \ 'verbose' : 1,
       \ 'file' : '',
       \ 'temp' : [],
       \ }
@@ -16,6 +17,14 @@ function! SpaceVim#api#logger#get() abort
   return deepcopy(s:self)
 endfunction
 
+function! s:self.set_silent(sl) abort
+  let self.silent = a:sl
+endfunction
+
+function! s:self.set_verbose(vb) abort
+  let self.verbose = a:vb
+endfunction
+
 function! s:self.set_level(l) abort
   let self.level = a:l
 endfunction
@@ -23,8 +32,10 @@ endfunction
 function! s:self.error(msg) abort
   let time = strftime('%H:%M:%S')
   let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[2] . ' ] ' . a:msg
-  if !self.silent
-    echoerr log
+  if !self.silent && self.verbose >= 1
+    echohl Error
+    echom log
+    echohl None
   endif
   call self.write(log)
 endfunction
@@ -47,7 +58,7 @@ function! s:self.warn(msg) abort
   endif
   let time = strftime('%H:%M:%S')
   let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[1] . ' ] ' . a:msg
-  if !self.silent
+  if !self.silent && self.verbose >= 2
     echohl WarningMsg
     echom log
     echohl None
@@ -61,7 +72,7 @@ function! s:self.info(msg) abort
   endif
   let time = strftime('%H:%M:%S')
   let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[0] . ' ] ' . a:msg
-  if !self.silent
+  if !self.silent && self.verbose >= 3
     echom log
   endif
   call self.write(log)
