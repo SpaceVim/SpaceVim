@@ -471,9 +471,11 @@ function! SpaceVim#loadCustomConfig() abort
   endif
   " the old value will be remove
   if filereadable(custom_glob_conf_old)
+    SpaceVim#logger#warn('~/.local.vim is deprecated!')
     exe 'source ' . custom_glob_conf_old
   endif
   if !empty(custom_confs_old)
+    SpaceVim#logger#warn('.local.vim is deprecated!')
     exe 'source ' . custom_confs_old[0]
   endif
 
@@ -482,11 +484,15 @@ function! SpaceVim#loadCustomConfig() abort
       exe 'set rtp ^=' . expand('.SpaceVim.d')
     endif
     exe 'source ' . custom_confs[0]
-    if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-      if isdirectory(expand('~/.SpaceVim.d/'))
-        set runtimepath^=~/.SpaceVim.d
+    if g:spacevim_force_global_config
+      if filereadable(custom_glob_conf)
+        if isdirectory(expand('~/.SpaceVim.d/'))
+          set runtimepath^=~/.SpaceVim.d
+        endif
+        exe 'source ' . custom_glob_conf
       endif
-      exe 'source ' . custom_glob_conf
+    else
+      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))
