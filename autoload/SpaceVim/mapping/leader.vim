@@ -169,10 +169,19 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
           \ 'resume denite window']
     nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
     let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
+    nnoremap <silent> [denite]i  :<C-u>Denite file_rec/git<cr>
+    let g:_spacevim_mappings_denite.i = ['Denite file_rec/git', 'git files']
     nnoremap <silent> [denite]g  :<C-u>Denite grep<cr>
     let g:_spacevim_mappings_denite.g = ['Denite grep', 'denite grep']
+    nnoremap <silent> [denite]t  :<C-u>Denite tag<CR>
+    let g:_spacevim_mappings_denite.t = ['Denite tag', 'denite tag']
+    nnoremap <silent> [denite]T  :<C-u>Denite tag:include<CR>
+    let g:_spacevim_mappings_denite.T = ['Denite tag/include',
+          \ 'denite tag/include']
     nnoremap <silent> [denite]j  :<C-u>Denite jump<CR>
     let g:_spacevim_mappings_denite.j = ['Denite jump', 'denite jump']
+    nnoremap <silent> [denite]h  :<C-u>Denite neoyank<CR>
+    let g:_spacevim_mappings_denite.h = ['Denite neoyank', 'denite neoyank']
     nnoremap <silent> [denite]<C-h>  :<C-u>DeniteCursorWord help<CR>
     let g:_spacevim_mappings_denite['<C-h>'] = ['DeniteCursorWord help',
           \ 'denite with cursor word help']

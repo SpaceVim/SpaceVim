@@ -56,6 +56,9 @@ else
   endif
 endif
 
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+    \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " FIND and GREP COMMANDS
 if executable('rg')
