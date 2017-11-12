@@ -7,12 +7,16 @@
 "=============================================================================
 
 function! SpaceVim#layers#lang#ruby#plugins() abort
-    let plugins = []
-    call add(plugins, ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby'}])
-    return plugins
+  return [
+      \ ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby' }]
+      \ ]
 endfunction
 
-
 function! SpaceVim#layers#lang#ruby#config() abort
-    
+  call SpaceVim#plugins#runner#reg_runner('ruby', 'ruby %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('ruby', funcref('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
