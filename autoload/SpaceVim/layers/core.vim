@@ -8,6 +8,7 @@ endfunction
 
 function! SpaceVim#layers#core#config() abort
     let g:rooter_silent_chdir = 1
+    let g:vimproc#download_windows_dll = 1
     call SpaceVim#layers#load('core#banner')
     call SpaceVim#layers#load('core#statusline')
     call SpaceVim#layers#load('core#tabline')
