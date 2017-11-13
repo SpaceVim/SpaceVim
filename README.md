@@ -10,7 +10,7 @@
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
-![Version](https://img.shields.io/badge/version-https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg--dev-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
@@ -54,13 +54,15 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 
 ### Project layout
 
-    ├─ autoload/SpaceVim/api/               SpaceVim APIs
-    ├─ autoload/SpaceVim/layers/            SpaceVim layers
-    ├─ autoload/SpaceVim/plugins/           SpaceVim plugins
-    ├─ autoload/SpaceVim/mapping/           SpaceVim mapping guide
-    ├─ doc/SpaceVim.txt                     SpaceVim help
-    ├─ docs/                                website of SpaceVim
-    └─ test/                                tests
+    ├─ autoload/SpaceVim/api/         APIs
+    ├─ autoload/SpaceVim/layers/      layers
+    ├─ autoload/SpaceVim/plugins/     plugins
+    ├─ autoload/SpaceVim/mapping/     mapping guide
+    ├─ doc/SpaceVim.txt               help
+    ├─ docs/                          website
+    ├─ wiki/                          wiki
+    ├─ bin/                           executeable
+    └─ test/                          tests
 
 ### Features
 
@@ -82,6 +84,10 @@ The best way to support SpaceVim is to contribute to it either by reporting bugs
 If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
 
 <a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+| wechat                                                                   | alipay                                                                     |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
 ### Credits & Thanks
 
