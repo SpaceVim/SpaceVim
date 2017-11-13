@@ -544,7 +544,7 @@ function! SpaceVim#end() abort
       call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
-    if has('nvim')
+    if has('python3')
       let g:spacevim_autocomplete_method = 'deoplete'
     elseif has('lua')
       let g:spacevim_autocomplete_method = 'neocomplete'
