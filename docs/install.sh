@@ -229,20 +229,6 @@ install_fonts () {
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
     fi
-    download_font "Sauce Code Pro Black Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Black Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro Bold Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Bold Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro ExtraLight Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro ExtraLight Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro Light Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Light Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Medium Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Nerd Font Complete.ttf"
-    download_font "Sauce Code Pro Semibold Nerd Font Complete Mono.ttf"
-    download_font "Sauce Code Pro Semibold Nerd Font Complete.ttf"
     echo -n "Updating font cache... "
     fc-cache -s
     mkfontscale "$HOME/.local/share/fonts"
