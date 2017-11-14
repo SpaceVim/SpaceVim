@@ -26,11 +26,27 @@ need_cmd () {
 }
 
 msg() {
+if [ $2 -gt 1 ]
+then
+    printf '%b' "$1" >&2
+else
     printf '%b\n' "$1" >&2
+fi
 }
 
 success() {
+if [ $# -gt 2 ]
+    case $2 in
+        1)
+            msg "${Green}[✔]${Color_off} ${1}${2}" "1"
+            ;;
+        0)
+            msg "${Green}[✔]${Color_off} ${1}${2}"
+            ;;
+    esac
+then
     msg "${Green}[✔]${Color_off} ${1}${2}"
+fi
 }
 
 info() {
@@ -204,7 +220,9 @@ usage () {
 download_font () {
     url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v1.0.0/patched-fonts/SourceCodePro/Black/complete/$1"
     path="$HOME/.local/share/fonts/$1"
-    curl --insecure --silent --location --output "$url" "$path"
+    info "Downloading $1"
+    wget -q -O "$path" "$url"
+    success "Download $1" '1'
 }
 
 install_fonts () {
