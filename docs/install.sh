@@ -200,6 +200,38 @@ usage () {
 }
 
 
+
+download_font () {
+    url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v1.0.0/patched-fonts/SourceCodePro/Black/complete/$1"
+    path="$HOME/.local/share/fonts/$1"
+    curl --insecure --silent --location --output "$url" "$path"
+}
+
+install_fonts () {
+    if [[ ! -d "$HOME/.local/share/fonts" ]]; then
+        mkdir -p $HOME/.local/share/fonts
+    fi
+    download_font "Sauce Code Pro Black Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Black Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro Bold Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Bold Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro ExtraLight Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro ExtraLight Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro Light Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Light Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Medium Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Nerd Font Complete.ttf"
+    download_font "Sauce Code Pro Semibold Nerd Font Complete Mono.ttf"
+    download_font "Sauce Code Pro Semibold Nerd Font Complete.ttf"
+    echo -n "Updating font cache... "
+    fc-cache -s
+    mkfontscale "$HOME/.local/share/fonts"
+    mkfontdir "$HOME/.local/share/fonts"
+    echo "done"
+}
+
 if [ $# -gt 0 ]
 then
     case $1 in
@@ -247,3 +279,4 @@ fetch_repo
 install_vim
 install_neovim
 install_package_manager
+install_fonts
