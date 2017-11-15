@@ -200,26 +200,11 @@ usage () {
 }
 
 
-
-download_font () {
-    url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
-    path="$HOME/.local/share/fonts/$1"
-    if [[ -f "$path" ]]
-    then
-        success "Downloaded $1"
-    else
-        info "Downloading $1"
-        wget -q -O "$path" "$url"
-        success "Downloaded $1"
-    fi
-}
-
 install_fonts () {
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
     fi
-    download_font "DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf"
-    download_font "Ubuntu Mono derivative Powerline Nerd Font Complete.ttf"
+    cp "$HOME/.SpaceVim/fonts/*" "$HOME/.local/share/fonts"
     echo -n "Updating font cache... "
     fc-cache -s
     mkfontscale "$HOME/.local/share/fonts"
