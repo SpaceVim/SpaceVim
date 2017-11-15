@@ -35,8 +35,14 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-endfunction
 
+  augroup SpaceVim_layer_checker
+    autocmd!
+    if g:spacevim_enable_ale
+      autocmd User ALELint let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    endif
+  augroup END
+endfunction
 
 function! s:verify_syntax_setup() abort
   if g:spacevim_enable_neomake
