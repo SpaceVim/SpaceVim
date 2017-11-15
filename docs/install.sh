@@ -26,27 +26,11 @@ need_cmd () {
 }
 
 msg() {
-if [ $2 -gt 1 ]
-then
-    printf '%b' "$1" >&2
-else
     printf '%b\n' "$1" >&2
-fi
 }
 
 success() {
-if [ $# -gt 2 ]
-    case $2 in
-        1)
-            msg "${Green}[✔]${Color_off} ${1}${2}" "1"
-            ;;
-        0)
-            msg "${Green}[✔]${Color_off} ${1}${2}"
-            ;;
-    esac
-then
     msg "${Green}[✔]${Color_off} ${1}${2}"
-fi
 }
 
 info() {
@@ -218,17 +202,24 @@ usage () {
 
 
 download_font () {
-    url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v1.0.0/patched-fonts/SourceCodePro/Black/complete/$1"
+    url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
     path="$HOME/.local/share/fonts/$1"
-    info "Downloading $1"
-    wget -q -O "$path" "$url"
-    success "Download $1" '1'
+    if [[ -f "$path" ]]
+    then
+        success "Downloaded $1"
+    else
+        info "Downloading $1"
+        wget -q -O "$path" "$url"
+        success "Downloaded $1"
+    fi
 }
 
 install_fonts () {
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
     fi
+    download_font "DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf"
+    download_font "Ubuntu Mono derivative Powerline Nerd Font Complete.ttf"
     echo -n "Updating font cache... "
     fc-cache -s
     mkfontscale "$HOME/.local/share/fonts"
