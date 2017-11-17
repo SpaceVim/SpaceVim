@@ -59,6 +59,10 @@ function! SpaceVim#layers#git#config() abort
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
   augroup END
+  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status', 'git status', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset %', 'unstage current file', 1)
 endfunction
 
 " vim:set et sw=2 cc=80:

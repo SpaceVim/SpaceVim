@@ -1,5 +1,5 @@
 function! SpaceVim#layers#VersionControl#config() abort
-  let g:_spacevim_mappings_space.g = {'name' : '+VersionControl/git'}
+  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   call SpaceVim#mapping#space#def('nnoremap', ['g', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
         \ 'buffer transient state', 1)
