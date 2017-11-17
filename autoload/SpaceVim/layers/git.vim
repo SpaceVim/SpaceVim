@@ -71,8 +71,8 @@ endfunction
 function! s:display_last_commit_of_current_line() abort
   let line = line('.')
   let file = expand('%')
-  let cmd = 'git show -L ' . line . ',' . line . ':' . file
-  let cmd .= ' --pretty=format:"%s"'
+  let cmd = 'git log -L ' . line . ',' . line . ':' . file
+  let cmd .= ' --pretty=format:"%s" -1'
   let title = systemlist(cmd)[0]
   if v:shell_error == 0
     echo 'Last commit of current line is: ' . title
