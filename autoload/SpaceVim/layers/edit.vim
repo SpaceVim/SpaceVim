@@ -21,6 +21,7 @@ function! SpaceVim#layers#edit#plugins() abort
                 \ ['haya14busa/vim-easyoperator-line'],
                 \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
                 \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
+                \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
                 \ ]
     if executable('fcitx')
         call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -44,6 +45,12 @@ function! SpaceVim#layers#edit#config() abort
     "noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
+
+  " osyo-manga/vim-jplus {{{
+  nmap <silent> J <Plug>(jplus)
+  vmap <silent> J <Plug>(jplus)
+  " }}}
+
     let g:_spacevim_mappings_space.x = {'name' : '+Text'}
     let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
     let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
