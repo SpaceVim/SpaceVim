@@ -2,7 +2,10 @@ function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['cohama/agit.vim',      { 'on_cmd' : ['Agit','AgitFile']}],
         \ ['gregsexton/gitv',      { 'on_cmd' : ['Gitv']}],
+        \ ['airblade/vim-gitgutter',      { 'on_cmd' : 'GitGutterEnable'}],
+        \ ['mhinz/vim-signify'],
         \ ['junegunn/gv.vim',      { 'on_cmd' : 'GV'}],
+        \ ['jreybert/vimagit',      { 'merged' : 0}],
         \ ['tpope/vim-fugitive',   { 'merged' : 0}],
         \ ]
   if has('patch-8.0.0027') || has('nvim')
