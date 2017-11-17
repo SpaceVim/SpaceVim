@@ -282,8 +282,8 @@ let g:spacevim_auto_disable_touchpad   = 1
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
-let g:spacevim_gitcommit_pr_icon       = 'p'
-let g:spacevim_gitcommit_issue_icon    = 'i'
+let g:spacevim_gitcommit_pr_icon       = ''
+let g:spacevim_gitcommit_issue_icon    = ''
 ""
 " Set SpaceVim buffer index type, default is 0.
 " >
