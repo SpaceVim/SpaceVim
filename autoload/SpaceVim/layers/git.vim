@@ -63,6 +63,20 @@ function! SpaceVim#layers#git#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status', 'git status', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset %', 'unstage current file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'M'], 'call call('
+        \ . string(function('s:display_last_commit_of_current_line')) . ', [])',
+        \ 'display the last commit message of the current line', 1)
+endfunction
+
+function! s:display_last_commit_of_current_line() abort
+  let line = line('.')
+  let file = expand('%')
+  let cmd = 'git show -L ' . line . ',' . line . ':' . file
+  let cmd .= ' --pretty=format:"%s"'
+  let title = systemlist(cmd)[0]
+  if v:shell_error == 0
+    echo 'Last commit of current line is: ' . title
+  endif
 endfunction
 
 " vim:set et sw=2 cc=80:
