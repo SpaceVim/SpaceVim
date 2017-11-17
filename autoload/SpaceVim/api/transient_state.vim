@@ -197,6 +197,17 @@ function! s:self._update_content() abort
                             call extend(self._handle_inputs, {key : right.func})
                         endfor
                     endif
+                elseif type(right.key) == 4
+                    let line .= '[' . right.key.name . '] '
+                    let line .= repeat(' ', right_max_key_len - len(right.key.name))
+                    let line .= right.desc 
+                    let begin = 41
+                    for pos in right.key.pos
+                        call self.highlight_keys(right.exit, i + 2, begin + pos[0], begin + pos[1])
+                    endfor
+                    for handles in right.key.handles
+                        call extend(self._handle_inputs, {handles[0] : handles[1]})
+                    endfor
                 endif
             endif
             call append(line('$'), line)

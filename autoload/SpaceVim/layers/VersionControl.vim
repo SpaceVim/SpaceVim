@@ -43,7 +43,14 @@ function! s:buffer_transient_state() abort
                 \ ],
                 \ 'right' : [
                 \ {
-                \ 'key' : ['w', 'u'],
+                \ 'key' : {
+                \ 'name' : 'w/u',
+                \ 'pos': [[0,1], [2,3]],
+                \ 'handles' : [
+                \ ['w', 'Gina add %'],
+                \ ['u', 'Gina reset %'],
+                \ ],
+                \ },
                 \ 'desc' : 'stage/unstage in current file',
                 \ 'func' : '',
                 \ 'cmd' : '',
