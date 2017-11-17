@@ -445,7 +445,7 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPReinstall                                                    *:SPReinstall*
-  Command for reinstall plugin, support completion of plugin anme.
+  Command for reinstall plugin, support completion of plugin name.
 
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
