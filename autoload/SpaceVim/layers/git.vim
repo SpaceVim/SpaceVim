@@ -1,11 +1,7 @@
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['cohama/agit.vim',      { 'on_cmd' : ['Agit','AgitFile']}],
-        \ ['gregsexton/gitv',      { 'on_cmd' : ['Gitv']}],
-        \ ['airblade/vim-gitgutter',      { 'on_cmd' : 'GitGutterEnable'}],
-        \ ['mhinz/vim-signify'],
-        \ ['junegunn/gv.vim',      { 'on_cmd' : 'GV'}],
-        \ ['jreybert/vimagit',      { 'merged' : 0}],
+        \ ['airblade/vim-gitgutter',      { 'merged' : 0}],
         \ ['tpope/vim-fugitive',   { 'merged' : 0}],
         \ ]
   if has('patch-8.0.0027') || has('nvim')
@@ -18,6 +14,7 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
+  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   if has('patch-8.0.0027') || has('nvim')
     nnoremap <silent> <Leader>gd :Gina diff<CR>
     nnoremap <silent> <Leader>gs :Gina status<CR>
@@ -35,6 +32,9 @@ function! SpaceVim#layers#git#config() abort
           \ 'a' : ['Gina add %', 'git add current buffer'],
           \ 'A' : ['Gina add .', 'git add all files'],
           \ }
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status', 'git status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset %', 'unstage current file', 1)
   else
     nnoremap <silent> <Leader>gd :Gita diff<CR>
     nnoremap <silent> <Leader>gs :Gita status<CR>
@@ -52,6 +52,9 @@ function! SpaceVim#layers#git#config() abort
           \ 'a' : ['Gita add %', 'git add current buffer'],
           \ 'A' : ['Gita add .', 'git add all files'],
           \ }
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gita add %', 'stage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gita reset %', 'unstage current file', 1)
   endif
   nmap <leader>hj <plug>(signify-next-hunk)
   nmap <leader>hk <plug>(signify-prev-hunk)
@@ -62,10 +65,6 @@ function! SpaceVim#layers#git#config() abort
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
   augroup END
-  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status', 'git status', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset %', 'unstage current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'M'], 'call call('
         \ . string(function('s:display_last_commit_of_current_line')) . ', [])',
         \ 'display the last commit message of the current line', 1)
