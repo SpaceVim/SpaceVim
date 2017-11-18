@@ -58,6 +58,10 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+    if !has('nvim')
+      call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
+      call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
+    endif
   endif
   if has('patch-7.4.774')
     call add(plugins, ['Shougo/echodoc.vim', {
@@ -67,6 +71,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ }])
   endif
   call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
+  call add(plugins, ['SpaceVim/LanguageClient-neovim',  {'merged': 0}])
   return plugins
 endfunction
 

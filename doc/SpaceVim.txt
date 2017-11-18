@@ -445,7 +445,7 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPReinstall                                                    *:SPReinstall*
-  Command for reinstall plugin, support completion of plugin anme.
+  Command for reinstall plugin, support completion of plugin name.
 
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
@@ -467,7 +467,7 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
       3 : log error messages only
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
-  Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
+  Set the log output file of SpaceVim. Default is empty.
 
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*

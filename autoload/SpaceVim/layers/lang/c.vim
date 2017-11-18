@@ -47,7 +47,7 @@ function! SpaceVim#layers#lang#c#plugins() abort
   else
     call add(plugins, ['Rip-Rip/clang_complete'])
   endif
-  call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python3')}])
+  call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python')}])
   return plugins
 endfunction
 

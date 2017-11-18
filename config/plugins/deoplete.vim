@@ -90,7 +90,12 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " public settings
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around'])
+let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around', 'LanguageClient'])
+for key in keys(g:deoplete#ignore_sources)
+  if key != '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
+    let g:deoplete#ignore_sources[key] = g:deoplete#ignore_sources[key] + ['around', 'LanguageClient']
+  endif
+endfor
 inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 set isfname-==
