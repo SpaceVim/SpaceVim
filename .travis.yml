@@ -15,7 +15,7 @@ notifications:
 cache:
   - directories:
     - $HOME/deps
-    - $HOME/.cache/pip
+    - $HOME/.cache/
 
 env:
   global:
