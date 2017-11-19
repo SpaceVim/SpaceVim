@@ -147,6 +147,22 @@ function! s:time() abort
   return ' ' . s:TIME.current_time() . ' '
 endfunction
 
+function! s:date() abort
+
+  return ' ' . s:TIME.current_date() . ' '
+  
+endfunction
+
+function! s:whitespace() abort
+  let ln = search('\s\+$', 'n')
+  if ln != 0
+    return ' trailing[' . ln . '] '
+  else
+    return ''
+  endif
+endfunction
+
+
 
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
@@ -158,6 +174,8 @@ let s:registed_sections = {
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
       \ 'time' : function('s:time'),
+      \ 'date' : function('s:date'),
+      \ 'whitespace' : function('s:whitespace'),
       \ }
 
 function! s:battery_status() abort
@@ -242,16 +260,6 @@ else
     endif
   endfunction
 endif
-
-function! s:whitespace() abort
-  let ln = search('\s\+$', 'n')
-  if ln != 0
-    return ' trailing[' . ln . '] '
-  else
-    return ''
-  endif
-endfunction
-
 
 
 function! s:filesize() abort
@@ -444,6 +452,8 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the major mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'b'], 'call SpaceVim#layers#core#statusline#toggle_section("battery status")',
         \ 'toggle the battery status', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'd'], 'call SpaceVim#layers#core#statusline#toggle_section("date")',
+        \ 'toggle the date', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
         \ 'toggle the time', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
