@@ -14,8 +14,7 @@ notifications:
     on_failure: never # default: always
 cache:
   - directories:
-    - $HOME/deps
-    - $HOME/.cache/
+    - $HOME/cache/
 
 env:
   global:
