@@ -70,6 +70,29 @@ let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters',
 let s:loaded_sections_r = g:spacevim_statusline_right_sections
 let s:loaded_sections_l = g:spacevim_statusline_left_sections
 
+" build in sections for SpaceVim statusline
+function! s:winnr(...) abort
+  if a:0 > 1
+    if g:spacevim_windows_index_type == 3
+      return ' ' . winnr() . ' '
+    else
+      return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
+  else
+    if g:spacevim_enable_statusline_display_mode == 1
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())}' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    elseif g:spacevim_windows_index_type == 3
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
+    else
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+    endif
+  endif
+endfunction
+
+let s:registed_sections = {
+      \ 'winnr' : function('s:winnr'),
+      \ }
+
 function! s:battery_status() abort
   if executable('acpi')
     return ' ⚡' . substitute(split(system('acpi'))[-1], '%', '%%', 'g') . ' '
@@ -165,23 +188,6 @@ else
   endfunction
 endif
 
-function! s:winnr(...) abort
-  if a:0 > 1
-    if g:spacevim_windows_index_type == 3
-      return ' ' . winnr() . ' '
-    else
-      return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
-    endif
-  else
-    if g:spacevim_enable_statusline_display_mode == 1
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())}' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
-    elseif g:spacevim_windows_index_type == 3
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
-    else
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
-    endif
-  endif
-endfunction
 
 function! s:filename() abort
   let name = fnamemodify(bufname('%'), ':t')
@@ -294,40 +300,18 @@ function! SpaceVim#layers#core#statusline#get(...) abort
 endfunction
 
 function! s:active() abort
-  let lsec = [s:winnr(), s:filename()]
-  if index(s:loaded_sections, 'search status') != -1
-    call add(lsec, s:search_status())
-  endif
-  if index(s:loaded_sections, 'major mode') != -1 && !empty(&filetype)
-    call add(lsec, ' ' . &filetype . ' ')
-  endif
+  let lsec = []
+  for section in s:loaded_sections_l
+    if has_key(s:registed_sections, section)
+      call add(lsec, call(s:registed_sections[section], []))
+    endif
+  endfor
   let rsec = []
-  if index(s:loaded_sections, 'syntax checking') != -1 && s:syntax_checking() != ''
-    call add(lsec, s:syntax_checking())
-  endif
-
-  if index(s:loaded_sections, 'minor mode lighters') != -1
-    call add(lsec, s:modes())
-  endif
-  if index(s:loaded_sections, 'version control info') != -1
-    call add(lsec, s:git_branch())
-  endif
-  call add(lsec, SpaceVim#plugins#searcher#count())
-  if index(s:loaded_sections, 'battery status') != -1
-    call add(rsec, s:battery_status())
-  endif
-  call add(rsec, s:fileformat())
-  if index(s:loaded_sections, 'cursorpos') != -1
-    call add(rsec, s:cursorpos())
-  endif
-  call add(rsec, ' %P ')
-  if index(s:loaded_sections, 'time') != -1
-    call add(rsec, s:time())
-  endif
-
-  if index(s:loaded_sections, 'whitespace') != -1
-    call add(rsec, s:whitespace())
-  endif
+  for section in s:loaded_sections_r
+    if has_key(s:registed_sections, section)
+      call add(rsec, call(s:registed_sections[section], []))
+    endif
+  endfor
   let fname = s:buffer_name()
   return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname,
         \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')

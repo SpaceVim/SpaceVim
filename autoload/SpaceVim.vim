@@ -158,7 +158,24 @@ let g:spacevim_enable_cursorline       = 1
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
 
+""
+" Define the left section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_left_sections = 
+"     \ [
+"     \ 'winnr',
+"     \ 'filename',
+"     \ 'major mode',
+"     \ 'minor mode lighters',
+"     \ 'version control info'
+"     \ ]
+" <
 let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'minor mode lighters', 'version control info']
+""
+" Define the right section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+" <
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
 
 ""
