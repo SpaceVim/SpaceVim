@@ -143,6 +143,11 @@ function! s:cursorpos() abort
   return ' %l:%c '
 endfunction
 
+function! s:time() abort
+  return ' ' . s:TIME.current_time() . ' '
+endfunction
+
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'filename' : function('s:filename'),
@@ -152,6 +157,7 @@ let s:registed_sections = {
       \ 'version control info' : function('s:git_branch'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
+      \ 'time' : function('s:time'),
       \ }
 
 function! s:battery_status() abort
@@ -197,10 +203,6 @@ function! s:search_status() abort
     let tt = split(ttl[0])[0]
   endif
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
-endfunction
-
-function! s:time() abort
-  return ' ' . s:TIME.current_time() . ' '
 endfunction
 
 if g:spacevim_enable_neomake
@@ -403,11 +405,26 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
+let s:section_old_pos = {
+      \ }
+
 function! SpaceVim#layers#core#statusline#toggle_section(name) abort
-  if index(s:loaded_sections, a:name) != -1
-    call remove(s:loaded_sections, index(s:loaded_sections, a:name))
-  else
-    call add(s:loaded_sections, a:name)
+  if index(s:loaded_sections_l, a:name) == -1
+        \ && index(s:loaded_sections_r, a:name) == -1
+        \ && !has_key(s:section_old_pos, a:name)
+    call add(s:loaded_sections_r, a:name)
+  elseif index(s:loaded_sections_r, a:name) != -1
+    let s:section_old_pos[a:name] = ['r', index(s:loaded_sections_r, a:name)]
+    call remove(s:loaded_sections_r, index(s:loaded_sections_r, a:name))
+  elseif index(s:loaded_sections_l, a:name) != -1
+    let s:section_old_pos[a:name] = ['l', index(s:loaded_sections_l, a:name)]
+    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  elseif has_key(s:section_old_pos, a:name)
+    if s:section_old_pos[a:name][0] == 'r'
+      call insert(s:loaded_sections_r, a:name, s:section_old_pos[a:name][1])
+    else
+      call insert(s:loaded_sections_l, a:name, s:section_old_pos[a:name][1])
+    endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
