@@ -8,7 +8,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
                 rm -rf build/GitHub.vim
             fi
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
-            /home/travis/cache/nvim-HEAD/bin/nvim -u .ci/common/github_commenter.vim
+            /home/travis/bin/nvim -u .ci/common/github_commenter.vim
         fi
         rm build_log
     elif [ "$LINT" = "vint-errors" ] ; then
