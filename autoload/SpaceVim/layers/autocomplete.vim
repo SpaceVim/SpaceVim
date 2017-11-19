@@ -71,7 +71,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ }])
   endif
   call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
-  call add(plugins, ['SpaceVim/LanguageClient-neovim',  {'merged': 0}])
   return plugins
 endfunction
 

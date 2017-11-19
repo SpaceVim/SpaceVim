@@ -455,6 +455,11 @@ endif
 
 let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
+" SpaceVim/LanguageClient-neovim {{{
+if !exists('g:LanguageClient_serverCommands')
+  let g:LanguageClient_serverCommands = {}
+endif
+" }}}
 
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
