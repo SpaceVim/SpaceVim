@@ -580,4 +580,16 @@ function! SpaceVim#layers#core#statusline#unite_mode()
   return ''
 endfunction
 
+function! SpaceVim#layers#core#statusline#register_sections(name, func)
+
+ if has_key(s:registed_sections, a:name)
+   call SpaceVim#logger#info('statusline build-in section ' . a:name . ' has been changed!')
+   call extend(s:registed_sections, {a:name : a:func})
+ else
+   call extend(s:registed_sections, {a:name : a:func})
+ endif
+
+endfunction
+
+
 " vim:set et sw=2 cc=80:
