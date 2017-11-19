@@ -2,7 +2,6 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
     let plugins = [
                 \ ['Yggdroot/indentLine'],
-                \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
                 \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],

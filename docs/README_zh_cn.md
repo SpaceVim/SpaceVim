@@ -7,7 +7,7 @@ description: "SpaceVim 是一个社区驱动的 Vim 配置，内含多种语言�
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version](https://img.shields.io/badge/version-0.5.0-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://github.com/SpaceVim/SpaceVim/blob/dev/doc/SpaceVim.txt)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
@@ -519,6 +519,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
+| `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
 | `SPC t m v` | 显示/隐藏版本控制信息                                               |
 

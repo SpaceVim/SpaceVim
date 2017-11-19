@@ -27,7 +27,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.5.0'
+let g:spacevim_version = '0.6.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -157,6 +157,27 @@ let g:spacevim_enable_cursorline       = 1
 "
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
+
+""
+" Define the left section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_left_sections = 
+"     \ [
+"     \ 'winnr',
+"     \ 'filename',
+"     \ 'major mode',
+"     \ 'minor mode lighters',
+"     \ 'version control info'
+"     \ ]
+" <
+let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'minor mode lighters', 'version control info']
+""
+" Define the right section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+" <
+let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
+
 ""
 " Enable/Disable unicode symbols in statusline
 let g:spacevim_statusline_unicode_symbols = 1
@@ -282,8 +303,8 @@ let g:spacevim_auto_disable_touchpad   = 1
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
-let g:spacevim_gitcommit_pr_icon       = 'p'
-let g:spacevim_gitcommit_issue_icon    = 'i'
+let g:spacevim_gitcommit_pr_icon       = ''
+let g:spacevim_gitcommit_issue_icon    = ''
 ""
 " Set SpaceVim buffer index type, default is 0.
 " >
@@ -471,9 +492,11 @@ function! SpaceVim#loadCustomConfig() abort
   endif
   " the old value will be remove
   if filereadable(custom_glob_conf_old)
+    call SpaceVim#logger#warn('~/.local.vim is deprecated!')
     exe 'source ' . custom_glob_conf_old
   endif
   if !empty(custom_confs_old)
+    call SpaceVim#logger#warn('.local.vim is deprecated!')
     exe 'source ' . custom_confs_old[0]
   endif
 
@@ -482,11 +505,15 @@ function! SpaceVim#loadCustomConfig() abort
       exe 'set rtp ^=' . expand('.SpaceVim.d')
     endif
     exe 'source ' . custom_confs[0]
-    if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-      if isdirectory(expand('~/.SpaceVim.d/'))
-        set runtimepath^=~/.SpaceVim.d
+    if g:spacevim_force_global_config
+      if filereadable(custom_glob_conf)
+        if isdirectory(expand('~/.SpaceVim.d/'))
+          set runtimepath^=~/.SpaceVim.d
+        endif
+        exe 'source ' . custom_glob_conf
       endif
-      exe 'source ' . custom_glob_conf
+    else
+      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))
@@ -538,7 +565,7 @@ function! SpaceVim#end() abort
       call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
-    if has('nvim')
+    if has('python3')
       let g:spacevim_autocomplete_method = 'deoplete'
     elseif has('lua')
       let g:spacevim_autocomplete_method = 'neocomplete'

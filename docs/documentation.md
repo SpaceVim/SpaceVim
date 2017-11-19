@@ -23,6 +23,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
     - [Updating Manually with git](#updating-manually-with-git)
   - [Update plugins](#update-plugins)
+  - [Get SpaceVim log](#get-spacevim-log)
 - [Configuration layers](#configuration-layers)
 - [Custom Configuration](#custom-configuration)
   - [Automatic Generation](#automatic-generation)
@@ -228,6 +229,10 @@ To update manually close Vim and update the git repository:
 ### Update plugins
 
 Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
+
+### Get SpaceVim log
+
+Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
 
 ## Configuration layers
 
@@ -439,6 +444,7 @@ Some elements can be dynamically toggled:
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | toggle the cursor position                                          |
 | `SPC t m t` | toggle the time                                                     |
+| `SPC t m d` | toggle the date                                                     |
 | `SPC t m T` | toggle the mode line itself                                         |
 | `SPC t m v` | toggle the version control info                                     |
 
