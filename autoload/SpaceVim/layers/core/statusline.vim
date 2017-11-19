@@ -16,6 +16,7 @@ let s:HI = SpaceVim#api#import('vim#highlight')
 let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:ICON = SpaceVim#api#import('unicode#icon')
 
 " init
 let s:separators = {
@@ -162,6 +163,18 @@ function! s:whitespace() abort
   endif
 endfunction
 
+function! s:battery_status() abort
+  if executable('acpi')
+    let battery = split(system('acpi'))[-1][:-2]
+    if g:spacevim_statusline_unicode_symbols
+      return ' ' . s:ICON.battery_status(battery) . ' '
+    else
+      return ' ⚡' . battery . ' '
+    endif
+  else
+    return ''
+  endif
+endfunction
 
 
 let s:registed_sections = {
@@ -176,16 +189,8 @@ let s:registed_sections = {
       \ 'time' : function('s:time'),
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),
+      \ 'battery_status' : function('s:battery_status'),
       \ }
-
-function! s:battery_status() abort
-  if executable('acpi')
-    return ' ⚡' . substitute(split(system('acpi'))[-1], '%', '%%', 'g') . ' '
-  else
-    return ''
-  endif
-endfunction
-
 
 
 function! s:check_mode() abort
