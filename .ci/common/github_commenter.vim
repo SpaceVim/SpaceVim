@@ -1,26 +1,26 @@
-set nocp
+exe 'set nocp'
 set rtp+=build/GitHub.vim
 so build/GitHub.vim/plugin/github.vim
 so build/GitHub.vim/autoload/github/api/issues.vim
 so build/GitHub.vim/autoload/github/api/util.vim
-let log = system('cat build_log')
-if !empty(log)
-  let summary = $LINT . ' build log'
-  let log = "<details><summary>" . summary . "</summary>" . log . "</details>"
-  let comments = github#api#issues#List_comments('SpaceVim', 'SpaceVim',$TRAVIS_PULL_REQUEST ,'')
-  if empty(comments)
-    call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': log}, 'SpaceVimBot', $BOTSECRET)
+let s:log = system('cat build_log')
+if !empty(s:log)
+  let s:summary = $LINT . ' build log'
+  let s:log = '<details><summary>' . s:summary . '</summary>' . s:log . '</details>'
+  let s:comments = github#api#issues#List_comments('SpaceVim', 'SpaceVim',$TRAVIS_PULL_REQUEST ,'')
+  if empty(s:comments)
+    call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': s:log}, 'SpaceVimBot', $BOTSECRET)
   else
-    let nr = 0
-    for comment in comments
-      if comment.user.login == 'SpaceVimBot'
-        let nr = comment.id
+    let s:nr = 0
+    for s:comment in s:comments
+      if s:comment.user.login ==# 'SpaceVimBot'
+        let s:nr = s:comment.id
       endif
     endfor
-    if nr == 0
-      call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': log}, 'SpaceVimBot', $BOTSECRET)
+    if s:nr == 0
+      call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': s:log}, 'SpaceVimBot', $BOTSECRET)
     else
-      call github#api#issues#Edit_comment('SpaceVim','SpaceVim', nr, {'body': log}, 'SpaceVimBot', $BOTSECRET)
+      call github#api#issues#Edit_comment('SpaceVim','SpaceVim', s:nr, {'body': s:log}, 'SpaceVimBot', $BOTSECRET)
     endif
   endif
 endif
