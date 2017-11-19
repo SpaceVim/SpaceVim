@@ -167,7 +167,7 @@ function! s:battery_status() abort
   if executable('acpi')
     let battery = split(system('acpi'))[-1][:-2]
     if g:spacevim_statusline_unicode_symbols
-      return ' ' . s:ICON.battery_status(battery) . ' '
+      return ' ' . s:ICON.battery_status(battery) . '  '
     else
       return ' ⚡' . battery . ' '
     endif
@@ -189,7 +189,7 @@ let s:registed_sections = {
       \ 'time' : function('s:time'),
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),
-      \ 'battery_status' : function('s:battery_status'),
+      \ 'battery status' : function('s:battery_status'),
       \ }
 
 
