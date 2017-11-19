@@ -3,7 +3,7 @@ function! SpaceVim#layers#lsp#plugins() abort
 
   if has('nvim')
     let plugins = add(plugins, ['SpaceVim/LanguageClient-neovim',
-          \ { 'merged': 0 }])
+          \ { 'merged': 0, 'if': has('python3') }])
   endif
 
   return plugins
