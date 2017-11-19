@@ -15,6 +15,7 @@ let s:TIME = SpaceVim#api#import('time')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
+let s:SYSTEM = SpaceVim#api#import('system')
 
 " init
 let s:separators = {
@@ -66,12 +67,25 @@ let s:modes = {
 
 let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info', 'cursorpos']
 
+let s:loaded_sections_r = g:spacevim_statusline_right_sections
+let s:loaded_sections_l = g:spacevim_statusline_left_sections
+
 function! s:battery_status() abort
   if executable('acpi')
     return ' ⚡' . substitute(split(system('acpi'))[-1], '%', '%%', 'g') . ' '
   else
     return ''
   endif
+endfunction
+
+
+if g:spacevim_statusline_unicode_symbols == 1
+  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
+else
+  let g:_spacevim_statusline_fileformat = &ff
+endif
+function! s:fileformat() abort
+  return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
 endfunction
 
 function! s:check_mode() abort
@@ -302,7 +316,7 @@ function! s:active() abort
   if index(s:loaded_sections, 'battery status') != -1
     call add(rsec, s:battery_status())
   endif
-  call add(rsec, '%{" " . &ff . " | " . (&fenc!=""?&fenc:&enc) . " "}')
+  call add(rsec, s:fileformat())
   if index(s:loaded_sections, 'cursorpos') != -1
     call add(rsec, s:cursorpos())
   endif

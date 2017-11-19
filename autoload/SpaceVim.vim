@@ -157,6 +157,10 @@ let g:spacevim_enable_cursorline       = 1
 "
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
+
+let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'minor mode lighters', 'version control info']
+let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+
 ""
 " Enable/Disable unicode symbols in statusline
 let g:spacevim_statusline_unicode_symbols = 1
