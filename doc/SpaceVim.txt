@@ -194,6 +194,25 @@ Set the statusline separators of statusline, default is 'arrow'
 See more details in: http://spacevim.org/documentation/#statusline
 
 
+                                         *g:spacevim_statusline_left_sections*
+Define the left section of statusline in active windows. By default:
+>
+  let g:spacevim_statusline_left_sections =
+    \ [
+    \ 'winnr',
+    \ 'filename',
+    \ 'major mode',
+    \ 'minor mode lighters',
+    \ 'version control info'
+    \ ]
+<
+
+                                        *g:spacevim_statusline_right_sections*
+Define the right section of statusline in active windows. By default:
+>
+  let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+<
+
                                        *g:spacevim_statusline_unicode_symbols*
 Enable/Disable unicode symbols in statusline
 
@@ -451,7 +470,7 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPReinstall                                                    *:SPReinstall*
-  Command for reinstall plugin, support completion of plugin anme.
+  Command for reinstall plugin, support completion of plugin name.
 
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.

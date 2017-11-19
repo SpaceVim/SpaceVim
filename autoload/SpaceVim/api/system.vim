@@ -47,14 +47,13 @@ let s:system['isDarwin'] = function('s:isDarwin')
 
 function! s:fileformat() abort
   let fileformat = ''
-
   if &fileformat ==? 'dos'
-    let fileformat = ''
+    let fileformat = ''
   elseif &fileformat ==? 'unix'
     if s:isDarwin()
-      let fileformat = ''
+      let fileformat = ''
     else
-      let fileformat = ''
+      let fileformat = ''
     endif
   elseif &fileformat ==? 'mac'
     let fileformat = ''

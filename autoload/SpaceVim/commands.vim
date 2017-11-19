@@ -37,7 +37,7 @@ function! SpaceVim#commands#load() abort
         \ SPUpdate call SpaceVim#commands#update_plugin(<f-args>)
 
   ""
-  " Command for reinstall plugin, support completion of plugin anme. 
+  " Command for reinstall plugin, support completion of plugin name. 
   command! -nargs=+
         \ -complete=custom,SpaceVim#commands#complete_plugin
         \ SPReinstall call SpaceVim#commands#reinstall_plugin(<f-args>)

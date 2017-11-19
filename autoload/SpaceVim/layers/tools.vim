@@ -28,7 +28,6 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'loadconf' : 1,
         \}],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
-        \ ['airblade/vim-gitgutter',      { 'on_cmd' : 'GitGutterEnable'}],
         \ ['itchyny/calendar.vim',        { 'on_cmd' : 'Calendar'}],
         \ ['wsdjeg/Mysql.vim',            { 'on_cmd' : 'SQLGetConnection'}],
         \ ['wsdjeg/job.vim',              { 'merged' : 0}],

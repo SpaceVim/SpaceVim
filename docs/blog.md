@@ -13,7 +13,7 @@ going on.
             <li>
                <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <h4>{{ post.excerpt | truncatewords: 100 }}</h4>
+               <h3>{{ post.excerpt | truncatewords: 100 }}</h3>
             </li>
     {% endfor %}
 </ul>

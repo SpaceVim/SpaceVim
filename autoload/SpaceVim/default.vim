@@ -124,6 +124,7 @@ function! SpaceVim#default#SetPlugins() abort
   call add(g:spacevim_plugin_groups, 'format')
   call add(g:spacevim_plugin_groups, 'chat')
   call add(g:spacevim_plugin_groups, 'git')
+  call add(g:spacevim_plugin_groups, 'VersionControl')
   call add(g:spacevim_plugin_groups, 'javascript')
   call add(g:spacevim_plugin_groups, 'ruby')
   call add(g:spacevim_plugin_groups, 'python')

@@ -200,6 +200,44 @@ usage () {
 }
 
 
+
+download_font () {
+    url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
+    path="$HOME/.local/share/fonts/$1"
+    if [[ -f "$path" ]]
+    then
+        success "Downloaded $1"
+    else
+        info "Downloading $1"
+        wget -q -O "$path" "$url"
+        success "Downloaded $1"
+    fi
+}
+
+install_fonts () {
+    if [[ ! -d "$HOME/.local/share/fonts" ]]; then
+        mkdir -p $HOME/.local/share/fonts
+    fi
+    download_font "DejaVu Sans Mono Bold Oblique for Powerline.ttf"
+    download_font "DejaVu Sans Mono Bold for Powerline.ttf"
+    download_font "DejaVu Sans Mono Oblique for Powerline.ttf"
+    download_font "DejaVu Sans Mono for Powerline.ttf"
+    download_font "DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf"
+    download_font "Ubuntu Mono derivative Powerline Nerd Font Complete.ttf"
+    download_font "WEBDINGS.TTF"
+    download_font "WINGDNG2.ttf"
+    download_font "WINGDNG3.ttf"
+    download_font "devicons.ttf"
+    download_font "mtextra.ttf"
+    download_font "symbol.ttf"
+    download_font "wingding.ttf"
+    echo -n "Updating font cache... "
+    fc-cache -fv
+    mkfontdir "$HOME/.local/share/fonts"
+    mkfontscale "$HOME/.local/share/fonts"
+    echo "done"
+}
+
 if [ $# -gt 0 ]
 then
     case $1 in
@@ -247,3 +285,4 @@ fetch_repo
 install_vim
 install_neovim
 install_package_manager
+install_fonts

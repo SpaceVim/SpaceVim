@@ -444,6 +444,7 @@ Some elements can be dynamically toggled:
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | toggle the cursor position                                          |
 | `SPC t m t` | toggle the time                                                     |
+| `SPC t m d` | toggle the date                                                     |
 | `SPC t m T` | toggle the mode line itself                                         |
 | `SPC t m v` | toggle the version control info                                     |
 

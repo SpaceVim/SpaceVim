@@ -519,6 +519,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
+| `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
 | `SPC t m v` | 显示/隐藏版本控制信息                                               |
 
