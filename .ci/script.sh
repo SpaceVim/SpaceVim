@@ -15,8 +15,7 @@ elif [ "$LINT" = "vimlint-errors" ]; then
     do
         /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log;
     done
-    log=`cat build_log`
-    if [ -n "$log" ]; then
+    if [[ -f build_log ]]; then
         cat build_log
         exit 2
     fi
