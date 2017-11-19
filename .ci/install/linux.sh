@@ -33,7 +33,7 @@ install_nvim() {
     CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
   make install
   python -m pip install --user neovim
-  python3 -m pip3 install --user neovim
+  python3 -m pip install --user neovim
   ln -sf $out $HOME/vim
 }
 
