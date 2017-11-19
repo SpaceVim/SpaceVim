@@ -239,6 +239,12 @@ Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
   let g:spacevim_warning_symbol = '!'
 <
 
+                                                   *g:spacevim_info_symbol*
+Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+>
+  let g:spacevim_info_symbol = 'i'
+<
+
                                             *g:spacevim_terminal_cursor_shape*
 Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
 changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive

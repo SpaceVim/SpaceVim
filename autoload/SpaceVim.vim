@@ -202,6 +202,12 @@ let g:spacevim_error_symbol            = '✖'
 " <
 let g:spacevim_warning_symbol          = '⚠'
 ""
+" Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+" >
+"   let g:spacevim_info_symbol = 'i'
+" <
+let g:spacevim_info_symbol             = '🛈'
+""
 " Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
 " changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
 " cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
