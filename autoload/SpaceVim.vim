@@ -176,7 +176,7 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'm
 " >
 "   let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
 " <
-let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 
 ""
 " Enable/Disable unicode symbols in statusline

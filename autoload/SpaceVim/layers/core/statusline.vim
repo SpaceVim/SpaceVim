@@ -65,6 +65,7 @@ let s:modes = {
       \ },
       \ }
 
+"  TODO This can not be deleted, it is used for toggle section
 let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info', 'cursorpos']
 
 let s:loaded_sections_r = g:spacevim_statusline_right_sections
@@ -89,8 +90,68 @@ function! s:winnr(...) abort
   endif
 endfunction
 
+function! s:filename() abort
+  let name = fnamemodify(bufname('%'), ':t')
+  if empty(name)
+    let name = 'No Name'
+  endif
+  return "%{ &modified ? ' * ' : ' - '}" . s:filesize() . name . ' '
+endfunction
+
+if g:spacevim_statusline_unicode_symbols == 1
+  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
+else
+  let g:_spacevim_statusline_fileformat = &ff
+endif
+function! s:fileformat() abort
+  return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
+endfunction
+
+function! s:major_mode() abort
+  return '%{empty(&ft)? "" : " " . &ft . " "}'
+endfunction
+
+function! s:modes() abort
+  let m = ' ❖ '
+  for mode in s:loaded_modes
+    if g:spacevim_statusline_unicode_symbols == 1
+      let m .= s:modes[mode].icon . ' '
+    else
+      let m .= s:modes[mode].icon_asc . ' '
+    endif
+  endfor
+  return m . ' '
+endfunction
+
+function! s:git_branch() abort
+  if exists('g:loaded_fugitive')
+    let l:head = fugitive#head()
+    if empty(l:head)
+      call fugitive#detect(getcwd())
+      let l:head = fugitive#head()
+    endif
+    return empty(l:head) ? '' : '  '.l:head . ' '
+  endif
+  return ''
+endfunction
+
+function! s:percentage() abort
+  return ' %P '
+endfunction
+
+function! s:cursorpos() abort
+  return ' %l:%c '
+endfunction
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
+      \ 'filename' : function('s:filename'),
+      \ 'fileformat' : function('s:fileformat'),
+      \ 'major mode' : function('s:major_mode'),
+      \ 'minor mode lighters' : function('s:modes'),
+      \ 'version control info' : function('s:git_branch'),
+      \ 'cursorpos' : function('s:cursorpos'),
+      \ 'percentage' : function('s:percentage'),
       \ }
 
 function! s:battery_status() abort
@@ -102,14 +163,6 @@ function! s:battery_status() abort
 endfunction
 
 
-if g:spacevim_statusline_unicode_symbols == 1
-  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
-else
-  let g:_spacevim_statusline_fileformat = &ff
-endif
-function! s:fileformat() abort
-  return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
-endfunction
 
 function! s:check_mode() abort
   if mode() == 'n'
@@ -188,27 +241,6 @@ else
   endfunction
 endif
 
-
-function! s:filename() abort
-  let name = fnamemodify(bufname('%'), ':t')
-  if empty(name)
-    let name = 'No Name'
-  endif
-  return (&modified ? ' * ' : ' - ') . s:filesize() . name . ' '
-endfunction
-
-function! s:git_branch() abort
-  if exists('g:loaded_fugitive')
-    let l:head = fugitive#head()
-    if empty(l:head)
-      call fugitive#detect(getcwd())
-      let l:head = fugitive#head()
-    endif
-    return empty(l:head) ? '' : '  '.l:head . ' '
-  endif
-  return ''
-endfunction
-
 function! s:whitespace() abort
   let ln = search('\s\+$', 'n')
   if ln != 0
@@ -218,22 +250,7 @@ function! s:whitespace() abort
   endif
 endfunction
 
-function! s:cursorpos() abort
-  return ' %l:%c '
-endfunction
 
-
-function! s:modes() abort
-  let m = ' ❖ '
-  for mode in s:loaded_modes
-    if g:spacevim_statusline_unicode_symbols == 1
-      let m .= s:modes[mode].icon . ' '
-    else
-      let m .= s:modes[mode].icon_asc . ' '
-    endif
-  endfor
-  return m . ' '
-endfunction
 
 function! s:filesize() abort
   let l:size = getfsize(bufname('%'))
