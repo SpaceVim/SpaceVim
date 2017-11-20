@@ -27,4 +27,8 @@ let g:neomake_warning_sign = get(g:, 'neomake_warning_sign', {
       \ 'text': get(g:,'spacevim_warning_symbol', '➤'),
       \ 'texthl': (g:spacevim_colorscheme ==# 'gruvbox' ? 'GruvboxYellowSign' : 'todo'),
       \ })
+let g:neomake_info_sign = get(g:, 'neomake_info_sign', {
+      \ 'text': get(g:,'spacevim_info_symbol', '🛈'),
+      \ 'texthl': (g:spacevim_colorscheme ==# 'gruvbox' ? 'GruvboxYellowSign' : 'todo'),
+      \ })
 " vim:set et sw=2:

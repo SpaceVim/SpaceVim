@@ -1,6 +1,7 @@
 scriptencoding utf-8
 let g:ale_sign_error = get(g:, 'spacevim_error_symbol', '✖')
 let g:ale_sign_warning = get(g:,'spacevim_warning_symbol', '➤')
+let g:ale_sign_info = get(g:,'spacevim_info_symbol', '🛈')
 let g:ale_echo_msg_format = get(g:, 'ale_echo_msg_format', '%severity%: %linter%: %s')
 
 if g:spacevim_colorscheme == 'gruvbox'

@@ -10,6 +10,7 @@ let g:syntastic_check_on_open = get(g:, 'syntastic_check_on_open', 0)
 let g:syntastic_check_on_wq = get(g:, 'syntastic_check_on_wq', 0)
 let g:syntastic_error_symbol = get(g:, 'spacevim_error_symbol', '✖')
 let g:syntastic_warning_symbol = get(g:, 'spacevim_warning_symbol', '➤')
+let g:syntastic_info_symbol = get(g:, 'spacevim_info_symbol', '🛈')
 let g:syntastic_vimlint_options = get(g:, 'syntastic_vimlint_options', {
       \'EVL102': 1 ,
       \'EVL103': 1 ,
