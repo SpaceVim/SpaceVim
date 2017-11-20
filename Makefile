@@ -1,8 +1,6 @@
-IS_NEOVIM=$(findstring neovim,$(VIM))
+DOCKER = docker run -it --rm spacevim/vims
 
-DOCKER = docker run -it --rm -v $(PWD):/testplugin -v $(PWD)/test/vim:/home spacevim/vims
-
-ifeq $(IS_NEOVIM)
+ifeq ($(VIM),nvim) 
   DEFAULT_VIM:=$(DOCKER) neovim-stable
 else
   DEFAULT_VIM:=$(DOCKER) vim8
