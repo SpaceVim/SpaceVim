@@ -258,7 +258,7 @@ Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
   let g:spacevim_warning_symbol = '!'
 <
 
-                                                   *g:spacevim_info_symbol*
+                                                      *g:spacevim_info_symbol*
 Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
 >
   let g:spacevim_info_symbol = 'i'

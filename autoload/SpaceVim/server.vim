@@ -20,7 +20,7 @@ function! SpaceVim#server#connect()
       try
         call serverstart($SPACEVIM_SERVER_ADDRESS)
         call SpaceVim#logger#info('SpaceVim server startup at:' . $SPACEVIM_SERVER_ADDRESS)
-      catch /Failed to start server: address already in use/
+      catch
       endtry
     elseif has('clientserver') && exists('*remote_startserver')
       if index(split(serverlist(), "\n"), $SPACEVIM_SERVER_ADDRESS) == -1
