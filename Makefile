@@ -1,10 +1,20 @@
+IS_NEOVIM=$(findstring neovim,$(VIM))
+
+DOCKER = docker run -it --rm -v $(PWD):/testplugin -v $(PWD)/test/vim:/home spacevim/vims
+
+ifeq $(IS_NEOVIM)
+  DEFAULT_VIM:=$(DOCKER) neovim-stable
+else
+  DEFAULT_VIM:=$(DOCKER) vim8
+endif
+
 test: build/vader | build
-	vim -Nu test/vimrc -c 'Vader! test/**'
+	$(DEFAULT_VIM) -Nu test/vimrc -c 'Vader! test/**'
 
 COVIMERAGE=$(shell command -v ccovimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
 
 test_coverage: $(COVIMERAGE) build/vader | build
-	$(COVIMERAGE) run vim -Nu test/vimrc -c 'Vader! test/**'
+	$(COVIMERAGE) run $(DEFAULT_VIM) -Nu test/vimrc -c 'Vader! test/**'
 
 build/covimerage:
 	virtualenv $@

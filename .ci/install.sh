@@ -6,20 +6,7 @@ set -ue -o pipefail
 # Prevent commands misbehaving due to locale differences
 export LC_ALL=C
 
-
-git config --global user.name "Travis"
-
-git config --global user.email travis@example.com
-
-export PYTHONUSERBASE="$HOME/.local"
-
-# Get root path of the script
-root=$(cd $(dirname $0); pwd)
-
-. $root/install/linux.sh
-
-# Install Vim/Neovim
-install $VIM $VIM_VERSION
+docker pull spacevim/vims
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint

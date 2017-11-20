@@ -8,12 +8,16 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
                 rm -rf build/GitHub.vim
             fi
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
-            /home/travis/cache/nvim-HEAD/bin/nvim -u .ci/common/github_commenter.vim
+            docker run -it --rm
+            \ -v $(PWD):/testplugin
+            \ -v $(PWD)/test/vim:/home
+            \ spacevim/vims neovim-stable
+            \ -u .ci/common/github_commenter.vim
             rm build_log
         fi
     elif [ "$LINT" = "vint-errors" ] ; then
-        add_comment_to_pr $TRAVIS_TEST_RESULT
+        echo ""
     elif [ "$LINT" = "vader" ] ; then
-        add_comment_to_pr $TRAVIS_TEST_RESULT
+        echo ""
     fi
 fi

@@ -1,7 +1,10 @@
 language: c
 dist: trusty
-sudo: false
+sudo: required
 language: generic
+
+services:
+  - docker
 
 git:
   depth: 3
@@ -31,32 +34,12 @@ env:
 os:
   - linux
 
-compiler:
-  - gcc
-
-addons:
-  apt:
-    packages:
-      - autoconf
-      - clang
-      - lcov
-      - libperl-dev
-      - python-dev
-      - python3-dev
-      - liblua5.2-dev
-      - lua5.2
-      - ruby-dev
-      - cscope
-      - libgtk2.0-dev
-
-
 matrix:
   allow_failures:
-    - env: LINT=vimlint
-    - env: LINT=vint
+    - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
+    - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
 
 install: .ci/install.sh
 script: .ci/script.sh
 after_success: .ci/after_success.sh
-# $TRAVIS_TEST_RESULT is the log
 after_failure: .ci/after_failure.sh
