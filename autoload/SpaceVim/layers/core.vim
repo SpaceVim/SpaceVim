@@ -20,9 +20,9 @@ function! SpaceVim#layers#core#config() abort
   if has('python3')
     let cmd =  'Denite file_rec'
   elseif has('python')
-    let cmd =  "exe 'LeaderfFile"
+    let cmd =  "LeaderfFile"
   else
-    let cmd =  "exe 'CtrlP"
+    let cmd =  "CtrlP"
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ cmd,
