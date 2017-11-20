@@ -18,6 +18,9 @@ Red='\033[0;31m'
 Blue='\033[0;34m'
 Green='\033[0;32m'
 
+#System name
+System="$(uname -s)"
+
 need_cmd () {
     if ! hash "$1" &>/dev/null; then
         error "Need '$1' (command not fount)"
@@ -232,9 +235,17 @@ install_fonts () {
     download_font "symbol.ttf"
     download_font "wingding.ttf"
     echo -n "Updating font cache... "
-    fc-cache -fv
-    mkfontdir "$HOME/.local/share/fonts"
-    mkfontscale "$HOME/.local/share/fonts"
+    if [ $System == "Darwin" ];then
+        if [ ! -e "$HOME/Library/Fonts" ];then
+            mkdir "$HOME/Library/Fonts"
+        fi 
+        cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
+    else
+        fc-cache -fv
+        mkfontdir "$HOME/.local/share/fonts"
+        mkfontscale "$HOME/.local/share/fonts"
+    fi
+
     echo "done"
 }
 
