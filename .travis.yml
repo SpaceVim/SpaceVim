@@ -1,7 +1,6 @@
-language: c
+language: python
 dist: trusty
 sudo: required
-language: generic
 
 services:
   - docker

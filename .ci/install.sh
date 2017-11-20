@@ -8,6 +8,8 @@ export LC_ALL=C
 
 docker pull spacevim/vims
 
+git fetch origin dev:dev
+
 if [ "${LINT#vimlint}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
     git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser

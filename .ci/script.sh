@@ -11,7 +11,7 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         rm build_log
     fi
     touch build_log
-    for file in $(git diff --name-only HEAD origin/dev | grep .vim$);
+    for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
         /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log;
     done
