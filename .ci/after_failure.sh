@@ -2,11 +2,12 @@
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
     if [ "$LINT" = "vimlint-errors" ] ; then
-        VIMLINT_LOG=`cat build_log`
         if [[ -f build_log ]]; then
             if [[ -d build/GitHub.vim ]]; then
                 rm -rf build/GitHub.vim
             fi
+            VIMLINT_LOG=`cat build_log`
+            echo "$VIMLINT_LOG"
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm spacevim/vims neovim-stable -u .ci/common/github_commenter.vim
             rm build_log
