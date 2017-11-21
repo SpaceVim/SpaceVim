@@ -1,4 +1,4 @@
-DOCKER = docker run -it --rm spacevim/vims
+DOCKER = docker run -it --rm -v $PWD:/testplugin -v $PWD/test:/home -v $PWD/build:/build "spacevim/vims"
 
 ifeq ($(VIM),nvim) 
   DEFAULT_VIM:=$(DOCKER) neovim-stable
