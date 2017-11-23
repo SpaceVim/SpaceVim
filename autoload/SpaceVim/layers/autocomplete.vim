@@ -72,6 +72,12 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
+    if g:spacevim_snippet_engine ==# 'neosnippet'
+      call add(plugins, ['maralla/completor-neosnippet', {
+            \ 'loadconf' : 1,
+            \ 'merged' : 0,
+            \ }])
+    endif
   endif
   if has('patch-7.4.774')
     call add(plugins, ['Shougo/echodoc.vim', {
