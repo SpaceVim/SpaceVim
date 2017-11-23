@@ -580,6 +580,8 @@ function! SpaceVim#end() abort
       let g:spacevim_autocomplete_method = 'deoplete'
     elseif has('lua')
       let g:spacevim_autocomplete_method = 'neocomplete'
+    elseif has('timers')
+      let g:spacevim_autocomplete_method = 'asyncomplete'
     else
       let g:spacevim_autocomplete_method = 'neocomplcache'
     endif

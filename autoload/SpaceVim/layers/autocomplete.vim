@@ -62,6 +62,16 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
       call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
     endif
+  elseif g:spacevim_autocomplete_method == 'asyncomplete'
+    call add(plugins, ['prabirshrestha/asyncomplete.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
+  elseif g:spacevim_autocomplete_method == 'completor'
+    call add(plugins, ['maralla/completor.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
   endif
   if has('patch-7.4.774')
     call add(plugins, ['Shougo/echodoc.vim', {
