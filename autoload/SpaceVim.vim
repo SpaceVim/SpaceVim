@@ -98,7 +98,32 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-let g:spacevim_autocomplete_method     = ''
+if has('python3')
+  ""
+  " Set the autocomplete engine of spacevim, the default logic is:
+  " >
+  "   if has('python3')
+  "     let g:spacevim_autocomplete_method = 'deoplete'
+  "   elseif has('lua')
+  "     let g:spacevim_autocomplete_method = 'neocomplete'
+  "   elseif has('python')
+  "     let g:spacevim_autocomplete_method = 'completor'
+  "   elseif has('timers')
+  "     let g:spacevim_autocomplete_method = 'asyncomplete'
+  "   else
+  "     let g:spacevim_autocomplete_method = 'neocomplcache'
+  "   endif
+  " <
+  let g:spacevim_autocomplete_method = 'deoplete'
+elseif has('lua')
+  let g:spacevim_autocomplete_method = 'neocomplete'
+elseif has('python')
+  let g:spacevim_autocomplete_method = 'completor'
+elseif has('timers')
+  let g:spacevim_autocomplete_method = 'asyncomplete'
+else
+  let g:spacevim_autocomplete_method = 'neocomplcache'
+endif
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
@@ -586,17 +611,6 @@ function! SpaceVim#end() abort
       call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
-    if has('python3')
-      let g:spacevim_autocomplete_method = 'deoplete'
-    elseif has('lua')
-      let g:spacevim_autocomplete_method = 'neocomplete'
-    elseif has('python')
-      let g:spacevim_autocomplete_method = 'completor'
-    elseif has('timers')
-      let g:spacevim_autocomplete_method = 'asyncomplete'
-    else
-      let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
   endif
   ""
   " generate tags for SpaceVim
