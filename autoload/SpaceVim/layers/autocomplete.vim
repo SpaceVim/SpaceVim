@@ -67,6 +67,10 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
+    call add(plugins, ['prabirshrestha/asyncomplete-buffer.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
   elseif g:spacevim_autocomplete_method == 'completor'
     call add(plugins, ['maralla/completor.vim', {
           \ 'loadconf' : 1,
