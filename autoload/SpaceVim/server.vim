@@ -37,9 +37,9 @@ endfunction
 
 
 function! SpaceVim#server#export_server()
-
-  call system('export $TEST_SPACEVIM="test"') 
-
+  if executable('export')
+    call system('export $TEST_SPACEVIM="test"') 
+  endif
 endfunction
 
 function! SpaceVim#server#terminate()
