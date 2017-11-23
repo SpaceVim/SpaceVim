@@ -52,6 +52,19 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
+### Uninstall
+```bash
+curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+```
+**OR** 
+
+you can use
+
+```bash
+sh /path/to/install.sh --uninstall
+```
+
+
 ### Project layout
 
     ├─ autoload/SpaceVim/api/         APIs
