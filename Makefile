@@ -1,6 +1,6 @@
 DOCKER = docker run -it --rm -v $(PWD):/testplugin -v $(PWD)/test:/test -v $(PWD)/build:/build "spacevim/vims"
 
-ifeq ($(VIM),nvim) 
+ifeq ($(VIM),nvim)
   DEFAULT_VIM:=$(DOCKER) neovim-stable
 else
   DEFAULT_VIM:=$(DOCKER) vim8
@@ -9,7 +9,7 @@ endif
 test: build/vader | build
 	$(DEFAULT_VIM) -Nu test/vimrc -c 'Vader! test/**'
 
-COVIMERAGE=$(shell command -v ccovimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
+COVIMERAGE=$(shell command -v covimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
 
 test_coverage: $(COVIMERAGE) build/vader | build
 	$(COVIMERAGE) run $(DEFAULT_VIM) -Nu test/vimrc -c 'Vader! test/**'
