@@ -29,8 +29,7 @@ jobs:
     - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint-errors VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vader VIM=vim VIM_VERSION=v8.0.0027
-    - env: LINT=vader VIM=nvim VIM_VERSION=v0.2.0
+    - env: LINT=vader
   allow_failures:
     - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
