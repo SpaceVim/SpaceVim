@@ -98,7 +98,32 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-let g:spacevim_autocomplete_method     = ''
+if has('python3')
+  ""
+  " Set the autocomplete engine of spacevim, the default logic is:
+  " >
+  "   if has('python3')
+  "     let g:spacevim_autocomplete_method = 'deoplete'
+  "   elseif has('lua')
+  "     let g:spacevim_autocomplete_method = 'neocomplete'
+  "   elseif has('python')
+  "     let g:spacevim_autocomplete_method = 'completor'
+  "   elseif has('timers')
+  "     let g:spacevim_autocomplete_method = 'asyncomplete'
+  "   else
+  "     let g:spacevim_autocomplete_method = 'neocomplcache'
+  "   endif
+  " <
+  let g:spacevim_autocomplete_method = 'deoplete'
+elseif has('lua')
+  let g:spacevim_autocomplete_method = 'neocomplete'
+elseif has('python')
+  let g:spacevim_autocomplete_method = 'completor'
+elseif has('timers')
+  let g:spacevim_autocomplete_method = 'asyncomplete'
+else
+  let g:spacevim_autocomplete_method = 'neocomplcache'
+endif
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
@@ -537,6 +562,16 @@ endfunction
 
 function! SpaceVim#end() abort
 
+  if g:spacevim_enable_neocomplcache
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+  if g:spacevim_enable_ycm
+    if has('python') || has('python3')
+      let g:spacevim_autocomplete_method = 'ycm'
+    else
+      call SpaceVim#logger#warn('YCM need +python or +python3 support, force to using ' . g:spacevim_autocomplete_method)
+    endif
+  endif
   if g:spacevim_keep_server_alive
     call SpaceVim#server#export_server()
   endif
@@ -576,19 +611,6 @@ function! SpaceVim#end() abort
       call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
-    if has('python3')
-      let g:spacevim_autocomplete_method = 'deoplete'
-    elseif has('lua')
-      let g:spacevim_autocomplete_method = 'neocomplete'
-    else
-      let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
-    if g:spacevim_enable_ycm
-      let g:spacevim_autocomplete_method = 'ycm'
-    endif
-    if g:spacevim_enable_neocomplcache
-      let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
   endif
   ""
   " generate tags for SpaceVim
