@@ -557,6 +557,11 @@ function! SpaceVim#loadCustomConfig() abort
     endif
     exe 'source ' . custom_glob_conf
   endif
+
+  if g:spacevim_enable_ycm && g:spacevim_snippet_engine != 'ultisnips'
+    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
+    let g:spacevim_snippet_engine = 'ultisnips'
+  endif
 endfunction
 
 
