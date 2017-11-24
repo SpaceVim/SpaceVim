@@ -23,10 +23,10 @@ elif [ "$LINT" = "vint" ]; then
 elif [ "$LINT" = "vint-errors" ]; then
     vint --error .
 elif [ "$LINT" = "vader" ]; then
-    pip install covimerage
-    make test_coverage
-    covimerage -vv xml --omit 'build/*'
-    pip install codecov
-    codecov -X search gcov pycov -f coverage.xml
+      pip install covimerage
+      make test_coverage
+      covimerage -vv xml --omit 'build/*'
+      pip install codecov
+      codecov -X search gcov pycov -f coverage.xml
 fi
 set +x
