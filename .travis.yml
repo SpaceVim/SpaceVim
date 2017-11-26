@@ -18,10 +18,12 @@ notifications:
 cache:
   - directories:
     - $HOME/cache/
+    - $HOME/deps
 
 env:
   global:
-    - PATH=$HOME/vim/bin:$PATH
+    - DEPS=$HOME/deps
+    - PATH=$DEPS/bin:$HOME/vim/bin:$PATH
 
 jobs:
   include:
