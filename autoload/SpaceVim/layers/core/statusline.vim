@@ -171,6 +171,14 @@ function! s:battery_status() abort
     else
       return ' ⚡' . battery . ' '
     endif
+  elseif executable('pmset')
+    let battery = matchstr(system('pmset -g batt'), '\d\+%')[:-2]
+    if g:spacevim_statusline_unicode_symbols
+      return ' ' . s:ICON.battery_status(battery) . '  '
+    else
+      return ' ⚡' . battery . ' '
+    endif
+
   else
     return ''
   endif
