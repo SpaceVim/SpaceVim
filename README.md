@@ -89,6 +89,8 @@ If you want to show your support financially you can buy a drink for the maintai
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
+Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
+
 ### Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
