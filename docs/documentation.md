@@ -1664,8 +1664,8 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | ----------------------- | :-----------: | ---------------------------------------------------------------- |
 | `F2`                    |     _All_     | Toggle tagbar                                                    |
 | `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer whit the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer whit the num index, this only works in neovim |
+| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
+| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
 | `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
 | `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
 | `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
