@@ -45,6 +45,7 @@ function! SpaceVim#commands#load() abort
   ""
   " Command for install plugins.
   command! -nargs=* SPInstall call SpaceVim#commands#install_plugin(<f-args>)
+  command! -nargs=0 Report call SpaceVim#issue#new()
 endfunction
 
 " @vimlint(EVL103, 1, a:ArgLead)
