@@ -8,6 +8,7 @@ function! s:open() abort
     w
 endfunction
 
+
 function! s:template() abort
     let info = [
                 \ '<!-- please remove the issue template when request for a feature -->',
@@ -23,7 +24,7 @@ function! s:template() abort
                 \ '',
                 \ '## Output of the `:SPDebugInfo!`',
                 \ '']
-                \ + split(execute(':SPDebugInfo'), "\n") +
+                \ + split(SpaceVim#api#import('vim#compatible').execute(':SPDebugInfo'), "\n") +
                 \ [
                 \ '## Screenshots',
                 \ '',
@@ -31,3 +32,4 @@ function! s:template() abort
                 \ ]
     return info
 endfunction
+
