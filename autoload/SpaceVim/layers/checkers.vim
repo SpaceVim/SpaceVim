@@ -3,6 +3,8 @@
 " @parentsection layers
 " SpaceVim uses neomake as default syntax checker.
 
+let s:SIG = SpaceVim#api#import('vim#signatures')
+
 function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
@@ -41,7 +43,35 @@ function! SpaceVim#layers#checkers#config() abort
     if g:spacevim_enable_ale
       autocmd User ALELint let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
+    autocmd CursorHold * call <SID>signatures_current_error()
+    autocmd CursorMoved * call <SID>signatures_clear()
   augroup END
+  let g:neomake_echo_current_error = 0
+endfunction
+
+let s:last_echoed_error = ''
+let s:clv = &conceallevel
+function! s:signatures_current_error() abort
+    let message = neomake#GetCurrentErrorMsg()
+    if empty(message)
+        if exists('s:last_echoed_error')
+            echon ''
+            unlet s:last_echoed_error
+        endif
+        return
+    endif
+    if exists('s:last_echoed_error')
+                \ && s:last_echoed_error == message
+        return
+    endif
+    let s:last_echoed_error = message
+    set conceallevel=2
+    call s:SIG.info(line('.') + 1, col('.'), message)
+endfunction
+
+function! s:signatures_clear() abort
+  let &conceallevel = s:clv
+  call s:SIG.clear()
 endfunction
 
 function! s:verify_syntax_setup() abort

@@ -1,7 +1,10 @@
 let s:self = {}
-
+let s:self.id = []
 function! s:self.info(line, col, message)  abort
-  let self.id = matchaddpos(self.group, [[a:line - 1, a:col - 1, len(a:message)]], 10, -1, {'conceal' : a:message})
+  let chars = SpaceVim#api#import('data#string').string2chars(a:message)
+  for index in range(len(chars))
+    call add(self.id, matchaddpos('Conceal', [[a:line, a:col - 1 + index, 1]], 10, -1, {'conceal' : chars[index]}))
+  endfor
 endfunction
 
 
@@ -13,7 +16,10 @@ endfunction
 call s:self.set_group('SpaceVim_signatures')
 
 function! s:self.clear() abort
-  call matchdelete(self.id)
+  for id in self.id
+    call matchdelete(id)
+  endfor
+  let self.id = []
 endfunction
 
 
