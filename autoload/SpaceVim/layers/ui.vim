@@ -26,7 +26,7 @@ function! SpaceVim#layers#ui#config() abort
     let g:indentLine_char = get(g:, 'indentLine_char', '¦')
     let g:indentLine_concealcursor = 'niv'
     let g:indentLine_conceallevel = 2
-    let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
+    let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
     noremap <silent> <F2> :silent TagbarToggle<CR>
