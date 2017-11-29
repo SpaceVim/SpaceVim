@@ -166,6 +166,8 @@ function! SpaceVim#layers#default#config() abort
     let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig', 'open-custom-configuration', 1)
+    call SpaceVim#mapping#space#def('noremap', ['n', '-'], '<C-x>', 'Decrease number under cursor', 0)
+    call SpaceVim#mapping#space#def('noremap', ['n', '+'], '<C-a>', 'Increase number under cursor', 0)
 endfunction
 
 let s:file = SpaceVim#api#import('file')
