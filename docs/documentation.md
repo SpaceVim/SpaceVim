@@ -88,6 +88,7 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Auto-indent pasted text](#auto-indent-pasted-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
@@ -1275,6 +1276,23 @@ Text insertion commands (start with `i`):
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
+#### Increase/Decrease numbers
+
+| Key Binding | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `SPC n +`   | increase the number under point by one and initiate transient state |
+| `SPC n -`   | decrease the number under point by one and initiate transient state |
+
+In transient state:
+
+| Key Binding   | Description                            |
+| ------------- | -------------------------------------- |
+| `+`           | increase the number under point by one |
+| `-`           | decrease the number under point by one |
+| Any other key | leave the transient state              |
+
+**Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+
 #### Commenting
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
@@ -1335,7 +1353,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`    | Info        | `g:spacevim_info_symbol`    |
+| `🛈`   | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 
@@ -1346,7 +1364,6 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
-
 
 ## EditorConfig
 
@@ -1362,32 +1379,31 @@ SpaceVim starts a server at launch. This server is killed whenever you close you
 
 If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
 
-```
-export PATH=$PATH:$HOME/.SpaceVim/bin
-```
+    export PATH=$PATH:$HOME/.SpaceVim/bin
 
 Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
+
 ## Achievements
 
 ### issues
 
-Achievements | Account
------ | -----
-[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+| Achievements                                                          | Account                                     |
+| --------------------------------------------------------------------- | ------------------------------------------- |
+| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
 
 ### Stars, forks and watchers
 
-Achievements | Account
------ | -----
-First stargazers | [monkeydterry](https://github.com/monkeydterry)
-100th stargazers | [iwillalwaysbe](https://github.com/iwillalwaysbe)
-1000th stargazers | [elvin-du](https://github.com/elvin-du)
-2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)
-3000th stargazers | [WellerQu](https://github.com/WellerQu)
+| Achievements      | Account                                           |
+| ----------------- | ------------------------------------------------- |
+| First stargazers  | [monkeydterry](https://github.com/monkeydterry)   |
+| 100th stargazers  | [iwillalwaysbe](https://github.com/iwillalwaysbe) |
+| 1000th stargazers | [elvin-du](https://github.com/elvin-du)           |
+| 2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)   |
+| 3000th stargazers | [WellerQu](https://github.com/WellerQu)           |
 
 <!-- SpaceVim Achievements end -->
 
