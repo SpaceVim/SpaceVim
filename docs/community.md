@@ -20,10 +20,10 @@ All of these channels are bridged together. Click on one of the badges below to 
 
     "[{PROTOCOL}] <{NICK}> {MESSAGE}"
 
-- [Gitter: SpaceVim/SpaceVim](https://gitter.im/SpaceVim/SpaceVim)
+- [`SpaceVim/SpaceVim`  on gitter](https://gitter.im/SpaceVim/SpaceVim)
 - [`#spacevim` on FreeNode](https://webchat.freenode.net/?channels=spacevim)
-- [t.me/SpaceVim](t.me/SpaceVim)
-- [Matrix roon](https://riot.im/app/#/room/%23spacevim:matrix.org)
+- [`t.me/SpaceVim` on telegram](t.me/SpaceVim)
+- [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
 - [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 
 ## Discuss
