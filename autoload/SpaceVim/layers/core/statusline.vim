@@ -184,9 +184,47 @@ function! s:battery_status() abort
   endif
 endfunction
 
+if g:spacevim_enable_neomake
+  function! s:syntax_checking()
+    if !exists('g:loaded_neomake')
+      return ''
+    endif
+    let counts = neomake#statusline#LoclistCounts()
+    let warnings = get(counts, 'W', 0)
+    let errors = get(counts, 'E', 0)
+    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    return l
+  endfunction
+elseif g:spacevim_enable_ale
+  function! s:syntax_checking()
+    if !exists('g:ale_enabled')
+      return ''
+    endif
+    let counts = ale#statusline#Count(bufnr(''))
+    let warnings = counts.warning + counts.style_warning
+    let errors = counts.error + counts.style_error
+    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    return l
+  endfunction
+else
+  function! s:syntax_checking()
+    if !exists(':SyntasticCheck')
+      return ''
+    endif
+    let l = SyntasticStatuslineFlag()
+    if strlen(l) > 0
+      return l
+    else
+      return ''
+    endif
+  endfunction
+endif
 
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
+      \ 'syntax checking' : function('s:syntax_checking'),
       \ 'filename' : function('s:filename'),
       \ 'fileformat' : function('s:fileformat'),
       \ 'major mode' : function('s:major_mode'),
@@ -236,43 +274,6 @@ function! s:search_status() abort
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
-if g:spacevim_enable_neomake
-  function! s:syntax_checking()
-    if !exists('g:loaded_neomake')
-      return ''
-    endif
-    let counts = neomake#statusline#LoclistCounts()
-    let warnings = get(counts, 'W', 0)
-    let errors = get(counts, 'E', 0)
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
-    return l
-  endfunction
-elseif g:spacevim_enable_ale
-  function! s:syntax_checking()
-    if !exists('g:ale_enabled')
-      return ''
-    endif
-    let counts = ale#statusline#Count(bufnr(''))
-    let warnings = counts.warning + counts.style_warning
-    let errors = counts.error + counts.style_error
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
-    return l
-  endfunction
-else
-  function! s:syntax_checking()
-    if !exists(':SyntasticCheck')
-      return ''
-    endif
-    let l = SyntasticStatuslineFlag()
-    if strlen(l) > 0
-      return l
-    else
-      return ''
-    endif
-  endfunction
-endif
 
 
 function! s:filesize() abort
