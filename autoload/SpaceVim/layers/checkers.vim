@@ -38,7 +38,9 @@ function! SpaceVim#layers#checkers#config() abort
 
   augroup SpaceVim_layer_checker
     autocmd!
-    if g:spacevim_enable_ale
+    if g:spacevim_enable_neomake 
+      autocmd User NeomakeFinished nested let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    elseif g:spacevim_enable_ale
       autocmd User ALELint let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
   augroup END
