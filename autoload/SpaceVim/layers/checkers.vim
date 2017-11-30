@@ -4,7 +4,7 @@
 " SpaceVim uses neomake as default syntax checker.
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
-
+let s:STRING = SpaceVim#api#import('data#string')
 function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
@@ -43,15 +43,17 @@ function! SpaceVim#layers#checkers#config() abort
     if g:spacevim_enable_ale
       autocmd User ALELint let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
+    " when move cursor, the error message will be shown below current line
+    " after a delay
     autocmd CursorMoved * call <SID>cursor_move_delay()
+    " when switch to Insert mode, stop timer and clear the signature
+    autocmd InsertEnter,WinLeave,CmdLineEnter * call <SID>signatures_clear()
   augroup END
 endfunction
 
 function! s:cursor_move_delay() abort
-  if exists('s:cursormoved_timer')
-    call timer_stop(s:cursormoved_timer)
-  endif
-  let s:cursormoved_timer = timer_start(get(g:, 'neomake_cursormoved_delay', 100), function('s:signatures_current_error'))
+  call s:signatures_clear()
+  let s:cursormoved_timer = timer_start(get(g:, 'neomake_cursormoved_delay', 300), function('s:signatures_current_error'))
 endfunction
 
 let s:last_echoed_error = ''
@@ -71,10 +73,16 @@ function! s:signatures_current_error(...) abort
   endif
   let s:last_echoed_error = message
   set conceallevel=2
-  call s:SIG.info(line('.') + 1, col('.'), message)
+  if len(line('.') + 1) > len(message)
+    let message = s:STRING.fill(message, len(line('.') + 1))
+  endif
+  call s:SIG.info(line('.') + 1, 1, message)
 endfunction
 
 function! s:signatures_clear() abort
+  if exists('s:cursormoved_timer') && s:cursormoved_timer != 0
+    call timer_stop(s:cursormoved_timer)
+  endif
   let s:last_echoed_error = ''
   let &conceallevel = s:clv
   call s:SIG.clear()
