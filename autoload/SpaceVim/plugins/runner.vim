@@ -10,6 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
 
+
 let s:runners = {}
 
 let s:bufnr = 0
@@ -86,22 +87,53 @@ function! SpaceVim#plugins#runner#open() abort
     call s:update_statusline()
   endif
 endfunction
-
 " @vimlint(EVL103, 1, a:job_id)
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
-function! s:on_stdout(job_id, data, event) abort
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-  let s:lines += len(a:data)
-  call s:update_statusline()
-endfunction
 
-function! s:on_stderr(job_id, data, event) abort
-  let s:status.has_errors = 1
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-  let s:lines += len(a:data)
-  call s:update_statusline()
-endfunction
+let g:wsd = []
+if has('nvim') && exists('*chanclose')
+  let s:_out_data = ['']
+  function! s:on_stdout(job_id, data, event) abort
+    let s:_out_data[-1] .= a:data[0]
+    call extend(s:_out_data, a:data[1:])
+    if s:_out_data[-1] == ''
+      call remove(s:_out_data, -1)
+      let lines = s:_out_data
+    else
+      let lines = s:_out_data
+    endif
+    if !empty(lines)
+      call add(g:wsd, lines)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+    endif
+    let s:lines += len(lines)
+    let s:_out_data = ['']
+    call s:update_statusline()
+  endfunction
+
+  let s:_err_data = ['']
+  function! s:on_stderr(job_id, data, event) abort
+    let s:status.has_errors = 1
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    let s:lines += len(a:data)
+    call s:update_statusline()
+  endfunction
+else
+  function! s:on_stdout(job_id, data, event) abort
+    call add(g:wsd, a:data)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    let s:lines += len(a:data)
+    call s:update_statusline()
+  endfunction
+
+  function! s:on_stderr(job_id, data, event) abort
+    let s:status.has_errors = 1
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    let s:lines += len(a:data)
+    call s:update_statusline()
+  endfunction
+endif
 
 function! s:on_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
