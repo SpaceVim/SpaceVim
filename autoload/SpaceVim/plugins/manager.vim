@@ -302,7 +302,7 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! s:lock_revision(repo) abort
-    let cmd = ['git', '--git-dir', a:repo.path, 'checkout', a:repo.rev]
+    let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
     call s:VIM_CO.system(cmd)
 endfunction
 
@@ -356,7 +356,7 @@ endfunction
 function! s:pull(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
-    let argv = ['git', '--git-dir', a:repo.path, 'pull', '--progress']
+    let argv = ['git', '--git-dir', a:repo.path . '/.git', 'pull', '--progress']
     if s:JOB.vim_job || s:JOB.nvim_job
         let jobid = s:JOB.start(argv,{
                     \ 'on_stderr' : function('s:on_install_stdout'),
