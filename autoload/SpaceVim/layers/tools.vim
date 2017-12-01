@@ -73,25 +73,9 @@ function! SpaceVim#layers#tools#config() abort
   endif
   map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
-  function! OpenOrCloseNERDTree() abort
-    exec 'normal! A'
-  endfunction
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
-  let g:NERDTreeWinPos=get(g:,'NERDTreeWinPos','right')
-  let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
-  let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
-  augroup nerdtree_zvim
-    autocmd!
-    autocmd bufenter *
-          \ if (winnr('$') == 1 && exists('b:NERDTree')
-          \ && b:NERDTree.isTabTree())
-          \|   q
-          \| endif
-    autocmd FileType nerdtree nnoremap <silent><buffer><Space>
-          \ :call OpenOrCloseNERDTree()<cr>
-  augroup END
 endfunction
 
 " vim:set et sw=2 cc=80:

@@ -881,27 +881,31 @@ VCS integration is supported, there will be a column status, this feature maybe 
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-| Key Binding                   | Description                                       |
-| ----------------------------- | ------------------------------------------------- |
-| `<F3>` or `SPC f t`           | Toggle file explorer                              |
-| **Within _VimFiler_ buffers** |                                                   |
-| `<Left>` or `h`               | go to parent node and collapse expanded directory |
-| `<Down>` or `j`               | select next file or directory                     |
-| `<Up>` or `k`                 | select previous file or directory                 |
-| `<Right>` or `l`              | open selected file or expand directory            |
-| `Ctrl`+`j`                    | Un-map                                            |
-| `Ctrl`+`l`                    | Un-map                                            |
-| `E`                           | Un-map                                            |
-| `.`                           | toggle visible ignored files                      |
-| `sv`                          | Split edit                                        |
-| `sg`                          | Vertical split edit                               |
-| `p`                           | Preview                                           |
-| `i`                           | Switch to directory history                       |
-| `v`                           | Quick look                                        |
-| `gx`                          | Execute with vimfiler associated                  |
-| `'`                           | Toggle mark current line                          |
-| `V`                           | Clear all marks                                   |
-| `Ctrl`+`r`                    | Redraw                                            |
+| Key Binding                    | Description                                       |
+| ------------------------------ | ------------------------------------------------- |
+| `<F3>` or `SPC f t`            | Toggle file explorer                              |
+| **Within _file tree_ buffers** |                                                   |
+| `<Left>` or `h`                | go to parent node and collapse expanded directory |
+| `<Down>` or `j`                | select next file or directory                     |
+| `<Up>` or `k`                  | select previous file or directory                 |
+| `<Right>` or `l`               | open selected file or expand directory            |
+| `Ctrl`+`j`                     | Un-map                                            |
+| `Ctrl`+`l`                     | Un-map                                            |
+| `E`                            | Un-map                                            |
+| `N`                            | Create new file under corsor                      |
+| `yy`                           | Copy file full path to system clipboard           |
+| `yY`                           | Copy file to system clipboard                     |
+| `P`                            | Paste file to the position under the cursor       |
+| `.`                            | toggle visible ignored files                      |
+| `sv`                           | Split edit                                        |
+| `sg`                           | Vertical split edit                               |
+| `p`                            | Preview                                           |
+| `i`                            | Switch to directory history                       |
+| `v`                            | Quick look                                        |
+| `gx`                           | Execute with vimfiler associated                  |
+| `'`                            | Toggle mark current line                          |
+| `V`                            | Clear all marks                                   |
+| `Ctrl`+`r`                     | Redraw                                            |
 
 ##### Open file with file tree.
 
@@ -1335,7 +1339,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`    | Info        | `g:spacevim_info_symbol`    |
+| `🛈`   | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 
@@ -1346,7 +1350,6 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
-
 
 ## EditorConfig
 
@@ -1362,32 +1365,31 @@ SpaceVim starts a server at launch. This server is killed whenever you close you
 
 If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
 
-```
-export PATH=$PATH:$HOME/.SpaceVim/bin
-```
+    export PATH=$PATH:$HOME/.SpaceVim/bin
 
 Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
+
 ## Achievements
 
 ### issues
 
-Achievements | Account
------ | -----
-[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+| Achievements                                                          | Account                                     |
+| --------------------------------------------------------------------- | ------------------------------------------- |
+| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
 
 ### Stars, forks and watchers
 
-Achievements | Account
------ | -----
-First stargazers | [monkeydterry](https://github.com/monkeydterry)
-100th stargazers | [iwillalwaysbe](https://github.com/iwillalwaysbe)
-1000th stargazers | [elvin-du](https://github.com/elvin-du)
-2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)
-3000th stargazers | [WellerQu](https://github.com/WellerQu)
+| Achievements      | Account                                           |
+| ----------------- | ------------------------------------------------- |
+| First stargazers  | [monkeydterry](https://github.com/monkeydterry)   |
+| 100th stargazers  | [iwillalwaysbe](https://github.com/iwillalwaysbe) |
+| 1000th stargazers | [elvin-du](https://github.com/elvin-du)           |
+| 2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)   |
+| 3000th stargazers | [WellerQu](https://github.com/WellerQu)           |
 
 <!-- SpaceVim Achievements end -->
 
