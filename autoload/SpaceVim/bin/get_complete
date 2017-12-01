@@ -5,12 +5,18 @@
 # License: LGPLv3 (http://www.gnu.org/licenses/lgpl-3.0.txt)
 #
 
+OS=$(uname)
+
 get_completions(){
     local completion COMP_CWORD COMP_LINE COMP_POINT COMP_WORDS COMPREPLY=()
 
     # load bash-completion if necessary
     declare -F _completion_loader &>/dev/null || {
-        source /usr/share/bash-completion/bash_completion
+        if [[ ${OS} == "Darwin" ]]; then
+            source /usr/local/etc/bash_completion
+        else
+            source /usr/share/bash-completion/bash_completion
+        fi
     }
 
     COMP_LINE=$*
