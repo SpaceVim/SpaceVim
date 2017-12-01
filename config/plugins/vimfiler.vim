@@ -84,6 +84,7 @@ function! s:vimfilerinit()
   nnoremap <silent><buffer><expr> sv  vimfiler#do_action('split')
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
   nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
+  nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
   nmap <buffer> gx      <Plug>(vimfiler_execute_vimfiler_associated)
   nmap <buffer> '       <Plug>(vimfiler_toggle_mark_current_line)
   nmap <buffer> v       <Plug>(vimfiler_quick_look)
@@ -95,6 +96,21 @@ function! s:vimfilerinit()
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
 endf
+
+function! s:paste_to_file_manager() abort
+  let path = vimfiler#get_filename()
+  if !isdirectory(path)
+    let path = fnamemodify(path, ':p:h')
+  endif
+  let old_wd = getcwd()
+  if old_wd == path
+    call s:VCOP.systemlist(['xclip-pastefile'])
+  else
+    noautocmd exe 'cd' fnameescape(path)
+    call s:VCOP.systemlist(['xclip-pastefile'])
+    noautocmd exe 'cd' fnameescape(old_wd)
+  endif
+endfunction
 
 function! s:copy_to_system_clipboard() abort
   let filename = vimfiler#get_marked_filenames(b:vimfiler)
