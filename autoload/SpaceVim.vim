@@ -445,6 +445,7 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 " TODO merge leader guide
 let g:_spacevim_mappings_space_custom = []
+let g:_spacevim_mappings_space_custom_group_name = []
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0

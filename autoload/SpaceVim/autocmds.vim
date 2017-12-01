@@ -125,10 +125,13 @@ function! s:fix_gruvbox() abort
   endif
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
+
 function! SpaceVim#autocmds#VimEnter() abort
   call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
   for argv in g:_spacevim_mappings_space_custom
     call call('SpaceVim#mapping#space#def', argv)
+  endfor
+  for argv in g:_spacevim_mappings_space_custom_group_name
   endfor
   if get(g:, '_spacevim_statusline_loaded', 0) == 1
     set laststatus=2
