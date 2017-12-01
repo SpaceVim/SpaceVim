@@ -102,14 +102,16 @@ function! s:copy_to_system_clipboard() abort
   if empty(filename)
     " Use cursor filename.
     let filename = vimfiler#get_filename()
-    if filename == '..' || empty(vimfiler#get_file(b:vimfiler))
+    if filename ==# '..' || empty(vimfiler#get_file(b:vimfiler))
       let filename = b:vimfiler.current_dir
     else
       let filename = vimfiler#get_file(b:vimfiler).action__path
     endif
+    call s:VCOP.systemlist(['xclip-copyfile', filename])
+  else
+    call s:VCOP.systemlist(['xclip-copyfile'] + filename)
   endif
-  " we need xclip-copyfile
-  call s:VCOP.systemlist(['xclip-copyfile', filename])
+  echo 'Yanked:' . (type(filename) == 3 ? len(filename) : 1 ) . ' files'
 endfunction
 
 " vim:set et sw=2:
