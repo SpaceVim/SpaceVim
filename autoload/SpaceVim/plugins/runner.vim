@@ -33,6 +33,8 @@ let s:target = ''
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
     let cmd = printf(a:runner, bufname('%'))
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
+    let s:lines += 3
     let s:start_time = reltime()
     let s:job_id =  s:JOB.start(cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
@@ -105,6 +107,8 @@ function! s:on_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
   let s:status.is_exit = 1
   let s:status.exit_code = a:data
+  let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
+  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   call s:update_statusline()
 
 endfunction
