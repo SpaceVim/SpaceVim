@@ -178,9 +178,18 @@ function! SpaceVim#layers#default#config() abort
         \ ]
         \ ]
         \ , 0)
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '+'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["+"])',
-        \ 'Increase number under cursor', 0)
+        \ ['Increase number under cursor',
+        \ [
+        \ '[SPC n +] is to increase the number under the cursor, and open',
+        \ 'the number translate state buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 0)
 endfunction
 
 function! s:number_transient_state(n) abort
