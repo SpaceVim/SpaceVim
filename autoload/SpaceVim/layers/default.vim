@@ -177,7 +177,7 @@ function! SpaceVim#layers#default#config() abort
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
         \ ]
-        \ , 0)
+        \ , 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '+'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["+"])',
@@ -189,7 +189,7 @@ function! SpaceVim#layers#default#config() abort
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
         \ ]
-        \ , 0)
+        \ , 1)
 endfunction
 
 function! s:number_transient_state(n) abort
