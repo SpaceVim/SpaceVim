@@ -1,5 +1,6 @@
 ---
 title: "SpaceVim lang#typescript layer"
+description: "This layer is for TypeScript development"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#typescript
