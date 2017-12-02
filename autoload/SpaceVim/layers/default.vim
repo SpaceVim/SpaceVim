@@ -166,9 +166,18 @@ function! SpaceVim#layers#default#config() abort
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig', 'open-custom-configuration', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '-'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["-"])',
-        \ 'Decrease number under cursor', 0)
+        \ ['Decrease number under cursor',
+        \ [
+        \ '[SPC n -] is to decrease the number under the cursor, and open',
+        \ 'the number translate state buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 0)
   call SpaceVim#mapping#space#def('nnoremap', ['n', '+'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["+"])',
         \ 'Increase number under cursor', 0)
