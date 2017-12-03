@@ -19,4 +19,5 @@ let g:ycm_semantic_triggers =  {
             \   'ruby' : ['.', '::'],
             \   'lua' : ['.', ':'],
             \   'erlang' : [':'],
+            \   'sh' : ['re!\w{2}', '/', '-'],
             \ }
