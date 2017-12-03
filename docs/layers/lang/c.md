@@ -56,3 +56,5 @@ The libclang shared object (dynamic library) file path. by default it is empty.
 ```
 
 - `clang_flag`
+
+Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
