@@ -16,8 +16,11 @@ function! s:update_log(log, summary, new_log) abort
       let end = i
     endif
   endfor
-  return a:log . "\n" . a:new_log
-  
+  if begin != -1 && end != -1
+  else
+    return a:log . "\n" . a:new_log
+  endif
+
 endfunction
 if !empty(s:log)
   if $LINT == 'vader'
