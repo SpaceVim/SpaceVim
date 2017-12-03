@@ -67,6 +67,11 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   let s:use_libclang = get(a:var,
         \ 'use_libclang',
         \ 'clang')
+
+  if has_key(a:var, 'clang_executable')
+    let g:completor_clang_binary = a:var.clang_executable
+    let g:deoplete#sources#clang#executable = a:var.clang_executable
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
