@@ -11,6 +11,8 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm \
                 -v $PWD/.ci:/.ci \
+                -v $PWD/autoload/SpaceVim/api:/API/autoload/SpaceVim/api \
+                -v $PWD/autoload/SpaceVim/api.vim:/API/autoload/SpaceVim/api.vim \
                 -v $PWD/build:/build \
                 spacevim/vims neovim-stable -u /.ci/common/github_commenter.vim
             rm build_log
@@ -25,6 +27,8 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm \
                 -v $PWD/.ci:/.ci \
+                -v $PWD/autoload/SpaceVim/api:/API/autoload/SpaceVim/api \
+                -v $PWD/autoload/SpaceVim/api.vim:/API/autoload/SpaceVim/api.vim \
                 -v $PWD/build:/build \
                 spacevim/vims neovim-stable -u /.ci/common/github_commenter.vim
             rm build_log
