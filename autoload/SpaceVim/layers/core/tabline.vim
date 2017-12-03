@@ -205,5 +205,7 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
     endif
     exe 'hi! SpaceVim_tabline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
     exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+    " SpaceVim_tabline_c is for modified buffers
+    exe 'hi! SpaceVim_tabline_m ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
     call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
 endfunction
