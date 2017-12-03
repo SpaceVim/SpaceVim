@@ -7,14 +7,14 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
         docker run -it --rm \
             -v $PWD/.ci:/.ci \
             -v $PWD/build:/build \
-            spacevim/vims neovim-stable -u .ci/common/github_commenter.vim
+            spacevim/vims neovim-stable -u /.ci/common/github_commenter.vim
     elif [ "$LINT" = "vint-errors" ] ; then
         VIMLINT_LOG=""
         git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
         docker run -it --rm \
             -v $PWD/.ci:/.ci \
             -v $PWD/build:/build \
-            spacevim/vims neovim-stable -u .ci/common/github_commenter.vim
+            spacevim/vims neovim-stable -u /.ci/common/github_commenter.vim
     elif [ "$LINT" = "vader" ] ; then
         echo ""
     fi
