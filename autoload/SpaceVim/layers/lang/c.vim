@@ -40,10 +40,16 @@
 
 
 
+let s:use_libclang = 0
+
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if has('nvim')
-    call add(plugins, ['tweekmonster/deoplete-clang2'])
+    if s:use_libclang
+      call add(plugins, ['zchee/deoplete-clang'])
+    else
+      call add(plugins, ['tweekmonster/deoplete-clang2'])
+    endif
   else
     call add(plugins, ['Rip-Rip/clang_complete'])
   endif
@@ -54,6 +60,13 @@ endfunction
 function! SpaceVim#layers#lang#c#config() abort
   call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', funcref('s:language_specified_mappings'))
+endfunction
+
+function! SpaceVim#layers#lang#c#set_variable(var) abort
+  " use clang or libclang
+  let s:use_libclang = get(a:var,
+        \ 'use_libclang',
+        \ 'clang')
 endfunction
 
 function! s:language_specified_mappings() abort
