@@ -10,7 +10,7 @@ description: "This layer is for c/c++/object-c development"
 
 - [Description](#description)
 - [Layer Installation](#layer-installation)
-- [Key bindings](#key-bindings)
+- [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
 
@@ -20,7 +20,39 @@ This layer is for c/c++/object-c development.
 
 ## Layer Installation
 
-To use this configuration layer, add `SPLayer 'lang#java'` to your custom configuration file.
+To use this configuration layer, add `SPLayer 'lang#c'` to your custom configuration file or load layer with custom options.
 
-## Key bindings
+```vim
+call SpaceVim#layers#load('lang#c',
+        \ {
+        \ 'enable_libclang' : 1,
+        \ }
+        \ )
+```
 
+## Configuration
+
+- `clang_executable` (string)
+
+set the path to the clang executable
+
+- `enable_libclang` (boolean)
+
+use libclang instead of `clang -cc1`, by default it is 0.
+
+- `libclang_path` (string)
+
+The libclang shared object (dynamic library) file path. by default it is empty.
+
+- `clang_std` (dict)
+
+```json
+{
+    "c": "c11",
+    "cpp": "c++1z",
+    "objc": "c11",
+    "objcpp": "c++1z",
+}
+```
+
+- `clang_flag`
