@@ -222,6 +222,25 @@ else
   endfunction
 endif
 
+function! s:hunks() abort
+  let hunks = [0,0,0]
+  try
+    let hunks = GitGutterGetHunkSummary()
+  catch
+  endtry
+  let rst = ''
+  if hunks[0] > 0
+    let rst .= hunks[0] . '+ '
+  endif
+  if hunks[1] > 0
+    let rst .= hunks[1] . '~ '
+  endif
+  if hunks[2] > 0
+    let rst .= hunks[2] . '- '
+  endif
+  return empty(rst) ? '' : ' ' . rst
+endfunction
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'syntax checking' : function('s:syntax_checking'),
@@ -230,6 +249,7 @@ let s:registed_sections = {
       \ 'major mode' : function('s:major_mode'),
       \ 'minor mode lighters' : function('s:modes'),
       \ 'version control info' : function('s:git_branch'),
+      \ 'hunks' : function('s:hunks'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
       \ 'time' : function('s:time'),
@@ -474,6 +494,8 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
         \ 'toggle the statuline itself', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
+        \ 'toggle the hunks summary', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',

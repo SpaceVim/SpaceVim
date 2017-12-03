@@ -42,6 +42,7 @@ function! SpaceVim#layers#git#config() abort
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
+    autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   augroup END
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'M'], 'call call('
         \ . string(function('s:display_last_commit_of_current_line')) . ', [])',
