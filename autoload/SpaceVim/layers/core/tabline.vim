@@ -127,17 +127,16 @@ function! SpaceVim#layers#core#tabline#get() abort
     endif
     let ct = bufnr('%')
     let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
-    let m_flag = 0
     if ct == get(s:buffers, 0, -1)
       if getbufvar(ct, '&modified', 0)
         let t = '%#SpaceVim_tabline_m# '
-        let m_flag = 1
       else
         let t = '%#SpaceVim_tabline_a# '
       endif
     else
       let t = '%#SpaceVim_tabline_b# '
     endif
+    let index = 1
     for i in s:buffers
       if getbufvar(i, '&modified', 0) && i != ct
         let t .= '%#SpaceVim_tabline_m_i#'
@@ -156,6 +155,8 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       call add(stack, i)
       call s:need_show_bfname(stack, i)
+      " here is the begin of a tab name
+      let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(index(s:buffers, i) + 1)
       elseif g:spacevim_buffer_index_type == 4
@@ -170,6 +171,8 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
       endif
       let t .= id . ' ' . name
+      " here is the end of a tabname
+      let t .= '%X'
       if i == ct
         if s:is_modified(i)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
@@ -185,6 +188,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let t .= ' %#SpaceVim_tabline_b#' . s:ilsep . ' '
       endif
+      let index += 1
     endfor
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Buffers '
@@ -211,7 +215,7 @@ function! SpaceVim#layers#core#tabline#config() abort
   "call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
-function! SpaceVim#layers#core#tabline#jump(id) abort
+function! SpaceVim#layers#core#tabline#jump(id, ...) abort
   if len(s:buffers) >= a:id
     let bid = s:buffers[a:id - 1]
     exe 'silent b' . bid
