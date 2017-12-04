@@ -156,7 +156,9 @@ function! SpaceVim#layers#core#tabline#get() abort
       call add(stack, i)
       call s:need_show_bfname(stack, i)
       " here is the begin of a tab name
-      let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      if has('tablineat')
+        let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      endif
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(index(s:buffers, i) + 1)
       elseif g:spacevim_buffer_index_type == 4
@@ -172,7 +174,9 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let t .= id . ' ' . name
       " here is the end of a tabname
-      let t .= '%X'
+      if has('tablineat')
+        let t .= '%X'
+      endif
       if i == ct
         if s:is_modified(i)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
