@@ -171,7 +171,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let t .= id . ' ' . name
       if i == ct
-        if m_flag
+        if s:is_modified(i)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
         else
           let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
@@ -183,7 +183,7 @@ function! SpaceVim#layers#core#tabline#get() abort
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
         endif
       else
-        let t .= ' ' . s:ilsep . ' '
+        let t .= ' %#SpaceVim_tabline_b#' . s:ilsep . ' '
       endif
     endfor
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
