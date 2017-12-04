@@ -45,6 +45,12 @@ function! s:async_run(runner) abort
   elseif type(a:runner) == type([])
     let s:target = tempname()
     let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
+          \ '[Compile] ' . compile_cmd,
+          \ '[Running] ' . s:target,
+          \ '',
+          \ repeat('-', 20)])
+    let s:lines += 4
     let s:start_time = reltime()
     let s:job_id =  s:JOB.start(compile_cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
