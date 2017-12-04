@@ -67,6 +67,13 @@ function! s:on_compile_exit(id, data, event) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+  else
+    let s:end_time = reltime(s:start_time)
+    let s:status.is_exit = 1
+    let s:status.exit_code = a:data
+    let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+    call s:update_statusline()
   endif
 endfunction
 
@@ -120,9 +127,20 @@ if has('nvim') && exists('*chanclose')
 
   let s:_err_data = ['']
   function! s:on_stderr(job_id, data, event) abort
-    let s:status.has_errors = 1
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    let s:lines += len(a:data)
+    let s:_out_data[-1] .= a:data[0]
+    call extend(s:_out_data, a:data[1:])
+    if s:_out_data[-1] == ''
+      call remove(s:_out_data, -1)
+      let lines = s:_out_data
+    else
+      let lines = s:_out_data
+    endif
+    if !empty(lines)
+      call add(g:wsd, lines)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+    endif
+    let s:lines += len(lines)
+    let s:_out_data = ['']
     call s:update_statusline()
   endfunction
 else
