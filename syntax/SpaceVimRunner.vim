@@ -1,0 +1,14 @@
+if exists("b:current_syntax")
+    finish
+endif
+let b:current_syntax = "SpaceVimRunner"
+syntax case ignore
+syn match RunnerCmd /\(\[Running\]\ \)\@<=.*/
+syn match KeyBindings /\[Running\]/
+syn match DoneSucceeded /\[Done]\(\ exited\ with\ code=0\)\@=/
+syn match DoneFailed /\[Done]\(\ exited\ with\ code=[^0]\)\@=/
+
+hi def link RunnerCmd Comment
+hi def link KeyBindings String
+hi def link DoneSucceeded String
+hi def link DoneFailed WarningMsg
