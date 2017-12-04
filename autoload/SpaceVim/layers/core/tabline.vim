@@ -67,6 +67,10 @@ function! s:need_show_bfname(stack, nr) abort
   endif
 endfunction
 
+function! s:is_modified(nr) abort
+  return getbufvar(a:nr, '&modified', 0)
+endfunction
+
 function! SpaceVim#layers#core#tabline#get() abort
   let nr = tabpagenr('$')
   let t = ''
@@ -135,10 +139,14 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t = '%#SpaceVim_tabline_b# '
     endif
     for i in s:buffers
-      if getbufvar(i, '&modified', 0)
-        let t .= '%#SpaceVim_tabline_m#'
+      if getbufvar(i, '&modified', 0) && i != ct
+        let t .= '%#SpaceVim_tabline_m_i#'
       elseif i == ct
-        let t .= '%#SpaceVim_tabline_a#'
+        if s:is_modified(i)
+          let t .= '%#SpaceVim_tabline_m#'
+        else
+          let t .= '%#SpaceVim_tabline_a#'
+        endif
       else
         let t .= '%#SpaceVim_tabline_b#'
       endif
@@ -166,7 +174,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         if m_flag
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
         else
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
         endif
       elseif i == pt
         if getbufvar(ct, '&modified', 0)
@@ -225,6 +233,7 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
   exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
   " SpaceVim_tabline_c is for modified buffers
   exe 'hi! SpaceVim_tabline_m ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+  exe 'hi! SpaceVim_tabline_m_i ctermbg=' . t[1][2] . ' ctermfg=' . t[4][3] . ' guibg=' . t[1][1] . ' guifg=' . t[4][1]
   call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')
