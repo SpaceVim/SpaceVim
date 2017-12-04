@@ -232,6 +232,7 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
+  call SpaceVim#logger#info(string(a:data)) 
     if a:id == -1
         let id = s:jobpid
     else
@@ -287,6 +288,7 @@ endfunction
 
 " @vimlint(EVL103, 1, a:event)
 function! s:on_install_stdout(id, data, event) abort
+  call SpaceVim#logger#info(string(a:data)) 
     if a:id == -1
         let id = s:jobpid
     else
@@ -356,7 +358,8 @@ endfunction
 function! s:pull(repo) abort
     let s:pct += 1
     let s:ui_buf[a:repo.name] = s:pct
-    let argv = ['git', '--git-dir', a:repo.path . '/.git', 'pull', '--progress']
+    let argv = ['git', '--git-dir', a:repo.path . '/.git', '--work-tree', a:repo.path, 'pull', '--progress']
+    call SpaceVim#logger#info('plugin manager cmd: ' . string(argv))
     if s:JOB.vim_job || s:JOB.nvim_job
         let jobid = s:JOB.start(argv,{
                     \ 'on_stderr' : function('s:on_install_stdout'),
