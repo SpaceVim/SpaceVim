@@ -216,9 +216,22 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
-  if len(s:buffers) >= a:id
-    let bid = s:buffers[a:id - 1]
-    exe 'silent b' . bid
+  if get(a:000, 2, '') == 'm'
+    if len(s:buffers) >= a:id
+      let bid = s:buffers[a:id - 1]
+      exe 'silent b' . bid
+      bd
+    endif
+  elseif get(a:000, 2, '') == 'l'
+    if len(s:buffers) >= a:id
+      let bid = s:buffers[a:id - 1]
+      exe 'silent b' . bid
+    endif
+  else
+    if len(s:buffers) >= a:id
+      let bid = s:buffers[a:id - 1]
+      exe 'silent b' . bid
+    endif
   endif
 endfunction
 

@@ -531,6 +531,13 @@ Buffers will be listed on tabline if there is only one tab, each item contains t
 | `<Leader> 8` | jump to index 8 on tabline |
 | `<Leader> 9` | jump to index 9 on tabline |
 
+SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
+
+| Key Binding      | Description        |
+| ---------------- | ------------------ |
+| `<Mouse-left>`   | jump to the buffer |
+| `<Mouse-middle>` | delete the buffer  |
+
 ## Manual
 
 ### Completion
