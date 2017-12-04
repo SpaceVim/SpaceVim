@@ -178,7 +178,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
       elseif i == pt
         if getbufvar(ct, '&modified', 0)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep . ' '
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . ' '
         else
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
         endif
