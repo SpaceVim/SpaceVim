@@ -533,6 +533,8 @@ Buffers will be listed on tabline if there is only one tab, each item contains t
 
 SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
 
+**NOTE:** this feature is only supported in neovim with `has('tablineat')`.
+
 | Key Binding      | Description        |
 | ---------------- | ------------------ |
 | `<Mouse-left>`   | jump to the buffer |
