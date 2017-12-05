@@ -85,6 +85,9 @@ let g:deoplete#ignore_sources.c = get(g:deoplete#ignore_sources, 'c', ['omni'])
 let g:deoplete#ignore_sources.rust = get(g:deoplete#ignore_sources, 'rust', ['omni'])
 call deoplete#custom#set('racer', 'mark', '')
 
+" vim
+let g:deoplete#ignore_sources.vim = get(g:deoplete#ignore_sources, 'vim', ['tag'])
+
 " clojure
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
