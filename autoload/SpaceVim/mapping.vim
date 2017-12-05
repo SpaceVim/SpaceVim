@@ -79,9 +79,15 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
   endif
 endfunction
 
-function! SpaceVim#mapping#shift_tab() abort
-  return pumvisible() ? "\<C-p>" : "\<Plug>delimitMateS-Tab"
-endfunction
+if g:spacevim_snippet_engine ==# 'neosnippet'
+  function! SpaceVim#mapping#shift_tab() abort
+    return pumvisible() ? "\<C-p>" : "\<Plug>delimitMateS-Tab"
+  endfunction
+elseif g:spacevim_snippet_engine ==# 'ultisnips'
+  function! SpaceVim#mapping#shift_tab() abort
+    return pumvisible() ? "\<C-p>" : "\<C-R>=UltiSnips#JumpForwards()\<CR>\<C-R>=cmp#ultisnips#JumpForward()\<CR>"
+  endfunction
+endif
 
 function! SpaceVim#mapping#tab() abort
   return SpaceVim#mapping#tab#i_tab()
