@@ -121,6 +121,10 @@ function! SpaceVim#layers#autocomplete#config() abort
       elseif g:spacevim_snippet_engine ==# 'ultisnips'
         imap <silent><expr><TAB> SpaceVim#mapping#tab()
         imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+        snoremap <silent> <TAB>
+              \ <ESC>:call UltiSnips#JumpForwards()<CR>
+        snoremap <silent> <S-TAB>
+              \ <ESC>:call UltiSnips#JumpBackwards()<CR>
       else
       endif
     else
