@@ -18,7 +18,8 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.DS_Store$',
       \ '^\.init\.vim-rplugin\~$',
       \ '^\.netrwhist$',
-      \ '\.class$'
+      \ '\.class$',
+      \ '^\.'
       \])
 
 if has('mac')
