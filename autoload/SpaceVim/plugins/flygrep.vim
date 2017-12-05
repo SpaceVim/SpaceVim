@@ -40,8 +40,8 @@ function! s:flygrep(expr) abort
     syn clear FileNames
   catch
   endtr
-  exe 'syn match FileNames /' . substitute(a:expr, '\([/\\]\)', '\\\1', 'g') . '/'
   hi def link FileNames MoreMsg
+  call matchadd('FileNames', a:expr)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(500, funcref('s:grep_timer'), {'repeat' : 1})
 endfunction
