@@ -375,7 +375,7 @@ function! s:active() abort
   endfor
   let fname = s:buffer_name()
   return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname,
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 
 function! s:inactive() abort
@@ -499,7 +499,7 @@ function! SpaceVim#layers#core#statusline#config() abort
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',
-          \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+          \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', g:spacevim_sidebar_width)
   endfunction
   let g:tagbar_status_func = 'TagbarStatusline'
   let g:unite_force_overwrite_statusline = 0
@@ -531,7 +531,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
         \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '',
-        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 " @vimlint(EVL103, 0, a:regex)
 " @vimlint(EVL103, 0, a:marked)
@@ -541,7 +541,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
         \ [' ' . getcwd() . ' '], s:lsep, s:rsep, '',
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
@@ -623,4 +623,4 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func)
 endfunction
 
 
-" vim:set et sw=2 cc=80:
+" vim:set et sw=2 cc=80 nowrap:

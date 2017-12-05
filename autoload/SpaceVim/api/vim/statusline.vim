@@ -1,7 +1,7 @@
 let s:self = {}
 
 
-function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z) abort
+function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z, winwidth) abort
     let l = '%#' . a:hi_a . '#' . a:left_sections[0]
     let l .= '%#' . a:hi_a . '_' . a:hi_b . '#' . a:lsep
     let flag = 1
