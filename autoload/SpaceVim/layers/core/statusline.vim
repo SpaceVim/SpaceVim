@@ -379,14 +379,21 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-  return '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-        \ . '%#SpaceVim_statusline_b#' . s:filename() . s:ilsep
-        \ . ' ' . &filetype . ' ' . s:ilsep 
-        \ . s:modes() . s:ilsep
-        \ . s:git_branch() . s:ilsep
-        \ . ' %='
-        \ . s:irsep . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
-        \ . s:irsep . ' %P '
+  let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
+  let lsec = [s:filename(), &filetype, s:modes(), s:git_branch(),]
+  let rsec = ['%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P ']
+  let len = s:STATUSLINE.len(s:winnr()) + 5
+  let lt = []
+  let winwidth = winwidth(winnr())
+  for sec in lsec
+    if len + s:STATUSLINE.len(sec) < winwidth
+      call add(lt, sec)
+      let len = len + s:STATUSLINE.len(sec)
+    else
+      break
+    endif
+  endfor
+  return l . join(lt, s:ilsep) . s:ilsep . ' %='.  s:irsep . join(rsec, s:irsep)
 endfunction
 function! s:gitgutter() abort
   if exists('b:gitgutter_summary')
