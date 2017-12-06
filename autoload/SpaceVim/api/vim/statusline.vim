@@ -5,7 +5,6 @@ function! s:self.check_width(len, sec, winwidth) abort
   return a:len + self.len(a:sec) < a:winwidth
 endfunction
 
-let g:wsd = '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
   if !empty(str)

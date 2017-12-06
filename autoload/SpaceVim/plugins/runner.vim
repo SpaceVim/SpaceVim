@@ -104,7 +104,6 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 
-let g:wsd = []
 if has('nvim') && exists('*chanclose')
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
@@ -117,7 +116,6 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     if !empty(lines)
-      call add(g:wsd, lines)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
     endif
     let s:lines += len(lines)
@@ -136,7 +134,6 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     if !empty(lines)
-      call add(g:wsd, lines)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
     endif
     let s:lines += len(lines)
@@ -145,7 +142,6 @@ if has('nvim') && exists('*chanclose')
   endfunction
 else
   function! s:on_stdout(job_id, data, event) abort
-    call add(g:wsd, a:data)
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
     call s:update_statusline()
