@@ -151,7 +151,7 @@ endfunction
 function! s:date() abort
 
   return ' ' . s:TIME.current_date() . ' '
-  
+
 endfunction
 
 function! s:whitespace() abort
@@ -313,6 +313,9 @@ function! s:filesize() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
+  for nr in range(1, winnr('$'))
+    call setwinvar(nr, 'winwidth', winwidth(nr))
+  endfor
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -380,21 +383,18 @@ endfunction
 
 function! s:inactive() abort
   let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
-  let lsec = [s:filename(), &filetype, s:modes(), s:git_branch(),]
-  let rsec = ['%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P ']
-  let len = s:STATUSLINE.len(s:winnr()) + 5
-  let lt = []
-  let winwidth = winwidth(winnr())
-  for sec in lsec
-    if len + s:STATUSLINE.len(sec) < winwidth
-      call add(lt, sec)
-      let len = len + s:STATUSLINE.len(sec)
-    else
-      break
-    endif
+  let secs = [s:filename(), &filetype, s:modes(), s:git_branch()]
+  let base = 30
+  for sec in secs
+    let len = s:STATUSLINE.len(sec)
+    let base += len
+    let l .= '%{ get(w:, "winwidth", 150) < ' . base . ' ? "" : (" ' . s:STATUSLINE.eval(sec) . ' ' . s:ilsep . '")}'
   endfor
-  return l . join(lt, s:ilsep) . s:ilsep . ' %='.  s:irsep . join(rsec, s:irsep)
+  let l .= join(['%=', '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+  return l
 endfunction
+
+
 function! s:gitgutter() abort
   if exists('b:gitgutter_summary')
     let l:summary = get(b:, 'gitgutter_summary')
@@ -620,12 +620,12 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#register_sections(name, func)
 
- if has_key(s:registed_sections, a:name)
-   call SpaceVim#logger#info('statusline build-in section ' . a:name . ' has been changed!')
-   call extend(s:registed_sections, {a:name : a:func})
- else
-   call extend(s:registed_sections, {a:name : a:func})
- endif
+  if has_key(s:registed_sections, a:name)
+    call SpaceVim#logger#info('statusline build-in section ' . a:name . ' has been changed!')
+    call extend(s:registed_sections, {a:name : a:func})
+  else
+    call extend(s:registed_sections, {a:name : a:func})
+  endif
 
 endfunction
 

@@ -15,6 +15,9 @@ function! s:self.len(sec) abort
   endif
 endfunction
 
+function! s:self.eval(sec) abort
+  return substitute(a:sec, '%{.*}', '', 'g')
+endfunction
 
 function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z, winwidth) abort
   let l = '%#' . a:hi_a . '#' . a:left_sections[0]
