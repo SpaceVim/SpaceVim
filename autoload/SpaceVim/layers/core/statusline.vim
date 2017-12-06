@@ -384,13 +384,15 @@ endfunction
 function! s:inactive() abort
   let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
   let secs = [s:filename(), &filetype, s:modes(), s:git_branch()]
-  let base = 30
+  let base = 10
   for sec in secs
     let len = s:STATUSLINE.len(sec)
     let base += len
     let l .= '%{ get(w:, "winwidth", 150) < ' . base . ' ? "" : (" ' . s:STATUSLINE.eval(sec) . ' ' . s:ilsep . '")}'
   endfor
-  let l .= join(['%=', '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+  if get(w:, 'winwidth', 150) > base + 10
+    let l .= join(['%=', '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+  endif
   return l
 endfunction
 
