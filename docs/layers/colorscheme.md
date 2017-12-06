@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim colorscheme layer"
-description: "This layers adds extensive support for git"
+description: "colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme."
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) colorscheme
