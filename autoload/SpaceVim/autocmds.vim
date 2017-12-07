@@ -18,7 +18,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType jsp call JspFileTypeInit()
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
-    autocmd FileType html,css,jsp EmmetInstall
+    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex EmmetInstall
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * setl cursorline
@@ -46,6 +46,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType sh setlocal omnifunc=SpaceVim#plugins#bashcomplete#omnicomplete
     autocmd FileType xml call XmlFileTypeInit()
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS

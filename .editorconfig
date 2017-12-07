@@ -1,0 +1,9 @@
+root = true
+
+[*.vim]
+indent_style = space
+indent_size = 2
+end_of_line = 1f
+insert_final_newline = true
+charset = utf_8
+

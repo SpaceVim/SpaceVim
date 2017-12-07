@@ -62,8 +62,11 @@ function! s:open_describe_buffer(desc) abort
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
     set filetype=HelpDescribe
     call setline(1, a:desc)
+    let b:defind_file_name = split(a:desc[-1][12:], ':')
     let lines = &lines * 30 / 100
     if lines < winheight(0)
         exe 'resize ' . lines
     endif
+    setlocal nofoldenable
+    nnoremap <buffer><silent> q :bd<cr>
 endfunction

@@ -1,6 +1,3 @@
-"WolfgangMehner/lua-support
-"http://lua-users.org/wiki/LuaEditorSupport
-"
 function! SpaceVim#layers#lang#lua#plugins() abort
     let plugins = []
     " Improved Lua 5.3 syntax and indentation support for Vim
@@ -11,7 +8,9 @@ function! SpaceVim#layers#lang#lua#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#lua#config() abort
+  if has('lua')
     augroup spacevim_lua
         autocmd FileType lua setlocal omnifunc=luacomplete#complete
     augroup END
+  endif
 endfunction

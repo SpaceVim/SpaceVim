@@ -1,16 +1,18 @@
 ---
 title: "SpaceVim shell layer"
+description: "This layer provide shell support in SpaceVim"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) shell
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Install](#install)
-* [Configuration](#configuration)
-    * [Default shell](#default-shell)
-    * [Default shell position and height](#default-shell-position-and-height)
-* [Key bindings](#key-bindings)
+
+- [Description](#description)
+- [Install](#install)
+- [Configuration](#configuration)
+  - [Default shell](#default-shell)
+  - [Default shell position and height](#default-shell-position-and-height)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 

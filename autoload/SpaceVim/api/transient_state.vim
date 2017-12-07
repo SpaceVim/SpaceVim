@@ -111,7 +111,7 @@ function! s:self._update_content() abort
                 let left_max_key_len = max([len(key.key), left_max_key_len])
             elseif type(key.key) == 3  " is a list
                 let left_max_key_len = max([len(join(key.key, '/')), left_max_key_len])
-            elseif type(key.key) == 4  " is a list
+            elseif type(key.key) == 4  " is a dict
                 let left_max_key_len = max([len(key.key.name), left_max_key_len])
             endif
         endfor
@@ -120,9 +120,8 @@ function! s:self._update_content() abort
             if type(key.key) == 1   " is a string
                 let right_max_key_len = max([len(key.key), right_max_key_len])
             elseif type(key.key) == 3  " is a list
-                let g:wsd = key.key
                 let right_max_key_len = max([len(join(key.key, '/')), right_max_key_len])
-            elseif type(key.key) == 4  " is a list
+            elseif type(key.key) == 4  " is a dict
                 let right_max_key_len = max([len(key.key.name), right_max_key_len])
             endif
         endfor
@@ -140,6 +139,23 @@ function! s:self._update_content() abort
                         call extend(self._handle_inputs, {left.key : left.func})
                     endif
                 elseif type(left.key) == 3
+                    let line .= '[' . join(left.key, '/') . '] '
+                    let line .= repeat(' ', left_max_key_len - len(join(left.key, '/')))
+                    let line .= left.desc 
+                    let begin = 1
+                    for key in left.key
+                        call self.highlight_keys(left.exit, i + 2, begin, begin + len(key))
+                        let begin = begin + len(key) + 1
+                    endfor
+                    if !empty(left.cmd)
+                        for key in left.key
+                            call extend(self._handle_inputs, {key : left.cmd})
+                        endfor
+                    elseif !empty(left.func)
+                        for key in left.key
+                            call extend(self._handle_inputs, {key : left.func})
+                        endfor
+                    endif
                 elseif type(left.key) == 4
                     let line .= '[' . left.key.name . '] '
                     let line .= repeat(' ', left_max_key_len - len(left.key.name))
@@ -180,6 +196,17 @@ function! s:self._update_content() abort
                             call extend(self._handle_inputs, {key : right.func})
                         endfor
                     endif
+                elseif type(right.key) == 4
+                    let line .= '[' . right.key.name . '] '
+                    let line .= repeat(' ', right_max_key_len - len(right.key.name))
+                    let line .= right.desc 
+                    let begin = 41
+                    for pos in right.key.pos
+                        call self.highlight_keys(right.exit, i + 2, begin + pos[0], begin + pos[1])
+                    endfor
+                    for handles in right.key.handles
+                        call extend(self._handle_inputs, {handles[0] : handles[1]})
+                    endfor
                 endif
             endif
             call append(line('$'), line)

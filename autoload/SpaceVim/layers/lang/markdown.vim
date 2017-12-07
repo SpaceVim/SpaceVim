@@ -8,9 +8,13 @@
 
 let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
+let s:md_listItemChar = '-'
+let g:vmt_list_indent_text = '  '
 function! SpaceVim#layers#lang#markdown#set_variable(var) abort
    let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
    let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
+   let s:md_listItemChar = get(a:var, 'listItemChar', s:md_listItemChar)
+   let g:vmt_list_item_char = s:md_listItemChar
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
@@ -19,7 +23,7 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
     call add(plugins, ['joker1007/vim-markdown-quote-syntax',{ 'on_ft' : 'markdown'}])
     call add(plugins, ['mzlogin/vim-markdown-toc',{ 'on_ft' : 'markdown'}])
     call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
-    call add(plugins, ['iamcco/markdown-preview.vim',{ 'on_ft' : 'markdown'}])
+    call add(plugins, ['iamcco/markdown-preview.vim', { 'depends' : 'open-browser.vim', 'on_ft' : 'markdown' }])
     return plugins
 endfunction
 
@@ -38,9 +42,6 @@ function! SpaceVim#layers#lang#markdown#config() abort
         au!
         autocmd BufEnter *.md call s:mappings()
     augroup END
-    if executable('firefox')
-        let g:mkdp_path_to_chrome= get(g:, 'mkdp_path_to_chrome', 'firefox')
-    endif
     let remarkrc = s:generate_remarkrc()
     let g:neoformat_enabled_markdown = ['remark']
     let g:neoformat_markdown_remark = {
@@ -48,6 +49,10 @@ function! SpaceVim#layers#lang#markdown#config() abort
                 \ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),
                 \ 'stdin': 1,
                 \ }
+
+  " iamcco/markdown-preview.vim {{{
+  let g:mkdp_browserfunc = 'openbrowser#open'
+  " }}}
 endfunction
 
 function! s:mappings() abort

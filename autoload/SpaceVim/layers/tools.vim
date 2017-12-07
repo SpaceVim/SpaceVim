@@ -28,7 +28,6 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'loadconf' : 1,
         \}],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
-        \ ['airblade/vim-gitgutter',      { 'on_cmd' : 'GitGutterEnable'}],
         \ ['itchyny/calendar.vim',        { 'on_cmd' : 'Calendar'}],
         \ ['wsdjeg/Mysql.vim',            { 'on_cmd' : 'SQLGetConnection'}],
         \ ['wsdjeg/job.vim',              { 'merged' : 0}],
@@ -66,33 +65,17 @@ function! SpaceVim#layers#tools#config() abort
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
   nnoremap <Leader>fz :FZF<CR>
-  if maparg('<C-l>', 'v') ==# ''
-    vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+  if maparg('<C-_>', 'v') ==# ''
+    vnoremap <silent> <C-_> <Esc>:Ydv<CR>
   endif
-  if maparg('<C-l>', 'n') ==# ''
-    nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+  if maparg('<C-_>', 'n') ==# ''
+    nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
   map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
-  function! OpenOrCloseNERDTree() abort
-    exec 'normal! A'
-  endfunction
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
-  let g:NERDTreeWinPos=get(g:,'NERDTreeWinPos','right')
-  let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
-  let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
-  augroup nerdtree_zvim
-    autocmd!
-    autocmd bufenter *
-          \ if (winnr('$') == 1 && exists('b:NERDTree')
-          \ && b:NERDTree.isTabTree())
-          \|   q
-          \| endif
-    autocmd FileType nerdtree nnoremap <silent><buffer><Space>
-          \ :call OpenOrCloseNERDTree()<cr>
-  augroup END
 endfunction
 
 " vim:set et sw=2 cc=80:

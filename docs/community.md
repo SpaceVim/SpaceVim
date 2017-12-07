@@ -1,23 +1,32 @@
 ---
 title:  "Community"
+description: "A list for community channels for SpaceVim."
 ---
 
 # Community
 
-Try these SpaceVim hangouts for any questions, problems or comments. 
+Visit these resources for help or general questions.
 
 ## Ask
+
 - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
-- vi StackExchange for "how to" & configuration questions
+- Try [vi.stackexchange.com](https://vi.stackexchange.com/) for **usage and configuration questions**.
 - [Twitter](https://twitter.com/SpaceVim) for hugs & pithy comments
+- [Facebook](https://www.facebook.com/SpaceVim)
 
 ## Chat
-- [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) (bridged to #spacevim IRC)
+
+All of these channels are bridged together. Click on one of the badges below to join the chat, In all of these channels, messages from `SpaceVimBot` is sent by remote user, and the format of the remote messages is:
+
+    "[{PROTOCOL}] <{NICK}> {MESSAGE}"
+
+- [`SpaceVim/SpaceVim`  on gitter](https://gitter.im/SpaceVim/SpaceVim)
 - [`#spacevim` on FreeNode](https://webchat.freenode.net/?channels=spacevim)
-- [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-- [![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
-- [/r/spacevim on Reddit](https://reddit.com/r/spacevim)
+- [`t.me/SpaceVim` on telegram](t.me/SpaceVim)
+- [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
+- [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 
 ## Discuss
 
 - [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
+- [/r/spacevim on Reddit](https://reddit.com/r/spacevim)

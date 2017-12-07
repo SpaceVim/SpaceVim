@@ -1,0 +1,5 @@
+Execute ( SpaceVim mode ):
+  so mode/basic.vim
+  AssertEqual g:spacevim_enable_guicolors, 0
+  so mode/dark_powered.vim
+  AssertEqual g:spacevim_enable_debug, 1

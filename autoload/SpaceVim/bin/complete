@@ -1,0 +1,34 @@
+#!/usr/bin/env expect
+
+log_user 0
+set prompt {/@}
+set cmd [lindex $argv 0]
+
+# start bash with no startup files for clean env
+spawn env INPUTRC=/dev/null PS1=$prompt bash --norc
+expect $prompt
+
+# set some readline variables for consistent completion output
+send "bind 'set show-all-if-ambiguous on'\r"
+expect $prompt
+send "bind 'set bell-style none'\r"
+expect $prompt
+send "bind 'set completion-query-items -1'\r"
+expect $prompt
+send "bind 'set page-completions off'\r"
+expect $prompt
+send "bind 'set completion-display-width 0'\r"
+expect $prompt
+
+# run the completion
+send "$cmd\t $prompt"
+expect {
+   # multiple matches, printed on separate lines, followed by prompt
+   -re "^$cmd\r\n(.*)\r\n$prompt$cmd" { puts $expect_out(1,string) }
+   # single match, completed in-place
+   -re "^($cmd\[^ \]*)  $prompt" { puts $expect_out(1,string) }
+   # single match, completed in-place, nospace
+   -re "^($cmd\[^ \]+) $prompt"  { puts $expect_out(1,string) }
+   # no match
+   -re "^$cmd $prompt" { exit }
+}

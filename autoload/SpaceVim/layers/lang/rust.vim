@@ -33,23 +33,37 @@
 "   normal      gd          rust-definition
 "   normal      gs          rust-definition-split
 "   normal      gx          rust-definition-vertical
-"   normal      <leader>gd  rust-doc
+"   normal      SPC l d     rust-doc
+"   normal      SPC l r     execute current file
 " <
 
 function! SpaceVim#layers#lang#rust#plugins() abort
-    let plugins = []
-    call add(plugins, ['racer-rust/vim-racer', {'on_ft' : 'rust'}])
-    call add(plugins, ['rust-lang/rust.vim', {'on_ft' : 'rust', 'merged' : 1}])
-    return plugins
+  let plugins = [
+        \ ['racer-rust/vim-racer', { 'on_ft' : 'rust' }],
+        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 1 }],
+        \ ]
+  return plugins
 endfunction
 
 function! SpaceVim#layers#lang#rust#config() abort
-    let g:racer_experimental_completer = 1
-    let g:racer_cmd = $HOME.'/.cargo/bin/racer'
-    augroup spacevim_layer_lang_rust
-        au FileType rust nmap <buffer><silent> gd <Plug>(rust-def)
-        au FileType rust nmap <buffer><silent> gs <Plug>(rust-def-split)
-        au FileType rust nmap <buffer><silent> gx <Plug>(rust-def-vertical)
-        au FileType rust nmap <buffer><silent> <leader>gd <Plug>(rust-doc)
-    augroup END
+  let g:racer_experimental_completer = 1
+  let g:racer_cmd = $HOME . '/.cargo/bin/racer'
+
+  call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
+  call SpaceVim#plugins#runner#reg_runner('rust', ['rustc %s -o #TEMP#', '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('rust', funcref('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  nmap <buffer> gs <Plug>(rust-def-split)
+  nmap <buffer> gx <Plug>(rust-def-vertical)
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'], '<Plug>(rust-doc)', 'show documentation', 0)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+endfunction
+
+function! s:gotodef() abort
+  if exists('*racer#GoToDefinition')
+    call racer#GoToDefinition()
+  endif
 endfunction

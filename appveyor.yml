@@ -1,0 +1,24 @@
+version: '{build}'
+clone_depth: 1
+environment:
+  matrix:
+    - CONDITION: Official latest-32
+install:
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
+  - 'git config --global user.name "Appveyor"'
+  - 'git config --global user.email appveyor@example.com'
+  - 'git clone -q --depth 1 --single-branch https://github.com/junegunn/vader.vim.git build/vader'
+  - 'git clone -q --depth 1 --single-branch https://github.com/Shougo/dein.vim C:\Users\appveyor\.cache\vimfiles\repos\github.com\Shougo\dein.vim'
+  - 'set THEMIS_HOME=%TEMP%\vim-themis'
+  - 'set PATH=%THEMIS_HOME%\bin;%PATH%'
+  - ps: .ci/install.ps1
+test_script:
+  - 'echo %PATH%'
+  - 'echo %THEMIS_HOME%'
+  - 'echo %THEMIS_VIM%'
+  - 'echo %THEMIS_ARGS%'
+  - '%THEMIS_VIM% --version'
+  - '%THEMIS_VIM% -Nu test/vimrc -c "Vader! test/**"'
+build: off
+deploy: off

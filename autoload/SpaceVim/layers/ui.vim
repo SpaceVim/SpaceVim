@@ -2,7 +2,6 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
     let plugins = [
                 \ ['Yggdroot/indentLine'],
-                \ ['mhinz/vim-signify'],
                 \ ['majutsushi/tagbar', {'loadconf' : 1}],
                 \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
                 \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
@@ -27,21 +26,21 @@ function! SpaceVim#layers#ui#config() abort
     let g:indentLine_char = get(g:, 'indentLine_char', '¦')
     let g:indentLine_concealcursor = 'niv'
     let g:indentLine_conceallevel = 2
-    let g:indentLine_fileTypeExclude = ['help', 'startify', 'vimfiler']
+    let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
-    noremap <silent> <F2> :TagbarToggle<CR>
+    noremap <silent> <F2> :silent TagbarToggle<CR>
     " Ui toggles
     call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
                 \ . string(s:_function('s:toggle_fill_column')) . ', [])',
-                \ 'toggle-colorcolume', 1)
+                \ 'toggle-colorcolumn', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
                 \ 'toggle background', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
                 \ 'Open tabs manager', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
                 \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
-                \ 'toggle-colorcolume', 1)
+                \ 'toggle-colorcolumn', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'set cursorline!',
                 \ 'toggle highlight of the current line', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
@@ -76,7 +75,7 @@ function! SpaceVim#layers#ui#config() abort
                 \ 'toggle syntax checker', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
                 \ . string(s:_function('s:toggle_spell_check')) . ', [])',
-                \ 'toggle syntax checker', 1)
+                \ 'toggle spell checker', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
                 \ . string(s:_function('s:toggle_whitespace')) . ', [])',
                 \ 'toggle the whitespace', 1)
@@ -200,12 +199,7 @@ endfunction
 function! s:toggle_syntax_checker() abort
     call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
     call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-    let g:_spacevim_toggle_syntax_flag = g:_spacevim_toggle_syntax_flag * -1
-    if g:_spacevim_toggle_syntax_flag == 1
-        echo "syntax-checking enabled."
-    else
-        echo "syntax-checking disabled."
-    endif
+    verbose NeomakeToggle
 endfunction
 
 function! s:toggle_spell_check() abort
@@ -215,6 +209,11 @@ function! s:toggle_spell_check() abort
         let &l:spell = 1
     endif
     call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
+    if &l:spell == 1
+      echo 'spell-checking enabled.'
+    else
+      echo 'spell-checking disabled.'
+    endif
 endfunction
 
 function! s:toggle_whitespace() abort

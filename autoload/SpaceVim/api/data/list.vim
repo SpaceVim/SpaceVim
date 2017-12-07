@@ -5,10 +5,12 @@ function! SpaceVim#api#data#list#get() abort
                 \ 'unshift' : '',
                 \ 'uniq' : '',
                 \ 'uniq_by' : '',
+                \ 'clear' : '',
                 \ 'char_range' : '',
                 \ 'has' : '',
                 \ 'has_index' : '',
                 \ 'listpart' : '',
+                \ 'replace' : '',
                 \ },
                 \ "function('s:' . v:key)"
                 \ )
@@ -99,5 +101,13 @@ endfunction
 function! s:has_index(list, index) abort
     return 0 <= a:index && a:index < len(a:list)
 endfunction
+
+function! s:replace(list, begin, end, re_list)
+  if a:begin <= a:end && a:begin >= 0 && a:end < len(a:list)
+    return a:list[:a:begin - 1] + a:re_list + a:list[a:end + 1:]
+  else
+    return a:list
+  endif
+endf
 
 " vim:set et sw=2 cc=80:

@@ -10,6 +10,7 @@ let g:deoplete#max_menu_width = get(g:, 'deoplete#max_menu_width', 0)
 let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
 let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
+let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
 
 " java && jsp
 let g:deoplete#omni#input_patterns.java = get(g:deoplete#omni#input_patterns, 'java', [
@@ -26,6 +27,9 @@ else
   call deoplete#custom#set('omni', 'mark', '')
   call deoplete#custom#set('omni', 'rank', 9999)
 endif
+
+" sh
+let g:deoplete#ignore_sources.sh = get(g:deoplete#ignore_sources, 'sh', ['around', 'member', 'tag', 'syntax'])
 
 " go
 let g:deoplete#ignore_sources.go = get(g:deoplete#ignore_sources, 'go', ['omni'])
@@ -68,7 +72,7 @@ let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_pattern
       \'[ ]#[ 0-9a-zA-Z]*',
       \])
 
-let g:deoplete#ignore_sources.gitcommit = ['neosnippet']
+let g:deoplete#ignore_sources.gitcommit = get(g:deoplete#ignore_sources, 'gitcommit', ['neosnippet'])
 
 " lua
 let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
@@ -81,9 +85,20 @@ let g:deoplete#ignore_sources.c = get(g:deoplete#ignore_sources, 'c', ['omni'])
 let g:deoplete#ignore_sources.rust = get(g:deoplete#ignore_sources, 'rust', ['omni'])
 call deoplete#custom#set('racer', 'mark', '')
 
+" vim
+let g:deoplete#ignore_sources.vim = get(g:deoplete#ignore_sources, 'vim', ['tag'])
+
+" clojure
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+
 " public settings
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around'])
+let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around', 'LanguageClient'])
+for key in keys(g:deoplete#ignore_sources)
+  if key != '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
+    let g:deoplete#ignore_sources[key] = g:deoplete#ignore_sources[key] + ['around', 'LanguageClient']
+  endif
+endfor
 inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 set isfname-==

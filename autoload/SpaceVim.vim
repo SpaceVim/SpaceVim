@@ -27,7 +27,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.5.0-dev'
+let g:spacevim_version = '0.6.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -98,13 +98,44 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-let g:spacevim_autocomplete_method     = ''
+if has('python3')
+  ""
+  " Set the autocomplete engine of spacevim, the default logic is:
+  " >
+  "   if has('python3')
+  "     let g:spacevim_autocomplete_method = 'deoplete'
+  "   elseif has('lua')
+  "     let g:spacevim_autocomplete_method = 'neocomplete'
+  "   elseif has('python')
+  "     let g:spacevim_autocomplete_method = 'completor'
+  "   elseif has('timers')
+  "     let g:spacevim_autocomplete_method = 'asyncomplete'
+  "   else
+  "     let g:spacevim_autocomplete_method = 'neocomplcache'
+  "   endif
+  " <
+  let g:spacevim_autocomplete_method = 'deoplete'
+elseif has('lua')
+  let g:spacevim_autocomplete_method = 'neocomplete'
+elseif has('python')
+  let g:spacevim_autocomplete_method = 'completor'
+elseif has('timers')
+  let g:spacevim_autocomplete_method = 'asyncomplete'
+else
+  let g:spacevim_autocomplete_method = 'neocomplcache'
+endif
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
 "   let g:spacevim_enable_neomake = 0
 " <
 let g:spacevim_enable_neomake          = 1
+""
+" Use ale for syntax checking, disabled by default.
+" >
+"   let g:spacevim_enable_ale = 1
+" <
+let g:spacevim_enable_ale          = 0
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
@@ -151,6 +182,52 @@ let g:spacevim_enable_cursorline       = 1
 "
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
+
+""
+" Define the left section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_left_sections = 
+"     \ [
+"     \ 'winnr',
+"     \ 'filename',
+"     \ 'major mode',
+"     \ 'minor mode lighters',
+"     \ 'version control info'
+"     \ ]
+" <
+let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'syntax checking', 'minor mode lighters', 'version control info', 'hunks']
+""
+" Define the right section of statusline in active windows. By default:
+" >
+"   let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+" <
+let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
+
+""
+" Enable/Disable unicode symbols in statusline
+let g:spacevim_statusline_unicode_symbols = 1
+""
+" Enable/Disable display mode. Default is 0, mode will be
+" displayed in statusline. To enable this feature:
+" >
+"   let g:spacevim_enable_statusline_display_mode = 1
+" <
+let g:spacevim_enable_statusline_display_mode     = 0
+""
+" Set the statusline/tabline palette of color, default values depends on the theme
+" >
+"   let g:spacevim_custom_color_palette = [
+"     \ ['#282828', '#b8bb26', 246, 235],
+"     \ ['#a89984', '#504945', 239, 246],
+"     \ ['#a89984', '#3c3836', 237, 246],
+"     \ ['#665c54', 241],
+"     \ ['#282828', '#83a598', 235, 109],
+"     \ ['#282828', '#fe8019', 235, 208],
+"     \ ['#282828', '#8ec07c', 235, 108],
+"     \ ]
+" <
+"
+let g:spacevim_custom_color_palette = []
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
@@ -171,6 +248,12 @@ let g:spacevim_error_symbol            = '✖'
 " <
 let g:spacevim_warning_symbol          = '⚠'
 ""
+" Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+" >
+"   let g:spacevim_info_symbol = 'i'
+" <
+let g:spacevim_info_symbol             = '🛈'
+""
 " Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
 " changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
 " cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
@@ -187,7 +270,7 @@ let g:spacevim_use_colorscheme         = 1
 " Set the help language of vim. Default is 'en'. 
 " You can change it to Chinese.
 " >
-"   let g:spacevim_vim_help_language = 'chinese'
+"   let g:spacevim_vim_help_language = 'cn'
 " <
 let g:spacevim_vim_help_language       = 'en'
 ""
@@ -196,6 +279,9 @@ let g:spacevim_vim_help_language       = 'en'
 "   let g:spacevim_language = 'en_CA.utf8'
 " <
 let g:spacevim_language                = ''
+""
+" Option for keep the spacevim server ailive
+let g:spacevim_keep_server_alive = 1
 ""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
@@ -248,8 +334,8 @@ let g:spacevim_auto_disable_touchpad   = 1
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_plugin_groups_exclude   = []
-let g:spacevim_gitcommit_pr_icon       = 'p'
-let g:spacevim_gitcommit_issue_icon    = 'i'
+let g:spacevim_gitcommit_pr_icon       = ''
+let g:spacevim_gitcommit_issue_icon    = ''
 ""
 " Set SpaceVim buffer index type, default is 0.
 " >
@@ -269,6 +355,7 @@ let g:spacevim_buffer_index_type = 0
 "   " 0: 1 ➛ ➊ 
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
+"   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
 let g:spacevim_windows_index_type = 0
@@ -335,13 +422,13 @@ let g:spacevim_lint_on_the_fly         = 0
 " <
 let g:spacevim_enable_vimfiler_welcome = 1
 ""
-" Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+" Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_gitstatus = 0
 ""
-" Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+" Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler']
+let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner', 'SpaceVimQuickFix', 'HelpDescribe']
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
@@ -414,6 +501,11 @@ endif
 
 let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
 
+" SpaceVim/LanguageClient-neovim {{{
+if !exists('g:LanguageClient_serverCommands')
+  let g:LanguageClient_serverCommands = {}
+endif
+" }}}
 
 
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
@@ -436,9 +528,11 @@ function! SpaceVim#loadCustomConfig() abort
   endif
   " the old value will be remove
   if filereadable(custom_glob_conf_old)
+    call SpaceVim#logger#warn('~/.local.vim is deprecated!')
     exe 'source ' . custom_glob_conf_old
   endif
   if !empty(custom_confs_old)
+    call SpaceVim#logger#warn('.local.vim is deprecated!')
     exe 'source ' . custom_confs_old[0]
   endif
 
@@ -447,11 +541,15 @@ function! SpaceVim#loadCustomConfig() abort
       exe 'set rtp ^=' . expand('.SpaceVim.d')
     endif
     exe 'source ' . custom_confs[0]
-    if filereadable(custom_glob_conf) && g:spacevim_force_global_config
-      if isdirectory(expand('~/.SpaceVim.d/'))
-        set runtimepath^=~/.SpaceVim.d
+    if g:spacevim_force_global_config
+      if filereadable(custom_glob_conf)
+        if isdirectory(expand('~/.SpaceVim.d/'))
+          set runtimepath^=~/.SpaceVim.d
+        endif
+        exe 'source ' . custom_glob_conf
       endif
-      exe 'source ' . custom_glob_conf
+    else
+      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))
@@ -459,10 +557,29 @@ function! SpaceVim#loadCustomConfig() abort
     endif
     exe 'source ' . custom_glob_conf
   endif
+
+  if g:spacevim_enable_ycm && g:spacevim_snippet_engine != 'ultisnips'
+    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
+    let g:spacevim_snippet_engine = 'ultisnips'
+  endif
 endfunction
 
 
 function! SpaceVim#end() abort
+
+  if g:spacevim_enable_neocomplcache
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+  if g:spacevim_enable_ycm
+    if has('python') || has('python3')
+      let g:spacevim_autocomplete_method = 'ycm'
+    else
+      call SpaceVim#logger#warn('YCM need +python or +python3 support, force to using ' . g:spacevim_autocomplete_method)
+    endif
+  endif
+  if g:spacevim_keep_server_alive
+    call SpaceVim#server#export_server()
+  endif
   if !empty(g:spacevim_windows_leader)
     call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
   endif
@@ -492,24 +609,13 @@ function! SpaceVim#end() abort
     endfor
     if g:spacevim_vim_help_language ==# 'cn'
       call add(g:spacevim_plugin_groups, 'chinese')
+    elseif g:spacevim_vim_help_language ==# 'ja'
+      call add(g:spacevim_plugin_groups, 'japanese')
     endif
     if g:spacevim_use_colorscheme==1
       call add(g:spacevim_plugin_groups, 'colorscheme')
     endif
 
-    if has('nvim')
-      let g:spacevim_autocomplete_method = 'deoplete'
-    elseif has('lua')
-      let g:spacevim_autocomplete_method = 'neocomplete'
-    else
-      let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
-    if g:spacevim_enable_ycm
-      let g:spacevim_autocomplete_method = 'ycm'
-    endif
-    if g:spacevim_enable_neocomplcache
-      let g:spacevim_autocomplete_method = 'neocomplcache'
-    endif
   endif
   ""
   " generate tags for SpaceVim

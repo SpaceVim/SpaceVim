@@ -9,7 +9,6 @@ function! SpaceVim#layers#lang#plugins() abort
                 \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
-                \ ['elzr/vim-json',                          { 'on_ft' : ['javascript','json']}],
                 \ ['elixir-lang/vim-elixir',                 { 'on_ft' : 'elixir'}],
                 \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],
                 \ ['isundil/vim-irssi-syntax',               { 'on_ft' : 'irssi'}],

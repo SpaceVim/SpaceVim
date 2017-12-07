@@ -1,5 +1,6 @@
 ---
 title:  "Development"
+description: "A guide for contributing to SpaceVim."
 ---
 
 # Development
@@ -19,14 +20,14 @@ Development happens in the GitHub repository. here is a throughput graph of the 
 
 ## Contribution guidelines
 
-SpaceVim is a effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
+SpaceVim is an effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
 We have a few guidelines, which we ask all contributors to follow.
 
 You can only consider reading the sections relevant to what you are going to do:
 
 - [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
 - [Reporting issues](#reporting-issues) if you are about to open a new issue.
-- [Contributing code](#contributing-code) if you are about to send a Pull-Request.
+- [Contributing code](#contributing-code) if you are about to send a pull-request.
 
 ### Asking for help
 
@@ -36,8 +37,8 @@ If you want to ask an usage question, be sure to look first into some places as 
 
 ### Reporting issues
 
-issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
-- Check that there is no duplicate issue in the issues tracker, you can search keywords in the issues tracker.
+Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
+- Check that there is no duplicate issue in the issues tracker, you can search for keywords in the issues tracker.
 - Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
 - Use a clear title and follow the issue template.
 - Include details on how to reproduce it, just like a step by step guide.

@@ -1,0 +1,5 @@
+Execute ( SpaceVim api color ):
+  let color = SpaceVim#api#import('color')
+  AssertEqual color.nr2str(233), '#121212'
+  AssertEqual color.str2nr('#121212'), 233
+  AssertEqual color.str2nr('bg'), 'bg'

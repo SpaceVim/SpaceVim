@@ -1,15 +1,9 @@
 let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
-  if s:has_map_to_spc()
-    return
-  endif
-  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
-  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
-  nmap <Space> [SPC]
-  vmap <Space> [SPC]
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space['?'] = ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
+  let g:_spacevim_mappings_space['?'] =
+        \ ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
   let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
@@ -23,12 +17,23 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
   let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
   let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+  let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
+  let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
   let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+  if s:has_map_to_spc()
+    return
+  endif
+  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
+  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
+  nmap <Space> [SPC]
+  vmap <Space> [SPC]
   " Windows
   for i in range(1, 9)
-    exe "call SpaceVim#mapping#space#def('nnoremap', [" . i . "], 'call SpaceVim#layers#core#statusline#jump(" . i . ")', 'window " . i . "', 1)"
+    exe "call SpaceVim#mapping#space#def('nnoremap', ["
+          \ . i . "], 'call SpaceVim#layers#core#statusline#jump("
+          \ . i . ")', 'window " . i . "', 1)"
   endfor
   let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
   nnoremap <silent> [SPC]w<tab> :wincmd w<cr>
@@ -37,33 +42,60 @@ function! SpaceVim#mapping#space#init() abort
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'], 'Goyo', 'centered-buffer-mode', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'], 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'], 'close', 'delete window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'tabnew', 'create new tab', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h', 'window-left', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j', 'window-down', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k', 'window-up', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'], 'wincmd l', 'window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'], 'wincmd H', 'window-far-left', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J', 'window-far-down', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K', 'window-far-up', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L', 'window-far-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'only', 'maximize/minimize window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap', 'swap window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext', 'other tabs', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'bel split', 'split-focus-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vs | wincmd w', 'layout-double-columns', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'], 'bel vs', 'split-window-right-focus', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '='], 'wincmd =', 'balance-windows', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'], 'wincmd w', 'cycle and focus between windows', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'], 'ChooseWin', 'select window', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'],
+        \ 'Goyo', 'centered-buffer-mode', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'],
+        \ 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'],
+        \ 'close', 'delete window', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
+        \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'],
+        \ 'tabnew', 'create new tab', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'],
+        \ 'wincmd h', 'window-left', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'],
+        \ 'wincmd j', 'window-down', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'],
+        \ 'wincmd k', 'window-up', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'],
+        \ 'wincmd l', 'window-right', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'],
+        \ 'wincmd H', 'window-far-left', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'],
+        \ 'wincmd J', 'window-far-down', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'],
+        \ 'wincmd K', 'window-far-up', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'],
+        \ 'wincmd L', 'window-far-right', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'],
+        \ 'only', 'maximize/minimize window', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
+        \ 'ChooseWinSwap', 'swap window', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'],
+        \ 'tabnext', 'other tabs', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'],
+        \ 'bel vs | wincmd w', 'split-window-right', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'],
+        \ 'bel vs | wincmd w', 'split-window-right', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'],
+        \ 'bel split | wincmd w', 'split-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'],
+        \ 'bel split | wincmd w', 'split-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'],
+        \ 'bel split', 'split-focus-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'],
+        \ 'silent only | vs | wincmd w', 'layout-double-columns', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'],
+        \ 'silent only | vs | vs | wincmd H', 'split-window-below', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
+        \ 'bel vs', 'split-window-right-focus', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
+        \ 'wincmd =', 'balance-windows', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'],
+        \ 'wincmd w', 'cycle and focus between windows', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'],
+        \ 'ChooseWin', 'select window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
   let s:lnum = expand('<slnum>') + 3
@@ -93,8 +125,9 @@ function! SpaceVim#mapping#space#init() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines invert', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
 
@@ -205,16 +238,16 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with ack', 1)
   " rg
   let g:_spacevim_mappings_space.s.r = {'name' : '+rg'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'B'], 'call SpaceVim#mapping#search#grep("r", "B")',
-        \ 'search cursor word in all buffers with rt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rt', 1)
+        \ 'search cursor word in all buffers with rg', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'P'], 'call SpaceVim#mapping#search#grep("r", "P")',
-        \ 'search cursor word in project with rt', 1)
+        \ 'search cursor word in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'f'], 'call SpaceVim#mapping#search#grep("r", "f")',
-        \ 'search in arbitrary directory  with rt', 1)
+        \ 'search in arbitrary directory  with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'F'], 'call SpaceVim#mapping#search#grep("r", "F")',
-        \ 'search cursor word in arbitrary directory  with rt', 1)
+        \ 'search cursor word in arbitrary directory  with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'j'], 'call SpaceVim#plugins#searcher#find("", "rg")',
         \ 'Background search cursor words in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
@@ -416,4 +449,4 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
-" vim:set et sw=2 cc=80:
+" vim:set et nowrap sw=2 cc=80:

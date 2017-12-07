@@ -45,6 +45,8 @@ call SpaceVim#default()
 
 call SpaceVim#loadCustomConfig()
 
+call SpaceVim#server#connect()
+
 call SpaceVim#end()
 
 call zvim#util#source_rc('general.vim')
@@ -60,5 +62,4 @@ endif
 call zvim#util#source_rc('commands.vim')
 filetype plugin indent on
 syntax on
-
 " vim:set et sw=2 cc=80:

@@ -401,6 +401,7 @@ function! s:winopen() " {{{
   setlocal nocursorline nocursorcolumn colorcolumn=
   setlocal winfixwidth winfixheight
   call s:updateStatusline()
+  call s:toggle_hide_cursor()
 endfunction " }}}
 
 function! s:updateStatusline() abort
@@ -428,7 +429,16 @@ function! s:guide_help_msg() abort
   return substitute(msg,' ', '\\ ', 'g')
 endfunction
 
+let s:t_ve = ''
+function! s:toggle_hide_cursor() abort
+  let t_ve = &t_ve
+  let &t_ve = s:t_ve
+  let s:t_ve = t_ve
+endfunction
+
+
 function! s:winclose() " {{{
+  call s:toggle_hide_cursor()
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
     noautocmd close

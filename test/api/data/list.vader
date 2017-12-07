@@ -1,0 +1,14 @@
+Execute ( SpaceVim api: data#list ):
+  let list = SpaceVim#api#import('data#list')
+  AssertEqual list.pop([1,2,3]), 3
+  AssertEqual list.listpart([1,2,3,4], 2, 1), [3, 4]
+  AssertEqual list.push([1,2], 3), [1, 2, 3]
+  AssertEqual list.shift([1, 2, 3]), 1
+  AssertEqual list.unshift([1, 2, 3], 1), [1, 1, 2, 3]
+  AssertEqual list.uniq([1, 1, 2, 3]), [1, 2, 3]
+  AssertEqual list.uniq_by([1, 1, 2, 3], 'v:val % 2 '), [1, 2]
+  AssertEqual list.clear([1, 1, 2, 3]), []
+  AssertEqual list.char_range('a', 'c'), ['a', 'b', 'c']
+  AssertEqual list.has(['a', 'c'], 'a'), 1
+  AssertEqual list.has_index(['a', 'c'], 1), 1
+  AssertEqual list.replace([1, 2, 3, 4, 5, 6, 7], 3, 5, [0, 0, 0, 0]), [1, 2, 3, 0, 0, 0, 0, 7]

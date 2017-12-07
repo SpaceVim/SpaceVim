@@ -41,7 +41,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'merged' : 0}])
   endif
   if g:spacevim_autocomplete_method ==# 'ycm'
-    call add(plugins, ['ervandew/supertab',                 { 'loadconf_before' : 1, 'merged' : 0}])
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
@@ -57,6 +56,41 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
+          \ }])
+    if !has('nvim')
+      call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
+      call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
+    endif
+  elseif g:spacevim_autocomplete_method == 'asyncomplete'
+    call add(plugins, ['prabirshrestha/asyncomplete.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, ['prabirshrestha/asyncomplete-buffer.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, ['yami-beta/asyncomplete-omni.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
+  elseif g:spacevim_autocomplete_method == 'completor'
+    call add(plugins, ['maralla/completor.vim', {
+          \ 'loadconf' : 1,
+          \ 'merged' : 0,
+          \ }])
+    if g:spacevim_snippet_engine ==# 'neosnippet'
+      call add(plugins, ['maralla/completor-neosnippet', {
+            \ 'loadconf' : 1,
+            \ 'merged' : 0,
+            \ }])
+    endif
+  endif
+  if has('patch-7.4.774')
+    call add(plugins, ['Shougo/echodoc.vim', {
+          \ 'on_cmd' : ['EchoDocEnable', 'EchoDocDisable'],
+          \ 'on_event' : 'CompleteDone',
+          \ 'loadconf_before' : 1,
           \ }])
   endif
   call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
@@ -74,14 +108,28 @@ function! SpaceVim#layers#autocomplete#config() abort
 
   "mapping
   if s:tab_key_behavior ==# 'smart'
-    imap <silent><expr><TAB> SpaceVim#mapping#tab()
-    smap <expr><TAB>
-          \ neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)" :
-          \ (complete_parameter#jumpable(1) ?
-          \ "\<plug>(complete_parameter#goto_next_parameter)" :
-          \ "\<TAB>")
-    imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+    if has('patch-7.4.774')
+      imap <silent><expr><TAB> SpaceVim#mapping#tab()
+      if g:spacevim_snippet_engine ==# 'neosnippet'
+        smap <expr><TAB>
+              \ neosnippet#expandable_or_jumpable() ?
+              \ "\<Plug>(neosnippet_expand_or_jump)" :
+              \ (complete_parameter#jumpable(1) ?
+              \ "\<plug>(complete_parameter#goto_next_parameter)" :
+              \ "\<TAB>")
+        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+      elseif g:spacevim_snippet_engine ==# 'ultisnips'
+        imap <silent><expr><TAB> SpaceVim#mapping#tab()
+        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+        snoremap <silent> <TAB>
+              \ <ESC>:call UltiSnips#JumpForwards()<CR>
+        snoremap <silent> <S-TAB>
+              \ <ESC>:call UltiSnips#JumpBackwards()<CR>
+      else
+      endif
+    else
+      call SpaceVim#logger#warn('smart tab in autocomplete layer need patch 7.4.774')
+    endif
   elseif s:tab_key_behavior ==# 'complete'
     inoremap <expr> <Tab>       pumvisible() ? "\<C-y>" : "\<C-n>"
   elseif s:tab_key_behavior ==# 'cycle'

@@ -6,11 +6,11 @@ title: "SpaceVim lang#markdown layer"
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-- [formatting](#formatting)
-  - [options](#options)
-- [Key bindings](#key-bindings)
+* [Description](#description)
+* [Layer Installation](#layer-installation)
+* [formatting](#formatting)
+  * [options](#options)
+* [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -44,7 +44,11 @@ How to indent the content from list items (`tab`, `mixed` or 1 , default: 1).
 
 **enableWcwidth**
 
-Enable/Disable wcwidth for detecting the length of a table cell, default is 0.
+Enable/Disable wcwidth for detecting the length of a table cell, default is 0. To enable this option, you need to install [wcwidth](https://www.npmjs.com/package/wcwidth)
+
+**listItemChar**
+
+Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
 
 ## Key bindings

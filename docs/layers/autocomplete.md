@@ -1,19 +1,22 @@
 ---
 title: "SpaceVim autocomplete layer"
+description: "This layer provides auto-completion to SpaceVim"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) autocomplete
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Install](#install)
-* [Configuration](#configuration)
-    * [Key bindings](#key-bindings)
-    * [Snippets directories](#snippets-directories)
-    * [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
-* [Key bindings](#key-bindings-1)
-    * [auto-complete](#auto-complete)
-    * [Neosnippet](#neosnippet)
+
+- [Description](#description)
+- [Install](#install)
+- [Configuration](#configuration)
+  - [Key bindings](#key-bindings)
+  - [Snippets directories](#snippets-directories)
+  - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
+- [LSP supported](#lsp-supported)
+- [Key bindings](#key-bindings-1)
+  - [auto-complete](#auto-complete)
+  - [Neosnippet](#neosnippet)
 
 <!-- vim-markdown-toc -->
 
@@ -94,6 +97,8 @@ call SpaceVim#layers#load('autocomplete', {
         \ 'auto-completion-enable-snippets-in-popup' : 0
         \ })
 ```
+
+## LSP supported
 
 ## Key bindings
 
