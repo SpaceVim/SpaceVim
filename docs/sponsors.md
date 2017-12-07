@@ -1,6 +1,6 @@
 ---
 title: "Sponsors"
-description: "sponsors page for spacevim"
+description: "the companies or individuals contributing a monthly amount to help sustain SpaceVim's development."
 ---
 
 ![Bountysource](https://spacevim.org/img/bountysource.png)
