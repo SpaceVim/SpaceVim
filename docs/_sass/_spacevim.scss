@@ -1,3 +1,8 @@
+@charset "utf-8";
+
+// Variables
+@import "variables";
+
 /*! normalize.css 2012-02-07T12:37 UTC - https://github.com/necolas/normalize.css */
 /* ============================================================================= HTML5 display definitions ========================================================================== */
 /* Corrects block display not defined in IE6/7/8/9 & FF3 */
@@ -214,13 +219,17 @@ p, ul, ol, table, pre, dl { margin: 0 0 20px; }
 
 h1, h2, h3 { line-height: 1.1; }
 
-h1 { font-size: 28px; }
+h1 { font-size: $h1-font-size; }
 
-h2 { font-size: 24px; }
+h2 { font-size: $h2-font-size; }
 
 h4, h5, h6 { color: #e8e8e8; }
 
-h3 { font-size: 18px; line-height: 24px; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: normal; color: #b6b6b6; }
+h3 { font-size: $h3-font-size; line-height: 24px; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: normal; color: #b6b6b6; }
+
+h4 { font-size: $h4-font-size; }
+h5 { font-size: $h5-font-size; }
+h6 { font-size: $h6-font-size; }
 
 a { color: #ffcc00; font-weight: 400; text-decoration: none; }
 a:hover { color: #ffeb9b; }
