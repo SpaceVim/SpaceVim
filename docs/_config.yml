@@ -15,11 +15,10 @@ plugins:
 
 github: [metadata]
 
-<<<<<<< HEAD
 sass:
  sass_dir: _sass
  style: compressed
-=======
+
 author:
       name: Shidong Wang
       twitter: SpaceVim
@@ -32,4 +31,3 @@ social:
       - https://twitter.com/SpaceVim
       - https://github.com/SpaceVim/SpaceVim
       - https://www.reddit.com/r/SpaceVim/
->>>>>>> 8b84e4959a542fba3aa7692e26d8fcc9ff4ae029
