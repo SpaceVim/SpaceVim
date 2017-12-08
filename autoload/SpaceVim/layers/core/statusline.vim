@@ -131,7 +131,7 @@ function! s:git_branch() abort
       call fugitive#detect(getcwd())
       let l:head = fugitive#head()
     endif
-    return empty(l:head) ? '' : '  '.l:head . ' '
+    return empty(l:head) ? '' : '  '.l:head . ' '
   endif
   return ''
 endfunction
