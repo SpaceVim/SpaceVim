@@ -515,6 +515,10 @@ The letters displayed in the statusline correspond to the key bindings used to t
 | `SPC t S`   | Ⓢ       | S     | enabled in spell checking                     |
 | `SPC t w`   | ⓦ       | w     | whitespace mode                               |
 
+**colorscheme of statusline:**
+
+current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
+
 #### tabline
 
 Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.

@@ -1,16 +1,42 @@
 ---
 title:  "Conventions"
-description: "conventions of contribute to SpaceVim, including the coding style guide about vim script and markdown"
+description: "conventions of contributing to SpaceVim, including the coding style guides about vim script and markdown"
 permalink: "/conventions"
 ---
 
 # Conventions
 
-## Content
+<!-- vim-markdown-toc GFM -->
 
-- [commit emoji convention](#commit-emoji-convention)
-- [viml coding style guild](#viml-coding-style-guide)
-- [markdown style guide](#markdown-style-guide)
+- [Commit emoji convention](#commit-emoji-convention)
+- [Viml coding style guide](#viml-coding-style-guide)
+  - [Portability](#portability)
+    - [Strings](#strings)
+    - [Matching Strings](#matching-strings)
+    - [Regular Expressions](#regular-expressions)
+    - [Dangerous commands](#dangerous-commands)
+    - [Fragile commands](#fragile-commands)
+    - [Catching Exceptions](#catching-exceptions)
+  - [General Guidelines](#general-guidelines)
+    - [Messaging](#messaging)
+    - [Type checking](#type-checking)
+    - [Python](#python)
+    - [Other Languages](#other-languages)
+    - [Plugin layout](#plugin-layout)
+    - [Functions](#functions)
+    - [Commands](#commands)
+    - [Autocommands](#autocommands)
+    - [Mappings](#mappings)
+    - [Errors](#errors)
+    - [Settings](#settings)
+  - [Style](#style)
+    - [Whitespace](#whitespace)
+    - [Line Continuations](#line-continuations)
+    - [Naming](#naming)
+- [Markdown style guide](#markdown-style-guide)
+- [Thanks:](#thanks)
+
+<!-- vim-markdown-toc -->
 
 ## Commit emoji convention
 
@@ -23,29 +49,35 @@ permalink: "/conventions"
 - :beer: I'm happy like reduced code complexity.
 
 ## Viml coding style guide
+
 ### Portability
+
 Vim is highly configurable. Users can change many of the default settings, including the case sensitivity, the regular expression rules, the substitution rules, and more. In order for your vimscript to work for all users, follow these guidelines:
 
 #### Strings
+
 **Prefer single quoted strings**
 
 Double quoted strings are semantically different in vimscript, and you probably don't want them (they break regexes).
 
-Use double quoted strings when you need an escape sequence (such as "\n") or if you know it doesn't matter and you need to embed single quotes.
+Use double quoted strings when you need an escape sequence (such as "\\n") or if you know it doesn't matter and you need to embed single quotes.
 
 #### Matching Strings
+
 **Use the =~# or =~? operator families over the =~ family.**
 
 The matching behavior depends upon the user's ignorecase and smartcase settings and on whether you compare them with the =~, =~#, or =~? family of operators. Use the =~# and =~? operator families explicitly when comparing strings unless you explicitly need to honor the user's case sensitivity settings.
 
 #### Regular Expressions
-**Prefix all regexes with one of \m, \v, \M, or \V.**
 
-In addition to the case sensitivity settings, regex behavior depends upon the user's nomagic setting. To make regexes act like nomagic and noignorecase are set, prepend all regexes with one of \m, \v, \M, or \V.
+**Prefix all regexes with one of \\m, \\v, \\M, or \\V.**
 
-You are welcome to use other magic levels (\v) and case sensitivities (\c) so long as they are intentional and explicit.
+In addition to the case sensitivity settings, regex behavior depends upon the user's nomagic setting. To make regexes act like nomagic and noignorecase are set, prepend all regexes with one of \\m, \\v, \\M, or \\V.
+
+You are welcome to use other magic levels (\\v) and case sensitivities (\\c) so long as they are intentional and explicit.
 
 #### Dangerous commands
+
 **Avoid commands with unintended side effects.**
 
 Avoid using :s[ubstitute] as it moves the cursor and prints error messages. Prefer functions (such as search()) better suited to scripts.
@@ -55,6 +87,7 @@ The meaning of the g flag depends upon the gdefault setting. If you do use :subs
 For many vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
 
 #### Fragile commands
+
 **Avoid commands that rely on user settings.**
 
 Always use normal! instead of normal. The latter depends upon the user's key mappings and could do anything.
@@ -64,12 +97,15 @@ Avoid :s[ubstitute], as its behavior depends upon a number of local settings.
 The same applies to other commands not listed here.
 
 #### Catching Exceptions
+
 **Match error codes, not error text.**
 
 Error text may be locale dependant.
 
 ### General Guidelines
+
 #### Messaging
+
 **Message the user infrequently.**
 
 Loud scripts are annoying. Message the user only when:
@@ -78,6 +114,7 @@ Loud scripts are annoying. Message the user only when:
 - An error has occurred.
 
 #### Type checking
+
 **Use strict and explicit checks where possible.**
 
 Vimscript has unsafe, unintuitive behavior when dealing with some types. For instance, 0 == 'foo' evaluates to true.
@@ -89,21 +126,25 @@ Check variable types explicitly before using them. Use functions from maktaba#en
 Use :unlet for variables that may change types, particularly those assigned inside loops.
 
 #### Python
+
 **Use sparingly.**
 
 Use python only when it provides critical functionality, for example when writing threaded code.
 
 #### Other Languages
+
 **Use vimscript instead.**
 
 Avoid using other scripting languages such as ruby and lua. We can not guarantee that the end user's vim has been compiled with support for non-vimscript languages.
 
 #### Plugin layout
+
 **Organize functionality into modular plugins**
 
 Group your functionality as a plugin, unified in one directory (or code repository) which shares your plugin's name (with a "vim-" prefix or ".vim" suffix if desired). It should be split into plugin/, autoload/, etc. subdirectories as necessary, and it should declare metadata in the addon-info.json format (see the VAM documentation for details).
 
 #### Functions
+
 **In the autoload/ directory, defined with [!] and [abort].**
 
 Autoloading allows functions to be loaded on demand, which makes startuptime faster and enforces function namespacing.
@@ -117,6 +158,7 @@ Non-library plugins should expose commands instead of functions. Command logic s
 [abort] forces the function to halt when it encounters an error.
 
 #### Commands
+
 **In the plugin/commands.vim or under the ftplugin/ directory, defined without [!].**
 
 General commands go in plugin/commands.vim. Filetype-specific commands go in ftplugin/.
@@ -124,6 +166,7 @@ General commands go in plugin/commands.vim. Filetype-specific commands go in ftp
 Excluding [!] prevents your plugin from silently clobbering existing commands. Command conflicts should be resolved by the user.
 
 #### Autocommands
+
 **Place them in plugin/autocmds.vim, within augroups.**
 
 Place all autocommands in augroups.
@@ -133,6 +176,7 @@ The augroup name should be unique. It should either be, or be prefixed with, the
 Clear the augroup with autocmd! before defining new autocommands in the augroup. This makes your plugin re-entrable.
 
 #### Mappings
+
 **Place them in plugin/mappings.vim, using maktaba#plugin#MapPrefix to get a prefix.**
 
 All key mappings should be defined in plugin/mappings.vim.
@@ -148,6 +192,7 @@ Your plugins generally shouldn't introduce mappings, but if they do, the map com
 When using catch, match the error code rather than the error text.
 
 #### Settings
+
 **Change settings locally**
 
 Use :setlocal and &l: instead of :set and & unless you have explicit reason to do otherwise.
@@ -189,6 +234,7 @@ such as "noremap <leader>gf :grep -f ".
 ```
 
 #### Line Continuations
+
 - Prefer line continuations on semantic boundaries.
 
 ```diff
@@ -214,6 +260,7 @@ autocommand BufEnter <buffer>
 - Do not continue multi-line commands when you can avoid it. Prefer function calls.
 
 #### Naming
+
 In general, use plugin-names-like-this, FunctionNamesLikeThis, CommandNamesLikeThis, augroup_names_like_this, variable_names_like_this.
 
 Always prefix variables with their scope.
@@ -221,28 +268,29 @@ Always prefix variables with their scope.
 - plugin-names-like-this
     Keep them short and sweet.
 - FunctionNamesLikeThis
-    - Prefix script-local functions with s:
-    - Autoloaded functions may not have a scope prefix.
-    - Do not create global functions. Use autoloaded functions instead.
+  - Prefix script-local functions with s:
+  - Autoloaded functions may not have a scope prefix.
+  - Do not create global functions. Use autoloaded functions instead.
 - CommandNamesLikeThis
     Prefer succinct command names over common command prefixes.
 - variable_names_like_this
     Augroup names count as variables for naming purposes.
 - Prefix all variables with their scope.
-    - Global variables with g:
-    - Script-local variables with s:
-    - Function arguments with a:
-    - Function-local variables with l:
-    - Vim-predefined variables with v:
-    - Buffer-local variables with b:
-    - g:, s:, and a: must always be used.
-    - b: changes the variable semantics; use it when you want buffer-local semantics.
-    - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
+  - Global variables with g:
+  - Script-local variables with s:
+  - Function arguments with a:
+  - Function-local variables with l:
+  - Vim-predefined variables with v:
+  - Buffer-local variables with b:
+  - g:, s:, and a: must always be used.
+  - b: changes the variable semantics; use it when you want buffer-local semantics.
+  - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 ## Markdown style guide
 
 ## Thanks:
-- link : https://google.github.io/styleguide/vimscriptguide.xml
-- link : https://google.github.io/styleguide/vimscriptfull.xml
-- link : https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt
+
+- link : <https://google.github.io/styleguide/vimscriptguide.xml>
+- link : <https://google.github.io/styleguide/vimscriptfull.xml>
+- link : <https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt>
 - [google's markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)
