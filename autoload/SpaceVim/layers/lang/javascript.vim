@@ -28,6 +28,7 @@ let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:use_lsp = get(a:var, 'use_lsp', 0) && has('nvim')
+        \ && executable('javascript-typescript-stdio')
   let s:auto_fix = get(a:var, 'auto_fix', 0)
 endfunction
 
@@ -45,9 +46,10 @@ function! SpaceVim#layers#lang#javascript#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ funcref('s:on_ft'))
 
-  if s:use_lsp && executable('javascript-typescript-stdio')
+  if s:use_lsp
     call SpaceVim#lsp#reg_server('javascript', ['javascript-typescript-stdio'])
-    call SpaceVim#mapping#gd#add('javascript', function('s:lsp_go_to_def'))
+    call SpaceVim#mapping#gd#add('javascript',
+          \ function('SpaceVim#lsp#go_to_def'))
   else
     call SpaceVim#mapping#gd#add('javascript', function('s:tern_go_to_def'))
   endif
@@ -80,12 +82,12 @@ function! s:on_ft() abort
   " }}}
 
   if s:use_lsp
-    nnoremap <silent><buffer> K :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call LanguageClient_textDocument_hover()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call LanguageClient_textDocument_rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   else
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TernDoc',
           \ 'show document', 1)
@@ -95,12 +97,6 @@ function! s:on_ft() abort
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-endfunction
-
-function! s:lsp_go_to_def() abort
-  if exists('*LanguageClient_textDocument_definition')
-    call LanguageClient_textDocument_definition()
-  endif
 endfunction
 
 function! s:tern_go_to_def() abort
