@@ -1,5 +1,6 @@
 ---
 title: "SpaceVim autocomplete layer"
+description: "This layer provides auto-completion to SpaceVim"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) autocomplete

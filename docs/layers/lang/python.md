@@ -1,12 +1,14 @@
 ---
 title: "SpaceVim lang#python layer"
+description: "This layer is for Python development, provide autocompletion, syntax checking, code format for python file."
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#python
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Features](#features)
+
+- [Description](#description)
+- [Features](#features)
 
 <!-- vim-markdown-toc -->
 

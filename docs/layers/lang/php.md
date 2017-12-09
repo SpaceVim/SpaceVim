@@ -1,13 +1,15 @@
 ---
 title: "SpaceVim lang#php layer"
+description: "This layer adds PHP language support to SpaceVim"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#php
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-    * [Requirement](#requirement)
+
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+  - [Requirement](#requirement)
 
 <!-- vim-markdown-toc -->
 

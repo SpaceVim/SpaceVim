@@ -15,6 +15,10 @@ plugins:
 
 github: [metadata]
 
+sass:
+ sass_dir: _sass
+ style: compressed
+
 author:
       name: Shidong Wang
       twitter: SpaceVim

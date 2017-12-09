@@ -131,7 +131,7 @@ function! s:git_branch() abort
       call fugitive#detect(getcwd())
       let l:head = fugitive#head()
     endif
-    return empty(l:head) ? '' : '  '.l:head . ' '
+    return empty(l:head) ? '' : '  '.l:head . ' '
   endif
   return ''
 endfunction
@@ -151,7 +151,7 @@ endfunction
 function! s:date() abort
 
   return ' ' . s:TIME.current_date() . ' '
-  
+
 endfunction
 
 function! s:whitespace() abort
@@ -184,14 +184,72 @@ function! s:battery_status() abort
   endif
 endfunction
 
+if g:spacevim_enable_neomake
+  function! s:syntax_checking()
+    if !exists('g:loaded_neomake')
+      return ''
+    endif
+    let counts = neomake#statusline#LoclistCounts()
+    let warnings = get(counts, 'W', 0)
+    let errors = get(counts, 'E', 0)
+    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    return l
+  endfunction
+elseif g:spacevim_enable_ale
+  function! s:syntax_checking()
+    if !exists('g:ale_enabled')
+      return ''
+    endif
+    let counts = ale#statusline#Count(bufnr(''))
+    let warnings = counts.warning + counts.style_warning
+    let errors = counts.error + counts.style_error
+    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    return l
+  endfunction
+else
+  function! s:syntax_checking()
+    if !exists(':SyntasticCheck')
+      return ''
+    endif
+    let l = SyntasticStatuslineFlag()
+    if strlen(l) > 0
+      return l
+    else
+      return ''
+    endif
+  endfunction
+endif
+
+function! s:hunks() abort
+  let hunks = [0,0,0]
+  try
+    let hunks = GitGutterGetHunkSummary()
+  catch
+  endtry
+  let rst = ''
+  if hunks[0] > 0
+    let rst .= hunks[0] . '+ '
+  endif
+  if hunks[1] > 0
+    let rst .= hunks[1] . '~ '
+  endif
+  if hunks[2] > 0
+    let rst .= hunks[2] . '- '
+  endif
+  return empty(rst) ? '' : ' ' . rst
+endfunction
 
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
+      \ 'syntax checking' : function('s:syntax_checking'),
       \ 'filename' : function('s:filename'),
       \ 'fileformat' : function('s:fileformat'),
       \ 'major mode' : function('s:major_mode'),
       \ 'minor mode lighters' : function('s:modes'),
       \ 'version control info' : function('s:git_branch'),
+      \ 'hunks' : function('s:hunks'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
       \ 'time' : function('s:time'),
@@ -236,43 +294,6 @@ function! s:search_status() abort
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
-if g:spacevim_enable_neomake
-  function! s:syntax_checking()
-    if !exists('g:loaded_neomake')
-      return ''
-    endif
-    let counts = neomake#statusline#LoclistCounts()
-    let warnings = get(counts, 'W', 0)
-    let errors = get(counts, 'E', 0)
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
-    return l
-  endfunction
-elseif g:spacevim_enable_ale
-  function! s:syntax_checking()
-    if !exists('g:ale_enabled')
-      return ''
-    endif
-    let counts = ale#statusline#Count(bufnr(''))
-    let warnings = counts.warning + counts.style_warning
-    let errors = counts.error + counts.style_error
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
-    return l
-  endfunction
-else
-  function! s:syntax_checking()
-    if !exists(':SyntasticCheck')
-      return ''
-    endif
-    let l = SyntasticStatuslineFlag()
-    if strlen(l) > 0
-      return l
-    else
-      return ''
-    endif
-  endfunction
-endif
 
 
 function! s:filesize() abort
@@ -292,6 +313,9 @@ function! s:filesize() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#get(...) abort
+  for nr in range(1, winnr('$'))
+    call setwinvar(nr, 'winwidth', winwidth(nr))
+  endfor
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -354,19 +378,25 @@ function! s:active() abort
   endfor
   let fname = s:buffer_name()
   return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname,
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 
 function! s:inactive() abort
-  return '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-        \ . '%#SpaceVim_statusline_b#' . s:filename() . s:ilsep
-        \ . ' ' . &filetype . ' ' . s:ilsep 
-        \ . s:modes() . s:ilsep
-        \ . s:git_branch() . s:ilsep
-        \ . ' %='
-        \ . s:irsep . '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}'
-        \ . s:irsep . ' %P '
+  let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
+  let secs = [s:filename(), &filetype, s:modes(), s:git_branch()]
+  let base = 10
+  for sec in secs
+    let len = s:STATUSLINE.len(sec)
+    let base += len
+    let l .= '%{ get(w:, "winwidth", 150) < ' . base . ' ? "" : (" ' . s:STATUSLINE.eval(sec) . ' ' . s:ilsep . '")}'
+  endfor
+  if get(w:, 'winwidth', 150) > base + 10
+    let l .= join(['%=', '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+  endif
+  return l
 endfunction
+
+
 function! s:gitgutter() abort
   if exists('b:gitgutter_summary')
     let l:summary = get(b:, 'gitgutter_summary')
@@ -473,10 +503,12 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
         \ 'toggle the statuline itself', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
+        \ 'toggle the hunks summary', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',
-          \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+          \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', g:spacevim_sidebar_width)
   endfunction
   let g:tagbar_status_func = 'TagbarStatusline'
   let g:unite_force_overwrite_statusline = 0
@@ -508,7 +540,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
         \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '',
-        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 " @vimlint(EVL103, 0, a:regex)
 " @vimlint(EVL103, 0, a:marked)
@@ -518,7 +550,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
         \ [' ' . getcwd() . ' '], s:lsep, s:rsep, '',
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z')
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
@@ -590,14 +622,14 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#register_sections(name, func)
 
- if has_key(s:registed_sections, a:name)
-   call SpaceVim#logger#info('statusline build-in section ' . a:name . ' has been changed!')
-   call extend(s:registed_sections, {a:name : a:func})
- else
-   call extend(s:registed_sections, {a:name : a:func})
- endif
+  if has_key(s:registed_sections, a:name)
+    call SpaceVim#logger#info('statusline build-in section ' . a:name . ' has been changed!')
+    call extend(s:registed_sections, {a:name : a:func})
+  else
+    call extend(s:registed_sections, {a:name : a:func})
+  endif
 
 endfunction
 
 
-" vim:set et sw=2 cc=80:
+" vim:set et sw=2 cc=80 nowrap:

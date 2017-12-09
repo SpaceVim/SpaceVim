@@ -1,4 +1,7 @@
 scriptencoding utf-8
+
+let s:VCOP = SpaceVim#api#import('vim#compatible')
+
 let g:vimfiler_as_default_explorer = get(g:, 'vimfiler_as_default_explorer', 1)
 let g:vimfiler_restore_alternate_file = get(g:, 'vimfiler_restore_alternate_file', 1)
 let g:vimfiler_tree_indentation = get(g:, 'vimfiler_tree_indentation', 1)
@@ -15,7 +18,8 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.DS_Store$',
       \ '^\.init\.vim-rplugin\~$',
       \ '^\.netrwhist$',
-      \ '\.class$'
+      \ '\.class$',
+      \ '^\.'
       \])
 
 if has('mac')
@@ -80,6 +84,8 @@ function! s:vimfilerinit()
   nnoremap <silent><buffer><expr> sg  vimfiler#do_action('vsplit')
   nnoremap <silent><buffer><expr> sv  vimfiler#do_action('split')
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
+  nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
+  nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
   nmap <buffer> gx      <Plug>(vimfiler_execute_vimfiler_associated)
   nmap <buffer> '       <Plug>(vimfiler_toggle_mark_current_line)
   nmap <buffer> v       <Plug>(vimfiler_quick_look)
@@ -91,5 +97,38 @@ function! s:vimfilerinit()
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
 endf
+
+function! s:paste_to_file_manager() abort
+  let path = vimfiler#get_filename()
+  if !isdirectory(path)
+    let path = fnamemodify(path, ':p:h')
+  endif
+  let old_wd = getcwd()
+  if old_wd == path
+    call s:VCOP.systemlist(['xclip-pastefile'])
+  else
+    noautocmd exe 'cd' fnameescape(path)
+    call s:VCOP.systemlist(['xclip-pastefile'])
+    noautocmd exe 'cd' fnameescape(old_wd)
+  endif
+endfunction
+
+function! s:copy_to_system_clipboard() abort
+  let filename = vimfiler#get_marked_filenames(b:vimfiler)
+
+  if empty(filename)
+    " Use cursor filename.
+    let filename = vimfiler#get_filename()
+    if filename ==# '..' || empty(vimfiler#get_file(b:vimfiler))
+      let filename = b:vimfiler.current_dir
+    else
+      let filename = vimfiler#get_file(b:vimfiler).action__path
+    endif
+    call s:VCOP.systemlist(['xclip-copyfile', filename])
+  else
+    call s:VCOP.systemlist(['xclip-copyfile'] + filename)
+  endif
+  echo 'Yanked:' . (type(filename) == 3 ? len(filename) : 1 ) . ' files'
+endfunction
 
 " vim:set et sw=2:

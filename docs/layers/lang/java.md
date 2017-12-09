@@ -1,18 +1,20 @@
 ---
 title: "SpaceVim lang#java layer"
+description: "This layer is for Java development"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#java
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-* [Key bindings](#key-bindings)
-    * [Java language specified key bindings](#java-language-specified-key-bindings)
-        * [Maven](#maven)
-        * [Jump](#jump)
-    * [Problems buffer](#problems-buffer)
-    * [Project buffer](#project-buffer)
+
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+- [Key bindings](#key-bindings)
+  - [Java language specified key bindings](#java-language-specified-key-bindings)
+    - [Maven](#maven)
+    - [Jump](#jump)
+  - [Problems buffer](#problems-buffer)
+  - [Project buffer](#project-buffer)
 
 <!-- vim-markdown-toc -->
 

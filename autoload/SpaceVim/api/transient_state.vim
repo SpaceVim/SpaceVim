@@ -120,7 +120,6 @@ function! s:self._update_content() abort
             if type(key.key) == 1   " is a string
                 let right_max_key_len = max([len(key.key), right_max_key_len])
             elseif type(key.key) == 3  " is a list
-                let g:wsd = key.key
                 let right_max_key_len = max([len(join(key.key, '/')), right_max_key_len])
             elseif type(key.key) == 4  " is a dict
                 let right_max_key_len = max([len(key.key.name), right_max_key_len])

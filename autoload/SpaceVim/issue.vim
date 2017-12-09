@@ -45,7 +45,6 @@ function! SpaceVim#issue#new()
           \ 'body' : join(getline(1, '$'), "\n"),
           \ }
     let response = github#api#issues#Create('SpaceVim', 'SpaceVim', username, password, issue)
-    let g:wsd = response
     if has_key(response, 'html_url')
       echo 'Issue created done: ' . response.html_url
     else

@@ -110,13 +110,23 @@ function! SpaceVim#layers#autocomplete#config() abort
   if s:tab_key_behavior ==# 'smart'
     if has('patch-7.4.774')
       imap <silent><expr><TAB> SpaceVim#mapping#tab()
-      smap <expr><TAB>
-            \ neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" :
-            \ (complete_parameter#jumpable(1) ?
-            \ "\<plug>(complete_parameter#goto_next_parameter)" :
-            \ "\<TAB>")
-      imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+      if g:spacevim_snippet_engine ==# 'neosnippet'
+        smap <expr><TAB>
+              \ neosnippet#expandable_or_jumpable() ?
+              \ "\<Plug>(neosnippet_expand_or_jump)" :
+              \ (complete_parameter#jumpable(1) ?
+              \ "\<plug>(complete_parameter#goto_next_parameter)" :
+              \ "\<TAB>")
+        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+      elseif g:spacevim_snippet_engine ==# 'ultisnips'
+        imap <silent><expr><TAB> SpaceVim#mapping#tab()
+        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+        snoremap <silent> <TAB>
+              \ <ESC>:call UltiSnips#JumpForwards()<CR>
+        snoremap <silent> <S-TAB>
+              \ <ESC>:call UltiSnips#JumpBackwards()<CR>
+      else
+      endif
     else
       call SpaceVim#logger#warn('smart tab in autocomplete layer need patch 7.4.774')
     endif
