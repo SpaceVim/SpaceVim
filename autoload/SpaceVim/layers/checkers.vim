@@ -49,7 +49,11 @@ function! SpaceVim#layers#checkers#config() abort
     " after a delay
     autocmd CursorMoved * call <SID>cursor_move_delay()
     " when switch to Insert mode, stop timer and clear the signature
-    autocmd InsertEnter,WinLeave,CmdLineEnter * call <SID>signatures_clear() | redraw
+    if exists('##CmdLineEnter')
+      autocmd InsertEnter,WinLeave,CmdLineEnter * call <SID>signatures_clear() | redraw
+    else
+      autocmd InsertEnter,WinLeave * call <SID>signatures_clear() | redraw
+    endif
   augroup END
 endfunction
 
