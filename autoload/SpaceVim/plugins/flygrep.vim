@@ -6,24 +6,19 @@ let s:grepid = 0
 
 function! SpaceVim#plugins#flygrep#open() abort
   if exists('*nvim_open_float_win')
-    let b = nvim_create_buf(v:false)
-    call nvim_buf_set_option(b, 'buftype', 'nofile')
-    call nvim_buf_set_option(b, 'filetype', 'SpaceVimFlyGrep')
-    call nvim_buf_set_option(b, 'bufhidden', 'wipe')
-    call nvim_buf_set_option(b, 'buflisted', v:false)
-    call nvim_buf_set_option(b, 'swapfile', v:false)
-    let opts = {'x':100, 'y':5, 'anchor': 'NE'}
-    let w =  nvim_open_float_win(b,v:false,50,8,opts)
-    hi Floating guibg=#000044
-    call setwinvar(w, '&winhl', 'Normal:Floating')
-    call setwinvar(w, '&number', 0)
-    call setwinvar(w, '&relativenumber', 0)
-    call setwinvar(w, '&list', 0)
-    call setwinvar(w, '&wrap', 0)
-    call setwinvar(w, '&cursorline', 1)
-    call setwinvar(w, '&spell', 0)
-    let s:buffer_id = b
+    let s:buffer_id = nvim_create_buf(v:false)
+    let opts = {'x':110, 'y':9, 'anchor': 'NE'}
+    let w =  nvim_open_float_win(s:buffer_id,v:false,100,20,opts)
+    " hi Floating guibg=#a89984
+    " call setwinvar(w, '&winhl', 'Normal:Floating')
+    exe win_id2win(w) . 'wincmd w'
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+    setf SpaceVimFlyGrep
+    let save_tve = &t_ve
+    setlocal t_ve=
+    redraw!
     call s:MPT.open()
+    let &t_ve = save_tve
   else
     rightbelow split __flygrep__
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
