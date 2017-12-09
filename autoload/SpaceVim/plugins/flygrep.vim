@@ -5,15 +5,31 @@ let s:grepid = 0
 
 
 function! SpaceVim#plugins#flygrep#open() abort
-  rightbelow split __flygrep__
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
-  let save_tve = &t_ve
-  setlocal t_ve=
-  " setlocal nomodifiable
-  setf SpaceVimFlyGrep
-  redraw!
-  call s:MPT.open()
-  let &t_ve = save_tve
+  if exists('*nvim_open_float_win')
+    let s:buffer_id = nvim_create_buf(v:false)
+    let opts = {'x':110, 'y':9, 'anchor': 'NE'}
+    let w =  nvim_open_float_win(s:buffer_id,v:false,100,20,opts)
+    " hi Floating guibg=#a89984
+    " call setwinvar(w, '&winhl', 'Normal:Floating')
+    exe win_id2win(w) . 'wincmd w'
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+    setf SpaceVimFlyGrep
+    let save_tve = &t_ve
+    setlocal t_ve=
+    redraw!
+    call s:MPT.open()
+    let &t_ve = save_tve
+  else
+    rightbelow split __flygrep__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+    let save_tve = &t_ve
+    setlocal t_ve=
+    " setlocal nomodifiable
+    setf SpaceVimFlyGrep
+    redraw!
+    call s:MPT.open()
+    let &t_ve = save_tve
+  endif
 endfunction
 
 let s:grep_expr = ''
@@ -64,6 +80,7 @@ let s:MPT._onclose = function('s:close_buffer')
 function! s:close_grep_job() abort
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
+    let s:std_line = 0
   endif
   if s:grep_timer_id != 0
     call timer_stop(s:grep_timer_id)
@@ -76,18 +93,28 @@ let s:MPT._oninputpro = function('s:close_grep_job')
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:id)
 " @vimlint(EVL103, 1, a:event)
-function! s:grep_stdout(id, data, event) abort
-  let datas =filter(a:data, '!empty(v:val)')
-  if getline(1) ==# ''
-    call setline(1, datas)
-  else
-    call append('$', datas)
-  endif
-  call s:MPT._build_prompt()
-endfunction
+if exists('*nvim_open_float_win')
+  let s:std_line = 0
+  function! s:grep_stdout(id, data, event) abort
+    let datas =filter(a:data, '!empty(v:val)')
+    call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
+    let s:std_line += len(datas)
+  endfunction
+else
+  function! s:grep_stdout(id, data, event) abort
+    let datas =filter(a:data, '!empty(v:val)')
+    if getline(1) ==# ''
+      call setline(1, datas)
+    else
+      call append('$', datas)
+    endif
+    call s:MPT._build_prompt()
+  endfunction
+endif
 
 function! s:grep_exit(id, data, event) abort
   redrawstatus
+  let s:std_line = 1
   let s:grepid = 0
 endfunction
 
