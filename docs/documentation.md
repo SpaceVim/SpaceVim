@@ -519,6 +519,36 @@ The letters displayed in the statusline correspond to the key bindings used to t
 
 current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
 
+```vim
+" the theme colors should be 
+" [
+"    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
+"    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
+"    \ [ c_guifg, c_guibg, c_ctermfg, c_ctermbg],
+"    \ [ z_guibg, z_ctermbg],
+"    \ [ i_guifg, i_guibg, i_ctermfg, i_ctermbg],
+"    \ [ v_guifg, v_guibg, v_ctermfg, v_ctermbg],
+"    \ [ r_guifg, r_guibg, r_ctermfg, r_ctermbg],
+" \ ]
+" group_a: window id
+" group_b/group_c: stausline sections
+" group_z: empty area 
+" group_i: window id in insert mode
+" group_v: window id in visual mode
+" group_r: window id in select mode
+function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
+    return [
+                \ ['#282828', '#a89984', 246, 235],
+                \ ['#a89984', '#504945', 239, 246],
+                \ ['#a89984', '#3c3836', 237, 246],
+                \ ['#665c54', 241],
+                \ ['#282828', '#83a598', 235, 109],
+                \ ['#282828', '#fe8019', 235, 208],
+                \ ['#282828', '#8ec07c', 235, 108],
+                \ ]
+endfunction
+```
+
 #### tabline
 
 Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
