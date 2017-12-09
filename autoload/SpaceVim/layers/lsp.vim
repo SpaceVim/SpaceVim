@@ -58,7 +58,7 @@ function! SpaceVim#layers#lsp#config() abort
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 'ALEInfoSign'
   endif
 
-  let g:LanguageClient_autoStart = 0
+  let g:LanguageClient_autoStart = 1
   " }}}
 endfunction
 
