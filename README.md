@@ -89,7 +89,7 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
   ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
 - **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
   ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
-- **Awesome statusline:**a heavily customized modular statusline.
+- **Awesome statusline:** a heavily customized modular statusline.
   ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
 - **Neovim centric:** Dark powered mode of SpaceVim
 
