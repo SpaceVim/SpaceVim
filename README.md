@@ -28,6 +28,20 @@ Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
+
+<!-- vim-markdown-toc GFM -->
+
+- [Requirements](#requirements)
+- [Install](#install)
+  - [Linux and macOS](#linux-and-macos)
+  - [Windows](#windows)
+- [Project layout](#project-layout)
+- [Features](#features)
+- [Support SpaceVim](#support-spacevim)
+- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
+
 ### Requirements
 
 At a minimum, SpaceVim requires `git` to be installed.  For a better graphical experience, install [nerd-font](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal supports [true colors](https://gist.github.com/XVilka/8346728).
