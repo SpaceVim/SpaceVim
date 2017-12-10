@@ -1,23 +1,23 @@
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
-     \ ['pangloss/vim-javascript',                { 'on_ft' : 'javascript' }],
-     \ ['othree/yajs.vim',                        { 'on_ft' : 'javascript' }],
-     \ ['othree/es.next.syntax.vim',              { 'on_ft' : 'javascript' }],
-     \ ['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript', 'coffee', 'ls', 'typescript'] }],
-     \ ['MaxMEllon/vim-jsx-pretty',               { 'on_ft' : 'javascript' }],
-     \ ['Galooshi/vim-import-js',                 { 'on_ft' : 'javascript', 'build' : 'npm install -g import-js' }],
-     \ ['maksimr/vim-jsbeautify',                 { 'on_ft' : 'javascript' }],
-     \ ['mmalecki/vim-node.js',                   { 'on_ft' : 'javascript' }],
+     \ ['MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript' }],
+     \ ['Galooshi/vim-import-js', {
+     \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
+     \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
+     \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
+     \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+     \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
+     \ ['othree/javascript-libraries-syntax.vim', {
+     \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
+     \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
+     \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
      \ ]
 
   if !s:use_lsp
     call add(plugins, ['ternjs/tern_for_vim', {
           \ 'on_ft': 'javascript', 'build' : 'npm install' }])
-
-    if has('nvim')
-      call add(plugins, ['carlitux/deoplete-ternjs', { 'on_ft': [
-            \ 'javascript'] }])
-    endif
+    call add(plugins, ['carlitux/deoplete-ternjs', { 'on_ft': [
+          \ 'javascript'], 'if': has('nvim') }])
   endif
 
   return plugins
