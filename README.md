@@ -36,6 +36,7 @@ Here is a throughput graph of the repository for the last few weeks:
   - [Windows](#windows)
 - [Project layout](#project-layout)
 - [Features](#features)
+- [Blogs](#blogs)
 - [Support SpaceVim](#support-spacevim)
 - [Credits & Thanks](#credits--thanks)
 
@@ -92,6 +93,13 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 - **Awesome statusline:** a heavily customized modular statusline.
   ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
 - **Neovim centric:** Dark powered mode of SpaceVim
+
+### Blogs
+
+- [Use Vim as a Java IDE](http://spacevim.org/use-vim-as-a-java-ide/)
+- [An async code runner in SpaceVim](http://spacevim.org/async-code-runner-in-SpaceVim/)
+
+More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 ### Support SpaceVim
 
