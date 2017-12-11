@@ -32,9 +32,9 @@ endfunction
 
 function! SpaceVim#plugins#repl#send(type) abort
   if a:type ==# 'line'
-    call s:JOB.send(s:job_id, [getline('.')])
+    call s:JOB.send(s:job_id, [getline('.'), ''])
   elseif a:type ==# 'buffer'
-    call s:JOB.send(s:job_id, [getline(1, '$')])
+    call s:JOB.send(s:job_id, getline(1, '$') + [''])
   elseif a:type ==# 'selection'
   else
   endif

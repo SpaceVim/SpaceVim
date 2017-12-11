@@ -190,7 +190,11 @@ function! s:self.send(id, data) abort
     if has_key(self.jobs, a:id)
       let job = get(self.jobs, a:id)
       let chanel = job_getchannel(job)
-      call ch_sendraw(chanel, a:data . "\n")
+      if type(a:data) == type('')
+        call ch_sendraw(chanel, a:data . "\n")
+      else
+        call ch_sendraw(chanel, join(a:data, "\n"))
+      endif
     else
       call self.warn('No job with such id')
     endif

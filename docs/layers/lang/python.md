@@ -71,7 +71,7 @@ pip install --user isort
 
 ### Inferior REPL process
 
-Start a Python or iPython inferior REPL process with `SPC l s i`. If ipython is available in system executable search paths, ipython will be used to launch python shell; otherwise, default python interpreter will be used. You may change your system executable search path by activating a virtual environment.
+Start a Python or iPython inferior REPL process with `SPC l s i`. If `ipython` is available in system executable search paths, `ipython` will be used to launch python shell; otherwise, default `python` interpreter will be used. You may change your system executable search path by activating a virtual environment.
 
 Send code to inferior process commands:
 

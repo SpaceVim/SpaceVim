@@ -31,7 +31,11 @@ function! SpaceVim#layers#lang#python#config() abort
         \ '']
         \ )
   let g:no_autoflake_maps = 1
-  call SpaceVim#plugins#repl#reg('python', 'python')
+  if executable('ipython')
+    call SpaceVim#plugins#repl#reg('python', 'ipython')
+  elseif executable('python')
+    call SpaceVim#plugins#repl#reg('python', 'python')
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
