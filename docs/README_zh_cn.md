@@ -292,7 +292,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 图中包含了一个 Neovim 的终端， 一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
 
-想要查阅更多截图，清阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
 ### 谁将从 SpaceVim 中获益？
 
@@ -345,7 +345,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，执定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
 
-SpaceVim 同时还支持项目本地配置，配置出世文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
+SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
 这是一个用户配置文件示例：
 
