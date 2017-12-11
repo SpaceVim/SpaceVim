@@ -75,8 +75,11 @@ Start a Python or iPython inferior REPL process with `SPC l s i`. If `ipython` i
 
 Send code to inferior process commands:
 
-| Key Binding | Description |
-| ----------- | ----------- |
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
 
 ### Running current script
 
