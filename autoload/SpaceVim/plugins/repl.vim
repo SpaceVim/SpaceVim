@@ -137,6 +137,7 @@ function! s:close() abort
   if s:job_id != 0
     call s:JOB.stop(s:job_id)
   endif
+  exe 'bd' s:bufnr
 endfunction
 
 let s:exes = {}
