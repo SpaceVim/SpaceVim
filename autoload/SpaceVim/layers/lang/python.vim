@@ -18,6 +18,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
   endif
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
+  call add(plugins, ['tell-k/vim-autoflake', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -29,12 +30,18 @@ function! SpaceVim#layers#lang#python#config() abort
         \ '# -*- coding: utf-8 -*-',
         \ '']
         \ )
-
+  let g:no_autoflake_maps = 1
 endfunction
 
 function! s:language_specified_mappings() abort
-
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+  let g:_spacevim_mappings_space.l.i = {'name' : '+Imports'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 's'],
+        \ 'Neoformat isort',
+        \ 'sort imports', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 'r'],
+        \ 'Autoflake',
+        \ 'remove unused imports', 1)
 endfunction

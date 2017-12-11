@@ -88,5 +88,5 @@ To running a python script, you can press `SPC l r` to run current file without 
 
 | Key Binding | Description                          |
 | ----------- | ------------------------------------ |
-| `SPC l r i` | remove unused imports with autoflake |
-| `SPC l r I` | sort imports with isort              |
+| `SPC l i r` | remove unused imports with autoflake |
+| `SPC l i s` | sort imports with isort              |
