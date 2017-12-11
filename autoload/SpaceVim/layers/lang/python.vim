@@ -31,6 +31,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ '']
         \ )
   let g:no_autoflake_maps = 1
+  call SpaceVim#plugins#repl#reg('python', 'python')
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -44,4 +45,8 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 'r'],
         \ 'Autoflake',
         \ 'remove unused imports', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("python")',
+        \ 'start REPL process', 1)
 endfunction
