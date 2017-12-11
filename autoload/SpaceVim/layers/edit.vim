@@ -38,10 +38,14 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
-        \  'jsp' : {
-        \      'extends' : 'html',
-        \  },
-        \}
+        \ 'javascript': {
+        \ 'extends': 'jsx',
+        \ },
+        \ 'jsp' : {
+        \ 'extends': 'html',
+        \ },
+        \ }
+
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
   let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
