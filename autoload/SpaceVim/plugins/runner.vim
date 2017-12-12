@@ -186,5 +186,5 @@ function! SpaceVim#plugins#runner#close() abort
   if s:status.is_exit == 0
     call s:JOB.close(s:job_id)
   endif
-  exe 'bd' s:bufnr
+  exe 'bd ' s:bufnr
 endfunction

@@ -146,7 +146,7 @@ function! s:close() abort
     let s:job_id = 0
   endif
   if s:bufnr != 0 && bufexists(s:bufnr)
-    exe 'bd' s:bufnr
+    exe 'bd ' s:bufnr
   endif
 endfunction
 
