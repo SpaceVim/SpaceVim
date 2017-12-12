@@ -75,7 +75,11 @@ let s:last_echoed_error = ''
 let s:clv = &conceallevel
 function! s:neomake_signatures_current_error(...) abort
   call s:neomake_signatures_clear()
-  let message = neomake#GetCurrentErrorMsg()
+  try
+    let message = neomake#GetCurrentErrorMsg()
+  catch /^Vim\%((\a\+)\)\=:E117/
+    let message = ''
+  endtry
   if empty(message)
     if exists('s:last_echoed_error')
       unlet s:last_echoed_error
