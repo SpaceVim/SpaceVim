@@ -141,10 +141,12 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! s:close() abort
-  if s:job_id != 0
+  if exists('s:job_id') && s:job_id != 0
     call s:JOB.stop(s:job_id)
   endif
-  exe 'bd' s:bufnr
+  if s:bufnr != 0
+    exe 'bd' s:bufnr
+  endif
 endfunction
 
 let s:exes = {}
