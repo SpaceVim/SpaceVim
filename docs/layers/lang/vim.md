@@ -1,5 +1,6 @@
 ---
 title: "SpaceVim lang#vim layer"
+description: "This layer is for writting vim script, including code completion, syntax checking and buffer formatting"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#vim

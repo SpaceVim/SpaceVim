@@ -1,13 +1,15 @@
 ---
 title: "SpaceVim lang#ruby layer"
+description: "This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file."
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#ruby
 
 <!-- vim-markdown-toc GFM -->
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-* [Key bindings](#key-bindings)
+
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 

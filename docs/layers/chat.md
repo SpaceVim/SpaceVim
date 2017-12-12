@@ -1,4 +1,5 @@
 ---
+title: "SpaceVim chat layer"
 description: "SpaceVim chatting layer provide chatting with qq and weixin in vim."
 ---
 
