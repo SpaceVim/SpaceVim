@@ -48,15 +48,15 @@ endfunction
 
 
 function! s:start(exe) abort
-  call s:open_windows()
   let s:lines = 0
   let s:status = {
-        \ 'is_running' : 0,
+        \ 'is_running' : 1,
         \ 'is_exit' : 0,
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
   let s:start_time = reltime()
+  call s:open_windows()
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . a:exe, '', repeat('-', 20)])
   let s:lines += 3
   let s:job_id =  s:JOB.start(a:exe,{
@@ -158,6 +158,14 @@ function! SpaceVim#plugins#repl#reg(ft, execute) abort
 
 endfunction
 
+function! SpaceVim#plugins#repl#status() abort
+  if s:status.is_running == 1
+    return 'running'
+  elseif s:status.is_exit == 1
+    return 'exit code : ' . s:status.exit_code 
+          \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
+  endif
+endfunction
 
 let s:bufnr = 0
 function! s:open_windows() abort

@@ -351,6 +351,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# HelpDescribe %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimRunner'
     return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
+  elseif &filetype ==# 'SpaceVimREPL'
+    return '%#SpaceVim_statusline_a# REPL %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#repl#status()}'
   elseif &filetype ==# 'VimMailClient'
     return '%#SpaceVim_statusline_a# VimMail %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{mail#client#win#status().dir}'
   elseif &filetype ==# 'SpaceVimQuickFix'
