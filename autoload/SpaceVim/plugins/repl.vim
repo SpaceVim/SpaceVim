@@ -143,8 +143,9 @@ endfunction
 function! s:close() abort
   if exists('s:job_id') && s:job_id != 0
     call s:JOB.stop(s:job_id)
+    let s:job_id = 0
   endif
-  if s:bufnr != 0
+  if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd' s:bufnr
   endif
 endfunction
