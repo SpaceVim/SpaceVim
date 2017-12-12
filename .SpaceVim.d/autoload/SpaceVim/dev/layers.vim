@@ -6,6 +6,7 @@ function! SpaceVim#dev#layers#update() abort
       exe (start + 1) . ',' . (end - 1) . 'delete'
     endif
     call append(start, s:generate_content())
+    silent! Neoformat
   endif
 
 endfunction
@@ -30,12 +31,12 @@ function! s:layer_list() abort
         \ ]
   for layer in layers
     let name = split(layer, '/docs/layers')[1][:-4] . '/'
-    let url = 'https://spacevim.org/layers/' . name
+    let url = 'https://spacevim.org/layers' . name
     let content = readfile(layer)
     if len(content) > 3
-      let line = '[' . name . '](' . url . ')    |   ' . content[2]
+      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
     else
-      let line = '[' . name . '](' . url . ')    |   can not find Description'
+      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   can not find Description |'
     endif
     call add(list, line)
   endfor
