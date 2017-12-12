@@ -10,6 +10,11 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
 
+augroup spacevim_repl
+  autocmd!
+  autocmd VimLeavePre * call s:close()
+augroup END
+
 
 function! SpaceVim#plugins#repl#start(ft) abort
 
@@ -121,7 +126,9 @@ function! s:on_exit(job_id, data, event) abort
   let s:status.is_exit = 1
   let s:status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+  endif
   call s:update_statusline()
 
 endfunction
