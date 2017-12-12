@@ -3,7 +3,6 @@ title:  "SpaceVim 中文手册"
 description: "SpaceVim 是一个社区驱动的 Vim 配置，内含多种语言模块，提供了代码补全、语法检查、跳转等多种 IDE 特性。"
 ---
 
-
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
@@ -35,8 +34,8 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 **捐助SpaceVim**
 
-| 微信                                              | 支付宝                                              |
-| ------------------------------------------------- | --------------------------------------------------- |
+| 微信                                                                     | 支付宝                                                                     |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
 **以下为SpaceVim中文手册，部分内容还未完成翻译，为了方便大家查询相关信息，已提前发布官网上，后面会逐渐更新完成，感谢大家一直以来的支持！**
@@ -108,7 +107,7 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
       - [文件树](#文件树)
         - [文件树中的常用操作](#文件树中的常用操作)
         - [文件树中打开文件](#文件树中打开文件)
-  - [Commands starting with `g`](#commands-starting-with-g)
+  - [以 `g` 为前缀的快捷键](#以-g-为前缀的快捷键)
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Auto-saving](#auto-saving)
   - [Searching](#searching)
@@ -186,13 +185,13 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包�
 
 ## 安装
 
-**Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：**
+**Linux/Mac：**
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-想要获取更多的自定义的安装方式，请参考：
+想要获取更多的信息，请参考：
 
 ```sh
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
@@ -204,24 +203,9 @@ SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim
 
 [从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
 
-**windows系统下的安装步骤：**
+**windows：**
 
-Windows 下 vim 用户只需要将本仓库克隆成用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
-
-    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-
-Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\\Local\\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
-
-    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-
-**字体**
-
-SpaceVim 默认启用了Powerline 字体，默认的的字体文件是：[DejaVu Sans Mono](https://github.com/wsdjeg/DotFiles/tree/master/fonts), Windows 用户直接下载下来右键安装即可。
-
-**vimproc.dll**
-
-Windows 下用户如果不方便编译，可以在qq群文件里面下载相应的dll文件放到vimproc
-的lib目录，默认是 `~/.cache/vimfiles/repos/github.com/Shougo/vimproc.vim/lib/`
+Window 下最方便的是下载安装脚本（[install.cmd](https://spacevim.org/install.cmd)）至本地，直接运行。
 
 ## 更新
 
@@ -992,57 +976,57 @@ SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性�
 | `sg`           | 分屏打开文件     |
 | `sv`           | 垂直分屏打开文件 |
 
-### Commands starting with `g`
+### 以 `g` 为前缀的快捷键
 
-after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
+在 Normal 模式下按下 `g` 之后，如果你不记得快捷键出现按键延迟，那么快捷键导航将会提示你所有以 `g` 为前缀的快捷键。
 
-| Key Binding | Description                                     |
-| ----------- | ----------------------------------------------- |
-| `g#`        | search under cursor backward                    |
-| `g$`        | go to rightmost character                       |
-| `g&`        | repeat last ":s" on all lines                   |
-| `g'`        | jump to mark                                    |
-| `g*`        | search under cursor forward                     |
-| `g+`        | newer text state                                |
-| `g,`        | newer position in change list                   |
-| `g-`        | older text state                                |
-| `g/`        | stay incsearch                                  |
-| `g0`        | go to leftmost character                        |
-| `g;`        | older position in change list                   |
-| `g<`        | last page of previous command output            |
-| `g<Home>`   | go to leftmost character                        |
-| `gE`        | end of previous word                            |
-| `gF`        | edit file under cursor(jump to line after name) |
-| `gH`        | select line mode                                |
-| `gI`        | insert text in column 1                         |
-| `gJ`        | join lines without space                        |
-| `gN`        | visually select previous match                  |
-| `gQ`        | switch to Ex mode                               |
-| `gR`        | enter VREPLACE mode                             |
-| `gT`        | previous tag page                               |
-| `gU`        | make motion text uppercase                      |
-| `g]`        | tselect cursor tag                              |
-| `g^`        | go to leftmost no-white character               |
-| `g_`        | go to last char                                 |
-| ``g` ``     | jump to mark                                    |
-| `ga`        | print ascii value of cursor character           |
-| `gd`        | goto definition                                 |
-| `ge`        | go to end of previous word                      |
-| `gf`        | edit file under cursor                          |
-| `gg`        | go to line N                                    |
-| `gh`        | select mode                                     |
-| `gi`        | insert text after '^ mark                       |
-| `gj`        | move cursor down screen line                    |
-| `gk`        | move cursor up screen line                      |
-| `gm`        | go to middle of screenline                      |
-| `gn`        | visually select next match                      |
-| `go`        | goto byte N in the buffer                       |
-| `gs`        | sleep N seconds                                 |
-| `gt`        | next tag page                                   |
-| `gu`        | make motion text lowercase                      |
-| `g~`        | swap case for Nmove text                        |
-| `g<End>`    | go to rightmost character                       |
-| `g<C-G>`    | show cursor info                                |
+| 快捷键    | 描述                                            |
+| --------- | ----------------------------------------------- |
+| `g#`      | 反向搜索光标下的词                              |
+| `g$`      | 跳向本行最右侧字符                              |
+| `g&`      | 针对所有行重复执行上一次 ":s" 命令              |
+| `g'`      | 跳至标签                                        |
+| `g*`      | 正向搜索光标下的词                              |
+| `g+`      | newer text state                                |
+| `g,`      | newer position in change list                   |
+| `g-`      | older text state                                |
+| `g/`      | stay incsearch                                  |
+| `g0`      | go to leftmost character                        |
+| `g;`      | older position in change list                   |
+| `g<`      | last page of previous command output            |
+| `g<Home>` | go to leftmost character                        |
+| `gE`      | end of previous word                            |
+| `gF`      | edit file under cursor(jump to line after name) |
+| `gH`      | select line mode                                |
+| `gI`      | insert text in column 1                         |
+| `gJ`      | join lines without space                        |
+| `gN`      | visually select previous match                  |
+| `gQ`      | switch to Ex mode                               |
+| `gR`      | enter VREPLACE mode                             |
+| `gT`      | previous tag page                               |
+| `gU`      | make motion text uppercase                      |
+| `g]`      | tselect cursor tag                              |
+| `g^`      | go to leftmost no-white character               |
+| `g_`      | go to last char                                 |
+| ``g` ``   | 跳至标签，等同于 `g'`                                    |
+| `ga`      | 打印光标字符的 ascii 值           |
+| `gd`      | 跳至定义处                                 |
+| `ge`      | go to end of previous word                      |
+| `gf`      | edit file under cursor                          |
+| `gg`      | go to line N                                    |
+| `gh`      | select mode                                     |
+| `gi`      | insert text after '^ mark                       |
+| `gj`      | move cursor down screen line                    |
+| `gk`      | move cursor up screen line                      |
+| `gm`      | go to middle of screenline                      |
+| `gn`      | visually select next match                      |
+| `go`      | goto byte N in the buffer                       |
+| `gs`      | sleep N seconds                                 |
+| `gt`      | next tag page                                   |
+| `gu`      | make motion text lowercase                      |
+| `g~`      | swap case for Nmove text                        |
+| `g<End>`  | 跳至本行最右侧字符，等同于 `g$`                       |
+| `g<C-G>`  | 显示光标信息                                |
 
 ### Commands starting with `z`
 
@@ -1373,8 +1357,6 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 
 **Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
 
-> > > > > > > dev
-
 #### Multi-Encodings
 
 SpaceVim use utf-8 as default encoding. there are four options for these case:
@@ -1416,7 +1398,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`    | Info        | `g:spacevim_info_symbol`    |
+| `🛈`   | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 
@@ -2158,3 +2140,5 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
             </li>
     {% endfor %}
 </ul>
+
+<!-- vim:set nowrap: -->
