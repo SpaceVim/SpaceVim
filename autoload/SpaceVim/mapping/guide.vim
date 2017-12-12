@@ -311,7 +311,6 @@ function! s:highlight_cursor() abort
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
-  let g:wsd = s:cursor_hi
 endfunction
 
 function! s:remove_cursor_highlight() abort
@@ -460,7 +459,6 @@ endfunction
 
 
 function! s:winclose() " {{{
-  call s:remove_cursor_highlight()
   call s:toggle_hide_cursor()
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
@@ -471,6 +469,7 @@ function! s:winclose() " {{{
     noautocmd execute s:winnr.'wincmd w'
     call winrestview(s:winv)
   endif
+  call s:remove_cursor_highlight()
 endfunction " }}}
 function! s:page_down() " {{{
   call feedkeys("\<c-c>", "n")
