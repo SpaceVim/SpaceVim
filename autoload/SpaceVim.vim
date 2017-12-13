@@ -430,7 +430,17 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner', 'SpaceVimREPL', 'SpaceVimQuickFix', 'HelpDescribe']
+let g:spacevim_smartcloseignoreft      = [
+      \ 'help',
+      \ 'tagbar',
+      \ 'vimfiler',
+      \ 'SpaceVimRunner',
+      \ 'SpaceVimREPL',
+      \ 'SpaceVimQuickFix',
+      \ 'HelpDescribe',
+      \ 'VebuggerShell',
+      \ 'VebuggerTerminal',
+      \ ]
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'

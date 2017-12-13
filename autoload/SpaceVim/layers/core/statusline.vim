@@ -357,6 +357,12 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# VimMail %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{mail#client#win#status().dir}'
   elseif &filetype ==# 'SpaceVimQuickFix'
     return '%#SpaceVim_statusline_a# SpaceVimQuickFix %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'VebuggerShell'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# VebuggerShell %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+  elseif &filetype ==# 'VebuggerTerminal'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# VebuggerTerminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   endif
   if a:0 > 0
     return s:active()
