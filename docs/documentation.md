@@ -93,6 +93,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
+    - [Searching files in project](#searching-files-in-project)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
   - [Connecting to the Vim server](#connecting-to-the-vim-server)
@@ -173,7 +174,7 @@ Community-driven configuration provides curated packages tuned by power users an
     <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
     unite work flow commands.
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
-- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
+- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
     [conventions](http://spacevim.org/development/).
@@ -520,7 +521,7 @@ The letters displayed in the statusline correspond to the key bindings used to t
 current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
 
 ```vim
-" the theme colors should be 
+" the theme colors should be
 " [
 "    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
 "    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
@@ -532,7 +533,7 @@ current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you 
 " \ ]
 " group_a: window id
 " group_b/group_c: stausline sections
-" group_z: empty area 
+" group_z: empty area
 " group_i: window id in insert mode
 " group_v: window id in visual mode
 " group_r: window id in select mode
@@ -1411,6 +1412,15 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
+
+#### Searching files in project
+
+| Key Binding | Description                                           |
+| ----------- | ----------------------------------------------------- |
+| `SPC p f`   | find files in current project                         |
+| `SPC p /`   | fuzzy search for text in current project              |
+| `SPC p k`   | kill all project buffers                              |
+| `SPC p t`   | find project root                                     |
 
 ## EditorConfig
 
