@@ -211,7 +211,7 @@ function! s:text_transient_state() abort
         \ 'key' : 'J',
         \ 'desc' : 'move text down',
         \ 'func' : '',
-        \ 'cmd' : 'silent! m .+1',
+        \ 'cmd' : 'noautocmd silent! m .+1',
         \ 'exit' : 0,
         \ },
         \ ],
@@ -219,7 +219,7 @@ function! s:text_transient_state() abort
         \ {
         \ 'key' : 'K',
         \ 'func' : '',
-        \ 'desc' : 'move text up',
+        \ 'desc' : 'noautocmd move text up',
         \ 'cmd' : 'silent! m .-2',
         \ 'exit' : 0,
         \ },
