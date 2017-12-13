@@ -22,6 +22,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
   let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+  let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
   if s:has_map_to_spc()
     return
   endif
