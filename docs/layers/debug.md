@@ -41,4 +41,4 @@ To use this configuration layer, add `call SpaceVim#layers#load('debug')` to you
 
 key bindings is too long? use `SPC d .` to open the debug transient state:
 
-![Debug Transient State](https://user-images.githubusercontent.com/13142418/33995923-16171792-e0a5-11e7-8a10-3624adcbba91.png)
+![Debug Transient State](https://user-images.githubusercontent.com/13142418/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)
