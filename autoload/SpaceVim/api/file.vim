@@ -28,7 +28,7 @@ let s:file_node_extensions = {
       \  'json'     : '',
       \  'js'       : '',
       \  'jsx'      : '',
-      \  'rb'       : '',
+      \  'rb'       : '',
       \  'php'      : '',
       \  'py'       : '',
       \  'pyc'      : '',
