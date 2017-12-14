@@ -22,5 +22,11 @@ endfunction
 function! SpaceVim#layers#debug#launching(ft) abort
   if a:ft ==# 'python'
     exe 'VBGstartPDB ' . bufname('%')
+  elseif a:ft ==# 'ruby'
+    exe 'VBGstartRDebug ' . bufname('%')
+  else
+    echohl WarningMsg
+    echo 'read :h vebugger-launching'
+    echohl None
   endif
 endfunction
