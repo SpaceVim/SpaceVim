@@ -36,3 +36,9 @@ To use this configuration layer, add `call SpaceVim#layers#load('debug')` to you
 | `SPC d e e` | Evaluate the `<cword>` under the cursor  |
 | `SPC d e S` | Execute the selected text                |
 | `SPC d k`   | Terminates the debugger                  |
+
+**Debug Transient State**
+
+key bindings is too long? use `SPC d .` to open the debug transient state:
+
+![Debug Transient State](https://user-images.githubusercontent.com/13142418/33995923-16171792-e0a5-11e7-8a10-3624adcbba91.png)
