@@ -12,4 +12,18 @@ function! SpaceVim#util#echoWarn(msg) abort
   echohl None
 endfunction
 
+function! SpaceVim#util#haspyxlib(lib) abort
+
+  try
+    if has('nvim')
+      exe 'py import ' . a:lib
+    else
+      exe 'pyx import ' . a:lib
+    endif
+  catch
+    return 0
+  endtry
+  return 1
+endfunction
+
 " vim:set et sw=2 cc=80:
