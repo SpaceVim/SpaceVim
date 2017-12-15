@@ -1,9 +1,6 @@
 exe 'set nocp'
-set rtp+=build/GitHub.vim
-set rtp+=/API/
-so build/GitHub.vim/plugin/github.vim
-so build/GitHub.vim/autoload/github/api/issues.vim
-so build/GitHub.vim/autoload/github/api/util.vim
+set rtp+=/build/GitHub.vim
+set rtp+=/API
 let s:LIST = SpaceVim#api#import('data#list')
 let s:log = filereadable('build_log') ? system('cat build_log') : ''
 function! s:update_log(log, summary, new_log) abort
