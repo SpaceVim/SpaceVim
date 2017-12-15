@@ -72,6 +72,9 @@ let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters',
 let s:loaded_sections_r = g:spacevim_statusline_right_sections
 let s:loaded_sections_l = g:spacevim_statusline_left_sections
 
+let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
+
 " build in sections for SpaceVim statusline
 function! s:winnr(...) abort
   if a:0 > 1
@@ -493,8 +496,6 @@ function! SpaceVim#layers#core#statusline#rsep()
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
-  let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
         \ 'toggle the minor mode lighters', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("version control info")',
