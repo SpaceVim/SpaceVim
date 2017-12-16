@@ -32,6 +32,7 @@ jobs:
     - env: LINT=vint-errors VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vader
+      addons: { apt: { packages: [python2.7-dev] } }
   allow_failures:
     - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
