@@ -128,9 +128,6 @@ endfunction
 
 function! SpaceVim#autocmds#VimEnter() abort
   call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-  for argv in g:_spacevim_mappings_space_custom
-    call call('SpaceVim#mapping#space#def', argv)
-  endfor
   for argv in g:_spacevim_mappings_space_custom_group_name
     if len(argv[0]) == 1
       if !has_key(g:_spacevim_mappings_space, argv[0][0])
@@ -147,6 +144,9 @@ function! SpaceVim#autocmds#VimEnter() abort
         endif
       endif
     endif
+  endfor
+  for argv in g:_spacevim_mappings_space_custom
+    call call('SpaceVim#mapping#space#def', argv)
   endfor
   if get(g:, '_spacevim_statusline_loaded', 0) == 1
     set laststatus=2
