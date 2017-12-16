@@ -146,7 +146,7 @@ function! SpaceVim#layers#default#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'N', 'n'], 'enew', 'new-empty-buffer', 1)
 
   " file mappings
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'b'], 'Unite vim_bookmarks', 'unite-filtered-bookmarks', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'b'], 'BookmarkShowAll', 'unite-filtered-bookmarks', 1)
   let g:_spacevim_mappings_space.f.C = {'name' : '+Files/convert'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'd'], 'update | e ++ff=dos | w', 'unix2dos', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'u'], 'update | e ++ff=dos | setlocal ff=unix | w', 'dos2unix', 1)
