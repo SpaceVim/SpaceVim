@@ -57,10 +57,10 @@ function! SpaceVim#autocmds#init() abort
           \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
           \|  else
             \|    if empty(maparg('<leader>[', 'n', 0, 1)) && empty(maparg('<leader>]', 'n', 0, 1))
-            \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-            \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
-            \|    endif
-            \|  endif
+              \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+              \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+              \|    endif
+              \|  endif
     "}}}
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     " Instead of reverting the cursor to the last position in the buffer, we
@@ -132,6 +132,21 @@ function! SpaceVim#autocmds#VimEnter() abort
     call call('SpaceVim#mapping#space#def', argv)
   endfor
   for argv in g:_spacevim_mappings_space_custom_group_name
+    if len(argv[0]) == 1
+      if !has_key(g:_spacevim_mappings_space, argv[0][0])
+        let g:_spacevim_mappings_space[argv[0][0]] = {'name' : argv[1]}
+      endif
+    elseif len(argv[0]) == 2
+      if !has_key(g:_spacevim_mappings_space, argv[0][0])
+        let g:_spacevim_mappings_space[argv[0][0]] = {'name' : '+Unnamed',
+              \ argv[0][1] : { 'name' : argv[1]},
+              \ }
+      else
+        if !has_key(g:_spacevim_mappings_space[argv[0][0]], argv[0][1])
+          let g:_spacevim_mappings_space[argv[0][0]][argv[0][1]] = {'name' : argv[1]}
+        endif
+      endif
+    endif
   endfor
   if get(g:, '_spacevim_statusline_loaded', 0) == 1
     set laststatus=2
@@ -145,9 +160,9 @@ function! SpaceVim#autocmds#VimEnter() abort
 endfunction
 
 function! s:disable_welcome() abort
-    augroup SPwelcome
-        au!
-    augroup END
+  augroup SPwelcome
+    au!
+  augroup END
 endfunction
 
 
