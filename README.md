@@ -20,13 +20,27 @@ SpaceVim is a community-driven vim distribution that supports vim and Neovim.  S
 
 Please star the project on github - it is a great way to show your appreciation while providing us motivation to continue working on this project.  The extra visibility for the project doesn't hurt either!
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
 Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
+
+<!-- vim-markdown-toc GFM -->
+
+- [Requirements](#requirements)
+- [Install](#install)
+  - [Linux and macOS](#linux-and-macos)
+  - [Windows](#windows)
+- [Project layout](#project-layout)
+- [Features](#features)
+- [Blogs](#blogs)
+- [Support SpaceVim](#support-spacevim)
+- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
 
 ### Requirements
 
@@ -68,14 +82,24 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 
 - **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
   ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
-- **Beautiful GUI:** you'll love the awesome UI and its useful features.
+- **Beautiful UI:** you'll love the awesome UI and its useful features.
+  ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 - **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
   ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
-- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings.
-  ![describe key](https://user-images.githubusercontent.com/13142418/32134986-060a3b8a-bc2a-11e7-89a2-3ee4e616bf06.gif)
+- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings, and find definition of key bindings.
+  ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
 - **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
   ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
+- **Awesome statusline:** a heavily customized modular statusline.
+  ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
 - **Neovim centric:** Dark powered mode of SpaceVim
+
+### Blogs
+
+- [Use Vim as a Java IDE](http://spacevim.org/use-vim-as-a-java-ide/)
+- [An async code runner in SpaceVim](http://spacevim.org/async-code-runner-in-SpaceVim/)
+
+More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 ### Support SpaceVim
 

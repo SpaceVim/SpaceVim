@@ -1,5 +1,6 @@
 ---
 title: "SpaceVim ui layer"
+description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) ui

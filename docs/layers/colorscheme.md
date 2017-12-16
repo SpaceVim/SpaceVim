@@ -1,8 +1,14 @@
-# [Layers](https://spacevim.org/layers) > colorscheme
+---
+title: "SpaceVim colorscheme layer"
+description: "colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme."
+---
+
+# [SpaceVim Layers:](https://spacevim.org/layers) colorscheme
 
 This layer provides many Vim colorschemes for SpaceVim, the default colorscheme is gruvbox.
 
 To change the colorscheme:
+
 ```vim
 let g:spacevim_colorscheme = 'onedark'
 ```

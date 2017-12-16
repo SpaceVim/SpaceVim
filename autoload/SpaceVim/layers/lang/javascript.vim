@@ -1,26 +1,34 @@
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
-     \ ['pangloss/vim-javascript',                { 'on_ft' : 'javascript' }],
-     \ ['othree/yajs.vim',                        { 'on_ft' : 'javascript' }],
-     \ ['othree/es.next.syntax.vim',              { 'on_ft' : 'javascript' }],
-     \ ['othree/javascript-libraries-syntax.vim', { 'on_ft' : ['javascript', 'coffee', 'ls', 'typescript'] }],
-     \ ['MaxMEllon/vim-jsx-pretty',               { 'on_ft' : 'javascript' }],
-     \ ['ternjs/tern_for_vim',                    { 'on_ft' : 'javascript', 'build' : 'npm install' }],
-     \ ['Galooshi/vim-import-js',                 { 'on_ft' : 'javascript', 'build' : 'npm install -g import-js' }],
-     \ ['maksimr/vim-jsbeautify',                 { 'on_ft' : 'javascript' }],
-     \ ['mmalecki/vim-node.js',                   { 'on_ft' : 'javascript' }],
+     \ ['MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript' }],
+     \ ['Galooshi/vim-import-js', {
+     \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
+     \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
+     \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
+     \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+     \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
+     \ ['othree/javascript-libraries-syntax.vim', {
+     \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
+     \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
+     \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
      \ ]
 
-  if has('nvim')
-    call add(plugins,['carlitux/deoplete-ternjs', { 'on_ft' : ['javascript'] }])
+  if !s:use_lsp
+    call add(plugins, ['ternjs/tern_for_vim', {
+          \ 'on_ft': 'javascript', 'build' : 'npm install' }])
+    call add(plugins, ['carlitux/deoplete-ternjs', { 'on_ft': [
+          \ 'javascript'], 'if': has('nvim') }])
   endif
 
   return plugins
 endfunction
 
+let s:use_lsp = 0
 let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
+  let s:use_lsp = get(a:var, 'use_lsp', 0) && has('nvim')
+        \ && executable('javascript-typescript-stdio')
   let s:auto_fix = get(a:var, 'auto_fix', 0)
 endfunction
 
@@ -34,9 +42,17 @@ function! SpaceVim#layers#lang#javascript#config() abort
   let g:vim_jsx_pretty_colorful_config = 1
   " }}}
 
-  call SpaceVim#mapping#gd#add('javascript', function('s:gotodef'))
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('javascript', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
+        \ funcref('s:on_ft'))
+
+  if s:use_lsp
+    call SpaceVim#lsp#reg_server('javascript', ['javascript-typescript-stdio'])
+    call SpaceVim#mapping#gd#add('javascript',
+          \ function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('javascript', function('s:tern_go_to_def'))
+  endif
 
   if s:auto_fix
     " Only use eslint
@@ -52,12 +68,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
   endif
 endfunction
 
-function! s:language_specified_mappings() abort
-  " ternjs/tern_for_vim {{{
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TernDoc', 'Look up the documentation of something', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TernRename', 'Rename the variable under the cursor', 1)
-  " }}}
-
+function! s:on_ft() abort
   " Galooshi/vim-import-js {{{
   nnoremap <silent><buffer> <F4> :ImportJSWord<CR>
   nnoremap <silent><buffer> <Leader>ji :ImportJSWord<CR>
@@ -70,14 +81,28 @@ function! s:language_specified_mappings() abort
   inoremap <silent><buffer> <C-j>g <Esc>:ImportJSGoto<CR>a
   " }}}
 
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  if s:use_lsp
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  else
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TernDoc',
+          \ 'show document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TernRename',
+          \ 'rename symbol', 1)
+  endif
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 
-function! s:gotodef() abort
+function! s:tern_go_to_def() abort
   if exists(':TernDef')
     TernDef
   endif
 endfunction
 
-
-" vim:set et sw=2 cc=80:
+" vi: et sw=2 cc=80

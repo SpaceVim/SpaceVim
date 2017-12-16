@@ -299,6 +299,26 @@ function! s:create_string(layout) " {{{
   return output
 endfunction " }}}
 
+let s:VIMH = SpaceVim#api#import('vim#highlight')
+function! s:highlight_cursor() abort
+  let info = {
+        \ 'name' : 'SpaceVimGuideCursor',
+        \ 'guibg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guifg'),
+        \ 'guifg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guibg'),
+        \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
+        \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
+        \ }
+  hi def link SpaceVimGuideCursor Cursor
+  call s:VIMH.hi(info)
+  let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
+endfunction
+
+function! s:remove_cursor_highlight() abort
+  try
+    call matchdelete(s:cursor_hi)
+  catch
+  endtry
+endfunction
 
 " @vimlint(EVL102, 1, l:string)
 function! s:start_buffer() " {{{
@@ -377,6 +397,7 @@ function! s:winopen() " {{{
   if !exists('s:bufnr')
     let s:bufnr = -1
   endif
+  call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if bufexists(s:bufnr)
     let qfbuf = &buftype ==# 'quickfix'
@@ -448,6 +469,7 @@ function! s:winclose() " {{{
     noautocmd execute s:winnr.'wincmd w'
     call winrestview(s:winv)
   endif
+  call s:remove_cursor_highlight()
 endfunction " }}}
 function! s:page_down() " {{{
   call feedkeys("\<c-c>", "n")

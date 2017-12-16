@@ -17,10 +17,12 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
   let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
   let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+  let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
   let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
   let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+  let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
   if s:has_map_to_spc()
     return
   endif

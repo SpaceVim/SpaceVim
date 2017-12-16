@@ -88,10 +88,12 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Auto-indent pasted text](#auto-indent-pasted-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
+    - [Searching files in project](#searching-files-in-project)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
   - [Connecting to the Vim server](#connecting-to-the-vim-server)
@@ -172,7 +174,7 @@ Community-driven configuration provides curated packages tuned by power users an
     <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
     unite work flow commands.
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
-- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
+- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
     [conventions](http://spacevim.org/development/).
@@ -514,6 +516,40 @@ The letters displayed in the statusline correspond to the key bindings used to t
 | `SPC t S`   | Ⓢ       | S     | enabled in spell checking                     |
 | `SPC t w`   | ⓦ       | w     | whitespace mode                               |
 
+**colorscheme of statusline:**
+
+current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
+
+```vim
+" the theme colors should be
+" [
+"    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
+"    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
+"    \ [ c_guifg, c_guibg, c_ctermfg, c_ctermbg],
+"    \ [ z_guibg, z_ctermbg],
+"    \ [ i_guifg, i_guibg, i_ctermfg, i_ctermbg],
+"    \ [ v_guifg, v_guibg, v_ctermfg, v_ctermbg],
+"    \ [ r_guifg, r_guibg, r_ctermfg, r_ctermbg],
+" \ ]
+" group_a: window id
+" group_b/group_c: stausline sections
+" group_z: empty area
+" group_i: window id in insert mode
+" group_v: window id in visual mode
+" group_r: window id in select mode
+function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
+    return [
+                \ ['#282828', '#a89984', 246, 235],
+                \ ['#a89984', '#504945', 239, 246],
+                \ ['#a89984', '#3c3836', 237, 246],
+                \ ['#665c54', 241],
+                \ ['#282828', '#83a598', 235, 109],
+                \ ['#282828', '#fe8019', 235, 208],
+                \ ['#282828', '#8ec07c', 235, 108],
+                \ ]
+endfunction
+```
+
 #### tabline
 
 Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
@@ -529,6 +565,15 @@ Buffers will be listed on tabline if there is only one tab, each item contains t
 | `<Leader> 7` | jump to index 7 on tabline |
 | `<Leader> 8` | jump to index 8 on tabline |
 | `<Leader> 9` | jump to index 9 on tabline |
+
+SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
+
+**NOTE:** this feature is only supported in neovim with `has('tablineat')`.
+
+| Key Binding      | Description        |
+| ---------------- | ------------------ |
+| `<Mouse-left>`   | jump to the buffer |
+| `<Mouse-middle>` | delete the buffer  |
 
 ## Manual
 
@@ -1177,18 +1222,18 @@ Background search keyword in a project, when searching done, the count will be s
 
 key binding in FlyGrep buffer:
 
-Key Binding	Description
-\-----------\| -----------
-`<Esc>` | close FlyGrep buffer
-`<Enter>` | open file at the cursor line
-`<Tab>` | move cursor line down
-`<S-Tab>` | move cursor line up
-`<Bs>` | remove last character
-`<C-w>` | remove the Word before the cursor
-`<C-u>` | remove the Line before the cursor
-`<C-k>` | remove the Line after the cursor
-`<C-a>`/`<Home>` | Go to the beginning of the line
-`<C-e>`/`<End>` | Go to the end of the line
+| Key Binding      | Description                       |
+| ---------------- | --------------------------------- |
+| `<Esc>`          | close FlyGrep buffer              |
+| `<Enter>`        | open file at the cursor line      |
+| `<Tab>`          | move cursor line down             |
+| `<S-Tab>`        | move cursor line up               |
+| `<Bs>`           | remove last character             |
+| `<C-w>`          | remove the Word before the cursor |
+| `<C-u>`          | remove the Line before the cursor |
+| `<C-k>`          | remove the Line after the cursor  |
+| `<C-a>`/`<Home>` | Go to the beginning of the line   |
+| `<C-e>`/`<End>`  | Go to the end of the line         |
 
 #### Persistent highlighting
 
@@ -1279,6 +1324,23 @@ Text insertion commands (start with `i`):
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
+#### Increase/Decrease numbers
+
+| Key Binding | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `SPC n +`   | increase the number under point by one and initiate transient state |
+| `SPC n -`   | decrease the number under point by one and initiate transient state |
+
+In transient state:
+
+| Key Binding   | Description                            |
+| ------------- | -------------------------------------- |
+| `+`           | increase the number under point by one |
+| `-`           | decrease the number under point by one |
+| Any other key | leave the transient state              |
+
+**Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+
 #### Commenting
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
@@ -1350,6 +1412,15 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
+
+#### Searching files in project
+
+| Key Binding | Description                                           |
+| ----------- | ----------------------------------------------------- |
+| `SPC p f`   | find files in current project                         |
+| `SPC p /`   | fuzzy search for text in current project              |
+| `SPC p k`   | kill all project buffers                              |
+| `SPC p t`   | find project root                                     |
 
 ## EditorConfig
 

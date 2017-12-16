@@ -12,6 +12,7 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'loadconf' : 1,
         \ 'merged' : 0}],
         \ ['MattesGroeger/vim-bookmarks',     { 'on_map' : '<Plug>Bookmark',
+        \ 'on_cmd' : 'BookmarkShowAll',
         \ 'loadconf_before' : 1}],
         \ ['simnalamburt/vim-mundo',          { 'on_cmd' : 'MundoToggle'}],
         \ ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',

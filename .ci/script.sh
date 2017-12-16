@@ -12,9 +12,9 @@ elif [ "$LINT" = "vimlint-errors" ]; then
     fi
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
-        /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log;
+        /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log 2>&1;
     done
-    if [[ -f build_log ]]; then
+    if [[ -s build_log ]]; then
         cat build_log
         exit 2
     fi

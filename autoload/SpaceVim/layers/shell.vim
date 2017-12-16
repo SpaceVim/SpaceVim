@@ -69,7 +69,7 @@ function! s:open_default_shell() abort
       if has('nvim')
         exe 'terminal'
       else
-        call term_start('bash', {'curwin' : 1, 'term_finish' : 'close'})
+        call term_start($SHELL, {'curwin' : 1, 'term_finish' : 'close'})
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1

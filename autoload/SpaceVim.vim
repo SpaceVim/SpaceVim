@@ -98,7 +98,7 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3')
+if has('python3') && SpaceVim#util#haspyxlib('neovim')
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -195,7 +195,7 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 "     \ 'version control info'
 "     \ ]
 " <
-let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'syntax checking', 'minor mode lighters', 'version control info']
+let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'syntax checking', 'minor mode lighters', 'version control info', 'hunks']
 ""
 " Define the right section of statusline in active windows. By default:
 " >
@@ -254,11 +254,13 @@ let g:spacevim_warning_symbol          = '⚠'
 " <
 let g:spacevim_info_symbol             = '🛈'
 ""
-" Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
-" changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
-" cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
-" cursor. Host terminal must support the DECSCUSR CSI escape sequence.
-"
+" Set the SpaceVim cursor shape in the terminal. 
+" >
+"   0 : to prevent Nvim from changing the cursor shape.
+"   1 : to enable non-blinking mode-sensitive cursor.
+"   2 : to enable blinking mode-sensitive cursor (default).
+" >
+" Host terminal must support the DECSCUSR CSI escape sequence.
 " Depending on the terminal emulator, using this option with nvim under
 " tmux might require adding the following to ~/.tmux.conf:
 " >
@@ -428,7 +430,17 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner', 'SpaceVimQuickFix', 'HelpDescribe']
+let g:spacevim_smartcloseignoreft      = [
+      \ 'help',
+      \ 'tagbar',
+      \ 'vimfiler',
+      \ 'SpaceVimRunner',
+      \ 'SpaceVimREPL',
+      \ 'SpaceVimQuickFix',
+      \ 'HelpDescribe',
+      \ 'VebuggerShell',
+      \ 'VebuggerTerminal',
+      \ ]
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
@@ -636,6 +648,8 @@ function! SpaceVim#end() abort
   if !g:spacevim_relativenumber
     set norelativenumber
   endif
+
+  let &shiftwidth = g:spacevim_default_indent
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>

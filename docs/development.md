@@ -1,22 +1,36 @@
 ---
 title:  "Development"
-description: "A guide for contributing to SpaceVim."
+description: "Development information about SpaceVim, including contributing guidelines and changelog."
 ---
 
 # Development
 
+<!-- vim-markdown-toc GFM -->
+
+- [Contribution guidelines](#contribution-guidelines)
+  - [Asking for help](#asking-for-help)
+  - [Reporting issues](#reporting-issues)
+  - [Contributing code](#contributing-code)
+    - [License](#license)
+    - [Conventions](#conventions)
+    - [Pull Request](#pull-request)
+      - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
+      - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
+    - [Contributing a layer](#contributing-a-layer)
+      - [File header](#file-header)
+      - [Author of a new layer](#author-of-a-new-layer)
+      - [Contributor to an existing layer](#contributor-to-an-existing-layer)
+    - [Contributing a keybinding](#contributing-a-keybinding)
+    - [Contributing a banner](#contributing-a-banner)
+    - [Contributing a statusline theme](#contributing-a-statusline-theme)
+- [Build with SpaceVim](#build-with-spacevim)
+- [Changelog](#changelog)
+
+<!-- vim-markdown-toc -->
+
 Development happens in the GitHub repository. here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
-## Content
-
-- [Contribution guidelines](#contribution-guidelines)
-    - [Asking for help](#asking-for-help)
-    - [Reporting issues](#reporting-issues)
-    - [Contributing code](#contributing-code)
-- [Build with SpaceVim](#build-with-spacevim)
-- [Changelog](#changelog)
 
 ## Contribution guidelines
 
@@ -32,12 +46,14 @@ You can only consider reading the sections relevant to what you are going to do:
 ### Asking for help
 
 If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
+
 - <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation): It is the general documentation of SpaceVim.
 
 ### Reporting issues
 
 Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
+
 - Check that there is no duplicate issue in the issues tracker, you can search for keywords in the issues tracker.
 - Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
 - Use a clear title and follow the issue template.
@@ -50,6 +66,7 @@ Code contributions are welcome. Please read the following sections carefully. In
 #### License
 
 The license is MIT for all the parts of SpaceVim. this includes:
+
 - The initialization and core files
 - All the layer files.
 
@@ -94,29 +111,27 @@ Write commit messages according to adapted [Tim Pope’s guidelines](http://tbag
 
 This is a model commit message:
 
-```
-Capitalized, short (72 chars or less) summary
+    Capitalized, short (72 chars or less) summary
 
-More detailed explanatory text, if necessary.  Wrap it to about 72
-characters or so.  In some contexts, the first line is treated as the
-subject of an email and the rest of the text as the body.  The blank
-line separating the summary from the body is critical (unless you omit
-the body entirely); tools like rebase can get confused if you run the
-two together.
+    More detailed explanatory text, if necessary.  Wrap it to about 72
+    characters or so.  In some contexts, the first line is treated as the
+    subject of an email and the rest of the text as the body.  The blank
+    line separating the summary from the body is critical (unless you omit
+    the body entirely); tools like rebase can get confused if you run the
+    two together.
 
-Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
-or "Fixes bug."  This convention matches up with commit messages generated
-by commands like git merge and git revert.
+    Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
+    or "Fixes bug."  This convention matches up with commit messages generated
+    by commands like git merge and git revert.
 
-Further paragraphs come after blank lines.
+    Further paragraphs come after blank lines.
 
-- Bullet points are okay, too
+    - Bullet points are okay, too
 
-    - Typically a hyphen or asterisk is used for the bullet, followed by a
-      single space, with blank lines in between, but conventions vary here
+        - Typically a hyphen or asterisk is used for the bullet, followed by a
+          single space, with blank lines in between, but conventions vary here
 
-    - Use a hanging indent
-```
+        - Use a hanging indent
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
@@ -222,6 +237,7 @@ If you have some ASCII skills you can submit your artwork!
 
 You are free to choose a reasonable height size but the width size should be around 75 characters.
 
+#### Contributing a statusline theme
 
 ## Build with SpaceVim
 

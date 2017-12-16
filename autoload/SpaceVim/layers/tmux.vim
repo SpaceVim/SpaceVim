@@ -19,21 +19,27 @@
 " <
 
 function! SpaceVim#layers#tmux#plugins() abort
-    let plugins = []
-    call add(plugins,['christoomey/vim-tmux-navigator', {'merged' : 0}])
-    return plugins
+  let plugins = [
+        \ ['christoomey/vim-tmux-navigator', { 'on_cmd': [
+        \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
+        \ 'TmuxNavigateRight'] }],
+        \ ]
+
+  return plugins
 endfunction
 
 function! SpaceVim#layers#tmux#config() abort
-    let g:tmux_navigator_no_mappings = 1
-    augroup spacevim_layer_tmux
-        au!
-        au VimEnter * call s:tmuxMappings()
-    augroup END
-    func s:tmuxMappings()
-        nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-        nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-        nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-        nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-    endf
+  let g:tmux_navigator_no_mappings = 1
+
+  augroup SpaceVim_layer_tmux
+    autocmd!
+    autocmd FocusGained * set cursorline
+    autocmd FocusLost * set nocursorline | redraw!
+  augroup END
+
+  nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+  nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
+  nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
+  nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
 endfunction
+

@@ -20,9 +20,23 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
     endif
   endfunction
 elseif g:spacevim_snippet_engine ==# 'ultisnips'
+  function! SpaceVim#mapping#tab#expandable()
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+      return snippet
+    elseif pumvisible()
+      return "\<C-n>"
+    else
+      return "\<TAB>"
+    endif
+  endfunction
   function! SpaceVim#mapping#tab#i_tab() abort
-    return "\<tab>"
+    if getline('.')[col('.')-2] ==# '{'&& pumvisible()
+      return "\<C-n>"
+    endif
+    return "\<C-R>=SpaceVim#mapping#tab#expandable()\<cr>"
   endfunction
 endif
+
 
 " vim:set et sw=2 cc=80:

@@ -9,3 +9,16 @@ This is the project layout of SpaceVim org:
 | [SpaceVim/vim-swig](https://github.com/SpaceVim/vim-swig)               | Swig vim syntax highlighting             |
 | [SpaceVim/vim-luacomplete](https://github.com/SpaceVim/vim-luacomplete) | lua complete plugin for vim              |
 | [SpaceVim/unite-unicode](https://github.com/SpaceVim/unite-unicode)     | Unite.vim plugin to insert unicode gyphs |
+
+In the main repo, the layout is:
+
+    ├─ autoload/SpaceVim/api/         APIs
+    ├─ autoload/SpaceVim/layers/      layers
+    ├─ autoload/SpaceVim/plugins/     plugins
+    ├─ autoload/SpaceVim/mapping/     mapping guide
+    ├─ doc/SpaceVim.txt               help
+    ├─ docs/                          website
+    ├─ wiki/                          wiki
+    ├─ bin/                           executeable
+    └─ test/                          tests
+
