@@ -320,6 +320,13 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
+if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configration file, **be sure** the key bindings is not used in SpaceVim.
+
+```vim
+call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+```
+
 ## Concepts
 
 ### Transient-states
