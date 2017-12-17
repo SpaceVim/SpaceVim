@@ -61,7 +61,7 @@ function! SpaceVim#plugins#projectmanager#kill_project() abort
                     \ 'expr' : [
                     \ 'buflisted(v:val)',
                     \ 'index(tabpagebuflist(), v:val) == -1',
-                    \ 'getbufvar(v:val, "_spacevim_project_name") == ' . name,
+                    \ 'getbufvar(v:val, "_spacevim_project_name") == "' . name . '"',
                     \ ],
                     \ 'do' : 'bd %d'
                     \ }
