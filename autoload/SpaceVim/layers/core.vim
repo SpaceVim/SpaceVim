@@ -16,6 +16,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#layers#load('core#tabline')
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'Rooter', 'find-project-root', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill all project buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'List all projects', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   if has('python3')
     let cmd =  'Denite file_rec'
