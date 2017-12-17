@@ -1422,12 +1422,12 @@ project manager commands start with `p`:
 
 #### Searching files in project
 
-| Key Binding | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `SPC p f`   | find files in current project                         |
-| `SPC p /`   | fuzzy search for text in current project              |
-| `SPC p k`   | kill all project buffers                              |
-| `SPC p t`   | find project root                                     |
+| Key Binding | Description                              |
+| ----------- | ---------------------------------------- |
+| `SPC p f`   | find files in current project            |
+| `SPC p /`   | fuzzy search for text in current project |
+| `SPC p k`   | kill all buffers of current project      |
+| `SPC p t`   | find project root                        |
 
 ## EditorConfig
 
