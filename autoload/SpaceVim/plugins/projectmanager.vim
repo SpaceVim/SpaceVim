@@ -28,8 +28,19 @@ function! SpaceVim#plugins#projectmanager#list() abort
 
 endfunction
 
-function! SpaceVim#plugins#projectmanager#current_()
+function! SpaceVim#plugins#projectmanager#current_name() abort
     return get(b:, '_spacevim_project_name', '')
+endfunction
+
+function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
+
+  let project = {
+        \ 'path' : getcwd(),
+        \ 'name' : fnamemodify(getcwd(), ':t')
+        \ }
+  call s:cache_project(project)
+  let g:_spacevim_project_name = project.name
+  let b:_spacevim_project_name = g:_spacevim_project_name
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort

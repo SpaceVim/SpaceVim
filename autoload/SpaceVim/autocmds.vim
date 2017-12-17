@@ -79,6 +79,8 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
+    autocmd User RooterChDir call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
   augroup END
 endfunction
 

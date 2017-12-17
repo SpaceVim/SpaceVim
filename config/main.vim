@@ -31,6 +31,7 @@ function! s:parser_argv() abort
     endif
 endfunction
 let s:status = s:parser_argv()
+call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
     augroup SPwelcome
