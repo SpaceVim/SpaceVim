@@ -82,13 +82,28 @@ endfunction
 function! SpaceVim#layers#unite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd')) . ', [])',
-        \ 'shell cmd', 1)
+        \ 'shell cmd(current dir)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', '!'], 'call call('
+        \ . string(s:_function('s:run_shell_cmd_project')) . ', [])',
+        \ 'shell cmd(project root)', 1)
 endfunction
 
 function! s:run_shell_cmd() abort
   let cmd = input('Please input shell command:', '', 'customlist,SpaceVim#plugins#bashcomplete#complete')
   if !empty(cmd)
     call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
+  endif
+endfunction
+
+function! s:run_shell_cmd_project() abort
+  let cmd = input('Please input shell command:', '', 'customlist,SpaceVim#plugins#bashcomplete#complete')
+  if !empty(cmd)
+    call unite#start([['output/shellcmd', cmd]], {
+          \ 'log': 1,
+          \ 'wrap': 1,
+          \ 'start_insert':0,
+          \ 'cwd' : SpaceVim#plugins#projectmanager#current_root(),
+          \ })
   endif
 endfunction
 

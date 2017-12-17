@@ -32,6 +32,14 @@ function! SpaceVim#plugins#projectmanager#current_()
     return get(b:, '_spacevim_project_name', '')
 endfunction
 
+function! SpaceVim#plugins#projectmanager#current_root() abort
+  try
+    Rooter
+  catch
+  endtry
+  return getcwd()
+endfunction
+
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#plugins#projectmanager#kill_project() abort

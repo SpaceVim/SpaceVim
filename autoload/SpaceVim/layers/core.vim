@@ -44,6 +44,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
+  " project manager
+  call SpaceVim#mapping#space#def('nnoremap', ['p', '!'], 'Grepper', 'fuzzy search for text in current project', 1)
+  
 endfunction
 
 function! s:gotodef() abort
