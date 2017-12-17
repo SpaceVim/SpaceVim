@@ -1428,6 +1428,7 @@ project manager commands start with `p`:
 | `SPC p /`   | fuzzy search for text in current project |
 | `SPC p k`   | kill all buffers of current project      |
 | `SPC p t`   | find project root                        |
+| `SPC p p`   | list all projects                        |
 
 ## EditorConfig
 
