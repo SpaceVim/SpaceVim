@@ -29,6 +29,7 @@ function! s:layer_list() abort
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
+  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/layers/index.md'))
   for layer in layers
     let name = split(layer, '/docs/layers')[1][:-4] . '/'
     let url = 'https://spacevim.org/layers' . name
