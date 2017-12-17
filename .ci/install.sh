@@ -17,7 +17,7 @@ elif [ "${LINT#vint}" != "$LINT" ]; then
   pip install vim-vint
 elif [ "${LINT#vader}" != "$LINT" ]; then
   git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
-  C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp --enable-python3interp --enable-rubyinterp"
+  C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
   (git clone --depth 1 https://github.com/vim/vim /tmp/vim &&
     cd /tmp/vim &&
     ./configure $C_OPTS &&
