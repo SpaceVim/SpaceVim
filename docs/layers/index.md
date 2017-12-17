@@ -28,10 +28,11 @@ call SpaceVim#layers#load('shell',
 | [checkers](https://spacevim.org/layers/checkers/)               | This layer provides syntax checking feature                                                                               |
 | [chinese](https://spacevim.org/layers/chinese/)                 | Layer for chinese users, include chinese docs and runtime messages                                                        |
 | [colorscheme](https://spacevim.org/layers/colorscheme/)         | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                  |
+| [debug](https://spacevim.org/layers/debug/)                     | This layer provide debug workflow support in SpaceVim                                                                     |
 | [default](https://spacevim.org/layers/default/)                 | lt layer contains none plugins, but it has some better default config for vim and neovim                                  |
 | [git](https://spacevim.org/layers/git/)                         | This layers adds extensive support for git                                                                                |
-| [index](https://spacevim.org/layers/index/)                     | list of available layers in SpaceVim                                                                                      |
 | [lang#c](https://spacevim.org/layers/lang/c/)                   | This layer is for c/c++/object-c development                                                                              |
+| [lang#elixir](https://spacevim.org/layers/lang/elixir/)         | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.               |
 | [lang#java](https://spacevim.org/layers/lang/java/)             | This layer is for Java development                                                                                        |
 | [lang#javascript](https://spacevim.org/layers/lang/javascript/) | This layer is for JaveScript development                                                                                  |
 | [lang#lisp](https://spacevim.org/layers/lang/lisp/)             | for lisp development                                                                                                      |

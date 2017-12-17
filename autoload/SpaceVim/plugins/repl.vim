@@ -41,6 +41,15 @@ function! SpaceVim#plugins#repl#send(type) abort
   elseif a:type ==# 'buffer'
     call s:JOB.send(s:job_id, getline(1, '$') + [''])
   elseif a:type ==# 'selection'
+    let begin = getpos("'<")
+    let end = getpos("'>")
+    if begin[1] != 0 && end[1] != 0
+      call s:JOB.send(s:job_id, getline(begin[1], end[1]) + [''])
+    else
+      echohl WarningMsg
+      echo 'no selection text'
+      echohl None
+    endif
   else
   endif
 endfunction

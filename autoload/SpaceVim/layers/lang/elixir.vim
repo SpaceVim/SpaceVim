@@ -8,7 +8,29 @@
 " @section(layer-checkers)
 
 function! SpaceVim#layers#lang#elixir#plugins() abort
-    let plugins = []
-    call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
-    return plugins
+  let plugins = []
+  call add(plugins, ['elixir-editors/vim-elixir', {'on_ft' : 'elixir'}])
+  call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
+  return plugins
+endfunction
+
+
+function! SpaceVim#layers#lang#elixir#config()
+  call SpaceVim#plugins#repl#reg('elixir', 'iex')
+  call SpaceVim#mapping#space#regesit_lang_mappings('elixir', funcref('s:language_specified_mappings'))
+endfunction
+function! s:language_specified_mappings() abort
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("elixir")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction

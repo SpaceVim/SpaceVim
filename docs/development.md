@@ -22,7 +22,6 @@ description: "Development information about SpaceVim, including contributing gui
       - [Contributor to an existing layer](#contributor-to-an-existing-layer)
     - [Contributing a keybinding](#contributing-a-keybinding)
     - [Contributing a banner](#contributing-a-banner)
-    - [Contributing a statusline theme](#contributing-a-statusline-theme)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Changelog](#changelog)
 
@@ -236,8 +235,6 @@ The startup banner is by default the SpaceVim logo but there are also ASCII bann
 If you have some ASCII skills you can submit your artwork!
 
 You are free to choose a reasonable height size but the width size should be around 75 characters.
-
-#### Contributing a statusline theme
 
 ## Build with SpaceVim
 
