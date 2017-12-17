@@ -62,11 +62,17 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
   ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
 - **Neovim centric:** Dark powered mode of SpaceVim
 
-## News
+## Blogs
 
-[Newsletter #1 - A New Hope](https://spacevim.org/SpaceVim-Newsletter-A-New-Hope/)
-
->    Published on: 2017-5-31 
+<ul>
+    {% for post in site.posts offset: 0 limit: 5  %}
+            <li>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+            </li>
+    {% endfor %}
+</ul>
 
 More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
