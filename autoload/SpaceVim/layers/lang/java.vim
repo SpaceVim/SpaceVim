@@ -60,6 +60,7 @@ endfunction
 
 function! SpaceVim#layers#lang#java#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('java', funcref('s:language_specified_mappings'))
+  call SpaceVim#plugins#repl#reg('java', 'jshell')
   augroup SpaceVim_lang_java
     au!
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -152,6 +153,19 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["mvn test"])',
         \ 'Run maven test', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("java")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 function! s:java_mappings() abort
