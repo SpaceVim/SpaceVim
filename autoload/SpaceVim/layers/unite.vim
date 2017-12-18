@@ -102,7 +102,7 @@ function! s:run_shell_cmd_project() abort
           \ 'log': 1,
           \ 'wrap': 1,
           \ 'start_insert':0,
-          \ 'cwd' : SpaceVim#plugins#projectmanager#current_root(),
+          \ 'path' : SpaceVim#plugins#projectmanager#current_root(),
           \ })
   endif
 endfunction
