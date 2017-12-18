@@ -1,3 +1,15 @@
+""
+" @section lang#lua, layer-lang-lua
+" @parentsection layers
+" This layer includes utilities and language-specific mappings for lua development.
+"
+" @subsection Mappings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         lua run
+" <
+
 function! SpaceVim#layers#lang#lua#plugins() abort
     let plugins = []
     " Improved Lua 5.3 syntax and indentation support for Vim
@@ -13,4 +25,14 @@ function! SpaceVim#layers#lang#lua#config() abort
         autocmd FileType lua setlocal omnifunc=luacomplete#complete
     augroup END
   endif
+
+    call SpaceVim#mapping#space#regesit_lang_mappings('lua', funcref('s:language_specified_mappings'))
+endfunction
+
+" Add language specific mappings
+function! s:language_specified_mappings() abort
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ '<Plug>(Lua)',
+        \ 'lua run', 0)
 endfunction
