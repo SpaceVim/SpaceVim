@@ -3,7 +3,7 @@ title: "SpaceVim golang layer"
 description: "This layer is for golang development. It also provides additional language-specific key mappings."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) golang
+# [SpaceVim Layers:](https://spacevim.org/layers) go
 
 <!-- vim-markdown-toc GFM -->
 
