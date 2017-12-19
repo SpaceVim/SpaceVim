@@ -31,8 +31,7 @@ endfunction
 
 " Add language specific mappings
 function! s:language_specified_mappings() abort
-
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
-        \ '<Plug>(Lua)',
-        \ 'lua run', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'Lua', 'lua run', 1)
 endfunction
+
+au BufEnter *.lua :LuaOutputMethod buffer
