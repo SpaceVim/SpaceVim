@@ -87,14 +87,12 @@ if has('nvim') && exists('*chanclose')
     if s:_out_data[-1] == ''
       call remove(s:_out_data, -1)
       let lines = s:_out_data
-    else
-      let lines = s:_out_data
+      if !empty(lines)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      endif
+      let s:_out_data = ['']
+      let s:lines += len(lines)
     endif
-    if !empty(lines)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
     call s:update_statusline()
   endfunction
 
