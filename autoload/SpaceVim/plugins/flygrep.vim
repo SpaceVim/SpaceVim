@@ -138,6 +138,7 @@ function! s:open_item() abort
     q
     exe 'e ' . filename
     exe linenr
+    redraw!
   endif
 endfunction
 
