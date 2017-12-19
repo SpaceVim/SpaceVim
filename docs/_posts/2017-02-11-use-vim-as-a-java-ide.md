@@ -9,12 +9,15 @@ redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
 
 I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim.
 
-![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
+![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
 ## Project manager
+
 1. [unite](https://github.com/Shougo/unite.vim) - file and code fuzzy founder.
 
-![](https://s3.amazonaws.com/github-csexton/unite-01.gif)
+The next version of unite is [denite](https://github.com/Shougo/denite.nvim), Denite is a dark powered plugin for Neovim/Vim to unite all interfaces.
+
+![unite](https://s3.amazonaws.com/github-csexton/unite-01.gif)
 
 The unite or unite.vim plug-in can search and display information from arbitrary sources like files, buffers, recently used files or registers. You can run several pre-defined actions on a target displayed in the unite window.
 
@@ -22,7 +25,7 @@ The difference between unite and similar plug-ins like fuzzyfinder, ctrl-p or ku
 
 You can also use unite with [ag](https://github.com/ggreer/the_silver_searcher), that will make searching faster.
 
-*config unite with ag or other tools support*
+_config unite with ag or other tools support_
 
 ```viml
 if executable('hw')
@@ -75,7 +78,8 @@ endif
 
 2. [vimfiler](https://github.com/Shougo/vimfiler.vim) - A powerful file explorer implemented in Vim script
 
-*Use vimfiler as default file explorer*
+_Use vimfiler as default file explorer_
+
 > for more information, you should read the documentation of vimfiler.
 
 ```viml
@@ -111,17 +115,18 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 ## Code completion
 
 1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
-    - Demo
 
-    ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
+   - Demo
 
-    - Generics demo
+   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
 
-    ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
+   - Generics demo
+
+   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
 
 2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
 
+3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
 
 ## Syntax lint
 
@@ -130,4 +135,8 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
 also you can set the classpath.
 
+## REPL
 
+you need to install jdk8 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
+
+![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
