@@ -96,31 +96,32 @@ function! s:language_specified_mappings() abort
         \ 'Smart import class under cursor', 0)
 
   " Generate key bindings
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','A'],
+  let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'A'],
         \ '<Plug>(JavaComplete-Generate-Accessors)',
         \ 'generate setter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 's'],
         \ '<Plug>(JavaComplete-Generate-AccessorSetter)',
         \ 'generate setter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'g'],
         \ '<Plug>(JavaComplete-Generate-AccessorGetter)',
         \ 'generate getter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'a'],
         \ '<Plug>(JavaComplete-Generate-AccessorSetterGetter)',
         \ 'generate setter and getter accessor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'M'],
         \ '<Plug>(JavaComplete-Generate-AbstractMethods)',
         \ 'Generate abstract methods', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'c'],
         \ '<Plug>(JavaComplete-Generate-Constructor)',
         \ 'Generate constructor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','C'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'C'],
         \ '<Plug>(JavaComplete-Generate-DefaultConstructor)',
         \ 'Generate default constructor', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','eq'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'e'],
         \ '<Plug>(JavaComplete-Generate-EqualsAndHashCode)',
         \ 'Generate equals functions', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','ts'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 't'],
         \ '<Plug>(JavaComplete-Generate-ToString)',
         \ 'Generate toString function', 0)
 

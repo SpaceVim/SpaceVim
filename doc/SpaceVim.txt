@@ -37,18 +37,19 @@ CONTENTS                                                   *SpaceVim-contents*
       14. lang#java.................................|SpaceVim-layer-lang-java|
       15. lang#julia...............................|SpaceVim-layer-lang-julia|
       16. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      17. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      18. lang#php...................................|SpaceVim-layer-lang-php|
-      19. lang#pony.................................|SpaceVim-layer-lang-pony|
-      20. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      21. lang#python.............................|SpaceVim-layer-lang-python|
-      22. lang#rust.................................|SpaceVim-layer-lang-rust|
-      23. lang#scala...............................|SpaceVim-layer-lang-scala|
-      24. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      25. lang#xml...................................|SpaceVim-layer-lang-xml|
-      26. operator...................................|SpaceVim-layer-operator|
-      27. shell.........................................|SpaceVim-layer-shell|
-      28. tmux...........................................|SpaceVim-layer-tmux|
+      17. lang#lua...................................|SpaceVim-layer-lang-lua|
+      18. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      19. lang#php...................................|SpaceVim-layer-lang-php|
+      20. lang#pony.................................|SpaceVim-layer-lang-pony|
+      21. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      22. lang#python.............................|SpaceVim-layer-lang-python|
+      23. lang#rust.................................|SpaceVim-layer-lang-rust|
+      24. lang#scala...............................|SpaceVim-layer-lang-scala|
+      25. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      26. lang#xml...................................|SpaceVim-layer-lang-xml|
+      27. operator...................................|SpaceVim-layer-operator|
+      28. shell.........................................|SpaceVim-layer-shell|
+      29. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -897,6 +898,20 @@ on-demanding  due to its LaTeXToUnicode feature.
 LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
 
 This layer is for kotlin development.
+
+==============================================================================
+LANG#LUA                                             *SpaceVim-layer-lang-lua*
+
+This layer includes utilities and language-specific mappings for lua
+development.
+
+MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         lua run
+<
 
 ==============================================================================
 LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
