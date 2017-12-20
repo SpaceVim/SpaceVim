@@ -20,6 +20,8 @@ function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
         \ 'debug transient state', 1)
+  let g:vebugger_breakpoint_text = '🞊'
+  let g:vebugger_currentline_text = '🠲'
 endfunction
 
 function! SpaceVim#layers#debug#launching(ft) abort
