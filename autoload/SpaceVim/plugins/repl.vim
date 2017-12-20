@@ -68,6 +68,8 @@ function! s:start(exe) abort
   call s:open_windows()
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . a:exe, '', repeat('-', 20)])
   let s:lines += 3
+  let s:_out_data = ['']
+  let s:_current_line = ''
   let s:job_id =  s:JOB.start(a:exe,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
@@ -79,54 +81,16 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 
-if has('nvim') && exists('*chanclose')
-  let s:_out_data = ['']
-  function! s:on_stdout(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] == ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-      if !empty(lines)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-      endif
-      let s:_out_data = ['']
-      let s:lines += len(lines)
-    endif
-    call s:update_statusline()
-  endfunction
+function! s:on_stdout(job_id, data, event) abort
+  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  let s:lines += len(a:data)
+  call s:update_statusline()
+endfunction
 
-  let s:_err_data = ['']
-  function! s:on_stderr(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] ==# ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-    else
-      let lines = s:_out_data
-    endif
-    if !empty(lines)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
-    call s:update_statusline()
-  endfunction
-else
-  function! s:on_stdout(job_id, data, event) abort
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    let s:lines += len(a:data)
-    call s:update_statusline()
-  endfunction
-
-  function! s:on_stderr(job_id, data, event) abort
-    let s:status.has_errors = 1
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    let s:lines += len(a:data)
-    call s:update_statusline()
-  endfunction
-endif
+function! s:on_stderr(job_id, data, event) abort
+  let s:status.has_errors = 1
+  call s:on_stdout(a:job_id, a:data, a:event)
+endfunction
 
 function! s:on_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
