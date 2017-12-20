@@ -28,7 +28,11 @@ function! SpaceVim#layers#lang#lua#config() abort
 
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
-  call SpaceVim#plugins#repl#reg('lua', 'luaprompt')
+  if executable('luap')
+    call SpaceVim#plugins#repl#reg('lua', 'luap')
+  else
+    call SpaceVim#plugins#repl#reg('lua', 'lua')
+  endif
 endfunction
 
 " Add language specific mappings
