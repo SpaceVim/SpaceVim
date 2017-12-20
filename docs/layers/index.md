@@ -33,6 +33,7 @@ call SpaceVim#layers#load('shell',
 | [git](https://spacevim.org/layers/git/)                         | This layers adds extensive support for git                                                                                |
 | [lang#c](https://spacevim.org/layers/lang/c/)                   | This layer is for c/c++/object-c development                                                                              |
 | [lang#elixir](https://spacevim.org/layers/lang/elixir/)         | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.               |
+| [lang#go](https://spacevim.org/layers/lang/go/)                 | This layer is for go development                                                                                          |
 | [lang#java](https://spacevim.org/layers/lang/java/)             | This layer is for Java development                                                                                        |
 | [lang#javascript](https://spacevim.org/layers/lang/javascript/) | This layer is for JaveScript development                                                                                  |
 | [lang#lisp](https://spacevim.org/layers/lang/lisp/)             | for lisp development                                                                                                      |
