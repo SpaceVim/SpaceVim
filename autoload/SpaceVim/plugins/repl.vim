@@ -70,6 +70,8 @@ function! s:start(exe) abort
   let s:lines += 3
   let s:_out_data = ['']
   let s:_current_line = ''
+  " this only for has('nvim') && exists('*chanclose')
+  let s:_out_data = ['']
   let s:job_id =  s:JOB.start(a:exe,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
@@ -81,11 +83,27 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 
-function! s:on_stdout(job_id, data, event) abort
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-  let s:lines += len(a:data)
-  call s:update_statusline()
-endfunction
+if has('nvim') && exists('*chanclose')
+  function! s:on_stdout(job_id, data, event) abort
+    let s:_out_data[-1] .= a:data[0]
+    call extend(s:_out_data, a:data[1:])
+    if s:_out_data[-1] ==# '' && len(s:_out_data) > 1
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+      let s:lines += len(s:_out_data) - 1
+      let s:_out_data = ['']
+    elseif  s:_out_data[-1] !=# '' && len(s:_out_data) > 1
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+      let s:lines += len(s:_out_data) - 1
+      let s:_out_data = [s:_out_data[-1]]
+    endif
+  endfunction
+else
+  function! s:on_stdout(job_id, data, event) abort
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    let s:lines += len(a:data)
+    call s:update_statusline()
+  endfunction
+endif
 
 function! s:on_stderr(job_id, data, event) abort
   let s:status.has_errors = 1
