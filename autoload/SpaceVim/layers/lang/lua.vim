@@ -49,8 +49,6 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
-
-  
 endfunction
 
 au BufEnter *.lua :LuaOutputMethod buffer
