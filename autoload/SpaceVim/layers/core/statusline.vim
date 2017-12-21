@@ -394,7 +394,7 @@ endfunction
 
 function! s:inactive() abort
   let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
-  let secs = [s:filename(), &filetype, s:modes(), s:git_branch()]
+  let secs = [s:filename(), " " . &filetype, s:modes(), s:git_branch()]
   let base = 10
   for sec in secs
     let len = s:STATUSLINE.len(sec)
