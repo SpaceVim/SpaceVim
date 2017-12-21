@@ -26,6 +26,13 @@ function! SpaceVim#layers#load(layer, ...) abort
   endif
 endfunction
 
+function! SpaceVim#layers#disable(layer) abort
+  let index = index(g:spacevim_plugin_groups, a:layer)
+  if index != -1
+    call remove(g:spacevim_plugin_groups, index)
+  endif
+endfunction
+
 function! s:list_layers() abort
   tabnew SpaceVimLayers
   nnoremap <buffer> q :q<cr>
