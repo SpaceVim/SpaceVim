@@ -68,15 +68,17 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 
 ### Project layout
 
-    ├─ autoload/SpaceVim/api/         APIs
-    ├─ autoload/SpaceVim/layers/      layers
-    ├─ autoload/SpaceVim/plugins/     plugins
-    ├─ autoload/SpaceVim/mapping/     mapping guide
-    ├─ doc/SpaceVim.txt               help
-    ├─ docs/                          website
-    ├─ wiki/                          wiki
-    ├─ bin/                           executeable
-    └─ test/                          tests
+```txt
+├─ autoload/SpaceVim/api/         APIs
+├─ autoload/SpaceVim/layers/      layers
+├─ autoload/SpaceVim/plugins/     plugins
+├─ autoload/SpaceVim/mapping/     mapping guide
+├─ doc/SpaceVim.txt               help
+├─ docs/                          website
+├─ wiki/                          wiki
+├─ bin/                           executeable
+└─ test/                          tests
+```
 
 ### Features
 
@@ -123,3 +125,5 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
 - authors of all the plugins used in SpaceVim.
+
+<!-- vim:set nowrap: -->

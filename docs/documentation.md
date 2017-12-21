@@ -2094,3 +2094,6 @@ As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` 
 [textobj-user]: https://github.com/kana/vim-textobj-user
 
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
+
+
+<!-- vim:set nowrap: -->
