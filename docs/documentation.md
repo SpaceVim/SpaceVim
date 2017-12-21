@@ -25,6 +25,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Update plugins](#update-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Configuration layers](#configuration-layers)
+  - [Purpose](#purpose)
+  - [Structure](#structure)
 - [Custom Configuration](#custom-configuration)
   - [Automatic Generation](#automatic-generation)
   - [Alternative directory](#alternative-directory)
@@ -239,6 +241,19 @@ Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `
 ## Configuration layers
 
 This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+
+### Purpose
+
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configration file.
+
+### Structure
+
+In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
+
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+
 
 ## Custom Configuration
 

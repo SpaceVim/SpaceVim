@@ -4,9 +4,26 @@ description: A list of available layers in SpaceVim.
 keywords: layer,layers
 ---
 
+
+<!-- vim-markdown-toc GFM -->
+
+- [Introduction](#introduction)
+  - [Enable layers](#enable-layers)
+  - [Disable layers](#disable-layers)
+- [Available layers](#available-layers)
+
+<!-- vim-markdown-toc -->
+
 ## Introduction
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature. here is an example for loadding a layer with some specified options:
+SpaceVim is a community-driven vim distribution that seeks to provide layer feature.
+Layers help collect related packages together to provide features.
+This approach helps keep configuration organized and reduces overhead for the user by
+keeping them from having to think about what packages to install.
+
+### Enable layers
+
+here is an example for loadding `shell` layer with some specified options:
 
 ```vim
 call SpaceVim#layers#load('shell',
@@ -17,9 +34,19 @@ call SpaceVim#layers#load('shell',
         \ )
 ```
 
+### Disable layers
+
+Some layers are enabled by defalut, here is an example for disable `shell` layer:
+
+```vim
+call SpaceVim#layers#disable('shell')
+```
+
 <!-- SpaceVim layer list start -->
 
 ## Available layers
+
+This is a list of available layers in SpaceVim, to contribute layers, please read the [development page](http://spacevim.org/development/).
 
 | Name                                                            | Description                                                                                                               |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
