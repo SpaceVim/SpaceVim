@@ -83,6 +83,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     else
       let t = '%#SpaceVim_tabline_b#  '
     endif
+    let index = 1
     for i in range(1, nr)
       if i == ct
         let t .= '%#SpaceVim_tabline_a#'
@@ -95,6 +96,9 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       call add(stack, buflist[winnr - 1])
       call s:need_show_bfname(stack, buflist[winnr - 1])
+      if has('tablineat')
+        let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      endif
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(i)
       elseif g:spacevim_buffer_index_type == 4
@@ -116,6 +120,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let t .= ' ' . s:ilsep . ' '
       endif
+      let index += 1
     endfor
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Tabs '
@@ -220,21 +225,34 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
-  if get(a:000, 2, '') == 'm'
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
-      bd
+  if get(a:000, 2, '') ==# 'm'
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+      quit
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+        bd
+      endif
     endif
-  elseif get(a:000, 2, '') == 'l'
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
+  elseif get(a:000, 2, '') ==# 'l'
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+      endif
     endif
   else
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+      endif
     endif
   endif
 endfunction
