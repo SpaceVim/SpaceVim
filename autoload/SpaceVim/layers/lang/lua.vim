@@ -11,28 +11,38 @@
 " <
 
 function! SpaceVim#layers#lang#lua#plugins() abort
-    let plugins = []
-    " Improved Lua 5.3 syntax and indentation support for Vim
-    call add(plugins, ['tbastos/vim-lua', {'on_ft' : 'lua'}])
-    call add(plugins, ['WolfgangMehner/lua-support', {'on_ft' : 'lua'}])
-    call add(plugins, ['SpaceVim/vim-luacomplete', {'on_ft' : 'lua', 'if' : has('lua')}])
-    return plugins
+  let plugins = []
+  " Improved Lua 5.3 syntax and indentation support for Vim
+  call add(plugins, ['tbastos/vim-lua', {'on_ft' : 'lua'}])
+  call add(plugins, ['WolfgangMehner/lua-support', {'on_ft' : 'lua'}])
+  call add(plugins, ['SpaceVim/vim-luacomplete', {'on_ft' : 'lua', 'if' : has('lua')}])
+  return plugins
 endfunction
+
+let s:lua_repl_command = ''
 
 function! SpaceVim#layers#lang#lua#config() abort
   if has('lua')
     augroup spacevim_lua
-        autocmd FileType lua setlocal omnifunc=luacomplete#complete
+      autocmd FileType lua setlocal omnifunc=luacomplete#complete
     augroup END
   endif
 
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
-  if executable('luap')
-    call SpaceVim#plugins#repl#reg('lua', 'luap')
+  if !empty(s:lua_repl_command)
+      call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
   else
-    call SpaceVim#plugins#repl#reg('lua', 'lua')
+    if executable('luap')
+      call SpaceVim#plugins#repl#reg('lua', 'luap')
+    else
+      call SpaceVim#plugins#repl#reg('lua', 'lua')
+    endif
   endif
+endfunction
+
+function! SpaceVim#layers#lang#lua#set_variablee(opt) abort
+  let s:lua_repl_command = get(a:opt, 'repl_command', '') 
 endfunction
 
 " Add language specific mappings
