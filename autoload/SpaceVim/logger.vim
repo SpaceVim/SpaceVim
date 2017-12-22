@@ -3,22 +3,22 @@ let s:LOGGER = SpaceVim#api#import('logger')
 call s:LOGGER.set_name('SpaceVim')
 call s:LOGGER.set_level(1)
 call s:LOGGER.set_silent(0)
-call s:LOGGER.set_verbose(2)
+call s:LOGGER.set_verbose(1)
 
-function! SpaceVim#logger#info(msg)
+function! SpaceVim#logger#info(msg) abort
 
   call s:LOGGER.info(a:msg)
 
 endfunction
 
-function! SpaceVim#logger#warn(msg)
+function! SpaceVim#logger#warn(msg) abort
 
   call s:LOGGER.warn(a:msg)
 
 endfunction
 
 
-function! SpaceVim#logger#error(msg)
+function! SpaceVim#logger#error(msg) abort
 
   call s:LOGGER.error(a:msg)
 
