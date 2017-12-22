@@ -44,7 +44,6 @@ function! SpaceVim#layers#lang#javascript#config() abort
         \ funcref('s:on_ft'))
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
-    call SpaceVim#lsp#reg_server('javascript', ['javascript-typescript-stdio'])
     call SpaceVim#mapping#gd#add('javascript',
           \ function('SpaceVim#lsp#go_to_def'))
   else

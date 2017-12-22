@@ -60,6 +60,9 @@ function! SpaceVim#layers#lsp#config() abort
 
   let g:LanguageClient_autoStart = 1
   " }}}
+  for ft in s:enabled_fts
+    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
+  endfor
 endfunction
 
 let s:enabled_fts = []
@@ -69,6 +72,10 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
+  let override = get(a:var, 'override_cmd', {})
+  if !empty(override)
+    call extend(s:lsp_servers, override, 'force')
+  endif
   for ft in get(a:var, 'filetypes', [])
     let cmd = get(s:lsp_servers, ft, [''])[0]
     if empty(cmd)
