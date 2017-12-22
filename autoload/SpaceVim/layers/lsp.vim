@@ -62,3 +62,22 @@ function! SpaceVim#layers#lsp#config() abort
   " }}}
 endfunction
 
+let s:enabled_fts = []
+
+let s:lsp_servers = {
+      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ }
+
+function! SpaceVim#layers#lsp#set_variable(var) abort
+  for ft in get(a:var, 'filetypes', [])
+    if executable(s:lsp_servers[ft][0])
+      call add(s:enabled_fts, ft)
+    else
+      call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . s:lsp_servers[ft][0] . 'is not executable!')
+    endif
+  endfor
+endfunction
+
+function! SpaceVim#layers#lsp#check_filetype(ft) abort
+  return index(s:enabled_fts, a:ft) != -1
+endfunction
