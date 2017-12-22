@@ -41,7 +41,7 @@ function! SpaceVim#layers#lang#lua#config() abort
   endif
 endfunction
 
-function! SpaceVim#layers#lang#lua#set_variablee(opt) abort
+function! SpaceVim#layers#lang#lua#set_variable(opt) abort
   let s:lua_repl_command = get(a:opt, 'repl_command', '') 
 endfunction
 
