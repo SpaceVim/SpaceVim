@@ -26,8 +26,6 @@ endfunction
 let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
-  let s:use_lsp = get(a:var, 'use_lsp', 0) && has('nvim')
-        \ && executable('javascript-typescript-stdio')
   let s:auto_fix = get(a:var, 'auto_fix', 0)
 endfunction
 

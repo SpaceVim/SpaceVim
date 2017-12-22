@@ -70,10 +70,15 @@ let s:lsp_servers = {
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
   for ft in get(a:var, 'filetypes', [])
-    if executable(s:lsp_servers[ft][0])
-      call add(s:enabled_fts, ft)
+    let cmd = get(s:lsp_servers, ft, [''])[0]
+    if empty(cmd)
+      call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
     else
-      call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . s:lsp_servers[ft][0] . 'is not executable!')
+      if executable(cmd)
+        call add(s:enabled_fts, ft)
+      else
+        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . cmd . 'is not executable!')
+      endif
     endif
   endfor
 endfunction
