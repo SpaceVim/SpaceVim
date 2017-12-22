@@ -39,6 +39,23 @@ call SpaceVim#layers#load('lsp',
     \ }
 ```
 
+default language server commands:
+
+| language     | server command                    |
+| ------------ | --------------------------------- |
+| `javascript` | `['javascript-typescript-stdio']` |
+
+To override the server command, you may need to use `override_cmd` option:
+
+```vim
+call SpaceVim#layers#load('lsp',
+    \ {
+    \ 'override_cmd' : {
+                     \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+                     \ }
+    \ }
+```
+
 ## Key bindings
 
 | Key Binding    | Description            |
