@@ -241,12 +241,16 @@ function! s:on_pull_exit(id, data, event) abort
     if a:data == 0 && a:event ==# 'exit'
         call s:msg_on_updated_done(s:pulling_repos[id].name)
     else
+      if a:data == 1
+        call s:msg_on_updated_failed(s:pulling_repos[id].name, ' The plugin dir is dirty')
+      else
         call s:msg_on_updated_failed(s:pulling_repos[id].name)
+      endif
     endif
     if a:id == -1
         redraw!
     endif
-    if !empty(get(s:pulling_repos[id], 'build', ''))
+    if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
         call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
@@ -341,7 +345,7 @@ function! s:on_install_exit(id, data, event) abort
     if get(s:pulling_repos[id], 'rev', '') !=# ''
         call s:lock_revision(s:pulling_repos[id])
     endif
-    if !empty(get(s:pulling_repos[id], 'build', ''))
+    if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
         call s:build(s:pulling_repos[id])
     else
         let s:pct_done += 1
@@ -479,8 +483,12 @@ function! s:msg_on_updated_done(name) abort
 endfunction
 
 " - foo.vim: Updating failed.
-function! s:msg_on_updated_failed(name) abort
+function! s:msg_on_updated_failed(name, ...) abort
+  if a:0 == 1
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed, ' . a:1)
+  else
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed.')
+  endif
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
@@ -494,8 +502,12 @@ function! s:msg_on_install_done(name) abort
 endfunction
 
 " - foo.vim: Updating failed.
-function! s:msg_on_install_failed(name) abort
+function! s:msg_on_install_failed(name, ...) abort
+  if a:0 == 1
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
+  else
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
+  endif
 endfunction
 
 " - foo.vim: Updating done.
