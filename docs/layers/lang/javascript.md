@@ -7,10 +7,10 @@ description: "This layer is for JaveScript development"
 
 <!-- vim-markdown-toc GFM -->
 
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-* [Features](#features)
-* [Layer configuration](#layer-configuration)
+- [Description](#description)
+- [Layer Installation](#layer-installation)
+- [Features](#features)
+- [Layer configuration](#layer-configuration)
 
 <!-- vim-markdown-toc -->
 
@@ -31,7 +31,6 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript
 
 ## Layer configuration
 
-`use_lsp`: Use language server if possible. The default value is `0`.
 `auto_fix`: auto fix problems when save files, disabled by default. if you need this feature, you can load this layer via:
 
 ```vim
