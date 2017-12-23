@@ -27,11 +27,11 @@ if has('nvim')
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'LSP',
-          \ 'cmd': {server_info -> a:cmds},
-          \ 'whitelist': [ a:ft ],
-          \ })
+   exe "au User lsp_setup call lsp#register_server({"
+          \ . "'name': 'LSP',"
+          \ . "'cmd': {server_info -> " . string(a:cmds) . "},"
+          \ . "'whitelist': ['" .  a:ft . "' ],"
+          \ . "})"
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
