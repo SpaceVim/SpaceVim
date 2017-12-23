@@ -41,6 +41,10 @@ endfunction
 function! SpaceVim#layers#lang#php#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ funcref('s:on_ft'))
+  if SpaceVim#layers#lsp#check_filetype('php')
+    call SpaceVim#mapping#gd#add('php',
+          \ function('SpaceVim#lsp#go_to_def'))
+  endif
 
 endfunction
 
