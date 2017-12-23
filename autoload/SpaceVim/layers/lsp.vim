@@ -70,6 +70,7 @@ let s:enabled_fts = []
 let s:lsp_servers = {
       \ 'javascript' : ['javascript-typescript-stdio'],
       \ 'haskell' : ['hie', '--lsp'],
+      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort

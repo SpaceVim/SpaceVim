@@ -25,15 +25,19 @@
 
 
 function! SpaceVim#layers#lang#php#plugins() abort
-    let plugins = []
+  let plugins = []
+  call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
+  call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
+  call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
+  if SpaceVim#layers#lsp#check_filetype('php')
+    call add(plugins, ['felixfbecker/php-language-server', {'on_ft' : 'php', 'build' : 'composer install && composer run-script parse-stubs'}])
+  else
     call add(plugins, ['php-vim/phpcd.vim', { 'on_ft' : 'php', 'build' : ['composer', 'install']}])
-    call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
-    call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
-    call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
-    call add(plugins, ['lvht/phpfold.vim', { 'on_ft' : 'php', 'build' : ['composer', 'install']}])
-    return plugins
+  endif
+  call add(plugins, ['lvht/phpfold.vim', { 'on_ft' : 'php', 'build' : ['composer', 'install']}])
+  return plugins
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
-    
+
 endfunction
