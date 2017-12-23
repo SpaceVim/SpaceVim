@@ -59,10 +59,7 @@ call SpaceVim#layers#load('lsp',
 
 ## Key bindings
 
-| Key Binding    | Description            |
-| -------------- | ---------------------- |
-| `<Leader> g a` | git add current file   |
-| `<Leader> g A` | git add All files      |
-| `<Leader> g b` | open git blame window  |
-| `<Leader> g s` | open git status window |
-| `<Leader> g c` | open git commit window |
+| Key Binding     | Description   |
+| --------------- | ------------- |
+| `K` / `SPC l d` | show document |
+| `SPC l e`       | rename symbol |
