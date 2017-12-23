@@ -44,6 +44,7 @@ default language server commands:
 | language     | server command                    |
 | ------------ | --------------------------------- |
 | `javascript` | `['javascript-typescript-stdio']` |
+| `haskell`    | `['hie', '--lsp']`                |
 
 To override the server command, you may need to use `override_cmd` option:
 

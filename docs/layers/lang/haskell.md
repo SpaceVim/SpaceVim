@@ -27,4 +27,5 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#haskell')`
 - syntax checking
 - goto definition
 - refernce finder
+- language server protocol (need lsp layer) 
 

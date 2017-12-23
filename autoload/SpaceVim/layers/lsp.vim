@@ -69,6 +69,7 @@ let s:enabled_fts = []
 
 let s:lsp_servers = {
       \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'haskell' : ['hie', '--lsp'],
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
