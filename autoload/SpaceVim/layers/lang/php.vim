@@ -39,5 +39,18 @@ function! SpaceVim#layers#lang#php#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
+  call SpaceVim#mapping#space#regesit_lang_mappings('php',
+        \ funcref('s:on_ft'))
 
+endfunction
+
+function! s:on_ft() abort
+  if SpaceVim#layers#lsp#check_filetype('php')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
 endfunction
