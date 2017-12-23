@@ -2,8 +2,11 @@ function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
   if has('nvim')
-    let plugins = add(plugins, ['SpaceVim/LanguageClient-neovim',
+    call add(plugins, ['SpaceVim/LanguageClient-neovim',
           \ { 'merged': 0, 'if': has('python3') }])
+  else
+    call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
+    call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
   endif
 
   return plugins
