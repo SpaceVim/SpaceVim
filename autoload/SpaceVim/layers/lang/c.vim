@@ -105,9 +105,6 @@ endfunction
 
 if g:spacevim_enable_neomake
   function! s:update_checkers_argv(argv, fts) abort
-    if exists(':Neomake') != 2
-      return
-    endif
     for ft in a:fts
         let g:neomake_{ft}_clang_maker = {
               \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
