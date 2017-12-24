@@ -103,7 +103,7 @@ function! s:update_clang_flag() abort
   endif
 endfunction
 
-if g:spacevim_enable_neomake
+if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
   function! s:update_checkers_argv(argv, fts) abort
     for ft in a:fts
       let g:neomake_{ft}_clang_maker = {
