@@ -58,8 +58,8 @@ function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
   let b:_spacevim_project_name = g:_spacevim_project_name
-  for callback in s:project_callback
-    call call(callback, [])
+  for Callback in s:project_callback
+    call call(Callback, [])
   endfor
 endfunction
 
