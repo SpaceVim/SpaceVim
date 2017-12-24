@@ -44,12 +44,15 @@ let s:use_libclang = 0
 
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
-  if has('nvim')
+  if g:spacevim_autocomplete_method ==# 'deoplete'
     if s:use_libclang
       call add(plugins, ['zchee/deoplete-clang'])
     else
       call add(plugins, ['tweekmonster/deoplete-clang2'])
     endif
+  elseif g:spacevim_autocomplete_method ==# 'ycm'
+  elseif g:spacevim_autocomplete_method ==# 'completor'
+  elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
   else
     call add(plugins, ['Rip-Rip/clang_complete'])
   endif
