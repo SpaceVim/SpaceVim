@@ -73,6 +73,13 @@ let s:enabled_fts = []
 let s:lsp_servers = {
       \ 'javascript' : ['javascript-typescript-stdio'],
       \ 'haskell' : ['hie', '--lsp'],
+      \ 'c' : ['clangd'],
+      \ 'cpp' : ['clangd'],
+      \ 'objc' : ['clangd'],
+      \ 'objcpp' : ['clangd'],
+      \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'python' : ['pyls'],
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php']
       \ }
 
