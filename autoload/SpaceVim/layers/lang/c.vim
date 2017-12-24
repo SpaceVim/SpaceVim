@@ -66,9 +66,6 @@ function! SpaceVim#layers#lang#c#config() abort
   call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
-  if filereadable('.clang')
-    call s:update_clang_flag()
-  endif
   if executable('clang')
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
@@ -112,7 +109,6 @@ if g:spacevim_enable_neomake
       return
     endif
     for ft in a:fts
-      if !exists('g:neomake_'. ft .'_clang_maker')
         let g:neomake_{ft}_clang_maker = {
               \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
               \ 'exe' : s:clang_executable,
@@ -127,7 +123,6 @@ if g:spacevim_enable_neomake
               \ '%I%f:%l: note: %m,'.
               \ '%f:%l: %m'
               \ }
-      endif
     endfor
   endfunction
 elseif g:spacevim_enable_ale

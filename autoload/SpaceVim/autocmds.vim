@@ -159,6 +159,7 @@ function! SpaceVim#autocmds#VimEnter() abort
     call SpaceVim#layers#core#tabline#def_colors()
     set showtabline=2
   endif
+  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 endfunction
 
 function! s:disable_welcome() abort
