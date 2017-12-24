@@ -106,25 +106,29 @@ endfunction
 if g:spacevim_enable_neomake
   function! s:update_checkers_argv(argv, fts) abort
     for ft in a:fts
-        let g:neomake_{ft}_clang_maker = {
-              \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
-              \ 'exe' : s:clang_executable,
-              \ 'errorformat':
-              \ '%-G%f:%s:,' .
-              \ '%f:%l:%c: %trror: %m,' .
-              \ '%f:%l:%c: %tarning: %m,' .
-              \ '%I%f:%l:%c: note: %m,' .
-              \ '%f:%l:%c: %m,'.
-              \ '%f:%l: %trror: %m,'.
-              \ '%f:%l: %tarning: %m,'.
-              \ '%I%f:%l: note: %m,'.
-              \ '%f:%l: %m'
-              \ }
+      let g:neomake_{ft}_clang_maker = {
+            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
+            \ 'exe' : s:clang_executable,
+            \ 'errorformat':
+            \ '%-G%f:%s:,' .
+            \ '%f:%l:%c: %trror: %m,' .
+            \ '%f:%l:%c: %tarning: %m,' .
+            \ '%I%f:%l:%c: note: %m,' .
+            \ '%f:%l:%c: %m,'.
+            \ '%f:%l: %trror: %m,'.
+            \ '%f:%l: %tarning: %m,'.
+            \ '%I%f:%l: note: %m,'.
+            \ '%f:%l: %m'
+            \ }
     endfor
   endfunction
 elseif g:spacevim_enable_ale
   function! s:update_checkers_argv(argv, fts) abort
-
+    " g:ale_c_clang_options
+    for ft in a:fts
+      let g:ale_{ft}_clang_options = ' -fsyntax-only -Wall -Wextra -I./ ' . join(a:argv, ' ')
+      let g:ale_{ft}_clang_executabl = s:clang_executable
+    endfor
   endfunction
 else
   function! s:update_checkers_argv(argv, fts) abort
