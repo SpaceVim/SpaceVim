@@ -41,7 +41,7 @@
 
 
 let s:use_libclang = 0
-
+let s:clang_executable = 'clang'
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if g:spacevim_autocomplete_method ==# 'deoplete'
@@ -69,6 +69,10 @@ function! SpaceVim#layers#lang#c#config() abort
   if filereadable('.clang')
     call s:update_clang_flag()
   endif
+  if executable('clang')
+    let g:neomake_c_enabled_makers = ['clang']
+    let g:neomake_cpp_enabled_makers = ['clang']
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort
@@ -80,6 +84,9 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
     let g:deoplete#sources#clang#executable = a:var.clang_executable
+    let g:neomake_c_enabled_makers = ['clang']
+    let g:neomake_cpp_enabled_makers = ['clang']
+    let s:clang_executable = a:var.clang_executable
   endif
 endfunction
 
@@ -90,7 +97,50 @@ function! s:language_specified_mappings() abort
         \ 'execute current file', 1)
 endfunction
 
+
 function! s:update_clang_flag() abort
-  
+  if filereadable('.clang')
+    let argvs = readfile('.clang')
+    call s:update_checkers_argv(argvs, ['c', 'cpp'])
+    call s:update_autocomplete_argv(argvs, ['c', 'cpp'])
+  endif
+endfunction
+
+if g:spacevim_enable_neomake
+  function! s:update_checkers_argv(argv, fts) abort
+    if exists(':Neomake') != 2
+      return
+    endif
+    for ft in a:fts
+      if !exists('g:neomake_'. ft .'_clang_maker')
+        let g:neomake_{ft}_clang_maker = {
+              \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
+              \ 'exe' : s:clang_executable,
+              \ 'errorformat':
+              \ '%-G%f:%s:,' .
+              \ '%f:%l:%c: %trror: %m,' .
+              \ '%f:%l:%c: %tarning: %m,' .
+              \ '%I%f:%l:%c: note: %m,' .
+              \ '%f:%l:%c: %m,'.
+              \ '%f:%l: %trror: %m,'.
+              \ '%f:%l: %tarning: %m,'.
+              \ '%I%f:%l: note: %m,'.
+              \ '%f:%l: %m'
+              \ }
+      endif
+    endfor
+  endfunction
+elseif g:spacevim_enable_ale
+  function! s:update_checkers_argv(argv, fts) abort
+
+  endfunction
+else
+  function! s:update_checkers_argv(argv, fts) abort
+
+  endfunction
+endif
+
+function! s:update_autocomplete_argv(argv, fts) abort
+
 endfunction
 
