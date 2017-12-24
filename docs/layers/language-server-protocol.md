@@ -10,6 +10,7 @@ description: "This layers provides language server protocol for vim and neovim"
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+  - [Install language server](#install-language-server)
 - [Configuration](#configuration)
 - [Key bindings](#key-bindings)
 
@@ -54,6 +55,21 @@ endif
 ## Install
 
 To use this configuration layer, add `call SpaceVim#layers#load('lsp')` to your custom configuration file.
+
+### Install language server
+
+**JavaScript:**
+
+```sh
+npm install -g javascript-typescript-langserver
+```
+
+**Python:**
+
+```sh
+pip install --user python-language-server
+```
+
 
 ## Configuration
 
