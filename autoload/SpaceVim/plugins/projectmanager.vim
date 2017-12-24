@@ -48,15 +48,28 @@ function! SpaceVim#plugins#projectmanager#current_name() abort
   return get(b:, '_spacevim_project_name', '')
 endfunction
 
+" this func is called when vim-rooter change the dir, That means the project
+" is changed, so will call call the registered function.
 function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
-
-  let project = {
+ let project = {
         \ 'path' : getcwd(),
         \ 'name' : fnamemodify(getcwd(), ':t')
         \ }
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
   let b:_spacevim_project_name = g:_spacevim_project_name
+  for callback in s:project_callback
+    call call(callback, [])
+  endfor
+endfunction
+
+let s:project_callback = []
+function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
+ if type(a:func) == 2
+   call add(s:project_callback, a:func)
+ else
+   call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
+ endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort

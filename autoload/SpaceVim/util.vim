@@ -6,6 +6,22 @@ function! SpaceVim#util#globpath(path, expr) abort
   endif
 endfunction
 
+function! SpaceVim#util#findFileInParent(what, where) abort
+    let old_suffixesadd = &suffixesadd
+    let &suffixesadd = ''
+    let file = findfile(a:what, escape(a:where, ' ') . ';')
+    let &suffixesadd = old_suffixesadd
+    return file
+endfunction
+
+function! SpaceVim#util#findDirInParent(what, where) abort
+    let old_suffixesadd = &suffixesadd
+    let &suffixesadd = ''
+    let dir = finddir(a:what, escape(a:where, ' ') . ';')
+    let &suffixesadd = old_suffixesadd
+    return dir
+endfunction
+
 function! SpaceVim#util#echoWarn(msg) abort
   echohl WarningMsg
   echo a:msg

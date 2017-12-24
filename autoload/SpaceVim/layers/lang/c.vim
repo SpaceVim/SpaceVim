@@ -51,7 +51,9 @@ function! SpaceVim#layers#lang#c#plugins() abort
       call add(plugins, ['tweekmonster/deoplete-clang2'])
     endif
   elseif g:spacevim_autocomplete_method ==# 'ycm'
+    " no need extra plugins
   elseif g:spacevim_autocomplete_method ==# 'completor'
+    " no need extra plugins
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
   else
     call add(plugins, ['Rip-Rip/clang_complete'])
@@ -63,6 +65,10 @@ endfunction
 function! SpaceVim#layers#lang#c#config() abort
   call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', funcref('s:language_specified_mappings'))
+  call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
+  if filereadable('.clang')
+    call s:update_clang_flag()
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort
@@ -82,5 +88,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+endfunction
+
+function! s:update_clang_flag() abort
+  
 endfunction
 
