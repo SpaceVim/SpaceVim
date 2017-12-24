@@ -10,6 +10,7 @@ description: "This layer is for c/c++/object-c development"
 
 - [Description](#description)
 - [Layer Installation](#layer-installation)
+- [Features](#features)
 - [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
@@ -20,7 +21,7 @@ This layer is for c/c++/object-c development.
 
 ## Layer Installation
 
-To use this configuration layer, add `SPLayer 'lang#c'` to your custom configuration file or load layer with custom options.
+To use this configuration layer, add `call SpaceVim#layers#load('lang#c')` to your custom configuration file.
 
 ```vim
 call SpaceVim#layers#load('lang#c',
@@ -29,6 +30,13 @@ call SpaceVim#layers#load('lang#c',
         \ }
         \ )
 ```
+
+## Features
+
+- code completion
+- syntax checking
+- formatting
+
 
 ## Configuration
 
