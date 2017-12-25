@@ -39,6 +39,7 @@ function! SpaceVim#layers#lang#php#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
+  call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ funcref('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
@@ -57,4 +58,7 @@ function! s:on_ft() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'execute current file', 1)
 endfunction
