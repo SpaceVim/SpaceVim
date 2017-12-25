@@ -71,7 +71,7 @@ endfunction
 let s:enabled_fts = []
 
 let s:lsp_servers = {
-      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'javascript' : ['typescript-language-server', '--stdio'],
       \ 'haskell' : ['hie', '--lsp'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
