@@ -62,6 +62,7 @@ function! SpaceVim#layers#lsp#config() abort
   endif
 
   let g:LanguageClient_autoStart = 1
+  let g:lsp_async_completion = 1
   " }}}
   for ft in s:enabled_fts
     call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])

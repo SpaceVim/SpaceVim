@@ -57,15 +57,23 @@ let g:deoplete#ignore_sources.typescript = get(g:deoplete#ignore_sources, 'types
 call deoplete#custom#set('typescript', 'rank', 9999)
 
 
-" php
+" php two types, 1. phpcd (default)  2. lsp
+if SpaceVim#layers#lsp#check_filetype('php')
+  if has('nvim')
+    let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['omni', 'around', 'member'])
+  else
+    let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['around', 'member'])
+  endif
+else
+  let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpcd', 'around', 'member'])
+  "call deoplete#custom#set('phpcd', 'mark', '')
+  "call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
+endif
 let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'php', [
       \'[^. \t0-9]\.\w*',
       \'[^. \t0-9]\->\w*',
       \'[^. \t0-9]\::\w*',
       \])
-let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpcd', 'around', 'member'])
-"call deoplete#custom#set('phpcd', 'mark', '')
-"call deoplete#custom#set('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
 
 " gitcommit
 let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_patterns, 'gitcommit', [

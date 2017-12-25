@@ -32,6 +32,7 @@ else
           \ . "'cmd': {server_info -> " . string(a:cmds) . "},"
           \ . "'whitelist': ['" .  a:ft . "' ],"
           \ . "})"
+   exe 'autocmd FileType ' . a:ft . ' setlocal omnifunc=lsp#complete'
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
