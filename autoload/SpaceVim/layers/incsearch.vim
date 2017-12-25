@@ -21,71 +21,82 @@
 "   <space>/    n           incsearch easymotion
 " <
 
+let s:filename = expand('<sfile>:~')
 
 function! SpaceVim#layers#incsearch#plugins() abort
-    let plugins = []
-    call add(plugins, ['haya14busa/incsearch.vim', {'merged' : 0}])
-    call add(plugins, ['haya14busa/incsearch-fuzzy.vim', {'merged' : 0}])
-    call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
-    call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
-    call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
-    return plugins
+  let plugins = []
+  call add(plugins, ['haya14busa/incsearch.vim', {'merged' : 0}])
+  call add(plugins, ['haya14busa/incsearch-fuzzy.vim', {'merged' : 0}])
+  call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
+  call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
+  call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
+  return plugins
 endfunction
 
+let s:lnum = expand('<slnum>') + 3
 function! SpaceVim#layers#incsearch#config() abort
-    map /  <Plug>(incsearch-forward)
-    map ?  <Plug>(incsearch-backward)
-    map g/ <Plug>(incsearch-stay)
-    set hlsearch
-    let g:incsearch#auto_nohlsearch = get(g:, 'incsearch#auto_nohlsearch', 1)
-    nnoremap <silent> n  :call <SID>update_search_index('d')<cr>
-    nnoremap <silent> N  :call <SID>update_search_index('r')<cr>
-    map *  <Plug>(incsearch-nohl-*)
-    map #  <Plug>(incsearch-nohl-#)
-    map g* <Plug>(incsearch-nohl-g*)
-    map g# <Plug>(incsearch-nohl-g#)
-    function! s:config_fuzzyall(...) abort
-        return extend(copy({
-                    \   'converters': [
-                    \     incsearch#config#fuzzy#converter(),
-                    \     incsearch#config#fuzzyspell#converter()
-                    \   ],
-                    \ }), get(a:, 1, {}))
-    endfunction
-    function! s:config_easyfuzzymotion(...) abort
-        return extend(copy({
-                    \   'converters': [incsearch#config#fuzzy#converter()],
-                    \   'modules': [incsearch#config#easymotion#module()],
-                    \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-                    \   'is_expr': 0,
-                    \   'is_stay': 1
-                    \ }), get(a:, 1, {}))
-    endfunction
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+  set hlsearch
+  let g:incsearch#auto_nohlsearch = get(g:, 'incsearch#auto_nohlsearch', 1)
+  nnoremap <silent> n  :call <SID>update_search_index('d')<cr>
+  nnoremap <silent> N  :call <SID>update_search_index('r')<cr>
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
+  function! s:config_fuzzyall(...) abort
+    return extend(copy({
+          \   'converters': [
+          \     incsearch#config#fuzzy#converter(),
+          \     incsearch#config#fuzzyspell#converter()
+          \   ],
+          \ }), get(a:, 1, {}))
+  endfunction
+  function! s:config_easyfuzzymotion(...) abort
+    return extend(copy({
+          \   'converters': [incsearch#config#fuzzy#converter()],
+          \   'modules': [incsearch#config#easymotion#module()],
+          \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+          \   'is_expr': 0,
+          \   'is_stay': 1
+          \ }), get(a:, 1, {}))
+  endfunction
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy find word',
+        \ [
+        \ '[SPC b /] is fuzzy find word in current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 0)
 endfunction
 
 
 let s:si_flag = 0
 function! s:update_search_index(key) abort
-    if a:key == 'd'
-        if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
-            call feedkeys("\<Plug>(incsearch-nohl-n)")
-        else
-            normal! n
-        endif
-        normal! ml
-    elseif a:key == 'r'
-        if mapcheck("<Plug>(incsearch-nohl-N)") !=# ''
-            call feedkeys("\<Plug>(incsearch-nohl-N)")
-        else
-            normal! N
-        endif
-        normal! ml
-    endif
-    if s:si_flag == 0
-        call SpaceVim#layers#core#statusline#toggle_section('search status') 
-        let s:si_flag = 1
+  if a:key == 'd'
+    if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+      call feedkeys("\<Plug>(incsearch-nohl-n)")
     else
-        let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      normal! n
     endif
-    normal! `l
+    normal! ml
+  elseif a:key == 'r'
+    if mapcheck("<Plug>(incsearch-nohl-N)") !=# ''
+      call feedkeys("\<Plug>(incsearch-nohl-N)")
+    else
+      normal! N
+    endif
+    normal! ml
+  endif
+  if s:si_flag == 0
+    call SpaceVim#layers#core#statusline#toggle_section('search status') 
+    let s:si_flag = 1
+  else
+    let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  endif
+  normal! `l
 endfunction
