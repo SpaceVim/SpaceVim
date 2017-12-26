@@ -52,13 +52,13 @@ function! s:self.write(msg) abort
   call writefile([a:msg], self.file, flags)
 endfunction
 
-function! s:self.warn(msg) abort
+function! s:self.warn(msg, ...) abort
   if self.level > 2
     return
   endif
   let time = strftime('%H:%M:%S')
   let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[1] . ' ] ' . a:msg
-  if !self.silent && self.verbose >= 2
+  if (!self.silent && self.verbose >= 2) || get(a:000, 0, 0) == 1
     echohl WarningMsg
     echom log
     echohl None

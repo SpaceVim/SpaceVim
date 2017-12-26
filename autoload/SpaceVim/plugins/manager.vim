@@ -120,19 +120,20 @@ function! SpaceVim#plugins#manager#install(...) abort
   if !s:JOB.vim_job && !s:JOB.nvim_job
     let &maxfuncdepth = 2000
   endif
-  let s:plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
-  if empty(s:plugins)
-    call SpaceVim#logger#warn(' [ plug manager ] Wrong plugin name, or all of the plugins are already installed.')
+  let plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
+  if empty(plugins)
+    call SpaceVim#logger#warn(' [ plug manager ] All of the plugins are already installed.', 1)
     return
   endif
   let status = s:new_window()
   if status == 0
-    call SpaceVim#logger#warn(' [ plug manager ] plugin manager process is not finished.')
+    call SpaceVim#logger#warn(' [ plug manager ] plugin manager process is not finished.', 1)
     return
   elseif status == 1
     " resume window
     return
   endif
+  let s:plugins = plugins
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
@@ -232,7 +233,6 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-  call SpaceVim#logger#info(string(a:data)) 
   if a:id == -1
     let id = s:jobpid
   else
@@ -292,7 +292,6 @@ endfunction
 
 " @vimlint(EVL103, 1, a:event)
 function! s:on_install_stdout(id, data, event) abort
-  call SpaceVim#logger#info(string(a:data)) 
   if a:id == -1
     let id = s:jobpid
   else
@@ -363,7 +362,6 @@ function! s:pull(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
   let argv = ['git', 'pull', '--progress']
-  call SpaceVim#logger#info('plugin manager cmd: ' . string(argv))
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
           \ 'on_stderr' : function('s:on_install_stdout'),

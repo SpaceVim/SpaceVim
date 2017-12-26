@@ -11,10 +11,9 @@ function! SpaceVim#logger#info(msg) abort
 
 endfunction
 
-function! SpaceVim#logger#warn(msg) abort
-
-  call s:LOGGER.warn(a:msg)
-
+function! SpaceVim#logger#warn(msg, ...) abort
+  let issilent = get(a:000, 0, 1)
+  call s:LOGGER.warn(a:msg, issilent)
 endfunction
 
 
