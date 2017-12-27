@@ -96,7 +96,7 @@ function! s:self.start(argv, ...) abort
     let id = len(self.jobs) + 1
     let opts.jobpid = id
     let wrapped = self.warp(a:argv, opts)
-    if has_key(wrapped.opts, 'cwd')
+    if has_key(wrapped.opts, 'cwd') && !has('patch-8.0.0902')
       let old_wd = getcwd()
       let cwd = expand(wrapped.opts.cwd, 1)
       " Avoid error E475: Invalid argument: cwd
