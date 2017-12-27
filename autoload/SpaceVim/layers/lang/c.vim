@@ -59,7 +59,11 @@ function! SpaceVim#layers#lang#c#plugins() abort
     call add(plugins, ['Rip-Rip/clang_complete'])
   endif
   if has('nvim')
-    call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+    if has('python3')
+      call add(plugins, ['arakashic/chromatica.nvim', { 'merged' : 0}])
+    else
+      call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+    endif
   elseif has('job')
     call add(plugins, ['bbchung/clighter8', { 'if' : has('python')}])
   else
