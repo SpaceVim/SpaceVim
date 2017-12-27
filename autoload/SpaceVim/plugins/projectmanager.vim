@@ -21,7 +21,7 @@ function! s:cache_project(prj) abort
   if !has_key(s:project_paths, a:prj.path)
     let s:project_paths[a:prj.path] = a:prj
     let desc = '[' . a:prj.name . '] ' . a:prj.path
-    let cmd = 'call SpaceVim#plugins#projectmanager#open("' . a:prj.path . '")'
+    let cmd = "call SpaceVim#plugins#projectmanager#open('" . a:prj.path . "')"
     call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
   endif
 endfunction
