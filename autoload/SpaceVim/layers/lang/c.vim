@@ -83,6 +83,7 @@ function! SpaceVim#layers#lang#c#config() abort
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
   endif
+  let g:chromatica#enable_at_startup=1
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort
