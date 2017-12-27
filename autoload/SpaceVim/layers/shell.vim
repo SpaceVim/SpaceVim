@@ -7,6 +7,8 @@
 " default_shell
 "
 
+let s:SYSTEM = SpaceVim#api#import('system')
+
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
   if has('nvim')
@@ -69,7 +71,12 @@ function! s:open_default_shell() abort
       if has('nvim')
         exe 'terminal'
       else
-        call term_start($SHELL, {'curwin' : 1, 'term_finish' : 'close'})
+        if s:SYSTEM.isWindows
+          let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+        else
+          let shell = empty($SHELL) ? 'bash' : $SHELL
+        endif
+        call term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
