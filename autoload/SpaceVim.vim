@@ -672,6 +672,9 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
+  if get(g:, '_spacevim_session_loaded', 0) == 1
+    return
+  endif
   exe 'cd' fnameescape(g:_spacevim_enter_dir)
   if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
