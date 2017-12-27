@@ -549,10 +549,11 @@ function! s:open_plugin_dir() abort
     exe 'topleft split'
     enew
     exe 'resize ' . &lines * 30 / 100
+    let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
     if has('nvim')
-      call termopen($SHELL, {'cwd' : dein#get(keys(plugin)[0]).path})
+      call termopen(shell, {'cwd' : dein#get(keys(plugin)[0]).path})
     else
-      call term_start($SHELL, {'curwin' : 1, 'term_finish' : 'close'})
+      call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : dein#get(keys(plugin)[0]).path})
     endif
   endif
 endfunction
