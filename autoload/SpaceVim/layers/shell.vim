@@ -80,6 +80,7 @@ function! s:open_default_shell() abort
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
+      setlocal nobuflisted
       startinsert
     else
       echo ':terminal is not supported in this version'
