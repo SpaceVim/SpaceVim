@@ -58,6 +58,13 @@ function! SpaceVim#layers#lang#c#plugins() abort
   else
     call add(plugins, ['Rip-Rip/clang_complete'])
   endif
+  if has('nvim')
+    call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+  elseif has('job')
+    call add(plugins, ['bbchung/clighter8', { 'if' : has('python')}])
+  else
+    call add(plugins, ['bbchung/clighter', { 'if' : has('python')}])
+  endif
   call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python')}])
   return plugins
 endfunction
