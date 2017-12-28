@@ -48,7 +48,7 @@ function! SpaceVim#layers#lang#c#plugins() abort
     if s:use_libclang
       call add(plugins, ['zchee/deoplete-clang'])
     else
-      call add(plugins, ['tweekmonster/deoplete-clang2'])
+      call add(plugins, ['SpaceVim/deoplete-clang2'])
     endif
   elseif g:spacevim_autocomplete_method ==# 'ycm'
     " no need extra plugins
