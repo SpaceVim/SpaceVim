@@ -89,8 +89,8 @@ endfunction
 function! SpaceVim#layers#lang#c#set_variable(var) abort
   " use clang or libclang
   let s:use_libclang = get(a:var,
-        \ 'use_libclang',
-        \ 'clang')
+        \ 'enable_libclang',
+        \ 0)
 
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
