@@ -42,6 +42,7 @@
 
 let s:use_libclang = 0
 let s:clang_executable = 'clang'
+let s:SYSTEM = SpaceVim#api#import('system')
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if g:spacevim_autocomplete_method ==# 'deoplete'
@@ -122,6 +123,7 @@ function! s:update_clang_flag() abort
     let argvs = readfile('.clang')
     call s:update_checkers_argv(argvs, ['c', 'cpp'])
     call s:update_autocomplete_argv(argvs, ['c', 'cpp'])
+    call s:update_neoinclude(argvs, ['c', 'cpp'])
   endif
 endfunction
 
@@ -160,5 +162,19 @@ endif
 
 function! s:update_autocomplete_argv(argv, fts) abort
 
+endfunction
+
+function! s:update_neoinclude(argv, fts) abort
+  if s:SYSTEM.isLinux
+    let path = '.,/usr/include,,' 
+  else
+    let path = '.,,' 
+  endif
+  for argv in a:argv
+    if argv =~# '^-I'
+      let path .= ',' . argv[2:]
+    endif
+  endfor
+  let b:neoinclude_paths = path
 endfunction
 
