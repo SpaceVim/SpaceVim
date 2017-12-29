@@ -34,7 +34,7 @@ To use this configuration layer, add `SPLayer 'lang#lua'` to your custom configu
 
 ### Inferior REPL process
 
-Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. for example, if you want to use `lua.repl`, load this layer via:
+Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
 
 ```vim
 call SpaceVim#layers#load('lang#lua'
