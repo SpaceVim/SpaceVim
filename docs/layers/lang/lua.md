@@ -49,7 +49,7 @@ Send code to inferior process commands:
 | ----------- | ------------------------------------------------ |
 | `SPC l b`   | compile current lua buffer                       |
 | `SPC l r`   | run current lua file                             |
-| `SPC l f`   | format current lua file                             |
+| `SPC l f`   | format current lua file                          |
 | `SPC l s b` | send buffer and keep code buffer focused         |
 | `SPC l s l` | send line and keep code buffer focused           |
 | `SPC l s s` | send selection text and keep code buffer focused |
