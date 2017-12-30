@@ -4,6 +4,7 @@ let s:self._tree = {}
 
 function! s:self._update() abort
     let tabnr = tabpagenr('$')
+    let self._tree = {}
     for i in range(1, tabnr)
         let buffers = tabpagebuflist(i)
         let self._tree[i] = buffers
