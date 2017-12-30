@@ -11,7 +11,7 @@
 
 # Reset
 Color_off='\033[0m'       # Text Reset
-Version='0.6.0-dev'
+Version='0.6.0'
 
 # Regular Colors
 Red='\033[0;31m'

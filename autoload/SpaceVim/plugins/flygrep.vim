@@ -2,7 +2,7 @@ let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:grepid = 0
-
+let s:MPT._prompt.mpt = '➭ '
 
 function! SpaceVim#plugins#flygrep#open() abort
   rightbelow split __flygrep__
