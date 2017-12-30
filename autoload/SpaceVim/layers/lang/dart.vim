@@ -1,6 +1,7 @@
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
   call add(plugins, ['dart-lang/dart-vim-plugin', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/deoplete-dart', {'merged' : 0}])
   return plugins
 endfunction
 
