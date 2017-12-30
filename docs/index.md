@@ -7,7 +7,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
-[![Version](https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim/releases/tag/0.5.0)
+[![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
 
 SpaceVim is a distribution of the vim editor that's inspired by spacemacs. It manages collections of plugins in layers, which help collect related packages together to provide features. For example, the python layer collects deoplete.nvim, neomake and jedi-vim together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install.
