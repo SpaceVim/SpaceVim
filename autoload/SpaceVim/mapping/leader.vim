@@ -121,6 +121,10 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   if !empty(a:key)
+    exe 'nnoremap <silent><nowait> [Window] :<c-u>LeaderGuide "' .
+          \ a:key . '"<CR>'
+    exe 'nmap ' .a:key . ' [Window]'
+    let g:_spacevim_mappings_windows = {}
     call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>',
           \ 'Defind window prefix', 'normal [Window]')
     call zvim#util#defineMap('nmap' , a:key, '[Window]',
@@ -315,6 +319,8 @@ function! SpaceVim#mapping#leader#defindKEYs() abort
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_unite_leader], g:_spacevim_mappings_unite)
   let g:_spacevim_mappings_prefixs[g:spacevim_denite_leader] = {'name' : '+Denite prefix'}
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_denite_leader], g:_spacevim_mappings_denite)
+  let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)
 endfunction
 
 
