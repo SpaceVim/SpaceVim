@@ -304,6 +304,8 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[g]'
   elseif a:key == 'z'
     return '[z]'
+  elseif a:key == g:spacevim_windows_leader
+    return '[WIN]'
   else
     return '<leader>'
   endif
