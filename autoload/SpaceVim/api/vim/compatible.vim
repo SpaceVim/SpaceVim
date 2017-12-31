@@ -3,6 +3,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'execute' : '',
         \ 'system' : '',
         \ 'systemlist' : '',
+        \ 'version' : '',
         \ 'globpath' : '',
         \ },
         \ "function('s:' . v:key)"
@@ -83,6 +84,22 @@ if has('patch-7.4.279')
 else
   function! s:globpath(dir, expr) abort
     return split(globpath(a:dir, a:expr), '\n')
+  endfunction
+endif
+
+if has('nvim')
+  function! s:version() abort
+    redir => l:msg
+    silent! execute ':version'
+    redir END
+    return matchstr(l:msg,'NVIM v\zs[^\n]*')
+  endfunction
+else
+  function! s:version() abort
+    redir => l:msg
+    silent! execute ':version'
+    redir END
+    return matchstr(l:msg,'Included patches: v\zs[^\n]*')
   endfunction
 endif
 
