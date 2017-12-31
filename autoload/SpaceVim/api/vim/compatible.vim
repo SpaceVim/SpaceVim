@@ -99,7 +99,17 @@ else
     redir => l:msg
     silent! execute ':version'
     redir END
-    return matchstr(l:msg,'Included patches: v\zs[^\n]*')
+    return s:parser(matchstr(l:msg,'\(Included\ patches:\ \)\@<=[^\n]*'))
+  endfunction
+  function! s:parser(version) abort
+    let v_list = split(a:version, ',')
+    if len(v_list) == 1
+      let patch = split(v_list[0], '-')[1]
+      let v = v:version[0:0] . '.' . v:version[2:2] . '.' . patch
+    else
+      let v = v:version[0:0] . '.' . v:version[2:2] . '(' . a:version . ')'
+    endif
+    return v
   endfunction
 endif
 
