@@ -1,3 +1,5 @@
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 function! SpaceVim#issue#report() abort
   call s:open()
 endfunction
@@ -18,8 +20,8 @@ function! s:template() abort
         \ '## Environment Information',
         \ '',
         \ '- OS:' . SpaceVim#api#import('system').name(),
-        \ '- vim version:' . (has('nvim') ? '' : v:version),
-        \ '- neovim version:' . (has('nvim') ? v:version : ''),
+        \ '- vim version:' . (has('nvim') ? '' : s:CMP.version()),
+        \ '- neovim version:' . (has('nvim') ? s:CMP.version() : ''),
         \ '',
         \ '## The reproduce ways from Vim starting (Required!)',
         \ '',
