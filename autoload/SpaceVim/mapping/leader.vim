@@ -125,14 +125,10 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [Window]'
     let g:_spacevim_mappings_windows = {}
-    call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>',
-          \ 'Defind window prefix', 'normal [Window]')
-    call zvim#util#defineMap('nmap' , a:key, '[Window]',
-          \ 'Use ' . a:key . ' as window prefix', 'normal ' . a:key)
-
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]p',
-          \ ':<C-u>vsplit<CR>:wincmd w<CR>',
-          \ 'vsplit vertically,switch to next window','vsplit | wincmd w')
+    nnoremap <silent> [Window]p
+          \ :<C-u>vsplit<CR>:wincmd w<CR>
+    let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
+          \ 'vsplit vertically,switch to next window']
     call zvim#util#defineMap('nnoremap <silent>', '[Window]v',
           \ ':<C-u>split<CR>', 'split window', 'split')
     call zvim#util#defineMap('nnoremap <silent>', '[Window]g',
