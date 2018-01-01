@@ -13,12 +13,12 @@ endfunction
 
 
 function! SpaceVim#plugins#help#describe_key()
-    let definded = 1
+    let defined = 1
     let root = s:key_describ
     let prompt = 'Describe key:'
     let keys = []
     call s:build_mpt(prompt)
-    while definded
+    while defined
         let key = getchar()
         let name = s:KEY.nr2name(key)
         call add(keys, name)
@@ -31,16 +31,16 @@ function! SpaceVim#plugins#help#describe_key()
                 else
                     call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
                 endif
-                let definded = 0
+                let defined = 0
             else
                 call s:build_mpt([prompt, join(keys + [''], ' - ')])
             endif
         else
             redraw!
             echohl Comment
-            echo   join(keys, ' - ') . ' is undfinded'
+            echo   join(keys, ' - ') . ' is undefined'
             echohl NONE
-            let definded = 0
+            let defined = 0
         endif
     endwhile
 endfunction
