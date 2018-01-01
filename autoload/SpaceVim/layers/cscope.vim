@@ -8,9 +8,12 @@ endfunction
 
 function! SpaceVim#layers#cscope#config() abort
     let g:_spacevim_mappings_space.m.c = {'name' : '+cscope'}
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'c'], 'GtagsGenerate!', 'create a gtags database', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'u'], 'GtagsGenerate', 'update tag database', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'f'], 'Unite gtags/path', 'list all file in GTAGS', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'd'], 'Unite gtags/def', 'find definitions', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'r'], 'Unite gtags/ref', 'find references', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'c'], 'Unite cscope/functions_called_by', 'find functions called by this function', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'C'], 'Unite cscope/functions_calling', 'find functions calling this function', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'd'], 'Unite cscope/global_definition', 'find global definition of a symbol', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'r'], 'Unite cscope/find_this_symbol', 'find references of a symbol', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'f'], 'Unite cscope/find_file', 'find files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'F'], 'Unite cscope/including_this_file', 'find files including this file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'e'], 'Unite cscope/egrep_pattern', 'Find this egrep pattern', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 't'], 'Unite cscope/text_string', 'find this text string', 1)
 endfunction
