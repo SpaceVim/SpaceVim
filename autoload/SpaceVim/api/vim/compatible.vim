@@ -89,10 +89,8 @@ endif
 
 if has('nvim')
   function! s:version() abort
-    redir => l:msg
-    silent! execute ':version'
-    redir END
-    return matchstr(l:msg,'NVIM v\zs[^\n]*')
+    let v = api_info().version
+    return v.major . '.' . v.minor . '.' . v.patch
   endfunction
 else
   function! s:version() abort
