@@ -16,4 +16,6 @@ function! SpaceVim#layers#cscope#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'F'], 'Unite cscope/including_this_file', 'find files including this file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'e'], 'Unite cscope/egrep_pattern', 'Find this egrep pattern', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 't'], 'Unite cscope/text_string', 'find this text string', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', '='], 'Unite cscope/assignments_to_symbol', 'find assignments to this symbol', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'i'], 'call CscopeUpdateDB()', 'create cscope index', 1)
 endfunction

@@ -40,7 +40,6 @@ call SpaceVim#layers#load('cscope')
 | `SPC m c C` | Find functions calling this function   |
 | `SPC m c d` | find global definition of a symbol     |
 | `SPC m c r` | find references of a symbol            |
-| `SPC m c u` | manually update tag database           |
 | `SPC m c f` | find file                              |
 | `SPC m c F` | find which files include a file        |
 | `SPC m c e` | search regular expression              |
