@@ -34,10 +34,14 @@ call SpaceVim#layers#load('cscope')
 
 | Key Binding | Description                            |
 | ----------- | -------------------------------------- |
+| `SPC m c =` | Find assignments to this symbol        |
 | `SPC m c i` | Create cscope index                    |
 | `SPC m c c` | Find functions called by this function |
 | `SPC m c C` | Find functions calling this function   |
 | `SPC m c d` | find global definition of a symbol     |
 | `SPC m c r` | find references of a symbol            |
 | `SPC m c u` | manually update tag database           |
-| `SPC m c f` | jump to a file in tag database         |
+| `SPC m c f` | find file                              |
+| `SPC m c F` | find which files include a file        |
+| `SPC m c e` | search regular expression              |
+| `SPC m c t` | search text                            |
