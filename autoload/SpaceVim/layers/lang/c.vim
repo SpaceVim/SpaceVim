@@ -45,19 +45,21 @@ let s:clang_executable = 'clang'
 let s:SYSTEM = SpaceVim#api#import('system')
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
-  if g:spacevim_autocomplete_method ==# 'deoplete'
-    if s:use_libclang
-      call add(plugins, ['zchee/deoplete-clang'])
+  if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+      if s:use_libclang
+        call add(plugins, ['zchee/deoplete-clang'])
+      else
+        call add(plugins, ['SpaceVim/deoplete-clang2'])
+      endif
+    elseif g:spacevim_autocomplete_method ==# 'ycm'
+      " no need extra plugins
+    elseif g:spacevim_autocomplete_method ==# 'completor'
+      " no need extra plugins
+    elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     else
-      call add(plugins, ['SpaceVim/deoplete-clang2'])
+      call add(plugins, ['Rip-Rip/clang_complete'])
     endif
-  elseif g:spacevim_autocomplete_method ==# 'ycm'
-    " no need extra plugins
-  elseif g:spacevim_autocomplete_method ==# 'completor'
-    " no need extra plugins
-  elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
-  else
-    call add(plugins, ['Rip-Rip/clang_complete'])
   endif
   if has('nvim')
     if has('python3')
