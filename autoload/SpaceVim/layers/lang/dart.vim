@@ -1,7 +1,9 @@
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
   call add(plugins, ['dart-lang/dart-vim-plugin', {'merged' : 0}])
-  call add(plugins, ['SpaceVim/deoplete-dart', {'merged' : 0}])
+  if !SpaceVim#layers#lsp#check_filetype('dart')
+    call add(plugins, ['SpaceVim/deoplete-dart', {'merged' : 0}])
+  endif
   return plugins
 endfunction
 
@@ -29,4 +31,12 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+  if SpaceVim#layers#lsp#check_filetype('dart')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
 endfunction
