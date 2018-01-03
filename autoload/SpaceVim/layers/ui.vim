@@ -70,9 +70,6 @@ function! SpaceVim#layers#ui#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
                 \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
                 \ 'display ~ in the fringe on empty lines', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
-                \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
-                \ 'toggle syntax checker', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
                 \ . string(s:_function('s:toggle_spell_check')) . ', [])',
                 \ 'toggle spell checker', 1)
@@ -196,11 +193,6 @@ function! s:toggle_win_fringe() abort
     endif
 endfunction
 
-function! s:toggle_syntax_checker() abort
-    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-    verbose NeomakeToggle
-endfunction
 
 function! s:toggle_spell_check() abort
     if &l:spell

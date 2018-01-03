@@ -24,6 +24,15 @@ checkers layer is loaded by default.
 
 ## Configuration
 
+By default, the error will be display below current line, if you want to disabled this feature, you may need to load this layer with `show_cursor_error` to 0.
+
+```vim
+call SpaceVim#layers#load('checkers', {
+    \ 'show_cursor_error' : 0,
+    \ })
+```
+
+
 | Name                         | default value | description                                              |
 | ---------------------------- | ------------- | -------------------------------------------------------- |
 | `g:spacevim_enable_neomake`  | 1             | Use neomake as default checking tools                    |
