@@ -33,6 +33,9 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 let s:loaded_modes = ['syntax-checking']
+if &cc ==# '80'
+  call add(s:loaded_modes, 'fill-column-indicator')
+endif
 let s:modes = {
       \ 'center-cursor': {
       \ 'icon' : '⊝',
