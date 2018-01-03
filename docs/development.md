@@ -183,20 +183,27 @@ here is an example for creating a new layer names `foo`:
 " @parentsection layers
 " This the doc for this layer:
 "
-" @subsection Mappings
+" @subsection Key Bindings
 " >
 "   Mode      Key           Function
 "   -------------------------------------------------------------
 "   normal    <leader>jA    generate accessors
 "   normal    <leader>js    generate setter accessor
 " <
-" @subsection options
+" @subsection Layer options
 " >
 "   Name              Description                      Default
 "   -------------------------------------------------------------
-"   g:foo_option1     Set option1 for foo layer        1
-"   g:foo_option2     Set option2 for foo layer        2
-"   g:foo_option3     Set option3 for foo layer        3
+"   option1       Set option1 for foo layer               ''
+"   option2       Set option2 for foo layer               []
+"   option3       Set option3 for foo layer               {}
+" <
+" @subsection Global options
+" >
+"   Name              Description                      Default
+"   -------------------------------------------------------------
+"   g:pluginA_opt1    Set opt1 for plugin A               ''
+"   g:pluginB_opt2    Set opt2 for plugin B               []
 " <
 
 function! SpaceVim#layers#foo#plugins() abort
@@ -215,7 +222,47 @@ function! SpaceVim#layers#foo#config() abort
 endfunction
 ```
 
-4. send PR to SpaceVim.
+4. Add layer document `docs/layers/foo.md` for `foo` layer.
+
+```md
+---
+title: "SpaceVim foo layer"
+description: "This is a short discription for the foo layer"
+---
+
+# [SpaceVim Layers:](https://spacevim.org/layers) foo
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Installation](#installation)
+  - [Layer](#layer)
+  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+- [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
+  - [RuboCop](#rubocop)
+  - [Running current script](#running-current-script)
+
+<!-- vim-markdown-toc -->
+
+## Description
+
+This layer is for ruby development.
+
+## Installation
+
+### Layer
+
+To use this configuration layer, add `call SpaceVim#layers#load('foo')` to your custom configuration file.
+
+### Other dependences
+
+## Key bindings
+
+```
+
+5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
+5. send PR to SpaceVim.
 
 ##### Contributor to an existing layer
 
