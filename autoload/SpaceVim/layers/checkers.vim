@@ -49,7 +49,9 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
+                \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+                \ 'toggle syntax checker', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
@@ -125,6 +127,12 @@ function! s:verify_syntax_setup() abort
   elseif g:spacevim_enable_ale
   else
   endif
+endfunction
+
+function! s:toggle_syntax_checker() abort
+    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
+    verbose NeomakeToggle
 endfunction
 
 function! s:error_transient_state() abort
