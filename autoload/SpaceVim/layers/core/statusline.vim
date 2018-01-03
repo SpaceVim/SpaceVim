@@ -36,6 +36,9 @@ let s:loaded_modes = []
 if index(g:spacevim_plugin_groups, 'checkers') != -1
   call add(s:loaded_modes, 'syntax-checking')
 endif
+if &cc ==# '80'
+  call add(s:loaded_modes, 'fill-column-indicator')
+endif
 let s:modes = {
       \ 'center-cursor': {
       \ 'icon' : '⊝',
