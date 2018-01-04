@@ -320,8 +320,10 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[z]'
   elseif a:key == g:spacevim_windows_leader
     return '[WIN]'
-  else
+  elseif a:key ==# '\'
     return '<leader>'
+  else
+    return ''
   endif
 endfunction
 
@@ -337,6 +339,8 @@ function! SpaceVim#mapping#leader#defindKEYs() abort
   call extend(g:_spacevim_mappings_prefixs['g'], g:_spacevim_mappings_g)
   let g:_spacevim_mappings_prefixs['z'] = {'name' : '+z prefix'}
   call extend(g:_spacevim_mappings_prefixs['z'], g:_spacevim_mappings_z)
+  let g:_spacevim_mappings_prefixs['\'] = {'name' : '+Leader prefix'}
+  call extend(g:_spacevim_mappings_prefixs['\'], g:_spacevim_mappings)
 endfunction
 
 
