@@ -77,6 +77,7 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
+    autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd User RooterChDir call SpaceVim#plugins#projectmanager#RootchandgeCallback()
