@@ -153,13 +153,13 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>b#<CR>
     let g:_spacevim_mappings_windows['\'] = ['b#',
           \ 'Switch to the last buffer']
-    nnoremap <silent> [Window]q
-          \ :<C-u>close<CR>
-    let g:_spacevim_mappings_windows.q = ['close',
-          \ 'Close current windows']
     nnoremap <silent> [Window]Q
+          \ :<C-u>close<CR>
+    let g:_spacevim_mappings_windows.Q = ['close',
+          \ 'Close current windows']
+    nnoremap <silent> [Window]q
           \ :<C-u>call SpaceVim#mapping#close_current_buffer()<CR>
-    let g:_spacevim_mappings_windows.Q = ['call SpaceVim#mapping#close_current_buffer()',
+    let g:_spacevim_mappings_windows.q = ['call SpaceVim#mapping#close_current_buffer()',
           \ 'delete current windows']
     nnoremap <silent> [Window]c
           \ :<C-u>call SpaceVim#mapping#clearBuffers()<CR>
