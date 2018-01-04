@@ -602,6 +602,8 @@ endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')
+call SpaceVim#plugins#help#regist_root({'[unite]' : g:_spacevim_mappings_unite})
+
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
