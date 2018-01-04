@@ -8,7 +8,7 @@ description: "This layer is for JaveScript development"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Features](#features)
 - [Layer configuration](#layer-configuration)
 
@@ -18,7 +18,7 @@ description: "This layer is for JaveScript development"
 
 This layer is for JavaScript development.
 
-## Layer Installation
+## Install
 
 To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript')` to your custom configuration file.
 

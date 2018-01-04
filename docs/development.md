@@ -21,6 +21,7 @@ description: "Development information about SpaceVim, including contributing gui
       - [Author of a new layer](#author-of-a-new-layer)
       - [Contributor to an existing layer](#contributor-to-an-existing-layer)
     - [Contributing a keybinding](#contributing-a-keybinding)
+    - [Language specified key bindings](#language-specified-key-bindings)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Changelog](#changelog)
@@ -110,27 +111,29 @@ Write commit messages according to adapted [Tim Pope’s guidelines](http://tbag
 
 This is a model commit message:
 
-    Capitalized, short (72 chars or less) summary
+```gitcommit
+Capitalized, short (72 chars or less) summary
 
-    More detailed explanatory text, if necessary.  Wrap it to about 72
-    characters or so.  In some contexts, the first line is treated as the
-    subject of an email and the rest of the text as the body.  The blank
-    line separating the summary from the body is critical (unless you omit
-    the body entirely); tools like rebase can get confused if you run the
-    two together.
+More detailed explanatory text, if necessary.  Wrap it to about 72
+characters or so.  In some contexts, the first line is treated as the
+subject of an email and the rest of the text as the body.  The blank
+line separating the summary from the body is critical (unless you omit
+the body entirely); tools like rebase can get confused if you run the
+two together.
 
-    Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
-    or "Fixes bug."  This convention matches up with commit messages generated
-    by commands like git merge and git revert.
+Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
+or "Fixes bug."  This convention matches up with commit messages generated
+by commands like git merge and git revert.
 
-    Further paragraphs come after blank lines.
+Further paragraphs come after blank lines.
 
-    - Bullet points are okay, too
+- Bullet points are okay, too
 
-        - Typically a hyphen or asterisk is used for the bullet, followed by a
-          single space, with blank lines in between, but conventions vary here
+    - Typically a hyphen or asterisk is used for the bullet, followed by a
+      single space, with blank lines in between, but conventions vary here
 
-        - Use a hanging indent
+    - Use a hanging indent
+```
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
@@ -148,13 +151,13 @@ The file header for vim script should look like the following template:
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: YOUR_NAME <YOUR_EMAIL>
+" Author: YOUR NAME <YOUR EMAIL>
 " URL: https://spacevim.org
 " License: MIT license
 "=============================================================================
 ```
 
-You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace YOUR_NAME and YOUR_EMAIL also. 
+You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also. 
 
 ##### Author of a new layer
 
@@ -180,20 +183,27 @@ here is an example for creating a new layer names `foo`:
 " @parentsection layers
 " This the doc for this layer:
 "
-" @subsection Mappings
+" @subsection Key Bindings
 " >
 "   Mode      Key           Function
 "   -------------------------------------------------------------
 "   normal    <leader>jA    generate accessors
 "   normal    <leader>js    generate setter accessor
 " <
-" @subsection options
+" @subsection Layer options
 " >
 "   Name              Description                      Default
 "   -------------------------------------------------------------
-"   g:foo_option1     Set option1 for foo layer        1
-"   g:foo_option2     Set option2 for foo layer        2
-"   g:foo_option3     Set option3 for foo layer        3
+"   option1       Set option1 for foo layer               ''
+"   option2       Set option2 for foo layer               []
+"   option3       Set option3 for foo layer               {}
+" <
+" @subsection Global options
+" >
+"   Name              Description                      Default
+"   -------------------------------------------------------------
+"   g:pluginA_opt1    Set opt1 for plugin A               ''
+"   g:pluginB_opt2    Set opt2 for plugin B               []
 " <
 
 function! SpaceVim#layers#foo#plugins() abort
@@ -212,7 +222,46 @@ function! SpaceVim#layers#foo#config() abort
 endfunction
 ```
 
-4. send PR to SpaceVim.
+4. Add layer document `docs/layers/foo.md` for `foo` layer.
+
+```md
+---
+title: "SpaceVim foo layer"
+description: "This is a short discription for the foo layer"
+---
+
+# [SpaceVim Layers:](https://spacevim.org/layers) foo
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Installation](#installation)
+  - [Layer](#layer)
+  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+- [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
+  - [RuboCop](#rubocop)
+  - [Running current script](#running-current-script)
+
+<!-- vim-markdown-toc -->
+
+## Description
+
+This layer is for ruby development.
+
+## Installation
+
+### Layer
+
+To use this configuration layer, add `call SpaceVim#layers#load('foo')` to your custom configuration file.
+
+### Other dependences
+
+## Key bindings
+```
+
+5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
+6. send PR to SpaceVim.
 
 ##### Contributor to an existing layer
 
@@ -227,6 +276,26 @@ First if you want to have some personal mappings, This can be done in your `~/.S
 If you think it worth contributing a new mappings then be sure to read the documentation to find the best mappings, then create a Pull-Request with your changes.
 
 ALWAYS document your new mappings or mappings changes inside the relevant documentation file. It should be the the layer file and the [documentation.md](https://spacevim.org/documentation).
+
+#### Language specified key bindings
+
+All language specified key bindings are started with `SPC l` prefix.
+
+we recommended to keep same language specified key bindings for different languages:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| SPC l r     | start a runner for current file                  |
+| SPC l e     | rename symbol                                    |
+| SPC l d     | show doc                                         |
+| SPC l i r   | remove unused imports                            |
+| SPC l i s   | sort imports with isort                          |
+| SPC l s i   | Start a language specified inferior REPL process |
+| SPC l s b   | send buffer and keep code buffer focused         |
+| SPC l s l   | send line and keep code buffer focused           |
+| SPC l s s   | send selection text and keep code buffer focused |
+
+All of these above key bindings are just recommended as default, but it also base on the language layer itself.
 
 #### Contributing a banner
 
