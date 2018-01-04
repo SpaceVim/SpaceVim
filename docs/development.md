@@ -288,10 +288,14 @@ we recommended to keep same language specified key bindings for different langua
 | SPC l r     | start a runner for current file                  |
 | SPC l e     | rename symbol                                    |
 | SPC l d     | show doc                                         |
+| SPC l i r   | remove unused imports                            |
+| SPC l i s   | sort imports with isort                          |
 | SPC l s i   | Start a language specified inferior REPL process |
 | SPC l s b   | send buffer and keep code buffer focused         |
 | SPC l s l   | send line and keep code buffer focused           |
 | SPC l s s   | send selection text and keep code buffer focused |
+
+All of these above key bindings are just recommended as default, but it also base on the language layer itself.
 
 #### Contributing a banner
 
