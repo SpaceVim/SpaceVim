@@ -4,6 +4,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'system' : '',
         \ 'systemlist' : '',
         \ 'version' : '',
+        \ 'has' : '',
         \ 'globpath' : '',
         \ },
         \ "function('s:' . v:key)"
@@ -110,5 +111,33 @@ else
     return v
   endfunction
 endif
+
+
+function! s:has(feature) abort
+  if a:feature ==# 'python'
+    try
+      py import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'python3'
+    try
+      py3 import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'pythonx'
+    try
+      pyx import vim
+      return 1
+    catch
+      return 0
+    endtry
+  else
+    return has(a:feature)
+  endif
+endfunction
 
 " vim:set et sw=2 cc=80:
