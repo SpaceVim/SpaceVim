@@ -49,9 +49,26 @@ for more info, please check the [release page of 0.4.0](https://spacevim.org/Spa
 
 ### Release 0.5.0
 
+This release is a big release after 0.4.0, three months development brings many new features.
+
+- Improve help describe key bindings
+- Improve ci
+- modular statusline/tabline
+- job API for neovim/vim
+- project manager and remote manager
+- new language layers
+
+for more info, please check the [release page of 0.5.0](https://spacevim.org/SpaceVim-release-v0.5.0/)
+
 ### Release 0.6.0
 
-This release brings a host of fixes and improvements. We will list some new features here, and be sure to check the [release page](https://spacevim.org/SpaceVim-release-v0.6.0/) for all the details.
+The latest release brings a host of fixes and improvements. We will list some new features here, and be sure to check the [release page](https://spacevim.org/SpaceVim-release-v0.6.0/) for all the details.
+
+- gf support in windows for plugin manager
+- runner/debuger/REPL support for language layer
+- language server protocol support
+
+**TODO:** we need to check the release info for dein UI
 
 ## Thanks
 
