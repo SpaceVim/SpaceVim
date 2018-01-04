@@ -607,18 +607,22 @@ call SpaceVim#plugins#help#regist_root({'[unite]' : g:_spacevim_mappings_unite})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#plugins#help#regist_root({'[denite]' : g:_spacevim_mappings_denite})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_windows_leader,
       \ 'g:_spacevim_mappings_windows')
+call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ 'g',
       \ 'g:_spacevim_mappings_g')
+call SpaceVim#plugins#help#regist_root({'[g]' : g:_spacevim_mappings_g})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ 'z',
       \ 'g:_spacevim_mappings_z')
+call SpaceVim#plugins#help#regist_root({'[z]' : g:_spacevim_mappings_z})
 let [s:lsep, s:rsep] = SpaceVim#layers#core#statusline#rsep()
 let &cpo = s:save_cpo
 unlet s:save_cpo
