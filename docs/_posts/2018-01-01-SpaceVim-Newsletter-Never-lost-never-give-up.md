@@ -38,6 +38,15 @@ for more info, please check the [release page of 0.3.1](https://spacevim.org/Spa
 
 ### Release 0.4.0
 
+This release has improved the user experience with some layers.
+
+- background searching and grep on the fly in incsearch layer
+- add prompt and web api
+- help describe for key bindings: `SPC h d k`
+- Add comment/manipulation/insertion key bindings
+
+for more info, please check the [release page of 0.4.0](https://spacevim.org/SpaceVim-release-v0.4.0/)
+
 ### Release 0.5.0
 
 ### Release 0.6.0
