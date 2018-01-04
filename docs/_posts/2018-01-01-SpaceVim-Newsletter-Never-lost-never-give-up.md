@@ -67,8 +67,7 @@ The latest release brings a host of fixes and improvements. We will list some ne
 - gf support in windows for plugin manager
 - runner/debuger/REPL support for language layer
 - language server protocol support
-
-**TODO:** we need to check the release info for dein UI
+- Improve the plugin manager UI (added in v0.3.0)
 
 ## Thanks
 
