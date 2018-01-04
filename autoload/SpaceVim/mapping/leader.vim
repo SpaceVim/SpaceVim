@@ -333,6 +333,10 @@ function! SpaceVim#mapping#leader#defindKEYs() abort
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_denite_leader], g:_spacevim_mappings_denite)
   let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)
+  let g:_spacevim_mappings_prefixs['g'] = {'name' : '+g prefix'}
+  call extend(g:_spacevim_mappings_prefixs['g'], g:_spacevim_mappings_g)
+  let g:_spacevim_mappings_prefixs['z'] = {'name' : '+z prefix'}
+  call extend(g:_spacevim_mappings_prefixs['z'], g:_spacevim_mappings_z)
 endfunction
 
 
