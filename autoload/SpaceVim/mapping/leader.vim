@@ -121,36 +121,50 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   if !empty(a:key)
-    call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>',
-          \ 'Defind window prefix', 'normal [Window]')
-    call zvim#util#defineMap('nmap' , a:key, '[Window]',
-          \ 'Use ' . a:key . ' as window prefix', 'normal ' . a:key)
-
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]p',
-          \ ':<C-u>vsplit<CR>:wincmd w<CR>',
-          \ 'vsplit vertically,switch to next window','vsplit | wincmd w')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]v',
-          \ ':<C-u>split<CR>', 'split window', 'split')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]g',
-          \ ':<C-u>vsplit<CR>', 'vsplit window', 'vsplit')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]t',
-          \ ':<C-u>tabnew<CR>', 'Create new tab', 'tabnew')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]o',
-          \ ':<C-u>only<CR>', 'Close other windows', 'only')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]x',
-          \ ':<C-u>call zvim#util#BufferEmpty()<CR>',
-          \ 'Empty current buffer', 'call zvim#util#BufferEmpty()')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]\',
-          \ ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]q',
-          \ ':<C-u>close<CR>', 'Close current windows','close')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]Q',
-          \ ':<C-u>call SpaceVim#mapping#close_current_buffer()<CR>',
-          \ 'delete current windows',
-          \ 'call SpaceVim#mapping#close_current_buffer()')
-    call zvim#util#defineMap('nnoremap <silent>', '[Window]c',
-          \ ':<C-u>call SpaceVim#mapping#clearBuffers()<CR>',
-          \ 'Clear all the buffers', 'call SpaceVim#mapping#clearBuffers()')
+    exe 'nnoremap <silent><nowait> [Window] :<c-u>LeaderGuide "' .
+          \ a:key . '"<CR>'
+    exe 'nmap ' .a:key . ' [Window]'
+    let g:_spacevim_mappings_windows = {}
+    nnoremap <silent> [Window]p
+          \ :<C-u>vsplit<CR>:wincmd w<CR>
+    let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
+          \ 'vsplit vertically,switch to next window']
+    nnoremap <silent> [Window]v
+          \ :<C-u>split<CR>
+    let g:_spacevim_mappings_windows.v = ['split',
+          \ 'split window']
+    nnoremap <silent> [Window]g
+          \ :<C-u>vsplit<CR>
+    let g:_spacevim_mappings_windows.g = ['vsplit',
+          \ 'vsplit window']
+    nnoremap <silent> [Window]t
+          \ :<C-u>tabnew<CR>
+    let g:_spacevim_mappings_windows.t = ['tabnew',
+          \ 'create new tab']
+    nnoremap <silent> [Window]o
+          \ :<C-u>only<CR>
+    let g:_spacevim_mappings_windows.o = ['only',
+          \ 'Close other windows']
+    nnoremap <silent> [Window]x
+          \ :<C-u>call zvim#util#BufferEmpty()<CR>
+    let g:_spacevim_mappings_windows.x = ['call zvim#util#BufferEmpty()',
+          \ 'Empty current buffer']
+    nnoremap <silent> [Window]\
+          \ :<C-u>b#<CR>
+    let g:_spacevim_mappings_windows['\'] = ['b#',
+          \ 'Switch to the last buffer']
+    nnoremap <silent> [Window]q
+          \ :<C-u>close<CR>
+    let g:_spacevim_mappings_windows.q = ['close',
+          \ 'Close current windows']
+    nnoremap <silent> [Window]Q
+          \ :<C-u>call SpaceVim#mapping#close_current_buffer()<CR>
+    let g:_spacevim_mappings_windows.Q = ['call SpaceVim#mapping#close_current_buffer()',
+          \ 'delete current windows']
+    nnoremap <silent> [Window]c
+          \ :<C-u>call SpaceVim#mapping#clearBuffers()<CR>
+    let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clearBuffers()',
+          \ 'Clear all the buffers']
   endif
 endfunction
 
@@ -304,6 +318,8 @@ function! SpaceVim#mapping#leader#getName(key) abort
     return '[g]'
   elseif a:key == 'z'
     return '[z]'
+  elseif a:key == g:spacevim_windows_leader
+    return '[WIN]'
   else
     return '<leader>'
   endif
@@ -315,6 +331,8 @@ function! SpaceVim#mapping#leader#defindKEYs() abort
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_unite_leader], g:_spacevim_mappings_unite)
   let g:_spacevim_mappings_prefixs[g:spacevim_denite_leader] = {'name' : '+Denite prefix'}
   call extend(g:_spacevim_mappings_prefixs[g:spacevim_denite_leader], g:_spacevim_mappings_denite)
+  let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
+  call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)
 endfunction
 
 

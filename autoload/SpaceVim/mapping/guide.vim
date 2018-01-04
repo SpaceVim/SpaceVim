@@ -606,6 +606,9 @@ call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
 call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ g:spacevim_windows_leader,
+      \ 'g:_spacevim_mappings_windows')
+call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')
 call SpaceVim#mapping#guide#register_prefix_descriptions(

@@ -3,6 +3,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'execute' : '',
         \ 'system' : '',
         \ 'systemlist' : '',
+        \ 'version' : '',
         \ 'globpath' : '',
         \ },
         \ "function('s:' . v:key)"
@@ -83,6 +84,30 @@ if has('patch-7.4.279')
 else
   function! s:globpath(dir, expr) abort
     return split(globpath(a:dir, a:expr), '\n')
+  endfunction
+endif
+
+if has('nvim')
+  function! s:version() abort
+    let v = api_info().version
+    return v.major . '.' . v.minor . '.' . v.patch
+  endfunction
+else
+  function! s:version() abort
+    redir => l:msg
+    silent! execute ':version'
+    redir END
+    return s:parser(matchstr(l:msg,'\(Included\ patches:\ \)\@<=[^\n]*'))
+  endfunction
+  function! s:parser(version) abort
+    let v_list = split(a:version, ',')
+    if len(v_list) == 1
+      let patch = split(v_list[0], '-')[1]
+      let v = v:version[0:0] . '.' . v:version[2:2] . '.' . patch
+    else
+      let v = v:version[0:0] . '.' . v:version[2:2] . '(' . a:version . ')'
+    endif
+    return v
   endfunction
 endif
 

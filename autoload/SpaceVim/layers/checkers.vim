@@ -5,6 +5,7 @@
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
 let s:STRING = SpaceVim#api#import('data#string')
+
 function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
@@ -17,6 +18,14 @@ function! SpaceVim#layers#checkers#plugins() abort
   endif
 
   return plugins
+endfunction
+
+let s:last_echoed_error = has('timers')
+
+function! SpaceVim#layers#checkers#set_variable(var) abort
+
+  let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
+
 endfunction
 
 
@@ -40,25 +49,28 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
+                \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+                \ 'toggle syntax checker', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
       autocmd User NeomakeFinished nested
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      if s:last_echoed_error
+        " when move cursor, the error message will be shown below current line
+        " after a delay
+        autocmd CursorMoved * call <SID>neomake_cursor_move_delay()
 
-      " when move cursor, the error message will be shown below current line
-      " after a delay
-      autocmd CursorMoved * call <SID>neomake_cursor_move_delay()
-
-      " when switch to Insert mode, stop timer and clear the signature
-      if exists('##CmdLineEnter')
-        autocmd InsertEnter,WinLeave,CmdLineEnter *
-              \ call <SID>neomake_signatures_clear()
-        autocmd CmdLineEnter *
-              \ call <SID>neomake_signatures_clear() | redraw
-      else
-        autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear()
+        " when switch to Insert mode, stop timer and clear the signature
+        if exists('##CmdLineEnter')
+          autocmd InsertEnter,WinLeave,CmdLineEnter *
+                \ call <SID>neomake_signatures_clear()
+          autocmd CmdLineEnter *
+                \ call <SID>neomake_signatures_clear() | redraw
+        else
+          autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear()
+        endif
       endif
     elseif g:spacevim_enable_ale
       autocmd User ALELint 
@@ -115,6 +127,12 @@ function! s:verify_syntax_setup() abort
   elseif g:spacevim_enable_ale
   else
   endif
+endfunction
+
+function! s:toggle_syntax_checker() abort
+    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
+    verbose NeomakeToggle
 endfunction
 
 function! s:error_transient_state() abort
