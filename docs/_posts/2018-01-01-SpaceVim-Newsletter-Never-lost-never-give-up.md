@@ -6,11 +6,11 @@ excerpt: "We know exactly what our purpose is, and we keep trying to do it, neve
 
 # [newsletter](https://spacevim.org/development#newsletter) > Never lost, Never give up
 
-Welcome to the second newsletter for SpaceVim, a project that hopes to turn vim to be an modular IDE for most languages.
+Welcome to the second newsletter for SpaceVim, a project that hopes to turn vim into a modular IDE for most languages.
 
 ## What is SpaceVim
 
-SpaceVim is a distribution of the vim editor that's inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). It manages collections of plugins in layers, which help collect related packages together to provide features. For example, the [python layer](http://spacevim.org/layers/lang/python/) collects [deoplete.nvim](https://github.com/Shougo/deoplete.nvim/), [neomake](https://github.com/neomake/neomake) and [jedi-vim](https://github.com/davidhalter/jedi-vim) together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install.
+SpaceVim is a vim distribution which's inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). It manages collection of plugins in layers, which help collect related packages together to provide features. For example, the [python layer](http://spacevim.org/layers/lang/python/) collects [deoplete.nvim](https://github.com/Shougo/deoplete.nvim/), [neomake](https://github.com/neomake/neomake) and [jedi-vim](https://github.com/davidhalter/jedi-vim) together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for users by keeping them from having to think about what packages to install.
 
 ## Participating
 
@@ -18,11 +18,11 @@ If you are interested in contributing to SpaceVim, read the [development](http:/
 
 ## What's new
 
-The last newsletter is posted on May 31, SpaceVim has released 4 releases.
+The last newsletter was posted on May 31, SpaceVim has released 4 releases.
 
 ### Release 0.3.1
 
-This release is a HOTFIX after 0.3.0, it adds support for old version of vim and fix some startup errors. 
+This release is a HOTFIX after 0.3.0, It brings support for old version of vim and fixs some startup errors. 
 
 new features in this release:
 
@@ -38,14 +38,12 @@ for more info, please check the [release page of 0.3.1](https://spacevim.org/Spa
 
 ### Release 0.4.0
 
-This release has improved the user experience with some layers.
+Next let’s see what happened in 0.4.0. As before, check out the [release notes](https://spacevim.org/SpaceVim-release-v0.4.0/) for details.
 
 - background searching and grep on the fly in incsearch layer
 - add prompt and web api
 - help describe for key bindings: `SPC h d k`
 - Add comment/manipulation/insertion key bindings
-
-for more info, please check the [release page of 0.4.0](https://spacevim.org/SpaceVim-release-v0.4.0/)
 
 ### Release 0.5.0
 
@@ -68,6 +66,18 @@ The latest release brings a host of fixes and improvements. We will list some ne
 - runner/debuger/REPL support for language layer
 - language server protocol support
 - Improve the plugin manager UI (added in v0.3.0)
+
+### 0.7.0-dev
+
+The develop version of SpaceVim is 0.7.0-dev now, here is a list of new features.
+
+- Guide for windows key bindings: `s` prefix
+- new language layer: `lang#dart`
+- new layer: `cscope`
+
+for more info, you can check the [pull requests](https://github.com/SpaceVim/SpaceVim/pulls?q=is%3Apr+is%3Aclosed)
+
+### Upcoming features
 
 ## Thanks
 
