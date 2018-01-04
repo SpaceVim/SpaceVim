@@ -258,11 +258,10 @@ To use this configuration layer, add `call SpaceVim#layers#load('foo')` to your 
 ### Other dependences
 
 ## Key bindings
-
 ```
 
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
-5. send PR to SpaceVim.
+6. send PR to SpaceVim.
 
 ##### Contributor to an existing layer
 
@@ -287,6 +286,8 @@ we recommended to keep same language specified key bindings for different langua
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
 | SPC l r     | start a runner for current file                  |
+| SPC l e     | rename symbol                                    |
+| SPC l d     | show doc                                         |
 | SPC l s i   | Start a language specified inferior REPL process |
 | SPC l s b   | send buffer and keep code buffer focused         |
 | SPC l s l   | send line and keep code buffer focused           |
