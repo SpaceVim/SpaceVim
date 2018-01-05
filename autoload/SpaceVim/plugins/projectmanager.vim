@@ -98,5 +98,23 @@ function! SpaceVim#plugins#projectmanager#kill_project() abort
 
 endfunction
 
+let g:spacevim_project_rooter_patterns = ['.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+
+function! s:find_root_directory() abort
+  let fd = expand('%:p')
+  let dirs = []
+  for pattern in g:spacevim_project_rooter_patterns
+    call add(dirs, SpaceVim#util#findFileInParent(pattern, fd))
+  endfor
+endfunction
+
+
+function! s:sort_dirs(dirs) abort
+  
+endfunction
+
+function! s:change_to_root_directory() abort
+  
+endfunction
 
 
