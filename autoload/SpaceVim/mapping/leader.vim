@@ -339,8 +339,9 @@ function! SpaceVim#mapping#leader#defindKEYs() abort
   call extend(g:_spacevim_mappings_prefixs['g'], g:_spacevim_mappings_g)
   let g:_spacevim_mappings_prefixs['z'] = {'name' : '+z prefix'}
   call extend(g:_spacevim_mappings_prefixs['z'], g:_spacevim_mappings_z)
-  let g:_spacevim_mappings_prefixs['\'] = {'name' : '+Leader prefix'}
-  call extend(g:_spacevim_mappings_prefixs['\'], g:_spacevim_mappings)
+  let leader = get(g:, 'mapleader', '\')
+  let g:_spacevim_mappings_prefixs[leader] = {'name' : '+Leader prefix'}
+  call extend(g:_spacevim_mappings_prefixs[leader], g:_spacevim_mappings)
 endfunction
 
 
