@@ -243,7 +243,7 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
   if !empty(a:key)
-    if a:key == 'F'
+    if a:key ==# 'F'
       nnoremap <leader>F F
     endif
     exe 'nnoremap <silent><nowait> [denite] :<c-u>LeaderGuide "' .
@@ -287,7 +287,7 @@ endfunction
 let s:unite_lnum = expand('<slnum>') + 3
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
-    if a:key == 'f'
+    if a:key ==# 'f'
       nnoremap <leader>f f
     endif
     " The prefix key.
@@ -307,23 +307,85 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
           \ ]
           \ ]
     if has('nvim')
-      nnoremap <silent> [unite]f  :<C-u>Unite file_rec/neovim<cr>
-      let g:_spacevim_mappings_unite.f = ['Unite file_rec/neovim', 'file_rec']
+      nnoremap <silent> [unite]f
+            \ :<C-u>Unite file_rec/neovim<cr>
+      let lnum = expand('<slnum>') + s:unite_lnum - 4
+      let g:_spacevim_mappings_unite.f = ['Unite file_rec/neovim',
+            \ 'file_rec',
+            \ [
+            \ '[UNITE f ] is to open unite file_rec source',
+            \ '',
+            \ 'Definition: ' . s:file . ':' . lnum,
+            \ ]
+            \ ]
     else
-      nnoremap <silent> [unite]f  :<C-u>Unite file_rec/async<cr>
-      let g:_spacevim_mappings_unite.f = ['Unite file_rec/async', 'file_rec']
+      nnoremap <silent> [unite]f
+            \ :<C-u>Unite file_rec/async<cr>
+      let lnum = expand('<slnum>') + s:unite_lnum - 4
+      let g:_spacevim_mappings_unite.f = ['Unite file_rec/async',
+            \ 'file_rec',
+            \ [
+            \ '[UNITE f ] is to open unite file_rec source',
+            \ '',
+            \ 'Definition: ' . s:file . ':' . lnum,
+            \ ]
+            \ ]
     endif
-    nnoremap <silent> [unite]i  :<C-u>Unite file_rec/git<cr>
-    let g:_spacevim_mappings_unite.i = ['Unite file_rec/git', 'git files']
-    nnoremap <silent> [unite]g  :<C-u>Unite grep<cr>
-    let g:_spacevim_mappings_unite.g = ['Unite grep', 'unite grep']
-    nnoremap <silent> [unite]u  :<C-u>Unite source<CR>
-    let g:_spacevim_mappings_unite.u = ['Unite source', 'unite source']
-    nnoremap <silent> [unite]t  :<C-u>Unite tag<CR>
-    let g:_spacevim_mappings_unite.t = ['Unite tag', 'unite tag']
-    nnoremap <silent> [unite]T  :<C-u>Unite tag/include<CR>
+    nnoremap <silent> [unite]i
+          \ :<C-u>Unite file_rec/git<cr>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
+    let g:_spacevim_mappings_unite.i = ['Unite file_rec/git',
+          \ 'git files',
+          \ [
+          \ '[UNITE f ] is to open unite file_rec source',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
+    nnoremap <silent> [unite]g
+          \ :<C-u>Unite grep<cr>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
+    let g:_spacevim_mappings_unite.g = ['Unite grep',
+          \ 'unite grep',
+          \ [
+          \ '[UNITE g ] is to open unite grep source',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
+    nnoremap <silent> [unite]u
+          \ :<C-u>Unite source<CR>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
+    let g:_spacevim_mappings_unite.u = ['Unite source',
+          \ 'unite source',
+          \ [
+          \ '[UNITE u ] is to open unite source',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
+    nnoremap <silent> [unite]t
+          \ :<C-u>Unite tag<CR>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
+    let g:_spacevim_mappings_unite.t = ['Unite tag',
+          \ 'unite tag',
+          \ [
+          \ '[UNITE t ] is to open unite tag source',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
+    nnoremap <silent> [unite]T
+          \ :<C-u>Unite tag/include<CR>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
     let g:_spacevim_mappings_unite.T = ['Unite tag/include',
-          \ 'unite tag/include']
+          \ 'unite tag/include',
+          \ [
+          \ '[UNITE T ] is to open unite tag/include source',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [unite]l  :<C-u>Unite locationlist<CR>
     let g:_spacevim_mappings_unite.l = ['Unite locationlist',
           \ 'unite locationlist']
@@ -351,7 +413,7 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
           \ :<C-u>Unite mapping<CR>
     nnoremap <silent> [unite]me
           \ :<C-u>Unite output:message<CR>
-    let g:_spacevim_mappings_unite.m = {'name' : 'unite menus',
+    let g:_spacevim_mappings_unite.m = {'name' : '+Menus',
           \ 'a' : ['Unite mapping', 'unite mappings'],
           \ 'e' : ['Unite output:message', 'unite messages']
           \ }
