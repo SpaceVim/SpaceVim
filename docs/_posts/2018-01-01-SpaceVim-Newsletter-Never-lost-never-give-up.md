@@ -79,6 +79,8 @@ for more info, you can check the [pull requests](https://github.com/SpaceVim/Spa
 
 ### Upcoming features
 
+we recommand to read the [roadmap](https://spacevim.org/roadmap/) of SpaceVim. Some noteworthy upcoming PRs are:
+
 ## Thanks
 
 Thank you contributors, sponsors, bug-reporters, supporters. Thank you [@wsdjeg](https://github.com/wsdjeg) for the awesome project and thank you [@syl20bnr](https://github.com/syl20bnr) for your foundational work.
