@@ -82,7 +82,11 @@ for more info, you can check the [pull requests](https://github.com/SpaceVim/Spa
 
 ### Upcoming features
 
-we recommand to read the [roadmap](https://spacevim.org/roadmap/) of SpaceVim. Some noteworthy upcoming PRs are:
+we recommand to read the [roadmap](https://spacevim.org/roadmap/) of SpaceVim. You can also check the PR list of SpaceVim:
+
+https://github.com/SpaceVim/SpaceVim/pulls
+
+[#1102](https://github.com/SpaceVim/SpaceVim/pull/1102) is PR for useing floating windows for grep on the fly, But this need a new neovim [WIP feature](https://github.com/neovim/neovim/pull/6619).
 
 ## Thanks
 
