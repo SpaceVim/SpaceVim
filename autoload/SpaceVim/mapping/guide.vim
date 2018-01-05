@@ -432,11 +432,13 @@ function! s:updateStatusline() abort
     let gname = ' - ' . gname[1:]
     let gname = substitute(gname,' ', '\\ ', 'g')
   endif
+  let keys = get(s:, 'prefix_key_inp', '')
+  let keys = substitute(keys, '\', '\\\', 'g')
   exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' . s:lsep .
         \ '%#LeaderGuiderName#\ ' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . get(s:, 'prefix_key_inp', '') . gname
+        \ . keys . gname
         \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
         \ . s:guide_help_msg()
 endfunction
