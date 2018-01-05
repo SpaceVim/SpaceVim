@@ -10,7 +10,9 @@ Welcome to the second newsletter for SpaceVim, a project that hopes to turn vim 
 
 ## What is SpaceVim
 
-SpaceVim is a vim distribution which's inspired by [spacemacs](https://github.com/syl20bnr/spacemacs). It manages collection of plugins in layers, which help collect related packages together to provide features. For example, the [python layer](http://spacevim.org/layers/lang/python/) collects [deoplete.nvim](https://github.com/Shougo/deoplete.nvim/), [neomake](https://github.com/neomake/neomake) and [jedi-vim](https://github.com/davidhalter/jedi-vim) together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for users by keeping them from having to think about what packages to install.
+SpaceVim is a vim distribution which's inspired by spacemacs. It manages collection of plugins in layers, which help collect related packages together to provide features. For example, the [python layer](http://spacevim.org/layers/lang/python/) collects [deoplete.nvim](https://github.com/Shougo/deoplete.nvim/), [neomake](https://github.com/neomake/neomake) and [deoplete-jedi](https://github.com/zchee/deoplete-jedi) together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for users by keeping them from having to think about what packages to install.
+
+The development of SpaceVim happened on github: <https://github.com/SpaceVim/SpaceVim>.
 
 ## Participating
 
@@ -74,6 +76,7 @@ The develop version of SpaceVim is 0.7.0-dev now, here is a list of new features
 - Guide for windows key bindings: `s` prefix
 - new language layer: `lang#dart`
 - new layer: `cscope`
+- key bindings help describe
 
 for more info, you can check the [pull requests](https://github.com/SpaceVim/SpaceVim/pulls?q=is%3Apr+is%3Aclosed)
 
