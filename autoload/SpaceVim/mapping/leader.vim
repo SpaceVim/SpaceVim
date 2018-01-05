@@ -6,6 +6,8 @@
 " License: MIT license
 "=============================================================================
 
+let s:file = expand('<sfile>:~')
+
 function! SpaceVim#mapping#leader#defindglobalMappings() abort
   if g:spacevim_enable_insert_leader
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
@@ -119,16 +121,25 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction
 
+let s:lnum = expand('<slnum>') + 3
 function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
   if !empty(a:key)
     exe 'nnoremap <silent><nowait> [Window] :<c-u>LeaderGuide "' .
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [Window]'
     let g:_spacevim_mappings_windows = {}
+    let lnum = expand('<slnum>') + s:lnum - 1
     nnoremap <silent> [Window]p
           \ :<C-u>vsplit<CR>:wincmd w<CR>
     let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
-          \ 'vsplit vertically,switch to next window']
+        \ [ 'vsplit vertically,switch to next window',
+        \ [
+        \ '[[unite] p ] is to vsplit the windows, and switch to next window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+        \ ]
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
     let g:_spacevim_mappings_windows.v = ['split',
