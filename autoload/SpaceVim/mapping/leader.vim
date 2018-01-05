@@ -132,56 +132,112 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>vsplit<CR>:wincmd w<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
-        \ 'vsplit vertically,switch to next window',
-        \ [
-        \ '[WIN p ] is to split windows vertically, switch to the new window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
+          \ 'vsplit vertically,switch to next window',
+          \ [
+          \ '[WIN p ] is to split windows vertically, switch to the new window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.v = ['split',
-        \ 'split window',
-        \ [
-        \ '[WIN v ] is to split windows, switch to the new window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
+          \ 'split window',
+          \ [
+          \ '[WIN v] is to split windows, switch to the new window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]g
           \ :<C-u>vsplit<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.g = ['vsplit',
-          \ 'vsplit window']
+          \ 'vsplit window',
+          \ [
+          \ '[WIN g] is to split windows vertically, switch to the new window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]t
           \ :<C-u>tabnew<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.t = ['tabnew',
-          \ 'create new tab']
+          \ 'create new tab',
+          \ [
+          \ '[WIN t] is to create new tab',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]o
           \ :<C-u>only<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.o = ['only',
-          \ 'Close other windows']
+          \ 'Close other windows',
+          \ [
+          \ '[WIN o] is to close all other windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]x
           \ :<C-u>call zvim#util#BufferEmpty()<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.x = ['call zvim#util#BufferEmpty()',
-          \ 'Empty current buffer']
+          \ 'Empty current buffer',
+          \ [
+          \ '[WIN x] is to empty current buffer',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]\
           \ :<C-u>b#<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows['\'] = ['b#',
-          \ 'Switch to the last buffer']
+          \ 'Switch to the last buffer',
+          \ [
+          \ '[WIN \] is to switch to the last buffer',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]Q
           \ :<C-u>close<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.Q = ['close',
-          \ 'Close current windows']
+          \ 'Close current windows',
+          \ [
+          \ '[WIN Q] is to close current windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]q
           \ :<C-u>call SpaceVim#mapping#close_current_buffer()<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.q = ['call SpaceVim#mapping#close_current_buffer()',
-          \ 'delete current windows']
+          \ 'delete current windows',
+          \ [
+          \ '[WIN q] is to delete current windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]c
           \ :<C-u>call SpaceVim#mapping#clearBuffers()<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clearBuffers()',
-          \ 'Clear all the buffers']
+          \ 'Clear all the buffers',
+          \ [
+          \ '[WIN c] is to clear all the buffers',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
   endif
 endfunction
 
