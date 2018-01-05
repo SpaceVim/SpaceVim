@@ -284,6 +284,7 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
   endif
 endfunction
 
+let s:unite_lnum = expand('<slnum>') + 3
 function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
   if !empty(a:key)
     if a:key == 'f'
@@ -296,8 +297,15 @@ function! SpaceVim#mapping#leader#defindUniteLeader(key) abort
     let g:_spacevim_mappings_unite = {}
     nnoremap <silent> [unite]r
           \ :<C-u>Unite -buffer-name=resume resume<CR>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
     let g:_spacevim_mappings_unite.r = ['Unite -buffer-name=resume resume',
-          \ 'resume unite window']
+          \ 'resume unite window',
+          \ [
+          \ '[UNITE r ] is to resume unite window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     if has('nvim')
       nnoremap <silent> [unite]f  :<C-u>Unite file_rec/neovim<cr>
       let g:_spacevim_mappings_unite.f = ['Unite file_rec/neovim', 'file_rec']
