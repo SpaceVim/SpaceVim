@@ -132,12 +132,11 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     nnoremap <silent> [Window]p
           \ :<C-u>vsplit<CR>:wincmd w<CR>
     let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
-        \ [ 'vsplit vertically,switch to next window',
+        \ 'vsplit vertically,switch to next window',
         \ [
         \ '[[unite] p ] is to vsplit the windows, and switch to next window',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
         \ ]
         \ ]
     nnoremap <silent> [Window]v
