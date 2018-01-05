@@ -102,6 +102,11 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
     let g:neomake_cpp_enabled_makers = ['clang']
     let s:clang_executable = a:var.clang_executable
   endif
+
+  if has_key(a:var, 'libclang_path')
+    let g:deoplete#sources#clang#libclang_path = a:var.libclang_path
+    let g:chromatica#libclang_path = a:var.libclang_path
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
