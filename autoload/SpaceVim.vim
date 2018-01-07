@@ -207,6 +207,10 @@ let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percenta
 " Enable/Disable unicode symbols in statusline
 let g:spacevim_statusline_unicode_symbols = 1
 ""
+" Enable/Disable language specific leader, by default you can use `,` ket
+" instead of `SPC` `l`.
+let g:spacevim_enable_language_specific_leader = 1
+""
 " Enable/Disable display mode. Default is 0, mode will be
 " displayed in statusline. To enable this feature:
 " >

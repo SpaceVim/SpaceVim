@@ -32,6 +32,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Alternative directory](#alternative-directory)
 - [Concepts](#concepts)
   - [Transient-states](#transient-states)
+- [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
 - [Awesome ui](#awesome-ui)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
@@ -352,6 +353,13 @@ When a transient state is active, a documentation is displayed in the transient 
 Move Text Transient State:
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
+## Differences between vim/neovim and SpaceVim
+
+- The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
+- The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
+- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
+- The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
 
 ## Awesome ui
 

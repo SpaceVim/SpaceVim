@@ -233,6 +233,10 @@ Define the right section of statusline in active windows. By default:
                                        *g:spacevim_statusline_unicode_symbols*
 Enable/Disable unicode symbols in statusline
 
+                                  *g:spacevim_enable_language_specific_leader*
+Enable/Disable language specific leader, by default you can use `,` ket
+instead of `SPC` `l`.
+
                                    *g:spacevim_enable_statusline_display_mode*
 Enable/Disable display mode. Default is 0, mode will be displayed in
 statusline. To enable this feature:

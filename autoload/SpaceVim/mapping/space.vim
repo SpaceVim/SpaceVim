@@ -30,6 +30,10 @@ function! SpaceVim#mapping#space#init() abort
   vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
   vmap <Space> [SPC]
+  if g:spacevim_enable_language_specific_leader
+    nmap , [SPC]l
+    vmap , [SPC]l
+  endif
   " Windows
   for i in range(1, 9)
     exe "call SpaceVim#mapping#space#def('nnoremap', ["
