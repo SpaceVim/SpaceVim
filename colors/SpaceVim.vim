@@ -28,12 +28,17 @@ let s:COLOR = SpaceVim#api#import('color')
 
 let s:palette = {
       \ 'dark' : [
-      \ ['Normal' , 249, 235, 'None', 'None'],
-      \ ['Cursor' , 235 , 178  , 'bold' , 'bold'],
-      \ ['Pmenu'  , 141 , 234 , 'None' , 'None'],
-      \ ['PmenuSel'   , 251 , 97    , 'None' , 'None'],
-      \ ['PmenuSbar'  , 28  , 233   , 'None' , 'None'],
-      \ ['PmenuThumb' , 160 , 97    , 'None' , 'None'],
+      \ ['Normal'     , 249 , 235 , 'None' , 'None'] ,
+      \ ['Cursor'     , 235 , 178 , 'bold' , 'bold'] ,
+      \ ['Pmenu'      , 141 , 234 , 'None' , 'None'] ,
+      \ ['PmenuSel'   , 251 , 97  , 'None' , 'None'] ,
+      \ ['PmenuSbar'  , 28  , 233 , 'None' , 'None'] ,
+      \ ['PmenuThumb' , 160 , 97  , 'None' , 'None'] ,
+      \ ['LineNr'     , 238 , 234 , 'None' , 'None'] ,
+      \ ['CursorLine' , ''  , 234 , 'None' , 'None'],
+      \ ['CursorLineNr' , 134 , 234 , 'None' , 'None'],
+      \ ['CursorColumn' , ''  , 234 , 'None' , 'None'],
+      \ ['ColorColumn' , ''  , 234 , 'None' , 'None'],
       \ ],
       \ 'light' : [
       \ ['Normal' , 249, 235, 'None', 'None'],
