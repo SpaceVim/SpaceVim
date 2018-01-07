@@ -290,7 +290,7 @@ let g:spacevim_language                = ''
 let g:spacevim_keep_server_alive = 1
 ""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
-let g:spacevim_colorscheme             = 'SpaceVim'
+let g:spacevim_colorscheme             = 'gruvbox'
 ""
 " The background of colorscheme. Default is 'dark'.
 let g:spacevim_colorscheme_bg             = 'dark'
