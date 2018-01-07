@@ -357,9 +357,22 @@ Move Text Transient State:
 ## Differences between vim/neovim and SpaceVim
 
 - The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_unite_leader`, defalut value is `f`.
+
 - The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_denite_leader`, defalut value is `F`.
+
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_windows_leader`, defalut value is `s`.
+
 - The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
+
+the option is `g:spacevim_enable_language_specific_leader`, defalut value is 1.
+
+[Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
 ## Awesome ui
 
