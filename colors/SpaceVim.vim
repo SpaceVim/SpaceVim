@@ -13,7 +13,6 @@ if version > 580
   endif
 endif
 
-
 if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
   " prevent change statuslines
   finish
@@ -24,11 +23,12 @@ endif
 let s:HIAPI = SpaceVim#api#import('vim#highlight')
 let s:COLOR = SpaceVim#api#import('color')
 
+let s:is_dark=(&background == 'dark')
+
 " color palette
 
 let s:palette = {
       \ 'dark' : [
-      \ ['Normal'     , 249 , 235 , 'None' , 'None'] ,
       \ ['Cursor'     , 235 , 178 , 'bold' , 'bold'] ,
       \ ['Pmenu'      , 141 , 234 , 'None' , 'None'] ,
       \ ['PmenuSel'   , 251 , 97  , 'None' , 'None'] ,
@@ -41,12 +41,11 @@ let s:palette = {
       \ ['ColorColumn' , ''  , 234 , 'None' , 'None'],
       \ ],
       \ 'light' : [
-      \ ['Normal' , 249, 235, 'None', 'None'],
       \ ],
       \ }
 
 function! s:hi() abort
-  for [item, fg, bg, cterm, gui] in s:palette[&background]
+  for [item, fg, bg, cterm, gui] in s:palette[s:is_dark ? 'dark' : 'light']
     call s:HIAPI.hi(
           \ {
           \ 'name' : item,
