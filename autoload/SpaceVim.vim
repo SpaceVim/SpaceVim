@@ -252,7 +252,7 @@ let g:spacevim_warning_symbol          = '⚠'
 " >
 "   let g:spacevim_info_symbol = 'i'
 " <
-let g:spacevim_info_symbol             = '🛈'
+let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
 ""
 " Set the SpaceVim cursor shape in the terminal. 
 " >
