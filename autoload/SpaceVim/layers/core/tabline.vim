@@ -48,7 +48,7 @@ function! s:tabname(id) abort
   if g:spacevim_enable_tabline_filetype_icon
     let icon = s:file.fticon(fn)
     if !empty(icon)
-      let fn = icon . ' ' . fn
+      let fn = fn . ' ' . icon
     endif
   endif
   if empty(fn)
@@ -109,7 +109,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       if g:spacevim_enable_tabline_filetype_icon
         let icon = s:file.fticon(name)
         if !empty(icon)
-          let name = icon . ' ' . name
+          let name = name . ' ' . icon
         endif
       endif
       let t .= id . ' ' . name
@@ -174,7 +174,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       if g:spacevim_enable_tabline_filetype_icon
         let icon = s:file.fticon(name)
         if !empty(icon)
-          let name = icon . ' ' . name
+          let name = name . ' ' . icon
         endif
       endif
       let t .= id . ' ' . name
