@@ -7,13 +7,13 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Installation](#installation)
-  - [Layer](#layer)
-  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
-- [Key bindings](#key-bindings)
-  - [Inferior REPL process](#inferior-repl-process)
-  - [Running current script](#running-current-script)
+* [Description](#description)
+* [Installation](#installation)
+  * [Layer](#layer)
+  * [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+* [Key bindings](#key-bindings)
+  * [Inferior REPL process](#inferior-repl-process)
+  * [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
@@ -34,7 +34,7 @@ To use this configuration layer, add `SPLayer 'lang#lua'` to your custom configu
 
 ### Inferior REPL process
 
-Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. for example, if you want to use `lua.repl`, load this layer via:
+Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
 
 ```vim
 call SpaceVim#layers#load('lang#lua'
@@ -47,6 +47,9 @@ Send code to inferior process commands:
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
+| `SPC l b`   | compile current lua buffer                       |
+| `SPC l r`   | run current lua file                             |
+| `SPC l f`   | format current lua file                          |
 | `SPC l s b` | send buffer and keep code buffer focused         |
 | `SPC l s l` | send line and keep code buffer focused           |
 | `SPC l s s` | send selection text and keep code buffer focused |

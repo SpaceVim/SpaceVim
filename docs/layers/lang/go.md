@@ -9,6 +9,7 @@ description: "This layer is for golang development. It also provides additional 
 
 - [Description](#description)
 - [Install](#install)
+- [Features](#features)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -19,23 +20,30 @@ This layer is for golang development. It also provides additional language-speci
 
 ## Install
 
-To use this configuration layer, add `SPLayer 'lang#go` to your custom configuration file.
+To use this configuration layer, add `call SpaceVim#layers#load('lang#go')` to your custom configuration file.
+
+## Features
+
+- auto-completion
+- syntax checking
+- goto definition
+- refernce finder
 
 ## Key bindings
 
 **Import key bindings:**
 
-| Key Binding | Description                              |
-| ----------- | ---------------------------------------- |
-| SPC l i     | go implements							               |
-| SPC l f     | go info									                 |
-| SPC l e     | go rename								                 |
-| SPC l r     | go run									                 |
-| SPC l b     | go build								                 |
-| SPC l t     | go test									                 |
-| SPC l d     | go doc									                 |
-| SPC l v     | go doc vertical							             |
-| SPC l c     | go coverage								               |
+| Key Binding | Description     |
+| ----------- | --------------- |
+| SPC l i     | go implements   |
+| SPC l f     | go info         |
+| SPC l e     | go rename       |
+| SPC l r     | go run          |
+| SPC l b     | go build        |
+| SPC l t     | go test         |
+| SPC l d     | go doc          |
+| SPC l v     | go doc vertical |
+| SPC l c     | go coverage     |
 
 **Code formatting:**
 

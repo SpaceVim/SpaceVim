@@ -3,6 +3,8 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'execute' : '',
         \ 'system' : '',
         \ 'systemlist' : '',
+        \ 'version' : '',
+        \ 'has' : '',
         \ 'globpath' : '',
         \ },
         \ "function('s:' . v:key)"
@@ -85,5 +87,57 @@ else
     return split(globpath(a:dir, a:expr), '\n')
   endfunction
 endif
+
+if has('nvim')
+  function! s:version() abort
+    let v = api_info().version
+    return v.major . '.' . v.minor . '.' . v.patch
+  endfunction
+else
+  function! s:version() abort
+    redir => l:msg
+    silent! execute ':version'
+    redir END
+    return s:parser(matchstr(l:msg,'\(Included\ patches:\ \)\@<=[^\n]*'))
+  endfunction
+  function! s:parser(version) abort
+    let v_list = split(a:version, ',')
+    if len(v_list) == 1
+      let patch = split(v_list[0], '-')[1]
+      let v = v:version[0:0] . '.' . v:version[2:2] . '.' . patch
+    else
+      let v = v:version[0:0] . '.' . v:version[2:2] . '(' . a:version . ')'
+    endif
+    return v
+  endfunction
+endif
+
+
+function! s:has(feature) abort
+  if a:feature ==# 'python'
+    try
+      py import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'python3'
+    try
+      py3 import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'pythonx'
+    try
+      pyx import vim
+      return 1
+    catch
+      return 0
+    endtry
+  else
+    return has(a:feature)
+  endif
+endfunction
 
 " vim:set et sw=2 cc=80:

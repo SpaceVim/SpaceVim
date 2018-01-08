@@ -1,4 +1,5 @@
 doc/tags
+.ropeproject/
 wiki/.git
 *.class
 .floo

@@ -32,6 +32,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Alternative directory](#alternative-directory)
 - [Concepts](#concepts)
   - [Transient-states](#transient-states)
+- [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
 - [Awesome ui](#awesome-ui)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
@@ -254,7 +255,6 @@ In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` l
 - `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
 - `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
 
-
 ## Custom Configuration
 
 User configuration can be stored in your ~/.SpaceVim.d directory.
@@ -353,6 +353,26 @@ When a transient state is active, a documentation is displayed in the transient 
 Move Text Transient State:
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
+## Differences between vim/neovim and SpaceVim
+
+- The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_unite_leader`, defalut value is `f`.
+
+- The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_denite_leader`, defalut value is `F`.
+
+- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
+
+the option is `g:spacevim_windows_leader`, defalut value is `s`.
+
+- The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
+
+the option is `g:spacevim_enable_language_specific_leader`, defalut value is 1.
+
+[Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
 ## Awesome ui
 
@@ -1786,24 +1806,24 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
 ##### Window Management
 
-| Key             |  Mode  | Action                                                                                                                                                                                                                          |
-| --------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `q`             | Normal | Smart buffer close                                                                                                                                                                                                              |
-| `s`+`p`         | Normal | Split nicely                                                                                                                                                                                                                    |
-| `s`+`v`         | Normal | :split                                                                                                                                                                                                                          |
-| `s`+`g`         | Normal | :vsplit                                                                                                                                                                                                                         |
-| `s`+`t`         | Normal | Open new tab (:tabnew)                                                                                                                                                                                                          |
-| `s`+`o`         | Normal | Close other windows (:only)                                                                                                                                                                                                     |
-| `s`+`x`         | Normal | Remove buffer, leave blank window                                                                                                                                                                                               |
-| `s`+`q`         | Normal | Closes current buffer (:close)                                                                                                                                                                                                  |
-| `s`+`Q`         | Normal | Removes current buffer, left buffer in the tabline will be displayed, if there is no buffer on the left, the right buffer will be displayed, if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `Tab`           | Normal | Next window or tab                                                                                                                                                                                                              |
-| `Shift`+`Tab`   | Normal | Previous window or tab                                                                                                                                                                                                          |
-| `<leader>`+`sv` | Normal | Split with previous buffer                                                                                                                                                                                                      |
-| `<leader>`+`sg` | Normal | Vertical split with previous buffer                                                                                                                                                                                             |
+| Key             |  Mode  | Action                                                                                                                                                                                                                         |
+| --------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `q`             | Normal | Smart buffer close                                                                                                                                                                                                             |
+| `s`+`p`         | Normal | Split nicely                                                                                                                                                                                                                   |
+| `s`+`v`         | Normal | :split                                                                                                                                                                                                                         |
+| `s`+`g`         | Normal | :vsplit                                                                                                                                                                                                                        |
+| `s`+`t`         | Normal | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `s`+`o`         | Normal | Close other windows (:only)                                                                                                                                                                                                    |
+| `s`+`x`         | Normal | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `s`+`q`         | Normal | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `s`+`Q`         | Normal | Close current buffer (:close)                                                                                                                                                                                                  |
+| `Tab`           | Normal | Next window or tab                                                                                                                                                                                                             |
+| `Shift`+`Tab`   | Normal | Previous window or tab                                                                                                                                                                                                         |
+| `<leader>`+`sv` | Normal | Split with previous buffer                                                                                                                                                                                                     |
+| `<leader>`+`sg` | Normal | Vertically split with previous buffer                                                                                                                                                                                          |
 
 SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
-can be get by <kbd>`<leader>` q r</kbd>
+can be get by <kbd><leader> q r</kbd>
 
 ##### Native functions
 
@@ -2094,6 +2114,5 @@ As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` 
 [textobj-user]: https://github.com/kana/vim-textobj-user
 
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
-
 
 <!-- vim:set nowrap: -->

@@ -1,7 +1,8 @@
 let s:self = {}
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
-if has('python')
+if s:CMP.has('python')
   " @vimlint(EVL103, 1, a:text)
   function! s:self.encode(text) abort
     py import vim
@@ -116,7 +117,7 @@ endif
 
 
 
-function! SpaceVim#api#data#base64#get()
+function! SpaceVim#api#data#base64#get() abort
 
   return deepcopy(s:self)
 

@@ -66,7 +66,7 @@ function! s:start(exe) abort
         \ }
   let s:start_time = reltime()
   call s:open_windows()
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . a:exe, '', repeat('-', 20)])
+  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
   let s:lines += 3
   let s:_out_data = ['']
   let s:_current_line = ''

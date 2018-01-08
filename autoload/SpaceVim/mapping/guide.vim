@@ -432,11 +432,13 @@ function! s:updateStatusline() abort
     let gname = ' - ' . gname[1:]
     let gname = substitute(gname,' ', '\\ ', 'g')
   endif
+  let keys = get(s:, 'prefix_key_inp', '')
+  let keys = substitute(keys, '\', '\\\', 'g')
   exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
         \ '%#LeaderGuiderSep1#' . s:lsep .
         \ '%#LeaderGuiderName#\ ' .
         \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . get(s:, 'prefix_key_inp', '') . gname
+        \ . keys . gname
         \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
         \ . s:guide_help_msg()
 endfunction
@@ -595,6 +597,7 @@ if get(g:, 'mapleader', '\') == ' '
 else
   call SpaceVim#mapping#guide#register_prefix_descriptions('\',
         \ 'g:_spacevim_mappings')
+  call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
@@ -602,18 +605,27 @@ endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_unite_leader,
       \ 'g:_spacevim_mappings_unite')
+call SpaceVim#plugins#help#regist_root({'[unite]' : g:_spacevim_mappings_unite})
+
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_denite_leader,
       \ 'g:_spacevim_mappings_denite')
+call SpaceVim#plugins#help#regist_root({'[denite]' : g:_spacevim_mappings_denite})
+call SpaceVim#mapping#guide#register_prefix_descriptions(
+      \ g:spacevim_windows_leader,
+      \ 'g:_spacevim_mappings_windows')
+call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ 'g',
       \ 'g:_spacevim_mappings_g')
+call SpaceVim#plugins#help#regist_root({'[g]' : g:_spacevim_mappings_g})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ 'z',
       \ 'g:_spacevim_mappings_z')
+call SpaceVim#plugins#help#regist_root({'[z]' : g:_spacevim_mappings_z})
 let [s:lsep, s:rsep] = SpaceVim#layers#core#statusline#rsep()
 let &cpo = s:save_cpo
 unlet s:save_cpo

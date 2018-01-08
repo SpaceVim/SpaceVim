@@ -36,7 +36,6 @@ else
 endif
 ```
 
-
 ## Features
 
 - Asynchronous calls
@@ -70,7 +69,6 @@ npm install -g javascript-typescript-langserver
 pip install --user python-language-server
 ```
 
-
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -87,10 +85,19 @@ call SpaceVim#layers#load('lsp',
 
 default language server commands:
 
-| language     | server command                    |
-| ------------ | --------------------------------- |
-| `javascript` | `['javascript-typescript-stdio']` |
-| `haskell`    | `['hie', '--lsp']`                |
+| language     | server command                                   |
+| ------------ | ------------------------------------------------ |
+| `javascript` | `['javascript-typescript-stdio']`                |
+| `haskell`    | `['hie', '--lsp']`                               |
+| `c`          | `['clangd']`                                     |
+| `cpp`        | `['clangd']`                                     |
+| `objc`       | `['clangd']`                                     |
+| `objcpp`     | `['clangd']`                                     |
+| `dart`       | `['dart_language_server']`                       |
+| `go`         | `['go-langserver', '-mode', 'stdio']`            |
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
+| `python`     | `['pyls']`                                       |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']` |
 
 To override the server command, you may need to use `override_cmd` option:
 

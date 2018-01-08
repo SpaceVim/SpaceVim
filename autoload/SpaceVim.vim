@@ -27,7 +27,7 @@
 ""
 " Version of SpaceVim , this value can not be changed.
 scriptencoding utf-8
-let g:spacevim_version = '0.6.0-dev'
+let g:spacevim_version = '0.7.0-dev'
 lockvar g:spacevim_version
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -207,6 +207,10 @@ let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percenta
 " Enable/Disable unicode symbols in statusline
 let g:spacevim_statusline_unicode_symbols = 1
 ""
+" Enable/Disable language specific leader, by default you can use `,` ket
+" instead of `SPC` `l`.
+let g:spacevim_enable_language_specific_leader = 1
+""
 " Enable/Disable display mode. Default is 0, mode will be
 " displayed in statusline. To enable this feature:
 " >
@@ -252,7 +256,7 @@ let g:spacevim_warning_symbol          = '⚠'
 " >
 "   let g:spacevim_info_symbol = 'i'
 " <
-let g:spacevim_info_symbol             = '🛈'
+let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
 ""
 " Set the SpaceVim cursor shape in the terminal. 
 " >
@@ -602,11 +606,11 @@ function! SpaceVim#end() abort
   if !empty(g:spacevim_denite_leader)
     call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
   endif
+  call SpaceVim#mapping#g#init()
+  call SpaceVim#mapping#z#init()
   call SpaceVim#mapping#leader#defindglobalMappings()
   call SpaceVim#mapping#leader#defindKEYs()
   call SpaceVim#mapping#space#init()
-  call SpaceVim#mapping#g#init()
-  call SpaceVim#mapping#z#init()
   if !SpaceVim#mapping#guide#has_configuration()
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
