@@ -11,6 +11,7 @@ description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块�
 [![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+[![Weibo](https://img.shields.io/badge/Weibo-%40SpaceVim-orange.svg)](https://weibo.com/SpaceVim)
 [![GitHub stars](https://img.shields.io/github/stars/SpaceVim/SpaceVim.svg?style=social&label=Star)](https://github.com/SpaceVim/SpaceVim)
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
@@ -32,6 +33,11 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块�
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
+
+
+**关注我们:**
+
+<img src="https://spacevim.org/img/weixingongzhonghao.png" height="200" width="200">
 
 <!-- vim-markdown-toc GFM -->
 
