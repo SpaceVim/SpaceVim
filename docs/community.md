@@ -7,12 +7,17 @@ description: "A list for community channels for SpaceVim."
 
 Visit these resources for help or general questions.
 
+## Discuss
+
+- [/r/spacevim on Reddit](https://reddit.com/r/spacevim)
+- [Mailing list](https://groups.google.com/forum/#!forum/spacevim)
+- [Twitter](https://twitter.com/SpaceVim)
+- [Facebook](https://www.facebook.com/SpaceVim)
+
 ## Ask
 
-- [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
 - Try [vi.stackexchange.com](https://vi.stackexchange.com/) for **usage and configuration questions**.
-- [Twitter](https://twitter.com/SpaceVim) for hugs & pithy comments
-- [Facebook](https://www.facebook.com/SpaceVim)
+- [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
 
 ## Chat
 
@@ -26,7 +31,3 @@ All of these channels are bridged together. Click on one of the badges below to 
 - [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
 - [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 
-## Discuss
-
-- [google mailing list](https://groups.google.com/forum/#!forum/spacevim)
-- [/r/spacevim on Reddit](https://reddit.com/r/spacevim)

@@ -1,44 +1,43 @@
 ---
 title:  "SpaceVim 中文手册"
-description: "SpaceVim 是一个社区驱动的 Vim 配置，内含多种语言模块，提供了代码补全、语法检查、跳转等多种 IDE 特性。"
+description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行、以及 REPL 和 DEBUG 支持。"
 ---
 
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version](https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
-[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://github.com/SpaceVim/SpaceVim/blob/dev/doc/SpaceVim.txt)
+[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
+[![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
+[![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-[![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Facebook](https://img.shields.io/badge/FaceBook-SpaceVim-blue.svg)](https://www.facebook.com/SpaceVim)
-
-[![GitHub watchers](https://img.shields.io/github/watchers/SpaceVim/SpaceVim.svg?style=social&label=Watch)](https://github.com/SpaceVim/SpaceVim)
+[![Weibo](https://img.shields.io/badge/Weibo-%40SpaceVim-orange.svg)](https://weibo.com/SpaceVim)
 [![GitHub stars](https://img.shields.io/github/stars/SpaceVim/SpaceVim.svg?style=social&label=Star)](https://github.com/SpaceVim/SpaceVim)
-[![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
-[![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
 项 目 主 页： <https://spacevim.org>
 
 Github 地址 : <https://github.com/SpaceVim/SpaceVim>
 
-SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供用户选择，针对不同语言选择特定的模块，就可以配置出一个适合特定语言开发的环境。
+SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
+及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
+语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
+即用的Vim-IDE。
 
-使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
+使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注
+和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的
+[QQ群(点击加入)](https://jq.qq.com/?_wv=1027&k=43zWPlT)，该群定期也会分享一些
+实用的 Vim 技巧以及插件。
 
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
-**捐助SpaceVim**
 
-| 微信                                                                     | 支付宝                                                                     |
-| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
+**关注我们:**
 
-**以下为SpaceVim中文手册，部分内容还未完成翻译，为了方便大家查询相关信息，已提前发布官网上，后面会逐渐更新完成，感谢大家一直以来的支持！**
+<img src="https://spacevim.org/img/weixingongzhonghao.png" height="200" width="200">
 
 <!-- vim-markdown-toc GFM -->
 
@@ -205,7 +204,7 @@ SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim
 
 **windows：**
 
-Window 下最方便的是下载安装脚本（[install.cmd](https://spacevim.org/install.cmd)）至本地，直接运行。
+Window 下最方便的是下载安装脚本（[install.cmd](https://spacevim.org/install.cmd)）至本地，直接运行，安装完毕后，打开 Gvim 他将自动下载插件，在 Windows 下需要手动安装 [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts) 字体。
 
 ## 更新
 
@@ -1008,9 +1007,9 @@ SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性�
 | `g]`      | tselect cursor tag                              |
 | `g^`      | go to leftmost no-white character               |
 | `g_`      | go to last char                                 |
-| ``g` ``   | 跳至标签，等同于 `g'`                                    |
-| `ga`      | 打印光标字符的 ascii 值           |
-| `gd`      | 跳至定义处                                 |
+| ``g` ``   | 跳至标签，等同于 `g'`                           |
+| `ga`      | 打印光标字符的 ascii 值                         |
+| `gd`      | 跳至定义处                                      |
 | `ge`      | go to end of previous word                      |
 | `gf`      | edit file under cursor                          |
 | `gg`      | go to line N                                    |
@@ -1025,8 +1024,8 @@ SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性�
 | `gt`      | next tag page                                   |
 | `gu`      | make motion text lowercase                      |
 | `g~`      | swap case for Nmove text                        |
-| `g<End>`  | 跳至本行最右侧字符，等同于 `g$`                       |
-| `g<C-G>`  | 显示光标信息                                |
+| `g<End>`  | 跳至本行最右侧字符，等同于 `g$`                 |
+| `g<C-G>`  | 显示光标信息                                    |
 
 ### Commands starting with `z`
 
@@ -2140,5 +2139,11 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
             </li>
     {% endfor %}
 </ul>
+
+**捐助SpaceVim**
+
+| 微信                                                                     | 支付宝                                                                     |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
 <!-- vim:set nowrap: -->
