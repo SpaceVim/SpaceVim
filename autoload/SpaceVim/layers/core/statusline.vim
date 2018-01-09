@@ -576,9 +576,10 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#mode(mode)
   let t = s:colors_template
-  if get(w:, 'spacevim_statusline_mode', '') != a:mode
+  let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
+  let mode = get(w:, 'spacevim_statusline_mode', '')
+  if  mode != a:mode
     if a:mode == 'n'
-      let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
       if !empty(iedit_mode)
         if iedit_mode ==# 'n'
           exe 'hi! SpaceVim_statusline_a ctermbg=' . t[8][3] . ' ctermfg=' . t[8][2] . ' guibg=' . t[8][1] . ' guifg=' . t[8][0]
