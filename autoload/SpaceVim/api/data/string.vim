@@ -72,6 +72,17 @@ function! s:string2chars(str) abort
 endfunction
 let s:file['string2chars'] = function('s:string2chars')
 
+function! s:strAllIndex(str, need) abort
+  let rst = []
+  let idx = stridx(a:str, a:need)
+  while idx != -1
+    call add(rst, idx)
+    let idx = stridx(a:str, a:need, idx + 1)
+  endwhile
+  return rst
+endfunction
+let s:file['strAllIndex'] = function('s:strAllIndex')
+
 function! SpaceVim#api#data#string#get() abort
   return deepcopy(s:file)
 endfunction
