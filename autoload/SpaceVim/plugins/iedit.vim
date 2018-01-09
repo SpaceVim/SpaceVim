@@ -8,8 +8,15 @@
 
 let s:stack = []
 let s:index = -1
+let s:cursor_col = -1
 let s:mode = ''
 let s:hi_id = ''
+
+" prompt
+
+let s:symbol_begin = ''
+let s:symbol_cursor = ''
+let s:symbol_end = ''
 
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -87,7 +94,6 @@ function! s:handle_normal(char) abort
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
   endif
-  echom s:mode . '--' . a:char
 endfunction
 
 function! s:handle_insert(char) abort
@@ -96,19 +102,32 @@ function! s:handle_insert(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'in'
     redrawstatus!
+  else
+    let s:symbol_begin .=  nr2char(a:char)
+    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
   endif
-  echom s:mode . '--' . a:char
 endfunction
 
 function! s:parse_symbol(begin, end, symbol) abort
   let len = len(a:symbol)
+  let cursor = [line('.'), col('.')]
   for l in range(a:begin, a:end)
     let line = getline(l)
     let idx = s:STRING.strAllIndex(line, a:symbol)
     for pos_c in idx
       call add(s:stack, [l, pos_c + 1, len])
+      if l == cursor[0] && pos_c <= cursor[1] && pos_c + len >= cursor[1]
+        let s:index = len(s:stack) - 1
+        let s:symbol_begin = line[pos_c : cursor[1] - 1]
+        let s:symbol_cursor = line[ cursor[1] - 1 : cursor[1] - 1]
+        let s:symbol_end = line[ cursor[1] : pos_c + len]
+      endif
     endfor
   endfor
   let g:wsd = s:stack
-  let s:hi_id = matchaddpos('SpaceVimGuideCursor', s:stack)
+  let s:hi_id = matchaddpos('CursorLine', s:stack)
+endfunction
+
+function! s:replace_symbol(symbol) abort
+
 endfunction
