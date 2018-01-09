@@ -86,12 +86,16 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Searching the web](#searching-the-web)
     - [Searching on the fly](#searching-on-the-fly)
     - [Persistent highlighting](#persistent-highlighting)
+    - [Highlight current symbol](#highlight-current-symbol)
   - [Editing](#editing)
     - [Paste text](#paste-text)
       - [Auto-indent pasted text](#auto-indent-pasted-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [Replace text with iedit](#replace-text-with-iedit)
+      - [iedit states key bindings](#iedit-states-key-bindings)
+      - [Examples](#examples)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
@@ -1281,6 +1285,8 @@ key binding in FlyGrep buffer:
 
 SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
+#### Highlight current symbol
+
 ### Editing
 
 #### Paste text
@@ -1382,6 +1388,27 @@ In transient state:
 | Any other key | leave the transient state              |
 
 **Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+
+#### Replace text with iedit
+
+SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
+
+**Two new modes:**
+
+`iedit-Normal`
+`idite-Insert`
+
+The defalut color for iedit is `red`/`green`.
+
+##### iedit states key bindings
+
+**State transitions:**
+
+| Key Binding | From             | to           |
+| ----------- | ---------------- | ------------ |
+| `SPC s e`   | normal or visual | iedit-Normal |
+
+##### Examples
 
 #### Commenting
 

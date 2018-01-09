@@ -20,7 +20,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
   let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  let g:_spacevim_mappings_space.s = {'name' : '+Searching'}
+  let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
   let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
   let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
   if s:has_map_to_spc()
@@ -282,6 +282,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
         \ 'clear search highlight', 1)
 
+  "Symbol
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'e'], 'call SpaceVim#plugins#iedit#start()',
+        \ 'start iedit mode', 1, 1)
   " Getting help
   let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
