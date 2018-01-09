@@ -1393,12 +1393,9 @@ In transient state:
 
 SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
 
-**Two new modes:**
+**Two new modes:** `iedit-Normal`/`idite-Insert`
 
-`iedit-Normal`
-`idite-Insert`
-
-The defalut color for iedit is `red`/`green`.
+The defalut color for iedit is `red`/`green` which is based on the current colorscheme.
 
 ##### iedit states key bindings
 
@@ -1407,6 +1404,24 @@ The defalut color for iedit is `red`/`green`.
 | Key Binding | From             | to           |
 | ----------- | ---------------- | ------------ |
 | `SPC s e`   | normal or visual | iedit-Normal |
+
+**In iedit-Normal mode:**
+
+`iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
+
+| Key Binding | Description                                                                     |
+| ----------- | ------------------------------------------------------------------------------- |
+| `Esc`       | go back to `Normal` mode                                                        |
+| `I`         | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
+| `A`         | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
+| `i`         | switch to `iedit-Insert` mode, same as `i`                                      |
+| `a`         | switch to `iedit-Insert` mode, same as `a`                                      |
+
+**In iedit-Insert mode:**
+
+| Key Binding | Description                    |
+| ----------- | ------------------------------ |
+| `Esc`       | go back to `iedit-Normal` mode |
 
 ##### Examples
 

@@ -578,7 +578,18 @@ function! SpaceVim#layers#core#statusline#mode(mode)
   let t = s:colors_template
   if get(w:, 'spacevim_statusline_mode', '') != a:mode
     if a:mode == 'n'
-      exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+      let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
+      if !empty(iedit_mode)
+        if iedit_mode ==# 'n'
+          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[8][3] . ' ctermfg=' . t[8][2] . ' guibg=' . t[8][1] . ' guifg=' . t[8][0]
+        elseif iedit_mode ==# 'i'
+          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[7][3] . ' ctermfg=' . t[7][2] . ' guibg=' . t[7][1] . ' guifg=' . t[7][0]
+        else
+          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+        endif
+      else
+        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+      endif
     elseif a:mode == 'i'
       exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
     elseif a:mode == 'R'

@@ -13,6 +13,8 @@ function! SpaceVim#plugins#iedit#start()
   let save_tve = &t_ve
   setlocal t_ve=
   let s:mode = 'n'
+  let w:spacevim_iedit_mode = s:mode
+  redrawstatus!
   while 1
     let char = getchar()
     redraw!
@@ -22,6 +24,8 @@ function! SpaceVim#plugins#iedit#start()
       call s:handle(s:mode, char)
     endif
   endwhile
+  let s:mode = ''
+  let w:spacevim_iedit_mode = s:mode
   let &t_ve = save_tve
 endfunction
 
@@ -38,6 +42,8 @@ endfunction
 function! s:handle_normal(char) abort
   if a:char ==# 105
     let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    redrawstatus!
   endif
   echom s:mode . '--' . a:char
 endfunction
@@ -45,6 +51,8 @@ endfunction
 function! s:handle_insert(char) abort
   if a:char == 27
     let s:mode = 'n'
+    let w:spacevim_iedit_mode = s:mode
+    redrawstatus!
   endif
   echom s:mode . '--' . a:char
 endfunction
