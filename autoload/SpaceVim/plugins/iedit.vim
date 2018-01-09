@@ -129,5 +129,11 @@ function! s:parse_symbol(begin, end, symbol) abort
 endfunction
 
 function! s:replace_symbol(symbol) abort
-
+  let len = len(s:stack)
+  for idx in range(len)
+    let pos = s:stack[len-1-idx]
+    let line = getline(pos[0])
+    let line = line[: pos[1]] . a:symbol . line[pos[1] + pos[2]:]
+    call setline(pos[0], line)
+  endfor
 endfunction
