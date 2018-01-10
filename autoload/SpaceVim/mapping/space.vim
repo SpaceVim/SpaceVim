@@ -285,6 +285,8 @@ function! SpaceVim#mapping#space#init() abort
   "Symbol
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'e'], 'call SpaceVim#plugins#iedit#start()',
         \ 'start iedit mode', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start()',
+        \ 'highlight all symbols', 1)
   " Getting help
   let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
