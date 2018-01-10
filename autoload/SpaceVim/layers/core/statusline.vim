@@ -605,7 +605,15 @@ function! SpaceVim#layers#core#statusline#mode(mode)
 endfunction
 
 function! SpaceVim#layers#core#statusline#mode_text(mode)
+  let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
   if a:mode == 'n'
+    if !empty(iedit_mode)
+      if iedit_mode ==# 'n'
+        return 'IEDIT-NORMAL '
+      else
+        return 'IEDIT-INSERT '
+      endif
+    endif
     return 'NORMAL '
   elseif a:mode == 'i'
     return 'INSERT '

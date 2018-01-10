@@ -93,6 +93,19 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
+  elseif a:char == 97
+    silent! call s:remove_cursor_highlight()
+    let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    let w:spacevim_statusline_mode = 'ii'
+    let s:symbol_begin = s:symbol_begin . s:symbol_cursor
+    if !empty(s:symbol_cursor)
+      noautocmd normal! l
+    endif
+    let s:symbol_cursor = matchstr(s:symbol_end, '^.')
+    let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
+    silent! call s:highlight_cursor()
+    redrawstatus!
   endif
 endfunction
 
@@ -102,6 +115,8 @@ function! s:handle_insert(char) abort
     let s:mode = 'n'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'in'
+    silent! call s:highlight_cursor()
+    redraw!
     redrawstatus!
     return
   elseif a:char == 23
@@ -145,7 +160,7 @@ function! s:replace_symbol(symbol) abort
     let pos = s:stack[len-1-idx]
     let line = getline(pos[0])
     let begin = line[:pos[1]]
-    let end = line[pos[1] + pos[2] - 2:]
+    let end = line[pos[1] + pos[2]:]
     let line = begin . a:symbol . end
     call setline(pos[0], line)
     let s:stack[len-1-idx][2] = len(a:symbol)
