@@ -77,7 +77,7 @@ function! s:strAllIndex(str, need) abort
   let idx = stridx(a:str, a:need)
   while idx != -1
     call add(rst, idx)
-    let idx = stridx(a:str, a:need, idx + 1)
+    let idx = stridx(a:str, a:need, idx + 1 + len(a:need))
   endwhile
   return rst
 endfunction

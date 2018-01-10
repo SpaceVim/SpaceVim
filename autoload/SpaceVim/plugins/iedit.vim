@@ -48,11 +48,11 @@ function! SpaceVim#plugins#iedit#start(...)
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
-  call s:highlight_cursor()
   let begin = get(a:000, 0, 1)
   let end = get(a:000, 1, line('$'))
   let symbol = expand('<cword>')
   call s:parse_symbol(begin, end, symbol)
+  call s:highlight_cursor()
   redrawstatus!
   while 1
     let char = getchar()
@@ -97,15 +97,26 @@ function! s:handle_normal(char) abort
 endfunction
 
 function! s:handle_insert(char) abort
+  silent! call s:remove_cursor_highlight()
   if a:char == 27
     let s:mode = 'n'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'in'
     redrawstatus!
+    return
+  elseif a:char == 23
+    exe 'noautocmd normal! ' . len(s:symbol_begin) . 'h'
+    let s:symbol_begin = ''
+  elseif a:char == 11
+    exe 'noautocmd normal! ' . (len(s:symbol_cursor) + len(s:symbol_end)) . 'l'
+    let s:symbol_cursor = ''
+    let s:symbol_end = ''
   else
+    noautocmd normal! l
     let s:symbol_begin .=  nr2char(a:char)
-    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
   endif
+  call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+  silent! call s:highlight_cursor()
 endfunction
 
 function! s:parse_symbol(begin, end, symbol) abort
@@ -124,16 +135,20 @@ function! s:parse_symbol(begin, end, symbol) abort
       endif
     endfor
   endfor
-  let g:wsd = s:stack
-  let s:hi_id = matchaddpos('CursorLine', s:stack)
+  let s:hi_id = matchaddpos('Underlined', s:stack)
 endfunction
 
 function! s:replace_symbol(symbol) abort
+  call matchdelete(s:hi_id)
   let len = len(s:stack)
   for idx in range(len)
     let pos = s:stack[len-1-idx]
     let line = getline(pos[0])
-    let line = line[: pos[1]] . a:symbol . line[pos[1] + pos[2]:]
+    let begin = line[:pos[1]]
+    let end = line[pos[1] + pos[2] - 2:]
+    let line = begin . a:symbol . end
     call setline(pos[0], line)
+    let s:stack[len-1-idx][2] = len(a:symbol)
   endfor
+  let s:hi_id = matchaddpos('Underlined', s:stack)
 endfunction
