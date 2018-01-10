@@ -21,6 +21,8 @@ let s:symbol_end = ''
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 
+let s:cursor_stack = []
+
 
 function! s:highlight_cursor() abort
   let info = {
@@ -32,7 +34,7 @@ function! s:highlight_cursor() abort
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
+  let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', s:cursor_stack) 
 endfunction
 
 function! s:remove_cursor_highlight() abort
@@ -59,11 +61,11 @@ function! SpaceVim#plugins#iedit#start(...)
     redraw!
     if s:mode ==# 'n' && char == 27
       break
-    else
-      call s:handle(s:mode, char)
     endif
+    call s:handle(s:mode, char)
   endwhile
   let s:stack = []
+  let s:cursor_stack = []
   let s:index = -1
   let s:mode = ''
   let w:spacevim_iedit_mode = s:mode
@@ -142,6 +144,7 @@ function! s:parse_symbol(begin, end, symbol) abort
     let idx = s:STRING.strAllIndex(line, a:symbol)
     for pos_c in idx
       call add(s:stack, [l, pos_c + 1, len])
+      call add(s:cursor_stack, [l, cursor[1], 1])
       if l == cursor[0] && pos_c <= cursor[1] && pos_c + len >= cursor[1]
         let s:index = len(s:stack) - 1
         let s:symbol_begin = line[pos_c : cursor[1] - 1]
