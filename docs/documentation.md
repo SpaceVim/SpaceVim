@@ -1287,6 +1287,37 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 #### Highlight current symbol
 
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
+
+It is also possible to change the range of the navigation on the fly to:
+
+- buffer
+- function
+- visible area
+
+To Highlight the current symbol under point press `SPC s h`.
+
+Navigation between the highlighted symbols can be done with the commands:
+
+| Key Binding | Description                                                                      |
+| ----------- | -------------------------------------------------------------------------------- |
+| `*`         | initiate navigation transient state on current symbol and jump forwards          |
+| `#`         | initiate navigation transient state on current symbol and jump backwards         |
+| `SPC s e`   | edit all occurrences of the current symbol                                    |
+| `SPC s h`   | highlight the current symbol and all its occurrence within the current range     |
+| `SPC s H`   | go to the last searched occurrence of the last highlighted symbol                |
+
+In highlight symbol transient state:
+
+| Key Binding   | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `e`           | edit occurrences (`*`)                                        |
+| `n`           | go to next occurrence                                         |
+| `N`           | go to previous occurrence                                     |
+| `r`           | change range (function, display area, whole buffer)           |
+| `R`           | go to home occurrence (reset position to starting occurrence) |
+| Any other key | leave the navigation transient state                          |
+
 ### Editing
 
 #### Paste text
