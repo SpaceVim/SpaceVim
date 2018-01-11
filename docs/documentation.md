@@ -1447,6 +1447,8 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | `A`         | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
 | `i`         | switch to `iedit-Insert` mode, same as `i`                                      |
 | `a`         | switch to `iedit-Insert` mode, same as `a`                                      |
+| `<Left>`    | Move cursor to left                                                             |
+| `<Right>`   | Move cursor to right                                                            |
 
 **In iedit-Insert mode:**
 
