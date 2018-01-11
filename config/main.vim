@@ -31,7 +31,6 @@ function! s:parser_argv() abort
     endif
 endfunction
 let s:status = s:parser_argv()
-call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
     augroup SPwelcome
@@ -46,6 +45,8 @@ catch
     execute 'set rtp +=' . fnamemodify(g:Config_Main_Home, ':p:h:h')
     call zvim#util#source_rc('functions.vim')
 endtry
+
+call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
 
 call zvim#util#source_rc('init.vim')
