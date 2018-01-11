@@ -58,7 +58,6 @@ function! SpaceVim#plugins#iedit#start(...)
   redrawstatus!
   while s:mode != ''
     redraw!
-    echom s:symbol_begin . '|' . s:symbol_cursor . '|' . s:symbol_end
     let char = getchar()
     if s:mode ==# 'n' && char == 27
       let s:mode = ''
@@ -166,7 +165,11 @@ function! s:replace_symbol(symbol) abort
   for idx in range(len)
     let pos = s:stack[len-1-idx]
     let line = getline(pos[0])
-    let begin = line[:pos[1]]
+    if pos[1] == 1
+      let begin = ''
+    else
+      let begin = line[:pos[1]]
+    endif
     let end = line[pos[1] + pos[2]:]
     let line = begin . a:symbol . end
     call setline(pos[0], line)
