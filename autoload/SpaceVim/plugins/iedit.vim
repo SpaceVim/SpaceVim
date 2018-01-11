@@ -34,14 +34,14 @@ function! s:highlight_cursor() abort
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', s:cursor_stack) 
+  for pos in s:stack
+    call matchaddpos('Underlined', [pos])
+    call matchaddpos('SpaceVimGuideCursor', [[pos[0], pos[1] + len(s:symbol_begin)]]) 
+  endfor
 endfunction
 
 function! s:remove_cursor_highlight() abort
-  try
-    call matchdelete(s:cursor_hi)
-  catch
-  endtry
+  call clearmatches()
 endfunction
 
 function! SpaceVim#plugins#iedit#start(...)
@@ -56,13 +56,15 @@ function! SpaceVim#plugins#iedit#start(...)
   call s:parse_symbol(begin, end, symbol)
   call s:highlight_cursor()
   redrawstatus!
-  while 1
-    let char = getchar()
+  while s:mode != ''
     redraw!
+    echom s:symbol_begin . '|' . s:symbol_cursor . '|' . s:symbol_end
+    let char = getchar()
     if s:mode ==# 'n' && char == 27
-      break
+      let s:mode = ''
+    else
+      call s:handle(s:mode, char)
     endif
-    call s:handle(s:mode, char)
   endwhile
   let s:stack = []
   let s:cursor_stack = []
@@ -122,14 +124,11 @@ function! s:handle_insert(char) abort
     redrawstatus!
     return
   elseif a:char == 23
-    exe 'noautocmd normal! ' . len(s:symbol_begin) . 'h'
     let s:symbol_begin = ''
   elseif a:char == 11
-    exe 'noautocmd normal! ' . (len(s:symbol_cursor) + len(s:symbol_end)) . 'l'
     let s:symbol_cursor = ''
     let s:symbol_end = ''
   else
-    noautocmd normal! l
     let s:symbol_begin .=  nr2char(a:char)
   endif
   call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
@@ -144,20 +143,25 @@ function! s:parse_symbol(begin, end, symbol) abort
     let idx = s:STRING.strAllIndex(line, a:symbol)
     for pos_c in idx
       call add(s:stack, [l, pos_c + 1, len])
-      call add(s:cursor_stack, [l, cursor[1], 1])
-      if l == cursor[0] && pos_c <= cursor[1] && pos_c + len >= cursor[1]
+      if l == cursor[0] && pos_c + 1 <= cursor[1] && pos_c + 1 + len >= cursor[1]
         let s:index = len(s:stack) - 1
-        let s:symbol_begin = line[pos_c : cursor[1] - 1]
+        if pos_c + 1 < cursor[1]
+          let s:symbol_begin = line[pos_c : cursor[1] - 2]
+        else
+          let s:symbol_begin = ''
+        endif
         let s:symbol_cursor = line[ cursor[1] - 1 : cursor[1] - 1]
-        let s:symbol_end = line[ cursor[1] : pos_c + len]
+        if pos_c + 1 + len > cursor[1]
+          let s:symbol_end = line[ cursor[1] : pos_c + len]
+        else
+          let s:symbol_end = ''
+        endif
       endif
     endfor
   endfor
-  let s:hi_id = matchaddpos('Underlined', s:stack)
 endfunction
 
 function! s:replace_symbol(symbol) abort
-  call matchdelete(s:hi_id)
   let len = len(s:stack)
   for idx in range(len)
     let pos = s:stack[len-1-idx]
@@ -168,5 +172,4 @@ function! s:replace_symbol(symbol) abort
     call setline(pos[0], line)
     let s:stack[len-1-idx][2] = len(a:symbol)
   endfor
-  let s:hi_id = matchaddpos('Underlined', s:stack)
 endfunction
