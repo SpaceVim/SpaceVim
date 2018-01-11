@@ -1299,13 +1299,13 @@ To Highlight the current symbol under point press `SPC s h`.
 
 Navigation between the highlighted symbols can be done with the commands:
 
-| Key Binding | Description                                                                      |
-| ----------- | -------------------------------------------------------------------------------- |
-| `*`         | initiate navigation transient state on current symbol and jump forwards          |
-| `#`         | initiate navigation transient state on current symbol and jump backwards         |
-| `SPC s e`   | edit all occurrences of the current symbol                                    |
-| `SPC s h`   | highlight the current symbol and all its occurrence within the current range     |
-| `SPC s H`   | go to the last searched occurrence of the last highlighted symbol                |
+| Key Binding | Description                                                                  |
+| ----------- | ---------------------------------------------------------------------------- |
+| `*`         | initiate navigation transient state on current symbol and jump forwards      |
+| `#`         | initiate navigation transient state on current symbol and jump backwards     |
+| `SPC s e`   | edit all occurrences of the current symbol                                   |
+| `SPC s h`   | highlight the current symbol and all its occurrence within the current range |
+| `SPC s H`   | go to the last searched occurrence of the last highlighted symbol            |
 
 In highlight symbol transient state:
 
@@ -1453,6 +1453,8 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | Key Binding | Description                    |
 | ----------- | ------------------------------ |
 | `Esc`       | go back to `iedit-Normal` mode |
+| `<Left>`    | Move cursor to left            |
+| `<Right>`   | Move cursor to right           |
 
 ##### Examples
 

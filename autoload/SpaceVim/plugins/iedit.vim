@@ -127,6 +127,14 @@ function! s:handle_insert(char) abort
   elseif a:char == 11
     let s:symbol_cursor = ''
     let s:symbol_end = ''
+  elseif a:char == "\<Left>"
+    let s:symbol_end = s:symbol_cursor . s:symbol_end
+    let s:symbol_cursor = matchstr(s:symbol_begin, '.$')
+    let s:symbol_begin = substitute(s:symbol_begin, '.$', '', 'g')  
+  elseif a:char == "\<Right>"
+    let s:symbol_begin = s:symbol_begin . s:symbol_cursor
+    let s:symbol_cursor = matchstr(s:symbol_end, '^.')
+    let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
   else
     let s:symbol_begin .=  nr2char(a:char)
   endif
