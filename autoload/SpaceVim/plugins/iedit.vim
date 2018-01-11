@@ -11,6 +11,7 @@ let s:index = -1
 let s:cursor_col = -1
 let s:mode = ''
 let s:hi_id = ''
+let s:Operator = ''
 
 " prompt
 
@@ -91,23 +92,19 @@ endfunction
 
 
 function! s:handle_normal(char) abort
-  if a:char ==# 105
+  silent! call s:remove_cursor_highlight()
+  if a:char ==# 105 " i
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
-  elseif a:char == 97
-    silent! call s:remove_cursor_highlight()
+  elseif a:char == 97 " a
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     let s:symbol_begin = s:symbol_begin . s:symbol_cursor
-    if !empty(s:symbol_cursor)
-      noautocmd normal! l
-    endif
     let s:symbol_cursor = matchstr(s:symbol_end, '^.')
     let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
-    silent! call s:highlight_cursor()
     redrawstatus!
   elseif a:char == "\<Left>"
     let s:symbol_end = s:symbol_cursor . s:symbol_end
@@ -117,8 +114,44 @@ function! s:handle_normal(char) abort
     let s:symbol_begin = s:symbol_begin . s:symbol_cursor
     let s:symbol_cursor = matchstr(s:symbol_end, '^.')
     let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
+  elseif a:char == 48 " 0
+    let s:symbol_end = substitute(s:symbol_begin . s:symbol_cursor . s:symbol_end, '^.', '', 'g')
+    let s:symbol_cursor = matchstr(s:symbol_begin, '^.')
+    let s:symbol_begin = ''
+  elseif a:char == 36 " $
+    let s:symbol_begin = substitute(s:symbol_begin . s:symbol_cursor . s:symbol_end, '.$', '', 'g')
+    let s:symbol_cursor = matchstr(s:symbol_end, '.$')
+    let s:symbol_end = ''
+  elseif a:char == 68 " D
+    let s:symbol_begin = ''
+    let s:symbol_cursor = ''
+    let s:symbol_end = ''
+  elseif a:char == 71 " G
+    exe s:stack[-1][0]
+  elseif a:char == 103 "g
+    if s:Operator ==# 'g'
+      exe s:stack[0][0]
+      let s:Operator = ''
+    else
+      let s:Operator = 'g'
+      call s:timeout()
+    endif
   endif
   silent! call s:highlight_cursor()
+endfunction
+
+if exists('*timer_start')
+  function! s:timeout() abort
+    call timer_start(1000, funcref('s:reset_Operator'))
+  endfunction
+else
+  function! s:timeout() abort
+  endfunction
+endif
+
+
+function! s:reset_Operator(...) abort
+  let s:Operator = ''
 endfunction
 
 function! s:handle_insert(char) abort
