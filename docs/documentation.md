@@ -1443,12 +1443,17 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | Key Binding | Description                                                                     |
 | ----------- | ------------------------------------------------------------------------------- |
 | `Esc`       | go back to `Normal` mode                                                        |
-| `I`         | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`         | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
 | `i`         | switch to `iedit-Insert` mode, same as `i`                                      |
 | `a`         | switch to `iedit-Insert` mode, same as `a`                                      |
+| `I`         | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
+| `A`         | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
 | `<Left>`    | Move cursor to left                                                             |
 | `<Right>`   | Move cursor to right                                                            |
+| `0`         | go to the beginning of the current occurrence                                   |
+| `$`         | go to the end of the current occurrence                                         |
+| `D`         | delete the occurrences                                                          |
+| `gg`        | go to first occurrence                                                          |
+| `G`         | go to last occurrence                                                           |
 
 **In iedit-Insert mode:**
 
