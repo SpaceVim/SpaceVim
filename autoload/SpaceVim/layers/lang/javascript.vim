@@ -133,6 +133,11 @@ function! s:on_ft() abort
           \ 'rename symbol', 1)
   endif
 
+  let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
+        \ 'generate JSDoc', 1)
+
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
