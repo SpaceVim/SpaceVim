@@ -37,7 +37,7 @@ function! s:highlight_cursor() abort
   call s:VIMH.hi(info)
   for pos in s:stack
     call matchaddpos('Underlined', [pos])
-    call matchaddpos('SpaceVimGuideCursor', [[pos[0], pos[1] + len(s:symbol_begin)]]) 
+    call matchadd('SpaceVimGuideCursor', '\%' . pos[0] . 'l\%' . (pos[1] + len(s:symbol_begin)) . 'c', 99999)
   endfor
 endfunction
 
@@ -169,6 +169,8 @@ function! s:handle_insert(char) abort
   elseif a:char == 11
     let s:symbol_cursor = ''
     let s:symbol_end = ''
+  elseif a:char == "\<bs>"
+    let s:symbol_begin = substitute(s:symbol_begin, '.$', '', 'g')
   elseif a:char == "\<Left>"
     let s:symbol_end = s:symbol_cursor . s:symbol_end
     let s:symbol_cursor = matchstr(s:symbol_begin, '.$')
