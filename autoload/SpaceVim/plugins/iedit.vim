@@ -126,6 +126,16 @@ function! s:handle_normal(char) abort
     let s:symbol_begin = ''
     let s:symbol_cursor = ''
     let s:symbol_end = ''
+    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+  elseif a:char == 83 " S
+    let s:symbol_begin = ''
+    let s:symbol_cursor = ''
+    let s:symbol_end = ''
+    let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    let w:spacevim_statusline_mode = 'ii'
+    redrawstatus!
+    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
   elseif a:char == 71 " G
     exe s:stack[-1][0]
   elseif a:char == 103 "g
