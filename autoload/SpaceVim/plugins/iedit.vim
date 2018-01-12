@@ -127,6 +127,11 @@ function! s:handle_normal(char) abort
     let s:symbol_cursor = ''
     let s:symbol_end = ''
     call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+  elseif a:char == 112 " p
+    let s:symbol_begin = @"
+    let s:symbol_cursor = ''
+    let s:symbol_end = ''
+    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
   elseif a:char == 83 " S
     let s:symbol_begin = ''
     let s:symbol_cursor = ''
@@ -236,19 +241,39 @@ function! s:parse_symbol(begin, end, symbol) abort
   endfor
 endfunction
 
+
+" TODO current only support one line symbol
 function! s:replace_symbol(symbol) abort
-  let len = len(s:stack)
-  for idx in range(len)
-    let pos = s:stack[len-1-idx]
-    let line = getline(pos[0])
-    if pos[1] == 1
-      let begin = ''
-    else
-      let begin = line[:pos[1]]
-    endif
-    let end = line[pos[1] + pos[2]:]
-    let line = begin . a:symbol . end
-    call setline(pos[0], line)
-    let s:stack[len-1-idx][2] = len(a:symbol)
-  endfor
+  let lines = split(a:symbol, "\n")
+  if len(lines) > 1
+    let len = len(s:stack)
+    for idx in range(len)
+      let pos = s:stack[len-1-idx]
+      let line = getline(pos[0])
+      if pos[1] == 1
+        let begin = ''
+      else
+        let begin = line[:pos[1]]
+      endif
+      let end = line[pos[1] + pos[2]:]
+      let line = begin . lines[0] . end
+      call setline(pos[0], line)
+      let s:stack[len-1-idx][2] = len(lines[0])
+    endfor
+  else
+    let len = len(s:stack)
+    for idx in range(len)
+      let pos = s:stack[len-1-idx]
+      let line = getline(pos[0])
+      if pos[1] == 1
+        let begin = ''
+      else
+        let begin = line[:pos[1]]
+      endif
+      let end = line[pos[1] + pos[2]:]
+      let line = begin . a:symbol . end
+      call setline(pos[0], line)
+      let s:stack[len-1-idx][2] = len(a:symbol)
+    endfor
+  endif
 endfunction

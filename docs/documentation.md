@@ -1457,6 +1457,7 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | `G`         | go to last occurrence                                                           |
 | `n`         | go to next occurrence                                                           |
 | `N`         | go to previous occurrence                                                       |
+| `p`         | replace occurrences with last yanked (copied) text                              |
 
 **In iedit-Insert mode:**
 
@@ -1465,6 +1466,8 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | `Esc`       | go back to `iedit-Normal` mode |
 | `<Left>`    | Move cursor to left            |
 | `<Right>`   | Move cursor to right           |
+| `<C-w>`     | delete words before cursor     |
+| `<C-K>`     | delete words after cursor      |
 
 ##### Examples
 
