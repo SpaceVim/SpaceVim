@@ -51,18 +51,16 @@ function! SpaceVim#plugins#iedit#start(...)
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
-  if get(a:000, 1, 0) == 1
-    if a:firstline == a:lastline
-      let save_reg_k = @k
-      normal! gv"ky
-      let symbol = @k
-      let @k = save_reg_k
-    else
-      let symbol = expand('<cword>')
-    endif
+  if get(a:000, 0, 0) == 1
+    let save_reg_k = @k
+    normal! gv"ky
+    let symbol = split(@k, "\n")[0]
+    let @k = save_reg_k
   else
     let symbol = expand('<cword>')
   endif
+  echomsg string(a:000)
+  echom symbol
   let begin = get(a:000, 1, 1)
   let end = get(a:000, 2, line('$'))
   call s:parse_symbol(begin, end, symbol)
