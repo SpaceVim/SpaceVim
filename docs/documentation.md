@@ -1454,6 +1454,8 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | `D`         | delete the occurrences                                                          |
 | `gg`        | go to first occurrence                                                          |
 | `G`         | go to last occurrence                                                           |
+| `n`         | go to next occurrence                                                           |
+| `N`         | go to previous occurrence                                                       |
 
 **In iedit-Insert mode:**
 

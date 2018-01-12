@@ -136,6 +136,20 @@ function! s:handle_normal(char) abort
       let s:Operator = 'g'
       call s:timeout()
     endif
+  elseif a:char == 110 " n
+    if s:index == len(s:stack) - 1
+      let s:index = 0
+    else
+      let s:index += 1
+    endif
+    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:symbol_begin))
+  elseif a:char == 78 " N
+    if s:index == 0
+      let s:index = len(s:stack) - 1
+    else
+      let s:index -= 1
+    endif
+    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:symbol_begin))
   endif
   silent! call s:highlight_cursor()
 endfunction
