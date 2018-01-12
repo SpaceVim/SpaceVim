@@ -1458,6 +1458,7 @@ The defalut color for iedit is `red`/`green` which is based on the current color
 | `n`         | go to next occurrence                                                           |
 | `N`         | go to previous occurrence                                                       |
 | `p`         | replace occurrences with last yanked (copied) text                              |
+| `<Tab>`     | toggle current occurrence                                                       |
 
 **In iedit-Insert mode:**
 

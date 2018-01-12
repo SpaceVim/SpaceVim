@@ -91,6 +91,8 @@ function! s:handle(mode, char) abort
 endfunction
 
 
+let s:toggle_stack = {}
+
 function! s:handle_normal(char) abort
   silent! call s:remove_cursor_highlight()
   if a:char ==# 105 " i
@@ -98,6 +100,14 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
+  elseif a:char == 9 " <tab>
+    if index(keys(s:toggle_stack), s:index . '') == -1
+      call extend(s:toggle_stack, {s:index : s:stack[s:index]})
+      call remove(s:stack, s:index)
+    else
+      call insert(s:stack, s:toggle_stack[s:index] , s:index)
+      call remove(s:toggle_stack, s:index)
+    endif
   elseif a:char == 97 " a
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
