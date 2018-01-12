@@ -283,8 +283,10 @@ function! SpaceVim#mapping#space#init() abort
         \ 'clear search highlight', 1)
 
   "Symbol
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'e'], 'call SpaceVim#plugins#iedit#start()',
-        \ 'start iedit mode', 1, 1)
+  nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>
+  xnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start(1)<cr>
+  call SpaceVim#mapping#space#def('nmap', ['s', 'e'], '<plug>SpaceVim-plugin-iedit',
+        \ 'start iedit mode', 0, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start()',
         \ 'highlight all symbols', 1)
   " Getting help
