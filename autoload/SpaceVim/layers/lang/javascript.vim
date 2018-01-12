@@ -3,6 +3,7 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
      \ ['MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript' }],
      \ ['Galooshi/vim-import-js', {
      \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
+     \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
      \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
      \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
      \ ['moll/vim-node', { 'on_ft': 'javascript' }],
@@ -100,6 +101,22 @@ function! s:on_ft() abort
   inoremap <silent><buffer> <C-j>i <Esc>:ImportJSWord<CR>a
   inoremap <silent><buffer> <C-j>f <Esc>:ImportJSFix<CR>a
   inoremap <silent><buffer> <C-j>g <Esc>:ImportJSGoto<CR>a
+  " }}}
+
+  " heavenshell/vim-jsdoc {{{
+
+  " Allow prompt for interactive input.
+  let g:jsdoc_allow_input_prompt = 1
+
+  " Prompt for a function description
+  let g:jsdoc_input_description = 1
+
+  " Set value to 1 to turn on detecting underscore starting functions as private convention
+  let g:jsdoc_underscore_private = 1
+
+  " Enable to use ECMAScript6's Shorthand function, Arrow function.
+  let g:jsdoc_enable_es6 = 1
+
   " }}}
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
