@@ -88,6 +88,13 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
 endfunction
 
 
+function! s:self.displayArea() abort
+  return [
+        \ line('w0'), line('w$')
+        \ ]
+endfunction
+
+
 fu! SpaceVim#api#vim#buffer#get() abort
   return deepcopy(s:self)
 endf
