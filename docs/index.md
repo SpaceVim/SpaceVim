@@ -55,34 +55,6 @@ More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 [Follow @SpaceVim](https://twitter.com/SpaceVim) 
 
-## Requirements
-
-At a minimum, SpaceVim requires `git` and `wget` to be installed. These tools
-are needed for downloading plugins and fonts.
-
-If you are new to vim, you should learning about Vim in general, read
-[vim-galore](https://github.com/mhinz/vim-galore).
-
-## Install
-
-### Linux and macOS
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash
-```
-
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
-
-For more info about the install script, please check:
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
-```
-
-### Windows
-
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
-
 ## Participating
 
 Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
