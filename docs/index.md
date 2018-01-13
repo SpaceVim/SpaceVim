@@ -42,7 +42,7 @@ See the [Quick start guide](quick-start-guide), [documentation](documentation) o
 ## Blogs
 
 <ul>
-    {% assign relevant = site.posts | except:"category","feature" %}
+    {% assign relevant = site.posts | except:"categories","feature" %}
     {% for post in relevant offset: 0 limit: 5  %}
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
