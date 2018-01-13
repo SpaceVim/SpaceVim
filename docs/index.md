@@ -10,45 +10,23 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
 
-SpaceVim is a distribution of the vim editor that's inspired by spacemacs. It manages collections of plugins in layers, which help collect related packages together to provide features. For example, the python layer collects deoplete.nvim, neomake and jedi-vim together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install.
+SpaceVim is a distribution of the vim editor that's inspired by spacemacs.
+It manages collections of plugins in layers, which help collect related
+packages together to provide features. For example, the python layer collects
+deoplete.nvim, neomake and jedi-vim together to provides autocompletion,
+syntax checking, and documentation lookup. This approach helps keep
+configuration organized and reduces overhead for the user by keeping them
+from having to think about what packages to install.
 
-Please star the project on github - it is a great way to show your appreciation while providing us motivation to continue working on this project.  The extra visibility for the project doesn't hurt either!
+Please star the project on github - it is a great way to show your
+appreciation while providing us motivation to continue working on this project.
+The extra visibility for the project doesn't hurt either!
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
 See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
 
-Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
-## Requirements
-
-At a minimum, SpaceVim requires `git` and `wget` to be installed. These tools are needed for downloading plugins and fonts.
-
-If you are new to vim, you should learning about Vim in general, read [vim-galore](https://github.com/mhinz/vim-galore).
-
-## Install
-
-### Linux and macOS
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash
-```
-
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
-
-For more info about the install script, please check:
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
-```
-
-### Windows
-
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
-
-## Features
+## New features
 
 - **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
   ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
@@ -77,7 +55,35 @@ More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 [Follow @SpaceVim](https://twitter.com/SpaceVim) 
 
-## Get Involved
+## Requirements
+
+At a minimum, SpaceVim requires `git` and `wget` to be installed. These tools
+are needed for downloading plugins and fonts.
+
+If you are new to vim, you should learning about Vim in general, read
+[vim-galore](https://github.com/mhinz/vim-galore).
+
+## Install
+
+### Linux and macOS
+
+```bash
+curl -sLf https://spacevim.org/install.sh | bash
+```
+
+After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
+
+For more info about the install script, please check:
+
+```bash
+curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+```
+
+### Windows
+
+The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+
+## Participating
 
 Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
 
