@@ -11,6 +11,9 @@ description: "This layer is for JaveScript development"
 - [Install](#install)
 - [Features](#features)
 - [Layer configuration](#layer-configuration)
+- [Key bindings](#key-bindings)
+  - [Import key bindings](#import-key-bindings)
+  - [Generate key bindings](#generate-key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -41,3 +44,23 @@ call SpaceVim#layers#load('lang#javascript',
             \ )
 
 ```
+
+## Key bindings
+
+### Import key bindings
+
+| Key Binding          | Description                     |
+| -------------------- | ------------------------------- |
+| `F4` (Insert/Normal) | Import symbol under cursor      |
+| `SPC j i`            | Import symbol under cursor      |
+| `SPC j f`            | Import missing symbols          |
+| `SPC j g`            | Jump to module under cursor     |
+| `<C-j>i` (Insert)    | Import symbol under cursor      |
+| `<C-j>f` (Insert)    | Import missing symbols          |
+| `<C-j>g` (Insert)    | Jump to module under cursor     |
+
+### Generate key bindings
+
+| Mode          | Key Binding | Description                           |
+| ------------- | ----------- | ------------------------------------- |
+| normal        | `SPC l g d` | Generate JSDoc                        |
