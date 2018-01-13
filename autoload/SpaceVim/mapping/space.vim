@@ -32,7 +32,7 @@ function! SpaceVim#mapping#space#init() abort
   vmap <Space> [SPC]
   if g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
-    vmap , [SPC]l
+    xmap , [SPC]l
   endif
   " Windows
   for i in range(1, 9)

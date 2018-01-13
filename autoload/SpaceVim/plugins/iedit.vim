@@ -47,6 +47,8 @@ endfunction
 
 function! SpaceVim#plugins#iedit#start(...)
   let save_tve = &t_ve
+  let save_cl = &l:cursorline
+  setlocal nocursorline
   setlocal t_ve=
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
@@ -57,7 +59,10 @@ function! SpaceVim#plugins#iedit#start(...)
     let symbol = split(@k, "\n")[0]
     let @k = save_reg_k
   else
-    let symbol = expand('<cword>')
+    let save_reg_k = @k
+    normal! viw"ky
+    let symbol = split(@k, "\n")[0]
+    let @k = save_reg_k
   endif
   echomsg string(a:000)
   echom symbol
@@ -88,6 +93,7 @@ function! SpaceVim#plugins#iedit#start(...)
   catch
   endtry
   let s:hi_id = ''
+  let &l:cursorline = save_cl
 endfunction
 
 
