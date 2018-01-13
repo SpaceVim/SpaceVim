@@ -2,13 +2,47 @@
 <html>
 
     <head>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-5073224535135889",
+                enable_page_level_ads: true
+            });
+        </script>
+        <meta name="baidu-site-verification" content="TUNbZyzuOn" />
+        {% seo %}
+        <script type="text/javascript" src="http://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script>
+        <script>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+                (function() {
+                    var hm = document.createElement("script");
+                    hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
+                    var s = document.getElementsByTagName("script")[0]; 
+                    s.parentNode.insertBefore(hm, s);
+                })();
+        </script>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PCLWNCD');
+        </script>
+        <!-- End Google Tag Manager -->
         <script>
             ((window.gitter = {}).chat = {}).options = {
                 room: 'SpaceVim/SpaceVim'
             };
         </script>
         <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-        {% seo %}
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>{{ page.title | default: Home }} - SpaceVim</title>
@@ -16,9 +50,27 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <script>
+            (function() {
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                } else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
     </head>
 
     <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCLWNCD"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
         <a href="https://github.com/SpaceVim/SpaceVim">
             <img alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" style="position: absolute; top: 0; right: 0; border: 0;"/>
         </a>
@@ -45,6 +97,19 @@
             </section>
 
         </div>
+
+        {% if site.google_analytics %}
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try {
+                var pageTracker = _gat._getTracker("{{ site.google_analytics }}");
+                pageTracker._trackPageview();
+            } catch (err) {}
+        </script>
+        {% endif %}
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58a01d3aac22bd89"></script>
     </body>
     <root>
