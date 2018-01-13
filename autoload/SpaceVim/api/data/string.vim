@@ -74,10 +74,10 @@ let s:file['string2chars'] = function('s:string2chars')
 
 function! s:strAllIndex(str, need) abort
   let rst = []
-  let idx = stridx(a:str, a:need)
+    let idx = match(a:str, "\\<" . a:need . "\\>")
   while idx != -1
     call add(rst, idx)
-    let idx = stridx(a:str, a:need, idx + 1 + len(a:need))
+    let idx = match(a:str, "\\<" . a:need . "\\>", idx + 1 + len(a:need))
   endwhile
   return rst
 endfunction
