@@ -24,7 +24,7 @@ The extra visibility for the project doesn't hurt either!
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
-See the [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
+See the [Quick start guide](quick-start-guide), [documentation](documentation) or [the list of layers](layers) for more information.
 
 ## New features
 
