@@ -42,7 +42,8 @@ See the [Quick start guide](quick-start-guide), [documentation](documentation) o
 ## Blogs
 
 <ul>
-    {% for post in site.posts offset: 0 limit: 5  %}
+    {% assign relevant = site.posts | except:"category","feature" %}
+    {% for post in relevant offset: 0 limit: 5  %}
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>
