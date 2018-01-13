@@ -28,17 +28,16 @@ See the [documentation](https://spacevim.org/documentation) or [the list of laye
 
 ## New features
 
-- **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
-  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
-- **Beautiful UI:** you'll love the awesome UI and its useful features.
-  ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-- **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
-  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
-- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings, and find definition of key bindings.
-  ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
-  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
-- **Neovim centric:** Dark powered mode of SpaceVim
+<ul>
+    {% for post in site.categories.feature offset: 0 limit: 5  %}
+               <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
+               <br>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <br>
+               <img src="{{ post.image }}">
+    {% endfor %}
+</ul>
 
 ## Blogs
 
