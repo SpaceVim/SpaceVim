@@ -51,7 +51,7 @@ endfunction
 " this func is called when vim-rooter change the dir, That means the project
 " is changed, so will call call the registered function.
 function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
- let project = {
+  let project = {
         \ 'path' : getcwd(),
         \ 'name' : fnamemodify(getcwd(), ':t')
         \ }
@@ -65,19 +65,27 @@ endfunction
 
 let s:project_callback = []
 function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
- if type(a:func) == 2
-   call add(s:project_callback, a:func)
- else
-   call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
- endif
+  if type(a:func) == 2
+    call add(s:project_callback, a:func)
+  else
+    call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
-  try
-    Rooter
-  catch
-  endtry
-  return getcwd()
+  let rootdir = getbufvar('%', 'rootDir', '')
+  if empty(rootdir)
+    let rootdir = s:change_to_root_directory()
+  else
+    call s:change_dir(rootdir)
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
+  endif
+  return rootdir
+endfunction
+
+function! s:change_dir(dir) abort
+  call SpaceVim#logger#info('change to root:' . a:dir)
+  exe 'cd ' . fnamemodify(a:dir, ':p')
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
@@ -98,5 +106,60 @@ function! SpaceVim#plugins#projectmanager#kill_project() abort
 
 endfunction
 
+if g:spacevim_project_rooter_automatically
+  augroup spacevim_project_rooter
+    autocmd!
+    autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
+    autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()
+  augroup END
+endif
+function! s:find_root_directory() abort
+  let fd = expand('%:p')
+  let dirs = []
+  for pattern in g:spacevim_project_rooter_patterns
+    if stridx(pattern, '/') != -1
+      let dir = SpaceVim#util#findDirInParent(pattern, fd)
+    else
+      let dir = SpaceVim#util#findFileInParent(pattern, fd)
+    endif
+    if !empty(dir)
+      let dir = fnamemodify(dir, ':p')
+      call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
+      call add(dirs, dir)
+    endif
+  endfor
+  return s:sort_dirs(deepcopy(dirs))
+endfunction
 
 
+function! s:sort_dirs(dirs) abort
+  let dirs = sort(a:dirs, funcref('s:compare'))
+  let bufdir = getbufvar('%', 'rootDir', '')
+  if bufdir ==# get(dirs, 0, '')
+    return ''
+  else
+    let dir = dirs[0]
+    if isdirectory(dir)
+      let dir = fnamemodify(dir, ':p:h:h')
+    else
+      let dir = fnamemodify(dir, ':p:h')
+    endif
+    call s:change_dir(dir)
+    call setbufvar('%', 'rootDir', getcwd())
+    return b:rootDir
+  endif
+endfunction
+
+function! s:compare(d1, d2) abort
+  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+endfunction
+
+function! s:change_to_root_directory() abort
+  if s:find_root_directory()
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
+  endif
+  return getbufvar('%', 'rootDir', '')
+endfunction
+
+
+" vim:set et nowrap sw=2 cc=80:

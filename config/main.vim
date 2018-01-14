@@ -46,7 +46,6 @@ catch
     call zvim#util#source_rc('functions.vim')
 endtry
 
-call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
 
 call zvim#util#source_rc('init.vim')
@@ -58,6 +57,8 @@ call SpaceVim#loadCustomConfig()
 call SpaceVim#server#connect()
 
 call SpaceVim#end()
+
+call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
 call zvim#util#source_rc('general.vim')
 

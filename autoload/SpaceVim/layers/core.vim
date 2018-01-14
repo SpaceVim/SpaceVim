@@ -2,16 +2,14 @@ function! SpaceVim#layers#core#plugins() abort
   return [
         \ ['Shougo/vimproc.vim', {'build' : ['make']}],
         \ ['benizi/vim-automkdir'],
-        \ ['airblade/vim-rooter', {'merged' : 0, 'loadconf' : 1}],
         \ ]
 endfunction
 
 let s:filename = expand('<sfile>:~')
-let s:lnum = expand('<slnum>') + 3
+let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#core#config() abort
-  let g:rooter_silent_chdir = 1
   let g:vimproc#download_windows_dll = 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'Rooter', 'find-project-root', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill all project buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'List all projects', 1)
   let lnum = expand('<slnum>') + s:lnum - 1

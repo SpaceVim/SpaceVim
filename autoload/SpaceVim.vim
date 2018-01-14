@@ -414,6 +414,13 @@ let g:spacevim_enable_powerline_fonts  = 1
 let g:spacevim_lint_on_save            = 1
 let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep']
 ""
+" Set the project rooter patterns, by default it is
+" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+""
+" Enable/Disable changing directory automatically. Enabled by default.
+let g:spacevim_project_rooter_automatically = 1
+""
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 " >
 "   let g:spacevim_lint_on_the_fly = 0
