@@ -80,7 +80,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox call s:fix_gruvbox()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
-    autocmd User RooterChDir call SpaceVim#plugins#projectmanager#RootchandgeCallback()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
   augroup END

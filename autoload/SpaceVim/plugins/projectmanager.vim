@@ -73,10 +73,7 @@ function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
-  try
-    Rooter
-  catch
-  endtry
+  call s:find_root_directory()
   return getcwd()
 endfunction
 
@@ -106,6 +103,7 @@ function! s:find_root_directory() abort
   for pattern in g:spacevim_project_rooter_patterns
     call add(dirs, SpaceVim#util#findFileInParent(pattern, fd))
   endfor
+  return s:sort_dirs(dirs)
 endfunction
 
 
@@ -114,7 +112,9 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:change_to_root_directory() abort
-  
+  if s:find_root_directory()
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
+  endif
 endfunction
 
 
