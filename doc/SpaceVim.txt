@@ -437,6 +437,13 @@ Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
   let g:spacevim_lint_on_save = 0
 <
 
+                                          *g:spacevim_project_rooter_patterns*
+Set the project rooter patterns, by default it is `['.git/', '_darcs/',
+'.hg/', '.bzr/', '.svn/']`
+
+                                     *g:spacevim_project_rooter_automatically*
+Enable/Disable changing directory automatically. Enabled by default.
+
                                                   *g:spacevim_lint_on_the_fly*
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 >

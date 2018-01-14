@@ -106,10 +106,7 @@ function! SpaceVim#plugins#projectmanager#kill_project() abort
 
 endfunction
 
-let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
-
-let g:spacevim_project_rooter_manual_only = 0
-if !g:spacevim_project_rooter_manual_only
+if g:spacevim_project_rooter_automatically
   augroup spacevim_project_rooter
     autocmd!
     autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
