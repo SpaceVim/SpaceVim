@@ -406,6 +406,9 @@ Plugin groups to be loaded.
 Set the github username, It will be used for getting your starred repos, and
 fuzzy find the repo you want.
 
+                                               *g:spacevim_windows_smartclose*
+Set the default key for smart close windows, default is `q`.
+
                                                  *g:spacevim_disabled_plugins*
 Disable plugins by name.
 >

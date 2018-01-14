@@ -382,6 +382,9 @@ let g:spacevim_plugin_groups           = []
 " fuzzy find the repo you want.
 let g:spacevim_github_username         = ''
 ""
+" Set the default key for smart close windows, default is `q`.
+let g:spacevim_windows_smartclose      = 'q'
+""
 " Disable plugins by name.
 " >
 "   let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
