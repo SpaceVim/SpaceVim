@@ -84,11 +84,8 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
 endfunction
 
 function! s:change_dir(dir) abort
-    if isdirectory(a:dir)
-      exe 'cd ' . fnamemodify(a:dir, ':p:h:h')
-    else
-      exe 'cd ' . fnamemodify(a:dir, ':p:h')
-    endif
+  call SpaceVim#logger#info('change to root:' . a:dir)
+  exe 'cd ' . fnamemodify(a:dir, ':p')
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
@@ -125,11 +122,12 @@ function! s:find_root_directory() abort
   for pattern in g:spacevim_project_rooter_patterns
     let dir = SpaceVim#util#findDirInParent(pattern, fd)
     if !empty(dir)
-      call SpaceVim#logger#info('Find project root:' . dir)
+      let dir = fnamemodify(dir, ':p')
+      call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
       call add(dirs, dir)
     endif
   endfor
-  return s:sort_dirs(dirs)
+  return s:sort_dirs(deepcopy(dirs))
 endfunction
 
 
@@ -140,6 +138,11 @@ function! s:sort_dirs(dirs) abort
     return ''
   else
     let dir = dirs[0]
+    if isdirectory(dir)
+      let dir = fnamemodify(dir, ':p:h:h')
+    else
+      let dir = fnamemodify(dir, ':p:h')
+    endif
     call s:change_dir(dir)
     call setbufvar('%', 'rootDir', getcwd())
     return b:rootDir
@@ -147,7 +150,7 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
 endfunction
 
 function! s:change_to_root_directory() abort
