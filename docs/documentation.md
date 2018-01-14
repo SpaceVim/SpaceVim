@@ -376,6 +376,10 @@ the option is `g:spacevim_windows_leader`, defalut value is `s`.
 
 the option is `g:spacevim_enable_language_specific_leader`, defalut value is 1.
 
+- The `q` key does recording, but in SpaceVim it is used for smart close window.
+
+the option is `g:spacevim_windows_smartclose`, defalut value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
+
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
 ## Awesome ui

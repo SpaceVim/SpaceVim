@@ -294,9 +294,6 @@ function! SpaceVim#default#SetMappings() abort
         \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
   call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
   call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  call SpaceVim#mapping#def('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
-        \ 'Smart close windows',
-        \ 'call zvim#util#SmartClose()')
 endfunction
 
 fu! s:tobur(num) abort

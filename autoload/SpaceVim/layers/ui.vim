@@ -30,6 +30,11 @@ function! SpaceVim#layers#ui#config() abort
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
   noremap <silent> <F2> :silent TagbarToggle<CR>
+  if !empty(g:spacevim_windows_smartclose)
+    call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
+          \ 'Smart close windows',
+          \ 'call zvim#util#SmartClose()')
+  endif
   " Ui toggles
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
         \ . string(s:_function('s:toggle_fill_column')) . ', [])',
