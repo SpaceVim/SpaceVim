@@ -51,7 +51,7 @@ endfunction
 " this func is called when vim-rooter change the dir, That means the project
 " is changed, so will call call the registered function.
 function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
- let project = {
+  let project = {
         \ 'path' : getcwd(),
         \ 'name' : fnamemodify(getcwd(), ':t')
         \ }
@@ -65,16 +65,30 @@ endfunction
 
 let s:project_callback = []
 function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
- if type(a:func) == 2
-   call add(s:project_callback, a:func)
- else
-   call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
- endif
+  if type(a:func) == 2
+    call add(s:project_callback, a:func)
+  else
+    call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
-  call s:find_root_directory()
-  return getcwd()
+  let rootdir = getbufvar('%', 'rootDir', '')
+  if empty(rootdir)
+    let rootdir = s:change_to_root_directory()
+  else
+    call s:change_dir(rootdir)
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
+  endif
+  return rootdir
+endfunction
+
+function! s:change_dir(dir) abort
+    if isdirectory(a:dir)
+      exe 'cd ' . fnamemodify(a:dir, ':p:h:h')
+    else
+      exe 'cd ' . fnamemodify(a:dir, ':p:h')
+    endif
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
@@ -95,26 +109,53 @@ function! SpaceVim#plugins#projectmanager#kill_project() abort
 
 endfunction
 
-let g:spacevim_project_rooter_patterns = ['.git', '.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 
+let g:spacevim_project_rooter_manual_only = 0
+if !g:spacevim_project_rooter_manual_only
+  augroup spacevim_project_rooter
+    autocmd!
+    autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
+    autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()
+  augroup END
+endif
 function! s:find_root_directory() abort
   let fd = expand('%:p')
   let dirs = []
   for pattern in g:spacevim_project_rooter_patterns
-    call add(dirs, SpaceVim#util#findFileInParent(pattern, fd))
+    let dir = SpaceVim#util#findDirInParent(pattern, fd)
+    if !empty(dir)
+      call SpaceVim#logger#info('Find project root:' . dir)
+      call add(dirs, dir)
+    endif
   endfor
   return s:sort_dirs(dirs)
 endfunction
 
 
 function! s:sort_dirs(dirs) abort
-  
+  let dirs = sort(a:dirs, funcref('s:compare'))
+  let bufdir = getbufvar('%', 'rootDir', '')
+  if bufdir ==# get(dirs, 0, '')
+    return ''
+  else
+    let dir = dirs[0]
+    call s:change_dir(dir)
+    call setbufvar('%', 'rootDir', getcwd())
+    return b:rootDir
+  endif
+endfunction
+
+function! s:compare(d1, d2) abort
+  return len(split(a:d1, '/')) - len(split(a:d2, '/'))
 endfunction
 
 function! s:change_to_root_directory() abort
   if s:find_root_directory()
     call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
   endif
+  return getbufvar('%', 'rootDir', '')
 endfunction
 
 
+" vim:set et nowrap sw=2 cc=80:
