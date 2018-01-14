@@ -1,3 +1,5 @@
+welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> **SpaceVim** wiki!
+
 - [Introduction](Introduction)  
 - **[FAQ](FAQ)**
 - [Progress/Roadmap](Progress)
