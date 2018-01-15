@@ -38,10 +38,6 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \   "start" : "\\%(vim\\|viml\\)",
         \},
         \}
-  augroup SpaceVim_lang_markdown
-    au!
-    autocmd BufEnter *.md call s:mappings()
-  augroup END
   let remarkrc = s:generate_remarkrc()
   let g:neoformat_enabled_markdown = ['remark']
   let g:neoformat_markdown_remark = {
@@ -53,6 +49,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
   " iamcco/markdown-preview.vim {{{
   let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
+  call SpaceVim#mapping#space#regesit_lang_mappings('markdown', funcref('s:mappings'))
 endfunction
 
 function! s:mappings() abort
