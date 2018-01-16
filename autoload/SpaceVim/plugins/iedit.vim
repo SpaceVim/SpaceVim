@@ -53,17 +53,16 @@ function! SpaceVim#plugins#iedit#start(...)
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
+  let curpos = getcurpos()
+  let save_reg_k = @k
   if get(a:000, 0, 0) == 1
-    let save_reg_k = @k
     normal! gv"ky
-    let symbol = split(@k, "\n")[0]
-    let @k = save_reg_k
   else
-    let save_reg_k = @k
     normal! viw"ky
-    let symbol = split(@k, "\n")[0]
-    let @k = save_reg_k
   endif
+  call setpos('.', curpos)
+  let symbol = split(@k, "\n")[0]
+  let @k = save_reg_k
   echomsg string(a:000)
   echom symbol
   let begin = get(a:000, 1, 1)
