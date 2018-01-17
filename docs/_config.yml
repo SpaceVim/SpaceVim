@@ -9,7 +9,6 @@ logo: https://spacevim.org/SpaceVim.png
 permalink: /:title/
 
 plugins:
-  - jekyll-github-metadata
   - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-seo-tag
