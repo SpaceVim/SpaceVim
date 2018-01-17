@@ -53,17 +53,16 @@ function! SpaceVim#plugins#iedit#start(...)
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
+  let curpos = getcurpos()
+  let save_reg_k = @k
   if get(a:000, 0, 0) == 1
-    let save_reg_k = @k
     normal! gv"ky
-    let symbol = split(@k, "\n")[0]
-    let @k = save_reg_k
   else
-    let save_reg_k = @k
     normal! viw"ky
-    let symbol = split(@k, "\n")[0]
-    let @k = save_reg_k
   endif
+  call setpos('.', curpos)
+  let symbol = split(@k, "\n")[0]
+  let @k = save_reg_k
   echomsg string(a:000)
   echom symbol
   let begin = get(a:000, 1, 1)
@@ -257,7 +256,7 @@ function! s:parse_symbol(begin, end, symbol) abort
         endif
         let s:symbol_cursor = line[ cursor[1] - 1 : cursor[1] - 1]
         if pos_c + 1 + len > cursor[1]
-          let s:symbol_end = line[ cursor[1] : pos_c + len]
+          let s:symbol_end = line[ cursor[1] : pos_c + len - 1]
         else
           let s:symbol_end = ''
         endif
@@ -278,7 +277,7 @@ function! s:replace_symbol(symbol) abort
       if pos[1] == 1
         let begin = ''
       else
-        let begin = line[:pos[1]]
+        let begin = line[:pos[1] - 2]
       endif
       let end = line[pos[1] + pos[2]:]
       let line = begin . lines[0] . end
@@ -293,9 +292,9 @@ function! s:replace_symbol(symbol) abort
       if pos[1] == 1
         let begin = ''
       else
-        let begin = line[:pos[1]]
+        let begin = line[:pos[1] - 2]
       endif
-      let end = line[pos[1] + pos[2]:]
+      let end = line[pos[1] + pos[2] - 1:]
       let line = begin . a:symbol . end
       call setline(pos[0], line)
       let s:stack[len-1-idx][2] = len(a:symbol)
