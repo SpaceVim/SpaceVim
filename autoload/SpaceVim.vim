@@ -400,6 +400,12 @@ let g:spacevim_disabled_plugins        = []
 " <
 let g:spacevim_custom_plugins          = []
 ""
+" change the default filetype icon for a specific filtype.
+" >
+"   let g:spacevim_filetype_icons['md'] = ''
+" <
+let g:spacevim_filetype_icons           = {}
+""
 " SpaceVim will load the global config after local config if set to 1. Default
 " is 0. If you have a local config, the global config will not be loaded. 
 " >

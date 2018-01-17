@@ -144,7 +144,9 @@ function! s:filetypeIcon(path) abort
     endif
   endfor
   let ext = fnamemodify(file, ':e')
-  if has_key(s:file_node_extensions, ext)
+  if has_key(g:spacevim_filetype_icons, ext)
+    return g:spacevim_filetype_icons[ext]
+  elseif has_key(s:file_node_extensions, ext)
     return s:file_node_extensions[ext]
   endif
   return ''
