@@ -122,7 +122,7 @@ function! s:find_root_directory() abort
     else
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
-    if !empty(dir)
+    if !empty(dir) && isdirectory(dir)
       let dir = fnamemodify(dir, ':p')
       call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
       call add(dirs, dir)
@@ -133,12 +133,11 @@ endfunction
 
 
 function! s:sort_dirs(dirs) abort
-  let dirs = sort(a:dirs, funcref('s:compare'))
+  let dir = get(sort(a:dirs, funcref('s:compare')), 0, '')
   let bufdir = getbufvar('%', 'rootDir', '')
-  if bufdir ==# get(dirs, 0, '')
+  if bufdir ==# dir
     return ''
   else
-    let dir = dirs[0]
     if isdirectory(dir)
       let dir = fnamemodify(dir, ':p:h:h')
     else
@@ -155,7 +154,7 @@ function! s:compare(d1, d2) abort
 endfunction
 
 function! s:change_to_root_directory() abort
-  if s:find_root_directory()
+  if !empty(s:find_root_directory())
     call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
   endif
   return getbufvar('%', 'rootDir', '')
