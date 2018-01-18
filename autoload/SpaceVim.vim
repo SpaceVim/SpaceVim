@@ -195,11 +195,18 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 "     \ 'version control info'
 "     \ ]
 " <
-let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode', 'syntax checking', 'minor mode lighters', 'version control info', 'hunks']
+let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
+      \ 'syntax checking', 'minor mode lighters',
+      \ 'version control info', 'hunks']
 ""
 " Define the right section of statusline in active windows. By default:
 " >
-"   let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+"   g:spacevim_statusline_right_sections =
+"     \ [
+"     \ 'fileformat',
+"     \ 'cursorpos',
+"     \ 'percentage'
+"     \ ]
 " <
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 

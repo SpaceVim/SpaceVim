@@ -227,7 +227,12 @@ Define the left section of statusline in active windows. By default:
                                         *g:spacevim_statusline_right_sections*
 Define the right section of statusline in active windows. By default:
 >
-  let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+  g:spacevim_statusline_right_sections =
+    \ [
+    \ 'fileformat',
+    \ 'cursorpos',
+    \ 'percentage'
+    \ ]
 <
 
                                        *g:spacevim_statusline_unicode_symbols*
