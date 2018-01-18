@@ -27,7 +27,7 @@ All of these channels are bridged together. Click on one of the badges below to 
 
 - [`SpaceVim/SpaceVim`  on gitter](https://gitter.im/SpaceVim/SpaceVim)
 - [`#spacevim` on FreeNode](https://webchat.freenode.net/?channels=spacevim)
-- [`t.me/SpaceVim` on telegram](t.me/SpaceVim)
+- [`t.me/SpaceVim` on telegram](https://t.me/SpaceVim)
 - [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
 - [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 

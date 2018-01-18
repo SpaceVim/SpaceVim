@@ -74,7 +74,7 @@ For files not belonging to Spacemacs like local packages and libraries, refer to
 
 #### Conventions
 
-SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/development/conventions) before your first contribution to get to know them.
+SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
 
 #### Pull Request
 
