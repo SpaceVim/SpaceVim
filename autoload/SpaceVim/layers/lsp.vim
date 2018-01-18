@@ -82,6 +82,7 @@ let s:lsp_servers = {
       \ 'go' : ['go-langserver', '-mode', 'stdio'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'python' : ['pyls'],
+      \ 'html' : ['html-languageserver', '--stdio'],
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php']
       \ }
 
