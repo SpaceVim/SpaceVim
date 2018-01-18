@@ -1,7 +1,6 @@
 ---
 title:  "Conventions"
 description: "conventions of contributing to SpaceVim, including the coding style guides about vim script and markdown"
-permalink: "/conventions"
 ---
 
 # Conventions
