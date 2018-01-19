@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#html layer"
-description: "This layer is for html development"
+description: "Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html."
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#html
@@ -11,12 +11,13 @@ description: "This layer is for html development"
 - [Layer Installation](#layer-installation)
   - [Language server](#language-server)
 - [Features](#features)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer is for html development.
+This layer adds support for editing HTML and CSS.
 
 ## Layer Installation
 
@@ -32,8 +33,14 @@ npm install --global vscode-html-languageserver-bin
 
 ## Features
 
+- Generate HTML and CSS coding using [neosnippet](https://github.com/Shougo/neosnippet.vim/) and [emmet-vim](https://github.com/mattn/emmet-vim)
+- Tags navigation on key % using matchit.vim
 - auto-completion
 - syntax checking
-- goto definition
-- refernce finder
-- language server protocol (need lsp layer) 
+- language server protocol (need `lsp` layer) 
+
+## Key bindings
+
+| key bindings | Description  |
+| ------------ | ------------ |
+| `<C-e>`      | emmet prefix |
