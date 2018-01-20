@@ -72,6 +72,7 @@ if (!(Test-Path "$HOME\vimfiles")) {
     cmd /c mklink $HOME\vimfiles $repo_path
 } else {
     echo "[OK] vimfiles already exists"
+	sleep 1
 }
 
 echo ""
