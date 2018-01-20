@@ -15,6 +15,7 @@ description: "This layer is for Python development, provide autocompletion, synt
   - [Buffer formatting](#buffer-formatting)
   - [Format imports](#format-imports)
 - [Key bindings](#key-bindings)
+  - [Code generation](#code-generation)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Testing](#testing)
@@ -68,6 +69,12 @@ pip install --user isort
 ```
 
 ## Key bindings
+
+### Code generation
+
+| Mode   | Key Binding | Description                           |
+| ------ | ----------- | ------------------------------------- |
+| normal | `SPC l g d` | Generate docstring                    |
 
 ### Inferior REPL process
 
