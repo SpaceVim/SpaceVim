@@ -27,16 +27,25 @@ if (!(echo $?)) {
 	echo ">>> Ready to Exit......"
 	Pause
 	exit
+} else {
+	echo "[OK] Test successfully. Moving to next..."
 }
 
+echo ""
+
 echo "==> Testing vim"
-vim --version
+gvim --version
 if (!(echo $?)) {
-	echo "[ERROR] Please install gvim or  make your PATH correctly set! "
-	echo ">>> Ready to Exit......"
+	echo "[WARNING] You didn't install gvim or vim. But intallation can still continue..."
+    echo ""
+	echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
 	Pause
-	exit
+} else {
+	echo ($(gvim --version) -split '\n')[0]
+	echo "[OK] Test successfully. Moving to next..."
 }
+
+echo ""
 
 if (!(Test-Path "$HOME\.SpaceVim")) {
     echo "==> Trying to clone $app_name"
