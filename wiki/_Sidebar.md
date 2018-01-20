@@ -1,7 +1,7 @@
 [[[https://github.com/SpaceVim/SpaceVim/raw/dev/docs/logo.png|alt=SpaceVim home]]](Home)
 --
-[Introduction](Introduction)   
-[Community](https://spacevim.org/community/)  
+[Introduction](introduction)   
+[Community](community)  
 [FAQ](FAQ)  
 [Layers](https://spacevim.org/layers/)
 
