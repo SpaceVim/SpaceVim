@@ -8,7 +8,7 @@ export LC_ALL=C
 
 docker pull spacevim/vims
 
-git fetch origin dev:dev
+git fetch origin master:master
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then
   git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
@@ -22,4 +22,7 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
     cd /tmp/vim &&
     ./configure $C_OPTS &&
     make install)
+elif [ "$LINT" = "jekyll" ]; then
+  cd docs
+  bundle install
 fi
