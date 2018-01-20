@@ -86,7 +86,7 @@ PR = Pull-Request
 
 ##### Ideally for simple PRs (most of them):
 
-- Branch from `dev`
+- Branch from `master`
 - One topic per PR
 - One commit per PR
 - If you have several commits on different topics, close the PR and create one PR per topic
@@ -100,6 +100,7 @@ Those PRs are usually cherry-picked.
 Squash only the commits with uninteresting changes like typos, syntax fixes, etc… and keep the important and isolated steps in different commits.
 
 Those PRs are merged and explicitly not fast-forwarded.
+
 Commit messages
 
 Write commit messages according to adapted [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):

@@ -7,7 +7,7 @@ function! SpaceVim#dev#releases#open() abort
   let is_dev = g:spacevim_version =~ 'dev'
   let releases = {
         \ 'tag_name': (is_dev ? 'nightly' : g:spacevim_version),
-        \ 'target_commitish': 'dev',
+        \ 'target_commitish': 'master',
         \ 'name': (is_dev ? 'nightly' : 'SpaceVim v' . g:spacevim_version),
         \ 'body': (is_dev ? s:body() : SpaceVim#dev#releases#content()),
         \ 'draft': v:false,
