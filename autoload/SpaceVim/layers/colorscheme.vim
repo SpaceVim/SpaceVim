@@ -171,7 +171,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
                 \ ['romainl/Apprentice'],
                 \ ['icymind/NeoSolarized'],
                 \ ['jacoborus/tender'],
-                \ ['rakr/vim-one'],
+                \ ['wsdjeg/vim-one'],
                 \ ['arcticicestudio/nord-vim'],
                 \ ['KeitaNakamura/neodark.vim'],
                 \ ]

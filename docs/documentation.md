@@ -184,7 +184,7 @@ Community-driven configuration provides curated packages tuned by power users an
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
-    [conventions](http://spacevim.org/development/).
+    [conventions](http://spacevim.org/conventions/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ## Screenshots

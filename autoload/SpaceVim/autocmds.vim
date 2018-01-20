@@ -18,7 +18,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType jsp call JspFileTypeInit()
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex EmmetInstall
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * setl cursorline

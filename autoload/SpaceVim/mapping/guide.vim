@@ -310,7 +310,24 @@ function! s:highlight_cursor() abort
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
+  if s:vis == 'gv'
+    " [bufnum, lnum, col, off]
+    let begin = getpos("'<")
+    let end = getpos("'>")
+    if begin[1] == end[1]
+      let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[begin[1], min([begin[2], end[2]]), abs(begin[2] - end[2]) + 1]]) 
+    else
+      let pos = [[begin[1], begin[2], len(getline(begin[1])) - begin[2] + 1],
+            \ [end[1], 1, end[2]],
+            \ ]
+      for lnum in range(begin[1] + 1, end[1] - 1)
+        call add(pos, [lnum, 1, len(getline(lnum))])
+      endfor
+      let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', pos) 
+    endif
+  else
+    let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
+  endif
 endfunction
 
 function! s:remove_cursor_highlight() abort
