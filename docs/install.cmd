@@ -20,6 +20,11 @@ $repo_url    = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
+echo "==> Starting Testing Procedure..."
+echo ""
+sleep 1
+
+
 echo "==> Testing git"
 git version
 if (!(echo $?)) {
@@ -29,6 +34,7 @@ if (!(echo $?)) {
 	exit
 } else {
 	echo "[OK] Test successfully. Moving to next..."
+    sleep 1
 }
 
 echo ""
@@ -41,10 +47,14 @@ if (!(echo $?)) {
 	echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
 	Pause
 } else {
-	echo ($(gvim --version) -split '\n')[0]
+	echo ($(vim --version) -split '\n')[0]
 	echo "[OK] Test successfully. Moving to next..."
+    sleep 1
 }
 
+echo "<== Testing Procedure Completed. Moving to next..."
+sleep 1
+echo ""
 echo ""
 
 if (!(Test-Path "$HOME\.SpaceVim")) {
