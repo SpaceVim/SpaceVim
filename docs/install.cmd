@@ -20,6 +20,24 @@ $repo_url    = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
+echo "==> Testing git"
+git version
+if (!(echo $?)) {
+	echo "[ERROR] Please install git or  make your PATH correctly set! "
+	echo ">>> Ready to Exit......"
+	Pause
+	exit
+}
+
+echo "==> Testing vim"
+vim --version
+if (!(echo $?)) {
+	echo "[ERROR] Please install gvim or  make your PATH correctly set! "
+	echo ">>> Ready to Exit......"
+	Pause
+	exit
+}
+
 if (!(Test-Path "$HOME\.SpaceVim")) {
     echo "==> Trying to clone $app_name"
     git clone $repo_url $repo_path
