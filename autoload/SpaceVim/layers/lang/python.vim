@@ -18,6 +18,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
             \ 'if' : has('python') || has('python3')}])
     endif
   endif
+  call add(plugins, ['heavenshell/vim-pydocstring',
+        \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['tell-k/vim-autoflake', {'merged' : 0}])
@@ -25,6 +27,20 @@ function! SpaceVim#layers#lang#python#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#python#config() abort
+  " heavenshell/vim-pydocstring {{{
+
+  " If you execute :Pydocstring at no `def`, `class` line.
+  " g:pydocstring_enable_comment enable to put comment.txt value.
+  let g:pydocstring_enable_comment = 0
+
+  " Disable this option to prevent pydocstring from creating any
+  " key mapping to the `:Pydocstring` command.
+  " Note: this value is overridden if you explicitly create a
+  " mapping in your vimrc, such as if you do:
+  let g:pydocstring_enable_mapping = 0
+
+  " }}}
+
   call SpaceVim#plugins#runner#reg_runner('python', 'python %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('python', funcref('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python',
