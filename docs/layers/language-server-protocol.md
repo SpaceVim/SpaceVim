@@ -91,6 +91,7 @@ default language server commands:
 | `haskell`    | `['hie', '--lsp']`                               |
 | `c`          | `['clangd']`                                     |
 | `cpp`        | `['clangd']`                                     |
+| `html`       | `['html-languageserver', '--stdio']`             |
 | `objc`       | `['clangd']`                                     |
 | `objcpp`     | `['clangd']`                                     |
 | `dart`       | `['dart_language_server']`                       |

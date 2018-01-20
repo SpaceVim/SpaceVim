@@ -15,7 +15,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['kana/vim-textobj-line'],
         \ ['kana/vim-textobj-entire'],
         \ ['scrooloose/nerdcommenter', { 'loadconf' : 1}],
-        \ ['mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'}],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
         \ ['haya14busa/vim-easyoperator-line'],
@@ -35,7 +34,6 @@ function! SpaceVim#layers#edit#config() abort
   let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
   let g:multi_cursor_quit_key=get(g:, 'multi_cursor_quit_key', '<Esc>')
   let g:user_emmet_install_global = 0
-  let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
         \ 'javascript': {
