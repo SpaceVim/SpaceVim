@@ -28,12 +28,12 @@ sleep 1
 echo "==> Testing git"
 git version
 if (!(echo $?)) {
-	echo "[ERROR] Please install git or  make your PATH correctly set! "
-	echo ">>> Ready to Exit......"
-	Pause
-	exit
+    echo "[ERROR] Please install git or  make your PATH correctly set! "
+    echo ">>> Ready to Exit......"
+    Pause
+    exit
 } else {
-	echo "[OK] Test successfully. Moving to next..."
+    echo "[OK] Test successfully. Moving to next..."
     sleep 1
 }
 
@@ -42,13 +42,13 @@ echo ""
 echo "==> Testing vim"
 gvim --version
 if (!(echo $?)) {
-	echo "[WARNING] You didn't install gvim or vim. But intallation can still continue..."
+    echo "[WARNING] You didn't install gvim or vim. But intallation can still continue..."
     echo ""
-	echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
-	Pause
+    echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
+    Pause
 } else {
-	echo ($(vim --version) -split '\n')[0]
-	echo "[OK] Test successfully. Moving to next..."
+    echo ($(vim --version) -split '\n')[0]
+    echo "[OK] Test successfully. Moving to next..."
     sleep 1
 }
 
