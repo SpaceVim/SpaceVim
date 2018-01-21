@@ -8,9 +8,12 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
 [![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
+
+
+# SpaceVim - Modern vim distribution 
 
 SpaceVim is a distribution of the vim editor that's inspired by spacemacs.
 It manages collections of plugins in layers, which help collect related
@@ -35,7 +38,7 @@ See the [Quick start guide](quick-start-guide), [documentation](documentation) o
                <span class="post-date">{{ post.date | date_to_string }}</span>
                <p>{{ post.excerpt | truncatewords: 100 }}</p>
                <br>
-               <img src="{{ post.image }}">
+               <img alt="{{ post.title }}" src="{{ post.image }}">
     {% endfor %}
 </ul>
 
