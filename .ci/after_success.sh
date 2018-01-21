@@ -23,5 +23,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
     echo ""
   fi
 else
-  ./wiki/async.sh
+  if [ "$LINT" = "jekyll" ]; then
+    ./wiki/async.sh
+  fi
 fi
