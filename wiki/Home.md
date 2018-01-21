@@ -17,6 +17,8 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 
 ## Developers
 
+the wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory automatically, if you want to contribute to the wiki, please use pull request.
+
 - [Support SpaceVim](support-spacevim)
     - [contribute to SpaceVim](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
     - [Write post about SpaceVim](write-post-about-spacevim)
