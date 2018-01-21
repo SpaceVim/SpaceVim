@@ -1,9 +1,13 @@
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:grepid = 0
 let s:MPT._prompt.mpt = '➭ '
 
+" keys:
+" files: files for grep, @buffers means listed buffer.
+let s:grep_files = ''
 function! SpaceVim#plugins#flygrep#open(agrv) abort
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
@@ -13,6 +17,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setf SpaceVimFlyGrep
   redraw!
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
+  let fs = get(a:agrv, 'files', '')
+  if fs ==# '@buffers'
+    let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
+  endif
   call s:MPT.open()
   let &t_ve = save_tve
 endfunction
@@ -100,7 +108,11 @@ function! s:get_search_cmd(exe, expr) abort
   if a:exe ==# 'grep'
     return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
   elseif a:exe ==# 'rg'
-    return ['rg', '-n', '-i', a:expr]
+    if !empty(s:grep_files) && type(s:grep_files) == 3
+      return ['rg', '-n', '-i', a:expr] + s:grep_files
+    else
+      return ['rg', '-n', '-i', a:expr]
+    endif
   else
     return [a:exe, a:expr]
   endif

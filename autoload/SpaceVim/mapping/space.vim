@@ -172,8 +172,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "execute 'Unite grep:%::' . expand(\"<cword>\") . '  -start-insert'",
         \ 'grep cursor word in current buffer', 1)
   " Searching in all loaded buffers
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], 'Unite grep:$buffers', 'grep in all loaded buffers', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "execute 'Unite grep:$buffers::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files':'@buffers'})",
+        \ 'grep in all loaded buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files':'@buffers'})",
         \ 'grep cursor word in all loaded buffers', 1)
   " Searching in files in an arbitrary directory
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], 'Unite grep', 'grep in arbitrary directory', 1)
