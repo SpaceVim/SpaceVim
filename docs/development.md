@@ -1,41 +1,39 @@
 ---
 title:  "Development"
-description: "Development information about SpaceVim, including contributing guidelines and changelog."
+description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# Development
+# Development guidelines
 
 <!-- vim-markdown-toc GFM -->
 
-- [Contribution guidelines](#contribution-guidelines)
-  - [Asking for help](#asking-for-help)
-  - [Reporting issues](#reporting-issues)
-  - [Contributing code](#contributing-code)
-    - [License](#license)
-    - [Conventions](#conventions)
-    - [Pull Request](#pull-request)
-      - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
-      - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
-    - [Contributing a layer](#contributing-a-layer)
-      - [File header](#file-header)
-      - [Author of a new layer](#author-of-a-new-layer)
-      - [Contributor to an existing layer](#contributor-to-an-existing-layer)
+- [Asking for help](#asking-for-help)
+- [Reporting issues](#reporting-issues)
+- [Contributing code](#contributing-code)
+  - [License](#license)
+  - [Conventions](#conventions)
+  - [Pull Request](#pull-request)
+    - [Rebase your pr Branch on top of upstream master:](#rebase-your-pr-branch-on-top-of-upstream-master)
+    - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
+    - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
+  - [Contributing a layer](#contributing-a-layer)
+    - [File header](#file-header)
+    - [Author of a new layer](#author-of-a-new-layer)
+    - [Contributor to an existing layer](#contributor-to-an-existing-layer)
     - [Contributing a keybinding](#contributing-a-keybinding)
-    - [Language specified key bindings](#language-specified-key-bindings)
+      - [Language specified key bindings](#language-specified-key-bindings)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Changelog](#changelog)
 
 <!-- vim-markdown-toc -->
 
+SpaceVim is an effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
+We have a few guidelines, which we ask all contributors to follow.
+
 Development happens in the GitHub repository. here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
-## Contribution guidelines
-
-SpaceVim is an effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
-We have a few guidelines, which we ask all contributors to follow.
 
 You can only consider reading the sections relevant to what you are going to do:
 
@@ -43,14 +41,14 @@ You can only consider reading the sections relevant to what you are going to do:
 - [Reporting issues](#reporting-issues) if you are about to open a new issue.
 - [Contributing code](#contributing-code) if you are about to send a pull-request.
 
-### Asking for help
+## Asking for help
 
 If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
 
 - <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation): It is the general documentation of SpaceVim.
 
-### Reporting issues
+## Reporting issues
 
 Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
 
@@ -59,11 +57,11 @@ Issues have to be reported on [issues tracker](https://github.com/SpaceVim/Space
 - Use a clear title and follow the issue template.
 - Include details on how to reproduce it, just like a step by step guide.
 
-### Contributing code
+## Contributing code
 
 Code contributions are welcome. Please read the following sections carefully. In any case, feel free to join us on the [gitter chat](https://gitter.im/SpaceVim/SpaceVim) to ask questions about contributing!
 
-#### License
+### License
 
 The license is MIT for all the parts of SpaceVim. this includes:
 
@@ -72,26 +70,43 @@ The license is MIT for all the parts of SpaceVim. this includes:
 
 For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
 
-#### Conventions
+### Conventions
 
 SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
 
-#### Pull Request
+### Pull Request
 
+#### Rebase your pr Branch on top of upstream master:
 
+- fork SpaceVim repository
+- clone your repository
 
-##### Ideally for simple PRs (most of them):
+```sh
+git clone ${YOUR_OWN_REPOSITORY_URL}
+```
+
+- add upstream remote
+
+```sh
+git remote add upstream https://github.com/SpaceVim/SpaceVim.git
+```
+
+- fetch upstream and rebase on top of upstream master
+
+```sh
+git fetch upstream
+git rebase upstream master
+```
+
+#### Ideally for simple PRs (most of them):
 
 - Branch from `master`
 - One topic per PR
 - One commit per PR
 - If you have several commits on different topics, close the PR and create one PR per topic
 - If you still have several commits, squash them into only one commit
-- Rebase your PR branch on top of upstream develop before submitting the PR
 
-Those PRs are usually cherry-picked.
-
-##### For complex PRs (big refactoring, etc):
+#### For complex PRs (big refactoring, etc):
 
 Squash only the commits with uninteresting changes like typos, syntax fixes, etc… and keep the important and isolated steps in different commits.
 
@@ -134,13 +149,13 @@ Further paragraphs come after blank lines.
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
-#### Contributing a layer
+### Contributing a layer
 
 Please read the layers documentation first.
 
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 
-##### File header
+#### File header
 
 The file header for vim script should look like the following template:
 
@@ -156,7 +171,7 @@ The file header for vim script should look like the following template:
 
 You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also. 
 
-##### Author of a new layer
+#### Author of a new layer
 
 In the files header, change the default author name (Shidong Wang) to your name.
 
@@ -223,7 +238,7 @@ endfunction
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-##### Contributor to an existing layer
+#### Contributor to an existing layer
 
 If you are contributing to an already existing layer, you should not modify any header file.
 
@@ -237,7 +252,7 @@ If you think it worth contributing a new mappings then be sure to read the docum
 
 ALWAYS document your new mappings or mappings changes inside the relevant documentation file. It should be the the layer file and the [documentation.md](https://spacevim.org/documentation).
 
-#### Language specified key bindings
+##### Language specified key bindings
 
 All language specified key bindings are started with `SPC l` prefix.
 
