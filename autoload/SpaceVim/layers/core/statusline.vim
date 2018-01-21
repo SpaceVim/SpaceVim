@@ -354,8 +354,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
           \ . '%#SpaceVim_statusline_c# %{unite#get_status_string()} '
   elseif &filetype ==# 'SpaceVimFlyGrep'
-    return '%#SpaceVim_statusline_a# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# %{getcwd()}%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+    return '%#SpaceVim_statusline_a_bold# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# %{getcwd()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
           \ . '%#SpaceVim_statusline_c# %{SpaceVim#plugins#flygrep#lineNr()}'
   elseif &filetype ==# 'TransientState'
     return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
