@@ -109,9 +109,9 @@ function! s:get_search_cmd(exe, expr) abort
     return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
   elseif a:exe ==# 'rg'
     if !empty(s:grep_files) && type(s:grep_files) == 3
-      return ['rg', '-n', '-i', a:expr] + s:grep_files
+      return ['rg', '-H', '-n', '-i', a:expr] + s:grep_files
     else
-      return ['rg', '-n', '-i', a:expr]
+      return ['rg', '-H', '-n', '-i', a:expr]
     endif
   else
     return [a:exe, a:expr]
