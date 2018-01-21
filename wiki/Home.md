@@ -18,6 +18,6 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 ## Developers
 
 - [Support SpaceVim](support-spacevim)
-    - [contribute to SpaceVim](contribute-to-spacevim)
+    - [contribute to SpaceVim](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
     - [Write post about SpaceVim](write-post-about-spacevim)
 - [Credits & Thanks](credits--thanks)
