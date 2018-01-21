@@ -7,7 +7,6 @@ let s:MPT._prompt.mpt = '➭ '
 
 " keys:
 " files: files for grep, @buffers means listed buffer.
-let s:grep_files = ''
 function! SpaceVim#plugins#flygrep#open(agrv) abort
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
@@ -20,6 +19,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
     let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
+  elseif !empty(fs)
+    let s:grep_files = fs
+  else
+    let s:grep_files = ''
   endif
   call s:MPT.open()
   let &t_ve = save_tve
@@ -110,6 +113,8 @@ function! s:get_search_cmd(exe, expr) abort
   elseif a:exe ==# 'rg'
     if !empty(s:grep_files) && type(s:grep_files) == 3
       return ['rg', '-H', '-n', '-i', a:expr] + s:grep_files
+    elseif !empty(s:grep_files) && type(s:grep_files) == 1
+      return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_files]
     else
       return ['rg', '-H', '-n', '-i', a:expr]
     endif
