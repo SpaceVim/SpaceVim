@@ -4,7 +4,7 @@ let s:SYS = SpaceVim#api#import('system')
 let s:grepid = 0
 let s:MPT._prompt.mpt = '➭ '
 
-function! SpaceVim#plugins#flygrep#open() abort
+function! SpaceVim#plugins#flygrep#open(agrv) abort
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
@@ -12,6 +12,7 @@ function! SpaceVim#plugins#flygrep#open() abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   redraw!
+  let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   call s:MPT.open()
   let &t_ve = save_tve
 endfunction

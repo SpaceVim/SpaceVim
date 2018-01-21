@@ -180,9 +180,10 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'], "execute 'Unite grep:::' . expand(\"<cword>\") . '  -start-insert'",
         \ 'grep in arbitrary directory', 1)
   " Searching in project
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], 'Unite grep:.', 'grep in project', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "execute 'Unite grep:.::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\")})",
         \ 'grep in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\")})",
+        \ 'grep cursor word in project', 1)
   " Searching background
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
         \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool())', 'Background search keywords in project', 1)
@@ -274,9 +275,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
         \ 'Background search cursor words in project with pt', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open()',
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep on the fly', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open()',
+  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep on the fly', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
