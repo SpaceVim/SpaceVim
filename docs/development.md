@@ -78,11 +78,7 @@ SpaceVim is based on conventions, mainly for naming functions, keybindings defin
 
 #### Pull Request
 
-Submit your contribution against the `dev` branch. You should not use your master branch to modify SpaceVim, this branch is considered to be read-only.
 
-You may want to read our beginner’s guide for Pull Requests.
-
-PR = Pull-Request
 
 ##### Ideally for simple PRs (most of them):
 
@@ -224,43 +220,6 @@ endfunction
 ```
 
 4. Add layer document `docs/layers/foo.md` for `foo` layer.
-
-```md
----
-title: "SpaceVim foo layer"
-description: "This is a short discription for the foo layer"
----
-
-# [SpaceVim Layers:](https://spacevim.org/layers) foo
-
-<!-- vim-markdown-toc GFM -->
-
-- [Description](#description)
-- [Installation](#installation)
-  - [Layer](#layer)
-  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
-- [Key bindings](#key-bindings)
-  - [Inferior REPL process](#inferior-repl-process)
-  - [RuboCop](#rubocop)
-  - [Running current script](#running-current-script)
-
-<!-- vim-markdown-toc -->
-
-## Description
-
-This layer is for ruby development.
-
-## Installation
-
-### Layer
-
-To use this configuration layer, add `call SpaceVim#layers#load('foo')` to your custom configuration file.
-
-### Other dependences
-
-## Key bindings
-```
-
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
