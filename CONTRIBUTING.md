@@ -46,5 +46,5 @@ SpaceVim is based on conventions, mainly for naming functions, keybindings defin
 
 Submit your contribution against the `master` branch. You should not use your master branch to modify SpaceVim, this branch is considered to be read-only.
 
-You may want to read our beginner’s guide for Pull Requests.
+You may want to read our [development guidelines](https://spacevim.org/development/).
 
