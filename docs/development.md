@@ -70,7 +70,7 @@ The license is MIT for all the parts of SpaceVim. this includes:
 - The initialization and core files
 - All the layer files.
 
-For files not belonging to Spacemacs like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
 
 #### Conventions
 

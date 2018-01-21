@@ -272,7 +272,7 @@ dt { color: #F0E7D5; font-family: 'OpenSansSemibold', "Helvetica Neue", Helvetic
 
 section { max-width: 650px; padding: 30px 0px 50px 0px; margin: 20px 0; margin-top: 70px; }
 section #title { border: 0; outline: none; margin: 0 0 50px 0; padding: 0 0 5px 0; }
-section #title h1 { font-family: 'OpenSansLight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; font-size: 40px; text-align: center; line-height: 36px; }
+section #titlex p { font-family: 'OpenSansLight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; font-size: 40px; text-align: center; line-height: 36px; }
 section #title p { color: #d7cfbe; font-family: 'OpenSansLight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; font-size: 18px; text-align: center; }
 section #title .credits { font-size: 11px; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; color: #696969; margin-top: -10px; }
 section #title .credits.left { float: left; }
@@ -284,3 +284,6 @@ section #title .credits.right { float: right; }
 @media print, screen and (max-width: 480px) { #header { margin-top: -20px; }
   section { margin-top: 40px; }
   nav { display: none; } }
+
+
+/*! vim:set nowrap: */

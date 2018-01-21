@@ -1,14 +1,15 @@
 ---
 title:  "Roadmap"
+description: "The roadmap and milestones define the project direction and priorities."
 ---
 
 # Roadmap
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
-## Current
+## Next
 
-### [0.6](https://github.com/SpaceVim/SpaceVim/milestone/9)
+### [0.7](https://github.com/SpaceVim/SpaceVim/milestone/10)
 
 ## Meta
 
@@ -21,6 +22,10 @@ There are release milestones and meta milestones ("buckets").
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
 ## Completed
+
+### [0.6](https://github.com/SpaceVim/SpaceVim/milestone/9)
+
+see the release note: [V0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
 
 ### [0.5](https://github.com/SpaceVim/SpaceVim/milestone/8)
 
