@@ -216,8 +216,10 @@ endfunction
 
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
+      \ "\<C-j>" : function('s:next_item'),
       \ "\<ScrollWheelDown>" : function('s:next_item'),
       \ "\<S-tab>" : function('s:previous_item'),
+      \ "\<C-k>" : function('s:previous_item'),
       \ "\<ScrollWheelUp>" : function('s:previous_item'),
       \ "\<Return>" : function('s:open_item'),
       \ "\<LeftMouse>" : function('s:move_cursor'),
