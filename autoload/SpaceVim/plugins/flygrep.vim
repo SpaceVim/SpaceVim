@@ -31,15 +31,15 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   else
     let s:grep_dir = ''
   endif
-  let s:grep_exe = get(a:agrv, 'cmd', s:grep_exe)
-  let s:grep_opt = get(a:agrv, 'opt', s:grep_opt)
-  let s:grep_ropt = get(a:agrv, 'ropt', s:grep_ropt)
+  let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
+  let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
   call s:MPT.open()
   let &t_ve = save_tve
 endfunction
 
 let s:grep_expr = ''
-let [s:grep_exe, s:grep_opt, s:grep_ropt] = SpaceVim#mapping#search#default_tool()
+let [s:grep_default_exe, s:grep_default_opt, s:grep_default_ropt] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 
 " @vimlint(EVL103, 1, a:timer)
