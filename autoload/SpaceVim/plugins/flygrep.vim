@@ -25,7 +25,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   else
     let s:grep_files = ''
   endif
-  let dir = get(a:agrv, 'dir', '')
+  let dir = expand(get(a:agrv, 'dir', ''))
   if !empty(dir) && isdirectory(dir)
     let s:grep_dir = dir
   else
@@ -43,6 +43,7 @@ let s:grep_timer_id = 0
 function! s:grep_timer(timer) abort
   let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_exe, s:grep_expr), {
         \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
@@ -105,6 +106,17 @@ function! s:grep_stdout(id, data, event) abort
   call s:MPT._build_prompt()
 endfunction
 
+function! s:grep_stderr(id, data, event) abort
+  let datas =filter(a:data, '!empty(v:val)')
+  if getline(1) ==# ''
+    call setline(1, datas)
+  else
+    call append('$', datas)
+  endif
+  call append('$', 'job:' . string(s:get_search_cmd(s:grep_exe, s:grep_expr)))
+  call s:MPT._build_prompt()
+endfunction
+
 function! s:grep_exit(id, data, event) abort
   redrawstatus
   let s:grepid = 0
@@ -122,8 +134,10 @@ function! s:get_search_cmd(exe, expr) abort
       return ['rg', '-H', '-n', '-i', a:expr] + s:grep_files
     elseif !empty(s:grep_files) && type(s:grep_files) == 1
       return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_files]
+    elseif !empty(s:grep_dir)
+      return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_dir]
     else
-      return ['rg', '-H', '-n', '-i', a:expr]
+      return ['rg', '-H', '-n', '-i', a:expr, s:grep_dir]
     endif
   else
     return [a:exe, a:expr]
