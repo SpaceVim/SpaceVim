@@ -65,8 +65,8 @@ function! s:flygrep(expr) abort
     call matchdelete(s:hi_id)
   catch
   endtr
-  hi def link FileNames MoreMsg
-  let s:hi_id = matchadd('FileNames', '\c' . a:expr, 1)
+  hi def link FlyGrepPattern MoreMsg
+  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(500, funcref('s:grep_timer'), {'repeat' : 1})
 endfunction
