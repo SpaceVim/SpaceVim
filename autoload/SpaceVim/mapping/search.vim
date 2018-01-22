@@ -1,4 +1,11 @@
 let s:search_tools = {}
+let s:search_tools.namespace = {
+      \ 'rg' : 'r',
+      \ 'ag' : 'a',
+      \ 'pt' : 't',
+      \ 'ack' : 'k',
+      \ 'grep' : 'g',
+      \ }
 let s:search_tools.a = {}
 let s:search_tools.a.command = 'ag'
 let s:search_tools.a.default_opts =
@@ -27,39 +34,68 @@ let s:search_tools.g.default_opts = '-inH'
 let s:search_tools.g.recursive_opt = ''
 
 function! SpaceVim#mapping#search#grep(key, scope)
-    let save_cmd = g:unite_source_grep_command
-    let save_opt = g:unite_source_grep_default_opts
-    let save_ropt = g:unite_source_grep_recursive_opt
-    let g:unite_source_grep_command = s:search_tools[a:key]['command']
-    let g:unite_source_grep_default_opts = s:search_tools[a:key]['default_opts']
-    let g:unite_source_grep_recursive_opt = s:search_tools[a:key]['recursive_opt']
+    let cmd = s:search_tools[a:key]['command']
+    let opt = s:search_tools[a:key]['default_opts']
+    let ropt = s:search_tools[a:key]['recursive_opt']
     if a:scope ==# 'b'
-        exe 'Unite grep:$buffers'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : input('grep pattern:'),
+              \ 'files':'@buffers',
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     elseif a:scope ==# 'B'
-        execute 'Unite grep:$buffers::' . expand('<cword>') . '  -start-insert'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : expand('<cword>'),
+              \ 'files':'@buffers',
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     elseif a:scope ==# 'p'
-        exe 'Unite grep:.'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : input('grep pattern:'),
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     elseif a:scope ==# 'P'
-        execute 'Unite grep:.::' . expand('<cword>') . '  -start-insert'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : expand('<cword>'),
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     elseif a:scope ==# 'f'
-        exe 'Unite grep'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : input('grep pattern:'),
+              \ 'dir' : input('arbitrary dir:', '', 'dir'),
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     elseif a:scope ==# 'F'
-        execute 'Unite grep:::' . expand('<cword>') . '  -start-insert'
+        call SpaceVim#plugins#flygrep#open({
+              \ 'input' : expand('<cword>'),
+              \ 'dir' : input('arbitrary dir:', '', 'dir'),
+              \ 'cmd' : cmd,
+              \ 'opt' : opt,
+              \ 'ropt' : ropt,
+              \ })
     endif
-    let g:unite_source_grep_command = save_cmd
-    let g:unite_source_grep_default_opts = save_opt
-    let g:unite_source_grep_recursive_opt = save_ropt
 endfunction
 
 function! SpaceVim#mapping#search#default_tool()
-    if has_key(s:search_tools, 'default_exe')
-        return s:search_tools.default_exe
-    else
+    if !has_key(s:search_tools, 'default_exe')
         for t in g:spacevim_search_tools
             if executable(t)
                 let s:search_tools.default_exe = t
-                return t
+                let key = s:search_tools.namespace[t]
+                let s:search_tools.default_opt = s:search_tools[key]['default_opts']
+                let s:search_tools.default_ropt = s:search_tools[key]['recursive_opt']
             endif
         endfor
     endif
+    return [s:search_tools.default_exe, s:search_tools.default_opt, s:search_tools.default_ropt]
 endfunction

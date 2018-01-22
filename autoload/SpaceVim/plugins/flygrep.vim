@@ -31,17 +31,20 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   else
     let s:grep_dir = ''
   endif
+  let s:grep_exe = get(a:agrv, 'cmd', s:grep_exe)
+  let s:grep_opt = get(a:agrv, 'opt', s:grep_opt)
+  let s:grep_ropt = get(a:agrv, 'ropt', s:grep_ropt)
   call s:MPT.open()
   let &t_ve = save_tve
 endfunction
 
 let s:grep_expr = ''
-let s:grep_exe = SpaceVim#mapping#search#default_tool()
+let [s:grep_exe, s:grep_opt, s:grep_ropt] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_exe, s:grep_expr), {
+  let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_expr), {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
@@ -126,21 +129,16 @@ endfunction
 " @vimlint(EVL103, 0, a:id)
 " @vimlint(EVL103, 0, a:event)
 
-function! s:get_search_cmd(exe, expr) abort
-  if a:exe ==# 'grep'
-    return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
-  elseif a:exe ==# 'rg'
-    if !empty(s:grep_files) && type(s:grep_files) == 3
-      return ['rg', '-H', '-n', '-i', a:expr] + s:grep_files
-    elseif !empty(s:grep_files) && type(s:grep_files) == 1
-      return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_files]
-    elseif !empty(s:grep_dir)
-      return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_dir]
-    else
-      return ['rg', '-H', '-n', '-i', a:expr]
-    endif
+function! s:get_search_cmd(expr) abort
+  let cmd = [s:grep_exe] + [s:grep_opt]
+  if !empty(s:grep_files) && type(s:grep_files) == 3
+    return cmd + [a:expr] + s:grep_files
+  elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    return cmd + [a:expr] + [s:grep_files]
+  elseif !empty(s:grep_dir)
+    return cmd + [a:expr] + [s:grep_dir]
   else
-    return [a:exe, a:expr]
+    return cmd + [a:expr]
   endif
 endfunction
 
