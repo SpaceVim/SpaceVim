@@ -44,7 +44,9 @@ let s:grep_timer_id = 0
 
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_expr), {
+  let cmd = s:get_search_cmd(s:grep_expr)
+  call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
@@ -130,7 +132,7 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! s:get_search_cmd(expr) abort
-  let cmd = [s:grep_exe] + [s:grep_opt]
+  let cmd = [s:grep_exe] + s:grep_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
     return cmd + [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1

@@ -20,8 +20,8 @@ let s:search_tools.t.recursive_opt = ''
 
 let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
-let s:search_tools.r.default_opts = '--hidden --no-heading --vimgrep -S'
-let s:search_tools.r.recursive_opt = ''
+let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--vimgrep', '-S']
+let s:search_tools.r.recursive_opt = []
 
 let s:search_tools.k = {}
 let s:search_tools.k.command = 'ack'
@@ -94,6 +94,7 @@ function! SpaceVim#mapping#search#default_tool()
                 let key = s:search_tools.namespace[t]
                 let s:search_tools.default_opt = s:search_tools[key]['default_opts']
                 let s:search_tools.default_ropt = s:search_tools[key]['recursive_opt']
+                break
             endif
         endfor
     endif
