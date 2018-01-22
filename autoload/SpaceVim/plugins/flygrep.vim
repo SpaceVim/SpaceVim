@@ -118,7 +118,7 @@ function! s:grep_stderr(id, data, event) abort
   else
     call append('$', datas)
   endif
-  call append('$', 'job:' . string(s:get_search_cmd(s:grep_exe, s:grep_expr)))
+  call append('$', 'job:' . string(s:get_search_cmd(s:grep_expr)))
   call s:MPT._build_prompt()
 endfunction
 
