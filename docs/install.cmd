@@ -74,7 +74,7 @@ if (!(Test-Path "$HOME\.SpaceVim")) {
 } else {
     echo "==> Trying to update $app_name"
     Push-Location $repo_path
-    git pull origin dev
+    git pull origin master
 }
 
 echo ""
