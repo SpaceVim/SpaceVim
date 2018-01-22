@@ -26,30 +26,32 @@ sleep 1
 
 
 echo "==> Testing git"
-git version
-if (!(echo $?)) {
-    echo "[ERROR] Please install git or  make your PATH correctly set! "
+if (Get-Command "git" -ErrorAction SilentlyContinue) {
+    git version
+    echo "[OK] Test successfully. Moving to next..."
+    sleep 1
+} else {
+    echo ""
+    echo "[ERROR] Unable to find 'git.exe' in your PATH"
     echo ">>> Ready to Exit......"
     Pause
     exit
-} else {
-    echo "[OK] Test successfully. Moving to next..."
-    sleep 1
 }
 
 echo ""
 
 echo "==> Testing vim"
-gvim --version
-if (!(echo $?)) {
-    echo "[WARNING] You didn't install gvim or vim. But intallation can still continue..."
-    echo ""
-    echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
-    Pause
-} else {
+if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
     echo ($(vim --version) -split '\n')[0]
     echo "[OK] Test successfully. Moving to next..."
+    echo ""
     sleep 1
+} else {
+    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo ""
+    echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
+    echo ""
+    Pause
 }
 
 echo "<== Testing Procedure Completed. Moving to next..."
