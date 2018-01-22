@@ -140,7 +140,7 @@ function! s:get_search_cmd(expr) abort
   elseif !empty(s:grep_dir)
     return cmd + [a:expr] + [s:grep_dir]
   else
-    return cmd + [a:expr]
+    return cmd + [a:expr] + s:grep_ropt
   endif
 endfunction
 

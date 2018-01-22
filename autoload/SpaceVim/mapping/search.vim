@@ -32,8 +32,8 @@ let s:search_tools.k.recursive_opt = []
 
 let s:search_tools.g = {}
 let s:search_tools.g.command = 'grep'
-let s:search_tools.g.default_opts = ['-inH']
-let s:search_tools.g.recursive_opt = []
+let s:search_tools.g.default_opts = ['-inHr']
+let s:search_tools.g.recursive_opt = ['.']
 
 function! SpaceVim#mapping#search#grep(key, scope)
   let cmd = s:search_tools[a:key]['command']
