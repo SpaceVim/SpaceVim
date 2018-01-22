@@ -44,7 +44,7 @@ let s:grep_timer_id = 0
 
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let cmd = s:get_search_cmd(s:grep_expr)
+  let cmd = s:get_search_cmd(join(split(s:grep_expr), '.*'))
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
@@ -66,7 +66,7 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FileNames MoreMsg
-  let s:hi_id = matchadd('FileNames', a:expr, 1)
+  let s:hi_id = matchadd('FileNames', '\c' . a:expr, 1)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(500, funcref('s:grep_timer'), {'repeat' : 1})
 endfunction
