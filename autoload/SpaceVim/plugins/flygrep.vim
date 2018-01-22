@@ -7,6 +7,7 @@ let s:MPT._prompt.mpt = '➭ '
 
 " keys:
 " files: files for grep, @buffers means listed buffer.
+" dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
@@ -23,6 +24,12 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:grep_files = fs
   else
     let s:grep_files = ''
+  endif
+  let dir = get(a:agrv, 'dir', '')
+  if !empty(dir) && isdirectory(dir)
+    let s:grep_dir = dir
+  else
+    let s:grep_dir = ''
   endif
   call s:MPT.open()
   let &t_ve = save_tve
