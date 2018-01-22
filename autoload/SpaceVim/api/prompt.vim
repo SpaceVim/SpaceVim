@@ -73,13 +73,13 @@ func! s:self._handle_input(...) abort
       call call(self._function_key[char], [])
       continue
     endif
-    if char ==# "\<Right>" || char == 6
+    if char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
       let self._prompt.end = substitute(self._prompt.end, '^.', '', 'g')
       call self._build_prompt()
       continue
-    elseif char ==# "\<Left>"  || char == 2
+    elseif char ==# "\<Left>"
       if self._prompt.begin !=# ''
         let self._prompt.end = self._prompt.cursor . self._prompt.end
         let self._prompt.cursor = matchstr(self._prompt.begin, '.$')

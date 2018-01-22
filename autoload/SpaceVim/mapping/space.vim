@@ -181,8 +181,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
         \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
         \ 'grep in arbitrary directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'], "execute 'Unite grep:::' . expand(\"<cword>\") . '  -start-insert'",
-        \ 'grep in arbitrary directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'], "call SpaceVim#plugins#flygrep#open({'input' :"
+        \ . " expand(\"<cword>\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
+        \ 'grep cursor word in arbitrary directory', 1)
   " Searching in project
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\")})",
         \ 'grep in project', 1)

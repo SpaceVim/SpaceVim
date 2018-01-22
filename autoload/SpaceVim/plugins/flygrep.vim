@@ -137,7 +137,7 @@ function! s:get_search_cmd(exe, expr) abort
     elseif !empty(s:grep_dir)
       return ['rg', '-H', '-n', '-i', a:expr] + [s:grep_dir]
     else
-      return ['rg', '-H', '-n', '-i', a:expr, s:grep_dir]
+      return ['rg', '-H', '-n', '-i', a:expr]
     endif
   else
     return [a:exe, a:expr]
