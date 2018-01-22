@@ -20,6 +20,17 @@ $repo_url    = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
+Function Pause ($Message = "Press any key to continue . . . ") {
+    if ((Test-Path variable:psISE) -and $psISE) {
+        $Shell = New-Object -ComObject "WScript.Shell"
+        $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
+    } else {     
+        Write-Host -NoNewline $Message
+        [void][System.Console]::ReadKey($true)
+        Write-Host
+    }
+}
+
 echo "==> Starting Testing Procedure..."
 echo ""
 sleep 1
@@ -32,7 +43,7 @@ if (Get-Command "git" -ErrorAction SilentlyContinue) {
     sleep 1
 } else {
     echo ""
-    echo "[ERROR] Unable to find 'git.exe' in your PATH"
+    echo "[ERROR] Unable to find `git.exe` in your PATH"
     echo ">>> Ready to Exit......"
     Pause
     exit
@@ -44,13 +55,11 @@ echo "==> Testing vim"
 if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
     echo ($(vim --version) -split '\n')[0]
     echo "[OK] Test successfully. Moving to next..."
-    echo ""
     sleep 1
 } else {
-    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo "[WARNING] Unable to find `gvim.exe` in your PATH. But intallation still can continue..."
     echo ""
     echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
-    echo ""
     Pause
 }
 
@@ -85,16 +94,5 @@ echo "==========================================================================
 echo ""
 echo "That's it. Thanks for installing $app_name. Enjoy!"
 echo ""
-
-Function Pause ($Message = "Press any key to continue . . . ") {
-    if ((Test-Path variable:psISE) -and $psISE) {
-        $Shell = New-Object -ComObject "WScript.Shell"
-        $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
-    } else {     
-        Write-Host -NoNewline $Message
-        [void][System.Console]::ReadKey($true)
-        Write-Host
-    }
-}
 
 Pause
