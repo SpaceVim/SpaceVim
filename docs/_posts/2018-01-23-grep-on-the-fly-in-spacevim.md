@@ -8,40 +8,39 @@ image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010
 # Asynchronous grep on the fly
 
 FlyGrep means **grep on the fly**, it will update the result as you type. Of course, it is running
-asynchronously. Before using this feature, you need to install a searching tool. FlyGrep can be
-interfaced with different searching tools like: `ag`, `rg`, `ack`, `pt` and `grep`, select any one
-you like.
+asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
+through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
-This ia a build-in plugin in SpaceVim, and we also separate a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
+This ia a built-in plugin in SpaceVim, and we also separated a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
 
 ## Features
 
-- **Searching in a project**
+- **Search in a project**
 
-In SpaceVim, you can use `SPC s p` or `SPC s /` to searching in current project.
+In SpaceVim, you can use `SPC s p` or `SPC s /` to search in the current project.
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-- **Searching in current file**
+- **Search in current file**
 
-You can use `SPC s s` to searching in current file. To searching word under the cursor, you may need to press `SPC s S`.
+You can use `SPC s s` to search in the current file. To search word under the cursor, you can press `SPC s S`.
 
 ![searching current file](https://user-images.githubusercontent.com/13142418/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
 
-- **Searching in all loaded buffers**
+- **Search in all loaded buffers**
 
 To searching in all loaded buffers, you need to press `SPC s b`, and you can also use `SPC s B` to search word under the point.
 
 ![searching-loaded-buffer](https://user-images.githubusercontent.com/13142418/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
 
-- **Searching in an arbitrary directory**
+- **Search in an arbitrary directory**
 
 If you want to searching in a different directory instead of current directory, you can
 use `SPC s f`. Then insert the path of the arbitrary directory.
 
-- **Background searching in a project**
+- **Search in a project in the background**
 
-If you need background searching, you can press `SPC s j`, after searching is done, the index will be shown on statusline. you can use `SPC s l` to list all the searching result.
+If you need background searching, you can press `SPC s j`, after searching is done, the index will be displayed on statusline. you can use `SPC s l` to list all the search results.
 
 ## Key bindings
 
@@ -49,7 +48,7 @@ The search commands in SpaceVim are organized under the `SPC s` prefix with the 
 
 If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default calling sequence is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
 
 The tool keys are:
 
@@ -80,8 +79,8 @@ The available scopes and corresponding keys are:
 | `<S-Tab>`        | move cursor line up               |
 | `<C-k>`          | move cursor line up               |
 | `<Bs>`           | remove last character             |
-| `<C-w>`          | remove the Word before the cursor |
-| `<C-u>`          | remove the Line before the cursor |
-| `<C-k>`          | remove the Line after the cursor  |
+| `<C-w>`          | remove the word before the cursor |
+| `<C-u>`          | remove the line before the cursor |
+| `<C-k>`          | remove the line after the cursor  |
 | `<C-a>`/`<Home>` | Go to the beginning of the line   |
 | `<C-e>`/`<End>`  | Go to the end of the line         |
