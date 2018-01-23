@@ -18,23 +18,25 @@ This ia a build-in plugin in SpaceVim, and we also split a plugin : [FlyGrep.vim
 
 ## Features
 
-- Searching in current file
+- **Searching in current file**
 
 You can use `SPC s s` to searching in current file. To searching word under the cursor, you may need to press `SPC s S`.
 
-- Searching in all loaded buffers
+- **Searching in all loaded buffers**
 
 To searching in all loaded buffers, you need to press `SPC s b`, and you can also use `SPC s B` to search word under the point.
 
-- Searching in an arbitrary directory
+- **Searching in an arbitrary directory**
 
 If you want to searching in a different directory instead of current directory, you can use `SPC s f`.
 
-- Searching in a project
+- **Searching in a project**
 
 In SpaceVim, you can use `SPC s p` or `SPC s /` to searching in current project.
 
-- Background searching in a project
+- **Background searching in a project**
+
+If you need background searching, you can press `SPC s j`, after searching is done, the index will be shown on statusline. you can use `SPC s l` to list all the searching result.
 
 ## Key bindings
 
@@ -64,6 +66,17 @@ The available scopes and corresponding keys are:
 
 **Within FlyGrep buffer:**
 
-| key bindings | description |
-| ------------ | ----------- |
-| `<TAb>`      | next result |
+| Key Binding      | Description                       |
+| ---------------- | --------------------------------- |
+| `<Esc>`          | close FlyGrep buffer              |
+| `<Enter>`        | open file at the cursor line      |
+| `<Tab>`          | move cursor line down             |
+| `<C-j>`          | move cursor line down             |
+| `<S-Tab>`        | move cursor line up               |
+| `<C-k>`          | move cursor line up               |
+| `<Bs>`           | remove last character             |
+| `<C-w>`          | remove the Word before the cursor |
+| `<C-u>`          | remove the Line before the cursor |
+| `<C-k>`          | remove the Line after the cursor  |
+| `<C-a>`/`<Home>` | Go to the beginning of the line   |
+| `<C-e>`/`<End>`  | Go to the end of the line         |
