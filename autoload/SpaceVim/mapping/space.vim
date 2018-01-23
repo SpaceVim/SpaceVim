@@ -168,26 +168,32 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
 
   " Searching in current buffer
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], 'Unite line', 'grep in current buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "execute 'Unite grep:%::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files': bufname(\"%\")})",
+        \ 'grep in current buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files': bufname(\"%\")})",
         \ 'grep cursor word in current buffer', 1)
   " Searching in all loaded buffers
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], 'Unite grep:$buffers', 'grep in all loaded buffers', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "execute 'Unite grep:$buffers::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files':'@buffers'})",
+        \ 'grep in all loaded buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files':'@buffers'})",
         \ 'grep cursor word in all loaded buffers', 1)
   " Searching in files in an arbitrary directory
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], 'Unite grep', 'grep in arbitrary directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'], "execute 'Unite grep:::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
+        \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
         \ 'grep in arbitrary directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'], "call SpaceVim#plugins#flygrep#open({'input' :"
+        \ . " expand(\"<cword>\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
+        \ 'grep cursor word in arbitrary directory', 1)
   " Searching in project
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], 'Unite grep:.', 'grep in project', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "execute 'Unite grep:.::' . expand(\"<cword>\") . '  -start-insert'",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\")})",
         \ 'grep in project', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\")})",
+        \ 'grep cursor word in project', 1)
   " Searching background
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
-        \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool())', 'Background search keywords in project', 1)
+        \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool()[0])', 'Background search keywords in project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'J'],
-        \ 'call SpaceVim#plugins#searcher#find(expand("<cword>"),SpaceVim#mapping#search#default_tool())',
+        \ 'call SpaceVim#plugins#searcher#find(expand("<cword>"),SpaceVim#mapping#search#default_tool()[0])',
         \ 'Background search cursor words in project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'l'], 'call SpaceVim#plugins#searcher#list()', 'List all searching results', 1)
 
@@ -274,9 +280,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
         \ 'Background search cursor words in project with pt', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open()',
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep on the fly', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open()',
+  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep on the fly', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',

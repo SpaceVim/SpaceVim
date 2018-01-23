@@ -1,10 +1,15 @@
+scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:grepid = 0
 let s:MPT._prompt.mpt = '➭ '
 
-function! SpaceVim#plugins#flygrep#open() abort
+" keys:
+" files: files for grep, @buffers means listed buffer.
+" dir: specific a directory for grep
+function! SpaceVim#plugins#flygrep#open(agrv) abort
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
@@ -12,18 +17,39 @@ function! SpaceVim#plugins#flygrep#open() abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   redraw!
+  let s:MPT._prompt.begin = get(a:agrv, 'input', '')
+  let fs = get(a:agrv, 'files', '')
+  if fs ==# '@buffers'
+    let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
+  elseif !empty(fs)
+    let s:grep_files = fs
+  else
+    let s:grep_files = ''
+  endif
+  let dir = expand(get(a:agrv, 'dir', ''))
+  if !empty(dir) && isdirectory(dir)
+    let s:grep_dir = dir
+  else
+    let s:grep_dir = ''
+  endif
+  let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
+  let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
   call s:MPT.open()
   let &t_ve = save_tve
 endfunction
 
 let s:grep_expr = ''
-let s:grep_exe = SpaceVim#mapping#search#default_tool()
+let [s:grep_default_exe, s:grep_default_opt, s:grep_default_ropt] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let s:grepid =  s:JOB.start(s:get_search_cmd(s:grep_exe, s:grep_expr), {
+  let cmd = s:get_search_cmd(join(split(s:grep_expr), '.*'))
+  call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
@@ -40,10 +66,10 @@ function! s:flygrep(expr) abort
     call matchdelete(s:hi_id)
   catch
   endtr
-  hi def link FileNames MoreMsg
-  let s:hi_id = matchadd('FileNames', a:expr, 1)
+  hi def link FlyGrepPattern MoreMsg
+  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
   let s:grep_expr = a:expr
-  let s:grep_timer_id = timer_start(500, funcref('s:grep_timer'), {'repeat' : 1})
+  let s:grep_timer_id = timer_start(200, funcref('s:grep_timer'), {'repeat' : 1})
 endfunction
 
 let s:MPT._handle_fly = function('s:flygrep')
@@ -86,6 +112,17 @@ function! s:grep_stdout(id, data, event) abort
   call s:MPT._build_prompt()
 endfunction
 
+function! s:grep_stderr(id, data, event) abort
+  let datas =filter(a:data, '!empty(v:val)')
+  if getline(1) ==# ''
+    call setline(1, datas)
+  else
+    call append('$', datas)
+  endif
+  call append('$', 'job:' . string(s:get_search_cmd(s:grep_expr)))
+  call s:MPT._build_prompt()
+endfunction
+
 function! s:grep_exit(id, data, event) abort
   redrawstatus
   let s:grepid = 0
@@ -95,13 +132,16 @@ endfunction
 " @vimlint(EVL103, 0, a:id)
 " @vimlint(EVL103, 0, a:event)
 
-function! s:get_search_cmd(exe, expr) abort
-  if a:exe ==# 'grep'
-    return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
-  elseif a:exe ==# 'rg'
-    return ['rg', '-n', '-i', a:expr]
+function! s:get_search_cmd(expr) abort
+  let cmd = [s:grep_exe] + s:grep_opt
+  if !empty(s:grep_files) && type(s:grep_files) == 3
+    return cmd + [a:expr] + s:grep_files
+  elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    return cmd + [a:expr] + [s:grep_files]
+  elseif !empty(s:grep_dir)
+    return cmd + [a:expr] + [s:grep_dir]
   else
-    return [a:exe, a:expr]
+    return cmd + [a:expr] + s:grep_ropt
   endif
 endfunction
 
@@ -176,8 +216,10 @@ endfunction
 
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
+      \ "\<C-j>" : function('s:next_item'),
       \ "\<ScrollWheelDown>" : function('s:next_item'),
       \ "\<S-tab>" : function('s:previous_item'),
+      \ "\<C-k>" : function('s:previous_item'),
       \ "\<ScrollWheelUp>" : function('s:previous_item'),
       \ "\<Return>" : function('s:open_item'),
       \ "\<LeftMouse>" : function('s:move_cursor'),
