@@ -1,38 +1,43 @@
 ---
-title: "FlyGrep in SpaceVim"
+title: "Grep on the fly in SpaceVim"
 categories: feature
 excerpt: "Run grep Asynchronously and on the fly as you type in SpaceVim, quick searching whole project or opened files."
-image: https://user-images.githubusercontent.com/13142418/34907415-c2cf7e88-f843-11e7-92d3-ef0f9b1b72ae.gif
+image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
 ---
 
-# Asynchronous grep on the fly in SpaceVim
+# Asynchronous grep on the fly
 
-FlyGrep means **grep on the fly**, it will update the result as you type. of caulse, it is running
-asynchronously. before using this feature, you need to install a searching tool. FlyGrep can be
+FlyGrep means **grep on the fly**, it will update the result as you type. Of course, it is running
+asynchronously. Before using this feature, you need to install a searching tool. FlyGrep can be
 interfaced with different searching tools like: `ag`, `rg`, `ack`, `pt` and `grep`, select any one
 you like.
 
-![grep in current project](https://user-images.githubusercontent.com/13142418/35276219-4aa9f9c0-0008-11e8-8d3c-7bf57f60a88e.gif)
-
-This ia a build-in plugin in SpaceVim, and we also split a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
+This ia a build-in plugin in SpaceVim, and we also separate a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
 
 ## Features
+
+- **Searching in a project**
+
+In SpaceVim, you can use `SPC s p` or `SPC s /` to searching in current project.
+
+![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
 - **Searching in current file**
 
 You can use `SPC s s` to searching in current file. To searching word under the cursor, you may need to press `SPC s S`.
 
+![searching current file](https://user-images.githubusercontent.com/13142418/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
+
 - **Searching in all loaded buffers**
 
 To searching in all loaded buffers, you need to press `SPC s b`, and you can also use `SPC s B` to search word under the point.
 
+![searching-loaded-buffer](https://user-images.githubusercontent.com/13142418/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
+
 - **Searching in an arbitrary directory**
 
-If you want to searching in a different directory instead of current directory, you can use `SPC s f`.
-
-- **Searching in a project**
-
-In SpaceVim, you can use `SPC s p` or `SPC s /` to searching in current project.
+If you want to searching in a different directory instead of current directory, you can
+use `SPC s f`. Then insert the path of the arbitrary directory.
 
 - **Background searching in a project**
 
