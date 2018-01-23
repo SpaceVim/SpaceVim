@@ -1,5 +1,5 @@
 function! SpaceVim#layers#tools#plugins() abort
-  return [
+  let plugins = [
         \ ['tpope/vim-scriptease'],
         \ ['mbbill/fencview',                 { 'on_cmd' : 'FencAutoDetect'}],
         \ ['wsdjeg/vim-cheat',                { 'on_cmd' : 'Cheat'}],
@@ -43,13 +43,23 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['lymslive/vnote', {'depends' : 'vimloo',
         \ 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}],
         \ ]
+
+  let s:CMP = SpaceVim#api#import('vim#compatible')
+  if s:CMP.has('python')
+    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
+  elseif s:CMP.has('python3')
+    call add(plugins, ['fedorenchik/VimCalc3', {'on_cmd' : 'Calc'}])
+  endif
+
+  return plugins
 endfunction
 
 function! SpaceVim#layers#tools#config() abort
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown', 'leaderGuide']
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calendar', 'vim calendar', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'l'], 'Calendar', 'vim calendar', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
         \ 'Auto detect the file encoding', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calc', 'vim calculator', 1)
   nmap mm <Plug>BookmarkToggle
   nmap mi <Plug>BookmarkAnnotate
   nmap ma <Plug>BookmarkShowAll
@@ -59,6 +69,8 @@ function! SpaceVim#layers#tools#config() abort
   augroup rainbow_lisp
     autocmd!
     autocmd FileType lisp,clojure,scheme,java RainbowParentheses
+    autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <buffer> <c-d> <c-[>:q<cr>
+          \ | nnoremap <buffer> q :bdelete<cr>
   augroup END
   let g:rainbow#max_level = 16
   let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
