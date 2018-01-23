@@ -1579,24 +1579,26 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
-
 ## Achievements
 
 ### issues
 
-| Achievements                                                          | Account                                     |
-| --------------------------------------------------------------------- | ------------------------------------------- |
-| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+[1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000) | [sei40kr](https://github.com/sei40kr)
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                           |
-| ----------------- | ------------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry)   |
-| 100th stargazers  | [iwillalwaysbe](https://github.com/iwillalwaysbe) |
-| 1000th stargazers | [elvin-du](https://github.com/elvin-du)           |
-| 2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)   |
-| 3000th stargazers | [WellerQu](https://github.com/WellerQu)           |
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [ShaneDelmore](https://github.com/ShaneDelmore)
+1000th stargazers | [dongkui0712](https://github.com/dongkui0712)
+2000th stargazers | [EvgeneOskin](https://github.com/EvgeneOskin)
+3000th stargazers | [zerdon](https://github.com/zerdon)
+4000th stargazers | [sfwatergit](https://github.com/sfwatergit)
+5000th stargazers | [robgrzel](https://github.com/robgrzel)
 
 <!-- SpaceVim Achievements end -->
 
