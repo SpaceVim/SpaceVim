@@ -1,4 +1,4 @@
-[[[https://github.com/SpaceVim/SpaceVim/raw/dev/docs/logo.png|alt=SpaceVim home]]](Home)
+[[[https://spacevim.org/logo.png|alt=SpaceVim home]]](Home)
 --
 [Introduction](introduction)   
 [Community](community)  
