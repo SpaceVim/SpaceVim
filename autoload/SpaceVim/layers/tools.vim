@@ -69,8 +69,8 @@ function! SpaceVim#layers#tools#config() abort
   augroup rainbow_lisp
     autocmd!
     autocmd FileType lisp,clojure,scheme,java RainbowParentheses
-    autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <buffer> <c-d> <c-[>:q<cr>
-          \ | nnoremap <buffer> q :bdelete<cr>
+    autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <silent> <buffer> <c-d> <c-[>:q<cr>
+          \ | nnoremap <silent> <buffer> q :bdelete<cr>
   augroup END
   let g:rainbow#max_level = 16
   let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
