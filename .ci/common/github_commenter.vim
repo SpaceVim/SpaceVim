@@ -70,4 +70,5 @@ else
     endif
   endif
 endif
+echom v:shell_error
 quit
