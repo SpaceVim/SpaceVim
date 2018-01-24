@@ -81,7 +81,7 @@ endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
-if index(s:loaded_sections_r, 'whitespace')
+if index(s:loaded_sections_r, 'whitespace') != -1
   call add(s:loaded_modes, 'whitespace')
 endif
 " build in sections for SpaceVim statusline
