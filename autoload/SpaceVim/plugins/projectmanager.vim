@@ -133,7 +133,7 @@ endfunction
 
 
 function! s:sort_dirs(dirs) abort
-  let dir = get(sort(a:dirs, funcref('s:compare')), 0, '')
+  let dir = get(sort(a:dirs, function('s:compare')), 0, '')
   let bufdir = getbufvar('%', 'rootDir', '')
   if bufdir ==# dir
     return ''
