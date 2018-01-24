@@ -17,7 +17,7 @@ endfunction
 
 function! SpaceVim#layers#lang#elixir#config()
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
-  call SpaceVim#mapping#space#regesit_lang_mappings('elixir', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}

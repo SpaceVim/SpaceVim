@@ -19,7 +19,7 @@ endfunction
 
 function! SpaceVim#layers#lang#vim#config() abort
   call SpaceVim#mapping#gd#add('vim','lookup#lookup')
-  call SpaceVim#mapping#space#regesit_lang_mappings('vim', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('vim', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort

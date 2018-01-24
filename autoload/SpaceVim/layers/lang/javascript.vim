@@ -60,7 +60,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
 
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
-        \ funcref('s:on_ft'))
+        \ function('s:on_ft'))
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
     call SpaceVim#mapping#gd#add('javascript',

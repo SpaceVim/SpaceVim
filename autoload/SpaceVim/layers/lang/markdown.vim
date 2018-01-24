@@ -49,7 +49,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
   " iamcco/markdown-preview.vim {{{
   let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
-  call SpaceVim#mapping#space#regesit_lang_mappings('markdown', funcref('s:mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
 endfunction
 
 function! s:mappings() abort

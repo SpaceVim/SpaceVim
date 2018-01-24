@@ -39,7 +39,7 @@ function! SpaceVim#layers#lang#go#config() abort
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
     let g:go_snippet_engine = 'neosnippet'
 
-    call SpaceVim#mapping#space#regesit_lang_mappings('go', funcref('s:language_specified_mappings'))
+    call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort

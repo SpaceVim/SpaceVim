@@ -91,7 +91,7 @@ function! SpaceVim#layers#lang#lisp#config() abort
                 \ ['n', '<c-n>', ':call vlime#ui#input#NextHistoryItem("forward")<cr>'],
                 \ ],
                 \ }
-    call SpaceVim#mapping#space#regesit_lang_mappings('lisp', funcref('s:lisp'))
+    call SpaceVim#mapping#space#regesit_lang_mappings('lisp', function('s:lisp'))
     augroup LocalVlimeKeys
         autocmd!
         autocmd FileType vlime_sldb call s:vlime_sldb()
