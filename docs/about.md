@@ -10,7 +10,7 @@ description: "SpaceVim is a communicate driven vim distribution that supports vi
 ## Goals
 
 - Provide a consistent user experience across platforms.
-- Provide better default layer for defferent languages.
+- Provide better default layer for different languages.
 
 ## Principles
 
