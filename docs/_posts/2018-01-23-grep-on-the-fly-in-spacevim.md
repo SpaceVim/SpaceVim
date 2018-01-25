@@ -3,6 +3,7 @@ title: "Grep on the fly in SpaceVim"
 categories: feature
 excerpt: "Run grep asynchronously, show search results in real-time based on user input, support searching the entire project, searching loaded files or only searching current file"
 image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
+comments: true
 ---
 
 # Asynchronous grep on the fly
