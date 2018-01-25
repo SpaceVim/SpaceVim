@@ -10,7 +10,7 @@ let s:MPT._prompt.mpt = '➭ '
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
-  rightbelow split __flygrep__
+  noautocmd rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=
@@ -224,9 +224,10 @@ function! s:open_item() abort
     let line = getline('.')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
-    q
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    noautocmd q
     exe 'e ' . filename
-    exe linenr
+    call cursor(linenr, colum)
     redraw!
   endif
 endfunction

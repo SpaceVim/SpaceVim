@@ -5,4 +5,4 @@ let b:current_syntax = "SpaceVimFlyGrep"
 syntax case ignore
 
 hi def link FileName Comment
-call matchadd('FileName', '[^:]*:\d\+:', 2)
+call matchadd('FileName', '[^:]*:\d\+:\d\+:', 2)
