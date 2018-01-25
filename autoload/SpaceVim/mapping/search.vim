@@ -26,7 +26,7 @@ let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
 let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--vimgrep', '-S']
 let s:search_tools.r.recursive_opt = []
-let s:search_tools.r.default_fopts = ['-N']
+let s:search_tools.r.default_fopts = ['--hidden', '-S', '-N']
 
 let s:search_tools.k = {}
 let s:search_tools.k.command = 'ack'
