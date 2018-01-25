@@ -70,6 +70,7 @@ function! s:start_filter() abort
   catch
     call SpaceVim#logger#info('FlyGrep: Failed to write filter content to temp file')
   endtry
+  call s:MPT._build_prompt()
 endfunction
 
 function! s:filter(expr) abort
