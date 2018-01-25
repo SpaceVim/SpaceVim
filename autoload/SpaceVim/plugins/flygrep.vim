@@ -215,6 +215,7 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
+  let s:MPT._handle_fly = function('s:flygrep')
   if getline('.') !=# ''
     if s:grepid != 0
       call s:JOB.stop(s:grepid)
