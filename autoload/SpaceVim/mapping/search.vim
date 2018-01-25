@@ -14,26 +14,31 @@ let s:search_tools.a.default_opts =
       \ '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
       \ ]
 let s:search_tools.a.recursive_opt = []
+let s:search_tools.a.default_fopts = ['--nonumber']
 
 let s:search_tools.t = {}
 let s:search_tools.t.command = 'pt'
 let s:search_tools.t.default_opts = ['--nogroup', '--nocolor']
 let s:search_tools.t.recursive_opt = []
+let s:search_tools.t.default_fopts = []
 
 let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
 let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--vimgrep', '-S']
 let s:search_tools.r.recursive_opt = []
+let s:search_tools.r.default_fopts = ['-N']
 
 let s:search_tools.k = {}
 let s:search_tools.k.command = 'ack'
 let s:search_tools.k.default_opts = ['-i', '--no-heading', '--no-color', '-k', '-H']
 let s:search_tools.k.recursive_opt = []
+let s:search_tools.k.default_fopts = []
 
 let s:search_tools.g = {}
 let s:search_tools.g.command = 'grep'
 let s:search_tools.g.default_opts = ['-inHr']
 let s:search_tools.g.recursive_opt = ['.']
+let s:search_tools.g.default_fopts = []
 
 function! SpaceVim#mapping#search#grep(key, scope)
   let cmd = s:search_tools[a:key]['command']
@@ -88,7 +93,7 @@ function! SpaceVim#mapping#search#grep(key, scope)
   endif
 endfunction
 
-function! SpaceVim#mapping#search#default_tool()
+function! SpaceVim#mapping#search#default_tool() abort
   if !has_key(s:search_tools, 'default_exe')
     for t in g:spacevim_search_tools
       if executable(t)
@@ -101,4 +106,9 @@ function! SpaceVim#mapping#search#default_tool()
     endfor
   endif
   return [s:search_tools.default_exe, s:search_tools.default_opt, s:search_tools.default_ropt]
+endfunction
+
+function! SpaceVim#mapping#search#getFopt(exe) abort
+        let key = s:search_tools.namespace[a:exe]
+        return s:search_tools[key]['default_fopts']
 endfunction

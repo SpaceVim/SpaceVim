@@ -55,6 +55,54 @@ function! s:grep_timer(timer) abort
         \ })
 endfunction
 " @vimlint(EVL103, 0, a:timer)
+let s:filter_file = ''
+function! s:start_filter() abort
+  let s:MPT._handle_fly = function('s:filter')
+  let s:MPT._prompt = {
+        \ 'mpt' : s:MPT._prompt.mpt,
+        \ 'begin' : '',
+        \ 'cursor' : '',
+        \ 'end' : '',
+        \ }
+  let s:filter_file = tempname()
+  try
+    call writefile(getbufline('%', 1, '$'), s:filter_file, 'b')
+  catch
+    call SpaceVim#logger#info('FlyGrep: Failed to write filter content to temp file')
+  endtry
+endfunction
+
+function! s:filter(expr) abort
+  call s:MPT._build_prompt()
+  if a:expr ==# ''
+    redrawstatus
+    return
+  endif
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtr
+  hi def link FlyGrepPattern MoreMsg
+  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
+  let s:grep_expr = a:expr
+  let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+endfunction
+
+function! s:filter_timer(timer) abort
+  let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
+  call SpaceVim#logger#info('filter cmd: ' . string(cmd))
+  let s:grepid =  s:JOB.start(cmd, {
+        \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'on_stderr' : function('s:grep_stderr'),
+        \ 'in_io' : 'null',
+        \ 'on_exit' : function('s:grep_exit'),
+        \ })
+endfunction
+
+function! s:get_filter_cmd(expr) abort
+  let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
+  return cmd + [a:expr] + [s:filter_file]
+endfunction
 
 function! s:flygrep(expr) abort
   call s:MPT._build_prompt()
@@ -224,6 +272,7 @@ let s:MPT._function_key = {
       \ "\<Return>" : function('s:open_item'),
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
+      \ "\<C-f>" : function('s:start_filter'),
       \ }
 
 if has('nvim')
