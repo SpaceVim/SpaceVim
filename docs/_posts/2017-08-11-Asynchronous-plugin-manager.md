@@ -3,6 +3,7 @@ title: "Asynchronous plugin manager"
 categories: feature
 excerpt: ""
 image: https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif
+comments: true
 ---
 
 

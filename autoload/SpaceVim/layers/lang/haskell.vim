@@ -18,7 +18,7 @@ function! SpaceVim#layers#lang#haskell#config() abort
         \ 'ghc -v0 --make %s -o #TEMP#',
         \ '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('haskell',
-        \ funcref('s:on_ft'))
+        \ function('s:on_ft'))
 
   if SpaceVim#layers#lsp#check_filetype('haskell')
     call SpaceVim#mapping#gd#add('haskell',

@@ -10,7 +10,7 @@ endfunction
 
 function! SpaceVim#layers#lang#dart#config() abort
   call SpaceVim#plugins#runner#reg_runner('dart', 'dart %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('dart', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('dart', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('dart', ['pub', 'global', 'run', 'dart_repl'])
 endfunction
 

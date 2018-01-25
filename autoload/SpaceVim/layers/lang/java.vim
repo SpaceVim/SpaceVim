@@ -83,7 +83,7 @@ function! SpaceVim#layers#lang#java#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#java#config() abort
-  call SpaceVim#mapping#space#regesit_lang_mappings('java', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('java', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('java', 'jshell')
   augroup SpaceVim_lang_java
     au!

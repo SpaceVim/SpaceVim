@@ -195,7 +195,7 @@ endfunction
 
 if exists('*timer_start')
   function! s:timeout() abort
-    call timer_start(1000, funcref('s:reset_Operator'))
+    call timer_start(1000, function('s:reset_Operator'))
   endfunction
 else
   function! s:timeout() abort

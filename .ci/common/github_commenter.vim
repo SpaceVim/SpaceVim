@@ -4,6 +4,7 @@ set rtp+=/API
 so /build/GitHub.vim/plugin/github.vim
 let s:LIST = SpaceVim#api#import('data#list')
 let s:log = filereadable('build_log') ? system('cat build_log') : ''
+let g:githubapi_verbose = 1
 function! s:update_log(log, summary, new_log) abort
   let log = split(a:log, "\n")
   let begin = -1
@@ -70,4 +71,5 @@ else
     endif
   endif
 endif
+echom v:shell_error
 quit
