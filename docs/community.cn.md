@@ -15,8 +15,8 @@ description: "SpaceVim 中文社区，让沟通更加便利，包括讨论、提
 
 ## 提问
 
-- [sf.gg]()
-- [码云问题列表]()
+- [segmentfault](https://segmentfault.com/t/vim)
+- [码云问题列表](https://gitee.com/spacevim/SpaceVim/issues)
 
 ## 聊天
 
