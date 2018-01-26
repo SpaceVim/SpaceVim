@@ -30,17 +30,33 @@ Here is a throughput graph of the repository for the last few weeks:
 
 <!-- vim-markdown-toc GFM -->
 
+- [Features](#features)
 - [Requirements](#requirements)
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
 - [Project layout](#project-layout)
-- [Features](#features)
 - [Blogs](#blogs)
 - [Support SpaceVim](#support-spacevim)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
+
+### Features
+
+- **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
+  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
+- **Beautiful UI:** you'll love the awesome UI and its useful features.
+  ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
+- **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
+  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
+- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings, and find definition of key bindings.
+  ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
+- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
+  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
+- **Awesome statusline:** a heavily customized modular statusline.
+  ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
+- **Neovim centric:** Dark powered mode of SpaceVim
 
 ### Requirements
 
@@ -80,21 +96,6 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 └─ test/                          tests
 ```
 
-### Features
-
-- **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
-  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
-- **Beautiful UI:** you'll love the awesome UI and its useful features.
-  ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-- **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
-  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
-- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings, and find definition of key bindings.
-  ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
-  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
-- **Awesome statusline:** a heavily customized modular statusline.
-  ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
-- **Neovim centric:** Dark powered mode of SpaceVim
 
 ### Blogs
 

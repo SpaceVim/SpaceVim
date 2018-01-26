@@ -29,7 +29,7 @@ If you are new to vim, you should learning about Vim in general, read
 ### Linux 或 macOS
 
 ```bash
-curl -sLf https://spacevim.org/install.sh | bash
+curl -sLf https://spacevim.org/cn/install.sh | bash
 ```
 
 After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
@@ -37,7 +37,7 @@ After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** in
 For more info about the install script, please check:
 
 ```bash
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ```
 
 ### Windows

@@ -64,7 +64,7 @@
           <p>{{ site.description | default: site.github.project_tagline }}</p>
           <hr>
           <p align="center">
-          <b><a href="{{ site.url }}"/cn>主页</a></b> |
+          <b><a href="{{ site.url }}/cn/">主页</a></b> |
           <b><a href="{{ site.url }}/cn/about">关于</a></b> |
           <b><a href="{{ site.url }}/cn/documentation">文档</a></b> |
           <b><a href="{{ site.url }}/cn/development">开发</a></b> |
@@ -129,10 +129,19 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58a01d3aac22bd89"></script>
   </body>
   <root>
+  {% if page.lang == "cn" %}
+  <p align="center">
+  <span class="credits right">网站源码位于 Github, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">帮助改进本页面</a> &mdash; 网站主题: <a href="https://twitter.com/michigangraham">mattgraham</a>,
+  </span>
+  </p>
+  {% else %}
   <p align="center">
   <span class="credits right">Hosted on GitHub, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">Help improve this page</a> &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a>,
   </span>
   </p>
+  {% endif %}
   </root>
 
 </html>
+
+<!-- vim:set nowrap: -->
