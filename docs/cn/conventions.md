@@ -1,14 +1,15 @@
 ---
 title:  "约定"
 description: "描述贡献代码所需遵循的约定俗成的规范，包括 vim 脚本的代码规范以及 markdown 文件的代码规范。"
+lang: cn
 ---
 
 # Conventions
 
 <!-- vim-markdown-toc GFM -->
 
-- [Commit emoji convention](#commit-emoji-convention)
-- [Viml coding style guide](#viml-coding-style-guide)
+- [Commit emoji 规范](#commit-emoji-规范)
+- [vim 脚本代码规范](#vim-脚本代码规范)
   - [Portability](#portability)
     - [Strings](#strings)
     - [Matching Strings](#matching-strings)
@@ -32,8 +33,8 @@ description: "描述贡献代码所需遵循的约定俗成的规范，包括 vi
     - [Whitespace](#whitespace)
     - [Line Continuations](#line-continuations)
     - [Naming](#naming)
-- [Markdown style guide](#markdown-style-guide)
-- [Thanks:](#thanks)
+- [markdown 代码规范](#markdown-代码规范)
+- [感谢:](#感谢)
 
 <!-- vim-markdown-toc -->
 

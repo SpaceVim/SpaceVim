@@ -1,5 +1,6 @@
 ---
 title: "公共 API"
+lang: cn
 ---
 
 # SpaceVim 公共 APIs

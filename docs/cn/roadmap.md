@@ -1,6 +1,7 @@
 ---
 title:  "Roadmap"
 description: "The roadmap and milestones define the project direction and priorities."
+lang: cn
 ---
 
 # Roadmap

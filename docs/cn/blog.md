@@ -1,6 +1,7 @@
 ---
 title: "博客"
 description: "SpaceVim 中文博客"
+lang: cn
 ---
 
 # SpaceVim 中文博客

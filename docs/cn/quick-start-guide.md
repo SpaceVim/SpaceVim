@@ -1,6 +1,7 @@
 ---
 title:  "快速入门"
 description: "SpaceVim 入门教程，包括安装初始化配置等内容"
+lang: cn
 ---
 
 
@@ -8,9 +9,9 @@ description: "SpaceVim 入门教程，包括安装初始化配置等内容"
 
 <!-- vim-markdown-toc GFM -->
 
-- [Requirements](#requirements)
-- [Install](#install)
-  - [Linux and macOS](#linux-and-macos)
+- [依赖](#依赖)
+- [安装](#安装)
+  - [Linux 或 macOS](#linux-或-macos)
   - [Windows](#windows)
 
 <!-- vim-markdown-toc -->

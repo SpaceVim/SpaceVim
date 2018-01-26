@@ -1,3 +1,8 @@
+---
+title:  "主页"
+description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
+lang: cn
+---
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
