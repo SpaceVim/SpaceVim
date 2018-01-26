@@ -1,6 +1,6 @@
 function! SpaceVim#layers#chinese#plugins() abort
     return [
-                \ ['vimcn/vimcdoc'],
+                \ ['yianwillis/vimcdoc', {'merged' : 0}],
                 \ ]
 endfunction
 
