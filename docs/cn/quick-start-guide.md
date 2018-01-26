@@ -1,5 +1,5 @@
 ---
-title:  "快速入门"
+title:  "入门指南"
 description: "SpaceVim 入门教程，包括安装初始化配置等内容"
 lang: cn
 ---

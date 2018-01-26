@@ -24,12 +24,32 @@ SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块�
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
 即用的Vim-IDE。
 
-使用过程中遇到问题或者有什么功能需求可以在 github 提交 issue，这将更容易被关注
+推荐阅读：
+
+- [入门指南](quick-start-guide)
+- [用户文档](documentation)
+- [可用模块](layers)
+
+## 最新特新
+
+<ul>
+    {% for post in site.categories.feature_cn offset: 0 limit: 5  %}
+               <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
+               <br>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <br>
+               <img alt="{{ post.title }}" src="{{ post.image }}">
+    {% endfor %}
+</ul>
+
+更多精彩博客请订阅 [SpaceVim 中文博客](https://spacevim.org/cn/blog/)
+
+[关注微博 @SpaceVim](https://weibo.com/SpaceVim) 
+
+## 参与
+
+使用过程中遇到问题或者有什么功能需求可以在码云提交，这将更容易被关注
 和修复。我们也欢迎喜欢 vim/neovim 的用户加入我们的
 [QQ群(点击加入)](https://jq.qq.com/?_wv=1027&k=43zWPlT)，该群定期也会分享一些
 实用的 Vim 技巧以及插件。
-
-以下是近几周的开发汇总：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
-

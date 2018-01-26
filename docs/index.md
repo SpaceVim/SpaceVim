@@ -42,18 +42,6 @@ See the [Quick start guide](quick-start-guide), [documentation](documentation) o
     {% endfor %}
 </ul>
 
-## Blogs
-
-<ul>
-    {% assign relevant = site.posts | except:"categories","feature" %}
-    {% for post in relevant offset: 0 limit: 5  %}
-               <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
-               <br>
-               <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
-    {% endfor %}
-</ul>
-
 More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
 
 [Follow @SpaceVim](https://twitter.com/SpaceVim) 
