@@ -1,6 +1,6 @@
 ---
-title:  "Conventions"
-description: "conventions of contributing to SpaceVim, including the coding style guides about vim script and markdown"
+title:  "约定"
+description: "描述贡献代码所需遵循的约定俗成的规范，包括 vim 脚本的代码规范以及 markdown 文件的代码规范。"
 ---
 
 # Conventions
@@ -37,17 +37,17 @@ description: "conventions of contributing to SpaceVim, including the coding styl
 
 <!-- vim-markdown-toc -->
 
-## Commit emoji convention
+## Commit emoji 规范
 
-- :memo: Add comment or doc
-- :gift: New feature.
-- :bug: Bug fix
-- :bomb: Breaking compatibility.
-- :white_check_mark: Write test.
-- :fire: Remove something.
-- :beer: I'm happy like reduced code complexity.
+- :memo: 添加一个备注或者文档
+- :gift: 新的特新
+- :bug: bug 修复
+- :bomb: 破坏向后兼容
+- :white_check_mark: 添加测试
+- :fire: 移除某些配置
+- :beer: 代码优化
 
-## Viml coding style guide
+## vim 脚本代码规范
 
 ### Portability
 
@@ -285,9 +285,9 @@ Always prefix variables with their scope.
   - b: changes the variable semantics; use it when you want buffer-local semantics.
   - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
-## Markdown style guide
+## markdown 代码规范
 
-## Thanks:
+## 感谢:
 
 - link : <https://google.github.io/styleguide/vimscriptguide.xml>
 - link : <https://google.github.io/styleguide/vimscriptfull.xml>
