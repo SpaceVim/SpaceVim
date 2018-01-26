@@ -8,12 +8,14 @@ lang: cn
 
 在这里，你可以看到最新的 SpaceVim 特性简介，以及使用技巧：
 
-<ul>
-    {% for post in site.posts_by_language.cn %}
+{% for post in site.post %}
+    <ul>
+        {% if post.lang == "cn" %}
             <li>
-               <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-               <span class="post-date">{{ post.date | date_to_string }}</span>
-               <h3>{{ post.excerpt | truncatewords: 100 }}</h3>
+              <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+              <span class="post-date">{{ post.date | date_to_string }}</span>
+              <h3>{{ post.excerpt | truncatewords: 100 }}</h3>
             </li>
-    {% endfor %}
-<
+        {% endif %}
+    </ul>
+{% endfor %}
