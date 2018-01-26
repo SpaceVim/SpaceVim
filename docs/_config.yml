@@ -7,8 +7,8 @@ project_repo_url: https://github.com/SpaceVim/SpaceVim
 url: https://spacevim.org
 logo: https://spacevim.org/SpaceVim.png
 permalink: /:title/
-languages: ['en', 'cn']
-language_default: 'en'
+languages: ["cn", "en"]
+language_default: "en"
 
 plugins:
   - jekyll-redirect-from
