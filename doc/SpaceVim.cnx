@@ -15,21 +15,21 @@
 wsdjeg                                                   *spacevim* *SpaceVim*
 
 ==============================================================================
-CONTENTS                                                   *SpaceVim-contents*
-  1. Introduction.............................................|SpaceVim-intro|
-  2. CONFIGURATION...........................................|SpaceVim-config|
-  3. Commands..............................................|SpaceVim-commands|
-  4. Functions............................................|SpaceVim-functions|
-  5. Layers..................................................|SpaceVim-layers|
-      1. Default............................................|SpaceVim-default|
-      2. autocomplete..................................|SpaceVim-autocomplete|
-      3. checkers....................................|SpaceVim-layer-checkers|
-      4. colorscheme....................................|SpaceVim-colorscheme|
-      5. core#tabline............................|SpaceVim-layer-core-tabline|
-      6. exprfold....................................|SpaceVim-layer-exprfold|
-      7. format..............................................|SpaceVim-format|
-      8. incsearch..................................|SpaceVim-layer-incsearch|
-      9. indentmove................................|SpaceVim-layer-indentmove|
+目录                                                        *SpaceVim-contents*
+  1. 简介.....................................................|SpaceVim-intro|
+  2. 配置...........................................|SpaceVim-config|
+  3. 命令..............................................|SpaceVim-commands|
+  4. 函数............................................|SpaceVim-functions|
+  5. 模块..................................................|SpaceVim-layers|
+      1. 默认模块............................................|SpaceVim-default|
+      2. 自动补全..................................|SpaceVim-autocomplete|
+      3. 语法检查....................................|SpaceVim-layer-checkers|
+      4. 颜色主题....................................|SpaceVim-colorscheme|
+      5. 标签栏............................|SpaceVim-layer-core-tabline|
+      6. 正则折叠....................................|SpaceVim-layer-exprfold|
+      7. 格式化..............................................|SpaceVim-format|
+      8. 实时检索..................................|SpaceVim-layer-incsearch|
+      9. 对齐移动................................|SpaceVim-layer-indentmove|
       10. lang#c.......................................|SpaceVim-layer-lang-c|
       11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
       12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
@@ -48,41 +48,43 @@ CONTENTS                                                   *SpaceVim-contents*
       25. lang#tmux.................................|SpaceVim-layer-lang-tmux|
       26. lang#xml...................................|SpaceVim-layer-lang-xml|
       27. operator...................................|SpaceVim-layer-operator|
-      28. shell.........................................|SpaceVim-layer-shell|
+      28. 终端.........................................|SpaceVim-layer-shell|
       29. tmux...........................................|SpaceVim-layer-tmux|
   6. API........................................................|SpaceVim-api|
-      1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
+      1. 命令行目录..................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
-      3. prompt..........................................|SpaceVim-api-prompt|
+      3. 命令行prompt.....................................|SpaceVim-api-prompt|
       4. sid............................................|SpaceVim-api-vim-sid|
       5. vim#message................................|SpaceVim-api-vim-message|
   7. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
-INTRODUCTION                                                  *SpaceVim-intro*
+简介                                                  *SpaceVim-intro*
 
-SpaceVim is a bundle of custom settings and plugins with a modular
-configuration for Vim. It was inspired by Spacemacs.
+SpaceVim 是一个社区驱动的 vim 配置，以模块的方式组织插件和配置，这一思想来源于 spacemacs.
+通过模块来管理插件可以为用户节省很多搜索插件和配置插件的时间.
 
 
 ==============================================================================
-CONFIGURATION                                                *SpaceVim-config*
+配置                                                          *SpaceVim-config*
 
-SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file. You
-can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
-be added to runtimepath, so you can write your own scripts in it. SpaceVim
-also supports local config for each project. Place local config  settings in
-`.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
-will also be added to runtimepath.
+SpaceVim 使用 `~/.SpaceVim.d/init.vim` 作为默认的全局配置文件. 你可以在其中设置所有的
+SpaceVim 模块和变量. 同时 `~/.SpaceVim.d/` 将被加入 vim 的 runtimepath, 因此，你可以
+在其中添加自己的脚本，具体的格式详见 |runtimepath|. SpaceVim 同时支持正对当前项目的局部
+设置，你可以在自己的项目根目录添加 `.SpaceVim.d/init.vim`, 同样的 `.SpaceVim.d/` 也会
+被加入到 vim 的runtimepath.
 
-                                                   *g:spacevim_default_indent*
-Change the default indentation of SpaceVim. Default is 2.
+
+                                                    *g:spacevim_default_indent*
+改变 SpaceVim 默认的对齐宽度. 默认是 2.
 >
   let g:spacevim_default_indent = 2
 <
 
                                                    *g:spacevim_relativenumber*
-Enable/Disable relativenumber, by default it is enabled.
+启用/禁用 相对行号，默认情况下是启用的，在窗口左侧，你可以看到相对行号，即为相对于本行的行号，
+便于上下多行移动光标.
+
 
                                                        *g:spacevim_max_column*
 Change the max number of columns for SpaceVim. Default is 120.
@@ -91,7 +93,8 @@ Change the max number of columns for SpaceVim. Default is 120.
 <
 
                                                  *g:spacevim_enable_guicolors*
-Enable true color support in terminal. Default is 1.
+启用/禁用 终端真色彩，默认情况下是启用的，颜色更加细腻，但需要确保你的终端支持真色彩，如果
+你的终端不支持真色彩，可以禁用此选项.
 >
   let g:spacevim_enable_guicolors = 1
 <
