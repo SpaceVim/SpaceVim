@@ -1,4 +1,7 @@
-language: python
+language: ruby
+rvm:
+- 2.1
+
 dist: trusty
 sudo: false
 
