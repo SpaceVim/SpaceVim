@@ -59,6 +59,7 @@
         <div id="titlex">
           <p align="center">{{ site.title | default: site.github.repository_name }}</p>
         </div>
+        {% if page.is_default_language %}
         <div id="title">
           <p>{{ site.description | default: site.github.project_tagline }}</p>
           <hr>
@@ -72,6 +73,21 @@
           </p>
           <hr>
         </div>
+        {% else %}
+        <div id="title">
+          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <hr>
+          <p align="center">
+          <b><a href="{{ site.url }}"/cn>主页</a></b> |
+          <b><a href="{{ site.url }}/cn/about">关于</a></b> |
+          <b><a href="{{ site.url }}/cn/documentation">文档</a></b> |
+          <b><a href="{{ site.url }}/cn/development">开发</a></b> |
+          <b><a href="{{ site.url }}/cn/community">社区</a></b> |
+          <b><a href="{{ site.url }}/cn/sponsors">赞助</a></b>
+          </p>
+          <hr>
+        </div>
+        {% endif %}
 
         {{ content }}
 
