@@ -9,9 +9,9 @@ description: "SpaceVim 中文社区，让沟通更加便利，包括讨论、提
 
 ## 讨论
 
-- [知乎专栏]()
-- [微博](https://weibo.com/SpaceVim)
-- [微信公众号]()
+- [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
+- [新浪微博](https://weibo.com/SpaceVim)
+- 微信公众号：SpaceVim
 
 ## 提问
 
