@@ -23,6 +23,5 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
     ./configure $C_OPTS &&
     make install)
 elif [ "$LINT" = "jekyll" ]; then
-  cd docs
-  bundle install
+  .ci/bootstrap
 fi

@@ -30,7 +30,7 @@ elif [ "$LINT" = "vader" ]; then
   pip install codecov
   codecov -X search gcov pycov -f coverage.xml
 elif [ "$LINT" = "jekyll" ]; then
-  cd docs
-  bundle exec jekyll build --drafts
+  .ci/build-production
+  tree docs/_site
 fi
 set +x
