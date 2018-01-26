@@ -1,0 +1,6 @@
+#!/bin/sh
+# usage: script/build-production
+#
+# Run the jekyll build
+
+cd docs && JEKYLL_ENV=production bundle exec jekyll build && htmlproof ./_site --disable-external --empty-alt-ignore
