@@ -17,7 +17,7 @@ description: "SpaceVim 赞助方式，以及历史赞助，如果你想赞助 Sp
 
 比特币: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-# 历史赞助
+## 历史赞助
 
 以下是所有的历史赞助，记住那些曾经爱心赞助的人们，非常感谢，你们的鼓励就是我坚持的动力 (排名不分先后，如有遗漏疏忽，请务必告知)
 
@@ -27,3 +27,16 @@ description: "SpaceVim 赞助方式，以及历史赞助，如果你想赞助 Sp
 | --------- | --- | --------------------------------------------- |
 | 2017-2-23 | ¥40 | user from wechat contributed ¥40 to SpaceVim  |
 | 2017-2-14 | ¥100 | user from wechat contributed ¥100 to SpaceVim |
+2017-06-20 | $ 2.57 | Шепелев​Григорий |
+2017-06-24 | $ 14.04 | Vowell Jason |
+2017-06-24 | $ 2.57 | Senaud Nicolas
+2017-09-16 | $ 2.57 | D'Avezac Mayeul
+2017-11-26 | $ 14.04 | Hermans Tim
+2017-12-13 | $ 5.44 | Ma Fei
+2017-12-27 | $ 8.30 | Módolo Marcelo
+
+## 历史支出
+
+| 日期      | 金额 | 描述                                   |
+| --------- | --- | --------------------------------------------- |
+2017-06-10 | - $ 5.00 | Vultr.com Cloud Hosting
