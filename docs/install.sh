@@ -132,7 +132,9 @@ echo_with_color () {
 fetch_repo () {
   if [[ -d "$HOME/.SpaceVim" ]]; then
     info "Trying to update SpaceVim"
-    git --git-dir "$HOME/.SpaceVim/.git" pull
+    cd "$HOME/.SpaceVim"
+    git pull
+    cd - > /dev/null 2>&1
     success "Successfully update SpaceVim"
   else
     info "Trying to clone SpaceVim"
