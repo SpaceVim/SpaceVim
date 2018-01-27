@@ -96,3 +96,5 @@ echo "That's it. Thanks for installing $app_name. Enjoy!"
 echo ""
 
 Pause
+
+# vim:set ft=ps1: 
