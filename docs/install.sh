@@ -8,7 +8,7 @@
 # License: MIT license
 #=============================================================================
 
-
+# Init option {{{
 # Reset
 Color_off='\033[0m'       # Text Reset
 Version='0.6.0'
@@ -21,13 +21,18 @@ Green='\033[0;32m'
 #System name
 System="$(uname -s)"
 
+# }}}
+
+# need_cmd {{{
 need_cmd () {
   if ! hash "$1" &>/dev/null; then
     error "Need '$1' (command not fount)"
     exit 1
   fi
 }
+# }}}
 
+# success/info/error/warn {{{
 msg() {
   printf '%b\n' "$1" >&2
 }
@@ -48,7 +53,9 @@ error() {
 warn () {
   msg "${Red}[✘]${Color_off} ${1}${2}"
 }
+# }}}
 
+# fetch_repo {{{
 fetch_repo () {
   if [[ -d "$HOME/.SpaceVim" ]]; then
     info "Trying to update SpaceVim"
@@ -60,7 +67,9 @@ fetch_repo () {
     success "Successfully clone SpaceVim"
   fi
 }
+# }}}
 
+# install_vim {{{
 install_vim () {
   if [[ -f "$HOME/.vimrc" ]]; then
     mv "$HOME/.vimrc" "$HOME/.vimrc_back"
@@ -81,7 +90,9 @@ install_vim () {
     success "Installed SpaceVim for vim"
   fi
 }
+# }}}
 
+# install_package_manager {{{
 install_package_manager () {
   if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
     info "Install dein.vim"
@@ -89,7 +100,9 @@ install_package_manager () {
     success "dein.vim installation done"
   fi
 }
+# }}}
 
+# install_neovim {{{
 install_neovim () {
   if [[ -d "$HOME/.config/nvim" ]]; then
     if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
@@ -105,7 +118,9 @@ install_neovim () {
     success "Installed SpaceVim for neovim"
   fi
 }
+# }}}
 
+# uninstall_vim {{{
 uninstall_vim () {
   if [[ -d "$HOME/.vim" ]]; then
     if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
@@ -122,7 +137,9 @@ uninstall_vim () {
     success "Recover from $HOME/.vimrc_back"
   fi
 }
+# }}}
 
+# uninstall_neovim {{{
 uninstall_neovim () {
   if [[ -d "$HOME/.config/nvim" ]]; then
     if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
@@ -135,7 +152,9 @@ uninstall_neovim () {
     fi
   fi
 }
+# }}}
 
+# check_requirements {{{
 check_requirements () {
   info "Checking Requirements for SpaceVim"
   if hash "git" &>/dev/null; then
@@ -171,7 +190,9 @@ check_requirements () {
   info "Checking true colors support in terminal:"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
 }
+# }}}
 
+# usage {{{
 usage () {
   echo "SpaceVim install script : V ${Version}"
   echo ""
@@ -201,9 +222,43 @@ usage () {
   echo ""
   echo "        curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall"
 }
+# }}}
 
+# install_done {{{
 
+install_done () {
+  echo ""
+  echo "Almost done!"
+  echo "=============================================================================="
+  echo "==        Open Vim and it will install the plugins automatically           =="
+  echo "=============================================================================="
+  echo ""
+  echo "That's it. Thanks for installing SpaceVim. Enjoy!"
+  echo ""
+}
 
+# }}}
+
+# welcome {{{
+
+welcome () {
+  echo "        /######                                     /##    /##/##             "
+  echo "       /##__  ##                                   | ##   | #|__/             "
+    echo "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+    echo "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+    echo "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+    echo "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+    echo "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+    echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+    echo "               | ##                                                           "
+    echo "               | ##                                                           "
+    echo "               |__/                                                           "
+  echo "                      version : 0.7.0-dev       by : spacevim.org             "
+}
+
+# }}}
+
+# download_font {{{
 download_font () {
   url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
   path="$HOME/.local/share/fonts/$1"
@@ -217,6 +272,9 @@ download_font () {
   fi
 }
 
+# }}}
+
+# install_fonts {{{
 install_fonts () {
   if [[ ! -d "$HOME/.local/share/fonts" ]]; then
     mkdir -p $HOME/.local/share/fonts
@@ -245,62 +303,67 @@ install_fonts () {
     mkfontdir "$HOME/.local/share/fonts"
     mkfontscale "$HOME/.local/share/fonts"
   fi
-
-  echo ""
-  echo "Almost done!"
-  echo "=============================================================================="
-  echo "==        Open Vim and it will install the plugins automatically           =="
-  echo "=============================================================================="
-  echo ""
-  echo "That's it. Thanks for installing SpaceVim. Enjoy!"
-  echo ""
+  echo "Done!"
 }
 
-if [ $# -gt 0 ]
-then
-  case $1 in
-    --uninstall|-u)
-      info "Trying to uninstall SpaceVim"
-      uninstall_vim
-      uninstall_neovim
-      exit 0
-      ;;
-    --checkRequirements|-c)
-      check_requirements
-      exit 0
-      ;;
-    --install|-i)
-      need_cmd 'git'
-      fetch_repo
-      if [ $# -eq 2 ]
-      then
-        case $2 in
-          neovim)
-            install_neovim
-            exit 0
-            ;;
-          vim)
-            install_vim
-            exit 0
-        esac
-      fi
-      install_vim
-      install_neovim
-      exit 0
-      ;;
-    --help|-h)
-      usage
-      exit 0
-      ;;
-    --version|-v)
-      msg "${Version}"
-      exit 0
-  esac
-fi
-# if no argv, installer will install SpaceVim
-need_cmd 'git'
-fetch_repo
-install_vim
-install_neovim
-install_package_manager
-install_fonts
+# }}}
+
+### main {{{
+main () {
+  if [ $# -gt 0 ]
+  then
+    case $1 in
+      --uninstall|-u)
+        info "Trying to uninstall SpaceVim"
+        uninstall_vim
+        uninstall_neovim
+        exit 0
+        ;;
+      --checkRequirements|-c)
+        check_requirements
+        exit 0
+        ;;
+      --install|-i)
+        need_cmd 'git'
+        fetch_repo
+        if [ $# -eq 2 ]
+        then
+          case $2 in
+            neovim)
+              install_neovim
+              exit 0
+              ;;
+            vim)
+              install_vim
+              exit 0
+          esac
+        fi
+        install_vim
+        install_neovim
+        exit 0
+        ;;
+      --help|-h)
+        usage
+        exit 0
+        ;;
+      --version|-v)
+        msg "${Version}"
+        exit 0
+    esac
+  else
+    welcome
+    need_cmd 'git'
+    fetch_repo
+    install_vim
+    install_neovim
+    install_package_manager
+    install_fonts
+    install_done
+  fi
+}
+
+# }}}
+
+main $@
+
+# vim:set foldenable foldmethod=marker:
