@@ -368,18 +368,18 @@ install_fonts () {
   download_font "mtextra.ttf"
   download_font "symbol.ttf"
   download_font "wingding.ttf"
-  echo -n "Updating font cache... "
+  info "Updating font cache, please wait ..."
   if [ $System == "Darwin" ];then
     if [ ! -e "$HOME/Library/Fonts" ];then
       mkdir "$HOME/Library/Fonts"
     fi 
     cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
   else
-    fc-cache -fv
-    mkfontdir "$HOME/.local/share/fonts"
-    mkfontscale "$HOME/.local/share/fonts"
+    fc-cache -fv > /dev/null
+    mkfontdir "$HOME/.local/share/fonts" > /dev/null
+    mkfontscale "$HOME/.local/share/fonts" > /dev/null
   fi
-  echo "Done!"
+  success "font cache done!"
 }
 
 # }}}
