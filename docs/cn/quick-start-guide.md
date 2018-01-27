@@ -18,11 +18,9 @@ lang: cn
 
 ## 依赖
 
-At a minimum, SpaceVim requires `git` and `wget` to be installed. These tools
-are needed for downloading plugins and fonts.
+安装 SpaceVim 及其插件需要用到 `git` 命令。
 
-If you are new to vim, you should learning about Vim in general, read
-[vim-galore](https://github.com/mhinz/vim-galore).
+如果你初次接触 vim，你可以阅读一下 [vim 基础教程](https://github.com/wsdjeg/vim-galore-zh_cn/blob/master/README.md)
 
 ## 安装
 
@@ -32,9 +30,9 @@ If you are new to vim, you should learning about Vim in general, read
 curl -sLf https://spacevim.org/cn/install.sh | bash
 ```
 
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
+安装结束后，初次打开 `vim` 或者 `gvim` 时， SpaceVim 会**自动**下载并安装插件。
 
-For more info about the install script, please check:
+如果需要获取安装脚本的帮助信息，可以执行如下命令，包括定制安装、更新和卸载等。
 
 ```bash
 curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
@@ -42,4 +40,4 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 
 ### Windows
 
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
