@@ -393,6 +393,7 @@ main () {
         info "Trying to uninstall SpaceVim"
         uninstall_vim
         uninstall_neovim
+        echo_with_color ${BWhite} "Thanks!"
         exit 0
         ;;
       --checkRequirements|-c)

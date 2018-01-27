@@ -309,12 +309,12 @@ usage () {
 
 install_done () {
   echo_with_color ${Yellow} ""
-  echo_with_color ${Yellow} "Almost done!"
+  echo_with_color ${Yellow} "安装已完成!"
   echo_with_color ${Yellow} "=============================================================================="
-  echo_with_color ${Yellow} "==    Open Vim or Neovim and it will install the plugins automatically      =="
+  echo_with_color ${Yellow} "==               打开 Vim 或 Neovim，所有插件将会自动安装                   =="
   echo_with_color ${Yellow} "=============================================================================="
   echo_with_color ${Yellow} ""
-  echo_with_color ${Yellow} "That's it. Thanks for installing SpaceVim. Enjoy!"
+  echo_with_color ${Yellow} "感谢支持 SpaceVim，欢迎反馈！"
   echo_with_color ${Yellow} ""
 }
 
@@ -324,8 +324,8 @@ install_done () {
 
 
 welcome () {
-  echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
-  echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
+    echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
+    echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
     echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
     echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
     echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
@@ -335,7 +335,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-  echo_with_color ${Yellow} "                      version : 0.7.0-dev       by : spacevim.org             "
+    echo_with_color ${Yellow} "                    版本 : 0.7.0-dev  中文官网 : https://spacevim.org/cn/     "
 }
 
 # }}}
@@ -346,11 +346,11 @@ download_font () {
   path="$HOME/.local/share/fonts/$1"
   if [[ -f "$path" ]]
   then
-    success "Downloaded $1"
+    success "已下载 $1"
   else
-    info "Downloading $1"
+    info "正在下载 $1"
     curl -s -o "$path" "$url"
-    success "Downloaded $1"
+    success "已下载 $1"
   fi
 }
 
@@ -374,7 +374,7 @@ install_fonts () {
   download_font "mtextra.ttf"
   download_font "symbol.ttf"
   download_font "wingding.ttf"
-  info "Updating font cache, please wait ..."
+  info "正在构建字体缓存，请稍等..."
   if [ $System == "Darwin" ];then
     if [ ! -e "$HOME/Library/Fonts" ];then
       mkdir "$HOME/Library/Fonts"
@@ -385,7 +385,7 @@ install_fonts () {
     mkfontdir "$HOME/.local/share/fonts" > /dev/null
     mkfontscale "$HOME/.local/share/fonts" > /dev/null
   fi
-  success "font cache done!"
+  success "字体安装已完成!"
 }
 
 # }}}
@@ -396,9 +396,10 @@ main () {
   then
     case $1 in
       --uninstall|-u)
-        info "Trying to uninstall SpaceVim"
+        info "正在卸载 SpaceVim..."
         uninstall_vim
         uninstall_neovim
+        echo_with_color ${BWhite} "感谢体验 SpaceVim，期待再次回来..."
         exit 0
         ;;
       --checkRequirements|-c)
