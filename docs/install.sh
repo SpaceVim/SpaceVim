@@ -212,7 +212,7 @@ download_font () {
         success "Downloaded $1"
     else
         info "Downloading $1"
-        wget -q -O "$path" "$url"
+        curl -s -o "$path" "$url"
         success "Downloaded $1"
     fi
 }
