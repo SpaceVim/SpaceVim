@@ -72,14 +72,24 @@ function! s:string2chars(str) abort
 endfunction
 let s:file['string2chars'] = function('s:string2chars')
 
-function! s:strAllIndex(str, need) abort
-  let rst = []
+function! s:strAllIndex(str, need, use_expr) abort
+  if a:use_expr
+    let rst = []
+    let idx = matchstrpos(a:str, a:need)
+    while idx[1] != -1
+      call add(rst, [idx[1], idx[2]])
+      let idx = matchstrpos(a:str, a:need, idx[2])
+    endwhile
+    return rst
+  else
+    let rst = []
     let idx = match(a:str, "\\<" . a:need . "\\>")
-  while idx != -1
-    call add(rst, idx)
-    let idx = match(a:str, "\\<" . a:need . "\\>", idx + 1 + len(a:need))
-  endwhile
-  return rst
+    while idx != -1
+      call add(rst, [idx, idx+len(a:need)])
+      let idx = match(a:str, "\\<" . a:need . "\\>", idx + 1 + len(a:need))
+    endwhile
+    return rst
+  endif
 endfunction
 let s:file['strAllIndex'] = function('s:strAllIndex')
 

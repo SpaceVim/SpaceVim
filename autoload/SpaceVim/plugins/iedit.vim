@@ -56,11 +56,17 @@ function! SpaceVim#plugins#iedit#start(...)
   let curpos = getcurpos()
   let argv = get(a:000, 0, '')
   let save_reg_k = @k
+  let use_expr = 0
   if argv == 1
     normal! gv"ky
     let symbol = split(@k, "\n")[0]
-  elseif !empty(argv) && type(argv) == 1
-    let symbol = argv
+  elseif !empty(argv) && type(argv) == 4
+    if has_key(argv, 'expr')
+      let use_expr = 1
+      let symbol = argv.expr
+    elseif has_key(argv, 'word')
+      let symbol = argv.word
+    endif
   else
     normal! viw"ky
     let symbol = split(@k, "\n")[0]
@@ -69,7 +75,11 @@ function! SpaceVim#plugins#iedit#start(...)
   call setpos('.', curpos)
   let begin = get(a:000, 1, 1)
   let end = get(a:000, 2, line('$'))
-  call s:parse_symbol(begin, end, symbol)
+  if use_expr
+    call s:parse_symbol(begin, end, symbol, 1)
+  else
+    call s:parse_symbol(begin, end, symbol)
+  endif
   call s:highlight_cursor()
   redrawstatus!
   while s:mode != ''
@@ -241,24 +251,25 @@ function! s:handle_insert(char) abort
   silent! call s:highlight_cursor()
 endfunction
 
-function! s:parse_symbol(begin, end, symbol) abort
+function! s:parse_symbol(begin, end, symbol, ...) abort
+  let use_expr = get(a:000, 0, 0)
   let len = len(a:symbol)
   let cursor = [line('.'), col('.')]
   for l in range(a:begin, a:end)
     let line = getline(l)
-    let idx = s:STRING.strAllIndex(line, a:symbol)
-    for pos_c in idx
-      call add(s:stack, [l, pos_c + 1, len])
-      if len(idx) > 1 && l == cursor[0] && pos_c + 1 <= cursor[1] && pos_c + 1 + len >= cursor[1]
+    let idx = s:STRING.strAllIndex(line, a:symbol, use_expr)
+    for [pos_a, pos_b] in idx
+      call add(s:stack, [l, pos_a + 1, pos_b + 1])
+      if len(idx) > 1 && l == cursor[0] && pos_a + 1 <= cursor[1] && pos_a + 1 + len >= cursor[1]
         let s:index = len(s:stack) - 1
-        if pos_c + 1 < cursor[1]
-          let s:symbol_begin = line[pos_c : cursor[1] - 2]
+        if pos_a + 1 < cursor[1]
+          let s:symbol_begin = line[pos_a : cursor[1] - 2]
         else
           let s:symbol_begin = ''
         endif
         let s:symbol_cursor = line[ cursor[1] - 1 : cursor[1] - 1]
-        if pos_c + 1 + len > cursor[1]
-          let s:symbol_end = line[ cursor[1] : pos_c + len - 1]
+        if pos_a + 1 + len > cursor[1]
+          let s:symbol_end = line[ cursor[1] : pos_a + len - 1]
         else
           let s:symbol_end = ''
         endif

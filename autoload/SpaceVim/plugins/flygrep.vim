@@ -125,7 +125,7 @@ function! s:start_replace() abort
   endtr
   redrawstatus
   let replace_text = s:current_grep_pattern
-  call SpaceVim#plugins#iedit#start(replace_text)
+  call SpaceVim#plugins#iedit#start({'expr' : replace_text})
 endfunction
 " }}}
 
