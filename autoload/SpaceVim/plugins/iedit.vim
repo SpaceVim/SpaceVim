@@ -35,9 +35,9 @@ function! s:highlight_cursor() abort
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  for pos in s:stack
-    call matchaddpos('Underlined', [pos])
-    call matchadd('SpaceVimGuideCursor', '\%' . pos[0] . 'l\%' . (pos[1] + len(s:symbol_begin)) . 'c', 99999)
+  for i in range(len(s:stack))
+    call matchaddpos('Underlined', s:stack[i])
+    call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
 endfunction
 
@@ -57,16 +57,16 @@ function! SpaceVim#plugins#iedit#start(...)
   let argv = get(a:000, 0, '')
   let save_reg_k = @k
   let use_expr = 0
-  if argv == 1
-    normal! gv"ky
-    let symbol = split(@k, "\n")[0]
-  elseif !empty(argv) && type(argv) == 4
+  if !empty(argv) && type(argv) == 4
     if has_key(argv, 'expr')
       let use_expr = 1
       let symbol = argv.expr
     elseif has_key(argv, 'word')
       let symbol = argv.word
     endif
+  elseif type(argv) == 0 && argv == 1
+    normal! gv"ky
+    let symbol = split(@k, "\n")[0]
   else
     normal! viw"ky
     let symbol = split(@k, "\n")[0]
@@ -143,17 +143,23 @@ function! s:handle_normal(char) abort
     let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
     redrawstatus!
   elseif a:char == "\<Left>"
-    let s:symbol_end = s:symbol_cursor . s:symbol_end
-    let s:symbol_cursor = matchstr(s:symbol_begin, '.$')
-    let s:symbol_begin = substitute(s:symbol_begin, '.$', '', 'g')  
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+    endfor
   elseif a:char == "\<Right>"
-    let s:symbol_begin = s:symbol_begin . s:symbol_cursor
-    let s:symbol_cursor = matchstr(s:symbol_end, '^.')
-    let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
   elseif a:char == 48 " 0
-    let s:symbol_end = substitute(s:symbol_begin . s:symbol_cursor . s:symbol_end, '^.', '', 'g')
-    let s:symbol_cursor = matchstr(s:symbol_begin, '^.')
-    let s:symbol_begin = ''
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '^.')
+      let s:cursor_stack[i].end = ''
+    endfor
   elseif a:char == 36 " $
     let s:symbol_begin = substitute(s:symbol_begin . s:symbol_cursor . s:symbol_end, '.$', '', 'g')
     let s:symbol_cursor = matchstr(s:symbol_end, '.$')
@@ -250,7 +256,6 @@ function! s:handle_insert(char) abort
   call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
   silent! call s:highlight_cursor()
 endfunction
-
 function! s:parse_symbol(begin, end, symbol, ...) abort
   let use_expr = get(a:000, 0, 0)
   let len = len(a:symbol)
@@ -259,31 +264,22 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let line = getline(l)
     let idx = s:STRING.strAllIndex(line, a:symbol, use_expr)
     for [pos_a, pos_b] in idx
-      call add(s:stack, [l, pos_a + 1, pos_b + 1])
+      call add(s:stack, [l, pos_a + 1, pos_b - pos_a])
       if len(idx) > 1 && l == cursor[0] && pos_a + 1 <= cursor[1] && pos_a + 1 + len >= cursor[1]
         let s:index = len(s:stack) - 1
-        if pos_a + 1 < cursor[1]
-          let s:symbol_begin = line[pos_a : cursor[1] - 2]
-        else
-          let s:symbol_begin = ''
-        endif
-        let s:symbol_cursor = line[ cursor[1] - 1 : cursor[1] - 1]
-        if pos_a + 1 + len > cursor[1]
-          let s:symbol_end = line[ cursor[1] : pos_a + len - 1]
-        else
-          let s:symbol_end = ''
-        endif
       endif
+      call add(s:cursor_stack, 
+            \ {
+            \ 'begin' : line[pos_a : pos_b - 1],
+            \ 'cursor' : line[pos_b : pos_b],
+            \ 'end' : '',
+            \ }
+            \ )
     endfor
   endfor
-  if empty(s:symbol_begin) && empty(s:symbol_cursor) && empty(s:symbol_end) && !empty(s:stack)
-    let item = s:stack[0]
-    let line = getline(item[0])
-    let pos_c = item[1]
-    let len = item[2]
-    let s:symbol_begin = ''
-    let s:symbol_cursor = line[pos_c : pos_c]
-    let s:symbol_end = line[ pos_c : pos_c + len - 1]
+  if s:index == -1 && !empty(s:stack)
+    let s:index = 0
+    call cursor(s:stack[0][0], s:stack[0][1])
   endif
 endfunction
 
