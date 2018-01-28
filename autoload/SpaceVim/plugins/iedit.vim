@@ -54,18 +54,19 @@ function! SpaceVim#plugins#iedit#start(...)
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
   let curpos = getcurpos()
+  let argv = get(a:000, 0, '')
   let save_reg_k = @k
-  if get(a:000, 0, 0) == 1
+  if argv == 1
     normal! gv"ky
-  elseif get(a:000, 0, 0) == 2
+    let symbol = split(@k, "\n")[0]
+  elseif !empty(argv) && type(argv) == 1
+    let symbol = argv
   else
     normal! viw"ky
+    let symbol = split(@k, "\n")[0]
   endif
-  call setpos('.', curpos)
-  let symbol = split(@k, "\n")[0]
   let @k = save_reg_k
-  echomsg string(a:000)
-  echom symbol
+  call setpos('.', curpos)
   let begin = get(a:000, 1, 1)
   let end = get(a:000, 2, line('$'))
   call s:parse_symbol(begin, end, symbol)
@@ -248,7 +249,7 @@ function! s:parse_symbol(begin, end, symbol) abort
     let idx = s:STRING.strAllIndex(line, a:symbol)
     for pos_c in idx
       call add(s:stack, [l, pos_c + 1, len])
-      if l == cursor[0] && pos_c + 1 <= cursor[1] && pos_c + 1 + len >= cursor[1]
+      if len(idx) > 1 && l == cursor[0] && pos_c + 1 <= cursor[1] && pos_c + 1 + len >= cursor[1]
         let s:index = len(s:stack) - 1
         if pos_c + 1 < cursor[1]
           let s:symbol_begin = line[pos_c : cursor[1] - 2]
@@ -264,6 +265,15 @@ function! s:parse_symbol(begin, end, symbol) abort
       endif
     endfor
   endfor
+  if empty(s:symbol_begin) && empty(s:symbol_cursor) && empty(s:symbol_end) && !empty(s:stack)
+    let item = s:stack[0]
+    let line = getline(item[0])
+    let pos_c = item[1]
+    let len = item[2]
+    let s:symbol_begin = ''
+    let s:symbol_cursor = line[pos_c : pos_c]
+    let s:symbol_end = line[ pos_c : pos_c + len - 1]
+  endif
 endfunction
 
 
