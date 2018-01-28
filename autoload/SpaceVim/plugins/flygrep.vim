@@ -64,6 +64,8 @@ let s:MPT._handle_fly = function('s:flygrep')
 " @vimlint(EVL103, 0, a:timer)
 let s:filter_file = ''
 function! s:start_filter() abort
+  let s:mode = 'f'
+  redrawstatus
   let s:MPT._handle_fly = function('s:filter')
   let s:MPT._prompt = {
         \ 'mpt' : s:MPT._prompt.mpt,
@@ -113,12 +115,14 @@ function! s:get_filter_cmd(expr) abort
 endfunction
 " }}}
 
+let s:mode = ''
 " replace local funcs {{{
 function! s:start_replace() abort
+  let s:mode = 'r'
+  redrawstatus
   let replace_text = s:current_grep_pattern
   let save_reg_k = @k
   let @k = replace_text
-  setl ft=text
   call SpaceVim#plugins#iedit#start(2)
   let @k = save_reg_k
 endfunction
@@ -335,4 +339,9 @@ function! SpaceVim#plugins#flygrep#lineNr() abort
     return line('.') . '/' . line('$')
   endif
 endfunction
+
+function! SpaceVim#plugins#flygrep#mode()
+  return empty(s:mode) ? '' : '(' . s:mode . ')'
+endfunction
+
 " }}}
