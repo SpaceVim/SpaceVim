@@ -7,3 +7,5 @@ Execute ( SpaceVim api: data#list ):
   AssertEqual str.fill_middle('s b', 10), '   s b    '
   AssertEqual str.string2chars(' s b '), [' ', 's', ' ', 'b', ' ']
   AssertEqual str.strAllIndex('hello spacevim hello', 'hello', 0), [[0, 5], [15, 20]]
+  AssertEqual str.strAllIndex('hello spacevim hello', 'he.*', 1), [[0, 20]]
+  AssertEqual str.strAllIndex('hello spacevim hello', 'he[^ ]*', 1), [[0, 5], [15, 20]]
