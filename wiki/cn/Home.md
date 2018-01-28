@@ -1,25 +1,17 @@
 欢迎来到 <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> **SpaceVim** 维基, 一个关于 SpaceVim的资源导航!
 
-- [Introduction](Introduction)  
-- **[FAQ](FAQ)**
-- [Progress/Roadmap](Progress)
-- [Features](Features)
-- [Project layout](project_layout)
+- [简介](Introduction)  
+- [特性](Features)
 
-## Users
+## 用户
 
-- [Documentation](https://spacevim.org/documentation)
-    - [Quick start guide](quick-start-guide)
-- [Getting Help](getting-help)
-- [Install](Installing-SpaceVim)
-- [Update](Update)
-- [Community](http://spacevim.org/community/)
+- [用户文档](https://spacevim.org/documentation)
+    - [快速入门](quick-start-guide)
+- [获取帮助](getting-help)
+- [安装](Installing-SpaceVim)
+- [更新](Update)
+- [社区](http://spacevim.org/community/)
 
-## Developers
+## 开发者
 
-the wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory automatically, if you want to contribute to the wiki, please use pull request.
-
-- [Support SpaceVim](support-spacevim)
-    - [contribute to SpaceVim](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
-    - [Write post about SpaceVim](write-post-about-spacevim)
-- [Credits & Thanks](credits--thanks)
+这一wiki是通过 [`wiki/cn/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki/cn) 目录自动生成的, 如果你想更新wiki，可以像主仓库提交 PR。
