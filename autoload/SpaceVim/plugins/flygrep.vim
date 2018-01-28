@@ -119,6 +119,10 @@ let s:mode = ''
 " replace local funcs {{{
 function! s:start_replace() abort
   let s:mode = 'r'
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtr
   redrawstatus
   let replace_text = s:current_grep_pattern
   call SpaceVim#plugins#iedit#start(replace_text)
