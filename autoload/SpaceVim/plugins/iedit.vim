@@ -144,9 +144,11 @@ function! s:handle_normal(char) abort
     redrawstatus!
   elseif a:char == "\<Left>"
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      if !empty(s:cursor_stack[i].begin)
+        let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      endif
     endfor
   elseif a:char == "\<Right>"
     for i in range(len(s:cursor_stack))
@@ -158,7 +160,7 @@ function! s:handle_normal(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '^.')
-      let s:cursor_stack[i].end = ''
+      let s:cursor_stack[i].begin = ''
     endfor
   elseif a:char == 36 " $
     let s:symbol_begin = substitute(s:symbol_begin . s:symbol_cursor . s:symbol_end, '.$', '', 'g')
