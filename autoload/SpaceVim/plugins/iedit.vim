@@ -36,7 +36,7 @@ function! s:highlight_cursor() abort
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   for i in range(len(s:stack))
-    call matchaddpos('Underlined', s:stack[i])
+    call matchaddpos('Underlined', [s:stack[i]])
     call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
 endfunction
@@ -270,8 +270,8 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
       endif
       call add(s:cursor_stack, 
             \ {
-            \ 'begin' : line[pos_a : pos_b - 1],
-            \ 'cursor' : line[pos_b : pos_b],
+            \ 'begin' : line[pos_a : pos_b - 2],
+            \ 'cursor' : line[pos_b - 1 : pos_b - 1],
             \ 'end' : '',
             \ }
             \ )
