@@ -121,10 +121,7 @@ function! s:start_replace() abort
   let s:mode = 'r'
   redrawstatus
   let replace_text = s:current_grep_pattern
-  let save_reg_k = @k
-  let @k = replace_text
-  call SpaceVim#plugins#iedit#start(2)
-  let @k = save_reg_k
+  call SpaceVim#plugins#iedit#start(replace_text)
 endfunction
 " }}}
 
