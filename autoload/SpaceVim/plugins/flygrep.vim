@@ -16,7 +16,8 @@ let s:grepid = 0
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let cmd = s:get_search_cmd(join(split(s:grep_expr), '.*'))
+  let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
@@ -109,6 +110,17 @@ endfunction
 function! s:get_filter_cmd(expr) abort
   let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
   return cmd + [a:expr] + [s:filter_file]
+endfunction
+" }}}
+
+" replace local funcs {{{
+function! s:start_replace() abort
+  let replace_text = s:current_grep_pattern
+  let save_reg_k = @k
+  let @k = replace_text
+  setl ft=text
+  call SpaceVim#plugins#iedit#start(2)
+  let @k = save_reg_k
 endfunction
 " }}}
 
@@ -260,6 +272,7 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
+      \ "\<C-r>" : function('s:start_replace'),
       \ }
 
 if has('nvim')
@@ -284,7 +297,7 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
-  noautocmd rightbelow split __flygrep__
+  rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=

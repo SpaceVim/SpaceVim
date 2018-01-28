@@ -57,6 +57,7 @@ function! SpaceVim#plugins#iedit#start(...)
   let save_reg_k = @k
   if get(a:000, 0, 0) == 1
     normal! gv"ky
+  elseif get(a:000, 0, 0) == 2
   else
     normal! viw"ky
   endif
