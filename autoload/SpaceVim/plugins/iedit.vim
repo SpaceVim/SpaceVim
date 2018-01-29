@@ -22,10 +22,10 @@ let s:cursor_stack = []
 function! s:highlight_cursor() abort
   let info = {
         \ 'name' : 'SpaceVimGuideCursor',
-        \ 'guibg' : sssynIDattr(ssynIDtrans(ssynID(line('.'), col('.'), 1)), 'guifg'),
-        \ 'guifg' : sssynIDattr(ssynIDtrans(ssynID(line('.'), col('.'), 1)), 'guibg'),
-        \ 'ctermbg' : sssynIDattr(ssynIDtrans(ssynID(line('.'), col('.'), 1)), 'ctermfg'),
-        \ 'ctermfg' : sssynIDattr(ssynIDtrans(ssynID(line('.'), col('.'), 1)), 'ctermbg'),
+        \ 'guibg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guifg'),
+        \ 'guifg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guibg'),
+        \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
+        \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
