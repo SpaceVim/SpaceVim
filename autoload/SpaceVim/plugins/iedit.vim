@@ -169,10 +169,13 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = ''
     endfor
   elseif a:char == 68 " D
-    let s:symbol_begin = ''
-    let s:symbol_cursor = ''
-    let s:symbol_end = ''
-    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = ''
+      let s:cursor_stack[i].cursor = ''
+      let s:cursor_stack[i].end = ''
+      let s:stack[i][2] = 0
+    endfor
+    call s:replace_symbol()
   elseif a:char == 112 " p
     let s:symbol_begin = @"
     let s:symbol_cursor = ''
@@ -289,37 +292,21 @@ endfunction
 
 
 " TODO current only support one line symbol
-function! s:replace_symbol(symbol) abort
-  let lines = split(a:symbol, "\n")
-  if len(lines) > 1
-    let len = len(s:stack)
-    for idx in range(len)
-      let pos = s:stack[len-1-idx]
-      let line = getline(pos[0])
-      if pos[1] == 1
-        let begin = ''
+function! s:replace_symbol() abort
+  let line = 0
+  let pre = ''
+  for i in range(len(s:stack))
+    if s:stack[i][0] != line
+      call setline(line, pre)
+      let line = s:stack[i][0]
+      let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+    else
+      if i == 0
+        let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       else
-        let begin = line[:pos[1] - 2]
+        let pre .= getline(line)[s:stack[i-1][1] + s:stack[i-1][2] : s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       endif
-      let end = line[pos[1] + pos[2]:]
-      let line = begin . lines[0] . end
-      call setline(pos[0], line)
-      let s:stack[len-1-idx][2] = len(lines[0])
-    endfor
-  else
-    let len = len(s:stack)
-    for idx in range(len)
-      let pos = s:stack[len-1-idx]
-      let line = getline(pos[0])
-      if pos[1] == 1
-        let begin = ''
-      else
-        let begin = line[:pos[1] - 2]
-      endif
-      let end = line[pos[1] + pos[2] - 1:]
-      let line = begin . a:symbol . end
-      call setline(pos[0], line)
-      let s:stack[len-1-idx][2] = len(a:symbol)
-    endfor
-  endif
+    endif
+  endfor
+  call setline(line, pre)
 endfunction
