@@ -189,6 +189,31 @@ endfunction
 
 let s:file['ls'] = function('s:ls')
 
+"
+" {
+" 'filename' : {
+"                 line1 : content,
+"                 line2 : content,
+"              } 
+" }
+function! s:updatefiles(files) abort
+  let failed = []
+  for fname in keys(a:files)
+    let buffer = readfile(fname)
+    for line in keys(a:files[fname])
+      let buffer[line - 1] = a:files[fname][line]
+    endfor
+    try
+      call writefile(buffer, fname, 'b')
+    catch 
+      call add(failed, fname)
+    endtry
+  endfor
+  return failed
+endfunction
+
+let s:file['updateFiles'] = function('s:updatefiles')
+
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)
 endfunction
