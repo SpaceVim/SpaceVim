@@ -13,12 +13,6 @@ let s:mode = ''
 let s:hi_id = ''
 let s:Operator = ''
 
-" prompt
-
-let s:symbol_begin = ''
-let s:symbol_cursor = ''
-let s:symbol_end = ''
-
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 
@@ -138,9 +132,11 @@ function! s:handle_normal(char) abort
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
-    let s:symbol_begin = s:symbol_begin . s:symbol_cursor
-    let s:symbol_cursor = matchstr(s:symbol_end, '^.')
-    let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
     redrawstatus!
   elseif a:char == "\<Left>"
     for i in range(len(s:cursor_stack))
@@ -173,23 +169,26 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].begin = ''
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
-      let s:stack[i][2] = 0
     endfor
     call s:replace_symbol()
   elseif a:char == 112 " p
-    let s:symbol_begin = @"
-    let s:symbol_cursor = ''
-    let s:symbol_end = ''
-    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = @"
+      let s:cursor_stack[i].cursor = ''
+      let s:cursor_stack[i].end = ''
+    endfor
+    call s:replace_symbol()
   elseif a:char == 83 " S
-    let s:symbol_begin = ''
-    let s:symbol_cursor = ''
-    let s:symbol_end = ''
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = ''
+      let s:cursor_stack[i].cursor = ''
+      let s:cursor_stack[i].end = ''
+    endfor
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
-    call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+    call s:replace_symbol()
   elseif a:char == 71 " G
     exe s:stack[-1][0]
   elseif a:char == 103 "g
@@ -206,14 +205,14 @@ function! s:handle_normal(char) abort
     else
       let s:index += 1
     endif
-    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:symbol_begin))
+    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
   elseif a:char == 78 " N
     if s:index == 0
       let s:index = len(s:stack) - 1
     else
       let s:index -= 1
     endif
-    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:symbol_begin))
+    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
   endif
   silent! call s:highlight_cursor()
 endfunction
@@ -242,25 +241,39 @@ function! s:handle_insert(char) abort
     redraw!
     redrawstatus!
     return
-  elseif a:char == 23
-    let s:symbol_begin = ''
-  elseif a:char == 11
-    let s:symbol_cursor = ''
-    let s:symbol_end = ''
+  elseif a:char == 23  " <c-w>
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = ''
+    endfor
+  elseif a:char == 11 " <c-k>
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = ''
+      let s:cursor_stack[i].end = ''
+    endfor
   elseif a:char == "\<bs>"
-    let s:symbol_begin = substitute(s:symbol_begin, '.$', '', 'g')
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+    endfor
   elseif a:char == "\<Left>"
-    let s:symbol_end = s:symbol_cursor . s:symbol_end
-    let s:symbol_cursor = matchstr(s:symbol_begin, '.$')
-    let s:symbol_begin = substitute(s:symbol_begin, '.$', '', 'g')  
+    for i in range(len(s:cursor_stack))
+      if !empty(s:cursor_stack[i].begin)
+        let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      endif
+    endfor
   elseif a:char == "\<Right>"
-    let s:symbol_begin = s:symbol_begin . s:symbol_cursor
-    let s:symbol_cursor = matchstr(s:symbol_end, '^.')
-    let s:symbol_end = substitute(s:symbol_end, '^.', '', 'g')
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
   else
-    let s:symbol_begin .=  nr2char(a:char)
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin .=  nr2char(a:char)
+    endfor
   endif
-  call s:replace_symbol(s:symbol_begin . s:symbol_cursor . s:symbol_end)
+  call s:replace_symbol()
   silent! call s:highlight_cursor()
 endfunction
 function! s:parse_symbol(begin, end, symbol, ...) abort
@@ -295,12 +308,18 @@ endfunction
 function! s:replace_symbol() abort
   let line = 0
   let pre = ''
+  let idxs = []
   for i in range(len(s:stack))
     if s:stack[i][0] != line
       call setline(line, pre)
+      for [idx, len] in idxs
+        let s:stack[idx][2] = len
+      endfor
+      let idxs = []
       let line = s:stack[i][0]
       let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
+      call add(idxs, [i, s:stack[i][2]])
       if i == 0
         let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       else
@@ -309,4 +328,7 @@ function! s:replace_symbol() abort
     endif
   endfor
   call setline(line, pre)
+  for [idx, len] in idxs
+    let s:stack[idx][2] = len
+  endfor
 endfunction
