@@ -31,6 +31,5 @@ elif [ "$LINT" = "vader" ]; then
   codecov -X search gcov pycov -f coverage.xml
 elif [ "$LINT" = "jekyll" ]; then
   .ci/build-production
-  tree docs/_site
 fi
 set +x
