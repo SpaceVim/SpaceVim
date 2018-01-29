@@ -317,7 +317,9 @@ function! s:replace_symbol() abort
       endfor
       let idxs = []
       let line = s:stack[i][0]
-      let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+      let begin = s:stack[i][1] == 0 ? '' : getline(line)[:s:stack[i][1] - 1]
+      echom begin
+      let pre =  begin . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
       call add(idxs, [i, s:stack[i][2]])
       if i == 0
@@ -332,3 +334,6 @@ function! s:replace_symbol() abort
     let s:stack[idx][2] = len
   endfor
 endfunction
+
+
+" vim:set et sw=2 cc=80 nowrap:
