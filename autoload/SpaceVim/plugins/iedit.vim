@@ -311,6 +311,11 @@ function! s:replace_symbol() abort
   let idxs = []
   for i in range(len(s:stack))
     if s:stack[i][0] != line
+      if !empty(idxs)
+        let end = getline(line)[s:stack[i-1][1] + s:stack[i-1][2] - 1: ]
+        echom end
+        let pre .=  end
+      endif
       call setline(line, pre)
       for [idx, len] in idxs
         let s:stack[idx][2] = len
@@ -318,17 +323,27 @@ function! s:replace_symbol() abort
       let idxs = []
       let line = s:stack[i][0]
       let begin = s:stack[i][1] == 0 ? '' : getline(line)[:s:stack[i][1] - 1]
-      echom begin
       let pre =  begin . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
       call add(idxs, [i, s:stack[i][2]])
       if i == 0
         let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       else
-        let pre .= getline(line)[s:stack[i-1][1] + s:stack[i-1][2] : s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let a = s:stack[i-1][1] + s:stack[i-1][2] - 1
+        let b = s:stack[i][1] - 2
+        if a == b
+          let next = ''
+        else
+          let next = getline(line)[ a : b ]
+        endif
+        let pre .= next . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       endif
     endif
   endfor
+  if !empty(idxs)
+    let end = getline(line)[s:stack[i-1][1] + s:stack[i-1][2] - 1: ]
+    let pre .=  end
+  endif
   call setline(line, pre)
   for [idx, len] in idxs
     let s:stack[idx][2] = len
