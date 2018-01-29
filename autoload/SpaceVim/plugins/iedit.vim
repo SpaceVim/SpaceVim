@@ -321,7 +321,7 @@ function! s:replace_symbol() abort
       endfor
       let idxs = []
       let line = s:stack[i][0]
-      let begin = s:stack[i][1] == 0 ? '' : getline(line)[:s:stack[i][1] - 1]
+      let begin = s:stack[i][1] == 0 ? '' : getline(line)[:s:stack[i][1] - 2]
       let pre =  begin . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
       call add(idxs, [i, s:stack[i][2]])
