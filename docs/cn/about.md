@@ -4,6 +4,8 @@ description: "SpaceVim 是一个社区驱动的模块化 vim 配置，以模块�
 lang: cn
 ---
 
+# 关于我们
+
 ## 版本
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的 vim 配置，支持 vim 和 neovim。SpaceVim 
@@ -17,14 +19,12 @@ lang: cn
 
 ## 标准
 
-- Do not regress from origin
-- Decide outcomes by weighing cost and benefit
-- prefer usability over tradition if the benefits are overwhelming
-- Give usability a chance™
+- 兼容 Vim 和 Neovim，尽量确保 Vim下和 Neovim 下有相同的用户体验
+- 兼容 Vim 7.4 或者无 +py/+py3/+lua等特性的Vim
 
 ## 鸣谢
 
-- 维护者: [Wang Shidong](https://github.com/wsdjeg)
+- 开发者: [Wang Shidong](https://github.com/wsdjeg)
 - [![贡献者](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [vimdoc](https://github.com/google/vimdoc) 自动生成 vim 文档
 - [Rafael Bodill](https://github.com/rafi) 的 vim 配置
