@@ -32,35 +32,36 @@ lang: cn
 SpaceVim is an effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
 We have a few guidelines, which we ask all contributors to follow.
 
-Development happens in the GitHub repository. here is a throughput graph of the repository for the last few weeks:
+开发主要集中在 Github 仓库，针对中文用户，可以采用码云仓库，Github 仓库的内容是与码云仓库实时同步的。下面是 SpaceVim 最近几周开发的状态图。
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
-You can only consider reading the sections relevant to what you are going to do:
+你可以考虑只阅读与你将要做的相关的部分:
 
-- [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
-- [Reporting issues](#reporting-issues) if you are about to open a new issue.
-- [Contributing code](#contributing-code) if you are about to send a pull-request.
+- [技术支持](#asking-for-help) 如果你正打算询问问题.
+- [提交问题](#reporting-issues) 如果你正打算提交某些问题.
+- [贡献代码](#contributing-code) 如果你正打算提交 PR.
 
-## Asking for help
+## 技术支持
 
 If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
+如果你打算询问一个使用相关的问题，请确保你已经自行搜索过答案，因为有可能在网站或这 github issue 列表已经有你需要的答案了：
 
-- <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
-- [SpaceVim documentation](https://spacevim.org/documentation): It is the general documentation of SpaceVim.
+- <kbd>:h SpaceVim-faq</kbd>: 这是一些常见问题的答案.
+- [SpaceVim 用户文档](https://spacevim.org/cn/documentation): 这是 SpaceVim 的用户文档，包括详细的配置及使用技巧.
 
-## Reporting issues
+## 提交问题
 
-Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
+提交问题请使用 github 的 [issues tracker(限英文)](https://github.com/SpaceVim/SpaceVim/issues) 或者码云的[问题列表(限中文)](https://gitee.com/spacevim/SpaceVim/issues), 提交问题之前，请确认：
 
-- Check that there is no duplicate issue in the issues tracker, you can search for keywords in the issues tracker.
-- Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
-- Use a clear title and follow the issue template.
-- Include details on how to reproduce it, just like a step by step guide.
+- 使用关键词搜索问题列表，确认没有重复问题存在
+- 确认该问题是否可以在最新版 SpaceVim 下重现，也许近期更新已经修复了这个问题
+- 使用明确的标题并遵循问题模板.
+- 包括如何重现它的细节, 一步一步细节需要描述清楚.
 
-## Contributing code
+## 贡献代码
 
-Code contributions are welcome. Please read the following sections carefully. In any case, feel free to join us on the [gitter chat](https://gitter.im/SpaceVim/SpaceVim) to ask questions about contributing!
+非常欢迎向我们贡献代码. 请仔细阅读以下章节. 在任何情况下，随时加入我们的 [gitter（英文）](https://gitter.im/SpaceVim/SpaceVim) 或者 QQ群: {{ site.qqgroup }} 来询问关于贡献代码的问题。
 
 ### License
 
