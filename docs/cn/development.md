@@ -9,20 +9,20 @@ lang: cn
 <!-- vim-markdown-toc GFM -->
 
 - [寻求帮助](#寻求帮助)
-- [Reporting issues](#反馈错误)
-- [Contributing code](#contributing-code)
-  - [License](#license)
-  - [Conventions](#conventions)
+- [反馈问题](#反馈问题)
+- [贡献代码](#贡献代码)
+  - [证书](#证书)
+  - [公约](#公约)
   - [Pull Request](#pull-request)
-    - [Rebase your pr Branch on top of upstream master:](#rebase-your-pr-branch-on-top-of-upstream-master)
-    - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
-    - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
-  - [Contributing a layer](#contributing-a-layer)
-    - [File header](#file-header)
-    - [Author of a new layer](#author-of-a-new-layer)
-    - [Contributor to an existing layer](#contributor-to-an-existing-layer)
-    - [Contributing a keybinding](#contributing-a-keybinding)
-      - [Language specified key bindings](#language-specified-key-bindings)
+    - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
+    - [抽象化的简单 PRs(绝大多数PRs都是这样的):](#抽象化的简单-prs绝大多数prs都是这样的)
+    - [复杂的PRs (大的重构, 等):](#复杂的prs-大的重构-等)
+  - [Contributing a layer 贡献层](#contributing-a-layer-贡献层)
+    - [文件头](#文件头)
+    - [新layer的作者](#新layer的作者)
+    - [对现有的layer进行贡献](#对现有的layer进行贡献)
+    - [贡献按键绑定](#贡献按键绑定)
+      - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Changelog](#changelog)
@@ -38,9 +38,9 @@ SpaceVim 是每个志愿者的努力的结晶,我们鼓励你参与进来. Space
 
 你可以只阅读下面内容中的,你需要用到的部分:
 
-- [Asking for help](#寻求帮助)           建立issue的帮助
-- [Reporting issues](#反馈错误)          反馈问题的帮助
-- [Contributing code](#贡献代码)         建立PR的帮助
+- [Asking for help](#寻求帮助) 建立issue的帮助
+- [Reporting issues](#反馈错误) 反馈问题的帮助
+- [Contributing code](#贡献代码) 建立PR的帮助
 
 ## 寻求帮助
 
