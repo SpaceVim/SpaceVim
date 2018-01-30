@@ -20,8 +20,6 @@ function! SpaceVim#layers#checkers#plugins() abort
   return plugins
 endfunction
 
-let s:last_echoed_error = has('timers')
-
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
@@ -57,7 +55,7 @@ function! SpaceVim#layers#checkers#config() abort
     if g:spacevim_enable_neomake
       autocmd User NeomakeFinished nested
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-      if s:last_echoed_error
+      if has('timers')
         " when move cursor, the error message will be shown below current line
         " after a delay
         autocmd CursorMoved * call <SID>neomake_cursor_move_delay()
