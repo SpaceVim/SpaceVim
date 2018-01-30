@@ -29,8 +29,7 @@ lang: cn
 
 <!-- vim-markdown-toc -->
 
-SpaceVim is an effort of all the volunteers, we encourage you to pitch in. The community makes SpaceVim what it is.
-We have a few guidelines, which we ask all contributors to follow.
+SpaceVim 是所有志愿者智慧的结晶, 我们鼓励你参与进来。但是我们有一些代码规范, 我们要求所有的贡献者都要遵守。
 
 开发主要集中在 Github 仓库，针对中文用户，可以采用码云仓库，Github 仓库的内容是与码云仓库实时同步的。下面是 SpaceVim 最近几周开发的状态图。
 
@@ -63,67 +62,70 @@ If you want to ask an usage question, be sure to look first into some places as 
 
 非常欢迎向我们贡献代码. 请仔细阅读以下章节. 在任何情况下，随时加入我们的 [gitter（英文）](https://gitter.im/SpaceVim/SpaceVim) 或者 QQ群: {{ site.qqgroup }} 来询问关于贡献代码的问题。
 
-### License
+### 许可
 
-The license is MIT for all the parts of SpaceVim. this includes:
+SpaceVim 所有部分采用 MIT 许可。
 
-- The initialization and core files
-- All the layer files.
+- 初始化及核心代码
+- 所有模块相关文件
 
-For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+额外的以来文件，请参阅文件头许可信息，这些文件不应该使用空白文件头，我们也不会接受空白文件头的代码。
 
-### Conventions
+### 约定
 
-SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
+SpaceVim 是一个社区驱动的配置，这一约定主要限制函数命名，快捷键的选择以及文档的书写。首次提交代码之前，请阅读[公共约定](https://spacevim.org/cn/conventions/)章节。
 
-### Pull Request
+### 拉取请求
 
-#### Rebase your pr Branch on top of upstream master:
+#### 基于 upstream 的 master 分支 rebase 你的新分支
 
-- fork SpaceVim repository
-- clone your repository
+具体的操作步骤如下：
+
+- fork SpaceVim 主仓库至你的个人名下
+- 克隆你的个人名下的 SpaceVim 仓库
 
 ```sh
 git clone ${YOUR_OWN_REPOSITORY_URL}
 ```
 
-- add upstream remote
+- 添加上游远程仓库地址
 
 ```sh
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 ```
 
-- fetch upstream and rebase on top of upstream master
+- 更新上游仓库，并且基于 upstream/master 进行 rebase
 
 ```sh
 git fetch upstream
 git rebase upstream master
 ```
 
-#### Ideally for simple PRs (most of them):
+#### 理想的简单拉取请求 (大多数情况下):
 
-- Branch from `master`
-- One topic per PR
-- One commit per PR
-- If you have several commits on different topics, close the PR and create one PR per topic
-- If you still have several commits, squash them into only one commit
+- 分支由 `master` 派生
+- 单个 PR 仅包括单个主题
+- 单个 PR 仅包括一个提交
+- 如果你有多个提交分别包含不同的主题，你可以关闭PR，重新为每一个主题重新开 PR。
+- 如果你仍然有多个提交，可以使用 `git squash` 合并这些 commits
 
-#### For complex PRs (big refactoring, etc):
+#### 复杂的拉取请求 (重构，新模块，新特性等):
 
-Squash only the commits with uninteresting changes like typos, syntax fixes, etc… and keep the important and isolated steps in different commits.
+合并无关的 commits（单次错误，语法错误等），保留重要的重构步骤的 commits，增加可阅读性。
 
-Those PRs are merged and explicitly not fast-forwarded.
+这些 PRs 需要一些时间去验证，不能确保可以快速合并。
 
-Commit messages
+**提交信息**
 
-Write commit messages according to adapted [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):
+请参照这篇规范书写 commit 信息：[Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):
 
-- Use present tense and write in the imperative: “Fix bug”, not “fixed bug” or “fixes bug”.
-- Start with a capitalized, short (72 characters or less) summary, followed by a blank line.
-- If necessary, add one or more paragraphs with details, wrapped at 72 characters.
-- Separate paragraphs by blank lines.
+- 提交信息(commit message)必须使用英文.
+- 采用祈使句：例如: “Fix bug”, 而不是 “fixed bug” 或者 “fixes bug”.
+- 以大写字母开头，并且短于72字符的摘要开头，其后需空一行。
+- 如果需要的话，可以添加一个或多个章节，每行字符少于72字节
+- 章节之间需要留有空行.
 
-This is a model commit message:
+具体请参阅下面的提交信息示例：
 
 ```gitcommit
 Capitalized, short (72 chars or less) summary
@@ -151,9 +153,9 @@ Further paragraphs come after blank lines.
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
-### Contributing a layer
+### 贡献一个模块
 
-Please read the layers documentation first.
+首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
 
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 
