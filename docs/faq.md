@@ -19,3 +19,8 @@ The problem was git auto added ^M when cloning, solved by:
 ```sh
 git config --global core.autocrlf input
 ```
+
+## Why SpaceVim can not display default colorscheme?
+
+By default, SpaceVim use true colors, so you should make sure your terminal support true colors, This is an articl about
+what is true colors and the terminals which support true colors.
