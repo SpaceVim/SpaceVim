@@ -18,9 +18,10 @@ lang: cn
 ## 标准
 
 - Do not regress from origin
-- Decide outcomes by weighing cost and benefit
-- prefer usability over tradition if the benefits are overwhelming
-- Give usability a chance™
+- 不要从 origin 回归.
+- 通过权衡成本和收益来决定结果.
+- 收益与传统相比较,当收益是压倒性的时候,我们选择收益,而非坚持传统.
+- 给可用性一个机会.
 
 ## 鸣谢
 
