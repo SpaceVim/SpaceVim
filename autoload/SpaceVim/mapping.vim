@@ -152,6 +152,10 @@ function! SpaceVim#mapping#close_current_buffer() abort
     if rs ==? 'y'
       write
     else
+      redraw!
+      echohl WarningMsg
+      echon 'canceled!'
+      echohl None
       return
     endif
   endif
