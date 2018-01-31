@@ -229,6 +229,7 @@ endfunction
 
 let s:file = SpaceVim#api#import('file')
 let s:MESSAGE = SpaceVim#api#import('vim#message')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! s:next_file() abort
   let dir = expand('%:p:h')
@@ -347,7 +348,7 @@ function! s:open_message_buffer() abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
   setf message
   normal! ggdG
-  silent put =execute(':message')
+  silent put =s:CMP.execute(':message')
   normal! G
   setlocal nomodifiable
   nnoremap <silent> <buffer> q :silent bd<CR>
