@@ -67,18 +67,18 @@ SpaceVim 是每个志愿者的努力的结晶,我们鼓励你参与进来. Space
 我们非常期待您的贡献. 在此之前,请您认真阅读下面的内容. 在任何情况下,都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/SpaceVim)进行提问和贡献代码.
 ### 证书
 
-The license is MIT for all the parts of SpaceVim. this includes:
+SpaceVim 所有部分采用 MIT 许可。
 
-- The initialization and core files
-- All the layer files.
+- 初始化及核心代码
+- 所有模块相关文件
 
-For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+额外的以来文件，请参阅文件头许可信息，这些文件不应该使用空白文件头，我们也不会接受空白文件头的代码。
 
 ### 公约
 
 SpaceVim 建立在下面的公约上: 该公约主要包括了 函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
 
-### Pull Request
+### 拉取请求
 
 #### 在上游的主分支顶部压缩你的PR分支
 
@@ -89,7 +89,7 @@ SpaceVim 建立在下面的公约上: 该公约主要包括了 函数的命名, 
 git clone ${YOUR_OWN_REPOSITORY_URL}
 ```
 
-- 添加远程上游
+- 添加上游远程仓库地址
 
 ```sh
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
@@ -102,7 +102,6 @@ git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 git fetch upstream
 git rebase upstream/master
 ```
-
 #### 抽象化的简单 PRs(绝大多数PRs都是这样的):
 
 - 'master'中的分支
@@ -153,13 +152,15 @@ Further paragraphs come after blank lines.
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
-### Contributing a layer 贡献层
 
-Please read the layers documentation first.
-请先阅读层文档
+### 贡献一个模块
+
+首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
+
 
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 未关联配置的层将会被拒绝.举个例子一个只有包和钩子的层,很简单的就能被替换为变量 `g:spacevim_custom_plugins`.
+
 #### 文件头
 
 vim 脚本的文件头,应该按照下面的格式:
