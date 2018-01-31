@@ -143,7 +143,19 @@ endfunction
 function! SpaceVim#mapping#close_current_buffer() abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
-  let index = index(buffers, bn) 
+  if getbufvar(bn, '&modified', 0)
+    redraw!
+    echohl WarningMsg
+    echon 'current buffer contains unsaved modification, save file Y/N?'
+    echohl None
+    let rs = nr2char(getchar())
+    if rs ==? 'y'
+      write
+    else
+      return
+    endif
+  endif
+  let index = index(buffers, bn)
   if index != -1
     if index == 0
       if len(buffers) > 1
