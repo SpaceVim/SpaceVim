@@ -207,7 +207,7 @@ to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 ## Who can benefit from this?
 
-- the **elementary** vim users.
+- **Elementary** vim users.
 - Vim users pursuing a beautiful appearance.
 - Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
 - Vim users wanting to learn a different way to edit files.
