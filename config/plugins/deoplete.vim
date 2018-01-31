@@ -101,6 +101,7 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " public settings
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+call deoplete#custom#set('file/include', 'matchers', 'matcher_head')
 let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around', 'LanguageClient'])
 for key in keys(g:deoplete#ignore_sources)
   if key != '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
