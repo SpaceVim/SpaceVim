@@ -10,7 +10,7 @@ lang: cn
 
 {% for post in site.post %}
     <ul>
-        {% if post.lang == "cn" %}
+        {% if post.lang %}
             <li>
               <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
               <span class="post-date">{{ post.date | date_to_string }}</span>
