@@ -8,61 +8,64 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [Asking for help](#asking-for-help)
-- [Reporting issues](#reporting-issues)
-- [Contributing code](#contributing-code)
-  - [License](#license)
-  - [Conventions](#conventions)
+- [寻求帮助](#寻求帮助)
+- [反馈问题](#反馈问题)
+- [贡献代码](#贡献代码)
+  - [证书](#证书)
+  - [公约](#公约)
   - [Pull Request](#pull-request)
-    - [Rebase your pr Branch on top of upstream master:](#rebase-your-pr-branch-on-top-of-upstream-master)
-    - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
-    - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
-  - [Contributing a layer](#contributing-a-layer)
-    - [File header](#file-header)
-    - [Author of a new layer](#author-of-a-new-layer)
-    - [Contributor to an existing layer](#contributor-to-an-existing-layer)
-    - [Contributing a keybinding](#contributing-a-keybinding)
-      - [Language specified key bindings](#language-specified-key-bindings)
+    - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
+    - [抽象化的简单 PRs(绝大多数PRs都是这样的):](#抽象化的简单-prs绝大多数prs都是这样的)
+    - [复杂的PRs (大的重构, 等):](#复杂的prs-大的重构-等)
+  - [Contributing a layer 贡献层](#contributing-a-layer-贡献层)
+    - [文件头](#文件头)
+    - [新layer的作者](#新layer的作者)
+    - [对现有的layer进行贡献](#对现有的layer进行贡献)
+    - [贡献按键绑定](#贡献按键绑定)
+      - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Changelog](#changelog)
 
 <!-- vim-markdown-toc -->
 
-SpaceVim 是所有志愿者智慧的结晶, 我们鼓励你参与进来。但是我们有一些代码规范, 我们要求所有的贡献者都要遵守。
+SpaceVim 是每个志愿者的努力的结晶,我们鼓励你参与进来. SpaceVim 是由社区驱动的. 
+下面是关于每个贡献者都应当遵守的简单规则的引导.
 
-开发主要集中在 Github 仓库，针对中文用户，可以采用码云仓库，Github 仓库的内容是与码云仓库实时同步的。下面是 SpaceVim 最近几周开发的状态图。
+在GitHub 仓库上进行开发. 下面是最近几周的仓库快照:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
-你可以考虑只阅读与你将要做的相关的部分:
+你可以只阅读下面内容中的,你需要用到的部分:
 
-- [技术支持](#asking-for-help) 如果你正打算询问问题.
-- [提交问题](#reporting-issues) 如果你正打算提交某些问题.
-- [贡献代码](#contributing-code) 如果你正打算提交 PR.
+- [Asking for help](#寻求帮助) 建立issue的帮助
+- [Reporting issues](#反馈错误) 反馈问题的帮助
+- [Contributing code](#贡献代码) 建立PR的帮助
 
-## 技术支持
+## 寻求帮助
 
-If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
-如果你打算询问一个使用相关的问题，请确保你已经自行搜索过答案，因为有可能在网站或这 github issue 列表已经有你需要的答案了：
+在你建立issue 之前,先确认你已经浏览过下面的faq以及SpaceVim文档
 
-- <kbd>:h SpaceVim-faq</kbd>: 这是一些常见问题的答案.
-- [SpaceVim 用户文档](https://spacevim.org/cn/documentation): 这是 SpaceVim 的用户文档，包括详细的配置及使用技巧.
+- <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
+- [SpaceVim documentation](https://spacevim.org/documentation): SpaceVim的官方文档
 
-## 提交问题
+## 反馈问题
 
-提交问题请使用 github 的 [issues tracker(限英文)](https://github.com/SpaceVim/SpaceVim/issues) 或者码云的[问题列表(限中文)](https://gitee.com/spacevim/SpaceVim/issues), 提交问题之前，请确认：
+请先阅读下面内容,再通过 [issues tracker](https://github.com/SpaceVim/SpaceVim/issues)进行反馈:
 
-- 使用关键词搜索问题列表，确认没有重复问题存在
-- 确认该问题是否可以在最新版 SpaceVim 下重现，也许近期更新已经修复了这个问题
-- 使用明确的标题并遵循问题模板.
-- 包括如何重现它的细节, 一步一步细节需要描述清楚.
+
+- 检查错误追踪中是否存在重复的问题, 你可以通过在错误追踪中搜索关键词来确认,错误追踪中是否存在重复的问题
+
+- 检查问题是否在最新版的SpaceVim中修复, 请更新你的SpaceVim, 然后进行bug重现操作.
+
+- 按照下面的问题格式,建立清晰的问题标题
+
+- 包括bug出现的细节, 一步一步重现bug出现的操作
 
 ## 贡献代码
 
-非常欢迎向我们贡献代码. 请仔细阅读以下章节. 在任何情况下，随时加入我们的 [gitter（英文）](https://gitter.im/SpaceVim/SpaceVim) 或者 QQ群: {{ site.qqgroup }} 来询问关于贡献代码的问题。
-
-### 许可
+我们非常期待您的贡献. 在此之前,请您认真阅读下面的内容. 在任何情况下,都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/SpaceVim)进行提问和贡献代码.
+### 证书
 
 SpaceVim 所有部分采用 MIT 许可。
 
@@ -71,18 +74,16 @@ SpaceVim 所有部分采用 MIT 许可。
 
 额外的以来文件，请参阅文件头许可信息，这些文件不应该使用空白文件头，我们也不会接受空白文件头的代码。
 
-### 约定
+### 公约
 
-SpaceVim 是一个社区驱动的配置，这一约定主要限制函数命名，快捷键的选择以及文档的书写。首次提交代码之前，请阅读[公共约定](https://spacevim.org/cn/conventions/)章节。
+SpaceVim 建立在下面的公约上: 该公约主要包括了 函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
 
 ### 拉取请求
 
-#### 基于 upstream 的 master 分支 rebase 你的新分支
+#### 在上游的主分支顶部压缩你的PR分支
 
-具体的操作步骤如下：
-
-- fork SpaceVim 主仓库至你的个人名下
-- 克隆你的个人名下的 SpaceVim 仓库
+- fork SpaceVim 仓库
+- 克隆你自己的仓库
 
 ```sh
 git clone ${YOUR_OWN_REPOSITORY_URL}
@@ -94,38 +95,36 @@ git clone ${YOUR_OWN_REPOSITORY_URL}
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 ```
 
-- 更新上游仓库，并且基于 upstream/master 进行 rebase
+- fetch upstream and rebase on top of upstream master
+- 在上游的主分支中取回并且重新定位上游
 
 ```sh
 git fetch upstream
-git rebase upstream master
+git rebase upstream/master
 ```
+#### 抽象化的简单 PRs(绝大多数PRs都是这样的):
 
-#### 理想的简单拉取请求 (大多数情况下):
+- 'master'中的分支
+- 每个PR一个主题
+- 每个PR一个提交
+- 如果你有一些不同主题的提交, 请关闭PR 然后为每个主题创建一个新的PR.
+- 如果你仍然有很多提交, 请把他们打包成一个提交
 
-- 分支由 `master` 派生
-- 单个 PR 仅包括单个主题
-- 单个 PR 仅包括一个提交
-- 如果你有多个提交分别包含不同的主题，你可以关闭PR，重新为每一个主题重新开 PR。
-- 如果你仍然有多个提交，可以使用 `git squash` 合并这些 commits
+#### 复杂的PRs (大的重构, 等):
 
-#### 复杂的拉取请求 (重构，新模块，新特性等):
+只打包一些枯燥的提交,比如修改错别字,语法修复,等等... 把重要和独立的步骤分别放在不同的提交中.
+Those PRs are merged and explicitly not fast-forwarded.
+这些PRs被合并并且非明试快速转发.
+提交信息
+根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):
+ 
 
-合并无关的 commits（单次错误，语法错误等），保留重要的重构步骤的 commits，增加可阅读性。
+- 用现在时和祈使句: 例如"Fix bug", 而不是"fixed bug" 或者"fixes bug".
+- 以大写字母开头,短摘要开头(72个字符或者更少),以空行结尾.
+- 如果需要的话,可以用每行72个字符的格式添加一个或多个详细的段落.
+- 每个独立的段落以空行结尾.
 
-这些 PRs 需要一些时间去验证，不能确保可以快速合并。
-
-**提交信息**
-
-请参照这篇规范书写 commit 信息：[Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):
-
-- 提交信息(commit message)必须使用英文.
-- 采用祈使句：例如: “Fix bug”, 而不是 “fixed bug” 或者 “fixes bug”.
-- 以大写字母开头，并且短于72字符的摘要开头，其后需空一行。
-- 如果需要的话，可以添加一个或多个章节，每行字符少于72字节
-- 章节之间需要留有空行.
-
-具体请参阅下面的提交信息示例：
+这是一个提交信息的模版:
 
 ```gitcommit
 Capitalized, short (72 chars or less) summary
@@ -153,15 +152,18 @@ Further paragraphs come after blank lines.
 
 [Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
 
+
 ### 贡献一个模块
 
 首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
 
+
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
+未关联配置的层将会被拒绝.举个例子一个只有包和钩子的层,很简单的就能被替换为变量 `g:spacevim_custom_plugins`.
 
-#### File header
+#### 文件头
 
-The file header for vim script should look like the following template:
+vim 脚本的文件头,应该按照下面的格式:
 
 ```viml
 "=============================================================================
@@ -174,12 +176,12 @@ The file header for vim script should look like the following template:
 ```
 
 You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also. 
+你可以用文件(比如: foo.vim)来替换掉 FILENAME, 把NAME 用你编写的layer来代替, 同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**
+#### 新layer的作者
 
-#### Author of a new layer
+把文件头中的默认作者名字(Shidong Wang)改为你自己的名字.
 
-In the files header, change the default author name (Shidong Wang) to your name.
-
-here is an example for creating a new layer names `foo`:
+下面是一个创建一个名字为`foo`的新的layer的实例
 
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
@@ -226,7 +228,6 @@ function! SpaceVim#layers#foo#plugins() abort
   let plugins = []
   call add(plugins, ['Shougo/foo.vim', {'option' : 'value'}])
   call add(plugins, ['Shougo/foo_test.vim', {'option' : 'value'}])
-  return plugins
 endfunction
 
 
@@ -242,25 +243,25 @@ endfunction
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-#### Contributor to an existing layer
+#### 对现有的layer进行贡献
 
 If you are contributing to an already existing layer, you should not modify any header file.
+如果你正在对一个已经存在的layer进行贡献的话, 你不能修改文件头的任意地方
 
-#### Contributing a keybinding
+#### 贡献按键绑定
 
-Mappings are an important part of SpaceVim.
+按键映射是 SpaceVim 中非常重要的一部分.
 
-First if you want to have some personal mappings, This can be done in your `~/.SpaceVim.d/init.vim` file.
+如果你只想要拥有自己的按键映射的话, 你可以在`~/.SpaceVim.d/init.vim`文件中进行修改.
 
-If you think it worth contributing a new mappings then be sure to read the documentation to find the best mappings, then create a Pull-Request with your changes.
+如果你认为贡献一个新的按键映射有必要,那么请首先阅读文档,把自己的按键映射调整为最佳状态,然后用你更改后的按键映射进行提交PR.
 
-ALWAYS document your new mappings or mappings changes inside the relevant documentation file. It should be the the layer file and the [documentation.md](https://spacevim.org/documentation).
+始终牢记,在相关文档中记录新的按键映射或者是按键映射更改. 他应该是层文件和 [documentation.md](https://spacevim.org/documentation).
 
-##### Language specified key bindings
 
-All language specified key bindings are started with `SPC l` prefix.
+##### 特定语言的按键绑定
 
-we recommended to keep same language specified key bindings for different languages:
+所有语言的特殊按键绑定都是以 `SPC l`前缀开始的.
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
@@ -274,7 +275,8 @@ we recommended to keep same language specified key bindings for different langua
 | SPC l s l   | send line and keep code buffer focused           |
 | SPC l s s   | send selection text and keep code buffer focused |
 
-All of these above key bindings are just recommended as default, but it also base on the language layer itself.
+上面所有的按键绑定都是默认的建议, 但是它同样是基于自身的语言层的.
+
 
 #### Contributing a banner
 
