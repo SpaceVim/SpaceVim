@@ -95,7 +95,7 @@ endfunction
 
 function! SpaceVim#mapping#search#default_tool() abort
   if !has_key(s:search_tools, 'default_exe')
-    for t in g:spacevim_search_tools
+    for t in get(g:, 'spacevim_search_tools', ['rg', 'ag', 'pt', 'ack', 'grep'])
       if executable(t)
         let s:search_tools.default_exe = t
         let key = s:search_tools.namespace[t]
