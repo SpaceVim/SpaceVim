@@ -10,9 +10,11 @@ lang: cn
 
 ## 讨论
 
-- [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
-- [新浪微博](https://weibo.com/SpaceVim)
-- 微信公众号：SpaceVim
+关于中文讨论，其实一直没有找到合适的讨论区，类似与 reddit 的网站还没有。
+
+- <i class="fab fa-discourse"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
+- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
+- <i class="fab fa-weixin"></i> 微信公众号：SpaceVim
 
 ## 提问
 
@@ -21,4 +23,5 @@ lang: cn
 
 ## 聊天
 
- SpaceVim 中文聊天主要是 QQ 群：121056965
+- <i class="fab fa-qq"></i> [`121056965` SpaceVim 中文交流群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+- <i class="fab fa-telegram-plane"></i> [`t.me/VimHub` Vim 中文 telegram 群](https://t.me/VimHub)

@@ -5,6 +5,7 @@
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     {% seo %}
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script>
       (function(w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -99,12 +100,12 @@
             this.page.url = '{{ page.url | absolute_url }}';
             this.page.identifier = '{{ page.url | absolute_url }}';
           };
-          (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://spacevim.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-          })();
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://spacevim.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
         </script>
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
