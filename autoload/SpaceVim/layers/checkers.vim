@@ -26,8 +26,8 @@ function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
 
-  if s:show_cursor_error && !has('timer')
-    call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timer feature')
+  if s:show_cursor_error && !has('timers')
+    call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
     let s:show_cursor_error = 0
   endif
 endfunction
