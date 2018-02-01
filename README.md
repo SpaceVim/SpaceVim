@@ -44,6 +44,14 @@ Here is a throughput graph of the repository for the last few weeks:
 
 ## Features
 
+[**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
+
+With this feature, vim will display the searching result as you type. Of course, it is running
+asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
+through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
+
+![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+
 [**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
 
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
