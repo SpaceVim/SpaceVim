@@ -18,7 +18,6 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Configuration layers](#configuration-layers)
 - [Custom Configuration](#custom-configuration)
 - [Concepts](#concepts)
-  - [Transient-states](#transient-states)
 - [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
 - [Awesome ui](#awesome-ui)
   - [Colorschemes](#colorschemes)
@@ -27,26 +26,19 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Statusline && tabline](#statusline--tabline)
     - [statusline](#statusline)
     - [tabline](#tabline)
-- [Manual](#manual)
-  - [Multiple leader mode](#multiple-leader-mode)
-  - [Custom Key bindings](#custom-key-bindings)
-      - [File Operations](#file-operations)
-      - [Editor UI](#editor-ui)
-      - [Window Management](#window-management)
-      - [Native functions](#native-functions)
-      - [Plugin: Unite](#plugin-unite)
-      - [Plugin: Bookmarks](#plugin-bookmarks)
+- [Genaral Key bindings](#genaral-key-bindings)
+  - [Window manager](#window-manager)
+  - [File Operations](#file-operations)
+  - [Editor UI](#editor-ui)
+  - [Native functions](#native-functions)
+  - [Plugin: Unite](#plugin-unite)
+  - [Plugin: Bookmarks](#plugin-bookmarks)
   - [Completion](#completion)
     - [Unite/Denite](#unitedenite)
-      - [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
   - [Discovering](#discovering)
     - [Mappings](#mappings)
-      - [Mappings guide](#mappings-guide)
-      - [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
     - [Getting help](#getting-help)
     - [Available layers](#available-layers)
-      - [Available plugins in SpaceVim](#available-plugins-in-spacevim)
-      - [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
     - [Toggles](#toggles)
   - [Navigating](#navigating)
     - [Point/Cursor](#pointcursor)
@@ -232,8 +224,8 @@ in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 here is an example config file for SpaceVim:
 
 ```vim
-" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
-" file for all possible options:
+" Here are some basic customizations, please refer to the
+" ~/.SpaceVim.d/init.vim file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
@@ -275,7 +267,8 @@ let g:spacevim_custom_plugins = [
 \ ['wsdjeg/GitHub.vim'],
 \ ]
 
-" If you want to add custom color palette for statusline and tabline, use these options:
+" If you want to add custom color palette for statusline and tabline, use
+" these options:
 let g:spacevim_custom_color_palette = [
 \ ['#282828', '#b8bb26', 246, 235],
 \ ['#a89984', '#504945', 239, 246],
@@ -301,7 +294,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 
 ## Concepts
 
-### Transient-states
+**Transient-states**
 
 SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
 
@@ -578,39 +571,32 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 | `<Mouse-left>`   | jump to the buffer |
 | `<Mouse-middle>` | delete the buffer  |
 
-## Manual
 
-### Multiple leader mode
+## Genaral Key bindings
 
-**Global origin vim leader**
+### Window manager
 
-Vim's origin global leader can be used in all modes.
+Windows manager key bindings can only be used in normal mode. The default leader is `s`, you can
+can change it via `g:spacevim_windows_leader`
 
-**Local origin vim leader**
+| Key bindings    | Description                                                                                                                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `q`             | Smart buffer close                                                                                                                                                                                                             |
+| `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
+| `s`+`v`         | :split                                                                                                                                                                                                                         |
+| `s`+`g`         | :vsplit                                                                                                                                                                                                                        |
+| `s`+`t`         | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `s`+`o`         | Close other windows (:only)                                                                                                                                                                                                    |
+| `s`+`x`         | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `s`+`q`         | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
+| `Tab`           | Next window or tab                                                                                                                                                                                                             |
+| `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
+| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
+| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
 
-Vim's origin local leader can be used in all the mode.
-
-**Windows function leader**
-
-Windows function leader can only be used in normal mode.
-For the list of mappings see the [link](#window-management)
-
-**Unite work flow leader**
-
-Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
-
-![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
-
-- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
-
-- List all the mappings and description: `f<space>`
-    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
-
-- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
-
-### Custom Key bindings
+SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
+can be get by <kbd><leader> q r</kbd>
 
 | Key                   |      Mode     | Action                                                                         |
 | --------------------- | :-----------: | ------------------------------------------------------------------------------ |
@@ -637,7 +623,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
 | `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
 
-##### File Operations
+### File Operations
 
 | Key             |          Mode         | Action                                     |
 | --------------- | :-------------------: | ------------------------------------------ |
@@ -646,7 +632,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
 | `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
 
-##### Editor UI
+### Editor UI
 
 | Key                     |      Mode     | Action                                                           |
 | ----------------------- | :-----------: | ---------------------------------------------------------------- |
@@ -676,28 +662,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
 | `<leader>`+`S`          | Normal/visual | Source selection                                                 |
 
-##### Window Management
-
-| Key             |  Mode  | Action                                                                                                                                                                                                                         |
-| --------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Normal | Smart buffer close                                                                                                                                                                                                             |
-| `s`+`p`         | Normal | Split nicely                                                                                                                                                                                                                   |
-| `s`+`v`         | Normal | :split                                                                                                                                                                                                                         |
-| `s`+`g`         | Normal | :vsplit                                                                                                                                                                                                                        |
-| `s`+`t`         | Normal | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s`+`o`         | Normal | Close other windows (:only)                                                                                                                                                                                                    |
-| `s`+`x`         | Normal | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s`+`q`         | Normal | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s`+`Q`         | Normal | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`           | Normal | Next window or tab                                                                                                                                                                                                             |
-| `Shift`+`Tab`   | Normal | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Normal | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Normal | Vertically split with previous buffer                                                                                                                                                                                          |
-
-SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
-can be get by <kbd><leader> q r</kbd>
-
-##### Native functions
+### Native functions
 
 | Key                |  Mode  | Action                           |
 | ------------------ | :----: | -------------------------------- |
@@ -706,7 +671,7 @@ can be get by <kbd><leader> q r</kbd>
 | `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
 | `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
 
-##### Plugin: Unite
+### Plugin: Unite
 
 | Key                 |      Mode     | Action                                                     |
 | ------------------- | :-----------: | ---------------------------------------------------------- |
@@ -736,8 +701,7 @@ can be get by <kbd><leader> q r</kbd>
 | `<leader>`+`ugf`    |     Normal    | Opens Unite file with word at cursor                       |
 | `<leader>`+`ugt`    | Normal/visual | Opens Unite tag with word at cursor                        |
 
-
-##### Plugin: Bookmarks
+### Plugin: Bookmarks
 
 | Key     |  Mode  | Action                          |
 | ------- | :----: | ------------------------------- |
@@ -748,13 +712,14 @@ can be get by <kbd><leader> q r</kbd>
 | `m`+`i` | Normal | Annotate bookmark               |
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+
 ### Completion
 
 #### Unite/Denite
 
 please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
 
-##### Mappings within unite/denite buffer
+**Mappings within unite/denite buffer**
 
 | Mappings         | Mode          | description                          |
 | ---------------- | ------------- | ------------------------------------ |
@@ -778,7 +743,7 @@ please checkout the documentation of unite and denite via `:h unite` and `:h den
 
 #### Mappings
 
-##### Mappings guide
+**Mappings guide**
 
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
 The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
@@ -791,7 +756,7 @@ The default key of these prefix is:
 | `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
 | `[denite]`  | `g:spacevim_denite_leader` / `F`  | denite mapping prefix of SpaceVim   |
 | `[unite]`   | `g:spacevim_unite_leader` / `f`   | unite mapping prefix of SpaceVim    |
-| `<leader>`  | `mapleader` / `` \ ``             | default leader prefix of vim/neovim |
+| `<leader>`  | `mapleader` / `\`                 | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -815,7 +780,7 @@ to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
-##### Unide/Denite describe key bindings
+**Unide/Denite describe key bindings**
 
 It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
 
@@ -846,11 +811,11 @@ Reporting an issue:
 
 All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
-##### Available plugins in SpaceVim
+**Available plugins in SpaceVim**
 
 All plugins can be easily discovered via `<leader> l p`.
 
-##### New packages from ELPA repositories
+**New packages from ELPA repositories**
 
 #### Toggles
 
@@ -1725,6 +1690,5 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 | 5000th stargazers | [robgrzel](https://github.com/robgrzel)         |
 
 <!-- SpaceVim Achievements end -->
-
 
 <!-- vim:set nowrap: -->
