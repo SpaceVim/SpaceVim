@@ -98,7 +98,7 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3') && SpaceVim#util#haspyxlib('neovim')
+if has('python3') && SpaceVim#util#haspy3lib('neovim')
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -510,36 +510,36 @@ endif
 
 let g:spacevim_leader_guide_run_map_on_popup = 1
 
-if !exists("g:leaderGuide_hspace")
+if !exists('g:leaderGuide_hspace')
   let g:leaderGuide_hspace = 5
 endif
 
 let g:spacevim_leader_guide_hspace = 5
 
-if !exists("g:leaderGuide_flatten")
+if !exists('g:leaderGuide_flatten')
   let g:leaderGuide_flatten = 1
 endif
 
 let g:spacevim_leader_guide_flatten = 1
 
-if !exists("g:leaderGuide_default_group_name")
-  let g:leaderGuide_default_group_name = ""
+if !exists('g:leaderGuide_default_group_name')
+  let g:leaderGuide_default_group_name = ''
 endif
 
-let g:spacevim_leader_guide_default_group_name = ""
+let g:spacevim_leader_guide_default_group_name = ''
 
-if !exists("g:leaderGuide_max_size")
+if !exists('g:leaderGuide_max_size')
   let g:leaderGuide_max_size = 0
 endif
 
 let g:spacevim_leader_guide_max_size = 0
 
-if !exists("g:leaderGuide_submode_mappings")
+if !exists('g:leaderGuide_submode_mappings')
   let g:leaderGuide_submode_mappings = 
         \ { '<C-C>': 'win_close', 'n': 'page_down', 'p': 'page_up', 'u' : 'undo'}
 endif
 
-let g:spacevim_leader_guide_submode_mappings = {'<C-C>': "win_close"}
+let g:spacevim_leader_guide_submode_mappings = {'<C-C>': 'win_close'}
 
 " SpaceVim/LanguageClient-neovim {{{
 if !exists('g:LanguageClient_serverCommands')
@@ -552,35 +552,25 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#loadCustomConfig() abort
-  let custom_confs_old = SpaceVim#util#globpath(getcwd(), '.local.vim')
-  let custom_confs = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
-  let custom_glob_conf_old = expand('~/.local.vim')
+  let custom_conf = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
   let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
 
   if has('timers')
-    if !filereadable(custom_glob_conf_old) && !filereadable(custom_glob_conf)
+    if !filereadable(custom_glob_conf)
       " if there is no custom config auto generate it.
+      let g:spacevim_checkinstall = 0
       augroup SpaceVimBootstrap
         au!
-        au VimEnter * call timer_start(10, function('SpaceVim#custom#autoconfig'))
+        au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
       augroup END
     endif
   endif
-  " the old value will be remove
-  if filereadable(custom_glob_conf_old)
-    call SpaceVim#logger#warn('~/.local.vim is deprecated!')
-    exe 'source ' . custom_glob_conf_old
-  endif
-  if !empty(custom_confs_old)
-    call SpaceVim#logger#warn('.local.vim is deprecated!')
-    exe 'source ' . custom_confs_old[0]
-  endif
 
-  if !empty(custom_confs)
+  if !empty(custom_conf)
     if isdirectory('.SpaceVim.d')
-      exe 'set rtp ^=' . expand('.SpaceVim.d')
+      exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
     endif
-    exe 'source ' . custom_confs[0]
+    exe 'source ' . custom_conf[0]
     if g:spacevim_force_global_config
       if filereadable(custom_glob_conf)
         if isdirectory(expand('~/.SpaceVim.d/'))
@@ -598,7 +588,7 @@ function! SpaceVim#loadCustomConfig() abort
     exe 'source ' . custom_glob_conf
   endif
 
-  if g:spacevim_enable_ycm && g:spacevim_snippet_engine != 'ultisnips'
+  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
     call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
     let g:spacevim_snippet_engine = 'ultisnips'
   endif

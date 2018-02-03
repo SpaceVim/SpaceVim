@@ -29,13 +29,26 @@ function! SpaceVim#util#echoWarn(msg) abort
 endfunction
 
 function! SpaceVim#util#haspyxlib(lib) abort
-
   try
-    if has('nvim')
-      exe 'py import ' . a:lib
-    else
       exe 'pyx import ' . a:lib
-    endif
+  catch
+    return 0
+  endtry
+  return 1
+endfunction
+
+function! SpaceVim#util#haspylib(lib)
+  try
+      exe 'py import ' . a:lib
+  catch
+    return 0
+  endtry
+  return 1
+endfunction
+
+function! SpaceVim#util#haspy3lib(lib)
+  try
+      exe 'py3 import ' . a:lib
   catch
     return 0
   endtry
