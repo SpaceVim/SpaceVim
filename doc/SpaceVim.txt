@@ -50,6 +50,7 @@ CONTENTS                                                   *SpaceVim-contents*
       27. operator...................................|SpaceVim-layer-operator|
       28. shell.........................................|SpaceVim-layer-shell|
       29. tmux...........................................|SpaceVim-layer-tmux|
+      30. tools#dash...............................|SpaceVim-layer-tools-dash|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -487,6 +488,10 @@ is on, if any.
 
                                                             *g:ale_echo_delay*
 w0rp/ale {{{
+
+                                                                  *g:dash_map*
+rizzatti/dash.vim {{{ Allows configuration of mappings between Vim filetypes
+and Dash's docsets.
 
 ==============================================================================
 COMMANDS                                                   *SpaceVim-commands*
@@ -1115,6 +1120,11 @@ MAPPINGS
   <C-k>     normal      Switch to vim/tmux pane in up direction
   <C-l>     normal      Switch to vim/tmux pane in right direction
 <
+
+==============================================================================
+TOOLS#DASH                                         *SpaceVim-layer-tools-dash*
+
+This layer provides Dash integration for SpaceVim
 
 ==============================================================================
 API                                                             *SpaceVim-api*
