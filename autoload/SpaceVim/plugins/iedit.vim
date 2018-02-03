@@ -301,6 +301,7 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let s:index = 0
     call cursor(s:stack[0][0], s:stack[0][1])
   endif
+  let g:wsd = [s:stack, s:cursor_stack]
 endfunction
 
 
@@ -316,20 +317,18 @@ function! s:replace_symbol() abort
         let pre .=  end
       endif
       call setline(line, pre)
-      for [idx, len] in idxs
-        let s:stack[idx][2] = len
-      endfor
+      call s:fixstack(idxs)
       let idxs = []
       let line = s:stack[i][0]
-      let begin = s:stack[i][1] == 0 ? '' : getline(line)[:s:stack[i][1] - 2]
+      let begin = s:stack[i][1] == 1 ? '' : getline(line)[:s:stack[i][1] - 2]
       let pre =  begin . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
-      call add(idxs, [i, s:stack[i][2]])
+      let line = s:stack[i][0]
       if i == 0
-        let pre = getline(line)[:s:stack[i][1]] . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let pre = (s:stack[i][1] == 1 ? '' : getline(line)[:s:stack[i][1] - 2]) . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       else
         let a = s:stack[i-1][1] + s:stack[i-1][2] - 1
-        let b = s:stack[i][1] - 2
+        let b = s:stack[i][1] - 1
         if a == b
           let next = ''
         else
@@ -338,16 +337,31 @@ function! s:replace_symbol() abort
         let pre .= next . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       endif
     endif
+    call add(idxs, [i, len(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end)])
   endfor
   if !empty(idxs)
     let end = getline(line)[s:stack[i][1] + s:stack[i][2] - 1: ]
     let pre .=  end
   endif
   call setline(line, pre)
-  for [idx, len] in idxs
-    let s:stack[idx][2] = len
-  endfor
+  call s:fixstack(idxs)
 endfunction
 
+" [idx, newlen] 
+" same line
+function! s:fixstack(idxs) abort
+  " for [idx, len] in idxs
+  "   let s:stack[idx]
+  "   let s:stack[idx][2] = len
+  " endfor
+  let change = 0
+  for i in range(len(a:idxs))
+    echom s:stack[a:idxs[i][0]][1]
+    let s:stack[a:idxs[i][0]][1] += change
+    echom s:stack[a:idxs[i][0]][1]
+    let change = a:idxs[i][1] - s:stack[a:idxs[i][0]][2]
+    let s:stack[a:idxs[i][0]][2] = a:idxs[i][1]
+  endfor
+endfunction
 
 " vim:set et sw=2 cc=80 nowrap:
