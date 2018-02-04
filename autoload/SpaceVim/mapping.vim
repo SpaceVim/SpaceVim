@@ -143,17 +143,20 @@ endfunction
 function! SpaceVim#mapping#close_current_buffer() abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
+  let f = ''
   if getbufvar(bn, '&modified', 0)
     redraw!
     echohl WarningMsg
-    echon 'current buffer contains unsaved modification, save file Y/N?'
+    echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
     echohl None
     let rs = nr2char(getchar())
     if rs ==? 'y'
       write
+    elseif rs ==? 'n'
+      let f = '!'
     else
       redraw!
-      echohl WarningMsg
+      echohl ModeMsg
       echon 'canceled!'
       echohl None
       return
