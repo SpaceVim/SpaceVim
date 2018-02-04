@@ -16,7 +16,7 @@ endfunction
 function! SpaceVim#layers#git#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   if has('patch-8.0.0027') || has('nvim')
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status', 'git status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset -q %', 'unstage current file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gina commit', 'edit git commit', 1)

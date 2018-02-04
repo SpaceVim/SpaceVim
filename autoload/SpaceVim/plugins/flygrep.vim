@@ -16,7 +16,8 @@ let s:grepid = 0
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
 function! s:grep_timer(timer) abort
-  let cmd = s:get_search_cmd(join(split(s:grep_expr), '.*'))
+  let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
@@ -63,6 +64,8 @@ let s:MPT._handle_fly = function('s:flygrep')
 " @vimlint(EVL103, 0, a:timer)
 let s:filter_file = ''
 function! s:start_filter() abort
+  let s:mode = 'f'
+  redrawstatus
   let s:MPT._handle_fly = function('s:filter')
   let s:MPT._prompt = {
         \ 'mpt' : s:MPT._prompt.mpt,
@@ -109,6 +112,20 @@ endfunction
 function! s:get_filter_cmd(expr) abort
   let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
   return cmd + [a:expr] + [s:filter_file]
+endfunction
+" }}}
+
+let s:mode = ''
+" replace local funcs {{{
+function! s:start_replace() abort
+  let s:mode = 'r'
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtr
+  redrawstatus
+  let replace_text = s:current_grep_pattern
+  call SpaceVim#plugins#iedit#start({'expr' : replace_text})
 endfunction
 " }}}
 
@@ -260,6 +277,7 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
+      \ "\<C-r>" : function('s:start_replace'),
       \ }
 
 if has('nvim')
@@ -284,7 +302,7 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
-  noautocmd rightbelow split __flygrep__
+  rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=
@@ -322,4 +340,9 @@ function! SpaceVim#plugins#flygrep#lineNr() abort
     return line('.') . '/' . line('$')
   endif
 endfunction
+
+function! SpaceVim#plugins#flygrep#mode()
+  return empty(s:mode) ? '' : '(' . s:mode . ')'
+endfunction
+
 " }}}

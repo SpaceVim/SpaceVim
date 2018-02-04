@@ -27,7 +27,7 @@ function! SpaceVim#layers#github#plugins() abort
   return [
         \ ['jaxbot/github-issues.vim', { 'on_cmd' : 'Gissues' }],
         \ ['junegunn/vim-github-dashboard', {
-        \ 'on_cmd': ['GHActivity', 'GHDashboard'],
+        \ 'on_cmd': ['GHA', 'GHD', 'GHActivity', 'GHDashboard'],
         \ }],
         \ ['tyru/open-browser-github.vim',  {
         \ 'depends': 'open-browser.vim',
