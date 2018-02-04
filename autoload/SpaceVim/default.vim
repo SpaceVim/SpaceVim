@@ -169,7 +169,9 @@ function! SpaceVim#default#SetMappings() abort
 
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
+  " use w!! in cmdline or use W command to sudo write a file
   cnoremap w!! %!sudo tee > /dev/null %
+  command! W w !sudo tee % > /dev/null
 
 
   " Use Ctrl+* to jump between windows

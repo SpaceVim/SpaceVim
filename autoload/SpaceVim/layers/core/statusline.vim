@@ -88,19 +88,23 @@ endif
 function! s:winnr(...) abort
   if a:0 > 1
     if g:spacevim_windows_index_type == 3
-      return ' ' . winnr() . ' '
+      return ' %{ get(w:, "winid", winnr()) } '
     else
-      return ' ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+      return ' %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     endif
   else
     if g:spacevim_enable_statusline_display_mode == 1
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())}' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     elseif g:spacevim_windows_index_type == 3
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . winnr() . ' '
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ get(w:, "winid", winnr()) } '
     else
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} ' . s:MESSLETTERS.circled_num(winnr(), g:spacevim_windows_index_type) . ' '
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     endif
   endif
+endfunction
+
+function! SpaceVim#layers#core#statusline#winnr(id)
+ return s:MESSLETTERS.circled_num(a:id, g:spacevim_windows_index_type)
 endfunction
 
 function! s:filename() abort
@@ -327,6 +331,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#get(...) abort
   for nr in range(1, winnr('$'))
     call setwinvar(nr, 'winwidth', winwidth(nr))
+    call setwinvar(nr, 'winid', nr)
   endfor
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep

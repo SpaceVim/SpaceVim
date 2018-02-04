@@ -3,6 +3,8 @@ title:  "About"
 description: "SpaceVim is a communicate driven vim distribution that supports vim and neovim"
 ---
 
+# About
+
 ## Version
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a community-driven vim distribution that supports vim and Neovim.  SpaceVim manages collections of plugins in layers.  Layers make it easy for you, the user, to enable a new language or feature by grouping all the related plugins together. It got inspired by spacemacs. 

@@ -20,18 +20,29 @@ function! SpaceVim#layers#checkers#plugins() abort
   return plugins
 endfunction
 
-let s:last_echoed_error = has('timers')
+let s:show_cursor_error = 1
 
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
 
+  if s:show_cursor_error && !has('timers')
+    call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
+    let s:show_cursor_error = 0
+  endif
 endfunction
 
 
 function! SpaceVim#layers#checkers#config() abort
+  "" neomake/neomake {{{
+  " This setting will echo the error for the line your cursor is on, if any.
+  let g:neomake_echo_current_error = get(g:, 'neomake_echo_current_error', !s:show_cursor_error)
   let g:neomake_cursormoved_delay = get(g:, 'neomake_cursormoved_delay', 300)
+  "" }}}
+
+  "" w0rp/ale {{{
   let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
+  "" }}}
 
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
         \ . string(s:_function('s:clear_errors')) . ', [])',
@@ -57,7 +68,7 @@ function! SpaceVim#layers#checkers#config() abort
     if g:spacevim_enable_neomake
       autocmd User NeomakeFinished nested
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-      if s:last_echoed_error
+      if s:show_cursor_error
         " when move cursor, the error message will be shown below current line
         " after a delay
         autocmd CursorMoved * call <SID>neomake_cursor_move_delay()

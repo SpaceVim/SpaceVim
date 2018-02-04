@@ -24,6 +24,9 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
   fi
 else
   if [ "$LINT" = "jekyll" ]; then
-    ./wiki/async.sh
+    ./wiki/async.sh "en"
+    ./wiki/async.sh "cn"
+    git remote add gitee https://SpaceVimBot:${BOTSECRET}@gitee.com/spacevim/SpaceVim.git
+    git push gitee master 
   fi
 fi

@@ -75,69 +75,69 @@ lang: cn
         - [文件树中的常用操作](#文件树中的常用操作)
         - [文件树中打开文件](#文件树中打开文件)
   - [以 `g` 为前缀的快捷键](#以-g-为前缀的快捷键)
-  - [Commands starting with `z`](#commands-starting-with-z)
-  - [Auto-saving](#auto-saving)
-  - [Searching](#searching)
-    - [With an external tool](#with-an-external-tool)
-      - [Useful key bindings](#useful-key-bindings)
-      - [Searching in current file](#searching-in-current-file)
-      - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
-      - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
-      - [Searching in a project](#searching-in-a-project)
-      - [Background searching in a project](#background-searching-in-a-project)
-      - [Searching the web](#searching-the-web)
-    - [Searching on the fly](#searching-on-the-fly)
-    - [Persistent highlighting](#persistent-highlighting)
-  - [Editing](#editing)
-    - [Paste text](#paste-text)
-      - [Auto-indent pasted text](#auto-indent-pasted-text)
-    - [Text manipulation commands](#text-manipulation-commands)
-    - [Text insertion commands](#text-insertion-commands)
-    - [Commenting](#commenting)
-    - [Multi-Encodings](#multi-encodings)
-  - [Errors handling](#errors-handling)
-  - [Managing projects](#managing-projects)
-- [Achievements](#achievements)
-  - [issues](#issues)
-  - [Stars, forks and watchers](#stars-forks-and-watchers)
-- [Features](#features)
-  - [Awesome ui](#awesome-ui)
-  - [Mnemonic key bindings](#mnemonic-key-bindings)
-- [Language specific mode](#language-specific-mode)
-- [Key Mapping](#key-mapping)
-  - [c/c++ support](#cc-support)
-  - [go support](#go-support)
-  - [python support](#python-support)
-- [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
-- [Modular configuration](#modular-configuration)
-- [Multiple leader mode](#multiple-leader-mode)
-  - [Global origin vim leader](#global-origin-vim-leader)
-  - [Local origin vim leader](#local-origin-vim-leader)
-  - [Windows function leader](#windows-function-leader)
-  - [Unite work flow leader](#unite-work-flow-leader)
-- [Unite centric work-flow](#unite-centric-work-flow)
-    - [Plugin Highlights](#plugin-highlights)
-    - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-  - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-    - [Language](#language)
-      - [Commands](#commands)
-      - [Commands](#commands-1)
-      - [Completion](#completion)
+  - [以 `z` 为前缀的快捷键](#以 -z- 为前缀的快捷键)
+  - [自动保存](#自动保存)
+  - [搜索](#搜索)
+    - [使用外部工具](#使用外部工具)
+      - [有用的按键绑](#有用的按键绑定)
+      - [在当前文件中进行搜索](#在当前文件中进行搜索)
+      - [在本地所有缓冲区内搜索](#在本地所有缓冲区内进行搜索)
+      - [在任意目录中进行搜索](#在任意目录中进行搜索)
+      - [在工程中进行搜](#在工程中进行搜索)
+      - [在工程中后台搜](#在工程中后台搜索)
+      - [在网上进行搜索](#在网上进行搜索)
+    - [用 fly 进行搜索](#用 fly 进行搜索)
+    - [保持高亮](#保持高亮)
+  - [编辑](#编辑)
+    - [粘贴文本](#粘贴文本)
+      - [粘贴文本自动缩进](#粘贴文本自动缩进)
+    - [文本操作命令](#文本操作命令)
+    - [文本插入命令](#文本插入命令)
+    - [评论Commenting](#评论commenting)
+    - [多编码方式](#多编码方式)
+  - [错误处理(handling)](#错误处理)
+  - [工程管理](#工程管理)
+- [完成(Achievements)](#完成(achievements))
+  - [错误](#错误)
+  - [开始 forks 和 watchers](#开始 forks 和 watchers)
+- [特性](#特性)
+  - [出彩的用户界面(ui)](#)
+  - [按键绑定助记符](#案件绑定助记符)
+- [语言特性模式](#语言特性模式)
+- [按键映射](#按键映射)
+  - [c/c++ 支持](#c/c++ 支持)
+  - [go 支持](#go 支持)
+  - [python 支持](#python 支持)
+- [以 Neovim 为中心的 SpaceVim 的 Dark powered 模式.](#以 Neovim 为中心的 SpaceVim 的 Dark powered 模式.)
+- [模块化配置](#模块化配置)
+- [多导航键模式](#多导航键模式)
+  - [vim 初始全局导航键](# vim 初始全局导航键)
+  - [vim 本地初始导航键](#vim 本地初始导航键)
+  - [窗口函数导航键](#窗口函数导航键)
+  - [Unite 工作流程(work flow)导航键](#unite 工作流程导航键)
+- [Unite 为中心的工作流程(work-flow)](#unite 为中心的工作流程)
+    - [高亮插件](#高亮插件)
+    - [非延迟(non lazy-loaded)加载插件](#非延迟加载插件)
+  - [延迟(lazy-loaded)加载插件](#延迟加载插件)
+    - [语言](#语言)
+      - [命令](#命令)
+      - [命令](#命令-1)
+      - [补全](#补全)
       - [Unite](#unite)
-      - [Operators & Text Objects](#operators--text-objects)
-    - [Custom Key bindings](#custom-key-bindings)
-      - [File Operations](#file-operations)
-      - [Editor UI](#editor-ui)
-      - [Window Management](#window-management)
-      - [Native functions](#native-functions)
-      - [Plugin: Unite](#plugin-unite)
-      - [Plugin: neocomplete](#plugin-neocomplete)
-      - [Plugin: NERD Commenter](#plugin-nerd-commenter)
-      - [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
-      - [Plugin: ChooseWin](#plugin-choosewin)
-      - [Plugin: Bookmarks](#plugin-bookmarks)
-      - [Plugin: Gina/Gita](#plugin-ginagita)
-      - [Plugin: vim-signify](#plugin-vim-signify)
+      - [操作符 & 文本对象](#operators--text-objects)
+    - [默认按键绑定](#默认按键绑定)
+      - [文件操作](#文件操作)
+      - [UI 编辑](#UI 编辑)
+      - [窗口管理](#窗口管理)
+      - [本地(Native)函数](#本地函数)
+      - [插件: Unite](#plugin-unite)
+      - [插件: neocomplete](#plugin-neocomplete)
+      - [插件: NERD Commenter](#plugin-nerd-commenter)
+      - [插件: Goyo and Limelight](#plugin-goyo-and-limelight)
+      - [插件: ChooseWin](#plugin-choosewin)
+      - [插件: Bookmarks](#plugin-bookmarks)
+      - [插件: Gina/Gita](#plugin-ginagita)
+      - [插件: vim-signify](#plugin-vim-signify)
       - [Misc Plugins](#misc-plugins)
   - [模块化配置](#模块化配置)
   - [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
@@ -301,50 +301,49 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 这是一个用户配置文件示例：
 
 ```vim
-" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
-" file for all possible options:
+" 这是一些基础的定制信息, 请参阅 ~/.SpaceVim.d/init.vim
+" 文件来查看所有可能用到的配置信息:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
-" Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
+" 更改默认的文件冗余备份目录.
+" 默认的冗余备份目录为 ~/.cache/vimfiles.
 let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
 
-" set SpaceVim colorscheme
+" 设置 SpaceVim 的配色方案
 let g:spacevim_colorscheme = 'jellybeans'
 
-" Set plugin manager, you want to use, default is dein.vim
+" 设置你想使用的插件管理器, 默认为 dein.vim
 let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
 
-" use space as `<Leader>`
+" 使用空格键为导航键 `<Leader>`
 let mapleader = "\<space>"
 
-" Set windows shortcut leader [Window], default is `s`
+" 设置快捷窗口导航键(leader [Window]), 默认为 `s`
 let g:spacevim_windows_leader = 's'
 
-" Set unite work flow shortcut leader [Unite], default is `f`
+" 设置 unite 工作流程快捷导航键(shortcut leader [Unite]), 默认为 `f`
 let g:spacevim_unite_leader = 'f'
 
-" By default, language specific plugins are not loaded. This can be changed
-" with the following, then the plugins for go development will be loaded.
+" 在默认情况下,个别语言插件未加载. 可以按照下面的方法来更改. 
+" 下面的更改完成后, go语言的开发工具就会被加载.
 call SpaceVim#layers#load('lang#go')
 
-" loaded ui layer
+" 加载用户界面层
 call SpaceVim#layers#load('ui')
 
-" If there is a particular plugin you don't like, you can define this
-" variable to disable them entirely:
+" 如果你不喜欢练习插件的话, 你可以按照下面那样定义变量,来关闭它们:
 let g:spacevim_disabled_plugins=[
 \ ['junegunn/fzf.vim'],
 \ ]
 
-" If you want to add some custom plugins, use these options:
+" 你可以按照下面的设置来添加默认的插件:
 let g:spacevim_custom_plugins = [
 \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
 \ ['wsdjeg/GitHub.vim'],
 \ ]
 
-" set the guifont
+" 设置gui字体(guifont)
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
@@ -995,10 +994,9 @@ SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性�
 | `g<End>`  | 跳至本行最右侧字符，等同于 `g$`                 |
 | `g<C-G>`  | 显示光标信息                                    |
 
-### Commands starting with `z`
+### 以 `z` 开头的命令
 
-after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `z`.
-
+当你不记得按键映射时, 你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射.
 | Key Binding | Description                                  |
 | ----------- | -------------------------------------------- |
 | `z<Right>`  | scroll screen N characters to left           |
@@ -1045,13 +1043,13 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 | `zz`        | smart scroll                                 |
 | `z<Left>`   | scroll screen N characters to right          |
 
-### Auto-saving
+### 自动保存 
 
-### Searching
+### 搜索
 
-#### With an external tool
+#### 使用额外工具
 
-SpaceVim can be interfaced with different searching tools like:
+SpaceVim 像下面那样调用不同搜索工具的搜索接口:
 
 - [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
 - [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
@@ -1059,13 +1057,17 @@ SpaceVim can be interfaced with different searching tools like:
 - [ack](https://beyondgrep.com/)
 - grep
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
+SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的工具,后一个键是范围. 
+例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索.
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
+如果最后一个键(决定范围)是大写字母, 那么就会对当前光标下的单词进行搜索. 
+举个例子 `SPC s a b` 将会搜索当前光标下的单词.
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools` 
+列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`. 
+举个例子 如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
 
-The tool keys are:
+下表是全部的工具键:
 
 | Tool | Key |
 | ---- | --- |
@@ -1075,24 +1077,24 @@ The tool keys are:
 | rg   | r   |
 | pt   | t   |
 
-The available scopes and corresponding keys are:
+应当避免的范围和对应按键为:
 
-| Scope                      | Key |
+| 范围                       | 键  |
 | -------------------------- | --- |
 | opened buffers             | b   |
 | files in a given directory | f   |
 | current project            | p   |
 
-It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
+可以双击按键序列中的第二个键来在当前文件中进行搜索.  举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索.
 
 Notes:
 
-- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
-- It is also possible to search in several directories at once by marking them in the unite buffer.
+- 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉, 但是他们可以在任意目录中正常运行.
+- 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
+**注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
+同时也需要安装一个名叫 `pt` 的命令行工具.
 
-**Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
-
-##### Useful key bindings
+##### 常用按键绑定
 
 | Key Binding     | Description                               |
 | --------------- | ----------------------------------------- |
@@ -1100,7 +1102,7 @@ Notes:
 | ``SPC s ` ``    | go back to the previous place before jump |
 | Prefix argument | will ask for file extensions              |
 
-##### Searching in current file
+##### 在当前文件中进行搜索
 
 | Key Binding | Description                                         |
 | ----------- | --------------------------------------------------- |
@@ -1113,7 +1115,7 @@ Notes:
 | `SPC s r r` | rg                                                  |
 | `SPC s r R` | rg with default input                               |
 
-##### Searching in all loaded buffers
+##### 在所有打开的缓冲区中进行搜索
 
 | Key Binding | Description                                         |
 | ----------- | --------------------------------------------------- |
@@ -1130,7 +1132,7 @@ Notes:
 | `SPC s t b` | pt                                                  |
 | `SPC s t B` | pt with default input                               |
 
-##### Searching in an arbitrary directory
+##### 在任意目录中进行搜索
 
 | Key Binding | Description                                         |
 | ----------- | --------------------------------------------------- |
@@ -1147,7 +1149,7 @@ Notes:
 | `SPC s t f` | pt                                                  |
 | `SPC s t F` | pt with default text                                |
 
-##### Searching in a project
+##### 在工程中进行搜索
 
 | Key Binding          | Description                                         |
 | -------------------- | --------------------------------------------------- |
@@ -1164,11 +1166,11 @@ Notes:
 | `SPC s r p`          | rg                                                  |
 | `SPC s r P`          | rg with default text                                |
 
-**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+**提示**: 在工程中进行搜索的话, 无需提前打开文件. 在工程保存目录中使用 `SPC　p p` 和　`C-s`　，　就比如 `SPC s p`.(TODO)　
 
-##### Background searching in a project
+##### 后台进行工程搜索
 
-Background search keyword in a project, when searching done, the count will be shown on the statusline.
+在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
 
 | Key Binding | Description                                                |
 | ----------- | ---------------------------------------------------------- |
@@ -1186,49 +1188,49 @@ Background search keyword in a project, when searching done, the count will be s
 | `SPC s r j` | rg                                                         |
 | `SPC s r J` | rg with default text                                       |
 
-##### Searching the web
+##### 在网上进行搜索
 
 | Key Binding | Description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
 | `SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO) |
 
-**Note**: to enable google suggestions in vim, you need to add `let g:spacevim_enable_googlesuggest = 1` to your custom Configuration file.
+**注意**: 为了在　vim　中使用谷歌　suggestions ，　你需要在你的默认配置文件中加入　`let g:spacevim_enable_googlesuggest = 1`. 
 
-#### Searching on the fly
+#### 用　fly 工具进行搜索
 
 | Key Binding | Description                                        |
 | ----------- | -------------------------------------------------- |
 | `SPC s g G` | Searching in project on the fly with default tools |
 
-key binding in FlyGrep buffer:
+FlyGrep 缓冲区的按键绑定:
 
 Key Binding	Description
-\-----------\| -----------
-`<Esc>` | close FlyGrep buffer
-`<Enter>` | open file at the cursor line
-`<Tab>` | move cursor line down
-`<S-Tab>` | move cursor line up
-`<Bs>` | remove last character
-`<C-w>` | remove the Word before the cursor
-`<C-u>` | remove the Line before the cursor
-`<C-k>` | remove the Line after the cursor
+\-----------\    | -----------
+`<Esc>`          | close FlyGrep buffer
+`<Enter>`        | open file at the cursor line
+`<Tab>`          | move cursor line down
+`<S-Tab>`        | move cursor line up
+`<Bs>`           | remove last character
+`<C-w>`          | remove the Word before the cursor
+`<C-u>`          | remove the Line before the cursor
+`<C-k>`          | remove the Line after the cursor
 `<C-a>`/`<Home>` | Go to the beginning of the line
-`<C-e>`/`<End>` | Go to the end of the line
+`<C-e>`/`<End>`  | Go to the end of the line
 
-#### Persistent highlighting
+#### 保持高亮
 
-SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
+SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索.
+同样可以通过 `SPC s c` 或者 运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
 
-### Editing
+### 编辑
 
-#### Paste text
+#### 粘贴文本
+##### 粘贴文本自动缩进
 
-##### Auto-indent pasted text
+#### 文本操作命令
 
-#### Text manipulation commands
-
-Text related commands (start with `x`):
+文本相关的命令 (以 `x` 开头):
 
 | Key Binding   | Description                                                          |
 | ------------- | -------------------------------------------------------------------- |
@@ -1286,9 +1288,9 @@ Text related commands (start with `x`):
 | `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
 | `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |
 
-#### Text insertion commands
+#### 文本插入命令
 
-Text insertion commands (start with `i`):
+文本插入相关命令(以 `i` 开头):
 
 | Key binding | Description                                                           |
 | ----------- | --------------------------------------------------------------------- |
@@ -1305,9 +1307,9 @@ Text insertion commands (start with `i`):
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
-#### Commenting
+#### 注释(Commentings)
 
-Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
+注释(comment)通过下面的工具来处理 [nerdcommenter](https://github.com/scrooloose/nerdcommenter), 它用下面的按键来界定范围.
 
 | Key Binding | Description               |
 | ----------- | ------------------------- |
@@ -1322,29 +1324,29 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c y`   | comment and yank          |
 | `SPC c Y`   | invert comment and yank   |
 
-**Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
+**小提示:** 用 `SPC ; SPC j l` 组合键高效的注释一个文本块的所有内容.
 
-#### Multi-Encodings
+#### 多方式编码
 
-SpaceVim use utf-8 as default encoding. there are four options for these case:
+SpaceVim 默认使用 utf-8 码进行编码. 下面是 utf-8 编码的四个设置:
 
 - fileencodings (fencs): ucs-bom,utf-8,default,latin1
 - fileencoding (fenc): utf-8
 - encoding (enc): utf-8
 - termencoding (tenc): utf-8 (only supported in vim)
 
-to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
+修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射. 在选择好文件编码方式后, 你可以运行下面的代码来修复编码:
 
 ```vim
 set enc=utf-8
 write
 ```
 
-### Errors handling
+### 错误处理
 
-SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
+SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进行错误反馈. 默认在操作保存时进行错误检查.
 
-Errors management mappings (start with e):
+错误管理导航键 (以 `e` 开头):
 
 | Mappings  | Description                                                                 |
 | --------- | --------------------------------------------------------------------------- |
@@ -1357,9 +1359,9 @@ Errors management mappings (start with e):
 | `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
 | `SPC e .` | error transient state                                                       |
 
-The next/previous error mappings and the error transient state can be used to browse errors from syntax checkers as well as errors from location list buffers, and indeed anything that supports vim's location list. This includes for example search results that have been saved to a location list buffer.
-
-Custom sign symbol:
+下一个/上一个 错误导航键 和 错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
+甚至可检查vim位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
+默认提示符:
 
 | Symbol | Description | Custom option               |
 | ------ | ----------- | --------------------------- |
@@ -1367,11 +1369,12 @@ Custom sign symbol:
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
 | `🛈`   | Info        | `g:spacevim_info_symbol`    |
 
-### Managing projects
+### 工程管理
 
-Projects in SpaceVim are managed by vim-projectionist and vim-rooter, vim-rooter will find the root of the project when a `.git` directory or a `.projections.json` file is encountered in the file tree.
+SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录 或
+在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录.
 
-project manager commands start with `p`:
+工程管理的命令以 `p` 开头:
 
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
@@ -1379,9 +1382,9 @@ project manager commands start with `p`:
 
 <!-- SpaceVim Achievements start -->
 
-## Achievements
+## 成就 
 
-### issues
+### 错误 
 
 | Achievements                                                          | Account                                     |
 | --------------------------------------------------------------------- | ------------------------------------------- |
@@ -1399,19 +1402,19 @@ project manager commands start with `p`:
 
 <!-- SpaceVim Achievements end -->
 
-## Features
+## 特性
 
-### Awesome ui
+### 优雅的用户界面 
 
 - outline + filemanager + checker
 
 ![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
 
-### Mnemonic key bindings
+### 按键绑定助记符
 
-Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
+按键绑定是用前缀组织起来的. 比如 b 是buffer, p 是 project, s 是 search, h 是 help 等等...
 
-**SPC mapping root** : SPC means `<Space>` on the keyboard.
+** SPC 根导航** : SPC 意思是键盘上的 `<Space>` 即空格键.
 
 | Key                  | Description   |
 | -------------------- | ------------- |
@@ -1420,36 +1423,36 @@ Key bindings are organized using mnemonic prefixes like b for buffer, p for proj
 | <kbd>SPC b</kbd>     | +buffers      |
 | <kbd>SPC 1...9</kbd> | windows 1...9 |
 
-## Language specific mode
+## 特定语言模式 
 
-## Key Mapping
+## 按键导航
 
 <iframe width='853' height='480' src='https://embed.coggle.it/diagram/WMlKuKS0uwABF2j1/a35e36df1d64e7b4f5fd7f956bf97a16b194cadb92d82d83e25aaf489349b0d8' frameborder='0' allowfullscreen></iframe>
 
-### c/c++ support
+### c/c++ 支持 
 
-1. code completion: autocompletion and fuzzy match.
+1. 代码自动补全: 自动补全和模糊匹配.
    ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
-2. syntax check: Asynchronous linting and make framework.
+2. 语法检查: 异步 linting  和 make 框架.
    ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
 
-### go support
+### go 支持
 
-1. code completion:
+1. 代码补全:
    ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
-2. syntax check:
+2. 语法检查:
    ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
 
-### python support
+### python 支持
 
-1. code completion:
+1. 代码补全:
    ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
-2. syntax check:
+2. 语法检查:
    ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
 
-## Neovim centric - Dark powered mode of SpaceVim.
+## 以 Neovim 为中心的 SpaceVim Dark powered 模式.
 
-By default, SpaceVim use these dark powered plugins:
+默认, SpaceVim 使用下面这些 dark powered 插件:
 
 1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
 2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
@@ -1460,43 +1463,44 @@ TODO:
 2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
 3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
 
-## Modular configuration
+## 模块化配置
 
-## Multiple leader mode
+## 多 leader 模式
 
-### Global origin vim leader
+### 初始 vim 全局 leader
 
-Vim's origin global leader can be used in all modes.
+Vim 的初始全局 leader 可以在任意模块中使用.
 
-### Local origin vim leader
+### 本地 vim 初始 leader
 
-Vim's origin local leader can be used in all the mode.
+Vim 的本地初始 leader 可以在任意模块中使用.
 
-### Windows function leader
+### 窗口函数 leader
 
-Windows function leader can only be used in normal mode.
-For the list of mappings see the [link](#window-management)
+窗口函数 lea 只能在普通模式下使用
+导航键列表在下面的链接中 [link](#窗口管理)
 
-### Unite work flow leader
 
-Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
+### 联合工作流程 leader
 
-## Unite centric work-flow
+联合工作流程 learder 只能在普通模式下使用. 联合 leader 需要 联合组.
+
+## 中心联合工作流程
 
 ![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
 
-- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
+- 列出所有已经安装的插件, 对想要的插件进行模糊查找, 默认行为是打开这些插件所对应的 github网址. 默认按键为 `<leader>lp`
     ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
 
-- List all the mappings and description: `f<space>`
+- 列出所有导航键及其描述: `f<space>`
     ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
-- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
+-列出所有 github.com 上已进行更新的插件, 模糊查找并打开对应的插件仓库. 默认按键为 `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
-#### Plugin Highlights
+#### 插件亮点
 
-- Package management with caching enabled and lazy loading
+- 通过捕捉和延迟加载方式启动包管理.
 - Project-aware tabs and label
 - Vimfiler as file-manager + SSH connections
 - Go completion via vim-go and gocode
@@ -1511,7 +1515,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
     [lazy-loaded]&#x3A; ./config/plugins.vim
 
-#### Non Lazy-Loaded Plugins
+#### 非延时加载插件
 
 | Name             | Description                                           |
 | ---------------- | ----------------------------------------------------- |
@@ -1528,9 +1532,9 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [bookmarks]      | Bookmarks, works independently from vim marks         |
 | [tmux-navigator] | Seamless navigation between tmux panes and vim splits |
 
-### Lazy-Loaded Plugins
+### 延时加载插件
 
-#### Language
+#### 语言
 
 | Name                | Description                                            |
 | ------------------- | ------------------------------------------------------ |
@@ -1562,7 +1566,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [phpindent]         | PHP official indenting                                 |
 | [phpspec]           | PhpSpec integration                                    |
 
-##### Commands
+##### 命令
 
 | Name             | Description                                         |
 | ---------------- | --------------------------------------------------- |
@@ -1583,7 +1587,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [vimwiki]        | Personal Wiki for Vim                               |
 | [thesaurus]      | Look up words in an online thesaurus                |
 
-##### Commands
+##### 命令
 
 | Name         | Description                                      |
 | ------------ | ------------------------------------------------ |
@@ -1593,7 +1597,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [indentline] | Display vertical indention lines                 |
 | [choosewin]  | Choose window to use, like tmux's 'display-pane' |
 
-##### Completion
+##### 补全
 
 | Name          | Description                                                   |
 | ------------- | ------------------------------------------------------------- |
@@ -1603,7 +1607,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [neocomplete] | Next generation completion framework                          |
 | [neosnippet]  | Contains neocomplete snippets source                          |
 
-##### Unite
+##### 联合
 
 | Name                 | Description                                 |
 | -------------------- | ------------------------------------------- |
@@ -1620,7 +1624,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [junkfile]           | Create temporary files for memo and testing |
 | [unite-issue]        | Issue manager for JIRA and GitHub           |
 
-##### Operators & Text Objects
+##### 操作符 & 文本的对象
 
 | Name                 | Description                                    |
 | -------------------- | ---------------------------------------------- |
@@ -1630,7 +1634,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | [textobj-user]       | Create your own text objects                   |
 | [textobj-multiblock] | Handle multiple brackets objects               |
 
-#### Custom Key bindings
+#### 默认按键绑定
 
 | Key                   |      Mode     | Action                                                                         |
 | --------------------- | :-----------: | ------------------------------------------------------------------------------ |
@@ -1657,7 +1661,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
 | `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
 
-##### File Operations
+##### 文件操作符
 
 | Key             |          Mode         | Action                                     |
 | --------------- | :-------------------: | ------------------------------------------ |
@@ -1666,7 +1670,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
 | `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
 
-##### Editor UI
+##### UI 编辑
 
 | Key                     |      Mode     | Action                                                           |
 | ----------------------- | :-----------: | ---------------------------------------------------------------- |
@@ -1696,7 +1700,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
 | `<leader>`+`S`          | Normal/visual | Source selection                                                 |
 
-##### Window Management
+##### 窗口管理
 
 | Key             |  Mode  | Action                                                                                                                                                                                                                          |
 | --------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1714,10 +1718,10 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | `<leader>`+`sv` | Normal | Split with previous buffer                                                                                                                                                                                                      |
 | `<leader>`+`sg` | Normal | Vertical split with previous buffer                                                                                                                                                                                             |
 
-SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
-can be get by <kbd>`<leader>` q r</kbd>
+SpaceVim 拥有普通模式的导航键 <kbd>q</kbd> 作为智能关闭缓冲区. 普通模式下的功能 <kbd>q</kbd>
+可以通过 <kbd>`<leader>` q r</kbd>实现
 
-##### Native functions
+##### 本地函数
 
 | Key                |  Mode  | Action                           |
 | ------------------ | :----: | -------------------------------- |
@@ -1806,8 +1810,9 @@ can be get by <kbd>`<leader>` q r</kbd>
 | `m`+`p` | Normal | Jump to previous bookmark       |
 | `m`+`i` | Normal | Annotate bookmark               |
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
-
+上面的列表是SpaceVim的书签列表导航键, 所以你不能使用`a`, `m`, `n`, `p` 或者 `i` 来标记当前位置寄存器,
+但是其他的寄存器不受此限制. 如果你确实需要这些寄存器的话, 你可以添加 `nnoremap <leader>m m` 
+在你的默认配置文件中, 然后你就可以使用`a` 来管理 `\ma`.
 ##### Plugin: Gina/Gita
 
 | Key             |  Mode  | Action                 |

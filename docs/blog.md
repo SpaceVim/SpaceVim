@@ -11,9 +11,9 @@ going on.
 <ul>
     {% for post in site.posts %}
             <li>
-               <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <h3>{{ post.excerpt | truncatewords: 100 }}</h3>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

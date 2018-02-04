@@ -39,13 +39,13 @@ description: "conventions of contributing to SpaceVim, including the coding styl
 
 ## Commit emoji convention
 
-- :memo: Add comment or doc
-- :gift: New feature.
-- :bug: Bug fix
-- :bomb: Breaking compatibility.
-- :white_check_mark: Write test.
-- :fire: Remove something.
-- :beer: I'm happy like reduced code complexity.
+- `:memo:` Add comment or doc
+- `:gift:` New feature.
+- `:bug:` Bug fix
+- `:bomb:` Breaking compatibility.
+- `:white_check_mark:` Write test.
+- `:fire:` Remove something.
+- `:beer:` I'm happy like reduced code complexity.
 
 ## Viml coding style guide
 

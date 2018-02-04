@@ -16,55 +16,68 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a distribution of the vim editor that's inspired by spacemacs. It manages collections of plugins in layers, which help collect related packages together to provide features. For example, the python layer collects deoplete.nvim, neomake and jedi-vim together to provides autocompletion, syntax checking, and documentation lookup. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install.
-
-Please star the project on github - it is a great way to show your appreciation while providing us motivation to continue working on this project.  The extra visibility for the project doesn't hurt either!
+SpaceVim is a distribution of the vim editor that's inspired by spacemacs. It manages collections
+of plugins in layers, which help collect related packages together to provide features. This
+approach helps keep configuration organized and reduces overhead for the user by keeping them
+from having to think about what packages to install.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
-See the [Quick start guide](https://spacevim.org/quick-start-guide), [documentation](https://spacevim.org/documentation) or [the list of layers](http://spacevim.org/layers/) for more information.
+See the [quick start guide](https://spacevim.org/quick-start-guide), [documentation](https://spacevim.org/documentation) or the [available layers](http://spacevim.org/layers/) for more information.
 
 Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
+
 <!-- vim-markdown-toc GFM -->
 
 - [Features](#features)
-- [Requirements](#requirements)
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
 - [Project layout](#project-layout)
-- [Blogs](#blogs)
 - [Support SpaceVim](#support-spacevim)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
 
-### Features
+## Features
 
-- **Great documentation:** access documentation in Vim with <kbd>SPC h SPC</kbd>.
-  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
-- **Beautiful UI:** you'll love the awesome UI and its useful features.
-  ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-- **Mnemonic key bindings:** all key bindings have mnemonic prefixes.
-  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
-- **Describe key bindings:** use <kbd>SPC h d k</kbd> to describe key bindings, and find definition of key bindings.
-  ![describe key](https://user-images.githubusercontent.com/13142418/33804739-52dbc498-dd71-11e7-97e5-ed0fa6ec1719.gif)
-- **Lazy load plugins:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
-  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
-- **Awesome statusline:** a heavily customized modular statusline.
-  ![statusline](https://user-images.githubusercontent.com/13142418/33804880-b9177142-dd73-11e7-82d5-1780dc27e7e3.png)
-- **Neovim centric:** Dark powered mode of SpaceVim
+[**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
 
-### Requirements
+With this feature, vim will display the searching result as you type. Of course, it is running
+asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
+through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
+
+![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+
+[**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
+
+You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
+The mapping guide is also available for `g`, `z`, `s`, `f` and `F`.
+
+![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
+
+[**Help description for key bindings**](http://spacevim.org/help-description-for-key-bindings/)
+
+use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
+
+![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
+
+[**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
+
+create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
+
+![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
+
+For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
+
+## Install
 
 At a minimum, SpaceVim requires `git` to be installed.  For a better graphical experience, install [nerd-font](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal supports [true colors](https://gist.github.com/XVilka/8346728).
 
-### Install
-
-#### Linux and macOS
+### Linux and macOS
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
@@ -78,11 +91,11 @@ For more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
-#### Windows
+### Windows
 
 The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
-### Project layout
+## Project layout
 
 ```txt
 ├─ autoload/SpaceVim/api/         APIs
@@ -90,25 +103,20 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ├─ autoload/SpaceVim/plugins/     plugins
 ├─ autoload/SpaceVim/mapping/     mapping guide
 ├─ doc/SpaceVim.txt               help
-├─ docs/                          website
-├─ wiki/                          wiki
+├─ docs/                          website(cn/en)
+├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executeable
 └─ test/                          tests
 ```
 
 
-### Blogs
+## Support SpaceVim
 
-- [Use Vim as a Java IDE](http://spacevim.org/use-vim-as-a-java-ide/)
-- [An async code runner in SpaceVim](http://spacevim.org/async-code-runner-in-SpaceVim/)
+The best way to support SpaceVim is to contribute to it either by reporting bugs,
+helping the community on the Gitter Chat or sending pull requests.
 
-More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
-
-### Support SpaceVim
-
-The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the Gitter Chat or sending pull requests.
-
-If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
+If you want to show your support financially you can buy a drink for the maintainer by
+clicking following icon.
 
 <a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
@@ -118,10 +126,11 @@ If you want to show your support financially you can buy a drink for the maintai
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-### Credits & Thanks
+## Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
+- [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim

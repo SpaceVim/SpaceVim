@@ -207,7 +207,7 @@ to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 ## Who can benefit from this?
 
-- the **elementary** vim users.
+- **Elementary** vim users.
 - Vim users pursuing a beautiful appearance.
 - Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
 - Vim users wanting to learn a different way to edit files.
@@ -664,13 +664,13 @@ The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value                                             | description                        |
-| ----------- | --------------------------------------------------------------------------- | ---------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                                                            | default mapping prefix of SpaceVim |
-| `[Window]`  | `g:spacevim_windows_leader` / `s`                                           | window mapping prefix of SpaceVim  |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`                                            | denite mapping prefix of SpaceVim  |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`                                             | unite mapping prefix of SpaceVim   |
-| `<leader>`  | `mapleader` / `\`                    \| default leader prefix of vim/neovim |                                    |
+| Prefix name | custom option and default value   | description                         |
+| ----------- | --------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
+| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
+| `[denite]`  | `g:spacevim_denite_leader` / `F`  | denite mapping prefix of SpaceVim   |
+| `[unite]`   | `g:spacevim_unite_leader` / `f`   | unite mapping prefix of SpaceVim    |
+| `<leader>`  | `mapleader` / `` \ ``             | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -678,7 +678,9 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 ![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
-this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc. after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
+
+after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
 
 | key | description                   |
 | --- | ----------------------------- |
@@ -1579,26 +1581,27 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
+
 ## Achievements
 
 ### issues
 
-Achievements | Account
------ | -----
-[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
-[1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000) | [sei40kr](https://github.com/sei40kr)
+| Achievements                                                          | Account                                     |
+| --------------------------------------------------------------------- | ------------------------------------------- |
+| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
+| [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)       |
 
 ### Stars, forks and watchers
 
-Achievements | Account
------ | -----
-First stargazers | [monkeydterry](https://github.com/monkeydterry)
-100th stargazers | [ShaneDelmore](https://github.com/ShaneDelmore)
-1000th stargazers | [dongkui0712](https://github.com/dongkui0712)
-2000th stargazers | [EvgeneOskin](https://github.com/EvgeneOskin)
-3000th stargazers | [zerdon](https://github.com/zerdon)
-4000th stargazers | [sfwatergit](https://github.com/sfwatergit)
-5000th stargazers | [robgrzel](https://github.com/robgrzel)
+| Achievements      | Account                                         |
+| ----------------- | ----------------------------------------------- |
+| First stargazers  | [monkeydterry](https://github.com/monkeydterry) |
+| 100th stargazers  | [ShaneDelmore](https://github.com/ShaneDelmore) |
+| 1000th stargazers | [dongkui0712](https://github.com/dongkui0712)   |
+| 2000th stargazers | [EvgeneOskin](https://github.com/EvgeneOskin)   |
+| 3000th stargazers | [zerdon](https://github.com/zerdon)             |
+| 4000th stargazers | [sfwatergit](https://github.com/sfwatergit)     |
+| 5000th stargazers | [robgrzel](https://github.com/robgrzel)         |
 
 <!-- SpaceVim Achievements end -->
 
