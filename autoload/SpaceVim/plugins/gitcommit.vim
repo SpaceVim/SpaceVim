@@ -2,6 +2,10 @@ let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
 let s:cache = {}
 let s:pr_cache = {}
+" pr_cache 
+" {
+"    'user - repo' : { pr.number : pr}
+" }
 
 " TODO: add asycn support
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
@@ -86,5 +90,17 @@ endf " }}}2
 
 function! s:cache_prs(user, repo) abort
   " let prs = github#api#issues#List_All_for_Repo(user, repo)
+  if !has_key(s:pr_cache, a:user . '_' . a:repo)
+    call extend(s:pr_cache, {a:user . '_' . a:repo : {}})
+  endif
+  call github#api#issue#list_all_for_repo(a:user, a:repo, function('s:list_callback'))
+endfunction
 
+" data is a list a PRs in one page
+function! s:list_callback(user, repo, data) abort
+  for pr in a:data
+    if !has_key(s:pr_cache[a:user . '_' . a:repo], pr.number)
+      call extend(s:pr_cache[a:user . '_' . a:repo], {pr.number : pr})
+    endif
+  endfor
 endfunction
