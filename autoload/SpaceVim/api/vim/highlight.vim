@@ -58,7 +58,7 @@ function! s:self.hi(info) abort
         let cmd .= ' guifg=' . a:info.guifg
     endif
     let style = []
-    for sty in ['hold', 'italic', 'underline']
+    for sty in ['bold', 'italic', 'underline']
         if get(a:info, sty, '') ==# '1'
             call add(style, sty)
         endif

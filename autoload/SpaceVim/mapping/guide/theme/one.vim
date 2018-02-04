@@ -7,5 +7,7 @@ function! SpaceVim#mapping#guide#theme#one#palette() abort
                 \ ['#2c323c', '#afd7d7', 114, 152],
                 \ ['#2c323c', '#ff8787', 114, 210],
                 \ ['#2c323c', '#d75f5f', 114, 167],
+                \ ['#2c323c', '#689d6a', 114, 72],
+                \ ['#2c323c', '#8f3f71', 114, 132],
                 \ ]
 endfunction
