@@ -2,6 +2,7 @@ let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
 let s:cache = {}
 
+" TODO: add asycn support
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
     if a:findstart
         let s:complete_ol = 0
