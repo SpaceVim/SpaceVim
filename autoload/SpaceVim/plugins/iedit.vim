@@ -18,6 +18,24 @@ let s:STRING = SpaceVim#api#import('data#string')
 
 let s:cursor_stack = []
 
+let s:iedit_hi_info = [
+      \ {
+      \ 'name' : 'IeditPurpleBold',
+      \ 'guibg' : '',
+      \ 'guifg' : '#d3869b',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
+      \ 'name' : 'IeditBlueBold',
+      \ 'guibg' : '',
+      \ 'guifg' : '#83a598',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 109,
+      \ 'bold' : 1,
+      \ }
+      \ ]
 
 function! s:highlight_cursor() abort
   let info = {
@@ -31,9 +49,9 @@ function! s:highlight_cursor() abort
   call s:VIMH.hi(info)
   for i in range(len(s:stack))
     if i == s:index
-      call matchaddpos('GruvboxPurpleBold', [s:stack[i]])
+      call matchaddpos('IeditPurpleBold', [s:stack[i]])
     else
-      call matchaddpos('GruvboxBlueBold', [s:stack[i]])
+      call matchaddpos('IeditBlueBold', [s:stack[i]])
     endif
     call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
@@ -48,6 +66,8 @@ function! SpaceVim#plugins#iedit#start(...)
   let save_cl = &l:cursorline
   setlocal nocursorline
   setlocal t_ve=
+  call s:VIMH.hi(s:iedit_hi_info[0])
+  call s:VIMH.hi(s:iedit_hi_info[1])
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
