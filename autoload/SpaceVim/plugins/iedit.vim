@@ -30,7 +30,11 @@ function! s:highlight_cursor() abort
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   for i in range(len(s:stack))
-    call matchaddpos('Underlined', [s:stack[i]])
+    if i == s:index
+      call matchaddpos('GruvboxPurpleBold', [s:stack[i]])
+    else
+      call matchaddpos('GruvboxBlueBold', [s:stack[i]])
+    endif
     call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
 endfunction
@@ -122,10 +126,12 @@ function! s:handle_normal(char) abort
     redrawstatus!
   elseif a:char == 9 " <tab>
     if index(keys(s:toggle_stack), s:index . '') == -1
-      call extend(s:toggle_stack, {s:index : s:stack[s:index]})
+      call extend(s:toggle_stack, {s:index : [s:stack[s:index], s:cursor_stack[s:index]]})
       call remove(s:stack, s:index)
+      call remove(s:cursor_stack, s:index)
     else
-      call insert(s:stack, s:toggle_stack[s:index] , s:index)
+      call insert(s:stack, s:toggle_stack[s:index][0] , s:index)
+      call insert(s:cursor_stack, s:toggle_stack[s:index][1] , s:index)
       call remove(s:toggle_stack, s:index)
     endif
   elseif a:char == 97 " a
