@@ -481,6 +481,13 @@ Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.
 
+                                                *g:neomake_echo_current_error*
+neomake/neomake {{{ This setting will echo the error for the line your cursor
+is on, if any.
+
+                                                            *g:ale_echo_delay*
+w0rp/ale {{{
+
 ==============================================================================
 COMMANDS                                                   *SpaceVim-commands*
 
