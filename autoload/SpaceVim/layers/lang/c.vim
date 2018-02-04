@@ -115,7 +115,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
-  if SpaceVim#layers#lsp#check_filetype('python')
+  if SpaceVim#layers#lsp#check_filetype('c')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
@@ -159,7 +159,7 @@ elseif g:spacevim_enable_ale
     " g:ale_c_clang_options
     for ft in a:fts
       let g:ale_{ft}_clang_options = ' -fsyntax-only -Wall -Wextra -I./ ' . join(a:argv, ' ')
-      let g:ale_{ft}_clang_executabl = s:clang_executable
+      let g:ale_{ft}_clang_executable = s:clang_executable
     endfor
   endfunction
 else
