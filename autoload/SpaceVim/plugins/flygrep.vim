@@ -8,7 +8,15 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 " Init local options: {{{
 let s:grep_expr = ''
-let [s:grep_default_exe, s:grep_default_opt, s:grep_default_ropt] = SpaceVim#mapping#search#default_tool()
+let [
+      \ s:grep_default_exe,
+      \ s:grep_default_opt,
+      \ s:grep_default_ropt,
+      \ s:grep_default_expr_opt,
+      \ s:grep_default_fix_string_opt,
+      \ s:grep_ignore_case,
+      \ s:grep_smart_case
+      \ ] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 let s:grepid = 0
 " }}}
@@ -21,7 +29,6 @@ function! s:grep_timer(timer) abort
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
-        \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
@@ -29,6 +36,13 @@ endfunction
 
 function! s:get_search_cmd(expr) abort
   let cmd = [s:grep_exe] + s:grep_opt
+  if &ignorecase
+    let cmd += s:grep_ignore_case
+  endif
+  if &smartcase
+    let cmd += s:grep_smart_case
+  endif
+  let cmd += s:grep_default_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
     return cmd + [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
@@ -56,8 +70,6 @@ function! s:flygrep(expr) abort
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
-" set default handle func: s:flygrep
-let s:MPT._handle_fly = function('s:flygrep')
 " }}}
 
 " filter local funcs: {{{
@@ -100,10 +112,8 @@ endfunction
 
 function! s:filter_timer(timer) abort
   let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
-  call SpaceVim#logger#info('filter cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
-        \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
@@ -115,7 +125,6 @@ function! s:get_filter_cmd(expr) abort
 endfunction
 " }}}
 
-let s:mode = ''
 " replace local funcs {{{
 function! s:start_replace() abort
   let s:mode = 'r'
@@ -171,17 +180,6 @@ function! s:grep_stdout(id, data, event) abort
   else
     call append('$', datas)
   endif
-  call s:MPT._build_prompt()
-endfunction
-
-function! s:grep_stderr(id, data, event) abort
-  let datas =filter(a:data, '!empty(v:val)')
-  if getline(1) ==# ''
-    call setline(1, datas)
-  else
-    call append('$', datas)
-  endif
-  call append('$', 'job:' . string(s:get_search_cmd(s:grep_expr)))
   call s:MPT._build_prompt()
 endfunction
 
@@ -302,6 +300,9 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
+  let s:mode = ''
+  " set default handle func: s:flygrep
+  let s:MPT._handle_fly = function('s:flygrep')
   rightbelow split __flygrep__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve

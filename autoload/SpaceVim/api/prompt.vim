@@ -136,6 +136,9 @@ func! s:self._build_prompt() abort
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
   echohl None | echon self._prompt.end
+  if empty(self._prompt.cursor) && !has('nvim')
+    echohl Comment | echon '_' | echohl None
+  endif
 endf
 
 function! s:self._clear_prompt() abort
