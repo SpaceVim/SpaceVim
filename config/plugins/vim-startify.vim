@@ -63,8 +63,8 @@ endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
 
 function! FileIcon(path)
-  echom a:path
-  return s:FILE.fticon(a:path)
+  let icon = s:FILE.fticon(a:path)
+  return empty(icon) ? ' ' : icon
 endfunction
 
 function! StartifyEntryFormat()
