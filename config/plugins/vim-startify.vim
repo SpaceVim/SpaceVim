@@ -68,6 +68,6 @@ function! FileIcon(path)
 endfunction
 
 function! StartifyEntryFormat()
-  return 'FileIcon(absolute_path) ." ". entry_path'
+  return 'FileIcon(entry_path) ."  ". entry_path'
 endfunction
 " vim:set et sw=2:

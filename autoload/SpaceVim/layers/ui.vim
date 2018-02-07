@@ -7,7 +7,7 @@ function! SpaceVim#layers#ui#plugins() abort
         \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
         \ ['lvht/tagbar-markdown',{'merged' : 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
-        \ ['mhinz/vim-startify', {'loadconf' : 1}],
+        \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ['blueyed/vim-diminactive', {'merged' : 0}],
         \ ]
   if get(g:, '_spacevim_statusline_loaded', 0) == 0
