@@ -14,6 +14,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
                 \ ['mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'}],
                 \ ['sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']}],
                 \ ['FelikZ/ctrlp-py-matcher'],
+                \ ['mattn/ctrlp-register'],
                 \ ['lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'}],
                 \ ['elentok/ctrlp-objects.vim',      { 'on_cmd' : [
                 \'CtrlPModels',
