@@ -9,4 +9,4 @@ Execute ( SpaceVim api: data#string ):
   AssertEqual str.strAllIndex('hello spacevim hello', 'hello', 0), [[0, 5], [15, 20]]
   AssertEqual str.strAllIndex('hello spacevim hello', 'he.*', 1), [[0, 20]]
   AssertEqual str.strAllIndex('hello spacevim hello', 'he[^ ]*', 1), [[0, 5], [15, 20]]
-  AssertEqual str.strAllIndex('let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end', 's.cursor[^_]*', 1), [[0, 5], [15, 20]]
+  AssertEqual str.strAllIndex('let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end', 's.cursor[^_]*', 1), [[4, 12], [28, 36], [55, 63]]
