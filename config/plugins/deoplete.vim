@@ -99,6 +99,9 @@ let g:deoplete#ignore_sources.vim = get(g:deoplete#ignore_sources, 'vim', ['tag'
 " clojure
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
+" ocaml
+let g:deoplete#ignore_sources.ocaml = ['buffer', 'around', 'omni']
+
 " public settings
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#set('file/include', 'matchers', 'matcher_head')
