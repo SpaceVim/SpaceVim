@@ -12,6 +12,9 @@
 function! SpaceVim#layers#lang#ocaml#plugins() abort
     let plugins = []
     call add(plugins, ['ocaml/merlin', {'on_ft' : 'ocaml', 'rtp' : 'vim/merlin'}])
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+        call add(plugins, ['copy/deoplete-ocaml'])
+    endif
     return plugins
 endfunction
 

@@ -1,14 +1,6 @@
-"=============================================================================
-" ocaml.md --- OCaml layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: 
-" URL: https://spacevim.org
-" License: MIT license
-"=============================================================================
-
 ---
 title: "SpaceVim lang#ocaml layer"
-description: "This layer is for OCaml development"
+description: "This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file."
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#ocaml
@@ -18,6 +10,7 @@ description: "This layer is for OCaml development"
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -36,3 +29,9 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#ocaml')` t
 - auto-completion
 - syntax checking
 - goto definition
+
+## Key bindings
+
+| Key Binding | Description                                               |
+| ----------- | --------------------------------------------------------- |
+| `gd`        | jump at the definition of the identifier under the cursor |
