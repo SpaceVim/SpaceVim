@@ -146,15 +146,8 @@ function! s:toggle_fill_column() abort
   call SpaceVim#layers#core#statusline#toggle_mode('hi-characters-for-long-lines')
 endfunction
 
-let s:idflag = 0
 function! s:toggle_indentline() abort
-  if !s:idflag
-    IndentLinesDisable
-    let s:idflag = 1
-  else
-    IndentLinesEnable
-    let s:idflag = 0
-  endif
+  IndentLinesToggle
 endfunction
 
 let s:shflag = 0
