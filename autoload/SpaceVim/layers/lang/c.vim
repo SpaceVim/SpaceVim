@@ -40,18 +40,13 @@
 
 
 
-let s:use_libclang = 0
 let s:clang_executable = 'clang'
 let s:SYSTEM = SpaceVim#api#import('system')
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
     if g:spacevim_autocomplete_method ==# 'deoplete'
-      if s:use_libclang
-        call add(plugins, ['zchee/deoplete-clang'])
-      else
-        call add(plugins, ['SpaceVim/deoplete-clang2'])
-      endif
+      call add(plugins, ['SpaceVim/deoplete-clang2'])
     elseif g:spacevim_autocomplete_method ==# 'ycm'
       " no need extra plugins
     elseif g:spacevim_autocomplete_method ==# 'completor'
@@ -91,11 +86,6 @@ function! SpaceVim#layers#lang#c#config() abort
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort
-  " use clang or libclang
-  let s:use_libclang = get(a:var,
-        \ 'enable_libclang',
-        \ 0)
-
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
     let g:deoplete#sources#clang#executable = a:var.clang_executable
@@ -105,7 +95,6 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   endif
 
   if has_key(a:var, 'libclang_path')
-    let g:deoplete#sources#clang#libclang_path = a:var.libclang_path
     let g:chromatica#libclang_path = a:var.libclang_path
   endif
 endfunction
