@@ -8,50 +8,36 @@ description: "General documentation about how to using SpaceVim, including the q
 <!-- vim-markdown-toc GFM -->
 
 - [Core Pillars](#core-pillars)
-  - [Mnemonic](#mnemonic)
-  - [Discoverable](#discoverable)
-  - [Consistent](#consistent)
-  - [Crowd-Configured](#crowd-configured)
 - [Highlighted features](#highlighted-features)
 - [Screenshots](#screenshots)
-  - [welcome page](#welcome-page)
-  - [working flow](#working-flow)
 - [Who can benefit from this?](#who-can-benefit-from-this)
 - [Update and Rollback](#update-and-rollback)
-  - [Update SpaceVim itself](#update-spacevim-itself)
-    - [Automatic Updates](#automatic-updates)
-    - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
-    - [Updating Manually with git](#updating-manually-with-git)
-  - [Update plugins](#update-plugins)
-  - [Get SpaceVim log](#get-spacevim-log)
+    - [Update SpaceVim itself](#update-spacevim-itself)
+    - [Update plugins](#update-plugins)
+    - [Get SpaceVim log](#get-spacevim-log)
 - [Configuration layers](#configuration-layers)
-  - [Purpose](#purpose)
-  - [Structure](#structure)
 - [Custom Configuration](#custom-configuration)
-  - [Automatic Generation](#automatic-generation)
-  - [Alternative directory](#alternative-directory)
 - [Concepts](#concepts)
-  - [Transient-states](#transient-states)
 - [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
-- [Awesome ui](#awesome-ui)
+- [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
   - [UI Toggles](#ui-toggles)
-  - [Statusline && tabline](#statusline--tabline)
-    - [statusline](#statusline)
-    - [tabline](#tabline)
-- [Manual](#manual)
+  - [Statusline](#statusline)
+  - [tabline](#tabline)
+- [Genaral Key bindings](#genaral-key-bindings)
+  - [Window manager](#window-manager)
+  - [File Operations](#file-operations)
+  - [Editor UI](#editor-ui)
+  - [Native functions](#native-functions)
+  - [Plugin: Unite](#plugin-unite)
+  - [Plugin: Bookmarks](#plugin-bookmarks)
   - [Completion](#completion)
     - [Unite/Denite](#unitedenite)
-      - [Mappings within unite/denite buffer](#mappings-within-unitedenite-buffer)
   - [Discovering](#discovering)
     - [Mappings](#mappings)
-      - [Mappings guide](#mappings-guide)
-      - [Unide/Denite describe key bindings](#unidedenite-describe-key-bindings)
     - [Getting help](#getting-help)
     - [Available layers](#available-layers)
-      - [Available plugins in SpaceVim](#available-plugins-in-spacevim)
-      - [New packages from ELPA repositories](#new-packages-from-elpa-repositories)
     - [Toggles](#toggles)
   - [Navigating](#navigating)
     - [Point/Cursor](#pointcursor)
@@ -103,49 +89,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Searching files in project](#searching-files-in-project)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
-  - [Connecting to the Vim server](#connecting-to-the-vim-server)
 - [Achievements](#achievements)
-  - [issues](#issues)
-  - [Stars, forks and watchers](#stars-forks-and-watchers)
-- [Features](#features)
-  - [Awesome ui](#awesome-ui-1)
-  - [Mnemonic key bindings](#mnemonic-key-bindings)
-- [Language specific mode](#language-specific-mode)
-- [Key Mapping](#key-mapping)
-  - [c/c++ support](#cc-support)
-  - [go support](#go-support)
-  - [python support](#python-support)
-- [Neovim centric - Dark powered mode of SpaceVim.](#neovim-centric---dark-powered-mode-of-spacevim)
-- [Modular configuration](#modular-configuration)
-- [Multiple leader mode](#multiple-leader-mode)
-  - [Global origin vim leader](#global-origin-vim-leader)
-  - [Local origin vim leader](#local-origin-vim-leader)
-  - [Windows function leader](#windows-function-leader)
-  - [Unite work flow leader](#unite-work-flow-leader)
-- [Unite centric work-flow](#unite-centric-work-flow)
-  - [Plugin Highlights](#plugin-highlights)
-  - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
-  - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
-    - [Language](#language)
-      - [Commands](#commands)
-      - [Commands](#commands-1)
-      - [Completion](#completion-1)
-      - [Unite](#unite)
-      - [Operators & Text Objects](#operators--text-objects)
-    - [Custom Key bindings](#custom-key-bindings)
-      - [File Operations](#file-operations)
-      - [Editor UI](#editor-ui)
-      - [Window Management](#window-management)
-      - [Native functions](#native-functions)
-      - [Plugin: Unite](#plugin-unite)
-      - [Plugin: neocomplete](#plugin-neocomplete)
-      - [Plugin: NERD Commenter](#plugin-nerd-commenter)
-      - [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
-      - [Plugin: ChooseWin](#plugin-choosewin)
-      - [Plugin: Bookmarks](#plugin-bookmarks)
-      - [Plugin: Gina/Gita](#plugin-ginagita)
-      - [Plugin: vim-signify](#plugin-vim-signify)
-      - [Misc Plugins](#misc-plugins)
 
 <!-- vim-markdown-toc -->
 
@@ -155,19 +99,19 @@ Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”
 
 If any of these core pillars is violated open an issue and we’ll try our best to fix it.
 
-### Mnemonic
+**Mnemonic**
 
 Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
 
-### Discoverable
+**Discoverable**
 
 Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
 
-### Consistent
+**Consistent**
 
 Similar functionalities have the same key binding everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
 
-### Crowd-Configured
+**Crowd-Configured**
 
 Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
 
@@ -189,11 +133,11 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ## Screenshots
 
-### welcome page
+**welcome page**
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-### working flow
+**working flow**
 
 ![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
@@ -215,31 +159,31 @@ to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 ## Update and Rollback
 
-### Update SpaceVim itself
+#### Update SpaceVim itself
 
 There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
 
-#### Automatic Updates
+**Automatic Updates**
 
 NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
 
 SpaceVim will automatically check for a new version every startup. You must restart Vim after updating.
 
-#### Updating from the SpaceVim Buffer
+**Updating from the SpaceVim Buffer**
 
 Use `:SPUpdate SpaceVim` in SpaceVim buffer, This command will open a buffer to show the process of updating.
 
-#### Updating Manually with git
+**Updating Manually with git**
 
 To update manually close Vim and update the git repository:
 
 `git -C ~/.SpaceVim pull`.
 
-### Update plugins
+#### Update plugins
 
 Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
 
-### Get SpaceVim log
+#### Get SpaceVim log
 
 Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
 
@@ -247,11 +191,11 @@ Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `
 
 This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
 
-### Purpose
+**Purpose**
 
 Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configration file.
 
-### Structure
+**Structure**
 
 In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
 
@@ -263,11 +207,11 @@ In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` l
 
 User configuration can be stored in your ~/.SpaceVim.d directory.
 
-### Automatic Generation
+**Automatic Generation**
 
 The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.vim` in your `HOME` directory.
 
-### Alternative directory
+**Alternative directory**
 
 `~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read <kbd>:h rtp</kbd>.
 
@@ -279,8 +223,8 @@ in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 here is an example config file for SpaceVim:
 
 ```vim
-" Here are some basic customizations, please refer to the ~/.SpaceVim.d/init.vim
-" file for all possible options:
+" Here are some basic customizations, please refer to the
+" ~/.SpaceVim.d/init.vim file for all possible options:
 let g:spacevim_default_indent = 3
 let g:spacevim_max_column     = 80
 
@@ -322,7 +266,8 @@ let g:spacevim_custom_plugins = [
 \ ['wsdjeg/GitHub.vim'],
 \ ]
 
-" If you want to add custom color palette for statusline and tabline, use these options:
+" If you want to add custom color palette for statusline and tabline, use
+" these options:
 let g:spacevim_custom_color_palette = [
 \ ['#282828', '#b8bb26', 246, 235],
 \ ['#a89984', '#504945', 239, 246],
@@ -348,7 +293,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 
 ## Concepts
 
-### Transient-states
+**Transient-states**
 
 SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
 
@@ -382,7 +327,7 @@ the option is `g:spacevim_windows_smartclose`, defalut value is `q`. If you stil
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
-## Awesome ui
+## Interface elements
 
 SpaceVim has a minimalistic and distraction free UI:
 
@@ -445,34 +390,18 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | SPC T m     | toggle menu bar                                                   |
 | SPC T t     | toggle tool bar                                                   |
 
-### Statusline && tabline
+### Statusline
 
-The statusline and tabline are heavily customized with the following capabilities:
-
-- tabline index of each buffer or tab.
-- vim mode (INSERT/NORMAL etc.)
-- git info : diff/branch
-- checker info: numbers of errors and warnings.
-- trailing line number.
-- enabled feature of SpaceVim
-- file information
-- search index
-
-| Key Binding | Description                   |
-| ----------- | ----------------------------- |
-| `SPC [1-9]` | jump to the index of tabline. |
-
-#### statusline
-
-The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:
 
 - show the window number
 - show the current mode
 - color code for current state
-- show the number of search results
+- show the index of searching result
 - toggle syntax checking info
 - toggle battery info
 - toggle minor mode lighters
+- show VCS information (branch, hunk summary)
 
 Reminder of the color codes for the states:
 
@@ -568,7 +497,8 @@ The letters displayed in the statusline correspond to the key bindings used to t
 
 **colorscheme of statusline:**
 
-current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
+current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to
+contribute theme please check the template of a statusline theme.
 
 ```vim
 " the theme colors should be
@@ -600,21 +530,24 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-#### tabline
+### tabline
 
-Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
+Buffers will be listed on tabline if there is only one tab, each item contains
+the index, bufname and the filetype icon. if there are more than one tab, all
+tabs will be listed on the tabline. each item can be quickly accessed using
+`<Leader> number`. default `<Leader>` is `\`.
 
 | Key Binding  | Description                |
 | ------------ | -------------------------- |
-| `<Leader> 1` | jump to index 1 on tabline |
-| `<Leader> 2` | jump to index 2 on tabline |
-| `<Leader> 3` | jump to index 3 on tabline |
-| `<Leader> 4` | jump to index 4 on tabline |
-| `<Leader> 5` | jump to index 5 on tabline |
-| `<Leader> 6` | jump to index 6 on tabline |
-| `<Leader> 7` | jump to index 7 on tabline |
-| `<Leader> 8` | jump to index 8 on tabline |
-| `<Leader> 9` | jump to index 9 on tabline |
+| `<Leader> 1` | Jump to index 1 on tabline |
+| `<Leader> 2` | Jump to index 2 on tabline |
+| `<Leader> 3` | Jump to index 3 on tabline |
+| `<Leader> 4` | Jump to index 4 on tabline |
+| `<Leader> 5` | Jump to index 5 on tabline |
+| `<Leader> 6` | Jump to index 6 on tabline |
+| `<Leader> 7` | Jump to index 7 on tabline |
+| `<Leader> 8` | Jump to index 8 on tabline |
+| `<Leader> 9` | Jump to index 9 on tabline |
 
 SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
 
@@ -622,10 +555,160 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 
 | Key Binding      | Description        |
 | ---------------- | ------------------ |
-| `<Mouse-left>`   | jump to the buffer |
-| `<Mouse-middle>` | delete the buffer  |
+| `<Mouse-left>`   | Jump to the buffer |
+| `<Mouse-middle>` | Delete the buffer  |
 
-## Manual
+**Tab manager:**
+
+You can also use `SPC t t` to open the tab manager windows. 
+
+key bindings within tab manager windows.
+
+| Key Binding | Description                       |
+| ----------- | --------------------------------- |
+| `o`         | Close or expand tab windows.      |
+| `<Enter>`   | Jump to windows under the cursor. |
+
+## Genaral Key bindings
+
+### Window manager
+
+Windows manager key bindings can only be used in normal mode. The default leader is `s`, you can
+can change it via `g:spacevim_windows_leader`
+
+| Key bindings    | Description                                                                                                                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `q`             | Smart buffer close                                                                                                                                                                                                             |
+| `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
+| `s`+`v`         | :split                                                                                                                                                                                                                         |
+| `s`+`g`         | :vsplit                                                                                                                                                                                                                        |
+| `s`+`t`         | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `s`+`o`         | Close other windows (:only)                                                                                                                                                                                                    |
+| `s`+`x`         | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `s`+`q`         | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
+| `Tab`           | Next window or tab                                                                                                                                                                                                             |
+| `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
+| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
+| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
+
+SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
+can be get by <kbd><leader> q r</kbd>
+
+| Key                   |      Mode     | Action                                                                         |
+| --------------------- | :-----------: | ------------------------------------------------------------------------------ |
+| `<leader>`+`y`        |     visual    | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl`+`c`            |     Normal    | Copy full path of current buffer to X11 clipboard                              |
+| `<leader>`+`Ctrl`+`c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
+| `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
+| `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl`+`b`            |     Normal    | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl`+`e`            |     Normal    | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl`+`y`            |     Normal    | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl`+`q`            |     Normal    | `Ctrl`+`w`                                                                     |
+| `Ctrl`+`x`            |     Normal    | Switch buffer and placement                                                    |
+| `Up,Down`             |     Normal    | Smart up and down                                                              |
+| `}`                   |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
+| `<`                   | Visual/Normal | Indent to left and re-select                                                   |
+| `>`                   | Visual/Normal | Indent to right and re-select                                                  |
+| `Tab`                 |     Visual    | Indent to right and re-select                                                  |
+| `Shift`+`Tab`         |     Visual    | Indent to left and re-select                                                   |
+| `gp`                  |     Normal    | Select last paste                                                              |
+| `Q`/`gQ`              |     Normal    | Disable EX-mode (<Nop>)                                                        |
+| `Ctrl`+`a`            |    Command    | Navigation in command line                                                     |
+| `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
+| `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
+
+### File Operations
+
+| Key             |          Mode         | Action                                     |
+| --------------- | :-------------------: | ------------------------------------------ |
+| `<leader>`+`cd` |         Normal        | Switch to the directory of the open buffer |
+| `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
+| `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
+| `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
+
+### Editor UI
+
+| Key                     |      Mode     | Action                                                           |
+| ----------------------- | :-----------: | ---------------------------------------------------------------- |
+| `F2`                    |     _All_     | Toggle tagbar                                                    |
+| `F3`                    |     _All_     | Toggle Vimfiler                                                  |
+| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
+| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
+| `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
+| `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
+| `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
+| `<leader>`+`tn`         |     Normal    | Toggle line numbers (:setlocal nonumber!)                        |
+| `<leader>`+`tl`         |     Normal    | Toggle hidden characters (:setlocal nolist!)                     |
+| `<leader>`+`th`         |     Normal    | Toggle highlighted search (:set hlsearch!)                       |
+| `<leader>`+`tw`         |     Normal    | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g0`                    |     Normal    | Go to first tab (:tabfirst)                                      |
+| `g$`                    |     Normal    | Go to last tab (:tablast)                                        |
+| `gr`                    |     Normal    | Go to previous tab (:tabprevious)                                |
+| `Ctrl`+`<Dow>`          |     Normal    | Move to split below (<C-w>j)                                     |
+| `Ctrl`+`<Up>`           |     Normal    | Move to upper split (<C-w>k)                                     |
+| `Ctrl`+`<Left>`         |     Normal    | Move to left split (<C-w>h)                                      |
+| `Ctrl`+`<Right>`        |     Normal    | Move to right split (<C-w>l)                                     |
+| `*`                     |     Visual    | Search selection forwards                                        |
+| `#`                     |     Visual    | Search selection backwards                                       |
+| `,`+`Space`             |     Normal    | Remove all spaces at EOL                                         |
+| `Ctrl`+`r`              |     Visual    | Replace selection                                                |
+| `<leader>`+`lj`         |     Normal    | Next on location list                                            |
+| `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
+| `<leader>`+`S`          | Normal/visual | Source selection                                                 |
+
+### Native functions
+
+| Key                |  Mode  | Action                           |
+| ------------------ | :----: | -------------------------------- |
+| `<leader>` + `qr`  | Normal | Same as native `q`               |
+| `<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin |
+| `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
+| `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
+
+### Plugin: Unite
+
+| Key                 |      Mode     | Action                                                     |
+| ------------------- | :-----------: | ---------------------------------------------------------- |
+| `[unite]`           |     Normal    | unite leader, default is `f`, `:h g:spacevim_unite_leader` |
+| `[unite]`+`r`       |     Normal    | Resumes Unite window                                       |
+| `[unite]`+`f`       |     Normal    | Opens Unite file recursive search                          |
+| `[unite]`+`i`       |     Normal    | Opens Unite git file search                                |
+| `[unite]`+`g`       |     Normal    | Opens Unite grep with ag (the_silver_searcher)             |
+| `[unite]`+`u`       |     Normal    | Opens Unite source                                         |
+| `[unite]`+`t`       |     Normal    | Opens Unite tag                                            |
+| `[unite]`+`T`       |     Normal    | Opens Unite tag/include                                    |
+| `[unite]`+`l`       |     Normal    | Opens Unite location list                                  |
+| `[unite]`+`q`       |     Normal    | Opens Unite quick fix                                      |
+| `[unite]`+`e`       |     Normal    | Opens Unite register                                       |
+| `[unite]`+`j`       |     Normal    | Opens Unite jump, change                                   |
+| `[unite]`+`h`       |     Normal    | Opens Unite history/yank                                   |
+| `[unite]`+`s`       |     Normal    | Opens Unite session                                        |
+| `[unite]`+`n`       |     Normal    | Opens Unite session/new                                    |
+| `[unite]`+`o`       |     Normal    | Opens Unite outline                                        |
+| `[unite]`+`c`       |     Normal    | Opens Unite buffer bookmark file in current directory      |
+| `[unite]`+`b`       |     Normal    | Opens Unite buffer bookmark file in buffer directory       |
+| `[unite]`+`ma`      |     Normal    | Opens Unite mapping                                        |
+| `[unite]`+`<space>` |     Normal    | Opens Unite menu:CustomKeyMaps                             |
+| `[unite]`+`me`      |     Normal    | Opens Unite output messages                                |
+| `<leader>`+`bl`     |     Normal    | Opens Unite buffers, mru, bookmark                         |
+| `<leader>`+`ta`     |     Normal    | Opens Unite tab                                            |
+| `<leader>`+`ugf`    |     Normal    | Opens Unite file with word at cursor                       |
+| `<leader>`+`ugt`    | Normal/visual | Opens Unite tag with word at cursor                        |
+
+### Plugin: Bookmarks
+
+| Key     |  Mode  | Action                          |
+| ------- | :----: | ------------------------------- |
+| `m`+`a` | Normal | Show list of all bookmarks      |
+| `m`+`m` | Normal | Toggle bookmark in current line |
+| `m`+`n` | Normal | Jump to next bookmark           |
+| `m`+`p` | Normal | Jump to previous bookmark       |
+| `m`+`i` | Normal | Annotate bookmark               |
+
+As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
 ### Completion
 
@@ -633,7 +716,7 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 
 please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
 
-##### Mappings within unite/denite buffer
+**Mappings within unite/denite buffer**
 
 | Mappings         | Mode          | description                          |
 | ---------------- | ------------- | ------------------------------------ |
@@ -657,20 +740,20 @@ please checkout the documentation of unite and denite via `:h unite` and `:h den
 
 #### Mappings
 
-##### Mappings guide
+**Mappings guide**
 
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
 The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value   | description                         |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`  | denite mapping prefix of SpaceVim   |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`   | unite mapping prefix of SpaceVim    |
-| `<leader>`  | `mapleader` / `` \ ``             | default leader prefix of vim/neovim |
+| Prefix name | custom option and default value                                          | description                        |
+| ----------- | ------------------------------------------------------------------------ | ---------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                                                         | default mapping prefix of SpaceVim |
+| `[Window]`  | `g:spacevim_windows_leader` / `s`                                        | window mapping prefix of SpaceVim  |
+| `[denite]`  | `g:spacevim_denite_leader` / `F`                                         | denite mapping prefix of SpaceVim  |
+| `[unite]`   | `g:spacevim_unite_leader` / `f`                                          | unite mapping prefix of SpaceVim   |
+| `<leader>`  | `mapleader` / `\`                 \| default leader prefix of vim/neovim |                                    |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -694,7 +777,7 @@ to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
-##### Unide/Denite describe key bindings
+**Unide/Denite describe key bindings**
 
 It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
 
@@ -725,11 +808,11 @@ Reporting an issue:
 
 All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
-##### Available plugins in SpaceVim
+**Available plugins in SpaceVim**
 
 All plugins can be easily discovered via `<leader> l p`.
 
-##### New packages from ELPA repositories
+**New packages from ELPA repositories**
 
 #### Toggles
 
@@ -1570,7 +1653,7 @@ To customize your editorconfig experience, read the [editorconfig-vim package’
 
 SpaceVim starts a server at launch. This server is killed whenever you close your Vim windows.
 
-### Connecting to the Vim server
+**Connecting to the Vim server**
 
 If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
 
@@ -1584,14 +1667,14 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 
 ## Achievements
 
-### issues
+**issues**
 
 | Achievements                                                          | Account                                     |
 | --------------------------------------------------------------------- | ------------------------------------------- |
 | [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
 | [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)       |
 
-### Stars, forks and watchers
+**Stars, forks and watchers**
 
 | Achievements      | Account                                         |
 | ----------------- | ----------------------------------------------- |
@@ -1604,613 +1687,5 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 | 5000th stargazers | [robgrzel](https://github.com/robgrzel)         |
 
 <!-- SpaceVim Achievements end -->
-
-## Features
-
-### Awesome ui
-
-- outline + filemanager + checker
-
-![awesome ui](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
-
-### Mnemonic key bindings
-
-Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
-
-**SPC mapping root** : SPC means `<Space>` on the keyboard.
-
-| Key                  | Description   |
-| -------------------- | ------------- |
-| <kbd>SPC !</kbd>     | shell cmd     |
-| <kbd>SPC a</kbd>     | +applications |
-| <kbd>SPC b</kbd>     | +buffers      |
-| <kbd>SPC 1...9</kbd> | windows 1...9 |
-
-## Language specific mode
-
-## Key Mapping
-
-<iframe width='853' height='480' src='https://embed.coggle.it/diagram/WMlKuKS0uwABF2j1/a35e36df1d64e7b4f5fd7f956bf97a16b194cadb92d82d83e25aaf489349b0d8' frameborder='0' allowfullscreen></iframe>
-
-### c/c++ support
-
-1. code completion: autocompletion and fuzzy match.
-   ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
-2. syntax check: Asynchronous linting and make framework.
-   ![syntax-check](https://cloud.githubusercontent.com/assets/13142418/22506340/e28b4782-e8ba-11e6-974b-ca29574dcc1f.png)
-
-### go support
-
-1. code completion:
-   ![2017-02-01_1360x721](https://cloud.githubusercontent.com/assets/13142418/22508345/8215c5e4-e8c4-11e6-95ec-f2a6e1e2f4d2.png)
-2. syntax check:
-   ![2017-02-01_1359x720](https://cloud.githubusercontent.com/assets/13142418/22509944/108b6508-e8cb-11e6-8104-6310a29ae796.png)
-
-### python support
-
-1. code completion:
-   ![2017-02-02_1360x724](https://cloud.githubusercontent.com/assets/13142418/22537799/7d1d47fe-e948-11e6-8168-a82e3f688554.png)
-2. syntax check:
-   ![2017-02-02_1358x720](https://cloud.githubusercontent.com/assets/13142418/22537883/36de7b5e-e949-11e6-866f-73c48e8f59aa.png)
-
-## Neovim centric - Dark powered mode of SpaceVim.
-
-By default, SpaceVim use these dark powered plugins:
-
-1. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-2. [dein.vim](https://github.com/Shougo/dein.vim) - Dark powered Vim/Neovim plugin manager
-
-TODO:
-
-1. [defx.nvim](https://github.com/Shougo/defx.nvim) - Dark powered file explorer
-2. [deoppet.nvim](https://github.com/Shougo/deoppet.nvim) - Dark powered snippet plugin
-3. [denite.nvim](https://github.com/Shougo/denite.nvim) - Dark powered asynchronous unite all interfaces for Neovim/Vim8
-
-## Modular configuration
-
-## Multiple leader mode
-
-### Global origin vim leader
-
-Vim's origin global leader can be used in all modes.
-
-### Local origin vim leader
-
-Vim's origin local leader can be used in all the mode.
-
-### Windows function leader
-
-Windows function leader can only be used in normal mode.
-For the list of mappings see the [link](#window-management)
-
-### Unite work flow leader
-
-Unite work flow leader can only be used in normal mode. Unite leader need unite groups.
-
-## Unite centric work-flow
-
-![unite](https://cloud.githubusercontent.com/assets/13142418/23955542/26fd5348-09d5-11e7-8253-1f43991439b0.png)
-
-- List all the plugins has been installed, fuzzy find what you want, default action is open the github website of current plugin. default key is `<leader>lp`
-    ![2017-01-21_1358x725](https://cloud.githubusercontent.com/assets/13142418/22175019/ce42d902-e027-11e6-89cd-4f44f70a10cd.png)
-
-- List all the mappings and description: `f<space>`
-    ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
-
-- List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
-    ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
-
-### Plugin Highlights
-
-- Package management with caching enabled and lazy loading
-- Project-aware tabs and label
-- Vimfiler as file-manager + SSH connections
-- Go completion via vim-go and gocode
-- Javascript completion via Tern
-- PHP completion, indent, folds, syntax
-- Python jedi completion, pep8 convention
-- Languages: Ansible, css3, csv, json, less, markdown, mustache
-- Helpers: Undo tree, bookmarks, git, tmux navigation,
-    hex editor, sessions, and much more.
-
-    _Note_ that 90% of the plugins are **[lazy-loaded]**.
-
-    [lazy-loaded]&#x3A; ./config/plugins.vim
-
-### Non Lazy-Loaded Plugins
-
-| Name             | Description                                           |
-| ---------------- | ----------------------------------------------------- |
-| [dein.vim]       | Dark powered Vim/Neovim plugin manager                |
-| [vimproc]        | Interactive command execution                         |
-| [colorschemes]   | Awesome color-schemes                                 |
-| [file-line]      | Allow opening a file in a given line                  |
-| [neomru]         | MRU source for Unite                                  |
-| [cursorword]     | Underlines word under cursor                          |
-| [gitbranch]      | Lightweight git branch detection                      |
-| [gitgutter]      | Shows git diffs in the gutter                         |
-| [tinyline]       | Tiny great looking statusline                         |
-| [tagabana]       | Central location for all tags                         |
-| [bookmarks]      | Bookmarks, works independently from vim marks         |
-| [tmux-navigator] | Seamless navigation between tmux panes and vim splits |
-
-### Lazy-Loaded Plugins
-
-#### Language
-
-| Name                | Description                                            |
-| ------------------- | ------------------------------------------------------ |
-| [html5]             | HTML5 omnicomplete and syntax                          |
-| [mustache]          | Mustache and handlebars syntax                         |
-| [markdown]          | Markdown syntax highlighting                           |
-| [ansible-yaml]      | Additional support for Ansible                         |
-| [jinja]             | Jinja support in vim                                   |
-| [less]              | Syntax for LESS                                        |
-| [css3-syntax]       | CSS3 syntax support to vim's built-in `syntax/css.vim` |
-| [csv]               | Handling column separated data                         |
-| [pep8-indent]       | Nicer Python indentation                               |
-| [logstash]          | Highlights logstash configuration files                |
-| [tmux]              | vim plugin for tmux.conf                               |
-| [json]              | Better JSON support                                    |
-| [toml]              | Syntax for TOML                                        |
-| [i3]                | i3 window manager config syntax                        |
-| [Dockerfile]        | syntax and snippets for Dockerfile                     |
-| [go]                | Go development                                         |
-| [jedi-vim]          | Python jedi autocompletion library                     |
-| [ruby]              | Ruby configuration files                               |
-| [portfile]          | Macports portfile configuration files                  |
-| [javascript]        | Enhanced Javascript syntax                             |
-| [javascript-indent] | Javascript indent script                               |
-| [tern]              | Provides Tern-based JavaScript editing support         |
-| [php]               | Up-to-date PHP syntax file                             |
-| [phpfold]           | PHP folding                                            |
-| [phpcomplete]       | Improved PHP omnicompletion                            |
-| [phpindent]         | PHP official indenting                                 |
-| [phpspec]           | PhpSpec integration                                    |
-
-##### Commands
-
-| Name             | Description                                         |
-| ---------------- | --------------------------------------------------- |
-| [vimfiler]       | Powerful file explorer                              |
-| [NERD Commenter] | Comment tool - no comment necessary                 |
-| [vinarise]       | Hex editor                                          |
-| [syntastic]      | Syntax checking hacks                               |
-| [gita]           | An awesome git handling plugin                      |
-| [gista]          | Manipulate gists in Vim                             |
-| [undotree]       | Ultimate undo history visualizer                    |
-| [incsearch]      | Improved incremental searching                      |
-| [expand-region]  | Visually select increasingly larger regions of text |
-| [open-browser]   | Open URI with your favorite browser                 |
-| [prettyprint]    | Pretty-print vim variables                          |
-| [quickrun]       | Run commands quickly                                |
-| [ref]            | Integrated reference viewer                         |
-| [dictionary]     | Dictionary.app interface                            |
-| [vimwiki]        | Personal Wiki for Vim                               |
-| [thesaurus]      | Look up words in an online thesaurus                |
-
-##### Commands
-
-| Name         | Description                                      |
-| ------------ | ------------------------------------------------ |
-| [goyo]       | Distraction-free writing                         |
-| [limelight]  | Hyperfocus-writing                               |
-| [matchit]    | Intelligent pair matching                        |
-| [indentline] | Display vertical indention lines                 |
-| [choosewin]  | Choose window to use, like tmux's 'display-pane' |
-
-##### Completion
-
-| Name          | Description                                                   |
-| ------------- | ------------------------------------------------------------- |
-| [delimitmate] | Insert mode auto-completion for quotes, parenthesis, brackets |
-| [echodoc]     | Print objects' documentation in echo area                     |
-| [deoplete]    | Neovim: Dark powered asynchronous completion framework        |
-| [neocomplete] | Next generation completion framework                          |
-| [neosnippet]  | Contains neocomplete snippets source                          |
-
-##### Unite
-
-| Name                 | Description                                 |
-| -------------------- | ------------------------------------------- |
-| [unite]              | Unite and create user interfaces            |
-| [unite-colorscheme]  | Browse colorschemes                         |
-| [unite-filetype]     | Select file type                            |
-| [unite-history]      | Browse history of command/search            |
-| [unite-build]        | Build with Unite interface                  |
-| [unite-outline]      | File "outline" source for unite             |
-| [unite-tag]          | Tags source for Unite                       |
-| [unite-quickfix]     | Quickfix source for Unite                   |
-| [neossh]             | SSH interface for plugins                   |
-| [unite-pull-request] | GitHub pull-request source for Unite        |
-| [junkfile]           | Create temporary files for memo and testing |
-| [unite-issue]        | Issue manager for JIRA and GitHub           |
-
-##### Operators & Text Objects
-
-| Name                 | Description                                    |
-| -------------------- | ---------------------------------------------- |
-| [operator-user]      | Define your own operator easily                |
-| [operator-replace]   | Operator to replace text with register content |
-| [operator-surround]  | Operator to enclose text objects               |
-| [textobj-user]       | Create your own text objects                   |
-| [textobj-multiblock] | Handle multiple brackets objects               |
-
-#### Custom Key bindings
-
-| Key                   |      Mode     | Action                                                                         |
-| --------------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<leader>`+`y`        |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl`+`c`            |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<leader>`+`Ctrl`+`c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl`+`b`            |     Normal    | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl`+`e`            |     Normal    | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl`+`y`            |     Normal    | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl`+`q`            |     Normal    | `Ctrl`+`w`                                                                     |
-| `Ctrl`+`x`            |     Normal    | Switch buffer and placement                                                    |
-| `Up,Down`             |     Normal    | Smart up and down                                                              |
-| `}`                   |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
-| `<`                   | Visual/Normal | Indent to left and re-select                                                   |
-| `>`                   | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`                 |     Visual    | Indent to right and re-select                                                  |
-| `Shift`+`Tab`         |     Visual    | Indent to left and re-select                                                   |
-| `gp`                  |     Normal    | Select last paste                                                              |
-| `Q`/`gQ`              |     Normal    | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl`+`a`            |    Command    | Navigation in command line                                                     |
-| `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
-| `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
-
-##### File Operations
-
-| Key             |          Mode         | Action                                     |
-| --------------- | :-------------------: | ------------------------------------------ |
-| `<leader>`+`cd` |         Normal        | Switch to the directory of the open buffer |
-| `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
-| `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
-| `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
-
-##### Editor UI
-
-| Key                     |      Mode     | Action                                                           |
-| ----------------------- | :-----------: | ---------------------------------------------------------------- |
-| `F2`                    |     _All_     | Toggle tagbar                                                    |
-| `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
-| `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`         |     Normal    | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`         |     Normal    | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`         |     Normal    | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`         |     Normal    | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                    |     Normal    | Go to first tab (:tabfirst)                                      |
-| `g$`                    |     Normal    | Go to last tab (:tablast)                                        |
-| `gr`                    |     Normal    | Go to previous tab (:tabprevious)                                |
-| `Ctrl`+`<Dow>`          |     Normal    | Move to split below (<C-w>j)                                     |
-| `Ctrl`+`<Up>`           |     Normal    | Move to upper split (<C-w>k)                                     |
-| `Ctrl`+`<Left>`         |     Normal    | Move to left split (<C-w>h)                                      |
-| `Ctrl`+`<Right>`        |     Normal    | Move to right split (<C-w>l)                                     |
-| `*`                     |     Visual    | Search selection forwards                                        |
-| `#`                     |     Visual    | Search selection backwards                                       |
-| `,`+`Space`             |     Normal    | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`              |     Visual    | Replace selection                                                |
-| `<leader>`+`lj`         |     Normal    | Next on location list                                            |
-| `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
-| `<leader>`+`S`          | Normal/visual | Source selection                                                 |
-
-##### Window Management
-
-| Key             |  Mode  | Action                                                                                                                                                                                                                         |
-| --------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Normal | Smart buffer close                                                                                                                                                                                                             |
-| `s`+`p`         | Normal | Split nicely                                                                                                                                                                                                                   |
-| `s`+`v`         | Normal | :split                                                                                                                                                                                                                         |
-| `s`+`g`         | Normal | :vsplit                                                                                                                                                                                                                        |
-| `s`+`t`         | Normal | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s`+`o`         | Normal | Close other windows (:only)                                                                                                                                                                                                    |
-| `s`+`x`         | Normal | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s`+`q`         | Normal | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s`+`Q`         | Normal | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`           | Normal | Next window or tab                                                                                                                                                                                                             |
-| `Shift`+`Tab`   | Normal | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Normal | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Normal | Vertically split with previous buffer                                                                                                                                                                                          |
-
-SpaceVim has mapped normal <kbd>q</kbd> as smart buffer close, the normal func of <kbd>q</kbd>
-can be get by <kbd><leader> q r</kbd>
-
-##### Native functions
-
-| Key                |  Mode  | Action                           |
-| ------------------ | :----: | -------------------------------- |
-| `<leader>` + `qr`  | Normal | Same as native `q`               |
-| `<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
-
-##### Plugin: Unite
-
-| Key                 |      Mode     | Action                                                     |
-| ------------------- | :-----------: | ---------------------------------------------------------- |
-| `[unite]`           |     Normal    | unite leader, default is `f`, `:h g:spacevim_unite_leader` |
-| `[unite]`+`r`       |     Normal    | Resumes Unite window                                       |
-| `[unite]`+`f`       |     Normal    | Opens Unite file recursive search                          |
-| `[unite]`+`i`       |     Normal    | Opens Unite git file search                                |
-| `[unite]`+`g`       |     Normal    | Opens Unite grep with ag (the_silver_searcher)             |
-| `[unite]`+`u`       |     Normal    | Opens Unite source                                         |
-| `[unite]`+`t`       |     Normal    | Opens Unite tag                                            |
-| `[unite]`+`T`       |     Normal    | Opens Unite tag/include                                    |
-| `[unite]`+`l`       |     Normal    | Opens Unite location list                                  |
-| `[unite]`+`q`       |     Normal    | Opens Unite quick fix                                      |
-| `[unite]`+`e`       |     Normal    | Opens Unite register                                       |
-| `[unite]`+`j`       |     Normal    | Opens Unite jump, change                                   |
-| `[unite]`+`h`       |     Normal    | Opens Unite history/yank                                   |
-| `[unite]`+`s`       |     Normal    | Opens Unite session                                        |
-| `[unite]`+`n`       |     Normal    | Opens Unite session/new                                    |
-| `[unite]`+`o`       |     Normal    | Opens Unite outline                                        |
-| `[unite]`+`c`       |     Normal    | Opens Unite buffer bookmark file in current directory      |
-| `[unite]`+`b`       |     Normal    | Opens Unite buffer bookmark file in buffer directory       |
-| `[unite]`+`ma`      |     Normal    | Opens Unite mapping                                        |
-| `[unite]`+`<space>` |     Normal    | Opens Unite menu:CustomKeyMaps                             |
-| `[unite]`+`me`      |     Normal    | Opens Unite output messages                                |
-| `<leader>`+`bl`     |     Normal    | Opens Unite buffers, mru, bookmark                         |
-| `<leader>`+`ta`     |     Normal    | Opens Unite tab                                            |
-| `<leader>`+`ugf`    |     Normal    | Opens Unite file with word at cursor                       |
-| `<leader>`+`ugt`    | Normal/visual | Opens Unite tag with word at cursor                        |
-
-##### Plugin: neocomplete
-
-| Key              |      Mode     | Action                           |
-| ---------------- | :-----------: | -------------------------------- |
-| `Enter`          |     Insert    | Smart snippet expansion          |
-| `Ctrl`+`space`   |     Insert    | Autocomplete with Unite          |
-| `Tab`            | Insert/select | Smart tab movement or completion |
-| `Ctrl`+`j/k/f/b` |     Insert    | Movement in popup                |
-| `Ctrl`+`g`       |     Insert    | Undo completion                  |
-| `Ctrl`+`l`       |     Insert    | Complete common string           |
-| `Ctrl`+`o`       |     Insert    | Expand snippet                   |
-| `Ctrl`+`y`       |     Insert    | Close pop-up                     |
-| `Ctrl`+`e`       |     Insert    | Close pop-up                     |
-| `Ctrl`+`l`       |     Insert    | Complete common string           |
-| `Ctrl`+`d`       |     Insert    | Scroll down                      |
-| `Ctrl`+`u`       |     Insert    | Scroll up                        |
-
-##### Plugin: NERD Commenter
-
-| Key             |      Mode     | Action                                                                |
-| --------------- | :-----------: | --------------------------------------------------------------------- |
-| `<leader>`+`cc` | Normal/visual | Comment out the current line or text selected in visual mode.         |
-| `<leader>`+`cn` | Normal/visual | Same as cc but forces nesting.                                        |
-| `<leader>`+`cu` | Normal/visual | Uncomments the selected line(s).                                      |
-| `<leader>`+`cs` | Normal/visual | Comments out the selected lines with a pretty block formatted layout. |
-| `<leader>`+`cy` | Normal/visual | Same as cc except that the commented line(s) are yanked first.        |
-
-##### Plugin: Goyo and Limelight
-
-| Key            |  Mode  | Action                          |
-| -------------- | :----: | ------------------------------- |
-| `<leader>`+`G` | Normal | Toggle distraction-free writing |
-
-##### Plugin: ChooseWin
-
-| Key            |  Mode  | Action                              |
-| -------------- | :----: | ----------------------------------- |
-| `-`            | Normal | Choose a window to edit             |
-| `<leader>`+`-` | Normal | Switch editing window with selected |
-
-##### Plugin: Bookmarks
-
-| Key     |  Mode  | Action                          |
-| ------- | :----: | ------------------------------- |
-| `m`+`a` | Normal | Show list of all bookmarks      |
-| `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | Jump to next bookmark           |
-| `m`+`p` | Normal | Jump to previous bookmark       |
-| `m`+`i` | Normal | Annotate bookmark               |
-
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
-
-##### Plugin: Gina/Gita
-
-| Key             |  Mode  | Action                 |
-| --------------- | :----: | ---------------------- |
-| `<leader>`+`gs` | Normal | Git status             |
-| `<leader>`+`gd` | Normal | Git diff               |
-| `<leader>`+`gc` | Normal | Git commit             |
-| `<leader>`+`gb` | Normal | Git blame              |
-| `<leader>`+`gp` | Normal | Git push               |
-| `<leader>`+`ga` | Normal | Git add current buffer |
-| `<leader>`+`gA` | Normal | Git add all files      |
-
-##### Plugin: vim-signify
-
-| Key                    |  Mode  | Action                |
-| ---------------------- | :----: | --------------------- |
-| `<leader>`+`hj` / `]c` | Normal | Jump to next hunk     |
-| `<leader>`+`hk` / `[c` | Normal | Jump to previous hunk |
-| `<leader>`+`hJ` / `]C` | Normal | Jump to last hunk     |
-| `<leader>`+`hK` / `[C` | Normal | Jump to first hunk    |
-
-##### Misc Plugins
-
-| Key             |  Mode  | Action                   |
-| --------------- | :----: | ------------------------ |
-| `<leader>`+`gu` | Normal | Open undo tree           |
-| `<leader>`+`i`  | Normal | Toggle indentation lines |
-| `<leader>`+`j`  | Normal | Start smalls             |
-| `<leader>`+`r`  | Normal | Quickrun                 |
-| `<leader>`+`?`  | Normal | Dictionary               |
-| `<leader>`+`W`  | Normal | Wiki                     |
-| `<leader>`+`K`  | Normal | Thesaurus                |
-
-<!-- plublic links -->
-
-[dein.vim]: https://github.com/Shougo/dein.vim
-
-[vimproc]: https://github.com/Shougo/vimproc.vim
-
-[colorschemes]: https://github.com/rafi/awesome-vim-colorschemes
-
-[file-line]: https://github.com/bogado/file-line
-
-[neomru]: https://github.com/Shougo/neomru.vim
-
-[cursorword]: https://github.com/itchyny/vim-cursorword
-
-[gitbranch]: https://github.com/itchyny/vim-gitbranch
-
-[gitgutter]: https://github.com/airblade/vim-gitgutter
-
-[bookmarks]: https://github.com/MattesGroeger/vim-bookmarks
-
-[tmux-navigator]: https://github.com/christoomey/vim-tmux-navigator
-
-[tinyline]: https://github.com/rafi/vim-tinyline
-
-[tagabana]: https://github.com/rafi/vim-tagabana
-
-[html5]: https://github.com/othree/html5.vim
-
-[mustache]: https://github.com/mustache/vim-mustache-handlebars
-
-[markdown]: https://github.com/rcmdnk/vim-markdown
-
-[ansible-yaml]: https://github.com/chase/vim-ansible-yaml
-
-[jinja]: https://github.com/mitsuhiko/vim-jinja
-
-[less]: https://github.com/groenewege/vim-less
-
-[css3-syntax]: https://github.com/hail2u/vim-css3-syntax
-
-[csv]: https://github.com/chrisbra/csv.vim
-
-[pep8-indent]: https://github.com/hynek/vim-python-pep8-indent
-
-[logstash]: https://github.com/robbles/logstash.vim
-
-[tmux]: https://github.com/tmux-plugins/vim-tmux
-
-[json]: https://github.com/elzr/vim-json
-
-[toml]: https://github.com/cespare/vim-toml
-
-[i3]: https://github.com/PotatoesMaster/i3-vim-syntax
-
-[dockerfile]: https://github.com/ekalinin/Dockerfile.vim
-
-[go]: https://github.com/fatih/vim-go
-
-[jedi-vim]: https://github.com/davidhalter/jedi-vim
-
-[ruby]: https://github.com/vim-ruby/vim-ruby
-
-[portfile]: https://github.com/jstrater/mpvim
-
-[javascript]: https://github.com/jelera/vim-javascript-syntax
-
-[javascript-indent]: https://github.com/jiangmiao/simple-javascript-indenter
-
-[tern]: https://github.com/marijnh/tern_for_vim
-
-[php]: https://github.com/StanAngeloff/php.vim
-
-[phpfold]: https://github.com/rayburgemeestre/phpfolding.vim
-
-[phpcomplete]: https://github.com/shawncplus/phpcomplete.vim
-
-[phpindent]: https://github.com/2072/PHP-Indenting-for-VIm
-
-[phpspec]: https://github.com/rafi/vim-phpspec
-
-[vimfiler]: https://github.com/Shougo/vimfiler.vim
-
-[tinycomment]: https://github.com/rafi/vim-tinycomment
-
-[vinarise]: https://github.com/Shougo/vinarise.vim
-
-[syntastic]: https://github.com/scrooloose/syntastic
-
-[gita]: https://github.com/lambdalisue/vim-gita
-
-[gista]: https://github.com/lambdalisue/vim-gista
-
-[undotree]: https://github.com/mbbill/undotree
-
-[incsearch]: https://github.com/haya14busa/incsearch.vim
-
-[expand-region]: https://github.com/terryma/vim-expand-region
-
-[open-browser]: https://github.com/tyru/open-browser.vim
-
-[prettyprint]: https://github.com/thinca/vim-prettyprint
-
-[quickrun]: https://github.com/thinca/vim-quickrun
-
-[ref]: https://github.com/thinca/vim-ref
-
-[dictionary]: https://github.com/itchyny/dictionary.vim
-
-[vimwiki]: https://github.com/vimwiki/vimwiki
-
-[thesaurus]: https://github.com/beloglazov/vim-online-thesaurus
-
-[goyo]: https://github.com/junegunn/goyo.vim
-
-[limelight]: https://github.com/junegunn/limelight.vim
-
-[matchit]: http://www.vim.org/scripts/script.php?script_id=39
-
-[indentline]: https://github.com/Yggdroot/indentLine
-
-[choosewin]: https://github.com/t9md/vim-choosewin
-
-[delimitmate]: https://github.com/Raimondi/delimitMate
-
-[echodoc]: https://github.com/Shougo/echodoc.vim
-
-[deoplete]: https://github.com/Shougo/deoplete.nvim
-
-[neocomplete]: https://github.com/Shougo/neocomplete.vim
-
-[neosnippet]: https://github.com/Shougo/neosnippet.vim
-
-[unite]: https://github.com/Shougo/unite.vim
-
-[unite-colorscheme]: https://github.com/ujihisa/unite-colorscheme
-
-[unite-filetype]: https://github.com/osyo-manga/unite-filetype
-
-[unite-history]: https://github.com/thinca/vim-unite-history
-
-[unite-build]: https://github.com/Shougo/unite-build
-
-[unite-outline]: https://github.com/h1mesuke/unite-outline
-
-[unite-tag]: https://github.com/tsukkee/unite-tag
-
-[unite-quickfix]: https://github.com/osyo-manga/unite-quickfix
-
-[neossh]: https://github.com/Shougo/neossh.vim
-
-[unite-pull-request]: https://github.com/joker1007/unite-pull-request
-
-[junkfile]: https://github.com/Shougo/junkfile.vim
-
-[unite-issue]: https://github.com/rafi/vim-unite-issue
-
-[operator-user]: https://github.com/kana/vim-operator-user
-
-[operator-replace]: https://github.com/kana/vim-operator-replace
-
-[operator-surround]: https://github.com/rhysd/vim-operator-surround
-
-[textobj-user]: https://github.com/kana/vim-textobj-user
-
-[textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
 
 <!-- vim:set nowrap: -->

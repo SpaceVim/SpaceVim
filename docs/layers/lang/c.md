@@ -23,14 +23,6 @@ This layer is for c/c++/object-c development.
 
 To use this configuration layer, add `call SpaceVim#layers#load('lang#c')` to your custom configuration file.
 
-```vim
-call SpaceVim#layers#load('lang#c',
-        \ {
-        \ 'enable_libclang' : 1,
-        \ }
-        \ )
-```
-
 ## Features
 
 - code completion
@@ -43,10 +35,6 @@ call SpaceVim#layers#load('lang#c',
 - `clang_executable` (string)
 
 set the path to the clang executable
-
-- `enable_libclang` (boolean)
-
-use libclang instead of `clang -cc1`, by default it is 0.
 
 - `libclang_path` (string)
 
