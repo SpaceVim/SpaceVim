@@ -19,13 +19,12 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Custom Configuration](#custom-configuration)
 - [Concepts](#concepts)
 - [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
-- [Awesome ui](#awesome-ui)
+- [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
   - [UI Toggles](#ui-toggles)
-  - [Statusline && tabline](#statusline--tabline)
-    - [statusline](#statusline)
-    - [tabline](#tabline)
+  - [Statusline](#statusline)
+  - [tabline](#tabline)
 - [Genaral Key bindings](#genaral-key-bindings)
   - [Window manager](#window-manager)
   - [File Operations](#file-operations)
@@ -328,7 +327,7 @@ the option is `g:spacevim_windows_smartclose`, defalut value is `q`. If you stil
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
-## Awesome ui
+## Interface elements
 
 SpaceVim has a minimalistic and distraction free UI:
 
@@ -391,34 +390,18 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | SPC T m     | toggle menu bar                                                   |
 | SPC T t     | toggle tool bar                                                   |
 
-### Statusline && tabline
+### Statusline
 
-The statusline and tabline are heavily customized with the following capabilities:
-
-- tabline index of each buffer or tab.
-- vim mode (INSERT/NORMAL etc.)
-- git info : diff/branch
-- checker info: numbers of errors and warnings.
-- trailing line number.
-- enabled feature of SpaceVim
-- file information
-- search index
-
-| Key Binding | Description                   |
-| ----------- | ----------------------------- |
-| `SPC [1-9]` | jump to the index of tabline. |
-
-#### statusline
-
-The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
+The `core#statusline` layer provide a heavily customized powerline with the following capabilities:
 
 - show the window number
 - show the current mode
 - color code for current state
-- show the number of search results
+- show the index of searching result
 - toggle syntax checking info
 - toggle battery info
 - toggle minor mode lighters
+- show VCS information (branch, hunk summary)
 
 Reminder of the color codes for the states:
 
@@ -514,7 +497,8 @@ The letters displayed in the statusline correspond to the key bindings used to t
 
 **colorscheme of statusline:**
 
-current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
+current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to
+contribute theme please check the template of a statusline theme.
 
 ```vim
 " the theme colors should be
@@ -546,21 +530,24 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-#### tabline
+### tabline
 
-Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
+Buffers will be listed on tabline if there is only one tab, each item contains
+the index, bufname and the filetype icon. if there are more than one tab, all
+tabs will be listed on the tabline. each item can be quickly accessed using
+`<Leader> number`. default `<Leader>` is `\`.
 
 | Key Binding  | Description                |
 | ------------ | -------------------------- |
-| `<Leader> 1` | jump to index 1 on tabline |
-| `<Leader> 2` | jump to index 2 on tabline |
-| `<Leader> 3` | jump to index 3 on tabline |
-| `<Leader> 4` | jump to index 4 on tabline |
-| `<Leader> 5` | jump to index 5 on tabline |
-| `<Leader> 6` | jump to index 6 on tabline |
-| `<Leader> 7` | jump to index 7 on tabline |
-| `<Leader> 8` | jump to index 8 on tabline |
-| `<Leader> 9` | jump to index 9 on tabline |
+| `<Leader> 1` | Jump to index 1 on tabline |
+| `<Leader> 2` | Jump to index 2 on tabline |
+| `<Leader> 3` | Jump to index 3 on tabline |
+| `<Leader> 4` | Jump to index 4 on tabline |
+| `<Leader> 5` | Jump to index 5 on tabline |
+| `<Leader> 6` | Jump to index 6 on tabline |
+| `<Leader> 7` | Jump to index 7 on tabline |
+| `<Leader> 8` | Jump to index 8 on tabline |
+| `<Leader> 9` | Jump to index 9 on tabline |
 
 SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
 
@@ -568,9 +555,19 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 
 | Key Binding      | Description        |
 | ---------------- | ------------------ |
-| `<Mouse-left>`   | jump to the buffer |
-| `<Mouse-middle>` | delete the buffer  |
+| `<Mouse-left>`   | Jump to the buffer |
+| `<Mouse-middle>` | Delete the buffer  |
 
+**Tab manager:**
+
+You can also use `SPC t t` to open the tab manager windows. 
+
+key bindings within tab manager windows.
+
+| Key Binding | Description                       |
+| ----------- | --------------------------------- |
+| `o`         | Close or expand tab windows.      |
+| `<Enter>`   | Jump to windows under the cursor. |
 
 ## Genaral Key bindings
 
@@ -750,13 +747,13 @@ The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value   | description                         |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`  | denite mapping prefix of SpaceVim   |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`   | unite mapping prefix of SpaceVim    |
-| `<leader>`  | `mapleader` / `\`                 | default leader prefix of vim/neovim |
+| Prefix name | custom option and default value                                          | description                        |
+| ----------- | ------------------------------------------------------------------------ | ---------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                                                         | default mapping prefix of SpaceVim |
+| `[Window]`  | `g:spacevim_windows_leader` / `s`                                        | window mapping prefix of SpaceVim  |
+| `[denite]`  | `g:spacevim_denite_leader` / `F`                                         | denite mapping prefix of SpaceVim  |
+| `[unite]`   | `g:spacevim_unite_leader` / `f`                                          | unite mapping prefix of SpaceVim   |
+| `<leader>`  | `mapleader` / `\`                 \| default leader prefix of vim/neovim |                                    |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 

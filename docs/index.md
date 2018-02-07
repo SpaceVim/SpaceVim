@@ -27,7 +27,7 @@ If you like SpaceVim, feel free to star the project on github - it is a great wa
 appreciation while providing us motivation to continue working on this project.
 The extra visibility for the project doesn't hurt either!
 
-See the [Quick start guide](quick-start-guide), [documentation](documentation) or [the list of layers](layers) for more information.
+See the [Quick start guide](quick-start-guide), [documentation](documentation) or the [available layers](http://spacevim.org/layers/) for more information.
 
 ## New features
 
