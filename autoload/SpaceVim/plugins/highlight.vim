@@ -7,8 +7,9 @@
 "=============================================================================
 
 
-function! SpaceVim#plugins#highlight#start()
+function! SpaceVim#plugins#highlight#start() abort
   let state = SpaceVim#api#import('transient_state') 
+  let stack = []
   call state.set_title('Highlight Transient State')
   call state.defind_keys(
         \ {
@@ -20,10 +21,19 @@ function! SpaceVim#plugins#highlight#start()
         \ }
         \ )
   call state.open()
-
 endfunction
 
+function! s:next_item() abort
+  
+endfunction
 
+function! s:previous_item() abort
+  
+endfunction
+
+function! s:toggle_item() abort
+  
+endfunction
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

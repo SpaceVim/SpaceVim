@@ -561,6 +561,16 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set the log output file of SpaceVim. Default is empty.
 
+SpaceVim#plugins#iedit#start()                *SpaceVim#plugins#iedit#start()*
+  public API for iedit mode
+>
+    KEY:
+    expr     match expression
+    word     match word
+    stack    cursor pos stack
+<
+  if only argv 1 is given, use selected word as pattern
+
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*
 
