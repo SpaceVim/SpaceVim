@@ -57,15 +57,15 @@ function! s:self.open() abort
       break
     endif
   endwhile
-  if !has_key(self._handle_quit, char)
-    if type(self._handle_inputs[char]) == 2
-      call call(self._handle_inputs[char], [])
-    elseif type(self._handle_inputs[char]) == 1
-      exe self._handle_inputs[char]
-    endif
-  endif
   exe 'bd ' . self._bufid
   doautocmd WinEnter
+  if has_key(self._handle_quit, char)
+    if type(self._handle_quit[char]) == 2
+      call call(self._handle_quit[char], [])
+    elseif type(self._handle_quit[char]) == 1
+      exe self._handle_quit[char]
+    endif
+  endif
 endfunction
 
 
