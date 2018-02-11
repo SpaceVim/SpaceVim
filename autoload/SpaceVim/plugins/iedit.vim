@@ -79,30 +79,30 @@ function! SpaceVim#plugins#iedit#start(...)
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
-  let curpos = getcurpos()
-  let argv = get(a:000, 0, '')
-  let save_reg_k = @k
-  let use_expr = 0
-  if !empty(argv) && type(argv) == 4
-    if has_key(argv, 'expr')
-      let use_expr = 1
-      let symbol = argv.expr
-    elseif has_key(argv, 'word')
-      let symbol = argv.word
-    elseif has_key(argv, 'stack')
-    endif
-  elseif type(argv) == 0 && argv == 1
-    normal! gv"ky
-    let symbol = split(@k, "\n")[0]
-  else
-    normal! viw"ky
-    let symbol = split(@k, "\n")[0]
-  endif
-  let @k = save_reg_k
-  call setpos('.', curpos)
-  let begin = get(a:000, 1, 1)
-  let end = get(a:000, 2, line('$'))
   if empty(s:stack)
+    let curpos = getcurpos()
+    let argv = get(a:000, 0, '')
+    let save_reg_k = @k
+    let use_expr = 0
+    if !empty(argv) && type(argv) == 4
+      if has_key(argv, 'expr')
+        let use_expr = 1
+        let symbol = argv.expr
+      elseif has_key(argv, 'word')
+        let symbol = argv.word
+      elseif has_key(argv, 'stack')
+      endif
+    elseif type(argv) == 0 && argv == 1
+      normal! gv"ky
+      let symbol = split(@k, "\n")[0]
+    else
+      normal! viw"ky
+      let symbol = split(@k, "\n")[0]
+    endif
+    let @k = save_reg_k
+    call setpos('.', curpos)
+    let begin = get(a:000, 1, 1)
+    let end = get(a:000, 2, line('$'))
     if use_expr
       call s:parse_symbol(begin, end, symbol, 1)
     else
@@ -338,7 +338,6 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let s:index = 0
     call cursor(s:stack[0][0], s:stack[0][1])
   endif
-  let g:wsd = [s:stack, s:cursor_stack]
 endfunction
 
 
@@ -398,6 +397,13 @@ function! s:fixstack(idxs) abort
     let change += a:idxs[i][1] - s:stack[a:idxs[i][0]][2]
     let s:stack[a:idxs[i][0]][2] = a:idxs[i][1]
   endfor
+endfunction
+
+function! SpaceVim#plugins#iedit#paser(begin, end, symbol, expr) abort
+  let s:cursor_stack = []
+  let s:stack = []
+  call s:parse_symbol(a:begin, a:end, a:symbol, a:expr) 
+  return [deepcopy(s:stack), deepcopy(s:cursor_stack)]
 endfunction
 
 " vim:set et sw=2 cc=80 nowrap:
