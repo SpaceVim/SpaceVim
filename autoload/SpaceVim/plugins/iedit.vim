@@ -60,7 +60,15 @@ endfunction
 function! s:remove_cursor_highlight() abort
   call clearmatches()
 endfunction
-
+""
+" public API for iedit mode
+" >
+"   KEY:
+"   expr     match expression
+"   word     match word
+"   stack    cursor pos stack
+" <
+" if only argv 1 is given, use selected word as pattern
 function! SpaceVim#plugins#iedit#start(...)
   let save_tve = &t_ve
   let save_cl = &l:cursorline
@@ -81,6 +89,7 @@ function! SpaceVim#plugins#iedit#start(...)
       let symbol = argv.expr
     elseif has_key(argv, 'word')
       let symbol = argv.word
+    elseif has_key(argv, 'stack')
     endif
   elseif type(argv) == 0 && argv == 1
     normal! gv"ky
@@ -93,10 +102,12 @@ function! SpaceVim#plugins#iedit#start(...)
   call setpos('.', curpos)
   let begin = get(a:000, 1, 1)
   let end = get(a:000, 2, line('$'))
-  if use_expr
-    call s:parse_symbol(begin, end, symbol, 1)
-  else
-    call s:parse_symbol(begin, end, symbol)
+  if empty(s:stack)
+    if use_expr
+      call s:parse_symbol(begin, end, symbol, 1)
+    else
+      call s:parse_symbol(begin, end, symbol)
+    endif
   endif
   call s:highlight_cursor()
   redrawstatus!
