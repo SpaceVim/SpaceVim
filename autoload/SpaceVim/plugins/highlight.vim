@@ -11,16 +11,16 @@ let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:hi_info = [
       \ {
       \ 'name' : 'IeditPurpleBold',
-      \ 'guibg' : '',
-      \ 'guifg' : '#d3869b',
+      \ 'guibg' : '#d3869b',
+      \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 175,
       \ 'bold' : 1,
       \ },
       \ {
       \ 'name' : 'IeditBlueBold',
-      \ 'guibg' : '',
-      \ 'guifg' : '#83a598',
+      \ 'guibg' : '#83a598',
+      \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 109,
       \ 'bold' : 1,
@@ -38,8 +38,8 @@ function! SpaceVim#plugins#highlight#start() abort
   call setpos('.', curpos)
   let state = SpaceVim#api#import('transient_state') 
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
-  let highlight_id = matchaddpos('IeditPurpleBold', s:stack)
-  let highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+  let s:highlight_id = matchaddpos('Search', s:stack)
+  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
   call state.set_title('Highlight Transient State')
   call state.defind_keys(
         \ {
@@ -48,7 +48,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ {
         \ 'key' : 'n',
         \ 'desc' : 'Next match',
-        \ 'func' : 'call call(' . string(function('s:next_item')) . ', [])',
+        \ 'func' : s:_function('s:next_item'),
         \ 'cmd' : '',
         \ 'exit' : 0,
         \ },
@@ -80,8 +80,8 @@ function! SpaceVim#plugins#highlight#start() abort
         \ }
         \ )
   call state.open()
-  call matchdelete(highlight_id)
-  call matchdelete(highlight_id_c)
+  call matchdelete(s:highlight_id)
+  call matchdelete(s:highlight_id_c)
 endfunction
 " n : next item
 " N/p: Previous item
@@ -95,7 +95,13 @@ endfunction
 " s: swoop
 "
 function! s:next_item() abort
-  normal! n
+  if s:index == len(s:stack) - 1
+    let s:index = 0
+  else
+    let s:index += 1
+  endif
+  call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
+  call s:update_highlight()
 endfunction
 
 let s:current_range = 'display'
@@ -108,7 +114,13 @@ function! s:change_range() abort
 endfunction
 
 function! s:previous_item() abort
-  normal! N 
+  if s:index == 0
+    let s:index = len(s:stack) - 1
+  else
+    let s:index -= 1
+  endif
+  call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
+  call s:update_highlight()
 endfunction
 
 function! s:toggle_item() abort
@@ -133,3 +145,11 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+
+function! s:update_highlight() abort
+  call matchdelete(s:highlight_id)
+  call matchdelete(s:highlight_id_c)
+  let s:highlight_id = matchaddpos('Search', s:stack)
+  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+  
+endfunction
