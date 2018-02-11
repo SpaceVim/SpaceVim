@@ -16,6 +16,7 @@ function! SpaceVim#plugins#highlight#start() abort
   call setpos('.', curpos)
   let state = SpaceVim#api#import('transient_state') 
   let s:stack = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)[0]
+  let highlight_id = matchaddpos('Search', s:stack)
   call state.set_title('Highlight Transient State')
   call state.defind_keys(
         \ {
@@ -56,6 +57,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ }
         \ )
   call state.open()
+  call matchdelete(highlight_id)
 endfunction
 " n : next item
 " N/p: Previous item
