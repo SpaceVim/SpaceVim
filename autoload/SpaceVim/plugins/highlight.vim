@@ -7,6 +7,28 @@
 "=============================================================================
 
 
+let s:VIMH = SpaceVim#api#import('vim#highlight')
+let s:hi_info = [
+      \ {
+      \ 'name' : 'IeditPurpleBold',
+      \ 'guibg' : '',
+      \ 'guifg' : '#d3869b',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
+      \ 'name' : 'IeditBlueBold',
+      \ 'guibg' : '',
+      \ 'guifg' : '#83a598',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 109,
+      \ 'bold' : 1,
+      \ }
+      \ ]
+call s:VIMH.hi(s:hi_info[0])
+call s:VIMH.hi(s:hi_info[1])
+
 function! SpaceVim#plugins#highlight#start() abort
   let curpos = getcurpos()
   let save_reg_k = @k
@@ -15,8 +37,9 @@ function! SpaceVim#plugins#highlight#start() abort
   let @k = save_reg_k
   call setpos('.', curpos)
   let state = SpaceVim#api#import('transient_state') 
-  let s:stack = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)[0]
-  let highlight_id = matchaddpos('Search', s:stack)
+  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  let highlight_id = matchaddpos('IeditPurpleBold', s:stack)
+  let highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
   call state.set_title('Highlight Transient State')
   call state.defind_keys(
         \ {
@@ -58,6 +81,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ )
   call state.open()
   call matchdelete(highlight_id)
+  call matchdelete(highlight_id_c)
 endfunction
 " n : next item
 " N/p: Previous item

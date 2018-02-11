@@ -403,7 +403,7 @@ function! SpaceVim#plugins#iedit#paser(begin, end, symbol, expr) abort
   let s:cursor_stack = []
   let s:stack = []
   call s:parse_symbol(a:begin, a:end, a:symbol, a:expr) 
-  return [deepcopy(s:stack), deepcopy(s:cursor_stack)]
+  return [deepcopy(s:stack), s:index]
 endfunction
 
 " vim:set et sw=2 cc=80 nowrap:
