@@ -10,29 +10,66 @@
 function! SpaceVim#plugins#highlight#start() abort
   let state = SpaceVim#api#import('transient_state') 
   let stack = []
+  let s:current_match = ''
   call state.set_title('Highlight Transient State')
   call state.defind_keys(
         \ {
         \ 'layout' : 'vertical split',
         \ 'left' : [
+        \ {
+        \ 'key' : 'n',
+        \ 'desc' : 'Next match',
+        \ 'func' : 'call call(' . string(function('s:next_item')) . ', [])',
+        \ 'cmd' : '',
+        \ 'exit' : 0,
+        \ },
         \ ],
         \ 'right' : [
+        \ {
+        \ 'key' : ['N', 'p'],
+        \ 'desc' : 'Previous match',
+        \ 'cmd' : 'call call(' . string(function('s:previous_item')) . ', [])',
+        \ 'func' : '',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'b',
+        \ 'desc' : 'search buffers',
+        \ 'cmd' : '',
+        \ 'func' : '',
+        \ 'exit_cmd' : 'call call(' . string(function('s:search_buffers')) . ', [])',
+        \ 'exit' : 1,
+        \ },
         \ ],
         \ }
         \ )
   call state.open()
 endfunction
-
+" n : next item
+" N/p: Previous item
+" r: change range
+" R: reset
+" e: iedit
+" d/D: next previous definition
+" b: search buffers
+" /: search proj
+" f: search files
+" s: swoop
+"
 function! s:next_item() abort
-  
+  normal! n
 endfunction
 
 function! s:previous_item() abort
-  
+  normal! N 
 endfunction
 
 function! s:toggle_item() abort
-  
+
+endfunction
+
+function! s:search_buffers() abort
+  call SpaceVim#plugins#flygrep#open({'input' : s:current_match, 'files':'@buffers'}) 
 endfunction
 
 " function() wrapper

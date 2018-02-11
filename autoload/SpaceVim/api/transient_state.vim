@@ -5,6 +5,7 @@ let s:self._on_syntax = ''
 let s:self._title = 'Transient State'
 let s:self._handle_inputs = {}
 let s:self._is_quit = []
+let s:self._handle_quit = {}
 
 function! s:self.open() abort
   noautocmd botright split __transient_state__
@@ -56,6 +57,13 @@ function! s:self.open() abort
       break
     endif
   endwhile
+  if !has_key(self._handle_quit, char)
+    if type(self._handle_inputs[char]) == 2
+      call call(self._handle_inputs[char], [])
+    elseif type(self._handle_inputs[char]) == 1
+      exe self._handle_inputs[char]
+    endif
+  endif
   exe 'bd ' . self._bufid
   doautocmd WinEnter
 endfunction
@@ -145,6 +153,9 @@ function! s:self._update_content() abort
           endif
           if left.exit
             call add(self._is_quit, left.key)
+            if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
+              call extend(self._handle_quit, {left.key : left.exit_cmd})
+            endif
           endif
         elseif type(left.key) == 3
           let line .= '[' . join(left.key, '/') . '] '
@@ -166,6 +177,10 @@ function! s:self._update_content() abort
           endif
           if left.exit
             call extend(self._is_quit, left.key)
+            " TODO: need fix
+            " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
+            "   call extend(self._handle_quit, {left.key : left.exit_cmd})
+            " endif
           endif
         elseif type(left.key) == 4
           let line .= '[' . left.key.name . '] '
@@ -179,6 +194,10 @@ function! s:self._update_content() abort
           endfor
           if left.exit
             call extend(self._is_quit, keys(left.key))
+            " TODO: need to fixed
+            " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
+            "   call extend(self._handle_quit, {left.key : left.exit_cmd})
+            " endif
           endif
         endif
       endif
@@ -194,6 +213,9 @@ function! s:self._update_content() abort
           endif
           if right.exit
             call add(self._is_quit, right.key)
+            if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
+              call extend(self._handle_quit, {right.key : right.exit_cmd})
+            endif
           endif
         elseif type(right.key) == 3
           let line .= '[' . join(right.key, '/') . '] '
@@ -215,6 +237,10 @@ function! s:self._update_content() abort
           endif
           if right.exit
             call extend(self._is_quit, right.key)
+            " TODO: need fix
+            " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
+            "   call extend(self._handle_quit, {right.key : right.exit_cmd})
+            " endif
           endif
         elseif type(right.key) == 4
           let line .= '[' . right.key.name . '] '
@@ -229,6 +255,10 @@ function! s:self._update_content() abort
           endfor
           if right.exit
             call extend(self._is_quit, keys(right.key))
+            " TODO: need fix
+            " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
+            "   call extend(self._handle_quit, {right.key : right.exit_cmd})
+            " endif
           endif
         endif
       endif
