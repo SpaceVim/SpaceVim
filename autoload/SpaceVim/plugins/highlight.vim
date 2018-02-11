@@ -23,6 +23,13 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'cmd' : '',
         \ 'exit' : 0,
         \ },
+        \ {
+        \ 'key' : 'r',
+        \ 'desc' : 'change range',
+        \ 'func' : '',
+        \ 'cmd' : 'call call(' . string(function('s:change_range')) . ', [])',
+        \ 'exit' : 0,
+        \ },
         \ ],
         \ 'right' : [
         \ {
@@ -58,6 +65,15 @@ endfunction
 "
 function! s:next_item() abort
   normal! n
+endfunction
+
+let s:current_range = 'display'
+function! s:change_range() abort
+  if s:current_range == 'display'
+    let s:current_range = 'buffer'
+  elseif s:current_range == 'buffer'
+    let s:current_range = 'display'
+  endif
 endfunction
 
 function! s:previous_item() abort
