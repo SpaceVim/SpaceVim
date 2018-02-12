@@ -74,6 +74,7 @@ function! s:self.open() abort
       exe self._handle_quit[char]
     endif
   endif
+  redraw!
 endfunction
 
 
