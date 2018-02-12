@@ -36,10 +36,10 @@ let s:hi_info = [
       \ },
       \ {
       \ 'name' : 'HiRrangeIndex',
-      \ 'guibg' : '#d3869b',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#a89984',
+      \ 'ctermbg' : 237,
+      \ 'ctermfg' : 246,
       \ 'bold' : 1,
       \ },
       \ {
@@ -196,16 +196,19 @@ let s:hi_range_id = 0
 let s:hi_range_index = 0
 function! s:range_logo() abort
   let line = getline(3)
-  let logo = s:STRING.fill_middle(s:current_range . '    [' . (s:index + 1) . '/' . len(s:stack) . ']', 30)
+  let range = s:current_range
+  let index = '[' . (s:index + 1) . '/' . len(s:stack) . ']'
+  let logo = s:STRING.fill_middle(range . '  ' . index, 30)
+  let begin = stridx(logo, s:current_range)
   call setline(3,  logo . line[30:])
   try
     call matchdelete(s:hi_range_id)
     call matchdelete(s:hi_range_index)
   catch
   endtry
-  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, 10, 10]])
-  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, 20, 10]])
-  echon 'change current range to:'
+  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
+  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
+  echon ' Change current range to:'
   exe 'echohl HiRrange' . s:current_range
   echon s:current_range
   echohl None
