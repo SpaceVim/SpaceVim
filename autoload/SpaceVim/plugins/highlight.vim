@@ -20,7 +20,7 @@ let s:hi_info = [
       \ },
       \ {
       \ 'name' : 'HiRrangeDisplay',
-      \ 'guibg' : '#d3869b',
+      \ 'guibg' : '#458588',
       \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 175,
@@ -28,7 +28,7 @@ let s:hi_info = [
       \ },
       \ {
       \ 'name' : 'HiRrangeBuffer',
-      \ 'guibg' : '#d3869b',
+      \ 'guibg' : '#689d6a',
       \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 175,
