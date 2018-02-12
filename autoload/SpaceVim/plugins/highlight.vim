@@ -160,6 +160,14 @@ function! s:range_logo() abort
   let line = getline(3)
   let logo = s:STRING.fill_middle(s:current_range . '    [' . s:index . '/' . len(s:stack) . ']', 30)
   call setline(3,  logo . line[30:])
+  echon 'change current range to:'
+  echohl Search
+  echon s:current_range
+  echohl None
+endfunction
+
+function! s:update_logo_highlight() abort
+  
 endfunction
 
 
