@@ -6,6 +6,7 @@ let s:self._title = 'Transient State'
 let s:self._handle_inputs = {}
 let s:self._is_quit = []
 let s:self._handle_quit = {}
+let s:self.noredraw = 0
 
 function! s:self.open() abort
   noautocmd botright split __transient_state__
@@ -42,11 +43,15 @@ function! s:self.open() abort
   " move to prvious window
   wincmd p
   while 1
-    redraw!
     if has_key(self._keys, 'logo')
       noautocmd wincmd p
       call call(self._keys.logo, [])
       noautocmd wincmd p
+    endif
+    if !self.noredraw
+      redraw!
+    else
+      let self.noredraw = 0
     endif
     let char = self._getchar()
     if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128

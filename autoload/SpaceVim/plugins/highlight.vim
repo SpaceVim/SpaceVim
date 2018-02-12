@@ -37,12 +37,12 @@ function! SpaceVim#plugins#highlight#start() abort
   let s:current_match = @k
   let @k = save_reg_k
   call setpos('.', curpos)
-  let state = SpaceVim#api#import('transient_state') 
+  let s:state = SpaceVim#api#import('transient_state') 
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   let s:highlight_id = matchaddpos('Search', s:stack)
   let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
-  call state.set_title('Highlight Transient State')
-  call state.defind_keys(
+  call s:state.set_title('Highlight Transient State')
+  call s:state.defind_keys(
         \ {
         \ 'layout' : 'vertical split',
         \ 'logo' : function('s:range_logo'),
@@ -82,7 +82,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ ],
         \ }
         \ )
-  call state.open()
+  call s:state.open()
   call matchdelete(s:highlight_id)
   call matchdelete(s:highlight_id_c)
 endfunction
@@ -114,6 +114,7 @@ function! s:change_range() abort
   elseif s:current_range ==# 'Buffer'
     let s:current_range = 'Display'
   endif
+  let s:state.noredraw = 1
 endfunction
 
 function! s:previous_item() abort
