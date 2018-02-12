@@ -152,7 +152,12 @@ function! SpaceVim#layers#autocomplete#config() abort
   imap <expr> <M-/>
         \ neosnippet#expandable() ?
         \ "\<Plug>(neosnippet_expand)" : ""
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert sneppets', 1)
+  endif
 endfunction
 
 let s:return_key_behavior = 'smart'
