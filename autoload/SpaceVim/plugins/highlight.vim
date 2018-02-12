@@ -19,6 +19,30 @@ let s:hi_info = [
       \ 'bold' : 1,
       \ },
       \ {
+      \ 'name' : 'HiRrangeDisplay',
+      \ 'guibg' : '#d3869b',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
+      \ 'name' : 'HiRrangeBuffer',
+      \ 'guibg' : '#d3869b',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
+      \ 'name' : 'HiRrangeIndex',
+      \ 'guibg' : '#d3869b',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
       \ 'name' : 'IeditBlueBold',
       \ 'guibg' : '#83a598',
       \ 'guifg' : '#282828',
@@ -27,8 +51,14 @@ let s:hi_info = [
       \ 'bold' : 1,
       \ }
       \ ]
-call s:VIMH.hi(s:hi_info[0])
-call s:VIMH.hi(s:hi_info[1])
+
+function! s:hi() abort
+  for info in s:hi_info
+    call s:VIMH.hi(info)
+  endfor
+endfunction
+
+call s:hi()
 
 function! s:init() abort
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
@@ -166,13 +196,13 @@ function! s:range_logo() abort
   let logo = s:STRING.fill_middle(s:current_range . '    [' . (s:index + 1) . '/' . len(s:stack) . ']', 30)
   call setline(3,  logo . line[30:])
   echon 'change current range to:'
-  echohl Search
+  exe 'echohl HiRrange' . s:current_range
   echon s:current_range
   echohl None
 endfunction
 
 function! s:update_logo_highlight() abort
-  
+
 endfunction
 
 
