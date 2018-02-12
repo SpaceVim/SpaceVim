@@ -36,10 +36,18 @@ function! s:self.open() abort
   if winheight(0) > line('$')
     exe 'resize ' .  line('$')
   endif
+  if has_key(self._keys, 'logo')
+    call call(self._keys.logo, [])
+  endif
   " move to prvious window
   wincmd p
   while 1
     redraw!
+    if has_key(self._keys, 'logo')
+      noautocmd wincmd p
+      call call(self._keys.logo, [])
+      noautocmd wincmd p
+    endif
     let char = self._getchar()
     if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
       continue

@@ -8,6 +8,7 @@
 
 
 let s:VIMH = SpaceVim#api#import('vim#highlight')
+let s:STRING = SpaceVim#api#import('data#string')
 let s:hi_info = [
       \ {
       \ 'name' : 'IeditPurpleBold',
@@ -156,9 +157,9 @@ function! s:update_highlight() abort
 endfunction
 
 function! s:range_logo() abort
-  return [
-        \ '    ' . s:current_range . '    [' . s:index . '/' . len(s:stack) . ']    ',
-        \ ]
+  let line = getline(3)
+  let logo = s:STRING.fill_middle(s:current_range . '    [' . s:index . '/' . len(s:stack) . ']', 30)
+  call setline(3,  logo . line[30:])
 endfunction
 
 
