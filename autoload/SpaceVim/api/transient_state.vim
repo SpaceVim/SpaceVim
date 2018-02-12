@@ -37,13 +37,10 @@ function! s:self.open() abort
   if winheight(0) > line('$')
     exe 'resize ' .  line('$')
   endif
-  if has_key(self._keys, 'logo')
-    call call(self._keys.logo, [])
-  endif
   " move to prvious window
   wincmd p
-  if has_key(self, '_on_init')
-    call call(self._on_init, [])
+  if has_key(self._keys, 'init')
+    call call(self._keys.init, [])
   endif
   while 1
     if has_key(self._keys, 'logo')

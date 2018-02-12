@@ -50,6 +50,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'layout' : 'vertical split',
         \ 'logo' : function('s:range_logo'),
         \ 'logo_width' : 30,
+        \ 'init' : function('s:init'),
         \ 'left' : [
         \ {
         \ 'key' : 'n',
@@ -85,7 +86,6 @@ function! SpaceVim#plugins#highlight#start() abort
         \ ],
         \ }
         \ )
-  let s:state._on_init = function('s:init')
   call s:state.open()
   call matchdelete(s:highlight_id)
   call matchdelete(s:highlight_id_c)
