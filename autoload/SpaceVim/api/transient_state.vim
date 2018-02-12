@@ -116,7 +116,7 @@ else
 endif
 
 function! s:self._update_content() abort
-  if get(self._keys, 'layout', '') == 'vertical split'
+  if get(self._keys, 'layout', '') ==# 'vertical split'
     let linenum = max([len(self._keys.right), len(self._keys.left)])
     let left_max_key_len = 0
     for key in self._keys.left
@@ -138,14 +138,20 @@ function! s:self._update_content() abort
         let right_max_key_len = max([len(key.key.name), right_max_key_len])
       endif
     endfor
+
+    if has_key(self._keys, 'logo') && has_key(self._keys, 'logo_width')
+      let logo_width = self._keys.logo_width
+    else
+      let logo_width = 0
+    endif
     for i in range(linenum)
       let left = get(self._keys.left, i)
       let right = get(self._keys.right, i)
-      let line = ''
+      let line = repeat(' ', logo_width)
       if !empty(left)
         if type(left.key) == 1
           let line .= '[' . left.key . '] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
-          call self.highlight_keys(left.exit, i + 2, 1, 1 + len(left.key))
+          call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + len(left.key))
           if !empty(left.cmd)
             call extend(self._handle_inputs, {left.key : left.cmd})
           elseif !empty(left.func)
@@ -161,7 +167,7 @@ function! s:self._update_content() abort
           let line .= '[' . join(left.key, '/') . '] '
           let line .= repeat(' ', left_max_key_len - len(join(left.key, '/')))
           let line .= left.desc 
-          let begin = 1
+          let begin = 1 + logo_width
           for key in left.key
             call self.highlight_keys(left.exit, i + 2, begin, begin + len(key))
             let begin = begin + len(key) + 1
@@ -201,11 +207,11 @@ function! s:self._update_content() abort
           endif
         endif
       endif
-      let line .= repeat(' ', 40 - len(line))
+      let line .= repeat(' ', 40 + logo_width - len(line))
       if !empty(right)
         if type(right.key) == 1
           let line .= '[' . right.key . '] ' . repeat(' ', right_max_key_len - len(right.key)) . right.desc 
-          call self.highlight_keys(right.exit, i + 2, 41, 41 + len(right.key))
+          call self.highlight_keys(right.exit, i + 2, 41 + logo_width, 41 + logo_width + len(right.key))
           if !empty(right.cmd)
             call extend(self._handle_inputs, {right.key : right.cmd})
           elseif !empty(right.func)
@@ -221,7 +227,7 @@ function! s:self._update_content() abort
           let line .= '[' . join(right.key, '/') . '] '
           let line .= repeat(' ', right_max_key_len - len(join(right.key, '/')))
           let line .= right.desc 
-          let begin = 41
+          let begin = 41 + logo_width
           for key in right.key
             call self.highlight_keys(right.exit, i + 2, begin, begin + len(key))
             let begin = begin + len(key) + 1
@@ -246,7 +252,7 @@ function! s:self._update_content() abort
           let line .= '[' . right.key.name . '] '
           let line .= repeat(' ', right_max_key_len - len(right.key.name))
           let line .= right.desc 
-          let begin = 41
+          let begin = 41 + logo_width
           for pos in right.key.pos
             call self.highlight_keys(right.exit, i + 2, begin + pos[0], begin + pos[1])
           endfor

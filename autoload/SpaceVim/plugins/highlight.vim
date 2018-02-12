@@ -44,6 +44,8 @@ function! SpaceVim#plugins#highlight#start() abort
   call state.defind_keys(
         \ {
         \ 'layout' : 'vertical split',
+        \ 'logo' : function('s:range_logo'),
+        \ 'logo_width' : 30,
         \ 'left' : [
         \ {
         \ 'key' : 'n',
@@ -104,12 +106,12 @@ function! s:next_item() abort
   call s:update_highlight()
 endfunction
 
-let s:current_range = 'display'
+let s:current_range = 'Display'
 function! s:change_range() abort
-  if s:current_range == 'display'
-    let s:current_range = 'buffer'
-  elseif s:current_range == 'buffer'
-    let s:current_range = 'display'
+  if s:current_range ==# 'Display'
+    let s:current_range = 'Buffer'
+  elseif s:current_range ==# 'Buffer'
+    let s:current_range = 'Display'
   endif
 endfunction
 
@@ -151,5 +153,12 @@ function! s:update_highlight() abort
   call matchdelete(s:highlight_id_c)
   let s:highlight_id = matchaddpos('Search', s:stack)
   let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
-  
 endfunction
+
+function! s:range_logo() abort
+  return [
+        \ '    ' . s:current_range . '    [' . s:index . '/' . len(s:stack) . ']    ',
+        \ ]
+endfunction
+
+
