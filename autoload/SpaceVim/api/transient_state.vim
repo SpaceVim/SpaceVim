@@ -45,6 +45,9 @@ function! s:self.open() abort
   while 1
     if has_key(self._keys, 'logo')
       noautocmd wincmd p
+      if self.noredraw
+        redraw!
+      endif
       call call(self._keys.logo, [])
       noautocmd wincmd p
     endif
