@@ -191,10 +191,20 @@ function! s:update_highlight() abort
   let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
 endfunction
 
+
+let s:hi_range_id = 0
+let s:hi_range_index = 0
 function! s:range_logo() abort
   let line = getline(3)
   let logo = s:STRING.fill_middle(s:current_range . '    [' . (s:index + 1) . '/' . len(s:stack) . ']', 30)
   call setline(3,  logo . line[30:])
+  try
+    call matchdelete(s:hi_range_id)
+    call matchdelete(s:hi_range_index)
+  catch
+  endtry
+  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, 10, 10]])
+  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, 20, 10]])
   echon 'change current range to:'
   exe 'echohl HiRrange' . s:current_range
   echon s:current_range
