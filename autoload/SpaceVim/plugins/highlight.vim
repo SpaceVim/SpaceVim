@@ -218,6 +218,7 @@ function! s:range_logo() abort
   endtry
   let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
   let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
+  redraw!
   echon ' Change current range to:'
   exe 'echohl HiRrange' . s:current_range
   echon s:current_range
