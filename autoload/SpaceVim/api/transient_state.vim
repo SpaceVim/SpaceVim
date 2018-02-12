@@ -42,6 +42,9 @@ function! s:self.open() abort
   endif
   " move to prvious window
   wincmd p
+  if has_key(self, '_on_init')
+    call call(self._on_init, [])
+  endif
   while 1
     if has_key(self._keys, 'logo')
       noautocmd wincmd p

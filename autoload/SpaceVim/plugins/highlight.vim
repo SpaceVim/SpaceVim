@@ -30,6 +30,12 @@ let s:hi_info = [
 call s:VIMH.hi(s:hi_info[0])
 call s:VIMH.hi(s:hi_info[1])
 
+function! s:init() abort
+  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  let s:highlight_id = matchaddpos('Search', s:stack)
+  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+endfunction
+
 function! SpaceVim#plugins#highlight#start() abort
   let curpos = getcurpos()
   let save_reg_k = @k
@@ -38,9 +44,6 @@ function! SpaceVim#plugins#highlight#start() abort
   let @k = save_reg_k
   call setpos('.', curpos)
   let s:state = SpaceVim#api#import('transient_state') 
-  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
-  let s:highlight_id = matchaddpos('Search', s:stack)
-  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
   call s:state.set_title('Highlight Transient State')
   call s:state.defind_keys(
         \ {
@@ -82,6 +85,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ ],
         \ }
         \ )
+  let s:state._on_init = function('s:init')
   call s:state.open()
   call matchdelete(s:highlight_id)
   call matchdelete(s:highlight_id_c)
@@ -159,7 +163,7 @@ endfunction
 
 function! s:range_logo() abort
   let line = getline(3)
-  let logo = s:STRING.fill_middle(s:current_range . '    [' . s:index . '/' . len(s:stack) . ']', 30)
+  let logo = s:STRING.fill_middle(s:current_range . '    [' . (s:index + 1) . '/' . len(s:stack) . ']', 30)
   call setline(3,  logo . line[30:])
   echon 'change current range to:'
   echohl Search
