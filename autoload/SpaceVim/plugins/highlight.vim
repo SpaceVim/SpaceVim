@@ -35,6 +35,14 @@ let s:hi_info = [
       \ 'bold' : 1,
       \ },
       \ {
+      \ 'name' : 'HiRrangeFunction',
+      \ 'guibg' : '#d38696',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },
+      \ {
       \ 'name' : 'HiRrangeIndex',
       \ 'guibg' : '#3c3836',
       \ 'guifg' : '#a89984',
@@ -146,6 +154,8 @@ function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
   elseif s:current_range ==# 'Buffer'
+    let s:current_range = 'Function'
+  elseif s:current_range ==# 'Function'
     let s:current_range = 'Display'
   endif
   let s:state.noredraw = 1
