@@ -68,6 +68,7 @@ endfunction
 
 function! s:init() abort
   call s:hi()
+  let s:current_range = 'Display'
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:highlight()
 endfunction
@@ -146,7 +147,6 @@ function! s:next_item() abort
   call s:update_highlight()
 endfunction
 
-let s:current_range = 'Display'
 function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
