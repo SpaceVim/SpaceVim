@@ -70,8 +70,7 @@ call s:hi()
 
 function! s:init() abort
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
-  let s:highlight_id = matchaddpos('Search', s:stack)
-  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+  call s:highlight()
 endfunction
 
 function! SpaceVim#plugins#highlight#start() abort
@@ -125,8 +124,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ }
         \ )
   call s:state.open()
-  call matchdelete(s:highlight_id)
-  call matchdelete(s:highlight_id_c)
+  call s:clear_highlight()
 endfunction
 " n : next item
 " N/p: Previous item
@@ -153,17 +151,33 @@ let s:current_range = 'Display'
 function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
-    call matchdelete(s:highlight_id)
-    call matchdelete(s:highlight_id_c)
     let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
-    let s:highlight_id = matchaddpos('Search', s:stack)
-    let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+    call s:clear_highlight()
+    call s:highlight()
   elseif s:current_range ==# 'Buffer'
     let s:current_range = 'Function'
   elseif s:current_range ==# 'Function'
     let s:current_range = 'Display'
+    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+    call s:clear_highlight()
+    call s:highlight()
   endif
   let s:state.noredraw = 1
+endfunction
+
+function! s:highlight() abort
+  let s:highlight_id = []
+  for item in s:stack
+    call add(s:highlight_id, matchaddpos('Search', [ item ]))
+  endfor
+  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+endfunction
+
+function! s:clear_highlight() abort
+  for id in s:highlight_id
+    call matchdelete(id)
+  endfor
+  call matchdelete(s:highlight_id_c)
 endfunction
 
 function! s:previous_item() abort
@@ -200,10 +214,8 @@ else
 endif
 
 function! s:update_highlight() abort
-  call matchdelete(s:highlight_id)
-  call matchdelete(s:highlight_id_c)
-  let s:highlight_id = matchaddpos('Search', s:stack)
-  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+  call s:clear_highlight()
+  call s:highlight()
 endfunction
 
 
