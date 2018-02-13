@@ -156,6 +156,10 @@ function! s:change_range() abort
     call s:highlight()
   elseif s:current_range ==# 'Buffer'
     let s:current_range = 'Function'
+    let range = s:find_func_range()
+    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(range[0], range[1], s:current_match, 0)
+    call s:clear_highlight()
+    call s:highlight()
   elseif s:current_range ==# 'Function'
     let s:current_range = 'Display'
     let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
@@ -246,4 +250,25 @@ function! s:update_logo_highlight() abort
 
 endfunction
 
+let s:function_expr = {}
+
+function! SpaceVim#plugins#highlight#reg_expr(ft, begin, end) abort
+  call extend(s:function_expr, {a:ft : [a:begin, a:end]})
+endfunction
+
+function! s:find_func_range() abort
+  let line = line('.')
+  if !empty(&ft) && has_key(s:function_expr, &ft)
+    let begin = s:function_expr[&ft][0]
+    let end = s:function_expr[&ft][1]
+    let pos1 = search(end, 'nb',line('w0'))
+    let pos2 = search(begin, 'nb',line('w0'))
+    let pos3 = search(end, 'n',line('w$'))
+    let pos0 = line('.')
+    if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
+      return [pos2, pos3]
+    endif
+  endif
+  return [line, line]
+endfunction
 
