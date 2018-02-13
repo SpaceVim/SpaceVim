@@ -155,7 +155,7 @@ function! SpaceVim#mapping#close_current_buffer() abort
     elseif rs ==? 'n'
       let f = '!'
       redraw
-      echohl WarningMsg
+      echohl ModeMsg
       echon 'discarded!'
       echohl None
     else
