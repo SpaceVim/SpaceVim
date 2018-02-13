@@ -66,9 +66,9 @@ function! s:hi() abort
   endfor
 endfunction
 
-call s:hi()
 
 function! s:init() abort
+  call s:hi()
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:highlight()
 endfunction
