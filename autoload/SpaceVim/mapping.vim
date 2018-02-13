@@ -145,7 +145,7 @@ function! SpaceVim#mapping#close_current_buffer() abort
   let bn = bufnr('%')
   let f = ''
   if getbufvar(bn, '&modified', 0)
-    redraw!
+    redraw
     echohl WarningMsg
     echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
     echohl None
@@ -154,30 +154,35 @@ function! SpaceVim#mapping#close_current_buffer() abort
       write
     elseif rs ==? 'n'
       let f = '!'
+      redraw
+      echohl WarningMsg
+      echon 'discarded!'
+      echohl None
     else
-      redraw!
+      redraw
       echohl ModeMsg
       echon 'canceled!'
       echohl None
       return
     endif
   endif
+  let cmd_close_buf = 'bd' . f
   let index = index(buffers, bn)
   if index != -1
     if index == 0
       if len(buffers) > 1
         exe 'b' . buffers[1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       else
-        exe 'bd ' . bn
+        exe cmd_close_buf . bn
       endif
     elseif index > 0
       if index + 1 == len(buffers)
         exe 'b' . buffers[index - 1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       else
         exe 'b' . buffers[index + 1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       endif
     endif
   endif
