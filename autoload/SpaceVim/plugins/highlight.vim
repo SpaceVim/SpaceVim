@@ -153,6 +153,11 @@ let s:current_range = 'Display'
 function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
+    call matchdelete(s:highlight_id)
+    call matchdelete(s:highlight_id_c)
+    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
+    let s:highlight_id = matchaddpos('Search', s:stack)
+    let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
   elseif s:current_range ==# 'Buffer'
     let s:current_range = 'Function'
   elseif s:current_range ==# 'Function'
