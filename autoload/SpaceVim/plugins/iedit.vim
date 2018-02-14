@@ -21,7 +21,7 @@ let s:cursor_stack = []
 let s:iedit_hi_info = [
       \ {
       \ 'name' : 'IeditPurpleBold',
-      \ 'guibg' : '',
+      \ 'guibg' : '#3c3836',
       \ 'guifg' : '#d3869b',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 175,
@@ -29,7 +29,7 @@ let s:iedit_hi_info = [
       \ },
       \ {
       \ 'name' : 'IeditBlueBold',
-      \ 'guibg' : '',
+      \ 'guibg' : '#3c3836',
       \ 'guifg' : '#83a598',
       \ 'ctermbg' : '',
       \ 'ctermfg' : 109,

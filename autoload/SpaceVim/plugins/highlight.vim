@@ -50,7 +50,7 @@ endfunction
 " transient_state API func: init {{{
 let s:hi_info = [
       \ {
-      \ 'name' : 'IeditPurpleBold',
+      \ 'name' : 'HiPurpleBold',
       \ 'guibg' : '#d3869b',
       \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
@@ -90,7 +90,7 @@ let s:hi_info = [
       \ 'bold' : 1,
       \ },
       \ {
-      \ 'name' : 'IeditBlueBold',
+      \ 'name' : 'HiBlueBold',
       \ 'guibg' : '#83a598',
       \ 'guifg' : '#282828',
       \ 'ctermbg' : '',
@@ -195,7 +195,10 @@ function! SpaceVim#plugins#highlight#start() abort
         \ }
         \ )
   call s:state.open()
-  call s:clear_highlight()
+  try
+    call s:clear_highlight()
+  catch
+  endtry
 endfunction
 " }}}
 
@@ -251,7 +254,7 @@ endfunction
 
 " key binding: e iedit {{{
 function! s:iedit() abort
-  
+  call SpaceVim#plugins#iedit#start() 
 endfunction
 " }}}
 
@@ -283,9 +286,9 @@ endfunction
 function! s:highlight() abort
   let s:highlight_id = []
   for item in s:stack
-    call add(s:highlight_id, matchaddpos('Search', [ item ]))
+    call add(s:highlight_id, matchaddpos('HiBlueBold', [ item ]))
   endfor
-  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+  let s:highlight_id_c = matchaddpos('HiPurpleBold', [s:stack[s:index]])
 endfunction
 " }}}
 
