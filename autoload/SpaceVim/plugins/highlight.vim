@@ -126,9 +126,9 @@ function! SpaceVim#plugins#highlight#start() abort
   call s:state.defind_keys(
         \ {
         \ 'layout' : 'vertical split',
-        \ 'logo' : function('s:range_logo'),
+        \ 'logo' : s:_function('s:range_logo'),
         \ 'logo_width' : 30,
-        \ 'init' : function('s:init'),
+        \ 'init' : s:_function('s:init'),
         \ 'left' : [
         \ {
         \ 'key' : 'n',
@@ -139,8 +139,8 @@ function! SpaceVim#plugins#highlight#start() abort
         \ },
         \ {
         \ 'key' : "\<tab>",
-        \ 'desc' : 'Next match',
-        \ 'func' : s:_function('s:next_item'),
+        \ 'desc' : 'Toggle highlight',
+        \ 'func' : s:_function('s:toggle_item'),
         \ 'cmd' : '',
         \ 'exit' : 0,
         \ },
@@ -148,15 +148,23 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'key' : 'r',
         \ 'desc' : 'change range',
         \ 'func' : '',
-        \ 'cmd' : 'call call(' . string(function('s:change_range')) . ', [])',
+        \ 'cmd' : 'call call(' . string(s:_function('s:change_range')) . ', [])',
         \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'e',
+        \ 'desc' : 'iedit',
+        \ 'cmd' : '',
+        \ 'func' : '',
+        \ 'exit_cmd' : 'call call(' . string(s:_function('s:iedit')) . ', [])',
+        \ 'exit' : 1,
         \ },
         \ ],
         \ 'right' : [
         \ {
         \ 'key' : ['N', 'p'],
         \ 'desc' : 'Previous match',
-        \ 'cmd' : 'call call(' . string(function('s:previous_item')) . ', [])',
+        \ 'cmd' : 'call call(' . string(s:_function('s:previous_item')) . ', [])',
         \ 'func' : '',
         \ 'exit' : 0,
         \ },
@@ -165,7 +173,7 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'desc' : 'search buffers',
         \ 'cmd' : '',
         \ 'func' : '',
-        \ 'exit_cmd' : 'call call(' . string(function('s:search_buffers')) . ', [])',
+        \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_buffers')) . ', [])',
         \ 'exit' : 1,
         \ },
         \ {
@@ -173,14 +181,14 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'desc' : 'Search project',
         \ 'cmd' : '',
         \ 'func' : '',
-        \ 'exit_cmd' : 'call call(' . string(function('s:search_project')) . ', [])',
+        \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_project')) . ', [])',
         \ 'exit' : 1,
         \ },
         \ {
         \ 'key' : 'R',
         \ 'desc' : 'Reset',
         \ 'cmd' : '',
-        \ 'func' : function('s:reset_range'),
+        \ 'func' : s:_function('s:reset_range'),
         \ 'exit' : 0,
         \ },
         \ ],
@@ -238,6 +246,12 @@ function! s:change_range() abort
     call s:highlight()
   endif
   let s:state.noredraw = 1
+endfunction
+" }}}
+
+" key binding: e iedit {{{
+function! s:iedit() abort
+  
 endfunction
 " }}}
 
@@ -330,5 +344,3 @@ function! s:find_func_range() abort
   return [line, line]
 endfunction
 " }}}
-
-" vim:set et sw=2 cc=80 foldenable:
