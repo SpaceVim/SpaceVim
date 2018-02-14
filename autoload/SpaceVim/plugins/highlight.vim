@@ -6,9 +6,48 @@
 " License: MIT license
 "=============================================================================
 
+" TODO: {{{
+" e: iedit
+" d/D: next previous definition
+" f: search files
+" s: swoop
+" }}}
 
+" Loadding SpaceVim api {{{
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
+"}}}
+
+" init local variable {{{
+let s:function_expr = {}
+let s:hi_range_id = 0
+let s:hi_range_index = 0
+" }}}
+
+" transient_state API func: logo {{{
+function! s:range_logo() abort
+  let line = getline(3)
+  let range = s:current_range
+  let index = '[' . (s:index + 1) . '/' . len(s:stack) . ']'
+  let logo = s:STRING.fill_middle(range . '  ' . index, 30)
+  let begin = stridx(logo, s:current_range)
+  call setline(3,  logo . line[30:])
+  try
+    call matchdelete(s:hi_range_id)
+    call matchdelete(s:hi_range_index)
+  catch
+  endtry
+  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
+  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
+  redraw!
+  echon ' Change current range to:'
+  exe 'echohl HiRrange' . s:current_range
+  echon s:current_range
+  echohl None
+endfunction
+" }}}
+
+" transient_state API func: init {{{
 let s:hi_info = [
       \ {
       \ 'name' : 'IeditPurpleBold',
@@ -72,7 +111,9 @@ function! s:init() abort
   let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:highlight()
 endfunction
+" }}}
 
+" public API func: start Highlight mode {{{
 function! SpaceVim#plugins#highlight#start() abort
   let curpos = getcurpos()
   let save_reg_k = @k
@@ -148,25 +189,24 @@ function! SpaceVim#plugins#highlight#start() abort
   call s:state.open()
   call s:clear_highlight()
 endfunction
-" n : next item
-" N/p: Previous item
-" r: change range
-" R: reset
-" e: iedit
-" d/D: next previous definition
-" b: search buffers
-" /: search proj
-" f: search files
-" s: swoop
+" }}}
 
-
-function! s:reset_range() abort
-    let s:current_range = 'Display'
-    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
-    call s:clear_highlight()
-    call s:highlight()
+" public API func: register function range expression {{{
+function! SpaceVim#plugins#highlight#reg_expr(ft, begin, end) abort
+  call extend(s:function_expr, {a:ft : [a:begin, a:end]})
 endfunction
+" }}}
 
+" key binding: R reset_range {{{
+function! s:reset_range() abort
+  let s:current_range = 'Display'
+  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  call s:clear_highlight()
+  call s:highlight()
+endfunction
+"}}}
+
+" key binding: n next_item {{{
 function! s:next_item() abort
   if s:index == len(s:stack) - 1
     let s:index = 0
@@ -176,7 +216,9 @@ function! s:next_item() abort
   call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
   call s:update_highlight()
 endfunction
+" }}}
 
+" key binding: r change_range {{{
 function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
@@ -197,22 +239,9 @@ function! s:change_range() abort
   endif
   let s:state.noredraw = 1
 endfunction
+" }}}
 
-function! s:highlight() abort
-  let s:highlight_id = []
-  for item in s:stack
-    call add(s:highlight_id, matchaddpos('Search', [ item ]))
-  endfor
-  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
-endfunction
-
-function! s:clear_highlight() abort
-  for id in s:highlight_id
-    call matchdelete(id)
-  endfor
-  call matchdelete(s:highlight_id_c)
-endfunction
-
+" key binding: N/p previous_item {{{
 function! s:previous_item() abort
   if s:index == 0
     let s:index = len(s:stack) - 1
@@ -222,20 +251,46 @@ function! s:previous_item() abort
   call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
   call s:update_highlight()
 endfunction
+" }}}
 
-function! s:toggle_item() abort
-
-endfunction
-
+" key binding: b search_buffers {{{
 function! s:search_buffers() abort
   call SpaceVim#plugins#flygrep#open({'input' : s:current_match, 'files':'@buffers'}) 
 endfunction
+" }}}
 
+" key binding: / search_project {{{
 function! s:search_project() abort
-  call SpaceVim#plugins#flygrep#open({'input' : s:current_match}) 
+  call spacevim#plugins#flygrep#open({'input' : s:current_match}) 
 endfunction
+" }}}
 
-" function() wrapper
+" local func: highlight symbol {{{
+function! s:highlight() abort
+  let s:highlight_id = []
+  for item in s:stack
+    call add(s:highlight_id, matchaddpos('Search', [ item ]))
+  endfor
+  let s:highlight_id_c = matchaddpos('IeditPurpleBold', [s:stack[s:index]])
+endfunction
+" }}}
+
+" local func: clear highlight {{{
+function! s:clear_highlight() abort
+  for id in s:highlight_id
+    call matchdelete(id)
+  endfor
+  call matchdelete(s:highlight_id_c)
+endfunction
+" }}}
+
+" key binding: Tab toggle_item {{{
+function! s:toggle_item() abort
+
+endfunction
+" }}}
+
+" local func: function() wrapper {{{
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
     return function(a:fstr)
@@ -249,46 +304,16 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+" }}}
 
+" local func: update highlight symbol {{{
 function! s:update_highlight() abort
   call s:clear_highlight()
   call s:highlight()
 endfunction
+" }}}
 
-
-let s:hi_range_id = 0
-let s:hi_range_index = 0
-function! s:range_logo() abort
-  let line = getline(3)
-  let range = s:current_range
-  let index = '[' . (s:index + 1) . '/' . len(s:stack) . ']'
-  let logo = s:STRING.fill_middle(range . '  ' . index, 30)
-  let begin = stridx(logo, s:current_range)
-  call setline(3,  logo . line[30:])
-  try
-    call matchdelete(s:hi_range_id)
-    call matchdelete(s:hi_range_index)
-  catch
-  endtry
-  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
-  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
-  redraw!
-  echon ' Change current range to:'
-  exe 'echohl HiRrange' . s:current_range
-  echon s:current_range
-  echohl None
-endfunction
-
-function! s:update_logo_highlight() abort
-
-endfunction
-
-let s:function_expr = {}
-
-function! SpaceVim#plugins#highlight#reg_expr(ft, begin, end) abort
-  call extend(s:function_expr, {a:ft : [a:begin, a:end]})
-endfunction
-
+" local func: find function range {{{
 function! s:find_func_range() abort
   let line = line('.')
   if !empty(&ft) && has_key(s:function_expr, &ft)
@@ -304,4 +329,6 @@ function! s:find_func_range() abort
   endif
   return [line, line]
 endfunction
+" }}}
 
+" vim:set et sw=2 cc=80 foldenable:
