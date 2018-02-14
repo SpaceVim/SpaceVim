@@ -44,6 +44,13 @@ Here is a throughput graph of the repository for the last few weeks:
 
 ## Features
 
+**Highlight cursor symbol**
+
+SpaceVim supports highlighting of the current symbol on demand and adds
+a transient state to easily navigate and rename this symbol.
+
+![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36208917-efe25afa-115f-11e8-8946-338bb4a43d58.gif)
+
 [**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
 
 With this feature, vim will display the searching result as you type. Of course, it is running
