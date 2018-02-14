@@ -49,7 +49,7 @@ Here is a throughput graph of the repository for the last few weeks:
 SpaceVim supports highlighting of the current symbol on demand and adds
 a transient state to easily navigate and rename this symbol.
 
-![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36208917-efe25afa-115f-11e8-8946-338bb4a43d58.gif)
+![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
 
 [**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
 
