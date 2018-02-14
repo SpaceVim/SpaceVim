@@ -91,6 +91,13 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'left' : [
         \ {
         \ 'key' : 'n',
+        \ 'desc' : 'Toggle highlight',
+        \ 'func' : s:_function('s:next_item'),
+        \ 'cmd' : '',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : "\<tab>",
         \ 'desc' : 'Next match',
         \ 'func' : s:_function('s:next_item'),
         \ 'cmd' : '',
@@ -120,6 +127,21 @@ function! SpaceVim#plugins#highlight#start() abort
         \ 'exit_cmd' : 'call call(' . string(function('s:search_buffers')) . ', [])',
         \ 'exit' : 1,
         \ },
+        \ {
+        \ 'key' : '/',
+        \ 'desc' : 'Search project',
+        \ 'cmd' : '',
+        \ 'func' : '',
+        \ 'exit_cmd' : 'call call(' . string(function('s:search_project')) . ', [])',
+        \ 'exit' : 1,
+        \ },
+        \ {
+        \ 'key' : 'R',
+        \ 'desc' : 'Reset',
+        \ 'cmd' : '',
+        \ 'func' : function('s:reset_range'),
+        \ 'exit' : 0,
+        \ },
         \ ],
         \ }
         \ )
@@ -136,7 +158,15 @@ endfunction
 " /: search proj
 " f: search files
 " s: swoop
-"
+
+
+function! s:reset_range() abort
+    let s:current_range = 'Display'
+    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+    call s:clear_highlight()
+    call s:highlight()
+endfunction
+
 function! s:next_item() abort
   if s:index == len(s:stack) - 1
     let s:index = 0
@@ -199,6 +229,10 @@ endfunction
 
 function! s:search_buffers() abort
   call SpaceVim#plugins#flygrep#open({'input' : s:current_match, 'files':'@buffers'}) 
+endfunction
+
+function! s:search_project() abort
+  call SpaceVim#plugins#flygrep#open({'input' : s:current_match}) 
 endfunction
 
 " function() wrapper

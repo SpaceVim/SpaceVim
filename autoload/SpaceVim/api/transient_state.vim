@@ -167,8 +167,13 @@ function! s:self._update_content() abort
       let line = repeat(' ', logo_width)
       if !empty(left)
         if type(left.key) == 1
-          let line .= '[' . left.key . '] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
-          call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + len(left.key))
+          if left.key ==# "\<tab>"
+            let line .= '[Tab] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
+            call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + 3)
+          else
+            let line .= '[' . left.key . '] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
+            call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + len(left.key))
+          endif
           if !empty(left.cmd)
             call extend(self._handle_inputs, {left.key : left.cmd})
           elseif !empty(left.func)
