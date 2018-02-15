@@ -1402,7 +1402,10 @@ In highlight symbol transient state:
 | ------------- | ------------------------------------------------------------- |
 | `e`           | edit occurrences (`*`)                                        |
 | `n`           | go to next occurrence                                         |
-| `N`           | go to previous occurrence                                     |
+| `N`/`p`       | go to previous occurrence                                     |
+| `b`           | search occurrence in all buffers                              |
+| `/`           | search occurrence in whole project                            |
+| `Tab`         | toggle highlight current occurrence                           |
 | `r`           | change range (function, display area, whole buffer)           |
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |

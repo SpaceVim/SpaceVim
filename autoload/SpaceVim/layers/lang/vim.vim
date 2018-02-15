@@ -20,6 +20,7 @@ endfunction
 function! SpaceVim#layers#lang#vim#config() abort
   call SpaceVim#mapping#gd#add('vim','lookup#lookup')
   call SpaceVim#mapping#space#regesit_lang_mappings('vim', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#highlight#reg_expr('vim', '^\s*\(func\|fu\|function\)!\?\s\+', '^\s*\(endfunc\|endf\|endfunction\)')
 endfunction
 
 function! s:language_specified_mappings() abort
