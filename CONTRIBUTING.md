@@ -33,6 +33,7 @@ Code contributions are welcome. Please read the following sections carefully. In
 #### License
 
 The license is GPLv3 for all the parts of SpaceVim. this includes:
+
 - The initialization and core files.
 - All the layer files.
 - The documentation

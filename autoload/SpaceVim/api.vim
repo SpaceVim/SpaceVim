@@ -3,7 +3,7 @@
 " Description: SpaceVim api core file
 " Author:      Shidong Wang <wsdjeg@outlook.com>
 " Website:     https://spacevim.org
-" License:     MIT
+" License:     GPLv3
 " ============================================================================
 
 ""

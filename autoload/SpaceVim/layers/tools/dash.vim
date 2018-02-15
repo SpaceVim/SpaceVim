@@ -3,7 +3,7 @@
 " Copyright (c) 2018 Shidong Wang & Contributors
 " Author: Seong Yong-ju < sei40kr at gmail.com >
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 
 ""

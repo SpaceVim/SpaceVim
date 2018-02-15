@@ -3,7 +3,7 @@
 " Description: colorscheme for leaderf
 " Author:      Shidong Wang <wsdjeg@outlook.com>
 " Website:     https://github.com/wsdjeg
-" License:     MIT
+" License:     GPLv3
 " ============================================================================
 
 let s:palette = {
