@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        sid.vim
-" Description: vim#sid api of SpaceVim
-" Author:      L-stt
-" Website:     https://spacevim.org
-" License:     GPLv3
-" ============================================================================
+"=============================================================================
+" sid.vim --- SpaceVim SID API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 ""
 " @section sid, api-vim-sid

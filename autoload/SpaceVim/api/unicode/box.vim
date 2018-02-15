@@ -1,3 +1,11 @@
+"=============================================================================
+" box.vim --- SpaceVim box API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:box = {}
 let s:json = SpaceVim#api#import('data#json')
 let s:string = SpaceVim#api#import('data#string')
