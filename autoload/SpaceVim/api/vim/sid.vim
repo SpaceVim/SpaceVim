@@ -3,7 +3,7 @@
 " Description: vim#sid api of SpaceVim
 " Author:      L-stt
 " Website:     https://spacevim.org
-" License:     MIT
+" License:     GPLv3
 " ============================================================================
 
 ""

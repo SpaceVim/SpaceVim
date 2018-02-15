@@ -32,9 +32,11 @@ Code contributions are welcome. Please read the following sections carefully. In
 
 #### License
 
-The license is MIT for all the parts of SpaceVim. this includes:
+The license is GPLv3 for all the parts of SpaceVim. this includes:
+
 - The initialization and core files.
 - All the layer files.
+- The documentation
 
 For files not belonging to SpaceVim, such as local packages and libraries, refer to the header file. Those files should not have an empty header. We may not accept code without a proper header file.
 

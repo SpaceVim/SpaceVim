@@ -3,7 +3,7 @@
 " Copyright (c) 2012-2016 kShidong Wang & Contributors
 " Author: Bambang Purnomsoidi D. P, < bambangpdp at gmail.com >
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 
 ""

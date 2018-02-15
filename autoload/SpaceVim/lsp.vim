@@ -3,7 +3,7 @@
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
 " Author: Seong Yong-ju < @sei40kr >
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 scriptencoding utf-8
 

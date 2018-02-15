@@ -3,7 +3,7 @@
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
 " Author: Jinxuan Zhu <zhujinxuan@gmail.com>
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 ""
 " @section lang#julia, layer-lang-julia

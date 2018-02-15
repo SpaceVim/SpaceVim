@@ -13,11 +13,11 @@ lang: cn
 - [贡献代码](#贡献代码)
   - [证书](#证书)
   - [公约](#公约)
-  - [Pull Request](#pull-request)
+  - [拉取请求](#拉取请求)
     - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
     - [抽象化的简单 PRs(绝大多数PRs都是这样的):](#抽象化的简单-prs绝大多数prs都是这样的)
     - [复杂的PRs (大的重构, 等):](#复杂的prs-大的重构-等)
-  - [Contributing a layer 贡献层](#contributing-a-layer-贡献层)
+  - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
     - [新layer的作者](#新layer的作者)
     - [对现有的layer进行贡献](#对现有的layer进行贡献)
@@ -171,7 +171,7 @@ vim 脚本的文件头,应该按照下面的格式:
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
 " Author: YOUR NAME <YOUR EMAIL>
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 ```
 
@@ -193,7 +193,7 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 
 ""

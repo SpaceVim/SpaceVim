@@ -3,7 +3,7 @@
 " Description: SpaceVim core#statusline layer
 " Author:      Shidong Wang <wsdjeg@outlook.com>
 " Website:     https://spacevim.org
-" License:     MIT
+" License:     GPLv3
 " ============================================================================
 
 " statusline
