@@ -1,3 +1,11 @@
+"=============================================================================
+" flygrep.vim --- Grep on the fly in SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 " Loadding SpaceVim api {{{
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
