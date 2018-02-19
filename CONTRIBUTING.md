@@ -1,3 +1,8 @@
+<!-- Copyright (c) 2016-2017 Wang Shidong & Contributors -->
+<!-- Author: Wang Shidong < wsdjeg at 163.com > -->
+<!-- URL: https://spacevim.org -->
+<!-- License: GPLv3 -->
+
 # Contributing to SpaceVim
 
 SpaceVim is an volunteer effort; we encourage you to pitch in. The community makes SpaceVim what it is.

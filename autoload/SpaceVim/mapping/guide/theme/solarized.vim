@@ -1,3 +1,12 @@
+"=============================================================================
+" solarized.vim --- solarized theme for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 " the theme colors should be 
 " [
 "    \ [ a_guifg, a_guibg, a_ctermbg, a_ctermfg],

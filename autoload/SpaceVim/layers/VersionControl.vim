@@ -1,3 +1,11 @@
+"=============================================================================
+" VersionControl.vim --- SpaceVim version control layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#VersionControl#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   call SpaceVim#mapping#space#def('nnoremap', ['g', '.'], 'call call('

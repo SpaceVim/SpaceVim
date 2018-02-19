@@ -1,9 +1,9 @@
 " ============================================================================
-" File:        spacevim.vim
-" Description: colorscheme for leaderf
-" Author:      Shidong Wang <wsdjeg@outlook.com>
-" Website:     https://github.com/wsdjeg
-" License:     GPLv3
+" spacevim.vim --- leaderf theme for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
 " ============================================================================
 
 let s:palette = {

@@ -1,3 +1,12 @@
+"=============================================================================
+" lisp.vim --- SpaceVim lang#lisp layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 function! SpaceVim#layers#lang#lisp#plugins() abort
     let plugins = []
     call add(plugins,['l04m33/vlime', {'on_ft' : 'lisp', 'rtp': 'vim'}])

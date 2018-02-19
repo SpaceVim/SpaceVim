@@ -1,3 +1,11 @@
+"=============================================================================
+" commands.vim --- commands in SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#commands#load() abort
   ""
   " Load exist layer, {layers} can be a string of a layer name, or a list

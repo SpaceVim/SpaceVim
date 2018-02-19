@@ -1,3 +1,11 @@
+"=============================================================================
+" tabmanager.vim --- tab manager for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 scriptencoding utf-8
 " APIs
 let s:BUFFER = SpaceVim#api#import('vim#buffer')

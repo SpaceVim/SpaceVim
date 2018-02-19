@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
 ""
 " @section lang#julia, layer-lang-julia
 " @parentsection layers

@@ -1,3 +1,11 @@
+"=============================================================================
+" lua.vim --- SpaceVim lang#lua layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 ""
 " @section lang#lua, layer-lang-lua
 " @parentsection layers

@@ -1,3 +1,11 @@
+"=============================================================================
+" indentmove.vim --- SpaceVim indentmove layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 ""
 " @section indentmove, layer-indentmove
 " @parentsection layers

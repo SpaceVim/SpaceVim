@@ -1,3 +1,11 @@
+"=============================================================================
+" ctrlp.vim --- SpaceVim ctrlp layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#ctrlp#plugins() abort
     let plugins = [
                 \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1}],

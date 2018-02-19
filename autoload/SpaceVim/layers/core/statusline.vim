@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        statusline.vim
-" Description: SpaceVim core#statusline layer
-" Author:      Shidong Wang <wsdjeg@outlook.com>
-" Website:     https://spacevim.org
-" License:     GPLv3
-" ============================================================================
+"=============================================================================
+" statusline.vim --- SpaceVim statusline
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 " statusline
 scriptencoding utf-8

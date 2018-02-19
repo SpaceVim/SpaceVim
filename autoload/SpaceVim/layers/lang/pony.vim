@@ -1,7 +1,7 @@
 "=============================================================================
-" pony.vim --- pony Layer file for SpaceVim
-" Copyright (c) 2012-2016 kShidong Wang & Contributors
-" Author: Bambang Purnomsoidi D. P, < bambangpdp at gmail.com >
+" pony.vim --- SpaceVim lang#pony layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

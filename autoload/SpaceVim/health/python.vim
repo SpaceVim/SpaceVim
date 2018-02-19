@@ -1,3 +1,10 @@
+"=============================================================================
+" python.vim --- SpaceVim python checker
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 function! SpaceVim#health#python#check() abort
   let result = ['SpaceVim python support check report:']
   if has('nvim')

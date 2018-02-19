@@ -1,3 +1,11 @@
+"=============================================================================
+" z.vim --- z key bindings
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap <silent><nowait> [z] :<c-u>LeaderGuide "z"<CR>
     nmap z [z]

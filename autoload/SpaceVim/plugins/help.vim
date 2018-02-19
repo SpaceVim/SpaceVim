@@ -1,3 +1,11 @@
+"=============================================================================
+" help.vim --- help plugin for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:KEY = SpaceVim#api#import('vim#key')
 let s:key_describ = {}
 

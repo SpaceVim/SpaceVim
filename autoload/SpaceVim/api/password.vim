@@ -1,3 +1,10 @@
+"=============================================================================
+" password.vim --- SpaceVim password API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 let s:self = {}
 
 let s:NUMBER = SpaceVim#api#import('data#number')

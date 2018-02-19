@@ -1,3 +1,11 @@
+"=============================================================================
+" custom.vim --- custom API in SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#custom#profile(dict) abort
     for key in keys(a:dict)
         call s:set(key, a:dict[key])

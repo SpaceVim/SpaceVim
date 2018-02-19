@@ -1,3 +1,11 @@
+"=============================================================================
+" sh.vim --- SpaceVim lang#sh layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#lang#sh#plugins() abort
     let l:plugins = []
     call add(l:plugins, ['chrisbra/vim-zsh', { 'on_ft' : 'zsh' }])
