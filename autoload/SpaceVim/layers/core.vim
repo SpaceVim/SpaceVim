@@ -1,3 +1,11 @@
+"=============================================================================
+" core.vim --- SpaceVim core layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#core#plugins() abort
   return [
         \ ['Shougo/vimproc.vim', {'build' : ['make']}],

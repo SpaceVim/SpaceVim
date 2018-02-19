@@ -1,3 +1,10 @@
+"=============================================================================
+" environment.vim --- SpaceVim environment checker
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 function! SpaceVim#health#environment#check() abort
   let result = ['SpaceVim environment check report:']
   call add(result, 'Current progpath: ' . v:progname . '(' . v:progpath . ')')

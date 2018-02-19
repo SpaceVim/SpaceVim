@@ -1,3 +1,11 @@
+"=============================================================================
+" clipboard.vim --- SpaceVim clipboard checker
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#health#clipboard#check() abort
   let result = ['SpaceVim clipboard support check report:']
   call add(result, 'Checking +clipboard:')

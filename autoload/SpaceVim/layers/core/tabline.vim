@@ -1,7 +1,7 @@
 "=============================================================================
-" tabline.vim --- core#tabline Layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" tabline.vim --- SpaceVim tabline
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

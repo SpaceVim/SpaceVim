@@ -1,3 +1,11 @@
+"=============================================================================
+" tags.vim --- SpaceVim tags layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#tags#plugins()
     return [
                 \ ['ludovicchabant/vim-gutentags', {'merged' : 0}],
