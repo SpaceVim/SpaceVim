@@ -1,3 +1,11 @@
+"=============================================================================
+" options.vim --- options function in SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#options#list() abort
   let list = []
   if has('patch-7.4.2010') && 0

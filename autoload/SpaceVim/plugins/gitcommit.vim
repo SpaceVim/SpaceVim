@@ -1,3 +1,11 @@
+"=============================================================================
+" gitcommit.vim --- git commit plugin for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
 let s:cache = {}

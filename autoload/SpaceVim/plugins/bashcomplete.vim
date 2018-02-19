@@ -1,3 +1,11 @@
+"=============================================================================
+" bashcomplete.vim --- bash complete for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 
 let s:BASH_COMPLETE = SpaceVim#api#import('bash#complete')
 

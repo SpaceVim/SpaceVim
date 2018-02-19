@@ -1,3 +1,11 @@
+"=============================================================================
+" tab.vim --- tab key binding
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 if g:spacevim_snippet_engine ==# 'neosnippet'
   function! SpaceVim#mapping#tab#i_tab() abort
     if getline('.')[col('.')-2] ==# '{'&& pumvisible()

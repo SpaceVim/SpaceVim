@@ -1,3 +1,11 @@
+"=============================================================================
+" nord.vim --- nord theme for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 " fg,bg, cbg,cfg
 function! SpaceVim#mapping#guide#theme#nord#palette() abort
     return [
