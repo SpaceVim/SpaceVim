@@ -78,20 +78,18 @@ function! SpaceVim#layers#lang#javascript#config() abort
     let g:neomake_javascript_enabled_makers = ['eslint']
     " Use the fix option of eslint
     let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
-
-    augroup Spacevim_lang_javascript
-      autocmd!
-      autocmd User NeomakeFinished checktime
-      autocmd FocusGained * checktime
-    augroup END
   endif
   
-  if s:use_local_eslint
-    augroup Spacevim_lang_javascript
+  augroup SpaceVim_lang_javascript
+    autocmd!
+    if s:auto_fix
+      autocmd User NeomakeFinished checktime
+      autocmd FocusGained * checktime
+    endif
+    if s:use_local_eslint
       autocmd BufNewFile,BufRead *.js call s:preferLocalEslint()
-    augroup END
-  endif
-
+    endif
+  augroup END
 endfunction
 
 function! s:on_ft() abort
