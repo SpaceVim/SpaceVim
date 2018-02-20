@@ -8,13 +8,13 @@
 
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
-     \ ['MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript' }],
      \ ['Galooshi/vim-import-js', {
      \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
      \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
      \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
      \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
      \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+     \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
      \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
      \ ['othree/javascript-libraries-syntax.vim', {
      \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
@@ -60,10 +60,6 @@ function! SpaceVim#layers#lang#javascript#config() abort
   " pangloss/vim-javascript {{{
   let g:javascript_plugin_jsdoc = 1
   let g:javascript_plugin_flow = 1
-  " }}}
-
-  " MaxMEllon/vim-jsx-pretty {{{
-  let g:vim_jsx_pretty_colorful_config = 1
   " }}}
 
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
