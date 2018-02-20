@@ -14,5 +14,13 @@ endfunction
 
 
 function! SpaceVim#layers#lang#json#config() abort
+  " elzr/vim-json {{{
+  " conceal by default
+  let g:vim_json_syntax_conceal = 0
+  " }}}
 
+  augroup SpaceVim_d_lang_json
+    autocmd!
+    autocmd FileType json setlocal foldmethod=syntax
+  augroup END
 endfunction
