@@ -11,15 +11,10 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
+SpaceVim 是一个社区驱动的模块化 vim 配置，以模块的方式组织和管理插件，提供各种类似 IDE 的特性。
+
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-项 目 主 页：<https://spacevim.org/cn/>
-
-码 云 地 址：<https://gitee.com/spacevim/SpaceVim/>
-
-SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，其中包含了多种功能模块，并且针对 neovim 做了功能优化。spacevim 有多种功能模块可供用户选择，针对不同语言选择特定的模块，就可以配置出一个适合特定语言开发的环境。
-
-使用过程中遇到问题或者有什么功能需求可以[提交issue](https://gitee.com/spacevim/SpaceVim/issues/new)，这将帮助我们一起提升产品。我们也欢迎喜欢 vim/neovim 的用户加入我们的 QQ 群，一起讨论 vim 相关的技巧，[点击加入Vim/SpaceVim用户群](https://jq.qq.com/?_wv=1027&k=43zWPlT)。
 
 以下是近几周的开发汇总：
 
