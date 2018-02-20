@@ -66,8 +66,8 @@ function! SpaceVim#layers#lang#c#plugins() abort
       call add(plugins, ['Rip-Rip/clang_complete'])
     endif
   endif
-  " chromatica is for neovim
-  " clamp is for neovim
+  " chromatica is for neovim with py3
+  " clamp is for neovim rpcstart('python', " [s:script_folder_path.'/../python/engine.py'])]
   " clighter8 is for vim8
   " clighter is for old vim
   if has('nvim')
@@ -110,6 +110,7 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
 
   if has_key(a:var, 'libclang_path')
     let g:chromatica#libclang_path = a:var.libclang_path
+    let g:clamp_libclang_file = a:var.libclang_path
   endif
 endfunction
 
