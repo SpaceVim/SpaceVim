@@ -70,6 +70,6 @@ function! SpaceVim#layers#github#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'I'],
         \ 'OpenGithubIssue', 'show issues in browser', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'p'],
-        \ 'OpenGithubPullRequests', 'show PRs in browser', 1)
+        \ 'OpenGithubPullReq', 'show PRs in browser', 1)
   "" }}}
 endfunction
