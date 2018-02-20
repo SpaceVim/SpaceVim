@@ -208,8 +208,8 @@ if g:spacevim_enable_neomake
     let counts = neomake#statusline#LoclistCounts()
     let warnings = get(counts, 'W', 0)
     let errors = get(counts, 'E', 0)
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
   endfunction
 elseif g:spacevim_enable_ale
@@ -220,8 +220,8 @@ elseif g:spacevim_enable_ale
     let counts = ale#statusline#Count(bufnr(''))
     let warnings = counts.warning + counts.style_warning
     let errors = counts.error + counts.style_error
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
   endfunction
 else
