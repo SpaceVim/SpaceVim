@@ -82,6 +82,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
   
   augroup SpaceVim_lang_javascript
     autocmd!
+    autocmd FileType javascript setlocal foldmethod=syntax
     if s:auto_fix
       autocmd User NeomakeFinished checktime
       autocmd FocusGained * checktime
