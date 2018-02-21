@@ -119,7 +119,9 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ### Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs,
-helping the community on the Gitter Chat or sending pull requests.
+helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
+
+For more info please check our [development guidelines](http://spacevim.org/development/).
 
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.
