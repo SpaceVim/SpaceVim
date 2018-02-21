@@ -1,6 +1,7 @@
 let g:neosnippet#snippets_directory = get(g:,'neosnippet#snippets_directory',
       \ '')
 if empty(g:neosnippet#snippets_directory)
+  unlet g:neosnippet#snippets_directory
   let g:neosnippet#snippets_directory = [expand('~/.SpaceVim/snippets/'),
         \ expand('~/.SpaceVim.d/snippets/')]
 elseif type(g:spacevim_force_global_config) == type('')

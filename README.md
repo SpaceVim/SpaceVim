@@ -16,10 +16,9 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
-SpaceVim is a distribution of the vim editor that's inspired by spacemacs. It manages collections
-of plugins in layers, which help collect related packages together to provide features. This
-approach helps keep configuration organized and reduces overhead for the user by keeping them
-from having to think about what packages to install.
+SpaceVim is a community-driven modular vim distribution. It manages collections
+of plugins in layers, which help collect related packages together to provide IDE-like features. 
+SpaceVim is not only a vimrc but an ultimate Vim configuration, It contains many build-in features.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
@@ -32,17 +31,17 @@ Here is a throughput graph of the repository for the last few weeks:
 
 <!-- vim-markdown-toc GFM -->
 
-- [Features](#features)
+- [New Features](#new-features)
 - [Install](#install)
-  - [Linux and macOS](#linux-and-macos)
-  - [Windows](#windows)
 - [Project layout](#project-layout)
 - [Support SpaceVim](#support-spacevim)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
 
-## Features
+### New Features
+
+This is a list of latest features implemented in SpaceVim:
 
 **Highlight cursor symbol**
 
@@ -80,11 +79,11 @@ create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asyn
 
 For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 
-## Install
+### Install
 
 At a minimum, SpaceVim requires `git` to be installed.  For a better graphical experience, install [nerd-font](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal supports [true colors](https://gist.github.com/XVilka/8346728).
 
-### Linux and macOS
+**Linux and macOS**
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
@@ -98,11 +97,11 @@ For more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
-### Windows
+**Windows**
 
 The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
-## Project layout
+### Project layout
 
 ```txt
 ├─ autoload/SpaceVim/api/         APIs
@@ -117,10 +116,12 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ```
 
 
-## Support SpaceVim
+### Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs,
-helping the community on the Gitter Chat or sending pull requests.
+helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
+
+For more info please check our [development guidelines](http://spacevim.org/development/).
 
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.
@@ -133,7 +134,7 @@ clicking following icon.
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-## Credits & Thanks
+### Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)

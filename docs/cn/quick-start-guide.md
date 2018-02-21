@@ -13,6 +13,10 @@ lang: cn
 - [安装](#安装)
   - [Linux 或 macOS](#linux-或-macos)
   - [Windows](#windows)
+- [基本使用](#基本使用)
+  - [模块及插件管理](#模块及插件管理)
+  - [常用快捷键](#常用快捷键)
+  - [IDE-like 特性](#ide-like-特性)
 
 <!-- vim-markdown-toc -->
 
@@ -41,3 +45,11 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ### Windows
 
 window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
+
+## 基本使用
+
+### 模块及插件管理
+
+### 常用快捷键
+
+### IDE-like 特性
