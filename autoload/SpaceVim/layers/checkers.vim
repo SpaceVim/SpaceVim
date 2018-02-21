@@ -28,7 +28,11 @@ function! SpaceVim#layers#checkers#plugins() abort
   return plugins
 endfunction
 
-let s:show_cursor_error = 1
+if has('timers')
+  let s:show_cursor_error = 1
+else
+  let s:show_cursor_error = 0
+endif
 
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
