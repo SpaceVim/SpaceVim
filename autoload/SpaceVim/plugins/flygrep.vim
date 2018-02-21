@@ -207,6 +207,9 @@ function! s:next_item() abort
   else
     normal! j
   endif
+  if s:preview_able == 1
+    call s:preview()
+  endif
   redrawstatus
   call s:MPT._build_prompt()
 endfunction
@@ -216,6 +219,9 @@ function! s:previous_item() abort
     normal! G
   else
     normal! k
+  endif
+  if s:preview_able == 1
+    call s:preview()
   endif
   redrawstatus
   call s:MPT._build_prompt()
@@ -272,6 +278,27 @@ function! s:move_cursor() abort
   call s:MPT._build_prompt()
 endfunction
 
+let s:preview_able = 0
+function! s:toggle_preview() abort
+  if s:preview_able == 0
+    let s:preview_able = 1
+    call s:preview()
+  else
+    pclose
+    let s:preview_able = 0
+  endif
+  redraw!
+  call s:MPT._build_prompt()
+endfunction
+
+function! s:preview() abort
+  let line = getline('.')
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  exe 'silent pedit! +' . linenr . ' ' . filename
+  resize 18
+endfunction
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
@@ -284,6 +311,7 @@ let s:MPT._function_key = {
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
       \ "\<C-r>" : function('s:start_replace'),
+      \ "\<C-p>" : function('s:toggle_preview'),
       \ }
 
 if has('nvim')
