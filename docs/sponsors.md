@@ -22,7 +22,36 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 These are the companies or individuals contributing a monthly amount to help sustain SpaceVim's development.
 See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for more details.
 
-| Date      | Description                                   |
-| --------- | --------------------------------------------- |
-| 2017-2-23 | user from wechat contributed ¥40 to SpaceVim  |
-| 2017-2-14 | user from wechat contributed ¥100 to SpaceVim |
+| date         | Amount  | Description                                   |
+| ------------ | ------- | --------------------------------------------- |
+| 2017-2-23    | ¥ 40    |                                               |
+| 2017-2-14    | ¥ 100   |                                               |
+| 2017-06-20   | $ 2.57  | Шепелев Григорий                              |
+| 2017-06-24   | $ 14.04 | Vowell Jason                                  |
+| 2017-06-24   | $ 2.57  | Senaud Nicolas                                |
+| 2017-09-16   | $ 2.57  | D'Avezac Mayeul                               |
+| 2017-11-26   | $ 14.04 | Hermans Tim                                   |
+| 2017-12-13   | $ 5.44  | Ma Fei                                        |
+| 2017-12-27   | $ 8.30  | Módolo Marcelo                                |
+| 2016-11-22   | ¥ 20    |                                               |
+| 2017-3-18    | ¥ 20    |                                               |
+| 2017-3-30    | ¥ 20    |                                               |
+| 2017-4-7     | ¥ 20    |                                               |
+| 2017-11-2    | ¥ 10    |                                               |
+| 2017-11-2    | ¥ 10    |                                               |
+| 2017-12-28   | ¥ 20    |                                               |
+| 2017-12-28   | ¥ 10.24 | bts                                           |
+| 2017-12-29   | ¥ 10    |                                               |
+| 2018-1-22    | ¥ 10    |                                               |
+| 2018-2-13    | $ 45    | talktopete                                    |
+| 2018-2-14    | ¥ 20    |                                               |
+| 2018-2-14    | ¥ 188   |                                               |
+| 2018-2-18    | ¥ 66.6  |                                               |
+| 2018-2-22    | $ 9     | sei40kr                                       |
+
+## Historical spending
+
+| date       | Amount  | Description                                   |
+| ---------- | ------- | --------------------------------------------- |
+| 2017-06-10 | - $ 5   | Host                                          |
+| 2017-01-03 | - ¥ 225 | Domain                                        |
