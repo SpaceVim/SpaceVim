@@ -31,6 +31,7 @@ let s:grepid = 0
 
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
+let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
   let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   let cmd = s:get_search_cmd(s:current_grep_pattern)
@@ -147,9 +148,11 @@ function! s:start_replace() abort
     call matchdelete(s:hi_id)
   catch
   endtr
-  redrawstatus
   let replace_text = s:current_grep_pattern
-  call SpaceVim#plugins#iedit#start({'expr' : replace_text})
+  if !empty(replace_text)
+    call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+  endif
+  redrawstatus
 endfunction
 " }}}
 
