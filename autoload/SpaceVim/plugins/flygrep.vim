@@ -398,8 +398,7 @@ function! SpaceVim#plugins#flygrep#lineNr() abort
 endfunction
 
 function! SpaceVim#plugins#flygrep#mode()
-  return s:grep_mode
-  return empty(s:mode) ? '' : '(' . s:mode . ')'
+  return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
 endfunction
 
 " }}}
