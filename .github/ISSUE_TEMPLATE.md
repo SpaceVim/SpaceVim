@@ -1,20 +1,15 @@
-<!-- please remove the issue template when request for a feature -->
-## Expected behavior, english is recommended
+<!-- bug reporting without issue template will be closed automatically -->
 
-
-## Environment Information
-- OS:
-- vim version:
-- neovim version:
+## Expected behavior, english is required
 
 ## The reproduce ways from Vim starting (Required!)
 
+## Debug info
 
-## Output of the ':SPDebugInfo!'
-
-please post log below, if you want me to reproduce your issue quickly, including your custom config here will be better.
+Please press <kbd>SPC h I</kbd>, debug info will be put into clipboard, then paste all content below.
 
 ## Screenshots
 
 If you have any screenshots for this issue, please upload here. BTW you can use https://asciinema.org/ for recording video in terminal.
 
+<!-- please remove the issue template when request for a feature -->
