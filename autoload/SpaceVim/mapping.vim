@@ -174,6 +174,12 @@ function! SpaceVim#mapping#close_current_buffer() abort
       return
     endif
   endif
+
+  if &buftype == 'terminal'
+    exe 'bd!'
+    return
+  endif
+
   let cmd_close_buf = 'bd' . f
   let index = index(buffers, bn)
   if index != -1
