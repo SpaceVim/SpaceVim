@@ -26,8 +26,8 @@ fu! zvim#util#defineMap(type,key,value,desc,...) abort
 
 endf
 fu! zvim#util#source_rc(file) abort
-    if filereadable(g:Config_Main_Home. '/' . a:file)
-        execute 'source ' . g:Config_Main_Home  . '/' . a:file
+    if filereadable(g:_spacevim_root_dir. '/' . a:file)
+        execute 'source ' . g:_spacevim_root_dir  . '/' . a:file
     endif
 endf
 

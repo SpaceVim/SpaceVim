@@ -40,14 +40,14 @@ endfunction
 
 function! s:awesome_mode() abort
     let sep = SpaceVim#api#import('file').separator
-    let f = fnamemodify(g:Config_Main_Home, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
+    let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
     let config = readfile(f, '')
     call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
     let sep = SpaceVim#api#import('file').separator
-    let f = fnamemodify(g:Config_Main_Home, ':h') . join(['', 'mode', 'basic.vim'], sep)
+    let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.vim'], sep)
     let config = readfile(f, '')
     call s:write_to_config(config)
 endfunction

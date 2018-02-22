@@ -3,4 +3,4 @@ Execute ( SpaceVim api: SpaceVim main code ):
   SPInstall
   exe "func! Close() \n qa! \n endf"
   call timer_start(2000, 'Close')
-  AssertEqual fnamemodify(g:Config_Main_Home, ':.'), 'config'
+  AssertEqual fnamemodify(g:_spacevim_root_dir, ':.'), 'config'

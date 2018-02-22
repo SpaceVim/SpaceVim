@@ -12,6 +12,7 @@ let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:LIST = SpaceVim#api#import('data#list')
 "}}}
 
 " Init local options: {{{
@@ -189,12 +190,17 @@ endfunction
 let s:MPT._oninputpro = function('s:close_grep_job')
 " }}}
 
+function! s:file_line(line) abort
+  return matchstr(a:line, '[^:]*:\d\+:')
+endfunction
+
 " FlyGrep job handles: {{{
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:id)
 " @vimlint(EVL103, 1, a:event)
 function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
+  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
   if getline(1) ==# ''
     call setline(1, datas)
   else

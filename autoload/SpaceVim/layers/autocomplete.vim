@@ -12,7 +12,7 @@
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
 " support. If there is no lua support, neocomplcache will be used for the
-" completion engine. Spacevim uses deoplete as the default completion engine
+" completion engine. SpaceVim uses deoplete as the default completion engine
 " for neovim. Deoplete requires neovim to be compiled with python support. For
 " more information on python support, please read neovim's |provider-python|.
 "
