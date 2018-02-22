@@ -139,7 +139,7 @@ func! s:self._handle_input(...) abort
 endf
 
 func! s:self._build_prompt() abort
-  redraw
+  normal! :
   echohl Comment | echon self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor

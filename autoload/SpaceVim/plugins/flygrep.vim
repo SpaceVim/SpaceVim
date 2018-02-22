@@ -31,6 +31,7 @@ let s:grepid = 0
 
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
+let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
   let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   let cmd = s:get_search_cmd(s:current_grep_pattern)
@@ -49,6 +50,9 @@ function! s:get_search_cmd(expr) abort
   endif
   if &smartcase
     let cmd += s:grep_smart_case
+  endif
+  if s:grep_mode ==# 'string'
+    let cmd += s:grep_default_fix_string_opt
   endif
   let cmd += s:grep_default_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
@@ -73,8 +77,12 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', join(split(a:expr), '\|'), 1)
   let s:grep_expr = a:expr
+  try
+    call timer_stop(s:grep_timer_id)
+  catch
+  endtry
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
@@ -140,9 +148,12 @@ function! s:start_replace() abort
     call matchdelete(s:hi_id)
   catch
   endtr
-  redrawstatus
   let replace_text = s:current_grep_pattern
-  call SpaceVim#plugins#iedit#start({'expr' : replace_text})
+  if !empty(replace_text)
+    call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+  endif
+  let s:hi_id = matchadd('FlyGrepPattern', join(split(replace_text), '\|'), 1)
+  redrawstatus
 endfunction
 " }}}
 
@@ -158,6 +169,7 @@ function! s:close_buffer() abort
   if s:grep_timer_id != 0
     call timer_stop(s:grep_timer_id)
   endif
+  pclose
   q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
@@ -188,7 +200,6 @@ function! s:grep_stdout(id, data, event) abort
   else
     call append('$', datas)
   endif
-  call s:MPT._build_prompt()
 endfunction
 
 function! s:grep_exit(id, data, event) abort
@@ -210,7 +221,7 @@ function! s:next_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  redrawstatus
+  redraw
   call s:MPT._build_prompt()
 endfunction
 
@@ -223,7 +234,7 @@ function! s:previous_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  redrawstatus
+  redraw
   call s:MPT._build_prompt()
 endfunction
 
@@ -299,6 +310,18 @@ function! s:preview() abort
   resize 18
 endfunction
 
+let s:grep_mode = 'expr'
+function! s:toggle_expr_mode() abort
+  if s:grep_mode ==# 'expr'
+    let s:grep_mode = 'string'
+  else
+    let s:grep_mode = 'expr'
+  endif
+  call s:MPT._oninputpro()
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
+endfunction
+
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
@@ -312,6 +335,7 @@ let s:MPT._function_key = {
       \ "\<C-f>" : function('s:start_filter'),
       \ "\<C-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
+      \ "\<C-e>" : function('s:toggle_expr_mode'),
       \ }
 
 if has('nvim')
@@ -345,7 +369,6 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
-  redraw!
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
@@ -372,14 +395,14 @@ endfunction
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
 function! SpaceVim#plugins#flygrep#lineNr() abort
   if getline(1) ==# ''
-    return ''
+    return 'no results'
   else
     return line('.') . '/' . line('$')
   endif
 endfunction
 
 function! SpaceVim#plugins#flygrep#mode()
-  return empty(s:mode) ? '' : '(' . s:mode . ')'
+  return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
 endfunction
 
 " }}}
