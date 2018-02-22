@@ -75,6 +75,10 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
   let s:grep_expr = a:expr
+  try
+    call timer_stop(s:grep_timer_id)
+  catch
+  endtry
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
@@ -211,6 +215,7 @@ function! s:next_item() abort
     call s:preview()
   endif
   redraw
+  call s:MPT._build_prompt()
 endfunction
 
 function! s:previous_item() abort
@@ -223,6 +228,7 @@ function! s:previous_item() abort
     call s:preview()
   endif
   redraw
+  call s:MPT._build_prompt()
 endfunction
 
 function! s:open_item() abort
