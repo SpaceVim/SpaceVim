@@ -158,6 +158,7 @@ function! s:close_buffer() abort
   if s:grep_timer_id != 0
     call timer_stop(s:grep_timer_id)
   endif
+  pclose
   q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
@@ -188,7 +189,6 @@ function! s:grep_stdout(id, data, event) abort
   else
     call append('$', datas)
   endif
-  call s:MPT._build_prompt()
 endfunction
 
 function! s:grep_exit(id, data, event) abort
@@ -210,7 +210,6 @@ function! s:next_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  redrawstatus
   call s:MPT._build_prompt()
 endfunction
 
@@ -223,7 +222,6 @@ function! s:previous_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  redrawstatus
   call s:MPT._build_prompt()
 endfunction
 
