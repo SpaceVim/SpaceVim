@@ -210,7 +210,7 @@ function! s:next_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  call s:MPT._build_prompt()
+  redraw
 endfunction
 
 function! s:previous_item() abort
@@ -222,7 +222,7 @@ function! s:previous_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
-  call s:MPT._build_prompt()
+  redraw
 endfunction
 
 function! s:open_item() abort
@@ -343,7 +343,6 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
-  redraw!
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
