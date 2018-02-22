@@ -391,13 +391,14 @@ endfunction
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
 function! SpaceVim#plugins#flygrep#lineNr() abort
   if getline(1) ==# ''
-    return ''
+    return 'no results'
   else
     return line('.') . '/' . line('$')
   endif
 endfunction
 
 function! SpaceVim#plugins#flygrep#mode()
+  return s:grep_mode
   return empty(s:mode) ? '' : '(' . s:mode . ')'
 endfunction
 
