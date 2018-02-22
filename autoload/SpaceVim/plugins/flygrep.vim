@@ -50,6 +50,9 @@ function! s:get_search_cmd(expr) abort
   if &smartcase
     let cmd += s:grep_smart_case
   endif
+  if s:grep_mode ==# 'string'
+    let cmd += s:grep_default_fix_string_opt
+  endif
   let cmd += s:grep_default_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
     return cmd + [a:expr] + s:grep_files
@@ -303,6 +306,18 @@ function! s:preview() abort
   resize 18
 endfunction
 
+let s:grep_mode = 'expr'
+function! s:toggle_expr_mode() abort
+  if s:grep_mode ==# 'expr'
+    let s:grep_mode = 'string'
+  else
+    let s:grep_mode = 'expr'
+  endif
+  call s:MPT._oninputpro()
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
+endfunction
+
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
@@ -316,6 +331,7 @@ let s:MPT._function_key = {
       \ "\<C-f>" : function('s:start_filter'),
       \ "\<C-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
+      \ "\<C-e>" : function('s:toggle_expr_mode'),
       \ }
 
 if has('nvim')
