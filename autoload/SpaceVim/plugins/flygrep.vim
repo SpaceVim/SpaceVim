@@ -152,6 +152,7 @@ function! s:start_replace() abort
   if !empty(replace_text)
     call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
+  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(replace_text), '\|'), 1)
   redrawstatus
 endfunction
 " }}}
