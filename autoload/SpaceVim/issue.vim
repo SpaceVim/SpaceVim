@@ -15,7 +15,9 @@ endfunction
 function! s:open() abort
   exe 'tabnew ' . tempname() . '/issue_report.md'
   let b:spacevim_issue_template = 1
-  call setline(1, s:template())
+  let template = s:template()
+  call setline(1, template)
+  let @+ = join(template, "\n")
   w
 endfunction
 
