@@ -77,7 +77,7 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', join(split(a:expr), '\|'), 1)
   let s:grep_expr = a:expr
   try
     call timer_stop(s:grep_timer_id)
@@ -152,7 +152,7 @@ function! s:start_replace() abort
   if !empty(replace_text)
     call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(replace_text), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', join(split(replace_text), '\|'), 1)
   redrawstatus
 endfunction
 " }}}
