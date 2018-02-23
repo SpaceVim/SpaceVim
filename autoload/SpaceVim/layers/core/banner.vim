@@ -390,7 +390,7 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '               version : ' . g:spacevim_version . '   by : spacevim.org',
         \ '',
         \ ],
-       \ [
+        \ [
         \ '',
         \ '_______________________________________________________',
         \ '=========(_)===(_) (_______)==(_______|_______|_)(_)(_)',
@@ -402,7 +402,7 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '               version : ' . g:spacevim_version . '   by : spacevim.org',
         \ '',
         \ ],
-       \ [
+        \ [
         \ '',
         \ 'VIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMMN0kkkkkkkkkkkkkkdl.dKWKkkkkkkkkkkkkkK',
         \ 'VIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMVIMWo;looooooooool,;;;;;;;;looooooooooool',
@@ -428,7 +428,7 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '               version : ' . g:spacevim_version . '   by : spacevim.org',
         \ '',
         \ ],
-  ]
+        \ ]
 endfunction
 
 " vim:set et sw=2:
