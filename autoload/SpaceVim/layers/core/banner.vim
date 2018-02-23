@@ -428,7 +428,7 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '               version : ' . g:spacevim_version . '   by : spacevim.org',
         \ '',
         \ ],
-  ];
+  ]
 endfunction
 
 " vim:set et sw=2:
