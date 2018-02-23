@@ -33,27 +33,9 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
 endfunction
 
 let s:auto_fix = 0
-let s:use_local_eslint = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
-  let s:use_local_eslint = get(a:var, 'use_local_eslint', 0)
-endfunction
-
-function! s:preferLocalEslint() 
-  let dir = expand('%:p:h')
-  while  finddir('node_modules' ,dir ) is ''
-    let next_dir = fnamemodify(dir, ':h')
-    if dir == next_dir
-      break
-    endif
-    let dir = next_dir
-  endwhile
-  let node_modules_path = dir . '/node_modules'
-  let eslint_bin = node_modules_path . '/.bin/eslint'
-  if (executable(eslint_bin)) 
-    let b:neomake_javascript_eslint_exe = eslint_bin
-  endif
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
@@ -61,6 +43,8 @@ function! SpaceVim#layers#lang#javascript#config() abort
   let g:javascript_plugin_jsdoc = 1
   let g:javascript_plugin_flow = 1
   " }}}
+
+  call add(g:spacevim_project_rooter_patterns, 'package.json')
 
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
@@ -86,9 +70,6 @@ function! SpaceVim#layers#lang#javascript#config() abort
     if s:auto_fix
       autocmd User NeomakeFinished checktime
       autocmd FocusGained * checktime
-    endif
-    if s:use_local_eslint
-      autocmd BufNewFile,BufRead *.js call s:preferLocalEslint()
     endif
   augroup END
 endfunction
