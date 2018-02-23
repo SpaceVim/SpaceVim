@@ -443,7 +443,7 @@ function! s:build(repo) abort
 endfunction
 
 function! s:msg_on_build_start(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+  call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2,
         \ '* ' . a:name . ': Building ')
 endfunction
 
@@ -454,7 +454,7 @@ endfunction
 " + foo.vim: Updating...
 if has('nvim')
   function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    call s:set_buf_line(s:plugin_manager_buffer,  4, ['+ ' . a:name . ': Updating...'] + getbufline(s:plugin_manager_buffer,4,4))
   endfunction
   function! s:msg_on_install_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
@@ -477,20 +477,20 @@ endif
 
 " - foo.vim: Updating done.
 function! s:msg_on_updated_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
+  call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, '- ' . a:name . ': Updating done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_updated_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed, ' . a:1)
+    call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, 'x ' . a:name . ': Updating failed, ' . a:1)
   else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed.')
+    call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, 'x ' . a:name . ': Updating failed.')
   endif
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+  call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2,
         \ '* ' . a:name . ': Installing ' . a:status)
 endfunction
 
@@ -510,15 +510,15 @@ endfunction
 
 " - foo.vim: Updating done.
 function! s:msg_on_build_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
+  call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, '- ' . a:name . ': Building done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_build_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
+    call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, 'x ' . a:name . ': Building failed, ' . a:1)
   else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
+    call s:set_buf_line(s:plugin_manager_buffer, len(keys(s:ui_buf)) - s:ui_buf[a:name] + 2, 'x ' . a:name . ': Building failed.')
   endif
 endfunction
 
@@ -573,10 +573,19 @@ if has('nvim') && exists('*nvim_buf_set_lines')
   function! s:set_buf_line(bufnr, nr, line) abort
     call setbufvar(s:plugin_manager_buffer,'&ma', 1)
     if bufexists(s:plugin_manager_buffer)
-      call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
+      if type(a:line) == 1
+        call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
+      else
+        call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, a:line)
+      endif
     endif
     if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+      if type(a:line) == 1
+        let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+      else
+        call insert(s:plugin_manager_buffer_lines, a:line[0], a:nr - 1 )
+        let s:plugin_manager_buffer_lines[a:nr] = a:line[1]
+      endif
     else
       call add(s:plugin_manager_buffer_lines, a:line)
     endif
