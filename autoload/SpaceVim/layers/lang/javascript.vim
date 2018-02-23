@@ -44,6 +44,8 @@ function! SpaceVim#layers#lang#javascript#config() abort
   let g:javascript_plugin_flow = 1
   " }}}
 
+  call add(g:spacevim_project_rooter_patterns, 'package.json')
+
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ function('s:on_ft'))
