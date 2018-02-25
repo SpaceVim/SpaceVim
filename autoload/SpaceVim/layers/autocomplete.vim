@@ -161,6 +161,7 @@ function! SpaceVim#layers#autocomplete#config() abort
         \ neosnippet#expandable() ?
         \ "\<Plug>(neosnippet_expand)" : ""
 
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   if g:spacevim_snippet_engine ==# 'neosnippet'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
