@@ -12,6 +12,7 @@ function! SpaceVim#api#data#list#get() abort
                 \ 'unshift' : '',
                 \ 'uniq' : '',
                 \ 'uniq_by' : '',
+                \ 'uniq_by_func' : '',
                 \ 'clear' : '',
                 \ 'char_range' : '',
                 \ 'has' : '',
@@ -69,6 +70,22 @@ endfunction
 
 function! s:uniq(list) abort
     return s:uniq_by(a:list, 'v:val')
+endfunction
+
+function! s:uniq_by_func(list, func) abort
+    let list = map(copy(a:list), '[v:val, call(a:func, [v:val])]')
+    let i = 0
+    let seen = {}
+    while i < len(list)
+        let key = string(list[i][1])
+        if has_key(seen, key)
+            call remove(list, i)
+        else
+            let seen[key] = 1
+            let i += 1
+        endif
+    endwhile
+    return map(list, 'v:val[0]')
 endfunction
 
 function! s:uniq_by(list, f) abort

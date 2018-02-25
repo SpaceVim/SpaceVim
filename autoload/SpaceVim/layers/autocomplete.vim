@@ -12,7 +12,7 @@
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
 " support. If there is no lua support, neocomplcache will be used for the
-" completion engine. Spacevim uses deoplete as the default completion engine
+" completion engine. SpaceVim uses deoplete as the default completion engine
 " for neovim. Deoplete requires neovim to be compiled with python support. For
 " more information on python support, please read neovim's |provider-python|.
 "
@@ -161,6 +161,7 @@ function! SpaceVim#layers#autocomplete#config() abort
         \ neosnippet#expandable() ?
         \ "\<Plug>(neosnippet_expand)" : ""
 
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   if g:spacevim_snippet_engine ==# 'neosnippet'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
   elseif g:spacevim_snippet_engine ==# 'ultisnips'

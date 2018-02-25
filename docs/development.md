@@ -11,6 +11,7 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 - [Reporting issues](#reporting-issues)
 - [Contributing code](#contributing-code)
   - [License](#license)
+  - [Bootstrap](#bootstrap)
   - [Conventions](#conventions)
   - [Pull Request](#pull-request)
     - [Rebase your pr Branch on top of upstream master:](#rebase-your-pr-branch-on-top-of-upstream-master)
@@ -70,6 +71,12 @@ The license is GPLv3 for all the parts of SpaceVim. this includes:
 - The documentation
 
 For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+
+### Bootstrap
+
+Before contributing to SpaceVim, you should know how does SpaceVim bootstrap, here is the logic of the bootstrap when SpaceVim startup.
+
+<!-- TODO -->
 
 ### Conventions
 

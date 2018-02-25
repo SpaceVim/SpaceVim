@@ -33,25 +33,26 @@ CONTENTS                                                   *SpaceVim-contents*
       10. indentmove...............................|SpaceVim-layer-indentmove|
       11. lang#c.......................................|SpaceVim-layer-lang-c|
       12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      13. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      14. lang#go.....................................|SpaceVim-layer-lang-go|
-      15. lang#java.................................|SpaceVim-layer-lang-java|
-      16. lang#julia...............................|SpaceVim-layer-lang-julia|
-      17. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      18. lang#lua...................................|SpaceVim-layer-lang-lua|
-      19. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      20. lang#php...................................|SpaceVim-layer-lang-php|
-      21. lang#pony.................................|SpaceVim-layer-lang-pony|
-      22. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      23. lang#python.............................|SpaceVim-layer-lang-python|
-      24. lang#rust.................................|SpaceVim-layer-lang-rust|
-      25. lang#scala...............................|SpaceVim-layer-lang-scala|
-      26. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      27. lang#xml...................................|SpaceVim-layer-lang-xml|
-      28. operator...................................|SpaceVim-layer-operator|
-      29. shell.........................................|SpaceVim-layer-shell|
-      30. tmux...........................................|SpaceVim-layer-tmux|
-      31. tools#dash...............................|SpaceVim-layer-tools-dash|
+      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      15. lang#go.....................................|SpaceVim-layer-lang-go|
+      16. lang#java.................................|SpaceVim-layer-lang-java|
+      17. lang#julia...............................|SpaceVim-layer-lang-julia|
+      18. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      19. lang#lua...................................|SpaceVim-layer-lang-lua|
+      20. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      21. lang#php...................................|SpaceVim-layer-lang-php|
+      22. lang#pony.................................|SpaceVim-layer-lang-pony|
+      23. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      24. lang#python.............................|SpaceVim-layer-lang-python|
+      25. lang#rust.................................|SpaceVim-layer-lang-rust|
+      26. lang#scala...............................|SpaceVim-layer-lang-scala|
+      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      28. lang#xml...................................|SpaceVim-layer-lang-xml|
+      29. operator...................................|SpaceVim-layer-operator|
+      30. shell.........................................|SpaceVim-layer-shell|
+      31. tmux...........................................|SpaceVim-layer-tmux|
+      32. tools#dash...............................|SpaceVim-layer-tools-dash|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -76,6 +77,9 @@ be added to runtimepath, so you can write your own scripts in it. SpaceVim
 also supports local config for each project. Place local config  settings in
 `.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
+
+                                                          *g:spacevim_version*
+Version of SpaceVim , this value can not be changed.
 
                                                    *g:spacevim_default_indent*
 Change the default indentation of SpaceVim. Default is 2.
@@ -585,7 +589,7 @@ AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 CODE COMPLETION
 SpaceVim uses neocomplete as the default completion engine if vim has lua
 support. If there is no lua support, neocomplcache will be used for the
-completion engine. Spacevim uses deoplete as the default completion engine for
+completion engine. SpaceVim uses deoplete as the default completion engine for
 neovim. Deoplete requires neovim to be compiled with python support. For more
 information on python support, please read neovim's |provider-python|.
 
@@ -880,6 +884,32 @@ LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
 INTRO
 The lang#crystal layer provides crystal filetype detection and syntax
 highlight, crystal tool and crystal spec integration.
+
+==============================================================================
+LANG#CSHARP                                       *SpaceVim-layer-lang-csharp*
+
+This layer includes utilities and language-specific mappings for csharp
+development.
+
+KEY MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l b         compile the project
+  normal          SPC l f         format current file
+  normal          SPC l d         show doc
+  normal          SPC l e         rename symbol under cursor
+  normal          SPC l g g       go to definition
+  normal          SPC l g i       find implementations
+  normal          SPC l g t       find type
+  normal          SPC l g s       find symbols
+  normal          SPC l g u       find usages of symbol under cursor
+  normal          SPC l g m       find members in the current buffer
+  normal          SPC l s r       reload the solution
+  normal          SPC l s s       start the OmniSharp server
+  normal          SPC l s S       stop the OmniSharp server
+<
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*

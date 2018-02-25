@@ -347,3 +347,5 @@ function! s:find_func_range() abort
   return [line, line]
 endfunction
 " }}}
+
+" vim:set et sw=2 cc=80 foldenable:

@@ -7,7 +7,10 @@
 "=============================================================================
 
 scriptencoding utf-8
-function! SpaceVim#default#SetOptions() abort
+
+let s:SYSTEM = SpaceVim#api#import('system')
+" Default options {{{
+function! SpaceVim#default#options() abort
   " basic vim settiing
   if has('gui_running')
     set guioptions-=m " Hide menu bar.
@@ -17,10 +20,10 @@ function! SpaceVim#default#SetOptions() abort
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
     set guioptions-=e " Hide tab
-    if WINDOWS()
+    if s:SYSTEM.isWindows
       " please install the font in 'Dotfiles\font'
       set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif OSX()
+    elseif s:SYSTEM.isOSX
       set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
     else
       set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
@@ -31,14 +34,12 @@ function! SpaceVim#default#SetOptions() abort
   " begining start delete the char you just typed in if you do not use set
   " nocompatible ,you need this
   set backspace=indent,eol,start
+  set smarttab
+  set nrformats-=octal
+  set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
+  set fillchars=vert:│,fold:·
 
-  " Shou number and relativenumber
-  set relativenumber
-  set number
-
-  " set fillchar
-  hi VertSplit ctermbg=NONE guibg=NONE
-  set fillchars+=vert:│
+  set laststatus=2
 
   " hide cmd
   set noshowcmd
@@ -60,14 +61,17 @@ function! SpaceVim#default#SetOptions() abort
   set softtabstop=4
   set shiftwidth=4
 
-  " autoread
+  " Enable line number
+  set number
+
+  " Automatically read a file changed outside of vim
   set autoread
 
   " backup
   set backup
   set undofile
   set undolevels=1000
-  let g:data_dir = $HOME . '/.data/'
+  let g:data_dir = $HOME . '/.cache/SpaceVim/'
   let g:backup_dir = g:data_dir . 'backup'
   let g:swap_dir = g:data_dir . 'swap'
   let g:undo_dir = g:data_dir . 'undofile'
@@ -83,13 +87,13 @@ function! SpaceVim#default#SetOptions() abort
   if finddir(g:undo_dir) ==# ''
     silent call mkdir(g:undo_dir)
   endif
+  unlet g:data_dir
   unlet g:backup_dir
   unlet g:swap_dir
-  unlet g:data_dir
   unlet g:undo_dir
-  set undodir=$HOME/.data/undofile
-  set backupdir=$HOME/.data/backup
-  set directory=$HOME/.data/swap
+  set undodir=$HOME/.cache/SpaceVim/undofile
+  set backupdir=$HOME/.cache/SpaceVim/backup
+  set directory=$HOME/.cache/SpaceVim/swap
 
   " no fold enable
   set nofoldenable
@@ -105,45 +109,36 @@ function! SpaceVim#default#SetOptions() abort
   set complete=.,w,b,u,t
   " limit completion menu height
   set pumheight=15
-  set scrolloff=3
+  set scrolloff=1
+  set sidescrolloff=5
+  set display+=lastline
   set incsearch
   set hlsearch
-  set laststatus=2
   set wildignorecase
   set mouse=nv
   set hidden
   set ttimeout
   set ttimeoutlen=50
-  set lazyredraw
   if has('patch-7.4.314')
     " don't give ins-completion-menu messages.
     set shortmess+=c
   endif
+  " Do not wrap lone lines
+  set nowrap
 endfunction
+"}}}
 
-function! SpaceVim#default#SetPlugins() abort
+function! SpaceVim#default#layers() abort
 
-  call add(g:spacevim_plugin_groups, 'web')
-  call add(g:spacevim_plugin_groups, 'lang')
-  call add(g:spacevim_plugin_groups, 'edit')
+  call SpaceVim#layers#load('autocomplete')
+  call SpaceVim#layers#load('checkers')
+  call SpaceVim#layers#load('format')
+  call SpaceVim#layers#load('edit')
+  call SpaceVim#layers#load('ui')
   call add(g:spacevim_plugin_groups, 'ui')
   call add(g:spacevim_plugin_groups, 'tools')
-  call add(g:spacevim_plugin_groups, 'checkers')
-  call add(g:spacevim_plugin_groups, 'format')
-  call add(g:spacevim_plugin_groups, 'chat')
   call add(g:spacevim_plugin_groups, 'git')
   call add(g:spacevim_plugin_groups, 'VersionControl')
-  call add(g:spacevim_plugin_groups, 'javascript')
-  call add(g:spacevim_plugin_groups, 'ruby')
-  call add(g:spacevim_plugin_groups, 'python')
-  call add(g:spacevim_plugin_groups, 'scala')
-  call add(g:spacevim_plugin_groups, 'lang#go')
-  call add(g:spacevim_plugin_groups, 'lang#markdown')
-  call add(g:spacevim_plugin_groups, 'scm')
-  call add(g:spacevim_plugin_groups, 'editing')
-  call add(g:spacevim_plugin_groups, 'indents')
-  call add(g:spacevim_plugin_groups, 'navigation')
-  call add(g:spacevim_plugin_groups, 'misc')
 
   call add(g:spacevim_plugin_groups, 'core')
   call SpaceVim#layers#load('core#banner')
@@ -154,26 +149,13 @@ function! SpaceVim#default#SetPlugins() abort
   call add(g:spacevim_plugin_groups, 'github')
   if has('python3')
     call add(g:spacevim_plugin_groups, 'denite')
-  endif
-  call add(g:spacevim_plugin_groups, 'ctrlp')
-  call add(g:spacevim_plugin_groups, 'autocomplete')
-  if ! has('nvim')
-    call add(g:spacevim_plugin_groups, 'vim')
+  elseif has('python')
   else
-    call add(g:spacevim_plugin_groups, 'nvim')
-  endif
-  if OSX()
-    call add(g:spacevim_plugin_groups, 'osx')
-  endif
-  if WINDOWS()
-    call add(g:spacevim_plugin_groups, 'windows')
-  endif
-  if LINUX()
-    call add(g:spacevim_plugin_groups, 'linux')
+    call add(g:spacevim_plugin_groups, 'ctrlp')
   endif
 endfunction
 
-function! SpaceVim#default#SetMappings() abort
+function! SpaceVim#default#keyBindings() abort
 
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN

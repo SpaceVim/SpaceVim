@@ -260,7 +260,8 @@ autocommand BufEnter <buffer>
 
 #### Naming
 
-In general, use plugin-names-like-this, FunctionNamesLikeThis, CommandNamesLikeThis, augroup_names_like_this, variable_names_like_this.
+In general, use `plugin-names-like-this`, `FunctionNamesLikeThis`,
+`CommandNamesLikeThis`, `augroup_names_like_this`, `variable_names_like_this`.
 
 Always prefix variables with their scope.
 
