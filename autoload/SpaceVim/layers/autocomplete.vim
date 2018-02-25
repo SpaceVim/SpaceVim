@@ -163,9 +163,9 @@ function! SpaceVim#layers#autocomplete#config() abort
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   if g:spacevim_snippet_engine ==# 'neosnippet'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert sneppets', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
 endfunction
 
