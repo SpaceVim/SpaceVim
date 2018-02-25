@@ -8,7 +8,7 @@
 
 scriptencoding utf-8
 " Default options {{{
-function! SpaceVim#default#SetOptions() abort
+function! SpaceVim#default#options() abort
   " basic vim settiing
   if has('gui_running')
     set guioptions-=m " Hide menu bar.
@@ -132,6 +132,7 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
   call SpaceVim#layers#load('edit')
+  call SpaceVim#layers#load('ui')
   call add(g:spacevim_plugin_groups, 'ui')
   call add(g:spacevim_plugin_groups, 'tools')
   call add(g:spacevim_plugin_groups, 'git')
@@ -146,11 +147,13 @@ function! SpaceVim#default#layers() abort
   call add(g:spacevim_plugin_groups, 'github')
   if has('python3')
     call add(g:spacevim_plugin_groups, 'denite')
+  elseif has('python')
+  else
+    call add(g:spacevim_plugin_groups, 'ctrlp')
   endif
-  call add(g:spacevim_plugin_groups, 'ctrlp')
 endfunction
 
-function! SpaceVim#default#SetMappings() abort
+function! SpaceVim#default#keyBindings() abort
 
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN

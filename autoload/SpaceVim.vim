@@ -741,15 +741,11 @@ function! SpaceVim#begin() abort
       autocmd VimEnter * call SpaceVim#welcome()
     augroup END
   endif
-  call SpaceVim#default#SetOptions()
+  call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#SetMappings()
+  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
-
-function! SpaceVim#defindFuncs() abort
-endfunction
-
 
 function! SpaceVim#welcome() abort
   if get(g:, '_spacevim_session_loaded', 0) == 1
