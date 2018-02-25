@@ -25,7 +25,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [tabline](#tabline)
-- [Genaral Key bindings](#genaral-key-bindings)
+- [General Key bindings](#general-key-bindings)
   - [Window manager](#window-manager)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
@@ -305,25 +305,25 @@ Move Text Transient State:
 
 ## Differences between vim/neovim and SpaceVim
 
-- The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
+- The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
 
-the option is `g:spacevim_unite_leader`, defalut value is `f`.
+the option is `g:spacevim_unite_leader`, default value is `f`.
 
-- The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
+- The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
 
-the option is `g:spacevim_denite_leader`, defalut value is `F`.
+the option is `g:spacevim_denite_leader`, default value is `F`.
 
-- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by defalut (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
+- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
-the option is `g:spacevim_windows_leader`, defalut value is `s`.
+the option is `g:spacevim_windows_leader`, default value is `s`.
 
 - The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
 
-the option is `g:spacevim_enable_language_specific_leader`, defalut value is 1.
+the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 
 - The `q` key does recording, but in SpaceVim it is used for smart close window.
 
-the option is `g:spacevim_windows_smartclose`, defalut value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
+the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
@@ -431,7 +431,7 @@ Some elements can be dynamically toggled:
 
 **Powerline font installation:**
 
-By defalut SpaceVim use  [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+By default SpaceVim use [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
 
 **syntax checking integration:**
 
@@ -569,7 +569,7 @@ key bindings within tab manager windows.
 | `o`         | Close or expand tab windows.      |
 | `<Enter>`   | Jump to windows under the cursor. |
 
-## Genaral Key bindings
+## General Key bindings
 
 ### Window manager
 
@@ -777,7 +777,7 @@ to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
-**Unide/Denite describe key bindings**
+**Unite/Denite describe key bindings**
 
 It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
 
@@ -1516,9 +1516,9 @@ In transient state:
 
 SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
 
-**Two new modes:** `iedit-Normal`/`idite-Insert`
+**Two new modes:** `iedit-Normal`/`iedit-Insert`
 
-The defalut color for iedit is `red`/`green` which is based on the current colorscheme.
+The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
 ##### iedit states key bindings
 
