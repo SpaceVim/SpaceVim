@@ -14,6 +14,8 @@ if has('vim_starting')
   endif
 endif
 
+let s:SYSTEM = SpaceVim#api#import('system')
+
 " Fsep && Psep
 if has('win16') || has('win32') || has('win64')
   let s:Psep = ';'
@@ -24,9 +26,9 @@ else
 endif
 "Use English for anything in vim
 try
-  if WINDOWS()
+  if s:SYSTEM.isWindows
     silent exec 'lan mes en_US.UTF-8'
-  elseif OSX()
+  elseif s:SYSTEM.isOSX
     silent exec 'language en_US'
   else
     let s:uname = system('uname -s')
@@ -46,7 +48,7 @@ catch /^Vim\%((\a\+)\)\=:E197/
 endtry
 
 " try to set encoding to utf-8
-if WINDOWS()
+if s:SYSTEM.isWindows
   " Be nice and check for multi_byte even if the config requires
   " multi_byte support most of the time
   if has('multi_byte')

@@ -5,6 +5,9 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+let s:SYSTEM = SpaceVim#api#import('system')
+
 function! SpaceVim#health#python#check() abort
   let result = ['SpaceVim python support check report:']
   if has('nvim')
@@ -25,7 +28,7 @@ function! SpaceVim#health#python#check() abort
     if has('python3')
       call add(result, '      SUCCEED!')
     else
-      if !WINDOWS()
+      if !s:SYSTEM.isWindows
         call add(result, '      Failed : to support +python3, Please install vim-gik, or build from sources.')
       else
         call add(result, '      Failed : to support +python3, install vim from https://github.com/vim/vim-win32-installer/releases')
@@ -36,7 +39,7 @@ function! SpaceVim#health#python#check() abort
     if has('python')
       call add(result, '      SUCCEED!')
     else
-      if !WINDOWS()
+      if !s:SYSTEM.isWindows
         call add(result, '      Failed : to support +python, Please install vim-gik, or build from sources.')
       else
         call add(result, '      Failed : to support +python3, install vim from https://github.com/vim/vim-win32-installer/releases')

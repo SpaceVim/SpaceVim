@@ -7,6 +7,8 @@
 "=============================================================================
 
 scriptencoding utf-8
+
+let s:SYSTEM = SpaceVim#api#import('system')
 " Default options {{{
 function! SpaceVim#default#options() abort
   " basic vim settiing
@@ -18,10 +20,10 @@ function! SpaceVim#default#options() abort
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
     set guioptions-=e " Hide tab
-    if WINDOWS()
+    if s:SYSTEM.isWindows
       " please install the font in 'Dotfiles\font'
       set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif OSX()
+    elseif s:SYSTEM.isOSX
       set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
     else
       set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
