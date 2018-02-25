@@ -742,7 +742,7 @@ function! SpaceVim#begin() abort
     augroup END
   endif
   call SpaceVim#default#SetOptions()
-  call SpaceVim#default#SetPlugins()
+  call SpaceVim#default#layers()
   call SpaceVim#default#SetMappings()
   call SpaceVim#commands#load()
 endfunction

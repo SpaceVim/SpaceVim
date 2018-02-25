@@ -126,16 +126,14 @@ function! SpaceVim#default#SetOptions() abort
 endfunction
 "}}}
 
-function! SpaceVim#default#SetPlugins() abort
+function! SpaceVim#default#layers() abort
 
-  call add(g:spacevim_plugin_groups, 'web')
-  call add(g:spacevim_plugin_groups, 'lang')
-  call add(g:spacevim_plugin_groups, 'edit')
+  call SpaceVim#layers#load('autocomplete')
+  call SpaceVim#layers#load('checkers')
+  call SpaceVim#layers#load('format')
+  call SpaceVim#layers#load('edit')
   call add(g:spacevim_plugin_groups, 'ui')
   call add(g:spacevim_plugin_groups, 'tools')
-  call add(g:spacevim_plugin_groups, 'checkers')
-  call add(g:spacevim_plugin_groups, 'format')
-  call add(g:spacevim_plugin_groups, 'chat')
   call add(g:spacevim_plugin_groups, 'git')
   call add(g:spacevim_plugin_groups, 'VersionControl')
 
@@ -150,21 +148,6 @@ function! SpaceVim#default#SetPlugins() abort
     call add(g:spacevim_plugin_groups, 'denite')
   endif
   call add(g:spacevim_plugin_groups, 'ctrlp')
-  call add(g:spacevim_plugin_groups, 'autocomplete')
-  if ! has('nvim')
-    call add(g:spacevim_plugin_groups, 'vim')
-  else
-    call add(g:spacevim_plugin_groups, 'nvim')
-  endif
-  if OSX()
-    call add(g:spacevim_plugin_groups, 'osx')
-  endif
-  if WINDOWS()
-    call add(g:spacevim_plugin_groups, 'windows')
-  endif
-  if LINUX()
-    call add(g:spacevim_plugin_groups, 'linux')
-  endif
 endfunction
 
 function! SpaceVim#default#SetMappings() abort
