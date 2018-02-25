@@ -83,6 +83,7 @@ call SpaceVim#layers#disable('shell')
 | [tags](https://spacevim.org/layers/tags/)    |   This layer provide tags manager for project | 
 | [tools#dash](https://spacevim.org/layers/tools/dash/)    |   This layer provides Dash integration for SpaceVim | 
 | [ui](https://spacevim.org/layers/ui/)    |   Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI | 
+
 <!-- SpaceVim layer list end -->
 
 <!-- vim:set nowrap: -->
