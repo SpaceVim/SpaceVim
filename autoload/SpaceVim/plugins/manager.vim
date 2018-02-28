@@ -10,6 +10,7 @@
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
 " init values
@@ -18,8 +19,12 @@ let s:pulling_repos = {}
 let s:building_repos = {}
 " key : plugin name, value : buf line number in manager buffer.
 let s:ui_buf = {}
-let s:plugin_manager_buffer = 0
-let s:plugin_manager_buffer_lines = []
+
+" plugin manager buffer
+let s:buffer_id = 0
+let s:buffer_lines = []
+
+" plugin manager job
 let s:jobpid = 0
 
 " install plugin manager
@@ -110,7 +115,7 @@ function! s:get_uninstalled_plugins() abort
 endfunction
 
 
-function! SpaceVim#plugins#manager#reinstall(...)
+function! SpaceVim#plugins#manager#reinstall(...) abort
   call dein#reinstall(a:1)
 endfunction
 
@@ -137,16 +142,16 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:BUFFER.set_buf_lines(s:buffer_id, 0, 1, 0, ['Installing plugins (' . s:pct_done . '/' . s:total . ')'])
   if has('nvim')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 3, '')
   elseif has('python')
-    call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:append_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:append_buf_line(s:buffer_id, 3, '')
   else
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 3, '')
   endif
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
@@ -188,16 +193,16 @@ function! SpaceVim#plugins#manager#update(...) abort
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
   if has('nvim')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 3, '')
   elseif has('python')
-    call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:append_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:append_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:append_buf_line(s:buffer_id, 3, '')
   else
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 3, '')
   endif
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
@@ -239,7 +244,7 @@ function! s:on_pull_exit(id, data, event) abort
     let id = a:id
   endif
   if a:data == 0 && a:event ==# 'exit'
-    call s:msg_on_updated_done(s:pulling_repos[id].name)
+    call s:update_done(s:pulling_repos[id].name)
   else
     if a:data == 1
       call s:msg_on_updated_failed(s:pulling_repos[id].name, ' The plugin dir is dirty')
@@ -254,8 +259,8 @@ function! s:on_pull_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -277,9 +282,9 @@ endfunction
 function! s:recache_rtp(id) abort
   if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
     " TODO add elapsed time info.
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
+    call s:set_buf_line(s:buffer_id, 1, 'Updated. Elapsed time: '
           \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
-    let s:plugin_manager_buffer = 0
+    let s:buffer_id = 0
     if g:spacevim_plugin_manager ==# 'dein'
       call dein#recache_runtimepath()
     endif
@@ -323,8 +328,8 @@ function! s:on_build_exit(id, data, event) abort
     call s:msg_on_build_failed(s:building_repos[id].name)
   endif
   let s:pct_done += 1
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-  call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+  call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:set_buf_line(s:buffer_id, 2, s:status_bar())
   call remove(s:building_repos, string(id))
   call s:recache_rtp(a:id)
 endfunction
@@ -337,7 +342,7 @@ function! s:on_install_exit(id, data, event) abort
     let id = a:id
   endif
   if a:data == 0 && a:event ==# 'exit'
-    call s:msg_on_install_done(s:pulling_repos[id].name)
+    call s:install_done(s:pulling_repos[id].name)
   else
     call s:msg_on_install_failed(s:pulling_repos[id].name)
   endif
@@ -348,8 +353,8 @@ function! s:on_install_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -443,7 +448,7 @@ function! s:build(repo) abort
 endfunction
 
 function! s:msg_on_build_start(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3,
         \ '* ' . a:name . ': Building ')
 endfunction
 
@@ -454,85 +459,81 @@ endfunction
 " + foo.vim: Updating...
 if has('nvim')
   function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
   function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
 elseif has('python')
   function! s:msg_on_start(name) abort
-    call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    call s:append_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
   function! s:msg_on_install_start(name) abort
-    call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
+    call s:append_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
 else
   function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
   function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
 endif
 
 " - foo.vim: Updating done.
-function! s:msg_on_updated_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
+function! s:update_done(name) abort
+  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_updated_failed(name, ...) abort
-  if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed, ' . a:1)
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed.')
-  endif
+  call s:setline(s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed. ' . get(a:000, 0, ''))
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3,
         \ '* ' . a:name . ': Installing ' . a:status)
 endfunction
 
 " - foo.vim: Updating done.
-function! s:msg_on_install_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
+function! s:install_done(name) abort
+  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
   else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
   endif
 endfunction
 
 " - foo.vim: Updating done.
 function! s:msg_on_build_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
+  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_build_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
   else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
+    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
   endif
 endfunction
 
 function! s:new_window() abort
-  if s:plugin_manager_buffer != 0 && bufexists(s:plugin_manager_buffer)
+  if s:buffer_id != 0 && bufexists(s:buffer_id)
     " buffer exist, process has not finished!
     return 0
-  elseif s:plugin_manager_buffer != 0 && !bufexists(s:plugin_manager_buffer)
+  elseif s:buffer_id != 0 && !bufexists(s:buffer_id)
     " buffer is hidden, process has not finished!
     call s:resume_window()
     return 1
   else
     execute get(g:, 'spacevim_window', 'vertical topleft new')
-    let s:plugin_manager_buffer = bufnr('%')
+    let s:buffer_id = bufnr('%')
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
@@ -560,27 +561,27 @@ endfunction
 
 function! s:resume_window() abort
   execute get(g:, 'spacevim_window', 'vertical topleft new')
-  let s:plugin_manager_buffer = bufnr('%')
+  let s:buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
   setf SpaceVimPlugManager
   nnoremap <silent> <buffer> q :bd<CR>
-  call setline(1, s:plugin_manager_buffer_lines)
+  call setline(1, s:buffer_lines)
   setlocal nomodifiable 
 endfunction
 
 " change modifiable before setline
 if has('nvim') && exists('*nvim_buf_set_lines')
   function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
+    call setbufvar(s:buffer_id,'&ma', 1)
+    if bufexists(s:buffer_id)
       call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
     endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+    if len(s:buffer_lines) >= a:nr
+      let s:buffer_lines[a:nr - 1] = a:line
     else
-      call add(s:plugin_manager_buffer_lines, a:line)
+      call add(s:buffer_lines, a:line)
     endif
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    call setbufvar(s:buffer_id,'&ma', 0)
   endfunction
 elseif has('python')
   py import vim
@@ -589,38 +590,38 @@ elseif has('python')
   " @vimlint(EVL103, 1, a:nr)
   " @vimlint(EVL103, 1, a:line)
   function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
+    call setbufvar(s:buffer_id,'&ma', 1)
+    if bufexists(s:buffer_id)
       py bufnr = string.atoi(vim.eval("a:bufnr"))
       py linr = string.atoi(vim.eval("a:nr")) - 1
       py str = vim.eval("a:line")
       py vim.buffers[bufnr][linr] = str
     endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+    if len(s:buffer_lines) >= a:nr
+      let s:buffer_lines[a:nr - 1] = a:line
     else
-      call add(s:plugin_manager_buffer_lines, a:line)
+      call add(s:buffer_lines, a:line)
     endif
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    call setbufvar(s:buffer_id,'&ma', 0)
   endfunction
 
   function! s:append_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
+    call setbufvar(s:buffer_id,'&ma', 1)
+    if bufexists(s:buffer_id)
       py bufnr = string.atoi(vim.eval("a:bufnr"))
       py linr = string.atoi(vim.eval("a:nr")) - 1
       py str = vim.eval("a:line")
       py vim.buffers[bufnr].append(str)
     endif
-    call add(s:plugin_manager_buffer_lines, a:line)
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
+    call add(s:buffer_lines, a:line)
+    call setbufvar(s:buffer_id,'&ma', 0)
   endfunction
   " @vimlint(EVL103, 0, a:bufnr)
   " @vimlint(EVL103, 0, a:nr)
   " @vimlint(EVL103, 0, a:line)
 else
   function! s:focus_main_win() abort
-    let winnr = bufwinnr(s:plugin_manager_buffer)
+    let winnr = bufwinnr(s:buffer_id)
     if winnr > -1
       exe winnr . 'wincmd w'
     endif
@@ -628,16 +629,20 @@ else
   endfunction
   function! s:set_buf_line(bufnr, nr, line) abort
     call setbufvar(a:bufnr,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
+    if bufexists(s:buffer_id)
       if s:focus_main_win() >= 0
         call setline(a:nr, a:line)
       endif
     endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
+    if len(s:buffer_lines) >= a:nr
+      let s:buffer_lines[a:nr - 1] = a:line
     else
-      call add(s:plugin_manager_buffer_lines, a:line)
+      call add(s:buffer_lines, a:line)
     endif
     call setbufvar(a:bufnr,'&ma', 0)
   endfunction
 endif
+
+function! s:setline(nr, line) abort
+  call s:BUFFER.set_buf_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
+endfunction
