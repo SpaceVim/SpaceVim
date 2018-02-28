@@ -123,6 +123,7 @@ endfunction
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
   if !s:JOB.vim_job && !s:JOB.nvim_job
+    let save_maxfuncdepth = &maxfuncdepth
     let &maxfuncdepth = 2000
   endif
   let plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
@@ -142,17 +143,12 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
-  call s:BUFFER.set_buf_lines(s:buffer_id, 0, 1, 0, ['Installing plugins (' . s:pct_done . '/' . s:total . ')'])
-  if has('nvim')
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:set_buf_line(s:buffer_id, 3, '')
-  elseif has('python')
-    call s:append_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:append_buf_line(s:buffer_id, 3, '')
-  else
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:set_buf_line(s:buffer_id, 3, '')
-  endif
+  call s:BUFFER.set_buf_lines(s:buffer_id, 0, 2, 0,
+        \ [
+        \ 'Installing plugins (' . s:pct_done . '/' . s:total . ')',
+        \ s:status_bar(),
+        \ '',
+        \ ])
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -163,7 +159,7 @@ function! SpaceVim#plugins#manager#install(...) abort
     endif
   endfor
   if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = 100
+    let &maxfuncdepth = save_maxfuncdepth
   endif
 endfunction
 " @vimlint(EVL102, 0, l:i)
