@@ -1,5 +1,5 @@
 "=============================================================================
-" manager.vim --- plugin manager for SpaceVim
+" manager.vim --- UI for dein in SpaceVim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
@@ -156,9 +156,7 @@ function! SpaceVim#plugins#manager#install(...) abort
     endif
   endfor
 endfunction
-" @vimlint(EVL102, 0, l:i)
 
-" @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
   let status = s:new_window()
   if status == 0
@@ -196,10 +194,9 @@ function! SpaceVim#plugins#manager#update(...) abort
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
-              \ 'path' : fnamemodify(g:Config_Main_Home, ':h')
+              \ 'path' : fnamemodify(g:_spacevim_root_dir, ':h')
               \ }
         call s:pull(repo)
-
       endif
     endif
   endfor
@@ -241,8 +238,12 @@ function! s:on_pull_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
+    call s:BUFFER.buf_set_lines(s:buffer_id, 0, 2, 0,
+          \ [
+          \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
+          \ s:status_bar(),
+          \ '',
+          \ ])
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -430,7 +431,7 @@ function! s:build(repo) abort
 endfunction
 
 function! s:msg_on_build_start(name) abort
-  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3,
+  call s:setline(s:ui_buf[a:name] + 3,
         \ '* ' . a:name . ': Building ')
 endfunction
 
