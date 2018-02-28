@@ -11,6 +11,7 @@ let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:TERM = SpaceVim#api#import('term')
 " }}}
 
 " init values
@@ -23,9 +24,6 @@ let s:plugin_nrs = {}
 " plugin manager buffer
 let s:buffer_id = 0
 let s:buffer_lines = []
-
-" plugin manager job
-let s:jobpid = 0
 
 " func: install plugin manager {{{
 function! s:install_manager() abort
@@ -217,11 +215,7 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_update_done(s:pulling_repos[id].name)
   else
@@ -280,11 +274,7 @@ endfunction
 
 " @vimlint(EVL103, 1, a:event)
 function! s:on_install_stdout(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   for str in a:data
     let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
     if !empty(status)
@@ -300,11 +290,7 @@ function! s:lock_revision(repo) abort
 endfunction
 
 function! s:on_build_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_build_done(s:building_repos[id].name)
   else
@@ -319,11 +305,7 @@ endfunction
 
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_install_done(s:pulling_repos[id].name)
   else
@@ -350,25 +332,14 @@ function! s:pull(repo) abort
   let s:pct += 1
   let s:plugin_nrs[a:repo.name] = s:pct
   let argv = ['git', 'pull', '--progress']
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'cwd' : a:repo.path,
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_update_start(a:repo.name)
-    endif
-  else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
+  let jobid = s:JOB.start(argv,{
+        \ 'on_stderr' : function('s:on_install_stdout'),
+        \ 'cwd' : a:repo.path,
+        \ 'on_exit' : function('s:on_pull_exit')
+        \ })
+  if jobid != 0
+    let s:pulling_repos[jobid] = a:repo
     call s:msg_on_update_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
-
   endif
 endfunction
 
@@ -377,56 +348,33 @@ function! s:install(repo) abort
   let s:plugin_nrs[a:repo.name] = s:pct
   let url = 'https://github.com/' . a:repo.repo
   let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_install_start(a:repo.name)
-    endif
-  else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_update_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-
+  let jobid = s:JOB.start(argv,{
+        \ 'on_stderr' : function('s:on_install_stdout'),
+        \ 'on_exit' : function('s:on_install_exit')
+        \ })
+  if jobid != 0
+    let s:pulling_repos[jobid] = a:repo
+    call s:msg_on_install_start(a:repo.name)
   endif
 endfunction
 
 function! s:build(repo) abort
   let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_build_exit'),
-          \ 'cwd' : a:repo.path,
-          \ })
-    if jobid > 0
-      let s:building_repos[jobid . ''] = a:repo
-      call s:msg_on_build_start(a:repo.name)
-    elseif jobid == 0
-      call s:msg_on_build_failed(a:repo.name)
-    elseif jobid == -1
-      if type(argv) == type([])
-        call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
-      else
-        call s:msg_on_build_failed(a:repo.name)
-      endif
-    endif
-  else
-    let s:building_repos[s:jobpid] = a:repo
+  let jobid = s:JOB.start(argv,{
+        \ 'on_exit' : function('s:on_build_exit'),
+        \ 'cwd' : a:repo.path,
+        \ })
+  if jobid > 0
+    let s:building_repos[jobid . ''] = a:repo
     call s:msg_on_build_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_build_exit'),
-          \ 'cwd' : a:repo.path,
-          \ })
-
+  elseif jobid == 0
+    call s:msg_on_build_failed(a:repo.name)
+  elseif jobid == -1
+    if type(argv) == type([])
+      call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
+    else
+      call s:msg_on_build_failed(a:repo.name)
+    endif
   endif
 endfunction
 
@@ -541,80 +489,14 @@ function! s:resume_window() abort
   setlocal nomodifiable 
 endfunction
 
-" change modifiable before setline
-if has('nvim') && exists('*nvim_buf_set_lines')
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:buffer_id,'&ma', 1)
-    if bufexists(s:buffer_id)
-      call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
-    endif
-    if len(s:buffer_lines) >= a:nr
-      let s:buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:buffer_lines, a:line)
-    endif
-    call setbufvar(s:buffer_id,'&ma', 0)
-  endfunction
-elseif has('python')
-  py import vim
-  py import string
-  " @vimlint(EVL103, 1, a:bufnr)
-  " @vimlint(EVL103, 1, a:nr)
-  " @vimlint(EVL103, 1, a:line)
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:buffer_id,'&ma', 1)
-    if bufexists(s:buffer_id)
-      py bufnr = string.atoi(vim.eval("a:bufnr"))
-      py linr = string.atoi(vim.eval("a:nr")) - 1
-      py str = vim.eval("a:line")
-      py vim.buffers[bufnr][linr] = str
-    endif
-    if len(s:buffer_lines) >= a:nr
-      let s:buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:buffer_lines, a:line)
-    endif
-    call setbufvar(s:buffer_id,'&ma', 0)
-  endfunction
-
-  function! s:append_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:buffer_id,'&ma', 1)
-    if bufexists(s:buffer_id)
-      py bufnr = string.atoi(vim.eval("a:bufnr"))
-      py linr = string.atoi(vim.eval("a:nr")) - 1
-      py str = vim.eval("a:line")
-      py vim.buffers[bufnr].append(str)
-    endif
-    call add(s:buffer_lines, a:line)
-    call setbufvar(s:buffer_id,'&ma', 0)
-  endfunction
-  " @vimlint(EVL103, 0, a:bufnr)
-  " @vimlint(EVL103, 0, a:nr)
-  " @vimlint(EVL103, 0, a:line)
-else
-  function! s:focus_main_win() abort
-    let winnr = bufwinnr(s:buffer_id)
-    if winnr > -1
-      exe winnr . 'wincmd w'
-    endif
-    return winnr
-  endfunction
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(a:bufnr,'&ma', 1)
-    if bufexists(s:buffer_id)
-      if s:focus_main_win() >= 0
-        call setline(a:nr, a:line)
-      endif
-    endif
-    if len(s:buffer_lines) >= a:nr
-      let s:buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:buffer_lines, a:line)
-    endif
-    call setbufvar(a:bufnr,'&ma', 0)
-  endfunction
-endif
 
 function! s:setline(nr, line) abort
-  call s:BUFFER.buf_set_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
+  if bufexists(s:buffer_id)
+    call s:BUFFER.buf_set_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
+  endif
+  if len(s:buffer_lines) >= a:nr
+    let s:buffer_lines[a:nr - 1] = a:line
+  else
+    call add(s:buffer_lines, a:line)
+  endif
 endfunction
