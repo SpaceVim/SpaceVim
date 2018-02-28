@@ -18,7 +18,7 @@ let s:plugins = []
 let s:pulling_repos = {}
 let s:building_repos = {}
 " key : plugin name, value : buf line number in manager buffer.
-let s:ui_buf = {}
+let s:plugin_nrs = {}
 
 " plugin manager buffer
 let s:buffer_id = 0
@@ -223,7 +223,7 @@ function! s:on_pull_exit(id, data, event) abort
     let id = a:id
   endif
   if a:data == 0 && a:event ==# 'exit'
-    call s:update_done(s:pulling_repos[id].name)
+    call s:msg_on_update_done(s:pulling_repos[id].name)
   else
     if a:data == 1
       call s:msg_on_updated_failed(s:pulling_repos[id].name, ' The plugin dir is dirty')
@@ -325,7 +325,7 @@ function! s:on_install_exit(id, data, event) abort
     let id = a:id
   endif
   if a:data == 0 && a:event ==# 'exit'
-    call s:install_done(s:pulling_repos[id].name)
+    call s:msg_on_install_done(s:pulling_repos[id].name)
   else
     call s:msg_on_install_failed(s:pulling_repos[id].name)
   endif
@@ -348,7 +348,7 @@ endfunction
 
 function! s:pull(repo) abort
   let s:pct += 1
-  let s:ui_buf[a:repo.name] = s:pct
+  let s:plugin_nrs[a:repo.name] = s:pct
   let argv = ['git', 'pull', '--progress']
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
@@ -358,12 +358,12 @@ function! s:pull(repo) abort
           \ })
     if jobid != 0
       let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_start(a:repo.name)
+      call s:msg_on_update_start(a:repo.name)
     endif
   else
     let s:jobpid += 1
     let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
+    call s:msg_on_update_start(a:repo.name)
     redraw!
     call s:JOB.start(argv,{
           \ 'on_exit' : function('s:on_pull_exit')
@@ -374,7 +374,7 @@ endfunction
 
 function! s:install(repo) abort
   let s:pct += 1
-  let s:ui_buf[a:repo.name] = s:pct
+  let s:plugin_nrs[a:repo.name] = s:pct
   let url = 'https://github.com/' . a:repo.repo
   let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   if s:JOB.vim_job || s:JOB.nvim_job
@@ -389,7 +389,7 @@ function! s:install(repo) abort
   else
     let s:jobpid += 1
     let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
+    call s:msg_on_update_start(a:repo.name)
     redraw!
     call s:JOB.start(argv,{
           \ 'on_stderr' : function('s:on_install_stdout'),
@@ -431,7 +431,7 @@ function! s:build(repo) abort
 endfunction
 
 function! s:msg_on_build_start(name) abort
-  call s:setline(s:ui_buf[a:name] + 3,
+  call s:setline(s:plugin_nrs[a:name] + 3,
         \ '* ' . a:name . ': Building ')
 endfunction
 
@@ -439,70 +439,59 @@ function! s:get_build_argv(build) abort
   " TODO check os
   return a:build
 endfunction
-" + foo.vim: Updating...
-if has('nvim')
-  function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-elseif has('python')
-  function! s:msg_on_start(name) abort
-    call s:append_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:append_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-else
-  function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-endif
 
-" - foo.vim: Updating done.
-function! s:update_done(name) abort
-  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
+" message func for update UI
+" update plugins {{{
+function! s:msg_on_update_start(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '+ ' . a:name . ': Updating...')
 endfunction
 
-" - foo.vim: Updating failed.
+function! s:msg_on_update_done(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Updating done.')
+endfunction
+
 function! s:msg_on_updated_failed(name, ...) abort
-  call s:setline(s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed. ' . get(a:000, 0, ''))
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Updating failed. ' . get(a:000, 0, ''))
+endfunction
+" }}}
+
+" install plugins {{{
+function! s:msg_on_install_start(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '+ ' . a:name . ': Installing...')
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
-  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3,
+  call s:setline(s:plugin_nrs[a:name] + 3,
         \ '* ' . a:name . ': Installing ' . a:status)
 endfunction
 
 " - foo.vim: Updating done.
-function! s:install_done(name) abort
-  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
+function! s:msg_on_install_done(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Installing done.')
 endfunction
+
+" }}}
 
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
+    call s:set_buf_line(s:buffer_id, s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
   else
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
+    call s:set_buf_line(s:buffer_id, s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Installing failed.')
   endif
 endfunction
 
 " - foo.vim: Updating done.
 function! s:msg_on_build_done(name) abort
-  call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
+  call s:set_buf_line(s:buffer_id, s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Building done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_build_failed(name, ...) abort
   if a:0 == 1
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
+    call s:set_buf_line(s:buffer_id, s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
   else
-    call s:set_buf_line(s:buffer_id, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
+    call s:set_buf_line(s:buffer_id, s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Building failed.')
   endif
 endfunction
 
@@ -528,7 +517,7 @@ endfunction
 
 function! s:open_plugin_dir() abort
   let line = line('.') - 3
-  let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
+  let plugin = filter(copy(s:plugin_nrs), 's:plugin_nrs[v:key] == line')
   if !empty(plugin)
     exe 'topleft split'
     enew
