@@ -6,12 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
-" Load SpaceVim api
+" Load SpaceVim APIs {{{
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-
+" }}}
 
 " init values
 let s:plugins = []
@@ -27,7 +27,7 @@ let s:buffer_lines = []
 " plugin manager job
 let s:jobpid = 0
 
-" install plugin manager
+" func: install plugin manager {{{
 function! s:install_manager() abort
   " Fsep && Psep
   if has('win16') || has('win32') || has('win64')
@@ -100,6 +100,7 @@ function! s:install_manager() abort
     exec 'set runtimepath+=~/.cache/vim-plug/'
   endif
 endf
+" }}}
 
 function! s:need_cmd(cmd) abort
   if executable(a:cmd)
@@ -122,10 +123,6 @@ endfunction
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let save_maxfuncdepth = &maxfuncdepth
-    let &maxfuncdepth = 2000
-  endif
   let plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
   if empty(plugins)
     call SpaceVim#logger#warn(' [ plug manager ] All of the plugins are already installed.', 1)
@@ -143,7 +140,7 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
-  call s:BUFFER.set_buf_lines(s:buffer_id, 0, 2, 0,
+  call s:BUFFER.buf_set_lines(s:buffer_id, 0, 2, 0,
         \ [
         \ 'Installing plugins (' . s:pct_done . '/' . s:total . ')',
         \ s:status_bar(),
@@ -158,17 +155,11 @@ function! SpaceVim#plugins#manager#install(...) abort
       endif
     endif
   endfor
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = save_maxfuncdepth
-  endif
 endfunction
 " @vimlint(EVL102, 0, l:i)
 
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#update(...) abort
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = 2000
-  endif
   let status = s:new_window()
   if status == 0
     echohl WarningMsg
@@ -189,17 +180,12 @@ function! SpaceVim#plugins#manager#update(...) abort
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)
-  call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-  if has('nvim')
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:set_buf_line(s:buffer_id, 3, '')
-  elseif has('python')
-    call s:append_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:append_buf_line(s:buffer_id, 3, '')
-  else
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
-    call s:set_buf_line(s:buffer_id, 3, '')
-  endif
+  call s:BUFFER.buf_set_lines(s:buffer_id, 0, 2, 0,
+        \ [
+        \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
+        \ s:status_bar(),
+        \ '',
+        \ ])
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -640,5 +626,5 @@ else
 endif
 
 function! s:setline(nr, line) abort
-  call s:BUFFER.set_buf_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
+  call s:BUFFER.buf_set_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
 endfunction

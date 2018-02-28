@@ -62,6 +62,8 @@ endfunction
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
+  let ma = getbufvar(a:buffer, '&ma')
+  call setbufvar(a:buffer,'&ma', 1)
   if exists('*nvim_buf_set_lines')
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
   elseif has('python')
@@ -93,6 +95,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     exe 'b' . a:buffer
     call setline(a:start - 1, a:replacement)
   endif
+  call setbufvar(a:buffer,'&ma', ma)
 endfunction
 
 
