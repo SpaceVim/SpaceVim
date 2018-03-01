@@ -124,6 +124,18 @@ function! SpaceVim#plugins#manager#reinstall(...) abort
 endfunction
 " }}}
 
+" Public API: SpaceVim#plugins#manager#terminal {{{
+function! SpaceVim#plugins#manager#terminal()
+  for id in keys(s:pulling_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+  for id in keys(s:building_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+endfunction
+" }}}
+
+
 " Public API: SpaceVim#plugins#manager#install {{{
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
