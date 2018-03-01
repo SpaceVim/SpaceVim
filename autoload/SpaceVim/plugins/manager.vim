@@ -156,12 +156,8 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
-  call s:BUFFER.buf_set_lines(s:buffer_id, 0, 2, 0,
-        \ [
-        \ 'Installing plugins (' . s:pct_done . '/' . s:total . ')',
-        \ s:status_bar(),
-        \ '',
-        \ ])
+  call s:setline(1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -196,12 +192,8 @@ function! SpaceVim#plugins#manager#update(...) abort
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)
-  call s:BUFFER.buf_set_lines(s:buffer_id, 0, 2, 0,
-        \ [
-        \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
-        \ s:status_bar(),
-        \ '',
-        \ ])
+  call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -302,11 +294,8 @@ function! s:on_pull_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:BUFFER.buf_set_lines(s:buffer_id, 0, 1, 0,
-          \ [
-          \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
-          \ s:status_bar(),
-          \ ])
+    call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:setline(2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -356,11 +345,8 @@ function! s:on_install_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:BUFFER.buf_set_lines(s:buffer_id, 0, 1, 0,
-          \ [
-          \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
-          \ s:status_bar(),
-          \ ])
+    call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:setline(2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -379,13 +365,10 @@ function! s:on_build_exit(id, data, event) abort
     call s:msg_on_build_failed(s:building_repos[id].name)
   endif
   let s:pct_done += 1
-    call s:BUFFER.buf_set_lines(s:buffer_id, 0, 1, 0,
-          \ [
-          \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
-          \ s:status_bar(),
-          \ ])
+  call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
   call remove(s:building_repos, string(id))
-  call s:recache_rtp(a:id)
+  call s:recache_rtp()
 endfunction
 " }}}
 
@@ -423,7 +406,7 @@ endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name, ...) abort
-    call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . get(a:000, 0, ''))
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . get(a:000, 0, ''))
 endfunction
 
 " }}}
@@ -436,7 +419,7 @@ function! s:msg_on_build_start(name) abort
 endfunction
 " - foo.vim: Updating failed.
 function! s:msg_on_build_failed(name, ...) abort
-    call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Building failed, ' . get(a:000, 0, ''))
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Building failed, ' . get(a:000, 0, ''))
 endfunction
 
 " - foo.vim: Updating done.
@@ -497,10 +480,10 @@ function! s:open_plugin_dir() abort
 endfunction
 " }}}
 
-" func setline {{{
+" func setline, first line number is 1 {{{
 function! s:setline(nr, line) abort
   if bufexists(s:buffer_id)
-    call s:BUFFER.buf_set_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
+    call s:BUFFER.buf_set_lines(s:buffer_id, a:nr -1 , a:nr , 0, [a:line])
   endif
   if len(s:buffer_lines) >= a:nr
     let s:buffer_lines[a:nr - 1] = a:line
