@@ -271,15 +271,9 @@ function! s:build(repo) abort
 endfunction
 " }}}
 
-function! s:status_bar() abort
-  let bar = '['
-  let ct = 50 * s:pct / s:total
-  let bar .= repeat('=', ct)
-  let bar .= repeat(' ', 50 - ct)
-  let bar .= ']'
-  return bar
-endfunction
+" call back functions
 
+" on_pull_exit {{{
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
   let id = a:id
@@ -317,22 +311,7 @@ function! s:on_pull_exit(id, data, event) abort
   endif
   call s:recache_rtp()
 endfunction
-
-
-function! s:recache_rtp() abort
-  if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
-    call s:setline(1, 'Updated. Elapsed time: '
-          \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
-    let s:buffer_id = 0
-    if g:spacevim_plugin_manager ==# 'dein'
-      call dein#recache_runtimepath()
-    endif
-    let s:recache_done = 1
-  endif
-
-endfunction
-
-" call back functions
+" }}}
 
 " on_install_stdout : {{{
 
@@ -347,6 +326,36 @@ function! s:on_install_stdout(id, data, event) abort
   endfor
 endfunction
 " @vimlint(EVL103, 0, a:event)
+" }}}
+
+" on_install_exit {{{
+" here if a:data == 0, git pull succeed
+function! s:on_install_exit(id, data, event) abort
+  let id = a:id
+  if a:data == 0 && a:event ==# 'exit'
+    call s:msg_on_install_done(s:pulling_repos[id].name)
+  else
+    call s:msg_on_install_failed(s:pulling_repos[id].name)
+  endif
+  if get(s:pulling_repos[id], 'rev', '') !=# ''
+    call s:lock_revision(s:pulling_repos[id])
+  endif
+  if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
+    call s:build(s:pulling_repos[id])
+  else
+    let s:pct_done += 1
+    call s:BUFFER.buf_set_lines(s:buffer_id, 0, 1, 0,
+          \ [
+          \ 'Updating plugins (' . s:pct_done . '/' . s:total . ')',
+          \ s:status_bar(),
+          \ ])
+  endif
+  call remove(s:pulling_repos, string(id))
+  if !empty(s:plugins)
+    call s:install(dein#get(s:LIST.shift(s:plugins)))
+  endif
+  call s:recache_rtp(a:id)
+endfunction
 " }}}
 
 " on_build_exit {{{
@@ -367,43 +376,6 @@ function! s:on_build_exit(id, data, event) abort
   call s:recache_rtp(a:id)
 endfunction
 " }}}
-
-function! s:lock_revision(repo) abort
-  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
-  call s:VIM_CO.system(cmd)
-endfunction
-
-
-" here if a:data == 0, git pull succeed
-function! s:on_install_exit(id, data, event) abort
-  let id = a:id
-  if a:data == 0 && a:event ==# 'exit'
-    call s:msg_on_install_done(s:pulling_repos[id].name)
-  else
-    call s:msg_on_install_failed(s:pulling_repos[id].name)
-  endif
-  if get(s:pulling_repos[id], 'rev', '') !=# ''
-    call s:lock_revision(s:pulling_repos[id])
-  endif
-  if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
-    call s:build(s:pulling_repos[id])
-  else
-    let s:pct_done += 1
-    call s:set_buf_line(s:buffer_id, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:buffer_id, 2, s:status_bar())
-  endif
-  call remove(s:pulling_repos, string(id))
-  if !empty(s:plugins)
-    call s:install(dein#get(s:LIST.shift(s:plugins)))
-  endif
-  call s:recache_rtp(a:id)
-endfunction
-
-
-function! s:get_build_argv(build) abort
-  " TODO check os
-  return a:build
-endfunction
 
 " message func for update UI
 
@@ -495,6 +467,7 @@ function! s:resume_window() abort
 endfunction
 " }}}
 
+" func: open_plugin_dir {{{
 function! s:open_plugin_dir() abort
   let line = line('.') - 3
   let plugin = filter(copy(s:plugin_nrs), 's:plugin_nrs[v:key] == line')
@@ -510,9 +483,9 @@ function! s:open_plugin_dir() abort
     endif
   endif
 endfunction
+" }}}
 
-
-
+" func setline {{{
 function! s:setline(nr, line) abort
   if bufexists(s:buffer_id)
     call s:BUFFER.buf_set_lines(s:buffer_id, a:nr, a:nr, 0, [a:line])
@@ -523,3 +496,44 @@ function! s:setline(nr, line) abort
     call add(s:buffer_lines, a:line)
   endif
 endfunction
+" }}}
+
+" func: status_bar {{{
+function! s:status_bar() abort
+  let bar = '['
+  let ct = 50 * s:pct / s:total
+  let bar .= repeat('=', ct)
+  let bar .= repeat(' ', 50 - ct)
+  let bar .= ']'
+  return bar
+endfunction
+" }}}
+
+" func: recache_rtp {{{
+function! s:recache_rtp() abort
+  if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
+    call s:setline(1, 'Updated. Elapsed time: '
+          \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
+    let s:buffer_id = 0
+    if g:spacevim_plugin_manager ==# 'dein'
+      call dein#recache_runtimepath()
+    endif
+    let s:recache_done = 1
+  endif
+
+endfunction
+" }}}
+
+" func lock_revision {{{
+function! s:lock_revision(repo) abort
+  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
+  call s:VIM_CO.system(cmd)
+endfunction
+" }}}
+
+" func: get_build_argv {{{
+function! s:get_build_argv(build) abort
+  " TODO check os
+  return a:build
+endfunction
+" }}}
