@@ -127,7 +127,6 @@ function! s:neomake_signatures_current_error(...) abort
     return
   endif
   let s:last_echoed_error = message
-  set conceallevel=2
   if len(line('.') + 1) > len(message)
     let message = s:STRING.fill(message, len(line('.') + 1))
   endif
