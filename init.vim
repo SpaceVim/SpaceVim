@@ -5,5 +5,4 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
