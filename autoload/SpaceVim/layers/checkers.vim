@@ -109,7 +109,6 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 let s:last_echoed_error = ''
-let s:clv = &conceallevel
 function! s:neomake_signatures_current_error(...) abort
   call s:neomake_signatures_clear()
   try
@@ -140,7 +139,6 @@ function! s:neomake_signatures_clear() abort
     call timer_stop(s:neomake_cursormoved_timer)
   endif
   let s:last_echoed_error = ''
-  let &conceallevel = s:clv
   call s:SIG.clear()
 endfunction
 
