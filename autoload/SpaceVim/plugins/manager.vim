@@ -18,6 +18,7 @@ let s:TERM = SpaceVim#api#import('term')
 let s:plugins = []
 let s:pulling_repos = {}
 let s:building_repos = {}
+let s:plugin_status = {}
 " key : plugin name, value : buf line number in manager buffer.
 let s:plugin_nrs = {}
 
@@ -158,6 +159,7 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:total = len(s:plugins)
   call s:setline(1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
   call s:setline(2, s:status_bar())
+  call s:setline(3, '')
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -194,6 +196,7 @@ function! SpaceVim#plugins#manager#update(...) abort
   let s:total = len(s:plugins)
   call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
   call s:setline(2, s:status_bar())
+  call s:setline(3, '')
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -225,7 +228,7 @@ function! s:pull(repo) abort
   let s:plugin_nrs[a:repo.name] = s:pct
   let argv = ['git', 'pull', '--progress']
   let jobid = s:JOB.start(argv,{
-        \ 'on_stderr' : function('s:on_install_stdout'),
+        \ 'on_stderr' : function('s:on_git_stdout'),
         \ 'cwd' : a:repo.path,
         \ 'on_exit' : function('s:on_pull_exit')
         \ })
@@ -243,7 +246,7 @@ function! s:install(repo) abort
   let url = 'https://github.com/' . a:repo.repo
   let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   let jobid = s:JOB.start(argv,{
-        \ 'on_stderr' : function('s:on_install_stdout'),
+        \ 'on_stderr' : function('s:on_git_stdout'),
         \ 'on_exit' : function('s:on_install_exit')
         \ })
   if jobid != 0
@@ -314,15 +317,24 @@ function! s:on_pull_exit(id, data, event) abort
 endfunction
 " }}}
 
-" on_install_stdout : {{{
+" on_git_stdout : {{{
 
 " @vimlint(EVL103, 1, a:event)
-function! s:on_install_stdout(id, data, event) abort
+function! s:on_git_stdout(id, data, event) abort
   let id = a:id
+  let name = s:pulling_repos[id].name
   for str in a:data
     let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
     if !empty(status)
-      call s:msg_on_install_process(s:pulling_repos[id].name, status)
+      call s:msg_on_install_process(name, status)
+    elseif !empty(str)
+      call s:setline(s:plugin_nrs[name] + 3,
+            \ '* ' . name . ': ' . str)
+      if has_key(s:plugin_status, name)
+        let s:plugin_status[name] += [str]
+      else
+        call extend(s:plugin_status, {name : [str]})
+      endif
     endif
   endfor
 endfunction
@@ -352,7 +364,7 @@ function! s:on_install_exit(id, data, event) abort
   if !empty(s:plugins)
     call s:install(dein#get(s:LIST.shift(s:plugins)))
   endif
-  call s:recache_rtp(a:id)
+  call s:recache_rtp()
 endfunction
 " }}}
 
@@ -444,6 +456,7 @@ function! s:new_window() abort
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> gf :call <SID>open_plugin_dir()<cr>
+    nnoremap <silent> <buffer> gi :call <SID>view_plugin_status()<cr>
     " process has finished or does not start.
     return 2
   endif
@@ -479,6 +492,17 @@ function! s:open_plugin_dir() abort
   endif
 endfunction
 " }}}
+
+function! s:view_plugin_status() abort
+  let line = line('.') - 3
+  let plugin = filter(copy(s:plugin_nrs), 's:plugin_nrs[v:key] == line')
+  if !empty(plugin) && has_key(s:plugin_status, keys(plugin)[0])
+    topleft split __plugin_info__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap nocursorline nospell nonu norelativenumber
+    exe 'resize ' . &lines * 30 / 100
+    call setline(1, s:plugin_status[keys(plugin)[0]])
+  endif
+endfunction
 
 " func setline, first line number is 1 {{{
 function! s:setline(nr, line) abort
@@ -532,3 +556,4 @@ function! s:get_build_argv(build) abort
   return a:build
 endfunction
 " }}}
+
