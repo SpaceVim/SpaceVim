@@ -1,28 +1,33 @@
 "=============================================================================
-" manager.vim --- plugin manager for SpaceVim
+" manager.vim --- UI for dein in SpaceVim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-" Load SpaceVim api
+" Load SpaceVim APIs {{{
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:TERM = SpaceVim#api#import('term')
+" }}}
 
-
-" init values
+" init values {{{
 let s:plugins = []
 let s:pulling_repos = {}
 let s:building_repos = {}
+let s:plugin_status = {}
 " key : plugin name, value : buf line number in manager buffer.
-let s:ui_buf = {}
-let s:plugin_manager_buffer = 0
-let s:plugin_manager_buffer_lines = []
-let s:jobpid = 0
+let s:plugin_nrs = {}
 
-" install plugin manager
+" plugin manager buffer
+let s:buffer_id = 0
+let s:buffer_lines = []
+" }}}
+
+" func: install plugin manager {{{
 function! s:install_manager() abort
   " Fsep && Psep
   if has('win16') || has('win32') || has('win64')
@@ -95,7 +100,9 @@ function! s:install_manager() abort
     exec 'set runtimepath+=~/.cache/vim-plug/'
   endif
 endf
+" }}}
 
+" func: need_cmd {{{
 function! s:need_cmd(cmd) abort
   if executable(a:cmd)
     return 1
@@ -104,22 +111,35 @@ function! s:need_cmd(cmd) abort
     return 0
   endif
 endfunction
+" }}}
 
+" func: get_uninstalled_plugins {{{
 function! s:get_uninstalled_plugins() abort
   return filter(values(dein#get()), '!isdirectory(v:val.path)')
 endfunction
+" }}}
 
-
-function! SpaceVim#plugins#manager#reinstall(...)
+" Public API: SpaceVim#plugins#manager#reinstall {{{
+function! SpaceVim#plugins#manager#reinstall(...) abort
   call dein#reinstall(a:1)
 endfunction
+" }}}
+
+" Public API: SpaceVim#plugins#manager#terminal {{{
+function! SpaceVim#plugins#manager#terminal()
+  for id in keys(s:pulling_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+  for id in keys(s:building_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+endfunction
+" }}}
 
 
+" Public API: SpaceVim#plugins#manager#install {{{
 " @vimlint(EVL102, 1, l:i)
 function! SpaceVim#plugins#manager#install(...) abort
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = 2000
-  endif
   let plugins = a:0 == 0 ? sort(map(s:get_uninstalled_plugins(), 'v:val.name')) : sort(copy(a:1))
   if empty(plugins)
     call SpaceVim#logger#warn(' [ plug manager ] All of the plugins are already installed.', 1)
@@ -137,17 +157,9 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:pct = 0
   let s:pct_done = 0
   let s:total = len(s:plugins)
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
-  if has('nvim')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  elseif has('python')
-    call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:append_buf_line(s:plugin_manager_buffer, 3, '')
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  endif
+  call s:setline(1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
+  call s:setline(3, '')
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -157,17 +169,11 @@ function! SpaceVim#plugins#manager#install(...) abort
       endif
     endif
   endfor
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = 100
-  endif
 endfunction
-" @vimlint(EVL102, 0, l:i)
+" }}}
 
-" @vimlint(EVL102, 1, l:i)
+" Public API: SpaceVim#plugins#manager#update {{{
 function! SpaceVim#plugins#manager#update(...) abort
-  if !s:JOB.vim_job && !s:JOB.nvim_job
-    let &maxfuncdepth = 2000
-  endif
   let status = s:new_window()
   if status == 0
     echohl WarningMsg
@@ -188,17 +194,9 @@ function! SpaceVim#plugins#manager#update(...) abort
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-  if has('nvim')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  elseif has('python')
-    call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:append_buf_line(s:plugin_manager_buffer, 3, '')
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-    call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  endif
+  call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
+  call s:setline(3, '')
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_max_processes)
     if !empty(s:plugins)
@@ -209,10 +207,9 @@ function! SpaceVim#plugins#manager#update(...) abort
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
-              \ 'path' : fnamemodify(g:Config_Main_Home, ':h')
+              \ 'path' : fnamemodify(g:_spacevim_root_dir, ':h')
               \ }
         call s:pull(repo)
-
       endif
     endif
   endfor
@@ -221,25 +218,74 @@ function! SpaceVim#plugins#manager#update(...) abort
   endif
 endfunction
 " @vimlint(EVL102, 0, l:i)
+" }}}
 
-function! s:status_bar() abort
-  let bar = '['
-  let ct = 50 * s:pct / s:total
-  let bar .= repeat('=', ct)
-  let bar .= repeat(' ', 50 - ct)
-  let bar .= ']'
-  return bar
+" Actions:
+
+"  pull {{{
+function! s:pull(repo) abort
+  let s:pct += 1
+  let s:plugin_nrs[a:repo.name] = s:pct
+  let argv = ['git', 'pull', '--progress']
+  let jobid = s:JOB.start(argv,{
+        \ 'on_stderr' : function('s:on_git_stdout'),
+        \ 'cwd' : a:repo.path,
+        \ 'on_exit' : function('s:on_pull_exit')
+        \ })
+  if jobid != 0
+    let s:pulling_repos[jobid] = a:repo
+    call s:msg_on_update_start(a:repo.name)
+  endif
 endfunction
+" }}}
 
+" install {{{
+function! s:install(repo) abort
+  let s:pct += 1
+  let s:plugin_nrs[a:repo.name] = s:pct
+  let url = 'https://github.com/' . a:repo.repo
+  let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
+  let jobid = s:JOB.start(argv,{
+        \ 'on_stderr' : function('s:on_git_stdout'),
+        \ 'on_exit' : function('s:on_install_exit')
+        \ })
+  if jobid != 0
+    let s:pulling_repos[jobid] = a:repo
+    call s:msg_on_install_start(a:repo.name)
+  endif
+endfunction
+" }}}
+
+" build {{{
+function! s:build(repo) abort
+  let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
+  let jobid = s:JOB.start(argv,{
+        \ 'on_exit' : function('s:on_build_exit'),
+        \ 'cwd' : a:repo.path,
+        \ })
+  if jobid > 0
+    let s:building_repos[jobid . ''] = a:repo
+    call s:msg_on_build_start(a:repo.name)
+  elseif jobid == 0
+    call s:msg_on_build_failed(a:repo.name)
+  elseif jobid == -1
+    if type(argv) == type([])
+      call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
+    else
+      call s:msg_on_build_failed(a:repo.name)
+    endif
+  endif
+endfunction
+" }}}
+
+" call back functions
+
+" on_pull_exit {{{
 " here if a:data == 0, git pull succeed
 function! s:on_pull_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   if a:data == 0 && a:event ==# 'exit'
-    call s:msg_on_updated_done(s:pulling_repos[id].name)
+    call s:msg_on_update_done(s:pulling_repos[id].name)
   else
     if a:data == 1
       call s:msg_on_updated_failed(s:pulling_repos[id].name, ' The plugin dir is dirty')
@@ -247,15 +293,12 @@ function! s:on_pull_exit(id, data, event) abort
       call s:msg_on_updated_failed(s:pulling_repos[id].name)
     endif
   endif
-  if a:id == -1
-    redraw!
-  endif
   if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:setline(2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
@@ -270,72 +313,38 @@ function! s:on_pull_exit(id, data, event) abort
     endif
     call s:pull(repo)
   endif
-  call s:recache_rtp(a:id)
+  call s:recache_rtp()
 endfunction
+" }}}
 
-
-function! s:recache_rtp(id) abort
-  if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
-    " TODO add elapsed time info.
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updated. Elapsed time: '
-          \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
-    let s:plugin_manager_buffer = 0
-    if g:spacevim_plugin_manager ==# 'dein'
-      call dein#recache_runtimepath()
-    endif
-    if a:id == -1
-      let s:recache_done = 1
-    endif
-  endif
-
-endfunction
+" on_git_stdout : {{{
 
 " @vimlint(EVL103, 1, a:event)
-function! s:on_install_stdout(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+function! s:on_git_stdout(id, data, event) abort
+  let id = a:id
+  let name = s:pulling_repos[id].name
   for str in a:data
     let status = matchstr(str,'\d\+%\s(\d\+/\d\+)')
     if !empty(status)
-      call s:msg_on_install_process(s:pulling_repos[id].name, status)
+      call s:msg_on_install_process(name, status)
+    elseif !empty(str)
+      call s:setline(s:plugin_nrs[name] + 3,
+            \ '* ' . name . ': ' . str)
+      if has_key(s:plugin_status, name)
+        let s:plugin_status[name] += [str]
+      else
+        call extend(s:plugin_status, {name : [str]})
+      endif
     endif
   endfor
 endfunction
 " @vimlint(EVL103, 0, a:event)
+" }}}
 
-function! s:lock_revision(repo) abort
-  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
-  call s:VIM_CO.system(cmd)
-endfunction
-
-function! s:on_build_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
-  if a:data == 0 && a:event ==# 'exit'
-    call s:msg_on_build_done(s:building_repos[id].name)
-  else
-    call s:msg_on_build_failed(s:building_repos[id].name)
-  endif
-  let s:pct_done += 1
-  call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-  call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
-  call remove(s:building_repos, string(id))
-  call s:recache_rtp(a:id)
-endfunction
-
+" on_install_exit {{{
 " here if a:data == 0, git pull succeed
 function! s:on_install_exit(id, data, event) abort
-  if a:id == -1
-    let id = s:jobpid
-  else
-    let id = a:id
-  endif
+  let id = a:id
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_install_done(s:pulling_repos[id].name)
   else
@@ -348,203 +357,128 @@ function! s:on_install_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
-    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:setline(2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
     call s:install(dein#get(s:LIST.shift(s:plugins)))
   endif
-  call s:recache_rtp(a:id)
+  call s:recache_rtp()
 endfunction
+" }}}
 
-function! s:pull(repo) abort
-  let s:pct += 1
-  let s:ui_buf[a:repo.name] = s:pct
-  let argv = ['git', 'pull', '--progress']
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'cwd' : a:repo.path,
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_start(a:repo.name)
-    endif
+" on_build_exit {{{
+function! s:on_build_exit(id, data, event) abort
+  let id = a:id
+  if a:data == 0 && a:event ==# 'exit'
+    call s:msg_on_build_done(s:building_repos[id].name)
   else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
-
+    call s:msg_on_build_failed(s:building_repos[id].name)
   endif
+  let s:pct_done += 1
+  call s:setline(1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+  call s:setline(2, s:status_bar())
+  call remove(s:building_repos, string(id))
+  call s:recache_rtp()
+endfunction
+" }}}
+
+" message func for update UI
+
+" update plugins {{{
+function! s:msg_on_update_start(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '+ ' . a:name . ': Updating...')
 endfunction
 
-function! s:install(repo) abort
-  let s:pct += 1
-  let s:ui_buf[a:repo.name] = s:pct
-  let url = 'https://github.com/' . a:repo.repo
-  let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_install_start(a:repo.name)
-    endif
-  else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-
-  endif
+function! s:msg_on_update_done(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Updating done.')
 endfunction
 
-function! s:build(repo) abort
-  let argv = type(a:repo.build) != 4 ? a:repo.build : s:get_build_argv(a:repo.build)
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_build_exit'),
-          \ 'cwd' : a:repo.path,
-          \ })
-    if jobid > 0
-      let s:building_repos[jobid . ''] = a:repo
-      call s:msg_on_build_start(a:repo.name)
-    elseif jobid == 0
-      call s:msg_on_build_failed(a:repo.name)
-    elseif jobid == -1
-      if type(argv) == type([])
-        call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
-      else
-        call s:msg_on_build_failed(a:repo.name)
-      endif
-    endif
-  else
-    let s:building_repos[s:jobpid] = a:repo
-    call s:msg_on_build_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_exit' : function('s:on_build_exit'),
-          \ 'cwd' : a:repo.path,
-          \ })
-
-  endif
-endfunction
-
-function! s:msg_on_build_start(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
-        \ '* ' . a:name . ': Building ')
-endfunction
-
-function! s:get_build_argv(build) abort
-  " TODO check os
-  return a:build
-endfunction
-" + foo.vim: Updating...
-if has('nvim')
-  function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-elseif has('python')
-  function! s:msg_on_start(name) abort
-    call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-else
-  function! s:msg_on_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
-  endfunction
-  function! s:msg_on_install_start(name) abort
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
-  endfunction
-endif
-
-" - foo.vim: Updating done.
-function! s:msg_on_updated_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Updating done.')
-endfunction
-
-" - foo.vim: Updating failed.
 function! s:msg_on_updated_failed(name, ...) abort
-  if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed, ' . a:1)
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Updating failed.')
-  endif
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Updating failed. ' . get(a:000, 0, ''))
+endfunction
+
+" }}}
+
+" install plugins {{{
+function! s:msg_on_install_start(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, '+ ' . a:name . ': Installing...')
 endfunction
 
 function! s:msg_on_install_process(name, status) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3,
+  call s:setline(s:plugin_nrs[a:name] + 3,
         \ '* ' . a:name . ': Installing ' . a:status)
 endfunction
 
 " - foo.vim: Updating done.
 function! s:msg_on_install_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Installing done.')
+  call s:setline(s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Installing done.')
 endfunction
 
 " - foo.vim: Updating failed.
 function! s:msg_on_install_failed(name, ...) abort
-  if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . a:1)
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Installing failed.')
-  endif
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Installing failed. ' . get(a:000, 0, ''))
+endfunction
+
+" }}}
+
+" build plugins {{{
+
+function! s:msg_on_build_start(name) abort
+  call s:setline(s:plugin_nrs[a:name] + 3,
+        \ '* ' . a:name . ': Building ')
+endfunction
+" - foo.vim: Updating failed.
+function! s:msg_on_build_failed(name, ...) abort
+  call s:setline(s:plugin_nrs[a:name] + 3, 'x ' . a:name . ': Building failed, ' . get(a:000, 0, ''))
 endfunction
 
 " - foo.vim: Updating done.
 function! s:msg_on_build_done(name) abort
-  call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Building done.')
+  call s:setline(s:plugin_nrs[a:name] + 3, '- ' . a:name . ': Building done.')
 endfunction
+" }}}
 
-" - foo.vim: Updating failed.
-function! s:msg_on_build_failed(name, ...) abort
-  if a:0 == 1
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed, ' . a:1)
-  else
-    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, 'x ' . a:name . ': Building failed.')
-  endif
-endfunction
-
+" new window {{{
 function! s:new_window() abort
-  if s:plugin_manager_buffer != 0 && bufexists(s:plugin_manager_buffer)
+  if s:buffer_id != 0 && bufexists(s:buffer_id)
     " buffer exist, process has not finished!
     return 0
-  elseif s:plugin_manager_buffer != 0 && !bufexists(s:plugin_manager_buffer)
+  elseif s:buffer_id != 0 && !bufexists(s:buffer_id)
     " buffer is hidden, process has not finished!
     call s:resume_window()
     return 1
   else
     execute get(g:, 'spacevim_window', 'vertical topleft new')
-    let s:plugin_manager_buffer = bufnr('%')
+    let s:buffer_id = bufnr('%')
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> gf :call <SID>open_plugin_dir()<cr>
+    nnoremap <silent> <buffer> gi :call <SID>view_plugin_status()<cr>
     " process has finished or does not start.
     return 2
   endif
 endfunction
+" }}}
 
+" resume window {{{
+function! s:resume_window() abort
+  execute get(g:, 'spacevim_window', 'vertical topleft new')
+  let s:buffer_id = bufnr('%')
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
+  setf SpaceVimPlugManager
+  nnoremap <silent> <buffer> q :bd<CR>
+  call setline(1, s:buffer_lines)
+  setlocal nomodifiable 
+endfunction
+" }}}
+
+" func: open_plugin_dir {{{
 function! s:open_plugin_dir() abort
   let line = line('.') - 3
-  let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
+  let plugin = filter(copy(s:plugin_nrs), 's:plugin_nrs[v:key] == line')
   if !empty(plugin)
     exe 'topleft split'
     enew
@@ -557,87 +491,69 @@ function! s:open_plugin_dir() abort
     endif
   endif
 endfunction
+" }}}
 
-function! s:resume_window() abort
-  execute get(g:, 'spacevim_window', 'vertical topleft new')
-  let s:plugin_manager_buffer = bufnr('%')
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell
-  setf SpaceVimPlugManager
-  nnoremap <silent> <buffer> q :bd<CR>
-  call setline(1, s:plugin_manager_buffer_lines)
-  setlocal nomodifiable 
+function! s:view_plugin_status() abort
+  let line = line('.') - 3
+  let plugin = filter(copy(s:plugin_nrs), 's:plugin_nrs[v:key] == line')
+  if !empty(plugin) && has_key(s:plugin_status, keys(plugin)[0])
+    topleft split __plugin_info__
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap nocursorline nospell nonu norelativenumber
+    exe 'resize ' . &lines * 30 / 100
+    call setline(1, s:plugin_status[keys(plugin)[0]])
+  endif
 endfunction
 
-" change modifiable before setline
-if has('nvim') && exists('*nvim_buf_set_lines')
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
-      call nvim_buf_set_lines(a:bufnr, a:nr - 1, a:nr, 0, [a:line])
-    endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:plugin_manager_buffer_lines, a:line)
-    endif
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
-  endfunction
-elseif has('python')
-  py import vim
-  py import string
-  " @vimlint(EVL103, 1, a:bufnr)
-  " @vimlint(EVL103, 1, a:nr)
-  " @vimlint(EVL103, 1, a:line)
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
-      py bufnr = string.atoi(vim.eval("a:bufnr"))
-      py linr = string.atoi(vim.eval("a:nr")) - 1
-      py str = vim.eval("a:line")
-      py vim.buffers[bufnr][linr] = str
-    endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:plugin_manager_buffer_lines, a:line)
-    endif
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
-  endfunction
+" func setline, first line number is 1 {{{
+function! s:setline(nr, line) abort
+  if bufexists(s:buffer_id)
+    call s:BUFFER.buf_set_lines(s:buffer_id, a:nr -1 , a:nr , 0, [a:line])
+  endif
+  if len(s:buffer_lines) >= a:nr
+    let s:buffer_lines[a:nr - 1] = a:line
+  else
+    call add(s:buffer_lines, a:line)
+  endif
+endfunction
+" }}}
 
-  function! s:append_buf_line(bufnr, nr, line) abort
-    call setbufvar(s:plugin_manager_buffer,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
-      py bufnr = string.atoi(vim.eval("a:bufnr"))
-      py linr = string.atoi(vim.eval("a:nr")) - 1
-      py str = vim.eval("a:line")
-      py vim.buffers[bufnr].append(str)
+" func: status_bar {{{
+function! s:status_bar() abort
+  let bar = '['
+  let ct = 50 * s:pct / s:total
+  let bar .= repeat('=', ct)
+  let bar .= repeat(' ', 50 - ct)
+  let bar .= ']'
+  return bar
+endfunction
+" }}}
+
+" func: recache_rtp {{{
+function! s:recache_rtp() abort
+  if empty(s:pulling_repos) && empty(s:building_repos) && !exists('s:recache_done')
+    call s:setline(1, 'Updated. Elapsed time: '
+          \ . split(reltimestr(reltime(s:start_time)))[0] . ' sec.')
+    let s:buffer_id = 0
+    if g:spacevim_plugin_manager ==# 'dein'
+      call dein#recache_runtimepath()
     endif
-    call add(s:plugin_manager_buffer_lines, a:line)
-    call setbufvar(s:plugin_manager_buffer,'&ma', 0)
-  endfunction
-  " @vimlint(EVL103, 0, a:bufnr)
-  " @vimlint(EVL103, 0, a:nr)
-  " @vimlint(EVL103, 0, a:line)
-else
-  function! s:focus_main_win() abort
-    let winnr = bufwinnr(s:plugin_manager_buffer)
-    if winnr > -1
-      exe winnr . 'wincmd w'
-    endif
-    return winnr
-  endfunction
-  function! s:set_buf_line(bufnr, nr, line) abort
-    call setbufvar(a:bufnr,'&ma', 1)
-    if bufexists(s:plugin_manager_buffer)
-      if s:focus_main_win() >= 0
-        call setline(a:nr, a:line)
-      endif
-    endif
-    if len(s:plugin_manager_buffer_lines) >= a:nr
-      let s:plugin_manager_buffer_lines[a:nr - 1] = a:line
-    else
-      call add(s:plugin_manager_buffer_lines, a:line)
-    endif
-    call setbufvar(a:bufnr,'&ma', 0)
-  endfunction
-endif
+    let s:recache_done = 1
+  endif
+
+endfunction
+" }}}
+
+" func lock_revision {{{
+function! s:lock_revision(repo) abort
+  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
+  call s:VIM_CO.system(cmd)
+endfunction
+" }}}
+
+" func: get_build_argv {{{
+function! s:get_build_argv(build) abort
+  " TODO check os
+  return a:build
+endfunction
+" }}}
+

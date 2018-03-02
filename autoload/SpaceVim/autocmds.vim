@@ -81,6 +81,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
+    autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
   augroup END
 endfunction
 
