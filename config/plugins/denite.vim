@@ -107,7 +107,9 @@ call denite#custom#var('menu', 'unite_source_menu_compatibility', 1)
 let s:insert_mode_mappings = [
       \  ['jk', '<denite:enter_mode:normal>', 'noremap'],
       \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+      \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
       \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+      \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
       \  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
       \  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
       \  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],

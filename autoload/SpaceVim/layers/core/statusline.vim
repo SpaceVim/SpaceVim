@@ -75,7 +75,7 @@ let s:loaded_sections_l = g:spacevim_statusline_left_sections
 let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
 let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
 
-if index(g:spacevim_plugin_groups, 'checkers') != -1
+if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
 endif
 if &cc ==# '80'

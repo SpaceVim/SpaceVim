@@ -404,11 +404,6 @@ Enable/Disable tabline filetype icon. default is 0.
                                         *g:spacevim_enable_os_fileformat_icon*
 Enable/Disable os fileformat icon. default is 0.
 
-                                                    *g:spacevim_plugin_groups*
-Plugin groups to be loaded.
->
-   let g:spacevim_plugin_groups = ['core', 'lang']
-<
 
                                                   *g:spacevim_github_username*
 Set the github username, It will be used for getting your starred repos, and

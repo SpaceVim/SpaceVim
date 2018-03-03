@@ -97,6 +97,8 @@ function! SpaceVim#layers#lang#c#config() abort
   endif
   let g:chromatica#enable_at_startup=1
   call add(g:spacevim_project_rooter_patterns, '.clang')
+let g:clang2_placeholder_next = ''
+let g:clang2_placeholder_prev = ''
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort

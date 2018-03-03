@@ -15,6 +15,7 @@ endfunction
 
 function! SpaceVim#layers#denite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  nnoremap <silent> <C-p> :Denite file_rec<cr>
 endfunction
 
 " vim:set et sw=2 cc=80:

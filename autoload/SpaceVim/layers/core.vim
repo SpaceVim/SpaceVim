@@ -7,10 +7,17 @@
 "=============================================================================
 
 function! SpaceVim#layers#core#plugins() abort
-  return [
-        \ ['Shougo/vimproc.vim', {'build' : ['make']}],
-        \ ['benizi/vim-automkdir'],
-        \ ]
+  let plugins = []
+  if g:spacevim_filemanager ==# 'nerdtree'
+    call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
+        \ 'loadconf' : 1}])
+  elseif g:spacevim_filemanager ==# 'vimfiler'
+    call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
+    call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
+    call add(plugins, ['Shougo/vimproc.vim', {'build' : ['make']}])
+  endif
+  call add(plugins, ['benizi/vim-automkdir'])
+  return plugins
 endfunction
 
 let s:filename = expand('<sfile>:~')
@@ -227,7 +234,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
-  
+
 endfunction
 
 function! s:gotodef() abort

@@ -129,29 +129,20 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
-
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
   call SpaceVim#layers#load('edit')
+  call SpaceVim#layers#load('tools')
   call SpaceVim#layers#load('ui')
-  call add(g:spacevim_plugin_groups, 'ui')
-  call add(g:spacevim_plugin_groups, 'tools')
-  call add(g:spacevim_plugin_groups, 'git')
-  call add(g:spacevim_plugin_groups, 'VersionControl')
-
-  call add(g:spacevim_plugin_groups, 'core')
+  call SpaceVim#layers#load('core')
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
-  call add(g:spacevim_plugin_groups, 'default')
-  call add(g:spacevim_plugin_groups, 'unite')
-  call add(g:spacevim_plugin_groups, 'github')
   if has('python3')
-    call add(g:spacevim_plugin_groups, 'denite')
-  elseif has('python')
+    call SpaceVim#layers#load('denite')
   else
-    call add(g:spacevim_plugin_groups, 'ctrlp')
+    call SpaceVim#layers#load('unite')
   endif
 endfunction
 

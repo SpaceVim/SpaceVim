@@ -12,7 +12,7 @@ if exists('g:GuiLoaded')
   else
     exe 'Guifont! ' . g:spacevim_guifont
   endif
-  if count(g:spacevim_plugin_groups, 'colorscheme') && g:spacevim_colorscheme !=# '' "{{{
+  if SpaceVim#layers#isLoaded('colorscheme') && g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
       exec 'colorscheme ' . g:spacevim_colorscheme
