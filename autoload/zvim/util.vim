@@ -186,27 +186,6 @@ function! zvim#util#listDirs(dir) abort
   return []
 endfunction
 
-function! zvim#util#OpenVimfiler() abort
-  if bufnr('vimfiler') == -1
-    silent VimFiler
-    if exists(':AirlineRefresh')
-      AirlineRefresh
-    endif
-    wincmd p
-    if &filetype !=# 'startify'
-      IndentLinesToggle
-      IndentLinesToggle
-    endif
-    wincmd p
-  else
-    silent VimFiler
-    doautocmd WinEnter
-    if exists(':AirlineRefresh')
-      AirlineRefresh
-    endif
-  endif
-endfunction
-
 let s:plugins_argv = ['-update', '-openurl']
 
 function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
