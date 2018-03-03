@@ -1,3 +1,11 @@
+"=============================================================================
+" Achievements.vim --- Script for generate achievements
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! s:generate_content() abort
     let content = ['## Achievements', '']
     let content += s:issues_ac()
@@ -30,7 +38,7 @@ function! s:issues_ac() abort
             break
         endif
     endfor
-    if line[-1] != ''
+    if line[-1] !=# ''
         let line += ['']
     endif
     return line
@@ -61,13 +69,13 @@ function! s:stargazers_ac() abort
             endif
         endif
     endfor
-    if line[-1] != ''
+    if line[-1] !=# ''
         let line += ['']
     endif
     return line
 endfunction
 
-function! SpaceVim#dev#Achievements#update()
+function! SpaceVim#dev#Achievements#update() abort
     let [start, end] = s:find_position()
     if start != 0 && end != 0
         if end - start > 1
