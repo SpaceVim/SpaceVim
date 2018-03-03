@@ -35,6 +35,9 @@ Here is a throughput graph of the repository for the last few weeks:
 - [Install](#install)
 - [Project layout](#project-layout)
 - [Support SpaceVim](#support-spacevim)
+- [Contributors](#contributors)
+  - [Backers](#backers)
+  - [Sponsors](#sponsors)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
@@ -137,6 +140,34 @@ clicking following icon.
 | <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
+
+### Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+
+
+#### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/spacevim#backer)]
+
+<a href="https://opencollective.com/spacevim#backers" target="_blank"><img src="https://opencollective.com/spacevim/backers.svg?width=890"></a>
+
+
+#### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/spacevim#sponsor)]
+
+<a href="https://opencollective.com/spacevim/sponsor/0/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/1/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/2/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/3/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/4/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/5/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/6/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/7/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/8/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/spacevim/sponsor/9/website" target="_blank"><img src="https://opencollective.com/spacevim/sponsor/9/avatar.svg"></a>
 
 ### Credits & Thanks
 
