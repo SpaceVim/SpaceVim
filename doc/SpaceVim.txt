@@ -21,38 +21,37 @@ CONTENTS                                                   *SpaceVim-contents*
   3. Commands..............................................|SpaceVim-commands|
   4. Functions............................................|SpaceVim-functions|
   5. Layers..................................................|SpaceVim-layers|
-      1. Default............................................|SpaceVim-default|
-      2. autocomplete..................................|SpaceVim-autocomplete|
-      3. checkers....................................|SpaceVim-layer-checkers|
-      4. colorscheme....................................|SpaceVim-colorscheme|
-      5. core#tabline............................|SpaceVim-layer-core-tabline|
-      6. exprfold....................................|SpaceVim-layer-exprfold|
-      7. format..............................................|SpaceVim-format|
-      8. github........................................|SpaceVim-layer-github|
-      9. incsearch..................................|SpaceVim-layer-incsearch|
-      10. indentmove...............................|SpaceVim-layer-indentmove|
-      11. lang#c.......................................|SpaceVim-layer-lang-c|
-      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      15. lang#go.....................................|SpaceVim-layer-lang-go|
-      16. lang#java.................................|SpaceVim-layer-lang-java|
-      17. lang#julia...............................|SpaceVim-layer-lang-julia|
-      18. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      19. lang#lua...................................|SpaceVim-layer-lang-lua|
-      20. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      21. lang#php...................................|SpaceVim-layer-lang-php|
-      22. lang#pony.................................|SpaceVim-layer-lang-pony|
-      23. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      24. lang#python.............................|SpaceVim-layer-lang-python|
-      25. lang#rust.................................|SpaceVim-layer-lang-rust|
-      26. lang#scala...............................|SpaceVim-layer-lang-scala|
-      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      28. lang#xml...................................|SpaceVim-layer-lang-xml|
-      29. operator...................................|SpaceVim-layer-operator|
-      30. shell.........................................|SpaceVim-layer-shell|
-      31. tmux...........................................|SpaceVim-layer-tmux|
-      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+      1. autocomplete..................................|SpaceVim-autocomplete|
+      2. checkers....................................|SpaceVim-layer-checkers|
+      3. colorscheme....................................|SpaceVim-colorscheme|
+      4. core#tabline............................|SpaceVim-layer-core-tabline|
+      5. exprfold....................................|SpaceVim-layer-exprfold|
+      6. format..............................................|SpaceVim-format|
+      7. github........................................|SpaceVim-layer-github|
+      8. incsearch..................................|SpaceVim-layer-incsearch|
+      9. indentmove................................|SpaceVim-layer-indentmove|
+      10. lang#c.......................................|SpaceVim-layer-lang-c|
+      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      12. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      13. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      14. lang#go.....................................|SpaceVim-layer-lang-go|
+      15. lang#java.................................|SpaceVim-layer-lang-java|
+      16. lang#julia...............................|SpaceVim-layer-lang-julia|
+      17. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      18. lang#lua...................................|SpaceVim-layer-lang-lua|
+      19. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      20. lang#php...................................|SpaceVim-layer-lang-php|
+      21. lang#pony.................................|SpaceVim-layer-lang-pony|
+      22. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      23. lang#python.............................|SpaceVim-layer-lang-python|
+      24. lang#rust.................................|SpaceVim-layer-lang-rust|
+      25. lang#scala...............................|SpaceVim-layer-lang-scala|
+      26. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      27. lang#xml...................................|SpaceVim-layer-lang-xml|
+      28. operator...................................|SpaceVim-layer-operator|
+      29. shell.........................................|SpaceVim-layer-shell|
+      30. tmux...........................................|SpaceVim-layer-tmux|
+      31. tools#dash...............................|SpaceVim-layer-tools-dash|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -579,9 +578,6 @@ SpaceVim#plugins#iedit#start()                *SpaceVim#plugins#iedit#start()*
 LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
-
-==============================================================================
-DEFAULT                                                     *SpaceVim-default*
 
 ==============================================================================
 AUTOCOMPLETE                                           *SpaceVim-autocomplete*
