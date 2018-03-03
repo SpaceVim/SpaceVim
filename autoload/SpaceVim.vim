@@ -349,7 +349,6 @@ let g:spacevim_auto_disable_touchpad   = 1
 " |SpaceVim#logger#setLevel()|
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
-let g:spacevim_plugin_groups_exclude   = []
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
@@ -381,12 +380,6 @@ let g:spacevim_enable_tabline_filetype_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0
-""
-" Plugin groups to be loaded.
-" >
-"    let g:spacevim_plugin_groups = ['core', 'lang']
-" <
-let g:spacevim_plugin_groups           = []
 ""
 " Set the github username, It will be used for getting your starred repos, and
 " fuzzy find the repo you want.
@@ -636,25 +629,15 @@ function! SpaceVim#end() abort
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
-  if g:spacevim_simple_mode
-    let g:spacevim_plugin_groups = ['core']
-  else
-    for s:group in g:spacevim_plugin_groups_exclude
-      let s:i = index(g:spacevim_plugin_groups, s:group)
-      if s:i != -1
-        call remove(g:spacevim_plugin_groups, s:i)
-      endif
-    endfor
-    if g:spacevim_vim_help_language ==# 'cn'
-      call add(g:spacevim_plugin_groups, 'chinese')
-    elseif g:spacevim_vim_help_language ==# 'ja'
-      call add(g:spacevim_plugin_groups, 'japanese')
-    endif
-    if g:spacevim_use_colorscheme==1
-      call add(g:spacevim_plugin_groups, 'colorscheme')
-    endif
-
+  if g:spacevim_vim_help_language ==# 'cn'
+    call SpaceVim#layers#load('chinese')
+  elseif g:spacevim_vim_help_language ==# 'ja'
+    call SpaceVim#layers#load('japanese')
   endif
+  if g:spacevim_use_colorscheme==1
+    call SpaceVim#layers#load('colorscheme')
+  endif
+
   ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
@@ -670,7 +653,7 @@ function! SpaceVim#end() abort
     silent exec 'lan ' . g:spacevim_language
   endif
 
-  if index(g:spacevim_plugin_groups, 'core#statusline') != -1
+  if SpaceVim#layers#isLoaded('core#statusline')
     call SpaceVim#layers#core#statusline#init()
   endif
 

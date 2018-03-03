@@ -10,16 +10,17 @@
 " @section Layers, layers
 "   SpaceVim support such layers:
 
+let s:enabled_layers = []
 
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
 " the second argv is the layer variable.
 function! SpaceVim#layers#load(layer, ...) abort
-  if a:layer == '-l'
+  if a:layer ==# '-l'
     call s:list_layers()
   endif
-  if index(g:spacevim_plugin_groups, a:layer) == -1
-    call add(g:spacevim_plugin_groups, a:layer)
+  if index(s:enabled_layers, a:layer) == -1
+    call add(s:enabled_layers, a:layer)
   endif
   if a:0 == 1 && type(a:1) == 4
     try
@@ -35,9 +36,9 @@ function! SpaceVim#layers#load(layer, ...) abort
 endfunction
 
 function! SpaceVim#layers#disable(layer) abort
-  let index = index(g:spacevim_plugin_groups, a:layer)
+  let index = index(s:enabled_layers, a:layer)
   if index != -1
-    call remove(g:spacevim_plugin_groups, index)
+    call remove(s:enabled_layers, index)
   endif
 endfunction
 
@@ -62,7 +63,7 @@ function! s:find_layers() abort
   for layer in layers
     if layer =~# pattern
       let name = layer[matchend(layer, pattern):-5]
-      let status = (index(g:spacevim_plugin_groups, substitute(name, '/', '#','g')) != -1) ? 'loaded' : 'not loaded'
+      let status = (index(s:enabled_layers, substitute(name, '/', '#','g')) != -1) ? 'loaded' : 'not loaded'
       if filereadable(expand('~/.SpaceVim/docs/layers/' . name . '.md'))
         let website = 'https://spacevim.org/layers/' . name
       else
@@ -76,6 +77,14 @@ function! s:find_layers() abort
     endif
   endfor
   return rst
+endfunction
+
+function! SpaceVim#layers#get() abort
+  return s:enabled_layers
+endfunction
+
+function! SpaceVim#layers#isLoaded(layer) abort
+  return index(s:enabled_layers, a:layer) != -1
 endfunction
 
 
