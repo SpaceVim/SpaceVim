@@ -44,8 +44,6 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['vim-scripts/TaskList.vim',                { 'on_cmd' : 'TaskList'}],
         \ ['MarcWeber/vim-addon-mw-utils'],
         \ ['vim-scripts/taglist.vim',         { 'on_cmd' : 'TlistToggle', 'loadconf' : 1}],
-        \ ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
-        \ 'loadconf' : 1}],
         \ ['Xuyuanp/nerdtree-git-plugin'],
         \ ['lymslive/vimloo', {'merged' : 0}],
         \ ['lymslive/vnote', {'depends' : 'vimloo',
