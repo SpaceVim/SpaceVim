@@ -4,6 +4,7 @@
 [Documentation](http://spacevim.org/documentation/) \|
 [Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
+[Sponsors](http://spacevim.org/sponsors/) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文官网](http://spacevim.org/cn/)
 
@@ -130,7 +131,7 @@ For more info please check our [development guidelines](http://spacevim.org/deve
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.
 
-<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | wechat                                                                   | alipay                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
