@@ -134,7 +134,7 @@ clicking following icon.
 
 | wechat                                                                   | alipay                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <a href='#'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
+| <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
