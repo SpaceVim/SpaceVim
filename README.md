@@ -134,13 +134,16 @@ clicking following icon.
 
 | wechat                                                                   | alipay                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
+| <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ### Credits & Thanks
 
 - [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
+
+<a href="graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
