@@ -17,6 +17,7 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : ['make']}])
   endif
   call add(plugins, ['benizi/vim-automkdir'])
+  call add(plugins, ['rhysd/clever-f.vim'])
   return plugins
 endfunction
 
