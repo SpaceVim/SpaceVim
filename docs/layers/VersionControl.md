@@ -43,3 +43,10 @@ description: "This layers provides general version control feature for vim. It s
 | `P`         | Push repo with popup      |
 | `c`         | Commit with popup         |
 | `C`         | Commit                    |
+
+**Unimpaired bindings**
+
+| Key Binding | Description                 |
+| ----------- | --------------------------- |
+| `[ c`       | Go to the previous vcs hunk |
+| `] c`       | Go to the next vcs hunk     |

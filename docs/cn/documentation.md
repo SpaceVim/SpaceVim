@@ -75,71 +75,71 @@ lang: cn
         - [文件树中的常用操作](#文件树中的常用操作)
         - [文件树中打开文件](#文件树中打开文件)
   - [以 `g` 为前缀的快捷键](#以-g-为前缀的快捷键)
-  - [以 `z` 为前缀的快捷键](#以 -z- 为前缀的快捷键)
+  - [以 `z` 开头的命令](#以-z-开头的命令)
   - [自动保存](#自动保存)
   - [搜索](#搜索)
-    - [使用外部工具](#使用外部工具)
-      - [有用的按键绑](#有用的按键绑定)
+    - [使用额外工具](#使用额外工具)
+      - [常用按键绑定](#常用按键绑定)
       - [在当前文件中进行搜索](#在当前文件中进行搜索)
-      - [在本地所有缓冲区内搜索](#在本地所有缓冲区内进行搜索)
+      - [在所有打开的缓冲区中进行搜索](#在所有打开的缓冲区中进行搜索)
       - [在任意目录中进行搜索](#在任意目录中进行搜索)
-      - [在工程中进行搜](#在工程中进行搜索)
-      - [在工程中后台搜](#在工程中后台搜索)
+      - [在工程中进行搜索](#在工程中进行搜索)
+      - [后台进行工程搜索](#后台进行工程搜索)
       - [在网上进行搜索](#在网上进行搜索)
-    - [用 fly 进行搜索](#用 fly 进行搜索)
+    - [用　fly 工具进行搜索](#用fly-工具进行搜索)
     - [保持高亮](#保持高亮)
   - [编辑](#编辑)
     - [粘贴文本](#粘贴文本)
       - [粘贴文本自动缩进](#粘贴文本自动缩进)
     - [文本操作命令](#文本操作命令)
     - [文本插入命令](#文本插入命令)
-    - [评论Commenting](#评论commenting)
-    - [多编码方式](#多编码方式)
-  - [错误处理(handling)](#错误处理)
+    - [注释(Commentings)](#注释commentings)
+    - [多方式编码](#多方式编码)
+  - [错误处理](#错误处理)
   - [工程管理](#工程管理)
-- [完成(Achievements)](#完成(achievements))
+- [成就](#成就)
   - [错误](#错误)
-  - [开始 forks 和 watchers](#开始 forks 和 watchers)
+  - [Stars, forks and watchers](#stars-forks-and-watchers)
 - [特性](#特性)
-  - [出彩的用户界面(ui)](#)
-  - [按键绑定助记符](#案件绑定助记符)
-- [语言特性模式](#语言特性模式)
-- [按键映射](#按键映射)
-  - [c/c++ 支持](#c/c++ 支持)
-  - [go 支持](#go 支持)
-  - [python 支持](#python 支持)
-- [以 Neovim 为中心的 SpaceVim 的 Dark powered 模式.](#以 Neovim 为中心的 SpaceVim 的 Dark powered 模式.)
+  - [优雅的用户界面](#优雅的用户界面)
+  - [按键绑定助记符](#按键绑定助记符)
+- [特定语言模式](#特定语言模式)
+- [按键导航](#按键导航)
+  - [c/c++ 支持](#cc-支持)
+  - [go 支持](#go-支持)
+  - [python 支持](#python-支持)
+- [以 Neovim 为中心的 SpaceVim Dark powered 模式.](#以-neovim-为中心的-spacevim-dark-powered-模式)
 - [模块化配置](#模块化配置)
-- [多导航键模式](#多导航键模式)
-  - [vim 初始全局导航键](# vim 初始全局导航键)
-  - [vim 本地初始导航键](#vim 本地初始导航键)
-  - [窗口函数导航键](#窗口函数导航键)
-  - [Unite 工作流程(work flow)导航键](#unite 工作流程导航键)
-- [Unite 为中心的工作流程(work-flow)](#unite 为中心的工作流程)
-    - [高亮插件](#高亮插件)
-    - [非延迟(non lazy-loaded)加载插件](#非延迟加载插件)
-  - [延迟(lazy-loaded)加载插件](#延迟加载插件)
+- [多 leader 模式](#多-leader-模式)
+  - [初始 vim 全局 leader](#初始-vim-全局-leader)
+  - [本地 vim 初始 leader](#本地-vim-初始-leader)
+  - [窗口函数 leader](#窗口函数-leader)
+  - [联合工作流程 leader](#联合工作流程-leader)
+- [中心联合工作流程](#中心联合工作流程)
+    - [插件亮点](#插件亮点)
+    - [非延时加载插件](#非延时加载插件)
+  - [延时加载插件](#延时加载插件)
     - [语言](#语言)
       - [命令](#命令)
       - [命令](#命令-1)
       - [补全](#补全)
-      - [Unite](#unite)
-      - [操作符 & 文本对象](#operators--text-objects)
+      - [联合](#联合)
+      - [操作符 & 文本的对象](#操作符--文本的对象)
     - [默认按键绑定](#默认按键绑定)
-      - [文件操作](#文件操作)
-      - [UI 编辑](#UI 编辑)
+      - [文件操作符](#文件操作符)
+      - [UI 编辑](#ui-编辑)
       - [窗口管理](#窗口管理)
-      - [本地(Native)函数](#本地函数)
-      - [插件: Unite](#plugin-unite)
-      - [插件: neocomplete](#plugin-neocomplete)
-      - [插件: NERD Commenter](#plugin-nerd-commenter)
-      - [插件: Goyo and Limelight](#plugin-goyo-and-limelight)
-      - [插件: ChooseWin](#plugin-choosewin)
-      - [插件: Bookmarks](#plugin-bookmarks)
-      - [插件: Gina/Gita](#plugin-ginagita)
-      - [插件: vim-signify](#plugin-vim-signify)
+      - [本地函数](#本地函数)
+      - [Plugin: Unite](#plugin-unite)
+      - [Plugin: neocomplete](#plugin-neocomplete)
+      - [Plugin: NERD Commenter](#plugin-nerd-commenter)
+      - [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
+      - [Plugin: ChooseWin](#plugin-choosewin)
+      - [Plugin: Bookmarks](#plugin-bookmarks)
+      - [Plugin: Gina/Gita](#plugin-ginagita)
+      - [Plugin: vim-signify](#plugin-vim-signify)
       - [Misc Plugins](#misc-plugins)
-  - [模块化配置](#模块化配置)
+  - [模块化配置](#模块化配置-1)
   - [Denite/Unite为主的工作平台](#deniteunite为主的工作平台)
   - [自动补全](#自动补全-1)
   - [细致的tags管理](#细致的tags管理)
@@ -699,29 +699,29 @@ let g:spacevim_custom_plugins = [
 
 ##### 常用的成对快捷键
 
-| 快捷键  | 描述                           |
-| ------- | ------------------------------ |
-| `[ SPC` | 在当前行或已选区域上方添加空行 |
-| `] SPC` | 在当前行或已选区域下方添加空行 |
-| `[ b`   | 跳至前一 buffer                |
-| `] b`   | 跳至下一 buffer                |
-| `[ f`   | 跳至文件夹中的前一个文件       |
-| `] f`   | 跳至文件夹中的下一个文件       |
-| `[ l`   | 跳至前一个错误处               |
-| `] l`   | 跳至下一个错误处               |
-| `[ c`   | 跳至前一个 vcs hunk            |
-| `] c`   | 跳至下一个 vcs hunk            |
-| `[ q`   | 跳至前一个错误                 |
-| `] q`   | 跳至下一个错误                 |
-| `[ t`   | 跳至前一个标签页               |
-| `] t`   | 跳至下一个标签页               |
-| `[ w`   | 跳至前一个窗口                 |
-| `] w`   | 跳至下一个窗口                 |
-| `[ e`   | 向上移动当前行或者已选择行     |
-| `] e`   | 向下移动当前行或者已选择行     |
-| `[ p`   | 粘贴至当前行上方               |
-| `] p`   | 粘贴至当前行下方               |
-| `g p`   | 选择粘贴的区域                 |
+| 快捷键  | 描述                                           |
+| ------- | ---------------------------------------------- |
+| `[ SPC` | 在当前行或已选区域上方添加空行                 |
+| `] SPC` | 在当前行或已选区域下方添加空行                 |
+| `[ b`   | 跳至前一 buffer                                |
+| `] b`   | 跳至下一 buffer                                |
+| `[ f`   | 跳至文件夹中的前一个文件                       |
+| `] f`   | 跳至文件夹中的下一个文件                       |
+| `[ l`   | 跳至前一个错误处                               |
+| `] l`   | 跳至下一个错误处                               |
+| `[ c`   | 跳至前一个 vcs hunk (需要 VersionControl 模块) |
+| `] c`   | 跳至下一个 vcs hunk (需要 VersionControl 模块) |
+| `[ q`   | 跳至前一个错误                                 |
+| `] q`   | 跳至下一个错误                                 |
+| `[ t`   | 跳至前一个标签页                               |
+| `] t`   | 跳至下一个标签页                               |
+| `[ w`   | 跳至前一个窗口                                 |
+| `] w`   | 跳至下一个窗口                                 |
+| `[ e`   | 向上移动当前行或者已选择行                     |
+| `] e`   | 向下移动当前行或者已选择行                     |
+| `[ p`   | 粘贴至当前行上方                               |
+| `] p`   | 粘贴至当前行下方                               |
+| `g p`   | 选择粘贴的区域                                 |
 
 ##### 跳转，合并，拆分
 
@@ -998,52 +998,52 @@ SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性�
 
 当你不记得按键映射时, 你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射.
 | Key Binding | Description                                  |
-| ----------- | -------------------------------------------- |
-| `z<Right>`  | scroll screen N characters to left           |
-| `z+`        | cursor to screen top line N                  |
-| `z-`        | cursor to screen bottom line N               |
-| `z.`        | cursor line to center                        |
-| `z<CR>`     | cursor line to top                           |
-| `z=`        | spelling suggestions                         |
-| `zA`        | toggle folds recursively                     |
-| `zC`        | close folds recursively                      |
-| `zD`        | delete folds recursively                     |
-| `zE`        | eliminate all folds                          |
-| `zF`        | create a fold for N lines                    |
-| `zG`        | mark good spelled(update internal-wordlist)  |
-| `zH`        | scroll half a screenwidth to the right       |
-| `zL`        | scroll half a screenwidth to the left        |
-| `zM`        | set `foldlevel` to zero                      |
-| `zN`        | set `foldenable`                             |
-| `zO`        | open folds recursively                       |
-| `zR`        | set `foldlevel` to deepest fold              |
-| `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldleve`                          |
-| `z^`        | cursor to screen bottom line N               |
-| `za`        | toggle a fold                                |
-| `zb`        | redraw, cursor line at bottom                |
-| `zc`        | close a fold                                 |
-| `zd`        | delete a fold                                |
-| `ze`        | right scroll horizontally to cursor position |
-| `zf`        | create a fold for motion                     |
-| `zg`        | mark good spelled                            |
-| `zh`        | scroll screen N characters to right          |
-| `zi`        | toggle foldenable                            |
-| `zj`        | mode to start of next fold                   |
-| `zk`        | mode to end of previous fold                 |
-| `zl`        | scroll screen N characters to left           |
-| `zm`        | subtract one from `foldlevel`                |
-| `zn`        | reset `foldenable`                           |
-| `zo`        | open fold                                    |
-| `zr`        | add one to `foldlevel`                       |
-| `zs`        | left scroll horizontally to cursor position  |
-| `zt`        | cursor line at top of window                 |
-| `zv`        | open enough folds to view cursor line        |
-| `zx`        | re-apply foldlevel and do "zV"               |
-| `zz`        | smart scroll                                 |
-| `z<Left>`   | scroll screen N characters to right          |
+\| ----------- \| -------------------------------------------- \|
+\| `z<Right>`  | scroll screen N characters to left           |
+\| `z+`        | cursor to screen top line N                  |
+\| `z-`        | cursor to screen bottom line N               |
+\| `z.`        | cursor line to center                        |
+\| `z<CR>`     | cursor line to top                           |
+\| `z=`        | spelling suggestions                         |
+\| `zA`        | toggle folds recursively                     |
+\| `zC`        | close folds recursively                      |
+\| `zD`        | delete folds recursively                     |
+\| `zE`        | eliminate all folds                          |
+\| `zF`        | create a fold for N lines                    |
+\| `zG`        | mark good spelled(update internal-wordlist)  |
+\| `zH`        | scroll half a screenwidth to the right       |
+\| `zL`        | scroll half a screenwidth to the left        |
+\| `zM`        | set `foldlevel` to zero                      |
+\| `zN`        | set `foldenable`                             \|
+\| `zO`        | open folds recursively                       |
+\| `zR`        | set `foldlevel` to deepest fold              |
+\| `zW`        | mark wrong spelled                           |
+\| `zX`        | re-apply `foldleve`                          \|
+\| `z^`        | cursor to screen bottom line N               |
+\| `za`        | toggle a fold                                |
+\| `zb`        | redraw, cursor line at bottom                |
+\| `zc`        | close a fold                                 |
+\| `zd`        | delete a fold                                |
+\| `ze`        | right scroll horizontally to cursor position |
+\| `zf`        | create a fold for motion                     |
+\| `zg`        | mark good spelled                            |
+\| `zh`        | scroll screen N characters to right          |
+\| `zi`        | toggle foldenable                            |
+\| `zj`        | mode to start of next fold                   |
+\| `zk`        | mode to end of previous fold                 |
+\| `zl`        | scroll screen N characters to left           |
+\| `zm`        | subtract one from `foldlevel`                \|
+\| `zn`        | reset `foldenable`                           \|
+\| `zo`        | open fold                                    |
+\| `zr`        | add one to `foldlevel`                       \|
+\| `zs`        | left scroll horizontally to cursor position  |
+\| `zt`        | cursor line at top of window                 |
+\| `zv`        | open enough folds to view cursor line        |
+\| `zx`        | re-apply foldlevel and do "zV"               |
+\| `zz`        | smart scroll                                 |
+\| `z<Left>`   | scroll screen N characters to right          |
 
-### 自动保存 
+### 自动保存
 
 ### 搜索
 
@@ -1091,8 +1091,8 @@ Notes:
 
 - 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉, 但是他们可以在任意目录中正常运行.
 - 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
-**注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
-同时也需要安装一个名叫 `pt` 的命令行工具.
+  **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
+  同时也需要安装一个名叫 `pt` 的命令行工具.
 
 ##### 常用按键绑定
 
@@ -1206,7 +1206,7 @@ Notes:
 FlyGrep 缓冲区的按键绑定:
 
 Key Binding	Description
-\-----------\    | -----------
+\-----------\\    | -----------
 `<Esc>`          | close FlyGrep buffer
 `<Enter>`        | open file at the cursor line
 `<Tab>`          | move cursor line down
@@ -1226,6 +1226,7 @@ SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果�
 ### 编辑
 
 #### 粘贴文本
+
 ##### 粘贴文本自动缩进
 
 #### 文本操作命令
@@ -1382,9 +1383,9 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当�
 
 <!-- SpaceVim Achievements start -->
 
-## 成就 
+## 成就
 
-### 错误 
+### 错误
 
 | Achievements                                                          | Account                                     |
 | --------------------------------------------------------------------- | ------------------------------------------- |
@@ -1404,7 +1405,7 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当�
 
 ## 特性
 
-### 优雅的用户界面 
+### 优雅的用户界面
 
 - outline + filemanager + checker
 
@@ -1423,13 +1424,13 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当�
 | <kbd>SPC b</kbd>     | +buffers      |
 | <kbd>SPC 1...9</kbd> | windows 1...9 |
 
-## 特定语言模式 
+## 特定语言模式
 
 ## 按键导航
 
 <iframe width='853' height='480' src='https://embed.coggle.it/diagram/WMlKuKS0uwABF2j1/a35e36df1d64e7b4f5fd7f956bf97a16b194cadb92d82d83e25aaf489349b0d8' frameborder='0' allowfullscreen></iframe>
 
-### c/c++ 支持 
+### c/c++ 支持
 
 1. 代码自动补全: 自动补全和模糊匹配.
    ![completion-fuzzy-match](https://cloud.githubusercontent.com/assets/13142418/22505960/df9068de-e8b8-11e6-943e-d79ceca095f1.png)
@@ -1480,7 +1481,6 @@ Vim 的本地初始 leader 可以在任意模块中使用.
 窗口函数 lea 只能在普通模式下使用
 导航键列表在下面的链接中 [link](#窗口管理)
 
-
 ### 联合工作流程 leader
 
 联合工作流程 learder 只能在普通模式下使用. 联合 leader 需要 联合组.
@@ -1495,7 +1495,7 @@ Vim 的本地初始 leader 可以在任意模块中使用.
 - 列出所有导航键及其描述: `f<space>`
     ![2017-02-01_1359x723](https://cloud.githubusercontent.com/assets/13142418/22507351/24af0d74-e8c0-11e6-985e-4a1404b629ed.png)
 
--列出所有 github.com 上已进行更新的插件, 模糊查找并打开对应的插件仓库. 默认按键为 `<leader>ls`
+\-列出所有 github.com 上已进行更新的插件, 模糊查找并打开对应的插件仓库. 默认按键为 `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
 #### 插件亮点
@@ -1813,6 +1813,7 @@ SpaceVim 拥有普通模式的导航键 <kbd>q</kbd> 作为智能关闭缓冲区
 上面的列表是SpaceVim的书签列表导航键, 所以你不能使用`a`, `m`, `n`, `p` 或者 `i` 来标记当前位置寄存器,
 但是其他的寄存器不受此限制. 如果你确实需要这些寄存器的话, 你可以添加 `nnoremap <leader>m m` 
 在你的默认配置文件中, 然后你就可以使用`a` 来管理 `\ma`.
+
 ##### Plugin: Gina/Gita
 
 | Key             |  Mode  | Action                 |
