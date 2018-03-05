@@ -11,3 +11,8 @@ This layer provides general function for version control. It should work with al
 
 ## Features
 
+- Show a diff using Vim its sign column
+- Show vcs info on statusline
+
+## Key bindings
+
