@@ -9,8 +9,6 @@
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
-        \ ['airblade/vim-gitgutter',      { 'merged' : 0}],
-        \ ['tpope/vim-fugitive',   { 'merged' : 0}],
         \ ]
   if has('patch-8.0.0027') || has('nvim')
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])

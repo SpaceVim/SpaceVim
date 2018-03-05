@@ -11,6 +11,7 @@ scriptencoding utf-8
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
   call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
+  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
   return plugins
 endfunction
 
