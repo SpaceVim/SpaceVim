@@ -5,9 +5,17 @@ description: "This layers provides general version control feature for vim. It s
 
 # [SpaceVim Layers:](https://spacevim.org/layers) VersionControl
 
+<!-- vim-markdown-toc GFM -->
+
+- [Intro](#intro)
+- [Features](#features)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
 ## Intro
 
-This layer provides general function for version control. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…
+  This layer provides general function for version control. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…
 
 ## Features
 
@@ -16,3 +24,22 @@ This layer provides general function for version control. It should work with al
 
 ## Key bindings
 
+| Key Binding | Description                     |
+| ----------- | ------------------------------- |
+| `SPC g .`   | version control transient-state |
+
+**Version Control Transient-state**
+
+| Key Binding | Description               |
+| ----------- | ------------------------- |
+| `w`         | Stage file                |
+| `u`         | Unstage file              |
+| `n`         | next hunk                 |
+| `N/p`       | previous hunk             |
+| `t`         | toggle diff signs         |
+| `l`         | Show repo log             |
+| `f`         | Fetch for repo with popup |
+| `F`         | Pull repo with popup      |
+| `P`         | Push repo with popup      |
+| `c`         | Commit with popup         |
+| `C`         | Commit                    |

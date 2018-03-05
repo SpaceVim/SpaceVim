@@ -17,6 +17,7 @@ endfunction
 
 function! SpaceVim#layers#VersionControl#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
+  let g:_spacevim_mappings_space.g.v = get(g:_spacevim_mappings_space.g, 'v',  {'name' : '+VersionControl'})
   call SpaceVim#mapping#space#def('nnoremap', ['g', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
         \ 'buffer transient state', 1)
@@ -86,7 +87,7 @@ function! s:buffer_transient_state() abort
         \ },
         \ {
         \ 'key' : ['r', 's', 'h'],
-        \ 'desc' : 'revert/stage/show',
+        \ 'desc' : 'revert/stage/show hunk',
         \ 'func' : '',
         \ 'cmd' : 'normal [c',
         \ 'exit' : 0,
