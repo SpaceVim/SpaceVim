@@ -48,7 +48,7 @@ endfunction
 function! s:hunks() abort
   let hunks = [0,0,0]
   try
-    let hunks = GitGutterGetHunkSummary()
+    let hunks = sy#repo#get_stats()
   catch
   endtry
   let rst = ''
@@ -62,6 +62,27 @@ function! s:hunks() abort
     let rst .= hunks[2] . '- '
   endif
   return empty(rst) ? '' : ' ' . rst
+endfunction
+
+" vcs transient state functions:
+function! s:show_repo_log() abort
+  
+endfunction
+
+function! s:show_diff_of_unstaged_hunks() abort
+  
+endfunction
+
+function! s:fetch_repo() abort
+  
+endfunction
+
+function! s:pull_repo() abort
+  
+endfunction
+
+function! s:push_repo() abort
+  
 endfunction
 
 function! s:buffer_transient_state() abort
@@ -123,14 +144,29 @@ function! s:buffer_transient_state() abort
         \ 'exit' : 1,
         \ },
         \ {
-        \ 'key' : ['f', 'F', 'P'],
+        \ 'key' : {
+        \ 'name' : 'f/F/P',
+        \ 'pos' : [[0,1], [2,3], [4,5]],
+        \ 'handles' : [
+        \ ['f' , 'call call(' . string(s:_function('s:fetch_repo')) . ', [])'],
+        \ ['F' , 'call call(' . string(s:_function('s:pull_repo')) . ', [])'],
+        \ ['P' , 'call call(' . string(s:_function('s:push_repo')) . ', [])'],
+        \ ],
+        \ },
         \ 'desc' : 'fetch/pull/push popup',
         \ 'func' : '',
         \ 'cmd' : '',
         \ 'exit' : 1,
         \ },
         \ {
-        \ 'key' : ['l', 'D'],
+        \ 'key' : {
+        \ 'name' : 'l/D',
+        \ 'pos' : [[0,1], [2,3]],
+        \ 'handles' : [
+        \ ['l' , 'call call(' . string(s:_function('s:show_repo_log')) . ', [])'],
+        \ ['D' , 'call call(' . string(s:_function('s:show_diff_of_unstaged_hunks')) . ', [])'],
+        \ ],
+        \ },
         \ 'desc' : 'log/diff popup',
         \ 'func' : '',
         \ 'cmd' : '',

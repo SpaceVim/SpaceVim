@@ -200,7 +200,7 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 " <
 let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
       \ 'syntax checking', 'minor mode lighters',
-      \ 'version control info', 'hunks']
+      \ ]
 ""
 " Define the right section of statusline in active windows. By default:
 " >

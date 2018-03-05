@@ -30,19 +30,20 @@ description: "This layers provides general version control feature for vim. It s
 
 **Version Control Transient-state**
 
-| Key Binding | Description               |
-| ----------- | ------------------------- |
-| `w`         | Stage file                |
-| `u`         | Unstage file              |
-| `n`         | next hunk                 |
-| `N/p`       | previous hunk             |
-| `t`         | toggle diff signs         |
-| `l`         | Show repo log             |
-| `f`         | Fetch for repo with popup |
-| `F`         | Pull repo with popup      |
-| `P`         | Push repo with popup      |
-| `c`         | Commit with popup         |
-| `C`         | Commit                    |
+| Key Binding | Description                  |
+| ----------- | ---------------------------- |
+| `w`         | Stage file                   |
+| `u`         | Unstage file                 |
+| `n`         | next hunk                    |
+| `N/p`       | previous hunk                |
+| `t`         | toggle diff signs            |
+| `l`         | Show repo log                |
+| `D`         | Show diffs of unstaged hunks |
+| `f`         | Fetch for repo with popup    |
+| `F`         | Pull repo with popup         |
+| `P`         | Push repo with popup         |
+| `c`         | Commit with popup            |
+| `C`         | Commit                       |
 
 **Unimpaired bindings**
 
