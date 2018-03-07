@@ -66,22 +66,42 @@ endfunction
 
 " vcs transient state functions:
 function! s:show_repo_log() abort
-  
+
 endfunction
 
 function! s:show_diff_of_unstaged_hunks() abort
-  
+
 endfunction
 
 function! s:fetch_repo() abort
-  
+
 endfunction
 
 function! s:pull_repo() abort
-  
+
 endfunction
 
 function! s:push_repo() abort
+
+endfunction
+
+function! s:commit_popup() abort
+
+endfunction
+
+function! s:commit() abort
+
+endfunction
+
+function! s:revert_hunk() abort
+  
+endfunction
+
+function! s:stage_hunk() abort
+  
+endfunction
+
+function! s:show_hunk_diff() abort
   
 endfunction
 
@@ -107,17 +127,25 @@ function! s:buffer_transient_state() abort
         \ 'exit' : 0,
         \ },
         \ {
-        \ 'key' : ['r', 's', 'h'],
+        \ 'key' : {
+        \ 'name' : 'r/s/h',
+        \ 'pos' : [[0,1], [2,3], [4,5]],
+        \ 'handles' : [
+        \ ['r' , 'call call(' . string(s:_function('s:revert_hunk')) . ', [])'],
+        \ ['s' , 'call call(' . string(s:_function('s:stage_hunk')) . ', [])'],
+        \ ['h' , 'call call(' . string(s:_function('s:show_hunk_diff')) . ', [])'],
+        \ ],
+        \ },
         \ 'desc' : 'revert/stage/show hunk',
         \ 'func' : '',
-        \ 'cmd' : 'normal [c',
+        \ 'cmd' : '',
         \ 'exit' : 0,
         \ },
         \ {
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : '',
+        \ 'cmd' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],
@@ -137,7 +165,14 @@ function! s:buffer_transient_state() abort
         \ 'exit' : 0,
         \ },
         \ {
-        \ 'key' : ['c', 'C'],
+        \ 'key' : {
+        \ 'name' : 'c/C',
+        \ 'pos' : [[0,1], [2,3]],
+        \ 'handles' : [
+        \ ['c' , 'call call(' . string(s:_function('s:commit_popup')) . ', [])'],
+        \ ['C' , 'call call(' . string(s:_function('s:commit')) . ', [])'],
+        \ ],
+        \ },
         \ 'desc' : 'commit with popup/direct commit',
         \ 'func' : '',
         \ 'cmd' : '',
