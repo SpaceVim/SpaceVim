@@ -65,6 +65,94 @@ function! s:hunks() abort
 endfunction
 
 " vcs transient state functions:
+
+" first we need to open a buffer contains:
+" Switches
+"  -g Show graph (--graph)
+"  -c Show graph in color (--color)
+"
+" Options
+"  =n Limit number of commits (-n"256")
+"  =f Limit to files (-- )
+"  =a Limit to author (--author=)
+"
+" Actions
+"  l Log current
+let s:git_log_switches = {
+      \ 'g' : {'desc' : 'Show graph', 'option' : '--graph'},
+      \ 'c' : {'desc' : 'Show graph in color', 'option' : '--color'},
+      \ 'd' : {'desc' : 'Show refnames', 'option' : '--decorate'},
+      \ 'S' : {'desc' : 'Show signatures', 'option' : '--show-signature'},
+      \ 'u' : {'desc' : 'Show diffs', 'option' : '--patch'},
+      \ 's' : {'desc' : 'Show diffstats', 'option' : '--stat'},
+      \ 'h' : {'desc' : 'Show header', 'option' : '++header'},
+      \ 'D' : {'desc' : 'Simplify by decoration', 'option' : '--simplify-by-decoration'},
+      \ 'f' : {'desc' : 'Follow renames when showing single-file log', 'option' : '--follow'},
+      \ }
+let s:git_log_options = {
+      \ 'n' : {'desc' : 'Limit number of commits', 'option' : '-n'},
+      \ 'f' : {'desc' : 'Limit to files', 'option' : '--'},
+      \ 'a' : {'desc' : 'Limit to author', 'option' : '--author='},
+      \ 'o' : {'desc' : 'Order commits by', 'option' : '++order='},
+      \ 'g' : {'desc' : 'Search messages', 'option' : '--grep='},
+      \ 'G' : {'desc' : 'Search changes', 'option' : '-G'},
+      \ 'S' : {'desc' : 'Search occurrences', 'option' : '-S'},
+      \ 'L' : {'desc' : 'Trace line evolution', 'option' : '-L'},
+      \ }
+let s:git_log_actions = {
+      \ 'l' : {'desc' : 'Log current'},
+      \ 'o' : {'desc' : 'Log other'},
+      \ 'h' : {'desc' : 'Log HEAD'},
+      \ 'L' : {'desc' : 'Log local branches'},
+      \ 'b' : {'desc' : 'Log all branches'},
+      \ 'a' : {'desc' : 'Log all references'},
+      \ 'r' : {'desc' : 'Reflog current'},
+      \ 'O' : {'desc' : 'Reflog other'},
+      \ 'H' : {'desc' : 'Reflog HEAD'},
+      \ }
+function! s:generate_git_log_popup_content() abort
+  let lines = ['Switches']
+  for k in keys(s:git_log_switches)
+    call add(lines, ' -' . k . ' ' . s:git_log_switches[k]['desc'] . '(' . s:git_log_switches[k]['option'] . ')')
+  endfor
+  call add(lines, '')
+  call add(lines, 'Options')
+  for k in keys(s:git_log_options)
+    call add(lines, ' =' . k . ' ' . s:git_log_options[k]['desc'] . '(' . s:git_log_options[k]['option'] . ')')
+  endfor
+  call add(lines, '')
+  call add(lines, 'Actions')
+  let actions_line = ''
+  let i = 0
+  for k in ['l', 'L', 'r', 'o', 'b', 'O', 'h', 'a', 'H']
+    let i += 1
+    let actions_line .= ' ' . k . ' ' . s:git_log_actions[k]['desc']
+    let actions_line .= repeat(' ', i % 3 * 30 - len(actions_line))
+    if i%3 == 0
+      call add(lines, actions_line)
+      let actions_line = ''
+    endif
+  endfor
+  if !empty(actions_line)
+      call add(lines, actions_line)
+      let actions_line = ''
+  endif
+  return lines
+endfunction
+
+function! s:open_log_popup_buffer() abort
+  let content = s:generate_git_log_popup_content()
+  exe 'rightbelow ' . len(content) . 'split __SpaceVim_git_log_popup__'
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber nocursorline
+  setfiletype SpaceVimGitLogPopup
+  call setline(1, content)
+endfunction
+
+function! Gitlog() abort
+  call s:open_log_popup_buffer()
+endfunction
+
+
 function! s:show_repo_log() abort
 
 endfunction
