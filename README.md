@@ -16,6 +16,7 @@
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
+[![Backers on Open Collective](https://opencollective.com/SpaceVim/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/SpaceVim/sponsors/badge.svg)](#sponsors) 
 
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features. 
@@ -151,3 +152,28 @@ This project exists thanks to all the people who have [contributed](CONTRIBUTING
 - authors of all the plugins used in SpaceVim.
 
 <!-- vim:set nowrap: -->
+
+
+#### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/SpaceVim#backer)]
+
+<a href="https://opencollective.com/SpaceVim#backers" target="_blank"><img src="https://opencollective.com/SpaceVim/backers.svg?width=890"></a>
+
+
+#### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/SpaceVim#sponsor)]
+
+<a href="https://opencollective.com/SpaceVim/sponsor/0/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/1/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/2/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/3/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/4/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/5/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/6/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/7/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/8/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/SpaceVim/sponsor/9/website" target="_blank"><img src="https://opencollective.com/SpaceVim/sponsor/9/avatar.svg"></a>
+
+
