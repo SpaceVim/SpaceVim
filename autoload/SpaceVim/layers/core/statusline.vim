@@ -140,17 +140,6 @@ function! s:modes() abort
   return m . ' '
 endfunction
 
-function! s:git_branch() abort
-  if exists('g:loaded_fugitive')
-    let l:head = fugitive#head()
-    if empty(l:head)
-      call fugitive#detect(getcwd())
-      let l:head = fugitive#head()
-    endif
-    return empty(l:head) ? '' : '  '.l:head . ' '
-  endif
-  return ''
-endfunction
 
 function! s:percentage() abort
   return ' %P '
@@ -238,25 +227,6 @@ else
   endfunction
 endif
 
-function! s:hunks() abort
-  let hunks = [0,0,0]
-  try
-    let hunks = GitGutterGetHunkSummary()
-  catch
-  endtry
-  let rst = ''
-  if hunks[0] > 0
-    let rst .= hunks[0] . '+ '
-  endif
-  if hunks[1] > 0
-    let rst .= hunks[1] . '~ '
-  endif
-  if hunks[2] > 0
-    let rst .= hunks[2] . '- '
-  endif
-  return empty(rst) ? '' : ' ' . rst
-endfunction
-
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'syntax checking' : function('s:syntax_checking'),
@@ -264,8 +234,6 @@ let s:registed_sections = {
       \ 'fileformat' : function('s:fileformat'),
       \ 'major mode' : function('s:major_mode'),
       \ 'minor mode lighters' : function('s:modes'),
-      \ 'version control info' : function('s:git_branch'),
-      \ 'hunks' : function('s:hunks'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
       \ 'time' : function('s:time'),
@@ -344,6 +312,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'SpaceVimLayerManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+  elseif &filetype ==# 'SpaceVimGitLogPopup'
+    return '%#SpaceVim_statusline_a# Git log popup %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimPlugManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -414,7 +384,7 @@ endfunction
 
 function! s:inactive() abort
   let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
-  let secs = [s:filename(), " " . &filetype, s:modes(), s:git_branch()]
+  let secs = [s:filename(), " " . &filetype, s:modes()]
   let base = 10
   for sec in secs
     let len = s:STATUSLINE.len(sec)
@@ -518,8 +488,6 @@ endfunction
 function! SpaceVim#layers#core#statusline#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
         \ 'toggle the minor mode lighters', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("version control info")',
-        \ 'version control info', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'M'], 'call SpaceVim#layers#core#statusline#toggle_section("major mode")',
         \ 'toggle the major mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'b'], 'call SpaceVim#layers#core#statusline#toggle_section("battery status")',
@@ -532,8 +500,6 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
         \ 'toggle the statuline itself', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
-        \ 'toggle the hunks summary', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',

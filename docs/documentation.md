@@ -850,29 +850,29 @@ Similar to easymotion or `f` in vimperator for firefox, this mode allows one to 
 
 #### Unimpaired bindings
 
-| Mappings | Description                      |
-| -------- | -------------------------------- |
-| `[ SPC`  | Insert space above               |
-| `] SPC`  | Insert space below               |
-| `[ b`    | Go to previous buffer            |
-| `] b`    | Go to next buffer                |
-| `[ f`    | Go to previous file in directory |
-| `] f`    | Go to next file in directory     |
-| `[ l`    | Go to the previous error         |
-| `] l`    | Go to the next error             |
-| `[ c`    | Go to the previous vcs hunk      |
-| `] c`    | Go to the next vcs hunk          |
-| `[ q`    | Go to the previous error         |
-| `] q`    | Go to the next error             |
-| `[ t`    | Go to the previous frame         |
-| `] t`    | Go to the next frame             |
-| `[ w`    | Go to the previous window        |
-| `] w`    | Go to the next window            |
-| `[ e`    | Move line up                     |
-| `] e`    | Move line down                   |
-| `[ p`    | Paste above current line         |
-| `] p`    | Paste below current line         |
-| `g p`    | Select pasted text               |
+| Mappings | Description                                             |
+| -------- | ------------------------------------------------------- |
+| `[ SPC`  | Insert space above                                      |
+| `] SPC`  | Insert space below                                      |
+| `[ b`    | Go to previous buffer                                   |
+| `] b`    | Go to next buffer                                       |
+| `[ f`    | Go to previous file in directory                        |
+| `] f`    | Go to next file in directory                            |
+| `[ l`    | Go to the previous error                                |
+| `] l`    | Go to the next error                                    |
+| `[ c`    | Go to the previous vcs hunk (need VersionControl layer) |
+| `] c`    | Go to the next vcs hunk (need VersionControl layer)     |
+| `[ q`    | Go to the previous error                                |
+| `] q`    | Go to the next error                                    |
+| `[ t`    | Go to the previous frame                                |
+| `] t`    | Go to the next frame                                    |
+| `[ w`    | Go to the previous window                               |
+| `] w`    | Go to the next window                                   |
+| `[ e`    | Move line up                                            |
+| `] e`    | Move line down                                          |
+| `[ p`    | Paste above current line                                |
+| `] p`    | Paste below current line                                |
+| `g p`    | Select pasted text                                      |
 
 #### Jumping, Joining and Splitting
 
