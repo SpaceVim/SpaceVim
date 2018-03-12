@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:SYSTEM = SpaceVim#api#import('system')
+
 " Default options {{{
 function! SpaceVim#default#options() abort
   " basic vim settiing
@@ -95,8 +96,6 @@ function! SpaceVim#default#options() abort
   set backupdir=$HOME/.cache/SpaceVim/backup
   set directory=$HOME/.cache/SpaceVim/swap
 
-  " no fold enable
-  set nofoldenable
   set nowritebackup
   set matchtime=0
   set ruler
@@ -125,6 +124,7 @@ function! SpaceVim#default#options() abort
   endif
   " Do not wrap lone lines
   set nowrap
+  set foldtext=SpaceVim#default#Customfoldtext()
 endfunction
 "}}}
 
@@ -301,6 +301,31 @@ endf
 
 function! SpaceVim#default#UseSimpleMode() abort
 
+endfunction
+
+function! SpaceVim#default#Customfoldtext() abort
+  "get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
+
+  let foldsymbol=''
+  let repeatsymbol=''
+  let prefix = foldsymbol . ' '
+
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = " " . foldSize . " lines "
+  let foldLevelStr = repeat("+--", v:foldlevel)
+  let lineCount = line("$")
+  let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
+  let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
+  return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endfunction
 
 " vim:set et sw=2:
