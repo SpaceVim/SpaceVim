@@ -5,7 +5,10 @@ description: "the companies or individuals contributing a monthly amount to help
 
 ![Bountysource](https://spacevim.org/img/bountysource.png)
 
-If you want to support SpaceVim, please check out our [Bountysource campaign](https://www.bountysource.com/teams/spacevim).
+SpaceVim is an open source project. Please consider supporting Oni by:
+
+- [Become a backer on BountySource](https://www.bountysource.com/teams/spacevim)
+- [Become a backer or sponsor on Open Collective](https://opencollective.com/spacevim)
 
 Also, you can buy me a coffee:
 
