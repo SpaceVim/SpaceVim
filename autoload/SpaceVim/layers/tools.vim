@@ -79,14 +79,12 @@ function! SpaceVim#layers#tools#config() abort
   let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
-  nnoremap <Leader>fz :FZF<CR>
   if maparg('<C-_>', 'v') ==# ''
     vnoremap <silent> <C-_> <Esc>:Ydv<CR>
   endif
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
-  map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>

@@ -81,7 +81,6 @@ function! SpaceVim#layers#lang#c#plugins() abort
   else
     call add(plugins, ['bbchung/clighter', { 'if' : has('python')}])
   endif
-  call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python')}])
   return plugins
 endfunction
 

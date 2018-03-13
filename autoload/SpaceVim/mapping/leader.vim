@@ -23,9 +23,6 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
 
   cnoremap <Leader><C-F> <C-F>
 
-  "When pressing <leader>cd switch to the directory of the open buffer
-  nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
   " Fast saving
   call SpaceVim#mapping#def('nnoremap', '<Leader>w', ':w<CR>',
         \ 'Save current file',
@@ -37,7 +34,7 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ 'Save current file')
 
   " Location list movement
-  let g:_spacevim_mappings.l = {'name' : 'Location list movement'}
+  let g:_spacevim_mappings.l = {'name' : '+Location list movement'}
   call SpaceVim#mapping#def('nnoremap', '<Leader>lj', ':lnext<CR>',
         \ 'Jump to next location list position',
         \ 'lnext',
@@ -87,10 +84,10 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
   "       \ "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
   "       \ 'Sourced selection.',
   "       \ "echo 'Use <leader>S to sourced selection.'")
-  call SpaceVim#mapping#def('nnoremap', '<Leader>S',
-        \ "^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",
-        \ 'Source line',
-        \ "echo 'Use <leader>S to sourced line.'")
+  " call spacevim#mapping#def('nnoremap', '<leader>s',
+  "      \ "^vg_y:execute @@<cr>:echo 'sourced line.'<cr>",
+  "      \ 'source line',
+  "      \ "echo 'use <leader>s to sourced line.'")
 
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv',
         \ ':call SpaceVim#mapping#split_previous_buffer()<CR>',
