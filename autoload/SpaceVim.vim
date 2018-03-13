@@ -614,12 +614,6 @@ function! SpaceVim#end() abort
   if !empty(g:spacevim_windows_leader)
     call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
   endif
-  if !empty(g:spacevim_unite_leader)
-    call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
-  endif
-  if !empty(g:spacevim_denite_leader)
-    call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
-  endif
   call SpaceVim#mapping#g#init()
   call SpaceVim#mapping#z#init()
   call SpaceVim#mapping#leader#defindglobalMappings()

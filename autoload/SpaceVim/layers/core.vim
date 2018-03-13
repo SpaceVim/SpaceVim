@@ -28,6 +28,7 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#core#config() abort
+  let g:matchup_matchparen_status_offscreen = 0
   " Unimpaired bindings
   " Quickly add empty lines
   nnoremap <silent> [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
@@ -215,9 +216,9 @@ function! SpaceVim#layers#core#config() abort
   if has('python3')
     let cmd =  'Denite file_rec'
   elseif has('python')
-    let cmd =  "LeaderfFile"
+    let cmd =  'LeaderfFile'
   else
-    let cmd =  "CtrlP"
+    let cmd =  'CtrlP'
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ cmd,
@@ -344,7 +345,7 @@ function! s:previous_window() abort
 endfunction
 
 function! s:split_string(newline) abort
-  let syn_name = synIDattr(synID(line("."), col("."), 1), "name")
+  let syn_name = synIDattr(synID(line('.'), col('.'), 1), 'name')
   if syn_name == &filetype . 'String'
     let c = col('.')
     let sep = ''
@@ -371,7 +372,7 @@ function! s:split_string(newline) abort
 endfunction
 
 function! s:is_string(l,c) abort
-  return synIDattr(synID(a:l, a:c, 1), "name") == &filetype . 'String'
+  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
 endfunction
 
 " function() wrapper
