@@ -23,18 +23,8 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
 
   cnoremap <Leader><C-F> <C-F>
 
-  " Fast saving
-  call SpaceVim#mapping#def('nnoremap', '<Leader>w', ':w<CR>',
-        \ 'Save current file',
-        \ 'w',
-        \ 'Save current file')
-  call SpaceVim#mapping#def('vnoremap', '<Leader>w', '<Esc>:w<CR>',
-        \ 'Save current file',
-        \ 'w',
-        \ 'Save current file')
-
   " Location list movement
-  let g:_spacevim_mappings.l = {'name' : '+Location list movement'}
+  let g:_spacevim_mappings.l = {'name' : '+Location movement'}
   call SpaceVim#mapping#def('nnoremap', '<Leader>lj', ':lnext<CR>',
         \ 'Jump to next location list position',
         \ 'lnext',
@@ -49,7 +39,7 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ 'Close location list window')
 
   " quickfix list movement
-  let g:_spacevim_mappings.q = {'name' : 'Quickfix list movement'}
+  let g:_spacevim_mappings.q = {'name' : '+Quickfix movement'}
   call SpaceVim#mapping#def('nnoremap', '<Leader>qj', ':cnext<CR>',
         \ 'Jump to next quickfix list position',
         \ 'cnext',
@@ -66,38 +56,6 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ 'Toggle recording',
         \ '',
         \ 'Toggle recording mode')
-
-  " call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-c>',
-  "       \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
-  "       \ 'Yank the github link of current file to X11 clipboard',
-  "       \ 'call zvim#util#CopyToClipboard(1)',
-  "       \ 'Copy to clipboard')
-  " call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-l>',
-  "       \ ':<c-u>call zvim#util#CopyToClipboard(2)<cr>',
-  "       \ 'Yank the github link of current line to X11 clipboard',
-  "       \ 'call zvim#util#CopyToClipboard(2)')
-  " call SpaceVim#mapping#def('vnoremap <silent>', '<Leader><C-l>',
-  "       \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
-  "       \ 'Yank the github link of current selection to X11 clipboard',
-  "       \ 'call zvim#util#CopyToClipboard(3)')
-  " call SpaceVim#mapping#def('vnoremap', '<Leader>S',
-  "       \ "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
-  "       \ 'Sourced selection.',
-  "       \ "echo 'Use <leader>S to sourced selection.'")
-  " call spacevim#mapping#def('nnoremap', '<leader>s',
-  "      \ "^vg_y:execute @@<cr>:echo 'sourced line.'<cr>",
-  "      \ 'source line',
-  "      \ "echo 'use <leader>s to sourced line.'")
-
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sv',
-        \ ':call SpaceVim#mapping#split_previous_buffer()<CR>',
-        \ 'Open previous buffer in split window',
-        \ 'call SpaceVim#mapping#split_previous_buffer()',
-        \ 'Split previout buffer')
-  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>sg',
-        \ ':call SpaceVim#mapping#vertical_split_previous_buffer()<CR>',
-        \ 'Open previous buffer in vsplit window' ,
-        \ 'call SpaceVim#mapping#vertical_split_previous_buffer()')
 endfunction
 
 let s:lnum = expand('<slnum>') + 3
