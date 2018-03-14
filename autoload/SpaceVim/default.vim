@@ -152,6 +152,53 @@ function! SpaceVim#default#layers() abort
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
+  if g:spacevim_enable_insert_leader
+    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+  endif
+
+  " yark and paste
+  xnoremap <Leader>y "+y
+  xnoremap <Leader>d "+d
+  nnoremap <Leader>p "+p
+  nnoremap <Leader>P "+P
+  xnoremap <Leader>p "+p
+  xnoremap <Leader>P "+P
+
+  cnoremap <Leader><C-F> <C-F>
+
+  " Location list movement
+  let g:_spacevim_mappings.l = {'name' : '+Location movement'}
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lj', ':lnext<CR>',
+        \ 'Jump to next location list position',
+        \ 'lnext',
+        \ 'Next location list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lk', ':lprev<CR>',
+        \ 'Jump to previous location list position',
+        \ 'lprev',
+        \ 'Previous location list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>lq', ':lclose<CR>',
+        \ 'Close the window showing the location list',
+        \ 'lclose',
+        \ 'Close location list window')
+
+  " quickfix list movement
+  let g:_spacevim_mappings.q = {'name' : '+Quickfix movement'}
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qj', ':cnext<CR>',
+        \ 'Jump to next quickfix list position',
+        \ 'cnext',
+        \ 'Next quickfix list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qk', ':cprev<CR>',
+        \ 'Jump to previous quickfix list position',
+        \ 'cprev',
+        \ 'Previous quickfix list')
+  call SpaceVim#mapping#def('nnoremap', '<Leader>qq', ':cclose<CR>',
+        \ 'Close quickfix list window',
+        \ 'cclose',
+        \ 'Close quickfix list window')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qr', 'q',
+        \ 'Toggle recording',
+        \ '',
+        \ 'Toggle recording mode')
 
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
