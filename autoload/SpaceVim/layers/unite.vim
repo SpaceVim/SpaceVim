@@ -160,224 +160,59 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Unite jump<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.j = ['Unite jump',
-        \ 'unite jump',
+        \ 'fuzzy find jump list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  return
-  nnoremap <silent> [unite]i
-        \ :<C-u>Unite file_rec/git<cr>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.i = ['Unite file_rec/git',
-        \ 'git files',
-        \ [
-        \ '[UNITE f ] is to open unite file_rec source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]g
-        \ :<C-u>Unite grep<cr>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.g = ['Unite grep',
-        \ 'unite grep',
-        \ [
-        \ '[UNITE g ] is to open unite grep source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]u
-        \ :<C-u>Unite source<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.u = ['Unite source',
-        \ 'unite source',
-        \ [
-        \ '[UNITE u ] is to open unite source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]t
-        \ :<C-u>Unite tag<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.t = ['Unite tag',
-        \ 'unite tag',
-        \ [
-        \ '[UNITE t ] is to open unite tag source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]T
-        \ :<C-u>Unite tag/include<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.T = ['Unite tag/include',
-        \ 'unite tag/include',
-        \ [
-        \ '[UNITE T ] is to open unite tag/include source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]l
+  nnoremap <silent> <Leader>fl
         \ :<C-u>Unite locationlist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.l = ['Unite locationlist',
-        \ 'unite locationlist',
+  let g:_spacevim_mappings.f.l = ['Unite locationlist',
+        \ 'fuzzy find location list',
         \ [
-        \ '[UNITE l ] is to open unite locationlist source',
+        \ '[Leader f l] is to fuzzy find location list',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> [unite]q
+  nnoremap <silent> <Leader>fm
+        \ :<C-u>Unite output:message<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.m = ['Unite output:message',
+        \ 'fuzzy find message',
+        \ [
+        \ '[Leader f m] is to fuzzy find message',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fq
         \ :<C-u>Unite quickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.q = ['Unite quickfix',
-        \ 'unite quickfix',
+  let g:_spacevim_mappings.f.q = ['Unite quickfix',
+        \ 'fuzzy find quickfix list',
         \ [
-        \ '[UNITE q ] is to open unite quickfix source',
+        \ '[Leader f q] is to fuzzy find quickfix list',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> [unite]<C-h>
-        \ :<C-u>UniteWithCursorWord help<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite['<C-h>'] = ['UniteWithCursorWord help',
-        \ 'unite with cursor word help',
-        \ [
-        \ '[UNITE <c-h> ] is to open unite help source for cursor word',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]s
-        \ :<C-u>Unite session<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.s = ['Unite session',
-        \ 'unite session',
-        \ [
-        \ '[UNITE s ] is to open unite session source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline
+  nnoremap <silent> <Leader>fo  :<C-u>Unite -buffer-name=outline
         \ -start-insert -auto-preview -split outline<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.o = ['Unite outline',
-        \ 'unite outline',
+  let g:_spacevim_mappings.f.o = ['Unite outline',
+        \ 'fuzzy find outline',
         \ [
-        \ '[UNITE o ] is to open unite outline source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-
-  " menu
-  nnoremap <silent> [unite]ma
-        \ :<C-u>Unite mapping<CR>
-  nnoremap <silent> [unite]me
-        \ :<C-u>Unite output:message<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 6
-  let g:_spacevim_mappings_unite.m = {'name' : '+Menus',
-        \ 'a' : ['Unite mapping', 'unite mappings',
-        \ [
-        \ '[UNITE m a ] is to open unite mapping menu',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ],
-        \ 'e' : ['Unite output:message', 'unite messages',
-        \ [
-        \ '[UNITE o ] is to open unite message menu',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . (lnum + 2),
-        \ ]
-        \ ]
-        \ }
-
-  nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-        \ -buffer-name=files buffer bookmark file<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.c =
-        \ ['UniteWithCurrentDir -buffer-name=files buffer bookmark file',
-        \ 'unite files in current dir',
-        \ [
-        \ '[UNITE c ] is to open unite outline source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-        \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.b =
-        \ ['UniteWithBufferDir -buffer-name=files' .
-        \ ' buffer bookmark file',
-        \ 'unite files in current dir',
-        \ [
-        \ '[UNITE b ] is to open unite buffer and bookmark source with cursor',
-        \ 'word',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]n
-        \ :<C-u>Unite session/new<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite.n = ['Unite session/new',
-        \ 'unite session/new',
-        \ [
-        \ '[UNITE n ] is to create new vim session',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]/
-        \ :Unite grep:.<cr>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite['/'] = ['Unite grep:.',
-        \ 'unite grep with preview',
-        \ [
-        \ '[UNITE / ] is to open unite grep source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> [unite]w
-        \ :<C-u>Unite -buffer-name=files -no-split
-        \ jump_point file_point buffer_tab
-        \ file_rec:! file file/new<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 6
-  let g:_spacevim_mappings_unite.w= ['Unite -buffer-name=files -no-split' .
-        \ ' jump_point file_point buffer_tab file_rec:! file file/new',
-        \ 'unite all file and jump',
-        \ [
-        \ '[UNITE w ] is to open unite jump_point file_point and buffer_tab',
-        \ 'source',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17
-        \ -start-insert menu:CustomKeyMaps<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings_unite['[SPC]'] = ['Unite -silent -ignorecase' .
-        \ ' -winheight=17 -start-insert menu:CustomKeyMaps',
-        \ 'unite customkeymaps',
-        \ [
-        \ '[UNITE o ] is to open unite outline source',
+        \ '[Leader f o] is to fuzzy find outline',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
 endfunction
+
 function! s:run_shell_cmd() abort
   let cmd = input('Please input shell command:', '', 'customlist,SpaceVim#plugins#bashcomplete#complete')
   if !empty(cmd)
