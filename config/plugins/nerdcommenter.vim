@@ -7,6 +7,7 @@ scriptencoding utf-8
 " Add extra space around delimiters when commenting, remove them when
 " uncommenting
 let g:NERDSpaceDelims = 1
+let g:NERDCreateDefaultMappings = 0
 
 " Always remove the extra spaces when uncommenting regardless of whether
 " NERDSpaceDelims is set

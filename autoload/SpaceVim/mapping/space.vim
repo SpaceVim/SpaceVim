@@ -153,13 +153,6 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
   nmap <silent> [SPC]; <Plug>CommentOperator
 
-  " in nerdcomment if has map to <plug>... the default mapping will be
-  " disable, so we add it for compatibility
-  nmap <Leader>cc <Plug>NERDCommenterComment
-  xmap <Leader>cc <Plug>NERDCommenterComment
-  nmap <Leader>ci <Plug>NERDCommenterInvert
-  xmap <Leader>ci <Plug>NERDCommenterInvert
-
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
   if g:spacevim_relativenumber

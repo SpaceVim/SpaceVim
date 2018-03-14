@@ -15,9 +15,6 @@ function! SpaceVim#layers#tools#plugins() abort
         \ ['junegunn/goyo.vim',               { 'on_cmd' : 'Goyo',
         \ 'loadconf' : 1}],
         \ ['junegunn/limelight.vim',          { 'on_cmd' : 'Limelight'}],
-        \ ['Yggdroot/LeaderF',                { 'on_cmd' : 'LeaderfFile',
-        \ 'loadconf' : 1,
-        \ 'merged' : 0}],
         \ ['MattesGroeger/vim-bookmarks',     { 'on_map' : '<Plug>Bookmark',
         \ 'on_cmd' : 'BookmarkShowAll',
         \ 'loadconf_before' : 1}],
@@ -82,14 +79,12 @@ function! SpaceVim#layers#tools#config() abort
   let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
-  nnoremap <Leader>fz :FZF<CR>
   if maparg('<C-_>', 'v') ==# ''
     vnoremap <silent> <C-_> <Esc>:Ydv<CR>
   endif
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
-  map <Leader>td <Plug>TaskList
   noremap <silent> <F8> :TlistToggle<CR>
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>

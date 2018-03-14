@@ -40,10 +40,6 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage all files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   endif
-  nmap <leader>hj <plug>(signify-next-hunk)
-  nmap <leader>hk <plug>(signify-prev-hunk)
-  nmap <leader>hJ 9999<leader>gj
-  nmap <leader>hK 9999<leader>gk
   augroup spacevim_layer_git
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>

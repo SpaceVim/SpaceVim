@@ -185,8 +185,6 @@ let g:unite_source_menu_menus.StatusCodeDefinitions.command_candidates = [
       \['➤ 505 HTTP Version Not Supported                                 ',
       \ 'echo "HTTP Version Not Supported"'],
       \]
-nnoremap <silent><leader>sc :Unite -silent -winheight=17
-      \ -start-insert menu:StatusCodeDefinitions<CR>
 let g:unite_source_grep_max_candidates = get(g:,
       \ 'unite_source_grep_max_candidates', 200)
 if executable('hw')
@@ -238,12 +236,6 @@ let g:unite_source_rec_async_command = get(g:,
       \ 'unite_source_rec_async_command',
       \ ['ag', '--follow', '--nocolor', '--nogroup',
       \  '--hidden', '-g', ''])
-nnoremap <silent><leader>ufa :<C-u>Unite -no-split
-      \ -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
-nnoremap <silent><leader>ufr :<C-u>Unite
-      \ -buffer-name=files file_rec/async:!<cr>
-nnoremap <silent><leader>ufg :<C-u>Unite
-      \ -buffer-name=git-repo file_rec/git<cr>
 call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
       \   'start_insert' : 1,
       \   'quit'         : 1,
@@ -253,42 +245,11 @@ call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
       \ })
 call unite#custom#source('file_rec/async,file_rec/neovim', 'ignore_globs',
       \ ['*.png','.git/','*.ttf', '*.eot', '*.woff', '*.svg'])
-nnoremap <silent><leader>uf  :<C-u>Unite
-      \ -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <silent><leader>ufm :<C-u>Unite
-      \ -no-split -buffer-name=mru   -start-insert file_mru<cr>
-nnoremap <silent><leader>ubf :<C-u>Unite
-      \ -buffer-name=buffer  buffer<cr>
-nnoremap <silent><leader>utb :<C-u>Unite
-      \ -buffer-name=buffer_tab  buffer_tab<cr>
 call unite#custom#profile('buffer,buffer_tab', 'context', {
       \   'start_insert' : 0,
       \   'quit'         : 1,
       \   'keep_focus'   : 1,
       \ })
-nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
-"" grep dictionay
-""" For searching the word in the cursor in the current directory
-nnoremap <silent><leader>v :Unite
-      \ -auto-preview -no-split grep:.::<C-R><C-w><CR>
-""" For searching the word handin
-nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
-""" For searching the word in the cursor in the current buffer
-noremap <silent><leader>vf :Unite
-      \ -auto-preview -no-split grep:%::<C-r><C-w><CR>
-""" For searching the word in the cursor in all opened buffer
-noremap <silent><leader>va :Unite
-      \ -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-nnoremap <silent><Leader>bl :<C-u>Unite
-      \ -start-insert -buffer-name=buffer buffer<cr>
-nnoremap <silent><Leader>ta :<C-u>Unite -start-insert -buffer-name=tag tag<cr>
-" search plugin
-" :Unite neobundle/search
-"for Unite menu{
-nnoremap <silent><leader>ugg :Unite -silent -start-insert menu:git<CR>
-nnoremap <silent><leader>ugf :UniteWithCursorWord file_rec/async<CR>
-nnoremap <silent><leader>ugt :UniteWithCursorWord tag<CR>
-nnoremap <silent><Leader>ls :call <SID>view_github_starred_repos()<CR>
 function! s:view_github_starred_repos() abort
   if empty(g:unite_source_menu_menus.MyStarredrepos.command_candidates)
     if UpdateStarredRepos()
@@ -298,8 +259,6 @@ function! s:view_github_starred_repos() abort
     Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
   endif
 endfunction
-nnoremap <silent><Leader>lm :Unite
-      \ -silent -ignorecase -winheight=17 -start-insert menu:MpvPlayer<CR>
 call zvim#util#loadMusics()
 augroup unite_buffer_feature
   autocmd FileType unite call s:unite_my_settings()
