@@ -27,10 +27,5 @@ endfunction
 function! g:ref_source_webdict_sites.wiki.filter(output)
   return join(split(a:output, "\n")[17 :], "\n")
 endfunction
-nnoremap <Leader>rj :<C-u>Ref webdict je<Space>
-nnoremap <Leader>re :<C-u>Ref webdict ej<Space>
-nnoremap <Leader>rc :<C-u>Ref webdict cn<Space>
-nnoremap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
-nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
 
 " vim:set et sw=2:

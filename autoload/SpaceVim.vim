@@ -616,7 +616,6 @@ function! SpaceVim#end() abort
   endif
   call SpaceVim#mapping#g#init()
   call SpaceVim#mapping#z#init()
-  call SpaceVim#mapping#leader#defindglobalMappings()
   call SpaceVim#mapping#leader#defindKEYs()
   call SpaceVim#mapping#space#init()
   if !SpaceVim#mapping#guide#has_configuration()

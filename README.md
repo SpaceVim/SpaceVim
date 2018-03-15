@@ -62,7 +62,7 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 [**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
 
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
-The mapping guide is also available for `g`, `z`, `s`, `f` and `F`.
+The mapping guide is also available for `g`, `z`, and `s`.
 
 ![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
