@@ -192,7 +192,6 @@ function! SpaceVim#layers#colorscheme#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
                 \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
                 \ . ', [])', 'cycle-spacevim-theme', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'unite-colorschemes', 1)
 endfunction
 
 
