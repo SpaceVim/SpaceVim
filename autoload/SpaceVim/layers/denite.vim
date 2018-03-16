@@ -50,5 +50,16 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>fh
+        \ :<C-u>Denite neoyank<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.h = ['Denite neoyank',
+        \ 'fuzzy find yank history',
+        \ [
+        \ '[Leader f h] is to fuzzy find history and yank content',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 " vim:set et sw=2 cc=80:

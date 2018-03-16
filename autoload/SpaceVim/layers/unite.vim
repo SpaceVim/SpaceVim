@@ -110,7 +110,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Unite history/yank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.h = ['Unite history/yank',
-        \ 'fuzzy find history/yank',
+        \ 'fuzzy find yank history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
         \ '',
