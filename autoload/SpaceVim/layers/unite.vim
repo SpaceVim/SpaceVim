@@ -19,9 +19,9 @@ function! SpaceVim#layers#unite#plugins() abort
         \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
         \ ]
 
-        " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
-        " \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
-        " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
+  " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
+  " \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
+  " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
 
   " history/yank source <Leader>fh
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
@@ -51,6 +51,7 @@ function! SpaceVim#layers#unite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', '!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd_project')) . ', [])',
         \ 'shell cmd(project root)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
 endfunction
@@ -109,7 +110,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Unite history/yank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.h = ['Unite history/yank',
-        \ 'fuzzy find history/yank',
+        \ 'fuzzy find yank history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
         \ '',
@@ -160,8 +161,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fo  :<C-u>Unite -buffer-name=outline
-        \ -start-insert -auto-preview -split outline<CR>
+  nnoremap <silent> <Leader>fo  :<C-u>Unite outline<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['Unite outline',
         \ 'fuzzy find outline',
@@ -171,7 +171,6 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'unite-colorschemes', 1)
 endfunction
 
 function! s:run_shell_cmd() abort
