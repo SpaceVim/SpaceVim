@@ -35,6 +35,10 @@ function! SpaceVim#layers#ui#config() abort
   else
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
+
+  " Add indentation level to tab-indentated files. 
+  " Note: there is a blank space at the end of the late backslash
+  autocmd FileType go set list lcs=tab:\┊\ 
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
