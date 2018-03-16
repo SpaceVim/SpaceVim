@@ -161,8 +161,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fo  :<C-u>Unite -buffer-name=outline
-        \ -start-insert -auto-preview -split outline<CR>
+  nnoremap <silent> <Leader>fo  :<C-u>Unite outline<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['Unite outline',
         \ 'fuzzy find outline',
