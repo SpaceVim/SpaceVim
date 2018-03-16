@@ -93,7 +93,7 @@ System="$(uname -s)"
 # need_cmd {{{
 need_cmd () {
   if ! hash "$1" &>/dev/null; then
-    error "Need '$1' (command not fount)"
+    error "Need '$1' (command not found)"
     exit 1
   fi
 }
