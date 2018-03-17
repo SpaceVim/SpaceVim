@@ -36,3 +36,16 @@ function! SpaceVim#layers#ctrlp#plugins() abort
     endif
     return plugins
 endfunction
+
+function! SpaceVim#layers#ctrlp#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  nnoremap <silent> <C-p> :Denite file_rec<cr>
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
+endfunction
+
+let s:file = expand('<sfile>:~')
+let s:unite_lnum = expand('<slnum>') + 3
+function! s:defind_fuzzy_finder() abort
+endfunction
