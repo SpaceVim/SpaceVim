@@ -109,9 +109,9 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fo  :<C-u>Denite outline<CR>
+  nnoremap <silent> <Leader>fo  :<C-u>LeaderfFunction<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.o = ['Denite outline',
+  let g:_spacevim_mappings.f.o = ['LeaderfFunction',
         \ 'fuzzy find outline',
         \ [
         \ '[Leader f o] is to fuzzy find outline',
