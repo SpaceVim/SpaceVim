@@ -45,7 +45,8 @@ function! s:colors() abort
         \               'fnamemodify(v:val, ":t:r")'),
         \ 'sink': 'colo', 'down': '40%'})
 endfunction
+
 command! FzfFiles call <SID>files()
 function! s:files() abort
-  call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'}})
+  call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'})
 endfunction
