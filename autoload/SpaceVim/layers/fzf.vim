@@ -41,12 +41,22 @@ endfunction
 
 command! FzfColors call <SID>colors()
 function! s:colors() abort
+  let s:source = 'colorscheme'
   call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
-        \               'fnamemodify(v:val, ":t:r")'),
+        \               "fnamemodify(v:val, ':t:r')"),
         \ 'sink': 'colo', 'down': '40%'})
 endfunction
 
 command! FzfFiles call <SID>files()
 function! s:files() abort
+  let s:source = 'files'
   call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'})
+endfunction
+
+let s:source = ''
+
+function! SpaceVim#layers#fzf#sources() abort
+
+  return s:source
+
 endfunction
