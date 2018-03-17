@@ -6,6 +6,9 @@
 " License: GPLv3
 "=============================================================================
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
+
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
   call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
@@ -37,6 +40,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>fj
+        \ :<C-u>FzfJumps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.j = ['FzfJumps',
+        \ 'fuzzy find jump list',
+        \ [
+        \ '[Leader f j] is to fuzzy find jump list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
@@ -59,4 +73,43 @@ function! SpaceVim#layers#fzf#sources() abort
 
   return s:source
 
+endfunction
+command! FzfJumps call <SID>jumps()
+function! s:bufopen(e) abort
+    let list = split(a:e)
+    if len(list) < 4
+      return
+    endif
+
+    let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
+    let lines = getbufline(file_text, linenr)
+    let path = file_text
+    let bufnr = bufnr(file_text)
+    if empty(lines)
+      if stridx(join(split(getline(linenr))), file_text) == 0
+        let lines = [file_text]
+        let path = bufname('%')
+        let bufnr = bufnr('%')
+      elseif filereadable(path)
+        let bufnr = 0
+        let lines = ['buffer unloaded']
+      else
+        " Skip.
+        return
+      endif
+    endif
+
+    exe 'e '  . path
+    call cursor(linenr, col)
+endfunction
+function! s:jumps() abort
+  function! s:jumplist() abort
+    return split(s:CMP.execute('jumps'), '\n')[1:]
+  endfunction
+  call fzf#run({
+        \   'source':  reverse(<sid>jumplist()),
+        \   'sink':    function('s:bufopen'),
+        \   'options': '+m',
+        \   'down':    len(<sid>jumplist()) + 2
+        \ })
 endfunction
