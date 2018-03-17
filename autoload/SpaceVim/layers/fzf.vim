@@ -8,11 +8,35 @@
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
-  call add(plugins, ['junegunn/fzf',                { 'on_cmd' : 'FZF'}])
+  call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
+  call add(plugins, ['junegunn/fzf.vim',                { 'merged' : 0}])
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#fzf#config() abort
-  
+  let g:fzf_command_prefix = 'Fzf'
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  nnoremap <silent> <C-p> :FzfFiles<cr>
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
+endfunction
+
+let s:file = expand('<sfile>:~')
+let s:unite_lnum = expand('<slnum>') + 3
+function! s:defind_fuzzy_finder() abort
+  nnoremap <silent> <Leader>fe
+        \ :<C-u>FZFNeoyank<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.r = ['FZFNeoyank',
+        \ 'fuzzy find registers',
+        \ [
+        \ '[Leader f r ] is to resume unite window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
