@@ -32,7 +32,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fe
         \ :<C-u>FZFNeoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.r = ['FZFNeoyank',
+  let g:_spacevim_mappings.f.e = ['FZFNeoyank',
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume unite window',
@@ -47,6 +47,28 @@ function! s:defind_fuzzy_finder() abort
         \ 'fuzzy find jump list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fh
+        \ :<C-u>FZFNeoyank<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.h = ['FZFNeoyank',
+        \ 'fuzzy find yank history',
+        \ [
+        \ '[Leader f r ] is to resume unite window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fm
+        \ :<C-u>FzfMessages<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.m = ['FzfMessages',
+        \ 'fuzzy find message',
+        \ [
+        \ '[Leader f m] is to fuzzy find message',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
@@ -112,5 +134,24 @@ function! s:jumps() abort
         \   'sink':    function('s:bufopen'),
         \   'options': '+m',
         \   'down':    len(<sid>jumplist()) + 2
+        \ })
+endfunction
+command! FzfMessages call <SID>message()
+function! s:yankmessage(e) abort
+  let @" = a:e
+  echohl ModeMsg
+  echo "Yanked"
+  echohl None
+endfunction
+function! s:message() abort
+  let s:source = 'jumps'
+  function! s:messagelist() abort
+    return split(s:CMP.execute('message'), '\n')
+  endfunction
+  call fzf#run({
+        \   'source':  reverse(<sid>messagelist()),
+        \   'sink':    function('s:yankmessage'),
+        \   'options': '+m',
+        \   'down':    len(<sid>messagelist()) + 2
         \ })
 endfunction
