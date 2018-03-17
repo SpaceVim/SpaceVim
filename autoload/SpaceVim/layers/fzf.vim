@@ -9,7 +9,6 @@
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
   call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
-  call add(plugins, ['junegunn/fzf.vim',                { 'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
@@ -17,7 +16,6 @@ endfunction
 
 
 function! SpaceVim#layers#fzf#config() abort
-  let g:fzf_command_prefix = 'Fzf'
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
@@ -39,4 +37,15 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+endfunction
+
+command! FzfColors call <SID>colors()
+function! s:colors() abort
+  call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
+        \               'fnamemodify(v:val, ":t:r")'),
+        \ 'sink': 'colo', 'down': '40%'})
+endfunction
+command! FzfFiles call <SID>files()
+function! s:files() abort
+  call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'}})
 endfunction
