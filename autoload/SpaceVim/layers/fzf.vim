@@ -103,6 +103,7 @@ function! s:bufopen(e) abort
     call cursor(linenr, col)
 endfunction
 function! s:jumps() abort
+  let s:source = 'jumps'
   function! s:jumplist() abort
     return split(s:CMP.execute('jumps'), '\n')[1:]
   endfunction
