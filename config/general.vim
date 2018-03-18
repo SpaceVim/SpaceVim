@@ -15,7 +15,7 @@ if g:spacevim_enable_guicolors == 1
         set guicolors
     endif
 endif
-if SpaceVim#layers#isLoaded('colorscheme') && g:spacevim_colorscheme !=# '' "{{{
+if g:spacevim_colorscheme !=# '' "{{{
     try
         exec 'set background=' . g:spacevim_colorscheme_bg
         exec 'colorscheme ' . g:spacevim_colorscheme

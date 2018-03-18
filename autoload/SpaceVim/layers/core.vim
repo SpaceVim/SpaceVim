@@ -11,6 +11,7 @@ function! SpaceVim#layers#core#plugins() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
           \ 'loadconf' : 1}])
+    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
@@ -21,7 +22,17 @@ function! SpaceVim#layers#core#plugins() abort
   call add(plugins, ['rhysd/clever-f.vim'])
 
   call add(plugins, ['andymass/vim-matchup'])
-
+  call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['tyru/open-browser.vim', {
+        \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
+        \ 'OpenBrowserSearch'],
+        \'on_map' : '<Plug>(openbrowser-',
+        \ 'loadconf' : 1,
+        \}])
+  call add(plugins, ['tpope/vim-projectionist',         { 'on_cmd' : ['A', 'AS', 'AV',
+        \ 'AT', 'AD', 'Cd', 'Lcd', 'ProjectDo']}])
+  call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
+        \ 'loadconf' : 1} ])
   return plugins
 endfunction
 

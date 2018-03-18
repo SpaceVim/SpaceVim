@@ -1,12 +1,13 @@
-[[[https://spacevim.org/logo.png|alt=SpaceVim home]]](Home)
+[![SpaceVim home](https://spacevim.org/logo.png)](Home)
 --
-[Introduction](introduction)   
+[Introduction](introduction)  
 [Community](community)  
 [FAQ](FAQ)  
 [Layers](https://spacevim.org/layers/)
 
 **Users**  
-[Install](Installing-SpaceVim)  
+[Install](Installing-SpaceVim)
+[Following HEAD](Following-HEAD)
 [Docs](http://spacevim.org/documentation/)
 
 **Developers**  

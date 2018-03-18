@@ -138,7 +138,6 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
   call SpaceVim#layers#load('edit')
-  call SpaceVim#layers#load('tools')
   call SpaceVim#layers#load('ui')
   call SpaceVim#layers#load('core')
   call SpaceVim#layers#load('core#banner')

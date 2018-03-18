@@ -30,6 +30,9 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
         \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
         \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
+        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : 'StripWhitespace'}],
+        \ ['ianva/vim-youdao-translater', { 'on_cmd' : ['Ydv','Ydc','Yde']}],
         \ ]
   if executable('fcitx')
     call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -517,6 +520,6 @@ function! s:add_buffer_head() abort
   endif
 endfunction
 
-function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp)
+function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
   call extend(s:ft_head_tp, {a:ft : a:tamp})
 endfunction

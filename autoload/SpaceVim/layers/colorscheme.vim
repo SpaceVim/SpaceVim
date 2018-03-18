@@ -149,7 +149,6 @@
 
 function! SpaceVim#layers#colorscheme#plugins() abort
     return [
-                \ ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}],
                 \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
                 \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
                 \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
