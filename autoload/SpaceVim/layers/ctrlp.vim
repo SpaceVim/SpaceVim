@@ -39,7 +39,8 @@ endfunction
 
 function! SpaceVim#layers#ctrlp#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
-  nnoremap <silent> <C-p> :Denite file_rec<cr>
+  " This is definded in plugin config
+  " nnoremap <silent> <C-p> :Ctrlp<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
