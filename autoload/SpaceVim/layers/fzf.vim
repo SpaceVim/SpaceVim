@@ -30,9 +30,9 @@ let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fe
-        \ :<C-u>FZFNeoyank<CR>
+        \ :<C-u>FzfRegister<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.e = ['FZFNeoyank',
+  let g:_spacevim_mappings.f.e = ['FzfRegister',
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume unite window',
@@ -236,6 +236,9 @@ function! s:location_list() abort
         \ 'down' : '40%',
         \ })
 endfunction
+
+
+command! -bang FzfOutline call fzf#run(fzf#wrap('outline', s:outline(), <bang>0))
 function! s:outline_format(lists) abort
   for list in a:lists
     let linenr = list[2][:len(list[2])-3]
@@ -287,4 +290,24 @@ function! s:outline(...) abort
     \ 'sink*':   function('s:outline_sink'),
     \ 'options': '--reverse +m -d "\t" --with-nth 1 -n 1 --ansi --prompt "Outline> "'}
 endfunction
-command! -bang FzfOutline call fzf#run(fzf#wrap('outline', s:outline(), <bang>0))
+
+
+command! FzfRegister call <SID>register()
+function! s:yankregister(e) abort
+  let @" = a:e
+  echohl ModeMsg
+  echo 'Yanked'
+  echohl None
+endfunction
+function! s:register() abort
+  let s:source = 'registers'
+  function! s:registers_list() abort
+    return split(s:CMP.execute('registers'), '\n')[1:]
+  endfunction
+  call fzf#run({
+        \   'source':  reverse(<sid>registers_list()),
+        \   'sink':    function('s:yankregister'),
+        \   'options': '+m',
+        \   'down': '40%'
+        \ })
+endfunction
