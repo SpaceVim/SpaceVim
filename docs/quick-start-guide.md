@@ -49,6 +49,6 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 
 ## Learning SpaceVim
 
-- [SpaceVim Documentation](documentation). Also known as "The Book", The SpaceVim Documentation will introduce
+- [SpaceVim Documentation](../documentation). Also known as "The Book", The SpaceVim Documentation will introduce
 you to the main topics important to using SpaceVim. The book is the primary official document of the language.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
