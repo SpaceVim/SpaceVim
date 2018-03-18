@@ -17,7 +17,7 @@ function! SpaceVim#layers#ui#plugins() abort
         \ ['t9md/vim-choosewin', {'merged' : 0}],
         \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
-  if get(g:, '_spacevim_statusline_loaded', 0) == 0
+  if !SpaceVim#layers#isLoaded('core#statusline')
     call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
     call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])

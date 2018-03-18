@@ -151,12 +151,12 @@ function! SpaceVim#autocmds#VimEnter() abort
   for argv in g:_spacevim_mappings_space_custom
     call call('SpaceVim#mapping#space#def', argv)
   endfor
-  if get(g:, '_spacevim_statusline_loaded', 0) == 1
+  if SpaceVim#layers#isLoaded('core#statusline')
     set laststatus=2
     call SpaceVim#layers#core#statusline#def_colors()
     setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
   endif
-  if get(g:, '_spacevim_tabline_loaded', 0) == 1
+  if SpaceVim#layers#isLoaded('core#tabline')
     call SpaceVim#layers#core#tabline#def_colors()
     set showtabline=2
   endif
