@@ -7,7 +7,6 @@
 
 **Users**  
 [Install](Installing-SpaceVim)
-[Following HEAD](Following-HEAD)
 [Docs](http://spacevim.org/documentation/)
 
 **Developers**  
