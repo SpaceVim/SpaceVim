@@ -392,7 +392,7 @@ The `core#statusline` layer provide a heavily customized powerline with the foll
 - toggle syntax checking info
 - toggle battery info
 - toggle minor mode lighters
-- show VCS information (branch, hunk summary)
+- show VCS information (branch, hunk summary) (need `git` and `VersionControl` layer)
 
 Reminder of the color codes for the states:
 
