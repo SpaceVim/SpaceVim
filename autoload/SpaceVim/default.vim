@@ -144,11 +144,6 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
-  if has('python3')
-    call SpaceVim#layers#load('denite')
-  else
-    call SpaceVim#layers#load('unite')
-  endif
 endfunction
 
 function! SpaceVim#default#keyBindings() abort

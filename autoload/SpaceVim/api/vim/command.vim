@@ -60,6 +60,7 @@ function! s:self.debug() abort
 endfunction
 
 
+
 function! SpaceVim#api#vim#command#get()
   return deepcopy(s:self)
 endfunction

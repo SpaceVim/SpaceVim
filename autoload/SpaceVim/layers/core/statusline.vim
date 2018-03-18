@@ -320,6 +320,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'SpaceVimTabsManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+  elseif &filetype ==# 'fzf'
+    return '%#SpaceVim_statusline_a_bold# FZF %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# %{SpaceVim#layers#fzf#sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'denite'
     return '%#SpaceVim_statusline_a_bold# %{SpaceVim#layers#core#statusline#denite_mode()} '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' '

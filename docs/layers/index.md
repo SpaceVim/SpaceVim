@@ -47,6 +47,7 @@ call SpaceVim#layers#disable('shell')
 
 | Name                                                                              | Description                                                                                                                                           |
 | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [VersionControl](https://spacevim.org/layers/VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…           |
 | [autocomplete](https://spacevim.org/layers/autocomplete/)                         | This layer provides auto-completion to SpaceVim                                                                                                       |
 | [chat](https://spacevim.org/layers/chat/)                                         | SpaceVim chatting layer provide chatting with qq and weixin in vim.                                                                                   |
 | [checkers](https://spacevim.org/layers/checkers/)                                 | This layer provides syntax checking feature                                                                                                           |
@@ -56,10 +57,10 @@ call SpaceVim#layers#disable('shell')
 | [ctrlp](https://spacevim.org/layers/ctrlp/)                                       | This layers adds extensive support for git                                                                                                            |
 | [debug](https://spacevim.org/layers/debug/)                                       | This layer provide debug workflow support in SpaceVim                                                                                                 |
 | [default](https://spacevim.org/layers/default/)                                   | lt layer contains none plugins, but it has some better default config for vim and neovim                                                              |
-| [denite](https://spacevim.org/layers/denite/)                                     | Another Unite centric work-flow which use denite                                                                                                      |
+| [denite](https://spacevim.org/layers/denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                     |
+| [fzf](https://spacevim.org/layers/fzf/)                                           | This layers provide a heavily customized fzf centric work-flow                                                                                        |
 | [git](https://spacevim.org/layers/git/)                                           | This layers adds extensive support for git                                                                                                            |
 | [github](https://spacevim.org/layers/github/)                                     | This layer provides GitHub integration for SpaceVim                                                                                                   |
-| [index](https://spacevim.org/layers/index/)                                       | list of available layers in SpaceVim                                                                                                                  |
 | [lang#c](https://spacevim.org/layers/lang/c/)                                     | This layer is for c/c++/object-c development                                                                                                          |
 | [lang#csharp](https://spacevim.org/layers/lang/csharp/)                           | This layer is for csharp development                                                                                                                  |
 | [lang#dart](https://spacevim.org/layers/lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                               |
@@ -83,6 +84,7 @@ call SpaceVim#layers#disable('shell')
 | [tags](https://spacevim.org/layers/tags/)                                         | This layer provide tags manager for project                                                                                                           |
 | [tools#dash](https://spacevim.org/layers/tools/dash/)                             | This layer provides Dash integration for SpaceVim                                                                                                     |
 | [ui](https://spacevim.org/layers/ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                             |
+| [unite](https://spacevim.org/layers/unite/)                                       | This layers provide a heavily customized Unite centric work-flow                                                                                      |
 
 <!-- SpaceVim layer list end -->
 
