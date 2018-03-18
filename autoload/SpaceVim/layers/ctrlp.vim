@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#ctrlp#plugins() abort
   let plugins = [
-        \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1}],
+        \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1, 'merged' : 0}],
         \ ['FelikZ/ctrlp-py-matcher'],
         \ ['mattn/ctrlp-register', {'on_cmd' : 'CtrlPRegister'}],
         \ ['DeaR/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],

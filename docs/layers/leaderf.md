@@ -1,13 +1,13 @@
 ---
-title: "SpaceVim denite layer"
-description: "This layers provide a heavily customized Denite centric work-flow"
+title: "SpaceVim leaderf layer"
+description: "This layers provide a heavily customized LeaderF centric work-flow"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) denite
 
 ## Intro
 
-This layer is a heavily customized warpper for denite and it's sources.
+This layer is a heavily customized warpper for LeaderF and it's sources.
 
 
 ## Configuration
