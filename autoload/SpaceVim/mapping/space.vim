@@ -55,10 +55,6 @@ function! SpaceVim#mapping#space#init() abort
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'],
-        \ 'Goyo', 'centered-buffer-mode', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'],
-        \ 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'],
         \ 'close', 'delete window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
