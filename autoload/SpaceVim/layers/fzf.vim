@@ -73,6 +73,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>fq
+        \ :<C-u>FzfQuickfix<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.q = ['FzfQuickfix',
+        \ 'fuzzy find quickfix list',
+        \ [
+        \ '[Leader f q] is to fuzzy find quickfix list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
@@ -140,11 +151,11 @@ command! FzfMessages call <SID>message()
 function! s:yankmessage(e) abort
   let @" = a:e
   echohl ModeMsg
-  echo "Yanked"
+  echo 'Yanked'
   echohl None
 endfunction
 function! s:message() abort
-  let s:source = 'jumps'
+  let s:source = 'message'
   function! s:messagelist() abort
     return split(s:CMP.execute('message'), '\n')
   endfunction
@@ -153,5 +164,30 @@ function! s:message() abort
         \   'sink':    function('s:yankmessage'),
         \   'options': '+m',
         \   'down':    len(<sid>messagelist()) + 2
+        \ })
+endfunction
+
+command! FzfQuickfix call s:quickfix()
+function! s:open_quickfix_item(e) abort
+    let line = a:e
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    exe 'e ' . filename
+    call cursor(linenr, colum)
+endfunction
+function! s:quickfix_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+function! s:quickfix() abort
+  let s:source = 'quickfix'
+  function! s:quickfix_list() abort
+    return map(getqflist(), 's:quickfix_to_grep(v:val)')
+  endfunction
+  call fzf#run({
+        \ 'source':  reverse(<sid>quickfix_list()),
+        \ 'sink':    function('s:open_quickfix_item'),
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
         \ })
 endfunction
