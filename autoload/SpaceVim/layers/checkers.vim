@@ -72,14 +72,16 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
-                \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
-                \ 'toggle syntax checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
+        \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+        \ 'toggle syntax checker', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
-      autocmd User NeomakeFinished nested
-            \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      if SpaceVim#layers#isLoaded('core#statusline')
+        autocmd User NeomakeFinished nested
+              \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      endif
       if s:show_cursor_error
         " when move cursor, the error message will be shown below current line
         " after a delay
@@ -95,7 +97,7 @@ function! SpaceVim#layers#checkers#config() abort
           autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear()
         endif
       endif
-    elseif g:spacevim_enable_ale
+    elseif g:spacevim_enable_ale && SpaceVim#layers#isLoaded('core#statusline')
       autocmd User ALELint 
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
@@ -150,9 +152,9 @@ function! s:verify_syntax_setup() abort
 endfunction
 
 function! s:toggle_syntax_checker() abort
-    call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-    call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-    verbose NeomakeToggle
+  call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+  call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
+  verbose NeomakeToggle
 endfunction
 
 function! s:error_transient_state() abort
