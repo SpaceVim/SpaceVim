@@ -62,9 +62,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fj
-        \ :<C-u>FzfJumps<CR>
+        \ :<C-u>CtrlPJump<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.j = ['FzfJumps',
+  let g:_spacevim_mappings.f.j = ['CtrlPJump',
         \ 'fuzzy find jump list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
@@ -95,9 +95,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fq
-        \ :<C-u>FzfQuickfix<CR>
+        \ :<C-u>CtrlPQuickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.q = ['FzfQuickfix',
+  let g:_spacevim_mappings.f.q = ['CtrlPQuickfix',
         \ 'fuzzy find quickfix list',
         \ [
         \ '[Leader f q] is to fuzzy find quickfix list',
