@@ -21,6 +21,7 @@ function! SpaceVim#layers#core#plugins() abort
   call add(plugins, ['rhysd/clever-f.vim'])
 
   call add(plugins, ['andymass/vim-matchup'])
+  call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
 
   return plugins
 endfunction
