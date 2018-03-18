@@ -84,6 +84,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>fl
+        \ :<C-u>FzfLocationList<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.l = ['FzfLocationList',
+        \ 'fuzzy find location list',
+        \ [
+        \ '[Leader f l] is to fuzzy find location list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
@@ -187,6 +198,30 @@ function! s:quickfix() abort
   call fzf#run({
         \ 'source':  reverse(<sid>quickfix_list()),
         \ 'sink':    function('s:open_quickfix_item'),
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
+        \ })
+endfunction
+command! FzfLocationList call s:location_list()
+function! s:location_list_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+function! s:open_location_item(e) abort
+    let line = a:e
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    exe 'e ' . filename
+    call cursor(linenr, colum)
+endfunction
+function! s:location_list() abort
+  let s:source = 'location_list'
+  function! s:get_location_list() abort
+    return map(getloclist(0), 's:location_list_to_grep(v:val)')
+  endfunction
+  call fzf#run({
+        \ 'source':  reverse(<sid>get_location_list()),
+        \ 'sink':    function('s:open_location_item'),
         \ 'options': '--reverse',
         \ 'down' : '40%',
         \ })
