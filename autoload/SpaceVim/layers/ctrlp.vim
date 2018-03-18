@@ -61,42 +61,9 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fh
-        \ :<C-u>FZFNeoyank<CR>
+  nnoremap <silent> <Leader>fo  :<C-u>CtrlPBufTag<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.h = ['FZFNeoyank',
-        \ 'fuzzy find yank history',
-        \ [
-        \ '[Leader f r ] is to resume unite window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> <Leader>fm
-        \ :<C-u>FzfMessages<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.m = ['FzfMessages',
-        \ 'fuzzy find message',
-        \ [
-        \ '[Leader f m] is to fuzzy find message',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> <Leader>fl
-        \ :<C-u>FzfLocationList<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.l = ['FzfLocationList',
-        \ 'fuzzy find location list',
-        \ [
-        \ '[Leader f l] is to fuzzy find location list',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-  nnoremap <silent> <Leader>fo  :<C-u>FzfOutline<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.o = ['FzfOutline',
+  let g:_spacevim_mappings.f.o = ['CtrlPBufTag',
         \ 'fuzzy find outline',
         \ [
         \ '[Leader f o] is to fuzzy find outline',
