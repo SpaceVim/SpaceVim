@@ -9,7 +9,23 @@ comments: true
 
 # [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.7.0
 
-## New Features
+
+![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+
+The last release is 3 mouths ago, so we want to bring you up-to-date in the SpaceVim world.
+
+## Breaking changes
+
+- Remove `[Unite]` and `[Denite]` leader, use clever-f instead.
+- Disable all language layers by default, reduced the number of plugins, by default it is 51 only.
+- Disable `git`, `VersionControl` and all fuzzy finder layers by default.
+- Remove most key bindings begin with `<Leader>`, the `<Leader>` should be customized by users themselves.
+
+## Pull requests
+
+This is a list of pull requests since last release.
+
+### New features
 
 - Add fzf layer [#1504](https://github.com/SpaceVim/SpaceVim/pull/1504)
 - Add clever f [#1460](https://github.com/SpaceVim/SpaceVim/pull/1460)
@@ -51,12 +67,11 @@ comments: true
 - Add dart layer [#1207](https://github.com/SpaceVim/SpaceVim/pull/1207)
 
 
-## Feature Changes
+### Changes
 
 - Change into more frequented used shortcuts [#1230](https://github.com/SpaceVim/SpaceVim/pull/1230)
 
-
-## Bug Fixs
+### Bug fixs
 
 - Fix #1505 [#1509](https://github.com/SpaceVim/SpaceVim/pull/1509)
 - Fix 1485 [#1508](https://github.com/SpaceVim/SpaceVim/pull/1508)
@@ -101,7 +116,7 @@ comments: true
 - Fix 'defined' typos in plugin help [#1217](https://github.com/SpaceVim/SpaceVim/pull/1217)
 
 
-## Unmarked PRs
+### Unmarked PRs
 
 - Improve tools layer [#1507](https://github.com/SpaceVim/SpaceVim/pull/1507)
 - Update ctrlp layer [#1503](https://github.com/SpaceVim/SpaceVim/pull/1503)
