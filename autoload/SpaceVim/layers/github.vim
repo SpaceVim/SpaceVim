@@ -33,7 +33,7 @@ function! SpaceVim#layers#github#plugins() abort
         \ 'depends': 'open-browser.vim',
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
         \ }],
-        \ ['wsdjeg/GitHub-api.vim'],
+        \ ['wsdjeg/GitHub-api.vim', {'merged' : 0}],
         \ ]
 endfunction
 

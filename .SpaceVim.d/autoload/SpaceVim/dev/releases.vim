@@ -32,7 +32,8 @@ function! s:get_list_of_PRs() abort
   let prs = []
   for i in range(1, 10)
     let issues = List('SpaceVim','SpaceVim', i)
-    call extend(prs, filter(issues, 'v:val["number"] > 966 && v:val["number"] < 1203'))
+    call extend(prs, filter(issues, 'v:val["number"] > 1205 && v:val["number"] < 1510'))
+    call extend(prs, filter(issues, 'v:val["number"] == 1203'))
   endfor
   return filter(prs, 'has_key(v:val, "pull_request")')
 endfunction

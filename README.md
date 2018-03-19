@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.7.0-FF00CC.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
@@ -21,7 +21,7 @@ SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features. 
 SpaceVim is not only a vimrc but an ultimate Vim configuration, It contains many build-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
 
 See the [quick start guide](https://spacevim.org/quick-start-guide), [documentation](https://spacevim.org/documentation) or the [available layers](http://spacevim.org/layers/) for more information.
 
