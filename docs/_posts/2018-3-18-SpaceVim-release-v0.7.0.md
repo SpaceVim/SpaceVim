@@ -3,7 +3,7 @@ title: SpaceVim release v0.7.0
 categories: changelog
 excerpt: ""
 type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png
+image: https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png
 comments: true
 ---
 
