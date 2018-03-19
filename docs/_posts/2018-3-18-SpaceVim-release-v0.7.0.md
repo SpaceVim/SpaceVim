@@ -14,64 +14,55 @@ comments: true
 
 The last release is 3 mouths ago, so we want to bring you up-to-date in the SpaceVim world.
 
+
+
 ## Breaking changes
 
-- Remove `[Unite]` and `[Denite]` leader, use clever-f instead.
+- Add clever f [#1460](https://github.com/SpaceVim/SpaceVim/pull/1460)
+Disable `[Unite]` and `[Denite]` custom leader, use clever-f instead.
 - Disable all language layers by default, reduced the number of plugins, by default it is 51 only.
+  - Improve fzf layer [#1504](https://github.com/SpaceVim/SpaceVim/pull/1504)
+  - Improve ctrlp layer [#1503](https://github.com/SpaceVim/SpaceVim/pull/1503)
+  - Improve leaderf layer [#1498](https://github.com/SpaceVim/SpaceVim/pull/1498)
+  - Improve denite layer [#1491](https://github.com/SpaceVim/SpaceVim/pull/1491)
+  - Improve unite layer [#1487](https://github.com/SpaceVim/SpaceVim/pull/1487)
 - Disable `git`, `VersionControl` and all fuzzy finder layers by default.
 - Remove most key bindings begin with `<Leader>`, the `<Leader>` should be customized by users themselves.
+- Improve tools layer [#1507](https://github.com/SpaceVim/SpaceVim/pull/1507). And disable it by default.
 
-## Pull requests
+## New features
 
-This is a list of pull requests since last release.
-
-### New features
-
-- Add fzf layer [#1504](https://github.com/SpaceVim/SpaceVim/pull/1504)
-- Add clever f [#1460](https://github.com/SpaceVim/SpaceVim/pull/1460)
-- Add package.json as project rooter in javascript layer [#1437](https://github.com/SpaceVim/SpaceVim/pull/1437)
-- Add csharp layer. [#1433](https://github.com/SpaceVim/SpaceVim/pull/1433)
-- Add faq for update plugins [#1428](https://github.com/SpaceVim/SpaceVim/pull/1428)
-- Add preview func [#1425](https://github.com/SpaceVim/SpaceVim/pull/1425)
-- Add icon to welcome page(startify) [#1389](https://github.com/SpaceVim/SpaceVim/pull/1389)
-- Add OCaml layer documentation [#1386](https://github.com/SpaceVim/SpaceVim/pull/1386)
-- Add tools#dash layer [#1366](https://github.com/SpaceVim/SpaceVim/pull/1366)
-- Add tools#dash layer [#1365](https://github.com/SpaceVim/SpaceVim/pull/1365)
-- Add prompt for quit buffer. [#1359](https://github.com/SpaceVim/SpaceVim/pull/1359)
-- Add tetach script [#1358](https://github.com/SpaceVim/SpaceVim/pull/1358)
-- Add cn blog: grep on the fly [#1355](https://github.com/SpaceVim/SpaceVim/pull/1355)
-- Add job api document [#1344](https://github.com/SpaceVim/SpaceVim/pull/1344)
-- Add cn wiki for gitee [#1343](https://github.com/SpaceVim/SpaceVim/pull/1343)
-- Add disqus [#1329](https://github.com/SpaceVim/SpaceVim/pull/1329)
-- Add github/page check [#1304](https://github.com/SpaceVim/SpaceVim/pull/1304)
-- Add CODEOWNERS [#1302](https://github.com/SpaceVim/SpaceVim/pull/1302)
-- Add vim-pydocstring [#1299](https://github.com/SpaceVim/SpaceVim/pull/1299)
-- Add html layer doc [#1295](https://github.com/SpaceVim/SpaceVim/pull/1295)
-- Add visual selection support [#1291](https://github.com/SpaceVim/SpaceVim/pull/1291)
-- Add option for config filetype icon [#1289](https://github.com/SpaceVim/SpaceVim/pull/1289)
-- Add reddit Sidebar [#1273](https://github.com/SpaceVim/SpaceVim/pull/1273)
-- Add a new plugin into javascript layer [#1270](https://github.com/SpaceVim/SpaceVim/pull/1270)
-- Add SpaceVim theme [#1255](https://github.com/SpaceVim/SpaceVim/pull/1255)
-- Add help describe for unite key bindings [#1248](https://github.com/SpaceVim/SpaceVim/pull/1248)
 - Add project rooter [#1245](https://github.com/SpaceVim/SpaceVim/pull/1245)
-- Add help desc for windows key bindings. [#1244](https://github.com/SpaceVim/SpaceVim/pull/1244)
-- Add help describe for other key bindings [#1241](https://github.com/SpaceVim/SpaceVim/pull/1241)
-- Add newsletter [#1228](https://github.com/SpaceVim/SpaceVim/pull/1228)
-- Add lsp support for dart [#1222](https://github.com/SpaceVim/SpaceVim/pull/1222)
-- Add key bindings development doc [#1221](https://github.com/SpaceVim/SpaceVim/pull/1221)
+- Add package.json as project rooter in javascript layer [#1437](https://github.com/SpaceVim/SpaceVim/pull/1437)
+- Add windows key bindings guide [#1214](https://github.com/SpaceVim/SpaceVim/pull/1214)
+- Add tetach script [#1358](https://github.com/SpaceVim/SpaceVim/pull/1358)
+
+## New layers
+
+- Add tools#dash layer [#1366](https://github.com/SpaceVim/SpaceVim/pull/1366), [#1365](https://github.com/SpaceVim/SpaceVim/pull/1365)
+- Add lang#csharp layer. [#1433](https://github.com/SpaceVim/SpaceVim/pull/1433)
 - Add cscope layer [#1220](https://github.com/SpaceVim/SpaceVim/pull/1220)
-- Add newsletter #2 [#1216](https://github.com/SpaceVim/SpaceVim/pull/1216)
-- Add version api [#1215](https://github.com/SpaceVim/SpaceVim/pull/1215)
-- Add: Win leader guide [#1214](https://github.com/SpaceVim/SpaceVim/pull/1214)
-- Add new interesting banners [#1208](https://github.com/SpaceVim/SpaceVim/pull/1208)
 - Add dart layer [#1207](https://github.com/SpaceVim/SpaceVim/pull/1207)
 
+## Enhancements
 
-### Changes
-
+- Add icon to welcome page(startify) [#1389](https://github.com/SpaceVim/SpaceVim/pull/1389)
+- Add help description for windows key bindings. [#1244](https://github.com/SpaceVim/SpaceVim/pull/1244)
+- Add help description for unite key bindings [#1248](https://github.com/SpaceVim/SpaceVim/pull/1248)
+- Add help description for other key bindings [#1241](https://github.com/SpaceVim/SpaceVim/pull/1241)
+- Add prompt for quit buffer. [#1359](https://github.com/SpaceVim/SpaceVim/pull/1359)
+- Add visual selection support [#1291](https://github.com/SpaceVim/SpaceVim/pull/1291)
+- Add lsp support for dart [#1222](https://github.com/SpaceVim/SpaceVim/pull/1222)
+- Add a new plugin into javascript layer [#1270](https://github.com/SpaceVim/SpaceVim/pull/1270)
+- Add preview func [#1425](https://github.com/SpaceVim/SpaceVim/pull/1425)
+- Add vim-pydocstring [#1299](https://github.com/SpaceVim/SpaceVim/pull/1299)
+- Add option for config filetype icon [#1289](https://github.com/SpaceVim/SpaceVim/pull/1289)
+- Add SpaceVim theme [#1255](https://github.com/SpaceVim/SpaceVim/pull/1255)
+- Add version api [#1215](https://github.com/SpaceVim/SpaceVim/pull/1215)
+- Add new interesting banners [#1208](https://github.com/SpaceVim/SpaceVim/pull/1208)
 - Change into more frequented used shortcuts [#1230](https://github.com/SpaceVim/SpaceVim/pull/1230)
 
-### Bug fixs
+## Bug fixs
 
 - Fix #1505 [#1509](https://github.com/SpaceVim/SpaceVim/pull/1509)
 - Fix 1485 [#1508](https://github.com/SpaceVim/SpaceVim/pull/1508)
@@ -115,14 +106,27 @@ This is a list of pull requests since last release.
 - Fix #1143 [#1224](https://github.com/SpaceVim/SpaceVim/pull/1224)
 - Fix 'defined' typos in plugin help [#1217](https://github.com/SpaceVim/SpaceVim/pull/1217)
 
+## Doc && Wiki
 
-### Unmarked PRs
+- Add cn wiki for gitee [#1343](https://github.com/SpaceVim/SpaceVim/pull/1343)
+- Add key bindings development doc [#1221](https://github.com/SpaceVim/SpaceVim/pull/1221)
+- Add CODEOWNERS [#1302](https://github.com/SpaceVim/SpaceVim/pull/1302)
+- Add html layer doc [#1295](https://github.com/SpaceVim/SpaceVim/pull/1295)
+- Add faq for update plugins [#1428](https://github.com/SpaceVim/SpaceVim/pull/1428)
+- Add OCaml layer documentation [#1386](https://github.com/SpaceVim/SpaceVim/pull/1386)
+- Add job api document [#1344](https://github.com/SpaceVim/SpaceVim/pull/1344)
+- Add disqus [#1329](https://github.com/SpaceVim/SpaceVim/pull/1329)
+- Add github/page check [#1304](https://github.com/SpaceVim/SpaceVim/pull/1304)
+- Add reddit Sidebar [#1273](https://github.com/SpaceVim/SpaceVim/pull/1273)
 
-- Improve tools layer [#1507](https://github.com/SpaceVim/SpaceVim/pull/1507)
-- Update ctrlp layer [#1503](https://github.com/SpaceVim/SpaceVim/pull/1503)
-- Improve leaderf layer [#1498](https://github.com/SpaceVim/SpaceVim/pull/1498)
-- Improve denite layer [#1491](https://github.com/SpaceVim/SpaceVim/pull/1491)
-- Improve unite layer [#1487](https://github.com/SpaceVim/SpaceVim/pull/1487)
+## Blog
+
+- Add cn blog: grep on the fly [#1355](https://github.com/SpaceVim/SpaceVim/pull/1355)
+- Add newsletter [#1228](https://github.com/SpaceVim/SpaceVim/pull/1228)
+- Add newsletter #2 [#1216](https://github.com/SpaceVim/SpaceVim/pull/1216)
+
+## Unmarked PRs
+
 - Edit because jshell was introduced with java9. [#1481](https://github.com/SpaceVim/SpaceVim/pull/1481)
 - Create leaderf layer [#1476](https://github.com/SpaceVim/SpaceVim/pull/1476)
 - Activating Open Collective [#1474](https://github.com/SpaceVim/SpaceVim/pull/1474)
