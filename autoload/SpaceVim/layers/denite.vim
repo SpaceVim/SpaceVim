@@ -31,9 +31,9 @@ let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fr
-        \ :<C-u>Denite -buffer-name=resume resume<CR>
+        \ :<C-u>Denite -resume<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.r = ['Denite -buffer-name=resume resume',
+  let g:_spacevim_mappings.f.r = ['Denite -resume',
         \ 'resume unite window',
         \ [
         \ '[Leader f r ] is to resume unite window',
