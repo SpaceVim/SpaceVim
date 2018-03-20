@@ -102,7 +102,7 @@ function! s:start_parser(key, dict) " {{{
     endif
     let mapd.display = s:format_displaystring(mapd.rhs)
     let mapd.lhs = substitute(mapd.lhs, key, "", "")
-    let mapd.lhs = substitute(mapd.lhs, "<Space>", " ", "g")
+    " let mapd.lhs = substitute(mapd.lhs, "<Space>", " ", "g")
     let mapd.lhs = substitute(mapd.lhs, "<Tab>", "<C-I>", "g")
     let mapd.rhs = substitute(mapd.rhs, "<SID>", "<SNR>".mapd['sid']."_", "g")
     if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
