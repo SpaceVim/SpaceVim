@@ -44,7 +44,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fe
         \ :<C-u>Denite register<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.r = ['Denite register',
+  let g:_spacevim_mappings.f.e = ['Denite register',
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume unite window',
@@ -117,5 +117,8 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
+  let g:_spacevim_mappings.f['[SPC]'] = ['Denite menu:CustomKeyMaps',
+        \ 'fuzzy find custom key bindings']
 endfunction
 " vim:set et sw=2 cc=80:
