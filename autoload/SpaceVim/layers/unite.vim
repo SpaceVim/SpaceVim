@@ -171,6 +171,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>f<Space>
+        \ :<C-u>Unite menu:CustomKeyMaps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.m = ['Unite menu:CustomKeyMaps',
+        \ 'fuzzy find custom key bindings',
+        \ [
+        \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 function! s:run_shell_cmd() abort
