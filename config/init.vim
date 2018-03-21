@@ -38,6 +38,9 @@ try
     elseif s:uname ==# "SunOS\n"
       " in Sun-OS terminal
       silent exec 'lan en_US.UTF-8'
+    elseif s:uname ==# "FreeBSD\n"
+      " in FreeBSD terminal
+      silent exec 'lan en_US.UTF-8'
     else
       " in linux-terminal
       silent exec 'lan en_US.utf8'
