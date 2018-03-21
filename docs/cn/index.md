@@ -15,9 +15,11 @@ lang: cn
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
-项 目 主 页： <https://spacevim.org>
+官 网： <https://spacevim.org>
 
-Github 地址 : <https://github.com/SpaceVim/SpaceVim>
+Github : <https://github.com/SpaceVim/SpaceVim>
+
+码 云 : <https://gitee.com/SpaceVim/SpaceVim>
 
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
