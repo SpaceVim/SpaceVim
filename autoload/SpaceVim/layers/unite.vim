@@ -17,6 +17,7 @@ function! SpaceVim#layers#unite#plugins() abort
         \ ['thinca/vim-unite-history', {'merged' : 0}],
         \ ['Shougo/unite-help', {'merged' : 0}],
         \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
+        \ ['hewes/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
         \ ]
 
   " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
