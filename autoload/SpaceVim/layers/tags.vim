@@ -27,7 +27,7 @@ function! SpaceVim#layers#tags#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'r'], 'Unite gtags/ref', 'find references', 1)
   else
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -p', 'list all file in GTAGS', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'd'], 'exe "Gtags -r " . expand("<cword>")', 'find definitions', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'd'], 'exe "Gtags -d " . expand("<cword>")', 'find definitions', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'r'], 'exe "Gtags -r " . expand("<cword>")', 'find references', 1)
   endif
 endfunction
