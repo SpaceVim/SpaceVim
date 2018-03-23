@@ -205,7 +205,7 @@ normal mode.To disable this feature:
                                              *g:spacevim_statusline_separator*
 Set the statusline separators of statusline, default is 'arrow'
 >
-  Separatos options:
+  Separators options:
     1. arrow
     2. curve
     3. slant
