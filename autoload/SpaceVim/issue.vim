@@ -21,6 +21,13 @@ function! s:open() abort
   w
 endfunction
 
+function! s:spacevim_status() abort
+  let pwd = getcwd()
+  exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
+  let status = system('git status')
+  exe 'cd ' . pwd
+  return split(status, "\n")
+endfunction
 
 function! s:template() abort
   let info = [
@@ -29,9 +36,17 @@ function! s:template() abort
         \ '',
         \ '## Environment Information',
         \ '',
-        \ '- OS:' . SpaceVim#api#import('system').name(),
-        \ '- vim version:' . (has('nvim') ? '' : s:CMP.version()),
-        \ '- neovim version:' . (has('nvim') ? s:CMP.version() : ''),
+        \ '- OS: ' . SpaceVim#api#import('system').name(),
+        \ '- vim version: ' . (has('nvim') ? '-' : s:CMP.version()),
+        \ '- neovim version: ' . (has('nvim') ? s:CMP.version() : '-'),
+        \ '- SpaceVim version: ' . g:spacevim_version,
+        \ '- SpaceVim status: ',
+        \ '',
+        \ '```'
+        \ ]
+        \ + s:spacevim_status() +
+        \ [
+        \ '```',
         \ '',
         \ '## The reproduce ways from Vim starting (Required!)',
         \ '',
@@ -48,7 +63,7 @@ endfunction
 
 
 
-function! SpaceVim#issue#new()
+function! SpaceVim#issue#new() abort
   if get(b:, 'spacevim_issue_template', 0) == 1
     let title = input('Issue title:')
     let username = input('github username:')
