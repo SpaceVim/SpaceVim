@@ -17,6 +17,7 @@
 "   ---------------------------------------------
 "   normal          SPC l i         go implements
 "   normal          SPC l f         go info
+"   normal          SPC l g         go to declaration
 "   normal          SPC l e         go rename
 "   normal          SPC l r         go run
 "   normal          SPC l b         go build
@@ -57,6 +58,9 @@ function! s:language_specified_mappings() abort
         \ 'go implements', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','f'],
         \ '<Plug>(go-info)',
+        \ 'go info', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
+        \ '<Plug>(go-def)',
         \ 'go info', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
         \ '<Plug>(go-rename)',
