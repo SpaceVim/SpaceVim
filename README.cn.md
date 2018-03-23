@@ -23,7 +23,7 @@ Github : <https://github.com/SpaceVim/SpaceVim>
 
 码 云 : <https://gitee.com/SpaceVim/SpaceVim>
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
 
 推荐阅读：
 
@@ -34,8 +34,6 @@ Github : <https://github.com/SpaceVim/SpaceVim>
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
-
-
 
 ### 最新特新
 
@@ -109,7 +107,7 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 
 window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
-**捐助SpaceVim**
+## **捐助SpaceVim**
 
 | 微信                                              | 支付宝                                              |
 | ------------------------------------------------- | --------------------------------------------------- |
