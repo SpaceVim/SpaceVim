@@ -173,7 +173,7 @@ let g:spacevim_enable_cursorline       = 1
 ""
 " Set the statusline separators of statusline, default is 'arrow'
 " >
-"   Separatos options:
+"   Separators options:
 "     1. arrow
 "     2. curve
 "     3. slant
