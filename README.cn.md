@@ -11,7 +11,6 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
@@ -35,11 +34,11 @@ Github : <https://github.com/SpaceVim/SpaceVim>
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
-### 最新特新
+## 最新特新
 
 以下为 SpaceVim 中最新实现的一些特性：
 
-**多光标Iedit模式**
+**多光标****Iedit****模式**
 
 SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了多光标支持，不同于已有插件的实现，
 该模式支持两种状态 ：`iedit-Normal` 和 `iedit-Insert`。默认情况下，多光标输入时，`iedit-normal`
@@ -77,8 +76,6 @@ SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代�
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-[**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
-
 **异步插件管理器**
 
 SpaceVim 利用了 vim8 和 neovim 最新的异步机制，实现了一套异步插件下载及更新插件，而插件运行管理采用的是 [dein.vim](https://github.com/Shougo/dein.vim/)。
@@ -107,8 +104,8 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 
 window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
-## **捐助SpaceVim**
+## 捐助SpaceVim
 
-| 微信                                              | 支付宝                                              |
-| ------------------------------------------------- | --------------------------------------------------- |
+| 微信                                                                     | 支付宝                                                                     |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
