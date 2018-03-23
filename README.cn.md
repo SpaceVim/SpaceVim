@@ -34,11 +34,27 @@ Github : <https://github.com/SpaceVim/SpaceVim>
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
+<!-- vim-markdown-toc GFM -->
+
+- [最新特新](#最新特新)
+  - [多光标Iedit模式](#多光标iedit模式)
+  - [高亮光标下的函数](#高亮光标下的函数)
+  - [实时代码检索](#实时代码检索)
+  - [快捷键辅助导航](#快捷键辅助导航)
+  - [快捷键描述系统](#快捷键描述系统)
+  - [异步插件管理器](#异步插件管理器)
+- [安装](#安装)
+  - [Linux 或 macOS](#linux-或-macos)
+  - [Windows](#windows)
+- [捐助SpaceVim](#捐助spacevim)
+
+<!-- vim-markdown-toc -->
+
 ## 最新特新
 
 以下为 SpaceVim 中最新实现的一些特性：
 
-**多光标****Iedit****模式**
+### 多光标Iedit模式
 
 SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了多光标支持，不同于已有插件的实现，
 该模式支持两种状态 ：`iedit-Normal` 和 `iedit-Insert`。默认情况下，多光标输入时，`iedit-normal`
@@ -46,7 +62,7 @@ SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了�
 
 ![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
 
-**高亮光标下的函数**
+### 高亮光标下的函数
 
 SpaceVim 支持高亮当前光标函数，并且启动一个特殊模式，在该模式下可以快捷地切换高亮区域
 （方法内、屏幕内、整个文件内），并且可以快速在高亮函数间跳转、切换高亮状态（高亮、取消高亮），
@@ -54,21 +70,21 @@ SpaceVim 支持高亮当前光标函数，并且启动一个特殊模式，在�
 
 ![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
 
-**实时代码检索**
+### 实时代码检索
 
 SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代码，当然需要借助后台搜索工具，
 目前支持的工具有：`ag`, `rg`, `ack`, `pt` 和 `grep`，用户可任意选择一个喜欢的工具。
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-**快捷键辅助导航**
+### 快捷键辅助导航
 
 在 SpaceVim 中，所有快捷键都有导航系统，你不需要记忆任何快捷键。初次使用时可根据快捷键提示进行操作。当按下空格键或者
 `g`、`z` 以及 `s` 按键时，导航就会自动出现。当你记住了快捷键，输入比较快时，导航则不会出现。
 
 ![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
-**快捷键描述系统**
+### 快捷键描述系统
 
 通过快捷键描述系统，你可以清楚的了解到一个快捷键的功能，并且可以快速跳转到快捷键定义的位置;
 比如，通过 `SPC h d k` 启动快捷键描述系统，然后按下所需描述快捷键 `SPC b n`，就会弹出一个描述
@@ -76,7 +92,7 @@ SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代�
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-**异步插件管理器**
+### 异步插件管理器
 
 SpaceVim 利用了 vim8 和 neovim 最新的异步机制，实现了一套异步插件下载及更新插件，而插件运行管理采用的是 [dein.vim](https://github.com/Shougo/dein.vim/)。
 
