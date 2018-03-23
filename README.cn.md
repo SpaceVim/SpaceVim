@@ -11,70 +11,99 @@
 [![GitHub forks](https://img.shields.io/github/forks/SpaceVim/SpaceVim.svg?style=social&label=Fork)](https://github.com/SpaceVim/SpaceVim)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SpaceVim.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/SpaceVim)
 
-SpaceVim 是一个社区驱动的模块化 vim 配置，以模块的方式组织和管理插件，提供各种类似 IDE 的特性。
+
+SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
+及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
+语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
+即用的Vim-IDE。
+
+官 网： <https://spacevim.org/cn/>
+
+Github : <https://github.com/SpaceVim/SpaceVim>
+
+码 云 : <https://gitee.com/SpaceVim/SpaceVim>
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
+推荐阅读：
+
+- [入门指南](https://spacevim.org/cn/quick-start-guide)
+- [用户文档](https://spacevim.org/cn/documentation)
+- [可用模块](https://spacevim.org/cn/layers)
 
 以下是近几周的开发汇总：
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
+
+
+### 最新特新
+
+以下为 SpaceVim 中最新实现的一些特性：
+
+**多光标 Iedit 模式**
+
+SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了多光标支持，不同于已有插件的实现，
+该模式支持两种状态 ：iedit-Normal 和 iedit-Insert。默认情况下 多光标输入时，iedit-normal
+模式状态栏时是红色，而 iedit-insert 模式时是绿色。
+
+![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
+
+**高亮光标下的函数**
+
+SpaceVim 支持高亮当前光标函数，并且启动一个特殊模式，在该模式下可以快捷地切换高亮区域
+（方法内、屏幕内、整个文件内），并且可以快速在高亮函数间跳转、切换高亮状态（高亮、取消高亮），
+并且可以根据已选择的位置计入 iedit 模式。
+
+![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
+
+**实时代码检索**
+
+SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代码，当然需要借助后台搜索工具，
+目前支持的工具有：`ag`, `rg`, `ack`, `pt` 和 `grep`，用户可任意选择一个喜欢的工具。
+
+![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+
+[**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
+
+You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
+The mapping guide is also available for `g`, `z`, and `s`.
+
+![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
+
+[**Help description for key bindings**](http://spacevim.org/help-description-for-key-bindings/)
+
+use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
+
+![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
+
+[**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
+
+create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
+
+![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
+
+For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
+
 ## 安装
 
-**Linux 或 Mac 下 SpaceVim的安装非常简单，只需要执行以下命令即可：**
+### Linux 或 macOS
 
-```sh
-curl -sLf https://spacevim.org/install.sh | bash
+```bash
+curl -sLf https://spacevim.org/cn/install.sh | bash
 ```
 
-想要获取更多的自定义的安装方式，请参考：
+安装结束后，初次打开 `vim` 或者 `gvim` 时， SpaceVim 会**自动**下载并安装插件。
 
-```sh
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
+如果需要获取安装脚本的帮助信息，可以执行如下命令，包括定制安装、更新和卸载等。
+
+```bash
+curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ```
 
-SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim以及neovim的安装，请参考以下链接：
+### Windows
 
-[安装neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
-
-[从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
-
-**windows系统下的安装步骤：**
-
-Windows 下 vim 用户只需要将本仓库克隆成用户 HOME 目录下的 vimfiles 即可，打开 CMD 默认的目录默认即为 HOME 目录，只需要执行如下命令即可：
-
-    git clone https://github.com/SpaceVim/SpaceVim.git vimfiles
-
-Windows 下 neovim 用户 需要将本仓库克隆成用户 HOME 目录下的 AppData\\Local\\nvim，想要获取跟多关于 neovim 安装相关的知识，可以访问 neovim 的 wiki， wiki 写的非常详细。打开 CMD 初始目录默认一般即为 HOME 目录，只需要执行如下命令即可：
-
-    git clone https://github.com/SpaceVim/SpaceVim.git AppData\Local\nvim
-
-**字体**
-
-SpaceVim 默认启用了Powerline 字体，默认的的字体文件是：[DejaVu Sans Mono](https://github.com/wsdjeg/DotFiles/tree/master/fonts), Windows 用户直接下载下来右键安装即可。
-
-**vimproc.dll**
-
-Windows 下用户如果不方便编译，可以在qq群文件里面下载相应的dll文件放到vimproc
-的lib目录，默认是 `~/.cache/vimfiles/repos/github.com/Shougo/vimproc.vim/lib/`
-
-## 更新
-
-可以通过 `:SPUpdate` 命令来更新spacevim 以及包含的插件，如果需要更新指定的插件，如：startuptime.vim，只需要执行 `:SPUpdate startuptime.vim`，也可以通过 `:SPUpdate SpaceVim` 来更新 SpaceVim.
-
-## 特性
-
-- **文档检索:** 通过快捷键 <kbd>SPC h SPC</kbd> 快速检索文档。
-  ![SPC h SPC](https://user-images.githubusercontent.com/13142418/31620230-48b53eea-b2c9-11e7-90d0-b717878875d4.gif)
-- **快捷键导航系统:** 所有的快捷键都可轻易通过导航系统检索到。
-  ![mapping guide](https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif)
-- **快捷键描述系统:** 使用 <kbd>SPC h d k</kbd> 启动快捷键描述系统，按下相应的快捷键后，展示该快捷键详细描述。
-  ![describe key](https://user-images.githubusercontent.com/13142418/32134986-060a3b8a-bc2a-11e7-89a2-3ee4e616bf06.gif)
-- **插件延迟加载:** 使用 [dein.vim](https://github.com/Shougo/dein.vim) 管理插件，90% 的插件延迟加载，优化用户体验。
-  ![UI for dein](https://user-images.githubusercontent.com/13142418/31309093-36c01150-abb3-11e7-836c-3ad406bdd71a.gif)
-- **Neovim 优化:** 针对 NeoVim 做了相应的优化，体验相比 Vim 更好。
-- **优雅的界面:** 状态栏，文件树，语法树等。
+window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
 **捐助SpaceVim**
 
