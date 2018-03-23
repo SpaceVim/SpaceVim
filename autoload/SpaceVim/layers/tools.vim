@@ -64,9 +64,6 @@ function! SpaceVim#layers#tools#config() abort
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
   noremap <silent> <F8> :TlistToggle<CR>
-  if g:spacevim_filemanager ==# 'nerdtree'
-    noremap <silent> <F3> :NERDTreeToggle<CR>
-  endif
 endfunction
 
 " vim:set et sw=2 cc=80:

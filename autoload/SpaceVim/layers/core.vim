@@ -39,6 +39,9 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#core#config() abort
+  if g:spacevim_filemanager ==# 'nerdtree'
+    noremap <silent> <F3> :NERDTreeToggle<CR>
+  endif
   let g:matchup_matchparen_status_offscreen = 0
   " Unimpaired bindings
   " Quickly add empty lines
