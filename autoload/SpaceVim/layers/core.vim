@@ -33,6 +33,9 @@ function! SpaceVim#layers#core#plugins() abort
         \ 'AT', 'AD', 'Cd', 'Lcd', 'ProjectDo']}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
+  if has('nvim')
+    call add(plugins, ['lambdalisue/suda.vim'])
+  endif
   return plugins
 endfunction
 
@@ -104,7 +107,11 @@ function! SpaceVim#layers#core#config() abort
         \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
+  if has('nvim') 
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'w suda://%', 'save buffer with sudo', 1)
+  else 
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
+  endif
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'Report an issue of SpaceVim', 1)
   if has('python3')
