@@ -15,7 +15,7 @@ lang: cn
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
-官 网： <https://spacevim.org>
+官 网： <https://spacevim.org/cn/>
 
 Github : <https://github.com/SpaceVim/SpaceVim>
 
