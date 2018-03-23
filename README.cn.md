@@ -15,7 +15,7 @@
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
-即用的Vim-IDE。
+即用的 Vim-IDE。
 
 官 网： <https://spacevim.org/cn/>
 
@@ -41,11 +41,11 @@ Github : <https://github.com/SpaceVim/SpaceVim>
 
 以下为 SpaceVim 中最新实现的一些特性：
 
-**多光标 Iedit 模式**
+**多光标Iedit模式**
 
 SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了多光标支持，不同于已有插件的实现，
-该模式支持两种状态 ：iedit-Normal 和 iedit-Insert。默认情况下 多光标输入时，iedit-normal
-模式状态栏时是红色，而 iedit-insert 模式时是绿色。
+该模式支持两种状态 ：`iedit-Normal` 和 `iedit-Insert`。默认情况下，多光标输入时，`iedit-normal`
+模式状态栏时是红色，而 `iedit-insert` 模式时是绿色，当然这根据所选择主题决定。
 
 ![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
 
@@ -64,26 +64,30 @@ SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代�
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-[**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
+**快捷键辅助导航**
 
-You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
-The mapping guide is also available for `g`, `z`, and `s`.
+在 SpaceVim 中，所有快捷键都有导航系统，你不需要记忆任何快捷键。初次使用时可根据快捷键提示进行操作。当按下空格键或者
+`g`、`z` 以及 `s` 按键时，导航就会自动出现。当你记住了快捷键，输入比较快时，导航则不会出现。
 
 ![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
-[**Help description for key bindings**](http://spacevim.org/help-description-for-key-bindings/)
+**快捷键描述系统**
 
-use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
+通过快捷键描述系统，你可以清楚的了解到一个快捷键的功能，并且可以快速跳转到快捷键定义的位置;
+比如，通过 `SPC h d k` 启动快捷键描述系统，然后按下所需描述快捷键 `SPC b n`，就会弹出一个描述
+窗口，在改窗口可以通过快捷键 `gd` 快速跳转到快捷键定义处。
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
 [**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
 
-create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
+**异步插件管理器**
+
+SpaceVim 利用了 vim8 和 neovim 最新的异步机制，实现了一套异步插件下载及更新插件，而插件运行管理采用的是 [dein.vim](https://github.com/Shougo/dein.vim/)。
 
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
-For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
+想要获取更多关于 SpaceVim 的最新特新，请关注 [SpaceVim 官方博客](https://spacevim.org/blog/)
 
 ## 安装
 
