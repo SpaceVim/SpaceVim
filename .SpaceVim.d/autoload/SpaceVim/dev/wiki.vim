@@ -30,7 +30,7 @@ function! s:get_labels() abort
   let line = []
 
   for label in labels
-    call add(line, label.name . ' | #' . label.color . ' | ' )
+    call add(line, label.name . ' | #' . label.color . ' | ' . get(label, 'description', '') )
   endfor
     if line[-1] !=# ''
         let line += ['']
