@@ -1,4 +1,4 @@
-[![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org/cn/)
+[![SpaceVim](docs/logo.png)](https://spacevim.org/cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 ![Version](https://img.shields.io/badge/version-0.8.0--dev-FF69B4.svg)
@@ -124,4 +124,4 @@ window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://sp
 
 | 微信                                                                     | 支付宝                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
+| <img src="docs/img/weixin.png" height="150" width="150"> | <img src="docs/img/zhifubao.png" height="150" width="150"> |
