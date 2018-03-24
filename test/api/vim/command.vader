@@ -1,0 +1,10 @@
+Execute ( SpaceVim api: data#command complete):
+  let cmd = SpaceVim#api#import('vim#command')
+  let cmd.options = {
+    \ '-d' : {
+      \ 'complete' : ['foo', 'baa'],
+    \ }
+    \ }
+    AssertEqual cmd.complete('', 'A ', 3), '-d'
+    AssertEqual cmd.complete('', 'A -d ', 6), "foo\nbaa"
+    AssertEqual cmd.complete('f', 'A -d f', 7), "foo\nbaa"

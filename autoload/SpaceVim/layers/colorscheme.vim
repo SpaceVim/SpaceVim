@@ -1,3 +1,11 @@
+"=============================================================================
+" colorscheme.vim --- SpaceVim colorscheme layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 ""
 " @section colorscheme, colorscheme
 " @parentsection layers
@@ -7,13 +15,13 @@
 " >
 "   let g:spacevim_colorscheme = 'solarized'
 " <
-" 
+"
 " The following colorschemes are include in SpaceVim. If the colorscheme you
 " want is not included in the list below, a PR is welcome.
-" 
+"
 " Also, there's one thing which everyone should know and pay attention to.
 " NOT all of below colorschemes support spell check very well. For example,
-" a colorscheme called atom doesn't support atom very well. 
+" a colorscheme called atom doesn't support spell check very well.
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 " You can see a list which has no support of spell check in here:
@@ -141,35 +149,66 @@
 
 function! SpaceVim#layers#colorscheme#plugins() abort
     return [
-                \ ['morhetz/gruvbox', {'loadconf' : 1}],
-                \ ['kristijanhusak/vim-hybrid-material'],
-                \ ['altercation/vim-colors-solarized'],
-                \ ['nanotech/jellybeans.vim'],
-                \ ['mhartington/oceanic-next'],
-                \ ['mhinz/vim-janah'],
-                \ ['Gabirel/molokai'],
-                \ ['kabbamine/yowish.vim'],
-                \ ['vim-scripts/wombat256.vim'],
-                \ ['vim-scripts/twilight256.vim'],
-                \ ['junegunn/seoul256.vim'],
-                \ ['vim-scripts/rdark-terminal2.vim'],
-                \ ['vim-scripts/pyte'],
-                \ ['joshdick/onedark.vim'],
-                \ ['fmoralesc/molokayo'],
-                \ ['jonathanfilip/vim-lucius'],
-                \ ['wimstefan/Lightning'],
-                \ ['w0ng/vim-hybrid'],
-                \ ['scheakur/vim-scheakur'],
-                \ ['keith/parsec.vim'],
-                \ ['NLKNguyen/papercolor-theme'],
-                \ ['romainl/flattened'],
-                \ ['MaxSt/FlatColor'],
-                \ ['chase/focuspoint-vim'],
-                \ ['chriskempson/base16-vim'],
-                \ ['gregsexton/Atom'],
-                \ ['gilgigilgil/anderson.vim'],
-                \ ['romainl/Apprentice'],
-                \ ['icymind/NeoSolarized'],
-                \ ['jacoborus/tender'],
+                \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
+                \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
+                \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
+                \ ['mhartington/oceanic-next', { 'merged' : 0 }],
+                \ ['mhinz/vim-janah', { 'merged' : 0 }],
+                \ ['Gabirel/molokai', { 'merged' : 0 }],
+                \ ['kabbamine/yowish.vim', { 'merged' : 0 }],
+                \ ['vim-scripts/wombat256.vim', { 'merged' : 0 }],
+                \ ['vim-scripts/twilight256.vim', { 'merged' : 0 }],
+                \ ['junegunn/seoul256.vim', { 'merged' : 0 }],
+                \ ['vim-scripts/rdark-terminal2.vim', { 'merged' : 0 }],
+                \ ['vim-scripts/pyte', { 'merged' : 0 }],
+                \ ['joshdick/onedark.vim', { 'merged' : 0 }],
+                \ ['fmoralesc/molokayo', { 'merged' : 0 }],
+                \ ['jonathanfilip/vim-lucius', { 'merged' : 0 }],
+                \ ['wimstefan/Lightning', { 'merged' : 0 }],
+                \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
+                \ ['scheakur/vim-scheakur', { 'merged' : 0 }],
+                \ ['keith/parsec.vim', { 'merged' : 0 }],
+                \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
+                \ ['romainl/flattened', { 'merged' : 0 }],
+                \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
+                \ ['chase/focuspoint-vim', { 'merged' : 0 }],
+                \ ['chriskempson/base16-vim', { 'merged' : 0 }],
+                \ ['gregsexton/Atom', { 'merged' : 0 }],
+                \ ['gilgigilgil/anderson.vim', { 'merged' : 0 }],
+                \ ['romainl/Apprentice', { 'merged' : 0 }],
+                \ ['icymind/NeoSolarized', { 'merged' : 0 }],
+                \ ['jacoborus/tender', { 'merged' : 0 }],
+                \ ['wsdjeg/vim-one', { 'merged' : 0 }],
+                \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
+                \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }]
                 \ ]
+endfunction
+
+let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one', 'nord']
+let s:Number = SpaceVim#api#import('data#number')
+
+function! SpaceVim#layers#colorscheme#config() abort
+    call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
+                \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
+                \ . ', [])', 'cycle-spacevim-theme', 1)
+endfunction
+
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+    function! s:_function(fstr) abort
+        return function(a:fstr)
+    endfunction
+else
+    function! s:_SID() abort
+        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+    endfunction
+    let s:_s = '<SNR>' . s:_SID() . '_'
+    function! s:_function(fstr) abort
+        return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    endfunction
+endif
+function! s:cycle_spacevim_theme() abort
+    let id = s:Number.random(0, len(s:cs))
+    exe 'colorscheme ' . s:cs[id]
 endfunction

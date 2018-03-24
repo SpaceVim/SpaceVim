@@ -1,0 +1,10 @@
+Execute ( SpaceVim api: data#list ):
+  let dict = SpaceVim#api#import('data#dict')
+  AssertEqual dict.make(['a','b'], [1, 2]), {'a':1, 'b':2}
+  AssertEqual dict.swap({'a' : 1, 'b' : 2}), {'1' : 'a', '2' : 'b'}
+  AssertEqual dict.make_index(['a', 'b']), {'a' : 1, 'b' : 1}
+  AssertEqual dict.pick({'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4}, ['b', 'c']), {'b' : 2, 'c' : 3}
+  AssertEqual dict.omit({'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4}, ['b', 'c']), {'a' : 1, 'd' : 4}
+  AssertEqual dict.clear({'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4}), {}
+  AssertEqual dict.max_by({'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4}, 'v:val % 2'), ['c', 3]
+  AssertEqual dict.min_by({'a' : 1, 'b' : 2, 'c' : 3, 'd' : 4}, 'v:val % 2'), ['d', 4]

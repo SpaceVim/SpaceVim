@@ -1,15 +1,15 @@
-## Expected behavior, english is recommend
+<!-- bug reporting without issue template will be closed automatically -->
 
-
-## Environment Information
-- OS:
-- vim version:
-- neovim version:
+## Expected behavior, english is required
 
 ## The reproduce ways from Vim starting (Required!)
 
+## Debug info
 
-## Output of the ":message" command, and ":echo SpaceVim#logger#viewLog()"
+Please press <kbd>SPC h I</kbd>, debug info will be put into clipboard, then paste all content below.
 
-please post log below, if you want me reproduce your issue quickly, post your custom config here will be better.
+## Screenshots
 
+If you have any screenshots for this issue, please upload here. BTW you can use https://asciinema.org/ for recording video in terminal.
+
+<!-- please remove the issue template when request for a feature -->

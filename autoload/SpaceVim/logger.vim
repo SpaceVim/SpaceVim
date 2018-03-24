@@ -1,7 +1,71 @@
-let s:logger_level = g:spacevim_debug_level
-let s:levels = ['Info', 'Warn', 'Error']
-let s:logger_file = expand('~/.SpaceVim/.SpaceVim.log')
-let s:log_temp = []
+"=============================================================================
+" logger.vim --- SpaceVim logger
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+let s:LOGGER = SpaceVim#api#import('logger')
+
+call s:LOGGER.set_name('SpaceVim')
+call s:LOGGER.set_level(1)
+call s:LOGGER.set_silent(0)
+call s:LOGGER.set_verbose(1)
+
+function! SpaceVim#logger#info(msg) abort
+
+  call s:LOGGER.info(a:msg)
+
+endfunction
+
+function! SpaceVim#logger#warn(msg, ...) abort
+  let issilent = get(a:000, 0, 1)
+  call s:LOGGER.warn(a:msg, issilent)
+endfunction
+
+
+function! SpaceVim#logger#error(msg) abort
+
+  call s:LOGGER.error(a:msg)
+
+endfunction
+
+function! SpaceVim#logger#viewLog(...) abort
+  let info = "### SpaceVim Options :\n\n"
+  let info .= "```viml\n"
+  let info .= join(SpaceVim#options#list(), "\n")
+  let info .= "\n```\n"
+  let info .= "\n\n"
+
+  let info .= "### SpaceVim Health checking :\n\n"
+  let info .= SpaceVim#health#report()
+  let info .= "\n\n"
+
+  let info .= "### SpaceVim runtime log :\n\n"
+  let info .= "```log\n"
+
+  let info .= s:LOGGER.view(s:LOGGER.level)
+
+  let info .= "\n```\n"
+  if a:0 > 0
+    if a:1 == 1
+      tabnew +setl\ nobuflisted
+      nnoremap <buffer><silent> q :bd!<CR>
+      for msg in split(info, "\n")
+        call append(line('$'), msg)
+      endfor
+      normal! "_dd
+      setl nomodifiable
+      setl buftype=nofile
+      setl filetype=markdown
+    else
+      echo info
+    endif
+  else
+    return info
+  endif
+endfunction
 
 ""
 " @public
@@ -13,80 +77,12 @@ let s:log_temp = []
 "
 "     3 : log error messages only
 function! SpaceVim#logger#setLevel(level) abort
-    let s:logger_level = a:level
-endfunction
-
-function! SpaceVim#logger#info(msg) abort
-    if g:spacevim_enable_debug && s:logger_level <= 1
-        call s:wite(s:warpMsg(a:msg, 1))
-    else
-        call add(s:log_temp,s:warpMsg(a:msg,1))
-    endif
-endfunction
-
-function! SpaceVim#logger#warn(msg) abort
-    if g:spacevim_enable_debug && s:logger_level <= 2
-        call s:wite(s:warpMsg(a:msg, 2))
-    else
-        call add(s:log_temp,s:warpMsg(a:msg,2))
-    endif
-endfunction
-
-function! SpaceVim#logger#error(msg) abort
-    if g:spacevim_enable_debug && s:logger_level <= 3
-        call s:wite(s:warpMsg(a:msg, 3))
-    else
-        call add(s:log_temp,s:warpMsg(a:msg,3))
-    endif
-endfunction
-
-function! s:wite(msg) abort
-    let flags = filewritable(s:logger_file) ? 'a' : ''
-    call writefile([a:msg], s:logger_file, flags)
-endfunction
-
-
-function! SpaceVim#logger#viewLog(...) abort
-    let info = "### SpaceVim Options :\n\n"
-    let info .= "```viml\n"
-    let info .= join(SpaceVim#options#list(), "\n")
-    let info .= "\n```\n"
-    let info .= "\n\n"
-
-    let info .= "### SpaceVim Health checking :\n\n"
-    let info .= SpaceVim#health#report()
-    let info .= "\n\n"
-
-    let info .= "### SpaceVim runtime log :\n\n"
-    let info .= "```log\n"
-
-    let l = a:0 > 0 ? a:1 : 1
-    if filereadable(s:logger_file)
-        let logs = readfile(s:logger_file, '')
-        let info .= join(filter(logs, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
-    else
-        let info .= '[ SpaceVim ] : logger file ' . s:logger_file . ' does not exists, only log for current process will be shown!'
-        let info .= join(filter(s:log_temp, "v:val =~# '\[ SpaceVim \] \[\d\d\:\d\d\:\d\d\] \[" . s:levels[l] . "\]'"), "\n")
-    endif
-    let info .= "\n```\n"
-    return info
+  call s:LOGGER.set_level(a:level)
 endfunction
 
 ""
 " @public
-" Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
+" Set the log output file of SpaceVim. Default is empty.
 function! SpaceVim#logger#setOutput(file) abort
-    let s:logger_file = a:file
-endfunction
-
-function! s:warpMsg(msg,l) abort
-    let time = strftime('%H:%M:%S')
-    let log = '[ SpaceVim ] [' . time . '] [' . s:levels[a:l - 1] . '] ' . a:msg
-    return log
-endfunction
-
-function! SpaceVim#logger#echoWarn(msg) abort
-    echohl WarningMsg
-    echom s:warpMsg(a:msg, 1)
-    echohl None
+  call s:LOGGER.set_file(a:file)
 endfunction

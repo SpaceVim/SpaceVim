@@ -1,0 +1,3 @@
+Execute ( SpaceVim api: data#list ):
+  let base64 = SpaceVim#api#import('data#base64')
+  AssertEqual "helloworld", base64.decode(base64.encode("helloworld"))

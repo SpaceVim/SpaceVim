@@ -1,0 +1,13 @@
+Execute ( SpaceVim plugin: quickfix ):
+  let qflist = [
+  \ {    
+    \ 'abbr' : 'test-abbr',
+    \ 'filename' : '~/test/Foo.java',
+    \ 'lnum' : 1,
+    \ 'col' : 1,
+    \ 'type' : 'E',
+    \ 'text' : 'test-text'
+  \ }
+  \ ]
+  call SpaceVim#plugins#quickfix#setqflist(qflist)
+  AssertEqual SpaceVim#plugins#quickfix#getqflist()[0].abbr, 'test-abbr'

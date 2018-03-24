@@ -43,7 +43,7 @@ function! s:install_manager() abort
         else
             if executable('git')
                 exec '!git clone https://github.com/Shougo/dein.vim "'
-                            \ . g:spacevim_plugin_bundle_dir
+                            \ . expand(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim"'], s:Fsep)
                 let g:spacevim_dein_installed = 1
@@ -108,11 +108,11 @@ function! zvim#plug#end() abort
     elseif g:spacevim_plugin_manager ==# 'dein'
         call dein#end()
         if g:spacevim_checkinstall == 1
-            silent! let flag = dein#check_install()
-            if flag
+            silent! let g:_spacevim_checking_flag = dein#check_install()
+            if g:_spacevim_checking_flag
                 augroup SpaceVimCheckInstall
                     au!
-                    au VimEnter * call dein#install()
+                    au VimEnter * SPInstall
                 augroup END
             endif
         endif
@@ -148,7 +148,7 @@ let s:plugins = []
 fu! s:parser(args) abort
     return a:args
 endf
-
+let g:_spacevim_plugins = []
 function! zvim#plug#add(repo,...) abort
     let g:spacevim_plugin_name = ''
     if g:spacevim_plugin_manager ==# 'neobundle'
@@ -161,6 +161,7 @@ function! zvim#plug#add(repo,...) abort
             call dein#add(a:repo)
         endif
         let g:spacevim_plugin_name = g:dein#name
+        call add(g:_spacevim_plugins, g:dein#name)
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
         if len(a:000) > 0
             exec "Plug '".a:repo."', ".join(a:000,',')
@@ -169,7 +170,7 @@ function! zvim#plug#add(repo,...) abort
         endif
         let g:spacevim_plugin_name = split(a:repo, '/')[-1]
     endif
-    let str = get(g:,'spacevim_plugin_layer', 'custom plugin')
+    let str = get(g:,'_spacevim_plugin_layer', 'custom plugin')
     let str = '[' . str . ']'
     let str = str . repeat(' ', 25 - len(str))
     exec 'call add(g:unite_source_menu_menus'

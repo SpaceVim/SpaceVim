@@ -1,0 +1,21 @@
+Execute (Test cmdlinemenu api):
+  let g:menu = SpaceVim#api#import('cmdlinemenu')
+  let g:cmdlinemenu_rst = ''
+  function! s:dark_mode() abort
+      let g:cmdlinemenu_rst = 'dark mode'
+  endfunction
+  
+  function! s:basic_mode() abort
+      let g:cmdlinemenu_rst = 'basic mode'
+  endfunction
+  
+  let g:ques = [
+              \ ['dark powered mode', function('s:dark_mode')],
+              \ ['basic mode', function('s:basic_mode')],
+              \ ]
+
+Do (Searches):
+  :call g:menu.menu(g:ques)\<Enter>
+  \<Enter>
+Execute (Assertions):
+  AssertEqual g:cmdlinemenu_rst, 'dark mode'

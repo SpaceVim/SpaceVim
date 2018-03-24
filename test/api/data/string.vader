@@ -1,0 +1,12 @@
+Execute ( SpaceVim api: data#string ):
+  let str = SpaceVim#api#import('data#string')
+  AssertEqual str.trim(' s b '), 's b'
+  AssertEqual str.trim_start(' s b '), 's b '
+  AssertEqual str.trim_end(' s b '), ' s b'
+  AssertEqual str.fill('s b', 10), 's b       '
+  AssertEqual str.fill_middle('s b', 10), '   s b    '
+  AssertEqual str.string2chars(' a b '), [' ', 'a', ' ', 'b', ' ']
+  AssertEqual str.strAllIndex('hello spacevim hello', 'hello', 0), [[0, 5], [15, 20]]
+  AssertEqual str.strAllIndex('hello spacevim hello', 'he.*', 1), [[0, 20]]
+  AssertEqual str.strAllIndex('hello spacevim hello', 'he[^ ]*', 1), [[0, 5], [15, 20]]
+  AssertEqual str.strAllIndex('let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end', 's.cursor[^_]*', 1), [[4, 12], [28, 36], [55, 63]]

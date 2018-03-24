@@ -1,0 +1,9 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @wsdjeg will be requested for review when someone opens a
+# pull request.
+*       @wsdjeg
+
+# 中文文件
+# 中文模块翻译
+docs/layers/*    @SLZhang-CUG
