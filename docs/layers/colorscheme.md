@@ -29,9 +29,9 @@ let g:spacevim_colorscheme = 'onedark'
 | ---------- | ---- | ----- | ---- | --- | ---------- |
 | gruvbox    | yes  | yes   | yes  | yes | yes        |
 | one        | yes  | yes   | yes  | yes | yes        |
-| molokai    | yes  | yes   | yes  | yes | yes        |
-| jellybeans | yes  | yes   | yes  | yes | yes        |
-| nord       | yes  | yes   | yes  | yes | yes        |
+| molokai    | yes  | no    | yes  | yes | yes        |
+| jellybeans | yes  | no    | yes  | yes | yes        |
+| nord       | yes  | no    | yes  | yes | yes        |
 | onedark    | yes  | no    | yes  | yes | yes        |
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
