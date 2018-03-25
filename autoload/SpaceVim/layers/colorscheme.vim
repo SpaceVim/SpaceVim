@@ -34,6 +34,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['rakr/vim-one', { 'merged' : 0 }],
         \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
         \ ['icymind/NeoSolarized', { 'merged' : 0 }],
+        \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ]
   "
   " \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
@@ -50,7 +51,6 @@ function! SpaceVim#layers#colorscheme#plugins() abort
   " \ ['fmoralesc/molokayo', { 'merged' : 0 }],
   " \ ['jonathanfilip/vim-lucius', { 'merged' : 0 }],
   " \ ['wimstefan/Lightning', { 'merged' : 0 }],
-  " \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
   " \ ['scheakur/vim-scheakur', { 'merged' : 0 }],
   " \ ['keith/parsec.vim', { 'merged' : 0 }],
   " \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
