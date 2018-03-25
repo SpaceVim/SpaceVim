@@ -57,7 +57,7 @@ let s:ctermGray = "243"
 "    \ [ in_guifg, in_guibg, in_ctermfg, in_ctermbg],
 " \ ]
 
-function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
+function! SpaceVim#mapping#guide#theme#jellybeans#palette() abort
     return [
                 \ ['#d8dee9', '#0d61ac', 189, 25],
                 \ ['#ffffff', '#262626', 231, 233],
