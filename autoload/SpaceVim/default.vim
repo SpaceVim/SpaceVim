@@ -125,6 +125,7 @@ function! SpaceVim#default#options() abort
     " don't give ins-completion-menu messages.
     set shortmess+=c
   endif
+  set shortmess+=s
   " Do not wrap lone lines
   set nowrap
 
