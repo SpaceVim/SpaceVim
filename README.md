@@ -44,6 +44,14 @@ Here is a throughput graph of the repository for the last few weeks:
 
 This is a list of latest features implemented in SpaceVim:
 
+**Iedit mode**
+
+SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection. Two new modes:`iedit-Normal`/`iedit-Insert`
+
+The default color for iedit is `red`/`green` which is based on the current colorscheme.
+
+![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
+
 **Highlight cursor symbol**
 
 SpaceVim supports highlighting of the current symbol on demand and adds
