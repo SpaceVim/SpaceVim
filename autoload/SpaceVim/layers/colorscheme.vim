@@ -37,32 +37,14 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ]
   "
-  " \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
-  " \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
+  " TODO:
   " \ ['mhartington/oceanic-next', { 'merged' : 0 }],
-  " \ ['mhinz/vim-janah', { 'merged' : 0 }],
-  " \ ['kabbamine/yowish.vim', { 'merged' : 0 }],
-  " \ ['vim-scripts/wombat256.vim', { 'merged' : 0 }],
-  " \ ['vim-scripts/twilight256.vim', { 'merged' : 0 }],
   " \ ['junegunn/seoul256.vim', { 'merged' : 0 }],
-  " \ ['vim-scripts/rdark-terminal2.vim', { 'merged' : 0 }],
-  " \ ['vim-scripts/pyte', { 'merged' : 0 }],
+  " \ ['kabbamine/yowish.vim', { 'merged' : 0 }],
   " \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }],
-  " \ ['fmoralesc/molokayo', { 'merged' : 0 }],
-  " \ ['jonathanfilip/vim-lucius', { 'merged' : 0 }],
-  " \ ['wimstefan/Lightning', { 'merged' : 0 }],
-  " \ ['scheakur/vim-scheakur', { 'merged' : 0 }],
-  " \ ['keith/parsec.vim', { 'merged' : 0 }],
   " \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
-  " \ ['romainl/flattened', { 'merged' : 0 }],
   " \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
-  " \ ['chase/focuspoint-vim', { 'merged' : 0 }],
-  " \ ['chriskempson/base16-vim', { 'merged' : 0 }],
-  " \ ['gregsexton/Atom', { 'merged' : 0 }],
-  " \ ['gilgigilgil/anderson.vim', { 'merged' : 0 }],
-  " \ ['romainl/Apprentice', { 'merged' : 0 }],
-  " \ ['jacoborus/tender', { 'merged' : 0 }],
-  " \ ]
+
 endfunction
 
 let s:cs = [
