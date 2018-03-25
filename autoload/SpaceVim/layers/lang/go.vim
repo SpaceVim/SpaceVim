@@ -29,26 +29,36 @@
 
 
 function! SpaceVim#layers#lang#go#plugins() abort
-    let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
-    if has('nvim')
-        call add(plugins, ['zchee/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
-    endif
-    return plugins
+  let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
+  if has('nvim')
+    call add(plugins, ['zchee/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
+  endif
+  return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#go#config() abort
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_build_constraints = 1
-    let g:go_fmt_command = 'goimports'
-    let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:go_snippet_engine = 'neosnippet'
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_fmt_command = 'goimports'
+  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  let g:go_snippet_engine = 'neosnippet'
 
-    call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
+  if SpaceVim#layers#lsp#check_filetype('go')
+    call SpaceVim#mapping#gd#add('go',
+          \ function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
+  endif
+  call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
+endfunction
+
+function! s:go_to_def() abort
+    call go#def#Jump('')
 endfunction
 
 function! s:language_specified_mappings() abort
