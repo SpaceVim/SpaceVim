@@ -86,26 +86,23 @@ endfunction
 
 let s:si_flag = 0
 function! s:update_search_index(key) abort
-  if a:key == 'd'
-    if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+  if a:key ==# 'd'
+    if mapcheck('<Plug>(incsearch-nohl-n)') !=# ''
       call feedkeys("\<Plug>(incsearch-nohl-n)")
     else
       normal! n
     endif
-    normal! ml
-  elseif a:key == 'r'
-    if mapcheck("<Plug>(incsearch-nohl-N)") !=# ''
+  elseif a:key ==# 'r'
+    if mapcheck('<Plug>(incsearch-nohl-N)') !=# ''
       call feedkeys("\<Plug>(incsearch-nohl-N)")
     else
       normal! N
     endif
-    normal! ml
   endif
-  if s:si_flag == 0
-    call SpaceVim#layers#core#statusline#toggle_section('search status') 
-    let s:si_flag = 1
-  else
-    let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  normal! ml
+  if !SpaceVim#layers#core#statusline#check_section('search status')
+    call SpaceVim#layers#core#statusline#toggle_section('search status')
   endif
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   normal! `l
 endfunction
