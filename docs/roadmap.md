@@ -9,7 +9,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 
 ## Next
 
-### [0.7](https://github.com/SpaceVim/SpaceVim/milestone/10)
+### [v0.8.0](https://github.com/SpaceVim/SpaceVim/milestone/11)
 
 ## Meta
 
@@ -23,15 +23,21 @@ There are release milestones and meta milestones ("buckets").
 
 ## Completed
 
-### [0.6](https://github.com/SpaceVim/SpaceVim/milestone/9)
+<!-- SpaceVim roadmap completed items start -->
 
-see the release note: [V0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
+### [v0.7.0](https://github.com/SpaceVim/SpaceVim/milestone/10)
 
-### [0.5](https://github.com/SpaceVim/SpaceVim/milestone/8)
+see the release note: [v0.7.0](http://spacevim.org/SpaceVim-release-v0.7.0/)
 
-see the release note: [V0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
+### [v0.6.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
 
-### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
+see the release note: [V0.6.0](http://spacevim.org/SpaceVim-release-v0.6.0/)
+
+### [v0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/8)
+
+see the release note: [V0.5.0](http://spacevim.org/SpaceVim-release-v0.5.0/)
+
+### [v0.4.0](https://github.com/SpaceVim/SpaceVim/milestone/7)
 
 - Improve git work  flow
   - completion in commit message buffer
@@ -57,3 +63,6 @@ see the release note: [V0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
 
 - The primary goal of the 0.1 release ("first public release") is to reach a stable, functional baseline that can be built upon and used as a benchmark for further progress.
 - Layers feature
+
+
+<!-- SpaceVim roadmap completed items end -->
