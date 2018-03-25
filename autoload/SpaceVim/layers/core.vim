@@ -81,27 +81,6 @@ function! SpaceVim#layers#core#config() abort
   " Select last paste
   nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  let lnum = expand('<slnum>') + s:lnum - 1
-  if has('python3')
-    let cmd =  'DeniteBufferDir file_rec'
-  elseif has('python')
-    let cmd =  "exe 'LeaderfFile ' . fnamemodify(bufname('%'), ':h')"
-  else
-    let cmd =  "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')"
-  endif
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-        \ cmd,
-        \ ['Find files in the directory of the current buffer',
-        \ [
-        \ '[SPC f f] is to find files in the directory of the current buffer',
-        \ 'vim with +python3 support will use denite',
-        \ 'vim with +python support will use leaderf',
-        \ 'otherwise will use ctrlp',
-        \ '',
-        \ 'Definition: ' . s:filename . ':' . lnum,
-        \ ]
-        \ ]
-        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
