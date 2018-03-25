@@ -45,6 +45,8 @@ function! SpaceVim#layers#unite#plugins() abort
   return plugins
 endfunction
 
+let s:filename = expand('<sfile>:~')
+let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd')) . ', [])',
@@ -60,6 +62,17 @@ function! SpaceVim#layers#unite#config() abort
   endif
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
+        \ 'UniteWithBufferDir file/' . (has('nvim') ? 'neovim' : 'async'),
+        \ ['Find files in the directory of the current buffer',
+        \ [
+        \ '[SPC f f] is to find files in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
 endfunction
 
 let s:file = expand('<sfile>:~')
