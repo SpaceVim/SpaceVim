@@ -148,67 +148,70 @@
 
 
 function! SpaceVim#layers#colorscheme#plugins() abort
-    return [
-                \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
-                \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
-                \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
-                \ ['mhartington/oceanic-next', { 'merged' : 0 }],
-                \ ['mhinz/vim-janah', { 'merged' : 0 }],
-                \ ['Gabirel/molokai', { 'merged' : 0 }],
-                \ ['kabbamine/yowish.vim', { 'merged' : 0 }],
-                \ ['vim-scripts/wombat256.vim', { 'merged' : 0 }],
-                \ ['vim-scripts/twilight256.vim', { 'merged' : 0 }],
-                \ ['junegunn/seoul256.vim', { 'merged' : 0 }],
-                \ ['vim-scripts/rdark-terminal2.vim', { 'merged' : 0 }],
-                \ ['vim-scripts/pyte', { 'merged' : 0 }],
-                \ ['joshdick/onedark.vim', { 'merged' : 0 }],
-                \ ['fmoralesc/molokayo', { 'merged' : 0 }],
-                \ ['jonathanfilip/vim-lucius', { 'merged' : 0 }],
-                \ ['wimstefan/Lightning', { 'merged' : 0 }],
-                \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
-                \ ['scheakur/vim-scheakur', { 'merged' : 0 }],
-                \ ['keith/parsec.vim', { 'merged' : 0 }],
-                \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
-                \ ['romainl/flattened', { 'merged' : 0 }],
-                \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
-                \ ['chase/focuspoint-vim', { 'merged' : 0 }],
-                \ ['chriskempson/base16-vim', { 'merged' : 0 }],
-                \ ['gregsexton/Atom', { 'merged' : 0 }],
-                \ ['gilgigilgil/anderson.vim', { 'merged' : 0 }],
-                \ ['romainl/Apprentice', { 'merged' : 0 }],
-                \ ['icymind/NeoSolarized', { 'merged' : 0 }],
-                \ ['jacoborus/tender', { 'merged' : 0 }],
-                \ ['wsdjeg/vim-one', { 'merged' : 0 }],
-                \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
-                \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }]
-                \ ]
+  return [
+        \ ['Gabirel/molokai', { 'merged' : 0 }],
+        \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }],
+        \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
+        \ ['rakr/vim-one', { 'merged' : 0 }],
+        \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
+        \ ['icymind/NeoSolarized', { 'merged' : 0 }],
+        \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
+        \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
+        \ ['mhartington/oceanic-next', { 'merged' : 0 }],
+        \ ['mhinz/vim-janah', { 'merged' : 0 }],
+        \ ['kabbamine/yowish.vim', { 'merged' : 0 }],
+        \ ['vim-scripts/wombat256.vim', { 'merged' : 0 }],
+        \ ['vim-scripts/twilight256.vim', { 'merged' : 0 }],
+        \ ['junegunn/seoul256.vim', { 'merged' : 0 }],
+        \ ['vim-scripts/rdark-terminal2.vim', { 'merged' : 0 }],
+        \ ['vim-scripts/pyte', { 'merged' : 0 }],
+        \ ['joshdick/onedark.vim', { 'merged' : 0 }],
+        \ ['fmoralesc/molokayo', { 'merged' : 0 }],
+        \ ['jonathanfilip/vim-lucius', { 'merged' : 0 }],
+        \ ['wimstefan/Lightning', { 'merged' : 0 }],
+        \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
+        \ ['scheakur/vim-scheakur', { 'merged' : 0 }],
+        \ ['keith/parsec.vim', { 'merged' : 0 }],
+        \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
+        \ ['romainl/flattened', { 'merged' : 0 }],
+        \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
+        \ ['chase/focuspoint-vim', { 'merged' : 0 }],
+        \ ['chriskempson/base16-vim', { 'merged' : 0 }],
+        \ ['gregsexton/Atom', { 'merged' : 0 }],
+        \ ['gilgigilgil/anderson.vim', { 'merged' : 0 }],
+        \ ['romainl/Apprentice', { 'merged' : 0 }],
+        \ ['jacoborus/tender', { 'merged' : 0 }],
+        \ ]
 endfunction
 
 let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one', 'nord']
 let s:Number = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#colorscheme#config() abort
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
-                \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
-                \ . ', [])', 'cycle-spacevim-theme', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
+        \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
+        \ . ', [])', 'cycle-spacevim-theme', 1)
+endfunction
+
+function! SpaceVim#layers#colorscheme#set_variable(var) abort
 endfunction
 
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
-    function! s:_function(fstr) abort
-        return function(a:fstr)
-    endfunction
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
 else
-    function! s:_SID() abort
-        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
-    endfunction
-    let s:_s = '<SNR>' . s:_SID() . '_'
-    function! s:_function(fstr) abort
-        return function(substitute(a:fstr, 's:', s:_s, 'g'))
-    endfunction
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
 endif
 function! s:cycle_spacevim_theme() abort
-    let id = s:Number.random(0, len(s:cs))
-    exe 'colorscheme ' . s:cs[id]
+  let id = s:Number.random(0, len(s:cs))
+  exe 'colorscheme ' . s:cs[id]
 endfunction
