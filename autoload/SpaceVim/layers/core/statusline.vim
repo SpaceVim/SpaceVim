@@ -654,5 +654,19 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func)
 
 endfunction
 
+function! SpaceVim#layers#core#statusline#check_section(name) abort
+  return (index(s:loaded_sections_l, a:name) != -1
+        \ || index(s:loaded_sections_r, a:name) != -1)
+endfunction
+
+function! SpaceVim#layers#core#statusline#remove_section(name) abort
+  if index(s:loaded_sections_l, a:name) != -1
+    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  endif
+  if index(s:loaded_sections_r, a:name) != -1
+    call remove(s:loaded_sections_r, index(s:loaded_sections_l, a:name))
+  endif
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+endfunction
 
 " vim:set et sw=2 cc=80 nowrap:
