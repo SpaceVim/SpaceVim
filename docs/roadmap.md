@@ -29,17 +29,28 @@ There are release milestones and meta milestones ("buckets").
 
 ### [v0.1.0](https://github.com/SpaceVim/SpaceVim/milestone/1)
 
+Will release 0.1 at 2017-01-27, as you know, it is the last day of this year in chinese.
+
 release note: [v0.1.0](http://spacevim.org/SpaceVim-release-v0.1.0/)
 
 ### [v0.2.0](https://github.com/SpaceVim/SpaceVim/milestone/2)
+
+1. Many language support
+2. Improve default layer
+3. finish document
 
 release note: [v0.2.0](http://spacevim.org/SpaceVim-release-v0.2.0/)
 
 ### [v0.3.0](https://github.com/SpaceVim/SpaceVim/milestone/3)
 
+- SpaceVim api
+- plugin manager ui ( for dein)
+
 release note: [v0.3.0](http://spacevim.org/SpaceVim-release-v0.3.0/)
 
 ### [v0.3.1](https://github.com/SpaceVim/SpaceVim/milestone/6)
+
+features need to be implemented just after v0.3.0 has been released.
 
 release note: [v0.3.1](http://spacevim.org/SpaceVim-release-v0.3.1/)
 
@@ -56,6 +67,8 @@ release note: [v0.5.0](http://spacevim.org/SpaceVim-release-v0.5.0/)
 release note: [v0.6.0](http://spacevim.org/SpaceVim-release-v0.6.0/)
 
 ### [v0.7.0](https://github.com/SpaceVim/SpaceVim/milestone/10)
+
+- Improve all the lang#\* layers
 
 release note: [v0.7.0](http://spacevim.org/SpaceVim-release-v0.7.0/)
 

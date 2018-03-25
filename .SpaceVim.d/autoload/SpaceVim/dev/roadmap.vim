@@ -39,11 +39,15 @@ function! s:get_milestones() abort
   for milestone in milestones
     call add(line, '### [' . milestone.title . '](' . milestone.html_url . ')' )
     call add(line, '')
+    if !empty(get(milestone, 'description', ''))
+      let line += split(milestone.description, "\n")
+      call add(line, '')
+    endif
     call add(line, 'release note: [' . milestone.title . '](http://spacevim.org/SpaceVim-release-' . milestone.title . '/)' )
     call add(line, '')
   endfor
-    if line[-1] !=# ''
-        let line += ['']
-    endif
+  if line[-1] !=# ''
+    let line += ['']
+  endif
   return line
 endfunction

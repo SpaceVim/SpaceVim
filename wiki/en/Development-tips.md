@@ -11,27 +11,26 @@
 
 ## Labels
 
-| Name               | color   | description |
-| ------------------ | ------- | ----------- |
-| BUG                | #ee0701 |             |
-| Discussion         | #1be209 |             |
-| Doc Tuning         | #d88d38 |             |
-| Duplicate          | #bfdadc |             |
-| Feature Requesting | #0052cc |             |
-| Fixed              | #ededed |             |
-| Mac                | #a8b8ed |             |
-| PR welcome         | #674eb2 |             |
-| RDY                | #e99695 |             |
-| RFC                | #006b75 |             |
-| TODO               | #b60205 |             |
-| WIP                | #5319e7 |             |
-| Website            | #282828 |             |
-| Win                | #036d5f |             |
-| bug-upstream       | #7d2dc4 |             |
-| enhancement        | #84b6eb |             |
-| lang:go            | #8cf2c2 |             |
-| need help          | #78db00 |             |
-| no-reproduce       | #8851b5 |             |
-| unplanned          | #eaf24d |             |
+| Name            | color   | description                            |
+| --------------- | ------- | -------------------------------------- |
+| PR welcome      | #674eb2 | null                                   |
+| RDY             | #e99695 | null                                   |
+| RFC             | #006b75 | null                                   |
+| WIP             | #5319e7 | null                                   |
+| bug             | #ee0701 | bug of SpaceVim core                   |
+| bug-upstream    | #ffd5bc | bug of upstream plugins for vim/neovim |
+| discussion      | #1be209 | general dicussion about spacevim       |
+| doc             | #24cc56 | doc type or need to be improved        |
+| duplicate       | #bfdadc | duplicate issue                        |
+| enhancement     | #84b6eb | improvement of exist feature           |
+| feature request | #f9c77c | request for new features               |
+| lang:go         | #8cf2c2 | Issue about go layer                   |
+| need help       | #78db00 | null                                   |
+| no-reproduce    | #8851b5 | Can not reproduce this issue           |
+| os:mac          | #a8b8ed |                                        |
+| os:windows      | #036d5f |                                        |
+| unplanned       | #eaf24d | null                                   |
+| usage           | #fef2c0 | usage of vim/neovim/spacevim           |
+| website         | #c0e276 |                                        |
 
 <!-- SpaceVim Wiki labels info end -->
