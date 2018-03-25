@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+
 function! SpaceVim#dev#roadmap#updateCompletedItems() abort
   let [start, end] = s:find_position()
   if start != 0 && end != 0
@@ -24,21 +25,22 @@ function! s:find_position() abort
 endfunction
 
 function! s:generate_content() abort
-  let content = ['## Labels',
-        \ '',
-        \ 'Name | color | description',
-        \ '--- | ---- | ----'
+  let content = ['## Completed',
+        \ ''
         \ ]
-  let content += s:get_labels()
+  let content += s:get_milestones()
   return content
 endfunction
 
-function! s:get_labels() abort
-  let labels = github#api#labels#GetAll('SpaceVim', 'SpaceVim')
+function! s:get_milestones() abort
+  let milestones = github#api#issues#ListAllMilestones('SpaceVim', 'SpaceVim', 'closed', 'due_on', 'asc')
   let line = []
 
-  for label in labels
-    call add(line, label.name . ' | #' . label.color . ' | ' . get(label, 'description', '') )
+  for milestone in milestones
+    call add(line, '### [' . milestone.title . '](' . milestone.html_url . ')' )
+    call add(line, '')
+    call add(line, 'release note: [' . milestone.title . '](http://spacevim.org/SpaceVim-release-' . milestone.title . '/)' )
+    call add(line, '')
   endfor
     if line[-1] !=# ''
         let line += ['']
