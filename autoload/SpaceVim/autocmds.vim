@@ -77,7 +77,7 @@ function! SpaceVim#autocmds#init() abort
     endif
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans call s:fix_VertSplit()
+    autocmd ColorScheme gruvbox,jellybeans,nord call s:fix_VertSplit()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
@@ -124,6 +124,8 @@ function! s:fix_VertSplit() abort
       hi VertSplit guibg=#282828 guifg=#181A1F
     elseif g:colors_name ==# 'jellybeans'
       hi VertSplit guibg=#151515 guifg=#080808
+    elseif g:colors_name ==# 'nord'
+      hi VertSplit guibg=#2E3440 guifg=#262626
     endif
   else
     if g:colors_name ==# 'gruvbox'
