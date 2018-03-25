@@ -65,12 +65,21 @@ function! SpaceVim#layers#colorscheme#plugins() abort
   " \ ]
 endfunction
 
-let s:cs = ['gruvbox', 'molokai', 'onedark', 'jellybeans', 'one', 'nord', 'NeoSolarized']
-let s:Number = SpaceVim#api#import('data#number')
+let s:cs = [
+      \ 'gruvbox',
+      \ 'molokai',
+      \ 'onedark',
+      \ 'jellybeans',
+      \ 'one',
+      \ 'nord',
+      \ 'hybrid',
+      \ 'NeoSolarized',
+      \ ]
+let s:NUMBER = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme == 1
-    let id = s:Number.random(0, len(s:cs))
+    let id = s:NUMBER.random(0, len(s:cs))
     let g:spacevim_colorscheme = s:cs[id]
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
@@ -99,6 +108,6 @@ else
   endfunction
 endif
 function! s:cycle_spacevim_theme() abort
-  let id = s:Number.random(0, len(s:cs))
+  let id = s:NUMBER.random(0, len(s:cs))
   exe 'colorscheme ' . s:cs[id]
 endfunction
