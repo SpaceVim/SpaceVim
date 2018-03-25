@@ -65,7 +65,7 @@ function! SpaceVim#mapping#guide#theme#jellybeans#palette() abort
                 \ ['#4e4e4e', 239],
                 \ ['#ffffff', '#437019', 231, 22],
                 \ ['#ffffff', '#870000', 231, 88],
-                \ ['#870000', '#ffffff', 88, 231],
+                \ ['#870000', '#000000', 88, 0],
                 \ ['#ffffff', '#689d6a', 231, 72],
                 \ ['#ffffff', '#8f3f71', 231, 132],
                 \ ]
