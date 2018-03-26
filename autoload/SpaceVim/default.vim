@@ -143,6 +143,7 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
+  call SpaceVim#layers#load('sudo')
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
@@ -193,18 +194,6 @@ function! SpaceVim#default#keyBindings() abort
         \ 'Toggle recording',
         \ '',
         \ 'Toggle recording mode')
-
-  " Save a file with sudo
-  " use w!! in cmdline or use W command to sudo write a file
-  if has('nvim')
-    cnoremap w!! w suda://%
-    command! W w suda://%
-  else
-    " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
-    cnoremap w!! %!sudo tee > /dev/null %
-    command! W w !sudo tee % > /dev/null
-  endif
-
 
   " Use Ctrl+* to jump between windows
   nnoremap <silent><C-Right> :<C-u>wincmd l<CR>
