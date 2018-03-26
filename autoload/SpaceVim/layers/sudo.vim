@@ -1,21 +1,21 @@
 "=============================================================================
-" core.vim --- SpaceVim sudo layer
+" sudo.vim --- SpaceVim sudo layer
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-function! SpaceVim#layers#core#plugins() abort
+function! SpaceVim#layers#sudo#plugins() abort
   let plugins = []
   return plugins
 endfunction
 
-function! SpaceVim#layers#core#config() abort
+function! SpaceVim#layers#sudo#config() abort
   if has('nvim') 
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'call SudoWriteCurrentFile()', 'save buffer with sudo', 1)
-    cnoremap w!! call SudoWriteCurrentFile()
     command! W call SudoWriteCurrentFile()
+    cnoremap w!! :call SudoWriteCurrentFile()
   else 
     " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
