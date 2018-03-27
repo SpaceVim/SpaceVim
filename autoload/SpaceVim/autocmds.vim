@@ -41,7 +41,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
     autocmd FileType lua set comments=f:--
-    autocmd FileType vim setlocal foldmethod=marker
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
