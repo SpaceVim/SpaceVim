@@ -30,9 +30,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Native functions](#native-functions)
-  - [Plugin: Bookmarks](#plugin-bookmarks)
-  - [Completion](#completion)
-    - [Unite/Denite](#unitedenite)
+  - [Bookmarks management](#bookmarks-management)
+  - [Fuzzy finder](#fuzzy-finder)
   - [Discovering](#discovering)
     - [Mappings](#mappings)
     - [Getting help](#getting-help)
@@ -683,8 +682,7 @@ can be get by <kbd><leader> q r</kbd>
 | `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
 | `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
 
-
-### Plugin: Bookmarks
+### Bookmarks management
 
 | Key     |  Mode  | Action                          |
 | ------- | :----: | ------------------------------- |
@@ -696,31 +694,70 @@ can be get by <kbd><leader> q r</kbd>
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
-### Completion
+### Fuzzy finder
 
-#### Unite/Denite
+SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+These layers have the same key bindings and features. But they need different dependencies.
 
-please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
+User only need to load one of these layers, then will be able to get these
+features.
 
-**Mappings within unite/denite buffer**
+**Key bindings**
 
-| Mappings         | Mode          | description                          |
+| Key bindings         | Discription                   |
+| -------------------- | ----------------------------- |
+| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f e`       | Fuzzy find register           |
+| `<Leader> f f`       | Fuzzy find file               |
+| `<Leader> f h`       | Fuzzy find history/yank       |
+| `<Leader> f j`       | Fuzzy find jump, change       |
+| `<Leader> f l`       | Fuzzy find location list      |
+| `<Leader> f m`       | Fuzzy find output messages    |
+| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f q`       | Fuzzy find quick fix          |
+| `<Leader> f r`       | Resumes Unite window          |
+
+But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
+
+| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
+| ------------------- | ------- | ------- | ------- | ------- | ------- |
+| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
+| register            | **yes** | **yes** | no      | **yes** | **yes** |
+| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
+| yank history        | **yes** | **yes** | no      | no      | **yes** |
+| jump                | **yes** | **yes** | no      | **yes** | **yes** |
+| location list       | **yes** | **yes** | no      | no      | **yes** |
+| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
+| message             | **yes** | **yes** | no      | no      | **yes** |
+| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
+| resume windows      | **yes** | **yes** | no      | no      | no      |
+
+all source marked as `no` will roll back to unite extension.
+
+**Key bindings within fuzzy finder buffer**
+
+| key bindings          | Mode   | description                               |
+| --------------------- | ------ | ----------------------------------------- |
+| `Tab`/`<C-j>`         | Insert | Select next line                          |
+| `Shift + Tab`/`<C-k>` | Insert | Select previous line                      |
+| `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
+| `Ctrl`+`w`            | Insert | Delete backward path                      |
+
+**Denite/Unite normal mode key bindings**
+
+| key bindings     | Mode          | description                          |
 | ---------------- | ------------- | ------------------------------------ |
 | `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
 | `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Insert        | Select next line                     |
 | `Tab`            | Normal        | Select actions                       |
-| `Shift` + `Tab`  | Insert        | Select previous line                 |
 | `Space`          | Normal        | Toggle mark current candidate, up    |
 | `Enter`          | Normal        | Run default action                   |
 | `Ctrl`+`v`       | Normal        | Open in a split                      |
 | `Ctrl`+`s`       | Normal        | Open in a vertical split             |
 | `Ctrl`+`t`       | Normal        | Open in a new tab                    |
 | `Ctrl` + `g`     | Normal        | Exit unite                           |
-| `jk`             | Insert        | Leave Insert mode                    |
 | `r`              | Normal        | Replace ('search' profile) or rename |
 | `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
-| `Ctrl`+`w`       | Insert        | Delete backward path                 |
 
 ### Discovering
 
