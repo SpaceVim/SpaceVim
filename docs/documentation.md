@@ -732,8 +732,6 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 | quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
 | resume windows      | **yes** | **yes** | no      | no      | no      |
 
-all source marked as `no` will roll back to unite extension.
-
 **Key bindings within fuzzy finder buffer**
 
 | key bindings          | Mode   | description                               |
@@ -758,6 +756,8 @@ all source marked as `no` will roll back to unite extension.
 | `Space`          | Normal        | Toggle mark current candidate, up    |
 | `r`              | Normal        | Replace ('search' profile) or rename |
 | `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
+
+The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
 
 ### Discovering
 
