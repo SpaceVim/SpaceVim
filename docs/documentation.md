@@ -738,10 +738,15 @@ all source marked as `no` will roll back to unite extension.
 
 | key bindings          | Mode   | description                               |
 | --------------------- | ------ | ----------------------------------------- |
-| `Tab`/`<C-j>`         | Insert | Select next line                          |
-| `Shift + Tab`/`<C-k>` | Insert | Select previous line                      |
+| `Tab`/`<C-j>`         | -      | Select next line                          |
+| `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
 | `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
 | `Ctrl`+`w`            | Insert | Delete backward path                      |
+| `Enter`               | -      | Run default action                        |
+| `Ctrl`+`v`            | -      | Open in a split                           |
+| `Ctrl`+`s`            | -      | Open in a vertical split                  |
+| `Ctrl`+`t`            | -      | Open in a new tab                         |
+| `Ctrl`+`g`            | -      | Exit unite                                |
 
 **Denite/Unite normal mode key bindings**
 
@@ -751,11 +756,6 @@ all source marked as `no` will roll back to unite extension.
 | `Ctrl`+`l`       | Normal        | Redraw                               |
 | `Tab`            | Normal        | Select actions                       |
 | `Space`          | Normal        | Toggle mark current candidate, up    |
-| `Enter`          | Normal        | Run default action                   |
-| `Ctrl`+`v`       | Normal        | Open in a split                      |
-| `Ctrl`+`s`       | Normal        | Open in a vertical split             |
-| `Ctrl`+`t`       | Normal        | Open in a new tab                    |
-| `Ctrl` + `g`     | Normal        | Exit unite                           |
 | `r`              | Normal        | Replace ('search' profile) or rename |
 | `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
 
@@ -770,13 +770,11 @@ The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value                                          | description                        |
-| ----------- | ------------------------------------------------------------------------ | ---------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                                                         | default mapping prefix of SpaceVim |
-| `[Window]`  | `g:spacevim_windows_leader` / `s`                                        | window mapping prefix of SpaceVim  |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`                                         | denite mapping prefix of SpaceVim  |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`                                          | unite mapping prefix of SpaceVim   |
-| `<leader>`  | `mapleader` / `\`                 \| default leader prefix of vim/neovim |                                    |
+| Prefix name | custom option and default value   | description                         |
+| ----------- | --------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
+| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
+| `<leader>`  | default vim leader                | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
