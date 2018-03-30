@@ -168,7 +168,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>f<Space>
         \ :<C-u>Unite menu:CustomKeyMaps<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f['<Space>'] = ['Unite menu:CustomKeyMaps',
+  let g:_spacevim_mappings.f['[SPC]'] = ['Unite menu:CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
