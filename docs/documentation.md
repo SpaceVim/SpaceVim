@@ -743,8 +743,8 @@ all source marked as `no` will roll back to unite extension.
 | `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
 | `Ctrl`+`w`            | Insert | Delete backward path                      |
 | `Enter`               | -      | Run default action                        |
-| `Ctrl`+`v`            | -      | Open in a split                           |
-| `Ctrl`+`s`            | -      | Open in a vertical split                  |
+| `Ctrl`+`s`            | -      | Open in a split                           |
+| `Ctrl`+`v`            | -      | Open in a vertical split                  |
 | `Ctrl`+`t`            | -      | Open in a new tab                         |
 | `Ctrl`+`g`            | -      | Exit unite                                |
 
