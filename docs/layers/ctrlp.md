@@ -7,7 +7,7 @@ description: "This layers provide a heavily customized ctrlp centric work-flow"
 
 ## Intro
 
-This layer is a heavily customized warpper for ctrlp.
+This layer is a heavily customized wrapper for ctrlp.
 
 
 ## Key bindings

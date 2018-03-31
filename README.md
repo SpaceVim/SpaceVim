@@ -18,7 +18,7 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
 SpaceVim is a community-driven modular vim distribution. It manages collections
-of plugins in layers, which help collect related packages together to provide IDE-like features. 
+of plugins in layers, which help collect related packages together to provide IDE-like features.
 SpaceVim is not only a vimrc but an ultimate Vim configuration, It contains many build-in features.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
@@ -100,7 +100,7 @@ curl -sLf https://spacevim.org/install.sh | bash
 
 After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
-For more info about the install script, please check:
+For more info about the installation script, please check:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
@@ -108,7 +108,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 **Windows**
 
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
 ### Project layout
 
@@ -124,7 +124,7 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
-├─ bin/                           executeable
+├─ bin/                           executable
 └─ test/                          tests
 ```
 

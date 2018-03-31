@@ -7,7 +7,7 @@ description: "This layers provide a heavily customized Unite centric work-flow"
 
 ## Intro
 
-This layer is a heavily customized warpper for unite.vim and unite sources.
+This layer is a heavily customized wrapper for unite.vim and unite sources.
 
 ## Configuration
 
