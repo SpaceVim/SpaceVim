@@ -579,7 +579,7 @@ function! SpaceVim#loadCustomConfig() abort
         exe 'source ' . custom_glob_conf
       endif
     else
-      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
+      call SpaceVim#logger#info('Skip glob configuration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))

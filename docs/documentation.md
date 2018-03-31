@@ -191,7 +191,7 @@ This section is an overview of layers. A more extensive introduction to writing 
 
 **Purpose**
 
-Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configration file.
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configuration file.
 
 **Structure**
 
@@ -282,7 +282,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
-if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configration file, **be sure** the key bindings is not used in SpaceVim.
+if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
 
 ```vim
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
@@ -453,7 +453,7 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
@@ -528,7 +528,7 @@ endfunction
 
 this example is for gruvbox colorscheme, if you want to use same colors when
 switch between different colorschemes, you may need to set
-`g:spacevim_custom_color_palette` in your custom configration file. for example:
+`g:spacevim_custom_color_palette` in your custom configuration file. for example:
 
 ```vim
 let g:spacevim_custom_color_palette = [
