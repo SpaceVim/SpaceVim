@@ -21,6 +21,17 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ 'FzfFiles',
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)

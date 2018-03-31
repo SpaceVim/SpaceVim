@@ -48,6 +48,22 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
+  if has('nvim')
+    let cmd = 'Unite file_rec/neovim'
+  else
+    let cmd = 'Unite file_rec/async'
+  endif
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ cmd,
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd')) . ', [])',
         \ 'shell cmd(current dir)', 1)

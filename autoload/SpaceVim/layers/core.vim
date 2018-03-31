@@ -205,27 +205,6 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find project root', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill all project buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'List all projects', 1)
-  let lnum = expand('<slnum>') + s:lnum - 1
-  if has('python3')
-    let cmd =  'Denite file_rec'
-  elseif has('python')
-    let cmd =  'LeaderfFile'
-  else
-    let cmd =  'CtrlP'
-  endif
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
-        \ cmd,
-        \ ['find files in current project',
-        \ [
-        \ '[SPC p f] is to find files in the root of the current project',
-        \ 'vim with +python3 support will use denite',
-        \ 'vim with +python support will use leaderf',
-        \ 'otherwise will use ctrlp',
-        \ '',
-        \ 'Definition: ' . s:filename . ':' . lnum,
-        \ ]
-        \ ]
-        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', '/'], 'Grepper', 'fuzzy search for text in current project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'q'], 'qa', 'prompt-kill-vim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'Q'], 'qa!', 'kill-vim', 1)
