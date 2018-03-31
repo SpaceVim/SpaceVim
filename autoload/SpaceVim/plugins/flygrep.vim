@@ -201,10 +201,12 @@ endfunction
 function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
   let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
-  if getline(1) ==# ''
-    call setline(1, datas)
-  else
-    call append('$', datas)
+  if bufnr('%') == s:flygrep_buffer_id
+    if getline(1) ==# ''
+      call setline(1, datas)
+    else
+      call append('$', datas)
+    endif
   endif
 endfunction
 
@@ -370,6 +372,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')
   rightbelow split __flygrep__
+  let s:flygrep_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=

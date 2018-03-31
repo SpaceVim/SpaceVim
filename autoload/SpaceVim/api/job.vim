@@ -176,6 +176,8 @@ function! s:self.stop(id) abort
     if has_key(self.jobs, a:id)
       call job_stop(get(self.jobs, a:id))
       call remove(self.jobs, a:id)
+    else
+      call self.warn('No job with such id')
     endif
   else
     call self.warn()
