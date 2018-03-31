@@ -66,6 +66,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
     augroup SpaceVim_lang_javascript
       autocmd!
       autocmd User NeomakeFinished checktime
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
       autocmd FocusGained * checktime
     augroup END
   endif

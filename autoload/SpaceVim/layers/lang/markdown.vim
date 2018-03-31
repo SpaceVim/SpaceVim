@@ -50,6 +50,10 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
+  augroup spacevim_layer_lang_markdown
+    autocmd!
+    autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  augroup END
 endfunction
 
 function! s:mappings() abort

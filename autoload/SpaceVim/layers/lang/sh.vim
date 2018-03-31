@@ -30,4 +30,8 @@ function! SpaceVim#layers#lang#sh#config()
       \ '#!/usr/bin/env zsh',
       \ ''
       \ ])
+  augroup spacevim_layer_lang_sh
+    autocmd!
+    autocmd FileType sh setlocal omnifunc=SpaceVim#plugins#bashcomplete#omnicomplete
+  augroup END
 endfunction

@@ -41,15 +41,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
     autocmd FileType lua set comments=f:--
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType sh setlocal omnifunc=SpaceVim#plugins#bashcomplete#omnicomplete
     autocmd FileType xml call XmlFileTypeInit()
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd Filetype qf setlocal nobuflisted
     autocmd BufEnter *
           \   if empty(&buftype) && has('nvim') && &filetype != 'help'
