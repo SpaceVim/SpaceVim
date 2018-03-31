@@ -88,7 +88,7 @@ function! s:self.start(argv, ...) abort
       call extend(self.jobs, {job : msg})
     else
       if job == -1
-        call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executeable')
+        call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executable')
       elseif job == 0
         call add(self._message, 'Failed to start job: invalid arguments')
       endif

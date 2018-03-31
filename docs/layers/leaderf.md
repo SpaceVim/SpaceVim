@@ -7,7 +7,7 @@ description: "This layers provide a heavily customized LeaderF centric work-flow
 
 ## Intro
 
-This layer is a heavily customized warpper for LeaderF and it's sources.
+This layer is a heavily customized wrapper for LeaderF and it's sources.
 
 
 ## Configuration

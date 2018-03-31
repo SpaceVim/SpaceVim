@@ -22,5 +22,5 @@ In the main repo, the layout is:
     ├─ doc/SpaceVim.txt               help
     ├─ docs/                          website
     ├─ wiki/                          wiki
-    ├─ bin/                           executeable
+    ├─ bin/                           executable
     └─ test/                          tests
