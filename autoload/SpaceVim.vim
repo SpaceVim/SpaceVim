@@ -455,7 +455,6 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
-      \ 'help',
       \ 'tagbar',
       \ 'vimfiler',
       \ 'SpaceVimRunner',
