@@ -50,6 +50,7 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ]
         \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'DeniteCursorWord help', 'get help with the symbol at point', 1)
 endfunction
 
 let s:file = expand('<sfile>:~')
