@@ -39,6 +39,9 @@ lockvar g:spacevim_version
 " <
 let g:spacevim_default_indent          = 2
 ""
+" In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+let g:spacevim_expand_tab              = 1
+""
 " Enable/Disable relativenumber, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 ""
@@ -652,7 +655,13 @@ function! SpaceVim#end() abort
     set relativenumber
   endif
 
+  " tab options:
+  set smarttab
+  let &expandtab = g:spacevim_expand_tab
+  let &tabstop = g:spacevim_default_indent
+  let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
+
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>

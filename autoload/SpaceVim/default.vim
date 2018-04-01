@@ -35,7 +35,6 @@ function! SpaceVim#default#options() abort
   " begining start delete the char you just typed in if you do not use set
   " nocompatible ,you need this
   set backspace=indent,eol,start
-  set smarttab
   set nrformats-=octal
   set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
   set fillchars=vert:│,fold:·
@@ -55,12 +54,6 @@ function! SpaceVim#default#options() abort
 
   " do not break words.
   set linebreak
-
-  " tab options:
-  set tabstop=4
-  set expandtab
-  set softtabstop=4
-  set shiftwidth=4
 
   " Enable line number
   set number
