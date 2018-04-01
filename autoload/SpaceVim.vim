@@ -689,7 +689,7 @@ function! SpaceVim#begin() abort
     if !argc()
       return [1, getcwd()]
     elseif argv(0) =~# '/$'
-      let f = expand(argv(0))
+      let f = fnamemodify(expand(argv(0)), ':p')
       if isdirectory(f)
         return [1, f]
       else
