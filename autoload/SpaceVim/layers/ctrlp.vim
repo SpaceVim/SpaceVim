@@ -12,6 +12,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
         \ ['FelikZ/ctrlp-py-matcher'],
         \ ['mattn/ctrlp-register', {'on_cmd' : 'CtrlPRegister'}],
         \ ['DeaR/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],
+        \ ['SpaceVim/vim-ctrlp-help', {'on_cmd' : 'CtrlPHelp'}],
         \ ]
   return plugins
 endfunction
@@ -19,6 +20,9 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#ctrlp#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
+        \ . string(s:_function('s:get_help_with_cursor_symbol')) . ', [])',
+        \ 'get help with the symbol at point', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'CtrlP',
@@ -47,6 +51,13 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ]
         \ ]
         \ , 1)
+endfunction
+
+function! s:get_help_with_cursor_symbol() abort
+  let save_ctrlp_default_input = get(g:, 'ctrlp_default_input', '')
+  let g:ctrlp_default_input = expand('<cword>')
+  CtrlPHelp
+  let g:ctrlp_default_input = save_ctrlp_default_input
 endfunction
 
 let s:file = expand('<sfile>:~')
@@ -96,3 +107,19 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 endfunction
+
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
