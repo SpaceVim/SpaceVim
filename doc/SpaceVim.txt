@@ -86,6 +86,9 @@ Change the default indentation of SpaceVim. Default is 2.
   let g:spacevim_default_indent = 2
 <
 
+                                                       *g:spacevim_expand_tab*
+In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+
                                                    *g:spacevim_relativenumber*
 Enable/Disable relativenumber, by default it is enabled.
 
