@@ -10,16 +10,16 @@ this is a list of most asked questions about SpaceVim.
 
 <!-- vim-markdown-toc GFM -->
 
-- [Where should I put my configration?](#where-should-i-put-my-configration)
+- [Where should I put my configuration?](#where-should-i-put-my-configuration)
 - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
 - [Why I can not update plugins?](#why-i-can-not-update-plugins)
 
 <!-- vim-markdown-toc -->
 
-### Where should I put my configration?
+### Where should I put my configuration?
 
-SpaceVim load custom global configuration from `~/.SpaceVim.d/init.vim`. It also support project specific configration, 
+SpaceVim load custom global configuration from `~/.SpaceVim.d/init.vim`. It also support project specific configuration, 
 That means it will load `.SpaceVim.d/init.vim` from the root of your project.
 
 ### E492: Not an editor command: ^M

@@ -24,6 +24,7 @@ function! SpaceVim#layers#lang#html#config() abort
   augroup spacevim_lang_html
     autocmd!
     autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex call s:install_emmet()
+    autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
   augroup END
 endfunction
 

@@ -8,19 +8,19 @@
 
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
-     \ ['Galooshi/vim-import-js', {
-     \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
-     \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
-     \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
-     \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
-     \ ['moll/vim-node', { 'on_ft': 'javascript' }],
-     \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
-     \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
-     \ ['othree/javascript-libraries-syntax.vim', {
-     \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
-     \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
-     \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
-     \ ]
+        \ ['Galooshi/vim-import-js', {
+        \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
+        \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
+        \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
+        \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
+        \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+        \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
+        \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
+        \ ['othree/javascript-libraries-syntax.vim', {
+        \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
+        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
+        \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
+        \ ]
 
   if !SpaceVim#layers#lsp#check_filetype('javascript')
     call add(plugins, ['ternjs/tern_for_vim', {
@@ -39,10 +39,8 @@ function! SpaceVim#layers#lang#javascript#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
-  " pangloss/vim-javascript {{{
   let g:javascript_plugin_jsdoc = 1
   let g:javascript_plugin_flow = 1
-  " }}}
 
   call add(g:spacevim_project_rooter_patterns, 'package.json')
 
@@ -63,19 +61,18 @@ function! SpaceVim#layers#lang#javascript#config() abort
     " Use the fix option of eslint
     let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
   endif
-  
-  augroup SpaceVim_lang_javascript
-    autocmd!
-    autocmd FileType javascript setlocal foldmethod=syntax
-    if s:auto_fix
+
+  if s:auto_fix
+    augroup SpaceVim_lang_javascript
+      autocmd!
       autocmd User NeomakeFinished checktime
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
       autocmd FocusGained * checktime
-    endif
-  augroup END
+    augroup END
+  endif
 endfunction
 
 function! s:on_ft() abort
-  " Galooshi/vim-import-js {{{
   nnoremap <silent><buffer> <F4> :ImportJSWord<CR>
   nnoremap <silent><buffer> <Leader>ji :ImportJSWord<CR>
   nnoremap <silent><buffer> <Leader>jf :ImportJSFix<CR>
@@ -85,9 +82,7 @@ function! s:on_ft() abort
   inoremap <silent><buffer> <C-j>i <Esc>:ImportJSWord<CR>a
   inoremap <silent><buffer> <C-j>f <Esc>:ImportJSFix<CR>a
   inoremap <silent><buffer> <C-j>g <Esc>:ImportJSGoto<CR>a
-  " }}}
 
-  " heavenshell/vim-jsdoc {{{
 
   " Allow prompt for interactive input.
   let g:jsdoc_allow_input_prompt = 1
@@ -101,7 +96,6 @@ function! s:on_ft() abort
   " Enable to use ECMAScript6's Shorthand function, Arrow function.
   let g:jsdoc_enable_es6 = 1
 
-  " }}}
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>

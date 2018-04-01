@@ -11,7 +11,6 @@ lang: cn
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的 vim 配置，支持 vim 和 neovim。SpaceVim 
 使用模块的方式来组织插件，对新手更加友好。
 
-
 ## 目标
 
 - 提供可跨平台的优雅的用户体验.

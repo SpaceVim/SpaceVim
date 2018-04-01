@@ -44,7 +44,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 ### Windows
 
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
 
 ## Learning SpaceVim

@@ -48,6 +48,23 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'UniteWithCursorWord help', 'get help with the symbol at point', 1)
+  if has('nvim')
+    let cmd = 'Unite file_rec/neovim'
+  else
+    let cmd = 'Unite file_rec/async'
+  endif
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ cmd,
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd')) . ', [])',
         \ 'shell cmd(current dir)', 1)
@@ -168,7 +185,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>f<Space>
         \ :<C-u>Unite menu:CustomKeyMaps<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f['<Space>'] = ['Unite menu:CustomKeyMaps',
+  let g:_spacevim_mappings.f['[SPC]'] = ['Unite menu:CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',

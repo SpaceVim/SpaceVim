@@ -79,16 +79,16 @@ function! SpaceVim#default#options() abort
   let g:swap_dir = g:data_dir . 'swap'
   let g:undo_dir = g:data_dir . 'undofile'
   if finddir(g:data_dir) ==# ''
-    silent call mkdir(g:data_dir)
+    silent call mkdir(g:data_dir, 'p', 0700)
   endif
   if finddir(g:backup_dir) ==# ''
-    silent call mkdir(g:backup_dir)
+    silent call mkdir(g:backup_dir, 'p', 0700)
   endif
   if finddir(g:swap_dir) ==# ''
-    silent call mkdir(g:swap_dir)
+    silent call mkdir(g:swap_dir, 'p', 0700)
   endif
   if finddir(g:undo_dir) ==# ''
-    silent call mkdir(g:undo_dir)
+    silent call mkdir(g:undo_dir, 'p', 0700)
   endif
   unlet g:data_dir
   unlet g:backup_dir

@@ -455,7 +455,6 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
-      \ 'help',
       \ 'tagbar',
       \ 'vimfiler',
       \ 'SpaceVimRunner',
@@ -579,7 +578,7 @@ function! SpaceVim#loadCustomConfig() abort
         exe 'source ' . custom_glob_conf
       endif
     else
-      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
+      call SpaceVim#logger#info('Skip glob configuration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))
@@ -690,7 +689,7 @@ function! SpaceVim#begin() abort
     if !argc()
       return [1, getcwd()]
     elseif argv(0) =~# '/$'
-      let f = expand(argv(0))
+      let f = fnamemodify(expand(argv(0)), ':p')
       if isdirectory(f)
         return [1, f]
       else

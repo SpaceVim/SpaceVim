@@ -101,10 +101,10 @@ function! s:start_parser(key, dict) " {{{
       continue
     endif
     let mapd.display = s:format_displaystring(mapd.rhs)
-    let mapd.lhs = substitute(mapd.lhs, key, "", "")
-    " let mapd.lhs = substitute(mapd.lhs, "<Space>", " ", "g")
-    let mapd.lhs = substitute(mapd.lhs, "<Tab>", "<C-I>", "g")
-    let mapd.rhs = substitute(mapd.rhs, "<SID>", "<SNR>".mapd['sid']."_", "g")
+    let mapd.lhs = substitute(mapd.lhs, key, '', '')
+    let mapd.lhs = substitute(mapd.lhs, '<Space>', ' ', 'g')
+    let mapd.lhs = substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
+    let mapd.rhs = substitute(mapd.rhs, '<SID>', '<SNR>'.mapd['sid'].'_', 'g')
     if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
       let mapd.lhs = s:string_to_keys(mapd.lhs)
       if (visual && match(mapd.mode, "[vx ]") >= 0) ||
@@ -190,13 +190,17 @@ function! s:escape_mappings(mapping) " {{{
 endfunction " }}}
 function! s:string_to_keys(input) " {{{
   " Avoid special case: <>
+  let retlist = []
   if match(a:input, '<.\+>') != -1
-    let retlist = []
     let si = 0
     let go = 1
     while si < len(a:input)
       if go
-        call add(retlist, a:input[si])
+        if a:input[si] ==# ' '
+          call add(retlist, '[SPC]')
+        else
+          call add(retlist, a:input[si])
+        endif
       else
         let retlist[-1] .= a:input[si]
       endif
@@ -207,10 +211,16 @@ function! s:string_to_keys(input) " {{{
       end
       let si += 1
     endw
-    return retlist
   else
-    return split(a:input, '\zs')
+    for it in split(a:input, '\zs')
+      if it ==# ' '
+        call add(retlist, '[SPC]')
+      else
+        call add(retlist, it)
+      endif
+    endfor
   endif
+  return retlist
 endfunction " }}}
 function! s:escape_keys(inp) " {{{
   let ret = substitute(a:inp, "<", "<lt>", "")
