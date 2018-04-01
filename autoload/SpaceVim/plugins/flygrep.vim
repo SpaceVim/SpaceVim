@@ -36,7 +36,6 @@ let s:complete_input_history_num = [0,0]
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
-  call add(s:grep_history, s:grep_expr)
   let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
@@ -250,6 +249,7 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
+  call add(s:grep_history, s:grep_expr)
   let s:MPT._handle_fly = function('s:flygrep')
   if getline('.') !=# ''
     if s:grepid != 0
@@ -343,6 +343,8 @@ function! s:previous_match_history() abort
   endif
   let s:complete_input_history_num[0] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+  normal! "_ggdG
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
 function! s:next_match_history() abort
@@ -356,6 +358,8 @@ function! s:next_match_history() abort
   endif
   let s:complete_input_history_num[1] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+  normal! "_ggdG
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
 function! s:complete_input_history(str,num) abort
