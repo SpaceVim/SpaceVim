@@ -13,8 +13,8 @@ function! SpaceVim#layers#lang#vim#plugins() abort
         \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
         \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
         \ ]
-  call add(plugins,['tweekmonster/exception.vim'])
-  call add(plugins,['mhinz/vim-lookup'])
+  call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
+  call add(plugins,['mhinz/vim-lookup', {'merged' : 0}])
   call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
   if g:spacevim_autocomplete_method == 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
@@ -39,6 +39,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],  'call call('
         \ . string(function('s:helpversion_cursor')) . ', [])',
         \ 'echo helpversion under cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','f'], 'call exception#trace()', 'tracing exceptions', 1)
 endfunction
 
 function! s:eval_cursor() abort
