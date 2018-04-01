@@ -28,12 +28,15 @@ let [
       \ ] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 let s:grepid = 0
+let s:grep_history = []
+let s:complete_input_history_num = [0,0]
 " }}}
 
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
+  call add(s:grep_history, s:grep_expr)
   let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
@@ -329,7 +332,42 @@ function! s:toggle_expr_mode() abort
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
+let s:complete_input_history_base = ''
+function! s:previous_match_history() abort
+  if s:complete_input_history_num == [0,0]
+    let s:complete_input_history_base = s:MPT._prompt.begin
+    let s:MPT._prompt.cursor = ''
+    let s:MPT._prompt.end = ''
+  else
+    let s:MPT._prompt.begin = s:complete_input_history_base
+  endif
+  let s:complete_input_history_num[0] += 1
+  let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+endfunction
 
+function! s:next_match_history() abort
+
+  if s:complete_input_history_num == [0,0]
+    let s:complete_input_history_base = s:MPT._prompt.begin
+    let s:MPT._prompt.cursor = ''
+    let s:MPT._prompt.end = ''
+  else
+    let s:MPT._prompt.begin = s:complete_input_history_base
+  endif
+  let s:complete_input_history_num[1] += 1
+  let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+endfunction
+
+function! s:complete_input_history(str,num) abort
+    let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
+    if len(results) > 0
+        call add(results, a:str)
+        let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
+        return results[index]
+    else
+        return a:str
+    endif
+endfunction
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
@@ -344,6 +382,8 @@ let s:MPT._function_key = {
       \ "\<C-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
+      \ "\<Up>" : function('s:previous_match_history'),
+      \ "\<Down>" : function('s:next_match_history'),
       \ }
 
 if has('nvim')
@@ -410,7 +450,7 @@ function! SpaceVim#plugins#flygrep#lineNr() abort
   endif
 endfunction
 
-function! SpaceVim#plugins#flygrep#mode()
+function! SpaceVim#plugins#flygrep#mode() abort
   return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
 endfunction
 
