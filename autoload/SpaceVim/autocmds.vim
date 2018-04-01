@@ -45,17 +45,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd Filetype qf setlocal nobuflisted
-    autocmd BufEnter *
-          \   if empty(&buftype) && has('nvim') && &filetype != 'help'
-          \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
-          \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
-          \|  else
-            \|    if empty(maparg('<leader>[', 'n', 0, 1)) && empty(maparg('<leader>]', 'n', 0, 1))
-              \|       nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-              \|       nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
-              \|    endif
-              \|  endif
-    "}}}
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
