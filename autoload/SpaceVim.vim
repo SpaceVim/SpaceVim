@@ -340,6 +340,10 @@ let g:spacevim_plugin_manager_max_processes = 16
 " <
 let g:spacevim_checkinstall            = 1
 ""
+" Enable/Disable vimcompatible mode, by default it is disabled. In
+" vimcompatible mode all vim origin key bindings will not be changed.
+let g:spacevim_vimcompatible           = 0
+""
 " Enable/Disable debug mode for SpaceVim. Default is 0.
 " >
 "   let g:spacevim_enable_debug = 1
