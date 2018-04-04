@@ -30,7 +30,7 @@ function! SpaceVim#layers#denite#config() abort
   call s:defind_fuzzy_finder()
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-        \ 'DeniteBufferDir file_recd',
+        \ 'DeniteBufferDir file_rec',
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
