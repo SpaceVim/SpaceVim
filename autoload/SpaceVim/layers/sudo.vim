@@ -7,15 +7,14 @@
 "=============================================================================
 
 function! SpaceVim#layers#sudo#plugins() abort
-  let plugins = []
-  return plugins
+  let l:plugins = []
+  return l:plugins
 endfunction
 
 function! SpaceVim#layers#sudo#config() abort
   if has('nvim') 
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'call SudoWriteCurrentFile()', 'save buffer with sudo', 1)
-    command! W call SudoWriteCurrentFile()
-    cnoremap w!! :call SudoWriteCurrentFile()
+    command! W call <SID>SudoWriteCurrentFile()
+    cnoremap w!! W
   else 
     " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
@@ -27,75 +26,64 @@ endfunction
 " suda functions from https://github.com/lambdalisue/suda.vim/blob/master/autoload/suda.vim 
 " a wrapper for system
 function! s:sudoSystem(cmd, ...) abort
-  let cmd = printf('sudo -p '''' -n %s', a:cmd)
+  let l:cmd = printf('sudo -p '''' -n %s', a:cmd)
   if &verbose
-    echomsg '[suda]' cmd
+    echomsg '[suda]' l:cmd
   endif
-  let result = a:0 ? system(cmd, a:1) : system(cmd)
+  let l:result = a:0 ? system(l:cmd, a:1) : system(l:cmd)
   if v:shell_error == 0
-    return result
+    return l:result
   endif
   try
     call inputsave()
-    redraw | let password = inputsecret('Password: ')
+    redraw | let l:password = inputsecret('Password: ')
   finally
     call inputrestore()
   endtry
-  let cmd = printf('sudo -p '''' -S %s', a:cmd)
-  return system(cmd, password . "\n" . (a:0 ? a:1 : ''))
+  let l:cmd = printf('sudo -p '''' -S %s', a:cmd)
+  return system(l:cmd, l:password . "\n" . (a:0 ? a:1 : ''))
 endfunction
 
 
 " suda functions from https://github.com/lambdalisue/suda.vim/blob/master/autoload/suda.vim 
 " write to a temporary file and tee to the current filename with suda
-function! s:sudoWrite(path, ...) abort range
-  let path = a:path
-  let options = extend({
-        \ 'cmdarg': v:cmdarg,
-        \ 'cmdbang': v:cmdbang,
-        \ 'range': '',
-        \}, a:0 ? a:1 : {}
-        \)
-  let tempfile = tempname()
+function! s:sudoWrite(path, ...) abort 
+  let l:path = a:path
+  let l:tempfile = tempname()
   try
-    let path_exists = !empty(getftype(path))
-    let echo_message = execute(printf(
-          \ '%swrite%s %s %s',
-          \ options.range,
-          \ options.cmdbang ? '!' : '',
-          \ options.cmdarg,
-          \ tempfile,
+    let l:path_exists = !empty(getftype(l:path))
+    let l:echo_message = execute(printf(
+          \ 'write %s',
+          \ l:tempfile,
           \))
-    let result = s:sudoSystem(
-          \ printf('tee %s', shellescape(path)),
-          \ join(readfile(tempfile, 'b'), "\n")
+    let l:result = s:sudoSystem(
+          \ printf('tee %s', shellescape(l:path)),
+          \ join(readfile(l:tempfile, 'b'), "\n")
           \)
     if v:shell_error
-      throw result
+      throw l:result
     endif
     " Rewrite message with a correct file name
-    let echo_message = substitute(
-          \ echo_message,
-          \ tempfile,
-          \ fnamemodify(path, ':~'),
+    let l:echo_message = substitute(
+          \ l:echo_message,
+          \ l:tempfile,
+          \ fnamemodify(l:path, ':~'),
           \ 'g',
           \)
-    if path_exists
-      let echo_message = substitute(echo_message, '\[New\] ', '', 'g')
+    if l:path_exists
+       let l:echo_message = substitute(l:echo_message, '\[New\] ', '', 'g')
     endif
-    return substitute(echo_message, '^\r\?\n', '', '')
+    return substitute(l:echo_message, '^\r\?\n', '', '')
   finally
-    silent call delete(tempfile)
+    silent call delete(l:tempfile)
   endtry
 endfunction
 
 " 
-function! SudoWriteCurrentFile() abort
+function! s:SudoWriteCurrentFile() abort
   try
-    let lhs = expand('%')
-    let echo_message = s:sudoWrite(lhs, {
-          \ 'range': '''[,'']',
-          \})
-    redraw | echo echo_message
+    let l:lhs = expand('%')
+    let l:echo_message = s:sudoWrite(l:lhs)
+    redraw | echo l:echo_message
   endtry
 endfunction
