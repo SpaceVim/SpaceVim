@@ -479,6 +479,25 @@ endfunction
 
 function! s:windows_transient_state() abort
   
+  let state = SpaceVim#api#import('transient_state') 
+  call state.set_title('Buffer Selection Transient State')
+  call state.defind_keys(
+        \ {
+        \ 'layout' : 'vertical split',
+        \ 'left' : [
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : 'n',
+        \ 'desc' : 'next buffer',
+        \ 'func' : '',
+        \ 'cmd' : 'bnext',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ }
+        \ )
+  call state.open()
 endfunction
 
 " function() wrapper
