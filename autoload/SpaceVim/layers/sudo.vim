@@ -1,5 +1,7 @@
 "=============================================================================
 " sudo.vim --- SpaceVim sudo layer
+" This plugin provides sudo write based on the logic of suda.vim (https://github.com/lambdalisue/suda.vim)
+" Thanks to lambdalisue for providing suda.vim
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
@@ -13,6 +15,9 @@ endfunction
 
 function! SpaceVim#layers#sudo#config() abort
   if has('nvim') 
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'call call('
+          \ . string(s:_function('s:SudoWriteCurrentFile')) . ', [])',
+          \ 'save buffer with sudo', 1)
     command! W call <SID>SudoWriteCurrentFile()
     cnoremap w!! W
   else 
@@ -87,3 +92,18 @@ function! s:SudoWriteCurrentFile() abort
     redraw | echo l:echo_message
   endtry
 endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
