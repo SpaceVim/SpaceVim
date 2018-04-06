@@ -189,16 +189,16 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
-  elseif a:char == 48 " 0
+  elseif a:char == 48 || a:char == "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '^.')
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char == 36 " $
+  elseif a:char == 36 || a:char == "\<End>"  " $ or <End>
     for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '.$', '', 'g')
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '.$')
       let s:cursor_stack[i].end = ''
     endfor
   elseif a:char == 68 " D
