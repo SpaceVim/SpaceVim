@@ -175,7 +175,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
     redrawstatus!
-  elseif a:char == "\<Left>"
+  elseif a:char == "\<Left>" || a:char == 104
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
@@ -183,7 +183,7 @@ function! s:handle_normal(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char == "\<Right>"
+  elseif a:char == "\<Right>" || a:char == 108
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
@@ -228,10 +228,12 @@ function! s:handle_normal(char) abort
     call s:replace_symbol()
   elseif a:char == 71 " G
     exe s:stack[-1][0]
+    let s:index = len(s:stack) - 1
   elseif a:char == 103 "g
     if s:Operator ==# 'g'
       exe s:stack[0][0]
       let s:Operator = ''
+      let s:index = 0
     else
       let s:Operator = 'g'
       call s:timeout()
