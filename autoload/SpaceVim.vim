@@ -104,7 +104,8 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3') && SpaceVim#util#haspy3lib('neovim')
+if (has('python3') && SpaceVim#util#haspy3lib('neovim')) ||
+      \ (has('nvim') || (has('job')))
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
