@@ -52,7 +52,7 @@ function! s:template() abort
         \ '',
         \ '## Output of the `:SPDebugInfo!`',
         \ '']
-        \ + split(SpaceVim#api#import('vim#compatible').execute(':SPDebugInfo'), "\n") +
+        \ + split(SpaceVim#api#import('vim#compatible').execute(':SPDebugInfo', 1), "\n") +
         \ [
         \ '## Screenshots',
         \ '',
