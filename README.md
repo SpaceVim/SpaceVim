@@ -19,7 +19,7 @@
 
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
-SpaceVim is not only a vimrc but an ultimate Vim configuration, It contains many build-in features.
+SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many build-in features.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
 
