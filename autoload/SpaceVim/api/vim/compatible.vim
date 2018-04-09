@@ -30,6 +30,7 @@ else
     else
       let s = a:1
     endif
+    let output = ''
     redir => output
     if s ==# 'silent'
       silent execute a:cmd
