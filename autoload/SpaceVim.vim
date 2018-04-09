@@ -124,7 +124,7 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
-elseif has('python')
+elseif has('python') && ((has('job') && has('timers') && has('lambda')) || has('nvim'))
   let g:spacevim_autocomplete_method = 'completor'
 elseif has('timers')
   let g:spacevim_autocomplete_method = 'asyncomplete'
