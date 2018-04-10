@@ -24,6 +24,7 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#leaderf#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'LeaderfMru', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :LeaderfFile<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'LeaderfColorscheme', 'fuzzy find colorschemes', 1)
