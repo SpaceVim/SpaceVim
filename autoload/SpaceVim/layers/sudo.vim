@@ -39,6 +39,7 @@ function! s:SudoWriteCurrentFile() abort
     redraw | echo l:echo_message
   finally
     doautocmd BufWritePost l:lhs
+    checktime
   endtry
 endfunction
 
