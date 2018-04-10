@@ -10,10 +10,14 @@
 
 function! SpaceVim#layers#sudo#plugins() abort
   let l:plugins = []
+  if has('nvim') 
+    call add(l:plugins, ['lambdalisue/suda.vim'])
+  endif
   return l:plugins
 endfunction
 
 function! SpaceVim#layers#sudo#config() abort
+  let g:suda_startup = 0 
   if has('nvim') 
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'call call('
           \ . string(s:_function('s:SudoWriteCurrentFile')) . ', [])',
@@ -23,77 +27,21 @@ function! SpaceVim#layers#sudo#config() abort
   else 
     " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
-    cnoremap w!! %!sudo tee > /dev/null %
+    cnoremap w!! W
     command! W w !sudo tee % > /dev/null
   endif
 endfunction
 
-" suda functions from https://github.com/lambdalisue/suda.vim/blob/master/autoload/suda.vim 
-" a wrapper for system
-function! s:sudoSystem(cmd, ...) abort
-  let l:cmd = printf('sudo -p '''' -n %s', a:cmd)
-  if &verbose
-    echomsg '[suda]' l:cmd
-  endif
-  let l:result = a:0 ? system(l:cmd, a:1) : system(l:cmd)
-  if v:shell_error == 0
-    return l:result
-  endif
-  try
-    call inputsave()
-    redraw | let l:password = inputsecret('Password: ')
-  finally
-    call inputrestore()
-  endtry
-  let l:cmd = printf('sudo -p '''' -S %s', a:cmd)
-  return system(l:cmd, l:password . "\n" . (a:0 ? a:1 : ''))
-endfunction
-
-
-" suda functions from https://github.com/lambdalisue/suda.vim/blob/master/autoload/suda.vim 
-" write to a temporary file and tee to the current filename with suda
-function! s:sudoWrite(path, ...) abort 
-  let l:path = a:path
-  let l:tempfile = tempname()
-  try
-    let l:path_exists = !empty(getftype(l:path))
-    let l:echo_message = execute(printf(
-          \ 'write %s',
-          \ l:tempfile,
-          \))
-    let l:result = s:sudoSystem(
-          \ printf('tee %s', shellescape(l:path)),
-          \ join(readfile(l:tempfile, 'b'), "\n")
-          \)
-    if v:shell_error
-      throw l:result
-    endif
-    " Rewrite message with a correct file name
-    let l:echo_message = substitute(
-          \ l:echo_message,
-          \ l:tempfile,
-          \ fnamemodify(l:path, ':~'),
-          \ 'g',
-          \)
-    if l:path_exists
-       let l:echo_message = substitute(l:echo_message, '\[New\] ', '', 'g')
-    endif
-    return substitute(l:echo_message, '^\r\?\n', '', '')
-  finally
-    silent call delete(l:tempfile)
-  endtry
-endfunction
-
-" 
 function! s:SudoWriteCurrentFile() abort
-  try
-    let l:lhs = expand('%')
-    let l:echo_message = s:sudoWrite(l:lhs)
+  let l:lhs = expand('%')
+  try 
+    let l:echo_message = suda#write(l:lhs)
     redraw | echo l:echo_message
+  finally
+    doautocmd BufWritePost l:lhs
   endtry
 endfunction
 
-" function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
     return function(a:fstr)
