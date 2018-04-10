@@ -35,7 +35,6 @@ function! SpaceVim#default#options() abort
   " begining start delete the char you just typed in if you do not use set
   " nocompatible ,you need this
   set backspace=indent,eol,start
-  set smarttab
   set nrformats-=octal
   set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
   set fillchars=vert:│,fold:·
@@ -56,12 +55,6 @@ function! SpaceVim#default#options() abort
   " do not break words.
   set linebreak
 
-  " tab options:
-  set tabstop=4
-  set expandtab
-  set softtabstop=4
-  set shiftwidth=4
-
   " Enable line number
   set number
 
@@ -79,16 +72,16 @@ function! SpaceVim#default#options() abort
   let g:swap_dir = g:data_dir . 'swap'
   let g:undo_dir = g:data_dir . 'undofile'
   if finddir(g:data_dir) ==# ''
-    silent call mkdir(g:data_dir)
+    silent call mkdir(g:data_dir, 'p', 0700)
   endif
   if finddir(g:backup_dir) ==# ''
-    silent call mkdir(g:backup_dir)
+    silent call mkdir(g:backup_dir, 'p', 0700)
   endif
   if finddir(g:swap_dir) ==# ''
-    silent call mkdir(g:swap_dir)
+    silent call mkdir(g:swap_dir, 'p', 0700)
   endif
   if finddir(g:undo_dir) ==# ''
-    silent call mkdir(g:undo_dir)
+    silent call mkdir(g:undo_dir, 'p', 0700)
   endif
   unlet g:data_dir
   unlet g:backup_dir
@@ -125,6 +118,7 @@ function! SpaceVim#default#options() abort
     " don't give ins-completion-menu messages.
     set shortmess+=c
   endif
+  set shortmess+=s
   " Do not wrap lone lines
   set nowrap
 

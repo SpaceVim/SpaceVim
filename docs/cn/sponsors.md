@@ -4,7 +4,7 @@ description: "SpaceVim 赞助方式，以及历史赞助，如果你想赞助 Sp
 lang: cn
 ---
 
-![Bountysource](https://spacevim.org/img/bountysource.png)
+![Bountysource](../../img/bountysource.png)
 
 如果你想赞助 SpaceVim，或者希望 SpaceVim 开发的更快一点，可以选择以下某种方式进行赞助：
 
@@ -14,7 +14,7 @@ lang: cn
 
 | 微信                                                                     | 支付宝                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
+| <img src="../../img/weixin.png" height="150" width="150"> | <img src="../../img/zhifubao.png" height="150" width="150"> |
 
 比特币: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 

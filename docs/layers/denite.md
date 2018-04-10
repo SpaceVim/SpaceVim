@@ -7,7 +7,7 @@ description: "This layers provide a heavily customized Denite centric work-flow"
 
 ## Intro
 
-This layer is a heavily customized warpper for denite and it's sources.
+This layer is a heavily customized wrapper for denite and it's sources.
 
 
 ## Configuration

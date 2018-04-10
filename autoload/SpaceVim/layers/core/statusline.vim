@@ -227,6 +227,21 @@ else
   endfunction
 endif
 
+function! s:search_status() abort
+  let ct = 0
+  let tt = 0
+  let ctl = split(s:VIMCOMP.execute('keeppatterns .,$s/' . @/ . '//gn', 'silent!'), "\n")
+  if !empty(ctl)
+    let ct = split(ctl[0])[0]
+  endif
+  let ttl = split(s:VIMCOMP.execute('keeppatterns %s/' . @/ . '//gn', 'silent!'), "\n")
+  if !empty(ctl)
+    let tt = split(ttl[0])[0]
+  endif
+  return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
+endfunction
+
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'syntax checking' : function('s:syntax_checking'),
@@ -240,6 +255,7 @@ let s:registed_sections = {
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),
       \ 'battery status' : function('s:battery_status'),
+      \ 'search status' : function('s:search_status'),
       \ }
 
 
@@ -263,21 +279,6 @@ function! s:buffer_name() abort
     return ''
   endif
 endfunction
-
-function! s:search_status() abort
-  let ct = 0
-  let tt = 0
-  let ctl = split(s:VIMCOMP.execute('keeppatterns .,$s/' . @/ . '//gn', 'silent!'), "\n")
-  if !empty(ctl)
-    let ct = split(ctl[0])[0]
-  endif
-  let ttl = split(s:VIMCOMP.execute('keeppatterns %s/' . @/ . '//gn', 'silent!'), "\n")
-  if !empty(ctl)
-    let tt = split(ttl[0])[0]
-  endif
-  return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
-endfunction
-
 
 
 function! s:filesize() abort
@@ -467,7 +468,11 @@ function! SpaceVim#layers#core#statusline#toggle_section(name) abort
   if index(s:loaded_sections_l, a:name) == -1
         \ && index(s:loaded_sections_r, a:name) == -1
         \ && !has_key(s:section_old_pos, a:name)
-    call add(s:loaded_sections_r, a:name)
+    if a:name ==# 'search status'
+      call insert(s:loaded_sections_l, a:name, 2)
+    else
+      call add(s:loaded_sections_r, a:name)
+    endif
   elseif index(s:loaded_sections_r, a:name) != -1
     let s:section_old_pos[a:name] = ['r', index(s:loaded_sections_r, a:name)]
     call remove(s:loaded_sections_r, index(s:loaded_sections_r, a:name))
@@ -649,5 +654,19 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func)
 
 endfunction
 
+function! SpaceVim#layers#core#statusline#check_section(name) abort
+  return (index(s:loaded_sections_l, a:name) != -1
+        \ || index(s:loaded_sections_r, a:name) != -1)
+endfunction
+
+function! SpaceVim#layers#core#statusline#remove_section(name) abort
+  if index(s:loaded_sections_l, a:name) != -1
+    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  endif
+  if index(s:loaded_sections_r, a:name) != -1
+    call remove(s:loaded_sections_r, index(s:loaded_sections_l, a:name))
+  endif
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+endfunction
 
 " vim:set et sw=2 cc=80 nowrap:

@@ -12,7 +12,7 @@ function! SpaceVim#layers#chinese#plugins() abort
                 \ ['yianwillis/vimcdoc', {'merged' : 0}],
                 \ ]
     if SpaceVim#layers#isLoaded('ctrlp')
-      call add(plugins, [['vimcn/ctrlp.cnx', {'merged' : 0}]])
+      call add(plugins, ['vimcn/ctrlp.cnx', {'merged' : 0}])
     endif
     return plugins
 endfunction

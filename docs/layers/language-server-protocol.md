@@ -81,6 +81,7 @@ call SpaceVim#layers#load('lsp',
                    \ 'javascript',
                    \ ],
     \ }
+\ )
 ```
 
 default language server commands:

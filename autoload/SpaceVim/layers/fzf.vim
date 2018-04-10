@@ -18,12 +18,36 @@ function! SpaceVim#layers#fzf#plugins() abort
 endfunction
 
 
+let s:filename = expand('<sfile>:~')
+let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ 'FzfFiles',
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
+        \ "exe 'FZF ' . fnamemodify(bufname('%'), ':h')",
+        \ ['Find files in the directory of the current buffer',
+        \ [
+        \ '[SPC f f] is to find files in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
 endfunction
 
 let s:file = expand('<sfile>:~')

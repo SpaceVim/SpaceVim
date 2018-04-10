@@ -18,8 +18,8 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
 SpaceVim is a community-driven modular vim distribution. It manages collections
-of plugins in layers, which help collect related packages together to provide IDE-like features. 
-SpaceVim is not only a vimrc but an ultimate Vim configuration, It contains many build-in features.
+of plugins in layers, which help collect related packages together to provide IDE-like features.
+SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many build-in features.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
 
@@ -43,6 +43,14 @@ Here is a throughput graph of the repository for the last few weeks:
 ### New Features
 
 This is a list of latest features implemented in SpaceVim:
+
+**Iedit mode**
+
+SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection. Two new modes:`iedit-Normal`/`iedit-Insert`
+
+The default color for iedit is `red`/`green` which is based on the current colorscheme.
+
+![iedit mode](https://user-images.githubusercontent.com/13142418/37873892-c76afb14-2fea-11e8-9149-aa955b8265f1.gif)
 
 **Highlight cursor symbol**
 
@@ -92,7 +100,7 @@ curl -sLf https://spacevim.org/install.sh | bash
 
 After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
-For more info about the install script, please check:
+For more info about the installation script, please check:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
@@ -100,7 +108,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 **Windows**
 
-The easist way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
 ### Project layout
 
@@ -116,7 +124,7 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
-├─ bin/                           executeable
+├─ bin/                           executable
 └─ test/                          tests
 ```
 

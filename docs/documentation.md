@@ -30,9 +30,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Native functions](#native-functions)
-  - [Plugin: Bookmarks](#plugin-bookmarks)
-  - [Completion](#completion)
-    - [Unite/Denite](#unitedenite)
+  - [Bookmarks management](#bookmarks-management)
+  - [Fuzzy finder](#fuzzy-finder)
   - [Discovering](#discovering)
     - [Mappings](#mappings)
     - [Getting help](#getting-help)
@@ -192,7 +191,7 @@ This section is an overview of layers. A more extensive introduction to writing 
 
 **Purpose**
 
-Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configration file.
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configuration file.
 
 **Structure**
 
@@ -283,7 +282,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
-if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configration file, **be sure** the key bindings is not used in SpaceVim.
+if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
 
 ```vim
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
@@ -454,7 +453,7 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
@@ -494,13 +493,15 @@ contribute theme please check the template of a statusline theme.
 ```vim
 " the theme colors should be
 " [
-"    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
-"    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
-"    \ [ c_guifg, c_guibg, c_ctermfg, c_ctermbg],
-"    \ [ z_guibg, z_ctermbg],
-"    \ [ i_guifg, i_guibg, i_ctermfg, i_ctermbg],
-"    \ [ v_guifg, v_guibg, v_ctermfg, v_ctermbg],
-"    \ [ r_guifg, r_guibg, r_ctermfg, r_ctermbg],
+"    \ [ a_guifg,  a_guibg,  a_ctermfg,  a_ctermbg],
+"    \ [ b_guifg,  b_guibg,  b_ctermfg,  b_ctermbg],
+"    \ [ c_guifg,  c_guibg,  c_ctermfg,  c_ctermbg],
+"    \ [ z_guibg,  z_ctermbg],
+"    \ [ i_guifg,  i_guibg,  i_ctermfg,  i_ctermbg],
+"    \ [ v_guifg,  v_guibg,  v_ctermfg,  v_ctermbg],
+"    \ [ r_guifg,  r_guibg,  r_ctermfg,  r_ctermbg],
+"    \ [ ii_guifg, ii_guibg, ii_ctermfg, ii_ctermbg],
+"    \ [ in_guifg, in_guibg, in_ctermfg, in_ctermbg],
 " \ ]
 " group_a: window id
 " group_b/group_c: stausline sections
@@ -508,6 +509,8 @@ contribute theme please check the template of a statusline theme.
 " group_i: window id in insert mode
 " group_v: window id in visual mode
 " group_r: window id in select mode
+" group_ii: window id in iedit-insert mode
+" group_in: windows id in iedit-normal mode
 function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
     return [
                 \ ['#282828', '#a89984', 246, 235],
@@ -517,8 +520,28 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
                 \ ['#282828', '#83a598', 235, 109],
                 \ ['#282828', '#fe8019', 235, 208],
                 \ ['#282828', '#8ec07c', 235, 108],
+                \ ['#282828', '#689d6a', 235, 72],
+                \ ['#282828', '#8f3f71', 235, 132],
                 \ ]
 endfunction
+```
+
+this example is for gruvbox colorscheme, if you want to use same colors when
+switch between different colorschemes, you may need to set
+`g:spacevim_custom_color_palette` in your custom configuration file. for example:
+
+```vim
+let g:spacevim_custom_color_palette = [
+                \ ['#282828', '#a89984', 246, 235],
+                \ ['#a89984', '#504945', 239, 246],
+                \ ['#a89984', '#3c3836', 237, 246],
+                \ ['#665c54', 241],
+                \ ['#282828', '#83a598', 235, 109],
+                \ ['#282828', '#fe8019', 235, 208],
+                \ ['#282828', '#8ec07c', 235, 108],
+                \ ['#282828', '#689d6a', 235, 72],
+                \ ['#282828', '#8f3f71', 235, 132],
+                \ ]
 ```
 
 ### tabline
@@ -659,8 +682,7 @@ can be get by <kbd><leader> q r</kbd>
 | `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
 | `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
 
-
-### Plugin: Bookmarks
+### Bookmarks management
 
 | Key     |  Mode  | Action                          |
 | ------- | :----: | ------------------------------- |
@@ -672,31 +694,70 @@ can be get by <kbd><leader> q r</kbd>
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
-### Completion
+### Fuzzy finder
 
-#### Unite/Denite
+SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+These layers have the same key bindings and features. But they need different dependencies.
 
-please checkout the documentation of unite and denite via `:h unite` and `:h denite`.
+User only need to load one of these layers, then will be able to get these
+features.
 
-**Mappings within unite/denite buffer**
+**Key bindings**
 
-| Mappings         | Mode          | description                          |
+| Key bindings         | Discription                   |
+| -------------------- | ----------------------------- |
+| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f e`       | Fuzzy find register           |
+| `<Leader> f f`       | Fuzzy find file               |
+| `<Leader> f h`       | Fuzzy find history/yank       |
+| `<Leader> f j`       | Fuzzy find jump, change       |
+| `<Leader> f l`       | Fuzzy find location list      |
+| `<Leader> f m`       | Fuzzy find output messages    |
+| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f q`       | Fuzzy find quick fix          |
+| `<Leader> f r`       | Resumes Unite window          |
+
+But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
+
+| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
+| ------------------- | ------- | ------- | ------- | ------- | ------- |
+| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
+| register            | **yes** | **yes** | no      | **yes** | **yes** |
+| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
+| yank history        | **yes** | **yes** | no      | no      | **yes** |
+| jump                | **yes** | **yes** | no      | **yes** | **yes** |
+| location list       | **yes** | **yes** | no      | no      | **yes** |
+| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
+| message             | **yes** | **yes** | no      | no      | **yes** |
+| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
+| resume windows      | **yes** | **yes** | no      | no      | no      |
+
+**Key bindings within fuzzy finder buffer**
+
+| key bindings          | Mode   | description                               |
+| --------------------- | ------ | ----------------------------------------- |
+| `Tab`/`<C-j>`         | -      | Select next line                          |
+| `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
+| `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
+| `Ctrl`+`w`            | Insert | Delete backward path                      |
+| `Enter`               | -      | Run default action                        |
+| `Ctrl`+`s`            | -      | Open in a split                           |
+| `Ctrl`+`v`            | -      | Open in a vertical split                  |
+| `Ctrl`+`t`            | -      | Open in a new tab                         |
+| `Ctrl`+`g`            | -      | Exit unite                                |
+
+**Denite/Unite normal mode key bindings**
+
+| key bindings     | Mode          | description                          |
 | ---------------- | ------------- | ------------------------------------ |
 | `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
 | `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Insert        | Select next line                     |
 | `Tab`            | Normal        | Select actions                       |
-| `Shift` + `Tab`  | Insert        | Select previous line                 |
 | `Space`          | Normal        | Toggle mark current candidate, up    |
-| `Enter`          | Normal        | Run default action                   |
-| `Ctrl`+`v`       | Normal        | Open in a split                      |
-| `Ctrl`+`s`       | Normal        | Open in a vertical split             |
-| `Ctrl`+`t`       | Normal        | Open in a new tab                    |
-| `Ctrl` + `g`     | Normal        | Exit unite                           |
-| `jk`             | Insert        | Leave Insert mode                    |
 | `r`              | Normal        | Replace ('search' profile) or rename |
 | `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
-| `Ctrl`+`w`       | Insert        | Delete backward path                 |
+
+The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
 
 ### Discovering
 
@@ -709,13 +770,11 @@ The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value                                          | description                        |
-| ----------- | ------------------------------------------------------------------------ | ---------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                                                         | default mapping prefix of SpaceVim |
-| `[Window]`  | `g:spacevim_windows_leader` / `s`                                        | window mapping prefix of SpaceVim  |
-| `[denite]`  | `g:spacevim_denite_leader` / `F`                                         | denite mapping prefix of SpaceVim  |
-| `[unite]`   | `g:spacevim_unite_leader` / `f`                                          | unite mapping prefix of SpaceVim   |
-| `<leader>`  | `mapleader` / `\`                 \| default leader prefix of vim/neovim |                                    |
+| Prefix name | custom option and default value   | description                         |
+| ----------- | --------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
+| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
+| `<leader>`  | default vim leader                | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -1494,25 +1553,25 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| Key Binding | Description                                                                     |
-| ----------- | ------------------------------------------------------------------------------- |
-| `Esc`       | go back to `Normal` mode                                                        |
-| `i`         | switch to `iedit-Insert` mode, same as `i`                                      |
-| `a`         | switch to `iedit-Insert` mode, same as `a`                                      |
-| `I`         | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`         | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
-| `<Left>`    | Move cursor to left                                                             |
-| `<Right>`   | Move cursor to right                                                            |
-| `0`         | go to the beginning of the current occurrence                                   |
-| `$`         | go to the end of the current occurrence                                         |
-| `D`         | delete the occurrences                                                          |
-| `S`         | delete the occurrences and switch to iedit-Insert mode                          |
-| `gg`        | go to first occurrence                                                          |
-| `G`         | go to last occurrence                                                           |
-| `n`         | go to next occurrence                                                           |
-| `N`         | go to previous occurrence                                                       |
-| `p`         | replace occurrences with last yanked (copied) text                              |
-| `<Tab>`     | toggle current occurrence                                                       |
+| Key Binding   | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+| `Esc`         | go back to `Normal` mode                                                        |
+| `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
+| `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
+| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
+| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
+| `<Left>`/`h`  | Move cursor to left                                                             |
+| `<Right>`/`l` | Move cursor to right                                                            |
+| `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
+| `$`/`<End>`   | go to the end of the current occurrence                                         |
+| `D`           | delete the occurrences                                                          |
+| `S`           | delete the occurrences and switch to iedit-Insert mode                          |
+| `gg`          | go to first occurrence                                                          |
+| `G`           | go to last occurrence                                                           |
+| `n`           | go to next occurrence                                                           |
+| `N`           | go to previous occurrence                                                       |
+| `p`           | replace occurrences with last yanked (copied) text                              |
+| `<Tab>`       | toggle current occurrence                                                       |
 
 **In iedit-Insert mode:**
 

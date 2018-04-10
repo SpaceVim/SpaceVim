@@ -16,5 +16,7 @@ function! SpaceVim#mapping#guide#theme#nord#palette() abort
                 \ ['#2E3440', '#8FBCBB', 0, 14],
                 \ ['#2E3440', '#D08770', 0, 11],
                 \ ['#2E3440', '#BF616A', 0, 1],
+                \ ['#2E3440', '#689d6a', 0, 72],
+                \ ['#2E3440', '#8f3f71', 0, 132],
                 \ ]
 endfunction

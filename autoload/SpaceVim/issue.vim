@@ -13,12 +13,12 @@ function! SpaceVim#issue#report() abort
 endfunction
 
 function! s:open() abort
-  exe 'tabnew ' . tempname() . '/issue_report.md'
+  exe 'silent tabnew ' . tempname() . '/issue_report.md'
   let b:spacevim_issue_template = 1
   let template = s:template()
   call setline(1, template)
   let @+ = join(template, "\n")
-  w
+  silent w
 endfunction
 
 function! s:spacevim_status() abort
@@ -52,7 +52,7 @@ function! s:template() abort
         \ '',
         \ '## Output of the `:SPDebugInfo!`',
         \ '']
-        \ + split(SpaceVim#api#import('vim#compatible').execute(':SPDebugInfo'), "\n") +
+        \ + split(s:CMP.execute(':SPDebugInfo'), "\n") +
         \ [
         \ '## Screenshots',
         \ '',

@@ -39,6 +39,9 @@ lockvar g:spacevim_version
 " <
 let g:spacevim_default_indent          = 2
 ""
+" In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+let g:spacevim_expand_tab              = 1
+""
 " Enable/Disable relativenumber, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 ""
@@ -101,7 +104,8 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3') && SpaceVim#util#haspy3lib('neovim')
+if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
+      \ (has('nvim') || (has('patch-8.0.0027')))
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -120,7 +124,7 @@ if has('python3') && SpaceVim#util#haspy3lib('neovim')
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
-elseif has('python')
+elseif has('python') && ((has('job') && has('timers') && has('lambda')) || has('nvim'))
   let g:spacevim_autocomplete_method = 'completor'
 elseif has('timers')
   let g:spacevim_autocomplete_method = 'asyncomplete'
@@ -238,6 +242,8 @@ let g:spacevim_enable_statusline_display_mode     = 0
 "     \ ['#282828', '#83a598', 235, 109],
 "     \ ['#282828', '#fe8019', 235, 208],
 "     \ ['#282828', '#8ec07c', 235, 108],
+"     \ ['#282828', '#689d6a', 235, 72],
+"     \ ['#282828', '#8f3f71', 235, 132],
 "     \ ]
 " <
 "
@@ -453,7 +459,6 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
-      \ 'help',
       \ 'tagbar',
       \ 'vimfiler',
       \ 'SpaceVimRunner',
@@ -577,7 +582,7 @@ function! SpaceVim#loadCustomConfig() abort
         exe 'source ' . custom_glob_conf
       endif
     else
-      call SpaceVim#logger#info('Skip glob configration of SpaceVim')
+      call SpaceVim#logger#info('Skip glob configuration of SpaceVim')
     endif
   elseif filereadable(custom_glob_conf)
     if isdirectory(expand('~/.SpaceVim.d/'))
@@ -651,7 +656,13 @@ function! SpaceVim#end() abort
     set relativenumber
   endif
 
+  " tab options:
+  set smarttab
+  let &expandtab = g:spacevim_expand_tab
+  let &tabstop = g:spacevim_default_indent
+  let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
+
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
@@ -688,7 +699,7 @@ function! SpaceVim#begin() abort
     if !argc()
       return [1, getcwd()]
     elseif argv(0) =~# '/$'
-      let f = expand(argv(0))
+      let f = fnamemodify(expand(argv(0)), ':p')
       if isdirectory(f)
         return [1, f]
       else

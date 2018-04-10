@@ -120,19 +120,6 @@ function! JspFileTypeInit()
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
 endfunction
-function! MyTagfunc() abort
-    mark H
-    let s:MyTagfunc_flag = 1
-    UniteWithCursorWord -immediately tag
-endfunction
-
-function! MyTagfuncBack() abort
-    if exists('s:MyTagfunc_flag')&&s:MyTagfunc_flag
-        exe "normal! `H"
-        let s:MyTagfunc_flag =0
-    endif
-endfunction
-
 
 function! MyLeaderTabfunc() abort
     if g:spacevim_autocomplete_method == 'deoplete'

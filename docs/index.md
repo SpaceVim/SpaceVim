@@ -54,15 +54,16 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 ## FAQ
 
-1. What is the project status?
+- What is the project status?
 
-The current stable version is 0.5.0. See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones) for development progress and the [roadmap](https://spacevim.org/roadmap/) for high-level plans.
+The current stable version is 0.7.0. See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+for development progress and the [roadmap](https://spacevim.org/roadmap/) for high-level plans.
 
-2. Is SpaceVim trying to turn Vim/Neovim into an IDE?
+- Is SpaceVim trying to turn Vim/Neovim into an IDE?
 
 With layers feature, this version of vim distribution try to turn vim/neovim into an IDE for many languages.
 
-3. Which version of vim/neovim is needed?
+- Which version of vim/neovim is needed?
 
 vim 7.4/neovim v0.1.7, and `+lua` or `+python3` is needed.
 

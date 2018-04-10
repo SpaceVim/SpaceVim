@@ -7,7 +7,7 @@ description: "This layers provide a heavily customized fzf centric work-flow"
 
 ## Intro
 
-This layer is a heavily customized warpper for fzf.
+This layer is a heavily customized wrapper for fzf.
 
 
 ## Key bindings
