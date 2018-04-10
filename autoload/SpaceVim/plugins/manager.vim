@@ -640,4 +640,15 @@ else
     endif
     call setbufvar(a:bufnr,'&ma', 0)
   endfunction
-endif
+endi
+
+" Public API: SpaceVim#plugins#manager#terminal {{{
+function! SpaceVim#plugins#manager#terminal()
+  for id in keys(s:pulling_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+  for id in keys(s:building_repos)
+    call s:JOB.stop(str2nr(id))
+  endfor
+endfunction
+" }}}f
