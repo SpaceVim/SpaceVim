@@ -137,6 +137,7 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
+  call SpaceVim#layers#load('sudo')
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
@@ -152,7 +153,6 @@ function! SpaceVim#default#keyBindings() abort
   xnoremap <Leader>p "+p
   xnoremap <Leader>P "+P
 
-  cnoremap <Leader><C-F> <C-F>
 
   " Location list movement
   let g:_spacevim_mappings.l = {'name' : '+Location movement'}
@@ -187,13 +187,6 @@ function! SpaceVim#default#keyBindings() abort
         \ 'Toggle recording',
         \ '',
         \ 'Toggle recording mode')
-
-  " Save a file with sudo
-  " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
-  " use w!! in cmdline or use W command to sudo write a file
-  cnoremap w!! %!sudo tee > /dev/null %
-  command! W w !sudo tee % > /dev/null
-
 
   " Use Ctrl+* to jump between windows
   nnoremap <silent><C-Right> :<C-u>wincmd l<CR>

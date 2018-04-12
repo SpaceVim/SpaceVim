@@ -83,7 +83,6 @@ function! SpaceVim#layers#core#config() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'write !sudo tee % >/dev/null', 'save buffer with sudo', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'Report an issue of SpaceVim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'l'], 'SPLayer -l', 'lists all the layers available in SpaceVim', 1)
@@ -121,9 +120,17 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:jump_to_url')) . ', [])',
         \ 'jump to url', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
-        \ 'buffer transient state', 1)
+        \ ['buffer transient state',
+        \ [
+        \ '[SPC b .] is to open the buffer transient state',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'], 'call SpaceVim#mapping#close_current_buffer()', 'kill this buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
         \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
@@ -159,7 +166,6 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
         \ 'delete-current-buffer-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Unite file_mru', 'open-recent-file', 1)
   if g:spacevim_filemanager ==# 'vimfiler'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle', 'show_file_tree', 1)

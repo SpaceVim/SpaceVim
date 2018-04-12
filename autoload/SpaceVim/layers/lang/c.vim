@@ -52,11 +52,13 @@
 let s:clang_executable = 'clang'
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
+
+
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
     if g:spacevim_autocomplete_method ==# 'deoplete'
-      call add(plugins, ['SpaceVim/deoplete-clang2'])
+      call add(plugins, ['Shougo/deoplete-clangx', {'merged' : 0}])
     elseif g:spacevim_autocomplete_method ==# 'ycm'
       " no need extra plugins
     elseif g:spacevim_autocomplete_method ==# 'completor'
@@ -96,8 +98,6 @@ function! SpaceVim#layers#lang#c#config() abort
   endif
   let g:chromatica#enable_at_startup=1
   call add(g:spacevim_project_rooter_patterns, '.clang')
-let g:clang2_placeholder_next = ''
-let g:clang2_placeholder_prev = ''
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort

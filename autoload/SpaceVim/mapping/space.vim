@@ -55,6 +55,17 @@ function! SpaceVim#mapping#space#init() abort
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
+  let s:lnum = expand('<slnum>') + 3
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '.'], 'call call('
+        \ . string(s:_function('s:windows_transient_state')) . ', [])',
+        \ ['buffer transient state',
+        \ [
+        \ '[SPC b .] is to open the buffer transient state',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'],
         \ 'close', 'delete window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
@@ -160,7 +171,6 @@ function! SpaceVim#mapping#space#init() abort
     let g:_spacevim_mappings_space.t.n = ['setlocal number!', 'toggle line number']
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'setlocal number!')
   endif
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
 
@@ -465,5 +475,43 @@ function! s:comment_to_line(invert) abort
     call feedkeys("\<Plug>NERDCommenterComment")
   endif
 endfunction
+
+function! s:windows_transient_state() abort
+  
+  let state = SpaceVim#api#import('transient_state') 
+  call state.set_title('Buffer Selection Transient State')
+  call state.defind_keys(
+        \ {
+        \ 'layout' : 'vertical split',
+        \ 'left' : [
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : 'n',
+        \ 'desc' : 'next buffer',
+        \ 'func' : '',
+        \ 'cmd' : 'bnext',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ }
+        \ )
+  call state.open()
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
 
 " vim:set et nowrap sw=2 cc=80:

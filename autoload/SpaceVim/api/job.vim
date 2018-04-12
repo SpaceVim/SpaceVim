@@ -1,10 +1,3 @@
-"=============================================================================
-" job.vim --- SpaceVim job API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
-" URL: https://spacevim.org
-" License: GPLv3
-"=============================================================================
 function! SpaceVim#api#job#get() abort
   return deepcopy(s:self)
 endfunction
@@ -88,7 +81,7 @@ function! s:self.start(argv, ...) abort
       call extend(self.jobs, {job : msg})
     else
       if job == -1
-        call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executable')
+        call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executeable')
       elseif job == 0
         call add(self._message, 'Failed to start job: invalid arguments')
       endif
@@ -176,8 +169,6 @@ function! s:self.stop(id) abort
     if has_key(self.jobs, a:id)
       call job_stop(get(self.jobs, a:id))
       call remove(self.jobs, a:id)
-    else
-      call self.warn('No job with such id')
     endif
   else
     call self.warn()

@@ -263,7 +263,7 @@ check_requirements () {
     fi
   fi
   info "Checking true colors support in terminal:"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
 }
 # }}}
 

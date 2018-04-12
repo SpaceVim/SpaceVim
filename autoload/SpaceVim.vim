@@ -76,7 +76,7 @@ let g:spacevim_unite_leader            = '\f'
 ""
 " Denite work flow leader of SpaceVim. Default is `F`.
 " Set to empty to disable this feature, or you can set to another char.
-let g:spacevim_denite_leader            = 'F'
+let g:spacevim_denite_leader            = '\f'
 ""
 " Enable/Disable spacevim's insert mode leader, default is enable
 let g:spacevim_enable_insert_leader    = 1
@@ -104,7 +104,8 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3') && SpaceVim#util#haspy3lib('neovim')
+if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
+      \ (has('nvim') || (has('patch-8.0.0027')))
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -123,7 +124,7 @@ if has('python3') && SpaceVim#util#haspy3lib('neovim')
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
-elseif has('python')
+elseif has('python') && ((has('job') && has('timers') && has('lambda')) || has('nvim'))
   let g:spacevim_autocomplete_method = 'completor'
 elseif has('timers')
   let g:spacevim_autocomplete_method = 'asyncomplete'
@@ -339,6 +340,10 @@ let g:spacevim_plugin_manager_max_processes = 16
 "   let g:spacevim_checkinstall = 1
 " <
 let g:spacevim_checkinstall            = 1
+""
+" Enable/Disable vimcompatible mode, by default it is disabled. In
+" vimcompatible mode all vim origin key bindings will not be changed.
+let g:spacevim_vimcompatible           = 0
 ""
 " Enable/Disable debug mode for SpaceVim. Default is 0.
 " >
@@ -598,7 +603,10 @@ endfunction
 
 
 function! SpaceVim#end() abort
-
+  if g:spacevim_vimcompatible == 1
+    let g:spacevim_windows_leader = ''
+    let g:spacevim_windows_smartclose = 0
+  endif
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
