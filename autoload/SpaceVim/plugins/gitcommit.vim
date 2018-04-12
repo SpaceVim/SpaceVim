@@ -1,22 +1,29 @@
+"=============================================================================
+" gitcommit.vim --- omni plugin for git commit
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
 let s:cache = {}
 let s:pr_cache = {}
-" pr_cache 
-" {
-"    'user - repo' : { pr.number : pr}
-" }
 
-" TODO: add asycn support
+let s:github_cache = {}
+
+
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
   if a:findstart
     let s:complete_ol = 0
     let line = getline('.')
     let start = col('.') - 1
-    while start > 0 && line[start - 1] != ' ' && line[start - 1] != '#'
+    while start > 0 && line[start - 1] !=# ' ' && line[start - 1] !=# '#'
       let start -= 1
     endwhile
-    if line[start - 1] == '#'
+    if line[start - 1] ==# '#'
       let s:complete_ol = 1
     endif
     return start
@@ -43,12 +50,12 @@ function! s:complete_pr(base) abort
   let [user,repo] = s:current_repo()
   let s:user = user
   let s:repo = repo
-  if !has_key(s:cache, user . '_' . repo)
+  if !has_key(s:pr_cache, user . '_' . repo)
     call s:cache_prs(user, repo)
   endif
-  let prs = get(s:cache, user . '_' . repo, [])
+  let prs = get(s:pr_cache, user . '_' . repo, {})
   let rst = []
-  for pr in prs
+  for pr in values(prs)
     let item = {
           \ 'word' : pr.number . '',
           \ 'abbr' : '#' . pr.number,
