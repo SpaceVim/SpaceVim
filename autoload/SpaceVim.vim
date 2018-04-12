@@ -598,7 +598,7 @@ function! SpaceVim#loadCustomConfig() abort
   " json config
   let json_global = expand('~/.SpaceVim.d/init.json')
   if filereadable(json_global)
-    let config = readfile(json_global)
+    let config = join(readfile(json_global), '')
     call SpaceVim#custom#apply(config)
   endif
 

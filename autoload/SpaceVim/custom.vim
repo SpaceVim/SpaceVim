@@ -73,7 +73,12 @@ endfunction
 
 
 function! SpaceVim#custom#apply(config) abort
-
+  let config = json_decode(a:config)
+  for key in keys(config)
+    if exists('g:spacevim_' . key)
+      exe 'let g:spacevim_' . key . ' = "' . config[key] . '"'
+    endif
+  endfor
 endfunction
 
 function! SpaceVim#custom#write(force) abort
