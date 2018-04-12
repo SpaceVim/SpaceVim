@@ -41,6 +41,8 @@ endfunction
 
 function! s:complete_pr(base) abort
   let [user,repo] = s:current_repo()
+  let s:user = user
+  let s:repo = repo
   if !has_key(s:cache, user . '_' . repo)
     call s:cache_prs(user, repo)
   endif
@@ -93,7 +95,11 @@ function! s:cache_prs(user, repo) abort
   if !has_key(s:pr_cache, a:user . '_' . a:repo)
     call extend(s:pr_cache, {a:user . '_' . a:repo : {}})
   endif
-  call github#api#issue#list_all_for_repo(a:user, a:repo, function('s:list_callback'))
+  call github#api#issues#async_list_opened(a:user, a:repo, function('s:callback'))
+endfunction
+
+function! s:callback(data) abort
+  call s:list_callback(s:user, s:repo, a:data)
 endfunction
 
 " data is a list a PRs in one page
