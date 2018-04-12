@@ -317,6 +317,8 @@ the option is `g:spacevim_windows_smartclose`, default value is `q`. If you stil
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
+If you still want to use this origin function, you can enable vimcompatible mode, via `let g:spacevim_vimcompatible = 1`.
+
 ## Interface elements
 
 SpaceVim has a minimalistic and distraction free UI:

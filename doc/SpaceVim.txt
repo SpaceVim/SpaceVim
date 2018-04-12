@@ -369,6 +369,10 @@ Enable/Disable checkinstall on SpaceVim startup. Default is 1.
   let g:spacevim_checkinstall = 1
 <
 
+                                                    *g:spacevim_vimcompatible*
+Enable/Disable vimcompatible mode, by default it is disabled. In vimcompatible
+mode all vim origin key bindings will not be changed.
+
                                                      *g:spacevim_enable_debug*
 Enable/Disable debug mode for SpaceVim. Default is 0.
 >

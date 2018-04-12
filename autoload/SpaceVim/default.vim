@@ -153,7 +153,6 @@ function! SpaceVim#default#keyBindings() abort
   xnoremap <Leader>p "+p
   xnoremap <Leader>P "+P
 
-  cnoremap <Leader><C-F> <C-F>
 
   " Location list movement
   let g:_spacevim_mappings.l = {'name' : '+Location movement'}
