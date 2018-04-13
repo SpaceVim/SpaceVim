@@ -33,4 +33,5 @@ SpaceVim 的中文问答社区主要集中在知乎 SpaceVim 话题，
 
 - <i class="fab fa-qq"></i> [`121056965` SpaceVim 中文交流①群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 - <i class="fab fa-qq"></i> [`755208473` SpaceVim 中文交流②群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
+- <i class="fab fa-qq"></i> [`748697811` SpaceVim 中文交流②群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
 - <i class="fab fa-telegram-plane"></i> [`t.me/VimHub` Vim 中文 telegram 群](https://t.me/VimHub)
