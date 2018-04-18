@@ -102,6 +102,22 @@ function! SpaceVim#mapping#search#grep(key, scope)
           \ 'opt' : opt,
           \ 'ropt' : ropt,
           \ })
+  elseif a:scope ==# 'd'
+    call SpaceVim#plugins#flygrep#open({
+          \ 'input' : input('grep pattern:'),
+          \ 'dir' : fnamemodify(expand("%"), ":p:h"),
+          \ 'cmd' : cmd,
+          \ 'opt' : opt,
+          \ 'ropt' : ropt,
+          \ })
+  elseif a:scope ==# 'D'
+    call SpaceVim#plugins#flygrep#open({
+          \ 'input' : expand('<cword>'),
+          \ 'dir' : fnamemodify(expand("%"), ":p:h"),
+          \ 'cmd' : cmd,
+          \ 'opt' : opt,
+          \ 'ropt' : ropt,
+          \ })
   elseif a:scope ==# 'f'
     call SpaceVim#plugins#flygrep#open({
           \ 'input' : input('grep pattern:'),
