@@ -595,6 +595,13 @@ function! SpaceVim#loadCustomConfig() abort
     exe 'source ' . custom_glob_conf
   endif
 
+  " json config
+  let json_global = expand('~/.SpaceVim.d/init.json')
+  if filereadable(json_global)
+    let config = join(readfile(json_global), '')
+    call SpaceVim#custom#apply(config)
+  endif
+
   if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
     call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
     let g:spacevim_snippet_engine = 'ultisnips'

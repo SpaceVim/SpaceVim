@@ -1,0 +1,10 @@
+{
+    "colorscheme": "grubox",
+    "background": "dark",
+    "guicolors": true,
+    "statusline_separator": "nil",
+    "statusline_inactive_separator": "bar",
+    "buffer_index_type": 4,
+    "filetype_icon": false,
+    "statusline_display_mode": false
+}

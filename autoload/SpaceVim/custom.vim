@@ -70,3 +70,17 @@ endfunction
 function! SpaceVim#custom#SPCGroupName(keys, name) abort
   call add(g:_spacevim_mappings_space_custom_group_name, [a:keys, a:name])
 endfunction
+
+
+function! SpaceVim#custom#apply(config) abort
+  let config = json_decode(a:config)
+  for key in keys(config)
+    if exists('g:spacevim_' . key)
+      exe 'let g:spacevim_' . key . ' = "' . config[key] . '"'
+    endif
+  endfor
+endfunction
+
+function! SpaceVim#custom#write(force) abort
+
+endfunction
