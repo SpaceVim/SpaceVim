@@ -63,6 +63,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [With an external tool](#with-an-external-tool)
       - [Useful key bindings](#useful-key-bindings)
       - [Searching in current file](#searching-in-current-file)
+      - [Searching in buffer directory](#searching-in-buffer-directory)
       - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
       - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
       - [Searching in a project](#searching-in-a-project)
@@ -1291,7 +1292,7 @@ Notes:
 | `SPC s r r` | rg                                                  |
 | `SPC s r R` | rg with default input                               |
 
-**Searching in buffer directory:**
+##### Searching in buffer directory
 
 | Key Binding | Description                                                 |
 | ----------- | ----------------------------------------------------------- |
