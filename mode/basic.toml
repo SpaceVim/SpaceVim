@@ -1,0 +1,18 @@
+# This is basic configuration example for SpaceVim
+
+[option]
+    colorscheme = "gruvbox"
+    background = "dark"
+    guicolors = true
+    statusline_separator = "nil"
+    statusline_separator = "bar"
+    buffer_index_type = 4
+    filetype_icon = false
+    statusline_display_mode = false
+
+[[layers]]
+    [checkers]
+    [shell]
+        default_position = "top"
+        default_height = 30
+    [lang/java]
