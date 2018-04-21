@@ -6,19 +6,22 @@
 " License: GPLv3
 "=============================================================================
 
+let s:TOML = SpaceVim#api#import('data#toml')
+let s:JSON = SpaceVim#api#import('data#json')
+
 function! SpaceVim#custom#profile(dict) abort
-    for key in keys(a:dict)
-        call s:set(key, a:dict[key])
-    endfor
+  for key in keys(a:dict)
+    call s:set(key, a:dict[key])
+  endfor
 endfunction
 
 
 function! s:set(key,val) abort
-    if !exists('g:spacevim_' . a:key)
-        call SpaceVim#logger#warn('no option named ' . a:key)
-    else
-        exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
-    endif
+  if !exists('g:spacevim_' . a:key)
+    call SpaceVim#logger#warn('no option named ' . a:key)
+  else
+    exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
+  endif
 endfunction
 
 " What is your preferred editing style?
@@ -30,41 +33,41 @@ endfunction
 " A minimalist distribution that you can build on (spacemacs-base)
 
 function! SpaceVim#custom#autoconfig(...) abort
-    let menu = SpaceVim#api#import('cmdlinemenu')
-    let ques = [
-                \ ['dark powered mode', function('s:awesome_mode')],
-                \ ['basic mode', function('s:basic_mode')],
-                \ ]
-    call menu.menu(ques)
+  let menu = SpaceVim#api#import('cmdlinemenu')
+  let ques = [
+        \ ['dark powered mode', function('s:awesome_mode')],
+        \ ['basic mode', function('s:basic_mode')],
+        \ ]
+  call menu.menu(ques)
 endfunction
 
 function! s:awesome_mode() abort
-    let sep = SpaceVim#api#import('file').separator
-    let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
-    let config = readfile(f, '')
-    call s:write_to_config(config)
+  let sep = SpaceVim#api#import('file').separator
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
+  let config = readfile(f, '')
+  call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
-    let sep = SpaceVim#api#import('file').separator
-    let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.vim'], sep)
-    let config = readfile(f, '')
-    call s:write_to_config(config)
+  let sep = SpaceVim#api#import('file').separator
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.vim'], sep)
+  let config = readfile(f, '')
+  call s:write_to_config(config)
 endfunction
 
 function! s:write_to_config(config) abort
-    let cf = expand('~/.SpaceVim.d/init.vim')
-    if filereadable(cf)
-        return
-    endif
-    if !isdirectory(fnamemodify(cf, ':p:h'))
-        call mkdir(expand(fnamemodify(cf, ':p:h')), 'p')
-    endif
-    call writefile(a:config, cf, '')
+  let cf = expand('~/.SpaceVim.d/init.vim')
+  if filereadable(cf)
+    return
+  endif
+  if !isdirectory(fnamemodify(cf, ':p:h'))
+    call mkdir(expand(fnamemodify(cf, ':p:h')), 'p')
+  endif
+  call writefile(a:config, cf, '')
 endfunction
 
 function! SpaceVim#custom#SPC(m, keys, cmd, desc, is_cmd) abort
-    call add(g:_spacevim_mappings_space_custom,[a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+  call add(g:_spacevim_mappings_space_custom,[a:m, a:keys, a:cmd, a:desc, a:is_cmd])
 endfunction
 
 function! SpaceVim#custom#SPCGroupName(keys, name) abort
@@ -85,34 +88,29 @@ function! SpaceVim#custom#write(force) abort
 
 endfunction
 
+function! s:path_to_fname(path) abort
+  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '/', '_', '')
+endfunction
+
 function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist 
-  " first check file time of ./SpaceVim.d/init.toml
-  " if it is same as ~/.cache/SpaceVim/{full-path}.json
-  "   load ~/.cache/SpaceVim/{full-path}.json and skip parse ./SpaceVim.d/init.toml
-  " else
-  "   parse ./SpaceVim.d/init.toml and write to ~/.cache/SpaceVim/{full-path}.json 
-  "   load ~/.cache/SpaceVim/{full-path}.json
-  " endif
-  " elseif file ./SpaceVim.d/init.vim exist
-  "  load ./SpaceVim.d/init.vim
-  "  warnning this file will not supported
-  " endif
-  " if do not skip global config
-  "   if file ~/.SpaceVim.d/init.toml exist 
-  "   first check file time of ~/.SpaceVim.d/init.toml
-  "   if it is same as ~/.cache/SpaceVim/init.json
-  "     load ~/.cache/SpaceVim/init.json and skip parse ~/.SpaceVim.d/init.toml
-  "   else
-  "     parse ~/.SpaceVim.d/init.toml and write to ~/.cache/SpaceVim/init.json 
-  "     load ~/.cache/SpaceVim/init.json
-  "   endif
-  "   elseif file ~/.SpaceVim.d/init.vim exist
-  "     load ./SpaceVim.d/init.vim
-  "    warnning this file will not supported
-  "   endif
-  " endif
-  " if all these files do not exist, auto generate custom configuration file.
+  if filereadable('.SpaceVim.d/init.toml')
+    let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
+    let local_conf_cache = s:path_to_fname(local_conf)
+    if getftime(local_conf) < getftime(local_conf_cache)
+      let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
+      call SpaceVim#custom#apply(conf)
+    else
+      let conf = s:TOML.parse_file(local_conf)
+      call writefile([s:JSON.json_encode(conf)], local_conf_cache)
+      call SpaceVim#custom#apply(conf)
+    endif
+    if g:spacevim_force_global_config
+    endif
+  elseif filereadable('.SpaceVim.d/init.vim')
+  else
+  endif
+
   let custom_conf = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
   let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
 
@@ -147,13 +145,6 @@ function! SpaceVim#custom#load() abort
       set runtimepath^=~/.SpaceVim.d
     endif
     exe 'source ' . custom_glob_conf
-  endif
-
-  " json config
-  let json_global = expand('~/.SpaceVim.d/init.json')
-  if filereadable(json_global)
-    let config = join(readfile(json_global), '')
-    call SpaceVim#custom#apply(config)
   endif
 
   if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'

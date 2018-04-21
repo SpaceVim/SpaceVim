@@ -71,6 +71,7 @@ function! SpaceVim#default#options() abort
   let g:backup_dir = g:data_dir . 'backup'
   let g:swap_dir = g:data_dir . 'swap'
   let g:undo_dir = g:data_dir . 'undofile'
+  let g:conf_dir = g:data_dir . 'conf'
   if finddir(g:data_dir) ==# ''
     silent call mkdir(g:data_dir, 'p', 0700)
   endif
@@ -83,10 +84,14 @@ function! SpaceVim#default#options() abort
   if finddir(g:undo_dir) ==# ''
     silent call mkdir(g:undo_dir, 'p', 0700)
   endif
+  if finddir(g:conf_dir) ==# ''
+    silent call mkdir(g:conf_dir, 'p', 0700)
+  endif
   unlet g:data_dir
   unlet g:backup_dir
   unlet g:swap_dir
   unlet g:undo_dir
+  unlet g:conf_dir
   set undodir=$HOME/.cache/SpaceVim/undofile
   set backupdir=$HOME/.cache/SpaceVim/backup
   set directory=$HOME/.cache/SpaceVim/swap
