@@ -19,7 +19,7 @@ catch
   call SpaceVim#begin()
 endtry
 
-call SpaceVim#loadCustomConfig()
+call SpaceVim#custom#load()
 
 call SpaceVim#end()
 " vim:set et sw=2 cc=80:
