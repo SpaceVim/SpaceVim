@@ -18,11 +18,13 @@
     filetype_icon = false
     statusline_display_mode = false
 
-# pust layer's name below this section to enable layers.
+# Enable autocomplete layer
 [[layers]]
-    [layers.checkers]
-    [[layers.shell]]
-        default_position = "top"
-        default_height = 30
-    # NOTE: for language layer, you need to replace # to /
-    [lang/java]
+name = 'autocomplete'
+auto-completion-return-key-behavior = "complete"
+auto-completion-tab-key-behavior = "cycle"
+
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
