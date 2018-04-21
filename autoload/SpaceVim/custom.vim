@@ -106,16 +106,45 @@ function! SpaceVim#custom#load() abort
       call SpaceVim#custom#apply(conf)
     endif
     if g:spacevim_force_global_config
+      call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
-  else
+    exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
+    exe 'source .SpaceVim.d/init.vim'
+    if g:spacevim_force_global_config
+      call s:load_glob_conf()
+    endif
   endif
 
-  let custom_conf = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
-  let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
+  call s:load_glob_conf()
 
-  if has('timers')
-    if !filereadable(custom_glob_conf)
+  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
+    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
+    let g:spacevim_snippet_engine = 'ultisnips'
+  endif
+endfunction
+
+
+function! s:load_glob_conf() abort
+  if filereadable(expand('~/.SpaceVim.d/init.toml'))
+    let local_conf = expand('~/.SpaceVim.d/init.toml')
+    let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
+    if getftime(local_conf) < getftime(local_conf_cache)
+      let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
+      call SpaceVim#custom#apply(conf)
+    else
+      let conf = s:TOML.parse_file(local_conf)
+      call writefile([s:JSON.json_encode(conf)], local_conf_cache)
+      call SpaceVim#custom#apply(conf)
+    endif
+  elseif filereadable(expand('~/.SpaceVim.d/init.vim'))
+    let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
+    if isdirectory(expand('~/.SpaceVim.d/'))
+      set runtimepath^=~/.SpaceVim.d
+    endif
+    exe 'source ' . custom_glob_conf
+  else
+    if has('timers')
       " if there is no custom config auto generate it.
       let g:spacevim_checkinstall = 0
       augroup SpaceVimBootstrap
@@ -125,30 +154,5 @@ function! SpaceVim#custom#load() abort
     endif
   endif
 
-  if !empty(custom_conf)
-    if isdirectory('.SpaceVim.d')
-      exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
-    endif
-    exe 'source ' . custom_conf[0]
-    if g:spacevim_force_global_config
-      if filereadable(custom_glob_conf)
-        if isdirectory(expand('~/.SpaceVim.d/'))
-          set runtimepath^=~/.SpaceVim.d
-        endif
-        exe 'source ' . custom_glob_conf
-      endif
-    else
-      call SpaceVim#logger#info('Skip glob configuration of SpaceVim')
-    endif
-  elseif filereadable(custom_glob_conf)
-    if isdirectory(expand('~/.SpaceVim.d/'))
-      set runtimepath^=~/.SpaceVim.d
-    endif
-    exe 'source ' . custom_glob_conf
-  endif
-
-  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
-    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
-    let g:spacevim_snippet_engine = 'ultisnips'
-  endif
 endfunction
+
