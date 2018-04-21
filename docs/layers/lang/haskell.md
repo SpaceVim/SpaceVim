@@ -1,5 +1,5 @@
 ---
-title: "SpaceVim lang#javascript layer"
+title: "SpaceVim lang#haskell layer"
 description: "This layer is for haskell development"
 ---
 
