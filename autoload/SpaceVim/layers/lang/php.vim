@@ -90,7 +90,7 @@ function! s:phpBeautify() abort
           \ shellescape(fnameescape(l:lhs))
           \ )
     try 
-      let l:result = system(l:command)
+      call system(l:command)
       checktime
     endtry
   endif
