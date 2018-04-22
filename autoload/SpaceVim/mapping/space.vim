@@ -184,6 +184,13 @@ function! SpaceVim#mapping#space#init() abort
         \ 'grep in all loaded buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files':'@buffers'})",
         \ 'grep cursor word in all loaded buffers', 1)
+  " Searching in buffer directory
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'], "call SpaceVim#plugins#flygrep#open({'input' :"
+        \ . " input(\"grep pattern:\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
+        \ 'grep in buffer directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'], "call SpaceVim#plugins#flygrep#open({'input' :"
+        \ . " expand(\"<cword>\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
+        \ 'grep cursor word in buffer directory', 1)
   " Searching in files in an arbitrary directory
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
         \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
@@ -210,6 +217,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'b'], 'call SpaceVim#mapping#search#grep("a", "b")', 'search in all buffers with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'B'], 'call SpaceVim#mapping#search#grep("a", "B")',
         \ 'search cursor word in all buffers with ag', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'd'], 'call SpaceVim#mapping#search#grep("a", "d")', 'search in buffer directory with ag', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'D'], 'call SpaceVim#mapping#search#grep("a", "D")',
+        \ 'search cursor word in buffer directory with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'p'], 'call SpaceVim#mapping#search#grep("a", "p")', 'search in project with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'P'], 'call SpaceVim#mapping#search#grep("a", "P")',
         \ 'search cursor word in project with ag', 1)
@@ -227,6 +237,9 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in all buffers with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'B'], 'call SpaceVim#mapping#search#grep("g", "B")',
         \ 'search cursor word in all buffers with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'd'], 'call SpaceVim#mapping#search#grep("g", "d")', 'search in buffer directory with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'D'], 'call SpaceVim#mapping#search#grep("g", "D")',
+        \ 'search cursor word in buffer directory with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'p'], 'call SpaceVim#mapping#search#grep("g", "p")', 'search in project with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'P'], 'call SpaceVim#mapping#search#grep("g", "P")',
         \ 'search cursor word in project with grep', 1)
@@ -243,6 +256,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'B'], 'call SpaceVim#mapping#search#grep("k", "B")',
         \ 'search cursor word in all buffers with ack', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'd'], 'call SpaceVim#mapping#search#grep("k", "d")', 'search in buffer directory with ack', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'D'], 'call SpaceVim#mapping#search#grep("k", "D")',
+        \ 'search cursor word in buffer directory with ack', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'p'], 'call SpaceVim#mapping#search#grep("k", "p")', 'search in project with ack', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'P'], 'call SpaceVim#mapping#search#grep("k", "P")',
         \ 'search cursor word in project with ack', 1)
@@ -259,6 +275,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'B'], 'call SpaceVim#mapping#search#grep("r", "B")',
         \ 'search cursor word in all buffers with rg', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'd'], 'call SpaceVim#mapping#search#grep("r", "d")', 'search in buffer directory with rg', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'D'], 'call SpaceVim#mapping#search#grep("r", "D")',
+        \ 'search cursor word in buffer directory with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'P'], 'call SpaceVim#mapping#search#grep("r", "P")',
         \ 'search cursor word in project with rg', 1)
@@ -275,6 +294,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'B'], 'call SpaceVim#mapping#search#grep("t", "B")',
         \ 'search cursor word in all buffers with pt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'd'], 'call SpaceVim#mapping#search#grep("t", "d")', 'search in buffer directory with pt', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'D'], 'call SpaceVim#mapping#search#grep("t", "D")',
+        \ 'search cursor word in buffer directory with pt', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'p'], 'call SpaceVim#mapping#search#grep("t", "p")', 'search in project with pt', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'P'], 'call SpaceVim#mapping#search#grep("t", "P")',
         \ 'search cursor word in project with pt', 1)

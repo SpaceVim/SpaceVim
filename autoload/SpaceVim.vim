@@ -558,50 +558,6 @@ endif
 command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
-function! SpaceVim#loadCustomConfig() abort
-  let custom_conf = SpaceVim#util#globpath(getcwd(), '.SpaceVim.d/init.vim')
-  let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
-
-  if has('timers')
-    if !filereadable(custom_glob_conf)
-      " if there is no custom config auto generate it.
-      let g:spacevim_checkinstall = 0
-      augroup SpaceVimBootstrap
-        au!
-        au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
-      augroup END
-    endif
-  endif
-
-  if !empty(custom_conf)
-    if isdirectory('.SpaceVim.d')
-      exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
-    endif
-    exe 'source ' . custom_conf[0]
-    if g:spacevim_force_global_config
-      if filereadable(custom_glob_conf)
-        if isdirectory(expand('~/.SpaceVim.d/'))
-          set runtimepath^=~/.SpaceVim.d
-        endif
-        exe 'source ' . custom_glob_conf
-      endif
-    else
-      call SpaceVim#logger#info('Skip glob configuration of SpaceVim')
-    endif
-  elseif filereadable(custom_glob_conf)
-    if isdirectory(expand('~/.SpaceVim.d/'))
-      set runtimepath^=~/.SpaceVim.d
-    endif
-    exe 'source ' . custom_glob_conf
-  endif
-
-  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
-    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
-    let g:spacevim_snippet_engine = 'ultisnips'
-  endif
-endfunction
-
-
 function! SpaceVim#end() abort
   if g:spacevim_vimcompatible == 1
     let g:spacevim_windows_leader = ''

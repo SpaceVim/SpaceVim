@@ -63,6 +63,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [With an external tool](#with-an-external-tool)
       - [Useful key bindings](#useful-key-bindings)
       - [Searching in current file](#searching-in-current-file)
+      - [Searching in buffer directory](#searching-in-buffer-directory)
       - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
       - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
       - [Searching in a project](#searching-in-a-project)
@@ -207,77 +208,40 @@ User configuration can be stored in your ~/.SpaceVim.d directory.
 
 **Automatic Generation**
 
-The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.vim` in your `HOME` directory.
+The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.toml` in your `HOME` directory.
 
 **Alternative directory**
 
 `~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read <kbd>:h rtp</kbd>.
 
-It is also possible to override the location of `~/.SpaceVim.d/` using the environment variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of this directory.
+It is also possible to override the location of `~/.SpaceVim.d/` using the environment
+variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of
+this directory.
 
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.vim`
+SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.toml`
 in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 
 here is an example config file for SpaceVim:
 
-```vim
-" Here are some basic customizations, please refer to the
-" ~/.SpaceVim.d/init.vim file for all possible options:
-let g:spacevim_default_indent = 3
-let g:spacevim_max_column     = 80
+```toml
+# This is basic configuration example for SpaceVim
 
-" Change the default directory where all miscellaneous persistent files go.
-" By default it is ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
+[option]
+    colorscheme = "gruvbox"
+    background = "dark"
+    guicolors = true
+    statusline_separator = "nil"
+    statusline_separator = "bar"
+    buffer_index_type = 4
+    filetype_icon = false
+    statusline_display_mode = false
 
-" set SpaceVim colorscheme
-let g:spacevim_colorscheme = 'jellybeans'
-
-" Set plugin manager, you want to use, default is dein.vim
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" use space as `<Leader>`
-let mapleader = "\<space>"
-
-" Set windows shortcut leader [Window], default is `s`
-let g:spacevim_windows_leader = 's'
-
-" Set unite work flow shortcut leader [Unite], default is `f`
-let g:spacevim_unite_leader = 'f'
-
-" By default, language specific plugins are not loaded. This can be changed
-" with the following, then the plugins for go development will be loaded.
-call SpaceVim#layers#load('lang#go')
-
-" loaded ui layer
-call SpaceVim#layers#load('ui')
-
-" If there is a particular plugin you don't like, you can define this
-" variable to disable them entirely:
-let g:spacevim_disabled_plugins=[
-\ ['junegunn/fzf.vim'],
-\ ]
-
-" If you want to add some custom plugins, use these options:
-let g:spacevim_custom_plugins = [
-\ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
-\ ['wsdjeg/GitHub.vim'],
-\ ]
-
-" If you want to add custom color palette for statusline and tabline, use
-" these options:
-let g:spacevim_custom_color_palette = [
-\ ['#282828', '#b8bb26', 246, 235],
-\ ['#a89984', '#504945', 239, 246],
-\ ['#a89984', '#3c3836', 237, 246],
-\ ['#665c54', 241],
-\ ['#282828', '#83a598', 235, 109],
-\ ['#282828', '#fe8019', 235, 208],
-\ ['#282828', '#8ec07c', 235, 108],
-\ ]
-
-" set the guifont
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+[[layers]]
+    [checkers]
+    [shell]
+        default_position = "top"
+        default_height = 30
+    [lang/java]
 ```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
@@ -1257,6 +1221,7 @@ The available scopes and corresponding keys are:
 | Scope                      | Key |
 | -------------------------- | --- |
 | opened buffers             | b   |
+| buffer directory           | d   |
 | files in a given directory | f   |
 | current project            | p   |
 
@@ -1289,6 +1254,23 @@ Notes:
 | `SPC s g G` | grep with default input                             |
 | `SPC s r r` | rg                                                  |
 | `SPC s r R` | rg with default input                               |
+
+##### Searching in buffer directory
+
+| Key Binding | Description                                                 |
+| ----------- | ----------------------------------------------------------- |
+| `SPC s d`   | searching in buffer directory with default tool             |
+| `SPC s D`   | searching in buffer directory cursor word with default tool |
+| `SPC s a d` | searching in buffer directory with ag                       |
+| `SPC s a D` | searching in buffer directory cursor word with ag           |
+| `SPC s g d` | searching in buffer directory with grep                     |
+| `SPC s g D` | searching in buffer directory cursor word with grep         |
+| `SPC s k d` | searching in buffer directory with ack                      |
+| `SPC s k D` | searching in buffer directory cursor word with ack          |
+| `SPC s r d` | searching in buffer directory with rg                       |
+| `SPC s r D` | searching in buffer directory cursor word with rg           |
+| `SPC s t d` | searching in buffer directory with pt                       |
+| `SPC s t D` | searching in buffer directory cursor word with pt           |
 
 ##### Searching in all loaded buffers
 
