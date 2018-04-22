@@ -35,8 +35,8 @@ function! SpaceVim#layers#tags#config() abort
     autocmd!
     autocmd BufEnter *
           \   if empty(&buftype) && &filetype != 'help'
-          \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
-          \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
+          \|      nnoremap <silent><buffer> <Leader>] :call MyTagfunc()<CR>
+          \|      nnoremap <silent><buffer> <Leader>[ :call MyTagfuncBack()<CR>
           \|  endif
   augroup END
 endfunction
@@ -44,7 +44,7 @@ endfunction
 function! MyTagfunc() abort
     mark H
     let s:MyTagfunc_flag = 1
-    UniteWithCursorWord -immediately tag
+    UniteWithCursorWord -force-immediately tag
 endfunction
 
 function! MyTagfuncBack() abort
