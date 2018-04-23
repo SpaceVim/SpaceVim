@@ -18,8 +18,7 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
         \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
         \ ['othree/javascript-libraries-syntax.vim', {
         \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
-        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
-        \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
+        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }]
         \ ]
 
   if !SpaceVim#layers#lsp#check_filetype('javascript')
