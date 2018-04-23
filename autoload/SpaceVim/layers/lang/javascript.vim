@@ -65,9 +65,9 @@ function! SpaceVim#layers#lang#javascript#config() abort
   if s:auto_fix
     augroup SpaceVim_lang_javascript
       autocmd!
-      autocmd User NeomakeFinished checktime
+      autocmd User NeomakeFinished call <SID>checktime_if_javascript()
       autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FocusGained * checktime
+      autocmd FocusGained * call <SID>checktime_if_javascript()
     augroup END
   endif
 endfunction
@@ -123,6 +123,12 @@ endfunction
 function! s:tern_go_to_def() abort
   if exists(':TernDef')
     TernDef
+  endif
+endfunction
+
+function! s:checktime_if_javascript() abort
+  if (match(&filetype, '^javascript') == 0)
+    checktime
   endif
 endfunction
 
