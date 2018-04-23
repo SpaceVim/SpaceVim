@@ -29,7 +29,6 @@ Here is a throughput graph of the repository for the last few weeks:
 
 [![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
-
 <!-- vim-markdown-toc GFM -->
 
 - [New Features](#new-features)
@@ -43,6 +42,43 @@ Here is a throughput graph of the repository for the last few weeks:
 ### New Features
 
 This is a list of latest features implemented in SpaceVim:
+
+**Use toml as default configuration**
+
+here is an example for using toml as SpaceVim config:
+
+```toml
+# This is basic configuration example for SpaceVim
+
+# All SpaceVim option below [option] section
+[options]
+    # set spacevim theme. by default colorscheme layer is not loaded,
+    # if you want to use more colorscheme, please load the colorscheme
+    # layer
+    colorscheme = "gruvbox"
+    background = "dark"
+    # Disable guicolors in basic mode, many terminal do not support 24bit
+    # true colors
+    guicolors = true
+    # Disable statusline separator, if you want to use other value, please
+    # install nerd fonts
+    statusline_separator = "nil"
+    statusline_separator = "bar"
+    buffer_index_type = 4
+    filetype_icon = false
+    statusline_display_mode = false
+
+# Enable autocomplete layer
+[[layers]]
+name = 'autocomplete'
+auto-completion-return-key-behavior = "complete"
+auto-completion-tab-key-behavior = "cycle"
+
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
+```
 
 **Iedit mode**
 
@@ -128,7 +164,6 @@ The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) a
 └─ test/                          tests
 ```
 
-
 ### Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs,
@@ -141,8 +176,8 @@ clicking following icon.
 
 <a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-| wechat                                                                   | alipay                                                                     |
-| ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| wechat                                                                                                     | alipay                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
@@ -151,6 +186,7 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 This project exists thanks to all the people who have [contributed](CONTRIBUTING.md):
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
