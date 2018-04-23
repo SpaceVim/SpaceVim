@@ -76,12 +76,18 @@ endfunction
 
 
 function! SpaceVim#custom#apply(config) abort
-  let config = json_decode(a:config)
-  for key in keys(config)
-    if exists('g:spacevim_' . key)
-      exe 'let g:spacevim_' . key . ' = "' . config[key] . '"'
-    endif
-  endfor
+  if type(a:config) != type({})
+    call SpaceVim#logger#info('config type is wrong!')
+  else
+    let options = get(a:config, 'options', {})
+    for [name, value] in items(options)
+      exe 'let g:spacevim_' . name . ' = value'
+    endfor
+    let layers = get(a:config, 'layers', {})
+    for layer in layers
+      call SpaceVim#layers#load(layer.name, layer)
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#custom#write(force) abort
