@@ -126,7 +126,7 @@ function! s:tern_go_to_def() abort
 endfunction
 
 function! s:checktime_if_javascript() abort
-  if (match(&filetype, '^javascript') == 0)
+  if (&filetype =~# '^javascript')
     checktime
   endif
 endfunction
