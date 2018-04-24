@@ -112,7 +112,7 @@ function! s:preferLocalPHPMD() abort
     let l:dir = l:next_dir
   endwhile
   let l:phpmd_path = dir. '/phpmd.xml'
-  if filereadable(l:phpmd_path)
+  if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
     let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
 endfunction
