@@ -184,7 +184,7 @@ Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `
 
 #### Get SpaceVim log
 
-Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
+Use `:SPDebugInfo!` command will display the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
 
 ## Configuration layers
 
