@@ -58,6 +58,12 @@ function! SpaceVim#layers#lang#php#config() abort
       autocmd!
       autocmd User NeomakeJobInit call <SID>phpBeautify()
       autocmd FocusGained * checktime
+      autocmd Filetype php call <SID>preferLocalPHPMD()
+    augroup END
+  else 
+    augroup SpaceVim_lang_php
+      autocmd!
+      autocmd Filetype php call <SID>preferLocalPHPMD()
     augroup END
   endif
 
@@ -93,5 +99,20 @@ function! s:phpBeautify() abort
       call system(l:command)
       checktime
     endtry
+  endif
+endfunction
+
+function! s:preferLocalPHPMD() abort 
+  let l:dir = expand('%:p:h')
+  while findfile('phpmd.xml', dir) ==# ''
+    let l:next_dir = fnamemodify(dir, ':h')
+    if l:dir == l:next_dir
+      break
+    endif
+    let l:dir = l:next_dir
+  endwhile
+  let l:phpmd_path = dir. '/phpmd.xml'
+  if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
+    let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
 endfunction
