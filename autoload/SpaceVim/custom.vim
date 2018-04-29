@@ -43,20 +43,23 @@ endfunction
 
 function! s:awesome_mode() abort
   let sep = SpaceVim#api#import('file').separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
   let sep = SpaceVim#api#import('file').separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.vim'], sep)
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:write_to_config(config) abort
-  let cf = expand('~/.SpaceVim.d/init.vim')
+
+  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
+  let g:_spacevim_global_config_path = global_dir . 'init.toml'
+  let cf = global_dir . 'init.toml'
   if filereadable(cf)
     return
   endif
@@ -134,9 +137,10 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  if filereadable(expand('~/.SpaceVim.d/init.toml'))
-    let g:_spacevim_global_config_path = '~/.SpaceVim.d/init.toml'
-    let local_conf = expand('~/.SpaceVim.d/init.toml')
+  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
+  if filereadable(global_dir . 'init.toml')
+    let g:_spacevim_global_config_path = global_dir . 'init.toml'
+    let local_conf = global_dir . 'init.toml'
     let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
@@ -146,12 +150,11 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf)
     endif
-  elseif filereadable(expand('~/.SpaceVim.d/init.vim'))
-    let g:_spacevim_global_config_path = '~/.SpaceVim.d/init.vim'
-    let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
-    if isdirectory(expand('~/.SpaceVim.d/'))
-      set runtimepath^=~/.SpaceVim.d
-    endif
+    exe 'set runtimepath^=' . global_dir
+  elseif filereadable(global_dir . 'init.vim')
+    let g:_spacevim_global_config_path = global_dir . 'init.vim'
+    let custom_glob_conf = global_dir . 'init.vim'
+    exe 'set runtimepath^=' . global_dir
     exe 'source ' . custom_glob_conf
   else
     if has('timers')

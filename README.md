@@ -32,7 +32,6 @@ Here is a throughput graph of the repository for the last few weeks:
 <!-- vim-markdown-toc GFM -->
 
 - [New Features](#new-features)
-- [Install](#install)
 - [Project layout](#project-layout)
 - [Support SpaceVim](#support-spacevim)
 - [Credits & Thanks](#credits--thanks)
@@ -123,28 +122,6 @@ create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asyn
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
 For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
-
-### Install
-
-At a minimum, SpaceVim requires `git` to be installed.  For a better graphical experience, install [nerd-font](https://github.com/ryanoasis/nerd-fonts) and make sure your terminal supports [true colors](https://gist.github.com/XVilka/8346728).
-
-**Linux and macOS**
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash
-```
-
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
-
-For more info about the installation script, please check:
-
-```bash
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
-```
-
-**Windows**
-
-The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
 ### Project layout
 

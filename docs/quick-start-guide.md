@@ -71,15 +71,17 @@ The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`, here is
 
 # Enable autocomplete layer
 [[layers]]
-name = 'autocomplete'
+name = "autocomplete"
 auto-completion-return-key-behavior = "complete"
 auto-completion-tab-key-behavior = "cycle"
 
 [[layers]]
-name = 'shell'
-default_position = 'top'
+name = "shell"
+default_position = "top"
 default_height = 30
 ```
+
+This example only list part of SpaceVim options, for the list of SpaceVim options, please read `:h SpaceVim-config`
 
 ## Learning SpaceVim
 
