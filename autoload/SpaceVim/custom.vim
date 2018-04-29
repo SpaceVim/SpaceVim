@@ -43,20 +43,23 @@ endfunction
 
 function! s:awesome_mode() abort
   let sep = SpaceVim#api#import('file').separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.vim'], sep)
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
   let sep = SpaceVim#api#import('file').separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.vim'], sep)
+  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:write_to_config(config) abort
-  let cf = expand('~/.SpaceVim.d/init.vim')
+
+  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
+  let g:_spacevim_global_config_path = global_dir . 'init.toml'
+  let cf = global_dir . 'init.toml'
   if filereadable(cf)
     return
   endif
