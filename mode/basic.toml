@@ -1,4 +1,10 @@
-# This is basic configuration example for SpaceVim
+#=============================================================================
+# basic.toml --- basic configuration example for SpaceVim
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: GPLv3
+#=============================================================================
 
 # All SpaceVim option below [option] section
 [options]
@@ -9,14 +15,16 @@
     background = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
-    guicolors = true
+    guicolors = false
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_inactive_separator = "bar"
     buffer_index_type = 4
     filetype_icon = false
     statusline_display_mode = false
+    # Enable vim compatible mode, avoid changing origin vim key bindings
+    vimcompatible = 1
 
 # Enable autocomplete layer
 [[layers]]
