@@ -78,9 +78,9 @@ endfunction
 
 function! SpaceVim#commands#config(...) abort
   if (a:0 > 0 && a:1 ==# '-g') || a:0 == 0
-    tabnew ~/.SpaceVim.d/init.vim
+    exe 'tabnew' g:_spacevim_global_config_path
   elseif  a:0 > 0 && a:1 ==# '-l'
-    tabnew .SpaceVim.d/init.vim
+    exe 'tabnew' g:_spacevim_config_path
   endif
 endfunction
 
@@ -96,7 +96,7 @@ function! SpaceVim#commands#update_plugin(...) abort
   endif
 endfunction
 
-function! SpaceVim#commands#reinstall_plugin(...)
+function! SpaceVim#commands#reinstall_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'dein'
     call SpaceVim#plugins#manager#reinstall(a:000)
   elseif g:spacevim_plugin_manager ==# 'neobundle'

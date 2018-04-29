@@ -101,6 +101,7 @@ endfunction
 function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist 
   if filereadable('.SpaceVim.d/init.toml')
+    let g:_spacevim_config_path = '.SpaceVim.d/init.toml'
     let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
@@ -115,6 +116,7 @@ function! SpaceVim#custom#load() abort
       call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
+    let g:_spacevim_config_path = '.SpaceVim.d/init.vim'
     exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config
@@ -133,6 +135,7 @@ endfunction
 
 function! s:load_glob_conf() abort
   if filereadable(expand('~/.SpaceVim.d/init.toml'))
+    let g:_spacevim_global_config_path = '~/.SpaceVim.d/init.toml'
     let local_conf = expand('~/.SpaceVim.d/init.toml')
     let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
     if getftime(local_conf) < getftime(local_conf_cache)
@@ -144,6 +147,7 @@ function! s:load_glob_conf() abort
       call SpaceVim#custom#apply(conf)
     endif
   elseif filereadable(expand('~/.SpaceVim.d/init.vim'))
+    let g:_spacevim_global_config_path = '~/.SpaceVim.d/init.vim'
     let custom_glob_conf = expand('~/.SpaceVim.d/init.vim')
     if isdirectory(expand('~/.SpaceVim.d/'))
       set runtimepath^=~/.SpaceVim.d
