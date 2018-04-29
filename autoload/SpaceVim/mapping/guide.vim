@@ -629,10 +629,12 @@ else
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
-call SpaceVim#mapping#guide#register_prefix_descriptions(
-      \ g:spacevim_windows_leader,
-      \ 'g:_spacevim_mappings_windows')
-call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
+if !g:spacevim_vimcompatible
+  call SpaceVim#mapping#guide#register_prefix_descriptions(
+        \ g:spacevim_windows_leader,
+        \ 'g:_spacevim_mappings_windows')
+  call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
+endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')
