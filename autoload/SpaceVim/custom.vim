@@ -98,7 +98,7 @@ function! SpaceVim#custom#write(force) abort
 endfunction
 
 function! s:path_to_fname(path) abort
-  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '/', '_', '')
+  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
 endfunction
 
 function! SpaceVim#custom#load() abort
@@ -106,16 +106,20 @@ function! SpaceVim#custom#load() abort
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = '.SpaceVim.d/init.toml'
     let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
+    call SpaceVim#logger#info('find config file: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
+      call SpaceVim#logger#info('loadding cached config: ' . local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf)
     else
       let conf = s:TOML.parse_file(local_conf)
+      call SpaceVim#logger#info('generate config cache: ' . local_conf_cache)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf)
     endif
     if g:spacevim_force_global_config
+      call SpaceVim#logger#info('force loadding global config >>>')
       call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
@@ -125,9 +129,11 @@ function! SpaceVim#custom#load() abort
     if g:spacevim_force_global_config
       call s:load_glob_conf()
     endif
+  else
+    call SpaceVim#logger#info('Can not find project local config, start to loadding global config')
+    call s:load_glob_conf()
   endif
 
-  call s:load_glob_conf()
 
   if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
     call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')

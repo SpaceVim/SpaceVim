@@ -64,6 +64,7 @@ function! SpaceVim#layers#lang#c#plugins() abort
     elseif g:spacevim_autocomplete_method ==# 'completor'
       " no need extra plugins
     elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
+      call add(plugins, ['wsdjeg/asyncomplete-clang.vim', {'merged' : 0, 'loadconf' : 1}])
     else
       call add(plugins, ['Rip-Rip/clang_complete'])
     endif
@@ -107,10 +108,12 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
     let s:clang_executable = a:var.clang_executable
+    let g:asyncomplete_clang_executable = a:var.clang_executable
   endif
 
   if has_key(a:var, 'libclang_path')
     let g:chromatica#libclang_path = a:var.libclang_path
+    let g:asyncomplete_clang_libclang_path = a:var.libclang_path
     let g:clamp_libclang_file = a:var.libclang_path
   endif
 endfunction
