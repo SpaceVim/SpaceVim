@@ -98,7 +98,7 @@ function! SpaceVim#custom#write(force) abort
 endfunction
 
 function! s:path_to_fname(path) abort
-  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '/', '_', '')
+  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '/', '_', 'g')
 endfunction
 
 function! SpaceVim#custom#load() abort
