@@ -106,6 +106,7 @@ function! SpaceVim#custom#load() abort
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = '.SpaceVim.d/init.toml'
     let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
+    call SpaceVim#logger#info('find config file:' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))

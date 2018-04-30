@@ -25,6 +25,9 @@ function! SpaceVim#commands#load() abort
   " new buffer.
   command! -nargs=0 -bang SPDebugInfo call SpaceVim#logger#viewLog('<bang>' == '!')
   ""
+  " view runtime log
+  command! -nargs=0 SPRuntimeLog call SpaceVim#logger#viewRuntimeLog()
+  ""
   " edit custom config file of SpaceVim, by default this command will open
   " global custom configuration file, '-l' option will load local custom
   " configuration file.
