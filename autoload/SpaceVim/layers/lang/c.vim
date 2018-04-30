@@ -64,6 +64,7 @@ function! SpaceVim#layers#lang#c#plugins() abort
     elseif g:spacevim_autocomplete_method ==# 'completor'
       " no need extra plugins
     elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
+      call add(plugins, ['wsdjeg/asyncomplete-clang.vim', {'merged' : 0}])
     else
       call add(plugins, ['Rip-Rip/clang_complete'])
     endif
