@@ -15,6 +15,7 @@ let s:self._handle_inputs = {}
 let s:self._is_quit = []
 let s:self._handle_quit = {}
 let s:self.noredraw = 0
+let s:self._cmp = SpaceVim#api#import('vim#compatible')
 
 function! s:self.open() abort
   noautocmd botright split __transient_state__
@@ -123,9 +124,9 @@ if has('nvim')
 else
   function! s:self.highlight_keys(exit, line, begin, end) abort
     if a:exit
-      call matchaddpos('SpaceVim_Transient_State_Exit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+      call self._cmp.matchaddpom('SpaceVim_Transient_State_Exit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
     else
-      call matchaddpos('SpaceVim_Transient_State_Notexit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+      call self._cmp.matchaddpom('SpaceVim_Transient_State_Notexit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
     endif
   endfunction
 endif
@@ -136,7 +137,7 @@ if has('nvim')
   endfunction
 else
   function! s:self.highlight_title() abort
-    call matchaddpos('SpaceVim_Transient_State_Title', [1])
+    call self._cmp.matchaddpom('SpaceVim_Transient_State_Title', [1])
   endfunction
 endif
 
