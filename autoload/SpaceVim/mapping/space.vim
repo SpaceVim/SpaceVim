@@ -199,9 +199,12 @@ function! SpaceVim#mapping#space#init() abort
         \ . " expand(\"<cword>\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
         \ 'grep cursor word in arbitrary directory', 1)
   " Searching in project
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\")})",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'],
+        \ 'call SpaceVim#plugins#flygrep#open(' .
+        \ "{'input' : input(\"grep pattern:\"), 'dir' : get(b:, \"rootDir\", getcwd())})",
         \ 'grep in project', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\")})",
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'P'],
+        \ "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'dir' : get(b:, \"rootDir\", getcwd())})",
         \ 'grep cursor word in project', 1)
   " Searching background
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],

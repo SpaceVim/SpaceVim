@@ -172,8 +172,8 @@ function! s:close_buffer() abort
   if s:grep_timer_id != 0
     call timer_stop(s:grep_timer_id)
   endif
-  pclose
-  q
+  noautocmd pclose
+  noautocmd q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
 " }}}
@@ -415,7 +415,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let s:mode = ''
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')
-  rightbelow split __flygrep__
+  noautocmd rightbelow split __flygrep__
   let s:flygrep_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
