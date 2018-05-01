@@ -124,7 +124,7 @@ warn () {
 
 # echo_with_color {{{
 echo_with_color () {
-  printf '%b\n' "$1$2" >&2
+  printf '%b\n' "$1$2$Color_off" >&2
 }
 # }}}
 
