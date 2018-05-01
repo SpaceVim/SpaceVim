@@ -16,6 +16,7 @@
 " Loadding SpaceVim api {{{
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 "}}}
 
 " init local variable {{{
@@ -37,8 +38,8 @@ function! s:range_logo() abort
     call matchdelete(s:hi_range_index)
   catch
   endtry
-  let s:hi_range_id = matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
-  let s:hi_range_index = matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
+  let s:hi_range_id = s:CMP.matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
+  let s:hi_range_index = s:CMP.matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
   redraw!
   echon ' Change current range to:'
   exe 'echohl HiRrange' . s:current_range
@@ -286,9 +287,9 @@ endfunction
 function! s:highlight() abort
   let s:highlight_id = []
   for item in s:stack
-    call add(s:highlight_id, matchaddpos('HiBlueBold', [ item ]))
+    call add(s:highlight_id, s:CMP.matchaddpos('HiBlueBold', [ item ]))
   endfor
-  let s:highlight_id_c = matchaddpos('HiPurpleBold', [s:stack[s:index]])
+  let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [s:stack[s:index]])
 endfunction
 " }}}
 
