@@ -47,6 +47,7 @@ main () {
             _checkdir autoload/SpaceVim/plugins
             _detect autoload/SpaceVim/plugins/manager.vim
             _detect autoload/SpaceVim/api.vim
+            _detect autoload/SpaceVim/commands.vim
             _detect autoload/SpaceVim/api/job.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
