@@ -15,6 +15,7 @@ let s:Operator = ''
 
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 let s:cursor_stack = []
 
@@ -49,9 +50,9 @@ function! s:highlight_cursor() abort
   call s:VIMH.hi(info)
   for i in range(len(s:stack))
     if i == s:index
-      call matchaddpos('IeditPurpleBold', [s:stack[i]])
+      call s:CMP.matchaddpos('IeditPurpleBold', [s:stack[i]])
     else
-      call matchaddpos('IeditBlueBold', [s:stack[i]])
+      call s:CMP.matchaddpos('IeditBlueBold', [s:stack[i]])
     endif
     call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
