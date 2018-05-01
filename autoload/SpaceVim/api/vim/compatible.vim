@@ -13,6 +13,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'version' : '',
         \ 'has' : '',
         \ 'globpath' : '',
+        \ 'matchaddpos' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
@@ -147,5 +148,20 @@ function! s:has(feature) abort
     return has(a:feature)
   endif
 endfunction
+
+
+if exists('*matchaddpos')
+  function! s:matchaddpos(group, pos, ...) abort
+    let priority = get(a:000, 0, 10)
+    let id = get(a:000, 1, -1)
+    let dict = get(a:000, 2, {})
+    return matchaddpos(a:group, a:pos, priority, id, dict)
+  endfunction
+else
+  function! s:matchaddpos(group, pos, ...) abort
+    
+  endfunction
+endif
+
 
 " vim:set et sw=2 cc=80:
