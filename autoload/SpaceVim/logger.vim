@@ -31,6 +31,26 @@ function! SpaceVim#logger#error(msg) abort
 
 endfunction
 
+function! SpaceVim#logger#viewRuntimeLog()
+  let info = "### SpaceVim runtime log :\n\n"
+  let info .= "```log\n"
+
+  let info .= s:LOGGER.view(s:LOGGER.level)
+
+  let info .= "\n```\n"
+  tabnew +setl\ nobuflisted
+  nnoremap <buffer><silent> q :bd!<CR>
+  for msg in split(info, "\n")
+    call append(line('$'), msg)
+  endfor
+  normal! "_dd
+  setl nomodifiable
+  setl buftype=nofile
+  setl filetype=markdown
+
+endfunction
+
+
 function! SpaceVim#logger#viewLog(...) abort
   let info = "### SpaceVim Options :\n\n"
   let info .= "```viml\n"

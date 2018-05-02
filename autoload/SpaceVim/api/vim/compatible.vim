@@ -13,6 +13,7 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'version' : '',
         \ 'has' : '',
         \ 'globpath' : '',
+        \ 'matchaddpos' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
@@ -147,5 +148,62 @@ function! s:has(feature) abort
     return has(a:feature)
   endif
 endfunction
+
+
+" - A number.  This whole line will be highlighted.  The first
+" line has number 1.
+" - A list with one number, e.g., [23]. The whole line with this
+" number will be highlighted.
+" - A list with two numbers, e.g., [23, 11]. The first number is
+" the line number, the second one is the column number (first
+" column is 1, the value must correspond to the byte index as
+" |col()| would return).  The character at this position will
+" be highlighted.
+" - A list with three numbers, e.g., [23, 11, 3]. As above, but
+" the third number gives the length of the highlight in bytes.
+
+if exists('*matchaddpos')
+  function! s:matchaddpos(group, pos, ...) abort
+    let priority = get(a:000, 0, 10)
+    let id = get(a:000, 1, -1)
+    let dict = get(a:000, 2, {})
+    return matchaddpos(a:group, a:pos, priority, id, dict)
+  endfunction
+else
+  function! s:matchaddpos(group, pos, ...) abort
+    let priority = get(a:000, 0, 10)
+    let id = get(a:000, 1, -1)
+    let dict = get(a:000, 2, {})
+    let pos1 = a:pos[0]
+    if type(pos1) == 0
+      let id = matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+    elseif type(pos1) == 3
+      if len(pos1) == 1
+        let id = matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+      elseif len(pos1) == 2
+        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+      elseif len(pos1) == 3
+        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+      endif
+    endif
+    if len(a:pos) > 1
+      for pos1 in a:pos[1:]
+        if type(pos1) == 0
+          call matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+        elseif type(pos1) == 3
+          if len(pos1) == 1
+            call matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+          elseif len(pos1) == 2
+            call matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+          elseif len(pos1) == 3
+            call matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+          endif
+        endif
+      endfor
+    endif
+    return id
+  endfunction
+endif
+
 
 " vim:set et sw=2 cc=80:

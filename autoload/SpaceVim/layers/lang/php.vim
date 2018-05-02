@@ -38,6 +38,12 @@ function! SpaceVim#layers#lang#php#plugins() abort
   return plugins
 endfunction
 
+let s:auto_fix = 0
+
+function! SpaceVim#layers#lang#php#set_variable(var) abort
+  let s:auto_fix = get(a:var, 'auto_fix', 0)
+endfunction
+
 function! SpaceVim#layers#lang#php#config() abort
   call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
@@ -45,6 +51,20 @@ function! SpaceVim#layers#lang#php#config() abort
   if SpaceVim#layers#lsp#check_filetype('php')
     call SpaceVim#mapping#gd#add('php',
           \ function('SpaceVim#lsp#go_to_def'))
+  endif
+
+  if s:auto_fix
+    augroup SpaceVim_lang_php
+      autocmd!
+      autocmd User NeomakeJobInit call <SID>phpBeautify()
+      autocmd FocusGained * checktime
+      autocmd Filetype php call <SID>preferLocalPHPMD()
+    augroup END
+  else 
+    augroup SpaceVim_lang_php
+      autocmd!
+      autocmd Filetype php call <SID>preferLocalPHPMD()
+    augroup END
   endif
 
 endfunction
@@ -61,4 +81,38 @@ function! s:on_ft() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+endfunction
+
+function! s:phpBeautify() abort
+  if (&filetype ==# 'php')
+    let l:args = []
+    if exists('g:neomake_php_phpcs_args_standard')
+      call add(l:args, '--standard=' . expand(g:neomake_php_phpcs_args_standard))
+    endif
+    let l:lhs = expand('%')
+    let l:command = printf(
+          \ 'phpcbf %s %s',
+          \ join(l:args, ' '),
+          \ shellescape(fnameescape(l:lhs))
+          \ )
+    try 
+      call system(l:command)
+      checktime
+    endtry
+  endif
+endfunction
+
+function! s:preferLocalPHPMD() abort 
+  let l:dir = expand('%:p:h')
+  while findfile('phpmd.xml', dir) ==# ''
+    let l:next_dir = fnamemodify(dir, ':h')
+    if l:dir == l:next_dir
+      break
+    endif
+    let l:dir = l:next_dir
+  endwhile
+  let l:phpmd_path = dir. '/phpmd.xml'
+  if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
+    let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
+  endif
 endfunction

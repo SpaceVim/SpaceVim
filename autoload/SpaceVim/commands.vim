@@ -25,6 +25,9 @@ function! SpaceVim#commands#load() abort
   " new buffer.
   command! -nargs=0 -bang SPDebugInfo call SpaceVim#logger#viewLog('<bang>' == '!')
   ""
+  " view runtime log
+  command! -nargs=0 SPRuntimeLog call SpaceVim#logger#viewRuntimeLog()
+  ""
   " edit custom config file of SpaceVim, by default this command will open
   " global custom configuration file, '-l' option will load local custom
   " configuration file.
@@ -78,9 +81,9 @@ endfunction
 
 function! SpaceVim#commands#config(...) abort
   if (a:0 > 0 && a:1 ==# '-g') || a:0 == 0
-    tabnew ~/.SpaceVim.d/init.vim
+    exe 'tabnew' g:_spacevim_global_config_path
   elseif  a:0 > 0 && a:1 ==# '-l'
-    tabnew .SpaceVim.d/init.vim
+    exe 'tabnew' g:_spacevim_config_path
   endif
 endfunction
 
@@ -96,7 +99,7 @@ function! SpaceVim#commands#update_plugin(...) abort
   endif
 endfunction
 
-function! SpaceVim#commands#reinstall_plugin(...)
+function! SpaceVim#commands#reinstall_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'dein'
     call SpaceVim#plugins#manager#reinstall(a:000)
   elseif g:spacevim_plugin_manager ==# 'neobundle'

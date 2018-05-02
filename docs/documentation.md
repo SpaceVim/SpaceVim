@@ -12,13 +12,15 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Screenshots](#screenshots)
 - [Who can benefit from this?](#who-can-benefit-from-this)
 - [Update and Rollback](#update-and-rollback)
-    - [Update SpaceVim itself](#update-spacevim-itself)
-    - [Update plugins](#update-plugins)
-    - [Get SpaceVim log](#get-spacevim-log)
-- [Configuration layers](#configuration-layers)
+  - [Update SpaceVim itself](#update-spacevim-itself)
+  - [Update plugins](#update-plugins)
+  - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
+  - [Automatic Generation](#automatic-generation)
+  - [Alternative directory](#alternative-directory)
+  - [Vim Compatible Mode](#vim-compatible-mode)
+  - [Private Layers](#private-layers)
 - [Concepts](#concepts)
-- [Differences between vim/neovim and SpaceVim](#differences-between-vimneovim-and-spacevim)
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
@@ -158,7 +160,7 @@ to get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 ## Update and Rollback
 
-#### Update SpaceVim itself
+### Update SpaceVim itself
 
 There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
 
@@ -178,39 +180,23 @@ To update manually close Vim and update the git repository:
 
 `git -C ~/.SpaceVim pull`.
 
-#### Update plugins
+### Update plugins
 
 Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
 
-#### Get SpaceVim log
+### Get SpaceVim log
 
-Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
-
-## Configuration layers
-
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
-
-**Purpose**
-
-Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configuration file.
-
-**Structure**
-
-In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
-
-- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
-- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
-- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+Use `:SPDebugInfo!` command will display the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
 
 ## Custom Configuration
 
-User configuration can be stored in your ~/.SpaceVim.d directory.
-
-**Automatic Generation**
+### Automatic Generation
 
 The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.toml` in your `HOME` directory.
 
-**Alternative directory**
+### Alternative directory
+
+User configuration can be stored in your `~/.SpaceVim.d` directory.
 
 `~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read <kbd>:h rtp</kbd>.
 
@@ -244,6 +230,8 @@ here is an example config file for SpaceVim:
     [lang/java]
 ```
 
+This is a list of available options for SpaceVim:
+
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
 
 if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
@@ -252,20 +240,9 @@ if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVi
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
 call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 ```
+### Vim Compatible Mode
 
-## Concepts
-
-**Transient-states**
-
-SpaceVim defines a wide variety of transient states (temporary overlay maps) where it makes sense. This prevents one from doing repetitive and tedious presses on the SPC key.
-
-When a transient state is active, a documentation is displayed in the transient state buffer. Additional information may as well be displayed in it.
-
-Move Text Transient State:
-
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
-
-## Differences between vim/neovim and SpaceVim
+This a list of different key bindings between SpaceVim and origin vim.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
@@ -281,7 +258,39 @@ the option is `g:spacevim_windows_smartclose`, default value is `q`. If you stil
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
-If you still want to use this origin function, you can enable vimcompatible mode, via `let g:spacevim_vimcompatible = 1`.
+If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = 1` in `[options]` section.
+
+### Private Layers
+
+This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+
+**Purpose**
+
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configuration file.
+
+**Structure**
+
+In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
+
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+
+## Concepts
+
+**Transient-states**
+
+SpaceVim defines a wide variety of transient states (temporary overlay maps)
+where it makes sense. This prevents one from doing repetitive and tedious
+presses on the SPC key.
+
+When a transient state is active, a documentation is displayed in the
+transient state buffer. Additional information may as well be displayed in it.
+
+Move Text Transient State:
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
 
 ## Interface elements
 

@@ -65,15 +65,8 @@ if SpaceVim#layers#lsp#check_filetype('php')
     let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['around', 'member'])
   endif
 else
-  let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['phpcd', 'around', 'member'])
-  "call deoplete#custom#source('phpcd', 'mark', '')
-  "call deoplete#custom#source('phpcd', 'input_pattern', '\w*|[^. \t]->\w*|\w*::\w*')
+  let g:deoplete#ignore_sources.php = get(g:deoplete#ignore_sources, 'php', ['omni', 'around', 'member'])
 endif
-let g:deoplete#omni#input_patterns.php = get(g:deoplete#omni#input_patterns, 'php', [
-      \'[^. \t0-9]\.\w*',
-      \'[^. \t0-9]\->\w*',
-      \'[^. \t0-9]\::\w*',
-      \])
 
 " gitcommit
 let g:deoplete#omni#input_patterns.gitcommit = get(g:deoplete#omni#input_patterns, 'gitcommit', [
@@ -107,7 +100,7 @@ call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
 let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around', 'LanguageClient'])
 for key in keys(g:deoplete#ignore_sources)
-  if key != '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
+  if key !=# '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
     let g:deoplete#ignore_sources[key] = g:deoplete#ignore_sources[key] + ['around', 'LanguageClient']
   endif
 endfor

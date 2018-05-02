@@ -10,6 +10,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 scriptencoding utf-8
 
+" Load SpaceVim API
+
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 function! SpaceVim#mapping#guide#has_configuration() "{{{
   return exists('s:desc_lookup')
 endfunction "}}}
@@ -325,7 +329,7 @@ function! s:highlight_cursor() abort
     let begin = getpos("'<")
     let end = getpos("'>")
     if begin[1] == end[1]
-      let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[begin[1], min([begin[2], end[2]]), abs(begin[2] - end[2]) + 1]]) 
+      let s:cursor_hi = s:CMP.matchaddpos('SpaceVimGuideCursor', [[begin[1], min([begin[2], end[2]]), abs(begin[2] - end[2]) + 1]]) 
     else
       let pos = [[begin[1], begin[2], len(getline(begin[1])) - begin[2] + 1],
             \ [end[1], 1, end[2]],
@@ -333,10 +337,10 @@ function! s:highlight_cursor() abort
       for lnum in range(begin[1] + 1, end[1] - 1)
         call add(pos, [lnum, 1, len(getline(lnum))])
       endfor
-      let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', pos) 
+      let s:cursor_hi = s:CMP.matchaddpos('SpaceVimGuideCursor', pos) 
     endif
   else
-    let s:cursor_hi = matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
+    let s:cursor_hi = s:CMP.matchaddpos('SpaceVimGuideCursor', [[line('.'), col('.'), 1]]) 
   endif
 endfunction
 
@@ -629,10 +633,12 @@ else
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
-call SpaceVim#mapping#guide#register_prefix_descriptions(
-      \ g:spacevim_windows_leader,
-      \ 'g:_spacevim_mappings_windows')
-call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
+if !g:spacevim_vimcompatible
+  call SpaceVim#mapping#guide#register_prefix_descriptions(
+        \ g:spacevim_windows_leader,
+        \ 'g:_spacevim_mappings_windows')
+  call SpaceVim#plugins#help#regist_root({'[WIN]' : g:_spacevim_mappings_windows})
+endif
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ '[KEYs]',
       \ 'g:_spacevim_mappings_prefixs')

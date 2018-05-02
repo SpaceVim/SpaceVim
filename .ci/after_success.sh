@@ -28,5 +28,7 @@ else
     ./wiki/async.sh "cn"
     git remote add gitee https://SpaceVimBot:${BOTSECRET}@gitee.com/spacevim/SpaceVim.git
     git push gitee master 
+    .ci/detach_plugin.sh flygrep
+    .ci/detach_plugin.sh dein-ui
   fi
 fi

@@ -257,13 +257,11 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
 
-
-  " Use Q format lines
-  map Q gq
-
   " Navigate window
   nnoremap <silent><C-q> <C-w>
-  nnoremap <silent><C-x> <C-w>x
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+  endif
 
   " Navigation in command line
   cnoremap <C-a> <Home>

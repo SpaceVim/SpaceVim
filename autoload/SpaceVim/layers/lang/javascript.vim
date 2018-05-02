@@ -18,8 +18,7 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
         \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
         \ ['othree/javascript-libraries-syntax.vim', {
         \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
-        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }],
-        \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
+        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }]
         \ ]
 
   if !SpaceVim#layers#lsp#check_filetype('javascript')
@@ -65,9 +64,9 @@ function! SpaceVim#layers#lang#javascript#config() abort
   if s:auto_fix
     augroup SpaceVim_lang_javascript
       autocmd!
-      autocmd User NeomakeFinished checktime
+      autocmd User NeomakeFinished call <SID>checktime_if_javascript()
       autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FocusGained * checktime
+      autocmd FocusGained * call <SID>checktime_if_javascript()
     augroup END
   endif
 endfunction
@@ -123,6 +122,12 @@ endfunction
 function! s:tern_go_to_def() abort
   if exists(':TernDef')
     TernDef
+  endif
+endfunction
+
+function! s:checktime_if_javascript() abort
+  if (&filetype =~# '^javascript')
+    checktime
   endif
 endfunction
 

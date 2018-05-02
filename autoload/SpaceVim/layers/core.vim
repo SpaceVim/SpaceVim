@@ -53,8 +53,8 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
   " [b or ]n go to previous or next buffer
-  nnoremap <silent> [b :<c-u>bN<cr>
-  nnoremap <silent> ]b :<c-u>bn<cr>
+  nnoremap <silent> [b :<c-u>bN \| stopinsert<cr>
+  nnoremap <silent> ]b :<c-u>bn \| stopinsert<cr>
 
   " [f or ]f go to next or previous file in dir
   nnoremap <silent> ]f :<c-u>call <SID>next_file()<cr>
@@ -86,6 +86,7 @@ function! SpaceVim#layers#core#config() abort
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'Report an issue of SpaceVim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'l'], 'SPLayer -l', 'lists all the layers available in SpaceVim', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'L'], 'SPRuntimeLog', 'view SpaceVim runtime log', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'm'], 'Unite manpage', 'search available man pages', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'k'], 'LeaderGuide "[KEYs]"', 'show top-level bindings with mapping guide', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
