@@ -7,13 +7,6 @@
 "=============================================================================
 
 scriptencoding utf-8
-" Enable nocompatible
-if has('vim_starting')
-  if &compatible
-    set nocompatible
-  endif
-endif
-
 let s:SYSTEM = SpaceVim#api#import('system')
 
 " Fsep && Psep

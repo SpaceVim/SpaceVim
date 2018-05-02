@@ -6,6 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+" Enable nocompatible
+if has('vim_starting')
+  if &compatible
+    set nocompatible
+  endif
+endif
 " Detect root directory of SpaceVim
 let g:_spacevim_root_dir = fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
