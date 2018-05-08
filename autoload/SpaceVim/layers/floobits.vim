@@ -15,21 +15,33 @@ endfunction
 
 
 function! SpaceVim#layers#floobits#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'c'], 'silent call call('
+  let g:_spacevim_mappings_space.m.f = {'name' : '+floobits'}
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'c'], 'silent call call('
         \ . string(s:_function('s:floobits_clear_highlights')) . ', [])',
         \ 'Clears all mirrored highlights', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'd'], 'silent call call('
+        \ . string(s:_function('s:floobits_load_rcfile')) . ', [])',
+        \ 'Load floobits rcfile', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'f'], 'silent call call('
+        \ . string(s:_function('s:floobits_follow_user')) . ', [])',
+        \ 'Follow a users changes', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'j'], 'silent call call('
+        \ . string(s:_function('s:floobits_join_workspace')) . ', [])',
+        \ 'Join an existing floobits workspace', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'l'], 'silent call call('
+        \ . string(s:_function('s:floobits_leave_workspace')) . ', [])',
+        \ 'Leave floobits workspace', 1)
 endfunction
 
- ""     (spacemacs/set-leader-keys
-        "Pc" 'floobits-clear-highlights
-        "Pd" 'spacemacs/floobits-load-rcfile
-        "Pf" 'floobits-follow-user
-        "Pj" 'floobits-join-workspace
-        "Pl" 'floobits-leave-workspace
-        "PR" 'floobits-share-dir-private
-        "Ps" 'floobits-summon
-        "Pt" 'floobits-follow-mode-toggle
-        "PU" 'floobits-share-dir-public))))
+"Pc" 'floobits-clear-highlights
+"Pd" 'spacemacs/floobits-load-rcfile
+"Pf" 'floobits-follow-user
+"Pj" 'floobits-join-workspace
+"Pl" 'floobits-leave-workspace
+"PR" 'floobits-share-dir-private
+"Ps" 'floobits-summon
+"Pt" 'floobits-follow-mode-toggle
+"PU" 'floobits-share-dir-public))))
 function! s:floobits_clear_highlights() abort
   
 endfunction
@@ -39,6 +51,14 @@ function! s:floobits_follow_user() abort
 endfunction
 
 function! s:floobits_load_rcfile() abort
+  
+endfunction
+
+function! s:floobits_join_workspace() abort
+  
+endfunction
+
+function! s:floobits_leave_workspace() abort
   
 endfunction
 
