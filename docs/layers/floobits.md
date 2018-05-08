@@ -18,6 +18,8 @@ description: "This layer adds support for the peer programming tool floobits to 
 
 This layer adds support for the peer programming tool floobits to SpaceVim.
 
+NOTE: This layer only support neovim.
+
 ## Features
 
 - Adjust floobits configuration file in the root of a project.
@@ -38,4 +40,4 @@ name = "floobits"
 
 | Key bindings | Discription                    |
 | ------------ | ------------------------------ |
-| `SPC p c`    | Clears all mirrored highlights |
+| `SPC m f c`  | Clears all mirrored highlights |

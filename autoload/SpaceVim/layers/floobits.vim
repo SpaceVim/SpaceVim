@@ -31,17 +31,28 @@ function! SpaceVim#layers#floobits#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'l'], 'silent call call('
         \ . string(s:_function('s:floobits_leave_workspace')) . ', [])',
         \ 'Leave floobits workspace', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'R'], 'silent call call('
+        \ . string(s:_function('s:floobits_share_dir_private')) . ', [])',
+        \ 'Share dir private', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 'U'], 'silent call call('
+        \ . string(s:_function('s:floobits_share_dir_public')) . ', [])',
+        \ 'Share dir public', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 's'], 'silent call call('
+        \ . string(s:_function('s:floobits_summon')) . ', [])',
+        \ 'Summon everyone', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'f', 't'], 'silent call call('
+        \ . string(s:_function('s:floobits_follow_mode_toggle')) . ', [])',
+        \ 'Toggle following of recent changes', 1)
 endfunction
 
-"Pc" 'floobits-clear-highlights
-"Pd" 'spacemacs/floobits-load-rcfile
-"Pf" 'floobits-follow-user
-"Pj" 'floobits-join-workspace
-"Pl" 'floobits-leave-workspace
-"PR" 'floobits-share-dir-private
-"Ps" 'floobits-summon
-"Pt" 'floobits-follow-mode-toggle
-"PU" 'floobits-share-dir-public))))
+function! s:floobits_follow_mode_toggle() abort
+  
+endfunction
+
+function! s:floobits_summon() abort
+  
+endfunction
+
 function! s:floobits_clear_highlights() abort
   
 endfunction
@@ -62,6 +73,13 @@ function! s:floobits_leave_workspace() abort
   
 endfunction
 
+function! s:floobits_share_dir_private() abort
+  
+endfunction
+
+function! s:floobits_share_dir_public() abort
+  
+endfunction
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
