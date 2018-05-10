@@ -6,7 +6,6 @@
 " License: GPLv3
 "=============================================================================
 
-scriptencoding utf-8
 let s:SYSTEM = SpaceVim#api#import('system')
 
 " Fsep && Psep
@@ -63,7 +62,9 @@ if s:SYSTEM.isWindows
 
 else
   " set default encoding to utf-8
+  set encoding=utf-8
   set termencoding=utf-8
   set fileencoding=utf-8
   set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 endif
+scriptencoding utf-8
