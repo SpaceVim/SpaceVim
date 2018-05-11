@@ -29,14 +29,14 @@ This layer is for Python development.
 
 ## Features
 
-- Aoto-completion using [deoplete-jedi](https://github.com/zchee/deoplete-jedi) or [jedi-vim](https://github.com/davidhalter/jedi-vim)
+- Auto-completion using [deoplete-jedi](https://github.com/zchee/deoplete-jedi) or [jedi-vim](https://github.com/davidhalter/jedi-vim)
 - Documentation Lookup using [jedi-vim](https://github.com/davidhalter/jedi-vim)
 
 ## Install
 
 ### Layer
 
-To use this configuration layer, add `SPLayer 'lang#python'` to your custom configuration file.
+To use this configuration layer, add `call SpaceVim#layers#load('lang#python')` to your custom configuration file.
 
 ### Syntax Checking
 
