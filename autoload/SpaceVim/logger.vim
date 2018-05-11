@@ -10,7 +10,7 @@ let s:LOGGER = SpaceVim#api#import('logger')
 
 call s:LOGGER.set_name('SpaceVim')
 call s:LOGGER.set_level(1)
-call s:LOGGER.set_silent(0)
+call s:LOGGER.set_silent(1)
 call s:LOGGER.set_verbose(1)
 
 function! SpaceVim#logger#info(msg) abort
@@ -31,7 +31,7 @@ function! SpaceVim#logger#error(msg) abort
 
 endfunction
 
-function! SpaceVim#logger#viewRuntimeLog()
+function! SpaceVim#logger#viewRuntimeLog() abort
   let info = "### SpaceVim runtime log :\n\n"
   let info .= "```log\n"
 
