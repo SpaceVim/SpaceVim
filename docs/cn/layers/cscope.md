@@ -3,6 +3,8 @@ title: "SpaceVim cscope layer"
 description: "This layer provide cscope manager for project"
 ---
 
+# [Layers](../) > cscope
+
 ## Description
 
 This layer provides a smart [Cscope](http://cscope.sourceforge.net/) and [PyCscope](https://github.com/portante/pycscope) helper for SpaceVim.

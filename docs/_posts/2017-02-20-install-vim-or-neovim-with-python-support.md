@@ -6,7 +6,7 @@ comments: true
 ---
 
 
-Installation of neovim/vim with python support:
+# Installation of neovim/vim with python support
 
 > [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 

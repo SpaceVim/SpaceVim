@@ -3,7 +3,7 @@ title: "SpaceVim checkers layer"
 description: "This layer provides syntax checking feature"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) checkers
+# [SpaceVim Layers:](../) checkers
 
 <!-- vim-markdown-toc GFM -->
 

@@ -6,12 +6,15 @@ keywords: layer,layers
 
 <!-- vim-markdown-toc GFM -->
 
-- [Introduction](#introduction)
-  - [Enable layers](#enable-layers)
-  - [Disable layers](#disable-layers)
 - [Available layers](#available-layers)
+  - [Introduction](#introduction)
+    - [Enable layers](#enable-layers)
+    - [Disable layers](#disable-layers)
+  - [Layers table](#layers-table)
 
 <!-- vim-markdown-toc -->
+
+# Available layers
 
 ## Introduction
 
@@ -43,7 +46,7 @@ call SpaceVim#layers#disable('shell')
 
 <!-- SpaceVim layer list start -->
 
-## Available layers
+## Layers table
 
 | Name                                                  | Description                                                                                                                                           |
 | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |

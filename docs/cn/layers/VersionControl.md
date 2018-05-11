@@ -4,7 +4,7 @@ description: "This layers provides general version control feature for vim. It s
 lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) VersionControl
+# [SpaceVim Layers:](../) VersionControl
 
 <!-- vim-markdown-toc GFM -->
 
