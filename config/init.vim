@@ -35,7 +35,7 @@ try
       silent exec 'lan en_US.UTF-8'
     else
       " in linux-terminal
-      silent exec 'lan en_US.utf8'
+      silent exec 'lan en_US.UTF-8'
     endif
   endif
 catch /^Vim\%((\a\+)\)\=:E197/
