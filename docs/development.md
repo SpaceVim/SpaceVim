@@ -290,7 +290,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## Build with SpaceVim
 
-SpaceVim provide a lot of public [APIs](https://spacevim.org/apis), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
+SpaceVim provide a lot of public [APIs](../apis/), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
