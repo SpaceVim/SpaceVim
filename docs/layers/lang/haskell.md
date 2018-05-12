@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#haskell layer"
-description: "This layer is for haskell development"
+description: "haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) lang#haskell
