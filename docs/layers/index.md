@@ -1,7 +1,6 @@
 ---
 title:  Available layers
 description: "A guide for managing SpaceVim with layers, tell you how to enable and disable a layer, also list all available layers in SpaceVim"
-keywords: layer,layers
 ---
 
 # Available layers
@@ -54,9 +53,9 @@ enable = false
 | Name                                                  | Description                                                                                                                                           |
 | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [VersionControl](VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…           |
-| [autocomplete](autocomplete/)                         | This layer provides auto-completion to SpaceVim                                                                                                       |
+| [autocomplete](autocomplete/)                         | Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically             |
 | [chat](chat/)                                         | SpaceVim chatting layer provide chatting with qq and weixin in vim.                                                                                   |
-| [checkers](checkers/)                                 | This layer provides syntax checking feature                                                                                                           |
+| [checkers](checkers/)                                 | Syntax checking automatically within SpaceVim, display error on the sign column and statusline.                                                       |
 | [chinese](chinese/)                                   | Layer for chinese users, include chinese docs and runtime messages                                                                                    |
 | [colorscheme](colorscheme/)                           | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                                              |
 | [cscope](cscope/)                                     | This layer provide cscope manager for project                                                                                                         |
