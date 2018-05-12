@@ -24,15 +24,15 @@ function! s:generate_content() abort
 endfunction
 
 function! s:layer_list() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', "docs/layers/**/*.md")
+  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/layers/**/*.md')
   let list = [
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
   call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/layers/index.md'))
   for layer in layers
-    let name = split(layer, '/docs/layers')[1][:-4] . '/'
-    let url = 'https://spacevim.org/layers' . name
+    let name = split(layer, '/docs/layers/')[1][:-4] . '/'
+    let url = name
     let content = readfile(layer)
     if len(content) > 3
       let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '

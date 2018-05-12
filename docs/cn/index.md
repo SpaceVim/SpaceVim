@@ -20,7 +20,7 @@ SpaceVim 是一个社区驱动的模块化 Vim IDE，以模块的方式组织管
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
 即用的Vim-IDE。
 
-请查阅《[入门指南](quick-start-guide)》、《[用户文档](documentation)》和《[可用模块](layers)》以获取更多信息。
+请查阅《[入门指南](quick-start-guide/)》、《[用户文档](documentation/)》和《[可用模块](layers/)》以获取更多信息。
 
 ## 最新特新
 
@@ -35,7 +35,7 @@ SpaceVim 是一个社区驱动的模块化 Vim IDE，以模块的方式组织管
     {% endfor %}
 </ul>
 
-更多精彩博客请订阅 [SpaceVim 中文博客](https://spacevim.org/cn/blog/)
+更多精彩博客请订阅 [SpaceVim 中文博客](blog/)
 
 [关注微博 @SpaceVim](https://weibo.com/SpaceVim) 
 
@@ -50,7 +50,7 @@ SpaceVim 是一个社区驱动的模块化 Vim IDE，以模块的方式组织管
 - 最新的状态是什么？
 
 当前最新发布的稳定版本是 v0.7.0。可以查看[时间表](https://github.com/SpaceVim/SpaceVim/milestones)获取开发进度，
-或者阅读 [roadmap](https://spacevim.org/roadmap/) 获取开发计划。
+或者阅读 [roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗?
 

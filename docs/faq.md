@@ -1,6 +1,6 @@
 ---
 title: "FAQ" 
-description: "A list of latest blog about the feature of SpaceVim and tutorials of using vim." 
+description: "A list of questions and answers relating to SpaceVim, especially one most asked in SpaceVim community" 
 ---
 
 # SpaceVim FAQ

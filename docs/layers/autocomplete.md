@@ -1,9 +1,9 @@
 ---
 title: "SpaceVim autocomplete layer"
-description: "This layer provides auto-completion to SpaceVim"
+description: "Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) autocomplete
+# [SpaceVim Layers:](../) autocomplete
 
 <!-- vim-markdown-toc GFM -->
 

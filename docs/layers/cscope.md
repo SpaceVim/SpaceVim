@@ -1,7 +1,20 @@
 ---
 title: "SpaceVim cscope layer"
-description: "This layer provide cscope manager for project"
+description: "cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope"
 ---
+
+# [Layers](../) > cscope
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Features](#features)
+- [Installation](#installation)
+  - [cscope](#cscope)
+  - [layer](#layer)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
 
 ## Description
 
@@ -24,10 +37,11 @@ sudo pacman -S cscope
 
 ### layer
 
-To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
+To use this configuration layer, add it to your configuration file.
 
-```vim
-call SpaceVim#layers#load('cscope')
+```toml
+[[layers]]
+name = "cscope"
 ```
 
 ## Key bindings

@@ -1,6 +1,6 @@
 ---
 title:  "About"
-description: "SpaceVim is a communicate driven vim distribution that supports vim and neovim"
+description: "SpaceVim is a communicate driven vim distribution with layer feature, all contributors make SpaceVim what it is."
 ---
 
 # About
@@ -19,12 +19,17 @@ description: "SpaceVim is a communicate driven vim distribution that supports vi
 - Do not regress from origin
 - Decide outcomes by weighing cost and benefit
 - prefer usability over tradition if the benefits are overwhelming
-- Give usability a chance™
+- Give usability a chance
 
 ## Credits & Thanks
 
-- Current maintainer: [Wang Shidong](https://github.com/wsdjeg)
-- [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
+This project exists thanks to all the people who have contributed to SpaceVim:
+
+<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+
+- [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
+- [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
+- authors of all the plugins used in SpaceVim.

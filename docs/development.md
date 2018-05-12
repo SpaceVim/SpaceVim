@@ -258,7 +258,8 @@ First if you want to have some personal mappings, This can be done in your `~/.S
 
 If you think it worth contributing a new mappings then be sure to read the documentation to find the best mappings, then create a Pull-Request with your changes.
 
-ALWAYS document your new mappings or mappings changes inside the relevant documentation file. It should be the the layer file and the [documentation.md](https://spacevim.org/documentation).
+ALWAYS document your new mappings or mappings changes inside the relevant documentation file.
+It should be the the layer file and the [documentation](../documentation/).
 
 ##### Language specified key bindings
 
@@ -268,15 +269,15 @@ we recommended to keep same language specified key bindings for different langua
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
-| SPC l r     | start a runner for current file                  |
-| SPC l e     | rename symbol                                    |
-| SPC l d     | show doc                                         |
-| SPC l i r   | remove unused imports                            |
-| SPC l i s   | sort imports with isort                          |
-| SPC l s i   | Start a language specified inferior REPL process |
-| SPC l s b   | send buffer and keep code buffer focused         |
-| SPC l s l   | send line and keep code buffer focused           |
-| SPC l s s   | send selection text and keep code buffer focused |
+| `SPC l r`   | start a runner for current file                  |
+| `SPC l e`   | rename symbol                                    |
+| `SPC l d`   | show doc                                         |
+| `SPC l i r` | remove unused imports                            |
+| `SPC l i s` | sort imports with isort                          |
+| `SPC l s i` | Start a language specified inferior REPL process |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
 
 All of these above key bindings are just recommended as default, but it also base on the language layer itself.
 
@@ -290,7 +291,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## Build with SpaceVim
 
-SpaceVim provide a lot of public [APIs](https://spacevim.org/apis), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
+SpaceVim provide a lot of public [APIs](../apis/), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
