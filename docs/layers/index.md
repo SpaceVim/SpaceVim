@@ -58,7 +58,7 @@ enable = false
 | [checkers](checkers/)                                 | Syntax checking automatically within SpaceVim, display error on the sign column and statusline.                                                       |
 | [chinese](chinese/)                                   | Layer for chinese users, include chinese docs and runtime messages                                                                                    |
 | [colorscheme](colorscheme/)                           | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                                              |
-| [cscope](cscope/)                                     | This layer provide cscope manager for project                                                                                                         |
+| [cscope](cscope/)                                     | cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope                                                       |
 | [ctrlp](ctrlp/)                                       | This layers provide a heavily customized ctrlp centric work-flow                                                                                      |
 | [debug](debug/)                                       | This layer provide debug workflow support in SpaceVim                                                                                                 |
 | [default](default/)                                   | lt layer contains none plugins, but it has some better default config for vim and neovim                                                              |
@@ -75,7 +75,7 @@ enable = false
 | [lang#html](lang/html/)                               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                            |
 | [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer. |
 | [lang#javascript](lang/javascript/)                   | This layer is for JaveScript development                                                                                                              |
-| [lang#lisp](lang/lisp/)                               | for lisp development                                                                                                                                  |
+| [lang#lisp](lang/lisp/)                               | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                               |
 | [lang#lua](lang/lua/)                                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                 |
 | [lang#markdown](lang/markdown/)                       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                             |
 | [lang#ocaml](lang/ocaml/)                             | This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file.                                            |

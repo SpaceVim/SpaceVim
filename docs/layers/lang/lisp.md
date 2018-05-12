@@ -1,4 +1,9 @@
-# [Layers](https://spacevim.org/layers) > lang#lisp
+---
+title: "SpaceVim lang#lisp layer"
+description: "This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file."
+---
+
+# [Layers](../../) > lang#lisp
 
 This layer is for lisp development.
 
