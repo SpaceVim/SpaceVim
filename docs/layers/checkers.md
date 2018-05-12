@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim checkers layer"
-description: "This layer provides syntax checking feature"
+description: "Syntax checking automatically within SpaceVim, display error on the sign column and statusline."
 ---
 
 # [SpaceVim Layers:](../) checkers

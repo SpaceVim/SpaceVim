@@ -1,12 +1,12 @@
 ---
 title: SpaceVim release v0.1.0
 categories: changelog
-excerpt: "Here you can check what has been done so far."
+description: "First public release of SpaceVim with IDE-like UI, most language support, modular configuration"
 type: NewsArticle
 comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.1.0
+# [Changelogs](development#changelog) > SpaceVim release v0.1.0
 
 SpaceVim is a modular configuration inspired by spacemacs, compatible with vim and neovim.
 

@@ -1,6 +1,6 @@
 ---
 title:  Available layers
-description: A list of available layers in SpaceVim.
+description: "A guide for managing SpaceVim with layers, tell you how to enable and disable a layer, also list all available layers in SpaceVim"
 keywords: layer,layers
 ---
 

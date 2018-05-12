@@ -1,6 +1,6 @@
 ---
 title:  "Community"
-description: "A list for community channels for SpaceVim."
+description: "A list of public channels SpaceVim, All messages are bridged between IRC, gitter, telegram, matrix and slack"
 ---
 
 # Community
