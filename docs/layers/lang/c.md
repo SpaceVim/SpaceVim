@@ -1,25 +1,25 @@
 ---
 title: "SpaceVim lang#c layer"
-description: "This layer is for c/c++/object-c development"
+description: "c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner."
 ---
 
-# [Layers](https://spacevim.org/layers) > lang#c
-
+# [Layers](../../) > lang#c
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Features](#features)
 - [Configuration](#configuration)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer is for c/c++/object-c development.
+`lang#c` layer provides c/c++/object-c language support for SpaceVim.
 
-## Layer Installation
+## Install
 
 To use this configuration layer, add `call SpaceVim#layers#load('lang#c')` to your custom configuration file.
 
@@ -28,7 +28,6 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#c')` to yo
 - code completion
 - syntax checking
 - formatting
-
 
 ## Configuration
 
@@ -54,3 +53,9 @@ The libclang shared object (dynamic library) file path. by default it is empty.
 - `clang_flag`
 
 Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
+
+## Key bindings
+
+| key binding | description                  |
+| ----------- | ---------------------------- |
+| `SPC l r`   | compile and run current file |

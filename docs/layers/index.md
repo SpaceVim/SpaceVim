@@ -4,17 +4,16 @@ description: A list of available layers in SpaceVim.
 keywords: layer,layers
 ---
 
+# Available layers
+
 <!-- vim-markdown-toc GFM -->
 
+- [Introduction](#introduction)
+  - [Enable layers](#enable-layers)
+  - [Disable layers](#disable-layers)
 - [Available layers](#available-layers)
-  - [Introduction](#introduction)
-    - [Enable layers](#enable-layers)
-    - [Disable layers](#disable-layers)
-  - [Layers table](#layers-table)
 
 <!-- vim-markdown-toc -->
-
-# Available layers
 
 ## Introduction
 
@@ -25,28 +24,32 @@ keeping them from having to think about what packages to install.
 
 ### Enable layers
 
+By default only `autocomplete`, `checkers` layer are enabled. To enable a specific layer
+you need to edit SpaceVim configuration file. The key binding for opening SpaceVim 
+configuration file is `SPC f v d`
+
 here is an example for loadding `shell` layer with some specified options:
 
-```vim
-call SpaceVim#layers#load('shell',
-        \ {
-        \ 'default_position' : 'top',
-        \ 'default_height' : 30,
-        \ }
-        \ )
+```toml
+[[layers]]
+name = "shell"
+default_position = "top"
+default_height = 30
 ```
 
 ### Disable layers
 
 Some layers are enabled by defalut, here is an example for disable `shell` layer:
 
-```vim
-call SpaceVim#layers#disable('shell')
+```toml
+[[layers]]
+name = "shell"
+enable = false
 ```
 
 <!-- SpaceVim layer list start -->
 
-## Layers table
+## Available layers
 
 | Name                                                  | Description                                                                                                                                           |
 | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -64,7 +67,7 @@ call SpaceVim#layers#disable('shell')
 | [fzf](fzf/)                                           | This layers provide a heavily customized fzf centric work-flow                                                                                        |
 | [git](git/)                                           | This layers adds extensive support for git                                                                                                            |
 | [github](github/)                                     | This layer provides GitHub integration for SpaceVim                                                                                                   |
-| [lang#c](lang/c/)                                     | This layer is for c/c++/object-c development                                                                                                          |
+| [lang#c](lang/c/)                                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                              |
 | [lang#csharp](lang/csharp/)                           | This layer is for csharp development                                                                                                                  |
 | [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                               |
 | [lang#elixir](lang/elixir/)                           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                           |
