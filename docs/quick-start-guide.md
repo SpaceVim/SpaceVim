@@ -15,6 +15,8 @@ show you how to install it, how to config it, and explain its features.
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
 - [Configuration](#configuration)
+  - [Options](#options)
+  - [example](#example)
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
@@ -46,7 +48,17 @@ The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) a
 
 ## Configuration
 
-The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`, here is an example:
+The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`.
+There are two sections in this configuration file `[options]` and `[[layers]]`.
+
+all available options for SpaceVim:
+
+### Options
+
+- `colorscheme`: (string)
+change the default colorscheme of SpaceVim, the default value is `gruvbox`.
+
+### example
 
 ```toml
 # This is basic configuration example for SpaceVim
