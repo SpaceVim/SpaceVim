@@ -57,8 +57,11 @@ endfunction
 
 function! s:menu(items) abort
   let saved_more = &more
+  let save_cmdheight = &cmdheight
   set nomore
   let items = s:parseItems(a:items)
+  let &cmdheight = len(items) + 1
+  redrawstatus!
   let selected = '1'
   let exit = 0
   let indent = repeat(' ', 7)
@@ -101,6 +104,8 @@ function! s:menu(items) abort
     endif
   endwhile
   let &more = saved_more
+  let &cmdheight = save_cmdheight
+  redraw!
 endfunction
 
 let s:api['menu'] = function('s:menu')
