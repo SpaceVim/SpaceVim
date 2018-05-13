@@ -86,9 +86,13 @@ function! SpaceVim#custom#apply(config) abort
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
     endfor
-    let layers = get(a:config, 'layers', {})
+    let layers = get(a:config, 'layers', [])
     for layer in layers
-      call SpaceVim#layers#load(layer.name, layer)
+      if !get(layer, 'enable', 1)
+        call SpaceVim#layers#disable(layer.name)
+      else
+        call SpaceVim#layers#load(layer.name, layer)
+      endif
     endfor
   endif
 endfunction
