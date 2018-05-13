@@ -94,6 +94,15 @@ function! SpaceVim#custom#apply(config) abort
         call SpaceVim#layers#load(layer.name, layer)
       endif
     endfor
+    let bootstrap_before = get(options, 'bootstrap_before', '')
+    let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
+    if !empty(bootstrap_before)
+      try
+        call call(bootstrap_before, [])
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
+      endtry
+    endif
   endif
 endfunction
 
