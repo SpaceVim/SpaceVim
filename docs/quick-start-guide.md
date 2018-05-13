@@ -46,7 +46,9 @@ The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) a
 
 ## Configuration
 
-The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`, here is an example:
+The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
+an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
+documentation.
 
 ```toml
 # This is basic configuration example for SpaceVim
@@ -55,18 +57,22 @@ The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`, here is
 [options]
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
-    # layer
+    # layer, the value of this option is a string.
     colorscheme = "gruvbox"
     background = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
-    # true colors
+    # true colors, the type of the value is boolean, true or false.
     guicolors = true
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
     statusline_separator = "bar"
     buffer_index_type = 4
-    filetype_icon = false
+    # Display file type icon on the tabline, If you do not have nerd fonts installed,
+    # please change the value to false
+    enable_tabline_filetype_icon = true
+    # Display current mode text on statusline, by default It is disabled, only color
+    # will be changed when switch modes.
     statusline_display_mode = false
 
 # Enable autocomplete layer
@@ -79,9 +85,12 @@ auto-completion-tab-key-behavior = "cycle"
 name = "shell"
 default_position = "top"
 default_height = 30
-```
 
-This example only list part of SpaceVim options, for the list of SpaceVim options, please read `:h SpaceVim-config`
+# This is an example for adding custom plugins lilydjwg/colorizer
+[[custom_plugins]]
+neme = 'lilydjwg/colorizer'
+merged = 0
+```
 
 ## Learning SpaceVim
 

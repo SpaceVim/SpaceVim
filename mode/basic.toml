@@ -21,7 +21,7 @@
     statusline_separator = "nil"
     statusline_inactive_separator = "bar"
     buffer_index_type = 4
-    filetype_icon = false
+    enable_tabline_filetype_icon = false
     statusline_display_mode = false
     # Enable vim compatible mode, avoid changing origin vim key bindings
     vimcompatible = 1

@@ -16,8 +16,6 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Update plugins](#update-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
-  - [Automatic Generation](#automatic-generation)
-  - [Alternative directory](#alternative-directory)
   - [Vim Compatible Mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
 - [Concepts](#concepts)
@@ -190,15 +188,11 @@ Use `:SPDebugInfo!` command will display the log of SpaceVim. You also can use `
 
 ## Custom Configuration
 
-### Automatic Generation
+The very first time SpaceVim starts up, it will ask you to choose a mode,
+then create the `SpaceVim.d/init.toml` in your `HOME` directory. All User
+configuration can be stored in your `~/.SpaceVim.d` directory.
 
-The very first time SpaceVim starts up, it will ask you several questions and then create the `SpaceVim.d/init.toml` in your `HOME` directory.
-
-### Alternative directory
-
-User configuration can be stored in your `~/.SpaceVim.d` directory.
-
-`~/.SpaceVim.d/` will be added to `&runtimepath` of vim. read `:h rtp`.
+`~/.SpaceVim.d/` will be added to `&runtimepath` of vim.
 
 It is also possible to override the location of `~/.SpaceVim.d/` using the environment
 variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of
@@ -207,30 +201,8 @@ this directory.
 SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.toml`
 in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
 
-here is an example config file for SpaceVim:
-
-```toml
-# This is basic configuration example for SpaceVim
-
-[option]
-    colorscheme = "gruvbox"
-    background = "dark"
-    guicolors = true
-    statusline_separator = "nil"
-    statusline_separator = "bar"
-    buffer_index_type = 4
-    filetype_icon = false
-    statusline_display_mode = false
-
-[[layers]]
-    [checkers]
-    [shell]
-        default_position = "top"
-        default_height = 30
-    [lang/java]
-```
-
-This is a list of available options for SpaceVim:
+All SpaceVim options can be found in `:h SpaceVim-config`, the key is same as
+the option name(just remove `g:spacevim_` prefix).
 
 Comprehensive documentation is available for each layer by `:h SpaceVim`.
 

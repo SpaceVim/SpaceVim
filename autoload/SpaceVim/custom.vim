@@ -86,10 +86,23 @@ function! SpaceVim#custom#apply(config) abort
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
     endfor
-    let layers = get(a:config, 'layers', {})
+    let layers = get(a:config, 'layers', [])
     for layer in layers
-      call SpaceVim#layers#load(layer.name, layer)
+      if !get(layer, 'enable', 1)
+        call SpaceVim#layers#disable(layer.name)
+      else
+        call SpaceVim#layers#load(layer.name, layer)
+      endif
     endfor
+    let bootstrap_before = get(options, 'bootstrap_before', '')
+    let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
+    if !empty(bootstrap_before)
+      try
+        call call(bootstrap_before, [])
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
+      endtry
+    endif
   endif
 endfunction
 
