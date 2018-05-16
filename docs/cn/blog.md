@@ -1,6 +1,6 @@
 ---
 title: "博客"
-description: "SpaceVim 中文博客"
+description: "SpaceVim 最新资讯、新特新预览，Vim 实用教程及使用技巧整理。"
 lang: cn
 ---
 

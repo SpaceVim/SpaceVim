@@ -1,7 +1,7 @@
 ---
 title: "Vim 异步实时代码检索"
 categories: feature_cn
-excerpt: "Run grep asynchronously, show search results in real-time based on user input, support searching the entire project, searching loaded files or only searching current file"
+description: "异步执行 grep，根据输入内容实时展示搜索结果，支持全工程检索、检索当前文件、检索已打开的文件等"
 image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
 comments: true
 permalink: /cn/:title/

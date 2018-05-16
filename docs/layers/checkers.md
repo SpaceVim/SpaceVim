@@ -1,9 +1,9 @@
 ---
 title: "SpaceVim checkers layer"
-description: "This layer provides syntax checking feature"
+description: "Syntax checking automatically within SpaceVim, display error on the sign column and statusline."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) checkers
+# [SpaceVim Layers:](../) checkers
 
 <!-- vim-markdown-toc GFM -->
 

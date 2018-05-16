@@ -86,10 +86,23 @@ function! SpaceVim#custom#apply(config) abort
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
     endfor
-    let layers = get(a:config, 'layers', {})
+    let layers = get(a:config, 'layers', [])
     for layer in layers
-      call SpaceVim#layers#load(layer.name, layer)
+      if !get(layer, 'enable', 1)
+        call SpaceVim#layers#disable(layer.name)
+      else
+        call SpaceVim#layers#load(layer.name, layer)
+      endif
     endfor
+    let bootstrap_before = get(options, 'bootstrap_before', '')
+    let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
+    if !empty(bootstrap_before)
+      try
+        call call(bootstrap_before, [])
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
+      endtry
+    endif
   endif
 endfunction
 
@@ -105,6 +118,7 @@ function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist 
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = '.SpaceVim.d/init.toml'
+    let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
     call SpaceVim#logger#info('find config file: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
@@ -124,7 +138,7 @@ function! SpaceVim#custom#load() abort
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
     let g:_spacevim_config_path = '.SpaceVim.d/init.vim'
-    exe 'set rtp ^=' . fnamemodify('.SpaceVim.d', ':p')
+    let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config
       call s:load_glob_conf()
@@ -143,10 +157,10 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
-  if filereadable(global_dir . 'init.toml')
-    let g:_spacevim_global_config_path = global_dir . 'init.toml'
-    let local_conf = global_dir . 'init.toml'
+  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d') : $SPACEVIMDIR
+  if filereadable(global_dir . '/init.toml')
+    let g:_spacevim_global_config_path = global_dir . '/init.toml'
+    let local_conf = global_dir . '/init.toml'
     let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
@@ -156,11 +170,11 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf)
     endif
-    exe 'set runtimepath^=' . global_dir
-  elseif filereadable(global_dir . 'init.vim')
-    let g:_spacevim_global_config_path = global_dir . 'init.vim'
-    let custom_glob_conf = global_dir . 'init.vim'
-    exe 'set runtimepath^=' . global_dir
+    let &rtp = global_dir . ',' . &rtp
+  elseif filereadable(global_dir . '/init.vim')
+    let g:_spacevim_global_config_path = global_dir . '/init.vim'
+    let custom_glob_conf = global_dir . '/init.vim'
+    let &rtp = global_dir . ',' . &rtp
     exe 'source ' . custom_glob_conf
   else
     if has('timers')

@@ -3,7 +3,7 @@ title: "SpaceVim chat layer"
 description: "SpaceVim chatting layer provide chatting with qq and weixin in vim."
 ---
 
-# [Layers](https://spacevim.org/layers) > chat
+# [Layers](../) > chat
 
 SpaceVim chatting layer provide chatting feature in vim.
 

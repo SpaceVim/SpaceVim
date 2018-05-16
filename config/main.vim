@@ -21,7 +21,7 @@ try
   call SpaceVim#begin()
 catch
   " Update the rtp only when SpaceVim is not contained in runtimepath.
-  execute 'set rtp +=' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
+  let &runtimepath += ',' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
   call SpaceVim#begin()
 endtry
 

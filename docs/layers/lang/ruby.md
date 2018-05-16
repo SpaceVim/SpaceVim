@@ -30,7 +30,7 @@ To use this configuration layer, add `SPLayer 'lang#ruby'` to your custom config
 
 ### Syntax checking && Code formatting
 
-To enable syntax checking and code formatting in spacevim, you need to install [cobocop](https://github.com/bbatsov/rubocop).
+To enable syntax checking and code formatting in spacevim, you need to install [rubocop](https://github.com/bbatsov/rubocop).
 
 ```sh
 gem install rubocop

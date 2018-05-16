@@ -27,7 +27,7 @@ If you like SpaceVim, feel free to star the project on github - it is a great wa
 appreciation while providing us motivation to continue working on this project.
 The extra visibility for the project doesn't hurt either!
 
-See the [Quick start guide](quick-start-guide), [documentation](documentation) or the [available layers](http://spacevim.org/layers/) for more information.
+See the [Quick start guide](quick-start-guide/), [documentation](documentation/) or the [available layers](layers/) for more information.
 
 ## New features
 
@@ -42,7 +42,7 @@ See the [Quick start guide](quick-start-guide), [documentation](documentation) o
     {% endfor %}
 </ul>
 
-More posts are in the [SpaceVim's Blog](https://spacevim.org/blog/)
+More posts are in the [SpaceVim's Blog](blog/)
 
 [Follow @SpaceVim](https://twitter.com/SpaceVim) 
 
@@ -57,7 +57,7 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 - What is the project status?
 
 The current stable version is 0.7.0. See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
-for development progress and the [roadmap](https://spacevim.org/roadmap/) for high-level plans.
+for development progress and the [roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
 

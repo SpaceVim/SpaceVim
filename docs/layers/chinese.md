@@ -3,7 +3,7 @@ title: "SpaceVim chinese layer"
 description: "Layer for chinese users, include chinese docs and runtime messages"
 ---
 
-# [Layers](https://spacevim.org/layers) > chinese
+# [Layers](../) > chinese
 
 ## Description
 

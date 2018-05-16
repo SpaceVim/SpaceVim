@@ -83,7 +83,7 @@ function! SpaceVim#layers#unite#config() abort
   call s:defind_fuzzy_finder()
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-        \ 'UniteWithBufferDir file/' . (has('nvim') ? 'neovim' : 'async'),
+        \ 'UniteWithBufferDir file_rec/' . (has('nvim') ? 'neovim' : 'async'),
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',

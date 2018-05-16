@@ -148,6 +148,13 @@ function! SpaceVim#autocmds#VimEnter() abort
     set showtabline=2
   endif
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+  if !empty(get(g:, '_spacevim_bootstrap_after', ''))
+      try
+        call call(g:_spacevim_bootstrap_after, [])
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+      endtry
+  endif
 endfunction
 
 function! s:disable_welcome() abort
