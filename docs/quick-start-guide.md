@@ -88,7 +88,7 @@ default_height = 30
 
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
-neme = 'lilydjwg/colorizer'
+name = "lilydjwg/colorizer"
 merged = 0
 ```
 
