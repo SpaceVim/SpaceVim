@@ -18,11 +18,15 @@ description: "This layers provides language server protocol for vim and neovim"
 
 ## Description
 
-This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/), This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork), The upstream is rewritten by rust.
+This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
+This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
+The upstream is rewritten by rust.
 
-we also want to include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+we also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
 
-the neovim team is going to implement the build-in LSP support, the PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
+the neovim team is going to implement the build-in LSP support, the
+PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
+create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
 
 SpaceVim should works well in different version of vim/neovim, so in the features, the logic of this layer should be:
 
@@ -49,11 +53,17 @@ endif
 - Formatting.
 - Code Action/Fix.
 
-**Note:** All these features dependent on the implementation of the language server, please check the list of [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/)
+**Note:** All these features dependent on the implementation of the language server, please
+check the list of [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/)
 
 ## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lsp')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lsp"
+```
 
 ### Install language server
 
@@ -73,15 +83,13 @@ pip install --user python-language-server
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
 
-```vim
-call SpaceVim#layers#load('lsp',
-    \ {
-    \ 'filetypes' : ['rust',
-                   \ 'typescript',
-                   \ 'javascript',
-                   \ ],
-    \ }
-\ )
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust",
+    "javascript"
+  ]
 ```
 
 default language server commands:
@@ -103,13 +111,15 @@ default language server commands:
 
 To override the server command, you may need to use `override_cmd` option:
 
-```vim
-call SpaceVim#layers#load('lsp',
-    \ {
-    \ 'override_cmd' : {
-                     \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
-                     \ }
-    \ }
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust",
+    "javascript"
+  ]
+  [layers.override_cmd]
+    rust = ["rustup", "run", "nightly", "rls"]
 ```
 
 ## Key bindings
