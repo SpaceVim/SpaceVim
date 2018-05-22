@@ -60,7 +60,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 多的主题，你可以载入 colorscheme 模块
     colorscheme = "gruvbox"
     # 背景可以取值 "dark" 和 "light"
-    background = "dark"
+    colorscheme_bg = "dark"
     # 启用/禁用终端真色，在目前大多数终端下都是支持真色的，当然也有
     # 一小部分终端不支持真色，如果你的 SpaceVim 颜色看上去比较怪异
     # 可以禁用终端真色，将下面的值设为 false
