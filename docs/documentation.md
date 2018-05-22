@@ -273,13 +273,17 @@ SpaceVim has a minimalistic and distraction free UI:
 
 ### Colorschemes
 
-The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruvbox). There are two variants of this colorscheme, a dark one and a light one. Some aspects of these colorscheme can be customized in the custom configuration file, read `:h gruvbox`.
+The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruvbox).
+There are two variants of this colorscheme, a dark one and a light one. Some aspects
+of these colorscheme can be customized in the custom configuration file, read `:h gruvbox`.
 
-It is possible to define your default themes in your `~/.SpaceVim.d/init.vim` with the variable colorschemes. For instance, to specify [vim-one with dark colorscheme](https://github.com/rakr/vim-one):
+It is possible to define your default themes in your `~/.SpaceVim.d/init.toml` with
+the variable colorschemes. For instance, to specify `desert`:
 
-```vim
-let g:spacevim_colorscheme = 'one'
-let g:spacevim_colorscheme_bg = 'dark'
+```toml
+[options]
+    colorscheme = "desert"
+    colorscheme_bg = "dark"
 ```
 
 | Mappings           | Description                                                    |
@@ -291,19 +295,29 @@ all the included colorscheme can be found in [colorscheme layer](http://spacevim
 
 **NOTE**:
 
-SpaceVim use true colors by default, so you should make sure your terminal support true colors. for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
+SpaceVim use true colors by default, so you should make sure your terminal support true colors.
+for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
+
+If your terminal do not supports true colors, you can disable SpaceVim true colors feature
+in `[options]` section:
+
+```toml
+    guicolors = false
+```
 
 ### Font
 
-The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended to install it on your system if you wish to use it.
+The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended
+to install it on your system if you wish to use it.
 
-To change the default font set the variable `g:spacevim_guifont` in your `~/.SpaceVim.d/init.vim` file. By default its value is:
+To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
-```vim
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```toml
+    guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
-If the specified font is not found, the fallback one will be used (depends on your system). Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+If the specified font is not found, the fallback one will be used (depends on your system).
+Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
 
 ### UI Toggles
 

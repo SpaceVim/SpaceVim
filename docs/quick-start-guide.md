@@ -59,7 +59,7 @@ documentation.
     # if you want to use more colorscheme, please load the colorscheme
     # layer, the value of this option is a string.
     colorscheme = "gruvbox"
-    background = "dark"
+    colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors, the type of the value is boolean, true or false.
     guicolors = true
@@ -68,11 +68,11 @@ documentation.
     statusline_separator = "nil"
     statusline_separator = "bar"
     buffer_index_type = 4
-    # Display file type icon on the tabline, If you do not have nerd fonts installed,
-    # please change the value to false
+    # Display file type icon on the tabline, If you do not have nerd fonts
+    # installed, please change the value to false
     enable_tabline_filetype_icon = true
-    # Display current mode text on statusline, by default It is disabled, only color
-    # will be changed when switch modes.
+    # Display current mode text on statusline, by default It is disabled,
+    # only color will be changed when switch modes.
     statusline_display_mode = false
 
 # Enable autocomplete layer
