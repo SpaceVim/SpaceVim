@@ -141,6 +141,7 @@ function! SpaceVim#custom#load() abort
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config
+      call SpaceVim#logger#info('force loadding global config >>>')
       call s:load_glob_conf()
     endif
   else
@@ -162,6 +163,7 @@ function! s:load_glob_conf() abort
     let g:_spacevim_global_config_path = global_dir . '/init.toml'
     let local_conf = global_dir . '/init.toml'
     let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
+    let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf)
@@ -170,7 +172,6 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf)
     endif
-    let &rtp = global_dir . ',' . &rtp
   elseif filereadable(global_dir . '/init.vim')
     let g:_spacevim_global_config_path = global_dir . '/init.vim'
     let custom_glob_conf = global_dir . '/init.vim'
