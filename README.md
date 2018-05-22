@@ -55,7 +55,7 @@ here is an example for using toml as SpaceVim config:
     # if you want to use more colorscheme, please load the colorscheme
     # layer
     colorscheme = "gruvbox"
-    background = "dark"
+    colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     guicolors = true
@@ -65,7 +65,7 @@ here is an example for using toml as SpaceVim config:
     statusline_separator = "bar"
     buffer_index_type = 4
     filetype_icon = false
-    statusline_display_mode = false
+    enable_statusline_display_mode = false
 
 # Enable autocomplete layer
 [[layers]]
