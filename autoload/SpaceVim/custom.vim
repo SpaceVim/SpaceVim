@@ -94,6 +94,10 @@ function! SpaceVim#custom#apply(config) abort
         call SpaceVim#layers#load(layer.name, layer)
       endif
     endfor
+    let custom_plugins = get(a:config, 'custom_plugins', [])
+    for plugin in custom_plugins
+      call add(g:spacevim_custom_plugins, [plugin.name, plugin])
+    endfor
     let bootstrap_before = get(options, 'bootstrap_before', '')
     let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
     if !empty(bootstrap_before)
