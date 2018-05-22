@@ -326,7 +326,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | Key Binding | Description                                                       |
 | ----------- | ----------------------------------------------------------------- |
 | `SPC t 8`   | highlight any character past the 80th column                      |
-| `SPC t f`   | display the fill column (by default the fill column is set to 80) |
+| `SPC t f`   | display the fill column (by default `max_column` is 120) |
 | `SPC t h h` | toggle highlight of the current line                              |
 | `SPC t h i` | toggle highlight indentation levels (TODO)                        |
 | `SPC t h c` | toggle highlight indentation current column                       |

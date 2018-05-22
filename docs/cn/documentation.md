@@ -401,23 +401,23 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| 快捷键      | 描述                                |
-| ----------- | ----------------------------------- |
-| `SPC t 8`   | 高亮所有超过80列的字符              |
-| `SPC t f`   | 高亮临界列，默认是第80列            |
-| `SPC t h h` | 高亮当前行                          |
-| `SPC t h i` | 高亮代码对齐线                      |
-| `SPC t h c` | 高亮光标所在列                      |
-| `SPC t h s` | 启用/禁用语法高亮                   |
-| `SPC t i`   | 切换显示当前对齐(TODO)              |
-| `SPC t n`   | 显示/隐藏行号                       |
-| `SPC t b`   | 切换背景色                          |
-| `SPC t t`   | 打开 Tab 管理器                     |
-| `SPC T ~`   | 显示/隐藏 buffer 结尾空行行首的 `~` |
-| `SPC T F`   | 切换全屏(TODO)                      |
-| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)             |
-| `SPC T m`   | 显示/隐藏菜单栏                     |
-| `SPC T t`   | 显示/隐藏工具栏                     |
+| 快捷键      | 描述                                      |
+| ----------- | ----------------------------------------- |
+| `SPC t 8`   | 高亮所有超过80列的字符                    |
+| `SPC t f`   | 高亮临界列，默认 `max_column` 是第 120 列 |
+| `SPC t h h` | 高亮当前行                                |
+| `SPC t h i` | 高亮代码对齐线                            |
+| `SPC t h c` | 高亮光标所在列                            |
+| `SPC t h s` | 启用/禁用语法高亮                         |
+| `SPC t i`   | 切换显示当前对齐(TODO)                    |
+| `SPC t n`   | 显示/隐藏行号                             |
+| `SPC t b`   | 切换背景色                                |
+| `SPC t t`   | 打开 Tab 管理器                           |
+| `SPC T ~`   | 显示/隐藏 buffer 结尾空行行首的 `~`       |
+| `SPC T F`   | 切换全屏(TODO)                            |
+| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)                   |
+| `SPC T m`   | 显示/隐藏菜单栏                           |
+| `SPC T t`   | 显示/隐藏工具栏                           |
 
 #### 状态栏 & 标签栏
 
@@ -1206,7 +1206,7 @@ Notes:
 FlyGrep 缓冲区的按键绑定:
 
 Key Binding	Description
-\-----------\\    | -----------
+\-----------\\    \| -----------
 `<Esc>`          | close FlyGrep buffer
 `<Enter>`        | open file at the cursor line
 `<Tab>`          | move cursor line down
