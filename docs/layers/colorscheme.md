@@ -5,6 +5,14 @@ description: "colorscheme provides a list of colorscheme for SpaceVim, default c
 
 # [SpaceVim Layers:](https://spacevim.org/layers) colorscheme
 
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Configuration](#configuration)
+
+<!-- vim-markdown-toc -->
+
 ## Description
 
 This layer provides many Vim colorschemes for SpaceVim, the default colorscheme is gruvbox.
@@ -13,14 +21,20 @@ This layer provides many Vim colorschemes for SpaceVim, the default colorscheme 
 
 This layer is disabled by default in SpaceVim.
 
-To use this configuration layer, add `call SpaceVim#layers#load('colorscheme')` to your custom configuration file.
+To use this configuration layer, add this snippet to your custom configuration file.
+
+```toml
+[[layers]]
+  name = 'colorscheme'
+```
 
 ## Configuration
 
 To change the colorscheme:
 
-```vim
-let g:spacevim_colorscheme = 'onedark'
+```toml
+[options]
+  colorscheme = "onedark"
 ```
 
 **List colorschemes**
@@ -36,18 +50,18 @@ let g:spacevim_colorscheme = 'onedark'
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
 Vim background color. SpaceVim support to change the background color with
-`g:spacevim_colorscheme_bg`:
+`colorscheme_bg`:
 
-```vim
-let g:spacevim_colorscheme_bg = 'dark'
+```toml
+[options]
+  colorscheme = "onedark"
+  colorscheme_bg = 'dark'
 ```
 
 colorscheme layer support random colorscheme on startup. just load this layer with layer option `random-theme`
 
-```vim
-call SpaceVim#layers#load('colorscheme', {
-    \ 'random-theme' : 1,
-    \ })
+```toml
+[[layers]]
+  name = 'colorscheme'
+  random-theme = true
 ```
-
-## Contributing
