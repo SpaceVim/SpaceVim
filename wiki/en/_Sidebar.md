@@ -2,13 +2,13 @@
 --
 [Introduction](introduction)  
 [Community](community)  
-[FAQ](FAQ)  
+[FAQ](https://spacevim.org/faq/)  
 [Layers](https://spacevim.org/layers/)
 
 **Users**  
-[Install](Installing-SpaceVim)
-[Following HEAD](Following-HEAD)
-[Docs](http://spacevim.org/documentation/)
+[Install](Installing-SpaceVim)  
+[Following HEAD](Following-HEAD)  
+[Docs](http://spacevim.org/documentation/)  
 
 **Developers**  
 [Contribute](https://spacevim.org/development/)  
