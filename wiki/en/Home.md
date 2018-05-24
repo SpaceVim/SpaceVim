@@ -9,16 +9,17 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 
 ### Users
 
-- [Getting Help](getting-help)
-- [Documentation](https://spacevim.org/documentation)
-    - [Quick start guide](https://spacevim.org/quick-start-guide/)
-- [Community](http://spacevim.org/community/)
+- [Getting Help](getting-help): A guide for getting help about using SpaceVim.
+- [Quick start guide](https://spacevim.org/quick-start-guide/): A quick start guide about SpaceVim
+- [Documentation](https://spacevim.org/documentation): SpaceVim Documentation
+- [Community](http://spacevim.org/community/): Official community
 
 ### Developers
 
-the wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory automatically, if you want to contribute to the wiki, please use pull request.
+This wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory
+automatically, if you want to contribute to the wiki, please send pull request to SpaceVim repo.
 
+- [Development guidelines](https://spacevim.org/development/)
+- [CONTRIBUTING](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
 - [Support SpaceVim](support-spacevim)
-    - [contribute to SpaceVim](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
-    - [Write post about SpaceVim](write-post-about-spacevim)
 - [Development tips](development-tips)

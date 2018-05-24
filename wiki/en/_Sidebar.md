@@ -6,8 +6,9 @@
 [Layers](https://spacevim.org/layers/)
 
 **Users**  
-[Following HEAD](Following-HEAD)  
+[Getting Help](getting-help)  
 [Docs](http://spacevim.org/documentation/)  
+[Following HEAD](Following-HEAD)  
 
 **Developers**  
 [Contribute](https://spacevim.org/development/)  
