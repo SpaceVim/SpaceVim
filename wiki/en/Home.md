@@ -21,5 +21,4 @@ the wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/m
 - [Support SpaceVim](support-spacevim)
     - [contribute to SpaceVim](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
     - [Write post about SpaceVim](write-post-about-spacevim)
-- [Credits & Thanks](credits-thanks)
 - [Development tips](development-tips)
