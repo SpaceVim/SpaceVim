@@ -1,57 +1,61 @@
 ---
-title: "SpaceVim shell layer"
-description: "This layer provide shell support in SpaceVim"
+title: "SpaceVim shell 模块"
+description: "这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验"
 ---
 
 # [SpaceVim Layers:](https://spacevim.org/layers) shell
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Configuration](#configuration)
-  - [Default shell](#default-shell)
-  - [Default shell position and height](#default-shell-position-and-height)
-- [Key bindings](#key-bindings)
+- [描述](#描述)
+- [安装](#安装)
+- [配置](#配置)
+  - [设置默认 shell](#设置默认-shell)
+  - [设置终端打开位置及高度](#设置终端打开位置及高度)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 描述
 
-This layer provide shell support in SpaceVim.
+这一模块为 SpaceVim 提供了 shell 集成，根据当前 vim/neovim 的版本，优化自带的内置终端。
 
-## Install
+## 安装
 
-To use this configuration layer, add `SPLayer 'shell'` to your custom configuration file.
+如果需要启用该模块，需要在 SpaceVim 的配置文件内添加如下代码：
 
-## Configuration
+```toml
+[[layers]]
+  name = "shell"
+```
 
-### Default shell
+## 配置
 
-Vim support these kinds of shell:
+### 设置默认 shell
 
-To define the default shell you can set the layer variable `default_shell` to the following variables:
+SpaceVim 支持两种 shell，用户在启用该模块时，可以通过 `default_shell` 这一模块选项来指定默认的 shell 工具。
 
--   terminal
--   VimShell
+- terminal：使用 vim/neovim 内置终端
+- VimShell：使用 VimShell 这一插件
 
 The default shell is quickly accessible via a the default shortcut key `SPC '`.
 
-### Default shell position and height
+### 设置终端打开位置及高度
 
-It is possible to choose where the shell should pop up by setting the variable `default_position` to either `top`, `bottom`, `left`, `right`, or `full`. Default value is `top`. It is also possible to set the default height in percents with the variable `default_height`. Default value is 30.
+在启用该模块时，可以通过 `default_position` 这一模块选项来指定终端打开的位置，
+目前可以选的值为：`top`, `bottom`, `left`, `right`, or `full`，默认的值为 `top`。
 
-```vim
-call SpaceVim#layers#load('shell',
-        \ {
-        \ 'default_position' : 'top',
-        \ 'default_height' : 30,
-        \ }
-        \ )
+同时，可以通过 `default_height` 这一模块选项指定终端打开的高度，默认值为 30。
+
+```toml
+[[layers]]
+  name = "shell"
+  default_position = "top"
+  default_height = 30
 ```
 
-## Key bindings
+## 快捷键
 
-| Key Binding | Description                            |
-| ----------- | -------------------------------------- |
-| `SPC '`     | Open, close or go to the default shell |
+| 按键    | 描述                           |
+| ------- | ------------------------------ |
+| `SPC '` | 打开终端或跳至已打开的终端窗口 |
