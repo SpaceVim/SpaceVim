@@ -228,6 +228,8 @@ the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 
 the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
+- The `Ctrl + a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
 If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = 1` in `[options]` section.
