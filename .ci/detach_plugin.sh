@@ -17,12 +17,14 @@ main () {
             cd detach/$1
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
             _detect autoload/SpaceVim/plugins/flygrep.vim
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
             _detect autoload/SpaceVim/api/system.vim
