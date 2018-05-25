@@ -103,7 +103,7 @@ git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 
 ```sh
 git fetch upstream
-git rebase upstream master
+git rebase upstream/master master
 ```
 
 #### Ideally for simple PRs (most of them):
