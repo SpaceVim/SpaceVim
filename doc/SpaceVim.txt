@@ -17,10 +17,11 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
-  2. CONFIGURATION...........................................|SpaceVim-config|
-  3. Commands..............................................|SpaceVim-commands|
-  4. Functions............................................|SpaceVim-functions|
-  5. Layers..................................................|SpaceVim-layers|
+  2. Options................................................|SpaceVim-options|
+  3. Configuration...........................................|SpaceVim-config|
+  4. Commands..............................................|SpaceVim-commands|
+  5. Functions............................................|SpaceVim-functions|
+  6. Layers..................................................|SpaceVim-layers|
       1. autocomplete..................................|SpaceVim-autocomplete|
       2. checkers....................................|SpaceVim-layer-checkers|
       3. colorscheme....................................|SpaceVim-colorscheme|
@@ -52,13 +53,13 @@ CONTENTS                                                   *SpaceVim-contents*
       29. shell.........................................|SpaceVim-layer-shell|
       30. tmux...........................................|SpaceVim-layer-tmux|
       31. tools#dash...............................|SpaceVim-layer-tools-dash|
-  6. API........................................................|SpaceVim-api|
+  7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
       3. prompt..........................................|SpaceVim-api-prompt|
       4. sid............................................|SpaceVim-api-vim-sid|
       5. vim#message................................|SpaceVim-api-vim-message|
-  7. FAQ........................................................|SpaceVim-faq|
+  8. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -68,14 +69,21 @@ configuration for Vim. It was inspired by Spacemacs.
 
 
 ==============================================================================
-CONFIGURATION                                                *SpaceVim-config*
+OPTIONS                                                     *SpaceVim-options*
 
-SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file. You
+SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file. You
 can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
 be added to runtimepath, so you can write your own scripts in it. SpaceVim
 also supports local config for each project. Place local config  settings in
-`.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
+`.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+please check bellowing options.
+
 
                                                           *g:spacevim_version*
 Version of SpaceVim , this value can not be changed.

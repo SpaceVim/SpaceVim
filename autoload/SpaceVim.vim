@@ -10,19 +10,26 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro version dicts functions exceptions layers api faq
+" @order intro options config layers api faq
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
 
 ""
-" @section CONFIGURATION, config
-" SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file.
+" @section Options, options
+" SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file.
 " You can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
 " also be added to runtimepath, so you can write your own scripts in it.
 " SpaceVim also supports local config for each project. Place local config 
-" settings in `.SpaceVim.d/init.vim` in the root directory of your project.
+" settings in `.SpaceVim.d/init.toml` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
+
+
+""
+" @section Configuration, config
+" If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+" please check bellowing options.
+"
 
 " Public SpaceVim Options {{{
 scriptencoding utf-8
@@ -776,7 +783,6 @@ endfunction
 " >
 "   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
 " <
-
 
 
 " vim:set et sw=2 cc=80:
