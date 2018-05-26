@@ -3,7 +3,7 @@ title: "SpaceVim shell 模块"
 description: "这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) shell
+# [SpaceVim Layers:](../) shell
 
 <!-- vim-markdown-toc GFM -->
 
