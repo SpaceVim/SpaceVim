@@ -1,0 +1,31 @@
+---
+title: "SpaceVim ctrlp 模块"
+description: "提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
+lang: cn
+---
+
+# [可用模块](../) >> ctrlp
+
+## 模块介绍
+
+这一模块在 ctrlp 的基础上做了时当的包装和定制，提供了搜索文件、函数列表、
+命令历史等等特性。
+
+## 启用模块
+
+## 快捷键
+
+下列快捷键均以 `<Leader> f` 为前置键，`<Leader>` 在 SpaceVim 中默认没有修改，
+为 `\` 键。
+
+| 按键                 | 描述                           |
+| -------------------- | ------------------------------ |
+| `<Leader> f <space>` | 模糊查找快捷键，并执行该快捷键 |
+| `<Leader> f e`       | 模糊搜索寄存器                 |
+| `<Leader> f h`       | 模糊搜索 history/yank          |
+| `<Leader> f j`       | 模糊搜索 jump, change          |
+| `<Leader> f l`       | 模糊搜索 location list         |
+| `<Leader> f m`       | 模糊搜索 output messages       |
+| `<Leader> f o`       | 模糊搜索函数列表               |
+| `<Leader> f q`       | 模糊搜索 quickfix list         |
+| `<Leader> f r`       | 重置上次搜索窗口               |
