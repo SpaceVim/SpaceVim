@@ -1,47 +1,56 @@
 ---
-title:  Available layers
-description: A list of available layers in SpaceVim.
+title:  可用模块
+description: "简述什么是模块，如何启用和禁用 SpaceVim 模块，以及如何设置模块选项。并罗列出 SpaceVim 中所有内置的模块。"
 keywords: layer,layers
+lang: cn
 ---
 
 <!-- vim-markdown-toc GFM -->
 
-- [Introduction](#introduction)
-  - [Enable layers](#enable-layers)
-  - [Disable layers](#disable-layers)
+- [什么是模块](#什么是模块)
+  - [如何启用模块](#如何启用模块)
+  - [如何禁用模块](#如何禁用模块)
 - [Available layers](#available-layers)
 
 <!-- vim-markdown-toc -->
 
-## Introduction
+## 什么是模块
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature.
-Layers help collect related packages together to provide features.
-This approach helps keep configuration organized and reduces overhead for the user by
-keeping them from having to think about what packages to install.
+SpaceVim 是一个社区驱动的 vim 配置集合，通常一个 Vim 的配置集合包含了诸多的
+Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管理这些插件以及相关
+的配置。默认情况下，这些模块都是禁用的，用户可以根据自己需要，或者是项目需要
+来载入指定的模块以获取相关功能。
 
-### Enable layers
+通过模块的方式管理插件和相关配置，为使用者节省了大量的搜索插件和调试插件的时
+间。用户仅仅需要根据自己的实际需求，来启用相关模块。比如，当我需要频繁调用终
+端时，可以启用终端支持的 `shell` 模块。
 
-here is an example for loadding `shell` layer with some specified options:
+### 如何启用模块
 
-```vim
-call SpaceVim#layers#load('shell',
-        \ {
-        \ 'default_position' : 'top',
-        \ 'default_height' : 30,
-        \ }
-        \ )
+以 `shell` 模块为例，启用该模块，并且设定一些模块选项，指定终端打开位置为
+顶部，高度 30。
+
+```toml
+[[layers]]
+  name = "shell"
+  default_position = "top"
+  default_height = 30
 ```
 
-### Disable layers
+### 如何禁用模块
 
-Some layers are enabled by defalut, here is an example for disable `shell` layer:
+在 SpaceVim 内，默认启用了一些模块，当你需要禁用某一个模块时，需要指定模块
+选项 `enable` 为 false。`enable` 这一选项缺省为 true，所以启用模块时，这一
+选项可以省略。
 
-```vim
-call SpaceVim#layers#disable('shell')
+```toml
+[[layers]]
+  name = "shell"
+  enable = false
 ```
 
-<!-- SpaceVim layer list start -->
+<!-- 更新模块列表 call SpaceVim#dev#layers#updateCn() -->
+<!-- SpaceVim layer cn list start -->
 
 ## Available layers
 
@@ -88,6 +97,6 @@ call SpaceVim#layers#disable('shell')
 | [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
 | [unite](unite/)                                       | This layers provide a heavily customized Unite centric work-flow                                                                                                    |
 
-<!-- SpaceVim layer list end -->
+<!-- SpaceVim layer cn list end -->
 
 <!-- vim:set nowrap: -->
