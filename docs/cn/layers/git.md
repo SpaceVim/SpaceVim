@@ -1,38 +1,41 @@
 ---
-title: "SpaceVim git layer"
-description: "This layers adds extensive support for git"
+title: "SpaceVim git 模块"
+description: "这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) git
+# [可用模块](../) >> git
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-  - [Features](#features)
-- [Install](#install)
-  - [Layer](#layer)
-- [Key bindings](#key-bindings)
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块描述
 
-This layers adds extensive support for [git](http://git-scm.com/).
+这一模块为 SpaceVim 提供了 [git](http://git-scm.com/) 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。
 
-### Features
+## 启用模块
 
-## Install
+默认情况下，这一模块并为启用，如果需要启用该模块，可在配置文件内加入：
 
-### Layer
+```toml
+[[layers]]
+  name = "git"
+```
 
-To use this configuration layer, add `call SpaceVim#layers#load('git')` to your custom configuration file.
+## 快捷键
 
-## Key bindings
-
-| Key Binding    | Description            |
-| -------------- | ---------------------- |
-| `<Leader> g a` | git add current file   |
-| `<Leader> g A` | git add All files      |
-| `<Leader> g b` | open git blame window  |
-| `<Leader> g s` | open git status window |
-| `<Leader> g c` | open git commit window |
+| 按键      | 描述                 |
+| --------- | -------------------- |
+| `SPC g s` | 打开 git status 窗口 |
+| `SPC g S` | stage 当前文件       |
+| `SPC g U` | unstage 当前文件     |
+| `SPC g c` | 打开 git commit 窗口 |
+| `SPC g p` | 执行 git push        |
+| `SPC g d` | 打开 git diff 窗口   |
+| `SPC g A` | git add 所有文件     |
+| `SPC g b` | 打开 git blame 窗口  |
