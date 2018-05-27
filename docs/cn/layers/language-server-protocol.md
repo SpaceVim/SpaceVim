@@ -1,30 +1,33 @@
 ---
-title: "SpaceVim language server protocol layer"
-description: "This layers provides language server protocol for vim and neovim"
+title: "SpaceVim lsp 模块"
+description: "lsp 模块为 SpaceVim 提供 language server protocol 的支持，提供更多语言相关服务"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lsp
+# [可用模块](../) >> lsp
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Install](#install)
-  - [Install language server](#install-language-server)
-- [Configuration](#configuration)
-- [Key bindings](#key-bindings)
+- [模块描述](#模块描述)
+- [模块特性](#模块特性)
+- [模块安装](#模块安装)
+  - [安装语言服务器](#安装语言服务器)
+- [模块配置](#模块配置)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块描述
 
-This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/), This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork), The upstream is rewritten by rust.
+lsp 模块提供了 [language-server-protocol](https://microsoft.github.io/language-server-protocol/) 的支持，
+这以模块在 [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) 基础上做了许多定制，
+这一链接为一克隆的版本，需要 `+python` 支持。
 
-we also want to include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+同时，当你的 Vim 不支持 `+python3` 时，我们采用 [vim-lsp](https://github.com/prabirshrestha/vim-lsp) 这一使用纯 vim 脚本书写的插件。
 
-the neovim team is going to implement the build-in LSP support, the PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
+neovim 团队也在尝试实现一个内置的 [lsp 框架](https://github.com/neovim/neovim/pull/6856)，后续该框架完成后，在 neovim 内将默认使用该框架。
 
-SpaceVim should works well in different version of vim/neovim, so in the features, the logic of this layer should be:
+在 SpaceVim 内部，lsp 的框架选择逻辑大致时这样的：
 
 ```vim
 if has('nvim')
@@ -36,26 +39,31 @@ else
 endif
 ```
 
-## Features
+## 模块特性
 
-- Asynchronous calls
-- Code completion (provided by [autocomplet](https://spacevim.org/layers/autocomplete/) layer)
-- Lint on the fly
-- Rename symbol
-- Hover/Get identifer info.
-- Goto definition.
-- Goto reference locations.
-- Workspace/Document symbols query.
-- Formatting.
-- Code Action/Fix.
+- 异步调用，避免卡顿
+- 代码补全，（需要载入 [autocomplet](https://spacevim.org/layers/autocomplete/) 模块）
+- 实时代码语法检查
+- 重命名函数
+- 显示错误信息
+- 跳至定义处
+- 列举所有引用
+- 文档检索
+- 代码格式化
+- 代码自动修复
 
-**Note:** All these features dependent on the implementation of the language server, please check the list of [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/)
+**注:** 以上所有信息依赖于语言服务器所实现的功能，请查阅 [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/) 列表。
 
-## Install
+## 模块安装
 
-To use this configuration layer, add `call SpaceVim#layers#load('lsp')` to your custom configuration file.
+默认未载入，如需载入该模块，可在配置文件加入:
 
-### Install language server
+```toml
+[[layers]]
+  name = "lsp"
+```
+
+### 安装语言服务器
 
 **JavaScript:**
 
@@ -69,23 +77,22 @@ npm install -g javascript-typescript-langserver
 pip install --user python-language-server
 ```
 
-## Configuration
+## 模块配置
 
-To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
+为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
 
-```vim
-call SpaceVim#layers#load('lsp',
-    \ {
-    \ 'filetypes' : ['rust',
-                   \ 'typescript',
-                   \ 'javascript',
-                   \ ],
-    \ }
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust",
+    "javascript"
+  ]
 ```
 
-default language server commands:
+默认语言服务器的执行命令列表如下：
 
-| language     | server command                                   |
+| 语言         | 命令                                             |
 | ------------ | ------------------------------------------------ |
 | `javascript` | `['javascript-typescript-stdio']`                |
 | `haskell`    | `['hie', '--lsp']`                               |
@@ -100,20 +107,22 @@ default language server commands:
 | `python`     | `['pyls']`                                       |
 | `php`        | `['php', 'path/to/bin/php-language-server.php']` |
 
-To override the server command, you may need to use `override_cmd` option:
+如果需要修改语言服务器的命令，在载入模块时，需要指定 `override_cmd` 选项：
 
-```vim
-call SpaceVim#layers#load('lsp',
-    \ {
-    \ 'override_cmd' : {
-                     \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
-                     \ }
-    \ }
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust",
+    "javascript"
+  ]
+  [layers.override_cmd]
+    rust = ["rustup", "run", "nightly", "rls"]
 ```
 
-## Key bindings
+## 快捷键
 
-| Key Binding     | Description   |
+| 按键            | 描述          |
 | --------------- | ------------- |
-| `K` / `SPC l d` | show document |
-| `SPC l e`       | rename symbol |
+| `K` / `SPC l d` | 显示文档      |
+| `SPC l e`       | 重命名 symbol |
