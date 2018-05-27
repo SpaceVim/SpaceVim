@@ -57,16 +57,18 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 
 | 名称                                                  | 描述                                                                                                                                                  |
 | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [VersionControl](VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…           |
+| [VersionControl](VersionControl/)                     | 这一模块为 SpaceVim 提供了通用的代码版本控制支持，该模块支持 Git、Mercurial、Bazaar、SVN 等等多种后台工具。                                           |
 | [autocomplete](autocomplete/)                         | 这一模块为 SpaceVim 提供了自动补全的框架，包括语法补全等多种补全来源，同时提供了代码块自动完成等特性。                                                |
-| [chat](chat/)                                         | SpaceVim chatting layer provide chatting with qq and weixin in vim.                                                                                   |
-| [checkers](checkers/)                                 | This layer provides syntax checking feature                                                                                                           |
-| [chinese](chinese/)                                   | Layer for chinese users, include chinese docs and runtime messages                                                                                    |
-| [colorscheme](colorscheme/)                           | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                                              |
-| [cscope](cscope/)                                     | This layer provide cscope manager for project                                                                                                         |
-| [debug](debug/)                                       | This layer provide debug workflow support in SpaceVim                                                                                                 |
-| [default](default/)                                   | lt layer contains none plugins, but it has some better default config for vim and neovim                                                              |
-| [git](git/)                                           | This layers adds extensive support for git                                                                                                            |
+| [chat](chat/)                                         | chat 模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。                                                       |
+| [checkers](checkers/)                                 | 这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置                                                              |
+| [chinese](chinese/)                                   | 该模块为中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。                                                                           |
+| [colorscheme](colorscheme/)                           | colorscheme 模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随即主题等特性             |
+| [cscope](cscope/)                                     | cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令                                                   |
+| [ctrlp](ctrlp/)                                       | 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                           |
+| [debug](debug/)                                       | 这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。                                                        |
+| [default](default/)                                   | SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置，                                                                                       |
+| [denite](denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                     |
+| [git](git/)                                           | 这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。                                             |
 | [lang#c](lang/c/)                                     | This layer is for c/c++/object-c development                                                                                                          |
 | [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                               |
 | [lang#elixir](lang/elixir/)                           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                           |
