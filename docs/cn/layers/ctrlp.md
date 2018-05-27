@@ -13,6 +13,13 @@ lang: cn
 
 ## 启用模块
 
+ctrlp 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：
+
+```toml
+[[layers]]
+  name = "ctrlp"
+```
+
 ## 快捷键
 
 下列快捷键均以 `<Leader> f` 为前置键，`<Leader>` 在 SpaceVim 中默认没有修改，
