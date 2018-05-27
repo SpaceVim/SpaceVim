@@ -1,38 +1,29 @@
 ---
-title: "SpaceVim denite 模块"
-description: "提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
-lang: cn
+title: "SpaceVim denite layer"
+description: "This layers provide a heavily customized Denite centric work-flow"
 ---
 
-# [可用模块](../) >> denite
+# [SpaceVim Layers:](https://spacevim.org/layers) denite
 
-## 模块描述
+## Intro
 
-提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。这一模块需要 Vim
-或者 Neovim 支持 `+python3`。
+This layer is a heavily customized wrapper for denite and it's sources.
 
-## 启用模块
 
-denite 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：
+## Configuration
 
-```toml
-[[layers]]
-  name = "denite"
-```
+SpaceVim use `F` as the default customized key bindings prefix for denite layer.
 
-## 快捷键
+## Key bindings
 
-下列快捷键均以 `<Leader> f` 为前置键，`<Leader>` 在 SpaceVim 中默认没有修改，
-为 `\` 键。
-
-| 按键                 | 描述                           |
-| -------------------- | ------------------------------ |
-| `<Leader> f <space>` | 模糊查找快捷键，并执行该快捷键 |
-| `<Leader> f e`       | 模糊搜索寄存器                 |
-| `<Leader> f h`       | 模糊搜索 history/yank          |
-| `<Leader> f j`       | 模糊搜索 jump, change          |
-| `<Leader> f l`       | 模糊搜索 location list         |
-| `<Leader> f m`       | 模糊搜索 output messages       |
-| `<Leader> f o`       | 模糊搜索函数列表               |
-| `<Leader> f q`       | 模糊搜索 quickfix list         |
-| `<Leader> f r`       | 重置上次搜索窗口               |
+| Key bindings         | Discription                   |
+| -------------------- | ----------------------------- |
+| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f e`       | Fuzzy find register           |
+| `<Leader> f h`       | Fuzzy find history/yank       |
+| `<Leader> f j`       | Fuzzy find jump, change       |
+| `<Leader> f l`       | Fuzzy find location list      |
+| `<Leader> f m`       | Fuzzy find output messages    |
+| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f q`       | Fuzzy find quick fix          |
+| `<Leader> f r`       | Resumes Unite window          |

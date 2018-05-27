@@ -1,23 +1,23 @@
 ---
-title: "SpaceVim denite 模块"
-description: "提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
+title: "SpaceVim leaderf模块"
+description: "提供以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
 lang: cn
 ---
 
-# [可用模块](../) >> denite
+# [可用模块](../) >> leaderf
 
-## 模块描述
+## 模块介绍
 
-提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。这一模块需要 Vim
-或者 Neovim 支持 `+python3`。
+这一模块在 leaderf 的基础上做了时当的包装和定制，提供了搜索文件、函数列表、
+命令历史等等特性。
 
 ## 启用模块
 
-denite 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：
+leaderf 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：
 
 ```toml
 [[layers]]
-  name = "denite"
+  name = "leaderf"
 ```
 
 ## 快捷键
