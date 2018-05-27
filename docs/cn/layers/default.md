@@ -6,6 +6,15 @@ lang: cn
 
 # [SpaceVim Layers:](../) default
 
-SpaceVim default layer contains none plugins, but it has some better default config for vim and neovim.
+## 模块描述
 
-## Key Mappings
+这一模块主要优化了一些 Vim 设置，包含了一些默认的设置选项，和快捷键。
+
+## 快捷键
+
+一些编辑常用的快捷键
+
+| 按键         | 描述             |
+| ------------ | ---------------- |
+| `<Leader> y` | 复制到系统剪切板 |
+| `<Leader> p` | 从系统剪切板粘贴 |
