@@ -1,27 +1,63 @@
 ---
-title: "SpaceVim chat layer"
-description: "SpaceVim chatting layer provide chatting with qq and weixin in vim."
+title: "SpaceVim chat 模块"
+description: "chat 模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。"
 ---
 
-# [Layers](https://spacevim.org/layers) > chat
+# [可用模块](../) >> chat
 
-SpaceVim chatting layer provide chatting feature in vim.
+<!-- vim-markdown-toc GFM -->
 
-## plugins
+- [模块介绍](#模块介绍)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
+<!-- vim-markdown-toc -->
 
-Name   | Description
------ | ------------------
-[vim-chat](https://github.com/vim-chat/vim-chat) | chatting in vim.
+## 模块介绍
 
-## Key Mappings
+chat 模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。
 
-`Alt + x` : open chatting buffer for qq.
-`Alt + w` : open chatting buffer for weixin.
+## 启用模块
 
-within chatting buffer:
+可通过在配置文件内加入如下配置来启用该模块：
 
-`Alt + Left/Right` : switch between buffer.
-`Alt + 1-9` : jump to specified channel.
+```toml
+[[layers]]
+  name = "chat"
+```
 
-for more mappings in chatting buffer, please read <kbd>:h vim-chat</kbd>.
+## 快捷键
+
+**打开/关闭聊天窗口**
+
+| 按键      | 描述                  |
+| --------- | --------------------- |
+| `Alt + x` | 打开/关闭 QQ 聊天窗口 |
+| `Alt + w` | 打开/关闭微信聊天窗口 |
+
+**聊天窗口内快捷键**
+
+输入消息是，可以使用如下快捷键快速编辑消息。
+
+| 按键             | 描述               |
+| ---------------- | ------------------ |
+| `<C-w>`          | 删除光标前单词     |
+| `<Home>/<C-a>`   | 将光标移至行首     |
+| `<Left>/<Right>` | 左右移动光标       |
+| `<End>/<C-e>`    | 将光标移至行末     |
+| `<C-h>/<Del>`    | 删除光标前字符     |
+| `<C-k>`          | 自光标处删除至行末 |
+| `<C-u>`          | 自光标处删除至行首 |
+| `<Tab>`          | 补全历史消息       |
+| `<C-d>`          | 删除光标处字符     |
+| `Alt + f`        | 按单词向前移动     |
+| `Alt + d`        | 从光标处删除至词尾 |
+
+**切换聊天频道**
+
+在聊天窗口内，会在状态栏上显示已经打开的聊天频道，可以通过以下快捷键进行切换。
+
+| 按键               | 描述                   |
+| ------------------ | ---------------------- |
+| `Alt + Left/Right` | 左右切换聊天频道       |
+| `Alt + 1-9`        | 跳至指定标签的聊天频道 |

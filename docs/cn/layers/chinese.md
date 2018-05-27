@@ -1,18 +1,38 @@
 ---
-title: "SpaceVim chinese layer"
-description: "Layer for chinese users, include chinese docs and runtime messages"
+title: "SpaceVim chinese 模块"
+description: "该模块为中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。"
+lang: cn
 ---
 
-# [Layers](https://spacevim.org/layers) > chinese
+# [可用模块](https://spacevim.org/layers) >> chinese
 
-## Description
+<!-- vim-markdown-toc GFM -->
 
-This layer is for chinese users, and provide chinese docs and runtime messages.
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+- [模块配置](#模块配置)
 
-## Layer Installation
+<!-- vim-markdown-toc -->
 
-To use this configuration layer, add `splayer 'chinese'` to your custom configuration file.
+## 模块描述
 
-## Configuration
+该模块为中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。
 
-if you want to enable this feature, add `let g:spacevim_vim_help_language = 'cn'` to your custom config file.
+## 启用模块
+
+中文用户，可以在配置文件里面启用该模块，以获取中文帮助文档：
+
+```toml
+[[layers]]
+  name = "chinese"
+```
+
+## 模块配置
+
+加在该模块后，默认的帮助文件语言并为设置为中文，可以通过 SpaceVim 选项
+`vim_help_language` 来设置，可将其值设为 `"cn"`。
+
+```toml
+[options]
+  vim_help_language = "cn"
+```
