@@ -144,9 +144,6 @@ lang: cn
   - [自动补全](#自动补全-1)
   - [细致的tags管理](#细致的tags管理)
 - [快速](#快速)
-  - [SpaceVim选项](#spacevim选项)
-  - [延伸阅读](#延伸阅读)
-    - [Vim 8 新特新之旅](#vim-8-新特新之旅)
 
 <!-- vim-markdown-toc -->
 
@@ -2088,31 +2085,6 @@ let g:spacevim_custom_plugins = [
 let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
-### SpaceVim选项
-
-| 选项名称                           |        默认值       | 描述                           |
-| ---------------------------------- | :-----------------: | ------------------------------ |
-| `g:spacevim_default_indent`        |          2          | 对齐空格                       |
-| `g:spacevim_enable_guicolors`      |          1          | 启用/禁用终端使用真色彩        |
-| `g:spacevim_windows_leader`        |         `s`         | 窗口管理快捷键前缀             |
-| `g:spacevim_unite_leader`          |         `f`         | Unite快捷键前缀                |
-| `g:spacevim_plugin_bundle_dir`     | `~/.cache/vimfiles` | 默认插件缓存位置               |
-| `g:spacevim_realtime_leader_guide` |          0          | 启用/禁用实时快捷键提示        |
-| `g:spacevim_guifont`               |          ''         | 设置SpaceVim字体               |
-| `g:spacevim_sidebar_width`         |          30         | 设置边栏宽度，文件树以及语法树 |
-| `g:spacevim_custom_plugins`        |         `[]`        | 设置自定义插件                 |
-
-### 延伸阅读
-
-#### Vim 8 新特新之旅
-
-<ul>
-    {% for post in site.categories.tutorials_cn %}
-            <li>
-                <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
-    {% endfor %}
-</ul>
 
 **捐助SpaceVim**
 
