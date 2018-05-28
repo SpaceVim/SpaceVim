@@ -116,7 +116,7 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ## Highlighted features
 
-- **Great documentation:** access documentation in Vim with
+- **Great documentation:** access documentation in SpaceVim with
     `:h SpaceVim`.
 - **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
 - **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.

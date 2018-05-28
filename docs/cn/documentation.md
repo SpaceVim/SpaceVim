@@ -5,38 +5,22 @@ redirect_from: "/README_zh_cn/"
 lang: cn
 ---
 
-## 目录
+# SpaceVim 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
-- [安装](#安装)
-- [更新](#更新)
-- [文档](#文档)
-  - [核心思想](#核心思想)
-    - [记忆辅助](#记忆辅助)
-    - [可视化交互](#可视化交互)
-    - [一致性](#一致性)
-    - [社区驱动](#社区驱动)
-  - [显著特性](#显著特性)
-  - [快捷键导航](#快捷键导航)
-  - [运行截图](#运行截图)
-    - [欢迎页面](#欢迎页面)
-    - [工作界面](#工作界面)
-  - [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
-  - [更新和回滚](#更新和回滚)
-    - [SpaceVim 自身更新](#spacevim-自身更新)
-      - [自动更新](#自动更新)
-      - [通过插件管理器更新](#通过插件管理器更新)
-      - [通过 git 进行更新](#通过-git-进行更新)
-    - [更新插件](#更新插件)
-  - [配置模块](#配置模块)
-  - [用户配置](#用户配置)
-    - [自动生成用户配置](#自动生成用户配置)
-    - [用户配置目录](#用户配置目录)
-  - [概念](#概念)
-    - [临时快捷键](#临时快捷键)
-  - [优雅的界面](#优雅的界面)
-    - [主题](#主题)
+- [核心思想](#核心思想)
+- [显著特性](#显著特性)
+- [运行截图](#运行截图)
+- [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
+- [更新和回滚](#更新和回滚)
+  - [SpaceVim 自身更新](#spacevim-自身更新)
+  - [更新插件](#更新插件)
+  - [获取日志](#获取日志)
+- [用户配置](#用户配置)
+- [概念](#概念)
+- [优雅的界面](#优雅的界面)
+  - [主题](#主题)
     - [字体](#字体)
     - [界面元素切换](#界面元素切换)
     - [状态栏 & 标签栏](#状态栏--标签栏)
@@ -48,7 +32,7 @@ lang: cn
       - [Unite/Denite buffer 中的快捷键](#unitedenite-buffer-中的快捷键)
     - [交互](#交互)
       - [快捷键](#快捷键)
-        - [快捷键导航](#快捷键导航-1)
+        - [快捷键导航](#快捷键导航)
         - [通过 Unite/Denite 浏览快捷键](#通过-unitedenite-浏览快捷键)
       - [获取帮助信息](#获取帮助信息)
       - [可用模块](#可用模块)
@@ -147,61 +131,31 @@ lang: cn
 
 <!-- vim-markdown-toc -->
 
-## 安装
-
-**Linux/Mac：**
-
-```sh
-curl -sLf https://spacevim.org/install.sh | bash
-```
-
-想要获取更多的信息，请参考：
-
-```sh
-curl -sLf https://spacevim.org/install.sh | bash -s -- -h
-```
-
-SpaceVim是一种模块化配置，可以运行在vim或者neovim上，关于vim以及neovim的安装，请参考以下链接：
-
-[安装neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
-
-[从源码编译vim](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
-
-**windows：**
-
-Window 下最方便的是下载安装脚本（[install.cmd](https://spacevim.org/install.cmd)）至本地，直接运行，安装完毕后，打开 Gvim 他将自动下载插件，在 Windows 下需要手动安装 [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts) 字体。
-
-## 更新
-
-可以通过 `:SPUpdate` 命令来更新spacevim 以及包含的插件，如果需要更新指定的插件，如：startuptime.vim，只需要执行 `:SPUpdate startuptime.vim`，也可以通过 `:SPUpdate SpaceVim` 来更新 SpaceVim.
-
-## 文档
-
-### 核心思想
+## 核心思想
 
 四大核心思想: 记忆辅助, 可视化交互, 一致性，社区驱动.
 
 如果违背了以上四大核心思想，我们将会尽力修复。
 
-#### 记忆辅助
+**记忆辅助**
 
 所有快捷键，根据其功能的不同分为不同的组，以相应的按键作为前缀，例如 `b` 为 buffer 相关快捷键前缀，`p` 为 project 相关快捷键前缀， `s` 为 search 相关快捷键前缀，`h` 为 help 相关快捷键前缀。
 
-#### 可视化交互
+**可视化交互**
 
 创新的实时快捷键辅助系统，以及查询系统，方便快捷查询到可用的模块、插件以及其他更多信息。
 
-#### 一致性
+**一致性**
 
 相似的功能使用同样的快捷键，这在 SpaceVim 中随处可见。这得益于明确的约定。其他模块的文档都以此为基础。
 
-#### 社区驱动
+**社区驱动**
 
 社区驱动，保证了 bug 修复的速度，以及新特性更新的速度。
 
-### 显著特性
+## 显著特性
 
-- **详细的文档:** 在 SpaceVim 通过 <kbd>:h SpaceVim</kbd> 来访问 SpaceVim 帮助文档。
+- **详细的文档:** 在 SpaceVim 中通过`:h SpaceVim`来访问 SpaceVim 帮助文档。
 - **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
 - **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
 - **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
@@ -210,27 +164,13 @@ Window 下最方便的是下载安装脚本（[install.cmd](https://spacevim.org
 - **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
 - **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
-### 快捷键导航
+## 运行截图
 
-SpaceVim 所有的快捷键都不需要去记忆，有强大的快捷键导航系统来提示每一个按键的具体功能，比如 Normal 模式下按下空格键，将出现如下提示：
-
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
-
-这一导航提示将所有以空格为前缀的快捷键分组展示，比如 `b` 是所以 buffer 相关的快捷键， `p` 是所有工程管理相关的快捷键。在导航模式下按下 `<C-h>` 你将在状态栏上看见相应的帮助信息，按键介绍如下：
-
-| 按键 | 描述           |
-| ---- | -------------- |
-| `u`  | 撤销前一按键   |
-| `n`  | 导航系统下一页 |
-| `p`  | 导航系统前一页 |
-
-### 运行截图
-
-#### 欢迎页面
+**欢迎页面**
 
 ![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
 
-#### 工作界面
+**工作界面**
 
 ![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
@@ -242,7 +182,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
-### 谁将从 SpaceVim 中获益？
+## 谁将从 SpaceVim 中获益？
 
 - **初级** Vim 用户.
 - 追求优雅界面的 Vim 用户
@@ -250,105 +190,50 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 - 想要学习一种不一样的编辑文件方式的 Vim 用户
 - 追求简单但是可高度配置系统的 Vim 用户
 
-### 更新和回滚
 
-#### SpaceVim 自身更新
+## 更新和回滚
+
+### SpaceVim 自身更新
 
 可通过很多种方式来更新 SpaceVim 的核心文件。建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
 
-##### 自动更新
+**自动更新**
 
 注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：`let g:spacevim_automatic_update = 1`。
 
 启用这一特性后，SpaceVim 将会在每次启动时候检测是否有新版本。更新后需重启 SpaceVim。
 
-##### 通过插件管理器更新
+**通过插件管理器更新**
 
 使用 `:SPUpdate SpaceVim` 这一命令，将会打开 SpaceVim 的插件管理器，更新 SpaceVim， 具体进度会在插件管理器 buffer 中展示。
 
-##### 通过 git 进行更新
+**通过 git 进行更新**
 
 可通过在 SpaceVim 目录中手动执行 `git pull`， SpaceVim 在 windows 下默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
 `git -C ~/.SpaceVim pull`.
 
-#### 更新插件
+### 更新插件
 
 使用 `:SPUpdate` 这一命令将会更新所有插件，包括 SpaceVim 自身。当然这一命令也支持参数，参数为插件名称，可同时添加多个插件名称作为参数，同时可以使用 <kbd>Tab</kbd> 键来补全插件名称。
 
-### 配置模块
+### 获取日志
 
-这里仅仅是大致罗列了下常用的模块，若要了解关于配置模块更加详细的信息，可阅读 [SpaceVim's layers page](http://spacevim.org/layers/)，（强烈建议阅读！）
+使用 `:SPDebugInfo!` 这一命令可以获取 SpaceVim 运行时日志，同时，可以使用 `SPC h I` 使用打开问题模板。
+可在这个模板中编辑问题，并提交。
 
-### 用户配置
+## 用户配置
 
-用户配置保存在 `~/.SpaceVim.d/` 文件夹。
-
-#### 自动生成用户配置
-
-初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.vim`。
-
-#### 用户配置目录
-
-`~/.SpaceVim.d/` 将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 <kbd>:h rtp</kbd>.
+初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在`~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
 
 当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，执定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
 
-SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
+SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.toml` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
-这是一个用户配置文件示例：
+所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。
 
-```vim
-" 这是一些基础的定制信息, 请参阅 ~/.SpaceVim.d/init.vim
-" 文件来查看所有可能用到的配置信息:
-let g:spacevim_default_indent = 3
-let g:spacevim_max_column     = 80
+## 概念
 
-" 更改默认的文件冗余备份目录.
-" 默认的冗余备份目录为 ~/.cache/vimfiles.
-let g:spacevim_plugin_bundle_dir = '~/.cache/vimfiles'
-
-" 设置 SpaceVim 的配色方案
-let g:spacevim_colorscheme = 'jellybeans'
-
-" 设置你想使用的插件管理器, 默认为 dein.vim
-let g:spacevim_plugin_manager = 'dein'  " neobundle or dein or vim-plug
-
-" 使用空格键为导航键 `<Leader>`
-let mapleader = "\<space>"
-
-" 设置快捷窗口导航键(leader [Window]), 默认为 `s`
-let g:spacevim_windows_leader = 's'
-
-" 设置 unite 工作流程快捷导航键(shortcut leader [Unite]), 默认为 `f`
-let g:spacevim_unite_leader = 'f'
-
-" 在默认情况下,个别语言插件未加载. 可以按照下面的方法来更改. 
-" 下面的更改完成后, go语言的开发工具就会被加载.
-call SpaceVim#layers#load('lang#go')
-
-" 加载用户界面层
-call SpaceVim#layers#load('ui')
-
-" 如果你不喜欢练习插件的话, 你可以按照下面那样定义变量,来关闭它们:
-let g:spacevim_disabled_plugins=[
-\ ['junegunn/fzf.vim'],
-\ ]
-
-" 你可以按照下面的设置来添加默认的插件:
-let g:spacevim_custom_plugins = [
-\ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
-\ ['wsdjeg/GitHub.vim'],
-\ ]
-
-" 设置gui字体(guifont)
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
-```
-
-更加详细的 SpaceVim 选项可以查阅 <kbd>:h SpaceVim</kbd>.
-
-### 概念
-
-#### 临时快捷键
+**临时快捷键菜单**
 
 SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
 
@@ -356,13 +241,11 @@ SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复�
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
-### 优雅的界面
+## 优雅的界面
 
 SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
-![UI](https://cloud.githubusercontent.com/assets/13142418/22506638/84705532-e8bc-11e6-8b72-edbdaf08426b.png)
-
-#### 主题
+### 主题
 
 SpaceVim 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 <kbd>:h gruvbox</kbd>.
 
