@@ -18,8 +18,11 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
         \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
         \ ['othree/javascript-libraries-syntax.vim', {
         \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
-        \ ['othree/yajs.vim', { 'on_ft': 'javascript' }]
         \ ]
+
+  if !s:flow
+    call add(plugins, ['othree/yajs.vim', { 'on_ft': 'javascript' }])
+  endif
 
   if !SpaceVim#layers#lsp#check_filetype('javascript')
     call add(plugins, ['ternjs/tern_for_vim', {
@@ -32,9 +35,11 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
 endfunction
 
 let s:auto_fix = 0
+let s:flow = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
+  let s:flow = get(a:var, 'flow', 0)
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
