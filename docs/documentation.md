@@ -212,9 +212,10 @@ if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVi
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
 call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 ```
+
 ### Vim Compatible Mode
 
-This a list of different key bindings between SpaceVim and origin vim.
+This a list of different key bindings between SpaceVim and origin vim. If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = true` in `[options]` section.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
@@ -231,8 +232,6 @@ the option is `g:spacevim_windows_smartclose`, default value is `q`. If you stil
 - The `Ctrl + a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
-
-If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = 1` in `[options]` section.
 
 ### Private Layers
 
@@ -265,7 +264,6 @@ Move Text Transient State:
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
-
 ## Interface elements
 
 SpaceVim has a minimalistic and distraction free UI:
@@ -288,12 +286,12 @@ the variable colorschemes. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings           | Description                                                    |
-| ------------------ | -------------------------------------------------------------- |
+| Mappings  | Description                                                    |
+| --------- | -------------------------------------------------------------- |
 | `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
 | `SPC T s` | select a theme using a unite buffer.                           |
 
-all the included colorscheme can be found in [colorscheme layer](http://spacevim.org/layers/colorscheme/).
+all the included colorscheme can be found in [colorscheme layer](layers/colorscheme/).
 
 **NOTE**:
 
@@ -325,23 +323,23 @@ Also note that changing this value has no effect if you are running Vim/Neovim i
 
 Some UI indicators can be toggled on and off (toggles start with t and T):
 
-| Key Binding | Description                                                       |
-| ----------- | ----------------------------------------------------------------- |
-| `SPC t 8`   | highlight any character past the 80th column                      |
+| Key Binding | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `SPC t 8`   | highlight any character past the 80th column             |
 | `SPC t f`   | display the fill column (by default `max_column` is 120) |
-| `SPC t h h` | toggle highlight of the current line                              |
-| `SPC t h i` | toggle highlight indentation levels (TODO)                        |
-| `SPC t h c` | toggle highlight indentation current column                       |
-| `SPC t h s` | toggle syntax highlighting                                        |
-| `SPC t i`   | toggle indentation guide at point                                 |
-| `SPC t n`   | toggle line numbers                                               |
-| `SPC t b`   | toggle background                                                 |
-| `SPC t t`   | open tabs manager                                                 |
-| `SPC T ~`   | display ~ in the fringe on empty lines                            |
-| `SPC T F`   | toggle frame fullscreen                                           |
-| `SPC T f`   | toggle display of the fringe                                      |
-| `SPC T m`   | toggle menu bar                                                   |
-| `SPC T t`   | toggle tool bar                                                   |
+| `SPC t h h` | toggle highlight of the current line                     |
+| `SPC t h i` | toggle highlight indentation levels (TODO)               |
+| `SPC t h c` | toggle highlight indentation current column              |
+| `SPC t h s` | toggle syntax highlighting                               |
+| `SPC t i`   | toggle indentation guide at point                        |
+| `SPC t n`   | toggle line numbers                                      |
+| `SPC t b`   | toggle background                                        |
+| `SPC t t`   | open tabs manager                                        |
+| `SPC T ~`   | display ~ in the fringe on empty lines                   |
+| `SPC T F`   | toggle frame fullscreen                                  |
+| `SPC T f`   | toggle display of the fringe                             |
+| `SPC T m`   | toggle menu bar                                          |
+| `SPC T t`   | toggle tool bar                                          |
 
 ### Statusline
 
@@ -355,6 +353,10 @@ The `core#statusline` layer provide a heavily customized powerline with the foll
 - toggle battery info
 - toggle minor mode lighters
 - show VCS information (branch, hunk summary) (need `git` and `VersionControl` layer)
+
+| Key bindings | Description                                  |
+| ------------ | -------------------------------------------- |
+| `SPC [1-9]`  | jump to the windows with the specific number |
 
 Reminder of the color codes for the states:
 
@@ -382,23 +384,19 @@ Some elements can be dynamically toggled:
 | `SPC t m T` | toggle the mode line itself                                         |
 | `SPC t m v` | toggle the version control info                                     |
 
-**Powerline font installation:**
+**nerd font installation:**
 
-By default SpaceVim use [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), to make statusline render correctly, you need to install the font. [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols) also should be installed.
+By default SpaceVim use nerd-fonts, please read the documentation of nerd fonts.
 
 **syntax checking integration:**
 
 When syntax checking minor mode is enabled, a new element appears showing the number of errors, warnings.
-
-syntax checking integration in statusline.
 
 **Search index integration:**
 
 Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
-
-_search index in statusline_
 
 **Battery status integration:**
 
@@ -416,10 +414,10 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
-```vim
-let g:spacevim_statusline_separator = 'arrow'
+```toml
+  statusline_separator = 'arrow'
 ```
 
 here is an exhaustive set of screenshots for all the available separator:
@@ -436,7 +434,7 @@ here is an exhaustive set of screenshots for all the available separator:
 
 The minor mode area can be toggled on and off with `SPC t m m`
 
-Unicode symbols are displayed by default. Setting the variable `g:spacevim_statusline_unicode_symbols` to 0 in your custom configuration file will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
+Unicode symbols are displayed by default. Add `statusline_unicode_symbols = false` to your custom configuration file, statusline will display ASCII characters instead (may be useful in terminal if you cannot set an appropriate font).
 
 The letters displayed in the statusline correspond to the key bindings used to toggle them.
 
@@ -491,20 +489,20 @@ endfunction
 
 this example is for gruvbox colorscheme, if you want to use same colors when
 switch between different colorschemes, you may need to set
-`g:spacevim_custom_color_palette` in your custom configuration file. for example:
+`custom_color_palette` in your custom configuration file. for example:
 
-```vim
-let g:spacevim_custom_color_palette = [
-                \ ['#282828', '#a89984', 246, 235],
-                \ ['#a89984', '#504945', 239, 246],
-                \ ['#a89984', '#3c3836', 237, 246],
-                \ ['#665c54', 241],
-                \ ['#282828', '#83a598', 235, 109],
-                \ ['#282828', '#fe8019', 235, 208],
-                \ ['#282828', '#8ec07c', 235, 108],
-                \ ['#282828', '#689d6a', 235, 72],
-                \ ['#282828', '#8f3f71', 235, 132],
-                \ ]
+```toml
+custom_color_palette = [
+    ["#282828", "#a89984", 246, 235],
+    ["#a89984", "#504945", 239, 246],
+    ["#a89984", "#3c3836", 237, 246],
+    ["#665c54", 241],
+    ["#282828", "#83a598", 235, 109],
+    ["#282828", "#fe8019", 235, 208],
+    ["#282828", "#8ec07c", 235, 108],
+    ["#282828", "#689d6a", 235, 72],
+    ["#282828", "#8f3f71", 235, 132],
+    ]
 ```
 
 ### tabline
@@ -776,7 +774,7 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
 
 | Mappings    | Description                                                      |
-| ---------   | ---------------------------------------------------------------- |
+| ----------- | ---------------------------------------------------------------- |
 | `SPC h SPC` | discover SpaceVim documentation, layers and packages using unite |
 | `SPC h i`   | get help with the symbol at point                                |
 | `SPC h k`   | show top-level bindings with which-key                           |
@@ -784,9 +782,9 @@ Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like 
 
 Reporting an issue:
 
-| Mappings | Description                                                 |
-| -------- | ----------------------------------------------------------- |
-| `SPC h I`| Open SpaceVim GitHub issue page with pre-filled information |
+| Mappings  | Description                                                 |
+| --------- | ----------------------------------------------------------- |
+| `SPC h I` | Open SpaceVim GitHub issue page with pre-filled information |
 
 #### Available layers
 
@@ -1693,4 +1691,4 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 
 <!-- SpaceVim Achievements end -->
 
-<!-- vim:set nowrap: -->
+<!-- vim:set wrap: -->

@@ -18,13 +18,14 @@ lang: cn
   - [更新插件](#更新插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
+  - [Vim 兼容模式](#vim-兼容模式)
+  - [私有模块](#私有模块)
 - [概念](#概念)
 - [优雅的界面](#优雅的界面)
-  - [主题](#主题)
+  - [颜色主题](#颜色主题)
     - [字体](#字体)
     - [界面元素切换](#界面元素切换)
-    - [状态栏 & 标签栏](#状态栏--标签栏)
-      - [状态栏](#状态栏)
+  - [状态栏](#状态栏)
       - [标签栏](#标签栏)
   - [手册](#手册)
     - [自动补全](#自动补全)
@@ -229,7 +230,50 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.toml` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
-所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。
+所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称未原先 Vim 脚本中使用的变量名称去处 `g:spacevim_` 前缀。
+
+如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+
+
+```vim
+call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+```
+
+### Vim 兼容模式
+
+以下为 SpaceVim 中与 Vim 默认情况下的一些差异，而在兼容模式下，
+以下所有差异将不存在，可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式。
+
+- Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
+它是 `Windows` 快捷键的前缀（可以在配置文件中设置成其他按键）。
+如果希望回复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 使用一个空字符串来禁用这一功能。
+
+- Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
+可设置 `enable_language_specific_leader = false`。
+
+- Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
+即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其他按键。
+
+- 命令行模式下 `<C-a>` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
+
+### 私有模块
+
+这一部分简单介绍了模块的组成，更多关于新建模块的内容可以阅读
+SpaceVim 的[模块首页](layers/)。
+
+**目的**
+
+使用模块的方式来组织和管理插件，将相关功能的插件组织成一个模块，启用/禁用效率更加高。同时也节省了很多寻找插件和配置插件的时间。
+
+**结构**
+
+在 SpaceVim 中，一个模块是一单个 Vim 文件，比如，`autocomplete` 模块存储在 `autoload/SpaceVim/layers/autocomplete.vim`，在这个文件内有以下几种公共函数：
+
+- `SpaceVim#layers#autocomplete#plugins()`: 返回该模块插件列表
+- `SpaceVim#layers#autocomplete#config()`: 模块相关设置
+- `SpaceVim#layers#autocomplete#set_variable()`: 模块选项设置函数
+
 
 ## 概念
 
@@ -243,36 +287,46 @@ SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复�
 
 ## 优雅的界面
 
-SpaceVim 集成了多种使用UI插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
+SpaceVim  集成了多种使用 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
-### 主题
+### 颜色主题
 
-SpaceVim 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 <kbd>:h gruvbox</kbd>.
+默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 `:h gruvbox`。
 
-如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.vim` 中修改 `g:g:spacevim_colorscheme`。例如，使用 [vim-one with dark colorscheme](https://github.com/rakr/vim-one)
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`:
 
-```vim
-let g:spacevim_colorscheme = 'one'
-let g:spacevim_colorscheme_bg = 'dark'
+```toml
+[options]
+    colorscheme = "desert"
+    colorscheme_bg = "dark"
 ```
 
 | 快捷键             | 描述                 |
 | ------------------ | -------------------- |
-| <kbd>SPC T n</kbd> | 切换至下一个随机主题 |
-| <kbd>SPC T s</kbd> | 通过 Unite 选择主题  |
+| `SPC T n` | 切换至下一个随机主题 |
+| `SPC T s` | 通过 Unite 选择主题  |
 
-可以在[主题模块](http://spacevim.org/layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
+可以在[主题模块](layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
 **注意**:
 
-SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色，可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
+SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色。
+可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
+
+如果你的终端不支持真色，可以在 SpaceVim 用户配置 `[options]` 中禁用真色支持：
+
+```toml
+    guicolors = false
+```
 
 #### 字体
 
-在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline. 如果你也喜欢这一字体，建议将这一字体安装到系统中。如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `g:spacevim_guifont`，默认值为:
+在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline.
+如果你也喜欢这一字体，建议将这一字体安装到系统中。
+如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `guifont`，默认值为:
 
-```vim
-let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+```toml
+    guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
@@ -299,24 +353,8 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `SPC T m`   | 显示/隐藏菜单栏                           |
 | `SPC T t`   | 显示/隐藏工具栏                           |
 
-#### 状态栏 & 标签栏
 
-状态栏和工具栏是高度定制的模块，提供了如下特性：
-
-- 展示 buffer 或者 Tab 的序列号
-- 展示当前模式
-- 展示 git 相关信息
-- 展示语法检查信息
-- 展示 trailing line 的行号
-- 展示当前 SpaceVim 已启用的功能
-- 展示文件信息
-- 展示搜索结果序号
-
-| 快捷键      | 描述               |
-| ----------- | ------------------ |
-| `SPC [1-9]` | 跳至制定序号的窗口 |
-
-##### 状态栏
+### 状态栏
 
 `core#statusline` 模块提供了一个高度定制的状态栏，提供如下特性，这一模块的灵感来自于 spacemacs 的状态栏。
 
@@ -326,6 +364,11 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 - 显示/隐藏语法检查信息
 - 显示/隐藏电池信息
 - 显示/隐藏 SpaceVim 功能启用状态
+- 显示版本控制信息（需要 `git` 和 `VersionControl` 模块）
+
+| 快捷键      | 描述               |
+| ----------- | ------------------ |
+| `SPC [1-9]` | 跳至制定序号的窗口 |
 
 默认主题 gruvbox 的状态栏颜色和模式对照表：
 
@@ -353,25 +396,19 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
 | `SPC t m v` | 显示/隐藏版本控制信息                                               |
 
-**Powerline 字体安装:**
+**nerd 字体安装:**
 
-SpaceVim 默认使用 [DejaVu Sans Mono for Powerline](https://github.com/powerline/fonts/tree/master/DejaVuSansMono), 为了使状态栏得以正常显示，你需要安装这一字体。如果需要在状态栏中展示其他类型的分割符，则需要安装 [powerline extra symbols](https://github.com/ryanoasis/powerline-extra-symbols).
+SpaceVim 默认使用 nerd fonts，可参阅其安装指南进行安装。
 
 **语法检查信息:**
 
 状态栏中语法检查信息元素如果被启用了，当语法检查结束后，会在状态栏中展示当前语法错误和警告的数量。
-
-TODO： add a picture
-
-_语法检查信息_
 
 **搜索结果信息:**
 
 当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，类似于 `20/22` 显示搜索结果总数以及当前结果的序号。具体的效果图如下：
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
-
-_search index in statusline_
 
 **电池状态信息:**
 
@@ -389,10 +426,10 @@ _acpi_ 可展示电池电量剩余百分比.
 
 **状态栏分割符:**
 
-可通过使用 `g:spacevim_statusline_separator` 来定制状态栏分割符，例如使用非常常用的方向箭头作为状态栏分割符：
+可通过使用 `statusline_separator` 来定制状态栏分割符，例如使用非常常用的方向箭头作为状态栏分割符：
 
-```vim
-let g:spacevim_statusline_separator = 'arrow'
+```toml
+  statusline_separator = 'arrow'
 ```
 
 SpaceVim 所支持的分割符以及截图如下：
@@ -407,17 +444,75 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **SpaceVim 功能模块:**
 
-功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `let g:spacevim_statusline_unicode_symbols = 0` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
+功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `statusline_unicode_symbols = false` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
 
 状态栏中功能模块内的字符显示与否，同如下快捷键功能保持一致：
 
 | 快捷键    | Unicode | ASCII | 功能             |
 | --------- | ------- | ----- | ---------------- |
-| `SPC t 8` | ⑧       | 8     | 高亮80列之后信息 |
-| `SPC t f` | ⓕ       | f     | 高亮第80列       |
+| `SPC t 8` | ⑧       | 8     | 高亮指定列后所有字符 |
+| `SPC t f` | ⓕ       | f     | 高亮指定列字符       |
 | `SPC t s` | ⓢ       | s     | 语法检查         |
 | `SPC t S` | Ⓢ       | S     | 拼写检查         |
 | `SPC t w` | ⓦ       | w     | 行尾空格检查     |
+
+**状态栏的颜色**
+
+当前版本的状态栏支持 `gruvbox`/`molokai`/`nord`/`one`/`onedark`，如果你需要使用其他主题，
+可以通过以下木板来设置：
+
+```vim
+" the theme colors should be
+" [
+"    \ [ a_guifg,  a_guibg,  a_ctermfg,  a_ctermbg],
+"    \ [ b_guifg,  b_guibg,  b_ctermfg,  b_ctermbg],
+"    \ [ c_guifg,  c_guibg,  c_ctermfg,  c_ctermbg],
+"    \ [ z_guibg,  z_ctermbg],
+"    \ [ i_guifg,  i_guibg,  i_ctermfg,  i_ctermbg],
+"    \ [ v_guifg,  v_guibg,  v_ctermfg,  v_ctermbg],
+"    \ [ r_guifg,  r_guibg,  r_ctermfg,  r_ctermbg],
+"    \ [ ii_guifg, ii_guibg, ii_ctermfg, ii_ctermbg],
+"    \ [ in_guifg, in_guibg, in_ctermfg, in_ctermbg],
+" \ ]
+" group_a: window id
+" group_b/group_c: stausline sections
+" group_z: empty area
+" group_i: window id in insert mode
+" group_v: window id in visual mode
+" group_r: window id in select mode
+" group_ii: window id in iedit-insert mode
+" group_in: windows id in iedit-normal mode
+function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
+    return [
+                \ ['#282828', '#a89984', 246, 235],
+                \ ['#a89984', '#504945', 239, 246],
+                \ ['#a89984', '#3c3836', 237, 246],
+                \ ['#665c54', 241],
+                \ ['#282828', '#83a598', 235, 109],
+                \ ['#282828', '#fe8019', 235, 208],
+                \ ['#282828', '#8ec07c', 235, 108],
+                \ ['#282828', '#689d6a', 235, 72],
+                \ ['#282828', '#8f3f71', 235, 132],
+                \ ]
+endfunction
+```
+
+这一模板是 gruvbox 主题的，如果你需要在切换主题是，状态栏都使用同一种颜色主题，
+可以设置 `custom_color_palette`：
+
+```toml
+custom_color_palette = [
+    ["#282828", "#a89984", 246, 235],
+    ["#a89984", "#504945", 239, 246],
+    ["#a89984", "#3c3836", 237, 246],
+    ["#665c54", 241],
+    ["#282828", "#83a598", 235, 109],
+    ["#282828", "#fe8019", 235, 208],
+    ["#282828", "#8ec07c", 235, 108],
+    ["#282828", "#689d6a", 235, 72],
+    ["#282828", "#8f3f71", 235, 132],
+    ]
+```
 
 ##### 标签栏
 
@@ -1975,4 +2070,4 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
 
-<!-- vim:set nowrap: -->
+<!-- vim:set wrap: -->
