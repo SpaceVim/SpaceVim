@@ -23,8 +23,8 @@ lang: cn
 - [概念](#概念)
 - [优雅的界面](#优雅的界面)
   - [颜色主题](#颜色主题)
-    - [字体](#字体)
-    - [界面元素切换](#界面元素切换)
+  - [字体](#字体)
+  - [界面元素切换](#界面元素切换)
   - [状态栏](#状态栏)
   - [标签栏](#标签栏)
 - [常规快捷键](#常规快捷键)
@@ -64,6 +64,7 @@ lang: cn
     - [使用额外工具](#使用额外工具)
       - [常用按键绑定](#常用按键绑定)
       - [在当前文件中进行搜索](#在当前文件中进行搜索)
+      - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
       - [在所有打开的缓冲区中进行搜索](#在所有打开的缓冲区中进行搜索)
       - [在任意目录中进行搜索](#在任意目录中进行搜索)
       - [在工程中进行搜索](#在工程中进行搜索)
@@ -89,8 +90,6 @@ lang: cn
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
 - [成就](#成就)
-  - [错误](#错误)
-  - [Stars, forks and watchers](#stars-forks-and-watchers)
 
 <!-- vim-markdown-toc -->
 
@@ -278,7 +277,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
     guicolors = false
 ```
 
-#### 字体
+### 字体
 
 在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline.
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
@@ -290,7 +289,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
 
-#### 界面元素切换
+### 界面元素切换
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
@@ -1212,6 +1211,23 @@ Notes:
 | `SPC s r r` | rg                                                  |
 | `SPC s r R` | rg with default input                               |
 
+##### 搜索当前文件所在的文件夹
+
+| Key Binding | Description                                                 |
+| ----------- | ----------------------------------------------------------- |
+| `SPC s d`   | searching in buffer directory with default tool             |
+| `SPC s D`   | searching in buffer directory cursor word with default tool |
+| `SPC s a d` | searching in buffer directory with ag                       |
+| `SPC s a D` | searching in buffer directory cursor word with ag           |
+| `SPC s g d` | searching in buffer directory with grep                     |
+| `SPC s g D` | searching in buffer directory cursor word with grep         |
+| `SPC s k d` | searching in buffer directory with ack                      |
+| `SPC s k D` | searching in buffer directory cursor word with ack          |
+| `SPC s r d` | searching in buffer directory with rg                       |
+| `SPC s r D` | searching in buffer directory cursor word with rg           |
+| `SPC s t d` | searching in buffer directory with pt                       |
+| `SPC s t D` | searching in buffer directory cursor word with pt           |
+
 ##### 在所有打开的缓冲区中进行搜索
 
 | Key Binding | Description                                         |
@@ -1617,13 +1633,13 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 
 ## 成就
 
-### 错误
+**错误**
 
 | Achievements                                                          | Account                                     |
 | --------------------------------------------------------------------- | ------------------------------------------- |
 | [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
 
-### Stars, forks and watchers
+**Stars, forks and watchers**
 
 | Achievements      | Account                                         |
 | ----------------- | ----------------------------------------------- |
