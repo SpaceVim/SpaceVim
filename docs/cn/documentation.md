@@ -28,7 +28,7 @@ lang: cn
   - [状态栏](#状态栏)
   - [标签栏](#标签栏)
 - [常规快捷键](#常规快捷键)
-  - [Window manager](#window-manager)
+  - [窗口管理器](#窗口管理器)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Native functions](#native-functions)
@@ -505,12 +505,12 @@ custom_color_palette = [
 
 ## 常规快捷键
 
-### Window manager
+### 窗口管理器
 
-Windows manager key bindings can only be used in normal mode. The default leader is `s`, you can
-can change it via `g:spacevim_windows_leader`
+窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀按键为 `s`，可以在配置文件中通过修改
+SpaceVim 选项 `window_leader` 的值来设为其他按键：
 
-| Key bindings    | Description                                                                                                                                                                                                                    |
+| 按键            | 描述                                                                                                                                                                                                                           |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `q`             | Smart buffer close                                                                                                                                                                                                             |
 | `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
