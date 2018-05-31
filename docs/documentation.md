@@ -58,7 +58,6 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Open file with file tree.](#open-file-with-file-tree)
   - [Commands starting with `g`](#commands-starting-with-g)
   - [Commands starting with `z`](#commands-starting-with-z)
-  - [Auto-saving](#auto-saving)
   - [Searching](#searching)
     - [With an external tool](#with-an-external-tool)
       - [Useful key bindings](#useful-key-bindings)
@@ -794,7 +793,17 @@ All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
 All plugins can be easily discovered via `<leader> l p`.
 
-**New packages from ELPA repositories**
+**Add custom plugins**
+
+If you want to add plugin from github, just add the repo name to the SpaceVim option `custom_plugins`:
+
+```toml
+# custom plugins {{{
+[[custom_plugins]]
+name = 'lilydjwg/colorizer'
+merged = 0
+# }}}
+```
 
 #### Toggles
 
@@ -1030,12 +1039,14 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 
 SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
 
-```vim
-" the default value is vimfiler
-let g:spacevim_filemanager = 'nerdtree'
+```toml
+# the default value is vimfiler
+filemanager = "nerdtree"
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default. to enable this feature, add `let g:spacevim_enable_vimfiler_gitstatus = 1` to your custom config. here is any picture for this feature:
+VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so
+it is not enabled by default. to enable this feature, add `enable_vimfiler_gitstatus = true` to your custom config.
+here is any picture for this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
 
@@ -1180,8 +1191,6 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 | `zx`        | re-apply foldlevel and do "zV"               |
 | `zz`        | smart scroll                                 |
 | `z<Left>`   | scroll screen N characters to right          |
-
-### Auto-saving
 
 ### Searching
 
@@ -1691,4 +1700,4 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 
 <!-- SpaceVim Achievements end -->
 
-<!-- vim:set wrap: -->
+<!-- vim:set nowrap: -->
