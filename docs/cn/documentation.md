@@ -1397,6 +1397,7 @@ In highlight symbol transient state:
 | `SPC x a ;`   | align region at ;                                                    |
 | `SPC x a =`   | align region at =                                                    |
 | `SPC x a ¦`   | align region at ¦                                                    |
+| `SPC x a |`   | align region at |                                                    |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`   | align current indentation region using default rules (TODO)          |
 | `SPC x a l`   | left-align with evil-lion (TODO)                                     |
