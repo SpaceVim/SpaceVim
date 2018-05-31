@@ -1,6 +1,6 @@
 ---
 title:  "Quick start guide"
-description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
+description: "A quick start guide which will tell you how to install and config SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
 # Quick start guide
