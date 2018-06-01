@@ -20,7 +20,10 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
         \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
         \ ]
 
-  if !s:flow
+  if s:enable_flow_syntax
+    call add(plugins, ['flowtype/vim-flow.vim', { 'on_ft': 'javascript' }])
+    let g:flow#enable = 0
+  else
     call add(plugins, ['othree/yajs.vim', { 'on_ft': 'javascript' }])
   endif
 
@@ -35,11 +38,11 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
 endfunction
 
 let s:auto_fix = 0
-let s:flow = 0
+let s:enable_flow_syntax = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
-  let s:flow = get(a:var, 'flow', 0)
+  let s:enable_flow_syntax = get(a:var, 'flow', 0)
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
