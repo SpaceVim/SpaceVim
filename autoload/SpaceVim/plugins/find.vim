@@ -81,10 +81,14 @@ function! SpaceVim#plugins#find#open() abort
 endfunction
 
 function! s:handle_command_line(cmd) abort
+  if empty(a:cmd)
+    return
+  endif
   let argvs = filter(deepcopy(s:options), 'v:key =~ split(a:cmd)[-1]')
   let line = []
   for item in items(argvs)
     call add(line, item[0] . ' ' . item[1])
   endfor
+  normal! "_dG
   call setline(1, line)
 endfunction
