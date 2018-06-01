@@ -16,6 +16,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Update plugins](#update-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
+  - [Bootstrap Functions](#bootstrap-functions)
   - [Vim Compatible Mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
 - [Concepts](#concepts)
@@ -210,6 +211,23 @@ if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVi
 ```vim
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
 call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+```
+
+### Bootstrap Functions
+
+SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable it you need to add `bootstrap_before = "myspacevim#before"` or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
+
+The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for exmaple
+
+```vim
+func! myspacevim#before() abort
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <esc>
+endf
+
+func! myspacevim#after() abort
+    iunmap jk
+endf
 ```
 
 ### Vim Compatible Mode
