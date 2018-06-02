@@ -34,7 +34,12 @@ echom s:file.pathSeparator
 
 here is the list of all available APIs, and welcome to contribute to SpaceVim.
 
+<!-- SpaceVim api list start -->
+
 | name   |             description            | documentation                             |
 | ------ | :--------------------------------: | ----------------------------------------- |
 | file   | basic api about file and directory | [readme](https://spacevim.org/api/file)   |
 | system |       basic api about system       | [readme](https://spacevim.org/api/system) |
+
+<!-- SpaceVim api list end -->
+

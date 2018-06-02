@@ -26,8 +26,13 @@ echom s:file.pathSeparator
 
 以下为可用的公共 apis，欢迎贡献新的 apis
 
+<!-- SpaceVim api cn list start -->
+
 名称 | 描述 | 文档
 ----- |:----:| -------
 file  | 文件 API | [readme](https://spacevim.org/cn/api/file)
 system | 系统 API | [readme](https://spacevim.org/cn/api/system)
 job | 异步协同 API | [readme](https://spacevim.org/cn/api/job)
+
+<!-- SpaceVim api cn list end -->
+
