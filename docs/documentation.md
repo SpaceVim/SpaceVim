@@ -308,7 +308,7 @@ the variable colorschemes. For instance, to specify `desert`:
 | `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
 | `SPC T s` | select a theme using a unite buffer.                           |
 
-all the included colorscheme can be found in [colorscheme layer](layers/colorscheme/).
+all the included colorscheme can be found in [colorscheme layer](../layers/colorscheme/).
 
 **NOTE**:
 

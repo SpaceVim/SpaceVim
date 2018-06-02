@@ -264,7 +264,7 @@ SpaceVim  集成了多种使用 UI 插件，如常用的文件树、语法树等
 | `SPC T n` | 切换至下一个随机主题 |
 | `SPC T s` | 通过 Unite 选择主题  |
 
-可以在[主题模块](layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
+可以在[主题模块](../layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
 **注意**:
 

@@ -25,7 +25,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 
 ```toml
 [[layers]]
-  name = 'colorscheme'
+  name = "colorscheme"
 ```
 
 ## 模块配置
@@ -57,7 +57,7 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
 ```toml
 [options]
   colorscheme = "onedark"
-  colorscheme_bg = 'dark'
+  colorscheme_bg = "dark"
 ```
 
 这一模块提供了，在启动时随机选择主题，而不是使用默认的主题。这一特性可以很
@@ -65,6 +65,6 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
 
 ```toml
 [[layers]]
-  name = 'colorscheme'
+  name = "colorscheme"
   random-theme = true
 ```
