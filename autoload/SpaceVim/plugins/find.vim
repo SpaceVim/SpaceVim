@@ -72,8 +72,18 @@ let s:options = {
       \ '-xtype' : '此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查'
       \ }
 
+function! s:start_find() abort
+  call s:MPT._clear_prompt()
+  let s:MPT._quit = 1
+  let line = getline('.')
+  noautocmd q
+endfunction
+
 function! SpaceVim#plugins#find#open() abort
   let s:MPT._handle_fly = function('s:handle_command_line')
+  let s:MPT._function_key = {
+        \ "\<Return>" : function('s:start_find'),
+        \ }
   noautocmd rightbelow split __spacevim_find_argv__
   let s:find_argvs_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
