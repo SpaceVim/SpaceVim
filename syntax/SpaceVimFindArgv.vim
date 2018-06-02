@@ -4,5 +4,7 @@ endif
 let b:current_syntax = "SpaceVimFindArgv"
 syntax case ignore
 
-syn match CMDFindArgvs /-[a-zA-Z]*\ /
-hi def link CMDFindArgvs Comment
+syn match CMDFindArgvOpt /-[a-zA-Z]*\ /
+syn match CMDFindArgvDesc /\(-[a-zA-Z0-1]*\ \)\@<=.*/
+hi def link CMDFindArgvOpt Number
+hi def link CMDFindArgvDesc Comment

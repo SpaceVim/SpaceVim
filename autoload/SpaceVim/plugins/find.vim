@@ -30,7 +30,6 @@ let s:options = {
       \ '-fls' : '此参数的效果和指定“-ls”参数类似，但会把结果保存为指定的列表文件',
       \ '-follow' : '排除符号连接',
       \ '-fprint' : '此参数的效果和指定“-print”参数类似，但会把结果保存成指定的列表文件',
-      \ '-fprint0' : '此参数的效果和指定“-print0”参数类似，但会把结果保存成指定的列表文件',
       \ '-fprintf' : '此参数的效果和指定“-printf”参数类似，但会把结果保存成指定的列表文件',
       \ '-fstype' : '只寻找该文件系统类型下的文件或目录',
       \ '-gid' : '查找符合指定之群组识别码的文件或目录',
@@ -77,6 +76,7 @@ function! s:start_find() abort
   let s:MPT._quit = 1
   let line = getline('.')
   noautocmd q
+  redraw!
 endfunction
 
 function! SpaceVim#plugins#find#open() abort
@@ -96,10 +96,13 @@ function! s:handle_command_line(cmd) abort
   if empty(a:cmd)
     return
   endif
-  let argvs = filter(deepcopy(s:options), 'v:key =~ split(a:cmd)[-1]')
-  let line = []
-  for item in items(argvs)
-    call add(line, item[0] . repeat(' ', 15 - len(item[0])) . item[1])
-  endfor
-  call setline(1, line)
+  let argv = split(a:cmd)[-1]
+  if argv =~# '^-[a-zA-Z0-1]*'
+    let argvs = filter(deepcopy(s:options), 'v:key =~ argv')
+    let line = []
+    for item in items(argvs)
+      call add(line, item[0] . repeat(' ', 15 - len(item[0])) . item[1])
+    endfor
+    call setline(1, line)
+  endif
 endfunction
