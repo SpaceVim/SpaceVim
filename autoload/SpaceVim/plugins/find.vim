@@ -77,18 +77,19 @@ function! SpaceVim#plugins#find#open() abort
   noautocmd rightbelow split __spacevim_find_argv__
   let s:find_argvs_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+  setf SpaceVimFindArgv
   call s:MPT.open()
 endfunction
 
 function! s:handle_command_line(cmd) abort
+  normal! "_dG
   if empty(a:cmd)
     return
   endif
   let argvs = filter(deepcopy(s:options), 'v:key =~ split(a:cmd)[-1]')
   let line = []
   for item in items(argvs)
-    call add(line, item[0] . ' ' . item[1])
+    call add(line, item[0] . repeat(' ', 15 - len(item[0])) . item[1])
   endfor
-  normal! "_dG
   call setline(1, line)
 endfunction
