@@ -816,11 +816,9 @@ All plugins can be easily discovered via `<leader> l p`.
 If you want to add plugin from github, just add the repo name to the SpaceVim option `custom_plugins`:
 
 ```toml
-# custom plugins {{{
 [[custom_plugins]]
 name = 'lilydjwg/colorizer'
 merged = 0
-# }}}
 ```
 
 #### Toggles

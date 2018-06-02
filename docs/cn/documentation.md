@@ -219,7 +219,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 ### 私有模块
 
 这一部分简单介绍了模块的组成，更多关于新建模块的内容可以阅读
-SpaceVim 的[模块首页](layers/)。
+SpaceVim 的[模块首页](../layers/)。
 
 **目的**
 
@@ -753,11 +753,9 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的
 如果添加来自于 github.com 的插件，可以 `用户名/仓库名` 这一格式，将该插件添加到 `custom_plugins`，示例如下：
 
 ```toml
-# custom plugins {{{
 [[custom_plugins]]
 name = 'lilydjwg/colorizer'
 merged = 0
-# }}}
 ```
 
 #### 界面元素显示切换
