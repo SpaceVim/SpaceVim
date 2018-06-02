@@ -79,10 +79,38 @@ function! s:start_find() abort
   redraw!
 endfunction
 
+function! s:next_item() abort
+  if line('.') == line('$')
+    normal! gg
+  else
+    normal! j
+  endif
+  let argv = matchstr(getline('.'), '^-[a-zA-Z0-9]')
+  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '-[a-zA-Z]*$', argv, 'g')
+  redraw
+  call s:MPT._build_prompt()
+endfunction
+
+function! s:previous_item() abort
+  if line('.') == 1
+    normal! G
+  else
+    normal! k
+  endif
+  let argv = matchstr(getline('.'), '^-[a-zA-Z0-9]')
+  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '-[a-zA-Z]*$', argv, 'g')
+  redraw
+  call s:MPT._build_prompt()
+endfunction
+
 function! SpaceVim#plugins#find#open() abort
   let s:MPT._handle_fly = function('s:handle_command_line')
   let s:MPT._function_key = {
         \ "\<Return>" : function('s:start_find'),
+        \ "\<Tab>" : function('s:next_item'),
+        \ "\<C-j>" : function('s:next_item'),
+        \ "\<S-tab>" : function('s:previous_item'),
+        \ "\<C-k>" : function('s:previous_item'),
         \ }
   noautocmd rightbelow split __spacevim_find_argv__
   let s:find_argvs_buffer_id = bufnr('%')
