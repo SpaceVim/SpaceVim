@@ -8,14 +8,6 @@
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
-" Fsep && Psep
-if has('win16') || has('win32') || has('win64')
-  let s:Psep = ';'
-  let s:Fsep = '\'
-else
-  let s:Psep = ':'
-  let s:Fsep = '/'
-endif
 "Use English for anything in vim
 try
   if s:SYSTEM.isWindows
