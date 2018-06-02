@@ -62,7 +62,7 @@ let s:options = {
       \ '-regex' : '指定字符串作为寻找文件或目录的范本样式',
       \ '-size' : '查找符合指定的文件大小的文件',
       \ '-true' : '将find指令的回传值皆设为True',
-      \ '-typ' : '只寻找符合指定的文件类型的文件',
+      \ '-type' : '只寻找符合指定的文件类型的文件',
       \ '-uid' : '查找符合指定的用户识别码的文件或目录',
       \ '-used' : '查找文件或目录被更改之后在指定时间曾被存取过的文件或目录，单位以日计算',
       \ '-user' : '查找符和指定的拥有者名称的文件或目录',
@@ -122,6 +122,8 @@ endfunction
 function! s:handle_command_line(cmd) abort
   normal! "_dG
   if empty(a:cmd)
+    redraw
+    call s:MPT._build_prompt()
     return
   endif
   let argv = split(a:cmd)[-1]
@@ -133,4 +135,6 @@ function! s:handle_command_line(cmd) abort
     endfor
     call setline(1, line)
   endif
+  redraw
+  call s:MPT._build_prompt()
 endfunction
