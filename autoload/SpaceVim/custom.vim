@@ -121,7 +121,7 @@ endfunction
 function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist 
   if filereadable('.SpaceVim.d/init.toml')
-    let g:_spacevim_config_path = '.SpaceVim.d/init.toml'
+    let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
     call SpaceVim#logger#info('find config file: ' . local_conf)
@@ -141,7 +141,7 @@ function! SpaceVim#custom#load() abort
       call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
-    let g:_spacevim_config_path = '.SpaceVim.d/init.vim'
+    let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.vim', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config

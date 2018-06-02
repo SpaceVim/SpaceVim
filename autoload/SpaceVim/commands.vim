@@ -80,10 +80,18 @@ endfunction
 " @vimlint(EVL103, 0, a:CursorPos)
 
 function! SpaceVim#commands#config(...) abort
-  if (a:0 > 0 && a:1 ==# '-g') || a:0 == 0
-    exe 'tabnew' g:_spacevim_global_config_path
-  elseif  a:0 > 0 && a:1 ==# '-l'
-    exe 'tabnew' g:_spacevim_config_path
+  if a:0 > 0
+    if a:1 ==# '-g'
+      exe 'tabnew' g:_spacevim_global_config_path
+    elseif  a:1 ==# '-l'
+      exe 'tabnew' g:_spacevim_config_path
+    endif
+  else
+    if g:spacevim_force_global_config
+      exe 'tabnew' g:_spacevim_global_config_path
+    else
+      exe 'tabnew' g:_spacevim_config_path
+    endif
   endif
 endfunction
 
