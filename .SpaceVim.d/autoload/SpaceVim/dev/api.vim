@@ -47,7 +47,7 @@ function! s:find_position_cn() abort
 endfunction
 
 function! s:generate_content() abort
-  let content = ['', '## Available APIs', '']
+  let content = ['', '## Available APIs', '', 'here is the list of all available APIs, and welcome to contribute to SpaceVim.', '']
   let content += s:layer_list()
   return content
 endfunction
@@ -64,7 +64,6 @@ function! s:layer_list() abort
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/apis.md'))
   for layer in layers
     let name = split(layer, '/docs/api/')[1][:-4] . '/'
     let url = name
@@ -85,7 +84,6 @@ function! s:layer_list_cn() abort
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/cn/apis.md'))
   for layer in layers
     let name = split(layer, '/docs/cn/api/')[1][:-4] . '/'
     let url = name

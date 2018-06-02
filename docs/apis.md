@@ -30,16 +30,15 @@ echom s:file.separator
 echom s:file.pathSeparator
 ```
 
+<!-- SpaceVim api list start -->
+
 ## Available APIs
 
 here is the list of all available APIs, and welcome to contribute to SpaceVim.
 
-<!-- SpaceVim api list start -->
-
-| name   |             description            | documentation                             |
-| ------ | :--------------------------------: | ----------------------------------------- |
-| file   | basic api about file and directory | [readme](https://spacevim.org/api/file)   |
-| system |       basic api about system       | [readme](https://spacevim.org/api/system) |
+| Name              | Description                                                         |
+| ----------------- | ------------------------------------------------------------------- |
+| [file](file/)     | file API provides some besic functions and values for current os.   |
+| [system](system/) | system API provides some besic functions and values for current os. |
 
 <!-- SpaceVim api list end -->
-

@@ -1,14 +1,15 @@
 ---
 title: "file api"
+description: "file API provides some besic functions and values for current os."
 ---
 
-# [APIs](https://spacevim.org/apis) : file
+# [Available APIs](../) >> file
 
 ## values
 
-name   | values | description
------ |:----:| ------------------
-separator | `/` or `\` | The system-dependent name-separator character.
-pathSeparator | `:` or `;` |  The system-dependent path-separator character.
+| name          |                            values                            | description                                    |
+| ------------- | :----------------------------------------------------------: | ---------------------------------------------- |
+| separator     | `/` or `\` \| The system-dependent name-separator character. |                                                |
+| pathSeparator |                          `:` or `;`                          | The system-dependent path-separator character. |
 
 ## functions
