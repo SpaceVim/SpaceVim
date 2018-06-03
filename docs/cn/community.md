@@ -50,8 +50,6 @@ lang: cn
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/cn` SpaceVim gitter 聊天室](https://gitter.im/SpaceVim/cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` SpaceVim 中文 telegram 群](https://t.me/SpaceVim_cn)
-- <i class="fab fa-qq"></i> [`121056965` SpaceVim 中文交流 ① 群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-- <i class="fab fa-qq"></i> [`755208473` SpaceVim 中文交流 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
-- <i class="fab fa-qq"></i> [`748697811` SpaceVim 中文交流 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
-
-**注：** 为了避免各种广告营销号的加入，QQ 群为付费交流群，进群后请不要发跟 SpaceVim 完全无关的内容。
+- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+- <i class="fab fa-qq"></i> [`755208473` Vim/SpaceVim 用户 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
+- <i class="fab fa-qq"></i> [`748697811` Vim/SpaceVim 用户 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
