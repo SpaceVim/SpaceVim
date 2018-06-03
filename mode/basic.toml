@@ -27,6 +27,7 @@
     statusline_unicode_symbols = false
     # Enable vim compatible mode, avoid changing origin vim key bindings
     vimcompatible = true
+
 # Enable autocomplete layer
 [[layers]]
 name = 'autocomplete'

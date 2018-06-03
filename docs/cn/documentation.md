@@ -274,7 +274,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 如果你的终端不支持真色，可以在 SpaceVim 用户配置 `[options]` 中禁用真色支持：
 
 ```toml
-    guicolors = false
+    enable_guicolors = false
 ```
 
 ### 字体
@@ -284,7 +284,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `guifont`，默认值为:
 
 ```toml
-    guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+    guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
 ```
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。

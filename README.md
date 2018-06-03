@@ -55,17 +55,21 @@ here is an example for using toml as SpaceVim config:
     # if you want to use more colorscheme, please load the colorscheme
     # layer
     colorscheme = "gruvbox"
-    colorscheme_bg = "dark"
+    background = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
-    guicolors = true
+    enable_guicolors = false
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_inactive_separator = "bar"
     buffer_index_type = 4
-    filetype_icon = false
+    windows_index_type = 3
+    enable_tabline_filetype_icon = false
     enable_statusline_display_mode = false
+    statusline_unicode_symbols = false
+    # Enable vim compatible mode, avoid changing origin vim key bindings
+    vimcompatible = true
 
 # Enable autocomplete layer
 [[layers]]

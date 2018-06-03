@@ -62,7 +62,7 @@ documentation.
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors, the type of the value is boolean, true or false.
-    guicolors = true
+    enable_guicolors = true
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
