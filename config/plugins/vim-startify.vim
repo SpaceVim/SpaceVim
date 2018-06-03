@@ -62,12 +62,17 @@ if !exists('g:startify_custom_header')
 endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
 
-function! FileIcon(path)
-  let icon = s:FILE.fticon(a:path)
-  return empty(icon) ? ' ' : icon
-endfunction
+if g:spacevim_enable_tabline_filetype_icon
 
-function! StartifyEntryFormat()
-  return 'FileIcon(entry_path) ."  ". entry_path'
-endfunction
+  function! FileIcon(path)
+    let icon = s:FILE.fticon(a:path)
+    return empty(icon) ? ' ' : icon
+  endfunction
+
+  function! StartifyEntryFormat()
+    return 'FileIcon(entry_path) ."  ". entry_path'
+  endfunction
+
+endif
+
 " vim:set et sw=2:
