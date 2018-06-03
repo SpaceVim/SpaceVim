@@ -6,7 +6,17 @@
 " License: GPLv3
 "=============================================================================
 
-" statusline
+""
+" @section core#statusline, layer-core-statusline
+" @parentsection layers
+" This layer provides default statusline for SpaceVim
+" If you want to use airline's statusline, just disable this layer
+" >
+"   [[layers]]
+"     name = "core#statusline"
+"     enable = false
+" <
+
 scriptencoding utf-8
 let g:_spacevim_statusline_loaded = 1
 " APIs

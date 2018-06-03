@@ -10,6 +10,12 @@
 " @section core#tabline, layer-core-tabline
 " @parentsection layers
 " This layer provides default tabline for SpaceVim
+" If you want to use airline's tabline, just disable this layer
+" >
+"   [[layers]]
+"     name = "core#tabline"
+"     enable = false
+" <
 
 scriptencoding utf-8
 let s:messletters = SpaceVim#api#import('messletters')
@@ -32,7 +38,7 @@ let s:separators = {
 
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
-      \ 'bar' : ["|", "|"],
+      \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
 
