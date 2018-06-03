@@ -25,7 +25,7 @@ To use this configuration layer, add this snippet to your custom configuration f
 
 ```toml
 [[layers]]
-  name = 'colorscheme'
+  name = "colorscheme"
 ```
 
 ## Configuration
@@ -55,13 +55,13 @@ Vim background color. SpaceVim support to change the background color with
 ```toml
 [options]
   colorscheme = "onedark"
-  colorscheme_bg = 'dark'
+  colorscheme_bg = "dark"
 ```
 
 colorscheme layer support random colorscheme on startup. just load this layer with layer option `random-theme`
 
 ```toml
 [[layers]]
-  name = 'colorscheme'
+  name = "colorscheme"
   random-theme = true
 ```

@@ -9,9 +9,9 @@ function! WINDOWS()
     return (has('win16') || has('win32') || has('win64'))
 endfunction
 function! OnmiConfigForJsp()
-    let pos1 = search("</script>","nb",line("w0"))
-    let pos2 = search("<script","nb",line("w0"))
-    let pos3 = search("</script>","n",line("w$"))
+    let pos1 = search('</script>','nb',line('w0'))
+    let pos2 = search('<script','nb',line('w0'))
+    let pos3 = search('</script>','n',line('w$'))
     let pos0 = line('.')
     if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
         set omnifunc=javascriptcomplete#CompleteJS
@@ -37,7 +37,7 @@ endf
 function! ToggleBG()
     let s:tbg = &background
     " Inversion
-    if s:tbg == "dark"
+    if s:tbg ==# 'dark'
         set background=light
     else
         set background=dark
@@ -46,7 +46,7 @@ endfunction
 function! BracketsFunc()
     let line = getline('.')
     let col = col('.')
-    if line[col - 2] == "]"
+    if line[col - 2] ==# ']'
         return "{}\<esc>i"
     else
         return "{\<cr>}\<esc>O"
@@ -191,11 +191,3 @@ fu! UpdateStarredRepos()
     endfor
     return 1
 endf
-
-
-function! TestBot(argv) abort
-endfunction
-  
-function! TestBot(argv) abort
-  
-endfunction

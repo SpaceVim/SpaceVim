@@ -308,7 +308,7 @@ the variable colorschemes. For instance, to specify `desert`:
 | `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
 | `SPC T s` | select a theme using a unite buffer.                           |
 
-all the included colorscheme can be found in [colorscheme layer](layers/colorscheme/).
+all the included colorscheme can be found in [colorscheme layer](../layers/colorscheme/).
 
 **NOTE**:
 
@@ -816,11 +816,9 @@ All plugins can be easily discovered via `<leader> l p`.
 If you want to add plugin from github, just add the repo name to the SpaceVim option `custom_plugins`:
 
 ```toml
-# custom plugins {{{
 [[custom_plugins]]
 name = 'lilydjwg/colorizer'
 merged = 0
-# }}}
 ```
 
 #### Toggles
