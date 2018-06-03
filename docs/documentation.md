@@ -319,7 +319,7 @@ If your terminal do not supports true colors, you can disable SpaceVim true colo
 in `[options]` section:
 
 ```toml
-    guicolors = false
+    enable_guicolors = false
 ```
 
 ### Font
