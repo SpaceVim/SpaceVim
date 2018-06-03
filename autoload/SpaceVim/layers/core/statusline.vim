@@ -139,9 +139,13 @@ function! s:major_mode() abort
 endfunction
 
 function! s:modes() abort
-  let m = ' ❖ '
+  if g:spacevim_statusline_unicode_symbols
+    let m = ' ❖ '
+  else
+    let m = ' # '
+  endif
   for mode in s:loaded_modes
-    if g:spacevim_statusline_unicode_symbols == 1
+    if g:spacevim_statusline_unicode_symbols
       let m .= s:modes[mode].icon . ' '
     else
       let m .= s:modes[mode].icon_asc . ' '
