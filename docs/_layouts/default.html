@@ -73,10 +73,6 @@
         {% if page.lang == "cn" %}
         <div id="title">
           <p>{{ site.description | default: site.github.project_tagline }}
-<form align="center" method="get" action="http://www.google.com/search" target="_self">
-<input type="hidden" name="sitesearch" value="spacevim.org" />
-<input type="text" name="q" maxlength="255" placeholder="Search with Google" />
-</form>
           </p>
           <hr>
           <p align="center">
@@ -92,10 +88,6 @@
         {% else %}
         <div id="title">
           <p>{{ site.description | default: site.github.project_tagline }}
-<form align="center" method="get" action="http://www.google.com/search" target="_self">
-<input type="hidden" name="sitesearch" value="spacevim.org" />
-<input type="text" name="q" maxlength="255" placeholder="Search with Google" />
-</form>
           </p>
           <hr>
           <p align="center">
@@ -154,11 +146,13 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
   <p align="center">
   <span class="credits right">网站源码位于 Github, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">帮助改进本页面</a> &mdash; 网站主题: <a href="https://twitter.com/michigangraham">mattgraham</a>,
   </span>
+  <input id="textbox" type="text" placeholder="Search on Google..." onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}" />
   </p>
   {% else %}
   <p align="center">
-  <span class="credits right">Hosted on GitHub, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">Help improve this page</a> &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a>,
+  <span class="credits right">Hosted on GitHub, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">Help improve this page</a> &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a>, 
   </span>
+  <input id="textbox" type="text" placeholder="Search on Google..." onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}" />
   </p>
   {% endif %}
   </root>
