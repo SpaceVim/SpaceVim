@@ -72,7 +72,12 @@
         </div>
         {% if page.lang == "cn" %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description | default: site.github.project_tagline }}
+<form align="center" method="get" action="http://www.google.com/search" target="_self">
+<input type="hidden" name="sitesearch" value="spacevim.org" />
+<input type="text" name="q" maxlength="255" placeholder="Search with Google" />
+</form>
+          </p>
           <hr>
           <p align="center">
           <b><a href="{{ site.url }}/cn/">主页</a></b> |
@@ -86,7 +91,12 @@
         </div>
         {% else %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description | default: site.github.project_tagline }}
+<form align="center" method="get" action="http://www.google.com/search" target="_self">
+<input type="hidden" name="sitesearch" value="spacevim.org" />
+<input type="text" name="q" maxlength="255" placeholder="Search with Google" />
+</form>
+          </p>
           <hr>
           <p align="center">
           <b><a href="{{ site.url }}">Home</a></b> |
