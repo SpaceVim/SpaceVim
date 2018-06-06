@@ -87,7 +87,8 @@ function! SpaceVim#commands#config(...) abort
       exe 'tabnew' g:_spacevim_config_path
     endif
   else
-    if g:spacevim_force_global_config
+    if g:spacevim_force_global_config ||
+          \ get(g:, '_spacevim_config_path', '0') ==# '0'
       exe 'tabnew' g:_spacevim_global_config_path
     else
       exe 'tabnew' g:_spacevim_config_path
