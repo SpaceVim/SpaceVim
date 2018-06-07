@@ -59,14 +59,26 @@ function! s:get_search_cmd(expr) abort
   endif
   let cmd += s:grep_default_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
-    return cmd + [a:expr] + s:grep_files
+    let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
-    return cmd + [a:expr] + [s:grep_files]
+    let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
-    return cmd + [a:expr] + [s:grep_dir]
+    let cmd += [a:expr] + [s:grep_dir]
   else
-    return cmd + [a:expr] + s:grep_ropt
+    let cmd += [a:expr] + s:grep_ropt
   endif
+  if has('win32')
+    set shell = powershell
+    let ext_cmd = ['|', 'select', '-first', '3000']
+    let cmd += ext_cmd
+    let cmd = join(cmd, ' ')
+  else
+    set shell=/bin/bash
+    let ext_cmd = ['|', 'head', '-3000']
+    let cmd += ext_cmd
+    let cmd = join(cmd, ' ')
+  endif
+  return cmd
 endfunction
 
 function! s:flygrep(expr) abort
