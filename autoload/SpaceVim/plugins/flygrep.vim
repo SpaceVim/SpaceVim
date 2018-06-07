@@ -68,16 +68,11 @@ function! s:get_search_cmd(expr) abort
     let cmd += [a:expr] + s:grep_ropt
   endif
   if has('win32')
-    set shell = powershell
-    let ext_cmd = ['|', 'select', '-first', '3000']
-    let cmd += ext_cmd
-    let cmd = join(cmd, ' ')
+    let cmd += ['\|', 'select', '\-first', '3000']
   else
-    set shell=/bin/bash
-    let ext_cmd = ['|', 'head', '-3000']
-    let cmd += ext_cmd
-    let cmd = join(cmd, ' ')
+    let cmd += ['\|', 'head', '\-3']
   endif
+  let cmd = join(cmd, ' ')
   return cmd
 endfunction
 
