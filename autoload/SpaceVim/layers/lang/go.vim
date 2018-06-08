@@ -44,7 +44,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:go_highlight_operators = 1
   let g:go_highlight_build_constraints = 1
   let g:go_fmt_command = 'goimports'
-  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+  let g:syntastic_go_checkers = ['golint', 'govet']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:go_snippet_engine = 'neosnippet'
 
@@ -69,34 +69,70 @@ endfunction
 
 function! s:language_specified_mappings() abort
 
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'],
-        \ '<Plug>(go-implements)',
-        \ 'go implements', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','f'],
-        \ '<Plug>(go-info)',
-        \ 'go info', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
-        \ '<Plug>(go-def)',
-        \ 'go info', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
-        \ '<Plug>(go-rename)',
-        \ 'go rename', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
-        \ '<Plug>(go-run)',
-        \ 'go run', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
+        \ ':GoAlternate<CR>',
+        \ 'go alternate', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','b'],
         \ '<Plug>(go-build)',
         \ 'go build', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
-        \ '<Plug>(go-test)',
-        \ 'go test', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','d'],
-        \ '<Plug>(go-doc)',
-        \ 'go doc', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
-        \ '<Plug>(go-doc-vertical)',
-        \ 'go doc (vertical)', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
         \ '<Plug>(go-coverage)',
         \ 'go coverage', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','d'],
+        \ '<Plug>(go-doc)',
+        \ 'go doc', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','D'],
+        \ '<Plug>(go-doc-vertical)',
+        \ 'go doc (vertical)', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
+        \ '<Plug>(go-rename)',
+        \ 'go rename', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
+        \ '<Plug>(go-def)',
+        \ 'go def', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','G'],
+        \ ':GoGenerate<CR>',
+        \ 'go generate', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','h'],
+        \ '<Plug>(go-info)',
+        \ 'go info', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'],
+        \ '<Plug>(go-implements)',
+        \ 'go implements', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
+        \ ':GoImpl<CR>',
+        \ 'impl stubs', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','k'],
+        \ ':GoAddTags<CR>',
+        \ 'add tags', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','K'],
+        \ ':GoRemoveTags<CR>',
+        \ 'remove tags', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','l'],
+        \ ':GoDecls<CR>',
+        \ 'decl file', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','L'],
+        \ ':GoDeclsDir<CR>',
+        \ 'decl dir', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','m'],
+        \ ':GoImports<CR>',
+        \ 'format imports', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
+        \ ':GoImport ',
+        \ 'add import', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ ':GoReferrers<CR>',
+        \ 'go referrers', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
+        \ ':GoFillStruct<CR>',
+        \ 'fill struct', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
+        \ '<Plug>(go-test)',
+        \ 'go test', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
+        \ ':GoFreevars<CR>',
+        \ 'freevars', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'],
+        \ '<Plug>(go-run)',
+        \ 'go run', 0)
 endfunction
