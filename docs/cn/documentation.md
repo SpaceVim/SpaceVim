@@ -624,7 +624,7 @@ features.
 
 **Key bindings**
 
-| Key bindings         | Discription                   |
+| Key bindings         | Description                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
