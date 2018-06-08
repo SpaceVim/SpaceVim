@@ -72,6 +72,7 @@ augroup spacevim_layer_lang_go
   " Add indentation level to tab-indentated files. 
   " Note: there is a blank space at the end of the late backslash
   autocmd FileType go setl list lcs=tab:\┊\ 
+  autocmd FileType go setl spell
 augroup END
 endfunction
 
