@@ -44,6 +44,7 @@ function! SpaceVim#layers#git#config() abort
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
+    autocmd FileType gitcommit setl spell 
     autocmd FileType gina-commit setl spell 
     autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     " Instead of reverting the cursor to the last position in the buffer, we
