@@ -217,7 +217,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 
 SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable it you need to add `bootstrap_before = "myspacevim#before"` or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
-The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for exmaple
+The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
 
 ```vim
 func! myspacevim#before() abort
