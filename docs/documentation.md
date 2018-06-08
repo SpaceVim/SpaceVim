@@ -330,7 +330,7 @@ to install it on your system if you wish to use it.
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+    guifont = 'DejaVu Sans Mono for Powerline:h11'
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
