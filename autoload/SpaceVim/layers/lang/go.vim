@@ -15,16 +15,28 @@
 " >
 "   Mode            Key             Function
 "   ---------------------------------------------
-"   normal          SPC l i         go implements
-"   normal          SPC l f         go info
-"   normal          SPC l g         go to declaration
-"   normal          SPC l e         go rename
-"   normal          SPC l r         go run
+"   normal          SPC l a         go alternate
 "   normal          SPC l b         go build
-"   normal          SPC l t         go test
-"   normal          SPC l d         go doc
-"   normal          SPC l v         go doc vertical
 "   normal          SPC l c         go coverage
+"   normal          SPC l d         go doc
+"   normal          SPC l D         go doc vertical
+"   normal          SPC l e         go rename
+"   normal          SPC l g         go definition
+"   normal          SPC l G         go generate
+"   normal          SPC l h         go info
+"   normal          SPC l i         go implements
+"   normal          SPC l I         implement stubs
+"   normal          SPC l k         add tags
+"   normal          SPC l K         remove tags
+"   normal          SPC l l         list declarations in file
+"   normal          SPC l L         list declarations in dir
+"   normal          SPC l m         format improts
+"   normal          SPC l M         add import
+"   normal          SPC l r         go referrers
+"   normal          SPC l s         fill struct
+"   normal          SPC l t         go test
+"   normal          SPC l v         freevars
+"   normal          SPC l x         go run
 " <
 
 
