@@ -69,11 +69,11 @@ let g:spacevim_expand_tab              = 1
 let g:spacevim_relativenumber          = 1
 
 ""
-" @section max-column, options-max-column
+" @section max_column, options-max_column
 " @parentsection options
 " Change the max number of columns for SpaceVim. Default is 120.
 " >
-"   max-column = 120
+"   max_column = 120
 " <
 
 ""
@@ -84,11 +84,11 @@ let g:spacevim_relativenumber          = 1
 let g:spacevim_max_column              = 120
 
 ""
-" @section enable-guicolors, options-enable-guicolors
+" @section enable_guicolors, options-enable_guicolors
 " @parentsection options
 " Enable true color support in terminal. Default is true.
 " >
-"   enable-guicolors = true
+"   enable_guicolors = true
 " <
 
 ""
@@ -99,11 +99,11 @@ let g:spacevim_max_column              = 120
 let g:spacevim_enable_guicolors = 1
 
 ""
-" @section enable-googlesuggest, options-enable-googlesuggest
+" @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.
 " >
-"   enable-googlesuggest = false
+"   enable_googlesuggest = false
 " <
 
 ""
@@ -114,12 +114,12 @@ let g:spacevim_enable_guicolors = 1
 let g:spacevim_enable_googlesuggest    = 0
 
 ""
-" @section windows-leader, options-windows-leader
+" @section windows_leader, options-windows_leader
 " @parentsection options
 " Window functions leader for SpaceVim. Default is `s`. 
 " Set to empty to disable this feature, or you can set to another char.
 " >
-"   windows-leader = ""
+"   windows_leader = ""
 " <
 
 
@@ -144,6 +144,15 @@ let g:spacevim_enable_insert_leader    = 1
 let g:spacevim_neobundle_installed     = 0
 let g:spacevim_dein_installed          = 0
 let g:spacevim_vim_plug_installed      = 0
+
+""
+" @section plugin_bundle_dir, options-plugin_bundle_dir
+" @parentsection options
+" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+" >
+"   plugin_bundle_dir = "~/.cache/vimplugs"
+" <
+
 ""
 " Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 " >
@@ -152,6 +161,15 @@ let g:spacevim_vim_plug_installed      = 0
 let g:spacevim_plugin_bundle_dir
       \ = $HOME. join(['', '.cache', 'vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
+
+""
+" @section realtime_leader_guide, options-realtime_leader_guide
+" @parentsection options
+" Enable/Disable realtime leader guide. Default is true. to disable it:
+" >
+"   realtime_leader_guide = false
+" <
+
 ""
 " Enable/Disable realtime leader guide. Default is 1. to disable it:
 " >
@@ -204,12 +222,30 @@ let g:spacevim_enable_neomake          = 1
 "   let g:spacevim_enable_ale = 1
 " <
 let g:spacevim_enable_ale          = 0
+
+""
+" @section guifont, options-guifont
+" @parentsection options
+" Set the guifont of SpaceVim. Default is empty.
+" >
+"   guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+" <
+
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
 "   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 " <
 let g:spacevim_guifont                 = ''
+
+""
+" @section enable_ycm, options-enable_ycm
+" @parentsection options
+" Enable/Disable YouCompleteMe. Default is false.
+" >
+"   enable_ycm = true
+" <
+
 ""
 " Enable/Disable YouCompleteMe. Default is 0.
 " >
