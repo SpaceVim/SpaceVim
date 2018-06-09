@@ -252,15 +252,32 @@ let g:spacevim_guifont                 = ''
 "   let g:spacevim_enable_ycm = 1
 " <
 let g:spacevim_enable_ycm              = 0
+
+""
+" @section sidebar_width, options-sidebar_width
+" @parentsection options
+" Set the width of the SpaceVim sidebar. Default is 30.
+" This value will be used by tagbar and vimfiler.
+
 ""
 " Set the width of the SpaceVim sidebar. Default is 30.
 " This value will be used by tagbar and vimfiler.
 let g:spacevim_sidebar_width           = 30
+
+""
+" @section snippet_engine, options-snippet_engine
+" @parentsection options
+" Set the snippet engine of SpaceVim, default is neosnippet. to enable
+" ultisnips:
+" >
+"   snippet_engine = "ultisnips"
+" <
+
 ""
 " Set the snippet engine of SpaceVim, default is neosnippet. to enable
 " ultisnips:
 " >
-"   let g:spacevim_snippet_engine = 'ultisnips'
+"   let g:spacevim_snippet_engine = "ultisnips"
 " <
 let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
@@ -428,9 +445,24 @@ let g:spacevim_filemanager             = 'vimfiler'
 " The default plugin manager of SpaceVim. Default is 'dein'.
 " Options are dein, neobundle, or vim-plug.
 let g:spacevim_plugin_manager          = 'dein'
+
+""
+" @section plugin_manager_processes, options-plugin_manager_processes
+" @parentsection options
+" Set the max process of SpaceVim plugin manager
+
 ""
 " Set the max process of SpaceVim plugin manager
-let g:spacevim_plugin_manager_max_processes = 16
+let g:spacevim_plugin_manager_processes = 16
+
+""
+" @section checkinstall, options-checkinstall
+" @parentsection options
+" Enable/Disable checkinstall on SpaceVim startup. Default is true.
+" >
+"   checkinstall = true
+" <
+
 ""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >

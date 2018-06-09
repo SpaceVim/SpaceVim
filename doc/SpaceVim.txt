@@ -18,15 +18,19 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
-      1. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      2. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      3. enable_ycm..............................|SpaceVim-options-enable_ycm|
-      4. guifont....................................|SpaceVim-options-guifont|
-      5. max_column..............................|SpaceVim-options-max_column|
-      6. plugin_bundle_dir................|SpaceVim-options-plugin_bundle_dir|
-      7. realtime_leader_guide........|SpaceVim-options-realtime_leader_guide|
-      8. relativenumber......................|SpaceVim-options-relativenumber|
-      9. windows_leader......................|SpaceVim-options-windows_leader|
+      1. checkinstall..........................|SpaceVim-options-checkinstall|
+      2. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      3. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      4. enable_ycm..............................|SpaceVim-options-enable_ycm|
+      5. guifont....................................|SpaceVim-options-guifont|
+      6. max_column..............................|SpaceVim-options-max_column|
+      7. plugin_bundle_dir................|SpaceVim-options-plugin_bundle_dir|
+      8. plugin_manager_processes..|SpaceVim-options-plugin_manager_processes|
+      9. realtime_leader_guide........|SpaceVim-options-realtime_leader_guide|
+      10. relativenumber.....................|SpaceVim-options-relativenumber|
+      11. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      12. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      13. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -96,6 +100,14 @@ here is an example setting SpaceVim options:
 <
 
 ==============================================================================
+CHECKINSTALL                                   *SpaceVim-options-checkinstall*
+
+Enable/Disable checkinstall on SpaceVim startup. Default is true.
+>
+  checkinstall = true
+<
+
+==============================================================================
 ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
 
 Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -144,6 +156,11 @@ Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
 <
 
 ==============================================================================
+PLUGIN_MANAGER_PROCESSES           *SpaceVim-options-plugin_manager_processes*
+
+Set the max process of SpaceVim plugin manager
+
+==============================================================================
 REALTIME_LEADER_GUIDE                 *SpaceVim-options-realtime_leader_guide*
 
 Enable/Disable realtime leader guide. Default is true. to disable it:
@@ -157,6 +174,21 @@ RELATIVENUMBER                               *SpaceVim-options-relativenumber*
 Enable/Disable relativenumber, by default it is enabled.
 >
   relativenumber = true
+<
+
+==============================================================================
+SIDEBAR_WIDTH                                 *SpaceVim-options-sidebar_width*
+
+Set the width of the SpaceVim sidebar. Default is 30. This value will be used
+by tagbar and vimfiler.
+
+==============================================================================
+SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
+
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  snippet_engine = "ultisnips"
 <
 
 ==============================================================================
@@ -293,7 +325,7 @@ by tagbar and vimfiler.
 Set the snippet engine of SpaceVim, default is neosnippet. to enable
 ultisnips:
 >
-  let g:spacevim_snippet_engine = 'ultisnips'
+  let g:spacevim_snippet_engine = "ultisnips"
 <
 
                                                 *g:spacevim_enable_cursorline*
@@ -458,7 +490,7 @@ The default file manager of SpaceVim. Default is 'vimfiler'.
 The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
 neobundle, or vim-plug.
 
-                                     *g:spacevim_plugin_manager_max_processes*
+                                         *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
 
                                                      *g:spacevim_checkinstall*
