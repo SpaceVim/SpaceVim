@@ -97,12 +97,32 @@ let g:spacevim_max_column              = 120
 "   let g:spacevim_enable_guicolors = 1
 " <
 let g:spacevim_enable_guicolors = 1
+
+""
+" @section enable-googlesuggest, options-enable-googlesuggest
+" @parentsection options
+" Enable/Disable Google suggestions for neocomplete. Default is false.
+" >
+"   enable-googlesuggest = false
+" <
+
 ""
 " Enable/Disable Google suggestions for neocomplete. Default is 0.
 " >
 "   let g:spacevim_enable_googlesuggest = 1
 " <
 let g:spacevim_enable_googlesuggest    = 0
+
+""
+" @section windows-leader, options-windows-leader
+" @parentsection options
+" Window functions leader for SpaceVim. Default is `s`. 
+" Set to empty to disable this feature, or you can set to another char.
+" >
+"   windows-leader = ""
+" <
+
+
 ""
 " Window functions leader for SpaceVim. Default is `s`. 
 " Set to empty to disable this feature, or you can set to another char.

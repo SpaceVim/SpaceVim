@@ -18,9 +18,11 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
-      1. enable-guicolors..................|SpaceVim-options-enable-guicolors|
-      2. max-column..............................|SpaceVim-options-max-column|
-      3. relativenumber......................|SpaceVim-options-relativenumber|
+      1. enable-googlesuggest..........|SpaceVim-options-enable-googlesuggest|
+      2. enable-guicolors..................|SpaceVim-options-enable-guicolors|
+      3. max-column..............................|SpaceVim-options-max-column|
+      4. relativenumber......................|SpaceVim-options-relativenumber|
+      5. windows-leader......................|SpaceVim-options-windows-leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -90,6 +92,14 @@ here is an example setting SpaceVim options:
 <
 
 ==============================================================================
+ENABLE-GOOGLESUGGEST                   *SpaceVim-options-enable-googlesuggest*
+
+Enable/Disable Google suggestions for neocomplete. Default is false.
+>
+  enable-googlesuggest = false
+<
+
+==============================================================================
 ENABLE-GUICOLORS                           *SpaceVim-options-enable-guicolors*
 
 Enable true color support in terminal. Default is true.
@@ -111,6 +121,15 @@ RELATIVENUMBER                               *SpaceVim-options-relativenumber*
 Enable/Disable relativenumber, by default it is enabled.
 >
   relativenumber = true
+<
+
+==============================================================================
+WINDOWS-LEADER                               *SpaceVim-options-windows-leader*
+
+Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+this feature, or you can set to another char.
+>
+  windows-leader = ""
 <
 
 ==============================================================================
