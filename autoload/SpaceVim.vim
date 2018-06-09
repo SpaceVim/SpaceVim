@@ -51,6 +51,15 @@ let g:spacevim_expand_tab              = 1
 ""
 " Enable/Disable relativenumber, by default it is enabled.
 let g:spacevim_relativenumber          = 1
+
+""
+" @section max-column, options-max-column
+" @parentsection options
+" Change the max number of columns for SpaceVim. Default is 120.
+" >
+"   max-column = 120
+" <
+
 ""
 " Change the max number of columns for SpaceVim. Default is 120.
 " >
