@@ -18,7 +18,9 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
-      1. max-column..............................|SpaceVim-options-max-column|
+      1. enable-guicolors..................|SpaceVim-options-enable-guicolors|
+      2. max-column..............................|SpaceVim-options-max-column|
+      3. relativenumber......................|SpaceVim-options-relativenumber|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -80,12 +82,35 @@ also supports local config for each project. Place local config  settings in
 `.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
 
+here is an example setting SpaceVim options:
+>
+  [options]
+    enable-guicolors = true
+    max-column = 120
+<
+
+==============================================================================
+ENABLE-GUICOLORS                           *SpaceVim-options-enable-guicolors*
+
+Enable true color support in terminal. Default is true.
+>
+  enable-guicolors = true
+<
+
 ==============================================================================
 MAX-COLUMN                                       *SpaceVim-options-max-column*
 
 Change the max number of columns for SpaceVim. Default is 120.
 >
   max-column = 120
+<
+
+==============================================================================
+RELATIVENUMBER                               *SpaceVim-options-relativenumber*
+
+Enable/Disable relativenumber, by default it is enabled.
+>
+  relativenumber = true
 <
 
 ==============================================================================

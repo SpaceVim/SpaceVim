@@ -23,6 +23,13 @@
 " SpaceVim also supports local config for each project. Place local config 
 " settings in `.SpaceVim.d/init.toml` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
+" 
+" here is an example setting SpaceVim options:
+" >
+"   [options]
+"     enable-guicolors = true
+"     max-column = 120
+" <
 
 
 ""
@@ -48,6 +55,15 @@ let g:spacevim_default_indent          = 2
 ""
 " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
 let g:spacevim_expand_tab              = 1
+
+""
+" @section relativenumber, options-relativenumber
+" @parentsection options
+" Enable/Disable relativenumber, by default it is enabled.
+" >
+"   relativenumber = true
+" <
+
 ""
 " Enable/Disable relativenumber, by default it is enabled.
 let g:spacevim_relativenumber          = 1
@@ -66,6 +82,15 @@ let g:spacevim_relativenumber          = 1
 "   let g:spacevim_max_column = 120
 " <
 let g:spacevim_max_column              = 120
+
+""
+" @section enable-guicolors, options-enable-guicolors
+" @parentsection options
+" Enable true color support in terminal. Default is true.
+" >
+"   enable-guicolors = true
+" <
+
 ""
 " Enable true color support in terminal. Default is 1.
 " >
