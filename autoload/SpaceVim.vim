@@ -577,6 +577,15 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+
+""
+" @section lint_on_the_fly, options-lint_on_the_fly
+" @parentsection options
+" Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
+" >
+"   lint_on_the_fly = false
+" <
+
 ""
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 " >
