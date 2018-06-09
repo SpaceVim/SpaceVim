@@ -41,7 +41,11 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
   let path = s:project_paths[a:project]['path']
   tabnew
   exe 'lcd ' . path
-  Startify | VimFiler
+  if g:spacevim_filemanager ==# 'vimfiler'
+    Startify | VimFiler
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+    Startify | NERDTree
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_name() abort
