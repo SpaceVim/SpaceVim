@@ -1,44 +1,52 @@
 ---
-title: "SpaceVim debug layer"
-description: "This layer provide debug workflow support in SpaceVim"
+title: "SpaceVim debug 模块"
+description: "这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) debug
+# [可用模块](../) >> debug
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Key bindings](#key-bindings)
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块描述
 
-This layer provide a debug workflow for SpaceVim. All of the function is based on [vim-vebugger](https://github.com/idanarye/vim-vebugger).
+这一模块为 SpaceVim 提供了基本的 debug 框架，高度定制
+[vim-vebugger](https://github.com/idanarye/vim-vebugger) 插件，支持多种 debug
+工具。
 
-## Install
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('debug')` to your custom configuration file.
+SpaceVim 默认未载入该模块，如需载入模块，可以在配置文件中加入：
 
-## Key bindings
+```toml
+[[layers]]
+  name = "debug"
+```
 
-| Key Binding | Description                              |
-| ----------- | ---------------------------------------- |
-| `SPC d l`   | launching debugger                       |
-| `SPC d c`   | Continue the execution                   |
-| `SPC d b`   | Toggle a breakpoint for the current line |
-| `SPC d B`   | Clear all breakpoints                    |
-| `SPC d o`   | step over                                |
-| `SPC d i`   | step into functions                      |
-| `SPC d O`   | step out of current function             |
-| `SPC d e s` | Evaluate and print the selected text     |
-| `SPC d e e` | Evaluate the `<cword>` under the cursor  |
-| `SPC d e S` | Execute the selected text                |
-| `SPC d k`   | Terminates the debugger                  |
+## 快捷键
 
-**Debug Transient State**
+| 按键        | 描述                      |
+| ----------- | ------------------------- |
+| `SPC d l`   | 启动 debugger             |
+| `SPC d c`   | 继续下一步                |
+| `SPC d b`   | 添加/去除当前行断点       |
+| `SPC d B`   | 清除所有断点              |
+| `SPC d o`   | 单步执行                  |
+| `SPC d i`   | 跳至方法体                |
+| `SPC d O`   | 运行至当前方法结束        |
+| `SPC d e s` | 打印并求值选中的文本      |
+| `SPC d e e` | 打印并求值光标所在变量    |
+| `SPC d e S` | Execute the selected text |
+| `SPC d k`   | 关闭 debugger             |
 
-key bindings is too long? use `SPC d .` to open the debug transient state:
+**Debug 临时快捷键菜单**
+
+debug 的快捷键太长了？ 可以使用 `SPC d .` 调出 debug 临时快捷键菜单。
 
 ![Debug Transient State](https://user-images.githubusercontent.com/13142418/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)

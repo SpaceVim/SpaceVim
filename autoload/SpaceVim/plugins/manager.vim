@@ -10,6 +10,7 @@
 let s:VIM_CO = SpaceVim#api#import('vim#compatible')
 let s:JOB = SpaceVim#api#import('job')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:SYS = SpaceVim#api#import('system')
 
 
 " init values
@@ -110,7 +111,7 @@ function! s:get_uninstalled_plugins() abort
 endfunction
 
 
-function! SpaceVim#plugins#manager#reinstall(...)
+function! SpaceVim#plugins#manager#reinstall(...) abort
   call dein#reinstall(a:1)
 endfunction
 
@@ -448,8 +449,7 @@ function! s:msg_on_build_start(name) abort
 endfunction
 
 function! s:get_build_argv(build) abort
-  " TODO check os
-  return a:build
+  return a:build[s:SYS.name]
 endfunction
 " + foo.vim: Updating...
 if has('nvim')
@@ -643,7 +643,7 @@ else
 endi
 
 " Public API: SpaceVim#plugins#manager#terminal {{{
-function! SpaceVim#plugins#manager#terminal()
+function! SpaceVim#plugins#manager#terminal() abort
   for id in keys(s:pulling_repos)
     call s:JOB.stop(str2nr(id))
   endfor

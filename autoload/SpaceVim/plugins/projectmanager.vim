@@ -41,7 +41,11 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
   let path = s:project_paths[a:project]['path']
   tabnew
   exe 'lcd ' . path
-  Startify | VimFiler
+  if g:spacevim_filemanager ==# 'vimfiler'
+    Startify | VimFiler
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+    Startify | NERDTree
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_name() abort
@@ -85,14 +89,14 @@ endfunction
 
 function! s:change_dir(dir) abort
   call SpaceVim#logger#info('change to root:' . a:dir)
-  exe 'cd ' . fnamemodify(a:dir, ':p')
+  exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#plugins#projectmanager#kill_project() abort
   let name = get(b:, '_spacevim_project_name', '')
-  if name != ''
+  if name !=# ''
     call s:BUFFER.filter_do(
           \ {
           \ 'expr' : [

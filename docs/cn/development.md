@@ -288,7 +288,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## Build with SpaceVim
 
-SpaceVim provide a lot of public [APIs](https://spacevim.org/apis), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
+SpaceVim provide a lot of public [APIs](../api/), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
@@ -301,9 +301,11 @@ markdown
 ## Changelog
 
 <ul>
-    {% for post in site.categories.changelog %}
+    {% for post in site.categories.changelog_cn %}
             <li>
-                <a href="{{ post.url }}">{{ post.title }}</a>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

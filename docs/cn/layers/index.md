@@ -1,93 +1,95 @@
 ---
-title:  Available layers
-description: A list of available layers in SpaceVim.
+title:  可用模块
+description: "简述什么是模块，如何启用和禁用 SpaceVim 模块，以及如何设置模块选项。并罗列出 SpaceVim 中所有内置的模块。"
 keywords: layer,layers
+lang: cn
 ---
 
 <!-- vim-markdown-toc GFM -->
 
-- [Introduction](#introduction)
-  - [Enable layers](#enable-layers)
-  - [Disable layers](#disable-layers)
-- [Available layers](#available-layers)
+- [什么是模块](#什么是模块)
+  - [如何启用模块](#如何启用模块)
+  - [如何禁用模块](#如何禁用模块)
+- [可用模块](#可用模块)
 
 <!-- vim-markdown-toc -->
 
-## Introduction
+## 什么是模块
 
-SpaceVim is a community-driven vim distribution that seeks to provide layer feature.
-Layers help collect related packages together to provide features.
-This approach helps keep configuration organized and reduces overhead for the user by
-keeping them from having to think about what packages to install.
+SpaceVim 是一个社区驱动的 vim 配置集合，通常一个 Vim 的配置集合包含了诸多的
+Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管理这些插件以及相关
+的配置。默认情况下，这些模块都是禁用的，用户可以根据自己需要，或者是项目需要
+来载入指定的模块以获取相关功能。
 
-### Enable layers
+通过模块的方式管理插件和相关配置，为使用者节省了大量的搜索插件和调试插件的时
+间。用户仅仅需要根据自己的实际需求，来启用相关模块。比如，当我需要频繁调用终
+端时，可以启用终端支持的 `shell` 模块。
 
-here is an example for loadding `shell` layer with some specified options:
+### 如何启用模块
 
-```vim
-call SpaceVim#layers#load('shell',
-        \ {
-        \ 'default_position' : 'top',
-        \ 'default_height' : 30,
-        \ }
-        \ )
+以 `shell` 模块为例，启用该模块，并且设定一些模块选项，指定终端打开位置为
+顶部，高度 30。
+
+```toml
+[[layers]]
+  name = "shell"
+  default_position = "top"
+  default_height = 30
 ```
 
-### Disable layers
+### 如何禁用模块
 
-Some layers are enabled by defalut, here is an example for disable `shell` layer:
+在 SpaceVim 内，默认启用了一些模块，当你需要禁用某一个模块时，需要指定模块
+选项 `enable` 为 false。`enable` 这一选项缺省为 true，所以启用模块时，这一
+选项可以省略。
 
-```vim
-call SpaceVim#layers#disable('shell')
+```toml
+[[layers]]
+  name = "shell"
+  enable = false
 ```
 
-<!-- SpaceVim layer list start -->
+<!-- 更新模块列表 call SpaceVim#dev#layers#updateCn() -->
 
-## Available layers
+<!-- SpaceVim layer cn list start -->
 
-| Name                                                  | Description                                                                                                                                                         |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [VersionControl](VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…                         |
-| [autocomplete](autocomplete/)                         | Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically                           |
-| [chat](chat/)                                         | SpaceVim chatting layer provide chatting with qq and weixin in vim.                                                                                                 |
-| [checkers](checkers/)                                 | Syntax checking automatically within SpaceVim, display error on the sign column and statusline.                                                                     |
-| [chinese](chinese/)                                   | Layer for chinese users, include chinese docs and runtime messages                                                                                                  |
-| [colorscheme](colorscheme/)                           | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                                                            |
-| [cscope](cscope/)                                     | cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope                                                                     |
-| [ctrlp](ctrlp/)                                       | This layers provide a heavily customized ctrlp centric work-flow                                                                                                    |
-| [debug](debug/)                                       | This layer provide debug workflow support in SpaceVim                                                                                                               |
-| [default](default/)                                   | lt layer contains none plugins, but it has some better default config for vim and neovim                                                                            |
-| [denite](denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                                   |
-| [fzf](fzf/)                                           | This layers provide a heavily customized fzf centric work-flow                                                                                                      |
-| [git](git/)                                           | This layers adds extensive support for git                                                                                                                          |
-| [github](github/)                                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
-| [lang#c](lang/c/)                                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
-| [lang#csharp](lang/csharp/)                           | This layer is for csharp development                                                                                                                                |
-| [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
-| [lang#elixir](lang/elixir/)                           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                                         |
-| [lang#go](lang/go/)                                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
-| [lang#haskell](lang/haskell/)                         | haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell |
-| [lang#html](lang/html/)                               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                                          |
-| [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer.               |
-| [lang#javascript](lang/javascript/)                   | This layer is for JaveScript development                                                                                                                            |
-| [lang#lisp](lang/lisp/)                               | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                                             |
-| [lang#lua](lang/lua/)                                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                               |
-| [lang#markdown](lang/markdown/)                       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                                           |
-| [lang#ocaml](lang/ocaml/)                             | This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file.                                                          |
-| [lang#php](lang/php/)                                 | This layer adds PHP language support to SpaceVim                                                                                                                    |
-| [lang#python](lang/python/)                           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
-| [lang#ruby](lang/ruby/)                               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
-| [lang#typescript](lang/typescript/)                   | This layer is for TypeScript development                                                                                                                            |
-| [lang#vim](lang/vim/)                                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                                             |
-| [language-server-protocol](language-server-protocol/) | This layers provides language server protocol for vim and neovim                                                                                                    |
-| [leaderf](leaderf/)                                   | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
-| [shell](shell/)                                       | This layer provide shell support in SpaceVim                                                                                                                        |
-| [tags](tags/)                                         | This layer provide tags manager for project                                                                                                                         |
-| [tools#dash](tools/dash/)                             | This layer provides Dash integration for SpaceVim                                                                                                                   |
-| [tools](tools/)                                       | This layer provides some tools for vim                                                                                                                              |
-| [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
-| [unite](unite/)                                       | This layers provide a heavily customized Unite centric work-flow                                                                                                    |
+## 可用模块
 
-<!-- SpaceVim layer list end -->
+| 名称                                                  | 描述                                                                                                                                                  |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [VersionControl](VersionControl/)                     | 这一模块为 SpaceVim 提供了通用的代码版本控制支持，该模块支持 Git、Mercurial、Bazaar、SVN 等等多种后台工具。                                           |
+| [autocomplete](autocomplete/)                         | 这一模块为 SpaceVim 提供了自动补全的框架，包括语法补全等多种补全来源，同时提供了代码块自动完成等特性。                                                |
+| [chat](chat/)                                         | chat 模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。                                                       |
+| [checkers](checkers/)                                 | 这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置                                                              |
+| [chinese](chinese/)                                   | 该模块为中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。                                                                           |
+| [colorscheme](colorscheme/)                           | colorscheme 模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随即主题等特性             |
+| [cscope](cscope/)                                     | cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令                                                   |
+| [ctrlp](ctrlp/)                                       | 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                           |
+| [debug](debug/)                                       | 这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。                                                        |
+| [default](default/)                                   | SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置，                                                                                       |
+| [denite](denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                     |
+| [git](git/)                                           | 这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。                                             |
+| [lang#c](lang/c/)                                     | This layer is for c/c++/object-c development                                                                                                          |
+| [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                               |
+| [lang#elixir](lang/elixir/)                           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                           |
+| [lang#go](lang/go/)                                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                     |
+| [lang#haskell](lang/haskell/)                         | This layer is for haskell development                                                                                                                 |
+| [lang#html](lang/html/)                               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                            |
+| [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer. |
+| [lang#javascript](lang/javascript/)                   | This layer is for JaveScript development                                                                                                              |
+| [lang#lisp](lang/lisp/)                               | for lisp development                                                                                                                                  |
+| [lang#lua](lang/lua/)                                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                 |
+| [lang#markdown](lang/markdown/)                       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                             |
+| [lang#php](lang/php/)                                 | This layer adds PHP language support to SpaceVim                                                                                                      |
+| [lang#python](lang/python/)                           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                           |
+| [lang#ruby](lang/ruby/)                               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                               |
+| [lang#typescript](lang/typescript/)                   | This layer is for TypeScript development                                                                                                              |
+| [lang#vim](lang/vim/)                                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                               |
+| [language-server-protocol](language-server-protocol/) | This layers provides language server protocol for vim and neovim                                                                                      |
+| [shell](shell/)                                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验                                                                                        |
+| [tags](tags/)                                         | This layer provide tags manager for project                                                                                                           |
+| [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                             |
+
+<!-- SpaceVim layer cn list end -->
 
 <!-- vim:set nowrap: -->

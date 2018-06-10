@@ -9,10 +9,11 @@ lang: cn
 在这里，你可以看到最新的 SpaceVim 特性简介，以及使用技巧：
 
 <ul>
-    {% for post in site.categories.feature_cn offset: 0 limit: 5  %}
-               <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
-               <br>
+    {% for post in site.categories.blog_cn %}
+            <li>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                <span class="post-date">{{ post.date | date_to_string }}</span>
                <p>{{ post.excerpt | truncatewords: 100 }}</p>
+            </li>
     {% endfor %}
 </ul>

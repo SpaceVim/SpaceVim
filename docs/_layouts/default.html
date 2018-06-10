@@ -23,11 +23,21 @@
   s.parentNode.insertBefore(hm, s);
 })();
     </script>
+
+    {% if page.lang == "cn" %}
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'SpaceVim/cn'
+      };
+    </script>
+    {% else %}
     <script>
       ((window.gitter = {}).chat = {}).options = {
         room: 'SpaceVim/SpaceVim'
       };
     </script>
+    {% endif %}
+
     <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -62,7 +72,8 @@
         </div>
         {% if page.lang == "cn" %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description | default: site.github.project_tagline }}
+          </p>
           <hr>
           <p align="center">
           <b><a href="{{ site.url }}/cn/">主页</a></b> |
@@ -76,7 +87,8 @@
         </div>
         {% else %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description | default: site.github.project_tagline }}
+          </p>
           <hr>
           <p align="center">
           <b><a href="{{ site.url }}">Home</a></b> |
@@ -134,11 +146,13 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
   <p align="center">
   <span class="credits right">网站源码位于 Github, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">帮助改进本页面</a> &mdash; 网站主题: <a href="https://twitter.com/michigangraham">mattgraham</a>,
   </span>
+  <input id="textbox" type="text" placeholder="Search on Google..." onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}" />
   </p>
   {% else %}
   <p align="center">
-  <span class="credits right">Hosted on GitHub, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">Help improve this page</a> &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a>,
+  <span class="credits right">Hosted on GitHub, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">Help improve this page</a> &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a>, 
   </span>
+  <input id="textbox" type="text" placeholder="Search on Google..." onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}" />
   </p>
   {% endif %}
   </root>

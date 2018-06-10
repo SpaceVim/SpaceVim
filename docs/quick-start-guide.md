@@ -1,6 +1,6 @@
 ---
 title:  "Quick start guide"
-description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
+description: "A quick start guide which will tell you how to install and config SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
 # Quick start guide
@@ -59,21 +59,21 @@ documentation.
     # if you want to use more colorscheme, please load the colorscheme
     # layer, the value of this option is a string.
     colorscheme = "gruvbox"
-    background = "dark"
+    colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors, the type of the value is boolean, true or false.
-    guicolors = true
+    enable_guicolors = true
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
     statusline_separator = "bar"
     buffer_index_type = 4
-    # Display file type icon on the tabline, If you do not have nerd fonts installed,
-    # please change the value to false
+    # Display file type icon on the tabline, If you do not have nerd fonts
+    # installed, please change the value to false
     enable_tabline_filetype_icon = true
-    # Display current mode text on statusline, by default It is disabled, only color
-    # will be changed when switch modes.
-    statusline_display_mode = false
+    # Display current mode text on statusline, by default It is disabled,
+    # only color will be changed when switch modes.
+    enable_statusline_display_mode = false
 
 # Enable autocomplete layer
 [[layers]]

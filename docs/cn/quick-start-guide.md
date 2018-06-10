@@ -60,11 +60,11 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 多的主题，你可以载入 colorscheme 模块
     colorscheme = "gruvbox"
     # 背景可以取值 "dark" 和 "light"
-    background = "dark"
+    colorscheme_bg = "dark"
     # 启用/禁用终端真色，在目前大多数终端下都是支持真色的，当然也有
     # 一小部分终端不支持真色，如果你的 SpaceVim 颜色看上去比较怪异
     # 可以禁用终端真色，将下面的值设为 false
-    guicolors = true
+    enable_guicolors = true
     # 设置状态栏上分割符号形状，如果字体安装失败，可以将值设为 "nil" 以
     # 禁用分割符号，默认为箭头 "arrow"
     statusline_separator = "nil"
@@ -81,7 +81,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     enable_tabline_filetype_icon = true
     # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等
     # 字样，只以颜色区分当前模式
-    statusline_display_mode = false
+    enable_statusline_display_mode = false
 
 # SpaceVim 模块设置，主要包括启用/禁用模块
 

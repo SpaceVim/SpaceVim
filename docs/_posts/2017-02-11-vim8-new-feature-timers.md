@@ -1,8 +1,10 @@
 ---
 title: "VIM 8 新特性之旅: 定时器 (timers)"
-categories: tutorials_cn
+categories: blog_cn
 excerpt: "VIM 8 新特性之旅系列教程 - 定时器, 介绍定时器具体使用方法以及场景"
-comments: true
+permalink: /cn/:title/
+redirect_from: "/vim8-new-feature-timers-zh_cn/"
+lang: cn
 ---
 
 # 定时器（ timer ）

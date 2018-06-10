@@ -1,6 +1,6 @@
 ---
 title: Newsletter #1 - A New Hope
-categories: newsletter
+categories: [newsletter, blog]
 excerpt: "A new hope: turn vim/neovim to be an IDE for most languages"
 comments: true
 ---

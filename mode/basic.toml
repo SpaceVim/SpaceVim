@@ -15,16 +15,18 @@
     background = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
-    guicolors = false
+    enable_guicolors = false
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
     statusline_inactive_separator = "bar"
     buffer_index_type = 4
+    windows_index_type = 3
     enable_tabline_filetype_icon = false
-    statusline_display_mode = false
+    enable_statusline_display_mode = false
+    statusline_unicode_symbols = false
     # Enable vim compatible mode, avoid changing origin vim key bindings
-    vimcompatible = 1
+    vimcompatible = true
 
 # Enable autocomplete layer
 [[layers]]

@@ -1,5 +1,5 @@
 "=============================================================================
-" layers.vim --- Develop script for update layer index
+" api.vim --- Develop script for update api index
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
@@ -8,7 +8,7 @@
 
 scriptencoding utf-8
 
-function! SpaceVim#dev#layers#update() abort
+function! SpaceVim#dev#api#update() abort
 
   let [start, end] = s:find_position()
   if start != 0 && end != 0
@@ -21,7 +21,7 @@ function! SpaceVim#dev#layers#update() abort
 
 endfunction
 
-function! SpaceVim#dev#layers#updateCn() abort
+function! SpaceVim#dev#api#updateCn() abort
 
   let [start, end] = s:find_position_cn()
   if start != 0 && end != 0
@@ -35,38 +35,37 @@ function! SpaceVim#dev#layers#updateCn() abort
 endfunction
 
 function! s:find_position() abort
-  let start = search('^<!-- SpaceVim layer list start -->$','bwnc')
-  let end = search('^<!-- SpaceVim layer list end -->$','bnwc')
+  let start = search('^<!-- SpaceVim api list start -->$','bwnc')
+  let end = search('^<!-- SpaceVim api list end -->$','bnwc')
   return sort([start, end])
 endfunction
 
 function! s:find_position_cn() abort
-  let start = search('^<!-- SpaceVim layer cn list start -->$','bwnc')
-  let end = search('^<!-- SpaceVim layer cn list end -->$','bnwc')
+  let start = search('^<!-- SpaceVim api cn list start -->$','bwnc')
+  let end = search('^<!-- SpaceVim api cn list end -->$','bnwc')
   return sort([start, end])
 endfunction
 
 function! s:generate_content() abort
-  let content = ['', '## Available layers', '']
+  let content = ['', '## Available APIs', '', 'here is the list of all available APIs, and welcome to contribute to SpaceVim.', '']
   let content += s:layer_list()
   return content
 endfunction
 
 function! s:generate_content_cn() abort
-  let content = ['', '## 可用模块', '']
+  let content = ['', '## 可用 APIs', '']
   let content += s:layer_list_cn()
   return content
 endfunction
 
 function! s:layer_list() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/layers/**/*.md')
+  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/api/**/*.md')
   let list = [
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/layers/index.md'))
   for layer in layers
-    let name = split(layer, '/docs/layers/')[1][:-4] . '/'
+    let name = split(layer, '/docs/api/')[1][:-4] . '/'
     let url = name
     let content = readfile(layer)
     if len(content) > 3
@@ -80,14 +79,13 @@ function! s:layer_list() abort
 endfunction
 
 function! s:layer_list_cn() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/cn/layers/**/*.md')
+  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/cn/api/**/*.md')
   let list = [
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/cn/layers/index.md'))
   for layer in layers
-    let name = split(layer, '/docs/cn/layers/')[1][:-4] . '/'
+    let name = split(layer, '/docs/cn/api/')[1][:-4] . '/'
     let url = name
     let content = readfile(layer)
     if len(content) > 3

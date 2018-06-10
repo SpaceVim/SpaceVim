@@ -1,91 +1,84 @@
 ---
-title: "SpaceVim tags layer"
-description: "This layer provide tags manager for project"
+title: "SpaceVim tags 模块"
+description: "tags 模块提供全局的 tags 索引管理，提供快速检索定义和引用的功能。"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) tags
+# [可用模块](../) >> tags
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Install](#install)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [安装及启用模块](#安装及启用模块)
   - [GNU Global (gtags)](#gnu-global-gtags)
-    - [Install on OSX using Homebrew](#install-on-osx-using-homebrew)
-    - [Install on \*nix from source](#install-on-nix-from-source)
-      - [Install recommended dependencies](#install-recommended-dependencies)
-      - [Install with recommended features](#install-with-recommended-features)
-      - [Configure your environment to use pygments and ctags](#configure-your-environment-to-use-pygments-and-ctags)
-  - [Load tags layer](#load-tags-layer)
-- [Usage](#usage)
-  - [Language Support](#language-support)
-    - [Built-in languages](#built-in-languages)
-    - [Exuberant ctags languages](#exuberant-ctags-languages)
-    - [Universal ctags languages](#universal-ctags-languages)
-    - [Pygments languages (plus symbol and reference tags)](#pygments-languages-plus-symbol-and-reference-tags)
-- [Key bindings](#key-bindings)
+    - [从源码编译安装](#从源码编译安装)
+      - [安装依赖环境](#安装依赖环境)
+      - [编译安装](#编译安装)
+      - [配置 pygments 和 ctags 环境](#配置-pygments-和-ctags-环境)
+  - [启用模块](#启用模块)
+- [使用模块](#使用模块)
+  - [语言支持](#语言支持)
+    - [内置的语言支持](#内置的语言支持)
+    - [通过 exuberant ctags 支持的语言](#通过-exuberant-ctags-支持的语言)
+    - [通过 Universal ctags 支持的语言](#通过-universal-ctags-支持的语言)
+    - [通过 Pygments 支持的语言](#通过-pygments-支持的语言)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer provide tags manager for project. This layer need `core` layer's project manager feature.
+tags 模块提供了项目 tags 管理工具，依赖 SpaceVim 自身的项目管理特性。
 
-## Features
+## 功能特性
 
--   Select any tag in a project retrieved by gtags
--   Resume previous helm-gtags session
--   Jump to a location based on context
--   Find definitions
--   Find references
--   Present tags in current function only
--   Create a tag database
--   Jump to definitions in file
--   Show stack of visited locations
--   Manually update tag database
--   Jump to next location in context stack
--   Jump to previous location in context stack
--   Jump to a file in tag database
--   Enables eldoc in modes that otherwise might not support it.
--   Enables company complete in modes that otherwise might not support it.
+- 自动/手动新建 tag 数据库
+- 自动/手动更新 tag 数据库
+- 查找所有引用处
+- 查找所有定义处
+- 列出当前项目所有 tag
+- 重置上次查询窗口
+- 根据文本内容跳至定义/引用处
 
-## Install
+## 安装及启用模块
 
 ### GNU Global (gtags)
 
-To use gtags, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
-
-You can install global from the software repository of your OS; however, many OS distributions are out of date, and you will probably be missing support for pygments and exuberant ctags, and thus support for many languages. We recommend installing from source. If not for example to install on Ubuntu:
+首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可更具当前使用的操作系统，
+使用自带的软件包管理工具安装。
 
 ```sh
 sudo apt-get install global
 ```
 
-#### Install on OSX using Homebrew
+**OSX 下使用 homebrew 安装**
 
 ```sh
 brew install global --with-pygments --with-ctags
 ```
 
-#### Install on \*nix from source
+#### 从源码编译安装
 
-##### Install recommended dependencies
+##### 安装依赖环境
 
-To take full advantage of global you should install 2 extra packages in addition to global: pygments and ctags (exuberant). You can do this using your normal OS package manager, e.g., on Ubuntu
+如果需要启用 global 的所有特性，你需要安装 2 个额外的软件包：pygments 和 ctags。
+这两个可以使用系统自带的包管理器安装：
+
+**Ubuntu**
 
 ```sh
 sudo apt-get install exuberant-ctags python-pygments
 ```
 
-or e.g., Archlinux:
+**ArchLinux**
 
 ```sh
 sudo pacman -S ctags python-pygments
 ```
 
-##### Install with recommended features
+##### 编译安装
 
-Download the latest tar.gz archive, then run these commands:
+下载最新的 tar.gz 文件，执行如下命令：
 
 ```sh
 tar xvf global-6.5.3.tar.gz
@@ -95,105 +88,109 @@ make
 sudo make install
 ```
 
-##### Configure your environment to use pygments and ctags
+##### 配置 pygments 和 ctags 环境
 
-To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or $HOME/.globalrc. For example:
+To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or 
+如果需要启用 pygments 和 ctags，需要复制示例 gtags.conf 至 `/etc/gtags.conf` 或者 `$HOME/.globalrc`。例如：
 
 ```sh
 cp gtags.conf ~/.globalrc
 ```
 
-Additionally you should define GTAGSLABEL in your shell startup file e.g. with sh/ksh:
+此外，启动 shell 时需要设置环境变量 `GTAGSLABEL`，通常需要修改 `.profile` 文件。
 
 ```sh
 echo export GTAGSLABEL=pygments >> .profile
 ```
 
-### Load tags layer
+### 启用模块
 
-To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
+可在配置文件添加如下内容来启用该模块。
 
-```vim
-call SpaceVim#layers#load('tags')
+```toml
+[[layers]]
+  name = "tags"
 ```
 
-## Usage
+## 使用模块
 
-Before using the gtags, remember to create a GTAGS database by the following methods:
+在使用 gtags 之前，建议先新建 GTAGS 数据库，可通过如下两种方式新建数据库：
 
--   From within SpaceVim, press `SPC m g c` to generate GTAGS database. If the language is not directly supported by GNU Global, you can choose ctags or pygments as a backend to generate tag database.
--   From inside terminal, runs gtags at your project root in terminal:
+- 在 SpaceVim 内，使用快捷键 `SPC m g c` 来新建 GTAGS 数据库，
+  如果 GUN Global 不能直接支持当墙语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
+- 在命令行，可以直接在项目根目录执行 gtags 命令。
 
 ```sh
 cd /path/to/project/root
 gtags
 ```
 
-If the language is not directly supported by gtags, and you have not set the GTAGSLABEL environment variable, use this command instead:
+对于 gtags 不直接支持的语言，并且未 GTAGSLABEL 环境变量，此时可以使用如下命令以达到同样效果：
 
 ```sh
 gtags --gtagslabel=pygments
 ```
 
-### Language Support
+### 语言支持
 
-#### Built-in languages
+#### 内置的语言支持
 
-If you do not have `ctags` or `pygments` enabled gtags will only produce tags for the following languages:
+如果你不使用 `ctags` 或者 `pygments`，gtags 默认将只支持如下语言：
 
--   asm
--   c/c++
--   java
--   php
--   yacc
+- asm
+- c/c++
+- java
+- php
+- yacc
 
-#### Exuberant ctags languages
+#### 通过 exuberant ctags 支持的语言
 
-If you have enabled `exuberant ctags` and use that as the backend (i.e., GTAGSLABEL=ctags or –gtagslabel=ctags) the following additional languages will have tags created for them:
+如果你启用了 `exuberant ctags`，并且使用其作为后台(i.e., GTAGSLABEL=ctags or –gtagslabel=ctags)，那么如下的语言将也得到支持：
 
--   c#
--   erlang
--   javascript
--   common-lisp
--   emacs-lisp
--   lua
--   ocaml
--   python
--   ruby
--   scheme
--   vimscript
--   windows-scripts (.bat .cmd files)
+- c#
+- erlang
+- javascript
+- common-lisp
+- emacs-lisp
+- lua
+- ocaml
+- python
+- ruby
+- scheme
+- vimscript
+- windows-scripts (.bat .cmd files)
 
-#### Universal ctags languages
+#### 通过 Universal ctags 支持的语言
 
-Instead, If you have installed the newer/beta [universal ctags](https://github.com/universal-ctags/ctags) and use that as the backend (i.e., GTAGSLABEL=ctags or –gtagslabel=ctags) the following additional languages will have tags created for them:
+作为 `exuberant ctags` 的替代，如果你启用 `Universal ctags`，除了上述语言以外，将还可以支持如下语言：
 
--   clojure
--   d
--   go
--   rust
+- clojure
+- d
+- go
+- rust
 
-#### Pygments languages (plus symbol and reference tags)
+#### 通过 Pygments 支持的语言
 
-In order to look up symbol references for any language not in the built in parser you must use the pygments backend. When this backend is used global actually uses both ctags and pygments to find the definitions and uses of functions and variables as well as “other symbols”.
+为了查找更多语言 symbol 的引用，而不仅仅时内置的语言分析器，你需要使用 pygments 作为后端，当启用
+pygments 后，可以通过 gtags 查询函数和变量的定义以及引用处。
 
-If you enabled pygments (the best choice) and use that as the backend (i.e., GTAGSLABEL=pygments or –gtagslabel=pygments) the following additional languages will have tags created for them:
+当 pygments 启用后，如下语言将得以支持：
 
--   elixir
--   fsharp
--   haskell
--   octave
--   racket
--   scala
--   shell-scripts
--   tex
+- elixir
+- fsharp
+- haskell
+- octave
+- racket
+- scala
+- shell-scripts
+- tex
 
-## Key bindings
+## 快捷键
 
-| Key Binding | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| `SPC m g c` | create a tag database                                     |
-| `SPC m g u` | manually update tag database                              |
-| `SPC m g f` | jump to a file in tag database                            |
-| `SPC m g d` | find definitions                                          |
-| `SPC m g r` | find references                                           |
+| 按键        | 描述                       |
+| ----------- | -------------------------- |
+| `SPC m g c` | 新建 tag 数据库            |
+| `SPC m g u` | 手动更新 tag 数据库        |
+| `SPC m g f` | 列出数据库中所涉及到的文件 |
+| `SPC m g d` | 查找 definitions           |
+| `SPC m g r` | 查找 references            |

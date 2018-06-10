@@ -17,48 +17,50 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
-  2. CONFIGURATION...........................................|SpaceVim-config|
-  3. Commands..............................................|SpaceVim-commands|
-  4. Functions............................................|SpaceVim-functions|
-  5. Layers..................................................|SpaceVim-layers|
+  2. Options................................................|SpaceVim-options|
+  3. Configuration...........................................|SpaceVim-config|
+  4. Commands..............................................|SpaceVim-commands|
+  5. Functions............................................|SpaceVim-functions|
+  6. Layers..................................................|SpaceVim-layers|
       1. autocomplete..................................|SpaceVim-autocomplete|
       2. checkers....................................|SpaceVim-layer-checkers|
       3. colorscheme....................................|SpaceVim-colorscheme|
-      4. core#tabline............................|SpaceVim-layer-core-tabline|
-      5. exprfold....................................|SpaceVim-layer-exprfold|
-      6. format..............................................|SpaceVim-format|
-      7. github........................................|SpaceVim-layer-github|
-      8. incsearch..................................|SpaceVim-layer-incsearch|
-      9. indentmove................................|SpaceVim-layer-indentmove|
-      10. lang#c.......................................|SpaceVim-layer-lang-c|
-      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      12. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      13. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      14. lang#go.....................................|SpaceVim-layer-lang-go|
-      15. lang#java.................................|SpaceVim-layer-lang-java|
-      16. lang#julia...............................|SpaceVim-layer-lang-julia|
-      17. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      18. lang#lua...................................|SpaceVim-layer-lang-lua|
-      19. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      20. lang#php...................................|SpaceVim-layer-lang-php|
-      21. lang#pony.................................|SpaceVim-layer-lang-pony|
-      22. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      23. lang#python.............................|SpaceVim-layer-lang-python|
-      24. lang#rust.................................|SpaceVim-layer-lang-rust|
-      25. lang#scala...............................|SpaceVim-layer-lang-scala|
-      26. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      27. lang#xml...................................|SpaceVim-layer-lang-xml|
-      28. operator...................................|SpaceVim-layer-operator|
-      29. shell.........................................|SpaceVim-layer-shell|
-      30. tmux...........................................|SpaceVim-layer-tmux|
-      31. tools#dash...............................|SpaceVim-layer-tools-dash|
-  6. API........................................................|SpaceVim-api|
+      4. core#statusline......................|SpaceVim-layer-core-statusline|
+      5. core#tabline............................|SpaceVim-layer-core-tabline|
+      6. exprfold....................................|SpaceVim-layer-exprfold|
+      7. format..............................................|SpaceVim-format|
+      8. github........................................|SpaceVim-layer-github|
+      9. incsearch..................................|SpaceVim-layer-incsearch|
+      10. indentmove...............................|SpaceVim-layer-indentmove|
+      11. lang#c.......................................|SpaceVim-layer-lang-c|
+      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      15. lang#go.....................................|SpaceVim-layer-lang-go|
+      16. lang#java.................................|SpaceVim-layer-lang-java|
+      17. lang#julia...............................|SpaceVim-layer-lang-julia|
+      18. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      19. lang#lua...................................|SpaceVim-layer-lang-lua|
+      20. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      21. lang#php...................................|SpaceVim-layer-lang-php|
+      22. lang#pony.................................|SpaceVim-layer-lang-pony|
+      23. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      24. lang#python.............................|SpaceVim-layer-lang-python|
+      25. lang#rust.................................|SpaceVim-layer-lang-rust|
+      26. lang#scala...............................|SpaceVim-layer-lang-scala|
+      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      28. lang#xml...................................|SpaceVim-layer-lang-xml|
+      29. operator...................................|SpaceVim-layer-operator|
+      30. shell.........................................|SpaceVim-layer-shell|
+      31. tmux...........................................|SpaceVim-layer-tmux|
+      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+  7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
       3. prompt..........................................|SpaceVim-api-prompt|
       4. sid............................................|SpaceVim-api-vim-sid|
       5. vim#message................................|SpaceVim-api-vim-message|
-  7. FAQ........................................................|SpaceVim-faq|
+  8. FAQ........................................................|SpaceVim-faq|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -68,14 +70,21 @@ configuration for Vim. It was inspired by Spacemacs.
 
 
 ==============================================================================
-CONFIGURATION                                                *SpaceVim-config*
+OPTIONS                                                     *SpaceVim-options*
 
-SpaceVim uses `~/.SpaceVim.d/init.vim` as its default global config file. You
+SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file. You
 can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
 be added to runtimepath, so you can write your own scripts in it. SpaceVim
 also supports local config for each project. Place local config  settings in
-`.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
+`.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+please check bellowing options.
+
 
                                                           *g:spacevim_version*
 Version of SpaceVim , this value can not be changed.
@@ -638,9 +647,26 @@ colorscheme called atom doesn't support spell check very well.
 SpaceVim is not gonna fix them since these should be in charge of each author.
 
 ==============================================================================
+CORE#STATUSLINE                               *SpaceVim-layer-core-statusline*
+
+This layer provides default statusline for SpaceVim If you want to use
+airline's statusline, just disable this layer
+>
+  [[layers]]
+    name = "core#statusline"
+    enable = false
+<
+
+==============================================================================
 CORE#TABLINE                                     *SpaceVim-layer-core-tabline*
 
-This layer provides default tabline for SpaceVim
+This layer provides default tabline for SpaceVim If you want to use airline's
+tabline, just disable this layer
+>
+  [[layers]]
+    name = "core#tabline"
+    enable = false
+<
 
 ==============================================================================
 EXPRFOLD                                             *SpaceVim-layer-exprfold*

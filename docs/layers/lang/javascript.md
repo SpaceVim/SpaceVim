@@ -34,12 +34,23 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript
 
 ## Layer configuration
 
-`auto_fix`: auto fix problems when save files, disabled by default. if you need this feature, you can load this layer via:
+`auto_fix`: auto fix problems when save files, disabled by default. If you need this feature, you can load this layer via:
 
 ```vim
 call SpaceVim#layers#load('lang#javascript',
             \ {
             \ 'auto_fix' : 1,
+            \ }
+            \ )
+
+```
+
+`enable_flow_syntax`: Enable configuration for [flow](https://flow.org/), disabled by default. If you need this feature, you can load this layer via:
+
+```vim
+call SpaceVim#layers#load('lang#javascript',
+            \ {
+            \ 'enable_flow_syntax' : 1,
             \ }
             \ )
 
