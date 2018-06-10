@@ -22,19 +22,22 @@ CONTENTS                                                   *SpaceVim-contents*
       2. enable_ale..............................|SpaceVim-options-enable_ale|
       3. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
       4. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      5. enable_neomake......................|SpaceVim-options-enable_neomake|
-      6. enable_ycm..............................|SpaceVim-options-enable_ycm|
-      7. error_symbol..........................|SpaceVim-options-error_symbol|
-      8. guifont....................................|SpaceVim-options-guifont|
-      9. lint_on_the_fly....................|SpaceVim-options-lint_on_the_fly|
-      10. max_column.............................|SpaceVim-options-max_column|
-      11. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      12. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      13. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      14. relativenumber.....................|SpaceVim-options-relativenumber|
-      15. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      16. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      17. windows_leader.....................|SpaceVim-options-windows_leader|
+      5. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      6. enable_neomake......................|SpaceVim-options-enable_neomake|
+      7. enable_statusline_display_mode
+.............................|SpaceVim-options-enable_statusline_display_mode|
+      8. enable_ycm..............................|SpaceVim-options-enable_ycm|
+      9. error_symbol..........................|SpaceVim-options-error_symbol|
+      10. guifont...................................|SpaceVim-options-guifont|
+      11. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      12. max_column.............................|SpaceVim-options-max_column|
+      13. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      14. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      15. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      16. relativenumber.....................|SpaceVim-options-relativenumber|
+      17. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      18. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      19. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -137,11 +140,26 @@ Enable true color support in terminal. Default is true.
 <
 
 ==============================================================================
+ENABLE_INSERT_LEADER                   *SpaceVim-options-enable_insert_leader*
+
+Enable/Disable spacevim's insert mode leader, default is enable
+
+==============================================================================
 ENABLE_NEOMAKE                               *SpaceVim-options-enable_neomake*
 
 SpaceVim default checker is neomake. If you want to use syntastic, use:
 >
   enable_neomake = false
+<
+
+==============================================================================
+ENABLE_STATUSLINE_DISPLAY_MODE
+                             *SpaceVim-options-enable_statusline_display_mode*
+
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  enable_statusline_display_mode = true
 <
 
 ==============================================================================
@@ -1394,6 +1412,10 @@ FAQ                                                             *SpaceVim-faq*
 
 ==============================================================================
 CHANGELOG                                                 *SpaceVim-changelog*
+
+Following HEAD: changes in master branch since last release v0.7.0
+
+https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 
 2018-03-19: v0.7.0
 

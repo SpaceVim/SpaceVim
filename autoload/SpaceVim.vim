@@ -138,6 +138,12 @@ let g:spacevim_unite_leader            = '\f'
 " Denite work flow leader of SpaceVim. Default is `F`.
 " Set to empty to disable this feature, or you can set to another char.
 let g:spacevim_denite_leader            = '\f'
+
+""
+" @section enable_insert_leader, options-enable_insert_leader
+" @parentsection options
+" Enable/Disable spacevim's insert mode leader, default is enable
+
 ""
 " Enable/Disable spacevim's insert mode leader, default is enable
 let g:spacevim_enable_insert_leader    = 1
@@ -356,6 +362,16 @@ let g:spacevim_statusline_unicode_symbols = 1
 " Enable/Disable language specific leader, by default you can use `,` ket
 " instead of `SPC` `l`.
 let g:spacevim_enable_language_specific_leader = 1
+
+""
+" @section enable_statusline_display_mode, options-enable_statusline_display_mode
+" @parentsection options
+" Enable/Disable display mode. Default is 0, mode will be
+" displayed in statusline. To enable this feature:
+" >
+"   enable_statusline_display_mode = true
+" <
+
 ""
 " Enable/Disable display mode. Default is 0, mode will be
 " displayed in statusline. To enable this feature:
@@ -944,6 +960,10 @@ endfunction
 
 ""
 " @section Changelog, changelog
+" Following HEAD: changes in master branch since last release v0.7.0
+" 
+" https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
 " 2018-03-19: v0.7.0
 "
 " https://spacevim.org/SpaceVim-release-v0.7.0/
