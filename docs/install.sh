@@ -189,6 +189,7 @@ install_neovim () {
       success "Installed SpaceVim for neovim"
     fi
   else
+    mkdir -p "$HOME/.config"
     ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
     success "Installed SpaceVim for neovim"
   fi
