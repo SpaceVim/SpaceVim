@@ -10,7 +10,7 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers api faq
+" @order intro options config layers api faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -210,12 +210,30 @@ elseif has('timers')
 else
   let g:spacevim_autocomplete_method = 'neocomplcache'
 endif
+
+""
+" @section enable_neomake, options-enable_neomake
+" @parentsection options
+" SpaceVim default checker is neomake. If you want to use syntastic, use:
+" >
+"   enable_neomake = false
+" <
+
 ""
 " SpaceVim default checker is neomake. If you want to use syntastic, use:
 " >
 "   let g:spacevim_enable_neomake = 0
 " <
 let g:spacevim_enable_neomake          = 1
+
+""
+" @section enable_ale, options-enable_ale
+" @parentsection options
+" Use ale for syntax checking, disabled by default.
+" >
+"   enable_ale = true
+" <
+
 ""
 " Use ale for syntax checking, disabled by default.
 " >
@@ -369,6 +387,15 @@ let g:spacevim_custom_color_palette = []
 "   let g:spacevim_enable_cursorcolumn = 1
 " <
 let g:spacevim_enable_cursorcolumn     = 0
+
+""
+" @section error_symbol, options-error_symbol
+" @parentsection options
+" Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
+" >
+"   error_symbol = "+"
+" <
+
 ""
 " Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 " >
@@ -915,5 +942,10 @@ endfunction
 "   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
 " <
 
+""
+" @section Changelog, changelog
+" 2018-03-19: v0.7.0
+"
+" https://spacevim.org/SpaceVim-release-v0.7.0/
 
 " vim:set et sw=2 cc=80:
