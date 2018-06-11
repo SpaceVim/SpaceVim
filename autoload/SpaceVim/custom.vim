@@ -163,7 +163,9 @@ endfunction
 
 function! s:load_glob_conf() abort
   let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d') : $SPACEVIMDIR
+  let local_exists = 0
   if filereadable(global_dir . '/init.toml')
+    let local_exists = 1
     let g:_spacevim_global_config_path = global_dir . '/init.toml'
     let local_conf = global_dir . '/init.toml'
     let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
@@ -176,20 +178,21 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf)
     endif
-  elseif filereadable(global_dir . '/init.vim')
+  endif
+  if filereadable(global_dir . '/init.vim')
+    let local_exists = 1
     let g:_spacevim_global_config_path = global_dir . '/init.vim'
     let custom_glob_conf = global_dir . '/init.vim'
     let &rtp = global_dir . ',' . &rtp
     exe 'source ' . custom_glob_conf
-  else
-    if has('timers')
-      " if there is no custom config auto generate it.
-      let g:spacevim_checkinstall = 0
-      augroup SpaceVimBootstrap
-        au!
-        au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
-      augroup END
-    endif
+  endif
+  if !local_exists && has('timers')
+    " if there is no custom config auto generate it.
+    let g:spacevim_checkinstall = 0
+    augroup SpaceVimBootstrap
+      au!
+      au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
+    augroup END
   endif
 
 endfunction
