@@ -42,7 +42,7 @@ let s:enable_flow_syntax = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
-  let s:enable_flow_syntax = get(a:var, 'flow', 0)
+  let s:enable_flow_syntax = get(a:var, 'enable_flow_syntax', 0)
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
