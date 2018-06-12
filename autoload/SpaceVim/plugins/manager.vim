@@ -150,7 +150,7 @@ function! SpaceVim#plugins#manager#install(...) abort
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
   endif
   let s:start_time = reltime()
-  for i in range(g:spacevim_plugin_manager_max_processes)
+  for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
       let repo = dein#get(s:LIST.shift(s:plugins))
       if !empty(repo)
@@ -201,7 +201,7 @@ function! SpaceVim#plugins#manager#update(...) abort
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
   endif
   let s:start_time = reltime()
-  for i in range(g:spacevim_plugin_manager_max_processes)
+  for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
       let reponame = s:LIST.shift(s:plugins)
       let repo = dein#get(reponame)
