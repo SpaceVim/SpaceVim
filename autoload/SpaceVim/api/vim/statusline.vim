@@ -55,9 +55,9 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
   if self.check_width(len, a:fname, a:winwidth)
     let len += self.len(a:fname)
     if flag == 1
-      let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
+      let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . '%#' . a:hi_z . '#' . a:fname . '%='
     else
-      let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
+      let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%#' . a:hi_z . '#' . a:fname . '%='
     endif
   else
     if flag == 1
