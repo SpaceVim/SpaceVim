@@ -26,7 +26,7 @@ function! s:self.eval(sec) abort
   return substitute(a:sec, '%{.*}', '', 'g')
 endfunction
 
-function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z, winwidth) abort
+function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi_a, hi_b, hi_c, hi_z, winwidth) abort
   let l = '%#' . a:hi_a . '#' . a:left_sections[0]
   let l .= '%#' . a:hi_a . '_' . a:hi_b . '#' . a:lsep
   let flag = 1
@@ -65,6 +65,9 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, h
     else
       let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%='
     endif
+  endif
+  if self.check_width(len, a:tag, a:winwidth)
+    let l .= a:tag
   endif
   let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep
   let flag = 1
