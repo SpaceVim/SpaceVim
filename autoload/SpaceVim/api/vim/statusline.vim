@@ -67,7 +67,7 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
     endif
   endif
   if self.check_width(len, a:tag, a:winwidth)
-    let l .= a:tag
+    let l .= '%#' . a:hi_z . '#' . a:tag
   endif
   let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep
   let flag = 1
