@@ -19,25 +19,26 @@ CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
       1. checkinstall..........................|SpaceVim-options-checkinstall|
-      2. enable_ale..............................|SpaceVim-options-enable_ale|
-      3. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      4. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      5. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
-      6. enable_neomake......................|SpaceVim-options-enable_neomake|
-      7. enable_statusline_display_mode
+      2. default_indent......................|SpaceVim-options-default_indent|
+      3. enable_ale..............................|SpaceVim-options-enable_ale|
+      4. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      5. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      6. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      7. enable_neomake......................|SpaceVim-options-enable_neomake|
+      8. enable_statusline_display_mode
 .............................|SpaceVim-options-enable_statusline_display_mode|
-      8. enable_ycm..............................|SpaceVim-options-enable_ycm|
-      9. error_symbol..........................|SpaceVim-options-error_symbol|
-      10. guifont...................................|SpaceVim-options-guifont|
-      11. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      12. max_column.............................|SpaceVim-options-max_column|
-      13. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      14. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      15. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      16. relativenumber.....................|SpaceVim-options-relativenumber|
-      17. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      18. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      19. windows_leader.....................|SpaceVim-options-windows_leader|
+      9. enable_ycm..............................|SpaceVim-options-enable_ycm|
+      10. error_symbol.........................|SpaceVim-options-error_symbol|
+      11. guifont...................................|SpaceVim-options-guifont|
+      12. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      13. max_column.............................|SpaceVim-options-max_column|
+      14. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      15. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      16. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      17. relativenumber.....................|SpaceVim-options-relativenumber|
+      18. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      19. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      20. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -113,6 +114,14 @@ CHECKINSTALL                                   *SpaceVim-options-checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is true.
 >
   checkinstall = true
+<
+
+==============================================================================
+DEFAULT_INDENT                               *SpaceVim-options-default_indent*
+
+Change the default indentation of SpaceVim. Default is 2.
+>
+  default_indent = 2
 <
 
 ==============================================================================
@@ -258,7 +267,7 @@ this feature, or you can set to another char.
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
-If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
 please check bellowing options.
 
 
@@ -301,14 +310,6 @@ this feature, or you can set to another char.
 >
   let g:spacevim_windows_leader = ''
 <
-
-                                                     *g:spacevim_unite_leader*
-Unite work flow leader of SpaceVim. Default is `f`. Set to empty to disable
-this feature, or you can set to another char.
-
-                                                    *g:spacevim_denite_leader*
-Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
-this feature, or you can set to another char.
 
                                              *g:spacevim_enable_insert_leader*
 Enable/Disable spacevim's insert mode leader, default is enable
