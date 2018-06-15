@@ -34,7 +34,7 @@
 
 ""
 " @section Configuration, config
-" If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+" If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
 " please check bellowing options.
 "
 
@@ -45,6 +45,14 @@ scriptencoding utf-8
 " Version of SpaceVim , this value can not be changed.
 let g:spacevim_version = '0.8.0-dev'
 lockvar g:spacevim_version
+
+""
+" @section default_indent, options-default_indent
+" @parentsection options
+" Change the default indentation of SpaceVim. Default is 2.
+" >
+"   default_indent = 2
+" <
 
 ""
 " Change the default indentation of SpaceVim. Default is 2.
@@ -130,14 +138,6 @@ let g:spacevim_enable_googlesuggest    = 0
 "   let g:spacevim_windows_leader = ''
 " <
 let g:spacevim_windows_leader          = 's'
-""
-" Unite work flow leader of SpaceVim. Default is `f`.
-" Set to empty to disable this feature, or you can set to another char.
-let g:spacevim_unite_leader            = '\f'
-""
-" Denite work flow leader of SpaceVim. Default is `F`.
-" Set to empty to disable this feature, or you can set to another char.
-let g:spacevim_denite_leader            = '\f'
 
 ""
 " @section enable_insert_leader, options-enable_insert_leader
@@ -147,9 +147,6 @@ let g:spacevim_denite_leader            = '\f'
 ""
 " Enable/Disable spacevim's insert mode leader, default is enable
 let g:spacevim_enable_insert_leader    = 1
-let g:spacevim_neobundle_installed     = 0
-let g:spacevim_dein_installed          = 0
-let g:spacevim_vim_plug_installed      = 0
 
 ""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
@@ -680,6 +677,9 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
+let g:_spacevim_neobundle_installed     = 0
+let g:_spacevim_dein_installed          = 0
+let g:_spacevim_vim_plug_installed      = 0
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
