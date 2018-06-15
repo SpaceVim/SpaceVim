@@ -19,13 +19,14 @@ this is a list of most asked questions about SpaceVim.
 
 ### Why use toml file as default configuration file?
 
-In the old version of SpaceVim, we use vim script as configuration file, but this brings many bug.
-When using vim file, the configuration are executed when loading the configuration file, that means
-if there is error in the configuration file, the content before the error line also will be executed.
-This will cause unknown issue.
+In the old version of SpaceVim, we use vim file as configuration file. But this introduces a lot of problems.
+When loading vim file, the file content is executed line by line. that means if there is error in the
+configuration file, the content before the error also will be executed.
+This will lead to unforeseen problems.
 
-So, we are going to using another language to config SpaceVim, SpaceVim will load the whole configuration
-file. If there is error in this configuration file, all the configuration will be abandoned.
+So we're going to use a more robust language to configure SpaceVim. SpaceVim will load the
+full configuration file, and if there are syntax errors in the configuration file, the
+entire configuration will be discarded.
 
 1. yaml relies on indentation and is error-prone when configuring transitions, regardless
 2. XML lacks a vim parsing library, so it is not considered
