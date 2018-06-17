@@ -4,7 +4,7 @@ endfunction
 function! SpaceVim#dev#releases#open() abort
   let username = input('github username:')
   let password = input('github password:')
-  let is_dev = g:spacevim_version =~ 'dev'
+  let is_dev = g:spacevim_version =~# 'dev'
   let releases = {
         \ 'tag_name': (is_dev ? 'nightly' : g:spacevim_version),
         \ 'target_commitish': 'master',
@@ -22,27 +22,29 @@ function! SpaceVim#dev#releases#open() abort
   endif
 endfunction
 
-function! List(owner, repo, page) abort
+function! s:list_closed_prs(owner, repo, page) abort
   return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues?state=closed&page=' . a:page , [])
 endfunction
 
 " v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
 " v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
+" v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
+" v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
+" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
 function! s:get_list_of_PRs() abort
   let prs = []
   for i in range(1, 10)
-    let issues = List('SpaceVim','SpaceVim', i)
-    call extend(prs, filter(issues, 'v:val["number"] > 1205 && v:val["number"] < 1510'))
-    call extend(prs, filter(issues, 'v:val["number"] == 1203'))
+    let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
+    call extend(prs, filter(issues, "v:val['number'] > 1610 && v:val['number'] < 1814"))
   endfor
-  return filter(prs, 'has_key(v:val, "pull_request")')
+  return filter(prs, "has_key(v:val, 'pull_request')")
 endfunction
 
 function! s:pr_to_list(pr) abort
   return '- ' . a:pr.title . ' [#' . a:pr.number . '](' . a:pr.html_url . ')'
 endfunction
 let g:wsd = []
-function! SpaceVim#dev#releases#content()
+function! SpaceVim#dev#releases#content() abort
   let md = [
         \ '### SpaceVim release ' . g:spacevim_version
         \ ]
