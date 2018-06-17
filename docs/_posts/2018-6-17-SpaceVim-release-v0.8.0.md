@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v0.8.0
 categories: [changelog, blog]
-excerpt: "Highlight symbol mode and iedit mode come out with v0.8.0"
+excerpt: "Use toml as default configuration file for SpaceVim"
 type: NewsArticle
 image: https://user-images.githubusercontent.com/13142418/41507987-b7fb4760-7202-11e8-8896-01650480e798.png
 comments: true
@@ -28,28 +28,40 @@ The last release v0.7.0 is targeted on March 18, 2018, so let's take a look at w
 
 ## New features
 
-- Add toml config support [#1636](https://github.com/SpaceVim/SpaceVim/pull/1636)
-- Improve toml support [#1654](https://github.com/SpaceVim/SpaceVim/pull/1654)
-- Add buffer directory searching [#1632](https://github.com/SpaceVim/SpaceVim/pull/1632)
-- Split dein UI as plugin [#1682](https://github.com/SpaceVim/SpaceVim/pull/1682)
+- Add toml config support [#1636](https://github.com/SpaceVim/SpaceVim/pull/1636), [#1654](https://github.com/SpaceVim/SpaceVim/pull/1654)
+
+In the old version of SpaceVim, we use vim file as configuration file. But this introduces a lot of problems.
+please check our [faq](../faq/#why-use-toml-file-as-default-configuration-file) for why use toml file as default configuration file.
+
 - Add async support for gitcommit [#1623](https://github.com/SpaceVim/SpaceVim/pull/1623)
+
+when edit commit message, complete the PR and ISSUE list from GitHub asynchronously.
+
+- Split dein UI as plugin [#1682](https://github.com/SpaceVim/SpaceVim/pull/1682)
+
+Dein is a awesome plugin manager for neovim and vim8, but it does not provide a
+UI, If you need vim-plug like install UI, you can use [dein-ui.vim](https://github.com/wsdjeg/dein-ui.vim).
+
+![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
+
+- Add buffer directory searching [#1632](https://github.com/SpaceVim/SpaceVim/pull/1632)
 - Add asyncomplete-clang [#1671](https://github.com/SpaceVim/SpaceVim/pull/1671)
 - add SPC `x a |` to align region at `|` [#1766](https://github.com/SpaceVim/SpaceVim/pull/1766)
 - Add auto fix feature to typescript [#1706](https://github.com/SpaceVim/SpaceVim/pull/1706)
 - Add compatible API for matchaddpos [#1681](https://github.com/SpaceVim/SpaceVim/pull/1681)
 - Add autofix feature for php with phpcbf [#1652](https://github.com/SpaceVim/SpaceVim/pull/1652)
 - Add more key bingindings [#1811](https://github.com/SpaceVim/SpaceVim/pull/1811)
+- Glyph free theme [#1784](https://github.com/SpaceVim/SpaceVim/pull/1784)
 
 ## New layers
 
 - Add org layer [#1718](https://github.com/SpaceVim/SpaceVim/pull/1718)
 - Add lang#r layer [#1717](https://github.com/SpaceVim/SpaceVim/pull/1717)
-- Glyph free theme [#1784](https://github.com/SpaceVim/SpaceVim/pull/1784)
 
 ## Enhancements
 
 - Change filetype assert [#1655](https://github.com/SpaceVim/SpaceVim/pull/1655)
-- Imporve max_column options [#1744](https://github.com/SpaceVim/SpaceVim/pull/1744)
+- Imporve `max_column` options [#1744](https://github.com/SpaceVim/SpaceVim/pull/1744)
 - Improve system api [#1780](https://github.com/SpaceVim/SpaceVim/pull/1780)
 - Improve tags layer [#1761](https://github.com/SpaceVim/SpaceVim/pull/1761)
 - Update Go layer to reflect vim-go var name change [#1719](https://github.com/SpaceVim/SpaceVim/pull/1719)
