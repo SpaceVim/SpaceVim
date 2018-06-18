@@ -57,6 +57,7 @@ let s:cs = [
       \ 'nord',
       \ 'hybrid',
       \ 'NeoSolarized',
+      \ 'material',
       \ ]
 let s:NUMBER = SpaceVim#api#import('data#number')
 
