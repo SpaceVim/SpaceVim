@@ -13,9 +13,9 @@
 " v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
 " v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
 
-let s:last_release_number = 1610
-let s:current_release_number = 1814
-let s:unmerged_prs_since_last_release = []
+let s:last_release_number = 1841
+let s:current_release_number = 1841
+let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838]
 let s:unmerged_prs_since_current_release = []
 
 " the logic should be from last_release_number to current_release_number,
@@ -54,7 +54,13 @@ function! s:get_list_of_PRs() abort
   let prs = []
   for i in range(1, 10)
     let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
-    call extend(prs, filter(issues, "v:val['number'] > 1610 && v:val['number'] < 1814"))
+    call extend(prs,
+          \ filter(issues,
+          \ "v:val['number'] > "
+          \ . s:last_release_number
+          \ . " && v:val['number'] < "
+          \ . s:current_release_number
+          \ ))
   endfor
   return filter(prs, "has_key(v:val, 'pull_request')")
 endfunction
