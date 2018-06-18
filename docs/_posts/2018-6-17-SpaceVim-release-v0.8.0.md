@@ -10,7 +10,8 @@ comments: true
 # [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.8.0
 
 
-The last release v0.7.0 is targeted on March 18, 2018, so let's take a look at what happened in the new release v0.8.0.
+This project exists thanks to all the people who have contributed. The last release v0.7.0 is targeted
+on March 18, 2018, so let's take a look at what happened in the new release v0.8.0.
 
 ![v0.8.0 welcome page](https://user-images.githubusercontent.com/13142418/41507987-b7fb4760-7202-11e8-8896-01650480e798.png)
 
@@ -145,15 +146,4 @@ UI, If you need vim-plug like install UI, you can use [dein-ui.vim](https://gith
 - Fix keys highlights, add missed [#1713](https://github.com/SpaceVim/SpaceVim/pull/1713)
 - Fix layer activation command and typo in Python layer docs [#1712](https://github.com/SpaceVim/SpaceVim/pull/1712)
 - Fix typo in documentation [#1661](https://github.com/SpaceVim/SpaceVim/pull/1661)
-
-
-
-
-
-
-
-
-
-
-
 
