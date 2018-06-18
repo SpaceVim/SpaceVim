@@ -103,7 +103,7 @@ function! s:winnr(...) abort
       return ' %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     endif
   else
-    if g:spacevim_enable_statusline_display_mode == 1
+    if g:spacevim_enable_statusline_mode == 1
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     elseif g:spacevim_windows_index_type == 3
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ get(w:, "winid", winnr()) } '
