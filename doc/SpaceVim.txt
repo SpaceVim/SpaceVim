@@ -25,8 +25,7 @@ CONTENTS                                                   *SpaceVim-contents*
       5. enable_guicolors..................|SpaceVim-options-enable_guicolors|
       6. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
       7. enable_neomake......................|SpaceVim-options-enable_neomake|
-      8. enable_statusline_display_mode
-.............................|SpaceVim-options-enable_statusline_display_mode|
+      8. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
       9. enable_ycm..............................|SpaceVim-options-enable_ycm|
       10. error_symbol.........................|SpaceVim-options-error_symbol|
       11. guifont...................................|SpaceVim-options-guifont|
@@ -162,13 +161,12 @@ SpaceVim default checker is neomake. If you want to use syntastic, use:
 <
 
 ==============================================================================
-ENABLE_STATUSLINE_DISPLAY_MODE
-                             *SpaceVim-options-enable_statusline_display_mode*
+ENABLE_STATUSLINE_MODE               *SpaceVim-options-enable_statusline_mode*
 
 Enable/Disable display mode. Default is 0, mode will be displayed in
 statusline. To enable this feature:
 >
-  enable_statusline_display_mode = true
+  enable_statusline_mode = true
 <
 
 ==============================================================================
@@ -436,11 +434,11 @@ Enable/Disable unicode symbols in statusline
 Enable/Disable language specific leader, by default you can use `,` ket
 instead of `SPC` `l`.
 
-                                   *g:spacevim_enable_statusline_display_mode*
+                                           *g:spacevim_enable_statusline_mode*
 Enable/Disable display mode. Default is 0, mode will be displayed in
 statusline. To enable this feature:
 >
-  let g:spacevim_enable_statusline_display_mode = 1
+  let g:spacevim_enable_statusline_mode = 1
 <
 
                                              *g:spacevim_custom_color_palette*

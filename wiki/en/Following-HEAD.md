@@ -8,6 +8,8 @@ The next release is v0.9.0.
 
 #### Changed
 
+- Change the option name `enable_statusline_display_mode` to `enable_statusline_mode` ([#1843](https://github.com/SpaceVim/SpaceVim/pull/1843))
+
 #### Removed
 
 #### Doc

@@ -361,21 +361,21 @@ let g:spacevim_statusline_unicode_symbols = 1
 let g:spacevim_enable_language_specific_leader = 1
 
 ""
-" @section enable_statusline_display_mode, options-enable_statusline_display_mode
+" @section enable_statusline_mode, options-enable_statusline_mode
 " @parentsection options
 " Enable/Disable display mode. Default is 0, mode will be
 " displayed in statusline. To enable this feature:
 " >
-"   enable_statusline_display_mode = true
+"   enable_statusline_mode = true
 " <
 
 ""
 " Enable/Disable display mode. Default is 0, mode will be
 " displayed in statusline. To enable this feature:
 " >
-"   let g:spacevim_enable_statusline_display_mode = 1
+"   let g:spacevim_enable_statusline_mode = 1
 " <
-let g:spacevim_enable_statusline_display_mode     = 0
+let g:spacevim_enable_statusline_mode     = 0
 ""
 " Set the statusline/tabline palette of color, default values depends on the theme
 " >
