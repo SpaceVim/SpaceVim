@@ -37,6 +37,8 @@ please check our [faq](../faq/#why-use-toml-file-as-default-configuration-file) 
 
 when edit commit message, complete the PR and ISSUE list from GitHub asynchronously.
 
+![complete in git commit](https://user-images.githubusercontent.com/13142418/41519892-6ee2d3fc-7290-11e8-8b48-20e24d3046bc.jpg)
+
 - Split dein UI as plugin [#1682](https://github.com/SpaceVim/SpaceVim/pull/1682)
 
 Dein is a awesome plugin manager for neovim and vim8, but it does not provide a
