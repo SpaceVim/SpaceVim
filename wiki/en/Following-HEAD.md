@@ -8,6 +8,8 @@ The next release is v0.9.0.
 
 #### Changed
 
+- Change the option name `enable_statusline_display_mode` to `enable_statusline_mode`
+
 #### Removed
 
 #### Doc
