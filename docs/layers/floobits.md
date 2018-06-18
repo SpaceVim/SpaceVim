@@ -38,6 +38,8 @@ name = "floobits"
 
 ## Key bindings
 
-| Key bindings | Discription                    |
-| ------------ | ------------------------------ |
-| `SPC m f c`  | Clears all mirrored highlights |
+| Key bindings | Discription                                               |
+| ------------ | --------------------------------------------------------- |
+| `SPC m f j`  | Join workspace                                            |
+| `SPC m f t`  | Toggle follow mode                                        |
+| `SPC m f s`  | Summon everyone in the workspace to your cursor position. |
