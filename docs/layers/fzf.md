@@ -23,3 +23,4 @@ This layer is a heavily customized wrapper for fzf.
 | `<Leader> f o`       | Fuzzy find outline            |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
+| `<Leader> b b`       | List all buffers              |
