@@ -60,7 +60,14 @@ function! s:get_list_of_PRs() abort
           \ . s:last_release_number
           \ . " && v:val['number'] < "
           \ . s:current_release_number
+          \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
           \ ))
+  endfor
+  for i in s:unmerged_prs_since_last_release
+    let pr = github#api#issues#Get_issue('SpaceVim', 'SpaceVim', i)
+    if get(pr, 'state', '') ==# 'closed'
+      call add(prs, pr)
+    endif
   endfor
   return filter(prs, "has_key(v:val, 'pull_request')")
 endfunction
