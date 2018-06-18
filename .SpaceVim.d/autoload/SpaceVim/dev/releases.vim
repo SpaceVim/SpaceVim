@@ -1,3 +1,27 @@
+"=============================================================================
+" releases.vim --- release script for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+" v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
+" v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
+" v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
+" v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
+" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
+
+let s:last_release_number = 1610
+let s:current_release_number = 1814
+let s:unmerged_prs_since_last_release = []
+let s:unmerged_prs_since_current_release = []
+
+" the logic should be from last_release_number to current_release_number,
+" include prs in unmerged_prs_since_last_release which is merged.
+" exclude prs in unmerged_prs_since_current_release
+
 function! s:body() abort
   return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
 endfunction
@@ -26,11 +50,6 @@ function! s:list_closed_prs(owner, repo, page) abort
   return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues?state=closed&page=' . a:page , [])
 endfunction
 
-" v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
-" v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
-" v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
-" v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
-" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
 function! s:get_list_of_PRs() abort
   let prs = []
   for i in range(1, 10)
