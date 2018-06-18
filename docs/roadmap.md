@@ -7,9 +7,27 @@ description: "The roadmap and milestones define the project direction and priori
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
+
+<!-- vim-markdown-toc GFM -->
+
+- [Next](#next)
+  - [v0.9.0](#v090)
+- [Meta](#meta)
+- [Completed](#completed)
+  - [v0.1.0](#v010)
+  - [v0.2.0](#v020)
+  - [v0.3.0](#v030)
+  - [v0.3.1](#v031)
+  - [v0.4.0](#v040)
+  - [v0.5.0](#v050)
+  - [v0.6.0](#v060)
+  - [v0.7.0](#v070)
+
+<!-- vim-markdown-toc -->
+
 ## Next
 
-### [v0.8.0](https://github.com/SpaceVim/SpaceVim/milestone/11)
+### [v0.9.0](https://github.com/SpaceVim/SpaceVim/milestone/12)
 
 ## Meta
 
