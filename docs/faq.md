@@ -9,13 +9,30 @@ this is a list of most asked questions about SpaceVim.
 
 <!-- vim-markdown-toc GFM -->
 
-- [Why use toml file as default configuration file?](#why-use-toml-file-as-default-configuration-file)
+- [Have a try with SpaceVim without overwrite vimrc?](#have-a-try-with-spacevim-without-overwrite-vimrc)
+- [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
 - [Where should I put my configuration?](#where-should-i-put-my-configuration)
 - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
 - [Why I can not update plugins?](#why-i-can-not-update-plugins)
 
 <!-- vim-markdown-toc -->
+
+### Have a try with SpaceVim without overwrite vimrc?
+
+The install script of SpaceVim will move your `~/.vimrc` to `~/.vimrc_back`. If you want to have a try with SpaceVim without overwrite
+your own vim configuration. you can clone SpaceVim manually.
+
+```sh
+git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
+```
+
+then, start vim via `vim -u ~/.SpaceVim/vimrc`. you can also put this alias into your bashrc.
+
+```sh
+alias svim='vim -u ~/.SpaceVim/vimrc'
+```
+
 
 ### Why use toml as the default configuration file format?
 
