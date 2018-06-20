@@ -1,0 +1,3 @@
+Execute ( SpaceVim api: data#toml ):
+  let toml = SpaceVim#api#import('data#toml')
+  AssertEqual toml.parse_file('mode/basic.toml').options.colorscheme, 'gruvbox'
