@@ -9,6 +9,8 @@ The next release is v0.9.0.
 - Add material theme ([#1833](https://github.com/SpaceVim/SpaceVim/pull/1833))
 - Add floobits layer ([#1697](https://github.com/SpaceVim/SpaceVim/pull/1697))
 - Add `SPC b b ` key binding in fzf layer ([#1725](https://github.com/SpaceVim/SpaceVim/pull/1725))
+- Add test for toml, number, file, icon and highlight API ([#1849](https://github.com/SpaceVim/SpaceVim/pull/1849))
+- Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
 
 ### Changed
 
@@ -20,6 +22,8 @@ The next release is v0.9.0.
 
 - Update version to v0.9.0-dev ([#1842](https://github.com/SpaceVim/SpaceVim/pull/1842))
 - Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
+- Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
+- Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
 
 ### Others
 
