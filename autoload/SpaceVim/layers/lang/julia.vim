@@ -18,9 +18,6 @@
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
   call add(plugins, ['JuliaEditorSupport/julia-vim' ])
-  if (has('nvim'))
-    call add(plugins, ['JuliaEditorSupport/deoplete-julia', {'on_ft' : 'julia'}])
-  endif
   call add(plugins, ['zyedidia/julialint.vim', {'on_ft' : 'julia'}])
   return plugins
 endfunction
@@ -30,4 +27,14 @@ function! SpaceVim#layers#lang#julia#config() abort
   let g:latex_to_unicode_tab = 0
   au! BufNewFile,BufRead *.jl setf julia
   au! BufNewFile,BufRead *.julia setf julia
+  
+  " julia
+  let g:default_julia_version = '0.6'
+
+  " language server
+  let g:LanguageClient_autoStart = 1
+  
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 endfunction
