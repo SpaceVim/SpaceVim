@@ -18,9 +18,6 @@
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
   call add(plugins, ['JuliaEditorSupport/julia-vim' ])
-  if (has('nvim'))
-    call add(plugins, ['roxma/nvim-completion-manager'])
-  endif
   call add(plugins, ['zyedidia/julialint.vim', {'on_ft' : 'julia'}])
   return plugins
 endfunction
