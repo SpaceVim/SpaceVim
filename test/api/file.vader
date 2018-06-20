@@ -1,0 +1,3 @@
+Execute ( SpaceVim api: file ):
+  let file = SpaceVim#api#import('file')
+  AssertEqual file.fticon('foo.md'), ''
