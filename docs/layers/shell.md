@@ -3,7 +3,7 @@ title: "SpaceVim shell layer"
 description: "This layer provide shell support in SpaceVim"
 ---
 
-# [Available Layers:](../) >> shell
+# [Available Layers](../) >> shell
 
 <!-- vim-markdown-toc GFM -->
 

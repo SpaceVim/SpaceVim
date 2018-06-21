@@ -3,12 +3,12 @@ title: "SpaceVim github layer"
 description: "This layer provides GitHub integration for SpaceVim"
 ---
 
-# [Available Layers:](../) >> github
+# [Available Layers](../) >> github
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -17,7 +17,7 @@ description: "This layer provides GitHub integration for SpaceVim"
 
 This layer provides GitHub integration for SpaceVim.
 
-## Layer Installation
+## Install
 
 To use this configuration layer, add following snippet to your custom configuration file.
 

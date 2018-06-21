@@ -3,11 +3,12 @@ title: "SpaceVim ui layer"
 description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) ui
+# [Available Layers](../) >> ui
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
+- [Install](#install)
 - [Plugins](#plugins)
 
 <!-- vim-markdown-toc -->
@@ -16,6 +17,14 @@ description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and 
 
 This is UI layer for SpaceVim, and it is loaded by default.
 
+## Install
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "ui"
+```
 
 ## Plugins
 
