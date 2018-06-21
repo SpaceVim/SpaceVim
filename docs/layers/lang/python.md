@@ -3,7 +3,7 @@ title: "SpaceVim lang#python layer"
 description: "This layer is for Python development, provide autocompletion, syntax checking, code format for python file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#python
+# [Available Layers:](../../) >> lang#python
 
 <!-- vim-markdown-toc GFM -->
 
@@ -36,7 +36,12 @@ This layer is for Python development.
 
 ### Layer
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#python')` to your custom configuration file.
+To use this configuration layer, add following snippet to your custom configuration file.
+
+```toml
+[[layers]]
+  name = "lang#python"
+```
 
 ### Syntax Checking
 
