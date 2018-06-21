@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : 0.8.0-dev       by : spacevim.org             "
+echo "                      version : 0.9.0-dev       by : spacevim.org             "
 
 Push-Location ~
 

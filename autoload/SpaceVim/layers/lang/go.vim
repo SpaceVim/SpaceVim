@@ -58,6 +58,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:go_fmt_command = 'goimports'
   let g:syntastic_go_checkers = ['golint', 'govet']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  let g:neomake_go_gometalinter_args = ['--disable-all']
   let g:go_snippet_engine = 'neosnippet'
 
   if SpaceVim#layers#lsp#check_filetype('go')

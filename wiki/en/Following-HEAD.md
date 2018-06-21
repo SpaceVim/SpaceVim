@@ -1,22 +1,33 @@
-This page documents changes in master branch since last release v0.7.0
+This page documents changes in master branch since last release v0.8.0
 
-### PreRelease
+## PreRelease
 
-The next release is v0.8.0.
+The next release is v0.9.0.
 
-#### Added
+### Added
 
-#### Changed
+- Add material theme ([#1833](https://github.com/SpaceVim/SpaceVim/pull/1833))
+- Add floobits layer ([#1697](https://github.com/SpaceVim/SpaceVim/pull/1697))
+- Add `SPC b b ` key binding in fzf layer ([#1725](https://github.com/SpaceVim/SpaceVim/pull/1725))
+- Add test for toml, number, file, icon and highlight API ([#1849](https://github.com/SpaceVim/SpaceVim/pull/1849))
+- Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
 
-#### Removed
+### Changed
 
-#### Doc
+- Change the option name `enable_statusline_display_mode` to `enable_statusline_mode` ([#1843](https://github.com/SpaceVim/SpaceVim/pull/1843))
 
-#### Wiki && Website
+### Removed
 
-#### Others
+### Doc, Wiki && Website
 
-### Latest Release
+- Update version to v0.9.0-dev ([#1842](https://github.com/SpaceVim/SpaceVim/pull/1842))
+- Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
+- Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
+- Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
 
-SpaceVim releases v0.7.0 at 2018-03-19, please check the
-[release page](https://spacevim.org/SpaceVim-release-v0.7.0/) for all the details
+### Others
+
+## Latest Release
+
+SpaceVim releases v0.8.0 at 2018-06-18, please check the
+[release page](https://spacevim.org/SpaceVim-release-v0.8.0/) for all the details

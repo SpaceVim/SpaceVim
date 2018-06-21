@@ -1,0 +1,5 @@
+Execute ( SpaceVim api: file ):
+  let &encoding = 'utf-8'
+  let g:spacevim_filetype_icons = {}
+  let file = SpaceVim#api#import('file')
+  AssertEqual file.fticon('foo.md'), ''

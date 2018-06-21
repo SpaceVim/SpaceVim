@@ -1,10 +1,34 @@
+"=============================================================================
+" releases.vim --- release script for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+" v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
+" v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
+" v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
+" v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
+" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
+
+let s:last_release_number = 1841
+let s:current_release_number = 1841
+let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838]
+let s:unmerged_prs_since_current_release = []
+
+" the logic should be from last_release_number to current_release_number,
+" include prs in unmerged_prs_since_last_release which is merged.
+" exclude prs in unmerged_prs_since_current_release
+
 function! s:body() abort
   return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
 endfunction
 function! SpaceVim#dev#releases#open() abort
   let username = input('github username:')
   let password = input('github password:')
-  let is_dev = g:spacevim_version =~ 'dev'
+  let is_dev = g:spacevim_version =~# 'dev'
   let releases = {
         \ 'tag_name': (is_dev ? 'nightly' : g:spacevim_version),
         \ 'target_commitish': 'master',
@@ -22,27 +46,37 @@ function! SpaceVim#dev#releases#open() abort
   endif
 endfunction
 
-function! List(owner, repo, page) abort
+function! s:list_closed_prs(owner, repo, page) abort
   return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues?state=closed&page=' . a:page , [])
 endfunction
 
-" v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
-" v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
 function! s:get_list_of_PRs() abort
   let prs = []
   for i in range(1, 10)
-    let issues = List('SpaceVim','SpaceVim', i)
-    call extend(prs, filter(issues, 'v:val["number"] > 1205 && v:val["number"] < 1510'))
-    call extend(prs, filter(issues, 'v:val["number"] == 1203'))
+    let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
+    call extend(prs,
+          \ filter(issues,
+          \ "v:val['number'] > "
+          \ . s:last_release_number
+          \ . " && v:val['number'] < "
+          \ . s:current_release_number
+          \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
+          \ ))
   endfor
-  return filter(prs, 'has_key(v:val, "pull_request")')
+  for i in s:unmerged_prs_since_last_release
+    let pr = github#api#issues#Get_issue('SpaceVim', 'SpaceVim', i)
+    if get(pr, 'state', '') ==# 'closed'
+      call add(prs, pr)
+    endif
+  endfor
+  return filter(prs, "has_key(v:val, 'pull_request')")
 endfunction
 
 function! s:pr_to_list(pr) abort
   return '- ' . a:pr.title . ' [#' . a:pr.number . '](' . a:pr.html_url . ')'
 endfunction
 let g:wsd = []
-function! SpaceVim#dev#releases#content()
+function! SpaceVim#dev#releases#content() abort
   let md = [
         \ '### SpaceVim release ' . g:spacevim_version
         \ ]

@@ -91,7 +91,8 @@ let s:lsp_servers = {
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'python' : ['pyls'],
       \ 'html' : ['html-languageserver', '--stdio'],
-      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php']
+      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
+      \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort

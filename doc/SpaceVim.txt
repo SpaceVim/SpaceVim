@@ -18,6 +18,26 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
+      1. checkinstall..........................|SpaceVim-options-checkinstall|
+      2. default_indent......................|SpaceVim-options-default_indent|
+      3. enable_ale..............................|SpaceVim-options-enable_ale|
+      4. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      5. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      6. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      7. enable_neomake......................|SpaceVim-options-enable_neomake|
+      8. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
+      9. enable_ycm..............................|SpaceVim-options-enable_ycm|
+      10. error_symbol.........................|SpaceVim-options-error_symbol|
+      11. guifont...................................|SpaceVim-options-guifont|
+      12. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      13. max_column.............................|SpaceVim-options-max_column|
+      14. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      15. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      16. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      17. relativenumber.....................|SpaceVim-options-relativenumber|
+      18. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      19. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      20. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -28,7 +48,7 @@ CONTENTS                                                   *SpaceVim-contents*
       4. core#statusline......................|SpaceVim-layer-core-statusline|
       5. core#tabline............................|SpaceVim-layer-core-tabline|
       6. exprfold....................................|SpaceVim-layer-exprfold|
-      7. format..............................................|SpaceVim-format|
+      7. format........................................|SpaceVim-layer-format|
       8. github........................................|SpaceVim-layer-github|
       9. incsearch..................................|SpaceVim-layer-incsearch|
       10. indentmove...............................|SpaceVim-layer-indentmove|
@@ -61,6 +81,7 @@ CONTENTS                                                   *SpaceVim-contents*
       4. sid............................................|SpaceVim-api-vim-sid|
       5. vim#message................................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
+  9. Changelog............................................|SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -79,10 +100,172 @@ also supports local config for each project. Place local config  settings in
 `.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
 
+here is an example setting SpaceVim options:
+>
+  [options]
+    enable-guicolors = true
+    max-column = 120
+<
+
+==============================================================================
+CHECKINSTALL                                   *SpaceVim-options-checkinstall*
+
+Enable/Disable checkinstall on SpaceVim startup. Default is true.
+>
+  checkinstall = true
+<
+
+==============================================================================
+DEFAULT_INDENT                               *SpaceVim-options-default_indent*
+
+Change the default indentation of SpaceVim. Default is 2.
+>
+  default_indent = 2
+<
+
+==============================================================================
+ENABLE_ALE                                       *SpaceVim-options-enable_ale*
+
+Use ale for syntax checking, disabled by default.
+>
+  enable_ale = true
+<
+
+==============================================================================
+ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
+
+Enable/Disable Google suggestions for neocomplete. Default is false.
+>
+  enable_googlesuggest = false
+<
+
+==============================================================================
+ENABLE_GUICOLORS                           *SpaceVim-options-enable_guicolors*
+
+Enable true color support in terminal. Default is true.
+>
+  enable_guicolors = true
+<
+
+==============================================================================
+ENABLE_INSERT_LEADER                   *SpaceVim-options-enable_insert_leader*
+
+Enable/Disable spacevim's insert mode leader, default is enable
+
+==============================================================================
+ENABLE_NEOMAKE                               *SpaceVim-options-enable_neomake*
+
+SpaceVim default checker is neomake. If you want to use syntastic, use:
+>
+  enable_neomake = false
+<
+
+==============================================================================
+ENABLE_STATUSLINE_MODE               *SpaceVim-options-enable_statusline_mode*
+
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  enable_statusline_mode = true
+<
+
+==============================================================================
+ENABLE_YCM                                       *SpaceVim-options-enable_ycm*
+
+Enable/Disable YouCompleteMe. Default is false.
+>
+  enable_ycm = true
+<
+
+==============================================================================
+ERROR_SYMBOL                                   *SpaceVim-options-error_symbol*
+
+Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
+>
+  error_symbol = "+"
+<
+
+==============================================================================
+GUIFONT                                             *SpaceVim-options-guifont*
+
+Set the guifont of SpaceVim. Default is empty.
+>
+  guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+<
+
+==============================================================================
+LINT_ON_THE_FLY                             *SpaceVim-options-lint_on_the_fly*
+
+Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
+>
+  lint_on_the_fly = false
+<
+
+==============================================================================
+MAX_COLUMN                                       *SpaceVim-options-max_column*
+
+Change the max number of columns for SpaceVim. Default is 120.
+>
+  max_column = 120
+<
+
+==============================================================================
+PLUGIN_BUNDLE_DIR                         *SpaceVim-options-plugin_bundle_dir*
+
+Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+>
+  plugin_bundle_dir = "~/.cache/vimplugs"
+<
+
+==============================================================================
+PLUGIN_MANAGER_PROCESSES           *SpaceVim-options-plugin_manager_processes*
+
+Set the max process of SpaceVim plugin manager
+
+==============================================================================
+REALTIME_LEADER_GUIDE                 *SpaceVim-options-realtime_leader_guide*
+
+Enable/Disable realtime leader guide. Default is true. to disable it:
+>
+  realtime_leader_guide = false
+<
+
+==============================================================================
+RELATIVENUMBER                               *SpaceVim-options-relativenumber*
+
+Enable/Disable relativenumber, by default it is enabled.
+>
+  relativenumber = true
+<
+
+==============================================================================
+SIDEBAR_WIDTH                                 *SpaceVim-options-sidebar_width*
+
+Set the width of the SpaceVim sidebar. Default is 30. This value will be used
+by tagbar and vimfiler.
+
+==============================================================================
+SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
+
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  snippet_engine = "ultisnips"
+<
+
+==============================================================================
+WINDOWS_LEADER                               *SpaceVim-options-windows_leader*
+
+Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+this feature, or you can set to another char.
+>
+  windows_leader = ""
+<
+
 ==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
-If you still want to use `~/.SpaceVim.d/init.toml` as configuration file,
+If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
 please check bellowing options.
 
 
@@ -125,14 +308,6 @@ this feature, or you can set to another char.
 >
   let g:spacevim_windows_leader = ''
 <
-
-                                                     *g:spacevim_unite_leader*
-Unite work flow leader of SpaceVim. Default is `f`. Set to empty to disable
-this feature, or you can set to another char.
-
-                                                    *g:spacevim_denite_leader*
-Denite work flow leader of SpaceVim. Default is `F`. Set to empty to disable
-this feature, or you can set to another char.
 
                                              *g:spacevim_enable_insert_leader*
 Enable/Disable spacevim's insert mode leader, default is enable
@@ -204,7 +379,7 @@ by tagbar and vimfiler.
 Set the snippet engine of SpaceVim, default is neosnippet. to enable
 ultisnips:
 >
-  let g:spacevim_snippet_engine = 'ultisnips'
+  let g:spacevim_snippet_engine = "ultisnips"
 <
 
                                                 *g:spacevim_enable_cursorline*
@@ -259,11 +434,11 @@ Enable/Disable unicode symbols in statusline
 Enable/Disable language specific leader, by default you can use `,` ket
 instead of `SPC` `l`.
 
-                                   *g:spacevim_enable_statusline_display_mode*
+                                           *g:spacevim_enable_statusline_mode*
 Enable/Disable display mode. Default is 0, mode will be displayed in
 statusline. To enable this feature:
 >
-  let g:spacevim_enable_statusline_display_mode = 1
+  let g:spacevim_enable_statusline_mode = 1
 <
 
                                              *g:spacevim_custom_color_palette*
@@ -369,7 +544,7 @@ The default file manager of SpaceVim. Default is 'vimfiler'.
 The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
 neobundle, or vim-plug.
 
-                                     *g:spacevim_plugin_manager_max_processes*
+                                         *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
 
                                                      *g:spacevim_checkinstall*
@@ -683,10 +858,17 @@ Mappings:
 <
 
 ==============================================================================
-FORMAT                                                       *SpaceVim-format*
+FORMAT                                                 *SpaceVim-layer-format*
 
 SpaceVim uses neoformat as the default code format tools. Neoformat uses a
-variety of formatters for many filetypes. for more info see |neoformat|
+variety of formatters for many filetypes. for more info see |neoformat| if you
+want to run a formatter on save, just put this config into bootstrap function.
+>
+  augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+  augroup END
+<
 
 ==============================================================================
 GITHUB                                                 *SpaceVim-layer-github*
@@ -842,16 +1024,28 @@ MAPPINGS
 >
   Mode            Key             Function
   ---------------------------------------------
-  normal          SPC l i         go implements
-  normal          SPC l f         go info
-  normal          SPC l g         go to declaration
-  normal          SPC l e         go rename
-  normal          SPC l r         go run
+  normal          SPC l a         go alternate
   normal          SPC l b         go build
-  normal          SPC l t         go test
-  normal          SPC l d         go doc
-  normal          SPC l v         go doc vertical
   normal          SPC l c         go coverage
+  normal          SPC l d         go doc
+  normal          SPC l D         go doc vertical
+  normal          SPC l e         go rename
+  normal          SPC l g         go definition
+  normal          SPC l G         go generate
+  normal          SPC l h         go info
+  normal          SPC l i         go implements
+  normal          SPC l I         implement stubs
+  normal          SPC l k         add tags
+  normal          SPC l K         remove tags
+  normal          SPC l l         list declarations in file
+  normal          SPC l L         list declarations in dir
+  normal          SPC l m         format improts
+  normal          SPC l M         add import
+  normal          SPC l r         go referrers
+  normal          SPC l s         fill struct
+  normal          SPC l t         go test
+  normal          SPC l v         freevars
+  normal          SPC l x         go run
 <
 
 ==============================================================================
@@ -1221,6 +1415,17 @@ FAQ                                                             *SpaceVim-faq*
 >
   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
 <
+
+==============================================================================
+CHANGELOG                                                 *SpaceVim-changelog*
+
+Following HEAD: changes in master branch since last release v0.7.0
+
+https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+
+2018-03-19: v0.7.0
+
+https://spacevim.org/SpaceVim-release-v0.7.0/
 
 
 vim:tw=78:ts=8:ft=help:norl:

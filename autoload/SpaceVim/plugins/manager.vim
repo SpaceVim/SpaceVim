@@ -38,7 +38,7 @@ function! s:install_manager() abort
     "auto install neobundle
     if filereadable(expand(g:spacevim_plugin_bundle_dir)
           \ . 'neobundle.vim'. s:Fsep. 'README.md')
-      let g:spacevim_neobundle_installed = 1
+      let g:_spacevim_neobundle_installed = 1
     else
       if s:need_cmd('git')
         call s:VIM_CO.system([
@@ -47,7 +47,7 @@ function! s:install_manager() abort
               \ 'https://github.com/Shougo/neobundle.vim',
               \ expand(g:spacevim_plugin_bundle_dir) . 'neobundle.vim'
               \ ])
-        let g:spacevim_neobundle_installed = 1
+        let g:_spacevim_neobundle_installed = 1
       endif
     endif
     exec 'set runtimepath+='
@@ -59,7 +59,7 @@ function! s:install_manager() abort
           \ . join(['repos', 'github.com',
           \ 'Shougo', 'dein.vim', 'README.md'],
           \ s:Fsep))
-      let g:spacevim_dein_installed = 1
+      let g:_spacevim_dein_installed = 1
     else
       if s:need_cmd('git')
         call s:VIM_CO.system([
@@ -70,7 +70,7 @@ function! s:install_manager() abort
               \ . join(['repos', 'github.com',
               \ 'Shougo', 'dein.vim"'], s:Fsep)
               \ ])
-        let g:spacevim_dein_installed = 1
+        let g:_spacevim_dein_installed = 1
       endif
     endif
     exec 'set runtimepath+='. fnameescape(g:spacevim_plugin_bundle_dir)
@@ -79,7 +79,7 @@ function! s:install_manager() abort
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
     if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-      let g:spacevim_vim_plug_installed = 1
+      let g:_spacevim_vim_plug_installed = 1
     else
       if s:need_cmd('curl')
 
@@ -90,7 +90,7 @@ function! s:install_manager() abort
               \ '--create-dirs',
               \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
               \ ])
-        let g:spacevim_vim_plug_installed = 1
+        let g:_spacevim_vim_plug_installed = 1
       endif
     endif
     exec 'set runtimepath+=~/.cache/vim-plug/'
@@ -150,7 +150,7 @@ function! SpaceVim#plugins#manager#install(...) abort
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
   endif
   let s:start_time = reltime()
-  for i in range(g:spacevim_plugin_manager_max_processes)
+  for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
       let repo = dein#get(s:LIST.shift(s:plugins))
       if !empty(repo)
@@ -201,7 +201,7 @@ function! SpaceVim#plugins#manager#update(...) abort
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
   endif
   let s:start_time = reltime()
-  for i in range(g:spacevim_plugin_manager_max_processes)
+  for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
       let reponame = s:LIST.shift(s:plugins)
       let repo = dein#get(reponame)
@@ -210,7 +210,7 @@ function! SpaceVim#plugins#manager#update(...) abort
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
-              \ 'path' : fnamemodify(g:Config_Main_Home, ':h')
+              \ 'path' : fnamemodify(g:_spacevim_root_dir, ':h')
               \ }
         call s:pull(repo)
 
