@@ -3,7 +3,7 @@ title: "SpaceVim colorscheme layer"
 description: "colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme."
 ---
 
-# [Available Layers:](../) >> colorschemes
+# [Available Layers](../) >> colorschemes
 
 <!-- vim-markdown-toc GFM -->
 

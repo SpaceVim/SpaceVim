@@ -3,7 +3,7 @@ title: "SpaceVim leaderf layer"
 description: "This layers provide a heavily customized LeaderF centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) denite
+# [Available Layers:](../) >> leaderf
 
 ## Intro
 

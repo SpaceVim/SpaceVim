@@ -3,7 +3,7 @@ title: "SpaceVim git layer"
 description: "This layers adds extensive support for git"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) git
+# [Available Layers:](../) >> git
 
 <!-- vim-markdown-toc GFM -->
 

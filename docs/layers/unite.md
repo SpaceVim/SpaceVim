@@ -3,7 +3,7 @@ title: "SpaceVim unite layer"
 description: "This layers provide a heavily customized Unite centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) unite
+# [Available Layers:](../) >> unite
 
 ## Intro
 

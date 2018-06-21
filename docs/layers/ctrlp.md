@@ -3,12 +3,28 @@ title: "SpaceVim ctrlp layer"
 description: "This layers provide a heavily customized ctrlp centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) ctrlp
+# [Available Layers](../) >> ctrlp
 
-## Intro
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
+## Description
 
 This layer is a heavily customized wrapper for ctrlp.
 
+## Install
+
+To use this configuration layer, add it to your configuration file.
+
+```toml
+[[layers]]
+name = "ctrlp"
+```
 
 ## Key bindings
 

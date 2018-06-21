@@ -3,7 +3,7 @@ title: "SpaceVim debug layer"
 description: "This layer provide debug workflow support in SpaceVim"
 ---
 
-# [Available Layers:](../) >> debug
+# [Available Layers](../) >> debug
 
 <!-- vim-markdown-toc GFM -->
 

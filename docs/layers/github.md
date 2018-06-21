@@ -19,10 +19,11 @@ This layer provides GitHub integration for SpaceVim.
 
 ## Layer Installation
 
-To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
+To use this configuration layer, add following snippet to your custom configuration file.
 
-```vim
-call SpaceVim#layers#load('github')
+```toml
+[[layers]]
+  name = "github"
 ```
 
 ## Key bindings
