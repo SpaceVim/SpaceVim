@@ -3,7 +3,7 @@ title: "SpaceVim denite layer"
 description: "This layers provide a heavily customized Denite centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) denite
+# [Available Layers:](../) >> denite
 
 ## Intro
 

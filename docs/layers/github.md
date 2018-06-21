@@ -3,7 +3,7 @@ title: "SpaceVim github layer"
 description: "This layer provides GitHub integration for SpaceVim"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) github
+# [Available Layers:](../) >> github
 
 <!-- vim-markdown-toc GFM -->
 

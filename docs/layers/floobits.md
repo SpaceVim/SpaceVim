@@ -3,7 +3,7 @@ title: "SpaceVim floobits layer"
 description: "This layer adds support for the peer programming tool floobits to SpaceVim."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) floobits
+# [Available Layers:](../) >> floobits
 
 <!-- vim-markdown-toc GFM -->
 
