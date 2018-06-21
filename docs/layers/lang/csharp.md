@@ -3,12 +3,12 @@ title: "SpaceVim lang#csharp layer"
 description: "This layer is for csharp development"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#csharp
+# [Available Layers](../../) >> lang#csharp
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Installation](#installation)
+- [Install](#install)
   - [Layer](#layer)
   - [OmniSharp Server](#omnisharp-server)
 - [Key bindings](#key-bindings)
@@ -19,11 +19,16 @@ description: "This layer is for csharp development"
 
 This layer is for csharp development.
 
-## Installation
+## Install
 
 ### Layer
 
-To use this configuration layer, add `SPLayer 'lang#csharp'` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#csharp"
+```
 
 ### OmniSharp Server
 

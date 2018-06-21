@@ -24,6 +24,7 @@ The next release is v0.9.0.
 - Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
 - Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
+- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860))
 
 ### Others
 

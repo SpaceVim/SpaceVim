@@ -3,7 +3,7 @@ title: "SpaceVim lang#javascript layer"
 description: "This layer is for JaveScript development"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#javascript
+# [Available Layers](../../) >> lang#javascript
 
 <!-- vim-markdown-toc GFM -->
 
@@ -23,7 +23,12 @@ This layer is for JavaScript development.
 
 ## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#javascript"
+```
 
 ## Features
 

@@ -3,7 +3,7 @@ title: "SpaceVim golang layer"
 description: "This layer is for golang development. It also provides additional language-specific key mappings."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) go
+# [Available Layers](../../) >> lang#go
 
 <!-- vim-markdown-toc GFM -->
 
@@ -20,7 +20,12 @@ This layer is for golang development. It also provides additional language-speci
 
 ## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#go')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#go"
+```
 
 ## Features
 
