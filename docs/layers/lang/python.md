@@ -3,7 +3,7 @@ title: "SpaceVim lang#python layer"
 description: "This layer is for Python development, provide autocompletion, syntax checking, code format for python file."
 ---
 
-# [Available Layers:](../../) >> lang#python
+# [Available Layers](../../) >> lang#python
 
 <!-- vim-markdown-toc GFM -->
 
@@ -15,6 +15,7 @@ description: "This layer is for Python development, provide autocompletion, synt
   - [Buffer formatting](#buffer-formatting)
   - [Format imports](#format-imports)
 - [Key bindings](#key-bindings)
+  - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -75,11 +76,17 @@ pip install --user isort
 
 ## Key bindings
 
+### Jump to definition
+
+| Mode   | Key Binding | Description                                      |
+| ------ | ----------- | ------------------------------------------------ |
+| normal | `g d`       | Jump to the definition position of cursor symbol |
+
 ### Code generation
 
-| Mode   | Key Binding | Description                           |
-| ------ | ----------- | ------------------------------------- |
-| normal | `SPC l g d` | Generate docstring                    |
+| Mode   | Key Binding | Description        |
+| ------ | ----------- | ------------------ |
+| normal | `SPC l g d` | Generate docstring |
 
 ### Inferior REPL process
 
