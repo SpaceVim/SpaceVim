@@ -50,10 +50,10 @@ A dict containing the standards you want to use. The default is:
 
 ```json
 {
-    'c': 'c11',
-    'cpp': 'c++1z',
-    'objc': 'c11',
-    'objcpp': 'c++1z',
+    "c": "c11",
+    "cpp": "c++1z",
+    "objc": "c11",
+    "objcpp": "c++1z",
 }
 ```
 
