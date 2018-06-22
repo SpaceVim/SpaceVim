@@ -1,20 +1,22 @@
 ---
-title: "SpaceVim lang#python layer"
-description: "This layer is for Python development, provide autocompletion, syntax checking, code format for python file."
+title: "SpaceVim lang#python 模块"
+description: "这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#python
+# [可用模块](../../) >> lang#python
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Install](#install)
-  - [Layer](#layer)
-  - [Syntax Checking](#syntax-checking)
-  - [Buffer formatting](#buffer-formatting)
-  - [Format imports](#format-imports)
-- [Key bindings](#key-bindings)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [依赖安装及启用模块](#依赖安装及启用模块)
+  - [启用模块](#启用模块)
+  - [语法检查](#语法检查)
+  - [代码格式化](#代码格式化)
+  - [格式化 imports](#格式化-imports)
+- [快捷键](#快捷键)
+  - [跳至定义处](#跳至定义处)
   - [Code generation](#code-generation)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -23,58 +25,73 @@ description: "This layer is for Python development, provide autocompletion, synt
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for Python development.
+这一模块为在 SpaceVim 中进行 python 开发提供了支持，包括代码补全、语法检查、代码格式化、交互式编程以及调试等特性。
 
-## Features
+## 功能特性
 
-- Aoto-completion using [deoplete-jedi](https://github.com/zchee/deoplete-jedi) or [jedi-vim](https://github.com/davidhalter/jedi-vim)
-- Documentation Lookup using [jedi-vim](https://github.com/davidhalter/jedi-vim)
+- 代码补全
+- 文档查阅
+- 语法检查
+- 代码格式化
+- 交互式编程
+- 代码调试
 
-## Install
+## 依赖安装及启用模块
 
-### Layer
+### 启用模块
 
-To use this configuration layer, add `SPLayer 'lang#python'` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-### Syntax Checking
+```toml
+[[layers]]
+  name = "lang#dart"
+```
 
-`checker` layer provide syntax checking feature, and for python it uses `flake8` package:
+### 语法检查
+
+`checkers` 模块提供了代码检查功能, 此外需要安装 `flake8` 包：
 
 ```sh
 pip install --user flake8
 ```
 
-### Buffer formatting
+### 代码格式化
 
-The default key binding for formatting buffer is `SPC b f`, and you need to install `yapf`. To enable automatic buffer formatting on save, load this layer with setting `format-on-save` to `1`.
+默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。若需要在保存文件是自动格式化该 python 文件，需要设置 `format-on-save` 为 `true`。
 
 ```sh
 pip install --user yapf
 ```
 
-### Format imports
+### 格式化 imports
 
-To be able to suppress unused imports easily, install [autoflake](https://github.com/myint/autoflake):
+若需要更便捷地删除未使用的 imports，需要安装 [autoflake](https://github.com/myint/autoflake)：
 
 ```sh
 pip install --user autoflake
 ```
 
-To be able to sort your imports, install [isort](https://github.com/timothycrosley/isort)
+通过安装 [isort](https://github.com/timothycrosley/isort) 可快速对 imports 进行排序：
 
 ```sh
 pip install --user isort
 ```
 
-## Key bindings
+## 快捷键
+
+### 跳至定义处
+
+| 模式   | 按键  | 描述                                             |
+| ------ | ----- | ------------------------------------------------ |
+| Normal | `g d` | Jump to the definition position of cursor symbol |
 
 ### Code generation
 
-| Mode   | Key Binding | Description                           |
-| ------ | ----------- | ------------------------------------- |
-| normal | `SPC l g d` | Generate docstring                    |
+| Mode   | Key Binding | Description        |
+| ------ | ----------- | ------------------ |
+| normal | `SPC l g d` | Generate docstring |
 
 ### Inferior REPL process
 
