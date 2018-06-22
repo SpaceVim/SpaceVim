@@ -22,7 +22,12 @@ lang: cn
 
 ## 启用模块
 
-checkers 模块默认情况下是启用的。
+可通过在配置文件内加入如下配置来启用该模块：
+
+```toml
+[[layers]]
+  name = "checkers"
+```
 
 ## 模块配置
 

@@ -4,7 +4,7 @@ description: "cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 p
 lang: cn
 ---
 
-# [可用模块](../) > cscope
+# [可用模块](../) >> cscope
 
 <!-- vim-markdown-toc GFM -->
 

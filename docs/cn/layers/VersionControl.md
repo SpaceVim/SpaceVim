@@ -9,6 +9,7 @@ lang: cn
 <!-- vim-markdown-toc GFM -->
 
 - [模块介绍](#模块介绍)
+- [启用模块](#启用模块)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -20,6 +21,15 @@ lang: cn
 
 - 在左侧栏显示代码改动标记
 - 在状态栏显示 vcs 版本信息
+
+## 启用模块
+
+可通过在配置文件内加入如下配置来启用该模块：
+
+```toml
+[[layers]]
+  name = "VersionControl"
+```
 
 ## 快捷键
 
