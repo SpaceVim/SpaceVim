@@ -69,7 +69,8 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [ctrlp](ctrlp/)                                       | 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                           |
 | [debug](debug/)                                       | 这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。                                                        |
 | [default](default/)                                   | SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置，                                                                                       |
-| [denite](denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                     |
+| [denite](denite/)                                     | 提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                      |
+| [fzf](fzf/)                                           | 提供以 fzf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                         |
 | [git](git/)                                           | 这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。                                             |
 | [lang#c](lang/c/)                                     | This layer is for c/c++/object-c development                                                                                                          |
 | [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                               |
@@ -87,10 +88,14 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#ruby](lang/ruby/)                               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                               |
 | [lang#typescript](lang/typescript/)                   | This layer is for TypeScript development                                                                                                              |
 | [lang#vim](lang/vim/)                                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                               |
-| [language-server-protocol](language-server-protocol/) | This layers provides language server protocol for vim and neovim                                                                                      |
+| [language-server-protocol](language-server-protocol/) | lsp 模块为 SpaceVim 提供 language server protocol 的支持，提供更多语言相关服务                                                                        |
+| [leaderf](leaderf/)                                   | 提供以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                     |
 | [shell](shell/)                                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验                                                                                        |
-| [tags](tags/)                                         | This layer provide tags manager for project                                                                                                           |
-| [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                             |
+| [tags](tags/)                                         | tags 模块提供全局的 tags 索引管理，提供快速检索定义和引用的功能。                                                                                     |
+| [tools#dash](tools/dash/)                             | 该模块提供对 Dash 支持，可快速查找光标位置的单词                                                                                                      |
+| [tools](tools/)                                       | 集成多种常用工具，包括日历、计算器、等等多种工具类插件，该模块针对 vim8 以及 neovim 提供了更好的插件选择。                                            |
+| [ui](ui/)                                             | SpaceVim ui 模块提供了一个 IDE-like 的界面，包括状态栏、文件树、语法数等等特性。                                                                      |
+| [unite](unite/)                                       | 提供以 unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                                           |
 
 <!-- SpaceVim layer cn list end -->
 
