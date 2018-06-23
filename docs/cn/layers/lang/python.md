@@ -46,7 +46,7 @@ lang: cn
 
 ```toml
 [[layers]]
-  name = "lang#dart"
+  name = "lang#python"
 ```
 
 ### 语法检查
