@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#go 模块"
-description: "This layer is for golang development. It also provides additional language-specific key mappings."
+description: "这一模块为 go 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 

@@ -1,31 +1,37 @@
 ---
-title: "SpaceVim lang#javascript layer"
-description: "This layer is for haskell development"
+title: "SpaceVim lang#haskell 模块"
+description: "这一模块为 haskell 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#haskell
+# [可用模块](../../) >> lang#haskell
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-- [Features](#features)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [功能特性](#功能特性)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for haskell development.
+这一模块为 haskell 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#haskell')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-## Features
+```toml
+[[layers]]
+  name = "lang#haskell"
+```
 
-- auto-completion
-- syntax checking
-- goto definition
-- refernce finder
-- language server protocol (need lsp layer) 
+## 功能特性
+
+- 代码补全
+- 语法检查
+- 跳转定义处
+- 查询函数引用
+- lsp 支持
 
