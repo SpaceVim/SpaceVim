@@ -1,77 +1,73 @@
 ---
-title: "SpaceVim lang#javascript layer"
-description: "This layer is for JaveScript development"
+title: "SpaceVim lang#javascript 模块"
+description: "这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#javascript
+# [可用模块](../../) >> lang#javascript
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Features](#features)
-- [Layer configuration](#layer-configuration)
-- [Key bindings](#key-bindings)
-  - [Import key bindings](#import-key-bindings)
-  - [Generate key bindings](#generate-key-bindings)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [功能特性](#功能特性)
+- [模块配置](#模块配置)
+- [快捷键](#快捷键)
+  - [导包相关快捷键](#导包相关快捷键)
+  - [常规快捷键](#常规快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for JavaScript development.
+这一模块为 SpaceVim 提供了 javascript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
 
-## Install
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-## Features
-
-- auto-completion
-- syntax checking
-- goto definition
-- refernce finder
-
-## Layer configuration
-
-`auto_fix`: auto fix problems when save files, disabled by default. If you need this feature, you can load this layer via:
-
-```vim
-call SpaceVim#layers#load('lang#javascript',
-            \ {
-            \ 'auto_fix' : 1,
-            \ }
-            \ )
-
+```toml
+[[layers]]
+  name = "lang#javascript"
 ```
 
-`enable_flow_syntax`: Enable configuration for [flow](https://flow.org/), disabled by default. If you need this feature, you can load this layer via:
+## 功能特性
 
-```vim
-call SpaceVim#layers#load('lang#javascript',
-            \ {
-            \ 'enable_flow_syntax' : 1,
-            \ }
-            \ )
+- 代码补全
+- 语法检查
+- 跳转定义处
+- 查询函数引用
 
+## 模块配置
+
+- `auto_fix`：保存文件时，自动修复代码问题，默认未启用该功能，若需要该功能，可在载入模块时设置该选项为 `true`。
+- `enable_flow_syntax`: 启用/禁用 [flow](https://flow.org/) 语法高亮，默认未启用。
+
+配置示例：
+
+```toml
+[[layers]]
+  name = "lang#javascript"
+  auto_fix = true
+  enable_flow_syntax = true
 ```
 
-## Key bindings
+## 快捷键
 
-### Import key bindings
+### 导包相关快捷键
 
-| Key Binding          | Description                     |
-| -------------------- | ------------------------------- |
-| `F4` (Insert/Normal) | Import symbol under cursor      |
-| `SPC j i`            | Import symbol under cursor      |
-| `SPC j f`            | Import missing symbols          |
-| `SPC j g`            | Jump to module under cursor     |
-| `<C-j>i` (Insert)    | Import symbol under cursor      |
-| `<C-j>f` (Insert)    | Import missing symbols          |
-| `<C-j>g` (Insert)    | Jump to module under cursor     |
+| 模式          | 快捷键    | 按键描述           |
+| ------------- | --------- | ------------------ |
+| Insert/Normal | `F4`      | 导入光标下的类     |
+| Normal        | `SPC l I` | 导入所有缺失的类   |
+| Normal        | `SPC l R` | 删除多余的导包     |
+| Normal        | `SPC l i` | 智能导入光标下的类 |
+| Insert        | `<C-j>I`  | 导入所有缺失的类   |
+| Insert        | `<C-j>R`  | 删除多余的导包     |
+| Insert        | `<C-j>i`  | 智能导入光标下的类 |
 
-### Generate key bindings
+### 常规快捷键
 
-| Mode          | Key Binding | Description                           |
-| ------------- | ----------- | ------------------------------------- |
-| normal        | `SPC l g d` | Generate JSDoc                        |
+| 模式   | 快捷键      | 按键描述   |
+| ------ | ----------- | ---------- |
+| normal | `SPC l g d` | 生成 JSDoc |
