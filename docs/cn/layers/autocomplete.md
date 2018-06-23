@@ -9,7 +9,7 @@ lang: cn
 <!-- vim-markdown-toc GFM -->
 
 - [模块描述](#模块描述)
-- [模块启用](#模块启用)
+- [启用模块](#启用模块)
 - [模块配置](#模块配置)
   - [快捷键设置](#快捷键设置)
   - [代码块的设置](#代码块的设置)
@@ -30,7 +30,7 @@ lang: cn
 代码块自动完成框架默认为[neosnippet](https://github.com/Shougo/neosnippet.vim)，可通过
 SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
-## 模块启用
+## 启用模块
 
 这一模块是默认启用的，当然为了稳妥，可以再配置文件里加入以下代码块：
 

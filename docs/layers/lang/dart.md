@@ -3,13 +3,13 @@ title: "SpaceVim lang#dart layer"
 description: "This layer is for dart development, provide autocompletion, syntax checking, code format for dart file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#dart
+# [Available Layers](../../) >> lang#dart
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
 - [Features](#features)
-- [Installation](#installation)
+- [Install](#install)
   - [Layer](#layer)
   - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
   - [Install dart-repl](#install-dart-repl)
@@ -33,11 +33,16 @@ This layer is for dart development.
 - REPL
 - code runner
 
-## Installation
+## Install
 
 ### Layer
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#dart')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#dart"
+```
 
 ### Syntax checking && Code formatting
 

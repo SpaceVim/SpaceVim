@@ -3,12 +3,20 @@ title: "SpaceVim leaderf layer"
 description: "This layers provide a heavily customized LeaderF centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) denite
+# [Available Layers](../) >> leaderf
 
-## Intro
+## Description
 
 This layer is a heavily customized wrapper for LeaderF and it's sources.
 
+## Install
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "leaderf"
+```
 
 ## Configuration
 

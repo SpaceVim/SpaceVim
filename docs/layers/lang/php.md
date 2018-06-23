@@ -3,13 +3,13 @@ title: "SpaceVim lang#php layer"
 description: "This layer adds PHP language support to SpaceVim"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#php
+# [Available Layers](../../) >> lang#php
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
 - [Features](#features)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
   - [Requirement](#requirement)
 
 <!-- vim-markdown-toc -->
@@ -26,9 +26,14 @@ This layer adds PHP language support to SpaceVim.
 - refernce finder
 - lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
 
-## Layer Installation
+## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#php')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#php"
+```
 
 ### Requirement
 

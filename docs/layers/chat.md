@@ -3,16 +3,29 @@ title: "SpaceVim chat layer"
 description: "SpaceVim chatting layer provide chatting with qq and weixin in vim."
 ---
 
-# [Layers](../) > chat
+# [Available Layers](../) >> chat
+
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Key Mappings](#key-mappings)
+
+<!-- vim-markdown-toc -->
+
+## Description
 
 SpaceVim chatting layer provide chatting feature in vim.
 
-## plugins
+## Install
 
+To use this configuration layer, add following snippet to your custom configuration file.
 
-Name   | Description
------ | ------------------
-[vim-chat](https://github.com/vim-chat/vim-chat) | chatting in vim.
+```toml
+[[layers]]
+  name = "chat"
+```
 
 ## Key Mappings
 

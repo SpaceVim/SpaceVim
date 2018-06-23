@@ -3,14 +3,14 @@ title: "SpaceVim tags layer"
 description: "This layer provide tags manager for project"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) tags
+# [Available Layers](../) >> tags
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [GNU Global (gtags)](#gnu-global-gtags)
+  - [GNU Global](#gnu-global)
     - [Install on OSX using Homebrew](#install-on-osx-using-homebrew)
     - [Install on \*nix from source](#install-on-nix-from-source)
       - [Install recommended dependencies](#install-recommended-dependencies)
@@ -51,11 +51,14 @@ This layer provide tags manager for project. This layer need `core` layer's proj
 
 ## Install
 
-### GNU Global (gtags)
+### GNU Global
 
 To use gtags, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
 
-You can install global from the software repository of your OS; however, many OS distributions are out of date, and you will probably be missing support for pygments and exuberant ctags, and thus support for many languages. We recommend installing from source. If not for example to install on Ubuntu:
+You can install global from the software repository of your OS; however, many OS distributions
+are out of date, and you will probably be missing support for pygments and exuberant ctags, and
+thus support for many languages. We recommend installing from source. If not for example to
+install on Ubuntu:
 
 ```sh
 sudo apt-get install global
@@ -111,10 +114,11 @@ echo export GTAGSLABEL=pygments >> .profile
 
 ### Load tags layer
 
-To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
+To use this configuration layer, update custom configuration file with:
 
-```vim
-call SpaceVim#layers#load('tags')
+```toml
+[[layers]]
+  name = "tags"
 ```
 
 ## Usage

@@ -3,13 +3,13 @@ title: "SpaceVim cscope layer"
 description: "cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope"
 ---
 
-# [Layers](../) > cscope
+# [Available Layers](../) >> cscope
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
 - [Features](#features)
-- [Installation](#installation)
+- [Install](#install)
   - [cscope](#cscope)
   - [layer](#layer)
 - [Key bindings](#key-bindings)
@@ -27,7 +27,7 @@ For more info about the differences between Cscope and other similar tools, plea
 - Tag indexing and searching for C-C++ via Cscope
 - Tag indexing and searching for python via PyCscope
 
-## Installation
+## Install
 
 ### cscope
 

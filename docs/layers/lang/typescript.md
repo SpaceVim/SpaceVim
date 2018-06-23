@@ -3,12 +3,12 @@ title: "SpaceVim lang#typescript layer"
 description: "This layer is for TypeScript development"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#typescript
+# [Available Layers](../../) >> lang#typescript
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Features](#features)
 - [Layer configuration](#layer-configuration)
 
@@ -18,9 +18,16 @@ description: "This layer is for TypeScript development"
 
 This layer is for TypeScript development.
 
-## Layer Installation
+## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#typescript')` to your custom configuration file. BTW, you need to install TypeScript via:
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#typescript"
+```
+
+BTW, you need to install TypeScript via:
 
 ```sh
 npm install -g typescript
