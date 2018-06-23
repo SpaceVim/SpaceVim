@@ -10,7 +10,7 @@ function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
   if has('nvim')
-    call add(plugins, ['SpaceVim/LanguageClient-neovim',
+    call add(plugins, ['autozimu/LanguageClient-neovim',
           \ { 'merged': 0, 'if': has('python3') }])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
