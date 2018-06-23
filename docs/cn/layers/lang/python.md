@@ -17,11 +17,10 @@ lang: cn
   - [格式化 imports](#格式化-imports)
 - [快捷键](#快捷键)
   - [跳至定义处](#跳至定义处)
-  - [Code generation](#code-generation)
-  - [Inferior REPL process](#inferior-repl-process)
-  - [Running current script](#running-current-script)
-  - [Testing](#testing)
-  - [Refactoring](#refactoring)
+  - [代码生成](#代码生成)
+  - [交互式编程](#交互式编程)
+  - [运行当前脚本](#运行当前脚本)
+  - [整理 Imports](#整理-imports)
 
 <!-- vim-markdown-toc -->
 
@@ -83,37 +82,36 @@ pip install --user isort
 
 ### 跳至定义处
 
-| 模式   | 按键  | 描述                                             |
-| ------ | ----- | ------------------------------------------------ |
-| Normal | `g d` | Jump to the definition position of cursor symbol |
+| 模式   | 按键  | 描述                 |
+| ------ | ----- | -------------------- |
+| Normal | `g d` | 跳至光标函数的定义处 |
 
-### Code generation
+### 代码生成
 
-| Mode   | Key Binding | Description        |
-| ------ | ----------- | ------------------ |
-| normal | `SPC l g d` | Generate docstring |
+| 模式   | 快捷键      | 按键描述       |
+| ------ | ----------- | -------------- |
+| Normal | `SPC l g d` | 生成 docstring |
 
-### Inferior REPL process
+### 交互式编程
 
-Start a Python or iPython inferior REPL process with `SPC l s i`. If `ipython` is available in system executable search paths, `ipython` will be used to launch python shell; otherwise, default `python` interpreter will be used. You may change your system executable search path by activating a virtual environment.
+启动 `python` 或 `ipython` 交互进程，快捷键为： `SPC l s i`。如果存在可执行命令 `ipython`，
+则使用该命令为默认的交互式命令；否则则使用默认的 `python` 命令。可通过设置虚拟环境来修改可执行命令。
 
-Send code to inferior process commands:
+将代码传输给 REPL 进程执行：
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| 快捷键      | 描述                    |
+| ----------- | ----------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL   |
+| `SPC l s s` | 发送已选中的内容至 REPL |
 
-### Running current script
+### 运行当前脚本
 
-To running a python script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+在编辑 python 文件是，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
 
-### Testing
+### 整理 Imports
 
-### Refactoring
-
-| Key Binding | Description                          |
-| ----------- | ------------------------------------ |
-| `SPC l i r` | remove unused imports with autoflake |
-| `SPC l i s` | sort imports with isort              |
+| 快捷键      | 按键描述                        |
+| ----------- | ------------------------------- |
+| `SPC l i r` | 使用 autoflake 移除未使用的导包 |
+| `SPC l i s` | 使用 isort 对导包进行排序       |
