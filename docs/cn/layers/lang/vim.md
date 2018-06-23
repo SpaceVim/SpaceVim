@@ -1,29 +1,35 @@
 ---
-title: "SpaceVim lang#vim layer"
-description: "This layer is for writting vim script, including code completion, syntax checking and buffer formatting"
+title: "SpaceVim lang#vim 模块"
+description: "这一模块为 vim script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#vim
+# [可用模块](../../) >> lang#vim
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-- [Key bindings](#key-bindings)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for vim plugin development.
+该模块主要为 Vim 脚本编辑提供支持，包括代码补全，语法检查等特性。
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#vim')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-## Key bindings
+```toml
+[[layers]]
+  name = "lang#vim"
+```
 
-| Key Binding | Description                               |
-| ----------- | ----------------------------------------- |
-| `SPC l e`   | print the eval under the cursor           |
-| `SPC l v`   | print the helpfulversion under the cursor |
+## 快捷键
+
+| 快捷键    | 按键描述                 |
+| --------- | ------------------------ |
+| `SPC l e` | 打印光标下函数值         |
+| `SPC l v` | 打印光标下函数的版本信息 |
