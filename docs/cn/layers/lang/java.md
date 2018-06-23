@@ -14,10 +14,10 @@ lang: cn
 - [快捷键](#快捷键)
   - [导包相关快捷键](#导包相关快捷键)
   - [代码生成相关快捷键](#代码生成相关快捷键)
-  - [Code formatting](#code-formatting)
+  - [代码格式化](#代码格式化)
   - [Maven](#maven)
   - [Jump](#jump)
-  - [Inferior REPL process](#inferior-repl-process)
+  - [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
@@ -59,7 +59,7 @@ lang: cn
 
 ### 代码生成相关快捷键
 
-| Mode          | Key Binding | Description                           |
+| 模式          | 快捷键      | 按键描述                              |
 | ------------- | ----------- | ------------------------------------- |
 | normal        | `SPC l g A` | generate accessors                    |
 | normal/visual | `SPC l g s` | generate setter accessor              |
@@ -74,14 +74,17 @@ lang: cn
 | normal        | `SPC l g c` | generate constructor                  |
 | normal        | `SPC l g C` | generate default constructor          |
 
-### Code formatting
+### 代码格式化
 
-the default key bindings for format current buffer is `SPC b f`. and this key bindings is defined in [format layer](<>). you can also use `g=` to indent current buffer.
+默认的代码格式化快捷键是 `SPC b f`，该快捷键又 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
 
-To make neoformat support java file, you should install uncrustify. or
-download [google's formater jar](https://github.com/google/google-java-format)
-and add `let g:spacevim_layer_lang_java_formatter = 'path/to/google-java-format.jar'`
-to SpaceVim custom configuration file.
+为了使 format 模块支持 java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
+同时，需要设置 `layer_lang_java_formatter` SpaceVim 选项：
+
+```toml
+[options]
+  layer_lang_java_formatter = "path/to/google-java-format.jar"
+```
 
 ### Maven
 
@@ -100,14 +103,14 @@ to SpaceVim custom configuration file.
 | ----------- | ---------------------- |
 | `SPC l j a` | jump to alternate file |
 
-### Inferior REPL process
+### 交互式编程
 
-Start a `jshell` inferior REPL process with `SPC l s i`. 
+启动 `jshell` 交互进程，快捷键为： `SPC l s i`。
 
-Send code to inferior process commands:
+将代码传输给 REPL 进程执行：
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| 快捷键      | 描述                        |
+| ----------- | --------------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL       |
+| `SPC l s s` | 发送已选中的内容至 REPL     |
