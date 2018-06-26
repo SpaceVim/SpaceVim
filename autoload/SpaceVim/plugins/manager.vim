@@ -550,10 +550,12 @@ function! s:open_plugin_dir() abort
     enew
     exe 'resize ' . &lines * 30 / 100
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
-    if has('nvim')
+    if has('nvim') && exists('*termopen')
       call termopen(shell, {'cwd' : dein#get(keys(plugin)[0]).path})
-    else
+    elseif exists('*term_start')
       call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : dein#get(keys(plugin)[0]).path})
+    else
+      exe 'VimShell ' .  dein#get(keys(plugin)[0]).path
     endif
   endif
 endfunction
