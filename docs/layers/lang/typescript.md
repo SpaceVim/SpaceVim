@@ -11,6 +11,7 @@ description: "This layer is for TypeScript development"
 - [Install](#install)
 - [Features](#features)
 - [Layer configuration](#layer-configuration)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -41,7 +42,15 @@ npm install -g typescript
 - type-signature
 - goto definition
 - refernce finder
+- lsp support
 
 ## Layer configuration
 
 `typescript_server_path`: set the path of the tsserver.
+
+## Key bindings
+
+| key binding | Description        |
+| ----------- | ------------------ |
+| `SPC l d`   | show documentation |
+| `SPC l e`   | rename symbol      |
