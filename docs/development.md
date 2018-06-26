@@ -91,6 +91,7 @@ pull request title should contains one of these prefix:
 
 - `Add:` Adding a new feature.
 - `Change:` Change default behaviors or the existing features.
+- `Fixed:` Fix some bugs
 - `Remove:` Remove any existing features.
 - `Doc:` update the help file.
 - `Website:` Update the contend of website.
