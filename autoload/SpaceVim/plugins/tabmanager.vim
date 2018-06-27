@@ -84,8 +84,8 @@ endfunction
 
 function! s:toggle() abort
     let line = line('.')
-    if getline('.') =~# '^[▷▼] Tab #'
-        let tabid = matchstr(getline('.'), '\d\+$')
+    if getline('.') =~# '^[▷▼] Tab '
+        let tabid = matchstr(line, '\d\+')
         if index(s:open_tabs, tabid) != -1
             call remove(s:open_tabs, index(s:open_tabs, tabid))
         else
@@ -93,5 +93,4 @@ function! s:toggle() abort
         endif
     endif
     call s:update_context()
-    exe line
 endfunction
