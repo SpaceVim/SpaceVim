@@ -1,58 +1,53 @@
 ---
-title: "SpaceVim lang#c layer"
-description: "This layer is for c/c++/object-c development"
+title: "SpaceVim lang#c 模块"
+description: "这一模块为 c/c++/object-c 的开发提供了支持，包括代码补全、语法检查等特性。"
+lang: cn
 ---
 
-# [Layers](https://spacevim.org/layers) > lang#c
-
+# [可用模块](../../) >> lang#c
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-- [Features](#features)
-- [Configuration](#configuration)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [功能特性](#功能特性)
+- [模块配置](#模块配置)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for c/c++/object-c development.
+这一模块为 c/c++/object-c 的开发提供了支持，包块代码补全、语法检查、格式化等特性。
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#c')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-```vim
-call SpaceVim#layers#load('lang#c',
-        \ {
-        \ 'enable_libclang' : 1,
-        \ }
-        \ )
+```toml
+[[layers]]
+  name = "lang#c"
 ```
 
-## Features
+## 功能特性
 
-- code completion
-- syntax checking
-- formatting
+- 代码补全
+- 语法检查
+- 代码格式化
 
+## 模块配置
 
-## Configuration
+- `clang_executable` （字符串）
 
-- `clang_executable` (string)
+设置可执行程序 clang 的路径。
 
-set the path to the clang executable
+- `libclang_path` （字符串）
 
-- `enable_libclang` (boolean)
+设置 libclang 的路径，默认情况下该选项值为空。
 
-use libclang instead of `clang -cc1`, by default it is 0.
+- `clang_std` （字典）
 
-- `libclang_path` (string)
-
-The libclang shared object (dynamic library) file path. by default it is empty.
-
-- `clang_std` (dict)
+该字典存储编辑不同 c 家族文件类型时所使用的标准库。默认值为：
 
 ```json
 {
@@ -65,4 +60,24 @@ The libclang shared object (dynamic library) file path. by default it is empty.
 
 - `clang_flag`
 
-Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
+通常，在项目根目录新建一个 `.clang` 文件，可以将编译参数逐行写入。也可以使用一 List 值来初始化该选项。
+例如： `clang_flag = ["-Iwhatever"]`
+
+以下为一个完整的 `lang#c` 模块载入示例：
+
+```toml
+[[layers]]
+  name = "lang#c"
+  clang_executable = "/usr/bin/clang"
+  [layer.clang_std]
+    c = "c11"
+    cpp = "c++1z"
+    objc = "c11"
+    objcpp = "c++1z"
+```
+
+## 快捷键
+
+| 按键      | 描述               |
+| --------- | ------------------ |
+| `SPC l r` | 编译并执行当前文件 |

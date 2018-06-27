@@ -27,6 +27,7 @@ function! SpaceVim#layers#denite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'buffer list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite file_mru', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Denite -resume', 'resume denite buffer', 1)
   nnoremap <silent> <C-p> :Denite file_rec<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}

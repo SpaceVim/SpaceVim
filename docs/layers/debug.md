@@ -3,7 +3,7 @@ title: "SpaceVim debug layer"
 description: "This layer provide debug workflow support in SpaceVim"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) debug
+# [Available Layers](../) >> debug
 
 <!-- vim-markdown-toc GFM -->
 
@@ -19,7 +19,13 @@ This layer provide a debug workflow for SpaceVim. All of the function is based o
 
 ## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('debug')` to your custom configuration file.
+
+To use this configuration layer, add following snippet to your custom configuration file.
+
+```toml
+[[layers]]
+  name = "debug"
+```
 
 ## Key bindings
 

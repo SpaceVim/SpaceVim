@@ -1,36 +1,42 @@
 ---
-title: "SpaceVim lang#php layer"
-description: "This layer adds PHP language support to SpaceVim"
+title: "SpaceVim lang#php 模块"
+description: "这一模块为 php 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#php
+# [可用模块](../../) >> lang#php
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Layer Installation](#layer-installation)
-  - [Requirement](#requirement)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [启用模块](#启用模块)
+  - [环境依赖](#环境依赖)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer adds PHP language support to SpaceVim.
+这一模块为在 SpaceVim 中进行 php 开发提供了支持，包括代码补全、语法检查、代码格式化、交互式编程以及调试等特性。
 
-## Features
+## 功能特性
 
-- auto-completion
-- syntax checking
-- goto definition
-- refernce finder
-- lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
+- 代码补全
+- 语法检查
+- 跳转定义处
+- 查询函数引用
+- lsp 支持
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#php')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-### Requirement
+```toml
+[[layers]]
+  name = "lang#php"
+```
+
+### 环境依赖
 
 1.  [PHP 5.3+](http://php.net/)
 2.  [PCNTL](http://php.net/manual/en/book.pcntl.php) Extension

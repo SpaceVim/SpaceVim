@@ -3,7 +3,7 @@ title: "SpaceVim language server protocol layer"
 description: "This layers provides language server protocol for vim and neovim"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lsp
+# [Available Layers](../) >> lsp
 
 <!-- vim-markdown-toc GFM -->
 

@@ -1,60 +1,54 @@
 ---
-title: "SpaceVim lang#lua layer"
-description: "This layer is for lua development, provide autocompletion, syntax checking, code format for lua file."
+title: "SpaceVim lang#lua 模块"
+description: "这一模块为 lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#lua
+# [可用模块](../../) >> lang#lua
 
 <!-- vim-markdown-toc GFM -->
 
-* [Description](#description)
-* [Installation](#installation)
-  * [Layer](#layer)
-  * [Syntax checking && Code formatting](#syntax-checking--code-formatting)
-* [Key bindings](#key-bindings)
-  * [Inferior REPL process](#inferior-repl-process)
-  * [Running current script](#running-current-script)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
+  - [交互式编程](#交互式编程)
+  - [运行当前脚本](#运行当前脚本)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for lua development.
+这一模块为在 SpaceVim 中进行 lua 开发提供了支持，包括代码补全、语法检查、代码格式化、交互式编程以及调试等特性。
 
-## Installation
+## 启用模块
 
-### Layer
+可通过在配置文件内加入如下配置来启用该模块：
 
-To use this configuration layer, add `SPLayer 'lang#lua'` to your custom configuration file.
-
-### Syntax checking && Code formatting
-
-
-## Key bindings
-
-### Inferior REPL process
-
-Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
-
-```vim
-call SpaceVim#layers#load('lang#lua'
-    \ {
-    \ 'repl_command' : '~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua',
-    \ }
+```toml
+[[layers]]
+  name = "lang#lua"
 ```
 
-Send code to inferior process commands:
+## 快捷键
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l b`   | compile current lua buffer                       |
-| `SPC l r`   | run current lua file                             |
-| `SPC l f`   | format current lua file                          |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+### 交互式编程
 
+启动 `lua` 或者 `luap` 交互进程，快捷键为： `SPC l s i`。若使用 `luap`，需要在载入模块时设置 `repl_command` 选项：
 
-### Running current script
+```toml
+[[layers]]
+  name = "lang#lua"
+  repl_command = "~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua"
+```
 
-To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+将代码传输给 REPL 进程执行：
+
+| 快捷键      | 描述                        |
+| ----------- | --------------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL       |
+| `SPC l s s` | 发送已选中的内容至 REPL     |
+
+### 运行当前脚本
+
+在编辑 lua 文件是，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。

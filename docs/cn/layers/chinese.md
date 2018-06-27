@@ -4,7 +4,7 @@ description: "该模块为中文用户提供了中文的 Vim 帮助文档，同�
 lang: cn
 ---
 
-# [可用模块](https://spacevim.org/layers) >> chinese
+# [可用模块](../) >> chinese
 
 <!-- vim-markdown-toc GFM -->
 

@@ -3,12 +3,12 @@ title: "SpaceVim lang#markdown layer"
 description: "Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#markdown
+# [Available Layers](../../) >> lang#markdown
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [formatting](#formatting)
   - [options](#options)
 - [Key bindings](#key-bindings)
@@ -19,9 +19,14 @@ description: "Edit markdown within vim, autopreview markdown in the default brow
 
 This layer is for editing markdown file.
 
-## Layer Installation
+## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#markdown')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#markdown"
+```
 
 ## formatting
 

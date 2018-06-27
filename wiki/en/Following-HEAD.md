@@ -11,10 +11,18 @@ The next release is v0.9.0.
 - Add `SPC b b ` key binding in fzf layer ([#1725](https://github.com/SpaceVim/SpaceVim/pull/1725))
 - Add test for toml, number, file, icon and highlight API ([#1849](https://github.com/SpaceVim/SpaceVim/pull/1849))
 - Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
+- Add lsp support for typescript ([#1870](https://github.com/SpaceVim/SpaceVim/pull/1870))
 
 ### Changed
 
 - Change the option name `enable_statusline_display_mode` to `enable_statusline_mode` ([#1843](https://github.com/SpaceVim/SpaceVim/pull/1843))
+- Recover spell and list option in go layer ([#1872](https://github.com/SpaceVim/SpaceVim/pull/1872))
+
+### Fixed
+
+- Fix plugins manager, unkown function `term_start` ([#1881](https://github.com/SpaceVim/SpaceVim/pull/1881), [#1880](https://github.com/SpaceVim/SpaceVim/pull/1880))
+- Fix project manager, can not find root of project ([#1883](https://github.com/SpaceVim/SpaceVim/pull/1883))
+- Fix resume key bindings [#1885](https://github.com/SpaceVim/SpaceVim/pull/1885)
 
 ### Removed
 
@@ -24,6 +32,8 @@ The next release is v0.9.0.
 - Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
 - Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
+- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860))
+- Update javascript layer doc ([#1884](https://github.com/SpaceVim/SpaceVim/pull/1884))
 
 ### Others
 

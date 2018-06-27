@@ -1,46 +1,52 @@
 ---
-title: "SpaceVim lang#html layer"
-description: "Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html."
+title: "SpaceVim lang#html 模块"
+description: "这一模块为 html 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#html
+# [可用模块](../../) >> lang#html
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-  - [Language server](#language-server)
-- [Features](#features)
-- [Key bindings](#key-bindings)
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+  - [安装语言服务器](#安装语言服务器)
+- [功能特性](#功能特性)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块描述
 
-This layer adds support for editing HTML and CSS.
+这一模块为 html、css 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#html')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-### Language server
+```toml
+[[layers]]
+  name = "lang#html"
+```
 
-To install the language server, you need `npm` on your machine:
+### 安装语言服务器
+
+通过 `npm` 安装 html 的语言服务器，配合 lsp 模块提供代码补全等特性。
 
 ```bash
 npm install --global vscode-html-languageserver-bin
 ```
 
-## Features
+## 功能特性
 
-- Generate HTML and CSS coding using [neosnippet](https://github.com/Shougo/neosnippet.vim/) and [emmet-vim](https://github.com/mattn/emmet-vim)
-- Tags navigation on key % using matchit.vim
-- auto-completion
-- syntax checking
-- language server protocol (need `lsp` layer) 
+- 通过[neosnippet](https://github.com/Shougo/neosnippet.vim/) 和 [emmet-vim](https://github.com/mattn/emmet-vim) 自动生成 HTML、CSS 代码块
+- 标签对跳转
+- 代码补全
+- 语法检查
+- lsp 支持
 
-## Key bindings
+## 快捷键
 
-| key bindings | Description  |
-| ------------ | ------------ |
-| `<C-e>`      | emmet prefix |
+| 快捷键  | 描述         |
+| ------- | ------------ |
+| `<C-e>` | emmet 前缀键 |

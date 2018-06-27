@@ -1,26 +1,27 @@
 ---
 title: "SpaceVim shell 模块"
 description: "这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验"
+lang: cn
 ---
 
-# [SpaceVim Layers:](../) shell
+# [可用模块](../) >> shell
 
 <!-- vim-markdown-toc GFM -->
 
-- [描述](#描述)
-- [安装](#安装)
-- [配置](#配置)
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+- [模块配置](#模块配置)
   - [设置默认 shell](#设置默认-shell)
   - [设置终端打开位置及高度](#设置终端打开位置及高度)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## 描述
+## 模块描述
 
 这一模块为 SpaceVim 提供了 shell 集成，根据当前 vim/neovim 的版本，优化自带的内置终端。
 
-## 安装
+## 启用模块
 
 如果需要启用该模块，需要在 SpaceVim 的配置文件内添加如下代码：
 
@@ -29,7 +30,7 @@ description: "这一模块为 SpaceVim 提供了终端集成特性，优化内�
   name = "shell"
 ```
 
-## 配置
+## 模块配置
 
 ### 设置默认 shell
 

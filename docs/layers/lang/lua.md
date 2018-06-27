@@ -3,17 +3,17 @@ title: "SpaceVim lang#lua layer"
 description: "This layer is for lua development, provide autocompletion, syntax checking, code format for lua file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#lua
+# [Available Layers](../../) >> lang#lua
 
 <!-- vim-markdown-toc GFM -->
 
-* [Description](#description)
-* [Installation](#installation)
-  * [Layer](#layer)
-  * [Syntax checking && Code formatting](#syntax-checking--code-formatting)
-* [Key bindings](#key-bindings)
-  * [Inferior REPL process](#inferior-repl-process)
-  * [Running current script](#running-current-script)
+- [Description](#description)
+- [Install](#install)
+  - [Layer](#layer)
+  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+- [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
+  - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
@@ -21,11 +21,16 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 
 This layer is for lua development.
 
-## Installation
+## Install
 
 ### Layer
 
-To use this configuration layer, add `SPLayer 'lang#lua'` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#lua"
+```
 
 ### Syntax checking && Code formatting
 
