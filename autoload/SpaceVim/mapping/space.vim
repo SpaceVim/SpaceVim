@@ -172,7 +172,6 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'setlocal number!')
   endif
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
-  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
 
   " Searching in current buffer
   call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files': bufname(\"%\")})",
