@@ -21,6 +21,7 @@ The next release is v0.9.0.
 ### Fixed
 
 - Fix plugins manager, unkown function `term_start` ([#1881](https://github.com/SpaceVim/SpaceVim/pull/1881))
+- Fix resume key bindings [#1885](https://github.com/SpaceVim/SpaceVim/pull/1885)
 
 ### Removed
 
