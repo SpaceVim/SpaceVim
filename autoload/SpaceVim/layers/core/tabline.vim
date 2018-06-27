@@ -122,7 +122,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
         let t .= id . ' ' . name
       else
-        let t .= id . ' ' . tabname
+        let t .= id . ' T:' . tabname
       endif
       if i == ct - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
