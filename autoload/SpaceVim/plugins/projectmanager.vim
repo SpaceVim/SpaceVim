@@ -126,7 +126,8 @@ function! s:find_root_directory() abort
     else
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
-    if !empty(dir) && isdirectory(dir)
+    let ftype = getftype(dir)
+    if ftype == "dir" || ftype == "file"
       let dir = fnamemodify(dir, ':p')
       call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
       call add(dirs, dir)
