@@ -20,7 +20,8 @@ The next release is v0.9.0.
 
 ### Fixed
 
-- Fix plugins manager, unkown function `term_start` ([#1881](https://github.com/SpaceVim/SpaceVim/pull/1881))
+- Fix plugins manager, unkown function `term_start` ([#1881](https://github.com/SpaceVim/SpaceVim/pull/1881), [#1880](https://github.com/SpaceVim/SpaceVim/pull/1880))
+- Fix project manager, can not find root of project ([#1883](https://github.com/SpaceVim/SpaceVim/pull/1883))
 
 ### Removed
 
@@ -31,6 +32,7 @@ The next release is v0.9.0.
 - Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
 - Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860))
+- Update javascript layer doc ([#1884](https://github.com/SpaceVim/SpaceVim/pull/1884))
 
 ### Others
 
