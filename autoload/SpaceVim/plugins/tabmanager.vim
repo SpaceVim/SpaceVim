@@ -38,6 +38,7 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> o :call <SID>toggle()<CR>
   nnoremap <silent> <buffer> r :call <SID>rename_tab()<CR>
   nnoremap <silent> <buffer> n :call <SID>create_new_named_tab()<CR>
+  nnoremap <silent> <buffer> x :call <SID>delete_tab()<CR>
 endfunction
 
 function! s:update_context() abort
@@ -122,4 +123,15 @@ function! s:create_new_named_tab() abort
   else
     tabnew
   endif
+endfunction
+
+function! s:delete_tab() abort
+  let line = line('.')
+  if getline('.') =~# '^[▷▼] Tab '
+    let tabid = matchstr(getline(line), '\d\+')
+    exe 'tabclose' tabid
+    set tabline=%!SpaceVim#layers#core#tabline#get()
+  endif
+  call s:update_context()
+  exe line
 endfunction

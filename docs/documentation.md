@@ -562,6 +562,7 @@ key bindings within tab manager windows.
 | `r`         | Rename the tab under the cursor.  |
 | `n`         | Create new named tab              |
 | `N`         | Create new tab              |
+| `x`         | Delete the tab              |
 | `<Enter>`   | Jump to windows under the cursor. |
 
 ## General Key bindings
