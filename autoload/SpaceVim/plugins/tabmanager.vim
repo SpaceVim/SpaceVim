@@ -20,7 +20,7 @@ let s:open_tabs = []
 function! SpaceVim#plugins#tabmanager#open() abort
     call s:BUFFER.open(
                 \ {
-                \ 'bufname' : '__Tabmanager__',
+                \ 'bufname' : '[TabManager]',
                 \ 'initfunc' : function('s:init_buffer'),
                 \ }
                 \ )
@@ -85,7 +85,7 @@ endfunction
 function! s:toggle() abort
     let line = line('.')
     if getline('.') =~# '^[▷▼] Tab '
-        let tabid = matchstr(line, '\d\+')
+        let tabid = matchstr(getline(line), '\d\+')
         if index(s:open_tabs, tabid) != -1
             call remove(s:open_tabs, index(s:open_tabs, tabid))
         else
@@ -93,4 +93,5 @@ function! s:toggle() abort
         endif
     endif
     call s:update_context()
+    exe line
 endfunction
