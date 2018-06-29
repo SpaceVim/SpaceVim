@@ -20,7 +20,7 @@ let s:open_tabs = []
 function! SpaceVim#plugins#tabmanager#open() abort
   call s:BUFFER.open(
         \ {
-        \ 'bufname' : '[TabManager]',
+        \ 'bufname' : '__TabManager__',
         \ 'initfunc' : function('s:init_buffer'),
         \ }
         \ )
@@ -39,6 +39,8 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> r :call <SID>rename_tab()<CR>
   nnoremap <silent> <buffer> n :call <SID>create_new_named_tab()<CR>
   nnoremap <silent> <buffer> x :call <SID>delete_tab()<CR>
+  nnoremap <silent> <buffer> yy :call <SID>copy_tab()<CR>
+  nnoremap <silent> <buffer> p :call <SID>paste_tab()<CR>
 endfunction
 
 function! s:update_context() abort
@@ -148,4 +150,35 @@ function! s:close_tab(nr) abort
   else
     exe 'tabclose' a:nr
   endif
+endfunction
+
+
+" 1. switch to the tab under cursor
+" 2. make session of current tab
+" 3. switch to previous tab
+function! s:copy_tab() abort
+  let current_tab = tabpagenr()
+  let cursor_tab = s:get_cursor_tabnr()
+  exe 'tabnext ' . cursor_tab
+  let save_sessionopts = &sessionoptions
+  let tabsession = '~/.cache/SpaceVim/tabmanager_session.vim'
+  let &sessionoptions = 'blank,buffers,curdir,folds,help,winsize'
+  exe 'mksession! ' . tabsession
+  exe 'tabnext ' . current_tab
+endfunction
+
+function! s:get_cursor_tabnr() abort
+  let line = line('.')
+  if getline('.') =~# '^[▷▼] Tab '
+    let tabid = matchstr(getline(line), '\d\+')
+  else
+    let line = search('^[▷▼] Tab ','bWnc')
+    let tabid = matchstr(getline(line), '\d\+')
+  endif
+  return tabid
+endfunction
+
+
+function! s:paste_tab() abort
+
 endfunction
