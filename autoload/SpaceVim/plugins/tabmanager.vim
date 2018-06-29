@@ -129,9 +129,23 @@ function! s:delete_tab() abort
   let line = line('.')
   if getline('.') =~# '^[▷▼] Tab '
     let tabid = matchstr(getline(line), '\d\+')
-    exe 'tabclose' tabid
+    if tabid ==# tabpagenr()
+      call s:close_tab(tabid)
+    else
+      call s:close_tab(tabid)
+      call s:update_context()
+    endif
     set tabline=%!SpaceVim#layers#core#tabline#get()
   endif
-  call s:update_context()
   exe line
+endfunction
+
+function! s:close_tab(nr) abort
+  if tabpagenr('$') == 1
+    echohl WarningMsg
+    echon 'can not close the last tab'
+    echohl NONE
+  else
+    exe 'tabclose' a:nr
+  endif
 endfunction
