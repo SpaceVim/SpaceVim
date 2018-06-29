@@ -556,14 +556,14 @@ You can also use `SPC t t` to open the tab manager windows.
 
 key bindings within tab manager windows.
 
-| Key Binding | Description                       |
-| ----------- | --------------------------------- |
-| `o`         | Close or expand tab windows.      |
-| `r`         | Rename the tab under the cursor.  |
-| `n`         | Create new named tab              |
-| `N`         | Create new tab              |
-| `x`         | Delete the tab              |
-| `<Enter>`   | Jump to windows under the cursor. |
+| Key Binding | Description                               |
+| ----------- | ----------------------------------------- |
+| `o`         | Close or expand tab windows.              |
+| `r`         | Rename the tab under the cursor.          |
+| `n`         | Create new named tab below the cursor tab |
+| `N`         | Create new tab below the cursor tab       |
+| `x`         | Delete the tab                            |
+| `<Enter>`   | Jump to windows under the cursor.         |
 
 ## General Key bindings
 
