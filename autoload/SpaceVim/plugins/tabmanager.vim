@@ -37,6 +37,7 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> <CR> <esc>:<c-u>cal <SID>jump()<CR>
   nnoremap <silent> <buffer> o :call <SID>toggle()<CR>
   nnoremap <silent> <buffer> r :call <SID>rename_tab()<CR>
+  nnoremap <silent> <buffer> n :call <SID>create_new_named_tab()<CR>
 endfunction
 
 function! s:update_context() abort
@@ -110,4 +111,15 @@ function! s:rename_tab() abort
   endif
   call s:update_context()
   exe line
+endfunction
+
+function! s:create_new_named_tab() abort
+  let tabname = input('Tab name:', '')
+  if !empty(tabname)
+    tabnew
+    let t:_spacevim_tab_name = tabname
+    set tabline=%!SpaceVim#layers#core#tabline#get()
+  else
+    tabnew
+  endif
 endfunction
