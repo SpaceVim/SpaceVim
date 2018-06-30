@@ -59,6 +59,9 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> x :call <SID>delete_tab()<CR>
   nnoremap <silent> <buffer> yy :call <SID>copy_tab()<CR>
   nnoremap <silent> <buffer> p :call <SID>paste_tab()<CR>
+  nnoremap <silent> <buffer> <C-S-Up> :call <SID>move_tab_backward()<CR>
+  nnoremap <silent> <buffer> <C-S-Down> :call <SID>move_tab_forward()<CR>
+
 endfunction
 
 function! s:update_context() abort
@@ -208,4 +211,24 @@ function! s:paste_tab() abort
   endif
   call s:TABs._jump(t,b)
   call s:update_context()
+endfunction
+
+
+function! s:move_tab_backward() abort
+  let tabid = s:get_cursor_tabnr()
+  let ct = tabpagenr()
+  exe tabid . 'tabdo tabmove -'
+  if ct == tabid
+    call s:update_context()
+  endif
+endfunction
+
+
+function! s:move_tab_forward() abort
+  let tabid = s:get_cursor_tabnr()
+  let ct = tabpagenr()
+  exe tabid . 'tabdo tabmove +'
+  if ct == tabid
+    call s:update_context()
+  endif
 endfunction
