@@ -62,8 +62,10 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> p :call <SID>paste_tab()<CR>
   nnoremap <silent> <buffer> <C-S-Up> :call <SID>move_tab_backward()<CR>
   nnoremap <silent> <buffer> <C-S-Down> :call <SID>move_tab_forward()<CR>
-  autocmd BufEnter <buffer> call s:update_context()
-
+  augroup spacevim_plugin_tabman_init
+    autocmd!
+    autocmd BufEnter <buffer> call s:update_context()
+  augroup END
 endfunction
 
 function! s:update_context() abort
@@ -271,3 +273,18 @@ function! s:move_tab_forward() abort
   let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
   exe line
 endfunction
+
+function! s:focus_update_context() abort
+  let tbm = filter(range(1, winnr('$')), 'bufname(winbufnr(v:val)) == s:bufname')
+  if !empty(tbm)
+    let winnr = winnr()
+    exe tbm[0]. 'wincmd w'
+    call s:update_context()
+    exe winnr . 'wincmd w'
+  endif
+endfunction
+
+augroup spacevim_plugin_tabman
+  autocmd!
+  autocmd TabEnter * call s:focus_update_context()
+augroup END
