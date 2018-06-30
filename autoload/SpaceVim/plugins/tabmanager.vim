@@ -216,19 +216,29 @@ endfunction
 
 function! s:move_tab_backward() abort
   let tabid = s:get_cursor_tabnr()
+  if tabid == 1
+    return
+  endif
   let ct = tabpagenr()
   exe tabid . 'tabdo tabmove -'
   if ct == tabid
     call s:update_context()
   endif
+  let line = search('^[▷▼] Tab ' . (tabid - 1),'wc')
+  exe line
 endfunction
 
 
 function! s:move_tab_forward() abort
   let tabid = s:get_cursor_tabnr()
+  if tabid == tabpagenr('$')
+    return
+  endif
   let ct = tabpagenr()
   exe tabid . 'tabdo tabmove +'
   if ct == tabid
     call s:update_context()
   endif
+  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  exe line
 endfunction
