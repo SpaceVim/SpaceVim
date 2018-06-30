@@ -70,7 +70,7 @@ function! s:update_context() abort
   normal! gg"_dG
   let tree = s:TABs.get_tree()
   let ctx = []
-  for page in keys(tree)
+  for page in sort(keys(tree), 'N')
     if index(s:open_tabs, page) != -1
       call add(ctx, '▼ Tab ' . page . ' ' . gettabvar(page, '_spacevim_tab_name', ''))
       for _buf in tree[page]
