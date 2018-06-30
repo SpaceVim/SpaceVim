@@ -62,6 +62,7 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> p :call <SID>paste_tab()<CR>
   nnoremap <silent> <buffer> <C-S-Up> :call <SID>move_tab_backward()<CR>
   nnoremap <silent> <buffer> <C-S-Down> :call <SID>move_tab_forward()<CR>
+  autocmd BufEnter <buffer> call s:update_context()
 
 endfunction
 
