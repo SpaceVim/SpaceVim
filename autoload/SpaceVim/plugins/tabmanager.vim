@@ -11,6 +11,7 @@ scriptencoding utf-8
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:TABs = SpaceVim#api#import('vim#tab')
 let s:bufferid = -1
+let s:bufname = '__TabManager__'
 
 " init val
 
@@ -23,20 +24,20 @@ function! SpaceVim#plugins#tabmanager#open() abort
     if index(tabpagebuflist(), s:bufferid) == -1
       let s:bufferid =  s:BUFFER.open(
             \ {
-            \ 'bufname' : '__TabManager__',
+            \ 'bufname' : s:bufname,
             \ 'initfunc' : function('s:init_buffer'),
             \ }
             \ )
       call s:BUFFER.resize(30)
       call s:update_context()
     else
-        let winnr = bufwinnr(bufname(s:bufferid))
-        exe winnr .  'wincmd w'
+      let winnr = bufwinnr(bufname(s:bufferid))
+      exe winnr .  'wincmd w'
     endif
   else
     let s:bufferid =  s:BUFFER.open(
           \ {
-          \ 'bufname' : '__TabManager__',
+          \ 'bufname' : s:bufname,
           \ 'initfunc' : function('s:init_buffer'),
           \ }
           \ )
@@ -123,14 +124,11 @@ endfunction
 
 function! s:rename_tab() abort
   let line = line('.')
-  if getline('.') =~# '^[▷▼] Tab '
-    let tabid = matchstr(getline(line), '\d\+')
-    let tabname = input('Tab name:', '')
-    if !empty(tabname)
-      let t:_spacevim_tab_name = tabname
-      call settabvar(tabid, '_spacevim_tab_name', tabname)
-      set tabline=%!SpaceVim#layers#core#tabline#get()
-    endif
+  let tabid = s:get_cursor_tabnr()
+  let tabname = input('Tab name:', '')
+  if !empty(tabname)
+    call settabvar(tabid, '_spacevim_tab_name', tabname)
+    set tabline=%!SpaceVim#layers#core#tabline#get()
   endif
   call s:update_context()
   exe line
