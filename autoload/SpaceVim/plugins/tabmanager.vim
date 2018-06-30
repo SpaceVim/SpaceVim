@@ -162,7 +162,7 @@ function! s:copy_tab() abort
   exe 'tabnext ' . cursor_tab
   let save_sessionopts = &sessionoptions
   let tabsession = '~/.cache/SpaceVim/tabmanager_session.vim'
-  let &sessionoptions = 'blank,buffers,curdir,folds,help,winsize'
+  let &sessionoptions = 'winsize'
   exe 'mksession! ' . tabsession
   exe 'tabnext ' . current_tab
 endfunction
