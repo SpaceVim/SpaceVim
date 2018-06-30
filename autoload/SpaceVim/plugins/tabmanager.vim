@@ -56,6 +56,7 @@ function! s:init_buffer() abort
   nnoremap <silent> <buffer> o :call <SID>toggle()<CR>
   nnoremap <silent> <buffer> r :call <SID>rename_tab()<CR>
   nnoremap <silent> <buffer> n :call <SID>create_new_named_tab()<CR>
+  nnoremap <silent> <buffer> N :call <SID>create_new_unnamed_tab()<CR>
   nnoremap <silent> <buffer> x :call <SID>delete_tab()<CR>
   nnoremap <silent> <buffer> yy :call <SID>copy_tab()<CR>
   nnoremap <silent> <buffer> p :call <SID>paste_tab()<CR>
@@ -74,7 +75,7 @@ function! s:update_context() abort
       call add(ctx, '▼ Tab ' . page . ' ' . gettabvar(page, '_spacevim_tab_name', ''))
       for _buf in tree[page]
         if getbufvar(_buf, '&buflisted')
-          call add(ctx, '    ' . _buf . ':' . fnamemodify(bufname(_buf), ':t'))
+          call add(ctx, '    ' . _buf . ':' . fnamemodify(empty(bufname(_buf))? 'No Name' : bufname(_buf), ':t'))
         endif
       endfor
     else
@@ -138,14 +139,38 @@ function! s:rename_tab() abort
 endfunction
 
 function! s:create_new_named_tab() abort
+  let tabid = s:get_cursor_tabnr()
+  let current_tab = tabpagenr()
   let tabname = input('Tab name:', '')
   if !empty(tabname)
-    tabnew
+    exe tabid . 'tabnew'
     let t:_spacevim_tab_name = tabname
     set tabline=%!SpaceVim#layers#core#tabline#get()
   else
-    tabnew
+    exe tabid . 'tabnew'
   endif
+  if tabid >= current_tab
+    exe 'tabnext ' . current_tab
+  else
+    exe 'tabnext ' . (current_tab + 1)
+  endif
+  call s:update_context()
+  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  exe line
+endfunction
+
+function! s:create_new_unnamed_tab() abort
+  let tabid = s:get_cursor_tabnr()
+  let current_tab = tabpagenr()
+  exe tabid . 'tabnew'
+  if tabid >= current_tab
+    exe 'tabnext ' . current_tab
+  else
+    exe 'tabnext ' . (current_tab + 1)
+  endif
+  call s:update_context()
+  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  exe line
 endfunction
 
 function! s:delete_tab() abort
