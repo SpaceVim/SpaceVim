@@ -8,9 +8,9 @@
 
 
 scriptencoding utf-8
-sy match TabManTName '^[▷▼] Tab \d\+\|^".*\zsTab#'
+sy match TabManTName '^[▷▼]  Tab \d\+'
+sy match TabManCurTName '^[▷▼] \*Tab \d\+'
 sy match TabManTNr /\(^[▷▼] Tab \d\+\)\@<=.*/
-sy match TabManCurTName '^Tab #\d\+\ze\*$'
 sy match TabManAtv '\*$'
 sy match TabManLead '[|`]-'
 sy match TabManTag '+$'

@@ -72,14 +72,22 @@ function! s:update_context() abort
   let ctx = []
   for page in sort(keys(tree), 'N')
     if index(s:open_tabs, page) != -1
-      call add(ctx, '▼ Tab ' . page . ' ' . gettabvar(page, '_spacevim_tab_name', ''))
+      call add(ctx,
+            \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
+            \ . 'Tab ' . page 
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ )
       for _buf in tree[page]
         if getbufvar(_buf, '&buflisted')
           call add(ctx, '    ' . _buf . ':' . fnamemodify(empty(bufname(_buf))? 'No Name' : bufname(_buf), ':t'))
         endif
       endfor
     else
-      call add(ctx, '▷ Tab ' . page . ' ' . gettabvar(page, '_spacevim_tab_name', ''))
+      call add(ctx,
+            \ '▷ ' . (page == tabpagenr() ? '*' : ' ')
+            \ . 'Tab ' . page 
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ )
     endif
   endfor
   call setline(1, ctx)
