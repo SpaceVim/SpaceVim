@@ -75,11 +75,14 @@ function! s:jump() abort
 endfunction
 
 function! s:tabid() abort
-  for i in range(0, line('.'))
-    if getline(line('.') - i) =~# '^[▷▼] Tab #'
-      return matchstr(getline(line('.') - i), '\d\+$')
-    endif
-  endfor
+  let line = line('.')
+  if getline('.') =~# '^[▷▼] Tab '
+    let tabid = matchstr(getline(line), '\d\+')
+  else
+    let line = search('^[▷▼] Tab ','bWnc')
+    let tabid = matchstr(getline(line), '\d\+')
+  endif
+  return tabid
 endfunction
 
 function! s:bufid() abort
@@ -180,5 +183,14 @@ endfunction
 
 
 function! s:paste_tab() abort
-
+  let t = s:tabid()
+  let b = s:bufid()
+  let cursor_tab = s:get_cursor_tabnr()
+  exe 'tabnew ' . cursor_tab
+  exe 'so ~/.cache/SpaceVim/tabmanager_session.vim' 
+  if index(s:open_tabs, t) != -1
+    call add(s:open_tabs, tabpagenr())
+  endif
+  call s:TABs._jump(t,b)
+  call s:update_context()
 endfunction
