@@ -254,6 +254,10 @@ function! s:move_tab_backward() abort
   exe tabid . 'tabdo tabmove -'
   if ct == tabid
     call s:update_context()
+  elseif tabid == ct + 1
+    exe 'tabnext' (ct + 1)
+  else
+    exe 'tabnext' ct
   endif
   let line = search('^[▷▼] [ *]Tab ' . (tabid - 1),'wc')
   exe line
@@ -269,6 +273,10 @@ function! s:move_tab_forward() abort
   exe tabid . 'tabdo tabmove +'
   if ct == tabid
     call s:update_context()
+  elseif tabid == ct - 1
+    exe 'tabnext' (ct - 1)
+  else
+    exe 'tabnext' ct
   endif
   let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
   exe line
