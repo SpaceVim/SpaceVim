@@ -71,7 +71,7 @@ function! s:update_context() abort
   let tree = s:TABs.get_tree()
   let ctx = []
   for page in sort(keys(tree), 'N')
-    if index(s:open_tabs, page) != -1
+    if gettabvar(page, 'spacevim_tabman_expandable', 1) == -1
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
@@ -121,16 +121,11 @@ function! s:bufid() abort
 endfunction
 
 function! s:toggle() abort
-  let line = line('.')
-  if getline('.') =~# '^[▷▼] [ *]Tab '
-    let tabid = matchstr(getline(line), '\d\+')
-    if index(s:open_tabs, tabid) != -1
-      call remove(s:open_tabs, index(s:open_tabs, tabid))
-    else
-      call add(s:open_tabs, tabid)
-    endif
-  endif
+  let tabid = s:get_cursor_tabnr()
+  call settabvar(tabid, 'spacevim_tabman_expandable', 
+        \ gettabvar(tabid, 'spacevim_tabman_expandable', 1) * -1)
   call s:update_context()
+  let line = search('^[▷▼] [ *]Tab ' . tabid,'wnc')
   exe line
 endfunction
 
@@ -239,9 +234,9 @@ function! s:paste_tab() abort
   let cursor_tab = s:get_cursor_tabnr()
   exe 'tabnew ' . cursor_tab
   exe 'so ~/.cache/SpaceVim/tabmanager_session.vim' 
-  if index(s:open_tabs, t) != -1
-    call add(s:open_tabs, tabpagenr())
-  endif
+  call settabvar(tabpagenr(),
+        \ 'spacevim_tabman_expandable',
+        \ gettabvar(t, 'spacevim_tabman_expandable', 1))
   call s:TABs._jump(t,b)
   call s:update_context()
 endfunction
