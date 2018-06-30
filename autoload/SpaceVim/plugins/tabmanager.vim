@@ -106,10 +106,10 @@ endfunction
 
 function! s:tabid() abort
   let line = line('.')
-  if getline('.') =~# '^[▷▼] Tab '
+  if getline('.') =~# '^[▷▼] [ *]Tab '
     let tabid = matchstr(getline(line), '\d\+')
   else
-    let line = search('^[▷▼] Tab ','bWnc')
+    let line = search('^[▷▼] [ *]Tab ','bWnc')
     let tabid = matchstr(getline(line), '\d\+')
   endif
   return tabid
@@ -136,7 +136,7 @@ endfunction
 
 function! s:rename_tab() abort
   let tabid = s:get_cursor_tabnr()
-  let line = search('^[▷▼] Tab ' . (tabid),'wc')
+  let line = search('^[▷▼] [ *]Tab ' . (tabid),'wc')
   let tabname = input('Tab name:', '')
   if !empty(tabname)
     call settabvar(tabid, '_spacevim_tab_name', tabname)
@@ -163,7 +163,7 @@ function! s:create_new_named_tab() abort
     exe 'tabnext ' . (current_tab + 1)
   endif
   call s:update_context()
-  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
   exe line
 endfunction
 
@@ -177,13 +177,13 @@ function! s:create_new_unnamed_tab() abort
     exe 'tabnext ' . (current_tab + 1)
   endif
   call s:update_context()
-  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
   exe line
 endfunction
 
 function! s:delete_tab() abort
   let line = line('.')
-  if getline('.') =~# '^[▷▼] Tab '
+  if getline('.') =~# '^[▷▼] [ *]Tab '
     let tabid = matchstr(getline(line), '\d\+')
     if tabid ==# tabpagenr()
       call s:close_tab(tabid)
@@ -223,10 +223,10 @@ endfunction
 
 function! s:get_cursor_tabnr() abort
   let line = line('.')
-  if getline('.') =~# '^[▷▼] Tab '
+  if getline('.') =~# '^[▷▼] [ *]Tab '
     let tabid = matchstr(getline(line), '\d\+')
   else
-    let line = search('^[▷▼] Tab ','bWnc')
+    let line = search('^[▷▼] [ *]Tab ','bWnc')
     let tabid = matchstr(getline(line), '\d\+')
   endif
   return tabid
@@ -257,7 +257,7 @@ function! s:move_tab_backward() abort
   if ct == tabid
     call s:update_context()
   endif
-  let line = search('^[▷▼] Tab ' . (tabid - 1),'wc')
+  let line = search('^[▷▼] [ *]Tab ' . (tabid - 1),'wc')
   exe line
 endfunction
 
@@ -272,6 +272,6 @@ function! s:move_tab_forward() abort
   if ct == tabid
     call s:update_context()
   endif
-  let line = search('^[▷▼] Tab ' . (tabid + 1),'wc')
+  let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
   exe line
 endfunction
