@@ -127,8 +127,8 @@ function! s:toggle() abort
 endfunction
 
 function! s:rename_tab() abort
-  let line = line('.')
   let tabid = s:get_cursor_tabnr()
+  let line = search('^[▷▼] Tab ' . (tabid),'wc')
   let tabname = input('Tab name:', '')
   if !empty(tabname)
     call settabvar(tabid, '_spacevim_tab_name', tabname)
