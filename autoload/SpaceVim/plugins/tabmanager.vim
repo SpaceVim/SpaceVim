@@ -10,6 +10,7 @@ scriptencoding utf-8
 " APIs
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:TABs = SpaceVim#api#import('vim#tab')
+let s:bufferid = -1
 
 " init val
 
@@ -18,15 +19,31 @@ let s:open_tabs = []
 
 " Interface
 function! SpaceVim#plugins#tabmanager#open() abort
-  call s:BUFFER.open(
-        \ {
-        \ 'bufname' : '__TabManager__',
-        \ 'initfunc' : function('s:init_buffer'),
-        \ }
-        \ )
+  if bufexists(s:bufferid)
+    if index(tabpagebuflist(), s:bufferid) == -1
+      let s:bufferid =  s:BUFFER.open(
+            \ {
+            \ 'bufname' : '__TabManager__',
+            \ 'initfunc' : function('s:init_buffer'),
+            \ }
+            \ )
+      call s:BUFFER.resize(30)
+      call s:update_context()
+    else
+        let winnr = bufwinnr(bufname(s:bufferid))
+        exe winnr .  'wincmd w'
+    endif
+  else
+    let s:bufferid =  s:BUFFER.open(
+          \ {
+          \ 'bufname' : '__TabManager__',
+          \ 'initfunc' : function('s:init_buffer'),
+          \ }
+          \ )
+    call s:BUFFER.resize(30)
+    call s:update_context()
+  endif
 
-  call s:BUFFER.resize(30)
-  call s:update_context()
 endfunction
 
 " local functions
