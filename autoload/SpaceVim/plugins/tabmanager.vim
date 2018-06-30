@@ -49,7 +49,7 @@ endfunction
 
 " local functions
 function! s:init_buffer() abort
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell number norelativenumber
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nomodifiable nospell number norelativenumber winfixwidth
   setf SpaceVimTabsManager
   nnoremap <silent> <buffer> q :bd<CR>
   nnoremap <silent> <buffer> <CR> <esc>:<c-u>cal <SID>jump()<CR>
