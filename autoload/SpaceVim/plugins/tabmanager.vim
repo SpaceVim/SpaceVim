@@ -218,10 +218,14 @@ endfunction
 " 1. switch to the tab under cursor
 " 2. make session of current tab
 " 3. switch to previous tab
+let s:copy_tab_expand_status = 1
+let s:copy_tab_name  = ''
 function! s:copy_tab() abort
   let current_tab = tabpagenr()
   let line = line('.')
   let cursor_tab = s:get_cursor_tabnr()
+  let s:copy_tab_expand_status = gettabvar(cursor_tab, 'spacevim_tabman_expandable', 1)
+  let s:copy_tab_name = gettabvar(cursor_tab, '_spacevim_tab_name', '')
   exe 'tabnext ' . cursor_tab
   let save_sessionopts = &sessionoptions
   let tabsession = '~/.cache/SpaceVim/tabmanager_session.vim'
@@ -250,7 +254,8 @@ function! s:paste_tab() abort
   silent! exe 'so ~/.cache/SpaceVim/tabmanager_session.vim'
   call settabvar(tabpagenr(),
         \ 'spacevim_tabman_expandable',
-        \ gettabvar(tabid, 'spacevim_tabman_expandable', 1))
+        \ s:copy_tab_expand_status)
+  call settabvar(tabpagenr(), '_spacevim_tab_name', s:copy_tab_name)
   if tabid >= current_tab
     exe 'tabnext ' . current_tab
   else
