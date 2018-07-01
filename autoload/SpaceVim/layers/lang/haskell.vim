@@ -31,7 +31,11 @@ function! SpaceVim#layers#lang#haskell#config() abort
   if SpaceVim#layers#lsp#check_filetype('haskell')
     call SpaceVim#mapping#gd#add('haskell',
           \ function('SpaceVim#lsp#go_to_def'))
-    call SpaceVim#lsp#reg_server('haskell', ['hie', '--lsp'])
+    if executable('hie-wrapper')
+      call SpaceVim#lsp#reg_server('haskell', ['hie-wrapper', '--lsp'])
+    else 
+      call SpaceVim#lsp#reg_server('haskell', ['hie', '--lsp'])
+    endif
   endif
 
   augroup SpaceVim_lang_haskell
