@@ -13,6 +13,10 @@ The next release is v0.9.0.
 - Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
 - Add lsp support for typescript ([#1870](https://github.com/SpaceVim/SpaceVim/pull/1870))
 
+### Improvement
+
+- Improve tab manager ([#1887](https://github.com/SpaceVim/SpaceVim/pull/1887))
+
 ### Changed
 
 - Change the option name `enable_statusline_display_mode` to `enable_statusline_mode` ([#1843](https://github.com/SpaceVim/SpaceVim/pull/1843))
