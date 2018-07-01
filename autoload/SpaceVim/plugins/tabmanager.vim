@@ -80,10 +80,12 @@ function! s:update_context() abort
             \ . 'Tab ' . page 
             \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
             \ )
+      let winid = 1
       for _buf in tree[page]
         if getbufvar(_buf, '&buflisted')
-          call add(ctx, '    ' . _buf . ':' . fnamemodify(empty(bufname(_buf))? 'No Name' : bufname(_buf), ':t'))
+          call add(ctx, '    ' . winid . ' ' . fnamemodify(empty(bufname(_buf))? 'No Name' : bufname(_buf), ':t'))
         endif
+        let winid += 1
       endfor
     else
       call add(ctx,
