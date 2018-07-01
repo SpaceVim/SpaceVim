@@ -41,6 +41,7 @@ function! SpaceVim#plugins#tabmanager#open() abort
           \ 'initfunc' : function('s:init_buffer'),
           \ }
           \ )
+    stopinsert
     call s:BUFFER.resize(30)
     call s:update_context()
   endif
@@ -107,12 +108,13 @@ function! s:jump() abort
   en
   let t = s:get_cursor_tabnr()
   let w = s:winid()
-  q
+  noautocmd quit
   if t == tabpagenr()
     call s:TABs._jump(t, w - 1)
   else
     call s:TABs._jump(t, w)
   endif
+  doautocmd WinEnter
 endfunction
 
 function! s:tabid() abort
