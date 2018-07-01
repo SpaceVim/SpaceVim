@@ -11,6 +11,7 @@ scriptencoding utf-8
 sy match TabManTName '^[▷▼]  Tab \d\+'
 sy match TabManCurTName '^[▷▼] \*Tab \d\+'
 sy match TabManTNr /\(^[▷▼] [ *]Tab \d\+\)\@<=.*/
+sy match TabManWNr /^ \+\d\+/
 sy match TabManAtv '\*$'
 sy match TabManLead '[|`]-'
 sy match TabManTag '+$'
@@ -20,6 +21,7 @@ sy match TabManHelp '^".*' contains=TabManHKey,TabManTName,TabManHSpecial
 
 hi def link TabManTName Directory
 hi def link TabManTNr String
+hi def link TabManWNr Number
 hi def link TabManCurTName Identifier
 hi def link TabManAtv Title
 hi def link TabManLead Special

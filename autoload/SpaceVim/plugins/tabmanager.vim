@@ -70,7 +70,7 @@ endfunction
 
 function! s:update_context() abort
   setl modifiable
-  normal! gg"_dG
+  silent! normal! gg"_dG
   let tree = s:TABs.get_tree()
   let ctx = []
   for page in sort(keys(tree), 'N')
@@ -95,7 +95,7 @@ function! s:update_context() abort
             \ )
     endif
   endfor
-  call setline(1, ctx)
+  silent! call setline(1, ctx)
   setl nomodifiable
 endfunction
 
