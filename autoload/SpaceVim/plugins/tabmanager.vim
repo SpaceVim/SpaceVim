@@ -84,6 +84,8 @@ function! s:update_context() abort
       for _buf in tree[page]
         if getbufvar(_buf, '&buflisted')
           call add(ctx, '    ' . winid . ' ' . fnamemodify(empty(bufname(_buf))? 'No Name' : bufname(_buf), ':t'))
+        elseif getbufvar(_buf, '&buftype') ==# 'terminal'
+          call add(ctx, '    ' . winid . ' Terminal')
         endif
         let winid += 1
       endfor
