@@ -103,10 +103,14 @@ function! s:jump() abort
   if v:prevcount
     exe 'keepj' v:prevcount
   en
-  let t = s:tabid()
-  let b = s:bufid()
+  let t = s:get_cursor_tabnr()
+  let w = s:winid()
   q
-  call s:TABs._jump(t,b)
+  if t == tabpagenr()
+    call s:TABs._jump(t, w - 1)
+  else
+    call s:TABs._jump(t, w)
+  endif
 endfunction
 
 function! s:tabid() abort
@@ -120,7 +124,7 @@ function! s:tabid() abort
   return tabid
 endfunction
 
-function! s:bufid() abort
+function! s:winid() abort
   let id = str2nr(split(getline('.'), ':')[0])
   return id
 endfunction
@@ -235,7 +239,7 @@ endfunction
 
 function! s:paste_tab() abort
   let t = s:tabid()
-  let b = s:bufid()
+  let b = s:winid()
   let cursor_tab = s:get_cursor_tabnr()
   exe 'tabnew ' . cursor_tab
   exe 'so ~/.cache/SpaceVim/tabmanager_session.vim' 
