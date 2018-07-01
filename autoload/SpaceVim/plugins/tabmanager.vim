@@ -216,6 +216,7 @@ endfunction
 " 3. switch to previous tab
 function! s:copy_tab() abort
   let current_tab = tabpagenr()
+  let line = line('.')
   let cursor_tab = s:get_cursor_tabnr()
   exe 'tabnext ' . cursor_tab
   let save_sessionopts = &sessionoptions
@@ -223,6 +224,7 @@ function! s:copy_tab() abort
   let &sessionoptions = 'winsize'
   exe 'mksession! ' . tabsession
   exe 'tabnext ' . current_tab
+  exe line
 endfunction
 
 function! s:get_cursor_tabnr() abort
@@ -238,16 +240,21 @@ endfunction
 
 
 function! s:paste_tab() abort
-  let t = s:tabid()
-  let b = s:winid()
-  let cursor_tab = s:get_cursor_tabnr()
-  exe 'tabnew ' . cursor_tab
-  exe 'so ~/.cache/SpaceVim/tabmanager_session.vim' 
+  let current_tab = tabpagenr()
+  let tabid = s:get_cursor_tabnr()
+  silent! exe tabid . 'tabnew '
+  silent! exe 'so ~/.cache/SpaceVim/tabmanager_session.vim'
   call settabvar(tabpagenr(),
         \ 'spacevim_tabman_expandable',
-        \ gettabvar(t, 'spacevim_tabman_expandable', 1))
-  call s:TABs._jump(t,b)
+        \ gettabvar(tabid, 'spacevim_tabman_expandable', 1))
+  if tabid >= current_tab
+    exe 'tabnext ' . current_tab
+  else
+    exe 'tabnext ' . (current_tab + 1)
+  endif
   call s:update_context()
+  let line = search('^[▷▼] [ *]Tab ' . (tabid + 1),'wc')
+  exe line
 endfunction
 
 
