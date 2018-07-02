@@ -330,7 +330,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   endfor
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'startify'
     try
       call fugitive#detect(getcwd())
@@ -346,7 +346,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'SpaceVimTabsManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'fzf'
     return '%#SpaceVim_statusline_a_bold# FZF %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{SpaceVim#layers#fzf#sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
