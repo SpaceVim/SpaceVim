@@ -264,7 +264,7 @@ function! s:open_item() abort
     noautocmd q
     exe 'e ' . filename
     call cursor(linenr, colum)
-    redraw!
+    redraw
   endif
 endfunction
 
@@ -309,7 +309,7 @@ function! s:toggle_preview() abort
     pclose
     let s:preview_able = 0
   endif
-  redraw!
+  redraw
   call s:MPT._build_prompt()
 endfunction
 
