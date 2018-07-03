@@ -100,6 +100,8 @@ function! SpaceVim#layers#core#tabline#get() abort
       let tabname = gettabvar(i, '_spacevim_tab_name', '')
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      elseif !has('nvim')
+        let t .= '%' . index . 'T'
       endif
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(i)
