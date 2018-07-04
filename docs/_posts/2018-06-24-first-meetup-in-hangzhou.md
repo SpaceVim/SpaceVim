@@ -1,8 +1,9 @@
 ---
-title: SpaceVim MeetUp in HangZhou
+title: "SpaceVim MeetUp in HangZhou"
 categories: [meetup, blog]
 excerpt: "Our first meetup in hangzhou, general discussion about features of SpaceVim."
 image: https://user-images.githubusercontent.com/13142418/42164326-48994830-7e38-11e8-8bf5-44adc65b514a.jpg
+commentsID: "SpaceVim MeetUp in HangZhou"
 comments: true
 ---
 
