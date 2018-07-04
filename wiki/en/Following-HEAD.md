@@ -40,6 +40,7 @@ The next release is v0.9.0.
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
 - Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860))
 - Update javascript layer doc ([#1884](https://github.com/SpaceVim/SpaceVim/pull/1884))
+- Change disqua to gitment ([#1904](https://github.com/SpaceVim/SpaceVim/pull/1904), [#1905](https://github.com/SpaceVim/SpaceVim/pull/1905), [#1906](https://github.com/SpaceVim/SpaceVim/pull/1906))
 
 ### Others
 
