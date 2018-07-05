@@ -444,6 +444,7 @@ function! SpaceVim#layers#core#statusline#init() abort
     autocmd!
     autocmd BufWinEnter,WinEnter,FileType
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
     autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
     autocmd ColorScheme * call SpaceVim#layers#core#statusline#def_colors()
   augroup END
