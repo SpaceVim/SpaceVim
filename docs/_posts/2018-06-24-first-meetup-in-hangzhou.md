@@ -9,8 +9,9 @@ comments: true
 
 # First meetup in Hangzhou
 
-> members: [Arith](https://github.com/icearith), BTS, [wsdjeg](https://github.com/wsdjeg)
-> time: {{ post.data | data_to_string }}
+> members: [Arith](https://github.com/icearith), BTS, [wsdjeg](https://github.com/wsdjeg)  
+> location: HangZhou  
+> time: {{ page.date | date_to_string }}
 
 We just make a general discussion about how to use SpaceVim, and what feature need to be improved in next release.
 
