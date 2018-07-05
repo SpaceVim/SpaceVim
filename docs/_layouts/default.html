@@ -115,8 +115,8 @@
               owner: 'wsdjeg',
               repo: 'SpaceVim-comments',
               oauth: {
-                client_id: '8f0cd1f544d1e4219798',
-                client_secret: '8d44f307314216d5f9418dcc06ef32e787d39a0e',
+                client_id: '{{ site.gitment_client_id }}',
+                client_secret: '{{ site.gitment_client_secret }}',
               },
             })
             gitment.render('container')
