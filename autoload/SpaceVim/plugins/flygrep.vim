@@ -240,6 +240,7 @@ function! s:next_item() abort
   endif
   redraw
   call s:MPT._build_prompt()
+  redrawstatus
 endfunction
 
 function! s:previous_item() abort
@@ -253,6 +254,7 @@ function! s:previous_item() abort
   endif
   redraw
   call s:MPT._build_prompt()
+  redrawstatus
 endfunction
 
 function! s:open_item() abort
