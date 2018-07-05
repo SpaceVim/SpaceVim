@@ -27,7 +27,7 @@ function! SpaceVim#autocmds#init() abort
       autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
       autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
     endif
-    autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
+    " autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
     autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal! g`\"" |
