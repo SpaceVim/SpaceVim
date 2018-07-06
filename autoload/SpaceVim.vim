@@ -646,6 +646,9 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 ""
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
+""
+" Enable/Disable autocompletion of parentheses, default is 1 (enabled).
+let g:spacevim_autocomplete_parens = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
