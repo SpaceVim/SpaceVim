@@ -68,11 +68,11 @@ function! s:get_search_cmd(expr) abort
     let cmd += [a:expr] + s:grep_ropt
   endif
   let cmd = map(cmd, 'shellescape(v:val)')
-  if has('win32')
-    let cmd += ['|', 'select', '-first', '3000']
-  else
-    let cmd += ['|', 'head', '-3000']
-  endif
+  " if has('win32')
+    " let cmd += ['|', 'select', '-first', '3000']
+  " else
+    " let cmd += ['|', 'head', '-3000']
+  " endif
   let cmd = join(cmd, ' ')
   return cmd
 endfunction

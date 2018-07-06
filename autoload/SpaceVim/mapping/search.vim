@@ -40,7 +40,10 @@ let s:search_tools.t.ignore_case = ['-i']
 
 let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
-let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column']
+let s:search_tools.r.default_opts = [
+      \ '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column',
+      \ '-g', '!.git'
+      \ ]
 let s:search_tools.r.recursive_opt = []
 let s:search_tools.r.expr_opt = ['-e']
 let s:search_tools.r.fixed_string_opt = ['-F']
