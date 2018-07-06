@@ -23,8 +23,8 @@ let [
       \ s:grep_default_ropt,
       \ s:grep_default_expr_opt,
       \ s:grep_default_fix_string_opt,
-      \ s:grep_ignore_case,
-      \ s:grep_smart_case
+      \ s:grep_default_ignore_case,
+      \ s:grep_default_smart_case
       \ ] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = 0
 let s:grepid = 0
@@ -57,7 +57,7 @@ function! s:get_search_cmd(expr) abort
   if s:grep_mode ==# 'string'
     let cmd += s:grep_default_fix_string_opt
   endif
-  let cmd += s:grep_default_expr_opt
+  let cmd += s:grep_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
     let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
@@ -449,12 +449,18 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
+  let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)
+  let s:grep_smart_case  = get(a:agrv, 'smart_case', s:grep_default_smart_case)
+  let s:grep_expr_opt  = get(a:agrv, 'expr_opt', s:grep_default_expr_opt)
   call SpaceVim#logger#info('FlyGrep startting ===========================')
-  call SpaceVim#logger#info('        executable: ' . s:grep_exe)
-  call SpaceVim#logger#info('        option    : ' . string(s:grep_opt))
-  call SpaceVim#logger#info('        r_option  : ' . string(s:grep_ropt))
-  call SpaceVim#logger#info('        files     : ' . string(s:grep_files))
-  call SpaceVim#logger#info('        dir       : ' . string(s:grep_dir))
+  call SpaceVim#logger#info('   executable    : ' . s:grep_exe)
+  call SpaceVim#logger#info('   option        : ' . string(s:grep_opt))
+  call SpaceVim#logger#info('   r_option      : ' . string(s:grep_ropt))
+  call SpaceVim#logger#info('   files         : ' . string(s:grep_files))
+  call SpaceVim#logger#info('   dir           : ' . string(s:grep_dir))
+  call SpaceVim#logger#info('   ignore_case   : ' . string(s:grep_ignore_case))
+  call SpaceVim#logger#info('   smart_case    : ' . string(s:grep_smart_case))
+  call SpaceVim#logger#info('   expr opt      : ' . string(s:grep_expr_opt))
   call s:MPT.open()
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
