@@ -18,7 +18,7 @@ let s:search_tools.a = {}
 let s:search_tools.a.command = 'ag'
 let s:search_tools.a.default_opts =
       \ [
-      \ '-i', '--vimgrep', '--hidden', '--ignore',
+      \ '-i', '--column', '--hidden', '--ignore',
       \ '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
       \ ]
 let s:search_tools.a.recursive_opt = []
