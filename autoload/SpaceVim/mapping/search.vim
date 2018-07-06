@@ -40,11 +40,11 @@ let s:search_tools.t.ignore_case = ['-i']
 
 let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
-let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--vimgrep']
+let s:search_tools.r.default_opts = ['--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column']
 let s:search_tools.r.recursive_opt = []
 let s:search_tools.r.expr_opt = ['-e']
 let s:search_tools.r.fixed_string_opt = ['-F']
-let s:search_tools.r.default_fopts = ['--hidden', '-N']
+let s:search_tools.r.default_fopts = ['-N']
 let s:search_tools.r.smart_case = ['-S']
 let s:search_tools.r.ignore_case = ['-i']
 
@@ -68,7 +68,7 @@ let s:search_tools.g.default_fopts = []
 let s:search_tools.g.smart_case = []
 let s:search_tools.g.ignore_case = ['-i']
 
-function! SpaceVim#mapping#search#grep(key, scope)
+function! SpaceVim#mapping#search#grep(key, scope) abort
   let cmd = s:search_tools[a:key]['command']
   let opt = s:search_tools[a:key]['default_opts']
   let ropt = s:search_tools[a:key]['recursive_opt']
@@ -105,7 +105,7 @@ function! SpaceVim#mapping#search#grep(key, scope)
   elseif a:scope ==# 'd'
     call SpaceVim#plugins#flygrep#open({
           \ 'input' : input('grep pattern:'),
-          \ 'dir' : fnamemodify(expand("%"), ":p:h"),
+          \ 'dir' : fnamemodify(expand('%'), ':p:h'),
           \ 'cmd' : cmd,
           \ 'opt' : opt,
           \ 'ropt' : ropt,
@@ -113,7 +113,7 @@ function! SpaceVim#mapping#search#grep(key, scope)
   elseif a:scope ==# 'D'
     call SpaceVim#plugins#flygrep#open({
           \ 'input' : expand('<cword>'),
-          \ 'dir' : fnamemodify(expand("%"), ":p:h"),
+          \ 'dir' : fnamemodify(expand('%'), ':p:h'),
           \ 'cmd' : cmd,
           \ 'opt' : opt,
           \ 'ropt' : ropt,

@@ -209,7 +209,7 @@ endfunction
 " @vimlint(EVL103, 1, a:event)
 function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
-  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
+  " let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
   if bufnr('%') == s:flygrep_buffer_id
     if getline(1) ==# ''
       call setline(1, datas)
@@ -449,13 +449,14 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
-  call SpaceVim#logger#info('FlyGrep startting >>')
+  call SpaceVim#logger#info('FlyGrep startting ===========================')
   call SpaceVim#logger#info('        executable: ' . s:grep_exe)
   call SpaceVim#logger#info('        option    : ' . string(s:grep_opt))
   call SpaceVim#logger#info('        r_option  : ' . string(s:grep_ropt))
   call SpaceVim#logger#info('        files     : ' . string(s:grep_files))
   call SpaceVim#logger#info('        dir       : ' . string(s:grep_dir))
   call s:MPT.open()
+  call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
 endfunction
 " }}}
