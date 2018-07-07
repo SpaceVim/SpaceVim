@@ -23,6 +23,7 @@
 " <
 
 let s:self = {}
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 
 let s:self._keys = {
@@ -140,10 +141,7 @@ endf
 
 func! s:self._build_prompt() abort
   normal! :
-  let ident = ''
-  try
-    let ident = repeat(' ', pyeval('vim.current.window.col'))
-  endtry
+  let ident = repeat(' ', self.__cmp.win_screenpos(0))
   echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
