@@ -274,7 +274,7 @@ function! s:open_item() abort
     noautocmd q
     exe 'e ' . filename
     call cursor(linenr, colum)
-    redraw
+    noautocmd normal! :
   endif
 endfunction
 
