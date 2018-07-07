@@ -140,7 +140,11 @@ endf
 
 func! s:self._build_prompt() abort
   normal! :
-  echohl Comment | echon self._prompt.mpt
+  let ident = ''
+  try
+    let ident = repeat(' ', pyeval('vim.current.window.col'))
+  endtry
+  echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
   echohl None | echon self._prompt.end
