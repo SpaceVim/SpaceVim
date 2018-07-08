@@ -38,7 +38,7 @@ let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
   let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   let cmd = s:get_search_cmd(s:current_grep_pattern)
-  call SpaceVim#logger#info('grep cmd: ' . cmd)
+  call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -68,13 +68,13 @@ function! s:get_search_cmd(expr) abort
   else
     let cmd += [a:expr] + s:grep_ropt
   endif
-  let cmd = map(cmd, 'shellescape(v:val)')
+  " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
     " let cmd += ['|', 'select', '-first', '3000']
   " else
     " let cmd += ['|', 'head', '-3000']
   " endif
-  let cmd = join(cmd, ' ')
+  " let cmd = join(cmd, ' ')
   return cmd
 endfunction
 
