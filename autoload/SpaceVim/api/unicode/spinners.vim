@@ -15,7 +15,18 @@ let s:self._data = {
       \          }
       \ }
 
-function! s:self.get(name) abort
+let s:self._id = 0
+
+function! s:self.Onframe(...) abort
+  
+endfunction
+
+" return timer id and strwidth
+function! s:self.apply(name, var) abort
+  
+endfunction
+
+function! s:self.get_info(name) abort
   return get(self._data, a:name, {})
 endfunction
 
