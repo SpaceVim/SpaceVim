@@ -249,6 +249,46 @@ function! s:next_item() abort
   redrawstatus
 endfunction
 
+function! s:page_up() abort
+  exe "normal! \<PageUp>"
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_down() abort
+  exe "normal! \<PageDown>"
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_home() abort
+  normal! gg
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_end() abort
+  normal! G
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
 function! s:previous_item() abort
   if line('.') == 1
     normal! G
@@ -403,6 +443,10 @@ let s:MPT._function_key = {
       \ "\<C-e>" : function('s:toggle_expr_mode'),
       \ "\<Up>" : function('s:previous_match_history'),
       \ "\<Down>" : function('s:next_match_history'),
+      \ "\<PageDown>" : function('s:page_down'),
+      \ "\<PageUp>" : function('s:page_up'),
+      \ "\<C-End>" : function('s:page_end'),
+      \ "\<C-Home>" : function('s:page_home'),
       \ }
 
 if has('nvim')
