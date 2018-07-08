@@ -23,6 +23,8 @@ SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
 
+The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+
 See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](http://spacevim.org/layers/) for more information.
 
 Here is a throughput graph of the repository for the last few weeks:
