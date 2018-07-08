@@ -41,6 +41,7 @@ function! s:grep_timer(timer) abort
   call SpaceVim#logger#info('grep cmd: ' . cmd)
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'on_stderr' : function('s:grep_stderr'),
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
@@ -218,6 +219,10 @@ function! s:grep_stdout(id, data, event) abort
       call append('$', datas)
     endif
   endif
+endfunction
+
+function! s:grep_stderr(id, data, event) abort
+  call SpaceVim#logger#error(' flygerp stderr: ' . string(a:data))
 endfunction
 
 function! s:grep_exit(id, data, event) abort
