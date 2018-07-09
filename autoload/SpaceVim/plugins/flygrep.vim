@@ -59,14 +59,21 @@ function! s:get_search_cmd(expr) abort
   endif
   let cmd += s:grep_default_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
-    return cmd + [a:expr] + s:grep_files
+    let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
-    return cmd + [a:expr] + [s:grep_files]
+    let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
-    return cmd + [a:expr] + [s:grep_dir]
+    let cmd += [a:expr] + [s:grep_dir]
   else
-    return cmd + [a:expr] + s:grep_ropt
+    let cmd += [a:expr] + s:grep_ropt
   endif
+  if has('win32')
+    let cmd += ['\|', 'select', '\-first', '3000']
+  else
+    let cmd += ['\|', 'head', '\-3']
+  endif
+  let cmd = join(cmd, ' ')
+  return cmd
 endfunction
 
 function! s:flygrep(expr) abort
