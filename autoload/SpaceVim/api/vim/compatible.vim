@@ -14,11 +14,43 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ 'has' : '',
         \ 'globpath' : '',
         \ 'matchaddpos' : '',
+        \ 'win_screenpos' : '',
         \ },
         \ "function('s:' . v:key)"
         \ )
 endfunction
 
+if has('patch-8.0.1364')
+  function! s:win_screenpos(nr) abort
+    return win_screenpos(a:nr)
+  endfunction
+elseif has('python')
+  function! s:win_screenpos(nr) abort
+    if winnr('$') < a:nr || a:nr < 0
+      return [0, 0]
+    elseif a:nr == 0
+      return [pyeval('vim.current.window.row'),
+            \ pyeval('vim.current.window.col')]
+    endif
+    return [pyeval('vim.windows[' . a:nr . '].row'),
+          \ pyeval('vim.windows[' . a:nr . '].col')]
+  endfunction
+elseif has('python3')
+  function! s:win_screenpos(nr) abort
+    if winnr('$') < a:nr || a:nr < 0
+      return [0, 0]
+    elseif a:nr == 0
+      return [py3eval('vim.current.window.row'),
+            \ py3eval('vim.current.window.col')]
+    endif
+    return [py3eval('vim.windows[' . a:nr . '].row'),
+          \ py3eval('vim.windows[' . a:nr . '].col')]
+  endfunction
+else
+  function! s:win_screenpos(nr) abort
+    return [0, 0]
+  endfunction
+endif
 
 if exists('*execute')
   function! s:execute(cmd, ...) abort

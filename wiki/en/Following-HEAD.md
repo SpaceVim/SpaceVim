@@ -18,6 +18,7 @@ The next release is v0.9.0.
 ### Improvement
 
 - Improve tab manager ([#1887](https://github.com/SpaceVim/SpaceVim/pull/1887))
+- Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898))
 
 ### Changed
 
