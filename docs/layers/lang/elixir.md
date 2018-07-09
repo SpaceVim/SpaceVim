@@ -3,7 +3,7 @@ title: "SpaceVim lang#elixir layer"
 description: "This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#elixir
+# [Available Layers](../../) >> lang#elixir
 
 <!-- vim-markdown-toc GFM -->
 
@@ -35,7 +35,12 @@ SpaceVim also provides REPL/Debug support for elixir.
 
 ### Layer
 
-To use this configuration layer, add `SPLayer 'lang#elixir'` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#elixir"
+```
 
 ## Key bindings
 

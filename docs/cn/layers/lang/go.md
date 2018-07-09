@@ -1,53 +1,71 @@
 ---
-title: "SpaceVim golang layer"
-description: "This layer is for golang development. It also provides additional language-specific key mappings."
+title: "SpaceVim lang#go 模块"
+description: "这一模块为 go 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) go
+# [可用模块](../../) >> lang#go
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Features](#features)
-- [Key bindings](#key-bindings)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [功能特性](#功能特性)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for golang development. It also provides additional language-specific key mappings.
+该模块为 SpaceVim 提供了 golang 开发支持，包括代码补全，格式化，语法检查等特性。同时提供诸多语言专属快捷键。
 
-## Install
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#go')` to your custom configuration file.
+可通过在配置文件内加入如下配置来启用该模块：
 
-## Features
+```toml
+[[layers]]
+  name = "lang#go"
+```
 
-- auto-completion
-- syntax checking
-- goto definition
-- refernce finder
+## 功能特性
 
-## Key bindings
+- 代码补全
+- 语法检查
+- 跳转定义处
+- 查询函数引用
 
-**Import key bindings:**
+## 快捷键
 
-| Key Binding | Description     |
-| ----------- | --------------- |
-| SPC l i     | go implements   |
-| SPC l f     | go info         |
-| SPC l e     | go rename       |
-| SPC l r     | go run          |
-| SPC l b     | go build        |
-| SPC l t     | go test         |
-| SPC l d     | go doc          |
-| SPC l v     | go doc vertical |
-| SPC l c     | go coverage     |
+**语言专属快捷键:**
 
-**Code formatting:**
+| 快捷键    | 描述                      |
+| --------- | ------------------------- |
+| `SPC l a` | go alternate              |
+| `SPC l b` | go build                  |
+| `SPC l c` | go coverage               |
+| `SPC l d` | go doc                    |
+| `SPC l D` | go doc vertical           |
+| `SPC l e` | go rename                 |
+| `SPC l g` | go definition             |
+| `SPC l G` | go generate               |
+| `SPC l h` | go info                   |
+| `SPC l i` | go implements             |
+| `SPC l I` | implement stubs           |
+| `SPC l k` | add tags                  |
+| `SPC l K` | remove tags               |
+| `SPC l l` | list declarations in file |
+| `SPC l m` | format improts            |
+| `SPC l M` | add import                |
+| `SPC l r` | go referrers              |
+| `SPC l s` | fill struct               |
+| `SPC l t` | go test                   |
+| `SPC l v` | freevars                  |
+| `SPC l x` | go run                    |
 
-the default key bindings for format current buffer is `SPC b f`, and this key bindings is defined in [format layer](<>). you can also use `g=` to indent current buffer.
+**代码格式化:**
 
-To make neoformat support go files, you should have [go-fmt](http://golang.org/cmd/gofmt/) command available, or
-install [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports). `go-fmt` is delivered by golang's default installation, so make sure you have correctly setup your go environment.
+默认的代码格式化快捷键是 `SPC b f`，该快捷键又 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
+
+为了使得 `format` 模块支持 go 文件，需要确认有可执行命令 [go-fmt](http://golang.org/cmd/gofmt/) 或者 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)，
+通常 `go-fmt` 命令为 go 自带的程序，请确认 go 开发环境是否配置正确。

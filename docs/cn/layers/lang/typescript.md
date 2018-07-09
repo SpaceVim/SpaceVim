@@ -1,40 +1,57 @@
 ---
-title: "SpaceVim lang#typescript layer"
-description: "This layer is for TypeScript development"
+title: "SpaceVim lang#typescript 模块"
+description: "这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#typescript
+# [可用模块](../../) >> lang#typescript
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Layer Installation](#layer-installation)
-- [Features](#features)
-- [Layer configuration](#layer-configuration)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
+- [功能特性](#功能特性)
+- [模块配置](#模块配置)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for TypeScript development.
+这一模块为 SpaceVim 提供了 typescript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
 
-## Layer Installation
+## 启用模块
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#typescript')` to your custom configuration file. BTW, you need to install TypeScript via:
+可通过在配置文件内加入如下配置来启用该模块：
+
+```toml
+[[layers]]
+  name = "lang#typescript"
+```
+
+同时，需要通过以下命令安装 TypeScript：
 
 ```sh
 npm install -g typescript
 ```
 
-## Features
+## 功能特性
 
-- auto-completion
-- syntax checking
-- viewing documentation
-- type-signature
-- goto definition
-- refernce finder
+- 代码补全
+- 语法检查
+- 查阅文档
+- 类型图标标记
+- 跳至定义处
+- 查询函数引用
+- lsp 支持
 
-## Layer configuration
+## 模块配置
 
-`typescript_server_path`: set the path of the tsserver.
+`typescript_server_path`: 该模块选项可以设置 tsserver 的路径。
+
+## 快捷键
+
+| 快捷键    | 按键描述             |
+| --------- | -------------------- |
+| `SPC l d` | 显示相关文档         |
+| `SPC l e` | 重命名光标函数或变量 |

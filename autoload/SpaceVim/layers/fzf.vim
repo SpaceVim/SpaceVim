@@ -22,6 +22,7 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
         \ ['find files in current project',
@@ -331,6 +332,23 @@ function! s:register() abort
   call fzf#run({
         \   'source':  reverse(<sid>registers_list()),
         \   'sink':    function('s:yankregister'),
+        \   'options': '+m',
+        \   'down': '40%'
+        \ })
+endfunction
+
+command! Fzfbuffers call <SID>buffers()
+function! s:open_buffer(e) abort
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+function! s:buffers() abort
+  let s:source = 'buffers'
+  function! s:buffer_list() abort
+    return split(s:CMP.execute('buffers'), '\n')
+  endfunction
+  call fzf#run({
+        \   'source':  reverse(<sid>buffer_list()),
+        \   'sink':    function('s:open_buffer'),
         \   'options': '+m',
         \   'down': '40%'
         \ })

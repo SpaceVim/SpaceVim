@@ -5,7 +5,7 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 - [FAQ](https://spacevim.org/faq/): The most asked questions about SpaceVim
 - [Progress/Roadmap](https://spacevim.org/roadmap/): The roadmap and development progress of SpaceVim
 - [Blogs](https://spacevim.org/blog/): Latest news and posts about SpaceVim
-- [Project layout](project_layout): Layout of current project
+- [Project layout](Project-layout): Layout of current project
 
 ### Users
 

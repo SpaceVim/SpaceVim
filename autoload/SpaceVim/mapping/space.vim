@@ -70,8 +70,12 @@ function! SpaceVim#mapping#space#init() abort
         \ 'close', 'delete window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
         \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'],
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
         \ 'tabnew', 'create new tab', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 
+        \ 'call call('
+        \ . string(function('s:create_new_named_tab'))
+        \ . ', [])', 'create new named tab', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'],
         \ 'wincmd h', 'window-left', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'],
@@ -172,7 +176,6 @@ function! SpaceVim#mapping#space#init() abort
     call SpaceVim#mapping#menu('toggle line number', '[SPC]tn', 'setlocal number!')
   endif
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
-  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
 
   " Searching in current buffer
   call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files': bufname(\"%\")})",
@@ -419,7 +422,7 @@ endfunction
 
 
 let s:language_specified_mappings = {}
-function! SpaceVim#mapping#space#refrashLSPC()
+function! SpaceVim#mapping#space#refrashLSPC() abort
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
     call call(s:language_specified_mappings[&filetype], [])
@@ -428,7 +431,7 @@ function! SpaceVim#mapping#space#refrashLSPC()
 
 endfunction
 
-function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func)
+function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
 endfunction
 
@@ -460,15 +463,15 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
-function! s:commentOperator(type, ...)
+function! s:commentOperator(type, ...) abort
   let sel_save = &selection
-  let &selection = "inclusive"
+  let &selection = 'inclusive'
   let reg_save = @@
 
   if a:0  " Invoked from Visual mode, use gv command.
-    silent exe "normal! gv"
+    silent exe 'normal! gv'
     call feedkeys("\<Plug>NERDCommenterComment")
-  elseif a:type == 'line'
+  elseif a:type ==# 'line'
     call feedkeys('`[V`]')
     call feedkeys("\<Plug>NERDCommenterComment")
   else
@@ -501,8 +504,19 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
+function! s:create_new_named_tab() abort
+  let tabname = input('Tab name:', '')
+  if !empty(tabname)
+    tabnew
+    let t:_spacevim_tab_name = tabname
+    set tabline=%!SpaceVim#layers#core#tabline#get()
+  else
+    tabnew
+  endif
+endfunction
+
 function! s:windows_transient_state() abort
-  
+
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('Buffer Selection Transient State')
   call state.defind_keys(

@@ -3,11 +3,30 @@ title: "SpaceVim unite layer"
 description: "This layers provide a heavily customized Unite centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) unite
+# [Available Layers](../) >> unite
 
-## Intro
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Configuration](#configuration)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
+## Description
 
 This layer is a heavily customized wrapper for unite.vim and unite sources.
+
+## Install
+
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "unite"
+```
 
 ## Configuration
 

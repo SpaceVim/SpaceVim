@@ -41,7 +41,11 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
   let path = s:project_paths[a:project]['path']
   tabnew
   exe 'lcd ' . path
-  Startify | VimFiler
+  if g:spacevim_filemanager ==# 'vimfiler'
+    Startify | VimFiler
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+    Startify | NERDTree
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_name() abort
@@ -122,7 +126,8 @@ function! s:find_root_directory() abort
     else
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
-    if !empty(dir) && isdirectory(dir)
+    let ftype = getftype(dir)
+    if ftype == "dir" || ftype == "file"
       let dir = fnamemodify(dir, ':p')
       call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
       call add(dirs, dir)

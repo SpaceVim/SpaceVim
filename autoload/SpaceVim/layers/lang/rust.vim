@@ -58,17 +58,38 @@ function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
   let g:racer_cmd = $HOME . '/.cargo/bin/racer'
 
-  call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
-  call SpaceVim#plugins#runner#reg_runner('rust', ['rustc %s -o #TEMP#', '#TEMP#'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
+  if SpaceVim#layers#lsp#check_filetype('rust')
+    call SpaceVim#mapping#gd#add('rust',
+          \ function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
+  endif
+
+  call SpaceVim#plugins#runner#reg_runner('rust',
+        \ ['rustc %s -o #TEMP#', '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('rust',
+        \ function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
   nmap <buffer> gs <Plug>(rust-def-split)
   nmap <buffer> gx <Plug>(rust-def-vertical)
 
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'], '<Plug>(rust-doc)', 'show documentation', 0)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  if SpaceVim#layers#lsp#check_filetype('rust')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show documentation', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'],
+          \ 'call SpaceVim#lsp#references()', 'show references', 1)
+  else
+    call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'],
+          \ '<Plug>(rust-doc)', 'show documentation', 1)
+  endif
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 
 function! s:gotodef() abort

@@ -2,6 +2,7 @@
 title: "An async code runner in SpaceVim"
 categories: blog
 excerpt: "A better way for running code with in vim, more info about the command status, will not move cursor from code buffer."
+commentsID: "Async code runner"
 comments: true
 ---
 

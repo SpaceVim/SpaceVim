@@ -103,7 +103,7 @@ function! s:winnr(...) abort
       return ' %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     endif
   else
-    if g:spacevim_enable_statusline_display_mode == 1
+    if g:spacevim_enable_statusline_mode == 1
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
     elseif g:spacevim_windows_index_type == 3
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ get(w:, "winid", winnr()) } '
@@ -294,6 +294,18 @@ function! s:buffer_name() abort
   endif
 endfunction
 
+function! s:current_tag() abort
+  return '%{SpaceVim#layers#core#statusline#_current_tag()}'
+endfunction
+
+function! SpaceVim#layers#core#statusline#_current_tag() abort
+  let tag = ''
+  try
+    let tag =tagbar#currenttag("%s ", "") 
+  catch
+  endtry
+  return tag
+endfunction
 
 function! s:filesize() abort
   let l:size = getfsize(bufname('%'))
@@ -318,7 +330,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   endfor
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'startify'
     try
       call fugitive#detect(getcwd())
@@ -334,7 +346,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'SpaceVimTabsManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# TabsManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'fzf'
     return '%#SpaceVim_statusline_a_bold# FZF %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{SpaceVim#layers#fzf#sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -396,7 +408,8 @@ function! s:active() abort
     endif
   endfor
   let fname = s:buffer_name()
-  return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname,
+  let tag = s:current_tag()
+  return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname, tag,
         \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 
@@ -455,7 +468,7 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   exe 'hi! SpaceVim_statusline_ia ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
   exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
   exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
-  exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[3][1] . ' guibg=' . t[3][0] . ' guifg=' . t[3][0]
+  exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[4][3] . ' guibg=' . t[3][0] . ' guifg=' . t[4][0]
   hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
   hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
   call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
@@ -524,7 +537,7 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the statuline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
-    return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '',
+    return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',
           \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', g:spacevim_sidebar_width)
   endfunction
   let g:tagbar_status_func = 'TagbarStatusline'
@@ -556,7 +569,7 @@ endfunction
 " @vimlint(EVL103, 1, a:marked)
 function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:prev . ' ', ' ' . a:item . ' ', ' ' . a:next . ' '],
-        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '',
+        \ [' ' . a:focus . ' ', ' ' . a:byfname . ' ', ' ' . getcwd() . ' '], s:lsep, s:rsep, '', '',
         \ 'SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 " @vimlint(EVL103, 0, a:regex)
@@ -566,7 +579,7 @@ endfunction
 "         the current directory is being scanned with a user_command.
 function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
   return s:STATUSLINE.build([' Ctrlp ', ' ' . a:str . ' '],
-        \ [' ' . getcwd() . ' '], s:lsep, s:rsep, '',
+        \ [' ' . getcwd() . ' '], s:lsep, s:rsep, '', '',
         \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
 endfunction
 

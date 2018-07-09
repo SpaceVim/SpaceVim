@@ -96,13 +96,13 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-prefix)s', 'jump to a character', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-s2)', 'jump to a suite of two characters', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-bd-w)', 'jump to a word', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-bd-jk)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump to a word', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
@@ -170,10 +170,13 @@ function! SpaceVim#layers#core#config() abort
   if g:spacevim_filemanager ==# 'vimfiler'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTree', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}

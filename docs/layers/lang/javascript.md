@@ -3,7 +3,7 @@ title: "SpaceVim lang#javascript layer"
 description: "This layer is for JaveScript development"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#javascript
+# [Available Layers](../../) >> lang#javascript
 
 <!-- vim-markdown-toc GFM -->
 
@@ -23,7 +23,12 @@ This layer is for JavaScript development.
 
 ## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+name = "lang#javascript"
+```
 
 ## Features
 
@@ -34,26 +39,16 @@ To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript
 
 ## Layer configuration
 
-`auto_fix`: auto fix problems when save files, disabled by default. If you need this feature, you can load this layer via:
+`auto_fix`: auto fix problems when saving files, disabled by default.
 
-```vim
-call SpaceVim#layers#load('lang#javascript',
-            \ {
-            \ 'auto_fix' : 1,
-            \ }
-            \ )
+`enable_flow_syntax`: Enable configuration for [flow](https://flow.org/), disabled by default.
 
-```
-
-`enable_flow_syntax`: Enable configuration for [flow](https://flow.org/), disabled by default. If you need this feature, you can load this layer via:
-
-```vim
-call SpaceVim#layers#load('lang#javascript',
-            \ {
-            \ 'enable_flow_syntax' : 1,
-            \ }
-            \ )
-
+If you need these features, you can enable them in the layer config:
+```toml
+[[layers]]
+name = "lang#javascript"
+auto_fix = true
+enable_flow_syntax = true
 ```
 
 ## Key bindings

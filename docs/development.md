@@ -14,9 +14,10 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
   - [Bootstrap](#bootstrap)
   - [Conventions](#conventions)
   - [Pull Request](#pull-request)
-    - [Rebase your pr Branch on top of upstream master:](#rebase-your-pr-branch-on-top-of-upstream-master)
-    - [Ideally for simple PRs (most of them):](#ideally-for-simple-prs-most-of-them)
-    - [For complex PRs (big refactoring, etc):](#for-complex-prs-big-refactoring-etc)
+    - [Title prefix of pull request](#title-prefix-of-pull-request)
+    - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
+    - [Ideally for simple PRs](#ideally-for-simple-prs)
+    - [For complex PRs](#for-complex-prs)
   - [Contributing a layer](#contributing-a-layer)
     - [File header](#file-header)
     - [Author of a new layer](#author-of-a-new-layer)
@@ -47,7 +48,7 @@ You can only consider reading the sections relevant to what you are going to do:
 If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
 
 - <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
-- [SpaceVim documentation](https://spacevim.org/documentation): It is the general documentation of SpaceVim.
+- [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
 
 ## Reporting issues
 
@@ -84,7 +85,22 @@ SpaceVim is based on conventions, mainly for naming functions, keybindings defin
 
 ### Pull Request
 
-#### Rebase your pr Branch on top of upstream master:
+#### Title prefix of pull request
+
+pull request title should contains one of these prefix:
+
+- `Add:` Adding a new feature.
+- `Change:` Change default behaviors or the existing features.
+- `Fixed:` Fix some bugs
+- `Remove:` Remove any existing features.
+- `Doc:` update the help file.
+- `Website:` Update the contend of website.
+
+here is an example:
+
+`Website: update the lang#c layer page`
+
+#### Rebase on top of upstream master
 
 - fork SpaceVim repository
 - clone your repository
@@ -106,7 +122,7 @@ git fetch upstream
 git rebase upstream/master master
 ```
 
-#### Ideally for simple PRs (most of them):
+#### Ideally for simple PRs
 
 - Branch from `master`
 - One topic per PR
@@ -114,7 +130,7 @@ git rebase upstream/master master
 - If you have several commits on different topics, close the PR and create one PR per topic
 - If you still have several commits, squash them into only one commit
 
-#### For complex PRs (big refactoring, etc):
+#### For complex PRs
 
 Squash only the commits with uninteresting changes like typos, syntax fixes, etc… and keep the important and isolated steps in different commits.
 

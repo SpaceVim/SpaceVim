@@ -1,56 +1,60 @@
 ---
-title: "SpaceVim lang#elixir layer"
-description: "This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file."
+title: "SpaceVim lang#elixir 模块"
+description: "这一模块为 elixir 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: cn
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#elixir
+# [可用模块](../../) >> lang#elixir
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Install](#install)
-  - [Layer](#layer)
-- [Key bindings](#key-bindings)
-  - [Inferior REPL process](#inferior-repl-process)
-  - [Running current script](#running-current-script)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
+  - [交互式编程](#交互式编程)
+  - [运行当前脚本](#运行当前脚本)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer is for Elixir development.
+这一模块为 SpaceVim 提供了 elixir 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
 
-## Features
+## 功能特性
 
-This layer include the plugin [slashmili/alchemist.vim](https://github.com/slashmili/alchemist.vim), which provides:
+该模块主要包括插件 [slashmili/alchemist.vim](https://github.com/slashmili/alchemist.vim)， 该插件提供：
 
-- Completion for Modules and functions.
-- Documentation lookup for Modules and functions.
-- Jump to the definition.
+- 代码补全
+- 文档查询
+- 跳转定义处
 
-SpaceVim also provides REPL/Debug support for elixir.
+同时，该模块还未 elixir 开发提供了交互式编程和调试等功能。
 
-## Install
+## 启用模块
 
-### Layer
+可通过在配置文件内加入如下配置来启用该模块：
 
-To use this configuration layer, add `SPLayer 'lang#elixir'` to your custom configuration file.
+```toml
+[[layers]]
+  name = "lang#elixir"
+```
 
-## Key bindings
 
-### Inferior REPL process
+## 快捷键
 
-Start a `iex` inferior REPL process with `SPC l s i`. 
+### 交互式编程
 
-Send code to inferior process commands:
+启动 `iex` 交互进程，快捷键为： `SPC l s i`。
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+将代码传输给 REPL 进程执行：
 
-### Running current script
+| 快捷键      | 描述                        |
+| ----------- | --------------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL       |
+| `SPC l s s` | 发送已选中的内容至 REPL     |
 
-To running current script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+### 运行当前脚本
+
+在编辑 elixir 文件是，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。

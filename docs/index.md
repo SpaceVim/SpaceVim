@@ -7,7 +7,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-0.8.0--dev-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-0.9.0--dev-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
@@ -26,6 +26,8 @@ from having to think about what packages to install.
 If you like SpaceVim, feel free to star the project on github - it is a great way to show your
 appreciation while providing us motivation to continue working on this project.
 The extra visibility for the project doesn't hurt either!
+
+The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 See the [Quick start guide](quick-start-guide/), [documentation](documentation/) or the [available layers](layers/) for more information.
 

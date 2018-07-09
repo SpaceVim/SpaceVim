@@ -35,6 +35,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
         \ ['icymind/NeoSolarized', { 'merged' : 0 }],
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
+        \ ['SpaceVim/vim-material', { 'merged' : 0}],
         \ ]
   "
   " TODO:
@@ -56,6 +57,7 @@ let s:cs = [
       \ 'nord',
       \ 'hybrid',
       \ 'NeoSolarized',
+      \ 'material',
       \ ]
 let s:NUMBER = SpaceVim#api#import('data#number')
 

@@ -4,11 +4,28 @@ description: "SpaceVim default 模块并不包含插件，但提供了一些更�
 lang: cn
 ---
 
-# [SpaceVim Layers:](../) default
+# [可用模块](../) >> default
+
+<!-- vim-markdown-toc GFM -->
+
+- [模块描述](#模块描述)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
+
+<!-- vim-markdown-toc -->
 
 ## 模块描述
 
 这一模块主要优化了一些 Vim 设置，包含了一些默认的设置选项，和快捷键。
+
+## 启用模块
+
+可通过在配置文件内加入如下配置来启用该模块：
+
+```toml
+[[layers]]
+  name = "default"
+```
 
 ## 快捷键
 

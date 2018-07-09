@@ -4,7 +4,7 @@ description: "colorscheme 模块为 SpaceVim 提供了一系列的常用颜色�
 lang: cn
 ---
 
-# [可用模块](https://spacevim.org/layers) >> colorscheme
+# [可用模块](../) >> colorscheme
 
 <!-- vim-markdown-toc GFM -->
 
@@ -20,7 +20,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 
 ## 启用模块
 
-默认情况下，这一模块并为启用，如果需要使用更多的颜色主题，可以启用该模块，在配置
+默认情况下，这一模块并未启用，如果需要使用更多的颜色主题，可以启用该模块，在配置
 文件内加入如下内容：
 
 ```toml

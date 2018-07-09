@@ -28,7 +28,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['easymotion/vim-easymotion'],
         \ ['haya14busa/vim-easyoperator-line'],
         \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
-        \ ['floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']}],
         \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
         \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : 'StripWhitespace'}],

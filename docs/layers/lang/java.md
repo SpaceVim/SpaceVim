@@ -3,7 +3,7 @@ title: "SpaceVim lang#java layer"
 description: "This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#java
+# [Available Layers](../../) >> lang#java
 
 <!-- vim-markdown-toc GFM -->
 
@@ -35,7 +35,12 @@ This layer is for Java development.
 
 ## Install
 
-To use this configuration layer, add `SPLayer 'lang#java'` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#java"
+```
 
 ## Key bindings
 

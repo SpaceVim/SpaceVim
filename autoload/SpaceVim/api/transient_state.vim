@@ -124,9 +124,9 @@ if has('nvim')
 else
   function! s:self.highlight_keys(exit, line, begin, end) abort
     if a:exit
-      call self._cmp.matchaddpom('SpaceVim_Transient_State_Exit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+      call self._cmp.matchaddpos('SpaceVim_Transient_State_Exit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
     else
-      call self._cmp.matchaddpom('SpaceVim_Transient_State_Notexit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
+      call self._cmp.matchaddpos('SpaceVim_Transient_State_Notexit', [[a:line + 1, a:begin + 1, a:end - a:begin]])
     endif
   endfunction
 endif
@@ -137,7 +137,7 @@ if has('nvim')
   endfunction
 else
   function! s:self.highlight_title() abort
-    call self._cmp.matchaddpom('SpaceVim_Transient_State_Title', [1])
+    call self._cmp.matchaddpos('SpaceVim_Transient_State_Title', [1])
   endfunction
 endif
 

@@ -3,23 +3,28 @@ title: "SpaceVim lang#vim layer"
 description: "This layer is for writting vim script, including code completion, syntax checking and buffer formatting"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#vim
+# [Available Layers](../../) >> lang#vim
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer is for vim plugin development.
+This layer is for writting vim script, including code completion, syntax checking and buffer formatting
 
-## Layer Installation
+## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#vim')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#vim"
+```
 
 ## Key bindings
 

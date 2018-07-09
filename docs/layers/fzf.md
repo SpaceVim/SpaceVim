@@ -3,12 +3,28 @@ title: "SpaceVim fzf layer"
 description: "This layers provide a heavily customized fzf centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) fzf
+# [Available Layers](../) >> fzf
 
-## Intro
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
+## Description
 
 This layer is a heavily customized wrapper for fzf.
 
+## Install
+
+To use this configuration layer, add it to your configuration file.
+
+```toml
+[[layers]]
+name = "fzf"
+```
 
 ## Key bindings
 
@@ -23,3 +39,4 @@ This layer is a heavily customized wrapper for fzf.
 | `<Leader> f o`       | Fuzzy find outline            |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
+| `<Leader> b b`       | List all buffers              |
