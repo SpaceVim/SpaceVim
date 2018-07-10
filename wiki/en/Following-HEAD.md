@@ -41,7 +41,7 @@ The next release is v0.9.0.
 - Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
 - Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
-- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860))
+- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860), [#1930](https://github.com/SpaceVim/SpaceVim/pull/1930))
 - Update javascript layer doc ([#1884](https://github.com/SpaceVim/SpaceVim/pull/1884))
 - Change disqua to gitment ([#1904](https://github.com/SpaceVim/SpaceVim/pull/1904), [#1905](https://github.com/SpaceVim/SpaceVim/pull/1905), [#1906](https://github.com/SpaceVim/SpaceVim/pull/1906))
 - Add post about meetup in HangZhou ([#1875](https://github.com/SpaceVim/SpaceVim/pull/1875))
