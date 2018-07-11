@@ -20,11 +20,38 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ )
 endfunction
 
+function! s:has(feature) abort
+  if a:feature ==# 'python'
+    try
+      py import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'python3'
+    try
+      py3 import vim
+      return 1
+    catch
+      return 0
+    endtry
+  elseif a:feature ==# 'pythonx'
+    try
+      pyx import vim
+      return 1
+    catch
+      return 0
+    endtry
+  else
+    return has(a:feature)
+  endif
+endfunction
+
 if has('patch-8.0.1364')
   function! s:win_screenpos(nr) abort
     return win_screenpos(a:nr)
   endfunction
-elseif has('python')
+elseif s:has('python')
   function! s:win_screenpos(nr) abort
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
@@ -35,7 +62,7 @@ elseif has('python')
     return [pyeval('vim.windows[' . a:nr . '].row'),
           \ pyeval('vim.windows[' . a:nr . '].col')]
   endfunction
-elseif has('python3')
+elseif s:has('python3')
   function! s:win_screenpos(nr) abort
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
@@ -154,32 +181,6 @@ else
 endif
 
 
-function! s:has(feature) abort
-  if a:feature ==# 'python'
-    try
-      py import vim
-      return 1
-    catch
-      return 0
-    endtry
-  elseif a:feature ==# 'python3'
-    try
-      py3 import vim
-      return 1
-    catch
-      return 0
-    endtry
-  elseif a:feature ==# 'pythonx'
-    try
-      pyx import vim
-      return 1
-    catch
-      return 0
-    endtry
-  else
-    return has(a:feature)
-  endif
-endfunction
 
 
 " - A number.  This whole line will be highlighted.  The first
