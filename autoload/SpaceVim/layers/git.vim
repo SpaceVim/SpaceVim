@@ -15,6 +15,9 @@ function! SpaceVim#layers#git#plugins() abort
   else
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
   endif
+  if g:spacevim_filemanager ==# 'nerdtree'
+    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
+  endif
   return plugins
 endfunction
 

@@ -31,7 +31,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
         \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : 'StripWhitespace'}],
-        \ ['ianva/vim-youdao-translater', { 'on_cmd' : ['Ydv','Ydc','Yde']}],
         \ ]
   if executable('fcitx')
     call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -144,9 +143,6 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
         \ 'insert lorem-ipsum sentence', 1)
-  let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc', 'translate current word', 1)
-
   " move line
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'J'], 'call call('
         \ . string(s:_function('s:move_text_down_transient_state')) . ', [])',

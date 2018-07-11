@@ -11,7 +11,6 @@ function! SpaceVim#layers#core#plugins() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
           \ 'loadconf' : 1}])
-    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])

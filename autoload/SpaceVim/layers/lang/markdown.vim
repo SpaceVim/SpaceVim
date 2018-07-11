@@ -23,6 +23,7 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   call add(plugins, ['mzlogin/vim-markdown-toc',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['iamcco/markdown-preview.vim', { 'depends' : 'open-browser.vim', 'on_ft' : 'markdown' }])
+  call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   return plugins
 endfunction
 
