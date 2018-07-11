@@ -54,7 +54,7 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusLost * call system('synclient touchpadoff=0')
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
-    autocmd BufWritePre * call automkdir#CreateCurrent()
+    autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord call s:fix_VertSplit()
