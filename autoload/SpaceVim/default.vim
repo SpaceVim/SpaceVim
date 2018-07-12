@@ -142,7 +142,6 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
-  call SpaceVim#layers#load('sudo')
 endfunction
 
 function! SpaceVim#default#keyBindings() abort

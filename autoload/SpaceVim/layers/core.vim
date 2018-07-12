@@ -11,15 +11,14 @@ function! SpaceVim#layers#core#plugins() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
           \ 'loadconf' : 1}])
-    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
-  call add(plugins, ['benizi/vim-automkdir'])
 
   call add(plugins, ['rhysd/clever-f.vim'])
+  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1}])
 
   call add(plugins, ['andymass/vim-matchup'])
   call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
@@ -218,6 +217,26 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
 
+  let g:_spacevim_mappings_space.c = {'name' : '+Comments'}
+  "
+  " Comments sections
+  "
+  " Toggles the comment state of the selected line(s). If the topmost selected
+  " line is commented, all selected lines are uncommented and vice versa.
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines invert', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+
+  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
+
+  nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
+  let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
+  nmap <silent> [SPC]; <Plug>CommentOperator
 endfunction
 
 function! s:gotodef() abort
@@ -536,4 +555,45 @@ function! s:buffer_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:commentOperator(type, ...) abort
+  let sel_save = &selection
+  let &selection = 'inclusive'
+  let reg_save = @@
+
+  if a:0  " Invoked from Visual mode, use gv command.
+    silent exe 'normal! gv'
+    call feedkeys("\<Plug>NERDCommenterComment")
+  elseif a:type ==# 'line'
+    call feedkeys('`[V`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  else
+    call feedkeys('`[v`]')
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+
+  let &selection = sel_save
+  let @@ = reg_save
+  set opfunc=
+endfunction
+
+function! s:comment_to_line(invert) abort
+  let input = input('line number: ')
+  if empty(input)
+    return
+  endif
+  let line = str2nr(input)
+  let ex = line - line('.')
+  if ex > 0
+    exe 'normal! V'. ex .'j'
+  elseif ex == 0
+  else
+    exe 'normal! V'. abs(ex) .'k'
+  endif
+  if a:invert
+    call feedkeys("\<Plug>NERDCommenterInvert")
+  else
+    call feedkeys("\<Plug>NERDCommenterComment")
+  endif
 endfunction
