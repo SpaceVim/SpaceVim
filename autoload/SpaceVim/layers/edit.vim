@@ -23,7 +23,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['kana/vim-textobj-indent'],
         \ ['kana/vim-textobj-line'],
         \ ['kana/vim-textobj-entire'],
-        \ ['scrooloose/nerdcommenter', { 'loadconf' : 1}],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
         \ ['haya14busa/vim-easyoperator-line'],
