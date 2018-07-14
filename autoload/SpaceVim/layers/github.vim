@@ -34,6 +34,7 @@ function! SpaceVim#layers#github#plugins() abort
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
         \ }],
         \ ['wsdjeg/GitHub-api.vim', {'merged' : 0}],
+        \ ['lambdalisue/vim-gista', {'merged' : 0}],
         \ ]
 endfunction
 
