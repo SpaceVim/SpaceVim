@@ -44,6 +44,11 @@ function! SpaceVim#layers#github#config() abort
         \ 'name' : '+VersionControl/git',
         \ })
   let g:_spacevim_mappings_space.g.h = { 'name': '+GitHub' }
+  let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
+
+  " @todo remove the username
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'l'], 'Gista list -u wsdjeg',
+        \ 'list gist', 1)
 
   "" jaxbot/github-issues.vim {{{
   " Disable completion by github-issues.vim. Because github-complete.vim

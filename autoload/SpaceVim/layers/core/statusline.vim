@@ -39,7 +39,7 @@ let s:separators = {
       \ }
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
-      \ 'bar' : ["|", "|"],
+      \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
 let s:loaded_modes = []
@@ -331,6 +331,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   if &filetype ==# 'vimfiler'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'gista-list'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Gista %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'startify'
     try
       call fugitive#detect(getcwd())
