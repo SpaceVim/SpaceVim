@@ -1,5 +1,6 @@
 filetype off
 set rtp+=/.vim/build/vader
+set rtp+=/.vim/build/dein.vim
 set rtp+=.
 set rtp+=after
 filetype plugin indent on

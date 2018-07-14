@@ -16,11 +16,7 @@ if [ "${LINT#vimlint}" != "$LINT" ]; then
 elif [ "${LINT#vint}" != "$LINT" ]; then
     pip install vim-vint pathlib enum34 typing
 elif [ "${LINT#vader}" != "$LINT" ]; then
-    if [[ ! -d ~/.SpaceVim.d ]]; then
-        mkdir -p ~/.SpaceVim.d
-    fi
-    cp mode/basic.toml ~/.SpaceVim.d/init.toml
-    git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+    git clone --depth=1 https://github.com/Shougo/dein.vim.git build/dein.vim
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi
