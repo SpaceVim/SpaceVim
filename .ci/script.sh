@@ -24,6 +24,7 @@ elif [ "$LINT" = "vint-errors" ]; then
   vint --error .
 elif [ "$LINT" = "vader" ]; then
   vim --version
+  cat ~/.SpaceVim.d/init.toml
   pip install covimerage
   make test_coverage
   covimerage -vv xml --omit 'build/*'
