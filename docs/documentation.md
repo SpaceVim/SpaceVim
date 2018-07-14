@@ -646,8 +646,8 @@ can change it via `g:spacevim_windows_leader`
 | `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
 | `Tab`           | Next window or tab                                                                                                                                                                                                             |
 | `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
+| `<Leader> s v` | Split with previous buffer                                                                                                                                                                                                     |
+| `<Leader> s g` | Vertically split with previous buffer                                                                                                                                                                                          |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<leader> q r`
