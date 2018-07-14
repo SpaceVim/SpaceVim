@@ -23,9 +23,8 @@ elif [ "$LINT" = "vint" ]; then
 elif [ "$LINT" = "vint-errors" ]; then
     vint --error .
 elif [ "$LINT" = "vader" ]; then
-    TESTVIM = "docker run -it --rm -v $PWD:/.vim spacevim/vims -v $PWD/mode/basic.toml:$HOME/.SpaceVim.d/init.toml nvim "
+    export TESTVIM = "docker run -it --rm -v $PWD:/.vim spacevim/vims -v $PWD/mode/basic.toml:$HOME/.SpaceVim.d/init.toml nvim "
     $TESTVIM --version
-    cat ~/.SpaceVim.d/init.toml
     pip install covimerage
     make test_coverage
     covimerage -vv xml --omit 'build/*'
