@@ -49,6 +49,8 @@ function! SpaceVim#layers#github#config() abort
   " @todo remove the username
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'l'], 'Gista list -u wsdjeg',
         \ 'list gist', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'p'], 'Gista post',
+        \ 'post selection or current file', 1, 1)
 
   "" jaxbot/github-issues.vim {{{
   " Disable completion by github-issues.vim. Because github-complete.vim
