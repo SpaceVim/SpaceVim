@@ -630,27 +630,32 @@ key bindings within tab manager windows:
 
 ### Window manager
 
-Windows manager key bindings can only be used in normal mode. The default leader is `s`, you can
-can change it via `g:spacevim_windows_leader`
+Windows manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
+can change it via `windows_leader` option:
 
-| Key bindings    | Description                                                                                                                                                                                                                    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Smart buffer close                                                                                                                                                                                                             |
-| `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
-| `s`+`v`         | :split                                                                                                                                                                                                                         |
-| `s`+`g`         | :vsplit                                                                                                                                                                                                                        |
-| `s`+`t`         | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s`+`o`         | Close other windows (:only)                                                                                                                                                                                                    |
-| `s`+`x`         | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s`+`q`         | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`           | Next window or tab                                                                                                                                                                                                             |
-| `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
+```toml
+[options]
+    windows_leader = "s"
+````
+
+| Key bindings   | Description                                                                                                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `q`            | Smart buffer close                                                                                                                                                                                                             |
+| `WIN p`          | Split nicely                                                                                                                                                                                                                   |
+| `WIN v`          | :split                                                                                                                                                                                                                         |
+| `WIN g`          | :vsplit                                                                                                                                                                                                                        |
+| `WIN t`          | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `WIN o`          | Close other windows (:only)                                                                                                                                                                                                    |
+| `WIN x`          | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `WIN q`          | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `WIN Q`          | Close current buffer (:close)                                                                                                                                                                                                  |
+| `Tab`          | Next window or tab                                                                                                                                                                                                             |
+| `<S-Tab>`      | Previous window or tab                                                                                                                                                                                                         |
 | `<Leader> s v` | Split with previous buffer                                                                                                                                                                                                     |
 | `<Leader> s g` | Vertically split with previous buffer                                                                                                                                                                                          |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
-can be get by `<leader> q r`
+can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
 
 | Key                   |      Mode     | Action                                                                         |
 | --------------------- | :-----------: | ------------------------------------------------------------------------------ |
