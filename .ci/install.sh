@@ -17,7 +17,9 @@ elif [ "${LINT#vint}" != "$LINT" ]; then
     pip install vim-vint pathlib enum34 typing
 elif [ "${LINT#vader}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+    cd ..
     eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
+    cd SpaceVim
     mkdir -p ${DEPS}/bin
     ln -s $(which nvim) ${DEPS}/bin/nvim
 elif [ "$LINT" = "jekyll" ]; then
