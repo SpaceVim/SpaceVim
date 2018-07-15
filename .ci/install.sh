@@ -18,8 +18,6 @@ elif [ "${LINT#vint}" != "$LINT" ]; then
 elif [ "${LINT#vader}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
     eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
-    mkdir -p ${DEPS}/bin
-    ln -s $(which nvim) ${DEPS}/bin/vim
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi
