@@ -187,7 +187,7 @@ function! s:load_glob_conf() abort
       let g:spacevim_checkinstall = 0
       augroup SpaceVimBootstrap
         au!
-        au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
+        " au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
       augroup END
     endif
   endif
