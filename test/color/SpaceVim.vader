@@ -1,0 +1,3 @@
+Execute ( SpaceVim colorscheme ):
+  colorscheme SpaceVim
+  AssertEqual g:colors_name, 'SpaceVim'
