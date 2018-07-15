@@ -31,7 +31,7 @@ Execute ( SpaceVim api: job ):
     call job.send(jobid, 'foo')
     sleep 10m
     AssertEqual stdout, 'foo'
-    AssertEqual job.status(jobid), 'run'
+    AssertEqual job.status(jobid), ' run'
     call job.stop(jobid)
     AssertEqual exit_data, 1
   else
