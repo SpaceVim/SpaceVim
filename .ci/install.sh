@@ -26,6 +26,8 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
 
     export VIM="${DEPS}/_neovim/share/nvim/runtime"
     echo "\$VIM: \"${VIM}\""
+    mkdir -p ${DEPS}/bin
+    ln -s $(which nvim) ${DEPS}/bin/nvim
     nvim --version
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
