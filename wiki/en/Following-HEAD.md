@@ -23,7 +23,7 @@ The next release is v0.9.0.
 
 ### Changed
 
-- Allow customization of vimfiler_quick_look_command ([#1889](https://github.com/SpaceVim/pull/1889))
+- Allow customization of `vimfiler_quick_look_command` ([#1889](https://github.com/SpaceVim/pull/1889))
 - Change the option name `enable_statusline_display_mode` to `enable_statusline_mode` ([#1843](https://github.com/SpaceVim/SpaceVim/pull/1843))
 - Recover spell and list option in go layer ([#1872](https://github.com/SpaceVim/SpaceVim/pull/1872))
 - Remove textwidth option in autocmd ([#1931](https://github.com/SpaceVim/SpaceVim/pull/1931))
