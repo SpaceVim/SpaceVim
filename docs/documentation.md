@@ -206,6 +206,29 @@ the option name(just remove `g:spacevim_` prefix).
 
 Comprehensive documentation is available for each layer by `:h SpaceVim`.
 
+**Add custom plugins**
+
+If you want to add plugin from github, just add the repo name to the  `custom_plugins` section:
+
+```toml
+[[custom_plugins]]
+    name = "lilydjwg/colorizer"
+    on_cmd = ["ColorHighlight", "ColorToggle"]
+    merged = 0
+```
+
+`on_cmd` option means this plugin will be loaded only when the following commands are called. for more options see `:h dein-options`
+
+**disable existing plugins**
+
+if you want to disable plugins which are added by SpaceVim, you can use SpaceVim `disabled_plugins` options:
+
+```toml
+[options]
+    # NOTE: the value should be a list, and each item is the name of the plugin.
+    disabled_plugins = ["clighter", "clighter8"]
+```
+
 if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
 
 ```vim
@@ -817,15 +840,6 @@ All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
 All plugins can be easily discovered via `<leader> l p`.
 
-**Add custom plugins**
-
-If you want to add plugin from github, just add the repo name to the SpaceVim option `custom_plugins`:
-
-```toml
-[[custom_plugins]]
-name = 'lilydjwg/colorizer'
-merged = 0
-```
 
 #### Toggles
 
