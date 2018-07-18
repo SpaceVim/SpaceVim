@@ -867,7 +867,7 @@ function! SpaceVim#begin() abort
     elseif argv(0) ==# '.'
       return [1, getcwd()]
     elseif isdirectory(expand(argv(0)))
-      return [1, expand(argv(0)) ]
+      return [1, fnamemodify(expand(argv(0)), ':p')]
     else
       return [0]
     endif
