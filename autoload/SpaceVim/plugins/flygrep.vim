@@ -471,6 +471,10 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
+  if empty(s:grep_default_exe)
+    call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
+    return
+  endif
   let s:mode = ''
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')

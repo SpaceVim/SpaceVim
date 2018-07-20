@@ -182,6 +182,9 @@ function! SpaceVim#mapping#search#default_tool() abort
         break
       endif
     endfor
+    if !has_key(s:search_tools, 'default_exe')
+      return ['', '', '', '', '', '', '']
+    endif
   endif
   return [
         \ s:search_tools.default_exe,
@@ -195,6 +198,6 @@ function! SpaceVim#mapping#search#default_tool() abort
 endfunction
 
 function! SpaceVim#mapping#search#getFopt(exe) abort
-        let key = s:search_tools.namespace[a:exe]
-        return s:search_tools[key]['default_fopts']
+  let key = s:search_tools.namespace[a:exe]
+  return s:search_tools[key]['default_fopts']
 endfunction
