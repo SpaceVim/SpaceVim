@@ -78,6 +78,14 @@ function! s:get_search_cmd(expr) abort
   return cmd
 endfunction
 
+" s:grep_mode expr or string
+" argv:expr is the input content from user
+" return a pattern for matchadd
+function! s:expr_to_pattern(expr) abort
+  let items = split(a:expr)
+  return join(items, '\|')
+endfunction
+
 function! s:flygrep(expr) abort
   call s:MPT._build_prompt()
   if a:expr ==# ''
@@ -89,7 +97,7 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', join(split(a:expr), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 1)
   let s:grep_expr = a:expr
   try
     call timer_stop(s:grep_timer_id)
@@ -133,7 +141,7 @@ function! s:filter(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 1)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
 endfunction
@@ -164,7 +172,7 @@ function! s:start_replace() abort
   if !empty(replace_text)
     call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = matchadd('FlyGrepPattern', join(split(replace_text), '\|'), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 1)
   redrawstatus
 endfunction
 " }}}
