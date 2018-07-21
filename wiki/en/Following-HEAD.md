@@ -19,7 +19,8 @@ The next release is v0.9.0.
 ### Improvement
 
 - Improve tab manager ([#1887](https://github.com/SpaceVim/SpaceVim/pull/1887))
-- Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898))
+- Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898), [#1961](https://github.com/SpaceVim/SpaceVim/pull/1961), [#1960](https://github.com/SpaceVim/SpaceVim/pull/1960), [#1929](https://github.com/SpaceVim/SpaceVim/pull/1929))
+- Improve plugin manager ([#1962](https://github.com/SpaceVim/SpaceVim/pull/1962))
 
 ### Changed
 
@@ -36,6 +37,7 @@ The next release is v0.9.0.
 - Fix project manager, can not find root of project ([#1883](https://github.com/SpaceVim/SpaceVim/pull/1883))
 - Fix resume key bindings [#1885](https://github.com/SpaceVim/SpaceVim/pull/1885)
 - Fix nerdtree key bindings [#1903](https://github.com/SpaceVim/SpaceVim/pull/1903)
+- Fix inactive windows statusline ([#1913](https://github.com/SpaceVim/SpaceVim/pull/1913))
 
 ### Removed
 
@@ -45,12 +47,18 @@ The next release is v0.9.0.
 - Update faq for why using toml ([#1838](https://github.com/SpaceVim/SpaceVim/pull/1838))
 - Update faq for using SpaceVim without overwrite vimrc ([#1848](https://github.com/SpaceVim/SpaceVim/pull/1848))
 - Improve pull request template ([#1852](https://github.com/SpaceVim/SpaceVim/pull/1852))
-- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860), [#1930](https://github.com/SpaceVim/SpaceVim/pull/1930))
+- Update layer page ([#1860](https://github.com/SpaceVim/SpaceVim/pull/1860), [#2930](https://github.com/SpaceVim/SpaceVim/pull/1930))
 - Update javascript layer doc ([#1884](https://github.com/SpaceVim/SpaceVim/pull/1884))
 - Change disqua to gitment ([#1904](https://github.com/SpaceVim/SpaceVim/pull/1904), [#1905](https://github.com/SpaceVim/SpaceVim/pull/1905), [#1906](https://github.com/SpaceVim/SpaceVim/pull/1906))
 - Add post about meetup in HangZhou ([#1875](https://github.com/SpaceVim/SpaceVim/pull/1875))
+- Update doc for disable plugin ([#1951](https://github.com/SpaceVim/SpaceVim/pull/1951))
+- Update readme ([#1924](https://github.com/SpaceVim/SpaceVim/pull/1924))
+- Update post time location ([#1916](https://github.com/SpaceVim/SpaceVim/pull/1916))
+- Type ([#1915](https://github.com/SpaceVim/SpaceVim/pull/1915), [#1914](https://github.com/SpaceVim/SpaceVim/pull/1914))
 
 ### Others
+
+- Fix ci lint ([#1946](https://github.com/SpaceVim/SpaceVim/pull/1946), [#1945](https://github.com/SpaceVim/SpaceVim/pull/1945), [#1944](https://github.com/SpaceVim/SpaceVim/pull/1944), [#1942](https://github.com/SpaceVim/SpaceVim/pull/1942))
 
 ## Latest Release
 
