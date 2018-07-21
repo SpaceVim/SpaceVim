@@ -482,9 +482,14 @@ let g:spacevim_simple_mode             = 0
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 let g:spacevim_filemanager             = 'vimfiler'
 ""
-" The default plugin manager of SpaceVim. Default is 'dein'.
+" The default plugin manager of SpaceVim.
+" if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-let g:spacevim_plugin_manager          = 'neobundle'
+if has('patch-7.4.2071')
+  let g:spacevim_plugin_manager          = 'dein'
+else
+  let g:spacevim_plugin_manager          = 'neobundle'
+endif
 
 ""
 " @section plugin_manager_processes, options-plugin_manager_processes
