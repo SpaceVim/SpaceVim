@@ -59,7 +59,7 @@ The next release is v0.9.0.
 - Update post time location ([#1916](https://github.com/SpaceVim/SpaceVim/pull/1916))
 - Type ([#1915](https://github.com/SpaceVim/SpaceVim/pull/1915), [#1914](https://github.com/SpaceVim/SpaceVim/pull/1914))
 - Add api doc ([#1896](https://github.com/SpaceVim/SpaceVim/pull/1896))
-- Update follow HEAD [#1886](https://github.com/SpaceVim/SpaceVim/pull/1886))
+- Update follow HEAD ([#1886](https://github.com/SpaceVim/SpaceVim/pull/1886), [#1953](https://github.com/SpaceVim/SpaceVim/pull/1953))
 
 ### Others
 
