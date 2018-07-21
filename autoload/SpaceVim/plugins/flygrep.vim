@@ -169,6 +169,7 @@ function! s:filter(expr) abort
   let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
 endfunction
 
+" @vimlint(EVL103, 1, a:timer)
 function! s:filter_timer(timer) abort
   let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
   let s:grepid =  s:JOB.start(cmd, {
@@ -177,6 +178,7 @@ function! s:filter_timer(timer) abort
         \ 'on_exit' : function('s:grep_exit'),
         \ })
 endfunction
+" @vimlint(EVL103, 0, a:timer)
 
 function! s:get_filter_cmd(expr) abort
   let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
