@@ -36,7 +36,11 @@ let s:complete_input_history_num = [0,0]
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
-  let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  if s:grep_mode ==# 'expr'
+    let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  else
+    let s:current_grep_pattern = s:grep_expr
+  endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
@@ -70,12 +74,46 @@ function! s:get_search_cmd(expr) abort
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
-    " let cmd += ['|', 'select', '-first', '3000']
+  " let cmd += ['|', 'select', '-first', '3000']
   " else
-    " let cmd += ['|', 'head', '-3000']
+  " let cmd += ['|', 'head', '-3000']
   " endif
   " let cmd = join(cmd, ' ')
   return cmd
+endfunction
+
+" s:grep_mode expr or string
+" argv:expr is the input content from user
+" return a pattern for s:matchadd
+function! s:expr_to_pattern(expr) abort
+  if s:grep_mode ==# 'expr'
+    let items = split(a:expr)
+    return join(items, '\|')
+  else
+    return a:expr
+  endif
+endfunction
+
+function! s:matchadd(group, partten, propty) abort
+  try
+    return matchadd(a:group, a:partten, a:propty)
+  catch /^Vim\%((\a\+)\)\=:E54/
+    let partten = substitute(a:partten, '\\(', '(', 'g')
+    try
+      return matchadd(a:group, partten, a:propty)
+    catch
+      return -1
+    endtry
+  catch /^Vim\%((\a\+)\)\=:E55/
+    let partten = substitute(a:partten, '\\)', ')', 'g')
+    try
+      return matchadd(a:group, partten, a:propty)
+    catch
+      return -1
+    endtry
+  catch 
+    return -1
+  endtry
 endfunction
 
 function! s:flygrep(expr) abort
@@ -89,7 +127,7 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', join(split(a:expr), '\|'), 1)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
   try
     call timer_stop(s:grep_timer_id)
@@ -133,11 +171,12 @@ function! s:filter(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', '\c' . join(split(a:expr), '\|'), 1)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
 endfunction
 
+" @vimlint(EVL103, 1, a:timer)
 function! s:filter_timer(timer) abort
   let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
   let s:grepid =  s:JOB.start(cmd, {
@@ -146,6 +185,7 @@ function! s:filter_timer(timer) abort
         \ 'on_exit' : function('s:grep_exit'),
         \ })
 endfunction
+" @vimlint(EVL103, 0, a:timer)
 
 function! s:get_filter_cmd(expr) abort
   let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
@@ -164,7 +204,7 @@ function! s:start_replace() abort
   if !empty(replace_text)
     call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = matchadd('FlyGrepPattern', join(split(replace_text), '\|'), 1)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
   redrawstatus
 endfunction
 " }}}
@@ -485,6 +525,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
+  call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
