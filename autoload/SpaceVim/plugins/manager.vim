@@ -106,14 +106,25 @@ function! s:need_cmd(cmd) abort
   endif
 endfunction
 
-function! s:get_uninstalled_plugins() abort
-  return filter(values(dein#get()), '!isdirectory(v:val.path)')
-endfunction
+if g:spacevim_plugin_manager ==# 'neobundle'
+  function! s:get_uninstalled_plugins() abort
+    return filter(neobundle#config#get_neobundles(), '!isdirectory(v:val.path)')
+  endfunction
+elseif g:spacevim_plugin_manager ==# 'dein'
+  function! s:get_uninstalled_plugins() abort
+    return filter(values(dein#get()), '!isdirectory(v:val.path)')
+  endfunction
+endif
 
-
-function! SpaceVim#plugins#manager#reinstall(...) abort
-  call dein#reinstall(a:1)
-endfunction
+if g:spacevim_plugin_manager ==# 'neobundle'
+  function! SpaceVim#plugins#manager#reinstall(...) abort
+    call neobundle#commands#reinstall(a:1)
+  endfunction
+elseif g:spacevim_plugin_manager ==# 'dein'
+  function! SpaceVim#plugins#manager#reinstall(...) abort
+    call dein#reinstall(a:1)
+  endfunction
+endif
 
 
 " @vimlint(EVL102, 1, l:i)
@@ -152,7 +163,11 @@ function! SpaceVim#plugins#manager#install(...) abort
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
-      let repo = dein#get(s:LIST.shift(s:plugins))
+      if g:spacevim_plugin_manager ==# 'dein'
+        let repo = dein#get(s:LIST.shift(s:plugins))
+      elseif g:spacevim_plugin_manager ==# 'neobundle'
+        let repo = neobundle#get(s:LIST.shift(s:plugins))
+      endif
       if !empty(repo)
         call s:install(repo)
       endif
@@ -388,7 +403,7 @@ endfunction
 function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let url = 'https://github.com/' . a:repo.repo
+  let url = 'https://github.com/' . has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path
   let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{

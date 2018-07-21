@@ -6,4 +6,6 @@
 " License: GPLv3
 "=============================================================================
 
+" call neobundle#get()
+
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'

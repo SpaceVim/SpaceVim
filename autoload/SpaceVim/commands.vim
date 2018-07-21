@@ -118,11 +118,16 @@ endfunction
 
 function! SpaceVim#commands#install_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
+    if a:0 == 0
+      call SpaceVim#plugins#manager#install()
+    else
+      call SpaceVim#plugins#manager#install(a:000)
+    endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     if a:0 == 0
       call SpaceVim#plugins#manager#install()
     else
-      call dein#install(a:000)
+      call SpaceVim#plugins#manager#install(a:000)
     endif
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
