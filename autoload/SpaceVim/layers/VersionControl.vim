@@ -92,14 +92,14 @@ let s:git_log_switches = {
       \ 'f' : {'desc' : 'Follow renames when showing single-file log', 'option' : '--follow', 'enable' : 0},
       \ }
 let s:git_log_options = {
-      \ 'n' : {'desc' : 'Limit number of commits', 'option' : '-n'},
-      \ 'f' : {'desc' : 'Limit to files', 'option' : '--'},
-      \ 'a' : {'desc' : 'Limit to author', 'option' : '--author='},
-      \ 'o' : {'desc' : 'Order commits by', 'option' : '++order='},
-      \ 'g' : {'desc' : 'Search messages', 'option' : '--grep='},
-      \ 'G' : {'desc' : 'Search changes', 'option' : '-G'},
-      \ 'S' : {'desc' : 'Search occurrences', 'option' : '-S'},
-      \ 'L' : {'desc' : 'Trace line evolution', 'option' : '-L'},
+      \ 'n' : {'desc' : 'Limit number of commits', 'option' : '-n', 'enable' : 0},
+      \ 'f' : {'desc' : 'Limit to files', 'option' : '--', 'enable' : 0},
+      \ 'a' : {'desc' : 'Limit to author', 'option' : '--author=', 'enable' : 0},
+      \ 'o' : {'desc' : 'Order commits by', 'option' : '++order=', 'enable' : 0},
+      \ 'g' : {'desc' : 'Search messages', 'option' : '--grep=', 'enable' : 0},
+      \ 'G' : {'desc' : 'Search changes', 'option' : '-G', 'enable' : 0},
+      \ 'S' : {'desc' : 'Search occurrences', 'option' : '-S', 'enable' : 0},
+      \ 'L' : {'desc' : 'Trace line evolution', 'option' : '-L', 'enable' : 0},
       \ }
 let s:git_log_actions = {
       \ 'l' : {'desc' : 'Log current'},
@@ -122,6 +122,7 @@ function! s:generate_git_log_popup_content() abort
   call add(lines, 'Options')
   for k in keys(s:git_log_options)
     call add(lines, ' =' . k . ' ' . s:git_log_options[k]['desc'] . '(' . s:git_log_options[k]['option'] . ')')
+    exe 'nnoremap <silent><buffer> =' . k . ' :call <SID>change_options("' . k . '")<cr>'
   endfor
   call add(lines, '')
   call add(lines, 'Actions')
@@ -169,6 +170,32 @@ function! s:toggle_switches(key) abort
   call s:highlight_switches()
 endfunction
 
+let s:options_hi_id = 0
+function! s:highlight_options() abort
+  let line = 1 + len(keys(s:git_log_switches)) + 2
+  try
+    call matchdelete(s:options_hi_id)
+  catch
+  endtry
+  let poses = []
+  for k in keys(s:git_log_options)
+    let line += 1
+    if s:git_log_options[k].enable
+        call add(poses, [line, len(s:git_log_options[k].desc) + 6, len(s:git_log_options[k].option)])
+    endif
+  endfor
+  let s:options_hi_id = s:CMP.matchaddpos('Normal', poses)
+endfunction
+
+function! s:change_options(key) abort
+  if s:git_log_options[a:key].enable
+    let s:git_log_options[a:key].enable = 0
+  else
+    let s:git_log_options[a:key].enable = 1
+  endif
+  call s:highlight_options()
+endfunction
+
 function! s:open_log_popup_buffer() abort
   exe 'rightbelow  split __SpaceVim_git_log_popup__'
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber nocursorline
@@ -178,6 +205,7 @@ function! s:open_log_popup_buffer() abort
   call setline(1, content)
   setlocal nomodifiable
   call s:highlight_switches()
+  call s:highlight_options()
 endfunction
 
 function! GitLog() abort
