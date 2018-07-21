@@ -177,6 +177,7 @@ function! s:open_log_popup_buffer() abort
   exe 'resize ' . len(content)
   call setline(1, content)
   setlocal nomodifiable
+  call s:highlight_switches()
 endfunction
 
 function! GitLog() abort
