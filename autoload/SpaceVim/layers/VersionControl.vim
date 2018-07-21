@@ -114,6 +114,7 @@ function! s:generate_git_log_popup_content() abort
   let lines = ['Switches']
   for k in keys(s:git_log_switches)
     call add(lines, ' -' . k . ' ' . s:git_log_switches[k]['desc'] . '(' . s:git_log_switches[k]['option'] . ')')
+    exe 'nnoremap <silent><buffer> -' . k . ' :call <SID>toggle_switches("' . k . '")<cr>'
   endfor
   call add(lines, '')
   call add(lines, 'Options')
@@ -140,21 +141,25 @@ function! s:generate_git_log_popup_content() abort
   return lines
 endfunction
 
+function! s:toggle_switches(key) abort
+  echom a:key
+endfunction
+
 function! s:open_log_popup_buffer() abort
-  let content = s:generate_git_log_popup_content()
-  exe 'rightbelow ' . len(content) . 'split __SpaceVim_git_log_popup__'
+  exe 'rightbelow  split __SpaceVim_git_log_popup__'
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber nocursorline
   setfiletype SpaceVimGitLogPopup
+  let content = s:generate_git_log_popup_content()
+  exe 'resize ' . len(content)
   call setline(1, content)
 endfunction
 
-function! Gitlog() abort
-  call s:open_log_popup_buffer()
+function! GitLog() abort
+  call s:show_repo_log()
 endfunction
 
-
 function! s:show_repo_log() abort
-
+  call s:open_log_popup_buffer()
 endfunction
 
 function! s:show_diff_of_unstaged_hunks() abort
