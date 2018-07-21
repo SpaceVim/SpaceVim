@@ -36,7 +36,11 @@ let s:complete_input_history_num = [0,0]
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
 function! s:grep_timer(timer) abort
-  let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  if s:grep_mode ==# 'expr'
+    let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  else
+    let s:current_grep_pattern = s:grep_expr
+  endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
@@ -70,9 +74,9 @@ function! s:get_search_cmd(expr) abort
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
-    " let cmd += ['|', 'select', '-first', '3000']
+  " let cmd += ['|', 'select', '-first', '3000']
   " else
-    " let cmd += ['|', 'head', '-3000']
+  " let cmd += ['|', 'head', '-3000']
   " endif
   " let cmd = join(cmd, ' ')
   return cmd
@@ -82,8 +86,12 @@ endfunction
 " argv:expr is the input content from user
 " return a pattern for matchadd
 function! s:expr_to_pattern(expr) abort
-  let items = split(a:expr)
-  return join(items, '\|')
+  if s:grep_mode ==# 'expr'
+    let items = split(a:expr)
+    return join(items, '\|')
+  else
+    return a:expr
+  endif
 endfunction
 
 function! s:flygrep(expr) abort
