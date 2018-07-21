@@ -199,7 +199,12 @@ function! SpaceVim#plugins#manager#update(...) abort
   if exists('s:recache_done')
     unlet s:recache_done
   endif
-  let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
+  if g:spacevim_plugin_manager ==# 'dein'
+    let s:plugins = a:0 == 0 ? sort(keys(dein#get())) : sort(copy(a:1))
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    let s:plugins = a:0 == 0 ? sort(map(neobundle#config#get_neobundles(), 'v:val.name')) : sort(copy(a:1))
+  elseif g:spacevim_plugin_manager ==# 'vim-plug'
+  endif
   if a:0 == 0
     call add(s:plugins, 'SpaceVim')
   endif
@@ -218,8 +223,13 @@ function! SpaceVim#plugins#manager#update(...) abort
   let s:start_time = reltime()
   for i in range(g:spacevim_plugin_manager_processes)
     if !empty(s:plugins)
-      let reponame = s:LIST.shift(s:plugins)
-      let repo = dein#get(reponame)
+      if g:spacevim_plugin_manager ==# 'dein'
+        let reponame = s:LIST.shift(s:plugins)
+        let repo = dein#get(reponame)
+      elseif g:spacevim_plugin_manager ==# 'neobundle'
+        let reponame = s:LIST.shift(s:plugins)
+        let repo = neobundle#get(reponame)
+      endif
       if !empty(repo)
         call s:pull(repo)
       elseif reponame ==# 'SpaceVim'

@@ -102,6 +102,11 @@ endfunction
 
 function! SpaceVim#commands#update_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
+    if a:0 == 0
+      call SpaceVim#plugins#manager#update()
+    else
+      call SpaceVim#plugins#manager#update(a:000)
+    endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     if a:0 == 0
       call SpaceVim#plugins#manager#update()
