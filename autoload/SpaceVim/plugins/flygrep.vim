@@ -104,6 +104,13 @@ function! s:matchadd(group, partten, propty) abort
     catch
       return -1
     endtry
+  catch /^Vim\%((\a\+)\)\=:E55/
+    let partten = substitute(a:partten, '\\)', ')', 'g')
+    try
+      return matchadd(a:group, partten, a:propty)
+    catch
+      return -1
+    endtry
   catch 
     return -1
   endtry
