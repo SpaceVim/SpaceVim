@@ -176,6 +176,7 @@ function! s:open_log_popup_buffer() abort
   let content = s:generate_git_log_popup_content()
   exe 'resize ' . len(content)
   call setline(1, content)
+  setlocal nomodifiable
 endfunction
 
 function! GitLog() abort
