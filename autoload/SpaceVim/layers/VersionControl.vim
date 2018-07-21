@@ -192,21 +192,21 @@ function! s:change_options(key) abort
     let s:git_log_options[a:key].enable = 0
   else
     let s:git_log_options[a:key].enable = 1
-  endif
-  if a:key ==# 'a'
-    " change author
-    let author = input('--author=', '')
-    if !empty(author)
-      let s:git_log_options[a:key].option = '--author="' . author . '"'
-    else
-      let s:git_log_options[a:key].option = '--author='
+    if a:key ==# 'a'
+      " change author
+      let author = input('--author=', '')
+      if !empty(author)
+        let s:git_log_options[a:key].option = '--author="' . author . '"'
+      else
+        let s:git_log_options[a:key].option = '--author='
+      endif
     endif
+    setlocal modifiable
+    let content = s:generate_git_log_popup_content()
+    normal! "_ggdG
+    call setline(1, content)
+    setlocal nomodifiable
   endif
-  setlocal modifiable
-  let content = s:generate_git_log_popup_content()
-  normal! "_ggdG
-  call setline(1, content)
-  setlocal nomodifiable
   call s:highlight_options()
 endfunction
 
