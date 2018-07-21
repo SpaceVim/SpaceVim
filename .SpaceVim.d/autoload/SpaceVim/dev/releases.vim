@@ -11,11 +11,13 @@
 " v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
 " v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
 " v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
-" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1814
+" v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1841
 
+" this option can only be changed after release
+let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838]
+" these options can be changed when going to release new tag
 let s:last_release_number = 1841
 let s:current_release_number = 1841
-let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838]
 let s:unmerged_prs_since_current_release = []
 
 " the logic should be from last_release_number to current_release_number,
