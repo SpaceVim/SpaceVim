@@ -8,6 +8,8 @@
 
 scriptencoding utf-8
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
   call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
@@ -79,15 +81,15 @@ endfunction
 " Actions
 "  l Log current
 let s:git_log_switches = {
-      \ 'g' : {'desc' : 'Show graph', 'option' : '--graph'},
-      \ 'c' : {'desc' : 'Show graph in color', 'option' : '--color'},
-      \ 'd' : {'desc' : 'Show refnames', 'option' : '--decorate'},
-      \ 'S' : {'desc' : 'Show signatures', 'option' : '--show-signature'},
-      \ 'u' : {'desc' : 'Show diffs', 'option' : '--patch'},
-      \ 's' : {'desc' : 'Show diffstats', 'option' : '--stat'},
-      \ 'h' : {'desc' : 'Show header', 'option' : '++header'},
-      \ 'D' : {'desc' : 'Simplify by decoration', 'option' : '--simplify-by-decoration'},
-      \ 'f' : {'desc' : 'Follow renames when showing single-file log', 'option' : '--follow'},
+      \ 'g' : {'desc' : 'Show graph', 'option' : '--graph', 'enable' : 0},
+      \ 'c' : {'desc' : 'Show graph in color', 'option' : '--color', 'enable' : 0},
+      \ 'd' : {'desc' : 'Show refnames', 'option' : '--decorate', 'enable' : 0},
+      \ 'S' : {'desc' : 'Show signatures', 'option' : '--show-signature', 'enable' : 0},
+      \ 'u' : {'desc' : 'Show diffs', 'option' : '--patch', 'enable' : 0},
+      \ 's' : {'desc' : 'Show diffstats', 'option' : '--stat', 'enable' : 0},
+      \ 'h' : {'desc' : 'Show header', 'option' : '++header', 'enable' : 0},
+      \ 'D' : {'desc' : 'Simplify by decoration', 'option' : '--simplify-by-decoration', 'enable' : 0},
+      \ 'f' : {'desc' : 'Follow renames when showing single-file log', 'option' : '--follow', 'enable' : 0},
       \ }
 let s:git_log_options = {
       \ 'n' : {'desc' : 'Limit number of commits', 'option' : '-n'},
@@ -135,14 +137,38 @@ function! s:generate_git_log_popup_content() abort
     endif
   endfor
   if !empty(actions_line)
-      call add(lines, actions_line)
-      let actions_line = ''
+    call add(lines, actions_line)
+    let actions_line = ''
   endif
   return lines
 endfunction
 
+let s:switches_hi_id = 0
+function! s:highlight_switches() abort
+  let line = 1
+  try
+    call matchdelete(s:switches_hi_id)
+  catch
+  endtry
+  for k in keys(s:git_log_switches)
+    let line += 1
+    if s:git_log_switches[k].enable
+      if s:switches_hi_id == 0
+        let s:switches_hi_id = s:CMP.matchaddpos('Normal', [line, len(s:git_log_switches[k].desc) + 5, len(s:git_log_switches[k].option)]) 
+      else
+        call s:CMP.matchaddpos('Normal', [line, len(s:git_log_switches[k].desc) + 5, len(s:git_log_switches[k].option)], 1, s:switches_hi_id) 
+      endif
+    endif
+  endfor
+endfunction
+
 function! s:toggle_switches(key) abort
-  echom a:key
+  if s:git_log_switches[a:key].enable
+    let s:git_log_switches[a:key].enable = 0
+  else
+    let s:git_log_switches[a:key].enable = 1
+  endif
+  call s:highlight_switches()
 endfunction
 
 function! s:open_log_popup_buffer() abort
@@ -187,15 +213,15 @@ function! s:commit() abort
 endfunction
 
 function! s:revert_hunk() abort
-  
+
 endfunction
 
 function! s:stage_hunk() abort
-  
+
 endfunction
 
 function! s:show_hunk_diff() abort
-  
+
 endfunction
 
 function! s:buffer_transient_state() abort
