@@ -575,12 +575,18 @@ function! s:open_plugin_dir() abort
     enew
     exe 'resize ' . &lines * 30 / 100
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
+    if g:spacevim_plugin_manager ==# 'dein'
+      let path = dein#get(keys(plugin)[0]).path
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      let path = neobundle#get(keys(plugin)[0]).path
+    elseif g:spacevim_plugin_manager ==# 'vim-plug'
+    endif
     if has('nvim') && exists('*termopen')
-      call termopen(shell, {'cwd' : dein#get(keys(plugin)[0]).path})
+      call termopen(shell, {'cwd' : path})
     elseif exists('*term_start')
-      call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : dein#get(keys(plugin)[0]).path})
+      call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : path})
     else
-      exe 'VimShell ' .  dein#get(keys(plugin)[0]).path
+      exe 'VimShell ' .  path
     endif
   endif
 endfunction
