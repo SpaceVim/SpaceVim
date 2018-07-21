@@ -484,7 +484,7 @@ let g:spacevim_filemanager             = 'vimfiler'
 ""
 " The default plugin manager of SpaceVim. Default is 'dein'.
 " Options are dein, neobundle, or vim-plug.
-let g:spacevim_plugin_manager          = 'dein'
+let g:spacevim_plugin_manager          = 'neobundle'
 
 ""
 " @section plugin_manager_processes, options-plugin_manager_processes
