@@ -154,9 +154,9 @@ function! s:highlight_switches() abort
     let line += 1
     if s:git_log_switches[k].enable
       if s:switches_hi_id == 0
-        let s:switches_hi_id = s:CMP.matchaddpos('Normal', [line, len(s:git_log_switches[k].desc) + 5, len(s:git_log_switches[k].option)]) 
+        let s:switches_hi_id = s:CMP.matchaddpos('Normal', [[line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)]]) 
       else
-        call s:CMP.matchaddpos('Normal', [line, len(s:git_log_switches[k].desc) + 5, len(s:git_log_switches[k].option)], 1, s:switches_hi_id) 
+        call s:CMP.matchaddpos('Normal', [[line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)]], 1, s:switches_hi_id) 
       endif
     endif
   endfor
