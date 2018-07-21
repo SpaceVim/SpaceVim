@@ -194,7 +194,8 @@ function! s:change_options(key) abort
     let s:git_log_options[a:key].enable = 1
     if a:key ==# 'a'
       " change author
-      let author = input('--author=', '')
+      let orig_author = matchstr(s:git_log_options[a:key].option, '\("\)\@<=[^"]*')
+      let author = input('--author=', orig_author)
       if !empty(author)
         let s:git_log_options[a:key].option = '--author="' . author . '"'
       else
