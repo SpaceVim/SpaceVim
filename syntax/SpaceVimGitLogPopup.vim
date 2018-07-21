@@ -10,7 +10,7 @@ syn match GitLogPopupTitle /^[A-Z].*/
 syn match GitLogKey /\ [-=]\?[a-zA-Z]\ /
 " desc
 syn match GitLogDesc /\(\ [-=]\?[a-zA-Z]\ \)\@<=[A-Z][a-z]*\s\([a-zA-Z-]\+\s\)*\([a-zA-Z]\)\+/
-syn match GitLogOption /\((\)\@<=[a-zA-Z-=+]*/
+syn match GitLogOption /\((\)\@<=[^(^)]*/
 hi def link GitLogPopupTitle ModeMsg
 hi def link GitLogKey Type
 hi def link GitLogDesc Identifier
