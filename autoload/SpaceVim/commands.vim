@@ -63,7 +63,11 @@ endfunction
 " @vimlint(EVL103, 1, a:CmdLine)
 " @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#commands#complete_plugin(ArgLead, CmdLine, CursorPos) abort
-  return join(keys(dein#get()) + ['SpaceVim'], "\n")
+  if g:spacevim_plugin_manager ==# 'dein'
+    return join(keys(dein#get()) + ['SpaceVim'], "\n")
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    return join(map(neobundle#config#get_neobundles(), 'v:val.name'), "\n")
+  endif
 endfunction
 " @vimlint(EVL103, 0, a:ArgLead)
 " @vimlint(EVL103, 0, a:CmdLine)
