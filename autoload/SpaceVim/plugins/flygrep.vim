@@ -97,7 +97,7 @@ function! s:flygrep(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
   try
     call timer_stop(s:grep_timer_id)
@@ -141,7 +141,7 @@ function! s:filter(expr) abort
   catch
   endtr
   hi def link FlyGrepPattern MoreMsg
-  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
   let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
 endfunction
@@ -172,7 +172,7 @@ function! s:start_replace() abort
   if !empty(replace_text)
     call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 1)
+  let s:hi_id = matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
   redrawstatus
 endfunction
 " }}}
@@ -493,6 +493,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
+  call matchadd('SpaceVim_statusline_c', '/[^:]*:\d\+:\d\+:/', 1)
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
