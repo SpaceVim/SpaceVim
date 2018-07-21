@@ -15,6 +15,7 @@ The next release is v0.9.0.
 - Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
 - Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
+- Implement git log popup feature ([#1963](https://github.com/SpaceVim/SpaceVim/pull/1963))
 
 ### Improvement
 
