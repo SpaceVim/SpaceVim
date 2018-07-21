@@ -150,16 +150,14 @@ function! s:highlight_switches() abort
     call matchdelete(s:switches_hi_id)
   catch
   endtry
+  let poses = []
   for k in keys(s:git_log_switches)
     let line += 1
     if s:git_log_switches[k].enable
-      if s:switches_hi_id == 0
-        let s:switches_hi_id = s:CMP.matchaddpos('Normal', [[line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)]]) 
-      else
-        call s:CMP.matchaddpos('Normal', [[line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)]], 1, s:switches_hi_id) 
-      endif
+        call add(poses, [line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)])
     endif
   endfor
+  let s:switches_hi_id = s:CMP.matchaddpos('Normal', poses)
 endfunction
 
 function! s:toggle_switches(key) abort
