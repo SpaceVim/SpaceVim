@@ -155,7 +155,7 @@ function! s:highlight_switches() abort
   for k in keys(s:git_log_switches)
     let line += 1
     if s:git_log_switches[k].enable
-        call add(poses, [line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)])
+      call add(poses, [line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)])
     endif
   endfor
   let s:switches_hi_id = s:CMP.matchaddpos('Normal', poses)
@@ -181,7 +181,7 @@ function! s:highlight_options() abort
   for k in keys(s:git_log_options)
     let line += 1
     if s:git_log_options[k].enable
-        call add(poses, [line, len(s:git_log_options[k].desc) + 6, len(s:git_log_options[k].option)])
+      call add(poses, [line, len(s:git_log_options[k].desc) + 6, len(s:git_log_options[k].option)])
     endif
   endfor
   let s:options_hi_id = s:CMP.matchaddpos('Normal', poses)
@@ -193,6 +193,20 @@ function! s:change_options(key) abort
   else
     let s:git_log_options[a:key].enable = 1
   endif
+  if a:key ==# 'a'
+    " change author
+    let author = input('--author=', '')
+    if !empty(author)
+      let s:git_log_options[a:key].option = '--author="' . author . '"'
+    else
+      let s:git_log_options[a:key].option = '--author='
+    endif
+  endif
+  setlocal modifiable
+  let content = s:generate_git_log_popup_content()
+  normal! "_ggdG
+  call setline(1, content)
+  setlocal nomodifiable
   call s:highlight_options()
 endfunction
 
