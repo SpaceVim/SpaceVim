@@ -103,7 +103,13 @@ function! zvim#plug#end() abort
     if g:spacevim_plugin_manager ==# 'neobundle'
         call neobundle#end()
         if g:spacevim_checkinstall == 1
-            NeoBundleCheck
+            silent! let g:_spacevim_checking_flag = neobundle#exists_not_installed_bundles()
+            if g:_spacevim_checking_flag
+                augroup SpaceVimCheckInstall
+                    au!
+                    au VimEnter * SPInstall
+                augroup END
+            endif
         endif
     elseif g:spacevim_plugin_manager ==# 'dein'
         call dein#end()
