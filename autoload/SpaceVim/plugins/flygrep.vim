@@ -493,7 +493,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
-  call matchadd('SpaceVim_statusline_c', '/[^:]*:\d\+:\d\+:/', 1)
+  call matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
   let s:MPT._prompt.begin = get(a:agrv, 'input', '')
   let fs = get(a:agrv, 'files', '')
   if fs ==# '@buffers'
