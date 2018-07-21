@@ -403,7 +403,7 @@ endfunction
 function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let url = 'https://github.com/' . has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path
+  let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
   let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
