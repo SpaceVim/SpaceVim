@@ -259,7 +259,13 @@ endfunction
 function! s:Log_current() abort
   close
   tabnew
-  call termopen(s:get_log_argv(), {'curwin' : 1, 'term_finish' : 'close'})
+  setlocal norelativenumber
+  let t:_spacevim_tab_name = 'Git log'
+  let argv = join(s:get_log_argv(), ' ')
+  call SpaceVim#logger#info(argv)
+  call termopen(argv, {'curwin' : 1, 'term_finish' : 'close'})
+  nnoremap <buffer><silent> q :bd!<cr>
+  startinsert
 endfunction
 " }}}
 
