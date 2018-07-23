@@ -241,7 +241,7 @@ function! s:show_repo_log() abort
 endfunction
 
 function! s:get_log_argv() abort
-  let argv = ['git', 'log']
+  let argv = ['git', 'log', '--no-color']
   for k in keys(s:git_log_switches)
     if s:git_log_switches[k].enable
       call add(argv, s:git_log_switches[k].option)
