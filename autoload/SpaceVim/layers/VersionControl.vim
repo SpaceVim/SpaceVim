@@ -112,6 +112,8 @@ let s:git_log_actions = {
       \ 'O' : {'desc' : 'Reflog other'},
       \ 'H' : {'desc' : 'Reflog HEAD'},
       \ }
+
+" generate git log popup content && defind key bindings {{{
 function! s:generate_git_log_popup_content() abort
   let lines = ['Switches']
   for k in keys(s:git_log_switches)
@@ -131,6 +133,7 @@ function! s:generate_git_log_popup_content() abort
   for k in ['l', 'L', 'r', 'o', 'b', 'O', 'h', 'a', 'H']
     let i += 1
     let actions_line .= ' ' . k . ' ' . s:git_log_actions[k]['desc']
+    exe 'nnoremap <silent><buffer> ' . k . ' :call <SID>' . join(split(s:git_log_actions[k]['desc']), '_') . '()<cr>'
     let actions_line .= repeat(' ', i % 3 * 30 - len(actions_line))
     if i%3 == 0
       call add(lines, actions_line)
@@ -143,7 +146,9 @@ function! s:generate_git_log_popup_content() abort
   endif
   return lines
 endfunction
+" }}}
 
+" git popup menu switches functions {{{
 let s:switches_hi_id = 0
 function! s:highlight_switches() abort
   let line = 1
@@ -169,7 +174,9 @@ function! s:toggle_switches(key) abort
   endif
   call s:highlight_switches()
 endfunction
+" }}}
 
+" git popup menu options functions {{{
 let s:options_hi_id = 0
 function! s:highlight_options() abort
   let line = 1 + len(keys(s:git_log_switches)) + 2
@@ -210,6 +217,8 @@ function! s:change_options(key) abort
   endif
   call s:highlight_options()
 endfunction
+" }}}
+
 
 function! s:open_log_popup_buffer() abort
   exe 'rightbelow  split __SpaceVim_git_log_popup__'
@@ -230,6 +239,12 @@ endfunction
 function! s:show_repo_log() abort
   call s:open_log_popup_buffer()
 endfunction
+
+" git log popup action functions {{{
+function! s:Log_current() abort
+  
+endfunction
+" }}}
 
 function! s:show_diff_of_unstaged_hunks() abort
 
@@ -375,7 +390,7 @@ function! s:buffer_transient_state() abort
   call state.open()
 endfunction
 
-" function() wrapper
+" function() wrapper {{{
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
     return function(a:fstr)
@@ -389,3 +404,4 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+" }}}
