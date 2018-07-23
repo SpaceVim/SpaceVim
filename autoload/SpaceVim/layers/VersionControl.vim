@@ -208,6 +208,18 @@ function! s:change_options(key) abort
       else
         let s:git_log_options[a:key].option = '--author='
       endif
+    elseif a:key ==# 'n'
+      let orig_nr = matchstr(s:git_log_options[a:key].option, '\("\)\@<=[^"]*')
+      let nr = str2nr(input('-n', orig_nr))
+      if nr > 0
+        let s:git_log_options[a:key].option = '-n"' . nr . '"'
+      else
+        echohl WarningMsg
+        echo 'need to input number'
+        echohl None
+        let s:git_log_options[a:key].enable = 0
+        let s:git_log_options[a:key].option = '-n'
+      endif
     endif
     setlocal modifiable
     let content = s:generate_git_log_popup_content()
