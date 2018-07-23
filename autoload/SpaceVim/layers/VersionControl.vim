@@ -240,9 +240,26 @@ function! s:show_repo_log() abort
   call s:open_log_popup_buffer()
 endfunction
 
+function! s:get_log_argv() abort
+  let argv = ['git', 'log']
+  for k in keys(s:git_log_switches)
+    if s:git_log_switches[k].enable
+      call add(argv, s:git_log_switches[k].option)
+    endif
+  endfor
+  for k in keys(s:git_log_options)
+    if s:git_log_options[k].enable
+      call add(argv, s:git_log_options[k].option)
+    endif
+  endfor
+  return argv
+endfunction
+
 " git log popup action functions {{{
 function! s:Log_current() abort
-  
+  close
+  tabnew
+  call termopen(s:get_log_argv(), {'curwin' : 1, 'term_finish' : 'close'})
 endfunction
 " }}}
 
