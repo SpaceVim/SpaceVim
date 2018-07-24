@@ -68,12 +68,11 @@ CONTENTS                                                   *SpaceVim-contents*
       24. lang#python.............................|SpaceVim-layer-lang-python|
       25. lang#rust.................................|SpaceVim-layer-lang-rust|
       26. lang#scala...............................|SpaceVim-layer-lang-scala|
-      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      28. lang#xml...................................|SpaceVim-layer-lang-xml|
-      29. operator...................................|SpaceVim-layer-operator|
-      30. shell.........................................|SpaceVim-layer-shell|
-      31. tmux...........................................|SpaceVim-layer-tmux|
-      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+      27. lang#xml...................................|SpaceVim-layer-lang-xml|
+      28. operator...................................|SpaceVim-layer-operator|
+      29. shell.........................................|SpaceVim-layer-shell|
+      30. tmux...........................................|SpaceVim-layer-tmux|
+      31. tools#dash...............................|SpaceVim-layer-tools-dash|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -1243,12 +1242,6 @@ MAPPINGS
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
-
-==============================================================================
-LANG#TMUX                                           *SpaceVim-layer-lang-tmux*
-
-INTRO
-The lang#tmux layer provides  |SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*

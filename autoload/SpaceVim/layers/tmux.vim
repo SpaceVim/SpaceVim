@@ -50,5 +50,11 @@ function! SpaceVim#layers#tmux#config() abort
   nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
   nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
   nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
+  let g:neomake_tmux_enabled_makers = ['tmux']
+  let g:neomake_markdown_tmux = {
+        \ 'exe': 'make',
+        \ 'args': ['--build'],
+        \ 'errorformat': '%f:%l:%c: %m',
+        \ }
 endfunction
 
