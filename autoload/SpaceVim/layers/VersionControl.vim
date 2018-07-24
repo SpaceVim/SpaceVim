@@ -322,22 +322,22 @@ function! s:buffer_transient_state() abort
   call state.set_title('VCS Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'n',
-        \ 'desc' : 'next hunk',
-        \ 'func' : '',
-        \ 'cmd' : 'normal ]c',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : ['N', 'p'],
-        \ 'desc' : 'previous hunk',
-        \ 'func' : '',
-        \ 'cmd' : 'normal [c',
-        \ 'exit' : 0,
-        \ },
+        \    'layout' : 'vertical split',
+        \    'left' : [
+        \       {
+        \         'key' : 'n',
+        \         'desc' : 'next hunk',
+        \         'func' : '',
+        \         'cmd' : 'normal ]c',
+        \         'exit' : 0,
+        \       },
+        \       {
+        \         'key' : ['N', 'p'],
+        \         'desc' : 'previous hunk',
+        \         'func' : '',
+        \         'cmd' : 'normal [c',
+        \         'exit' : 0,
+        \       },
         \ {
         \ 'key' : {
         \ 'name' : 'r/s/h',
