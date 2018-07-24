@@ -127,9 +127,11 @@ endf
 
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype('python')
-    if has('nvim')
-    else
-    endif
+    try
+      call jedi#goto()
+    catch /^Vim\%((\a\+)\)\=:E429/
+      let g:wsd = v:errmsg
+    endtry
   else
   endif
 endfunction
