@@ -21,10 +21,12 @@ function! SpaceVim#layers#lang#python#plugins() abort
   if !SpaceVim#layers#lsp#check_filetype('python')
     if has('nvim')
       call add(plugins, ['zchee/deoplete-jedi', { 'on_ft' : 'python'}])
-    else
-      call add(plugins, ['davidhalter/jedi-vim', { 'on_ft' : 'python',
-            \ 'if' : has('python') || has('python3')}])
+      " in neovim, we can use deoplete-jedi together with jedi-vim,
+      " but we need to disable the completions of jedi-vim.
+      let g:jedi#completions_enabled = 0
     endif
+    call add(plugins, ['davidhalter/jedi-vim', { 'on_ft' : 'python',
+          \ 'if' : has('python') || has('python3')}])
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
