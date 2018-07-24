@@ -129,5 +129,6 @@ function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype('python')
     call jedi#goto()
   else
+    call SpaceVim#lsp#go_to_def()
   endif
 endfunction
