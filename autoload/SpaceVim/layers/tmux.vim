@@ -10,7 +10,8 @@
 " @section tmux, layer-tmux
 " @parentsection layers
 " Adds integration between tmux and vim panes. Switch between panes
-" seamlessly.
+" seamlessly.syntax highlighting, commenting, man page navigation
+" and ability to execute lines as tmux commands.
 " This layer is not added by default. To include it, add
 " `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`.
 " If you are having issues with <C-h> in a neovim buffer, see
@@ -32,7 +33,7 @@ function! SpaceVim#layers#tmux#plugins() abort
         \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
         \ 'TmuxNavigateRight'] }],
         \ ]
-
+  call add(plugins, ['tmux-plugins/vim-tmux', {'on_ft' : 'tmux'}])
   return plugins
 endfunction
 

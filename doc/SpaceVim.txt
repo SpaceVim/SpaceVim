@@ -1248,9 +1248,7 @@ LANG#SCALA                                         *SpaceVim-layer-lang-scala*
 LANG#TMUX                                           *SpaceVim-layer-lang-tmux*
 
 INTRO
-The lang#tmux layer provides syntax highlighting, commenting, man page
-navigation and ability to execute lines as tmux commands.
-|SpaceVim-layer-checkers|
+The lang#tmux layer provides  |SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
@@ -1277,10 +1275,11 @@ default_shell
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
 
-Adds integration between tmux and vim panes. Switch between panes seamlessly.
-This layer is not added by default. To include it, add
-`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If you are
-having issues with <C-h> in a neovim buffer, see
+Adds integration between tmux and vim panes. Switch between panes
+seamlessly.syntax highlighting, commenting, man page navigation and ability to
+execute lines as tmux commands. This layer is not added by default. To include
+it, add `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If
+you are having issues with <C-h> in a neovim buffer, see
 `https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
 
 MAPPINGS
