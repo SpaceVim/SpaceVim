@@ -22,6 +22,7 @@ The next release is v0.9.0.
 - Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898), [#1961](https://github.com/SpaceVim/SpaceVim/pull/1961), [#1960](https://github.com/SpaceVim/SpaceVim/pull/1960), [#1929](https://github.com/SpaceVim/SpaceVim/pull/1929), [#1802](https://github.com/SpaceVim/SpaceVim/pull/1802))
 - Improve plugin manager ([#1962](https://github.com/SpaceVim/SpaceVim/pull/1962))
 - Support mouse click in tabline ([#1902](https://github.com/SpaceVim/SpaceVim/pull/1902))
+- Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969))
 
 ### Changed
 
