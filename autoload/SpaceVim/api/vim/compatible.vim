@@ -20,26 +20,37 @@ function! SpaceVim#api#vim#compatible#get() abort
         \ )
 endfunction
 
+let s:has_cache = {}
+
 function! s:has(feature) abort
+  if has_key(s:has_cache, a:feature)
+    return s:has_cache[a:feature]
+  endif
   if a:feature ==# 'python'
     try
       py import vim
+      let s:has_cache['python'] = 1
       return 1
     catch
+      let s:has_cache['python'] = 0
       return 0
     endtry
   elseif a:feature ==# 'python3'
     try
       py3 import vim
+      let s:has_cache['python3'] = 1
       return 1
     catch
+      let s:has_cache['python3'] = 0
       return 0
     endtry
   elseif a:feature ==# 'pythonx'
     try
       pyx import vim
+      let s:has_cache['pythonx'] = 1
       return 1
     catch
+      let s:has_cache['pythonx'] = 0
       return 0
     endtry
   else
