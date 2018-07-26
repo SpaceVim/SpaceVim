@@ -62,7 +62,7 @@ if has('patch-8.0.1364')
   function! s:win_screenpos(nr) abort
     return win_screenpos(a:nr)
   endfunction
-elseif s:has('python')
+elseif has('python')
   function! s:win_screenpos(nr) abort
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
@@ -73,7 +73,7 @@ elseif s:has('python')
     return [pyeval('vim.windows[' . a:nr . '].row'),
           \ pyeval('vim.windows[' . a:nr . '].col')]
   endfunction
-elseif s:has('python3')
+elseif has('python3')
   function! s:win_screenpos(nr) abort
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
