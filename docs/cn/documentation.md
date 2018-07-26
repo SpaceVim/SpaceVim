@@ -18,6 +18,7 @@ lang: cn
   - [更新插件](#更新插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
+  - [启动函数](#启动函数)
   - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
 - [概念](#概念)
@@ -198,6 +199,28 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
 call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 ```
+
+### 启动函数
+
+由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
+可通过设置这两个选项值来指定函数名称。
+
+启动函数文件应防止在 Vim &runtimepath 的 autoload 文件夹内。例如：
+
+文件名： `~/.SpaceVim.d/autoload/myspacevim.vim`
+
+```vim
+func! myspacevim#before() abort
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <esc>
+endf
+
+func! myspacevim#after() abort
+    iunmap jk
+endf
+```
+
+函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
 
 ### Vim 兼容模式
 
