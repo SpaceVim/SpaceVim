@@ -12,8 +12,9 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
   call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
+  call add(plugins, ['junegunn/fzf.vim',            { 'merged' : 0}])
+  call add(plugins, ['Shougo/neoyank.vim',          { 'merged' : 0}])
+  call add(plugins, ['SpaceVim/fzf-neoyank',        { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -21,8 +22,10 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
+  let g:fzf_command_prefix = 'Fzf'
+
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'FzfBuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
         \ ['find files in current project',
@@ -33,7 +36,7 @@ function! SpaceVim#layers#fzf#config() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'FzfBTags', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
@@ -120,39 +123,13 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fo  :<C-u>FzfOutline<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.o = ['FzfOutline',
-        \ 'fuzzy find outline',
-        \ [
-        \ '[Leader f o] is to fuzzy find outline',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-endfunction
-
-command! FzfColors call <SID>colors()
-function! s:colors() abort
-  let s:source = 'colorscheme'
-  call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
-        \               "fnamemodify(v:val, ':t:r')"),
-        \ 'sink': 'colo', 'down': '40%'})
-endfunction
-
-command! FzfFiles call <SID>files()
-function! s:files() abort
-  let s:source = 'files'
-  call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'})
 endfunction
 
 let s:source = ''
-
 function! SpaceVim#layers#fzf#sources() abort
-
   return s:source
-
 endfunction
+
 command! FzfJumps call <SID>jumps()
 function! s:bufopen(e) abort
     let list = split(a:e)
@@ -193,6 +170,7 @@ function! s:jumps() abort
         \   'down':    len(<sid>jumplist()) + 2
         \ })
 endfunction
+
 command! FzfMessages call <SID>message()
 function! s:yankmessage(e) abort
   let @" = a:e
@@ -237,6 +215,7 @@ function! s:quickfix() abort
         \ 'down' : '40%',
         \ })
 endfunction
+
 command! FzfLocationList call s:location_list()
 function! s:location_list_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
@@ -262,61 +241,6 @@ function! s:location_list() abort
         \ })
 endfunction
 
-
-command! -bang FzfOutline call fzf#run(fzf#wrap('outline', s:outline(), <bang>0))
-function! s:outline_format(lists) abort
-  for list in a:lists
-    let linenr = list[2][:len(list[2])-3]
-    let line = getline(linenr)
-    let idx = stridx(line, list[0])
-    let len = len(list[0])
-    let list[0] = line[:idx-1] . printf("\x1b[%s%sm%s\x1b[m", 34, '', line[idx : idx+len-1]) . line[idx + len :]
-  endfor
-  for list in a:lists
-    call map(list, "printf('%s', v:val)")
-  endfor
-  return a:lists
-endfunction
-
-function! s:outline_source(tag_cmds) abort
-  if !filereadable(expand('%'))
-    throw 'Save the file first'
-  endif
-
-  for cmd in a:tag_cmds
-    let lines = split(system(cmd), "\n")
-    if !v:shell_error
-      break
-    endif
-  endfor
-  if v:shell_error
-    throw get(lines, 0, 'Failed to extract tags')
-  elseif empty(lines)
-    throw 'No tags found'
-  endif
-  return map(s:outline_format(map(lines, 'split(v:val, "\t")')), 'join(v:val, "\t")')
-endfunction
-
-function! s:outline_sink(lines) abort
-  if !empty(a:lines)
-    let line = a:lines[0]
-    execute split(line, "\t")[2]
-  endif
-endfunction
-
-function! s:outline(...) abort
-  let s:source = 'outline'
-  let args = copy(a:000)
-  let tag_cmds = [
-    \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
-    \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
-  return {
-    \ 'source':  s:outline_source(tag_cmds),
-    \ 'sink*':   function('s:outline_sink'),
-    \ 'options': '--reverse +m -d "\t" --with-nth 1 -n 1 --ansi --prompt "Outline> "'}
-endfunction
-
-
 command! FzfRegister call <SID>register()
 function! s:yankregister(e) abort
   let @" = a:e
@@ -337,19 +261,3 @@ function! s:register() abort
         \ })
 endfunction
 
-command! Fzfbuffers call <SID>buffers()
-function! s:open_buffer(e) abort
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
-function! s:buffers() abort
-  let s:source = 'buffers'
-  function! s:buffer_list() abort
-    return split(s:CMP.execute('buffers'), '\n')
-  endfunction
-  call fzf#run({
-        \   'source':  reverse(<sid>buffer_list()),
-        \   'sink':    function('s:open_buffer'),
-        \   'options': '+m',
-        \   'down': '40%'
-        \ })
-endfunction
