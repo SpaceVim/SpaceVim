@@ -19,6 +19,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Bootstrap Functions](#bootstrap-functions)
   - [Vim Compatible Mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
+  - [Debug upstream plugins](#debug-upstream-plugins)
 - [Concepts](#concepts)
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
@@ -288,6 +289,38 @@ In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` l
 - `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
 - `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
 - `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+
+### Debug upstream plugins
+
+If you think one of the built-in plugin has some bugs, and you want to debug that plugin. you can follow these step:
+
+1. disable this plugin
+
+for example, disable neomake.vim:
+
+```toml
+[option]
+    disabled_plugins = ["neomake.vim"]
+```
+
+2. add a forked plugin or add a local plugin
+
+use toml file to add custom forked plugins:
+
+```toml
+[[custom_plugins]]
+   name = 'wsdjeg/neomake.vim'
+   # note: you need to disable merged feature
+   merged = false
+```
+
+use `bootstrap_before` function to add local plugin:
+
+```vim
+function! myspacevim#before() abort
+    set rtp+=~/path/to/your/localplugin
+endfunction
+```
 
 ## Concepts
 
