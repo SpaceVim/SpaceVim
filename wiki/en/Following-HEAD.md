@@ -33,6 +33,7 @@ The next release is v0.9.0.
 - Recover spell and list option in go layer ([#1872](https://github.com/SpaceVim/SpaceVim/pull/1872))
 - Remove textwidth option in autocmd ([#1931](https://github.com/SpaceVim/SpaceVim/pull/1931))
 - Reduce number of default plugins ([#1932](https://github.com/SpaceVim/SpaceVim/pull/1932))
+- Recover modeline option ([#1992](https://github.com/SpaceVim/SpaceVim/pull/1992))
 
 ### Fixed
 
