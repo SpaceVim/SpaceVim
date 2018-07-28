@@ -21,7 +21,7 @@ function! s:open_win() abort
   botright split __todo_manager__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimTodoManager
   let s:bufnr = bufnr('%')
   call s:update_todo_content()
