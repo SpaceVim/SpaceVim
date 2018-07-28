@@ -35,15 +35,6 @@ else
   endif
 endif
 
-
-" python host
-if !empty($PYTHON_HOST_PROG)
-  let g:python_host_prog  = $PYTHON_HOST_PROG
-endif
-if !empty($PYTHON3_HOST_PROG)
-  let g:python3_host_prog = $PYTHON3_HOST_PROG
-endif
-
 "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
