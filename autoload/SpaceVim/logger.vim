@@ -52,10 +52,14 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
-  let info = "### SpaceVim Options :\n\n"
-  let info .= "```viml\n"
+  let info = "### SpaceVim options :\n\n"
+  let info .= "```toml\n"
   let info .= join(SpaceVim#options#list(), "\n")
   let info .= "\n```\n"
+  let info .= "\n\n"
+
+  let info .= "### SpaceVim layers :\n\n"
+  let info .= SpaceVim#layers#report()
   let info .= "\n\n"
 
   let info .= "### SpaceVim Health checking :\n\n"

@@ -57,7 +57,7 @@ function! s:list_layers() abort
 endfunction
 
 function! s:find_layers() abort
-  let layers = SpaceVim#util#globpath(&rtp, "autoload/SpaceVim/layers/**/*.vim")
+  let layers = SpaceVim#util#globpath(&rtp, 'autoload/SpaceVim/layers/**/*.vim')
   let pattern = '/autoload/SpaceVim/layers/'
   let rst = []
   for layer in layers
@@ -69,7 +69,7 @@ function! s:find_layers() abort
       else
         let website = 'no exists'
       endif
-      if status == 'loaded'
+      if status ==# 'loaded'
         call add(rst, '+ ' . name . ':' . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
       else
         call add(rst, '- ' . name . ':' . repeat(' ', 21 - len(name)) . status . repeat(' ', 10) . website)
@@ -85,6 +85,12 @@ endfunction
 
 function! SpaceVim#layers#isLoaded(layer) abort
   return index(s:enabled_layers, a:layer) != -1
+endfunction
+
+function! SpaceVim#layers#report() abort
+
+  return ''
+
 endfunction
 
 
