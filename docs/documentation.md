@@ -876,7 +876,6 @@ All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
 All plugins can be easily discovered via `<leader> l p`.
 
-
 #### Toggles
 
 both the toggles mappings started with `[SPC] t` or `[SPC] T`. you can find it in the mapping guide.
@@ -998,8 +997,8 @@ Windows manipulation commands (start with `w`):
 | `SPC w TAB`          | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`            | balance split windows                                                                                         |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`            | Distraction-free reading current window                                                                       |
-| `SPC w C`            | Distraction-free reading other windows via vim-choosewin                                                      |
+| `SPC w c`            | Distraction-free reading current window  (tools layer)                                                        |
+| `SPC w C`            | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
 | `SPC w d`            | delete a window                                                                                               |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)                                      |
 | `SPC w D`            | delete another window using vim-choosewin                                                                     |

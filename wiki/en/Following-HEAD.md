@@ -67,6 +67,7 @@ The next release is v0.9.0.
 - Update follow HEAD ([#1886](https://github.com/SpaceVim/SpaceVim/pull/1886), [#1953](https://github.com/SpaceVim/SpaceVim/pull/1953))
 - Update doc for bootstrap function ([#1980](https://github.com/SpaceVim/SpaceVim/pull/1980))
 - Update doc for debug upstream plugins ([#1981](https://github.com/SpaceVim/SpaceVim/pull/1981))
+- Update doc windows key bindings ([#1995](https://github.com/SpaceVim/SpaceVim/pull/1995))
 
 ### Others
 
