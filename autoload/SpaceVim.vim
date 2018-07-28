@@ -843,9 +843,6 @@ function! SpaceVim#end() abort
 
   call SpaceVim#autocmds#init()
 
-  if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
-  endif
 
   call zvim#util#source_rc('commands.vim')
   filetype plugin indent on
@@ -855,6 +852,9 @@ endfunction
 
 function! SpaceVim#begin() abort
 
+  if has('nvim')
+    call zvim#util#source_rc('neovim.vim')
+  endif
   call zvim#util#source_rc('functions.vim')
   call zvim#util#source_rc('init.vim')
 
