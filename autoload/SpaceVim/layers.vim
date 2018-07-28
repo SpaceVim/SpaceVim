@@ -11,6 +11,7 @@
 "   SpaceVim support such layers:
 
 let s:enabled_layers = []
+let s:layers_vars = {}
 
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
@@ -25,6 +26,7 @@ function! SpaceVim#layers#load(layer, ...) abort
   if a:0 == 1 && type(a:1) == 4
     try
       call SpaceVim#layers#{a:layer}#set_variable(a:1)
+      let s:layers_vars[a:layer] = a:1
     catch /^Vim\%((\a\+)\)\=:E117/
     endtry
   endif
@@ -88,9 +90,20 @@ function! SpaceVim#layers#isLoaded(layer) abort
 endfunction
 
 function! SpaceVim#layers#report() abort
-
-  return ''
-
+  let info = "```toml\n"
+  for name in s:enabled_layers
+    let info .= "[[layers]]\n"
+    let info .= '  name="' . name . '"' . "\n"
+    if has_key(s:layers_vars, name)
+      for var in keys(s:layers_vars[name])
+        if var !=# 'name'
+          let info .= '  ' . var . '=' . string(name) . "\n"
+        endif
+      endfor
+    endif
+  endfor
+  let info .= "```\n"
+  return info
 endfunction
 
 
