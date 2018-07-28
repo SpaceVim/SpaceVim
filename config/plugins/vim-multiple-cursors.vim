@@ -34,8 +34,9 @@ function! Multiple_cursors_before()
   if g:spacevim_autocomplete_parens
     try
       let b:saved_delimitMate_statues = b:delimitMate_enabled
-      echom 1
+      echom execute('imap "')
       DelimitMateOff
+      echom execute('imap "')
     catch
     endtry
   endif
@@ -47,7 +48,9 @@ function! Multiple_cursors_after()
   if g:spacevim_autocomplete_parens
     try
       if b:saved_delimitMate_statues
-        DelimitMateOn
+      echom execute('imap "')
+        silent! DelimitMateOn
+      echom execute('imap "')
       endif
     catch
     endtry
