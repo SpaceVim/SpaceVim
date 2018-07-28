@@ -189,7 +189,7 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindKEYs() abort
   let g:_spacevim_mappings_prefixs = {}
-  if !g:spacevim_vimcompatible
+  if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
     let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
     call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)
   endif
