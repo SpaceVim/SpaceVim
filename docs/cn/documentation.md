@@ -21,6 +21,7 @@ lang: cn
   - [启动函数](#启动函数)
   - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
+  - [调试上游插件](#调试上游插件)
 - [概念](#概念)
 - [优雅的界面](#优雅的界面)
   - [颜色主题](#颜色主题)
@@ -255,6 +256,38 @@ SpaceVim 的[模块首页](../layers/)。
 - `SpaceVim#layers#autocomplete#plugins()`: 返回该模块插件列表
 - `SpaceVim#layers#autocomplete#config()`: 模块相关设置
 - `SpaceVim#layers#autocomplete#set_variable()`: 模块选项设置函数
+
+### 调试上游插件
+
+当发现某个内置上游插件存在问题时，需要修改并调试上游插件，可以依照以下步骤：
+
+1. 禁用内置上游插件
+
+比如，调试内置语法检查插件 neomake.vim
+
+```toml
+[option]
+    disabled_plugins = ["neomake.vim"]
+```
+
+2. 添加自己fork的插件，或者本地克隆版本：
+
+修搞配置文件 init.toml， 加入以下部分，来添加自己fork的版本：
+
+```toml
+[[custom_plugins]]
+   name = 'wsdjeg/neomake.vim'
+   # note: you need to disable merged feature
+   merged = false
+```
+
+或者使用 `bootstrap_before` 函数添加本地路径：
+
+```vim
+function! myspacevim#before() abort
+    set rtp+=~/path/to/your/localplugin
+endfunction
+```
 
 ## 概念
 
