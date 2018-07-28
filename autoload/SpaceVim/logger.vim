@@ -52,7 +52,8 @@ endfunction
 
 
 function! SpaceVim#logger#viewLog(...) abort
-  let info = "### SpaceVim options :\n\n"
+  let info = "<details><summary> SpaceVim debug information </summary>\n\n"
+  let info .= "### SpaceVim options :\n\n"
   let info .= "```toml\n"
   let info .= join(SpaceVim#options#list(), "\n")
   let info .= "\n```\n"
@@ -71,7 +72,7 @@ function! SpaceVim#logger#viewLog(...) abort
 
   let info .= s:LOGGER.view(s:LOGGER.level)
 
-  let info .= "\n```\n"
+  let info .= "\n```\n</details>\n\n"
   if a:0 > 0
     if a:1 == 1
       tabnew +setl\ nobuflisted

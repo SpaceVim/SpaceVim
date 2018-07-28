@@ -97,7 +97,7 @@ function! SpaceVim#layers#report() abort
     if has_key(s:layers_vars, name)
       for var in keys(s:layers_vars[name])
         if var !=# 'name'
-          let info .= '  ' . var . '=' . string(name) . "\n"
+          let info .= '  ' . var . '=' . string(s:layers_vars[name][var]) . "\n"
         endif
       endfor
     endif
