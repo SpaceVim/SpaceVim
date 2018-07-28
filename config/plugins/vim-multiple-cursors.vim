@@ -40,6 +40,7 @@ function! Multiple_cursors_before()
     catch
     endtry
   endif
+  " after this , delimitmate still enabled.
 endfunction
 
 " Called once only when the multiple selection is canceled (default <Esc>)
