@@ -254,6 +254,9 @@ func! myspacevim#after() abort
 endf
 ```
 
+the `bootstrap_before` will be called after custom configuration file is loaded. and the `bootstrap_after` will
+be called after VimEnter autocmd.
+
 ### Vim Compatible Mode
 
 This a list of different key bindings between SpaceVim and origin vim. If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = true` in `[options]` section.
