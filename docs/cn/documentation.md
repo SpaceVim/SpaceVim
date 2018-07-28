@@ -18,8 +18,10 @@ lang: cn
   - [更新插件](#更新插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
+  - [启动函数](#启动函数)
   - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
+  - [调试上游插件](#调试上游插件)
 - [概念](#概念)
 - [优雅的界面](#优雅的界面)
   - [颜色主题](#颜色主题)
@@ -199,6 +201,28 @@ call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
 call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 ```
 
+### 启动函数
+
+由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
+可通过设置这两个选项值来指定函数名称。
+
+启动函数文件应防止在 Vim &runtimepath 的 autoload 文件夹内。例如：
+
+文件名： `~/.SpaceVim.d/autoload/myspacevim.vim`
+
+```vim
+func! myspacevim#before() abort
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <esc>
+endf
+
+func! myspacevim#after() abort
+    iunmap jk
+endf
+```
+
+函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
+
 ### Vim 兼容模式
 
 以下为 SpaceVim 中与 Vim 默认情况下的一些差异，而在兼容模式下，
@@ -232,6 +256,38 @@ SpaceVim 的[模块首页](../layers/)。
 - `SpaceVim#layers#autocomplete#plugins()`: 返回该模块插件列表
 - `SpaceVim#layers#autocomplete#config()`: 模块相关设置
 - `SpaceVim#layers#autocomplete#set_variable()`: 模块选项设置函数
+
+### 调试上游插件
+
+当发现某个内置上游插件存在问题时，需要修改并调试上游插件，可以依照以下步骤：
+
+1. 禁用内置上游插件
+
+比如，调试内置语法检查插件 neomake.vim
+
+```toml
+[option]
+    disabled_plugins = ["neomake.vim"]
+```
+
+2. 添加自己fork的插件，或者本地克隆版本：
+
+修搞配置文件 init.toml， 加入以下部分，来添加自己fork的版本：
+
+```toml
+[[custom_plugins]]
+   name = 'wsdjeg/neomake.vim'
+   # note: you need to disable merged feature
+   merged = false
+```
+
+或者使用 `bootstrap_before` 函数添加本地路径：
+
+```vim
+function! myspacevim#before() abort
+    set rtp+=~/path/to/your/localplugin
+endfunction
+```
 
 ## 概念
 
