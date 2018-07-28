@@ -25,6 +25,7 @@ function! s:open_win() abort
   set filetype=SpaceVimTodoManager
   let s:bufnr = bufnr('%')
   call s:update_todo_content()
+  nnoremap <buffer><silent> <Enter> :call <SID>open_todo()<cr>
 endfunction
 
 function! s:update_todo_content() abort
@@ -58,6 +59,18 @@ function! s:stdout(id, data, event) abort
 endfunction
 
 function! s:exit(id, data, event ) abort
-  let g:lines = map(s:todos, "v:val.file . '   ' . v:val.title")
+  let g:lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
   call setline(1, g:lines)
+endfunction
+
+
+function! s:open_todo() abort
+  let todo = s:todos[line('.') - 1]
+  try
+    close
+  catch
+  endtry
+  exe 'e ' . todo.file
+  call cursor(todo.line, todo.column)
+  noautocmd normal! :
 endfunction
