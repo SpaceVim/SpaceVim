@@ -43,6 +43,7 @@ The next release is v0.9.0.
 - Fix inactive windows statusline ([#1913](https://github.com/SpaceVim/SpaceVim/pull/1913))
 - Fix key binding `SPC f t` ([#1900](https://github.com/SpaceVim/SpaceVim/pull/1900))
 - Fix lsp support for haskell, javascript and typescript ([#1894](https://github.com/SpaceVim/SpaceVim/pull/1894))
+- can not set `windows_leader` to empty string ([#1990](https://github.com/SpaceVim/SpaceVim/pull/1990))
 
 ### Removed
 
