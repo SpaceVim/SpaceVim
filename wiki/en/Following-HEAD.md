@@ -24,6 +24,7 @@ The next release is v0.9.0.
 - Support mouse click in tabline ([#1902](https://github.com/SpaceVim/SpaceVim/pull/1902))
 - Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969))
 - neovim +py and +py3 support ([#1988](https://github.com/SpaceVim/SpaceVim/pull/1988))
+- Improve debug info ([#1991](https://github.com/SpaceVim/SpaceVim/pull/1991))
 
 ### Changed
 

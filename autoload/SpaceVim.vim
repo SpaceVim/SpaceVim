@@ -666,7 +666,7 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'VebuggerTerminal',
       \ 'SpaceVimTabsManager'
       \ ]
-let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
 ""

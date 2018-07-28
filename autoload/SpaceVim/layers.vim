@@ -11,6 +11,7 @@
 "   SpaceVim support such layers:
 
 let s:enabled_layers = []
+let s:layers_vars = {}
 
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
@@ -25,6 +26,7 @@ function! SpaceVim#layers#load(layer, ...) abort
   if a:0 == 1 && type(a:1) == 4
     try
       call SpaceVim#layers#{a:layer}#set_variable(a:1)
+      let s:layers_vars[a:layer] = a:1
     catch /^Vim\%((\a\+)\)\=:E117/
     endtry
   endif
@@ -57,7 +59,7 @@ function! s:list_layers() abort
 endfunction
 
 function! s:find_layers() abort
-  let layers = SpaceVim#util#globpath(&rtp, "autoload/SpaceVim/layers/**/*.vim")
+  let layers = SpaceVim#util#globpath(&rtp, 'autoload/SpaceVim/layers/**/*.vim')
   let pattern = '/autoload/SpaceVim/layers/'
   let rst = []
   for layer in layers
@@ -69,7 +71,7 @@ function! s:find_layers() abort
       else
         let website = 'no exists'
       endif
-      if status == 'loaded'
+      if status ==# 'loaded'
         call add(rst, '+ ' . name . ':' . repeat(' ', 25 - len(name)) . status . repeat(' ', 10) . website)
       else
         call add(rst, '- ' . name . ':' . repeat(' ', 21 - len(name)) . status . repeat(' ', 10) . website)
@@ -85,6 +87,23 @@ endfunction
 
 function! SpaceVim#layers#isLoaded(layer) abort
   return index(s:enabled_layers, a:layer) != -1
+endfunction
+
+function! SpaceVim#layers#report() abort
+  let info = "```toml\n"
+  for name in s:enabled_layers
+    let info .= "[[layers]]\n"
+    let info .= '  name="' . name . '"' . "\n"
+    if has_key(s:layers_vars, name)
+      for var in keys(s:layers_vars[name])
+        if var !=# 'name'
+          let info .= '  ' . var . '=' . string(s:layers_vars[name][var]) . "\n"
+        endif
+      endfor
+    endif
+  endfor
+  let info .= "```\n"
+  return info
 endfunction
 
 
