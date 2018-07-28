@@ -14,7 +14,7 @@
 
 function! SpaceVim#layers#lang#kotlin#plugins() abort
     let plugins = []
-    call add(plugins, ['udalov/kotlin-vim'])
+    call add(plugins, ['udalov/kotlin-vim', {'merged' : 0}])
     return plugins
 endfunction
 
@@ -24,21 +24,21 @@ if g:spacevim_enable_neomake
 let g:neomake_kotlin_kotlinc_maker = {
     \ 'args': ['-cp', s:classpath(), '-d', s:outputdir()],
     \ 'errorformat':
-        \ "%E%f:%l:%c: error: %m," .
-		\ "%W%f:%l:%c: warning: %m," .
-		\ "%Eerror: %m," .
-		\ "%Wwarning: %m," .
-		\ "%Iinfo: %m,"
+        \ '%E%f:%l:%c: error: %m,' .
+		\ '%W%f:%l:%c: warning: %m,' .
+		\ '%Eerror: %m,' .
+		\ '%Wwarning: %m,' .
+		\ '%Iinfo: %m,'
     \ }
 let g:neomake_kotlin_enabled_makers = ['kotlinc']
 endif
 endfunction
 
-func! s:classpath()
+func! s:classpath() abort
 
 endf
 
-func! s:outputdir()
+func! s:outputdir() abort
 
 endf
 
