@@ -30,14 +30,13 @@ endfunction
 
 function! s:update_todo_content() abort
   let s:todos = []
-  let argv = ['rg', '-n','--column','@todo']
+  let argv = ['rg', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column',
+      \ '-g', '!.git','@t'. 'odo ']
   call s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
         \ 'on_exit' : function('s:exit'),
         \ })
 endfunction
-
-" autoload/SpaceVim/layers/github.vim:49:5:  " @todo remove the username
 
 function! s:stdout(id, data, event) abort
   for data in a:data
@@ -74,3 +73,7 @@ function! s:open_todo() abort
   call cursor(todo.line, todo.column)
   noautocmd normal! :
 endfunction
+
+" @todo fuzzy find todo list
+" after open todo manager buffer, we should be able to fuzzy find the item we
+" need.
