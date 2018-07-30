@@ -68,6 +68,9 @@ function! s:layer_list() abort
   for layer in layers
     let name = split(layer, '/docs/layers/')[1][:-4] . '/'
     let url = name
+    if name ==# 'language-server-protocol/'
+      let name = 'lsp'
+    endif
     let content = readfile(layer)
     if len(content) > 3
       let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
