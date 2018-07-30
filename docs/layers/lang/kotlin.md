@@ -31,3 +31,6 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#kotlin"
 ```
 
+to enable language server protocol, you need to install:
+
+https://github.com/fwcd/KotlinLanguageServer
