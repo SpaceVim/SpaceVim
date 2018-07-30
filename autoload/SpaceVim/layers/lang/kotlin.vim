@@ -32,11 +32,11 @@ function! SpaceVim#layers#lang#kotlin#config() abort
           \ }
     let g:neomake_kotlin_enabled_makers = ['kotlinc']
   endif
-  call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
-  if SpaceVim#layers#lsp#check_filetype('python')
+  if SpaceVim#layers#lsp#check_filetype('kotlin')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
