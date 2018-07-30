@@ -6,6 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+function! SpaceVim#layers#lang#dockerfile#plugins() abort
+  let plugins = []
+  call add(plugins, ['ekalinin/Dockerfile.vim', {'merged' : 0}])
+  return plugins
+endfunction
+
 
 function! SpaceVim#layers#lang#dockerfile#config() abort
 
