@@ -15,6 +15,7 @@ The next release is v0.9.0.
 - Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
 - Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
+- Add kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
 
 ### Improvement
 
@@ -22,7 +23,7 @@ The next release is v0.9.0.
 - Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898), [#1961](https://github.com/SpaceVim/SpaceVim/pull/1961), [#1960](https://github.com/SpaceVim/SpaceVim/pull/1960), [#1929](https://github.com/SpaceVim/SpaceVim/pull/1929), [#1802](https://github.com/SpaceVim/SpaceVim/pull/1802))
 - Improve plugin manager ([#1962](https://github.com/SpaceVim/SpaceVim/pull/1962))
 - Support mouse click in tabline ([#1902](https://github.com/SpaceVim/SpaceVim/pull/1902))
-- Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969))
+- Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969), [#1999](https://github.com/SpaceVim/SpaceVim/pull/1999))
 - neovim +py and +py3 support ([#1988](https://github.com/SpaceVim/SpaceVim/pull/1988))
 - Improve debug info ([#1991](https://github.com/SpaceVim/SpaceVim/pull/1991))
 
