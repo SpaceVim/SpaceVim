@@ -149,7 +149,7 @@ function! SpaceVim#default#keyBindings() abort
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
   endif
 
-  " yark and paste
+  " yank and paste
   xnoremap <Leader>y "+y
   xnoremap <Leader>d "+d
   nnoremap <Leader>p "+p
