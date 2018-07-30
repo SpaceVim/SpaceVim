@@ -15,7 +15,8 @@ The next release is v0.9.0.
 - Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
 - Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
-- Add kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
+- Add lang#kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
+- Add lang#dockerfile layer ([#2001](https://github.com/SpaceVim/SpaceVim/pull/2001))
 
 ### Improvement
 

@@ -70,6 +70,7 @@ enable = false
 | [lang#c](lang/c/)                   | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#csharp](lang/csharp/)         | This layer is for csharp development                                                                                                                                |
 | [lang#dart](lang/dart/)             | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
+| [lang#dockerfile](lang/dockerfile/) | This layer adds DockerFile to SpaceVim                                                                                                                              |
 | [lang#elixir](lang/elixir/)         | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                                         |
 | [lang#go](lang/go/)                 | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
 | [lang#haskell](lang/haskell/)       | haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell |
