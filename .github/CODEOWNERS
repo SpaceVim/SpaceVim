@@ -7,3 +7,10 @@
 # 中文文件
 # 中文模块翻译
 docs/layers/*    @SLZhang-CUG
+
+# lang#javascript layer
+autoload/SpaceVim/layers/lang/javascript.vim
+docs/layers/lang/javascript.md
+docs/cn/layers/lang/javascript.md
+# layer plugins conf:
+
