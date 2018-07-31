@@ -5,7 +5,7 @@ excerpt: "A general guide for using SpaceVim as Java IDE, including layer config
 redirect_from: ["/2017/02/11/use-vim-as-a-java-ide.html", "/use-vim-as-a-java-ide/"]
 type: BlogPosting
 comments: true
-commentsID: "Use SpaceVim as a Java IDE"
+commentsID: "Use Vim as a Java IDE"
 ---
 
 # [Blogs](https://spacevim.org/community#blogs) > Use SpaceVim as a Java IDE
