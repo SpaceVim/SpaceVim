@@ -35,7 +35,7 @@
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please check bellowing options.
+" please take a look at the following options.
 "
 
 " Public SpaceVim Options {{{
@@ -682,7 +682,7 @@ let g:spacevim_wildignore
 " }}}
 
 
-" Privite SpaceVim options
+" Private SpaceVim options
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
