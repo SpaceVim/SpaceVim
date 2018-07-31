@@ -1,16 +1,29 @@
 ---
-title: "Use Vim as a Java IDE"
+title: "Use SpaceVim as a Java IDE"
 categories: [tutorials, blog]
-excerpt: "I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim."
+excerpt: "A general guide for using SpaceVim as Java IDE, including layer configuration and requiems installation."
 redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
 type: BlogPosting
 comments: true
 commentsID: "Use Vim as a Java IDE"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
+# [Blogs](https://spacevim.org/community#blogs) > Use SpaceVim as a Java IDE
 
-I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim.
+I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project. following these step to setup your Java IDE.
+
+<!-- vim-markdown-toc GFM -->
+
+- [Install SpaceVim](#install-spacevim)
+- [Project manager](#project-manager)
+- [Code formatting](#code-formatting)
+- [Code completion](#code-completion)
+- [Syntax lint](#syntax-lint)
+- [REPL](#repl)
+
+<!-- vim-markdown-toc -->
+
+## Install SpaceVim
 
 ![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
