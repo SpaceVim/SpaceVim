@@ -12,7 +12,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 " Default options {{{
 function! SpaceVim#default#options() abort
-  " basic vim settiing
+  " basic vim settings
   if has('gui_running')
     set guioptions-=m " Hide menu bar.
     set guioptions-=T " Hide toolbar
