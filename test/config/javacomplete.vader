@@ -1,0 +1,4 @@
+Execute ( Plugin config: vim-javacomplete2 ):
+  so config/plugins/vim-javacomplete2.vim
+  AssertEqual g:JavaComplete_UseFQN, 1
+

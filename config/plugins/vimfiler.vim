@@ -22,12 +22,14 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.'
       \])
 
-if has('mac')
-  let g:vimfiler_quick_look_command =
-        \ '/Applications//Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
-else
-  let g:vimfiler_quick_look_command = 'gloobus-preview'
+if has('mac') 
+   let g:vimfiler_quick_look_command = 
+         \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
+else 
+   let g:vimfiler_quick_look_command = 
+        \ get(g:, 'vimfiler_quick_look_command', 'gloobus-preview') 
 endif
+
 function! s:setcolum() abort
   if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
     return 'filetypeicon'

@@ -475,6 +475,9 @@ Enable/Disable gitstatus column in vimfiler buffer, default is 0.
                                      *g:spacevim_enable_vimfiler_filetypeicon*
 Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 
+                                              *g:spacevim_autocomplete_parens*
+Enable/Disable autocompletion of parentheses, default is 1 (enabled).
+
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.

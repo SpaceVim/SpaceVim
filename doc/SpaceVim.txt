@@ -540,10 +540,6 @@ plugins will be installed.
                                                       *g:spacevim_filemanager*
 The default file manager of SpaceVim. Default is 'vimfiler'.
 
-                                                   *g:spacevim_plugin_manager*
-The default plugin manager of SpaceVim. Default is 'dein'. Options are dein,
-neobundle, or vim-plug.
-
                                          *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
 
@@ -675,6 +671,9 @@ Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 
                                      *g:spacevim_enable_vimfiler_filetypeicon*
 Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
+
+                                              *g:spacevim_autocomplete_parens*
+Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and

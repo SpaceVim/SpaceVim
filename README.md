@@ -19,9 +19,11 @@
 
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
-SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many build-in features.
+SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+
+The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](http://spacevim.org/layers/) for more information.
 
@@ -66,7 +68,7 @@ here is an example for using toml as SpaceVim config:
     buffer_index_type = 4
     windows_index_type = 3
     enable_tabline_filetype_icon = false
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
     statusline_unicode_symbols = false
     # Enable vim compatible mode, avoid changing origin vim key bindings
     vimcompatible = true

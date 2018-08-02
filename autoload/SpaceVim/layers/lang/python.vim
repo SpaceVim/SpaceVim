@@ -21,10 +21,12 @@ function! SpaceVim#layers#lang#python#plugins() abort
   if !SpaceVim#layers#lsp#check_filetype('python')
     if has('nvim')
       call add(plugins, ['zchee/deoplete-jedi', { 'on_ft' : 'python'}])
-    else
-      call add(plugins, ['davidhalter/jedi-vim', { 'on_ft' : 'python',
-            \ 'if' : has('python') || has('python3')}])
+      " in neovim, we can use deoplete-jedi together with jedi-vim,
+      " but we need to disable the completions of jedi-vim.
+      let g:jedi#completions_enabled = 0
     endif
+    call add(plugins, ['davidhalter/jedi-vim', { 'on_ft' : 'python',
+          \ 'if' : has('python') || has('python3')}])
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
@@ -54,6 +56,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ 'exe' : function('s:getexe'),
         \ 'opt' : [],
         \ })
+  call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python',
         \ ['#!/usr/bin/env python',
@@ -112,12 +115,20 @@ function! s:language_specified_mappings() abort
   endif
 endfunction
 
-func! s:getexe()
+func! s:getexe() abort
   let line = getline(1)
-  if line =~ '^#!'
+  if line =~# '^#!'
     let exe = split(line)
     let exe[0] = exe[0][2:]
     return exe
   endif
   return ['python']
 endf
+
+function! s:go_to_def() abort
+  if !SpaceVim#layers#lsp#check_filetype('python')
+    call jedi#goto()
+  else
+    call SpaceVim#lsp#go_to_def()
+  endif
+endfunction

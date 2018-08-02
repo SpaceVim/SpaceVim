@@ -97,13 +97,11 @@ function! SpaceVim#layers#core#tabline#get() abort
       let buflist = tabpagebuflist(i)
       let winnr = tabpagewinnr(i)
       let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
-      if empty(name)
-        let name = 'No Name'
-      endif
-      call add(stack, buflist[winnr - 1])
-      call s:need_show_bfname(stack, buflist[winnr - 1])
+      let tabname = gettabvar(i, '_spacevim_tab_name', '')
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      elseif !has('nvim')
+        let t .= '%' . index . 'T'
       endif
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(i)
@@ -112,13 +110,22 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let id = s:messletters.circled_num(i, g:spacevim_buffer_index_type)
       endif
-      if g:spacevim_enable_tabline_filetype_icon
-        let icon = s:file.fticon(name)
-        if !empty(icon)
-          let name = name . ' ' . icon
+      if empty(tabname)
+        if empty(name)
+          let name = 'No Name'
         endif
+        call add(stack, buflist[winnr - 1])
+        call s:need_show_bfname(stack, buflist[winnr - 1])
+        if g:spacevim_enable_tabline_filetype_icon
+          let icon = s:file.fticon(name)
+          if !empty(icon)
+            let name = name . ' ' . icon
+          endif
+        endif
+        let t .= id . ' ' . name
+      else
+        let t .= id . ' T:' . tabname
       endif
-      let t .= id . ' ' . name
       if i == ct - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
       elseif i == ct

@@ -34,6 +34,7 @@ function! SpaceVim#layers#github#plugins() abort
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
         \ }],
         \ ['wsdjeg/GitHub-api.vim', {'merged' : 0}],
+        \ ['lambdalisue/vim-gista', {'merged' : 0}],
         \ ]
 endfunction
 
@@ -43,6 +44,13 @@ function! SpaceVim#layers#github#config() abort
         \ 'name' : '+VersionControl/git',
         \ })
   let g:_spacevim_mappings_space.g.h = { 'name': '+GitHub' }
+  let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
+
+  " @todo remove the username
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'l'], 'Gista list -u wsdjeg',
+        \ 'list gist', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'p'], 'Gista post',
+        \ 'post selection or current file', 1, 1)
 
   "" jaxbot/github-issues.vim {{{
   " Disable completion by github-issues.vim. Because github-complete.vim

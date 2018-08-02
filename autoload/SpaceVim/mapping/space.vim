@@ -18,7 +18,6 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
   let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
   let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
-  let g:_spacevim_mappings_space.c = {'name' : '+Comments'}
   let g:_spacevim_mappings_space.f = {'name' : '+Files'}
   let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
   let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
@@ -70,8 +69,12 @@ function! SpaceVim#mapping#space#init() abort
         \ 'close', 'delete window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
         \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'],
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
         \ 'tabnew', 'create new tab', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 
+        \ 'call call('
+        \ . string(function('s:create_new_named_tab'))
+        \ . ', [])', 'create new named tab', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'],
         \ 'wincmd h', 'window-left', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'],
@@ -140,25 +143,6 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  "
-  " Comments sections
-  "
-  " Toggles the comment state of the selected line(s). If the topmost selected
-  " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines invert', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
-
-  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
-  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
-
-  nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
-  let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
-  nmap <silent> [SPC]; <Plug>CommentOperator
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
@@ -418,7 +402,7 @@ endfunction
 
 
 let s:language_specified_mappings = {}
-function! SpaceVim#mapping#space#refrashLSPC()
+function! SpaceVim#mapping#space#refrashLSPC() abort
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
     call call(s:language_specified_mappings[&filetype], [])
@@ -427,7 +411,7 @@ function! SpaceVim#mapping#space#refrashLSPC()
 
 endfunction
 
-function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func)
+function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
 endfunction
 
@@ -459,49 +443,20 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 endfunction
 
-function! s:commentOperator(type, ...)
-  let sel_save = &selection
-  let &selection = "inclusive"
-  let reg_save = @@
 
-  if a:0  " Invoked from Visual mode, use gv command.
-    silent exe "normal! gv"
-    call feedkeys("\<Plug>NERDCommenterComment")
-  elseif a:type == 'line'
-    call feedkeys('`[V`]')
-    call feedkeys("\<Plug>NERDCommenterComment")
+function! s:create_new_named_tab() abort
+  let tabname = input('Tab name:', '')
+  if !empty(tabname)
+    tabnew
+    let t:_spacevim_tab_name = tabname
+    set tabline=%!SpaceVim#layers#core#tabline#get()
   else
-    call feedkeys('`[v`]')
-    call feedkeys("\<Plug>NERDCommenterComment")
-  endif
-
-  let &selection = sel_save
-  let @@ = reg_save
-  set opfunc=
-endfunction
-
-function! s:comment_to_line(invert) abort
-  let input = input('line number: ')
-  if empty(input)
-    return
-  endif
-  let line = str2nr(input)
-  let ex = line - line('.')
-  if ex > 0
-    exe 'normal! V'. ex .'j'
-  elseif ex == 0
-  else
-    exe 'normal! V'. abs(ex) .'k'
-  endif
-  if a:invert
-    call feedkeys("\<Plug>NERDCommenterInvert")
-  else
-    call feedkeys("\<Plug>NERDCommenterComment")
+    tabnew
   endif
 endfunction
 
 function! s:windows_transient_state() abort
-  
+
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('Buffer Selection Transient State')
   call state.defind_keys(

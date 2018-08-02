@@ -23,6 +23,7 @@
 " <
 
 let s:self = {}
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 
 let s:self._keys = {
@@ -140,7 +141,8 @@ endf
 
 func! s:self._build_prompt() abort
   normal! :
-  echohl Comment | echon self._prompt.mpt
+  let ident = repeat(' ', self.__cmp.win_screenpos(0)[1])
+  echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
   echohl None | echon self._prompt.end

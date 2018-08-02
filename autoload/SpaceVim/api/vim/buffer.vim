@@ -36,6 +36,7 @@ function! s:self.open(opts) abort
   if !empty(cmd)
     exe cmd
   endif
+  return bufnr('%')
 endfunction
 
 

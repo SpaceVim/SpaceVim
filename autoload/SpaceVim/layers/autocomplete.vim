@@ -36,8 +36,10 @@ function! SpaceVim#layers#autocomplete#plugins() abort
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],
         \ ['Shougo/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
-        \ ['Raimondi/delimitMate',        { 'merged' : 0}],
         \ ]
+  if g:spacevim_autocomplete_parens
+    call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
+  endif
   " snippet
   if g:spacevim_snippet_engine ==# 'neosnippet'
     call add(plugins,  ['Shougo/neosnippet.vim', { 'on_event' : 'InsertEnter',
@@ -107,12 +109,14 @@ endfunction
 
 
 function! SpaceVim#layers#autocomplete#config() abort
-  imap <expr>( 
-        \ pumvisible() ? 
-        \ complete_parameter#pre_complete("()") : 
-        \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
-        \ "\<Plug>delimitMate(" :
-        \ '('
+  if g:spacevim_autocomplete_parens
+    imap <expr>(
+          \ pumvisible() ?
+          \ complete_parameter#pre_complete("()") :
+          \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
+          \ "\<Plug>delimitMate(" :
+          \ '('
+  endif
 
   "mapping
   if s:tab_key_behavior ==# 'smart'

@@ -13,7 +13,6 @@ function! SpaceVim#layers#ui#plugins() abort
         \ ['majutsushi/tagbar', {'loadconf' : 1}],
         \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
         \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
-        \ ['lvht/tagbar-markdown',{'merged' : 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
         \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]

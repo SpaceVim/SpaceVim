@@ -4,6 +4,7 @@ categories: [changelog, blog]
 excerpt: "Highlight symbol mode and iedit mode come out with v0.7.0"
 type: NewsArticle
 image: https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png
+commentsID: "SpaceVim release v0.7.0"
 comments: true
 ---
 

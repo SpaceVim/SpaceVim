@@ -23,7 +23,6 @@ elif [ "$LINT" = "vint" ]; then
 elif [ "$LINT" = "vint-errors" ]; then
   vint --error .
 elif [ "$LINT" = "vader" ]; then
-  vim --version
   pip install covimerage
   make test_coverage
   covimerage -vv xml --omit 'build/*'

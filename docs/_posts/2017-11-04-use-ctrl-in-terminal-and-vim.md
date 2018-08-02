@@ -1,8 +1,9 @@
 ---
 title: "VIM 中 ctrl 相关的组合键的使用"
-categories: blog_cn
+categories: [blog_cn, feature_cn]
 excerpt: "枚举 Vim 内置的 Ctrl 组合键功能，以及终端下的一些区别"
 comments: true
+commentsID: "VIM 中 ctrl 相关的组合键的使用"
 lang: cn
 ---
 

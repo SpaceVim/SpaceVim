@@ -106,20 +106,21 @@
 
         {% if page.comments %}
 
-        <div id="disqus_thread"></div>
-        <script>
-          var disqus_config = function () {
-            this.page.url = '{{ page.url | absolute_url }}';
-            this.page.identifier = '{{ page.url | absolute_url }}';
-          };
-(function() {
-  var d = document, s = d.createElement('script');
-  s.src = 'https://spacevim.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <div id="container"></div>
+            <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+            <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+            <script>
+            var gitment = new Gitment({
+              id: '{{ page.commentsID | default: page.title }}', // 可选。默认为 location.href
+              owner: 'wsdjeg',
+              repo: 'SpaceVim-comments',
+              oauth: {
+                client_id: '{{ site.gitment_client_id }}',
+                client_secret: '{{ site.gitment_client_secret }}',
+              },
+            })
+            gitment.render('container')
+            </script>
 
         {% endif %}
 

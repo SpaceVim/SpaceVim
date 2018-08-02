@@ -35,7 +35,7 @@
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please check bellowing options.
+" please take a look at the following options.
 "
 
 " Public SpaceVim Options {{{
@@ -482,9 +482,14 @@ let g:spacevim_simple_mode             = 0
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 let g:spacevim_filemanager             = 'vimfiler'
 ""
-" The default plugin manager of SpaceVim. Default is 'dein'.
+" The default plugin manager of SpaceVim.
+" if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-let g:spacevim_plugin_manager          = 'dein'
+if has('patch-7.4.2071')
+  let g:spacevim_plugin_manager          = 'dein'
+else
+  let g:spacevim_plugin_manager          = 'neobundle'
+endif
 
 ""
 " @section plugin_manager_processes, options-plugin_manager_processes
@@ -646,6 +651,9 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 ""
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
+""
+" Enable/Disable autocompletion of parentheses, default is 1 (enabled).
+let g:spacevim_autocomplete_parens = 1
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
@@ -656,8 +664,9 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'HelpDescribe',
       \ 'VebuggerShell',
       \ 'VebuggerTerminal',
+      \ 'SpaceVimTabsManager'
       \ ]
-let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
 ""
@@ -673,7 +682,7 @@ let g:spacevim_wildignore
 " }}}
 
 
-" Privite SpaceVim options
+" Private SpaceVim options
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
@@ -863,7 +872,7 @@ function! SpaceVim#begin() abort
     elseif argv(0) ==# '.'
       return [1, getcwd()]
     elseif isdirectory(expand(argv(0)))
-      return [1, expand(argv(0)) ]
+      return [1, fnamemodify(expand(argv(0)), ':p')]
     else
       return [0]
     endif

@@ -63,7 +63,11 @@ endfunction
 " @vimlint(EVL103, 1, a:CmdLine)
 " @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#commands#complete_plugin(ArgLead, CmdLine, CursorPos) abort
-  return join(keys(dein#get()) + ['SpaceVim'], "\n")
+  if g:spacevim_plugin_manager ==# 'dein'
+    return join(keys(dein#get()) + ['SpaceVim'], "\n")
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    return join(map(neobundle#config#get_neobundles(), 'v:val.name'), "\n")
+  endif
 endfunction
 " @vimlint(EVL103, 0, a:ArgLead)
 " @vimlint(EVL103, 0, a:CmdLine)
@@ -98,6 +102,11 @@ endfunction
 
 function! SpaceVim#commands#update_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
+    if a:0 == 0
+      call SpaceVim#plugins#manager#update()
+    else
+      call SpaceVim#plugins#manager#update(a:000)
+    endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     if a:0 == 0
       call SpaceVim#plugins#manager#update()
@@ -118,11 +127,16 @@ endfunction
 
 function! SpaceVim#commands#install_plugin(...) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
+    if a:0 == 0
+      call SpaceVim#plugins#manager#install()
+    else
+      call SpaceVim#plugins#manager#install(a:000)
+    endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     if a:0 == 0
       call SpaceVim#plugins#manager#install()
     else
-      call dein#install(a:000)
+      call SpaceVim#plugins#manager#install(a:000)
     endif
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
