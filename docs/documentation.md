@@ -1085,7 +1085,8 @@ Files manipulation commands (start with f):
 | `SPC f C d` | convert file from unix to dos encoding                         |
 | `SPC f C u` | convert file from dos to unix encoding                         |
 | `SPC f D`   | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO)         |
+| `SPC f E`   | open a file with elevated privileges (sudo layer)         |
+| `SPC f W`   | save a file with elevated privileges (sudo layer)         |
 | `SPC f f`   | open file                                                      |
 | `SPC f F`   | try to open the file under point                               |
 | `SPC f o`   | open a file using the default external program(TODO)           |
