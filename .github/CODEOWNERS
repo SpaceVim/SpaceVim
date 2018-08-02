@@ -9,8 +9,8 @@
 docs/layers/*    @SLZhang-CUG
 
 # lang#javascript layer
-autoload/SpaceVim/layers/lang/javascript.vim
-docs/layers/lang/javascript.md
-docs/cn/layers/lang/javascript.md
+autoload/SpaceVim/layers/lang/javascript.vim @ zhujinxuan @ S1ngS1ng @ chemzqm
+docs/layers/lang/javascript.md               @ zhujinxuan @ S1ngS1ng @ chemzqm
+docs/cn/layers/lang/javascript.md            @ zhujinxuan @ S1ngS1ng @ chemzqm
 # layer plugins conf:
 
