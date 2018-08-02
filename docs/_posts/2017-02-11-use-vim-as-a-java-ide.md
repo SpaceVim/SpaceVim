@@ -1,14 +1,14 @@
 ---
-title: "Use SpaceVim as a Java IDE"
+title: "Use Vim as a Java IDE"
 categories: [tutorials, blog]
 excerpt: "A general guide for using SpaceVim as Java IDE, including layer configuration and requiems installation."
-redirect_from: ["/2017/02/11/use-vim-as-a-java-ide.html", "/use-vim-as-a-java-ide/"]
+redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
 type: BlogPosting
 comments: true
-commentsID: "Use SpaceVim as a Java IDE"
+commentsID: "Use Vim as a Java IDE"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > Use SpaceVim as a Java IDE
+# [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
 
 I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project.
 
@@ -40,6 +40,14 @@ after installing Vim, following the quick start guide to install SpaceVim,
 ![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
 ## Fuzzy finder
+
+SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
+fuzzy finder layer. for example enable denite layer:
+
+```toml
+[[layers]]
+name = "denite"
+```
 
 ## Version Contrl
 
