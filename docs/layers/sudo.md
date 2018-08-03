@@ -30,5 +30,5 @@ To use this configuration layer, update custom configuration file with:
 
 | Key Binding | Description                          |
 | ----------- | ------------------------------------ |
-| `SPC f E`   | open a file with elevated privileges |
+| `SPC f E`   | open a file with elevated privileges (TODO) |
 | `SPC f W`   | save a file with elevated privileges |
