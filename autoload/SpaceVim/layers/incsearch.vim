@@ -27,7 +27,7 @@
 "   z/          n           incsearch fuzzy /
 "   z?          n           incsearch fuzzy ?
 "   zg?         n           incsearch fuzzy g?
-"   <space>/    n           incsearch easymotion
+"   <Space>/    n           incsearch easymotion
 " <
 
 let s:filename = expand('<sfile>:~')

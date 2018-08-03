@@ -688,7 +688,7 @@ features.
 
 | Key bindings         | Description                   |
 | -------------------- | ----------------------------- |
-| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f f`       | Fuzzy find file               |
 | `<Leader> f h`       | Fuzzy find history/yank       |
