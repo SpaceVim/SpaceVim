@@ -117,18 +117,13 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ## Highlighted features
 
-- **Great documentation:** access documentation in SpaceVim with
-    `:h SpaceVim`.
+- **Great documentation:** access documentation in SpaceVim with `:h SpaceVim`.
 - **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
 - **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
-- **Mnemonic key bindings:** commands have mnemonic prefixes like
-    `[Window]` for all the window and buffer commands or `[Unite]` for the
-    unite work flow commands.
+- **Mnemonic key bindings:** commands have mnemonic prefixes like `[WIN]` for all the window and buffer commands or `[Unite]` for the unite work flow commands.
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
-- **Batteries included:** discover hundreds of ready-to-use packages nicely
-    organised in configuration layers following a set of
-    [conventions](http://spacevim.org/conventions/).
+- **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ## Screenshots
@@ -246,7 +241,7 @@ The bootstrap functions should be placed to the `autoload` directory in `runtime
 ```vim
 func! myspacevim#before() abort
     let g:neomake_enabled_c_makers = ['clang']
-    nnoremap jk <esc>
+    nnoremap jk <Esc>
 endf
 
 func! myspacevim#after() abort
@@ -273,7 +268,7 @@ the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 
 the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
-- The `Ctrl + a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+- The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
@@ -615,16 +610,16 @@ You can also use `SPC t t` to open the tab manager windows.
 
 key bindings within tab manager windows:
 
-| Key Binding  | Description                               |
-| ------------ | ----------------------------------------- |
-| `o`          | Close or expand tab windows.              |
-| `r`          | Rename the tab under the cursor.          |
-| `n`          | Create new named tab below the cursor tab |
-| `N`          | Create new tab below the cursor tab       |
-| `x`          | Delete the tab                            |
-| `<C-S-Up>`   | Move tab backward                         |
-| `<C-S-Down>` | Move tab forward                          |
-| `<Enter>`    | Jump to windows under the cursor.         |
+| Key Binding       | Description                               |
+| ----------------- | ----------------------------------------- |
+| `o`               | Close or expand tab windows.              |
+| `r`               | Rename the tab under the cursor.          |
+| `n`               | Create new named tab below the cursor tab |
+| `N`               | Create new tab below the cursor tab       |
+| `x`               | Delete the tab                            |
+| `Ctrl-Shift-Up`   | Move tab backward                         |
+| `Ctrl-Shift-Down` | Move tab forward                          |
+| `<Enter>`         | Jump to windows under the cursor.         |
 
 ## General Key bindings
 
@@ -636,21 +631,21 @@ can change it via `windows_leader` option:
 ```toml
 [options]
     windows_leader = "s"
-````
+```
 
 | Key bindings   | Description                                                                                                                                                                                                                    |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `q`            | Smart buffer close                                                                                                                                                                                                             |
-| `WIN p`          | Split nicely                                                                                                                                                                                                                   |
-| `WIN v`          | :split                                                                                                                                                                                                                         |
-| `WIN g`          | :vsplit                                                                                                                                                                                                                        |
-| `WIN t`          | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `WIN o`          | Close other windows (:only)                                                                                                                                                                                                    |
-| `WIN x`          | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `WIN q`          | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `WIN Q`          | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`          | Next window or tab                                                                                                                                                                                                             |
-| `<S-Tab>`      | Previous window or tab                                                                                                                                                                                                         |
+| `WIN p`        | Split nicely                                                                                                                                                                                                                   |
+| `WIN v`        | :split                                                                                                                                                                                                                         |
+| `WIN g`        | :vsplit                                                                                                                                                                                                                        |
+| `WIN t`        | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `WIN o`        | Close other windows (:only)                                                                                                                                                                                                    |
+| `WIN x`        | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `WIN q`        | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `WIN Q`        | Close current buffer (:close)                                                                                                                                                                                                  |
+| `<Tab>`        | Next window or tab                                                                                                                                                                                                             |
+| `Shift-Tab`    | Previous window or tab                                                                                                                                                                                                         |
 | `<Leader> s v` | Split with previous buffer                                                                                                                                                                                                     |
 | `<Leader> s g` | Vertically split with previous buffer                                                                                                                                                                                          |
 
@@ -659,9 +654,9 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 | Key                   |      Mode     | Action                                                                         |
 | --------------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<leader>`+`y`        |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl`+`c`            |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<leader>`+`Ctrl`+`c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> y`          |     visual    | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`              |     Normal    | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c`     |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
 | `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
 | `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
 | `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
@@ -723,12 +718,12 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 ### Native functions
 
-| Key                |  Mode  | Action                           |
-| ------------------ | :----: | -------------------------------- |
-| `<leader>` + `qr`  | Normal | Same as native `q`               |
-| `<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
+| Key              |  Mode  | Action                            |
+| ---------------- | :----: | --------------------------------- |
+| `<Leader> q r`   | Normal | Same as native `q`                |
+| `<Leader> q r /` | Normal | Same as native `q /`, open cmdwin |
+| `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
+| `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
 ### Bookmarks management
 
@@ -1090,8 +1085,8 @@ Files manipulation commands (start with f):
 | `SPC f C d` | convert file from unix to dos encoding                         |
 | `SPC f C u` | convert file from dos to unix encoding                         |
 | `SPC f D`   | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`   | open a file with elevated privileges (sudo layer) (TODO)         |
-| `SPC f W`   | save a file with elevated privileges (sudo layer)         |
+| `SPC f E`   | open a file with elevated privileges (sudo layer) (TODO)       |
+| `SPC f W`   | save a file with elevated privileges (sudo layer)              |
 | `SPC f f`   | open file                                                      |
 | `SPC f F`   | try to open the file under point                               |
 | `SPC f o`   | open a file using the default external program(TODO)           |
