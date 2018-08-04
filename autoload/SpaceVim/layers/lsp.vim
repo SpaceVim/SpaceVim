@@ -88,6 +88,7 @@ let s:lsp_servers = {
       \ 'objcpp' : ['clangd'],
       \ 'dart' : ['dart_language_server'],
       \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'dockerfile' : ['docker-langserver', '--stdio'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'python' : ['pyls'],
       \ 'html' : ['html-languageserver', '--stdio'],

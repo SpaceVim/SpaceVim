@@ -11,6 +11,13 @@ if has('vim_starting')
   if &compatible
     set nocompatible
   endif
+  " python host
+  if !empty($PYTHON_HOST_PROG)
+    let g:python_host_prog  = $PYTHON_HOST_PROG
+  endif
+  if !empty($PYTHON3_HOST_PROG)
+    let g:python3_host_prog = $PYTHON3_HOST_PROG
+  endif
 endif
 " Detect root directory of SpaceVim
 let g:_spacevim_root_dir = fnamemodify(expand('<sfile>'),

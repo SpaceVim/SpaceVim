@@ -762,7 +762,7 @@ mappings
   z/          n           incsearch fuzzy /
   z?          n           incsearch fuzzy ?
   zg?         n           incsearch fuzzy g?
-  <space>/    n           incsearch easymotion
+  <Space>/    n           incsearch easymotion
 <
 
 ==============================================================================
@@ -1220,10 +1220,10 @@ FAQ                                                             *SpaceVim-faq*
   `<leader>+<c-f>`.
 <
 
-  4. How to use `<space>` as `<leader>`?
+  4. How to use `<Space>` as `<Leader>`?
 
 >
-  Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+  Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
 <
 
 

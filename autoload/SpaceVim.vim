@@ -35,7 +35,7 @@
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please check bellowing options.
+" please take a look at the following options.
 "
 
 " Public SpaceVim Options {{{
@@ -666,7 +666,7 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'VebuggerTerminal',
       \ 'SpaceVimTabsManager'
       \ ]
-let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
 ""
@@ -682,7 +682,7 @@ let g:spacevim_wildignore
 " }}}
 
 
-" Privite SpaceVim options
+" Private SpaceVim options
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
@@ -962,9 +962,9 @@ endfunction
 "   `<leader>+<c-f>`.
 " <
 "
-" 4. How to use `<space>` as `<leader>`?
+" 4. How to use `<Space>` as `<Leader>`?
 " >
-"   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+"   Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
 " <
 
 ""

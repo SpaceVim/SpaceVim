@@ -10,9 +10,9 @@ let s:json = {}
 
 
 if exists('*json_decode')
-  let g:spacevim_api_json_true = v:true
-  let g:spacevim_api_json_true = v:false
-  let g:spacevim_api_json_true = v:null
+  let g:_spacevim_api_json_trus = v:true
+  let g:_spacevim_api_json_trus = v:false
+  let g:_spacevim_api_json_trus = v:null
   function! s:json_decode(json) abort
     if a:json ==# ''
       return []
@@ -29,16 +29,16 @@ else
   function! s:json_false() abort
   endfunction
 
-  let g:spacevim_api_json_true = [function('s:json_true')]
-  let g:spacevim_api_json_false = [function('s:json_false')]
-  let g:spacevim_api_json_null = [function('s:json_null')]
+  let g:_spacevim_api_json_trus = [function('s:json_true')]
+  let g:_spacevim_api_json_falss = [function('s:json_false')]
+  let g:_spacevim_api_json_nuls = [function('s:json_null')]
   " @vimlint(EVL102, 1, l:true)
   " @vimlint(EVL102, 1, l:false)
   " @vimlint(EVL102, 1, l:null)
   function! s:json_decode(json) abort
-    let true = g:spacevim_api_json_true
-    let false = g:spacevim_api_json_false
-    let null = g:spacevim_api_json_null
+    let true = g:_spacevim_api_json_trus
+    let false = g:_spacevim_api_json_falss
+    let null = g:_spacevim_api_json_nuls
     if substitute(a:json, '\v\"%(\\.|[^"\\])*\"|true|false|null|[+-]?\d+%(\.\d+%([Ee][+-]?\d+)?)?', '', 'g') !~# "[^,:{}[\\] \t]"
 
       try
@@ -58,9 +58,9 @@ else
   " @vimlint(EVL102, 0, l:null)
 endif
 
-lockvar g:spacevim_api_json_true
-lockvar g:spacevim_api_json_false
-lockvar g:spacevim_api_json_null
+lockvar g:_spacevim_api_json_trus
+lockvar g:_spacevim_api_json_falss
+lockvar g:_spacevim_api_json_nuls
 
 let s:json['json_decode'] = function('s:json_decode')
 
@@ -81,19 +81,19 @@ else
       return iconv(json, &encoding, 'utf-8')
     elseif type(a:val) == 2
       let s = string(a:val)
-      if s == string(g:spacevim_api_json_null)
+      if s == string(g:_spacevim_api_json_nuls)
         return 'null'
-      elseif s == string(g:spacevim_api_json_true)
+      elseif s == string(g:_spacevim_api_json_trus)
         return 'true'
-      elseif s == string(g:spacevim_api_json_false)
+      elseif s == string(g:_spacevim_api_json_falss)
         return 'false'
       endif
     elseif type(a:val) == type([])
-      if len(a:val) == 1 && a:val[0] == g:spacevim_api_json_false[0]
+      if len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_falss[0]
         return 'false'
-      elseif len(a:val) == 1 && a:val[0] == g:spacevim_api_json_true[0]
+      elseif len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_trus[0]
         return 'true'
-      elseif len(a:val) == 1 && a:val[0] == g:spacevim_api_json_null[0]
+      elseif len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_nuls[0]
         return 'null'
       endif
       return '[' . join(map(copy(a:val), 's:json_encode(v:val)'), ',') . ']'
