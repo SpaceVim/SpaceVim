@@ -652,69 +652,69 @@ can change it via `windows_leader` option:
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
 
-| Key                   |      Mode     | Action                                                                         |
-| --------------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<Leader> y`          |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`              |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c`     |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl`+`b`            |     Normal    | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl`+`e`            |     Normal    | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl`+`y`            |     Normal    | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl`+`q`            |     Normal    | `Ctrl`+`w`                                                                     |
-| `Ctrl`+`x`            |     Normal    | Switch buffer and placement                                                    |
-| `Up,Down`             |     Normal    | Smart up and down                                                              |
-| `}`                   |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
-| `<`                   | Visual/Normal | Indent to left and re-select                                                   |
-| `>`                   | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`                 |     Visual    | Indent to right and re-select                                                  |
-| `Shift`+`Tab`         |     Visual    | Indent to left and re-select                                                   |
-| `gp`                  |     Normal    | Select last paste                                                              |
-| `Q`/`gQ`              |     Normal    | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl`+`a`            |    Command    | Navigation in command line                                                     |
-| `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
-| `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
+| Key               |      Mode     | Action                                                                         |
+| ----------------- | :-----------: | ------------------------------------------------------------------------------ |
+| `<Leader> y`      |     visual    | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`          |     Normal    | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
+| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
+| `Ctrl-f`          |     Normal    | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl-b`          |     Normal    | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl-e`          |     Normal    | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl-y`          |     Normal    | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl-q`          |     Normal    | `Ctrl`+`w`                                                                     |
+| `Ctrl-x`          |     Normal    | Switch buffer and placement                                                    |
+| `<Up>`, `<Down>`  |     Normal    | Smart up and down                                                              |
+| `}`               |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
+| `<`               | Visual/Normal | Indent to left and re-select                                                   |
+| `>`               | Visual/Normal | Indent to right and re-select                                                  |
+| `Tab`             |     Visual    | Indent to right and re-select                                                  |
+| `Shift-Tab`       |     Visual    | Indent to left and re-select                                                   |
+| `g p`             |     Normal    | Select last paste                                                              |
+| `Q` / `g Q`       |     Normal    | Disable EX-mode (<Nop>)                                                        |
+| `Ctrl-a`          |    Command    | Navigation in command line                                                     |
+| `Ctrl-b`          |    Command    | Move cursor backward in command line                                           |
+| `Ctrl-f`          |    Command    | Move cursor forward in command line                                            |
 
 ### File Operations
 
-| Key             |          Mode         | Action                                     |
-| --------------- | :-------------------: | ------------------------------------------ |
-| `<leader>`+`cd` |         Normal        | Switch to the directory of the open buffer |
-| `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
-| `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
-| `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
+| Key            |          Mode         | Action                                     |
+| -------------- | :-------------------: | ------------------------------------------ |
+| `<Leader> c d` |         Normal        | Switch to the directory of the open buffer |
+| `<Leader> w`   |     Normal/visual     | Write (:w)                                 |
+| `Ctrl-s`       | Normal/visual/Command | Write (:w)                                 |
+| `:w!!`         |        Command        | Write as root (%!sudo tee > /dev/null %)   |
 
 ### Editor UI
 
-| Key                     |      Mode     | Action                                                           |
-| ----------------------- | :-----------: | ---------------------------------------------------------------- |
-| `F2`                    |     _All_     | Toggle tagbar                                                    |
-| `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
-| `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`         |     Normal    | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`         |     Normal    | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`         |     Normal    | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`         |     Normal    | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                    |     Normal    | Go to first tab (:tabfirst)                                      |
-| `g$`                    |     Normal    | Go to last tab (:tablast)                                        |
-| `gr`                    |     Normal    | Go to previous tab (:tabprevious)                                |
-| `Ctrl`+`<Dow>`          |     Normal    | Move to split below (<C-w>j)                                     |
-| `Ctrl`+`<Up>`           |     Normal    | Move to upper split (<C-w>k)                                     |
-| `Ctrl`+`<Left>`         |     Normal    | Move to left split (<C-w>h)                                      |
-| `Ctrl`+`<Right>`        |     Normal    | Move to right split (<C-w>l)                                     |
-| `*`                     |     Visual    | Search selection forwards                                        |
-| `#`                     |     Visual    | Search selection backwards                                       |
-| `,`+`Space`             |     Normal    | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`              |     Visual    | Replace selection                                                |
-| `<leader>`+`lj`         |     Normal    | Next on location list                                            |
-| `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
-| `<leader>`+`S`          | Normal/visual | Source selection                                                 |
+| Key binding           | Description                                                      |
+| --------------------- | ---------------------------------------------------------------- |
+| `<F2>`                | Toggle tagbar                                                    |
+| `<F3>`                | Toggle Vimfiler                                                  |
+| `<Leader> [1-9]`      | Jump to the buffer with the num index                            |
+| `Alt-[1-9]`           | Jump to the buffer with the num index, this only works in neovim |
+| `Alt-h` / `Alt-Left`  | Jump to left buffer in the tabline, this only works in neovim    |
+| `Alt-l` / `Alt-Right` | Jump to Right buffer in the tabline, this only works in neovim   |
+| `<Leader> t s`        | Toggle spell-checker (:setlocal spell!)                          |
+| `<Leader>`+`tn`       | Toggle line numbers (:setlocal nonumber!)                        |
+| `<leader>`+`tl`       | Toggle hidden characters (:setlocal nolist!)                     |
+| `<leader>`+`th`       | Toggle highlighted search (:set hlsearch!)                       |
+| `<leader>`+`tw`       | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g 0`                 | Go to first tab (:tabfirst)                                      |
+| `g $`                 | Go to last tab (:tablast)                                        |
+| `g r`                 | Go to previous tab (:tabprevious)                                |
+| `Ctrl-Down`           | Move to split below (<C-w>j)                                     |
+| `Ctrl-Up`             | Move to upper split (<C-w>k)                                     |
+| `Ctrl-Left`           | Move to left split (<C-w>h)                                      |
+| `Ctrl-Right`          | Move to right split (<C-w>l)                                     |
+| `*`                   | Search selection forwards                                        |
+| `#`                   | Search selection backwards                                       |
+| `,`+`Space`           | Remove all spaces at EOL                                         |
+| `Ctrl`+`r`            | Replace selection                                                |
+| `<leader>`+`lj`       | Next on location list                                            |
+| `<leader>`+`lk`       | Previous on location list                                        |
+| `<leader>`+`S`        | Source selection                                                 |
 
 ### Native functions
 
