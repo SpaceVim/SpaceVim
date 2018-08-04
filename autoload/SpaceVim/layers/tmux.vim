@@ -57,5 +57,11 @@ function! SpaceVim#layers#tmux#config() abort
         \ 'args': ['source-file', '-q'],
         \ 'errorformat': '%f:%l:%m,%+Gunknown command: %s',
         \ }
+  let g:tmuxline_separators = {
+        \ 'left' : "\ue0b0",
+        \ 'left_alt': '>',
+        \ 'right' : '',
+        \ 'right_alt' : '<',
+        \ 'space' : ' '}
 endfunction
 
