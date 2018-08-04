@@ -1136,31 +1136,27 @@ here is any picture for this feature:
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-| Key Binding                    | Description                                       |
-| ------------------------------ | ------------------------------------------------- |
-| `<F3>` or `SPC f t`            | Toggle file explorer                              |
-| **Within _file tree_ buffers** |                                                   |
-| `<Left>` or `h`                | go to parent node and collapse expanded directory |
-| `<Down>` or `j`                | select next file or directory                     |
-| `<Up>` or `k`                  | select previous file or directory                 |
-| `<Right>` or `l`               | open selected file or expand directory            |
-| `Ctrl`+`j`                     | Un-map                                            |
-| `Ctrl`+`l`                     | Un-map                                            |
-| `E`                            | Un-map                                            |
-| `N`                            | Create new file under corsor                      |
-| `yy`                           | Copy file full path to system clipboard           |
-| `yY`                           | Copy file to system clipboard                     |
-| `P`                            | Paste file to the position under the cursor       |
-| `.`                            | toggle visible ignored files                      |
-| `sv`                           | Split edit                                        |
-| `sg`                           | Vertical split edit                               |
-| `p`                            | Preview                                           |
-| `i`                            | Switch to directory history                       |
-| `v`                            | Quick look                                        |
-| `gx`                           | Execute with vimfiler associated                  |
-| `'`                            | Toggle mark current line                          |
-| `V`                            | Clear all marks                                   |
-| `Ctrl`+`r`                     | Redraw                                            |
+| Key Binding        | Description                                       |
+| ------------------ | ------------------------------------------------- |
+| `<F3>` / `SPC f t` | Toggle file explorer                              |
+| `<Left>` / `h`     | go to parent node and collapse expanded directory |
+| `<Down>` / `j`     | select next file or directory                     |
+| `<Up>` / `k`       | select previous file or directory                 |
+| `<Right>` / `l`    | open selected file or expand directory            |
+| `N`                | Create new file under corsor                      |
+| `y y`              | Copy file full path to system clipboard           |
+| `y Y`              | Copy file to system clipboard                     |
+| `P`                | Paste file to the position under the cursor       |
+| `.`                | toggle visible ignored files                      |
+| `s v`              | Split edit                                        |
+| `s g`              | Vertical split edit                               |
+| `p`                | Preview                                           |
+| `i`                | Switch to directory history                       |
+| `v`                | Quick look                                        |
+| `g x`              | Execute with vimfiler associated                  |
+| `'`                | Toggle mark current line                          |
+| `V`                | Clear all marks                                   |
+| `Ctrl-r`           | Redraw                                            |
 
 ##### Open file with file tree.
 
