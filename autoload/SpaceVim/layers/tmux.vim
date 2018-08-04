@@ -34,6 +34,7 @@ function! SpaceVim#layers#tmux#plugins() abort
         \ 'TmuxNavigateRight'] }],
         \ ]
   call add(plugins, ['tmux-plugins/vim-tmux', {'on_ft' : 'tmux'}])
+  call add(plugins, ['edkolev/tmuxline.vim', {'merged' : 0}])
   return plugins
 endfunction
 
