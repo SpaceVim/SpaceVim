@@ -117,18 +117,13 @@ Community-driven configuration provides curated packages tuned by power users an
 
 ## Highlighted features
 
-- **Great documentation:** access documentation in SpaceVim with
-    `:h SpaceVim`.
+- **Great documentation:** access documentation in SpaceVim with `:h SpaceVim`.
 - **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
 - **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
-- **Mnemonic key bindings:** commands have mnemonic prefixes like
-    `[Window]` for all the window and buffer commands or `[Unite]` for the
-    unite work flow commands.
+- **Mnemonic key bindings:** commands have mnemonic prefixes like `[WIN]` for all the window and buffer commands or `[Unite]` for the unite work flow commands.
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
-- **Batteries included:** discover hundreds of ready-to-use packages nicely
-    organised in configuration layers following a set of
-    [conventions](http://spacevim.org/conventions/).
+- **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
 - **Neovim centric:** Dark powered mode of SpaceVim
 
 ## Screenshots
@@ -246,7 +241,7 @@ The bootstrap functions should be placed to the `autoload` directory in `runtime
 ```vim
 func! myspacevim#before() abort
     let g:neomake_enabled_c_makers = ['clang']
-    nnoremap jk <esc>
+    nnoremap jk <Esc>
 endf
 
 func! myspacevim#after() abort
@@ -273,7 +268,7 @@ the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 
 the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
-- The `Ctrl + a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+- The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
@@ -615,125 +610,134 @@ You can also use `SPC t t` to open the tab manager windows.
 
 key bindings within tab manager windows:
 
-| Key Binding  | Description                               |
-| ------------ | ----------------------------------------- |
-| `o`          | Close or expand tab windows.              |
-| `r`          | Rename the tab under the cursor.          |
-| `n`          | Create new named tab below the cursor tab |
-| `N`          | Create new tab below the cursor tab       |
-| `x`          | Delete the tab                            |
-| `<C-S-Up>`   | Move tab backward                         |
-| `<C-S-Down>` | Move tab forward                          |
-| `<Enter>`    | Jump to windows under the cursor.         |
+| Key Binding       | Description                               |
+| ----------------- | ----------------------------------------- |
+| `o`               | Close or expand tab windows.              |
+| `r`               | Rename the tab under the cursor.          |
+| `n`               | Create new named tab below the cursor tab |
+| `N`               | Create new tab below the cursor tab       |
+| `x`               | Delete the tab                            |
+| `Ctrl-Shift-Up`   | Move tab backward                         |
+| `Ctrl-Shift-Down` | Move tab forward                          |
+| `<Enter>`         | Jump to windows under the cursor.         |
 
 ## General Key bindings
 
 ### Window manager
 
-Windows manager key bindings can only be used in normal mode. The default leader is `s`, you can
-can change it via `g:spacevim_windows_leader`
+Windows manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
+can change it via `windows_leader` option:
 
-| Key bindings    | Description                                                                                                                                                                                                                    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Smart buffer close                                                                                                                                                                                                             |
-| `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
-| `s`+`v`         | :split                                                                                                                                                                                                                         |
-| `s`+`g`         | :vsplit                                                                                                                                                                                                                        |
-| `s`+`t`         | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s`+`o`         | Close other windows (:only)                                                                                                                                                                                                    |
-| `s`+`x`         | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s`+`q`         | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`           | Next window or tab                                                                                                                                                                                                             |
-| `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
+```toml
+[options]
+    windows_leader = "s"
+```
+
+| Key bindings   | Description                                                                                                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `q`            | Smart buffer close                                                                                                                                                                                                             |
+| `WIN p`        | Split nicely                                                                                                                                                                                                                   |
+| `WIN v`        | :split                                                                                                                                                                                                                         |
+| `WIN g`        | :vsplit                                                                                                                                                                                                                        |
+| `WIN t`        | Open new tab (:tabnew)                                                                                                                                                                                                         |
+| `WIN o`        | Close other windows (:only)                                                                                                                                                                                                    |
+| `WIN x`        | Remove buffer, leave blank window                                                                                                                                                                                              |
+| `WIN q`        | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
+| `WIN Q`        | Close current buffer (:close)                                                                                                                                                                                                  |
+| `<Tab>`        | Next window or tab                                                                                                                                                                                                             |
+| `Shift-Tab`    | Previous window or tab                                                                                                                                                                                                         |
+| `<Leader> s v` | Split with previous buffer                                                                                                                                                                                                     |
+| `<Leader> s g` | Vertically split with previous buffer                                                                                                                                                                                          |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
-can be get by `<leader> q r`
+can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
 
-| Key                   |      Mode     | Action                                                                         |
-| --------------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<leader>`+`y`        |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl`+`c`            |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<leader>`+`Ctrl`+`c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl`+`b`            |     Normal    | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl`+`e`            |     Normal    | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl`+`y`            |     Normal    | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl`+`q`            |     Normal    | `Ctrl`+`w`                                                                     |
-| `Ctrl`+`x`            |     Normal    | Switch buffer and placement                                                    |
-| `Up,Down`             |     Normal    | Smart up and down                                                              |
-| `}`                   |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
-| `<`                   | Visual/Normal | Indent to left and re-select                                                   |
-| `>`                   | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`                 |     Visual    | Indent to right and re-select                                                  |
-| `Shift`+`Tab`         |     Visual    | Indent to left and re-select                                                   |
-| `gp`                  |     Normal    | Select last paste                                                              |
-| `Q`/`gQ`              |     Normal    | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl`+`a`            |    Command    | Navigation in command line                                                     |
-| `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
-| `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
+| Key               |      Mode     | Action                                                                         |
+| ----------------- | :-----------: | ------------------------------------------------------------------------------ |
+| `<Leader> y`      |     visual    | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`          |     Normal    | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
+| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
+| `Ctrl-f`          |     Normal    | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl-b`          |     Normal    | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl-e`          |     Normal    | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl-y`          |     Normal    | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl-q`          |     Normal    | `Ctrl`+`w`                                                                     |
+| `Ctrl-x`          |     Normal    | Switch buffer and placement                                                    |
+| `<Up>`, `<Down>`  |     Normal    | Smart up and down                                                              |
+| `}`               |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
+| `<`               | Visual/Normal | Indent to left and re-select                                                   |
+| `>`               | Visual/Normal | Indent to right and re-select                                                  |
+| `<Tab>`           |     Visual    | Indent to right and re-select                                                  |
+| `Shift-Tab`       |     Visual    | Indent to left and re-select                                                   |
+| `g p`             |     Normal    | Select last paste                                                              |
+| `Q` / `g Q`       |     Normal    | Disable EX-mode (<Nop>)                                                        |
+| `Ctrl-a`          |    Command    | Navigation in command line                                                     |
+| `Ctrl-b`          |    Command    | Move cursor backward in command line                                           |
+| `Ctrl-f`          |    Command    | Move cursor forward in command line                                            |
 
 ### File Operations
 
-| Key             |          Mode         | Action                                     |
-| --------------- | :-------------------: | ------------------------------------------ |
-| `<leader>`+`cd` |         Normal        | Switch to the directory of the open buffer |
-| `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
-| `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
-| `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
+| Key binding    | Description                                |
+| -------------- | ------------------------------------------ |
+| `<Leader> c d` | Switch to the directory of the open buffer |
+| `SPC f s`      | Write (:w)                                 |
+| `Ctrl-s`       | Write (:w)                                 |
+| `SPC f W`      | Write as root (need sudo layer)            |
 
 ### Editor UI
 
-| Key                     |      Mode     | Action                                                           |
-| ----------------------- | :-----------: | ---------------------------------------------------------------- |
-| `F2`                    |     _All_     | Toggle tagbar                                                    |
-| `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
-| `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`         |     Normal    | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`         |     Normal    | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`         |     Normal    | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`         |     Normal    | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                    |     Normal    | Go to first tab (:tabfirst)                                      |
-| `g$`                    |     Normal    | Go to last tab (:tablast)                                        |
-| `gr`                    |     Normal    | Go to previous tab (:tabprevious)                                |
-| `Ctrl`+`<Dow>`          |     Normal    | Move to split below (<C-w>j)                                     |
-| `Ctrl`+`<Up>`           |     Normal    | Move to upper split (<C-w>k)                                     |
-| `Ctrl`+`<Left>`         |     Normal    | Move to left split (<C-w>h)                                      |
-| `Ctrl`+`<Right>`        |     Normal    | Move to right split (<C-w>l)                                     |
-| `*`                     |     Visual    | Search selection forwards                                        |
-| `#`                     |     Visual    | Search selection backwards                                       |
-| `,`+`Space`             |     Normal    | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`              |     Visual    | Replace selection                                                |
-| `<leader>`+`lj`         |     Normal    | Next on location list                                            |
-| `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
-| `<leader>`+`S`          | Normal/visual | Source selection                                                 |
+| Key binding           | Description                                                      |
+| --------------------- | ---------------------------------------------------------------- |
+| `<F2>`                | Toggle tagbar                                                    |
+| `<F3>`                | Toggle Vimfiler                                                  |
+| `<Leader> [1-9]`      | Jump to the buffer with the num index                            |
+| `Alt-[1-9]`           | Jump to the buffer with the num index, this only works in neovim |
+| `Alt-h` / `Alt-Left`  | Jump to left buffer in the tabline, this only works in neovim    |
+| `Alt-l` / `Alt-Right` | Jump to Right buffer in the tabline, this only works in neovim   |
+| `SPC t S`             | Toggle spell checker                                             |
+| `SPC t n`             | Toggle line number and relativenumber                            |
+| `SPC t l`             | Toggle hidden characters (:setlocal nolist!)                     |
+| `SPC t W`             | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g 0`                 | Go to first tab (:tabfirst)                                      |
+| `g $`                 | Go to last tab (:tablast)                                        |
+| `g r`                 | Go to previous tab (:tabprevious)                                |
+| `Ctrl-Down`           | Move to split below (`Ctrl-w j`)                                 |
+| `Ctrl-Up`             | Move to upper split (`Ctrl-w k`)                                 |
+| `Ctrl-Left`           | Move to left split (`Ctrl-w h`)                                  |
+| `Ctrl-Right`          | Move to right split (`Ctrl-w l`)                                 |
+| `*`                   | Search selection forwards                                        |
+| `#`                   | Search selection backwards                                       |
+| `, <Space>`           | Remove all spaces at EOL                                         |
+| `Ctrl-r`              | Replace selection in visual mode                                 |
 
 ### Native functions
 
-| Key                |  Mode  | Action                           |
-| ------------------ | :----: | -------------------------------- |
-| `<leader>` + `qr`  | Normal | Same as native `q`               |
-| `<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
+| Key              |  Mode  | Action                            |
+| ---------------- | :----: | --------------------------------- |
+| `<Leader> q r`   | Normal | Same as native `q`                |
+| `<Leader> q r /` | Normal | Same as native `q /`, open cmdwin |
+| `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
+| `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
 ### Bookmarks management
 
-| Key     |  Mode  | Action                          |
-| ------- | :----: | ------------------------------- |
-| `m`+`a` | Normal | Show list of all bookmarks      |
-| `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | Jump to next bookmark           |
-| `m`+`p` | Normal | Jump to previous bookmark       |
-| `m`+`i` | Normal | Annotate bookmark               |
+Bookmarks manager are included in `tools` layer, to use following key bindings, you need to enable
+`tools` layer:
+
+```toml
+[[layers]]
+  name = "tools"
+```
+
+| Key binding | Description                     |
+| ----------- | ------------------------------- |
+| `m a`       | Show list of all bookmarks      |
+| `m m`       | Toggle bookmark in current line |
+| `m n`       | Jump to next bookmark           |
+| `m p`       | Jump to previous bookmark       |
+| `m i`       | Annotate bookmark               |
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
@@ -749,7 +753,7 @@ features.
 
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
-| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f f`       | Fuzzy find file               |
 | `<Leader> f h`       | Fuzzy find history/yank       |
@@ -777,28 +781,28 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Key bindings within fuzzy finder buffer**
 
-| key bindings          | Mode   | description                               |
-| --------------------- | ------ | ----------------------------------------- |
-| `Tab`/`<C-j>`         | -      | Select next line                          |
-| `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
-| `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
-| `Ctrl`+`w`            | Insert | Delete backward path                      |
-| `Enter`               | -      | Run default action                        |
-| `Ctrl`+`s`            | -      | Open in a split                           |
-| `Ctrl`+`v`            | -      | Open in a vertical split                  |
-| `Ctrl`+`t`            | -      | Open in a new tab                         |
-| `Ctrl`+`g`            | -      | Exit unite                                |
+| key bindings           | description                               |
+| ---------------------- | ----------------------------------------- |
+| `<Tab>` / `Ctrl-j`     | Select next line                          |
+| `Shift-Tab` / `Ctrl-k` | Select previous line                      |
+| `j k`                  | Leave Insert mode (Only for denite/unite) |
+| `Ctrl-w`               | Delete backward path                      |
+| `<Enter>`              | Run default action                        |
+| `Ctrl-s`               | Open in a split                           |
+| `Ctrl-v`               | Open in a vertical split                  |
+| `Ctrl-t`               | Open in a new tab                         |
+| `Ctrl-g`               | Exit unite                                |
 
 **Denite/Unite normal mode key bindings**
 
-| key bindings     | Mode          | description                          |
-| ---------------- | ------------- | ------------------------------------ |
-| `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Normal        | Select actions                       |
-| `Space`          | Normal        | Toggle mark current candidate, up    |
-| `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
+| key bindings   | Mode          | description                          |
+| -------------- | ------------- | ------------------------------------ |
+| `Ctrl-h/k/l/r` | Normal        | Un-map                               |
+| `Ctrl-l`       | Normal        | Redraw                               |
+| `<Tab>`        | Normal        | Select actions                       |
+| `<Space>`      | Normal        | Toggle mark current candidate, up    |
+| `r`            | Normal        | Replace ('search' profile) or rename |
+| `Ctrl-z`       | Normal/insert | Toggle transpose window              |
 
 The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
 
@@ -809,15 +813,15 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 **Mappings guide**
 
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
-The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
+The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value   | description                         |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
-| `<leader>`  | default vim leader                | default leader prefix of vim/neovim |
+| Prefix name | custom option and default value | description                         |
+| ----------- | ------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                | default mapping prefix of SpaceVim  |
+| `[WIN]`     | `windows_leader` / `s`          | window mapping prefix of SpaceVim   |
+| `<Leader>`  | default vim leader              | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
@@ -827,7 +831,7 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 
-after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+after pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
 
 | key | description                   |
 | --- | ----------------------------- |
@@ -1045,8 +1049,8 @@ Buffer manipulation commands (start with `b`):
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
 | `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | kill other buffers                                                             |
-| `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
+| `SPC b Ctrl-d`  | kill other buffers                                                             |
+| `SPC b Ctrl-D`  | kill buffers using a regular expression(TODO)                                  |
 | `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
 | `SPC b h`       | open _SpaceVim_ home buffer                                                    |
 | `SPC b n`       | switch to next buffer avoiding special buffers                                 |
@@ -1085,8 +1089,8 @@ Files manipulation commands (start with f):
 | `SPC f C d` | convert file from unix to dos encoding                         |
 | `SPC f C u` | convert file from dos to unix encoding                         |
 | `SPC f D`   | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`   | open a file with elevated privileges (sudo layer) (TODO)         |
-| `SPC f W`   | save a file with elevated privileges (sudo layer)         |
+| `SPC f E`   | open a file with elevated privileges (sudo layer) (TODO)       |
+| `SPC f W`   | save a file with elevated privileges (sudo layer)              |
 | `SPC f f`   | open file                                                      |
 | `SPC f F`   | try to open the file under point                               |
 | `SPC f o`   | open a file using the default external program(TODO)           |
@@ -1109,7 +1113,9 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 
 #### File tree
 
-SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
+SpaceVim use vimfiler as the default file tree, and the default key binding is `<F3>`, and
+SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree.
+to change the file explore to nerdtree:
 
 ```toml
 # the default value is vimfiler
@@ -1126,31 +1132,27 @@ here is any picture for this feature:
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-| Key Binding                    | Description                                       |
-| ------------------------------ | ------------------------------------------------- |
-| `<F3>` or `SPC f t`            | Toggle file explorer                              |
-| **Within _file tree_ buffers** |                                                   |
-| `<Left>` or `h`                | go to parent node and collapse expanded directory |
-| `<Down>` or `j`                | select next file or directory                     |
-| `<Up>` or `k`                  | select previous file or directory                 |
-| `<Right>` or `l`               | open selected file or expand directory            |
-| `Ctrl`+`j`                     | Un-map                                            |
-| `Ctrl`+`l`                     | Un-map                                            |
-| `E`                            | Un-map                                            |
-| `N`                            | Create new file under corsor                      |
-| `yy`                           | Copy file full path to system clipboard           |
-| `yY`                           | Copy file to system clipboard                     |
-| `P`                            | Paste file to the position under the cursor       |
-| `.`                            | toggle visible ignored files                      |
-| `sv`                           | Split edit                                        |
-| `sg`                           | Vertical split edit                               |
-| `p`                            | Preview                                           |
-| `i`                            | Switch to directory history                       |
-| `v`                            | Quick look                                        |
-| `gx`                           | Execute with vimfiler associated                  |
-| `'`                            | Toggle mark current line                          |
-| `V`                            | Clear all marks                                   |
-| `Ctrl`+`r`                     | Redraw                                            |
+| Key Binding        | Description                                       |
+| ------------------ | ------------------------------------------------- |
+| `<F3>` / `SPC f t` | Toggle file explorer                              |
+| `<Left>` / `h`     | go to parent node and collapse expanded directory |
+| `<Down>` / `j`     | select next file or directory                     |
+| `<Up>` / `k`       | select previous file or directory                 |
+| `<Right>` / `l`    | open selected file or expand directory            |
+| `N`                | Create new file under corsor                      |
+| `y y`              | Copy file full path to system clipboard           |
+| `y Y`              | Copy file to system clipboard                     |
+| `P`                | Paste file to the position under the cursor       |
+| `.`                | toggle visible ignored files                      |
+| `s v`              | Split edit                                        |
+| `s g`              | Vertical split edit                               |
+| `p`                | Preview                                           |
+| `i`                | Switch to directory history                       |
+| `v`                | Quick look                                        |
+| `g x`              | Execute with vimfiler associated                  |
+| `'`                | Toggle mark current line                          |
+| `V`                | Clear all marks                                   |
+| `Ctrl-r`           | Redraw                                            |
 
 ##### Open file with file tree.
 
@@ -1164,105 +1166,107 @@ If there is only one file buffer opened, a file is opened in the active window, 
 
 ### Commands starting with `g`
 
-after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
+after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide
+which will tell you the functional of all mappings starting with `g`.
 
 | Key Binding | Description                                     |
 | ----------- | ----------------------------------------------- |
-| `g#`        | search under cursor backward                    |
-| `g$`        | go to rightmost character                       |
-| `g&`        | repeat last ":s" on all lines                   |
-| `g'`        | jump to mark                                    |
-| `g*`        | search under cursor forward                     |
-| `g+`        | newer text state                                |
-| `g,`        | newer position in change list                   |
-| `g-`        | older text state                                |
-| `g/`        | stay incsearch                                  |
-| `g0`        | go to leftmost character                        |
-| `g;`        | older position in change list                   |
-| `g<`        | last page of previous command output            |
-| `g<Home>`   | go to leftmost character                        |
-| `gE`        | end of previous word                            |
-| `gF`        | edit file under cursor(jump to line after name) |
-| `gH`        | select line mode                                |
-| `gI`        | insert text in column 1                         |
-| `gJ`        | join lines without space                        |
-| `gN`        | visually select previous match                  |
-| `gQ`        | switch to Ex mode                               |
-| `gR`        | enter VREPLACE mode                             |
-| `gT`        | previous tag page                               |
-| `gU`        | make motion text uppercase                      |
-| `g]`        | tselect cursor tag                              |
-| `g^`        | go to leftmost no-white character               |
-| `g_`        | go to last char                                 |
-| ``g` ``     | jump to mark                                    |
-| `ga`        | print ascii value of cursor character           |
-| `gd`        | goto definition                                 |
-| `ge`        | go to end of previous word                      |
-| `gf`        | edit file under cursor                          |
-| `gg`        | go to line N                                    |
-| `gh`        | select mode                                     |
-| `gi`        | insert text after '^ mark                       |
-| `gj`        | move cursor down screen line                    |
-| `gk`        | move cursor up screen line                      |
-| `gm`        | go to middle of screenline                      |
-| `gn`        | visually select next match                      |
-| `go`        | goto byte N in the buffer                       |
-| `gs`        | sleep N seconds                                 |
-| `gt`        | next tag page                                   |
-| `gu`        | make motion text lowercase                      |
-| `g~`        | swap case for Nmove text                        |
-| `g<End>`    | go to rightmost character                       |
-| `g<C-G>`    | show cursor info                                |
+| `g #`       | search under cursor backward                    |
+| `g $`       | go to rightmost character                       |
+| `g &`       | repeat last ":s" on all lines                   |
+| `g '`       | jump to mark                                    |
+| `g *`       | search under cursor forward                     |
+| `g +`       | newer text state                                |
+| `g ,`       | newer position in change list                   |
+| `g -`       | older text state                                |
+| `g /`       | stay incsearch                                  |
+| `g 0`       | go to leftmost character                        |
+| `g ;`       | older position in change list                   |
+| `g <`       | last page of previous command output            |
+| `g <Home>`  | go to leftmost character                        |
+| `g E`       | end of previous word                            |
+| `g F`       | edit file under cursor(jump to line after name) |
+| `g H`       | select line mode                                |
+| `g I`       | insert text in column 1                         |
+| `g J`       | join lines without space                        |
+| `g N`       | visually select previous match                  |
+| `g Q`       | switch to Ex mode                               |
+| `g R`       | enter VREPLACE mode                             |
+| `g T`       | previous tag page                               |
+| `g U`       | make motion text uppercase                      |
+| `g ]`       | tselect cursor tag                              |
+| `g ^`       | go to leftmost no-white character               |
+| `g _`       | go to last char                                 |
+| ``g ` ``    | jump to mark                                    |
+| `g a`       | print ascii value of cursor character           |
+| `g d`       | goto definition                                 |
+| `g e`       | go to end of previous word                      |
+| `g f`       | edit file under cursor                          |
+| `g g`       | go to line N                                    |
+| `g h`       | select mode                                     |
+| `g i`       | insert text after '^ mark                       |
+| `g j`       | move cursor down screen line                    |
+| `g k`       | move cursor up screen line                      |
+| `g m`       | go to middle of screenline                      |
+| `g n`       | visually select next match                      |
+| `g o`       | goto byte N in the buffer                       |
+| `g s`       | sleep N seconds                                 |
+| `g t`       | next tag page                                   |
+| `g u`       | make motion text lowercase                      |
+| `g ~`       | swap case for Nmove text                        |
+| `g <End>`   | go to rightmost character                       |
+| `g Ctrl-g`  | show cursor info                                |
 
 ### Commands starting with `z`
 
-after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `z`.
+after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
+which will tell you the functional of all mappings starting with `z`.
 
 | Key Binding | Description                                  |
 | ----------- | -------------------------------------------- |
-| `z<Right>`  | scroll screen N characters to left           |
-| `z+`        | cursor to screen top line N                  |
-| `z-`        | cursor to screen bottom line N               |
-| `z.`        | cursor line to center                        |
-| `z<CR>`     | cursor line to top                           |
-| `z=`        | spelling suggestions                         |
-| `zA`        | toggle folds recursively                     |
-| `zC`        | close folds recursively                      |
-| `zD`        | delete folds recursively                     |
-| `zE`        | eliminate all folds                          |
-| `zF`        | create a fold for N lines                    |
-| `zG`        | mark good spelled(update internal-wordlist)  |
-| `zH`        | scroll half a screenwidth to the right       |
-| `zL`        | scroll half a screenwidth to the left        |
-| `zM`        | set `foldlevel` to zero                      |
-| `zN`        | set `foldenable`                             |
-| `zO`        | open folds recursively                       |
-| `zR`        | set `foldlevel` to deepest fold              |
-| `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldlevel`                         |
-| `z^`        | cursor to screen bottom line N               |
-| `za`        | toggle a fold                                |
-| `zb`        | redraw, cursor line at bottom                |
-| `zc`        | close a fold                                 |
-| `zd`        | delete a fold                                |
-| `ze`        | right scroll horizontally to cursor position |
-| `zf`        | create a fold for motion                     |
-| `zg`        | mark good spelled                            |
-| `zh`        | scroll screen N characters to right          |
-| `zi`        | toggle foldenable                            |
-| `zj`        | mode to start of next fold                   |
-| `zk`        | mode to end of previous fold                 |
-| `zl`        | scroll screen N characters to left           |
-| `zm`        | subtract one from `foldlevel`                |
-| `zn`        | reset `foldenable`                           |
-| `zo`        | open fold                                    |
-| `zr`        | add one to `foldlevel`                       |
-| `zs`        | left scroll horizontally to cursor position  |
-| `zt`        | cursor line at top of window                 |
-| `zv`        | open enough folds to view cursor line        |
-| `zx`        | re-apply foldlevel and do "zV"               |
-| `zz`        | smart scroll                                 |
-| `z<Left>`   | scroll screen N characters to right          |
+| `z <Right>` | scroll screen N characters to left           |
+| `z +`       | cursor to screen top line N                  |
+| `z -`       | cursor to screen bottom line N               |
+| `z .`       | cursor line to center                        |
+| `z <Enter>` | cursor line to top                           |
+| `z =`       | spelling suggestions                         |
+| `z A`       | toggle folds recursively                     |
+| `z C`       | close folds recursively                      |
+| `z D`       | delete folds recursively                     |
+| `z E`       | eliminate all folds                          |
+| `z F`       | create a fold for N lines                    |
+| `z G`       | mark good spelled(update internal-wordlist)  |
+| `z H`       | scroll half a screenwidth to the right       |
+| `z L`       | scroll half a screenwidth to the left        |
+| `z M`       | set `foldlevel` to zero                      |
+| `z N`       | set `foldenable`                             |
+| `z O`       | open folds recursively                       |
+| `z R`       | set `foldlevel` to deepest fold              |
+| `z W`       | mark wrong spelled                           |
+| `z X`       | re-apply `foldlevel`                         |
+| `z ^`       | cursor to screen bottom line N               |
+| `z a`       | toggle a fold                                |
+| `z b`       | redraw, cursor line at bottom                |
+| `z c`       | close a fold                                 |
+| `z d`       | delete a fold                                |
+| `z e`       | right scroll horizontally to cursor position |
+| `z f`       | create a fold for motion                     |
+| `z g`       | mark good spelled                            |
+| `z h`       | scroll screen N characters to right          |
+| `z i`       | toggle foldenable                            |
+| `z j`       | mode to start of next fold                   |
+| `z k`       | mode to end of previous fold                 |
+| `z l`       | scroll screen N characters to left           |
+| `z m`       | subtract one from `foldlevel`                |
+| `z n`       | reset `foldenable`                           |
+| `z o`       | open fold                                    |
+| `z r`       | add one to `foldlevel`                       |
+| `z s`       | left scroll horizontally to cursor position  |
+| `z t`       | cursor line at top of window                 |
+| `z v`       | open enough folds to view cursor line        |
+| `z x`       | re-apply foldlevel and do "zV"               |
+| `z z`       | smart scroll                                 |
+| `z <Left>`  | scroll screen N characters to right          |
 
 ### Searching
 
@@ -1438,18 +1442,18 @@ Background search keyword in a project, when searching done, the count will be s
 
 key binding in FlyGrep buffer:
 
-| Key Binding      | Description                       |
-| ---------------- | --------------------------------- |
-| `<Esc>`          | close FlyGrep buffer              |
-| `<Enter>`        | open file at the cursor line      |
-| `<Tab>`          | move cursor line down             |
-| `<S-Tab>`        | move cursor line up               |
-| `<Bs>`           | remove last character             |
-| `<C-w>`          | remove the Word before the cursor |
-| `<C-u>`          | remove the Line before the cursor |
-| `<C-k>`          | remove the Line after the cursor  |
-| `<C-a>`/`<Home>` | Go to the beginning of the line   |
-| `<C-e>`/`<End>`  | Go to the end of the line         |
+| Key Binding         | Description                       |
+| ------------------- | --------------------------------- |
+| `<Esc>`             | close FlyGrep buffer              |
+| `<Enter>`           | open file at the cursor line      |
+| `<Tab>`             | move cursor line down             |
+| `Shift-Tab`         | move cursor line up               |
+| `<BackSpace>`       | remove last character             |
+| `Ctrl-w`            | remove the Word before the cursor |
+| `Ctrl-u`            | remove the Line before the cursor |
+| `Ctrl-k`            | remove the Line after the cursor  |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
+| `Ctrl-e` / `<End>`  | Go to the end of the line         |
 
 #### Persistent highlighting
 
@@ -1486,7 +1490,7 @@ In highlight symbol transient state:
 | `N`/`p`       | go to previous occurrence                                     |
 | `b`           | search occurrence in all buffers                              |
 | `/`           | search occurrence in whole project                            |
-| `Tab`         | toggle highlight current occurrence                           |
+| `<Tab>`       | toggle highlight current occurrence                           |
 | `r`           | change range (function, display area, whole buffer)           |
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
@@ -1638,11 +1642,11 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 | Key Binding | Description                    |
 | ----------- | ------------------------------ |
-| `Esc`       | go back to `iedit-Normal` mode |
+| `<Esc>`     | go back to `iedit-Normal` mode |
 | `<Left>`    | Move cursor to left            |
 | `<Right>`   | Move cursor to right           |
-| `<C-w>`     | delete words before cursor     |
-| `<C-K>`     | delete words after cursor      |
+| `Ctrl-w`    | delete words before cursor     |
+| `Ctrl-k`    | delete words after cursor      |
 
 ##### Examples
 

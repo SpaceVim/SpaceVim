@@ -44,8 +44,8 @@ function! SpaceVim#layers#core#config() abort
   let g:matchup_matchparen_status_offscreen = 0
   " Unimpaired bindings
   " Quickly add empty lines
-  nnoremap <silent> [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent> ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+  nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+  nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
   "]e or [e move current line ,count can be useed
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
