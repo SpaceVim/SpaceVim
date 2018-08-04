@@ -704,10 +704,10 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `g 0`                 | Go to first tab (:tabfirst)                                      |
 | `g $`                 | Go to last tab (:tablast)                                        |
 | `g r`                 | Go to previous tab (:tabprevious)                                |
-| `Ctrl-Down`           | Move to split below (<C-w>j)                                     |
-| `Ctrl-Up`             | Move to upper split (<C-w>k)                                     |
-| `Ctrl-Left`           | Move to left split (<C-w>h)                                      |
-| `Ctrl-Right`          | Move to right split (<C-w>l)                                     |
+| `Ctrl-Down`           | Move to split below (`Ctrl-w j`)                                 |
+| `Ctrl-Up`             | Move to upper split (`Ctrl-w k`)                                 |
+| `Ctrl-Left`           | Move to left split (`Ctrl-w h`)                                  |
+| `Ctrl-Right`          | Move to right split (`Ctrl-w l`)                                 |
 | `*`                   | Search selection forwards                                        |
 | `#`                   | Search selection backwards                                       |
 | `, <Space>`           | Remove all spaces at EOL                                         |
@@ -835,7 +835,7 @@ for example, after pressing `<Space>` in normal mode, you will see :
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 
-after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+after pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
 
 | key | description                   |
 | --- | ----------------------------- |
@@ -1053,8 +1053,8 @@ Buffer manipulation commands (start with `b`):
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
 | `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | kill other buffers                                                             |
-| `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
+| `SPC b Ctrl-d`  | kill other buffers                                                             |
+| `SPC b Ctrl-D`  | kill buffers using a regular expression(TODO)                                  |
 | `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
 | `SPC b h`       | open _SpaceVim_ home buffer                                                    |
 | `SPC b n`       | switch to next buffer avoiding special buffers                                 |
@@ -1170,105 +1170,107 @@ If there is only one file buffer opened, a file is opened in the active window, 
 
 ### Commands starting with `g`
 
-after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `g`.
+after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide
+which will tell you the functional of all mappings starting with `g`.
 
 | Key Binding | Description                                     |
 | ----------- | ----------------------------------------------- |
-| `g#`        | search under cursor backward                    |
-| `g$`        | go to rightmost character                       |
-| `g&`        | repeat last ":s" on all lines                   |
-| `g'`        | jump to mark                                    |
-| `g*`        | search under cursor forward                     |
-| `g+`        | newer text state                                |
-| `g,`        | newer position in change list                   |
-| `g-`        | older text state                                |
-| `g/`        | stay incsearch                                  |
-| `g0`        | go to leftmost character                        |
-| `g;`        | older position in change list                   |
-| `g<`        | last page of previous command output            |
-| `g<Home>`   | go to leftmost character                        |
-| `gE`        | end of previous word                            |
-| `gF`        | edit file under cursor(jump to line after name) |
-| `gH`        | select line mode                                |
-| `gI`        | insert text in column 1                         |
-| `gJ`        | join lines without space                        |
-| `gN`        | visually select previous match                  |
-| `gQ`        | switch to Ex mode                               |
-| `gR`        | enter VREPLACE mode                             |
-| `gT`        | previous tag page                               |
-| `gU`        | make motion text uppercase                      |
-| `g]`        | tselect cursor tag                              |
-| `g^`        | go to leftmost no-white character               |
-| `g_`        | go to last char                                 |
-| ``g` ``     | jump to mark                                    |
-| `ga`        | print ascii value of cursor character           |
-| `gd`        | goto definition                                 |
-| `ge`        | go to end of previous word                      |
-| `gf`        | edit file under cursor                          |
-| `gg`        | go to line N                                    |
-| `gh`        | select mode                                     |
-| `gi`        | insert text after '^ mark                       |
-| `gj`        | move cursor down screen line                    |
-| `gk`        | move cursor up screen line                      |
-| `gm`        | go to middle of screenline                      |
-| `gn`        | visually select next match                      |
-| `go`        | goto byte N in the buffer                       |
-| `gs`        | sleep N seconds                                 |
-| `gt`        | next tag page                                   |
-| `gu`        | make motion text lowercase                      |
-| `g~`        | swap case for Nmove text                        |
-| `g<End>`    | go to rightmost character                       |
-| `g<C-G>`    | show cursor info                                |
+| `g #`       | search under cursor backward                    |
+| `g $`       | go to rightmost character                       |
+| `g &`       | repeat last ":s" on all lines                   |
+| `g '`       | jump to mark                                    |
+| `g *`       | search under cursor forward                     |
+| `g +`       | newer text state                                |
+| `g ,`       | newer position in change list                   |
+| `g -`       | older text state                                |
+| `g /`       | stay incsearch                                  |
+| `g 0`       | go to leftmost character                        |
+| `g ;`       | older position in change list                   |
+| `g <`       | last page of previous command output            |
+| `g <Home>`  | go to leftmost character                        |
+| `g E`       | end of previous word                            |
+| `g F`       | edit file under cursor(jump to line after name) |
+| `g H`       | select line mode                                |
+| `g I`       | insert text in column 1                         |
+| `g J`       | join lines without space                        |
+| `g N`       | visually select previous match                  |
+| `g Q`       | switch to Ex mode                               |
+| `g R`       | enter VREPLACE mode                             |
+| `g T`       | previous tag page                               |
+| `g U`       | make motion text uppercase                      |
+| `g ]`       | tselect cursor tag                              |
+| `g ^`       | go to leftmost no-white character               |
+| `g _`       | go to last char                                 |
+| ``g ` ``    | jump to mark                                    |
+| `g a`       | print ascii value of cursor character           |
+| `g d`       | goto definition                                 |
+| `g e`       | go to end of previous word                      |
+| `g f`       | edit file under cursor                          |
+| `g g`       | go to line N                                    |
+| `g h`       | select mode                                     |
+| `g i`       | insert text after '^ mark                       |
+| `g j`       | move cursor down screen line                    |
+| `g k`       | move cursor up screen line                      |
+| `g m`       | go to middle of screenline                      |
+| `g n`       | visually select next match                      |
+| `g o`       | goto byte N in the buffer                       |
+| `g s`       | sleep N seconds                                 |
+| `g t`       | next tag page                                   |
+| `g u`       | make motion text lowercase                      |
+| `g ~`       | swap case for Nmove text                        |
+| `g <End>`   | go to rightmost character                       |
+| `g Ctrl-g`  | show cursor info                                |
 
 ### Commands starting with `z`
 
-after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide which will tell you the functional of all mappings starting with `z`.
+after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
+which will tell you the functional of all mappings starting with `z`.
 
 | Key Binding | Description                                  |
 | ----------- | -------------------------------------------- |
-| `z<Right>`  | scroll screen N characters to left           |
-| `z+`        | cursor to screen top line N                  |
-| `z-`        | cursor to screen bottom line N               |
-| `z.`        | cursor line to center                        |
-| `z<CR>`     | cursor line to top                           |
-| `z=`        | spelling suggestions                         |
-| `zA`        | toggle folds recursively                     |
-| `zC`        | close folds recursively                      |
-| `zD`        | delete folds recursively                     |
-| `zE`        | eliminate all folds                          |
-| `zF`        | create a fold for N lines                    |
-| `zG`        | mark good spelled(update internal-wordlist)  |
-| `zH`        | scroll half a screenwidth to the right       |
-| `zL`        | scroll half a screenwidth to the left        |
-| `zM`        | set `foldlevel` to zero                      |
-| `zN`        | set `foldenable`                             |
-| `zO`        | open folds recursively                       |
-| `zR`        | set `foldlevel` to deepest fold              |
-| `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldlevel`                         |
-| `z^`        | cursor to screen bottom line N               |
-| `za`        | toggle a fold                                |
-| `zb`        | redraw, cursor line at bottom                |
-| `zc`        | close a fold                                 |
-| `zd`        | delete a fold                                |
-| `ze`        | right scroll horizontally to cursor position |
-| `zf`        | create a fold for motion                     |
-| `zg`        | mark good spelled                            |
-| `zh`        | scroll screen N characters to right          |
-| `zi`        | toggle foldenable                            |
-| `zj`        | mode to start of next fold                   |
-| `zk`        | mode to end of previous fold                 |
-| `zl`        | scroll screen N characters to left           |
-| `zm`        | subtract one from `foldlevel`                |
-| `zn`        | reset `foldenable`                           |
-| `zo`        | open fold                                    |
-| `zr`        | add one to `foldlevel`                       |
-| `zs`        | left scroll horizontally to cursor position  |
-| `zt`        | cursor line at top of window                 |
-| `zv`        | open enough folds to view cursor line        |
-| `zx`        | re-apply foldlevel and do "zV"               |
-| `zz`        | smart scroll                                 |
-| `z<Left>`   | scroll screen N characters to right          |
+| `z <Right>` | scroll screen N characters to left           |
+| `z +`       | cursor to screen top line N                  |
+| `z -`       | cursor to screen bottom line N               |
+| `z .`       | cursor line to center                        |
+| `z <Enter>` | cursor line to top                           |
+| `z =`       | spelling suggestions                         |
+| `z A`       | toggle folds recursively                     |
+| `z C`       | close folds recursively                      |
+| `z D`       | delete folds recursively                     |
+| `z E`       | eliminate all folds                          |
+| `z F`       | create a fold for N lines                    |
+| `z G`       | mark good spelled(update internal-wordlist)  |
+| `z H`       | scroll half a screenwidth to the right       |
+| `z L`       | scroll half a screenwidth to the left        |
+| `z M`       | set `foldlevel` to zero                      |
+| `z N`       | set `foldenable`                             |
+| `z O`       | open folds recursively                       |
+| `z R`       | set `foldlevel` to deepest fold              |
+| `z W`       | mark wrong spelled                           |
+| `z X`       | re-apply `foldlevel`                         |
+| `z ^`       | cursor to screen bottom line N               |
+| `z a`       | toggle a fold                                |
+| `z b`       | redraw, cursor line at bottom                |
+| `z c`       | close a fold                                 |
+| `z d`       | delete a fold                                |
+| `z e`       | right scroll horizontally to cursor position |
+| `z f`       | create a fold for motion                     |
+| `z g`       | mark good spelled                            |
+| `z h`       | scroll screen N characters to right          |
+| `z i`       | toggle foldenable                            |
+| `z j`       | mode to start of next fold                   |
+| `z k`       | mode to end of previous fold                 |
+| `z l`       | scroll screen N characters to left           |
+| `z m`       | subtract one from `foldlevel`                |
+| `z n`       | reset `foldenable`                           |
+| `z o`       | open fold                                    |
+| `z r`       | add one to `foldlevel`                       |
+| `z s`       | left scroll horizontally to cursor position  |
+| `z t`       | cursor line at top of window                 |
+| `z v`       | open enough folds to view cursor line        |
+| `z x`       | re-apply foldlevel and do "zV"               |
+| `z z`       | smart scroll                                 |
+| `z <Left>`  | scroll screen N characters to right          |
 
 ### Searching
 
