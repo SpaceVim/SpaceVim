@@ -90,7 +90,9 @@ enable = false
 | [lsp](language-server-protocol/)    | This layers provides language server protocol for vim and neovim                                                                                                    |
 | [leaderf](leaderf/)                 | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
 | [shell](shell/)                     | This layer provide shell support in SpaceVim                                                                                                                        |
+| [sudo](sudo/)                       | sudo layer provides ability to read and write file elevated privileges in SpaceVim                                                                                  |
 | [tags](tags/)                       | This layer provide tags manager for project                                                                                                                         |
+| [tmux](tmux/)                       | This layers adds extensive support for tmux                                                                                                                         |
 | [tools#dash](tools/dash/)           | This layer provides Dash integration for SpaceVim                                                                                                                   |
 | [tools](tools/)                     | This layer provides some tools for vim                                                                                                                              |
 | [ui](ui/)                           | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |

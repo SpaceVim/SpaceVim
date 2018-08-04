@@ -27,6 +27,7 @@ The next release is v0.9.0.
 - Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969), [#1999](https://github.com/SpaceVim/SpaceVim/pull/1999))
 - neovim +py and +py3 support ([#1988](https://github.com/SpaceVim/SpaceVim/pull/1988))
 - Improve debug info ([#1991](https://github.com/SpaceVim/SpaceVim/pull/1991))
+- Improve tmux layer ([#1970](https://github.com/SpaceVim/SpaceVim/pull/1970))
 
 ### Changed
 
@@ -72,6 +73,7 @@ The next release is v0.9.0.
 - Update doc windows key bindings ([#1995](https://github.com/SpaceVim/SpaceVim/pull/1995))
 - Add doc for sudo layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
 - Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
+
 
 ### Others
 
