@@ -168,12 +168,15 @@ install_vim () {
             success "Installed SpaceVim for vim"
         else
             mv "$HOME/.vim" "$HOME/.vim_back"
+            ret="$?"
             success "BackUp $HOME/.vim to $HOME/.vim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.vim"
+            ret="$?"
             success "Installed SpaceVim for vim"
         fi
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.vim"
+        ret="$?"
         success "Installed SpaceVim for vim"
     fi
 }
@@ -198,13 +201,18 @@ install_neovim () {
             success "Installed SpaceVim for neovim"
         else
             mv "$HOME/.config/nvim" "$HOME/.config/nvim_back"
+            ret="$?"
             success "BackUp $HOME/.config/nvim to $HOME/.config/nvim_back"
             ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
+            ret="$?"
             success "Installed SpaceVim for neovim"
         fi
     else
-        mkdir -p "$HOME/.config"
+        if [[ ! -d "$HOME/.config" ]]; then
+            mkdir -p "$HOME/.config"
+        fi
         ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
+        ret="$?"
         success "Installed SpaceVim for neovim"
     fi
 }
