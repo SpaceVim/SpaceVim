@@ -63,15 +63,36 @@ function! SpaceVim#layers#tmux#config() abort
         \ 'right' : s:separators[s:tmuxline_separators][1],
         \ 'right_alt' : s:i_separators[s:tmuxline_separators_alt][1],
         \ 'space' : ' '}
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : '#H',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '#W %R',
-      \'z'    : '#H'}
+  let g:tmuxline_preset = {
+        \'a'    : '#S',
+        \'b'    : '#W',
+        \'c'    : '#H',
+        \'win'  : '#I #W',
+        \'cwin' : '#I #W',
+        \'x'    : '%a',
+        \'y'    : '#W %R',
+        \'z'    : '#H'}
+  if !empty(g:spacevim_custom_color_palette)
+    let t = g:spacevim_custom_color_palette
+  else
+    let name = g:spacevim_colorscheme
+    try
+      let t = SpaceVim#mapping#guide#theme#{name}#palette()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let t = SpaceVim#mapping#guide#theme#gruvbox#palette()
+    endtry
+  endif
+  let g:tmuxline_theme = {
+        \   'a'    : [ t[0][3], t[0][2], 'bold' ],
+        \   'b'    : [ t[1][2], t[1][3] ],
+        \   'c'    : [ t[2][2], t[2][3] ],
+        \   'z'    : [ t[0][3], t[0][2] ],
+        \   'y'    : [ t[1][2], t[1][3] ],
+        \   'x'    : [ t[2][2], t[2][3] ],
+        \   'win'  : [ t[1][2], t[1][3] ],
+        \   'cwin' : [ t[0][3], t[0][2] ],
+        \   'bg'   : [ t[3][1], t[3][1] ],
+        \ }
 endfunction
 
 " init
