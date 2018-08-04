@@ -66,11 +66,10 @@ function! SpaceVim#layers#tmux#config() abort
   let g:tmuxline_preset = {
         \'a'    : '#S',
         \'b'    : '#W',
-        \'c'    : '#H',
-        \'win'  : '#I #W',
-        \'cwin' : '#I #W',
+        \'win'  : ['#I', '#W'],
+        \'cwin' : ['#I', '#W'],
         \'x'    : '%a',
-        \'y'    : '#W %R',
+        \'y'    : '%R',
         \'z'    : '#H'}
   if !empty(g:spacevim_custom_color_palette)
     let t = g:spacevim_custom_color_palette
