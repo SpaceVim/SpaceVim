@@ -679,12 +679,12 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 ### File Operations
 
-| Key            |          Mode         | Action                                     |
-| -------------- | :-------------------: | ------------------------------------------ |
-| `<Leader> c d` |         Normal        | Switch to the directory of the open buffer |
-| `<Leader> w`   |     Normal/visual     | Write (:w)                                 |
-| `Ctrl-s`       | Normal/visual/Command | Write (:w)                                 |
-| `:w!!`         |        Command        | Write as root (%!sudo tee > /dev/null %)   |
+| Key binding    | Description                                |
+| -------------- | ------------------------------------------ |
+| `<Leader> c d` | Switch to the directory of the open buffer |
+| `SPC f s`      | Write (:w)                                 |
+| `Ctrl-s`       | Write (:w)                                 |
+| `SPC f W`      | Write as root (need sudo layer)            |
 
 ### Editor UI
 
@@ -696,8 +696,8 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `Alt-[1-9]`           | Jump to the buffer with the num index, this only works in neovim |
 | `Alt-h` / `Alt-Left`  | Jump to left buffer in the tabline, this only works in neovim    |
 | `Alt-l` / `Alt-Right` | Jump to Right buffer in the tabline, this only works in neovim   |
-| `<Leader> t s`        | Toggle spell-checker (:setlocal spell!)                          |
-| `<Leader>`+`tn`       | Toggle line numbers (:setlocal nonumber!)                        |
+| `SPC t S`             | Toggle spell checker                                             |
+| `SPC t n`             | Toggle line number and relativenumber                            |
 | `<leader>`+`tl`       | Toggle hidden characters (:setlocal nolist!)                     |
 | `<leader>`+`th`       | Toggle highlighted search (:set hlsearch!)                       |
 | `<leader>`+`tw`       | Toggle wrap (:setlocal wrap! breakindent!)                       |
@@ -710,8 +710,8 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `Ctrl-Right`          | Move to right split (<C-w>l)                                     |
 | `*`                   | Search selection forwards                                        |
 | `#`                   | Search selection backwards                                       |
-| `,`+`Space`           | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`            | Replace selection                                                |
+| `, <Space>`           | Remove all spaces at EOL                                         |
+| `Ctrl-r`              | Replace selection in visual mode                                 |
 | `<leader>`+`lj`       | Next on location list                                            |
 | `<leader>`+`lk`       | Previous on location list                                        |
 | `<leader>`+`S`        | Source selection                                                 |
@@ -727,13 +727,21 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 ### Bookmarks management
 
-| Key     |  Mode  | Action                          |
-| ------- | :----: | ------------------------------- |
-| `m`+`a` | Normal | Show list of all bookmarks      |
-| `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | Jump to next bookmark           |
-| `m`+`p` | Normal | Jump to previous bookmark       |
-| `m`+`i` | Normal | Annotate bookmark               |
+Bookmarks manager are included in `tools` layer, to use following key bindings, you need to enable
+`tools` layer:
+
+```toml
+[[layers]]
+  name = "tools"
+```
+
+| Key binding | Description                     |
+| ----------- | ------------------------------- |
+| `m a`       | Show list of all bookmarks      |
+| `m m`       | Toggle bookmark in current line |
+| `m n`       | Jump to next bookmark           |
+| `m p`       | Jump to previous bookmark       |
+| `m i`       | Annotate bookmark               |
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
@@ -777,17 +785,17 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Key bindings within fuzzy finder buffer**
 
-| key bindings          | Mode   | description                               |
-| --------------------- | ------ | ----------------------------------------- |
-| `Tab`/`<C-j>`         | -      | Select next line                          |
-| `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
-| `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
-| `Ctrl`+`w`            | Insert | Delete backward path                      |
-| `Enter`               | -      | Run default action                        |
-| `Ctrl`+`s`            | -      | Open in a split                           |
-| `Ctrl`+`v`            | -      | Open in a vertical split                  |
-| `Ctrl`+`t`            | -      | Open in a new tab                         |
-| `Ctrl`+`g`            | -      | Exit unite                                |
+| key bindings           | description                               |
+| ---------------------- | ----------------------------------------- |
+| `Tab` / `Ctrl-j`       | Select next line                          |
+| `Shift-Tab` / `Ctrl-k` | Select previous line                      |
+| `j k`                  | Leave Insert mode (Only for denite/unite) |
+| `Ctrl-w`               | Delete backward path                      |
+| `<Enter>`              | Run default action                        |
+| `Ctrl-s`               | Open in a split                           |
+| `Ctrl-v`               | Open in a vertical split                  |
+| `Ctrl-t`               | Open in a new tab                         |
+| `Ctrl-g`               | Exit unite                                |
 
 **Denite/Unite normal mode key bindings**
 
@@ -1109,7 +1117,9 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 
 #### File tree
 
-SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
+SpaceVim use vimfiler as the default file tree, and the default key binding is `<F3>`, and
+SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree.
+to change the file explore to nerdtree:
 
 ```toml
 # the default value is vimfiler
