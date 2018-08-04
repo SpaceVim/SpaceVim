@@ -9,7 +9,7 @@
 
 function! SpaceVim#layers#lang#agda#plugins() abort
   let plugins = []
-  call add(plugins, ['derekelkins/agda-vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-agda', {'merged' : 0}])
   return plugins
 endfunction
 
