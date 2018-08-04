@@ -698,9 +698,8 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `Alt-l` / `Alt-Right` | Jump to Right buffer in the tabline, this only works in neovim   |
 | `SPC t S`             | Toggle spell checker                                             |
 | `SPC t n`             | Toggle line number and relativenumber                            |
-| `<leader>`+`tl`       | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`       | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`       | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `SPC t l`             | Toggle hidden characters (:setlocal nolist!)                     |
+| `SPC t W`             | Toggle wrap (:setlocal wrap! breakindent!)                       |
 | `g 0`                 | Go to first tab (:tabfirst)                                      |
 | `g $`                 | Go to last tab (:tablast)                                        |
 | `g r`                 | Go to previous tab (:tabprevious)                                |
@@ -712,9 +711,6 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `#`                   | Search selection backwards                                       |
 | `, <Space>`           | Remove all spaces at EOL                                         |
 | `Ctrl-r`              | Replace selection in visual mode                                 |
-| `<leader>`+`lj`       | Next on location list                                            |
-| `<leader>`+`lk`       | Previous on location list                                        |
-| `<leader>`+`S`        | Source selection                                                 |
 
 ### Native functions
 
