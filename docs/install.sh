@@ -142,11 +142,13 @@ fetch_repo () {
         info "Trying to update SpaceVim"
         cd "$HOME/.SpaceVim"
         git pull
+        ret="$?"
         cd - > /dev/null 2>&1
         success "Successfully update SpaceVim"
     else
         info "Trying to clone SpaceVim"
         git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
+        ret="$?"
         success "Successfully clone SpaceVim"
     fi
 }
@@ -333,15 +335,15 @@ install_done () {
 welcome () {
     echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
     echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
-        echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
-        echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
-        echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
-        echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
-        echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
-        echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               |__/                                                           "
+    echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+    echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+    echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+    echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+    echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+    echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               |__/                                                           "
     echo_with_color ${Yellow} "                      version : 0.9.0-dev       by : spacevim.org             "
 }
 
