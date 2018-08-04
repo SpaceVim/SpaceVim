@@ -10,6 +10,8 @@ description: "This layers adds extensive support for tmux"
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -28,3 +30,8 @@ To use this configuration layer, update custom configuration file with:
   name = "tmux"
 ```
 
+## Layer options
+
+- `tmuxline_separators`: default value is same as SpaceVim options `statusline_separator`
+
+## Key bindings

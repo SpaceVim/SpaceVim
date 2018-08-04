@@ -58,10 +58,40 @@ function! SpaceVim#layers#tmux#config() abort
         \ 'errorformat': '%f:%l:%m,%+Gunknown command: %s',
         \ }
   let g:tmuxline_separators = {
-        \ 'left' : "\ue0b0",
-        \ 'left_alt': '>',
-        \ 'right' : '',
-        \ 'right_alt' : '<',
+        \ 'left' : s:separators[s:tmuxline_separators][0],
+        \ 'left_alt': s:i_separators[s:tmuxline_separators_alt][0],
+        \ 'right' : s:separators[s:tmuxline_separators][1],
+        \ 'right_alt' : s:i_separators[s:tmuxline_separators_alt][1],
         \ 'space' : ' '}
 endfunction
 
+" init
+let s:separators = {
+      \ 'arrow' : ["\ue0b0", "\ue0b2"],
+      \ 'curve' : ["\ue0b4", "\ue0b6"],
+      \ 'slant' : ["\ue0b8", "\ue0ba"],
+      \ 'brace' : ["\ue0d2", "\ue0d4"],
+      \ 'fire' : ["\ue0c0", "\ue0c2"],
+      \ 'nil' : ['', ''],
+      \ }
+
+let s:i_separators = {
+      \ 'arrow' : ["\ue0b1", "\ue0b3"],
+      \ 'bar' : ['|', '|'],
+      \ 'nil' : ['', ''],
+      \ }
+
+let s:tmuxline_separators = g:spacevim_statusline_separator
+let s:tmuxline_separators_alt = g:spacevim_statusline_inactive_separator
+
+function! SpaceVim#layers#tmux#set_variable(var) abort
+
+  let s:tmuxline_separators = get(a:var,
+        \ 'tmuxline_separators',
+        \ g:spacevim_statusline_separator)
+
+  let s:tmuxline_separators_alt = get(a:var,
+        \ 'tmuxline_separators_alt',
+        \ g:spacevim_statusline_inactive_separator)
+
+endfunction
