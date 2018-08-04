@@ -669,7 +669,7 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `}`               |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
 | `<`               | Visual/Normal | Indent to left and re-select                                                   |
 | `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`             |     Visual    | Indent to right and re-select                                                  |
+| `<Tab>`           |     Visual    | Indent to right and re-select                                                  |
 | `Shift-Tab`       |     Visual    | Indent to left and re-select                                                   |
 | `g p`             |     Normal    | Select last paste                                                              |
 | `Q` / `g Q`       |     Normal    | Disable EX-mode (<Nop>)                                                        |
@@ -783,7 +783,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 | key bindings           | description                               |
 | ---------------------- | ----------------------------------------- |
-| `Tab` / `Ctrl-j`       | Select next line                          |
+| `<Tab>` / `Ctrl-j`     | Select next line                          |
 | `Shift-Tab` / `Ctrl-k` | Select previous line                      |
 | `j k`                  | Leave Insert mode (Only for denite/unite) |
 | `Ctrl-w`               | Delete backward path                      |
@@ -795,14 +795,14 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Denite/Unite normal mode key bindings**
 
-| key bindings     | Mode          | description                          |
-| ---------------- | ------------- | ------------------------------------ |
-| `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Normal        | Select actions                       |
-| `Space`          | Normal        | Toggle mark current candidate, up    |
-| `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
+| key bindings   | Mode          | description                          |
+| -------------- | ------------- | ------------------------------------ |
+| `Ctrl-h/k/l/r` | Normal        | Un-map                               |
+| `Ctrl-l`       | Normal        | Redraw                               |
+| `<Tab>`        | Normal        | Select actions                       |
+| `<Space>`      | Normal        | Toggle mark current candidate, up    |
+| `r`            | Normal        | Replace ('search' profile) or rename |
+| `Ctrl-z`       | Normal/insert | Toggle transpose window              |
 
 The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
 
@@ -1442,18 +1442,18 @@ Background search keyword in a project, when searching done, the count will be s
 
 key binding in FlyGrep buffer:
 
-| Key Binding      | Description                       |
-| ---------------- | --------------------------------- |
-| `<Esc>`          | close FlyGrep buffer              |
-| `<Enter>`        | open file at the cursor line      |
-| `<Tab>`          | move cursor line down             |
-| `<S-Tab>`        | move cursor line up               |
-| `<Bs>`           | remove last character             |
-| `<C-w>`          | remove the Word before the cursor |
-| `<C-u>`          | remove the Line before the cursor |
-| `<C-k>`          | remove the Line after the cursor  |
-| `<C-a>`/`<Home>` | Go to the beginning of the line   |
-| `<C-e>`/`<End>`  | Go to the end of the line         |
+| Key Binding         | Description                       |
+| ------------------- | --------------------------------- |
+| `<Esc>`             | close FlyGrep buffer              |
+| `<Enter>`           | open file at the cursor line      |
+| `<Tab>`             | move cursor line down             |
+| `Shift-Tab`         | move cursor line up               |
+| `<BackSpace>`       | remove last character             |
+| `Ctrl-w`            | remove the Word before the cursor |
+| `Ctrl-u`            | remove the Line before the cursor |
+| `Ctrl-k`            | remove the Line after the cursor  |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
+| `Ctrl-e` / `<End>`  | Go to the end of the line         |
 
 #### Persistent highlighting
 
@@ -1490,7 +1490,7 @@ In highlight symbol transient state:
 | `N`/`p`       | go to previous occurrence                                     |
 | `b`           | search occurrence in all buffers                              |
 | `/`           | search occurrence in whole project                            |
-| `Tab`         | toggle highlight current occurrence                           |
+| `<Tab>`       | toggle highlight current occurrence                           |
 | `r`           | change range (function, display area, whole buffer)           |
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
@@ -1642,11 +1642,11 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 | Key Binding | Description                    |
 | ----------- | ------------------------------ |
-| `Esc`       | go back to `iedit-Normal` mode |
+| `<Esc>`     | go back to `iedit-Normal` mode |
 | `<Left>`    | Move cursor to left            |
 | `<Right>`   | Move cursor to right           |
-| `<C-w>`     | delete words before cursor     |
-| `<C-K>`     | delete words after cursor      |
+| `Ctrl-w`    | delete words before cursor     |
+| `Ctrl-k`    | delete words after cursor      |
 
 ##### Examples
 
