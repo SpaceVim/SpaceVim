@@ -817,15 +817,15 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 **Mappings guide**
 
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
-The prefix can be `[SPC]`, `[Window]`, `[denite]`, `<leader>` and `[unite]`.
+The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
 
 The default key of these prefix is:
 
-| Prefix name | custom option and default value   | description                         |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
-| `<leader>`  | default vim leader                | default leader prefix of vim/neovim |
+| Prefix name | custom option and default value | description                         |
+| ----------- | ------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                | default mapping prefix of SpaceVim  |
+| `[WIN]`     | `windows_leader` / `s`          | window mapping prefix of SpaceVim   |
+| `<Leader>`  | default vim leader              | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
