@@ -63,6 +63,15 @@ function! SpaceVim#layers#tmux#config() abort
         \ 'right' : s:separators[s:tmuxline_separators][1],
         \ 'right_alt' : s:i_separators[s:tmuxline_separators_alt][1],
         \ 'space' : ' '}
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#H',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '#W %R',
+      \'z'    : '#H'}
 endfunction
 
 " init
