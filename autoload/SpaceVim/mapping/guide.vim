@@ -87,21 +87,13 @@ function! SpaceVim#mapping#guide#parse_mappings() " {{{
 endfunction " }}}
 
 
-function! s:execute(cmd) " {{{
-  let output = ""
-  redir => output
-  silent execute a:cmd
-  redir END
-  return output
-endfunction " }}}
-
 function! s:start_parser(key, dict) " {{{
   if a:key ==# '[KEYs]'
     return
   endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
 
-  0verbose let readmap = s:execute('map ' . key)
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
 
   let lines = split(readmap, "\n")
   let visual = s:vis == "gv" ? 1 : 0
