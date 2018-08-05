@@ -88,6 +88,7 @@ endfunction " }}}
 
 
 function! s:execute(cmd) " {{{
+  let output = ""
   redir => output
   silent execute a:cmd
   redir END
