@@ -10,12 +10,14 @@ description: "This layer adds agda language support to SpaceVim"
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer adds agda language support to SpaceVim.
+This layer adds [agda](https://github.com/agda/agda) language support to SpaceVim.
+Agda is a dependently typed functional programming language. 
 
 ## Features
 
@@ -29,3 +31,23 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#agda"
 ```
+
+## Key bindings
+
+| Key bindings | Description              |
+| ------------ | ------------------------ |
+| `SPC l r`    | execute current file     |
+| `SPC l l`    | reload                   |
+| `SPC l t`    | infer                    |
+| `SPC l f`    | refine false             |
+| `SPC l F`    | refine true              |
+| `SPC l g`    | give                     |
+| `SPC l c`    | make case                |
+| `SPC l a`    | auto                     |
+| `SPC l e`    | context                  |
+| `SPC l n`    | Normalize IgnoreAbstract |
+| `SPC l N`    | Normalize DefaultCompute |
+| `SPC l M`    | Show module              |
+| `SPC l y`    | why in scope             |
+| `SPC l h`    | helper function          |
+| `SPC l m`    | metas                    |

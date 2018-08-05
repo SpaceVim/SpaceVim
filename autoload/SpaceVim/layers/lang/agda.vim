@@ -28,20 +28,40 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
         \ 'call Infer()',
         \ 'infer', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','f'],
         \ 'call Refine("False")',
         \ 'refine false', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','R'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','F'],
         \ 'call Refine("True")',
         \ 'refine true', 1)
-  nnoremap <buffer> <LocalLeader>g :call Give()<CR>
-  nnoremap <buffer> <LocalLeader>c :call MakeCase()<CR>
-  nnoremap <buffer> <LocalLeader>a :call Auto()<CR>
-  nnoremap <buffer> <LocalLeader>e :call Context()<CR>
-  nnoremap <buffer> <LocalLeader>n :call Normalize("IgnoreAbstract")<CR>
-  nnoremap <buffer> <LocalLeader>N :call Normalize("DefaultCompute")<CR>
-  nnoremap <buffer> <LocalLeader>M :call ShowModule('')<CR>
-  nnoremap <buffer> <LocalLeader>y :call WhyInScope('')<CR>
-  nnoremap <buffer> <LocalLeader>h :call HelperFunction()<CR>
-  nnoremap <buffer> <LocalLeader>m :Metas<CR>
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
+        \ 'call Give()',
+        \ 'give', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
+        \ 'call MakeCase()',
+        \ 'MakeCase', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
+        \ 'call Auto()',
+        \ 'Auto', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
+        \ 'call Context()',
+        \ 'Context', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','n'],
+        \ 'call Normalize("IgnoreAbstract")',
+        \ 'Normalize IgnoreAbstract', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','N'],
+        \ 'call Normalize("DefaultCompute")',
+        \ 'Normalize DefaultCompute', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
+        \ 'call ShowModule("")',
+        \ 'Show module', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','y'],
+        \ 'call WhyInScope("")',
+        \ 'Why in scope', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','h'],
+        \ 'call HelperFunction()',
+        \ 'HelperFunction', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','m'],
+        \ 'Metas',
+        \ 'Metas', 1)
 endfunction
