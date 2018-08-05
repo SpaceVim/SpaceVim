@@ -21,4 +21,27 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+  " let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','l'],
+        \ 'Reload',
+        \ 'reload', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
+        \ 'call Infer()',
+        \ 'infer', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call Refine("False")',
+        \ 'refine false', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','R'],
+        \ 'call Refine("True")',
+        \ 'refine true', 1)
+  nnoremap <buffer> <LocalLeader>g :call Give()<CR>
+  nnoremap <buffer> <LocalLeader>c :call MakeCase()<CR>
+  nnoremap <buffer> <LocalLeader>a :call Auto()<CR>
+  nnoremap <buffer> <LocalLeader>e :call Context()<CR>
+  nnoremap <buffer> <LocalLeader>n :call Normalize("IgnoreAbstract")<CR>
+  nnoremap <buffer> <LocalLeader>N :call Normalize("DefaultCompute")<CR>
+  nnoremap <buffer> <LocalLeader>M :call ShowModule('')<CR>
+  nnoremap <buffer> <LocalLeader>y :call WhyInScope('')<CR>
+  nnoremap <buffer> <LocalLeader>h :call HelperFunction()<CR>
+  nnoremap <buffer> <LocalLeader>m :Metas<CR>
 endfunction
