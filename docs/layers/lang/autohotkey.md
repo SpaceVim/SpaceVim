@@ -3,7 +3,7 @@ title: "SpaceVim lang#autohotkey layer"
 description: "This layer adds autohotkey language support to SpaceVim"
 ---
 
-# [Available Layers](../../) >> lang#dockerfile
+# [Available Layers](../../) >> lang#autohotkey
 
 <!-- vim-markdown-toc GFM -->
 
