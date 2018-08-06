@@ -18,6 +18,7 @@ The next release is v0.9.0.
 - Add lang#kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
 - Add lang#dockerfile layer ([#2001](https://github.com/SpaceVim/SpaceVim/pull/2001))
 - Add lang#agda layer ([#1941](https://github.com/SpaceVim/SpaceVim/pull/1941))
+- Add lang#autohotkey layer ([#2021](https://github.com/SpaceVim/SpaceVim/pull/2021))
 
 ### Improvement
 

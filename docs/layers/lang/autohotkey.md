@@ -20,6 +20,7 @@ This layer adds autohotkey language support to SpaceVim.
 ## Features
 
 - syntax highlighting
+- code completion
 
 ## Install
 
