@@ -1,13 +1,12 @@
 If you need help, ask your question in the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim), a member of the community will help you out.
 
-here is a simple guide for how to getting help about SpaceVim. Before asking question, please read the FAQ, the answer to your question maybe
-listed there. 
+here is a simple guide for how to get help with SpaceVim. Before asking questions, please read the FAQ, the answer to your question may
+be listed there. 
 
 
-### Transitioning from origin vim config
+### Transitioning to init.toml
 
-If you are not new to Vim, and you have familial with your own vim config, We recommend to use `vimcompatible` mode, In this mode, no origin key
-bindings will be override.
+If you are not new to Vim, and you are familiar with your own vim config, we recommend to use `vimcompatible` mode, In this mode, no original key bindings will be overriden.
 
 ### Installation question
 
