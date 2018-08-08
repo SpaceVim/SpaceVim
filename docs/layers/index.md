@@ -87,6 +87,7 @@ enable = false
 | [lang#php](lang/php/)               | This layer adds PHP language support to SpaceVim                                                                                                                    |
 | [lang#python](lang/python/)         | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
 | [lang#ruby](lang/ruby/)             | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
+| [lang#swift](lang/swift/)           | swift language support for SpaceVim, includes code completion, syntax highlighting                                                                                  |
 | [lang#typescript](lang/typescript/) | This layer is for TypeScript development                                                                                                                            |
 | [lang#vim](lang/vim/)               | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                                             |
 | [lsp](language-server-protocol/)    | This layers provides language server protocol for vim and neovim                                                                                                    |
