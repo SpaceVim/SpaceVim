@@ -17,6 +17,8 @@ The next release is v0.9.0.
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
 - Add lang#kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
 - Add lang#dockerfile layer ([#2001](https://github.com/SpaceVim/SpaceVim/pull/2001))
+- Add lang#agda layer ([#1941](https://github.com/SpaceVim/SpaceVim/pull/1941))
+- Add lang#autohotkey layer ([#2021](https://github.com/SpaceVim/SpaceVim/pull/2021))
 
 ### Improvement
 
@@ -27,6 +29,7 @@ The next release is v0.9.0.
 - Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969), [#1999](https://github.com/SpaceVim/SpaceVim/pull/1999))
 - neovim +py and +py3 support ([#1988](https://github.com/SpaceVim/SpaceVim/pull/1988))
 - Improve debug info ([#1991](https://github.com/SpaceVim/SpaceVim/pull/1991))
+- Improve tmux layer ([#1970](https://github.com/SpaceVim/SpaceVim/pull/1970))
 
 ### Changed
 
@@ -48,6 +51,7 @@ The next release is v0.9.0.
 - Fix key binding `SPC f t` ([#1900](https://github.com/SpaceVim/SpaceVim/pull/1900))
 - Fix lsp support for haskell, javascript and typescript ([#1894](https://github.com/SpaceVim/SpaceVim/pull/1894))
 - can not set `windows_leader` to empty string ([#1990](https://github.com/SpaceVim/SpaceVim/pull/1990))
+- Setting 'verbose' flag to positive value breaks mappings guides ([#2017](https://github.com/SpaceVim/SpaceVim/pull/2017))
 
 ### Removed
 
@@ -70,11 +74,15 @@ The next release is v0.9.0.
 - Update doc for bootstrap function ([#1980](https://github.com/SpaceVim/SpaceVim/pull/1980))
 - Update doc for debug upstream plugins ([#1981](https://github.com/SpaceVim/SpaceVim/pull/1981))
 - Update doc windows key bindings ([#1995](https://github.com/SpaceVim/SpaceVim/pull/1995))
+- Add doc for sudo layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
+- Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
+
 
 ### Others
 
 - Fix ci lint ([#1946](https://github.com/SpaceVim/SpaceVim/pull/1946), [#1945](https://github.com/SpaceVim/SpaceVim/pull/1945), [#1944](https://github.com/SpaceVim/SpaceVim/pull/1944), [#1942](https://github.com/SpaceVim/SpaceVim/pull/1942))
 - Add todo manager for SpaceVim development ([#1939](https://github.com/SpaceVim/SpaceVim/pull/1939))
+- Add code owner for javascript layer ([#2003](https://github.com/SpaceVim/SpaceVim/pull/2003), [#2009](https://github.com/SpaceVim/SpaceVim/pull/2009))
 
 ## Latest Release
 

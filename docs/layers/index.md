@@ -67,6 +67,8 @@ enable = false
 | [fzf](fzf/)                         | This layers provide a heavily customized fzf centric work-flow                                                                                                      |
 | [git](git/)                         | This layers adds extensive support for git                                                                                                                          |
 | [github](github/)                   | This layer provides GitHub integration for SpaceVim                                                                                                                 |
+| [lang#agda](lang/agda/)             | This layer adds agda language support to SpaceVim                                                                                                                   |
+| [lang#autohotkey](lang/autohotkey/) | This layer adds autohotkey language support to SpaceVim                                                                                                             |
 | [lang#c](lang/c/)                   | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#csharp](lang/csharp/)         | This layer is for csharp development                                                                                                                                |
 | [lang#dart](lang/dart/)             | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
@@ -90,7 +92,9 @@ enable = false
 | [lsp](language-server-protocol/)    | This layers provides language server protocol for vim and neovim                                                                                                    |
 | [leaderf](leaderf/)                 | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
 | [shell](shell/)                     | This layer provide shell support in SpaceVim                                                                                                                        |
+| [sudo](sudo/)                       | sudo layer provides ability to read and write file elevated privileges in SpaceVim                                                                                  |
 | [tags](tags/)                       | This layer provide tags manager for project                                                                                                                         |
+| [tmux](tmux/)                       | This layers adds extensive support for tmux                                                                                                                         |
 | [tools#dash](tools/dash/)           | This layer provides Dash integration for SpaceVim                                                                                                                   |
 | [tools](tools/)                     | This layer provides some tools for vim                                                                                                                              |
 | [ui](ui/)                           | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |

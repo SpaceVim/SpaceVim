@@ -965,9 +965,9 @@ endfunction
 "   `<leader>+<c-f>`.
 " <
 "
-" 4. How to use `<space>` as `<leader>`?
+" 4. How to use `<Space>` as `<Leader>`?
 " >
-"   Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+"   Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
 " <
 
 ""
