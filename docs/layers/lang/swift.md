@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#swift layer"
-description: "swift language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell"
+description: "swift language support for SpaceVim, includes code completion, syntax highlighting"
 ---
 
 # [Available Layers](../../) >> lang#swift
@@ -10,6 +10,7 @@ description: "swift language support for SpaceVim, includes code completion, syn
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -30,6 +31,9 @@ To use this configuration layer, update custom configuration file with:
 
 - auto-completion
 - syntax checking
-- goto definition
-- refernce finder
-- language server protocol (need lsp layer) 
+
+## Key bindings
+
+| Key binding | Description             |
+| ----------- | ----------------------- |
+| `SPC l k`   | jumping to placeholders |
