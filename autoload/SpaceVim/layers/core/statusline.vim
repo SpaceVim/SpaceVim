@@ -114,7 +114,7 @@ function! s:winnr(...) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#winnr(id)
- return s:MESSLETTERS.circled_num(a:id, g:spacevim_windows_index_type)
+  return s:MESSLETTERS.circled_num(a:id, g:spacevim_windows_index_type)
 endfunction
 
 function! s:filename() abort

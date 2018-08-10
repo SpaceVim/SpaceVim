@@ -223,7 +223,15 @@ function! s:toggle_spell_check() abort
   endif
 endfunction
 
+let s:whitespace_enable = 0
 function! s:toggle_whitespace() abort
+  if s:whitespace_enable
+    DisableWhitespace
+    let s:whitespace_enable = 0
+  else
+    EnableWhitespace
+    let s:whitespace_enable = 1
+  endif
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction
