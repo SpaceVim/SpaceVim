@@ -37,13 +37,13 @@ endfunction
 function! s:find_position() abort
   let start = search('^<!-- SpaceVim layer list start -->$','bwnc')
   let end = search('^<!-- SpaceVim layer list end -->$','bnwc')
-  return sort([start, end])
+  return sort([start, end], 'n')
 endfunction
 
 function! s:find_position_cn() abort
   let start = search('^<!-- SpaceVim layer cn list start -->$','bwnc')
   let end = search('^<!-- SpaceVim layer cn list end -->$','bnwc')
-  return sort([start, end])
+  return sort([start, end], 'n')
 endfunction
 
 function! s:generate_content() abort

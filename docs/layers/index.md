@@ -83,6 +83,7 @@ enable = false
 | [lang#lisp](lang/lisp/)             | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                                             |
 | [lang#lua](lang/lua/)               | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                               |
 | [lang#markdown](lang/markdown/)     | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                                           |
+| [lang#nim](lang/nim/)               | This layer adds nim language support to SpaceVim                                                                                                                    |
 | [lang#ocaml](lang/ocaml/)           | This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file.                                                          |
 | [lang#php](lang/php/)               | This layer adds PHP language support to SpaceVim                                                                                                                    |
 | [lang#python](lang/python/)         | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
