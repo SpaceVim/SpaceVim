@@ -10,6 +10,8 @@ description: "This layer adds nim language support to SpaceVim"
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Key bindings](#key-bindings)
+- [Examples](#examples)
 
 <!-- vim-markdown-toc -->
 
@@ -21,6 +23,8 @@ Nim is a compiled, garbage-collected systems programming language.
 ## Features
 
 - syntax highlighting
+- code completion
+- code compiler and runner
 
 ## Install
 
@@ -33,8 +37,18 @@ To use this configuration layer, update custom configuration file with:
 
 before using this layer, you need to install nim via package manager. for example in archlinux:
 
-
 ```sh
 sudo pacman -S nim nimble
 ```
 
+## Key bindings
+
+| Key binding | Description                  |
+| ----------- | ---------------------------- |
+| `SPC l r`   | compile and run current file |
+
+## Examples
+
+This is an nim example project which is developed in SpaceVim.
+
+<https://github.com/wsdjeg/nim-example>
