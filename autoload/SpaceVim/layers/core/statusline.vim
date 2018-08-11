@@ -640,6 +640,12 @@ function! SpaceVim#layers#core#statusline#mode_text(mode)
     return 'INSERT '
   elseif a:mode == 'R'
     return 'REPLACE '
+  elseif a:mode ==# 'v'
+    return 'VISUAL '
+  elseif a:mode ==# 'V'
+    return 'V-LINE'
+  elseif a:mode ==# 'c'
+    return 'COMMAND '
   elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
     return 'VISUAL '
   endif
