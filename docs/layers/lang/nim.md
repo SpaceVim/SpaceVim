@@ -11,6 +11,7 @@ description: "This layer adds nim language support to SpaceVim"
 - [Features](#features)
 - [Install](#install)
 - [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
 - [Examples](#examples)
 
 <!-- vim-markdown-toc -->
@@ -46,6 +47,18 @@ sudo pacman -S nim nimble
 | Key binding | Description                  |
 | ----------- | ---------------------------- |
 | `SPC l r`   | compile and run current file |
+
+### Inferior REPL process
+
+Start a `nim secret` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
 
 ## Examples
 
