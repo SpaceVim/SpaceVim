@@ -23,9 +23,15 @@ endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
         \ 'NimInfo', 'show symbol info', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+        \ 'call nim#features#usages#run()', 'rename symbol in file', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'E'],
+        \ 'call nim#features#usages#run(1)', 'rename symbol in project', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'compible and run current file', 1)
+
+  " REPL key bindings {{{
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("nim")',
@@ -39,6 +45,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+  " }}}
 endfunction
 
 function! s:go_to_def() abort

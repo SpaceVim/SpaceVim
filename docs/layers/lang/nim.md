@@ -47,6 +47,8 @@ sudo pacman -S nim nimble
 | Key binding | Description                  |
 | ----------- | ---------------------------- |
 | `SPC l r`   | compile and run current file |
+| `SPC l e`   | rename symbol in file        |
+| `SPC l E`   | rename symbol in project     |
 
 ### Inferior REPL process
 
