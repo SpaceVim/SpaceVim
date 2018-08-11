@@ -644,8 +644,12 @@ function! SpaceVim#layers#core#statusline#mode_text(mode)
     return 'VISUAL '
   elseif a:mode ==# 'V'
     return 'V-LINE'
+  elseif a:mode ==# ''
+    return 'V-BLOCK'
   elseif a:mode ==# 'c'
     return 'COMMAND '
+  elseif a:mode ==# 't'
+    return 'TERMINAL '
   elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
     return 'VISUAL '
   endif
