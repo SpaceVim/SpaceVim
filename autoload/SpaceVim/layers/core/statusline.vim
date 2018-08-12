@@ -419,7 +419,7 @@ function! s:active() abort
 endfunction
 
 function! s:inactive() abort
-  let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
+  let l = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
   let secs = [s:filename(), " " . &filetype, s:modes()]
   let base = 10
   for sec in secs
@@ -471,7 +471,7 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   let s:colors_template = t
   exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
   exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-  exe 'hi! SpaceVim_statusline_ia ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+  exe 'hi! SpaceVim_statusline_ia gui=bold cterm=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
   exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
   exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
   exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[4][3] . ' guibg=' . t[3][0] . ' guifg=' . t[4][0]
