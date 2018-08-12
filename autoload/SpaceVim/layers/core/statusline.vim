@@ -630,28 +630,28 @@ function! SpaceVim#layers#core#statusline#mode_text(mode)
   if a:mode == 'n'
     if !empty(iedit_mode)
       if iedit_mode ==# 'n'
-        return 'IEDIT-NORMAL '
+        return 'IEDIT-NORMAL'
       else
-        return 'IEDIT-INSERT '
+        return 'IEDIT-INSERT'
       endif
     endif
-    return 'NORMAL '
+    return 'NORMAL'
   elseif a:mode == 'i'
-    return 'INSERT '
+    return 'INSERT'
   elseif a:mode == 'R'
-    return 'REPLACE '
+    return 'REPLACE'
   elseif a:mode ==# 'v'
-    return 'VISUAL '
+    return 'VISUAL'
   elseif a:mode ==# 'V'
     return 'V-LINE'
   elseif a:mode ==# ''
     return 'V-BLOCK'
   elseif a:mode ==# 'c'
-    return 'COMMAND '
+    return 'COMMAND'
   elseif a:mode ==# 't'
-    return 'TERMINAL '
+    return 'TERMINAL'
   elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
-    return 'VISUAL '
+    return 'VISUAL'
   endif
   return ' '
 endfunction
