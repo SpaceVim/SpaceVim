@@ -18,16 +18,26 @@
 function! SpaceVim#layers#lang#elixir#plugins() abort
   let plugins = []
   call add(plugins, ['elixir-editors/vim-elixir', {'on_ft' : ['elixir', 'eelixir']}])
-  call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
+  if !SpaceVim#layers#lsp#check_filetype('elixir')
+    call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
+  endif
   return plugins
 endfunction
 
 
-function! SpaceVim#layers#lang#elixir#config()
+function! SpaceVim#layers#lang#elixir#config() abort
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
   call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
+  if SpaceVim#layers#lsp#check_filetype('elixir')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("elixir")',
