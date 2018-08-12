@@ -603,21 +603,21 @@ function! SpaceVim#layers#core#statusline#mode(mode)
     if a:mode == 'n'
       if !empty(iedit_mode)
         if iedit_mode ==# 'n'
-          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[8][3] . ' ctermfg=' . t[8][2] . ' guibg=' . t[8][1] . ' guifg=' . t[8][0]
+          exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[8][3] . ' ctermfg=' . t[8][2] . ' guibg=' . t[8][1] . ' guifg=' . t[8][0]
         elseif iedit_mode ==# 'i'
-          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[7][3] . ' ctermfg=' . t[7][2] . ' guibg=' . t[7][1] . ' guifg=' . t[7][0]
+          exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[7][3] . ' ctermfg=' . t[7][2] . ' guibg=' . t[7][1] . ' guifg=' . t[7][0]
         else
-          exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+          exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
         endif
       else
-        exe 'hi! SpaceVim_statusline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+        exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
       endif
     elseif a:mode == 'i'
-      exe 'hi! SpaceVim_statusline_a ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+      exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
     elseif a:mode == 'R'
-      exe 'hi! SpaceVim_statusline_a ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
-    elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V' || a:mode == 's' || a:mode == 'S' || a:mode == '^S'
-      exe 'hi! SpaceVim_statusline_a ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
+      exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[6][3] . ' ctermfg=' . t[6][2] . ' guibg=' . t[6][1] . ' guifg=' . t[6][0]
+    elseif a:mode == 'v' || a:mode == 'V' || a:mode == '' || a:mode == 's' || a:mode == 'S' || a:mode == ''
+      exe 'hi! SpaceVim_statusline_a gui=bold ctermbg=' . t[5][3] . ' ctermfg=' . t[5][2] . ' guibg=' . t[5][1] . ' guifg=' . t[5][0]
     endif
     call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
     let w:spacevim_statusline_mode = a:mode
