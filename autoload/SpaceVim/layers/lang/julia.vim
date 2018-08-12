@@ -18,15 +18,25 @@
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
   call add(plugins, ['JuliaEditorSupport/julia-vim' , {'merged' : 0}])
-  if !SpaceVim#layers#lsp#check_filetype('julia')
-    call add(plugins, ['JuliaEditorSupport/deoplete-julia', {'merged' : 0}])
-  endif
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#julia#config() abort
   call SpaceVim#plugins#repl#reg('julia', 'julia')
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("julia")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
   let g:latex_to_unicode_tab = 0
 
   " julia
