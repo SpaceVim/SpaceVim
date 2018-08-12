@@ -96,7 +96,7 @@ if index(s:loaded_sections_r, 'whitespace') != -1
 endif
 " build in sections for SpaceVim statusline
 function! s:winnr(...) abort
-  if a:0 > 1
+  if a:0 >= 1
     if g:spacevim_windows_index_type == 3
       return ' %{ get(w:, "winid", winnr()) } '
     else
@@ -543,7 +543,7 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the statuline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
-    return s:STATUSLINE.build([s:winnr(),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',
+    return s:STATUSLINE.build([s:winnr(1),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',
           \ 'SpaceVim_statusline_ia', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', g:spacevim_sidebar_width)
   endfunction
   let g:tagbar_status_func = 'TagbarStatusline'
