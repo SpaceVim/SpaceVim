@@ -97,6 +97,7 @@ default language server commands:
 | language     | server command                                   |
 | ------------ | ------------------------------------------------ |
 | `javascript` | `['javascript-typescript-stdio']`                |
+| `typescript` | `['typescript-language-server', '--stdio']`      |
 | `haskell`    | `['hie', '--lsp']`                               |
 | `c`          | `['clangd']`                                     |
 | `cpp`        | `['clangd']`                                     |
@@ -108,6 +109,7 @@ default language server commands:
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
 | `python`     | `['pyls']`                                       |
 | `php`        | `['php', 'path/to/bin/php-language-server.php']` |
+| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
 
 To override the server command, you may need to use `override_cmd` option:
 
