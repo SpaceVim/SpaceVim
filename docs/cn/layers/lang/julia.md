@@ -4,7 +4,7 @@ description: "这一模块为 julia 开发提供支持，包括代码补全、�
 lang: cn
 ---
 
-# [可用模块](../../) >> lang#elixir
+# [可用模块](../../) >> lang#julia
 
 <!-- vim-markdown-toc GFM -->
 
