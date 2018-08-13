@@ -79,6 +79,14 @@ npm install -g javascript-typescript-langserver
 pip install --user python-language-server
 ```
 
+**julia:**
+
+The `LanguageServer` package must be installed in Julia (0.6 or greater), i.e.
+
+```sh
+julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
