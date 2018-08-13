@@ -23,6 +23,9 @@ endfunction
 
 
 function! SpaceVim#layers#lang#julia#config() abort
+  " registe code runner commmand for julia
+  call SpaceVim#plugins#runner#reg_runner('julia', 'julia %s')
+  " registe REPL command and key bindings for julia
   call SpaceVim#plugins#repl#reg('julia', 'julia')
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
