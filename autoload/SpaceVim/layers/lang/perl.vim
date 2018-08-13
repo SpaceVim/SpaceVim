@@ -18,7 +18,7 @@ function! SpaceVim#layers#lang#perl#config() abort
 
   call SpaceVim#plugins#runner#reg_runner('perl', 'perl %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('perl', function('s:language_specified_mappings'))
-    call SpaceVim#plugins#repl#reg('perl', 'perl')
+  call SpaceVim#plugins#repl#reg('perl', ['perl', '-de', '42'])
 endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
