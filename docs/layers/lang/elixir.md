@@ -30,8 +30,8 @@ This layer include the plugin [slashmili/alchemist.vim](https://github.com/slash
 - Documentation lookup for Modules and functions.
 - Jump to the definition.
 
-SpaceVim also provides REPL/Debug support and Language Server protocol for elixir. to enable language server protocol
-for elixir, you need to load lsp layer for elixir.
+SpaceVim also provides REPL, code runner and Language Server protocol support for elixir. to enable language server protocol
+for elixir, you need to load `lsp` layer for elixir.
 
 ## Install
 
