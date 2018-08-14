@@ -28,6 +28,7 @@ endfunction
 function! SpaceVim#layers#lang#elixir#config() abort
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
   call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#gd#add('elixir', function('s:go_to_def'))
 endfunction
 function! s:language_specified_mappings() abort
   if SpaceVim#layers#lsp#check_filetype('elixir')
@@ -51,4 +52,12 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! s:go_to_def() abort
+  if SpaceVim#layers#lsp#check_filetype('elixir')
+    call SpaceVim#lsp#go_to_def()
+  else
+    ExDef
+  endif
 endfunction
