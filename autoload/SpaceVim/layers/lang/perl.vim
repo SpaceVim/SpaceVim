@@ -9,18 +9,22 @@
 
 function! SpaceVim#layers#lang#perl#plugins() abort
   let plugins = []
-  call add(plugins, ['WolfgangMehner/perl-support', {'on_ft' : 'perl'}])
   call add(plugins, ['c9s/perlomni.vim', {'on_ft' : 'perl'}])
+  call add(plugins, ['vim-perl/vim-perl', {'on_ft' : 'perl'}])
+  call add(plugins, ['hotchpotch/perldoc-vim', {'on_cmd' : 'Perldoc'}])
   return plugins
 endfunction
 
 function! SpaceVim#layers#lang#perl#config() abort
-
+  let g:perldoc_no_default_key_mappings = 1
   call SpaceVim#plugins#runner#reg_runner('perl', 'perl %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('perl', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('perl', ['perl', '-de', '42'])
 endfunction
 function! s:language_specified_mappings() abort
+  nnoremap <silent><buffer> K :Perldoc<CR>
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+        \ 'Perldoc', 'show_document', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
