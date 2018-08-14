@@ -87,6 +87,9 @@ The `LanguageServer` package must be installed in Julia (0.6 or greater), i.e.
 julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
 ```
 
+With new package system in Julia 0.7 and above, we have a package mode in Julia REPL.
+in REPL, hit `]` to enter the package management mode, then `add LanguageServer` to install the package.
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
