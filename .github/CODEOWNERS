@@ -7,3 +7,9 @@
 # 中文文件
 # 中文模块翻译
 docs/layers/*    @SLZhang-CUG
+
+
+# lang#julia layer
+autoload/SpaceVim/layers/lang/julia.vim @jingpengw
+docs/layers/lang/julia.md               @jingpengw
+docs/cn/layers/lang/julia.md            @jingpengw
