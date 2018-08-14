@@ -15,6 +15,12 @@ The next release is v0.9.0.
 - Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
 - Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
+- Add lang#kotlin layer ([#1996](https://github.com/SpaceVim/SpaceVim/pull/1996))
+- Add lang#dockerfile layer ([#2001](https://github.com/SpaceVim/SpaceVim/pull/2001))
+- Add lang#agda layer ([#1941](https://github.com/SpaceVim/SpaceVim/pull/1941))
+- Add lang#autohotkey layer ([#2021](https://github.com/SpaceVim/SpaceVim/pull/2021))
+- Add lang#swift layer ([#2027](https://github.com/SpaceVim/SpaceVim/pull/2027))
+- Add lang#nim layer ([#2018](https://github.com/SpaceVim/SpaceVim/pull/2018))
 
 ### Improvement
 
@@ -22,7 +28,11 @@ The next release is v0.9.0.
 - Improve flygep ([#1898](https://github.com/SpaceVim/SpaceVim/pull/1898), [#1961](https://github.com/SpaceVim/SpaceVim/pull/1961), [#1960](https://github.com/SpaceVim/SpaceVim/pull/1960), [#1929](https://github.com/SpaceVim/SpaceVim/pull/1929), [#1802](https://github.com/SpaceVim/SpaceVim/pull/1802))
 - Improve plugin manager ([#1962](https://github.com/SpaceVim/SpaceVim/pull/1962))
 - Support mouse click in tabline ([#1902](https://github.com/SpaceVim/SpaceVim/pull/1902))
-- Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969))
+- Add go def function for python ([#1969](https://github.com/SpaceVim/SpaceVim/pull/1969), [#1999](https://github.com/SpaceVim/SpaceVim/pull/1999))
+- neovim +py and +py3 support ([#1988](https://github.com/SpaceVim/SpaceVim/pull/1988))
+- Improve debug info ([#1991](https://github.com/SpaceVim/SpaceVim/pull/1991))
+- Improve tmux layer ([#1970](https://github.com/SpaceVim/SpaceVim/pull/1970))
+- Improve statusline mode text and color ([#2034](https://github.com/SpaceVim/SpaceVim/pull/2034))
 
 ### Changed
 
@@ -31,6 +41,7 @@ The next release is v0.9.0.
 - Recover spell and list option in go layer ([#1872](https://github.com/SpaceVim/SpaceVim/pull/1872))
 - Remove textwidth option in autocmd ([#1931](https://github.com/SpaceVim/SpaceVim/pull/1931))
 - Reduce number of default plugins ([#1932](https://github.com/SpaceVim/SpaceVim/pull/1932))
+- Recover modeline option ([#1992](https://github.com/SpaceVim/SpaceVim/pull/1992))
 
 ### Fixed
 
@@ -42,6 +53,9 @@ The next release is v0.9.0.
 - Fix inactive windows statusline ([#1913](https://github.com/SpaceVim/SpaceVim/pull/1913))
 - Fix key binding `SPC f t` ([#1900](https://github.com/SpaceVim/SpaceVim/pull/1900))
 - Fix lsp support for haskell, javascript and typescript ([#1894](https://github.com/SpaceVim/SpaceVim/pull/1894))
+- can not set `windows_leader` to empty string ([#1990](https://github.com/SpaceVim/SpaceVim/pull/1990))
+- Setting 'verbose' flag to positive value breaks mappings guides ([#2017](https://github.com/SpaceVim/SpaceVim/pull/2017))
+- Fix whitespace toggle ([#2032](https://github.com/SpaceVim/SpaceVim/pull/2032))
 
 ### Removed
 
@@ -63,10 +77,16 @@ The next release is v0.9.0.
 - Update follow HEAD ([#1886](https://github.com/SpaceVim/SpaceVim/pull/1886), [#1953](https://github.com/SpaceVim/SpaceVim/pull/1953))
 - Update doc for bootstrap function ([#1980](https://github.com/SpaceVim/SpaceVim/pull/1980))
 - Update doc for debug upstream plugins ([#1981](https://github.com/SpaceVim/SpaceVim/pull/1981))
+- Update doc windows key bindings ([#1995](https://github.com/SpaceVim/SpaceVim/pull/1995))
+- Add doc for sudo layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
+- Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
+
 
 ### Others
 
 - Fix ci lint ([#1946](https://github.com/SpaceVim/SpaceVim/pull/1946), [#1945](https://github.com/SpaceVim/SpaceVim/pull/1945), [#1944](https://github.com/SpaceVim/SpaceVim/pull/1944), [#1942](https://github.com/SpaceVim/SpaceVim/pull/1942))
+- Add todo manager for SpaceVim development ([#1939](https://github.com/SpaceVim/SpaceVim/pull/1939))
+- Add code owner for javascript layer ([#2003](https://github.com/SpaceVim/SpaceVim/pull/2003), [#2009](https://github.com/SpaceVim/SpaceVim/pull/2009))
 
 ## Latest Release
 

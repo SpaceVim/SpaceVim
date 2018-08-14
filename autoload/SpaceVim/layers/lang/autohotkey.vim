@@ -1,9 +1,13 @@
 "=============================================================================
-" init.vim --- Entry file for neovim
+" autohotkey.vim --- AutoHotkey support for SpaceVim
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
+function! SpaceVim#layers#lang#autohotkey#plugins() abort
+  let plugins = []
+  call add(plugins, ['wsdjeg/vim-autohotkey', {'merged' : 0}])
+  return plugins
+endfunction

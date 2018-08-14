@@ -6,7 +6,7 @@
 [Community](https://spacevim.org/community/) \|
 [Sponsors](http://spacevim.org/sponsors/) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
-[中文官网](http://spacevim.org/cn/)
+[中文官网](https://spacevim.org/cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)

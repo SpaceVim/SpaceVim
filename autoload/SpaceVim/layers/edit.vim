@@ -29,7 +29,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
         \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : 'StripWhitespace'}],
+        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if executable('fcitx')
     call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])

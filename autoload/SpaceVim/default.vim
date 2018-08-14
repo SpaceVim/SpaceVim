@@ -12,7 +12,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 " Default options {{{
 function! SpaceVim#default#options() abort
-  " basic vim settiing
+  " basic vim settings
   if has('gui_running')
     set guioptions-=m " Hide menu bar.
     set guioptions-=T " Hide toolbar
@@ -149,7 +149,7 @@ function! SpaceVim#default#keyBindings() abort
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
   endif
 
-  " yark and paste
+  " yank and paste
   xnoremap <Leader>y "+y
   xnoremap <Leader>d "+d
   nnoremap <Leader>p "+p
@@ -313,7 +313,7 @@ function! SpaceVim#default#keyBindings() abort
 endfunction
 
 fu! s:tobur(num) abort
-  if index(get(g:,'spacevim_altmoveignoreft',[]), &filetype) == -1
+  if index(get(g:,'_spacevim_altmoveignoreft',[]), &filetype) == -1
     if a:num ==# 'next'
       if tabpagenr('$') > 1
         tabnext

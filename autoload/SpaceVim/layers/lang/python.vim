@@ -56,7 +56,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ 'exe' : function('s:getexe'),
         \ 'opt' : [],
         \ })
-  call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
+  call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python',
         \ ['#!/usr/bin/env python',

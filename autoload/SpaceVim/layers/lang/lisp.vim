@@ -17,7 +17,7 @@ endfunction
 function! SpaceVim#layers#lang#lisp#config() abort
     let g:vlime_default_mappings = {
                 \ 'lisp': [
-                \ ['i', '<space>', '<space><c-r>=VlimeKey("space")<cr>'],
+                \ ['i', '<Space>', '<Space><c-r>=VlimeKey("space")<cr>'],
                 \ ['i', '<cr>', '<cr><c-r>=VlimeKey("cr")<cr>'],
                 \ ['i', '<tab>', '<c-r>=VlimeKey("tab")<cr>'],
                 \
@@ -62,7 +62,7 @@ function! SpaceVim#layers#lang#lisp#config() abort
                 \ ],
                 \
                 \ 'inspector': [
-                \ ['n', ['<cr>', '<space>'], ':call vlime#ui#inspector#InspectorSelect()<cr>'],
+                \ ['n', ['<cr>', '<Space>'], ':call vlime#ui#inspector#InspectorSelect()<cr>'],
                 \ ['n', ['<c-n>', '<tab>'], ':call vlime#ui#inspector#NextField(v:true)<cr>'],
                 \ ['n', '<c-p>', ':call vlime#ui#inspector#NextField(v:false)<cr>'],
                 \ ['n', 'p', ':call vlime#ui#inspector#InspectorPop()<cr>'],

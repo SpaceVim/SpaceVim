@@ -27,7 +27,7 @@ function! SpaceVim#layers#ui#plugins() abort
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
-  if g:spacevim_colorscheme_bg == 'dark'
+  if g:spacevim_colorscheme_bg ==# 'dark'
     let g:indentLine_color_term = get(g:, 'indentLine_color_term', 239)
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#504945')
   else
@@ -88,6 +88,10 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
         \ . string(s:_function('s:toggle_spell_check')) . ', [])',
         \ 'toggle spell checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
+        \ 'toggle hidden listchars', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
+        \ 'toggle wrap line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
         \ 'toggle the whitespace', 1)
@@ -219,7 +223,15 @@ function! s:toggle_spell_check() abort
   endif
 endfunction
 
+let s:whitespace_enable = 0
 function! s:toggle_whitespace() abort
+  if s:whitespace_enable
+    DisableWhitespace
+    let s:whitespace_enable = 0
+  else
+    EnableWhitespace
+    let s:whitespace_enable = 1
+  endif
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction

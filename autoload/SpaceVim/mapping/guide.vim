@@ -92,10 +92,9 @@ function! s:start_parser(key, dict) " {{{
     return
   endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
-  let readmap = ""
-  redir => readmap
-  silent execute 'map '.key
-  redir END
+
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
+
   let lines = split(readmap, "\n")
   let visual = s:vis == "gv" ? 1 : 0
 
@@ -633,7 +632,7 @@ else
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
-if !g:spacevim_vimcompatible
+if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
   call SpaceVim#mapping#guide#register_prefix_descriptions(
         \ g:spacevim_windows_leader,
         \ 'g:_spacevim_mappings_windows')
