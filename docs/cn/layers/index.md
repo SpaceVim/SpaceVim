@@ -80,6 +80,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#html](lang/html/)                               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                            |
 | [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer. |
 | [lang#javascript](lang/javascript/)                   | This layer is for JaveScript development                                                                                                              |
+| [lang#julia](lang/julia/)                             | 这一模块为 julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                                  |
 | [lang#lisp](lang/lisp/)                               | for lisp development                                                                                                                                  |
 | [lang#lua](lang/lua/)                                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                 |
 | [lang#markdown](lang/markdown/)                       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                             |

@@ -79,6 +79,17 @@ npm install -g javascript-typescript-langserver
 pip install --user python-language-server
 ```
 
+**julia:**
+
+The `LanguageServer` package must be installed in Julia (0.6 or greater), i.e.
+
+```sh
+julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
+```
+
+With new package system in Julia 0.7 and above, we have a package mode in Julia REPL.
+in REPL, hit `]` to enter the package management mode, then `add LanguageServer` to install the package.
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -97,6 +108,7 @@ default language server commands:
 | language     | server command                                   |
 | ------------ | ------------------------------------------------ |
 | `javascript` | `['javascript-typescript-stdio']`                |
+| `typescript` | `['typescript-language-server', '--stdio']`      |
 | `haskell`    | `['hie', '--lsp']`                               |
 | `c`          | `['clangd']`                                     |
 | `cpp`        | `['clangd']`                                     |
@@ -108,6 +120,7 @@ default language server commands:
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
 | `python`     | `['pyls']`                                       |
 | `php`        | `['php', 'path/to/bin/php-language-server.php']` |
+| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
 
 To override the server command, you may need to use `override_cmd` option:
 

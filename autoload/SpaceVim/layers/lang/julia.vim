@@ -9,7 +9,7 @@
 ""
 " @section lang#julia, layer-lang-julia
 " @parentsection layers
-" The layer provides synatax highlight and linting for julia. 
+" The layer provides synatax highlight julia. 
 " The completeion only works in nvim with deoplete.
 " However, the julia-vim could not be load on-demanding 
 " due to its LaTeXToUnicode feature.
@@ -17,24 +17,39 @@
 
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
-  call add(plugins, ['JuliaEditorSupport/julia-vim' ])
-  call add(plugins, ['zyedidia/julialint.vim', {'on_ft' : 'julia'}])
+  call add(plugins, ['JuliaEditorSupport/julia-vim' , {'merged' : 0}])
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#julia#config() abort
+  " registe code runner commmand for julia
+  call SpaceVim#plugins#runner#reg_runner('julia', 'julia %s')
+  " registe REPL command and key bindings for julia
+  call SpaceVim#plugins#repl#reg('julia', 'julia')
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("julia")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
   let g:latex_to_unicode_tab = 0
-  au! BufNewFile,BufRead *.jl setf julia
-  au! BufNewFile,BufRead *.julia setf julia
-  
+
   " julia
   let g:default_julia_version = '0.6'
 
-  " language server
-  let g:LanguageClient_autoStart = 1
-  
-  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+  if SpaceVim#layers#lsp#check_filetype('julia')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
 endfunction

@@ -50,6 +50,7 @@ enable = false
 
 ## Available layers
 
+
 | Name                                | Description                                                                                                                                                         |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [VersionControl](VersionControl/)   | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…                         |
@@ -79,6 +80,7 @@ enable = false
 | [lang#html](lang/html/)             | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                                          |
 | [lang#java](lang/java/)             | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer.               |
 | [lang#javascript](lang/javascript/) | This layer is for JaveScript development                                                                                                                            |
+| [lang#julia](lang/julia/)                             |  This layer is for julia development, provide autocompletion, syntax checking and code formatting                                                 |
 | [lang#kotlin](lang/kotlin/)         | This layer adds kotlin language support to SpaceVim                                                                                                                 |
 | [lang#lisp](lang/lisp/)             | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                                             |
 | [lang#lua](lang/lua/)               | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                               |
@@ -101,6 +103,7 @@ enable = false
 | [tools](tools/)                     | This layer provides some tools for vim                                                                                                                              |
 | [ui](ui/)                           | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
 | [unite](unite/)                     | This layers provide a heavily customized Unite centric work-flow                                                                                                    |
+
 
 <!-- SpaceVim layer list end -->
 
