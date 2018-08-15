@@ -67,6 +67,12 @@ To use this configuration layer, update custom configuration file with:
 
 ### Install language server
 
+**Bash**
+
+```sh
+npm i -g bash-language-server
+```
+
 **JavaScript:**
 
 ```sh
@@ -105,21 +111,22 @@ To enable lsp support for a specified filetype, you may need to load this layer 
 
 default language server commands:
 
-| language     | server command                                   |
-| ------------ | ------------------------------------------------ |
-| `javascript` | `['javascript-typescript-stdio']`                |
-| `typescript` | `['typescript-language-server', '--stdio']`      |
-| `haskell`    | `['hie', '--lsp']`                               |
-| `c`          | `['clangd']`                                     |
-| `cpp`        | `['clangd']`                                     |
-| `html`       | `['html-languageserver', '--stdio']`             |
-| `objc`       | `['clangd']`                                     |
-| `objcpp`     | `['clangd']`                                     |
-| `dart`       | `['dart_language_server']`                       |
-| `go`         | `['go-langserver', '-mode', 'stdio']`            |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
-| `python`     | `['pyls']`                                       |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']` |
+| language     | server command                                                                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
+| `sh`       | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
+| `c`          | `['clangd']`                                                                                                                                                                                     |
+| `cpp`        | `['clangd']`                                                                                                                                                                                     |
+| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `objc`       | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `dart`       | `['dart_language_server']`                                                                                                                                                                       |
+| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `python`     | `['pyls']`                                                                                                                                                                                       |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
 
 To override the server command, you may need to use `override_cmd` option:
