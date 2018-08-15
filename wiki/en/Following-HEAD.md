@@ -13,6 +13,7 @@ The next release is v0.9.0.
 - Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
 - Add lsp support for typescript ([#1870](https://github.com/SpaceVim/SpaceVim/pull/1870))
 - Add lsp support for elixir ([#2037](https://github.com/SpaceVim/SpaceVim/pull/2037))
+- Add lsp support for bash ([#2045](https://github.com/SpaceVim/SpaceVim/pull/2045))
 - Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
 - Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
 - Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))

@@ -18,7 +18,7 @@ description: "Shell script development layer, provides autocompletion, syntax ch
 
 ## Description
 
-This layer is for shell script development.
+This layer is for shell script development. Shell script includes bash script and zsh script.
 
 ## Features
 
