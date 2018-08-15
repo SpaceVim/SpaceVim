@@ -81,7 +81,7 @@ let s:enabled_fts = []
 
 let s:lsp_servers = {
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'bash' : ['bash-language-server', 'start'],
+      \ 'sh' : ['bash-language-server', 'start'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
