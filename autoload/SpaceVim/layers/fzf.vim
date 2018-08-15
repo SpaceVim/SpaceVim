@@ -7,6 +7,8 @@
 "=============================================================================
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:LIST = SpaceVim#api#import('data#list')
+let s:SYS = SpaceVim#api#import('system')
 
 
 function! SpaceVim#layers#fzf#plugins() abort
@@ -33,7 +35,7 @@ function! SpaceVim#layers#fzf#config() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'FzfOutline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
@@ -352,4 +354,24 @@ function! s:buffers() abort
         \   'options': '+m',
         \   'down': '40%'
         \ })
+endfunction
+
+command! FzfHelpTags call <SID>helptags(<q-args>)
+function! s:helptags(...)
+  if !executable('grep') || !executable('perl')
+    call SpaceVim#logger#warn('FzfHelptags command requires grep and perl')
+  endif
+  let sorted = sort(split(globpath(&runtimepath, 'doc/tags', 1), '\n'))
+  let tags = exists('*uniq') ? uniq(sorted) : s:LIST.uniq(sorted)
+
+  if exists('s:helptags_script')
+    silent! call delete(s:helptags_script)
+  endif
+  let s:helptags_script = tempname()
+  call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('.s:green('%-40s', 'Label').'\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
+  return s:fzf('helptags', {
+  \ 'source':  'grep -H ".*" '.join(map(tags, 'fzf#shellescape(v:val)')).
+    \ ' | perl -n '.fzf#shellescape(s:helptags_script).' | sort',
+  \ 'sink':    s:function('s:helptag_sink'),
+  \ 'options': ['--ansi', '+m', '--tiebreak=begin', '--with-nth', '..-2']}, a:000)
 endfunction
