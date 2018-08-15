@@ -22,10 +22,11 @@ This layer is for shell script development.
 
 ## Features
 
-- code completion
-- syntax highlighting and indent
-- syntax checking
-- code formatting
+- Code completion
+- Syntax highlighting and indent
+- Syntax checking
+- Code formatting
+- Jump to declaration
 
 SpaceVim also provides language server protocol support for bash script. to enable language server protocol
 for bash script, you need to load `lsp` layer for bash.
@@ -48,5 +49,4 @@ To use this configuration layer, update custom configuration file with:
 | Key binding     | Description                      |
 | --------------- | -------------------------------- |
 | `SPC l d` / `K` | Show doc of cursor symbol        |
-| `SPC l e`       | Rename symbol (need `lsp` layer) |
 | `g d`           | Jump to definition               |
