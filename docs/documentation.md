@@ -859,12 +859,12 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 
 Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
 
-| Mappings    | Description                                                      |
-| ----------- | ---------------------------------------------------------------- |
-| `SPC h SPC` | discover SpaceVim documentation, layers and packages using unite |
-| `SPC h i`   | get help with the symbol at point                                |
-| `SPC h k`   | show top-level bindings with which-key                           |
-| `SPC h m`   | search available man pages                                       |
+| Mappings    | Description                                                                   |
+| ----------- | ----------------------------------------------------------------------------- |
+| `SPC h SPC` | discover SpaceVim documentation, layers and packages using fuzzy finder layer |
+| `SPC h i`   | get help with the symbol at point                                             |
+| `SPC h k`   | show top-level bindings with which-key                                        |
+| `SPC h m`   | search available man pages                                                    |
 
 Reporting an issue:
 
