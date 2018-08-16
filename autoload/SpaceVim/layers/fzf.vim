@@ -28,10 +28,8 @@ function! SpaceVim#layers#fzf#config() abort
     autocmd FileType fzf setlocal nonumber norelativenumber
   augroup END
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call feedkeys(":FzfHelpTags\<Cr>SpaceVim")', 'find-SpaceVim-help', 1)
-  let g:_spacevim_fzf_help_str = 'call feedkeys(":FzfHelpTags\<Cr>" . expand("<cword>"))'
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], g:_spacevim_fzf_help_str, 'get help with the symbol at point', 1)
-  nnoremap [SPC]hi :exe g:_spacevim_fzf_help_str<cr>
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'FzfHelpTags SpaceVim', 'find-SpaceVim-help', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'exe "FzfHelpTags " . expand("<cword>")', 'get help with the symbol at point', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
@@ -406,8 +404,9 @@ function! s:helptag_sink(line)
   endif
   execute 'help' tag
 endfunction
-command! FzfHelpTags call <SID>helptags(<q-args>)
+command! -nargs=? FzfHelpTags call <SID>helptags(<q-args>)
 function! s:helptags(...)
+  let query = get(a:000, 0, '')
   if !executable('grep') || !executable('perl')
     call SpaceVim#logger#warn('FzfHelpTags command requires grep and perl')
   endif
@@ -424,7 +423,7 @@ function! s:helptags(...)
         \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
         \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
         \ 'sink':    function('s:helptag_sink'),
-        \ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'],
+        \ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'] + (empty(query) ? [] : ['--query', query]),
         \   'down': '40%'
         \ })
 endfunction
