@@ -791,7 +791,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的
 
 | 快捷键      | 描述                                         |
 | ----------- | -------------------------------------------- |
-| `SPC h SPC` | 使用 Unite 展示 SpaceVim 帮助文档章节目录    |
+| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录    |
 | `SPC h i`   | 获取光标下单词的帮助信息                     |
 | `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
 | `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |

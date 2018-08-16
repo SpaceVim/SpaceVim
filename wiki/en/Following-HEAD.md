@@ -36,6 +36,7 @@ The next release is v0.9.0.
 - Improve tmux layer ([#1970](https://github.com/SpaceVim/SpaceVim/pull/1970))
 - Improve statusline mode text and color ([#2034](https://github.com/SpaceVim/SpaceVim/pull/2034))
 - Improve `lang#perl` layer, add layer doc ([#2041](https://github.com/SpaceVim/SpaceVim/pull/2041))
+- Improve `fzf` layer, add helptags source ([#2047](https://github.com/SpaceVim/SpaceVim/pull/2047))
 
 ### Changed
 
