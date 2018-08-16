@@ -857,7 +857,9 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 
 #### Getting help
 
-Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
+fuzzy finder layer is powerful tool to  unite all interfaces. it was meant to be
+like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for
+getting help info about functions, variables etc:
 
 | Mappings    | Description                                                                   |
 | ----------- | ----------------------------------------------------------------------------- |
