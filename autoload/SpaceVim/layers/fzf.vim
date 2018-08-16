@@ -28,6 +28,10 @@ function! SpaceVim#layers#fzf#config() abort
     autocmd FileType fzf setlocal nonumber norelativenumber
   augroup END
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call feedkeys(":FzfHelpTags\<Cr>SpaceVim")', 'find-SpaceVim-help', 1)
+  let g:_spacevim_fzf_help_str = 'call feedkeys(":FzfHelpTags\<Cr>" . expand("<cword>"))'
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], g:_spacevim_fzf_help_str, 'get help with the symbol at point', 1)
+  nnoremap [SPC]hi :exe g:_spacevim_fzf_help_str<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
@@ -405,7 +409,7 @@ endfunction
 command! FzfHelpTags call <SID>helptags(<q-args>)
 function! s:helptags(...)
   if !executable('grep') || !executable('perl')
-    call SpaceVim#logger#warn('FzfHelptags command requires grep and perl')
+    call SpaceVim#logger#warn('FzfHelpTags command requires grep and perl')
   endif
   let sorted = sort(split(globpath(&runtimepath, 'doc/tags', 1), '\n'))
   let tags = exists('*uniq') ? uniq(sorted) : s:LIST.uniq(sorted)
@@ -420,7 +424,7 @@ function! s:helptags(...)
         \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
         \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
         \ 'sink':    function('s:helptag_sink'),
-        \ 'options': ['--ansi', '+m', '--tiebreak=begin', '--with-nth', '..-2'],
+        \ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'],
         \   'down': '40%'
         \ })
 endfunction
