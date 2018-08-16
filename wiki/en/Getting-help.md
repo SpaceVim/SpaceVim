@@ -23,6 +23,4 @@ any arbitrary programming language. This enables features like
 - syntax highlighting
 - indent
 
-In current version, these languages are supported in SpaceVim:
-
-- [Bash](https://spacevim.org/layers/lang/sh/)
+please check out the [available layers](https://spacevim.org/layers/) for all supported languages.
