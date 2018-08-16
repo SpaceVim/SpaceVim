@@ -23,6 +23,10 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
+  augroup fzf_layer
+    autocmd!
+    autocmd FileType fzf setlocal nonumber norelativenumber
+  augroup END
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
@@ -139,7 +143,7 @@ function! s:colors() abort
   let s:source = 'colorscheme'
   call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
         \               "fnamemodify(v:val, ':t:r')"),
-        \ 'sink': 'colo', 'down': '40%'})
+        \ 'sink': 'colo','options': '--reverse',  'down': '40%'})
 endfunction
 
 command! FzfFiles call <SID>files()
@@ -411,8 +415,9 @@ function! s:helptags(...)
   endif
   let s:helptags_script = tempname()
   call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('.s:green('%-40s', 'Label').'\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
+  let s:source = 'help'
   call fzf#run({
-        \ 'source':  'grep -H ".*" '.join(map(tags, 'fzf#shellescape(v:val)')).
+        \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
         \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
         \ 'sink':    function('s:helptag_sink'),
         \ 'options': ['--ansi', '+m', '--tiebreak=begin', '--with-nth', '..-2'],
