@@ -1122,9 +1122,9 @@ and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 ==============================================================================
 LANG#JULIA                                         *SpaceVim-layer-lang-julia*
 
-The layer provides synatax highlight and linting for julia.  The completeion
-only works in nvim with deoplete. However, the julia-vim could not be load
-on-demanding  due to its LaTeXToUnicode feature.
+The layer provides synatax highlight julia.  The completeion only works in
+nvim with deoplete. However, the julia-vim could not be load on-demanding  due
+to its LaTeXToUnicode feature.
 
 
 ==============================================================================
@@ -1200,8 +1200,7 @@ MAPPINGS
 ==============================================================================
 LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
-SpaceVim does not load this layer by default. If you are a rust developer, you
-should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
+This layer is for Rust development.
 
 Requirements:
 
@@ -1234,8 +1233,6 @@ MAPPINGS
   Mode        Key         Function
   -----------------------------------------------
   normal      gd          rust-definition
-  normal      gs          rust-definition-split
-  normal      gx          rust-definition-vertical
   normal      SPC l d     rust-doc
   normal      SPC l r     execute current file
 <
