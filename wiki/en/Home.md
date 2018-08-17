@@ -13,7 +13,7 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 - [Quick start guide](https://spacevim.org/quick-start-guide/): A quick start guide about SpaceVim
 - [Documentation](https://spacevim.org/documentation): SpaceVim Documentation
 - [Community](http://spacevim.org/community/): Official community
-- [Following HEAD](Following-HEAD)  
+- [Following HEAD](Following-HEAD): Changes in master branch since last release
 
 ### Developers
 
