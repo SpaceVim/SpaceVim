@@ -206,7 +206,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
 可通过设置这两个选项值来指定函数名称。
 
-启动函数文件应防止在 Vim &runtimepath 的 autoload 文件夹内。例如：
+启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
 文件名： `~/.SpaceVim.d/autoload/myspacevim.vim`
 
@@ -472,7 +472,7 @@ SpaceVim 所支持的分割符以及截图如下：
 **状态栏的颜色**
 
 当前版本的状态栏支持 `gruvbox`/`molokai`/`nord`/`one`/`onedark`，如果你需要使用其他主题，
-可以通过以下木板来设置：
+可以通过以下模板来设置：
 
 ```vim
 " the theme colors should be
@@ -529,7 +529,7 @@ custom_color_palette = [
 
 ### 标签栏
 
-如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Baffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
+如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
 | 快捷键       | 描述             |
 | ------------ | ---------------- |
