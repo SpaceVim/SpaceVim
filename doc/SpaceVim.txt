@@ -1235,6 +1235,8 @@ MAPPINGS
   normal      gd          rust-definition
   normal      SPC l d     rust-doc
   normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
 <
 
 ==============================================================================

@@ -40,6 +40,8 @@
 "   normal      gd          rust-definition
 "   normal      SPC l d     rust-doc
 "   normal      SPC l r     execute current file
+"   normal      SPC l s     rust-def-split
+"   normal      SPC l x     rust-def-vertical
 " <
 
 function! SpaceVim#layers#lang#rust#plugins() abort
@@ -52,7 +54,7 @@ endfunction
 
 function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
-  let g:racer_cmd = $HOME . '/.cargo/bin/racer'
+  let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
 
   if SpaceVim#layers#lsp#check_filetype('rust')
     call SpaceVim#mapping#gd#add('rust',

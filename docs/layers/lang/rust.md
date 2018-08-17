@@ -50,7 +50,8 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l d` / `K` | Show doc of cursor symbol        |
 | `SPC l e`       | Rename symbol (need `lsp` layer) |
 | `g d`           | Jump to definition               |
-
+| `SPC l s`       | Jump to definition (split)       |
+| `SPC l x`       | Jump to definition (vertical)    |
 
 ### Code runner
 
