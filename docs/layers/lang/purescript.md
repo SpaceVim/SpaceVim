@@ -10,6 +10,7 @@ description: "This layer is for purescript development, provide autocompletion, 
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+  - [Get the compiler and recommended  tools](#get-the-compiler-and-recommended--tools)
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
   - [Language specific key bindings](#language-specific-key-bindings)
@@ -19,7 +20,7 @@ description: "This layer is for purescript development, provide autocompletion, 
 
 ## Description
 
-This layer is for Purescript development.
+This layer is for Purescript development. PureScript is a strongly-typed functional programming language that compiles to JavaScript.
 
 ## Features
 
@@ -31,6 +32,13 @@ SpaceVim also provides REPL, code runner and Language Server protocol support fo
 for purescript, you need to load `lsp` layer for purescript.
 
 ## Install
+
+### Get the compiler and recommended  tools
+
+```sh
+npm install -g purescript
+npm install -g pulp bower
+```
 
 ### Layer
 
