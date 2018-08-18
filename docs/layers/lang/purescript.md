@@ -54,9 +54,21 @@ To use this configuration layer, update custom configuration file with:
 
 ### Imports
 
-| Key binding | Description                                            |
-| ----------- | ------------------------------------------------------ |
-| `g d`       | Goto identifier.                                       |
+| Key binding | Description                           |
+| ----------- | ------------------------------------- |
+| `g d`       | Goto identifier.                      |
+| `SPC l L`   | list loaded modules                   |
+| `SPC l l`   | reset loaded modules and load externs |
+| `SPC l r`   | run current project                   |
+| `SPC l R`   | rubuild current buffer                |
+| `SPC l f`   | generate function template            |
+| `SPC l t`   | add type annotation                   |
+| `SPC l a`   | apply current line suggestion         |
+| `SPC l A`   | apply all suggestions                 |
+| `SPC l C`   | add case expression                   |
+| `SPC l i`   | inport module under cursor            |
+| `SPC l p`   | search pursuit for cursor ident       |
+| `SPC l T`   | find type for cursor ident            |
 
 ### Inferior REPL process
 
