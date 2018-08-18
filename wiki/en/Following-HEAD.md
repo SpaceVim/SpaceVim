@@ -23,6 +23,7 @@ The next release is v0.9.0.
 - Add `lang#autohotkey` layer ([#2021](https://github.com/SpaceVim/SpaceVim/pull/2021))
 - Add `lang#swift` layer ([#2027](https://github.com/SpaceVim/SpaceVim/pull/2027))
 - Add `lang#nim` layer ([#2018](https://github.com/SpaceVim/SpaceVim/pull/2018))
+- Add `lang#purescript` layer ([#2054](https://github.com/SpaceVim/SpaceVim/pull/2054))
 
 ### Improvement
 

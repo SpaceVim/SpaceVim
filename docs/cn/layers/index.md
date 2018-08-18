@@ -86,6 +86,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#markdown](lang/markdown/)                       | 这一模块为 markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                            |
 | [lang#perl](lang/perl/)                               | 这一模块为 perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#php](lang/php/)                                 | 这一模块为 php 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
+| [lang#purescript](lang/purescript/)                   | 这一模块为 purescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#python](lang/python/)                           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#ruby](lang/ruby/)                               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#rust](lang/rust/)                               | 这一模块为 rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
