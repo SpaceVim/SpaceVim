@@ -13,7 +13,7 @@ description: "This layer is for purescript development, provide autocompletion, 
   - [Get the compiler and recommended  tools](#get-the-compiler-and-recommended--tools)
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
-  - [Imports](#imports)
+  - [Language specific key bindings](#language-specific-key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
@@ -52,7 +52,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Key bindings
 
-### Imports
+### Language specific key bindings
 
 | Key binding | Description                           |
 | ----------- | ------------------------------------- |
@@ -66,7 +66,7 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l a`   | apply current line suggestion         |
 | `SPC l A`   | apply all suggestions                 |
 | `SPC l C`   | add case expression                   |
-| `SPC l i`   | inport module under cursor            |
+| `SPC l i`   | import module under cursor            |
 | `SPC l p`   | search pursuit for cursor ident       |
 | `SPC l T`   | find type for cursor ident            |
 
