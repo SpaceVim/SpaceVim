@@ -61,7 +61,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     nnoremap <silent> [Window]o
           \ :<C-u>only<Space><Bar><Space>doautocmd WinEnter<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.o = ['only',
+    let g:_spacevim_mappings_windows.o = ['only | doautocmd WinEnter',
           \ 'Close other windows',
           \ [
           \ '[WIN o] is to close all other windows',
