@@ -75,9 +75,9 @@ function! s:async_run(runner) abort
   endif
 endfunction
 
-" @vimlint(evl103, 0, a:id)
-" @vimlint(evl103, 0, a:data)
-" @vimlint(evl103, 0, a:event)
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
   if a:data == 0
     let s:job_id =  s:JOB.start(s:target,{
@@ -94,9 +94,9 @@ function! s:on_compile_exit(id, data, event) abort
     call s:update_statusline()
   endif
 endfunction
-" @vimlint(evl103, 1, a:job_id)
-" @vimlint(evl103, 1, a:data)
-" @vimlint(evl103, 1, a:event)
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:event)
 
 function! s:update_statusline() abort
   redrawstatus!
@@ -121,10 +121,10 @@ function! SpaceVim#plugins#runner#open() abort
     call s:update_statusline()
   endif
 endfunction
-" @vimlint(evl103, 1, a:job_id)
-" @vimlint(evl103, 1, a:data)
-" @vimlint(evl103, 1, a:event)
 
+" @vimlint(EVL103, 1, a:job_id)
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:event)
 if has('nvim') && exists('*chanclose')
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
