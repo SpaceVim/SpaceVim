@@ -7,14 +7,14 @@
 "=============================================================================
 
 
-function! SpaceVim#layers#docs#layers#lang#purescript#plugins() abort
+function! SpaceVim#layers#lang#purescript#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/purescript-vim', {'on_ft' : 'purescript'}])
   call add(plugins, ['frigoeu/psc-ide-vim', {'on_ft' : 'purescript'}])
   return plugins
 endfunction
 
-function! SpaceVim#layers#docs#layers#lang#purescript#config() abort
+function! SpaceVim#layers#lang#purescript#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('purescript', function('s:language_specified_mappings'))
   call SpaceVim#mapping#gd#add('purescript', function('s:go_to_def'))
 endfunction
