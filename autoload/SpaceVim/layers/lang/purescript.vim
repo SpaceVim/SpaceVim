@@ -17,12 +17,31 @@ endfunction
 function! SpaceVim#layers#lang#purescript#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('purescript', function('s:language_specified_mappings'))
   call SpaceVim#mapping#gd#add('purescript', function('s:go_to_def'))
-    call SpaceVim#plugins#repl#reg('purescript', ['pulp', 'repl'])
+  call SpaceVim#plugins#repl#reg('purescript', ['pulp', 'repl'])
+  call SpaceVim#plugins#runner#reg_runner('purescript', 'pulp run')
 endfunction
 function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'run current project', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','L'],
         \ 'Plist',
         \ 'list loaded modules', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','l'],
+        \ 'Pload!',
+        \ 'reset loaded modules and load externs', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i'],
+        \ 'Pimport',
+        \ 'import module', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','T'],
+        \ 'Ptype',
+        \ 'find type of cursor ident', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'],
+        \ 'Pursuit',
+        \ 'search pursuit for cursor ident', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
+        \ 'Papply',
+        \ 'apply current line suggestion', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("purescript")',

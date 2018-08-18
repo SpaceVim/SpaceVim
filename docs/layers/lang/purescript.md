@@ -13,7 +13,7 @@ description: "This layer is for purescript development, provide autocompletion, 
   - [Get the compiler and recommended  tools](#get-the-compiler-and-recommended--tools)
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
-  - [Language specific key bindings](#language-specific-key-bindings)
+  - [Imports](#imports)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
@@ -52,14 +52,11 @@ To use this configuration layer, update custom configuration file with:
 
 ## Key bindings
 
-### Language specific key bindings
+### Imports
 
-| Key binding     | Description                      |
-| --------------- | -------------------------------- |
-| `SPC l d` / `K` | Show doc of cursor symbol        |
-| `SPC l t`       | Jump to tag stack                |
-| `SPC l e`       | Rename symbol (need `lsp` layer) |
-| `g d`           | Jump to definition               |
+| Key binding | Description                                            |
+| ----------- | ------------------------------------------------------ |
+| `g d`       | Goto identifier.                                       |
 
 ### Inferior REPL process
 

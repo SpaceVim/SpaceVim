@@ -33,7 +33,11 @@ let s:target = ''
 
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
-    let cmd = printf(a:runner, bufname('%'))
+    try
+      let cmd = printf(a:runner, bufname('%'))
+    catch
+      let cmd = a:runner
+    endtry
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
