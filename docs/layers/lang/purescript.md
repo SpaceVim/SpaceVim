@@ -14,6 +14,7 @@ description: "This layer is for purescript development, provide autocompletion, 
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
   - [Language specific key bindings](#language-specific-key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
@@ -59,6 +60,18 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l t`       | Jump to tag stack                |
 | `SPC l e`       | Rename symbol (need `lsp` layer) |
 | `g d`           | Jump to definition               |
+
+### Inferior REPL process
+
+Start a `pulp repl` inferior REPL process with `SPC l s i`. 
+
+Send code to inferior process commands:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
 
 ### Running current script
 
