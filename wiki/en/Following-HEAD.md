@@ -61,6 +61,7 @@ The next release is v0.9.0.
 - can not set `windows_leader` to empty string ([#1990](https://github.com/SpaceVim/SpaceVim/pull/1990))
 - Setting 'verbose' flag to positive value breaks mappings guides ([#2017](https://github.com/SpaceVim/SpaceVim/pull/2017))
 - Fix whitespace toggle ([#2032](https://github.com/SpaceVim/SpaceVim/pull/2032))
+- Fix Unknown function: TSOnBufEnter for nvim-typescript ([#2062](https://github.com/SpaceVim/SpaceVim/pull/2062))
 
 ### Removed
 

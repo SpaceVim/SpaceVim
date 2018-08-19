@@ -12,7 +12,7 @@ function! SpaceVim#layers#lang#typescript#plugins() abort
   call add(plugins, ['leafgarland/typescript-vim'])
   if !SpaceVim#layers#lsp#check_filetype('typescript')
     if has('nvim')
-      call add(plugins, ['mhartington/nvim-typescript'])
+      call add(plugins, ['mhartington/nvim-typescript', {'build': './install.sh'}])
     else
       call add(plugins, ['Quramy/tsuquyomi'])
     endif
