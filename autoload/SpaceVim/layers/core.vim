@@ -17,10 +17,10 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
 
-  call add(plugins, ['rhysd/clever-f.vim'])
-  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1}])
+  call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
-  call add(plugins, ['andymass/vim-matchup'])
+  call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
