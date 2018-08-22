@@ -14,7 +14,6 @@ description: "This layer is for erlang development, provide autocompletion, synt
 - [Key bindings](#key-bindings)
   - [Language specific key bindings](#language-specific-key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
-  - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
@@ -24,9 +23,9 @@ This layer is for erlang development.
 
 ## Features
 
-- Completion for Modules and functions.
-- Documentation lookup for Modules and functions.
-- Jump to the definition.
+- code completion
+- syntax highlighting
+- syntax checking
 
 SpaceVim also provides REPL, code runner and Language Server protocol support for erlang. to enable language server protocol
 for erlang, you need to load `lsp` layer for erlang.
@@ -63,7 +62,3 @@ Send code to inferior process commands:
 | `SPC l s b` | send buffer and keep code buffer focused         |
 | `SPC l s l` | send line and keep code buffer focused           |
 | `SPC l s s` | send selection text and keep code buffer focused |
-
-### Running current script
-
-To running current script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.

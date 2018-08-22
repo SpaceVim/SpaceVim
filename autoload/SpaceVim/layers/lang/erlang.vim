@@ -18,10 +18,14 @@ endfunction
 
 function! SpaceVim#layers#lang#erlang#config() abort
   call SpaceVim#plugins#repl#reg('erlang', 'erl')
+  " call SpaceVim#plugins#runner#reg_runner('erlang', ['erlc -o #TEMP# %s', 'erl -pa #TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('erlang', function('s:language_specified_mappings'))
   " call SpaceVim#mapping#gd#add('erlang', function('s:go_to_def'))
 endfunction
 function! s:language_specified_mappings() abort
+  " call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        " \ 'call SpaceVim#plugins#runner#open()',
+        " \ 'execute current file', 1)
   if SpaceVim#layers#lsp#check_filetype('erlang')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
