@@ -81,6 +81,7 @@ let s:enabled_fts = []
 
 let s:lsp_servers = {
       \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'sh' : ['bash-language-server', 'start'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
@@ -94,7 +95,8 @@ let s:lsp_servers = {
       \ 'html' : ['html-languageserver', '--stdio'],
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
       \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
-      \ 'javascript' : ['javascript-typescript-stdio']
+      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'purescript' : ['purescript-language-server', '--stdio']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort

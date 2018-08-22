@@ -7,6 +7,8 @@
 "=============================================================================
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:LIST = SpaceVim#api#import('data#list')
+let s:SYS = SpaceVim#api#import('system')
 
 
 function! SpaceVim#layers#fzf#plugins() abort
@@ -21,7 +23,13 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fzf#config() abort
+  augroup fzf_layer
+    autocmd!
+    autocmd FileType fzf setlocal nonumber norelativenumber
+  augroup END
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'FzfHelpTags SpaceVim', 'find-SpaceVim-help', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'exe "FzfHelpTags " . expand("<cword>")', 'get help with the symbol at point', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
@@ -33,7 +41,7 @@ function! SpaceVim#layers#fzf#config() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'FzfOutline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
@@ -137,7 +145,7 @@ function! s:colors() abort
   let s:source = 'colorscheme'
   call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
         \               "fnamemodify(v:val, ':t:r')"),
-        \ 'sink': 'colo', 'down': '40%'})
+        \ 'sink': 'colo','options': '--reverse',  'down': '40%'})
 endfunction
 
 command! FzfFiles call <SID>files()
@@ -155,31 +163,31 @@ function! SpaceVim#layers#fzf#sources() abort
 endfunction
 command! FzfJumps call <SID>jumps()
 function! s:bufopen(e) abort
-    let list = split(a:e)
-    if len(list) < 4
+  let list = split(a:e)
+  if len(list) < 4
+    return
+  endif
+
+  let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
+  let lines = getbufline(file_text, linenr)
+  let path = file_text
+  let bufnr = bufnr(file_text)
+  if empty(lines)
+    if stridx(join(split(getline(linenr))), file_text) == 0
+      let lines = [file_text]
+      let path = bufname('%')
+      let bufnr = bufnr('%')
+    elseif filereadable(path)
+      let bufnr = 0
+      let lines = ['buffer unloaded']
+    else
+      " Skip.
       return
     endif
+  endif
 
-    let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
-    let lines = getbufline(file_text, linenr)
-    let path = file_text
-    let bufnr = bufnr(file_text)
-    if empty(lines)
-      if stridx(join(split(getline(linenr))), file_text) == 0
-        let lines = [file_text]
-        let path = bufname('%')
-        let bufnr = bufnr('%')
-      elseif filereadable(path)
-        let bufnr = 0
-        let lines = ['buffer unloaded']
-      else
-        " Skip.
-        return
-      endif
-    endif
-
-    exe 'e '  . path
-    call cursor(linenr, col)
+  exe 'e '  . path
+  call cursor(linenr, col)
 endfunction
 function! s:jumps() abort
   let s:source = 'jumps'
@@ -215,12 +223,12 @@ endfunction
 
 command! FzfQuickfix call s:quickfix()
 function! s:open_quickfix_item(e) abort
-    let line = a:e
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-    exe 'e ' . filename
-    call cursor(linenr, colum)
+  let line = a:e
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
 endfunction
 function! s:quickfix_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
@@ -242,12 +250,12 @@ function! s:location_list_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
 endfunction
 function! s:open_location_item(e) abort
-    let line = a:e
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-    exe 'e ' . filename
-    call cursor(linenr, colum)
+  let line = a:e
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
 endfunction
 function! s:location_list() abort
   let s:source = 'location_list'
@@ -308,12 +316,12 @@ function! s:outline(...) abort
   let s:source = 'outline'
   let args = copy(a:000)
   let tag_cmds = [
-    \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
-    \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
+        \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
+        \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
   return {
-    \ 'source':  s:outline_source(tag_cmds),
-    \ 'sink*':   function('s:outline_sink'),
-    \ 'options': '--reverse +m -d "\t" --with-nth 1 -n 1 --ansi --prompt "Outline> "'}
+        \ 'source':  s:outline_source(tag_cmds),
+        \ 'sink*':   function('s:outline_sink'),
+        \ 'options': '--reverse +m -d "\t" --with-nth 1 -n 1 --ansi --prompt "Outline> "'}
 endfunction
 
 
@@ -350,6 +358,72 @@ function! s:buffers() abort
         \   'source':  reverse(<sid>buffer_list()),
         \   'sink':    function('s:open_buffer'),
         \   'options': '+m',
+        \   'down': '40%'
+        \ })
+endfunction
+
+let s:ansi = {'black': 30, 'red': 31, 'green': 32, 'yellow': 33, 'blue': 34, 'magenta': 35, 'cyan': 36}
+
+function! s:get_color(attr, ...)
+  let gui = has('termguicolors') && &termguicolors
+  let fam = gui ? 'gui' : 'cterm'
+  let pat = gui ? '^#[a-f0-9]\+' : '^[0-9]\+$'
+  for group in a:000
+    let code = synIDattr(synIDtrans(hlID(group)), a:attr, fam)
+    if code =~? pat
+      return code
+    endif
+  endfor
+  return ''
+endfunction
+function! s:csi(color, fg)
+  let prefix = a:fg ? '38;' : '48;'
+  if a:color[0] == '#'
+    return prefix.'2;'.join(map([a:color[1:2], a:color[3:4], a:color[5:6]], 'str2nr(v:val, 16)'), ';')
+  endif
+  return prefix.'5;'.a:color
+endfunction
+
+function! s:ansi(str, group, default, ...)
+  let fg = s:get_color('fg', a:group)
+  let bg = s:get_color('bg', a:group)
+  let color = s:csi(empty(fg) ? s:ansi[a:default] : fg, 1) .
+        \ (empty(bg) ? '' : s:csi(bg, 0))
+  return printf("\x1b[%s%sm%s\x1b[m", color, a:0 ? ';1' : '', a:str)
+endfunction
+for s:color_name in keys(s:ansi)
+  execute "function! s:".s:color_name."(str, ...)\n"
+        \ "  return s:ansi(a:str, get(a:, 1, ''), '".s:color_name."')\n"
+        \ "endfunction"
+endfor
+function! s:helptag_sink(line)
+  let [tag, file, path] = split(a:line, "\t")[0:2]
+  let rtp = fnamemodify(path, ':p:h:h')
+  if stridx(&rtp, rtp) < 0
+    execute 'set rtp+='. fnameescape(rtp)
+  endif
+  execute 'help' tag
+endfunction
+command! -nargs=? FzfHelpTags call <SID>helptags(<q-args>)
+function! s:helptags(...)
+  let query = get(a:000, 0, '')
+  if !executable('grep') || !executable('perl')
+    call SpaceVim#logger#warn('FzfHelpTags command requires grep and perl')
+  endif
+  let sorted = sort(split(globpath(&runtimepath, 'doc/tags', 1), '\n'))
+  let tags = exists('*uniq') ? uniq(sorted) : s:LIST.uniq(sorted)
+
+  if exists('s:helptags_script')
+    silent! call delete(s:helptags_script)
+  endif
+  let s:helptags_script = tempname()
+  call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('.s:green('%-40s', 'Label').'\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
+  let s:source = 'help'
+  call fzf#run({
+        \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
+        \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
+        \ 'sink':    function('s:helptag_sink'),
+        \ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'] + (empty(query) ? [] : ['--query', query]),
         \   'down': '40%'
         \ })
 endfunction

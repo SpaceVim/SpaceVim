@@ -92,10 +92,9 @@ function! s:start_parser(key, dict) " {{{
     return
   endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
-  let readmap = ""
-  redir => readmap
-  silent execute 'map '.key
-  redir END
+
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
+
   let lines = split(readmap, "\n")
   let visual = s:vis == "gv" ? 1 : 0
 

@@ -188,11 +188,11 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在`~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
 
-当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，执定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
+当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
 
 SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.toml` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
-所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称未原先 Vim 脚本中使用的变量名称去处 `g:spacevim_` 前缀。
+所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
 
 如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
 
@@ -206,7 +206,7 @@ call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
 可通过设置这两个选项值来指定函数名称。
 
-启动函数文件应防止在 Vim &runtimepath 的 autoload 文件夹内。例如：
+启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
 文件名： `~/.SpaceVim.d/autoload/myspacevim.vim`
 
@@ -472,7 +472,7 @@ SpaceVim 所支持的分割符以及截图如下：
 **状态栏的颜色**
 
 当前版本的状态栏支持 `gruvbox`/`molokai`/`nord`/`one`/`onedark`，如果你需要使用其他主题，
-可以通过以下木板来设置：
+可以通过以下模板来设置：
 
 ```vim
 " the theme colors should be
@@ -529,7 +529,7 @@ custom_color_palette = [
 
 ### 标签栏
 
-如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Baffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
+如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
 | 快捷键       | 描述             |
 | ------------ | ---------------- |
@@ -688,7 +688,7 @@ features.
 
 | Key bindings         | Description                   |
 | -------------------- | ----------------------------- |
-| `<Leader> f <space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f f`       | Fuzzy find file               |
 | `<Leader> f h`       | Fuzzy find history/yank       |
@@ -791,7 +791,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的
 
 | 快捷键      | 描述                                         |
 | ----------- | -------------------------------------------- |
-| `SPC h SPC` | 使用 Unite 展示 SpaceVim 帮助文档章节目录    |
+| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录    |
 | `SPC h i`   | 获取光标下单词的帮助信息                     |
 | `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
 | `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |
@@ -1057,7 +1057,7 @@ SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 
 filemanager = "nerdtree"
 ```
 
-SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性需要分析文件夹内容，
+SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
 可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
 

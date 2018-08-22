@@ -17,10 +17,10 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
 
-  call add(plugins, ['rhysd/clever-f.vim'])
-  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1}])
+  call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
-  call add(plugins, ['andymass/vim-matchup'])
+  call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
@@ -44,8 +44,8 @@ function! SpaceVim#layers#core#config() abort
   let g:matchup_matchparen_status_offscreen = 0
   " Unimpaired bindings
   " Quickly add empty lines
-  nnoremap <silent> [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent> ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+  nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+  nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
   "]e or [e move current line ,count can be useed
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
@@ -88,7 +88,6 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'L'], 'SPRuntimeLog', 'view SpaceVim runtime log', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'm'], 'Unite manpage', 'search available man pages', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'k'], 'LeaderGuide "[KEYs]"', 'show top-level bindings with mapping guide', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', '0'], 'm`^', 'push mark and goto beginning of line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', '$'], 'm`g_', 'push mark and goto end of line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)

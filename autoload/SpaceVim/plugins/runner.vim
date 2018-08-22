@@ -33,7 +33,11 @@ let s:target = ''
 
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
-    let cmd = printf(a:runner, bufname('%'))
+    try
+      let cmd = printf(a:runner, bufname('%'))
+    catch
+      let cmd = a:runner
+    endtry
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -71,6 +75,9 @@ function! s:async_run(runner) abort
   endif
 endfunction
 
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
   if a:data == 0
     let s:job_id =  s:JOB.start(s:target,{
@@ -87,6 +94,9 @@ function! s:on_compile_exit(id, data, event) abort
     call s:update_statusline()
   endif
 endfunction
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:event)
 
 function! s:update_statusline() abort
   redrawstatus!
@@ -111,16 +121,16 @@ function! SpaceVim#plugins#runner#open() abort
     call s:update_statusline()
   endif
 endfunction
+
 " @vimlint(EVL103, 1, a:job_id)
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
-
 if has('nvim') && exists('*chanclose')
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
     let s:_out_data[-1] .= a:data[0]
     call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] == ''
+    if s:_out_data[-1] ==# ''
       call remove(s:_out_data, -1)
       let lines = s:_out_data
     else
@@ -138,7 +148,7 @@ if has('nvim') && exists('*chanclose')
   function! s:on_stderr(job_id, data, event) abort
     let s:_out_data[-1] .= a:data[0]
     call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] == ''
+    if s:_out_data[-1] ==# ''
       call remove(s:_out_data, -1)
       let lines = s:_out_data
     else
