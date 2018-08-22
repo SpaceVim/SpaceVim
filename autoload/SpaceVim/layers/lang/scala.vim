@@ -16,3 +16,7 @@ function! SpaceVim#layers#lang#scala#plugins() abort
     call add(plugins, ['derekwyatt/vim-scala',                    { 'on_ft' : 'scala'}])
     return plugins
 endfunction
+
+function! SpaceVim#layers#lang#scala#config() abort
+  let g:scala_use_default_keymappings = 0
+endfunction
