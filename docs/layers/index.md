@@ -75,6 +75,7 @@ enable = false
 | [lang#dart](lang/dart/)               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
 | [lang#dockerfile](lang/dockerfile/)   | This layer adds DockerFile to SpaceVim                                                                                                                              |
 | [lang#elixir](lang/elixir/)           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                                         |
+| [lang#erlang](lang/erlang/)           | This layer is for erlang development, provide autocompletion, syntax checking, code format for erlang file.                                                         |
 | [lang#go](lang/go/)                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
 | [lang#haskell](lang/haskell/)         | haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell |
 | [lang#html](lang/html/)               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                                          |

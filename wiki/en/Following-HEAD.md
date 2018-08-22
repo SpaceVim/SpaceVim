@@ -25,6 +25,7 @@ The next release is v0.9.0.
 - Add `lang#nim` layer ([#2018](https://github.com/SpaceVim/SpaceVim/pull/2018))
 - Add `lang#purescript` layer ([#2054](https://github.com/SpaceVim/SpaceVim/pull/2054))
 - Add `lang#WebAssembly` layer ([#2068](https://github.com/SpaceVim/SpaceVim/pull/2068))
+- Add `lang#erlang` layer ([#2074](https://github.com/SpaceVim/SpaceVim/pull/2074))
 
 ### Improvement
 
