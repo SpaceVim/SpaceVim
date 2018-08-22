@@ -96,9 +96,9 @@ fu! zvim#util#CopyToClipboard(...) abort
             echo 'Copied to clipboard'
           catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
-              echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
+              echohl WarningMsg | echom 'Cannot find clipboard, for more info see :h clipboard' | echohl None
             else
-              echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+              echohl WarningMsg | echom 'You need to compile your vim with +clipboard feature' | echohl None
             endif
           endtry
         else
@@ -108,7 +108,7 @@ fu! zvim#util#CopyToClipboard(...) abort
         echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
       endif
     else
-      echohl WarningMsg | echom 'You need install git!' | echohl None
+      echohl WarningMsg | echom 'You need to install git!' | echohl None
     endif
   else
     try
@@ -118,7 +118,7 @@ fu! zvim#util#CopyToClipboard(...) abort
       if has('nvim')
         echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
       else
-        echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+        echohl WarningMsg | echom 'You need to compile you vim with +clipboard feature' | echohl None
       endif
     endtry
   endif
