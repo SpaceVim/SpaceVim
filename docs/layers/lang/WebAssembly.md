@@ -27,5 +27,5 @@ To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#kotlin"
+  name = "lang#WebAssembly"
 ```
