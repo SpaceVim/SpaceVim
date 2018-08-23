@@ -9,6 +9,6 @@
 
 function! SpaceVim#layers#lang#fsharp#plugins() abort
   let plugins = []
-  call add(plugins, ['fsharp/vim-fsharp', {'on_ft' : 'fsharp'}])
+  call add(plugins, ['wsdjeg/vim-fsharp', {'on_ft' : 'fsharp'}])
   return plugins
 endfunction
