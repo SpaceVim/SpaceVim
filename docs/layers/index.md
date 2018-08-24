@@ -94,6 +94,7 @@ enable = false
 | [lang#python](lang/python/)           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
 | [lang#ruby](lang/ruby/)               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
 | [lang#rust](lang/rust/)               | This layer is for rust development, provide autocompletion, syntax checking, code format for rust file.                                                             |
+| [lang#scala](lang/scala/)             | This layer adds scala language support to SpaceVim                                                                                                                  |
 | [lang#sh](lang/sh/)                   | Shell script development layer, provides autocompletion, syntax checking, code format for bash and zsh script.                                                      |
 | [lang#swift](lang/swift/)             | swift language support for SpaceVim, includes code completion, syntax highlighting                                                                                  |
 | [lang#typescript](lang/typescript/)   | This layer is for TypeScript development                                                                                                                            |
