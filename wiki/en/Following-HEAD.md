@@ -65,6 +65,7 @@ The next release is v0.9.0.
 - Fix whitespace toggle ([#2032](https://github.com/SpaceVim/SpaceVim/pull/2032))
 - Fix Unknown function: TSOnBufEnter for nvim-typescript ([#2062](https://github.com/SpaceVim/SpaceVim/pull/2062))
 - Fix icon in windows ([#2082](https://github.com/SpaceVim/SpaceVim/pull/2082))
+- Fix toggle highlight tail spaces ([#2080](https://github.com/SpaceVim/SpaceVim/pull/2080))
 
 ### Removed
 
