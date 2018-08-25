@@ -75,7 +75,7 @@ function! s:self.hi(info) abort
         let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
     endif
     try
-        exe cmd
+        silent! exe cmd
     catch
     endtry
 endfunction

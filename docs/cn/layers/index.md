@@ -92,6 +92,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#python](lang/python/)                           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#ruby](lang/ruby/)                               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#rust](lang/rust/)                               | 这一模块为 rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
+| [lang#scala](lang/scala/)                             | 这一模块为 scala 开发提供支持，包括语法高亮，函数列表等特性                                                                               |
 | [lang#sh](lang/sh/)                                   | 这一模块为 shell script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
 | [lang#typescript](lang/typescript/)                   | 这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#vim](lang/vim/)                                 | 这一模块为 vim script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
