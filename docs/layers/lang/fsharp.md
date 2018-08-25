@@ -10,6 +10,8 @@ description: "This layer adds fsharp language support to SpaceVim"
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
 
@@ -20,8 +22,15 @@ This layer adds fsharp language support to SpaceVim.
 ## Features
 
 - syntax highlighting, indent provide by [vim-fsharp](https://github.com/wsdjeg/vim-fsharp)
+- REPL support
 
 ## Install
+
+**Install fsharp on Archlinux:**
+
+```sh
+yaourt -S fsharp-git
+```
 
 To use this configuration layer, update custom configuration file with:
 
@@ -29,3 +38,18 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#fsharp"
 ```
+
+## Key bindings
+
+### Inferior REPL process
+
+Start a `fsharpi --readline-` inferior REPL process with `SPC l s i`. 
+
+Send code to inferior process commands:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
+
