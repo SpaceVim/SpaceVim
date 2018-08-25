@@ -91,6 +91,7 @@ enable = false
 | [lang#ocaml](lang/ocaml/)             | This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file.                                                          |
 | [lang#perl](lang/perl/)               | This layer is for perl development, provide autocompletion, syntax checking, code format for perl file.                                                             |
 | [lang#php](lang/php/)                 | This layer adds PHP language support to SpaceVim                                                                                                                    |
+| [lang#plantuml](lang/plantuml/)       | This layer is for plantuml development, syntax highlighting for plantuml file.                                                                                      |
 | [lang#purescript](lang/purescript/)   | This layer is for purescript development, provide autocompletion, syntax checking, code format for purescript file.                                                 |
 | [lang#python](lang/python/)           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
 | [lang#ruby](lang/ruby/)               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
