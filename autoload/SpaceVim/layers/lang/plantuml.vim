@@ -14,7 +14,7 @@ function! SpaceVim#layers#lang#plantuml#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#plantuml#config() abort
-  call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
+  " call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
