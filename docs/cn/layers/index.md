@@ -76,6 +76,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 c/c++/object-c 的开发提供了支持，包括代码补全、语法检查等特性。                                                                |
 | [lang#dart](lang/dart/)                               | 这一模块为 dart 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#elixir](lang/elixir/)                           | 这一模块为 elixir 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
+| [lang#elm](lang/elm/)                                 | 这一模块为 elm 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [lang#erlang](lang/erlang/)                           | 这一模块为 erlang 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#fsharp](lang/fsharp/)                           | 这一模块为 fsharp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#go](lang/go/)                                   | 这一模块为 go 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                    |

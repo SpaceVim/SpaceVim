@@ -28,6 +28,7 @@ The next release is v0.9.0.
 - Add `lang#erlang` layer ([#2074](https://github.com/SpaceVim/SpaceVim/pull/2074))
 - Add `lang#fsharp` layer ([#2081](https://github.com/SpaceVim/SpaceVim/pull/2081))
 - Add `lang#plantuml` layer ([#2085](https://github.com/SpaceVim/SpaceVim/pull/2085))
+- Add `lang#elm` layer ([#2088](https://github.com/SpaceVim/SpaceVim/pull/2088))
 
 ### Improvement
 
