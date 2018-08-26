@@ -24,12 +24,13 @@ This layer is for elm development.
 
 ## Features
 
-- Completion for Modules and functions.
-- Documentation lookup for Modules and functions.
-- Jump to the definition.
+- Code completion
+- Syntax highlighting, indent
+- Running unite test
+- Syntax checking
+- Find symbol doc
 
-SpaceVim also provides REPL, code runner and Language Server protocol support for elm. to enable language server protocol
-for elm, you need to load `lsp` layer for elm.
+SpaceVim also provides REPL support for elm.
 
 ## Install
 
