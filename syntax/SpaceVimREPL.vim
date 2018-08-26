@@ -34,7 +34,8 @@ function! s:highlight_shell_cmd() abort
         \ '29' : ' gui=NONE',
         \ '39' : ' ctermfg=NONE guifg=NONE',
         \ '49' : ' ctermbg=NONE guibg=NONE',
-        \ '90' : ' ctermfg=245 guifg=#928374'
+        \ '90' : ' ctermfg=245 guifg=#928374',
+        \ '95' : ' ctermfg=175 guifg=#d3869b',
         \}
   for color in range(30, 37)
     " Foreground color pattern.
