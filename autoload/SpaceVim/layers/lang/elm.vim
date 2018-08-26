@@ -20,3 +20,26 @@ function! SpaceVim#layers#lang#elm#plugins() abort
   call add(plugins, ['wsdjeg/vim-elm', {'on_ft' : 'elm'}])
   return plugins
 endfunction
+
+
+function! SpaceVim#layers#lang#elm#config() abort
+  call SpaceVim#plugins#repl#reg('elm', 'elm repl')
+  call SpaceVim#mapping#space#regesit_lang_mappings('elm', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("elm")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
+
+endfunction
