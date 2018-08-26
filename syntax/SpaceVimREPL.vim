@@ -1,3 +1,12 @@
+if exists('b:current_syntax') && b:current_syntax ==# 'SpaceVimREPL'
+  finish
+endif
+let b:current_syntax = 'SpaceVimREPL'
+syntax case ignore
+syn match SpaceVimREPLLabel /\[REPL executable\]/
+syn match SpaceVimREPLRunnerCmd /\(\[REPL executable\]\ \)\@<=.*/
+hi def link SpaceVimREPLLabel String
+hi def link RunnerCmd Comment
 let s:shellcmd_colors =
       \ [
       \ '#6c6c6c', '#ff6666', '#66ff66', '#ffd30a',
@@ -25,6 +34,7 @@ function! s:highlight_shell_cmd() abort
         \ '29' : ' gui=NONE',
         \ '39' : ' ctermfg=NONE guifg=NONE',
         \ '49' : ' ctermbg=NONE guibg=NONE',
+        \ '90' : ' ctermfg=245 guifg=#928374'
         \}
   for color in range(30, 37)
     " Foreground color pattern.
