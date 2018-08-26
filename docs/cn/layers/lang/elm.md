@@ -1,6 +1,7 @@
 ---
 title: "SpaceVim lang#elm 模块"
 description: "这一模块为 elm 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+image: https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png
 lang: cn
 ---
 
@@ -85,6 +86,8 @@ npm install -g elm-format
 ### 交互式编程
 
 启动 `elm repl` 交互进程，快捷键为： `SPC l s i`。
+
+![elm repl](https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png)
 
 将代码传输给 REPL 进程执行：
 
