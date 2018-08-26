@@ -10,6 +10,7 @@ description: "This layer is for elm development, provide autocompletion, syntax 
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+  - [Requirements](#requirements)
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
   - [Language specific key bindings](#language-specific-key-bindings)
@@ -32,6 +33,32 @@ SpaceVim also provides REPL, code runner and Language Server protocol support fo
 for elm, you need to load `lsp` layer for elm.
 
 ## Install
+
+### Requirements
+
+First, make sure you have the [Elm Platform](http://elm-lang.org/install) installed. The simplest method to get started is to use the official [npm](https://www.npmjs.com/package/elm) package.
+
+```
+npm install -g elm
+```
+
+In order to run unit tests from within vim, install [elm-test](https://github.com/rtfeldman/node-elm-test)
+
+```
+npm install -g elm-test
+```
+
+For code completion and doc lookups, install [elm-oracle](https://github.com/elmcast/elm-oracle).
+
+```
+npm install -g elm-oracle
+```
+
+To automatically format your code, install [elm-format](https://github.com/avh4/elm-format).
+
+```
+npm install -g elm-format
+```
 
 ### Layer
 
