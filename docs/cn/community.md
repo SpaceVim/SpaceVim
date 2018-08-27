@@ -27,7 +27,7 @@ lang: cn
 
 ### 问题及需求提交
 
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者 码云的问题列表来提交。
+在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
 - [码云](https://gitee.com/spacevim/SpaceVim/issues) - （中文）
 - [GitHub](https://github.com/SpaceVim/SpaceVim) - （英文）

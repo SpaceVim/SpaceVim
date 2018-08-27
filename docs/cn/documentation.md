@@ -126,7 +126,7 @@ lang: cn
 - **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
 - **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
 - **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
@@ -1221,7 +1221,7 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的
 
 如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools` 
 列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`. 
-举个例子 如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
+举个例子如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
 
 下表是全部的工具键:
 
@@ -1394,7 +1394,7 @@ FlyGrep 缓冲区的按键绑定:
 #### 保持高亮
 
 SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索.
-同样可以通过 `SPC s c` 或者 运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
+同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
 
 #### Highlight current symbol
 
@@ -1639,7 +1639,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 | `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
 | `SPC e .` | error transient state                                                       |
 
-下一个/上一个 错误导航键 和 错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
+下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
 甚至可检查vim位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
 默认提示符:
 
@@ -1651,7 +1651,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录 或
+SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录或
 在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录.
 
 工程管理的命令以 `p` 开头:

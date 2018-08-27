@@ -77,7 +77,7 @@ SpaceVim 所有部分采用 MIT 许可。
 
 ### 公约
 
-SpaceVim 建立在下面的公约上: 该公约主要包括了 函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
+SpaceVim 建立在下面的公约上: 该公约主要包括了函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
 
 ### 拉取请求
 
