@@ -15,6 +15,8 @@ let s:JOB = SpaceVim#api#import('job')
 " let s:LIST = SpaceVim#api#import('data#list')
 "}}}
 
+let s:MPT._prompt.mpt = ' find '
+
 let s:options = {
       \ '-amin' : '查找在指定时间曾被存取过的文件或目录，单位以分钟计算',
       \ '-anewer' : '查找其存取时间较指定文件或目录的存取时间更接近现在的文件或目录',
@@ -71,12 +73,31 @@ let s:options = {
       \ '-xtype' : '此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查'
       \ }
 
+
+let s:finded_files = []
 function! s:start_find() abort
+  let cmd = 'find ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   call s:MPT._clear_prompt()
   let s:MPT._quit = 1
   let line = getline('.')
   noautocmd q
   redraw!
+  call s:JOB.start(cmd,
+        \ {
+        \ 'on_stdout' : function('s:find_on_stdout'),
+        \ 'on_exit' : function('s:find_on_exit'),
+        \ }
+        \ )
+endfunction
+
+function! s:find_on_stdout(id, data, event) abort
+  let s:finded_files += a:data
+endfunction
+
+function! s:find_on_exit(id, data, event) abort
+  let files = map(filter(s:finded_files, '!empty(v:val)'), "{'filename' : v:val}")
+  call setqflist(files)
+  copen
 endfunction
 
 function! s:next_item() abort
