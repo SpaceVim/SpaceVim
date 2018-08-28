@@ -72,8 +72,9 @@ CONTENTS                                                   *SpaceVim-contents*
       28. lang#xml...................................|SpaceVim-layer-lang-xml|
       29. operator...................................|SpaceVim-layer-operator|
       30. shell.........................................|SpaceVim-layer-shell|
-      31. tmux...........................................|SpaceVim-layer-tmux|
-      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+      31. test...........................................|SpaceVim-layer-test|
+      32. tmux...........................................|SpaceVim-layer-tmux|
+      33. tools#dash...............................|SpaceVim-layer-tools-dash|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1284,6 +1285,23 @@ For more info, read |deol| and |vimshell|.
 VARIABLE
 default_shell
 
+==============================================================================
+TEST                                                     *SpaceVim-layer-test*
+
+This layer allow to run tests directly on SpaceVim
+This layer is not added by default. To include
+it, add `[[layers]] name = "test"` to your `~/.SpaceVim.d/init.toml`.
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      SPC k n     Run nearest test
+  normal      SPC k f     Run test file
+  normal      SPC k s     Run test suite
+  normal      SPC k l     Run last test
+  normal      SPC k v     Visit the last test file
 
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
