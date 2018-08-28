@@ -108,9 +108,19 @@ endfunction
 
 function! s:find_on_exit(id, data, event) abort
   let files = map(filter(s:finded_files, '!empty(v:val)'), "{'filename' : v:val}")
-  call setqflist(files)
-  copen
+  if !empty(files)
+    call setqflist(files)
+    copen
+  else
+    echo "Can not find anything"
+  endif
 endfunction
+
+function! s:close_buffer() abort
+  noautocmd pclose
+  noautocmd q
+endfunction
+let s:MPT._onclose = function('s:close_buffer')
 
 function! s:next_item() abort
   if line('.') == line('$')
