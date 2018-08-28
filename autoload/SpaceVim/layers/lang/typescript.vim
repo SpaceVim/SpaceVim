@@ -59,10 +59,26 @@ function! s:on_ft() abort
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   else
     if has('nvim')
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'], 'TSTypeDef',
+            \ 'type definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsDoc',
             \ 'show document', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TSRename',
             \ 'rename symbol', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'], 'TSGetCodeFix',
+            \ 'code fix', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g'], 'TSDef',
+            \ 'definition', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TSImport',
+            \ 'import', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'p'], 'TSDefPreview',
+            \ 'preview definition', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'TSRefs',
+            \ 'references', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'], 'TSSearch <C-R><C-W> *<CR>',
+            \ 'search', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
+            \ 'view type', 1)
     else
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
             \ 'show document', 1)
