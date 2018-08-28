@@ -73,6 +73,18 @@ let s:options = {
       \ '-xtype' : '此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查'
       \ }
 
+let s:second_option = {
+      \ '-type' :
+      \   {
+      \     'f' : '普通文件',
+      \     'l' : '符号连接',
+      \     'd' : '目录',
+      \     'c' : '字符设备',
+      \     'b' : '块设备',
+      \     's' : '套接字',
+      \     'p' : 'Fifo',
+      \   },
+      \ }
 
 let s:finded_files = []
 function! s:start_find() abort
@@ -148,7 +160,13 @@ function! s:handle_command_line(cmd) abort
     return
   endif
   let argv = split(a:cmd)[-1]
-  if argv =~# '^-[a-zA-Z0-1]*'
+  if a:cmd[-1:] ==# ' ' && argv ==# '-type'
+    let line = []
+    for item in items(s:second_option['-type'])
+      call add(line, '  ' . item[0] . repeat(' ', 8 - len(item[0])) . item[1])
+    endfor
+    call setline(1, line)
+  elseif argv =~# '^-[a-zA-Z0-1]*'
     let argvs = filter(deepcopy(s:options), 'v:key =~ argv')
     let line = []
     for item in items(argvs)
