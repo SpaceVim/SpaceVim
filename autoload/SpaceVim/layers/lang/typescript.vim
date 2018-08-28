@@ -32,7 +32,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
     call SpaceVim#mapping#gd#add('typescript',
           \ function('SpaceVim#lsp#go_to_def'))
   endif
-  call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
+  call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_ft'))
 endfunction
 
