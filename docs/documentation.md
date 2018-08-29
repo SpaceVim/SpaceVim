@@ -1669,7 +1669,8 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c y`   | comment and yank          |
 | `SPC c Y`   | invert comment and yank   |
 
-**Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
+**Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
+For exmaple, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 
