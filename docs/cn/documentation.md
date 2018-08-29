@@ -1604,7 +1604,12 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c y`   | comment and yank          |
 | `SPC c Y`   | invert comment and yank   |
 
-**小提示:** 用 `SPC ; SPC j l` 组合键高效的注释一个文本块的所有内容.
+**小提示：
+
+*用 `SPC ;` 可以启动一个 operator 模式，在该模式下，可以使用移动命令确认注释的范围，
+比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
+
+`SPC ; SPC j l` 组合键高效的注释一个文本块的所有内容.
 
 #### 多方式编码
 
