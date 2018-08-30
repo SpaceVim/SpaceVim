@@ -142,7 +142,7 @@ let s:second_option = {
 
 let s:finded_files = []
 function! s:start_find() abort
-  let cmd = 'find ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+  let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   call s:MPT._clear_prompt()
   let s:MPT._quit = 1
   let line = getline('.')
