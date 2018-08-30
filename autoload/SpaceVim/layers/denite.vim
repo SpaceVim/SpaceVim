@@ -24,6 +24,7 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Denite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Denite help -input=SpaceVim', 'find-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'buffer list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite file_mru', 'open-recent-file', 1)
