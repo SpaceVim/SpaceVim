@@ -71,6 +71,7 @@ The next release is v0.9.0.
 - Fix icon in windows ([#2082](https://github.com/SpaceVim/SpaceVim/pull/2082))
 - Fix toggle highlight tail spaces ([#2080](https://github.com/SpaceVim/SpaceVim/pull/2080))
 - Fix lsp layer plugin installation ([#2108](https://github.com/SpaceVim/SpaceVim/pull/2108))
+- Fix key binding `SPC ?` ([#2109](https://github.com/SpaceVim/SpaceVim/pull/2109))
 
 ### Removed
 
