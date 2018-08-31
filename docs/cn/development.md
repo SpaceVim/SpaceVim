@@ -48,7 +48,7 @@ SpaceVim 是每个志愿者的努力的结晶,我们鼓励你参与进来. Space
 在你建立issue 之前,先确认你已经浏览过下面的faq以及SpaceVim文档
 
 - <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
-- [SpaceVim documentation](https://spacevim.org/documentation): SpaceVim的官方文档
+- [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim的官方文档
 
 ## 反馈问题
 
@@ -77,7 +77,7 @@ SpaceVim 所有部分采用 MIT 许可。
 
 ### 公约
 
-SpaceVim 建立在下面的公约上: 该公约主要包括了函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
+SpaceVim 建立在下面的公约上: 该公约主要包括了函数的命名, 按键绑定的定义以及文档的写法. 请阅读下面的公约: [conventions](https://spacevim.org/cn/conventions/) 在您进行贡献前,请确认您已经了解了以上公约的内容.
 
 ### 拉取请求
 
@@ -272,7 +272,7 @@ If you are contributing to an already existing layer, you should not modify any 
 
 如果你认为贡献一个新的按键映射有必要,那么请首先阅读文档,把自己的按键映射调整为最佳状态,然后用你更改后的按键映射进行提交PR.
 
-始终牢记,在相关文档中记录新的按键映射或者是按键映射更改. 他应该是层文件和 [documentation.md](https://spacevim.org/documentation).
+始终牢记,在相关文档中记录新的按键映射或者是按键映射更改. 他应该是层文件和 [documentation.md](https://spacevim.org/cn/documentation).
 
 
 ##### 特定语言的按键绑定
