@@ -213,7 +213,7 @@ function! SpaceVim#plugins#manager#update(...) abort
   if has('nvim')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  elseif has('python')
+  elseif s:VIM_CO.has('python')
     call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:append_buf_line(s:plugin_manager_buffer, 3, '')
   else
@@ -484,7 +484,7 @@ if has('nvim')
   function! s:msg_on_install_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
-elseif has('python')
+elseif s:VIM_CO.has('python')
   function! s:msg_on_start(name) abort
     call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
