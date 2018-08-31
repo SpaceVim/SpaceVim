@@ -766,18 +766,18 @@ features.
 
 But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
 
-| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
-| ------------------- | ------- | ------- | ------- | ------- | ------- |
-| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
-| register            | **yes** | **yes** | no      | **yes** | **yes** |
-| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
-| yank history        | **yes** | **yes** | no      | no      | **yes** |
-| jump                | **yes** | **yes** | no      | **yes** | **yes** |
-| location list       | **yes** | **yes** | no      | no      | **yes** |
-| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
-| message             | **yes** | **yes** | no      | no      | **yes** |
-| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
-| resume windows      | **yes** | **yes** | no      | no      | no      |
+| Feature            | unite | denite | leaderf | ctrlp | fzf |
+| ------------------ | ----- | ------ | ------- | ----- | --- |
+| menu CustomKeyMaps | yes   | yes    | no      | no    | no  |
+| register           | yes   | yes    | no      | yes   | yes |
+| file               | yes   | yes    | yes     | yes   | yes |
+| yank history       | yes   | yes    | no      | no    | yes |
+| jump               | yes   | yes    | no      | yes   | yes |
+| location list      | yes   | yes    | no      | no    | yes |
+| outline            | yes   | yes    | yes     | yes   | yes |
+| message            | yes   | yes    | no      | no    | yes |
+| quickfix list      | yes   | yes    | no      | yes   | yes |
+| resume windows     | yes   | yes    | no      | no    | no  |
 
 **Key bindings within fuzzy finder buffer**
 

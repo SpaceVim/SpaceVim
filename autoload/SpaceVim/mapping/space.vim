@@ -10,8 +10,6 @@ let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space['?'] =
-        \ ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
   let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
