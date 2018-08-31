@@ -615,7 +615,7 @@ if has('nvim') && exists('*nvim_buf_set_lines')
     endif
     call setbufvar(s:plugin_manager_buffer,'&ma', 0)
   endfunction
-elseif has('python')
+elseif s:VIM_CO.has('python')
   py import vim
   py import string
   " @vimlint(EVL103, 1, a:bufnr)
