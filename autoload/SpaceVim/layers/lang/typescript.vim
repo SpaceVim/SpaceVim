@@ -88,7 +88,7 @@ endfunction
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype('typescript')
     if has('nvim')
-      call feedkeys(":TSDef\<CR>")
+      TSDef
     else 
       call SpaceVim#lsp#go_to_def()
     endif
