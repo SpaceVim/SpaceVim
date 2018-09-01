@@ -264,6 +264,9 @@ function! s:on_pull_exit(id, data, event) abort
   else
     let id = a:id
   endif
+  if !has_key(s:pulling_repos, id)
+    return
+  endif
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_updated_done(s:pulling_repos[id].name)
   else
@@ -362,6 +365,9 @@ function! s:on_install_exit(id, data, event) abort
   else
     let id = a:id
   endif
+  if !has_key(s:pulling_repos, id)
+    return
+  endif
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_install_done(s:pulling_repos[id].name)
   else
@@ -374,7 +380,7 @@ function! s:on_install_exit(id, data, event) abort
     call s:build(s:pulling_repos[id])
   else
     let s:pct_done += 1
-    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Installing plugins (' . s:pct_done . '/' . s:total . ')')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
   endif
   call remove(s:pulling_repos, string(id))
@@ -404,6 +410,8 @@ function! s:pull(repo) abort
     call s:msg_on_start(a:repo.name)
     redraw!
     call s:JOB.start(argv,{
+          \ 'on_stderr' : function('s:on_install_stdout'),
+          \ 'cwd' : a:repo.path,
           \ 'on_exit' : function('s:on_pull_exit')
           \ })
 
