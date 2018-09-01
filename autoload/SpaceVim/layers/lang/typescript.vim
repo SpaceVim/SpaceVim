@@ -1,4 +1,4 @@
-"=============================================================================
+"GetUserUserContext=============================================================================
 " typescript.vim --- lang#typescript layer for SpaceVim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
@@ -28,10 +28,8 @@ function! SpaceVim#layers#lang#typescript#config() abort
       autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
     augroup END
   endif
-  if SpaceVim#layers#lsp#check_filetype('typescript')
-    call SpaceVim#mapping#gd#add('typescript',
-          \ function('SpaceVim#lsp#go_to_def'))
-  endif
+  call SpaceVim#mapping#gd#add('typescript',
+        \ function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_ft'))
 endfunction
@@ -49,6 +47,7 @@ function! SpaceVim#layers#lang#typescript#set_variable(var) abort
     endif
   endif
 endfunction
+
 function! s:on_ft() abort
   if SpaceVim#layers#lsp#check_filetype('typescript')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
@@ -67,8 +66,6 @@ function! s:on_ft() abort
             \ 'rename symbol', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'], 'TSGetCodeFix',
             \ 'code fix', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g'], 'TSDef',
-            \ 'definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TSImport',
             \ 'import', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'p'], 'TSDefPreview',
@@ -85,5 +82,17 @@ function! s:on_ft() abort
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TsuquyomiRenameSymbol',
             \ 'rename symbol', 1)
     endif
+  endif
+endfunction
+
+function! s:go_to_def() abort
+  if !SpaceVim#layers#lsp#check_filetype('typescript')
+    if has('nvim')
+      call feedkeys(":TSDef\<CR>")
+    else 
+      call SpaceVim#lsp#go_to_def()
+    endif
+  else
+    call SpaceVim#lsp#go_to_def()
   endif
 endfunction
