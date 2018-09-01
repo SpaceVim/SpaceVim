@@ -69,7 +69,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ '']
         \ )
   if executable('ipython')
-    call SpaceVim#plugins#repl#reg('python', 'ipython')
+    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', 'python')
   endif
