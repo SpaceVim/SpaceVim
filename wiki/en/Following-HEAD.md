@@ -44,6 +44,7 @@ The next release is v0.9.0.
 - Improve `lang#perl` layer, add layer doc ([#2041](https://github.com/SpaceVim/SpaceVim/pull/2041))
 - Improve `lang#scala` layer, add layer doc ([#2077](https://github.com/SpaceVim/SpaceVim/pull/2077))
 - Improve `fzf` layer, add helptags source ([#2047](https://github.com/SpaceVim/SpaceVim/pull/2047))
+- Improve statusline for nerdtree buffer ([#2117](https://github.com/SpaceVim/SpaceVim/pull/2117))
 
 ### Changed
 
