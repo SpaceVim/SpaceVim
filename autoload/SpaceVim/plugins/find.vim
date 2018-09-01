@@ -43,8 +43,8 @@ let s:options_en = {
       \ '-iregex' : '此参数的效果和指定“-regexe”参数类似，但忽略字符大小写的差别',
       \ '-links' : '查找符合指定的硬连接数目的文件或目录',
       \ '-ls' : 'If find command return True, then send all files names to stdout',
-      \ '-maxdepth' : '设置最大目录层级',
-      \ '-mindepth' : '设置最小目录层级',
+      \ '-maxdepth' : 'specific the max path depath',
+      \ '-mindepth' : 'specific the min path depath',
       \ '-mmin' : '查找在指定时间曾被更改过的文件或目录，单位以分钟计算',
       \ '-mount' : '此参数的效果和指定“-xdev”相同',
       \ '-mtime' : '查找在指定时间曾被更改过的文件或目录，单位以24小时计算',
@@ -125,6 +125,19 @@ let s:options = {
       \ '-version' : '显示版本信息',
       \ '-xdev' : '将范围局限在先行的文件系统中',
       \ '-xtype' : '此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查'
+      \ }
+
+let s:second_option_en = {
+      \ '-type' :
+      \   {
+      \     'f' : 'regular file',
+      \     'l' : 'symbolic link',
+      \     'd' : 'directory',
+      \     'c' : 'character (unbuffered) special',
+      \     'b' : 'block (buffered) special',
+      \     's' : 'socket',
+      \     'p' : 'named pipe (FIFO)',
+      \   },
       \ }
 
 let s:second_option = {
@@ -226,12 +239,12 @@ function! s:handle_command_line(cmd) abort
   let argv = split(a:cmd)[-1]
   if a:cmd[-1:] ==# ' ' && argv ==# '-type'
     let line = []
-    for item in items(s:second_option['-type'])
+    for item in items(s:second_option_en['-type'])
       call add(line, '  ' . item[0] . repeat(' ', 8 - len(item[0])) . item[1])
     endfor
     call setline(1, line)
   elseif argv =~# '^-[a-zA-Z0-1]*'
-    let argvs = filter(deepcopy(s:options), 'v:key =~ argv')
+    let argvs = filter(deepcopy(s:options_en), 'v:key =~ argv')
     let line = []
     for item in items(argvs)
       call add(line, item[0] . repeat(' ', 15 - len(item[0])) . item[1])

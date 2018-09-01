@@ -1103,6 +1103,7 @@ Files manipulation commands (start with f):
 
 | Key Binding | Description                                                    |
 | ----------- | -------------------------------------------------------------- |
+| `SPC f /`   | Find files with `find` command                                 |
 | `SPC f b`   | go to file bookmarks                                           |
 | `SPC f c`   | copy current file to a different location(TODO)                |
 | `SPC f C d` | convert file from unix to dos encoding                         |
