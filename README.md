@@ -93,7 +93,7 @@ SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
-![iedit mode](https://user-images.githubusercontent.com/13142418/37873892-c76afb14-2fea-11e8-9149-aa955b8265f1.gif)
+![iedit mode](https://user-images.githubusercontent.com/13142418/44941560-be2a9800-add2-11e8-8fa5-e6118ff9ddcb.gif)
 
 **Highlight cursor symbol**
 
