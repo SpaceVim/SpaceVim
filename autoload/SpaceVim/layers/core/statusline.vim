@@ -125,12 +125,12 @@ function! s:filename() abort
   return "%{ &modified ? ' * ' : ' - '}" . s:filesize() . name . ' '
 endfunction
 
-if g:spacevim_statusline_unicode_symbols == 1
-  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
-else
-  let g:_spacevim_statusline_fileformat = &ff
-endif
 function! s:fileformat() abort
+  if g:spacevim_statusline_unicode_symbols == 1
+    let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
+  else
+    let g:_spacevim_statusline_fileformat = &ff
+  endif
   return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
 endfunction
 
