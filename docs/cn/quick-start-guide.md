@@ -43,7 +43,7 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 
 ### Windows
 
-window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
+windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
 ## 配置
 
