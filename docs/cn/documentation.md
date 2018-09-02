@@ -510,7 +510,7 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-这一模板是 gruvbox 主题的，当你需要在切换主题是，状态栏都使用同一种颜色主题，
+这一模板是 gruvbox 主题的，当你需要在切换主题时，状态栏都使用同一种颜色主题，
 可以设置 `custom_color_palette`：
 
 ```toml
