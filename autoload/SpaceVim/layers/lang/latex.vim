@@ -9,7 +9,7 @@
 
 function! SpaceVim#layers#lang#latex#plugins() abort
   let plugins = []
-  call add(plugins, ['vim-latex/vim-latex', {'merged' : 0}])
+  call add(plugins, ['lervag/vimtex', {'merged' : 0}])
   return plugins
 endfunction
 
