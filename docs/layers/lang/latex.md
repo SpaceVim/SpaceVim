@@ -3,7 +3,7 @@ title: "SpaceVim lang#latex layer"
 description: "This layer is for latex development, provide autocompletion, syntax checking, code format for latex file."
 ---
 
-# [Available Layers](../../) >> lang#perl
+# [Available Layers](../../) >> lang#latex
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,7 +18,7 @@ description: "This layer is for latex development, provide autocompletion, synta
 
 ## Description
 
-This layer is for latex development.
+This layer is for latex development. [vimtex](https://github.com/lervag/vimtex) is incuded in this layer.
 
 ## Features
 
