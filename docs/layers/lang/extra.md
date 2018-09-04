@@ -8,7 +8,7 @@ description: "This layer adds extra language support to SpaceVim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Features](#features)
+- [Included languages](#included-languages)
 - [Install](#install)
 
 <!-- vim-markdown-toc -->
@@ -19,10 +19,16 @@ This layer adds many extra language support for less common languages to SpaceVi
 
 ## Included languages
 
-language | features
---- | ---
-i3 config | syntax highlighting
-irssi config | syntax highlighting
+| language            | features                                                |
+| ------------------- | ------------------------------------------------------- |
+| i3 config           | syntax highlighting                                     |
+| qml                 | syntax highlighting                                     |
+| toml                | syntax highlighting                                     |
+| coffee script       | syntax highlighting                                     |
+| irssi config        | syntax highlighting                                     |
+| vimperator config   | syntax highlighting                                     |
+| Pug (formerly Jade) | syntax highlighting, indent                             |
+| mustache            | syntax highlighting, matchit, section movement mappings |
 
 ## Install
 
@@ -30,5 +36,5 @@ To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#WebAssembly"
+  name = "lang#extra"
 ```
