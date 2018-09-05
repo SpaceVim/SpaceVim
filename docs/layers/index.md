@@ -21,11 +21,23 @@ Layers help collect related packages together to provide features.
 This approach helps keep configuration organized and reduces overhead for the user by
 keeping them from having to think about what packages to install.
 
+
 ### Enable layers
 
-By default only `autocomplete`, `checkers` layer are enabled. To enable a specific layer
-you need to edit SpaceVim configuration file. The key binding for opening SpaceVim 
-configuration file is `SPC f v d`
+By default SpaceVim enable these layers:
+
+- `autocomplete`
+- `checkers`
+- `format`
+- `edit`
+- `ui`
+- `core`
+- `core#banner`
+- `core#statusline`
+- `core#tabline`
+
+To enable a specific layer you need to edit SpaceVim configuration file.
+The key binding for opening SpaceVim configuration file is `SPC f v d`.
 
 here is an example for loadding `shell` layer with some specified options:
 
