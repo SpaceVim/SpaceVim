@@ -31,3 +31,13 @@ To use this configuration layer, update custom configuration file with:
 - [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
 - [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
 
+## Tips
+
+SpaceVim provide default statusline and tabline plugin which are provided by `core#statusline` and `core#tabline` layer, If you want to use airline, just disable that layer:
+
+```toml
+[[layers]]
+  name = "core#statusline"
+  enable = false
+```
+
