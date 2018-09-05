@@ -28,8 +28,9 @@ To use this configuration layer, update custom configuration file with:
 
 ## Plugins
 
-- [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
-- [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
+- [startify](https://github.com/mhinz/vim-startify): welcome page, default key binding is `SPC a s`.
+- [tagbar](https://github.com/majutsushi/tagbar): outline sidebar, default key binding is `<F2>`.
+- [indentLine](https://github.com/Yggdroot/indentLine): code indent line, toggle key binding is `SPC t i`.
 
 ## Tips
 
