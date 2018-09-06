@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#latex layer"
-description: "This layer is for latex development, provide autocompletion, syntax checking, code format for latex file."
+description: "This layer provides support for writing LaTeX documents, including syntax highlighting, code completion, formatting etc."
 ---
 
 # [Available Layers](../../) >> lang#latex
