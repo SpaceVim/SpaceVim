@@ -878,7 +878,7 @@ function! SpaceVim#begin() abort
     endif
   endfunction
   let s:status = s:parser_argv()
-
+  call SpaceVim#logger#info('SpaceVim startup status is: ' . string(s:status) )
   " If do not start Vim with filename, Define autocmd for opening welcome page
   if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
@@ -894,7 +894,9 @@ function! SpaceVim#begin() abort
 endfunction
 
 function! SpaceVim#welcome() abort
+  call SpaceVim#logger#info('try to open SpaceVim welcome page')
   if get(g:, '_spacevim_session_loaded', 0) == 1
+    call SpaceVim#logger#info('start SpaceVim with session file, skip welcome page')
     return
   endif
   exe 'cd' fnameescape(g:_spacevim_enter_dir)
@@ -905,9 +907,6 @@ function! SpaceVim#welcome() abort
     Startify
     if isdirectory(bufname(1))
       bwipeout! 1
-    endif
-    if exists(':IndentLinesDisable')
-      IndentLinesDisable
     endif
   endif
   if g:spacevim_enable_vimfiler_welcome
