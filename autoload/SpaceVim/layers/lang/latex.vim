@@ -14,11 +14,8 @@ function! SpaceVim#layers#lang#latex#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#latex#config() abort
-  augroup spacevim_layer_lang_latex
-    autocmd!
-    au BufNewFile,BufRead *.tex setlocal filetype=latex
-  augroup END
-  call SpaceVim#mapping#space#regesit_lang_mappings('latex', function('s:language_specified_mappings'))
+  let g:tex_flavor = 'latex'
+  call SpaceVim#mapping#space#regesit_lang_mappings('tex', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
