@@ -104,6 +104,7 @@ enable = false
 | [lang#swift](lang/swift/)             | swift language support for SpaceVim, includes code completion, syntax highlighting                                                                                  |
 | [lang#typescript](lang/typescript/)   | This layer is for TypeScript development                                                                                                                            |
 | [lang#vim](lang/vim/)                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                                             |
+| [lang#vue](lang/vue/)                 | This layer adds vue language support to SpaceVim                                                                                                                    |
 | [lsp](language-server-protocol/)      | This layers provides language server protocol for vim and neovim                                                                                                    |
 | [leaderf](leaderf/)                   | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
 | [shell](shell/)                       | This layer provide shell support in SpaceVim                                                                                                                        |
