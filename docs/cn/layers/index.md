@@ -99,6 +99,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#sh](lang/sh/)                                   | 这一模块为 shell script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
 | [lang#typescript](lang/typescript/)                   | 这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#vim](lang/vim/)                                 | 这一模块为 vim script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
+| [lang#vue](lang/vue/)                                 | 这一模块为 vue 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [language-server-protocol](language-server-protocol/) | lsp 模块为 SpaceVim 提供 language server protocol 的支持，提供更多语言相关服务                                                            |
 | [leaderf](leaderf/)                                   | 提供以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                         |
 | [shell](shell/)                                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验                                                                            |
