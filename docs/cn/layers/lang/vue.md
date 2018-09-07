@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 vue 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 vue 开发支持。该模块包含了插件 [vim-vue](https://github.com/posva/vim-vue)。
 
 ## 功能特性
 
