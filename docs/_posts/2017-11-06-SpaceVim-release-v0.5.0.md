@@ -7,7 +7,7 @@ commentsID: "SpaceVim release v0.5.0"
 comments: true
 ---
 
-# [Changelogs](development#changelog) > SpaceVim release v0.5.0
+# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.5.0
 
 ## New Features
 
