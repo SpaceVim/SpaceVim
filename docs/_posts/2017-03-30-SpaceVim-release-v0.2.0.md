@@ -7,7 +7,7 @@ commentsID: "SpaceVim release v0.2.0"
 comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.2.0
+# [Changelogs](../development#changelog) > SpaceVim release v0.2.0
 
 SpaceVim is a community-driven vim distribution inspired by spacemacs. 
 
