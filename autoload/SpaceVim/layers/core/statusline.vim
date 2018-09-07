@@ -125,12 +125,12 @@ function! s:filename() abort
   return "%{ &modified ? ' * ' : ' - '}" . s:filesize() . name . ' '
 endfunction
 
-if g:spacevim_statusline_unicode_symbols == 1
-  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
-else
-  let g:_spacevim_statusline_fileformat = &ff
-endif
 function! s:fileformat() abort
+  if g:spacevim_statusline_unicode_symbols == 1
+    let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
+  else
+    let g:_spacevim_statusline_fileformat = &ff
+  endif
   return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
 endfunction
 
@@ -334,6 +334,15 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'gista-list'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Gista %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'nerdtree'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Nerdtree %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'Mundo'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Mundo %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'MundoDiff'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# MundoDiff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'startify'
     try
       call fugitive#detect(getcwd())

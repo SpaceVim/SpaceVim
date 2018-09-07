@@ -75,7 +75,10 @@ enable = false
 | [lang#dart](lang/dart/)               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
 | [lang#dockerfile](lang/dockerfile/)   | This layer adds DockerFile to SpaceVim                                                                                                                              |
 | [lang#elixir](lang/elixir/)           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                                         |
+| [lang#elm](lang/elm/)                 | This layer is for elm development, provide autocompletion, syntax checking, code format for elm file.                                                               |
 | [lang#erlang](lang/erlang/)           | This layer is for erlang development, provide autocompletion, syntax checking, code format for erlang file.                                                         |
+| [lang#extra](lang/extra/)             | This layer adds extra language support to SpaceVim                                                                                                                  |
+| [lang#fsharp](lang/fsharp/)           | This layer adds fsharp language support to SpaceVim                                                                                                                 |
 | [lang#go](lang/go/)                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
 | [lang#haskell](lang/haskell/)         | haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell |
 | [lang#html](lang/html/)               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                                          |
@@ -83,6 +86,7 @@ enable = false
 | [lang#javascript](lang/javascript/)   | This layer is for JaveScript development                                                                                                                            |
 | [lang#julia](lang/julia/)             | This layer is for julia development, provide autocompletion, syntax checking and code formatting                                                                    |
 | [lang#kotlin](lang/kotlin/)           | This layer adds kotlin language support to SpaceVim                                                                                                                 |
+| [lang#latex](lang/latex/)             | This layer provides support for writing LaTeX documents, including syntax highlighting, code completion, formatting etc.                                            |
 | [lang#lisp](lang/lisp/)               | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                                             |
 | [lang#lua](lang/lua/)                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                               |
 | [lang#markdown](lang/markdown/)       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                                           |
@@ -90,10 +94,12 @@ enable = false
 | [lang#ocaml](lang/ocaml/)             | This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file.                                                          |
 | [lang#perl](lang/perl/)               | This layer is for perl development, provide autocompletion, syntax checking, code format for perl file.                                                             |
 | [lang#php](lang/php/)                 | This layer adds PHP language support to SpaceVim                                                                                                                    |
+| [lang#plantuml](lang/plantuml/)       | This layer is for plantuml development, syntax highlighting for plantuml file.                                                                                      |
 | [lang#purescript](lang/purescript/)   | This layer is for purescript development, provide autocompletion, syntax checking, code format for purescript file.                                                 |
 | [lang#python](lang/python/)           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
 | [lang#ruby](lang/ruby/)               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
 | [lang#rust](lang/rust/)               | This layer is for rust development, provide autocompletion, syntax checking, code format for rust file.                                                             |
+| [lang#scala](lang/scala/)             | This layer adds scala language support to SpaceVim                                                                                                                  |
 | [lang#sh](lang/sh/)                   | Shell script development layer, provides autocompletion, syntax checking, code format for bash and zsh script.                                                      |
 | [lang#swift](lang/swift/)             | swift language support for SpaceVim, includes code completion, syntax highlighting                                                                                  |
 | [lang#typescript](lang/typescript/)   | This layer is for TypeScript development                                                                                                                            |

@@ -1,5 +1,5 @@
 if exists('b:current_syntax') && b:current_syntax ==# 'SpaceVimRunner'
-    finish
+  finish
 endif
 let b:current_syntax = 'SpaceVimRunner'
 syntax case ignore

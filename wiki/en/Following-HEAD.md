@@ -26,6 +26,10 @@ The next release is v0.9.0.
 - Add `lang#purescript` layer ([#2054](https://github.com/SpaceVim/SpaceVim/pull/2054))
 - Add `lang#WebAssembly` layer ([#2068](https://github.com/SpaceVim/SpaceVim/pull/2068))
 - Add `lang#erlang` layer ([#2074](https://github.com/SpaceVim/SpaceVim/pull/2074))
+- Add `lang#fsharp` layer ([#2081](https://github.com/SpaceVim/SpaceVim/pull/2081))
+- Add `lang#plantuml` layer ([#2085](https://github.com/SpaceVim/SpaceVim/pull/2085))
+- Add `lang#elm` layer, improve REPL highlight ([#2088](https://github.com/SpaceVim/SpaceVim/pull/2088))
+- Add `lang#latex` and `lang#extra` layer ([#2133](https://github.com/SpaceVim/SpaceVim/pull/2133))
 
 ### Improvement
 
@@ -39,7 +43,11 @@ The next release is v0.9.0.
 - Improve `tmux` layer ([#1970](https://github.com/SpaceVim/SpaceVim/pull/1970))
 - Improve statusline mode text and color ([#2034](https://github.com/SpaceVim/SpaceVim/pull/2034))
 - Improve `lang#perl` layer, add layer doc ([#2041](https://github.com/SpaceVim/SpaceVim/pull/2041))
+- Improve `lang#scala` layer, add layer doc ([#2077](https://github.com/SpaceVim/SpaceVim/pull/2077))
 - Improve `fzf` layer, add helptags source ([#2047](https://github.com/SpaceVim/SpaceVim/pull/2047))
+- Improve statusline for nerdtree buffer ([#2117](https://github.com/SpaceVim/SpaceVim/pull/2117))
+- Improve statusline for mundo buffer ([#2118](https://github.com/SpaceVim/SpaceVim/pull/2118))
+- Improve compatibility with old vim ([#2130](https://github.com/SpaceVim/SpaceVim/pull/2130))
 
 ### Changed
 
@@ -64,6 +72,12 @@ The next release is v0.9.0.
 - Setting 'verbose' flag to positive value breaks mappings guides ([#2017](https://github.com/SpaceVim/SpaceVim/pull/2017))
 - Fix whitespace toggle ([#2032](https://github.com/SpaceVim/SpaceVim/pull/2032))
 - Fix Unknown function: TSOnBufEnter for nvim-typescript ([#2062](https://github.com/SpaceVim/SpaceVim/pull/2062))
+- Fix icon in windows ([#2082](https://github.com/SpaceVim/SpaceVim/pull/2082))
+- Fix toggle highlight tail spaces ([#2080](https://github.com/SpaceVim/SpaceVim/pull/2080))
+- Fix lsp layer plugin installation ([#2108](https://github.com/SpaceVim/SpaceVim/pull/2108))
+- Fix key binding `SPC ?` ([#2109](https://github.com/SpaceVim/SpaceVim/pull/2109))
+- Fix python autoflake support ([#2115](https://github.com/SpaceVim/SpaceVim/pull/2115))
+- Fix active statusline displaying fileformat info ([#2125](https://github.com/SpaceVim/SpaceVim/pull/2125))
 
 ### Removed
 
@@ -90,7 +104,6 @@ The next release is v0.9.0.
 - Add doc for `sudo` layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
 - Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
 - Update getting help page in wiki ([#2025](https://github.com/SpaceVim/SpaceVim/pull/2025))
-
 
 ### Others
 

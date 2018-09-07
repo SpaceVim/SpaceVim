@@ -37,6 +37,10 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
   let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
+  let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
+        \ 'qf', 'help', 'markdown', 'leaderGuide',
+        \ 'startify'
+        \ ]
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
   noremap <silent> <F2> :silent TagbarToggle<CR>
@@ -94,7 +98,7 @@ function! SpaceVim#layers#ui#config() abort
         \ 'toggle wrap line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
-        \ 'toggle the whitespace', 1)
+        \ 'toggle highlight tail spaces', 1)
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

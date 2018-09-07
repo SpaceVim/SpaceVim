@@ -76,22 +76,28 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 c/c++/object-c 的开发提供了支持，包括代码补全、语法检查等特性。                                                                |
 | [lang#dart](lang/dart/)                               | 这一模块为 dart 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#elixir](lang/elixir/)                           | 这一模块为 elixir 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
+| [lang#elm](lang/elm/)                                 | 这一模块为 elm 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [lang#erlang](lang/erlang/)                           | 这一模块为 erlang 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
+| [lang#extra](lang/extra/)                             | 该模块主要为一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性                                                                    |
+| [lang#fsharp](lang/fsharp/)                           | 这一模块为 fsharp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#go](lang/go/)                                   | 这一模块为 go 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                    |
 | [lang#haskell](lang/haskell/)                         | 这一模块为 haskell 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                               |
 | [lang#html](lang/html/)                               | 这一模块为 html 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#java](lang/java/)                               | 这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#javascript](lang/javascript/)                   | 这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#julia](lang/julia/)                             | 这一模块为 julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                 |
+| [lang#latex](lang/latex/)                             | 这一模块为 latex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                 |
 | [lang#lisp](lang/lisp/)                               | 这一模块为 lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#lua](lang/lua/)                                 | 这一模块为 lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [lang#markdown](lang/markdown/)                       | 这一模块为 markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                            |
 | [lang#perl](lang/perl/)                               | 这一模块为 perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#php](lang/php/)                                 | 这一模块为 php 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
+| [lang#plantuml](lang/plantuml/)                       | 这一模块为 plantuml 开发提供支持，包括语法高亮、实时预览等特性。                                                                          |
 | [lang#purescript](lang/purescript/)                   | 这一模块为 purescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#python](lang/python/)                           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#ruby](lang/ruby/)                               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#rust](lang/rust/)                               | 这一模块为 rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
+| [lang#scala](lang/scala/)                             | 这一模块为 scala 开发提供支持，包括语法高亮，函数列表等特性                                                                               |
 | [lang#sh](lang/sh/)                                   | 这一模块为 shell script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
 | [lang#typescript](lang/typescript/)                   | 这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#vim](lang/vim/)                                 | 这一模块为 vim script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |

@@ -56,6 +56,12 @@ pip install --user flake8
 
 The default key binding for formatting buffer is `SPC b f`, and you need to install `yapf`. To enable automatic buffer formatting on save, load this layer with setting `format-on-save` to `1`.
 
+```
+[[layers]]
+  name = "lang#python"
+  format-on-save = 1
+```
+
 ```sh
 pip install --user yapf
 ```
