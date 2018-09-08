@@ -279,7 +279,7 @@ endfunction
 
 " key binding: / search_project {{{
 function! s:search_project() abort
-  call spacevim#plugins#flygrep#open({'input' : s:current_match}) 
+  call SpaceVim#plugins#flygrep#open({'input' : s:current_match}) 
 endfunction
 " }}}
 
