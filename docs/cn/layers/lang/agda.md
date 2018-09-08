@@ -17,8 +17,7 @@ lang: cn
 
 ## 模块简介
 
-Agda is a dependently typed functional programming language. 
-This layer adds [agda](https://github.com/agda/agda) language support to SpaceVim.
+Agda是一种依赖类型的函数式编程语言。这一模块为 SpaceVim 提供了 [agda](https://github.com/agda/agda) 开发支持。
 
 ## 功能特性
 
