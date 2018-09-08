@@ -4,7 +4,7 @@ description: "这一模块为 SpaceVim 提供了 agda 语言开发的支持，�
 lang: cn
 ---
 
-# [Available Layers](../../) >> lang#agda
+# [可用模块](../../) >> lang#agda
 
 <!-- vim-markdown-toc GFM -->
 
