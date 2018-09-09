@@ -20,6 +20,7 @@ This layer adds vue language support to SpaceVim. This layer includes plugin [vi
 ## Features
 
 - syntax highlighting
+- lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
 
 ## Install
 
