@@ -19,6 +19,12 @@ function! SpaceVim#layers#chinese#plugins() abort
 endfunction
 
 function! SpaceVim#layers#chinese#config() abort
+  command! YDCV call s:ydcv()
   let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc', 'translate current word', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 'T'], 'Ydc', 'translate current word', 1)
 endfunction
+
+
+func! s:ydcv()
+endftion
