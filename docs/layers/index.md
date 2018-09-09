@@ -77,6 +77,7 @@ enable = false
 | [lang#elixir](lang/elixir/)           | This layer is for elixir development, provide autocompletion, syntax checking, code format for elixir file.                                                         |
 | [lang#elm](lang/elm/)                 | This layer is for elm development, provide autocompletion, syntax checking, code format for elm file.                                                               |
 | [lang#erlang](lang/erlang/)           | This layer is for erlang development, provide autocompletion, syntax checking, code format for erlang file.                                                         |
+| [lang#extra](lang/extra/)             | This layer adds extra language support to SpaceVim                                                                                                                  |
 | [lang#fsharp](lang/fsharp/)           | This layer adds fsharp language support to SpaceVim                                                                                                                 |
 | [lang#go](lang/go/)                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
 | [lang#haskell](lang/haskell/)         | haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell |
@@ -85,6 +86,7 @@ enable = false
 | [lang#javascript](lang/javascript/)   | This layer is for JaveScript development                                                                                                                            |
 | [lang#julia](lang/julia/)             | This layer is for julia development, provide autocompletion, syntax checking and code formatting                                                                    |
 | [lang#kotlin](lang/kotlin/)           | This layer adds kotlin language support to SpaceVim                                                                                                                 |
+| [lang#latex](lang/latex/)             | This layer provides support for writing LaTeX documents, including syntax highlighting, code completion, formatting etc.                                            |
 | [lang#lisp](lang/lisp/)               | This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file.                                                             |
 | [lang#lua](lang/lua/)                 | This layer is for lua development, provide autocompletion, syntax checking, code format for lua file.                                                               |
 | [lang#markdown](lang/markdown/)       | Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file.                                           |
@@ -102,6 +104,7 @@ enable = false
 | [lang#swift](lang/swift/)             | swift language support for SpaceVim, includes code completion, syntax highlighting                                                                                  |
 | [lang#typescript](lang/typescript/)   | This layer is for TypeScript development                                                                                                                            |
 | [lang#vim](lang/vim/)                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                                             |
+| [lang#vue](lang/vue/)                 | This layer adds vue language support to SpaceVim                                                                                                                    |
 | [lsp](language-server-protocol/)      | This layers provides language server protocol for vim and neovim                                                                                                    |
 | [leaderf](leaderf/)                   | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
 | [shell](shell/)                       | This layer provide shell support in SpaceVim                                                                                                                        |

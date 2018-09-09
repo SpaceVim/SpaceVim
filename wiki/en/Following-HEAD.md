@@ -29,6 +29,8 @@ The next release is v0.9.0.
 - Add `lang#fsharp` layer ([#2081](https://github.com/SpaceVim/SpaceVim/pull/2081))
 - Add `lang#plantuml` layer ([#2085](https://github.com/SpaceVim/SpaceVim/pull/2085))
 - Add `lang#elm` layer, improve REPL highlight ([#2088](https://github.com/SpaceVim/SpaceVim/pull/2088))
+- Add `lang#vue` layer ([#2143](https://github.com/SpaceVim/SpaceVim/pull/2143))
+- Add `lang#latex` and `lang#extra` layer ([#2133](https://github.com/SpaceVim/SpaceVim/pull/2133))
 
 ### Improvement
 
@@ -46,6 +48,7 @@ The next release is v0.9.0.
 - Improve `fzf` layer, add helptags source ([#2047](https://github.com/SpaceVim/SpaceVim/pull/2047))
 - Improve statusline for nerdtree buffer ([#2117](https://github.com/SpaceVim/SpaceVim/pull/2117))
 - Improve statusline for mundo buffer ([#2118](https://github.com/SpaceVim/SpaceVim/pull/2118))
+- Improve compatibility with old vim ([#2130](https://github.com/SpaceVim/SpaceVim/pull/2130))
 
 ### Changed
 
@@ -75,6 +78,7 @@ The next release is v0.9.0.
 - Fix lsp layer plugin installation ([#2108](https://github.com/SpaceVim/SpaceVim/pull/2108))
 - Fix key binding `SPC ?` ([#2109](https://github.com/SpaceVim/SpaceVim/pull/2109))
 - Fix python autoflake support ([#2115](https://github.com/SpaceVim/SpaceVim/pull/2115))
+- Fix active statusline displaying fileformat info ([#2125](https://github.com/SpaceVim/SpaceVim/pull/2125))
 
 ### Removed
 
