@@ -38,7 +38,7 @@ lang: cn
 
 <!-- vim-markdown-toc -->
 
-## Commit 规范
+## Commit emoji 规范
 
 - `:memo:` 添加一个备注或者文档
 - `:gift:` 新的特新
