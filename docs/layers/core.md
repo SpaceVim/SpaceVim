@@ -1,14 +1,13 @@
 ---
- title: "SpaceVim core layer"
- description: "SpaceVim core layer provides many default key bindings and features."
- ---
+title: "SpaceVim core layer"
+description: "SpaceVim core layer provides many default key bindings and features."
+---
 
- # [Available Layers](../) >> core
+# [Available Layers](../) >> core
  
- ## Intro
+## Intro
  
- ## Features
+## Features
  
- ## Configuration
+## Configuration
  
-

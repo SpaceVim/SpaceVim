@@ -1,13 +1,15 @@
 ---
-title: "SpaceVim core layer"
-description: "SpaceVim core layer provides many default key bindings and features."
+title: "SpaceVim core 模块"
+description: "core 模块主要包括 SpaceVim 启动及基本操作所必须的插件及配置。"
+lang: cn
 ---
 
-# [Available Layers](../) >> core
+# [可用模块](../) >> core
  
-## Intro
- 
-## Features
- 
-## Configuration
- 
+## 模块简介
+
+该模块主要包括 SpaceVim 启动时所必须的配置，默认已启用。
+
+## 功能特性
+
+- 文件树：nerdtree 或者 vimfiler，默认为 vimfiler，由 `filemanager` 选项控制
