@@ -175,7 +175,7 @@ Further paragraphs come after blank lines.
 
 
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
-未关联配置的layer将会被拒绝.举个例子一个只有包和钩子的layer,就能被很简单地替换为变量 `g:spacevim_custom_plugins`.
+未关联配置的模块将会被拒绝.举个例子一个只有包和钩子的模块,就能被很简单地替换为变量 `g:spacevim_custom_plugins`.
 
 #### 文件头
 
