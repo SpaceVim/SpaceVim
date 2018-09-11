@@ -9,14 +9,15 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
+- [模块简介](#模块简介)
 - [Install](#install)
+- [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-This layer provides code format feature SpaceVim, and neoformat is included in this layer.
+该模块为 SpaceVim 提供代码格式化的功能，使用了 Vim8/neovim 的异步特性。引入了插件 [neoformat](https://github.com/sbdchd/neoformat)
 
 ## Install
 

@@ -10,6 +10,7 @@ description: "Code formatting support for SpaceVim"
 
 - [Description](#description)
 - [Install](#install)
+- [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
 

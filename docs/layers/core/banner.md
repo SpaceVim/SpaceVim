@@ -1,24 +1,21 @@
 ---
- title: "SpaceVim core#banner layer"
- description: "This layer provides many default banner on welcome page."
- ---
+title: "SpaceVim core#banner layer"
+description: "This layer provides many default banner on welcome page."
+---
 
- # [Available Layers](../) >> core#banner
+# [Available Layers](../) >> core#banner
 
- <!-- vim-markdown-toc GFM -->
+<!-- vim-markdown-toc GFM -->
 
- - [Description](#description)
+- [Description](#description)
+- [Layer option](#layer-option)
 
- <!-- vim-markdown-toc -->
+<!-- vim-markdown-toc -->
 
- ## Description
+## Description
 
   This layer provides many default banner on welcome page. 
 
- ## Layer option
- 
- - frequece for change the banner: daily, weekly, or other.
- 
+## Layer option
 
-
-
+- frequece for change the banner: daily, weekly, or other.
