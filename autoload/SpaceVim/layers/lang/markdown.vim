@@ -52,6 +52,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
   " }}}
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
   nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
+  xnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
   augroup spacevim_layer_lang_markdown
     autocmd!
     autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -100,6 +101,7 @@ function! s:markdown_insert_url() abort
     let result = splits[0] . '[' . splits[1] . '](' . url . ')' . splits[2]
     call setline(pos1[1], result)
   endif
+  keepjumps call cursor(pos1[1], scope[0])
 endfunction
 
 
