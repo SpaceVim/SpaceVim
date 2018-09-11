@@ -94,6 +94,7 @@ function! s:markdown_insert_url() abort
   let pos1 = getpos("'<")
   let pos2 = getpos("'>")
   let scope = sort([pos1[2], pos2[2]], 'n')
+  "FIXME: list scope is not same as string scope index.
   let url = @+
   if !empty(url)
     let line = getline(pos1[1])

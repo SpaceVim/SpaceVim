@@ -10,8 +10,8 @@ lang: cn
 <!-- vim-markdown-toc GFM -->
 
 - [模块简介](#模块简介)
-- [Install](#install)
-- [Configuration](#configuration)
+- [启用模块](#启用模块)
+- [模块设置](#模块设置)
 
 <!-- vim-markdown-toc -->
 
@@ -19,16 +19,15 @@ lang: cn
 
 该模块为 SpaceVim 提供代码格式化的功能，使用了 Vim8/neovim 的异步特性。引入了插件 [neoformat](https://github.com/sbdchd/neoformat)
 
-## Install
+## 启用模块
 
-This layer is enabled by default. If you want to disable this layer, add following to your configuration file:
+可通过在配置文件内加入如下配置来启用该模块：
 
 ```toml
 [[layers]]
-  name = "tools"
-  enable = false
+  name = "format"
 ```
 
-## Configuration
+## 模块设置
 
 neoformat provide better default for different languages, but you can also config it in bootstrap function.

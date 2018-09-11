@@ -8,7 +8,9 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [模块选项](#模块选项)
 
 <!-- vim-markdown-toc -->
 
@@ -18,7 +20,12 @@ lang: cn
 
 ## 功能特性
 
-
+- 修改围绕当前光标的符号
+- 重复编辑
+- 多光标支持
+- 对齐文档内容
+- 高亮行为符号
+- 自动载入 editorconfig 配置
 
 ## 模块选项
 
