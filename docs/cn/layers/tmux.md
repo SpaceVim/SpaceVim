@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim tmux 模块"
-description: "This layers adds extensive support for tmux"
+description: "该模块主要提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。"
 lang: cn
 ---
 
@@ -8,14 +8,15 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Layer options](#layer-options)
-- [Key bindings](#key-bindings)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [启用模块](#启用模块)
+- [模块选项](#模块选项)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
 该模块主要提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。
 
@@ -43,9 +44,9 @@ lang: cn
 
 ## 快捷键
 
-| 按键      | 功能描述                                    |
-| ------------ | ------------------------------------------ |
-| `Ctrl-h`     | Switch to vim/tmux pane in left direction  |
-| `Ctrl-j`     | Switch to vim/tmux pane in down direction  |
-| `Ctrl-k`     | Switch to vim/tmux pane in up direction    |
-| `Ctrl-l`     | Switch to vim/tmux pane in right direction |
+| 按键     | 功能描述                                   |
+| -------- | ------------------------------------------ |
+| `Ctrl-h` | Switch to vim/tmux pane in left direction  |
+| `Ctrl-j` | Switch to vim/tmux pane in down direction  |
+| `Ctrl-k` | Switch to vim/tmux pane in up direction    |
+| `Ctrl-l` | Switch to vim/tmux pane in right direction |

@@ -8,15 +8,16 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
+- [模块简介](#模块简介)
+- [模块选项](#模块选项)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## 模块简介
 
-  This layer provides many default banner on welcome page. 
+这一模块主要是为 SpaceVim 设置一些默认的启动界面的 logo。
 
-## Layer option
+## 模块选项
  
 - frequece for change the banner: daily, weekly, or other.
  

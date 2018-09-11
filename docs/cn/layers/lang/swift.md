@@ -1,16 +1,17 @@
 ---
 title: "SpaceVim lang#swift 模块"
-description: "swift language support for SpaceVim, includes code completion, syntax highlighting"
+description: "该模块主要为 SpaceVim 提供了 swift 开发支持，包括语法高亮、语法检查等特性。"
+lang: cn
 ---
 
 # [可用模块](../../) >> lang#swift
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Features](#features)
-- [Key bindings](#key-bindings)
+- [模块简介](#模块简介)
+- [功能特性](#功能特性)
+- [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 

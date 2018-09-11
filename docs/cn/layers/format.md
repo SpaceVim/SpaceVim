@@ -30,4 +30,5 @@ lang: cn
 
 ## 模块设置
 
-neoformat provide better default for different languages, but you can also config it in bootstrap function.
+neoformat 这一插件为不同语言做了很好的默认配置，只需要安装对应的格式化命令即可。当然，neoformat 也支持自定义配置。
+可以在 SpaceVim 启动函数里设置相关插件选项。

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#kotlin 模块"
-description: "This layer adds kotlin language support to SpaceVim"
+description: "该模块为 SpaceVim 提供了 kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
 lang: cn
 ---
 

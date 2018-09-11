@@ -8,6 +8,7 @@ description: "This layer provides default statusline for SpaceVim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
+- [Layer option](#layer-option)
 
 <!-- vim-markdown-toc -->
 

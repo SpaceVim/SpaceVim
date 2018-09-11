@@ -8,6 +8,8 @@ description: "Improve code edit expr in SpaceVim, provide more text opjects."
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
+- [Features](#features)
+- [Options](#options)
 
 <!-- vim-markdown-toc -->
 
@@ -16,7 +18,6 @@ description: "Improve code edit expr in SpaceVim, provide more text opjects."
 This layer provide many edit key bindings for SpaceVim, and also porvide more text objects. 
 
 ## Features
-
 
 
 ## Options
