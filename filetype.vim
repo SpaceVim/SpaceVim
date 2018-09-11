@@ -9,4 +9,8 @@
 au BufRead,BufNewFile *.rs set filetype=rust
 au BufNewFile,BufRead *.sol setf solidity
 
+" Support for wepy (https://github.com/Tencent/wepy)
+" and layer 'lang#vue' need to be enabled
+au BufRead,BufNewFile *.wpy setlocal filetype=vue.html.javascript.css
+
 " vim:set et sw=2
