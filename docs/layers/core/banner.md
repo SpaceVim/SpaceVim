@@ -8,7 +8,7 @@ description: "This layer provides many default banner on welcome page."
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer option](#layer-option)
+- [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
 
@@ -16,6 +16,6 @@ description: "This layer provides many default banner on welcome page."
 
   This layer provides many default banner on welcome page. 
 
-## Layer option
+## Configuration
 
-- frequece for change the banner: daily, weekly, or other.
+Currently, SpaceVim do not allowed to set the frequency.

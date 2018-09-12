@@ -8,15 +8,15 @@ description: "This layer provides default statusline for SpaceVim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer option](#layer-option)
+- [Configuration](#configuration)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-   The default statusline for SpaceVim.
+ This layer provides default statusline for SpaceVim.
 
-## Layer option
+## Configuration
   
-- frequece for change the banner: daily, weekly, or other.
+All statusline key bindings can be find on [SpaceVim documentation](../../../documentation/#statusline)
   
