@@ -225,13 +225,6 @@ if you want to disable plugins which are added by SpaceVim, you can use SpaceVim
     disabled_plugins = ["clighter", "clighter8"]
 ```
 
-if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
-
-```vim
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
-```
-
 ### Bootstrap Functions
 
 SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable it you need to add `bootstrap_before = "myspacevim#before"` or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
@@ -251,6 +244,15 @@ endf
 
 the `bootstrap_before` will be called after custom configuration file is loaded. and the `bootstrap_after` will
 be called after VimEnter autocmd.
+
+if you want to add custom `SPC` prefix key bindings, you can add this to bootstrap function, **be sure** the key bindings is not used in SpaceVim.
+
+```vim
+func! myspacevim#before() abort
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endf
+```
 
 ### Vim Compatible Mode
 
