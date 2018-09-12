@@ -93,7 +93,7 @@ export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 ### Why vim freeze after pressing Ctrl-s?
 
 This is feature of terminal emulator, you can use `Ctrl-q` to unfreeze your vim.
-To disable this feature you need the following in either `~/.bash_profile` or ``~/.bashrc`:
+To disable this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
 
 ```sh
 stty -ixon
