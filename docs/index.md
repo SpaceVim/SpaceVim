@@ -69,5 +69,6 @@ With layers feature, this version of vim distribution try to turn vim/neovim int
 
 vim 7.4/neovim v0.1.7, and `+lua` or `+python3` is needed.
 
+For more general questions, please read [SpaceVim FAQ](faq/)
 
 <!-- vim:set nowrap: -->
