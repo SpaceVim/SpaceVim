@@ -10,17 +10,16 @@ lang: cn
 
 - [简介](#简介)
 - [使用方法](#使用方法)
-- [可用 API](#可用-api)
 - [可用 APIs](#可用-apis)
 
 <!-- vim-markdown-toc -->
 
-## 简介
+#### 简介
 
 为了兼容不同版本的 Vim，避免使用重复的兼容函数，SpaceVim 提供了一套兼容的公共 API。开发插件时，
 可以在你的插件中使用这些公共 API，这一思想主要借鉴于 [vital.vim](https://github.com/vim-jp/vital.vim)。
 
-## 使用方法
+#### 使用方法
 
 可以通过 `SpaceVim#api#import()` 函数导入相关 API，参考以下示例：
 
@@ -38,13 +37,9 @@ echom s:file.separator
 echom s:file.pathSeparator
 ```
 
-## 可用 API
-
-以下为 SpaceVim 中目前可用的公共 API。
-
 <!-- SpaceVim api cn list start -->
 
-## 可用 APIs
+#### 可用 APIs
 
 | 名称                            | 描述                                                           |
 | ------------------------------- | -------------------------------------------------------------- |

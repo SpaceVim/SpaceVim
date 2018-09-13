@@ -12,7 +12,7 @@ description: "A list of available APIs in SpaceVim, provide compatible functions
 
 <!-- vim-markdown-toc -->
 
-## Introduction
+#### Introduction
 
 SpaceVim provides many public apis, you can use this apis in your plugins.
 This is an example for how to load API, and how to use the public functions within the APIs.
@@ -34,7 +34,7 @@ echom s:file.pathSeparator
 
 <!-- SpaceVim api list start -->
 
-## Available APIs
+#### Available APIs
 
 here is the list of all available APIs, and welcome to contribute to SpaceVim.
 
