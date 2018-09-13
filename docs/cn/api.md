@@ -1,7 +1,6 @@
 ---
 title: "公共 API"
 description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，以及 neovim 和 vim 的兼容组件"
-redirect_from: "/cn/apis/"
 lang: cn
 ---
 

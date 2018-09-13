@@ -1,10 +1,9 @@
 ---
-title: "APIs"
+title:  Available APIs
 description: "A list of available APIs in SpaceVim, provide compatible functions for vim and neovim."
-redirect_from: "/apis/"
 ---
 
-# SpaceVim APIs
+# Available APIs
 
 <!-- vim-markdown-toc GFM -->
 
