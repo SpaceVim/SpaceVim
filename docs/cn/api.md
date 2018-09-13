@@ -4,19 +4,33 @@ description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，�
 lang: cn
 ---
 
-# SpaceVim 公共 APIs
+# 公共 API
 
-SpaceVim 提供了许多公共的 apis，你可以在你的插件中使用这些公共 apis，SpaceVim 的公共 apis 借鉴与 [vital.vim](https://github.com/vim-jp/vital.vim)
+<!-- vim-markdown-toc GFM -->
+
+- [简介](#简介)
+- [使用方法](#使用方法)
+- [可用 API](#可用-api)
+- [可用 APIs](#可用-apis)
+
+<!-- vim-markdown-toc -->
+
+## 简介
+
+为了兼容不同版本的 Vim，避免使用重复的兼容函数，SpaceVim 提供了一套兼容的公共 API。开发插件时，
+可以在你的插件中使用这些公共 API，这一思想主要借鉴于 [vital.vim](https://github.com/vim-jp/vital.vim)。
 
 ## 使用方法
 
-可以使用 `SpaceVim#api#import()` 方法导入 API。参考以下示例：
+可以通过 `SpaceVim#api#import()` 函数导入相关 API，参考以下示例：
 
 ```viml
-
+" 导入 file API，并赋值给变量 s:file
 let s:file = SpaceVim#api#import('file')
+" 导入 system API，并赋值给变量 s:system
 let s:system = SpaceVim#api#import('system')
 
+" 调用 system API 的 isWindows 成员变量
 if s:system.isWindows
     echom "Os is Windows"
 endif
@@ -24,15 +38,19 @@ echom s:file.separator
 echom s:file.pathSeparator
 ```
 
-以下为可用的公共 apis，欢迎贡献新的 apis
+## 可用 API
+
+以下为 SpaceVim 中目前可用的公共 API。
 
 <!-- SpaceVim api cn list start -->
 
-名称 | 描述 | 文档
------ |:----:| -------
-file  | 文件 API | [readme](https://spacevim.org/cn/api/file)
-system | 系统 API | [readme](https://spacevim.org/cn/api/system)
-job | 异步协同 API | [readme](https://spacevim.org/cn/api/job)
+## 可用 APIs
+
+| 名称                            | 描述                                                           |
+| ------------------------------- | -------------------------------------------------------------- |
+| [file](file/)                   | can not find Description                                       |
+| [job](job/)                     | 兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制 |
+| [system](system/)               | can not find Description                                       |
+| [vim#highlight](vim/highlight/) | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。  |
 
 <!-- SpaceVim api cn list end -->
-
