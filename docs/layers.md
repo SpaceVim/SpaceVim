@@ -69,10 +69,10 @@ enable = false
 | [checkers](checkers/)                 | Syntax checking automatically within SpaceVim, display error on the sign column and statusline.                                                                     |
 | [chinese](chinese/)                   | Layer for chinese users, include chinese docs and runtime messages                                                                                                  |
 | [colorscheme](colorscheme/)           | colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme.                                                            |
-| [core#banner](core/banner/)           | "This layer provides many default banner on welcome page.                                                                                                           |
+| [core#banner](core/banner/)           | This layer provides many default banner on welcome page.                                                                                                            |
 | [core#statusline](core/statusline/)   | This layer provides default statusline for SpaceVim                                                                                                                 |
 | [core#tabline](core/tabline/)         | SpaceVim core#tabline layer provides a better tabline for SpaceVim                                                                                                  |
-| [core](core/)                         | "SpaceVim core layer provides many default key bindings and features.                                                                                               |
+| [core](core/)                         | SpaceVim core layer provides many default key bindings and features.                                                                                                |
 | [cscope](cscope/)                     | cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope                                                                     |
 | [ctrlp](ctrlp/)                       | This layers provide a heavily customized ctrlp centric work-flow                                                                                                    |
 | [debug](debug/)                       | This layer provide debug workflow support in SpaceVim                                                                                                               |
@@ -131,7 +131,6 @@ enable = false
 | [tools#dash](tools/dash/)             | This layer provides Dash integration for SpaceVim                                                                                                                   |
 | [tools](tools/)                       | This layer provides some tools for vim                                                                                                                              |
 | [ui](ui/)                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
-| [unite](unite/)                       | This layers provide a heavily customized Unite centric work-flow                                                                                                    |
 
 <!-- SpaceVim layer list end -->
 

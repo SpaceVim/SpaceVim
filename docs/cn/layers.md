@@ -68,7 +68,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [core#banner](core/banner/)           | This layer provides many default banner on welcome page.                                                                                  |
 | [core#statusline](core/statusline/)   | 这一模块为 SpaceVim 提供了默认的模式化的状态了支持。                                                                                      |
 | [core#tabline](core/tabline/)         | SpaceVim core#tabline layer provides a better tabline for SpaceVim                                                                        |
-| [core](core/)                         | SpaceVim core layer provides many default key bindings and features.                                                                      |
+| [core](core/)                         | core 模块主要包括 SpaceVim 启动及基本操作所必须的插件及配置。                                                                             |
 | [cscope](cscope/)                     | cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令                                       |
 | [ctrlp](ctrlp/)                       | 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                               |
 | [debug](debug/)                       | 这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。                                            |
@@ -98,7 +98,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#java](lang/java/)               | 这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#javascript](lang/javascript/)   | 这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#julia](lang/julia/)             | 这一模块为 julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                 |
-| [lang#kotlin](lang/kotlin/)           | This layer adds kotlin language support to SpaceVim                                                                                       |
+| [lang#kotlin](lang/kotlin/)           | 该模块为 SpaceVim 提供了 kotlin 语言开发支持，包括语法高亮、语言服务器支持。                                                              |
 | [lang#latex](lang/latex/)             | 这一模块为 latex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                 |
 | [lang#lisp](lang/lisp/)               | 这一模块为 lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#lua](lang/lua/)                 | 这一模块为 lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
@@ -114,7 +114,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#rust](lang/rust/)               | 这一模块为 rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#scala](lang/scala/)             | 这一模块为 scala 开发提供支持，包括语法高亮，函数列表等特性                                                                               |
 | [lang#sh](lang/sh/)                   | 这一模块为 shell script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
-| [lang#swift](lang/swift/)             | swift language support for SpaceVim, includes code completion, syntax highlighting                                                        |
+| [lang#swift](lang/swift/)             | 该模块主要为 SpaceVim 提供了 swift 开发支持，包括语法高亮、语法检查等特性。                                                               |
 | [lang#typescript](lang/typescript/)   | 这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#vim](lang/vim/)                 | 这一模块为 vim script 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#vue](lang/vue/)                 | 这一模块为 vue 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
@@ -123,11 +123,10 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [shell](shell/)                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验                                                                            |
 | [sudo](sudo/)                         | sudo 提供了在 SpaceVim 中以管理员身份读写文件的功能。                                                                                     |
 | [tags](tags/)                         | tags 模块提供全局的 tags 索引管理，提供快速检索定义和引用的功能。                                                                         |
-| [tmux](tmux/)                         | This layers adds extensive support for tmux                                                                                               |
+| [tmux](tmux/)                         | 该模块主要提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。                                                         |
 | [tools#dash](tools/dash/)             | 该模块提供对 Dash 支持，可快速查找光标位置的单词                                                                                          |
 | [tools](tools/)                       | 集成多种常用工具，包括日历、计算器、等等多种工具类插件，该模块针对 vim8 以及 neovim 提供了更好的插件选择。                                |
 | [ui](ui/)                             | SpaceVim ui 模块提供了一个 IDE-like 的界面，包括状态栏、文件树、语法数等等特性。                                                          |
-| [unite](unite/)                       | 提供以 unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                               |
 
 <!-- SpaceVim layer cn list end -->
 
