@@ -88,6 +88,7 @@ enable = false
 | [lang#agda](lang/agda/)               | This layer adds agda language support to SpaceVim                                                                                                                   |
 | [lang#autohotkey](lang/autohotkey/)   | This layer adds autohotkey language support to SpaceVim                                                                                                             |
 | [lang#c](lang/c/)                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
+| [lang#clojure](lang/clojure/)         | This layer is for clojure development, provide autocompletion, syntax checking, code format for clojure file.                                                       |
 | [lang#csharp](lang/csharp/)           | This layer is for csharp development                                                                                                                                |
 | [lang#dart](lang/dart/)               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
 | [lang#dockerfile](lang/dockerfile/)   | This layer adds DockerFile to SpaceVim                                                                                                                              |

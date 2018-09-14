@@ -24,8 +24,7 @@ This layer is for clojure development, and it includes vim-clojure-static and vi
 - Syntax highlighting
 - Indent
 - Code formatting
-
-SpaceVim also provides REPL for clojure.
+- REPL support
 
 ## Install
 
