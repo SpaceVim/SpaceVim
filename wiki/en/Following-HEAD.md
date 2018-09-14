@@ -106,6 +106,7 @@ The next release is v0.9.0.
 - Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
 - Update getting help page in wiki ([#2025](https://github.com/SpaceVim/SpaceVim/pull/2025))
 - Add doc for missing layers ([#2139](https://github.com/SpaceVim/SpaceVim/pull/2139))
+- Add doc highlight API ([#2145](https://github.com/SpaceVim/SpaceVim/pull/2145))
 
 ### Others
 
