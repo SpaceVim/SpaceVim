@@ -483,7 +483,7 @@ let g:spacevim_simple_mode             = 0
 let g:spacevim_filemanager             = 'vimfiler'
 
 " The default window position for NERDTree
-let g:spacevim_nerdtree_win_pos        = ''
+let g:spacevim_sidebar_direction        = ''
 ""
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
