@@ -67,6 +67,12 @@ To use this configuration layer, update custom configuration file with:
 
 ### Install language server
 
+**Bash**
+
+```sh
+npm i -g bash-language-server
+```
+
 **JavaScript:**
 
 ```sh
@@ -77,6 +83,29 @@ npm install -g javascript-typescript-langserver
 
 ```sh
 pip install --user python-language-server
+```
+
+**julia:**
+
+The `LanguageServer` package must be installed in Julia (0.6 or greater), i.e.
+
+```sh
+julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
+```
+
+With new package system in Julia 0.7 and above, we have a package mode in Julia REPL.
+in REPL, hit `]` to enter the package management mode, then `add LanguageServer` to install the package.
+
+**PureScript**
+
+```sh
+npm install -g purescript-language-server
+```
+
+**Vue:**
+
+```sh
+npm install vue-language-server -g
 ```
 
 ## Configuration
@@ -94,20 +123,25 @@ To enable lsp support for a specified filetype, you may need to load this layer 
 
 default language server commands:
 
-| language     | server command                                   |
-| ------------ | ------------------------------------------------ |
-| `javascript` | `['javascript-typescript-stdio']`                |
-| `haskell`    | `['hie', '--lsp']`                               |
-| `c`          | `['clangd']`                                     |
-| `cpp`        | `['clangd']`                                     |
-| `html`       | `['html-languageserver', '--stdio']`             |
-| `objc`       | `['clangd']`                                     |
-| `objcpp`     | `['clangd']`                                     |
-| `dart`       | `['dart_language_server']`                       |
-| `go`         | `['go-langserver', '-mode', 'stdio']`            |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
-| `python`     | `['pyls']`                                       |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']` |
+| language     | server command                                                                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
+| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
+| `c`          | `['clangd']`                                                                                                                                                                                     |
+| `cpp`        | `['clangd']`                                                                                                                                                                                     |
+| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `objc`       | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `dart`       | `['dart_language_server']`                                                                                                                                                                       |
+| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `python`     | `['pyls']`                                                                                                                                                                                       |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `vue`        | `['vls']`                                                                                                                                                                                        |
 
 To override the server command, you may need to use `override_cmd` option:
 

@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
-        \ ['SpaceVim/cscope.vim'],
+        \ ['SpaceVim/cscope.vim', {'merged' : 0}],
         \ ]
   return plugins
 endfunction

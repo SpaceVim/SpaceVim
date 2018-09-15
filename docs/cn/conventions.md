@@ -60,19 +60,19 @@ vim 具有高度可定制性. 用户可以更改很多的默认设置, 包括区
 
 双引号字符串在vim脚本中的语义跟其他语言中不一样, 你可能并不需要他们.(他们打破了正则表达式)
 
-当你需要转义时使用双引号(例如 "\\n") 或者 你需要嵌入单引号.(例如"Abce'a'")
+当你需要转义时使用双引号(例如 "\\n") 或者你需要嵌入单引号.(例如"Abce'a'")
 
 #### 匹配字符串
 
-**用 =~# 或者 =~? 操作符家族 替换=~家族.**
+**用 =~# 或者 =~? 操作符家族替换=~家族.**
 
-匹配行为取决于用户的忽略大小写设置(ignorecase)和智能大小写(smartcase)设置以及你是否将他们与 =~, =~# 或 =~?操作符家族进行比较.使用 =~# 和 =~? 操作符家族 显式的比较字符串,除非明确的要遵守用户的大小写语义设置.
+匹配行为取决于用户的忽略大小写设置(ignorecase)和智能大小写(smartcase)设置以及你是否将他们与 =~, =~# 或 =~?操作符家族进行比较.使用 =~# 和 =~? 操作符家族显式的比较字符串,除非明确的要遵守用户的大小写语义设置.
 
 #### Regular Expressions
 
 **所有的正则表达前缀都是 \\m, \\v, \\M, or \\V. 其中之一**
 
-在传统的大小写语义设置下,正则表达式的行为取决于用户的无魔法(nomagic)设置. 为了让正则表达式的行为像无魔法(nomagic)和 不忽略大小写(noignorecase)设置下一样, 在所有正则表达式前, 前置 \\m, \\v, \\M, or \\V.之一
+在传统的大小写语义设置下,正则表达式的行为取决于用户的无魔法(nomagic)设置. 为了让正则表达式的行为像无魔法(nomagic)和不忽略大小写(noignorecase)设置下一样, 在所有正则表达式前, 前置 \\m, \\v, \\M, or \\V.之一
 
 欢迎你使用其他等级的魔法(magic levels)(\\v) 和大小写敏感性(\\c) 只要确定了他们是你有意为之并且是明确的.
 
@@ -82,7 +82,7 @@ vim 具有高度可定制性. 用户可以更改很多的默认设置, 包括区
 
 避免使用 :s[ubtitute] 因为它引动光标并打印错误消息. 首选功能(例如 search()) 比s[ubtitute]更适用于脚本.
 
-这意味着 g 标志取决于 上层中 gdefault 设置. 如果你用了 :subtitute 你必须要保存 gdefault, 把它设置为 0 或 1 预先生成替换并且在操作完成后还原它.
+这意味着 g 标志取决于上层中 gdefault 设置. 如果你用了 :subtitute 你必须要保存 gdefault, 把它设置为 0 或 1 预先生成替换并且在操作完成后还原它.
 For many vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
 有很多内置的vim命令, 函数, 可以在更小的影响下完成同样的事情. 查看:help functions() 查看内置的函数表.
 
@@ -119,7 +119,7 @@ For many vim commands, functions exist that do the same thing with fewer side ef
 
 vim脚本在处理一些类型(style)时有不安全,不直观的行为. 举个例子, 0 == 'foo' 认证为真.(evalutaes to true.)
 
-尽可能的用严格的比较操作. 当二次比较字母的时候用 is# 操作符. 除此之外, 更适合用 maktaba#value#IsEqual 或 明确使用 check htype().
+尽可能的用严格的比较操作. 当二次比较字母的时候用 is# 操作符. 除此之外, 更适合用 maktaba#value#IsEqual 或明确使用 check htype().
 
 在使用变量前,明确检查变量的类型. 使用 maktaba#ensure 中的函数(functions from maktaba#ensure) 或 check maktaba#value 或 type() 找出你自己的错误.
 
@@ -140,7 +140,7 @@ vim脚本在处理一些类型(style)时有不安全,不直观的行为. 举个�
 
 **将功能组织到模块化插件中**
 
-把你的功能组织成为一个插件,统一放在一个文件夹中(或者是代码仓库)分享你的插件名(用一个" vim- "前缀 或者需要的话使用 ".vim" 后缀).它应该可以被拆分到 plugin/, autoload/, 等等. 子目录应该以addon-info.json格式声明元数据(详情参见 VAM 文档).
+把你的功能组织成为一个插件,统一放在一个文件夹中(或者是代码仓库)分享你的插件名(用一个" vim- "前缀或者需要的话使用 ".vim" 后缀).它应该可以被拆分到 plugin/, autoload/, 等等. 子目录应该以addon-info.json格式声明元数据(详情参见 VAM 文档).
 
 #### 功能
 
@@ -148,7 +148,7 @@ vim脚本在处理一些类型(style)时有不安全,不直观的行为. 举个�
 
 自动加载允许按需加载函数,这使得启动时间更快,并且强制执行函数命名空间.(namespacing)
 
-脚本本地函数(Script-local functions)是被欢迎的, 但是只应存活在 atuoload/ 和 被自动运行函数调用中.
+脚本本地函数(Script-local functions)是被欢迎的, 但是只应存活在 atuoload/ 和被自动运行函数调用中.
 
 非库函数(Non-library) 插件应该提供命令来代替函数. 命令逻辑应该被提取到功能和自动加载.
 
@@ -158,7 +158,7 @@ vim脚本在处理一些类型(style)时有不安全,不直观的行为. 举个�
 
 #### 命令
 
-**在 plugin/commands.vim 中 或  the ftplugin/ 目录中, 不用[!]定义.**
+**在 plugin/commands.vim 中或  the ftplugin/ 目录中, 不用[!]定义.**
 
 一般命令(general commands)进入 plugin/commands.vim. 文件类型特殊命令(Filetype-specific) 进入 ftplugin/.
 

@@ -65,6 +65,12 @@ endif
 
 ### 安装语言服务器
 
+**Bash**
+
+```sh
+npm i -g bash-language-server
+```
+
 **JavaScript:**
 
 ```sh
@@ -75,6 +81,23 @@ npm install -g javascript-typescript-langserver
 
 ```sh
 pip install --user python-language-server
+```
+
+**julia:**
+
+安装 `LanguageServer` 包需要 Julia（0.6 或更高版本）.
+
+```sh
+julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
+```
+
+在 Julia 0.7 新的包管理系统下，可以在 REPL 模式下进行安装，只需要输入 `]` 即可切入到包管理模式，
+然后执行 `add LanguageServer` 来安装对应的包。
+
+**vue:**
+
+```sh
+npm install vue-language-server -g
 ```
 
 ## 模块配置
@@ -92,20 +115,24 @@ pip install --user python-language-server
 
 默认语言服务器的执行命令列表如下：
 
-| 语言         | 命令                                             |
-| ------------ | ------------------------------------------------ |
-| `javascript` | `['javascript-typescript-stdio']`                |
-| `haskell`    | `['hie', '--lsp']`                               |
-| `c`          | `['clangd']`                                     |
-| `cpp`        | `['clangd']`                                     |
-| `html`       | `['html-languageserver', '--stdio']`             |
-| `objc`       | `['clangd']`                                     |
-| `objcpp`     | `['clangd']`                                     |
-| `dart`       | `['dart_language_server']`                       |
-| `go`         | `['go-langserver', '-mode', 'stdio']`            |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`            |
-| `python`     | `['pyls']`                                       |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']` |
+| 语言         | 命令                                                                                                                                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
+| `sh`       | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
+| `c`          | `['clangd']`                                                                                                                                                                                     |
+| `cpp`        | `['clangd']`                                                                                                                                                                                     |
+| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `objc`       | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `dart`       | `['dart_language_server']`                                                                                                                                                                       |
+| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `python`     | `['pyls']`                                                                                                                                                                                       |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `vue`        | `['vls']`                                                                                                                                                                                        |
 
 如果需要修改语言服务器的命令，在载入模块时，需要指定 `override_cmd` 选项：
 

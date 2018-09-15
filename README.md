@@ -1,12 +1,12 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
-[Documentation](http://spacevim.org/documentation/) \|
+[Documentation](https://spacevim.org/documentation/) \|
 [Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
-[Sponsors](http://spacevim.org/sponsors/) \|
+[Sponsors](https://spacevim.org/sponsors/) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
-[中文官网](http://spacevim.org/cn/)
+[中文官网](https://spacevim.org/cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
@@ -21,11 +21,13 @@ SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
 
 The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](http://spacevim.org/layers/) for more information.
+See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](https://spacevim.org/layers/) for more information.
+If you have any questions about SpaceVim, please follow the [Getting Help guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
+
 
 Here is a throughput graph of the repository for the last few weeks:
 
@@ -91,7 +93,7 @@ SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
-![iedit mode](https://user-images.githubusercontent.com/13142418/37873892-c76afb14-2fea-11e8-9149-aa955b8265f1.gif)
+![iedit mode](https://user-images.githubusercontent.com/13142418/44941560-be2a9800-add2-11e8-8fa5-e6118ff9ddcb.gif)
 
 **Highlight cursor symbol**
 
@@ -108,20 +110,20 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-[**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
+[**Mnemonic key bindings navigation**](https://spacevim.org/mnemonic-key-bindings-navigation/)
 
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
 The mapping guide is also available for `g`, `z`, and `s`.
 
 ![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
-[**Help description for key bindings**](http://spacevim.org/help-description-for-key-bindings/)
+[**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
 
 use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-[**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
+[**Asynchronous plugin manager**](https://spacevim.org/Asynchronous-plugin-manager/)
 
 create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
 
@@ -152,7 +154,7 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 The best way to support SpaceVim is to contribute to it either by reporting bugs,
 helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
 
-For more info please check our [development guidelines](http://spacevim.org/development/).
+For more info please check our [development guidelines](https://spacevim.org/development/).
 
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.

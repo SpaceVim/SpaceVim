@@ -12,6 +12,7 @@ description: "This layer is for elixir development, provide autocompletion, synt
 - [Install](#install)
   - [Layer](#layer)
 - [Key bindings](#key-bindings)
+  - [Language specific key bindings](#language-specific-key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
@@ -29,7 +30,8 @@ This layer include the plugin [slashmili/alchemist.vim](https://github.com/slash
 - Documentation lookup for Modules and functions.
 - Jump to the definition.
 
-SpaceVim also provides REPL/Debug support for elixir.
+SpaceVim also provides REPL, code runner and Language Server protocol support for elixir. to enable language server protocol
+for elixir, you need to load `lsp` layer for elixir.
 
 ## Install
 
@@ -43,6 +45,15 @@ To use this configuration layer, update custom configuration file with:
 ```
 
 ## Key bindings
+
+### Language specific key bindings
+
+| Key binding     | Description                      |
+| --------------- | -------------------------------- |
+| `SPC l d` / `K` | Show doc of cursor symbol        |
+| `SPC l t`       | Jump to tag stack                |
+| `SPC l e`       | Rename symbol (need `lsp` layer) |
+| `g d`           | Jump to definition               |
 
 ### Inferior REPL process
 

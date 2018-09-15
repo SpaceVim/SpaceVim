@@ -130,7 +130,7 @@ Community-driven configuration provides curated packages tuned by power users an
 
 **welcome page**
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
 
 **working flow**
 
@@ -225,13 +225,6 @@ if you want to disable plugins which are added by SpaceVim, you can use SpaceVim
     disabled_plugins = ["clighter", "clighter8"]
 ```
 
-if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configuration file, **be sure** the key bindings is not used in SpaceVim.
-
-```vim
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
-```
-
 ### Bootstrap Functions
 
 SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable it you need to add `bootstrap_before = "myspacevim#before"` or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
@@ -251,6 +244,15 @@ endf
 
 the `bootstrap_before` will be called after custom configuration file is loaded. and the `bootstrap_after` will
 be called after VimEnter autocmd.
+
+if you want to add custom `SPC` prefix key bindings, you can add this to bootstrap function, **be sure** the key bindings is not used in SpaceVim.
+
+```vim
+func! myspacevim#before() abort
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endf
+```
 
 ### Vim Compatible Mode
 
@@ -766,18 +768,18 @@ features.
 
 But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
 
-| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
-| ------------------- | ------- | ------- | ------- | ------- | ------- |
-| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
-| register            | **yes** | **yes** | no      | **yes** | **yes** |
-| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
-| yank history        | **yes** | **yes** | no      | no      | **yes** |
-| jump                | **yes** | **yes** | no      | **yes** | **yes** |
-| location list       | **yes** | **yes** | no      | no      | **yes** |
-| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
-| message             | **yes** | **yes** | no      | no      | **yes** |
-| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
-| resume windows      | **yes** | **yes** | no      | no      | no      |
+| Feature            | unite | denite | leaderf | ctrlp | fzf |
+| ------------------ | ----- | ------ | ------- | ----- | --- |
+| menu CustomKeyMaps | yes   | yes    | no      | no    | no  |
+| register           | yes   | yes    | no      | yes   | yes |
+| file               | yes   | yes    | yes     | yes   | yes |
+| yank history       | yes   | yes    | no      | no    | yes |
+| jump               | yes   | yes    | no      | yes   | yes |
+| location list      | yes   | yes    | no      | no    | yes |
+| outline            | yes   | yes    | yes     | yes   | yes |
+| message            | yes   | yes    | no      | no    | yes |
+| quickfix list      | yes   | yes    | no      | yes   | yes |
+| resume windows     | yes   | yes    | no      | no    | no  |
 
 **Key bindings within fuzzy finder buffer**
 
@@ -857,14 +859,16 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 
 #### Getting help
 
-Denite/Unite is powerful tool to  unite all interfaces. it was meant to be like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for getting help info about functions, variables etc:
+fuzzy finder layer is powerful tool to  unite all interfaces. it was meant to be
+like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for
+getting help info about functions, variables etc:
 
-| Mappings    | Description                                                      |
-| ----------- | ---------------------------------------------------------------- |
-| `SPC h SPC` | discover SpaceVim documentation, layers and packages using unite |
-| `SPC h i`   | get help with the symbol at point                                |
-| `SPC h k`   | show top-level bindings with which-key                           |
-| `SPC h m`   | search available man pages                                       |
+| Mappings    | Description                                                                   |
+| ----------- | ----------------------------------------------------------------------------- |
+| `SPC h SPC` | discover SpaceVim documentation, layers and packages using fuzzy finder layer |
+| `SPC h i`   | get help with the symbol at point                                             |
+| `SPC h k`   | show top-level bindings with which-key                                        |
+| `SPC h m`   | search available man pages                                                    |
 
 Reporting an issue:
 
@@ -1667,7 +1671,8 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c y`   | comment and yank          |
 | `SPC c Y`   | invert comment and yank   |
 
-**Tips:** To comment efficiently a block of line use the combo `SPC ; SPC j l`
+**Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
+For exmaple, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 

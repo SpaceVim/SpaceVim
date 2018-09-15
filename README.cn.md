@@ -60,7 +60,7 @@ SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了�
 该模式支持两种状态 ：`iedit-Normal` 和 `iedit-Insert`。默认情况下，多光标输入时，`iedit-normal`
 模式状态栏时是红色，而 `iedit-insert` 模式时是绿色，当然这根据所选择主题决定。
 
-![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
+![iedit mode](https://user-images.githubusercontent.com/13142418/44941560-be2a9800-add2-11e8-8fa5-e6118ff9ddcb.gif)
 
 ### 高亮光标下的函数
 
