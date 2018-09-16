@@ -71,7 +71,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
       call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
     endif
-  elseif g:spacevim_autocomplete_method == 'asyncomplete'
+  elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -84,7 +84,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
-  elseif g:spacevim_autocomplete_method == 'completor'
+  elseif g:spacevim_autocomplete_method ==# 'completor'
     call add(plugins, ['maralla/completor.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -197,5 +197,13 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
 endfunction
 
+function! SpaceVim#layers#autocomplete#get_options() abort
+
+  return ['return_key_behavior',
+        \ 'tab_key_behavior',
+        \ 'auto-completion-complete-with-key-sequence',
+        \ 'auto-completion-complete-with-key-sequence-delay']
+
+endfunction
 
 " vim:set et sw=2 cc=80:

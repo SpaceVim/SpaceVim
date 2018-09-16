@@ -124,3 +124,10 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
         \ g:spacevim_statusline_inactive_separator)
 
 endfunction
+
+
+function! SpaceVim#layers#tmux#get_options() abort
+
+  return ['tmuxline_separators', 'tmuxline_separators_alt']
+
+endfunction

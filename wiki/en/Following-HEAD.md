@@ -31,6 +31,7 @@ The next release is v0.9.0.
 - Add `lang#elm` layer, improve REPL highlight ([#2088](https://github.com/SpaceVim/SpaceVim/pull/2088))
 - Add `lang#vue` layer ([#2143](https://github.com/SpaceVim/SpaceVim/pull/2143))
 - Add `lang#latex` and `lang#extra` layer ([#2133](https://github.com/SpaceVim/SpaceVim/pull/2133))
+- Add omnifunc for SPConfig ([#2173](https://github.com/SpaceVim/SpaceVim/pull/2173))
 
 ### Improvement
 

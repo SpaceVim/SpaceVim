@@ -44,6 +44,12 @@ function! SpaceVim#layers#checkers#set_variable(var) abort
   endif
 endfunction
 
+function! SpaceVim#layers#checkers#get_options() abort
+
+  return ['show_cursor_error']
+
+endfunction
+
 
 function! SpaceVim#layers#checkers#config() abort
   "" neomake/neomake {{{

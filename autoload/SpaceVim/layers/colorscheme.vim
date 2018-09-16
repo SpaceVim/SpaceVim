@@ -76,6 +76,12 @@ function! SpaceVim#layers#colorscheme#set_variable(var) abort
   let s:random_colorscheme = get(a:var, 'random-theme', 0)
 endfunction
 
+function! SpaceVim#layers#colorscheme#get_options() abort
+
+  return ['random-theme']
+
+endfunction
+
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
