@@ -769,6 +769,7 @@ function! SpaceVim#end() abort
 
   if !g:spacevim_vimcompatible
     nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
   endif
   call SpaceVim#server#connect()
 
