@@ -37,16 +37,35 @@ To change the colorscheme:
   colorscheme = "onedark"
 ```
 
-**List colorschemes**
+Colorscheme list
 
-| Name       | dark | light | term | gui | statusline |
-| ---------- | ---- | ----- | ---- | --- | ---------- |
-| gruvbox    | yes  | yes   | yes  | yes | yes        |
-| one        | yes  | yes   | yes  | yes | yes        |
-| molokai    | yes  | no    | yes  | yes | yes        |
-| jellybeans | yes  | no    | yes  | yes | yes        |
-| nord       | yes  | no    | yes  | yes | yes        |
-| onedark    | yes  | no    | yes  | yes | yes        |
+| Name         | dark | light | term | gui | statusline |
+| ------------ | ---- | ----- | ---- | --- | ---------- |
+| molokai      | yes  | no    | yes  | yes | yes        |
+| onedark      | yes  | no    | yes  | yes | yes        |
+| jellybeans   | yes  | no    | yes  | yes | yes        |
+| one          | yes  | yes   | yes  | yes | yes        |
+| nord         | yes  | no    | yes  | yes | yes        |
+| gruvbox      | yes  | yes   | yes  | yes | yes        |
+| NeoSolarized | yes  | yes   | yes  | yes | yes        |
+| hybrid       | yes  | yes   | yes  | yes | yes        |
+| material     | yes  | yes   | yes  | yes | yes        |
+| SpaceVim     | yes  | yes   | yes  | yes | yes        |
+
+By default this layer only include above colorschemes, if you want to use other colorscheme which
+is available on github, you can use `custom_plugins` section in configuration file, for examples:
+
+```toml
+[options]
+  colorscheme = "OceanicNext"
+  colorscheme_bg = "dark"
+
+# add custom_plugins: https://github.com/mhartington/oceanic-next
+[[custom_plugins]]
+  name = "mhartington/oceanic-next"
+  merged = 0
+```
+
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
 Vim background color. SpaceVim support to change the background color with
@@ -65,3 +84,4 @@ colorscheme layer support random colorscheme on startup. just load this layer wi
   name = "colorscheme"
   random-theme = true
 ```
+

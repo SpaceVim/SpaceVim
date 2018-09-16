@@ -18,5 +18,7 @@ function! SpaceVim#mapping#guide#theme#SpaceVim#palette() abort
                 \ ['#282828', '#00BFFF', 114, 152],
                 \ ['#2c323c', '#ff8787', 114, 210],
                 \ ['#2c323c', '#d75f5f', 114, 167],
+                \ ['#282828', '#689d6a', 235, 72],
+                \ ['#282828', '#8f3f71', 235, 132],
                 \ ]
 endfunction
