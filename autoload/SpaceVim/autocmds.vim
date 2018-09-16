@@ -65,7 +65,9 @@ function! SpaceVim#autocmds#init() abort
 endfunction
 
 function! s:enable_cursorline() abort
-  setl nocursorline
+  if g:_spacevim_cursorline_flag == -1
+    setl cursorline
+  endif
 endfunction
 
 function! s:disable_cursorline() abort
@@ -155,11 +157,11 @@ function! SpaceVim#autocmds#VimEnter() abort
   endif
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   if !empty(get(g:, '_spacevim_bootstrap_after', ''))
-      try
-        call call(g:_spacevim_bootstrap_after, [])
-      catch
-        call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
-      endtry
+    try
+      call call(g:_spacevim_bootstrap_after, [])
+    catch
+      call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+    endtry
   endif
 endfunction
 
