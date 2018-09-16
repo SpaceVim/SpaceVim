@@ -29,6 +29,7 @@ The next release is v0.9.0.
 - Add `lang#fsharp` layer ([#2081](https://github.com/SpaceVim/SpaceVim/pull/2081))
 - Add `lang#plantuml` layer ([#2085](https://github.com/SpaceVim/SpaceVim/pull/2085))
 - Add `lang#elm` layer, improve REPL highlight ([#2088](https://github.com/SpaceVim/SpaceVim/pull/2088))
+- Add `lang#vue` layer ([#2143](https://github.com/SpaceVim/SpaceVim/pull/2143))
 - Add `lang#latex` and `lang#extra` layer ([#2133](https://github.com/SpaceVim/SpaceVim/pull/2133))
 
 ### Improvement
@@ -44,6 +45,7 @@ The next release is v0.9.0.
 - Improve statusline mode text and color ([#2034](https://github.com/SpaceVim/SpaceVim/pull/2034))
 - Improve `lang#perl` layer, add layer doc ([#2041](https://github.com/SpaceVim/SpaceVim/pull/2041))
 - Improve `lang#scala` layer, add layer doc ([#2077](https://github.com/SpaceVim/SpaceVim/pull/2077))
+- Improve `lang#clojure` layer, add layer doc ([#2091](https://github.com/SpaceVim/SpaceVim/pull/2091))
 - Improve `fzf` layer, add helptags source ([#2047](https://github.com/SpaceVim/SpaceVim/pull/2047))
 - Improve statusline for nerdtree buffer ([#2117](https://github.com/SpaceVim/SpaceVim/pull/2117))
 - Improve statusline for mundo buffer ([#2118](https://github.com/SpaceVim/SpaceVim/pull/2118))
@@ -78,6 +80,7 @@ The next release is v0.9.0.
 - Fix key binding `SPC ?` ([#2109](https://github.com/SpaceVim/SpaceVim/pull/2109))
 - Fix python autoflake support ([#2115](https://github.com/SpaceVim/SpaceVim/pull/2115))
 - Fix active statusline displaying fileformat info ([#2125](https://github.com/SpaceVim/SpaceVim/pull/2125))
+- Fix unkown v:progpath ([#2169](https://github.com/SpaceVim/SpaceVim/pull/2169))
 
 ### Removed
 
@@ -104,6 +107,8 @@ The next release is v0.9.0.
 - Add doc for `sudo` layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
 - Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
 - Update getting help page in wiki ([#2025](https://github.com/SpaceVim/SpaceVim/pull/2025))
+- Add doc for missing layers ([#2139](https://github.com/SpaceVim/SpaceVim/pull/2139))
+- Add doc highlight API ([#2145](https://github.com/SpaceVim/SpaceVim/pull/2145))
 
 ### Others
 

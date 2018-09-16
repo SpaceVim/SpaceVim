@@ -8,7 +8,7 @@ commentsID: "SpaceVim release v0.8.0"
 comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.8.0
+# [Changelogs](../development#changelog) > SpaceVim release v0.8.0
 
 
 This project exists thanks to all the people who have contributed. The last release v0.7.0 is targeted

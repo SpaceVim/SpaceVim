@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#ocaml layer"
-description: "This layer is for Python development, provide autocompletion, syntax checking, code format for ocaml file."
+description: "This layer is for ocaml development, provide autocompletion, syntax checking, code format for ocaml file."
 ---
 
 # [Available Layers](../../) >> lang#ocaml

@@ -8,7 +8,7 @@ commentsID: "SpaceVim release v0.7.0"
 comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.7.0
+# [Changelogs](../development#changelog) > SpaceVim release v0.7.0
 
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)

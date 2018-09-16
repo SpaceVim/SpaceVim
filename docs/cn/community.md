@@ -56,7 +56,7 @@ lang: cn
 
 以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
 
-- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
+- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群（满）](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 - <i class="fab fa-qq"></i> [`755208473` Vim/SpaceVim 用户 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
 - <i class="fab fa-qq"></i> [`748697811` Vim/SpaceVim 用户 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
 - <i class="fab fa-qq"></i> [`667379969` Vim/SpaceVim 用户 ④ 群](https://jq.qq.com/?_wv=1027&k=5z2C7BM)

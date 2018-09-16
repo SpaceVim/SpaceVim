@@ -15,6 +15,7 @@ lang: cn
 - [为什么选择 Toml 作为默认配置语言？](#为什么选择-toml-作为默认配置语言)
 - [为什么 SpaceVim 颜色主题和官网不一致？](#为什么-spacevim-颜色主题和官网不一致)
 - [如何增加自定义快捷键？](#如何增加自定义快捷键)
+- [按下 Ctrl-s 后，Vim 为什么会卡死？](#按下-ctrl-s-后vim-为什么会卡死)
 
 <!-- vim-markdown-toc -->
 
@@ -70,4 +71,14 @@ lang: cn
 function! myspacevim#init() abort
   nnoremap <Leader>w :w<cr>
 endfunction
+```
+
+### 按下 Ctrl-s 后，Vim 为什么会卡死？
+
+这是终端模拟器的特性，在终端模拟器内，有一套快捷键，可以暂停终端输出和恢复输出，默认情况下，
+按下 `Ctrl-s` 终端会停止输出，表现为 Vim 卡住，按任何按键都无响应。此时可以按 `Ctrl-q` 恢复终端。
+当然，如果你希望禁用这一特性，可以在的终端配置文件 `~/.bashrc` 或者 `~/.bash_profile` 中加入：
+
+```sh
+stty -ixon
 ```

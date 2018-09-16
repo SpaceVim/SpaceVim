@@ -132,7 +132,7 @@ lang: cn
 
 **欢迎页面**
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
 
 **工作界面**
 
@@ -194,11 +194,31 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 
 所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
 
-如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索的模块。
 
-```vim
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+**添加自定义插件**
+
+如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `custom_plugins` 片段：
+
+```toml
+[[custom_plugins]]
+    name = "lilydjwg/colorizer"
+    on_cmd = ["ColorHighlight", "ColorToggle"]
+    merged = 0
+```
+
+以上这段配置，添加了插件 `lilydjwg/colorizer`，并且，通过 `on_cmd` 这一选项使得这个插件延迟加载。
+该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其他的选项，
+可以通过 `:h dein-options` 查阅。
+
+**禁用插件**
+
+SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过 `disabled_plugins` 这一选项来操作：
+
+```toml
+[options]
+    # 请注意，该值为一个 List，每一个选项为插件的名称，而非 github 仓库地址。
+    disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### 启动函数
@@ -222,6 +242,15 @@ endf
 ```
 
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
+
+如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+
+```vim
+func! myspacevim#before() abort
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endf
+```
 
 ### Vim 兼容模式
 

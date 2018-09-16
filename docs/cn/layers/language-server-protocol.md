@@ -94,6 +94,12 @@ julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
 在 Julia 0.7 新的包管理系统下，可以在 REPL 模式下进行安装，只需要输入 `]` 即可切入到包管理模式，
 然后执行 `add LanguageServer` 来安装对应的包。
 
+**vue:**
+
+```sh
+npm install vue-language-server -g
+```
+
 ## 模块配置
 
 为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
@@ -126,6 +132,7 @@ julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
 | `python`     | `['pyls']`                                                                                                                                                                                       |
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `vue`        | `['vls']`                                                                                                                                                                                        |
 
 如果需要修改语言服务器的命令，在载入模块时，需要指定 `override_cmd` 选项：
 
