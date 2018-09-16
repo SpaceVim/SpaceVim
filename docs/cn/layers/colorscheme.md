@@ -52,6 +52,21 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 | material     | yes      | yes      | yes      | yes     | yes        |
 | SpaceVim     | yes      | yes      | yes      | yes     | yes        |
 
+默认情况下，SpaceVim 的 colorscheme 模块仅包含以上主题，如果需要使用 Github 上其他主题，
+可以在配置文件中使用 `custom_plugins` 来添加主题，例如：
+
+```toml
+[options]
+  colorscheme = "OceanicNext"
+  colorscheme_bg = "dark"
+
+# 添加自定义主题：https://github.com/mhartington/oceanic-next
+[[custom_plugins]]
+  name = "mhartington/oceanic-next"
+  merged = 0
+```
+
+
 部分主题提供了深色和浅色两系列的主题，可以通过设置主题背景色来切换这两种主题。
 SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置。
 

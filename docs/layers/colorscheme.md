@@ -60,6 +60,7 @@ is available on github, you can use `custom_plugins` section in configuration fi
   colorscheme = "OceanicNext"
   colorscheme_bg = "dark"
 
+# add custom_plugins: https://github.com/mhartington/oceanic-next
 [[custom_plugins]]
   name = "mhartington/oceanic-next"
   merged = 0
