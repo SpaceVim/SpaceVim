@@ -1,3 +1,4 @@
 {
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
+  "docs/cn/*.md": {"alternate": "docs/{}.md"},
 }
