@@ -195,15 +195,23 @@ function! s:load_glob_conf() abort
 
 endfunction
 
+" FIXME: the type should match the toml's type
 function! s:opt_type(opt) abort
   let var = get(g:, 'spacevim_' . a:opt, '')
   if type(var) == type('')
-    return '[str]'
+    return '[string]'
+  elseif type(var) == 5
+    return '[boolean]'
+  elseif type(var) == 0
+    return '[number]'
+  elseif type(var) == 3
+    return '[list]'
   endif
 endfunction
 
 function! s:short_desc_of_opt(opt) abort
-  return 'Desc for opt'
+  " TODO: add short desc for each options
+  return ''
 endfunction
 
 function! SpaceVim#custom#complete(findstart, base) abort
