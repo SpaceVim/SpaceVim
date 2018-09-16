@@ -500,7 +500,7 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **状态栏的颜色**
 
-SpaceVim 默认为 colorcheme 模块所包含的主题颜色提供了状态栏主题，若需要使用其他颜色主题，
+SpaceVim 默认为 [colorcheme 模块](../layers/colorscheme/)所包含的主题颜色提供了状态栏主题，若需要使用其他颜色主题，
 需要自行设置状态栏主题。若未设置，则使用 gruvbox 的主题。
 
 可以参考以下模板来设置：

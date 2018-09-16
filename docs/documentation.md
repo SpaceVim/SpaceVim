@@ -522,7 +522,7 @@ The letters displayed in the statusline correspond to the key bindings used to t
 **colorscheme of statusline:**
 
 By default SpaceVim only support colorschemes which has
-been included in colorscheme layer.
+been included in [colorscheme layer](../layers/colorscheme/).
 
 If you want to contribute theme please check the template of a statusline theme.
 
