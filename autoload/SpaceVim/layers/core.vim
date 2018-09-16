@@ -17,7 +17,9 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
 
-  call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+  if !g:spacevim_vimcompatible
+    call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+  endif
   call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
   call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
