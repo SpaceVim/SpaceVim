@@ -195,6 +195,17 @@ function! s:load_glob_conf() abort
 
 endfunction
 
+function! s:opt_type(opt) abort
+  let var = get(g:, 'spacevim_' . a:opt, '')
+  if type(var) == type('')
+    return '[str]'
+  endif
+endfunction
+
+function! s:short_desc_of_opt(opt) abort
+  return 'Desc for opt'
+endfunction
+
 function! SpaceVim#custom#complete(findstart, base) abort
   if a:findstart
     let s:complete_type = ''
@@ -226,7 +237,11 @@ function! SpaceVim#custom#complete(findstart, base) abort
     if s:complete_type ==# 'spacevim_options'
       for m in map(getcompletion('g:spacevim_','var'), 'v:val[11:]')
         if m =~ '^' . a:base
-          call add(res, m)
+          call add(res, {
+                \ 'word' : m,
+                \ 'kind' : s:opt_type(m),
+                \ 'menu' : s:short_desc_of_opt(m),
+                \ })
         endif
       endfor
     elseif s:complete_type ==# 'layers_options'
