@@ -222,7 +222,9 @@ function! SpaceVim#custom#complete(findstart, base) abort
     let section_line = search('^\s*\[','bn')
     if section_line > 0
       if getline(section_line) =~# '^\s*\[options\]\s*$'
-        let s:complete_type = 'spacevim_options'
+        if getline('.')[:col('.')-1] =~# '^\s*[a-zA-Z_]*$'
+          let s:complete_type = 'spacevim_options'
+        endif
       elseif getline(section_line) =~# '^\s*\[\[layers\]\]\s*$'
         let s:complete_type = 'layers_options'
         let layer_name_line = search('^\s*name\s*=','bn')
@@ -233,7 +235,7 @@ function! SpaceVim#custom#complete(findstart, base) abort
     endif
     let line = getline('.')
     let start = col('.') - 1
-    while start > 0 && line[start - 1] =~# '\a'
+    while start > 0 && line[start - 1] =~# '[a-zA-Z_]'
       let start -= 1
     endwhile
     return start
