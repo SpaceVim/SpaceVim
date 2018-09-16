@@ -197,5 +197,10 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
 endfunction
 
+function! SpaceVim#layers#autocomplete#get_options() abort
+
+  return ['return_key_behavior', 'tab_key_behavior']
+
+endfunction
 
 " vim:set et sw=2 cc=80:

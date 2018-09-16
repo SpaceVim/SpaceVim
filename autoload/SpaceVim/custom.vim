@@ -195,24 +195,52 @@ function! s:load_glob_conf() abort
 
 endfunction
 
-
-function! SpaceVim#custom#complete(findstart, base)
-	  if a:findstart
-	    " locate the start of the word
-	    let line = getline('.')
-	    let start = col('.') - 1
-	    while start > 0 && line[start - 1] =~ '\a'
-	      let start -= 1
-	    endwhile
-	    return start
-	  else
-	    " find months matching with "a:base"
-	    let res = []
-	    for m in split("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")
-	      if m =~ '^' . a:base
-		call add(res, m)
-	      endif
-	    endfor
-	    return res
-	  endif
+function! SpaceVim#custom#complete(findstart, base) abort
+  if a:findstart
+    let s:complete_type = ''
+    let s:complete_layer_name = ''
+    " locate the start of the word
+    let section_line = search('^\s*\[','bn')
+    if section_line > 0
+      if getline(section_line) =~# '^\s*\[options\]\s*&'
+        let s:complete_type = 'spacevim_options'
+      elseif getline(section_line) =~# '^\s*\[\[layers\]\]\s*$'
+        let s:complete_type = 'layers_options'
+        let layer_name_line = search('^\s*name\s*=','bn')
+        if layer_name_line > section_line && layer_name_line < line('.')
+          let s:complete_layer_name = eval(split(getline(layer_name_line), '=')[1])
+        endif
+      endif
+    endif
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~# '\a'
+      let start -= 1
+    endwhile
+    return start
+  else
+    " find months matching with "a:base"
+    let res = []
+    if s:complete_type ==# 'spacevim_options'
+      for m in map(getcompletion('g:spacevim_','var'), 'v:val[11:]')
+        if m =~ '^' . a:base
+          call add(res, m)
+        endif
+      endfor
+    elseif s:complete_type ==# 'layers_options'
+      let options = ['name']
+      if !empty(s:complete_layer_name)
+        try
+          let options = SpaceVim#layers#{s:complete_layer_name}#get_options()
+        catch
+        endtry
+      endif
+      for m in options
+        if m =~ '^' . a:base
+          call add(res, m)
+        endif
+      endfor
+    endif
+    return res
+  endif
 endfunction
