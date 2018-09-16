@@ -1,3 +1,5 @@
 Execute ( SpaceVim colorscheme ):
+  let g:current_colors = g:colors_name
   colorscheme SpaceVim
   AssertEqual g:colors_name, 'SpaceVim'
+  exe 'colorscheme ' . g:current_colors
