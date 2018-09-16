@@ -20,8 +20,8 @@ function! SpaceVim#autocmds#init() abort
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
-      autocmd BufEnter,WinEnter,InsertLeave * setl cursorline
-      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorline
+      autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
+      autocmd BufLeave,WinLeave,InsertEnter * call s:disable_cursorline()
     endif
     if g:spacevim_enable_cursorcolumn == 1
       autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
@@ -62,6 +62,14 @@ function! SpaceVim#autocmds#init() abort
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
   augroup END
+endfunction
+
+function! s:enable_cursorline() abort
+  setl nocursorline
+endfunction
+
+function! s:disable_cursorline() abort
+  setl nocursorline
 endfunction
 
 function! s:reload_touchpad_status() abort
