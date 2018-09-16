@@ -521,8 +521,10 @@ The letters displayed in the statusline correspond to the key bindings used to t
 
 **colorscheme of statusline:**
 
-current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to
-contribute theme please check the template of a statusline theme.
+By default SpaceVim only support colorschemes which has
+been included in colorscheme layer.
+
+If you want to contribute theme please check the template of a statusline theme.
 
 ```vim
 " the theme colors should be
