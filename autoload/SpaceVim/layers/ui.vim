@@ -60,8 +60,13 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
         \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
         \ 'fill-column-indicator', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'set cursorline!',
-        \ 'toggle highlight of the current line', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'call call('
+        \ . string(s:_function('s:toggle_cursorline')) . ', [])',
+        \ ['toggle highlight of the current line',
+        \ [
+        \ 'SPC t h h is to toggle the highlighting of cursorline'
+        \ ]
+        \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
         \ . string(s:_function('s:toggle_indentline')) . ', [])',
         \ ['toggle highlight indentation levels',
@@ -211,6 +216,12 @@ function! s:toggle_win_fringe() abort
     set guioptions-=r
     let s:tfflag = 0
   endif
+endfunction
+
+let g:_spacevim_cursorline_flag = -1
+function! s:toggle_cursorline() abort
+  setl cursorline!
+  let g:_spacevim_cursorline_flag = g:_spacevim_cursorline_flag * -1
 endfunction
 
 function! s:toggle_spell_check() abort
