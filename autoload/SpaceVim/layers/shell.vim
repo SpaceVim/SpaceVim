@@ -52,6 +52,12 @@ function! SpaceVim#layers#shell#set_variable(var) abort
   let s:default_height = get(a:var, 'default_height', 30)
 endfunction
 
+function! SpaceVim#layers#shell#get_options() abort
+
+  return ['default_shell', 'default_position', 'default_height']
+
+endfunction
+
 let s:shell_win_nr = 0
 function! s:open_default_shell() abort
   if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
