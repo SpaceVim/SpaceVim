@@ -202,7 +202,7 @@ function! SpaceVim#custom#complete(findstart, base) abort
     " locate the start of the word
     let section_line = search('^\s*\[','bn')
     if section_line > 0
-      if getline(section_line) =~# '^\s*\[options\]\s*&'
+      if getline(section_line) =~# '^\s*\[options\]\s*$'
         let s:complete_type = 'spacevim_options'
       elseif getline(section_line) =~# '^\s*\[\[layers\]\]\s*$'
         let s:complete_type = 'layers_options'
@@ -219,7 +219,9 @@ function! SpaceVim#custom#complete(findstart, base) abort
     endwhile
     return start
   else
-    " find months matching with "a:base"
+    call SpaceVim#logger#info('Complete SpaceVim configuration file:')
+    call SpaceVim#logger#info('complete_type: ' . s:complete_type)
+    call SpaceVim#logger#info('complete_layer_name: ' . s:complete_layer_name)
     let res = []
     if s:complete_type ==# 'spacevim_options'
       for m in map(getcompletion('g:spacevim_','var'), 'v:val[11:]')
