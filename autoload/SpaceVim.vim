@@ -770,6 +770,9 @@ function! SpaceVim#end() abort
   if !g:spacevim_vimcompatible
     nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
   endif
   call SpaceVim#server#connect()
 
