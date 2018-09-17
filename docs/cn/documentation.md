@@ -254,12 +254,11 @@ endf
 
 ### Vim 兼容模式
 
-以下为 SpaceVim 中与 Vim 默认情况下的一些差异，而在兼容模式下，
-以下所有差异将不存在，可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式。
+以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
 - Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是 `Windows` 快捷键的前缀（可以在配置文件中设置成其他按键）。
-  如果希望回复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 使用一个空字符串来禁用这一功能。
+  它是窗口相关快捷键的前缀（可以在配置文件中设置成其他按键）。
+  如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
 - Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
 - Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
@@ -267,6 +266,15 @@ endf
 - 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
 - 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
 - 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
+
+可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，
+以上所有差异将不存在。当然，也可通过对应的选项禁用某一个差异。比如，恢复逗号`,`的原始功能，
+可以通过禁用语言专用的前缀键：
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
 
 如果发现有其他区别，可以[提交 PR](http://spacevim.org/development/)。
 

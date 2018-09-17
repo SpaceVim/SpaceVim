@@ -256,7 +256,7 @@ endf
 
 ### Vim compatible mode
 
-This a list of different key bindings between SpaceVim and origin vim. If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = true` in `[options]` section.
+This a list of different key bindings between SpaceVim and origin vim.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
@@ -273,6 +273,17 @@ the option is `g:spacevim_windows_smartclose`, default value is `q`. If you stil
 - The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
 - `Ctrl-b` in command line mode is mapped to `<Left>`, which will move cursor to the left.
 - `Ctrl-f` in command line mode is mapped to `<Right>`, which will move cursor to the right.
+
+SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the different points above will disappear,
+you can enable vimcompatible mode via `vimcompatible = true` in `[options]` section.
+
+If you want to disable one of these differences, use the relevant options.
+For example, to disable language specific leader, you may add following to your configuration file:
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
