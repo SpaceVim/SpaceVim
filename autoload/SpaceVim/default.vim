@@ -258,14 +258,7 @@ function! SpaceVim#default#keyBindings() abort
 
   " Navigate window
   nnoremap <silent><C-q> <C-w>
-  if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
-  endif
 
-  " Navigation in command line
-  cnoremap <C-a> <Home>
-  cnoremap <C-b> <Left>
-  cnoremap <C-f> <Right>
 
 
   " Fast saving

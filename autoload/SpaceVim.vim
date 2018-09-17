@@ -766,6 +766,14 @@ function! SpaceVim#end() abort
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = 0
   endif
+
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
+  endif
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
