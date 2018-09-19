@@ -6,16 +6,21 @@ lang: cn
 
 # [Available Layers](../../) >> lang#asciidoc
 
-<!-- vim-asciidoc-toc GFM -->
+<!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
+- [模块简介](#模块简介)
+- [启用模块](#启用模块)
 
-<!-- vim-asciidoc-toc -->
+<!-- vim-markdown-toc -->
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 asciidoc 文件夹编辑支持。
+该模块为 SpaceVim 提供了 asciidoc 文件夹编辑支持。该模块包括以下插件：
+
+- `wsdjeg/vim-asciidoc`
+- `dahu/VimRegStyle`
+- `dahu/vimple`
+- `dahu/Asif`
 
 ## 启用模块
 
