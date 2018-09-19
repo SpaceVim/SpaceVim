@@ -24,4 +24,3 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#asciidoc"
 ```
-

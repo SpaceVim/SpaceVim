@@ -22,3 +22,6 @@ endf
 function! SpaceVim#layers#lang#asciidoc#config() abort
   
 endfunction
+
+
+" https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/

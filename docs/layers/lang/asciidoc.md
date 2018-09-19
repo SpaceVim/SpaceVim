@@ -13,13 +13,13 @@ lang: cn
 
 <!-- vim-asciidoc-toc -->
 
-## Description
+## 模块简介
 
-This layer is for editing asciidoc file.
+该模块为 SpaceVim 提供了 asciidoc 文件夹编辑支持。
 
-## Install
+## 启用模块
 
-To use this configuration layer, update custom configuration file with:
+可通过在配置文件内加入如下配置来启用该模块：
 
 ```toml
 [[layers]]
