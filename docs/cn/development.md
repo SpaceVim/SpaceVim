@@ -73,7 +73,7 @@ SpaceVim 所有部分采用 MIT 许可。
 - 初始化及核心代码
 - 所有模块相关文件
 
-额外的以来文件，请参阅文件头许可信息，这些文件不应该使用空白文件头，我们也不会接受空白文件头的代码。
+额外的依赖文件，请参阅文件头许可信息，这些文件不应该使用空白文件头，我们也不会接受空白文件头的代码。
 
 ### 公约
 
@@ -175,7 +175,7 @@ Further paragraphs come after blank lines.
 
 
 Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
-未关联配置的层将会被拒绝.举个例子一个只有包和钩子的层,很简单的就能被替换为变量 `g:spacevim_custom_plugins`.
+未关联配置的模块将会被拒绝.举个例子一个只有包和钩子的模块,就能被很简单地替换为变量 `g:spacevim_custom_plugins`.
 
 #### 文件头
 

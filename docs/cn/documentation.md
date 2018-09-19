@@ -441,7 +441,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
 | `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
-| `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
+| `SPC t m p` | 显示/隐藏光标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
 | `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
@@ -471,7 +471,7 @@ _acpi_ 可展示电池电量剩余百分比.
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0 - 30%    | 红色 |
+| 0   - 30%  | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -550,7 +550,7 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-这一模板是 gruvbox 主题的，如果你需要在切换主题是，状态栏都使用同一种颜色主题，
+这一模板是 gruvbox 主题的，当你需要在切换主题时，状态栏都使用同一种颜色主题，
 可以设置 `custom_color_palette`：
 
 ```toml
@@ -583,7 +583,7 @@ custom_color_palette = [
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-标签栏上也支持鼠标操作，左键可以快速切换至该序号，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
+标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
 
 | 按键             | 描述         |
 | ---------------- | ------------ |
