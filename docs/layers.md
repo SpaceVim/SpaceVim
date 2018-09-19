@@ -86,6 +86,7 @@ enable = false
 | [github](github/)                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
 | [lang#WebAssembly](lang/WebAssembly/) | This layer adds WebAssembly support to SpaceVim                                                                                                                     |
 | [lang#agda](lang/agda/)               | This layer adds agda language support to SpaceVim                                                                                                                   |
+| [lang#asciidoc](lang/asciidoc/)       | Edit asciidoc within vim, autopreview asciidoc in the default browser, with this layer you can also format asciidoc file.                                           |
 | [lang#autohotkey](lang/autohotkey/)   | This layer adds autohotkey language support to SpaceVim                                                                                                             |
 | [lang#c](lang/c/)                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#clojure](lang/clojure/)         | This layer is for clojure development, provide autocompletion, syntax checking, code format for clojure file.                                                       |
