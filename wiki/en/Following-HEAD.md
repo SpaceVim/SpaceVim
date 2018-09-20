@@ -52,6 +52,7 @@ The next release is v0.9.0.
 - Improve statusline for mundo buffer ([#2118](https://github.com/SpaceVim/SpaceVim/pull/2118))
 - Improve compatibility with old vim ([#2130](https://github.com/SpaceVim/SpaceVim/pull/2130))
 - Improve vimcompatible mode ([#2174](https://github.com/SpaceVim/SpaceVim/pull/2174))
+- Add mapping for NERDCommenterSexy ([#2180](https://github.com/SpaceVim/SpaceVim/pull/2180))
 
 ### Changed
 
