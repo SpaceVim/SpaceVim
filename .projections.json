@@ -3,4 +3,6 @@
   "docs/cn/*.md": {"alternate": "docs/{}.md"},
   "doc/*.txt": {"alternate": "doc/{}.cnx"},
   "doc/*.cnx": {"alternate": "doc/{}.txt"},
+  "docs/*.cmd": {"alternate": "docs/cn/{}.cmd"},
+  "docs/cn/*.cmd": {"alternate": "docs/{}.cmd"},
 }
