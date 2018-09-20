@@ -197,15 +197,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
   nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
   nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
-  if has('nvim') || exists(':tnoremap') == 2
-    exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
-    exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
-    exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
-    exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
-    exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
-    exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
-    exe 'tnoremap <silent><esc>     <C-\><C-n>'
-  endif
 
 
   "Use jk switch to normal mode

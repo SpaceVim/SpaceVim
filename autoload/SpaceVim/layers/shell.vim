@@ -39,7 +39,31 @@ function! SpaceVim#layers#shell#config() abort
         \ ]
         \ ], 1)
 
+  if has('nvim') || exists(':tnoremap') == 2
+    exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
+    exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
+    exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
+    exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
+    exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
+    exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
+    exe 'tnoremap <silent><esc>     <C-\><C-n>'
+    exe 'tnoremap <silent><C-d>     exit<CR>'
+  endif
+  " in window gvim, use <C-d> to close terminal buffer
+
 endfunction
+
+" FIXME: 
+func! SpaceVim#layers#shell#terminal() abort
+  let line = getline('.')
+  let pwd = getcwd()
+  echom 'current line is >' . line . '<'
+  echom 'pwd is >>>' . pwd . '><<<'
+  if line ==# pwd . '>'
+    return 'exit<CR>'
+  endif
+  return ''
+endf
 
 
 let s:default_shell = 'terminal'
@@ -90,11 +114,16 @@ function! s:open_default_shell() abort
         else
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
-        call term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
+        let g:terminal_job_id = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
       setlocal nobuflisted
+      " use q to close terminal buffer in vim, if vimcompatible mode is not
+      " enabled, and smart quit is on.
+      if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
+        nnoremap <buffer><silent> q :bd!<CR>
+      endif
       startinsert
     else
       echo ':terminal is not supported in this version'
