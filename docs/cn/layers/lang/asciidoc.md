@@ -18,9 +18,6 @@ lang: cn
 该模块为 SpaceVim 提供了 asciidoc 文件夹编辑支持。该模块包括以下插件：
 
 - `wsdjeg/vim-asciidoc`
-- `Raimondi/VimRegStyle`
-- `dahu/vimple`
-- `dahu/Asif`
 
 ## 启用模块
 

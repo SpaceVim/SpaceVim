@@ -17,9 +17,6 @@ description: "Edit asciidoc within vim, autopreview asciidoc in the default brow
 This layer is for editing asciidoc file. following plugins are included in this layer:
 
 - `wsdjeg/vim-asciidoc`
-- `Raimondi/VimRegStyle`
-- `dahu/vimple`
-- `dahu/Asif`
 
 ## Install
 

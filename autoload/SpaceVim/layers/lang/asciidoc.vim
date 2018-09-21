@@ -11,18 +11,12 @@ func! SpaceVim#layers#lang#asciidoc#plugins() abort
 
   return [
         \ ['wsdjeg/vim-asciidoc', {'merged' : 0}],
-        \ ['Raimondi/VimRegStyle', {'merged' : 0}],
-        \ ['dahu/vimple', {'merged' : 0}],
-        \ ['dahu/Asif', {'merged' : 0}],
         \ ]
 
 endf
 
 
 function! SpaceVim#layers#lang#asciidoc#config() abort
-  if !exists('g:init_vimple_maps_and_commands')
-    let g:init_vimple_maps_and_commands = 0
-  endif
 endfunction
 
 
