@@ -11,6 +11,7 @@ func! SpaceVim#layers#lang#asciidoc#plugins() abort
 
   return [
         \ ['wsdjeg/vim-asciidoc', {'merged' : 0}],
+        \ ['Raimondi/VimRegStyle', {'merged' : 0}],
         \ ]
 
 endf
