@@ -84,7 +84,7 @@ function! SpaceVim#custom#apply(config) abort
   else
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
-      exe 'let g:spacevim_' . name . ' = value'
+      exe 'let g:spacevim_' . name . ' = "' . value . '"'
       unlet value
     endfor
     let layers = get(a:config, 'layers', [])
