@@ -90,6 +90,13 @@ endfunction
 function! s:change_dir(dir) abort
   call SpaceVim#logger#info('change to root:' . a:dir)
   exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+
+  try
+    " FIXME: change the git dir when the path is changed.
+    let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
+  catch
+  endtry
+  " let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
