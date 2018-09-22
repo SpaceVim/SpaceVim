@@ -47,7 +47,11 @@ function! SpaceVim#layers#shell#config() abort
     exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
     exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
     exe 'tnoremap <silent><esc>     <C-\><C-n>'
-    exe 'tnoremap <silent><C-d>     exit<CR>'
+    if s:SYSTEM.isWindows
+      exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
+      exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
+      exe 'tnoremap <expr><silent><C-w>  SpaceVim#layers#shell#ctrl_w()'
+    endif
   endif
   " in window gvim, use <C-d> to close terminal buffer
 
@@ -55,15 +59,26 @@ endfunction
 
 " FIXME: 
 func! SpaceVim#layers#shell#terminal() abort
-  let line = getline('.')
+  let line = getline('$')
   let pwd = getcwd()
-  echom 'current line is >' . line . '<'
-  echom 'pwd is >>>' . pwd . '><<<'
   if line ==# pwd . '>'
-    return 'exit<CR>'
+    return "exit\<CR>"
   endif
-  return ''
+  return "\<C-d>"
 endf
+func! SpaceVim#layers#shell#ctrl_u() abort
+  let line = getline('$')
+  let prompt = getcwd() . '>'
+  return repeat("\<BS>", len(line) - len(prompt) + 2)
+  return "\<C-u>"
+endfunction
+
+func! SpaceVim#layers#shell#ctrl_w() abort
+  let cursorpos = term_getcursor(s:term_buf_nr)
+  let line = getline(cursorpos[0])[:cursorpos[1]-1]
+  let str = matchstr(line, '[^ ]*\s*$')
+  return repeat("\<BS>", len(str))
+endfunction
 
 
 let s:default_shell = 'terminal'
@@ -114,7 +129,7 @@ function! s:open_default_shell() abort
         else
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
-        let g:terminal_job_id = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
+        let s:term_buf_nr = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
