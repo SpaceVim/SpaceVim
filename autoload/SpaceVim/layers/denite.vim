@@ -26,11 +26,17 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Denite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Denite help -input=SpaceVim', 'find-SpaceVim-help', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'buffer list', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
+        \ . string(s:_function('s:buffer_list')) . ', [])',
+        \ ['buffer list',
+        \ [
+        \ 'SPC b b is to open buffer list via denite'
+        \ ]
+        \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite file_mru', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Denite -resume', 'resume denite buffer', 1)
-  nnoremap <silent> <C-p> :Denite file_rec<cr>
+  nnoremap <silent> <C-p> :call <SID>file_rec()<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
@@ -159,4 +165,29 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 endfunction
+
+function! s:buffer_list() abort
+  Denite buffer
+  doautocmd WinEnter
+endfunction
+
+function! s:file_rec() abort
+  Denite file_rec
+  doautocmd WinEnter
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
 " vim:set et sw=2 cc=80:
