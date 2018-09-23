@@ -1,6 +1,6 @@
 ---
 title: "web#http api"
-description: "web#http API provides some besic functions and values for http request"
+description: "web#http API provides some basic functions and values for http request"
 ---
 
 # [Available APIs](../../) >> web#html
@@ -14,7 +14,7 @@ description: "web#http API provides some besic functions and values for http req
 
 ## Intro
 
-web#html API provides some besic functions and values for http request.
+web#html API provides some basic functions and values for http request.
 
 ## Functions
 

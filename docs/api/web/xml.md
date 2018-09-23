@@ -1,6 +1,6 @@
 ---
 title: "web#xml api"
-description: "web#xml API provides some besic functions and values for parser xml file."
+description: "web#xml API provides some basic functions and values for parser xml file."
 ---
 
 # [Available APIs](../../) >> web#xml
@@ -14,7 +14,7 @@ description: "web#xml API provides some besic functions and values for parser xm
 
 ## Intro
 
-web#xml API provides some besic functions and values for parser xml file.
+web#xml API provides some basic functions and values for parser xml file.
 
 ## Functions
 

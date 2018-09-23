@@ -1,6 +1,6 @@
 ---
 title: "password api"
-description: "password API provides some besic functions for generating password"
+description: "password API provides some basic functions for generating password"
 ---
 
 # [Available APIs](../) >> password

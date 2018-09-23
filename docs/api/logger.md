@@ -1,6 +1,6 @@
 ---
 title: "logger API"
-description: "logger API provides some besic functions for log message when create plugins"
+description: "logger API provides some basic functions for log message when create plugins"
 ---
 
 # [Available APIs](../) >> logger

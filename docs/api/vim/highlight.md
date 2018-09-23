@@ -1,6 +1,6 @@
 ---
 title: "vim#highlight api"
-description: "vim#highlight API provides some besic functions and values for getting and setting highlight info."
+description: "vim#highlight API provides some basic functions and values for getting and setting highlight info."
 ---
 
 # [Available APIs](../../) >> vim#highlight
@@ -14,7 +14,7 @@ description: "vim#highlight API provides some besic functions and values for get
 
 ## Intro
 
-vim#highlight API provides some besic functions and values for getting and setting highlight info.
+vim#highlight API provides some basic functions and values for getting and setting highlight info.
 
 ## Functions
 
