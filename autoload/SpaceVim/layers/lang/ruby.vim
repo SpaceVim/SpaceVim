@@ -21,6 +21,7 @@ function! SpaceVim#layers#lang#ruby#config() abort
       call SpaceVim#plugins#repl#reg('ruby',s:ruby_repl_command)
   else
       call SpaceVim#plugins#repl#reg('ruby', 'irb')
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
