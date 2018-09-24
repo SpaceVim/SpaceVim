@@ -63,7 +63,7 @@ let s:cs = [
 let s:NUMBER = SpaceVim#api#import('data#number')
 
 let s:time = {
-      \ 'dalily' : 90,
+      \ 'dalily' : 1 * 24 * 60 * 60 * 1000,
       \ }
 
 function! SpaceVim#layers#colorscheme#config() abort
@@ -75,7 +75,7 @@ function! SpaceVim#layers#colorscheme#config() abort
     let conf = s:JSON.json_decode(join(readfile('~/.cache/SpaceVim/colorscheme_frequence.json', ''), ''))
     if conf.fequecnce != ''
       let ctime = localtime()
-      if ctime - conf.last >= s:time[conf.fequecnce]
+      if ctime - conf.last >= get(s:time,  conf.fequecnce, 0)
         let id = s:NUMBER.random(0, len(s:cs))
         let g:spacevim_colorscheme = s:cs[id]
         call s:update_conf()
