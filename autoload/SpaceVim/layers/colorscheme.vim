@@ -25,6 +25,7 @@
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 
+let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#colorscheme#plugins() abort
   return [
@@ -63,8 +64,23 @@ let s:NUMBER = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme == 1
-    let id = s:NUMBER.random(0, len(s:cs))
-    let g:spacevim_colorscheme = s:cs[id]
+    let ctime = ''
+    " Use local file's save time, the local file is
+    " ~/.cache/SpaceVim/colorscheme_frequence.json
+    " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
+    let conf = s:JSON.json_decode(join(readfile('~/.cache/SpaceVim/colorscheme_frequence.json', ''), ''))
+    if conf.fequecnce == 'daily'
+      let ctime = localtime()
+      if ctime - conf.last >= 90
+        let id = s:NUMBER.random(0, len(s:cs))
+        let g:spacevim_colorscheme = s:cs[id]
+      else
+        let g:spacevim_colorscheme = conf.theme
+      endif
+    else
+      let id = s:NUMBER.random(0, len(s:cs))
+      let g:spacevim_colorscheme = s:cs[id]
+    endif
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
         \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
