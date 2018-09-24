@@ -72,7 +72,7 @@ function! SpaceVim#layers#colorscheme#config() abort
     " Use local file's save time, the local file is
     " ~/.cache/SpaceVim/colorscheme_frequence.json
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
-    let conf = s:JSON.json_decode(join(readfile('~/.cache/SpaceVim/colorscheme_frequence.json', ''), ''))
+    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
     if conf.fequecnce != ''
       let ctime = localtime()
       if ctime - conf.last >= get(s:time,  conf.fequecnce, 0)
@@ -98,7 +98,7 @@ function! s:update_conf() abort
         \ 'last' : localtime(),
         \ 'theme' : g:spacevim_colorscheme
         \ }
-  call writefile([s:JSON.json_encode(conf)], '~/.cache/SpaceVim/colorscheme_frequence.json')
+  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
 endfunction
 
 let s:random_colorscheme = 0
