@@ -66,6 +66,9 @@ let s:time = {
       \ 'dalily' : 1 * 24 * 60 * 60 * 1000,
       \ }
 
+let s:random_colorscheme = 0
+let s:random_frequency = ''
+
 function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme == 1
     let ctime = ''
@@ -73,9 +76,9 @@ function! SpaceVim#layers#colorscheme#config() abort
     " ~/.cache/SpaceVim/colorscheme_frequence.json
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
     let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
-    if conf.fequecnce != ''
+    if s:random_frequency != ''
       let ctime = localtime()
-      if ctime - conf.last >= get(s:time,  conf.fequecnce, 0)
+      if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
         let id = s:NUMBER.random(0, len(s:cs))
         let g:spacevim_colorscheme = s:cs[id]
         call s:update_conf()
@@ -101,8 +104,6 @@ function! s:update_conf() abort
   call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
 endfunction
 
-let s:random_colorscheme = 0
-let s:random_frequency = 'hourly'
 
 function! SpaceVim#layers#colorscheme#set_variable(var) abort
   let s:random_colorscheme = get(a:var, 'random_theme', get(a:var, 'random-theme', 0))
