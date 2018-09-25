@@ -78,7 +78,7 @@ let s:random_colorscheme = 0
 let s:random_frequency = ''
 
 function! SpaceVim#layers#colorscheme#config() abort
-  if s:random_colorscheme == 1
+  if s:random_colorscheme
     let ctime = ''
     " Use local file's save time, the local file is
     " ~/.cache/SpaceVim/colorscheme_frequence.json
