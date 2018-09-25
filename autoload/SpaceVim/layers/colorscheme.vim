@@ -147,5 +147,9 @@ else
 endif
 function! s:cycle_spacevim_theme() abort
   let id = s:NUMBER.random(0, len(s:cs))
-  exe 'colorscheme ' . s:cs[id]
+  " if the frequency is not empty and random_theme is on, SPC T n should
+  " update the cache file:
+  let g:spacevim_colorscheme = s:cs[id]
+  exe 'colorscheme ' . g:spacevim_colorscheme
+  call s:update_conf()
 endfunction
