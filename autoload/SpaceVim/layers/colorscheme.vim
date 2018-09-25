@@ -64,7 +64,15 @@ let s:NUMBER = SpaceVim#api#import('data#number')
 
 let s:time = {
       \ 'dalily' : 1 * 24 * 60 * 60 * 1000,
+      \ 'hourly' : 1 * 60 * 60 * 1000,
+      \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
       \ }
+
+for n in range(1, 23)
+  call extend(s:time, {n . 'h' : n * 60 * 60 * 1000})
+endfor
+
+unlet n
 
 let s:random_colorscheme = 0
 let s:random_frequency = ''
@@ -75,19 +83,25 @@ function! SpaceVim#layers#colorscheme#config() abort
     " Use local file's save time, the local file is
     " ~/.cache/SpaceVim/colorscheme_frequence.json
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
-    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
-    if s:random_frequency != ''
-      let ctime = localtime()
-      if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+    if filereadable('~/.cache/SpaceVim/colorscheme_frequence.json')
+      let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
+      if s:random_frequency !=# '' && !empty(conf)
+        let ctime = localtime()
+        if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+          let id = s:NUMBER.random(0, len(s:cs))
+          let g:spacevim_colorscheme = s:cs[id]
+          call s:update_conf()
+        else
+          let g:spacevim_colorscheme = conf.theme
+        endif
+      else
         let id = s:NUMBER.random(0, len(s:cs))
         let g:spacevim_colorscheme = s:cs[id]
-        call s:update_conf()
-      else
-        let g:spacevim_colorscheme = conf.theme
       endif
     else
-      let id = s:NUMBER.random(0, len(s:cs))
-      let g:spacevim_colorscheme = s:cs[id]
+      if s:random_frequency !=# ''
+        call s:update_conf()
+      endif
     endif
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
