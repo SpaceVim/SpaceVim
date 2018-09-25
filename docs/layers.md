@@ -38,7 +38,7 @@ By default SpaceVim enable these layers:
 To enable a specific layer you need to edit SpaceVim configuration file.
 The key binding for opening SpaceVim configuration file is `SPC f v d`.
 
-here is an example for loadding `shell` layer with some specified options:
+here is an example for loading `shell` layer with some specified options:
 
 ```toml
 [[layers]]
