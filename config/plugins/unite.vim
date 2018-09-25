@@ -286,11 +286,11 @@ function! s:unite_my_settings()
   imap <silent><buffer><expr> <C-s>     unite#do_action('split')
   nmap <silent><buffer><expr> <C-s>     unite#do_action('split')
 
-  " Runs "split" action by <C-s>.
+  " Runs "vsplit" action by <C-v>.
   imap <silent><buffer><expr> <C-v>     unite#do_action('vsplit')
   nmap <silent><buffer><expr> <C-v>     unite#do_action('vsplit')
 
-  " Runs "split" action by <C-s>.
+  " Runs "tabopen" action by <C-t>.
   imap <silent><buffer><expr> <C-t>     unite#do_action('tabopen')
   nmap <silent><buffer><expr> <C-t>     unite#do_action('tabopen')
 
