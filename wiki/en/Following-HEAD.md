@@ -116,6 +116,7 @@ The next release is v0.9.0.
 - Update doc for debug upstream plugins ([#1981](https://github.com/SpaceVim/SpaceVim/pull/1981))
 - Update doc windows key bindings ([#1995](https://github.com/SpaceVim/SpaceVim/pull/1995))
 - Add doc for `lang#rust` layer ([#2052](https://github.com/SpaceVim/SpaceVim/pull/2052))
+- Add doc for `lang#puppet` layer ([#2198](https://github.com/SpaceVim/SpaceVim/pull/2198))
 - Add doc for `sudo` layer ([#2011](https://github.com/SpaceVim/SpaceVim/pull/2011))
 - Update key notations ([#1940](https://github.com/SpaceVim/SpaceVim/pull/1940))
 - Update getting help page in wiki ([#2025](https://github.com/SpaceVim/SpaceVim/pull/2025))
