@@ -89,8 +89,10 @@ The next release is v0.9.0.
 - Fix active statusline displaying fileformat info ([#2125](https://github.com/SpaceVim/SpaceVim/pull/2125))
 - Fix unkown v:progpath ([#2169](https://github.com/SpaceVim/SpaceVim/pull/2169))
 - Fix builtin statusline theme ([#2170](https://github.com/SpaceVim/SpaceVim/pull/2170))
-- Fix toggle cursorline highlighting ([#2171](https://github.com/SpaceVim/SpaceVim/pull/2171))
+- Fix toggle cursorline 
+- Fix cn install script ([#2181](https://github.com/SpaceVim/SpaceVim/pull/2181))
 - Fix searching for the cursor word in the project w/ FlyGrep ([#2183](https://github.com/SpaceVim/SpaceVim/pull/2183))
+
 
 ### Removed
 

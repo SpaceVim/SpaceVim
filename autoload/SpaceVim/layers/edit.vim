@@ -26,7 +26,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
         \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0}],
+        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ ['godlygeek/tabular',           { 'on_cmd' : 'Tabularize'}],
         \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],

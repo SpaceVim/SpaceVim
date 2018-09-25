@@ -85,6 +85,14 @@ if (!(Test-Path "$HOME\vimfiles")) {
     echo "[OK] vimfiles already exists"
 	sleep 1
 }
+echo ""
+
+if (!(Test-Path "$HOME\AppData\Local\nvim")) {
+  cmd /c mklink "$HOME\AppData\Local\nvim" $repo_path
+} else {
+    echo "[OK] $HOME\AppData\Local\nvim already exists"
+	sleep 1
+}
 
 echo ""
 echo "Almost done!"

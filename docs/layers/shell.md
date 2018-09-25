@@ -37,8 +37,8 @@ Vim support these kinds of shell:
 
 To define the default shell you can set the layer variable `default_shell` to the following variables:
 
--   terminal
--   VimShell
+- terminal
+- VimShell
 
 The default shell is quickly accessible via a the default shortcut key `SPC '`.
 
@@ -58,6 +58,13 @@ in percents with the variable `default_height`. Default value is 30.
 
 ## Key bindings
 
-| Key Binding | Description                            |
-| ----------- | -------------------------------------- |
-| `SPC '`     | Open, close or go to the default shell |
+| Key Binding | Description                              |
+| ----------- | ---------------------------------------- |
+| `SPC '`     | Open or switch to the terminal windows   |
+| `Ctrl-d`    | Close terminal windows in terminal mode  |
+| `q`         | Close terminal windows in Normal mode    |
+| `<Esc>`     | Switch to Normal mode from terminal mode |
+| `Ctrl-h`    | Switch to the windows on the left        |
+| `Ctrl-j`    | Switch to the windows below              |
+| `Ctrl-k`    | Switch to the windows on the top         |
+| `Ctrl-l`    | Switch to the windows on the right       |

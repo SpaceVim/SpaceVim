@@ -25,7 +25,7 @@ lang: cn
 - 多光标支持
 - 对齐文档内容
 - 高亮行为符号
-- 自动载入 editorconfig 配置
+- 自动载入 editorconfig 配置，需要 `+python` 或者 `+python3` 支持
 
 ## 模块选项
 
