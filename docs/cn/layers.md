@@ -110,6 +110,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#perl](lang/perl/)               | 这一模块为 perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#php](lang/php/)                 | 这一模块为 php 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [lang#plantuml](lang/plantuml/)       | 这一模块为 plantuml 开发提供支持，包括语法高亮、实时预览等特性。                                                                          |
+| [lang#puppet](lang/puppet/)           | 该模块为 SpaceVim 提供了 puppet 语言开发支持，包括语法高亮、语言服务器支持。                                                              |
 | [lang#purescript](lang/purescript/)   | 这一模块为 purescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#python](lang/python/)           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#ruby](lang/ruby/)               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
