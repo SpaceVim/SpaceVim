@@ -85,14 +85,14 @@ Colorscheme layer support random colorscheme on startup. just load this layer wi
   random_theme = true
 ```
 
-The frequency can be changed via `frequency` layer options, the available values are  `dalily`, `hourly`, `weekly`.
+The frequency can be changed via `frequency` layer options, the available values are  `daily`, `hourly`, `weekly`.
 You can also use `number + unit`, for example: `1h`.
 
 ```toml
 [[layers]]
   name = "colorscheme"
   random_theme = true
-  frequency = "dalily"
+  frequency = "daily"
 ```
 
 
