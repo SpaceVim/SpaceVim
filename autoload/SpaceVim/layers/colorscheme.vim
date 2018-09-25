@@ -63,7 +63,7 @@ let s:cs = [
 let s:NUMBER = SpaceVim#api#import('data#number')
 
 let s:time = {
-      \ 'dalily' : 1 * 24 * 60 * 60 * 1000,
+      \ 'daily' : 1 * 24 * 60 * 60 * 1000,
       \ 'hourly' : 1 * 60 * 60 * 1000,
       \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
       \ }
