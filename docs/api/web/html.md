@@ -1,6 +1,6 @@
 ---
 title: "web#html api"
-description: "web#html API provides some besic functions and values for parser html file."
+description: "web#html API provides some basic functions and values for parser html file."
 ---
 
 # [Available APIs](../../) >> web#html
@@ -14,7 +14,7 @@ description: "web#html API provides some besic functions and values for parser h
 
 ## Intro
 
-web#html API provides some besic functions and values for parser html file.
+web#html API provides some basic functions and values for parser html file.
 
 ## Functions
 

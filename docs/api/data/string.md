@@ -1,6 +1,6 @@
 ---
 title: "data#string API"
-description: "data#string API provides some besic functions and values for string."
+description: "data#string API provides some basic functions and values for string."
 ---
 
 # [Available APIs](../../) >> data#string

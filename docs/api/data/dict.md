@@ -1,6 +1,6 @@
 ---
 title: "data#dict API"
-description: "data#dict API provides some besic functions and values for dict."
+description: "data#dict API provides some basic functions and values for dict."
 ---
 
 # [Available APIs](../../) >> data#dict

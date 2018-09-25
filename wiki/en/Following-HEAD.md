@@ -32,6 +32,8 @@ The next release is v0.9.0.
 - Add `lang#vue` layer ([#2143](https://github.com/SpaceVim/SpaceVim/pull/2143))
 - Add `lang#latex` and `lang#extra` layer ([#2133](https://github.com/SpaceVim/SpaceVim/pull/2133))
 - Add omnifunc for SPConfig ([#2173](https://github.com/SpaceVim/SpaceVim/pull/2173))
+- Add `lang#asciidoc` layer ([#2179](https://github.com/SpaceVim/SpaceVim/pull/2179))
+- Add frequency support for colorscheme layer ([#2189](https://github.com/SpaceVim/SpaceVim/pull/2189))
 
 ### Improvement
 
@@ -52,6 +54,9 @@ The next release is v0.9.0.
 - Improve statusline for mundo buffer ([#2118](https://github.com/SpaceVim/SpaceVim/pull/2118))
 - Improve compatibility with old vim ([#2130](https://github.com/SpaceVim/SpaceVim/pull/2130))
 - Improve vimcompatible mode ([#2174](https://github.com/SpaceVim/SpaceVim/pull/2174))
+- Add mapping for NERDCommenterSexy ([#2180](https://github.com/SpaceVim/SpaceVim/pull/2180))
+- Improve Ruby language layer to accept a custom REPL ([#2185] (https://github.com/SpaceVim/SpaceVim/pull/2185))
+- Improve denite layer key bindings ([#2188](https://github.com/SpaceVim/SpaceVim/pull/2188))
 
 ### Changed
 
@@ -84,8 +89,10 @@ The next release is v0.9.0.
 - Fix active statusline displaying fileformat info ([#2125](https://github.com/SpaceVim/SpaceVim/pull/2125))
 - Fix unkown v:progpath ([#2169](https://github.com/SpaceVim/SpaceVim/pull/2169))
 - Fix builtin statusline theme ([#2170](https://github.com/SpaceVim/SpaceVim/pull/2170))
-- Fix toggle cursorline highlighting ([#2171](https://github.com/SpaceVim/SpaceVim/pull/2171))
+- Fix toggle cursorline 
 - Fix cn install script ([#2181](https://github.com/SpaceVim/SpaceVim/pull/2181))
+- Fix searching for the cursor word in the project w/ FlyGrep ([#2183](https://github.com/SpaceVim/SpaceVim/pull/2183))
+
 
 ### Removed
 

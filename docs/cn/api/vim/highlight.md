@@ -15,7 +15,7 @@ lang: cn
 
 ## Intro
 
-vim#highlight API provides some besic functions and values for getting and setting highlight info.
+vim#highlight API provides some basic functions and values for getting and setting highlight info.
 
 ## Functions
 

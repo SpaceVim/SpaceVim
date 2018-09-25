@@ -12,10 +12,20 @@ function! SpaceVim#layers#lang#ruby#plugins() abort
         \ ]
 endfunction
 
+let s:ruby_repl_command = ''
+
 function! SpaceVim#layers#lang#ruby#config() abort
   call SpaceVim#plugins#runner#reg_runner('ruby', 'ruby %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('ruby', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#repl#reg('ruby', 'irb')
+  if !empty(s:ruby_repl_command)
+      call SpaceVim#plugins#repl#reg('ruby',s:ruby_repl_command)
+  else
+      call SpaceVim#plugins#repl#reg('ruby', 'irb')
+  endif
+endfunction
+
+function! SpaceVim#layers#lang#ruby#set_variable(var) abort
+  let s:ruby_repl_command = get(a:var, 'repl_command', '') 
 endfunction
 
 function! s:language_specified_mappings() abort

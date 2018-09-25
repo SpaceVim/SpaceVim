@@ -1480,7 +1480,7 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 #### Highlight current symbol
 
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
 
 It is also possible to change the range of the navigation on the fly to:
 
@@ -1687,7 +1687,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c Y`   | invert comment and yank   |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
-For exmaple, `SPC ; 4 j` will comment current line and the following 4 lines.
+For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 
