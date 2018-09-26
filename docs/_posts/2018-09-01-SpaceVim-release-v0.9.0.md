@@ -11,24 +11,87 @@ comments: true
 # [Changelogs](../development#changelog) > SpaceVim release v0.9.0
 
 
+<!-- vim-markdown-toc GFM -->
+
+- [New features](#new-features)
+- [Pull requests list](#pull-requests-list)
+  - [Added](#added)
+  - [Improvement](#improvement)
+  - [Changed](#changed)
+  - [Fixed](#fixed)
+  - [Doc, Wiki && Website](#doc-wiki--website)
+  - [Others](#others)
+
+<!-- vim-markdown-toc -->
+
 This project exists thanks to all the people who have contributed. The last release v0.8.0 is targeted
 on june 18, 2018, so let's take a look at what happened in the new release v0.9.0.
 
 ![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png)
 
 
-<!-- vim-markdown-toc GFM -->
+## New features
 
-- [Added](#added)
-- [Improvement](#improvement)
-- [Changed](#changed)
-- [Fixed](#fixed)
-- [Removed](#removed)
-- [Doc, Wiki && Website](#doc-wiki--website)
-- [Others](#others)
+Since last release, SpaceVim has added 15 new language layer. here is a list of all new language layers
+added since last release:
 
-<!-- vim-markdown-toc -->
+- [lang#kotlin](../layers/lang/kotlin/) layer
+- [lang#dockerfile](../layers/lang/dockerfile/) layer
+- [lang#agda](../layers/lang/agda/) layer
+- [lang#autohotkey](../layers/lang/autohotkey/) layer
+- [lang#swift](../layers/lang/swift/) layer
+- [lang#nim](../layers/lang/nim/) layer
+- [lang#purescript](../layers/lang/purescript/) layer
+- [lang#WebAssembly](../layers/lang/WebAssembly/) layer
+- [lang#erlang](../layers/lang/erlang/) layer
+- [lang#fsharp](../layers/lang/fsharp/) layer
+- [lang#plantuml](../layers/lang/plantuml/) layer
+- [lang#elm](../layers/lang/elm/) layer
+- [lang#vue](../layers/lang/vue/) layer
+- [lang#latex](../layers/lang/latex/) layer
+- [lang#asciidoc](../layers/lang/asciidoc/) layer
 
+The [lsp](../layers/language-server-protocol//) layer now also support julia, typescript, elixir and bash.
+
+frequency support for colorscheme layer. with this feature, you can enable random theme and change the frequency how SpaceVim
+update the colorscheme. for example, enable random theme, and update colorscheme daily.
+
+```toml
+[[layers]]
+  name = "colorscheme"
+  random_theme = true
+  frequency = "daily"
+```
+
+Completion SpaceVim options and layer options when edit SpaceVim configuration file:
+
+![complete spacevim configuration file](https://user-images.githubusercontent.com/13142418/46082785-7c72ee80-c1d2-11e8-9058-12ca1e7f4f63.png)
+
+
+Improve builtin tab manager, support creating named tabs and rename an exist tab:
+
+- Rename tab, default key binding is `r`
+
+the name of the tab will be displayed on tabline and tabmanger.
+
+![rename](https://user-images.githubusercontent.com/13142418/42123061-26d938aa-7c11-11e8-8e98-b089fbc53f30.gif)
+
+
+- Move cursor tab forward and backword, default key binding is `<C-S-Up>/<C-S-Down>`
+
+![movetab](https://user-images.githubusercontent.com/13142418/42123107-de3d10c0-7c11-11e8-8ddd-ed20b8925dee.gif)
+
+
+- Create new tab after the tab under the cursor, key bindings: (`n`: create named tab / `N` : create anonymous tab)
+
+![newtab](https://user-images.githubusercontent.com/13142418/42123504-d1c9e80c-7c18-11e8-8a51-a37fa55abb9b.gif)
+
+- copy / paste tab, include tab layout and tab name
+
+![copytab](https://user-images.githubusercontent.com/13142418/42134628-311b9648-7d72-11e8-9277-e63bbf42502c.gif)
+
+
+## Pull requests list
 
 ### Added
 
@@ -118,9 +181,6 @@ on june 18, 2018, so let's take a look at what happened in the new release v0.9.
 - Fix toggle cursorline 
 - Fix cn install script ([#2181](https://github.com/SpaceVim/SpaceVim/pull/2181))
 - Fix searching for the cursor word in the project w/ FlyGrep ([#2183](https://github.com/SpaceVim/SpaceVim/pull/2183))
-
-
-### Removed
 
 ### Doc, Wiki && Website
 
