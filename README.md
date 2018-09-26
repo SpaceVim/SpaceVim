@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-0.9.0--dev-FF69B4.svg)
+![Version](https://img.shields.io/badge/version-0.9.0-FF69B4.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
@@ -23,7 +23,7 @@ SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
 
-The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](https://spacevim.org/layers/) for more information.
 If you have any questions about SpaceVim, please follow the [Getting Help guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
