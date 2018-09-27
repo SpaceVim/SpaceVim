@@ -8,10 +8,10 @@ lang: cn
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-0.9.0-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png)
 
 # SpaceVim - 模块化 Vim IDE
 
