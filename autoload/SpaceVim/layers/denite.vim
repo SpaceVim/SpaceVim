@@ -136,7 +136,7 @@ function! SpaceVim#layers#denite#config() abort
 
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["DeniteCursorWord help"])',
         \ ['get help with the symbol at point',
         \ [
