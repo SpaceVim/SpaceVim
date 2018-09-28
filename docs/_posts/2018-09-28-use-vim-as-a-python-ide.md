@@ -15,9 +15,9 @@ commentsID: "使用 SpaceVim 搭建 Python 开发环境"
 
 <!-- vim-markdown-toc GFM -->
 
-- [Installation](#installation)
-- [Default UI](#default-ui)
-- [Fuzzy finder](#fuzzy-finder)
+- [安装模块](#安装模块)
+- [默认界面](#默认界面)
+- [模糊搜索](#模糊搜索)
 - [Version Contrl](#version-contrl)
 - [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
@@ -39,14 +39,15 @@ SpaceVim 是一个模块化的 Vim IDE，初次安装时默认并未启用相关
   name = "lang#python"
 ```
 
-## Default UI
+## 默认界面
+
+常规的编辑界面如下，左侧为文件树，快捷键为 `<F3>`；右侧是语法树，快捷键为 `<F2>`；底部通常展示语法错误列表。
 
 ![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
-## Fuzzy finder
+## 模糊搜索
 
-SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
-fuzzy finder layer. for example enable denite layer:
+SpaceVim 提供了5种模糊搜索模块，默认这些模块都没有载入，可选择其中一个载入。在这里，我们以载入 `denite` 模块为例，需在配置文件添加：
 
 ```toml
 [[layers]]
