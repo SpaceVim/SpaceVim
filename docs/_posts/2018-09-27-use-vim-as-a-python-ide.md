@@ -1,11 +1,10 @@
 ---
 title: "Use Vim as a Java IDE"
 categories: [tutorials, blog]
-excerpt: "A general guide for using SpaceVim as Java IDE, including layer configuration and requiems installation."
-redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
+excerpt: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
-commentsID: "Use Vim as a Java IDE"
+commentsID: "Use Vim as a Python IDE"
 ---
 
 # [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
