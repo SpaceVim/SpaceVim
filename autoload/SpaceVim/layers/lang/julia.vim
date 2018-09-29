@@ -31,7 +31,7 @@ function! SpaceVim#layers#lang#julia#config() abort
 
   let g:latex_to_unicode_auto = 1
   let g:latex_to_unicode_tab = 1
-  runtime macros/matchit.vim
+  " runtime macros/matchit.vim
 
   " julia
   let g:default_julia_version = '0.7'
