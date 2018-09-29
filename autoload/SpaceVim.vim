@@ -800,7 +800,11 @@ function! SpaceVim#end() abort
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
-
+  if g:spacevim_vim_help_language ==# 'cn'
+    let &helplang = 'cn'
+  elseif g:spacevim_vim_help_language ==# 'ja'
+    let &helplang = 'jp'
+  endif
   ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
