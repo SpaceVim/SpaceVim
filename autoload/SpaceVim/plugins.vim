@@ -63,9 +63,15 @@ function! s:loadLayerConfig(layer) abort
 endfunction
 
 function! s:disable_plugins(plugin_list) abort
-  for name in a:plugin_list
-    call dein#disable(name)
-  endfor
+  if g:spacevim_plugin_manager ==# 'dein'
+    for name in a:plugin_list
+      call dein#disable(name)
+    endfor
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    for name in a:plugin_list
+      call neobundle#config#disable(name)
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#plugins#get(...) abort

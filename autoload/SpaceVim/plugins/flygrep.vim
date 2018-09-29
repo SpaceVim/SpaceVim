@@ -26,7 +26,7 @@ let [
       \ s:grep_default_ignore_case,
       \ s:grep_default_smart_case
       \ ] = SpaceVim#mapping#search#default_tool()
-let s:grep_timer_id = 0
+let s:grep_timer_id = -1
 let s:grepid = 0
 let s:grep_history = []
 let s:complete_input_history_num = [0,0]
@@ -129,10 +129,7 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  try
-    call timer_stop(s:grep_timer_id)
-  catch
-  endtry
+  call timer_stop(s:grep_timer_id)
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
@@ -218,9 +215,7 @@ function! s:close_buffer() abort
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
-  endif
+  call timer_stop(s:grep_timer_id)
   noautocmd pclose
   noautocmd q
 endfunction
@@ -232,9 +227,7 @@ function! s:close_grep_job() abort
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
-  endif
+  call timer_stop(s:grep_timer_id)
   normal! "_ggdG
 endfunction
 

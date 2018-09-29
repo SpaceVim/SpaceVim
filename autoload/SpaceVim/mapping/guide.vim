@@ -321,7 +321,7 @@ function! s:highlight_cursor() abort
         \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
         \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
         \ }
-  hi def link SpaceVimGuideCursor Cursor
+  hi! def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   if s:vis == 'gv'
     " [bufnum, lnum, col, off]

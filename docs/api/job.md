@@ -1,6 +1,6 @@
 ---
 title: "job api"
-description: "job API provides some besic functions for running a job"
+description: "job API provides some basic functions for running a job"
 ---
 
 # [Available APIs](../) >> job

@@ -7,7 +7,7 @@ comments: true
 commentsID: "SpaceVim release v0.1.0"
 ---
 
-# [Changelogs](development#changelog) > SpaceVim release v0.1.0
+# [Changelogs](../development#changelog) > SpaceVim release v0.1.0
 
 SpaceVim is a modular configuration inspired by spacemacs, compatible with vim and neovim.
 

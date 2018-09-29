@@ -48,6 +48,7 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'UniteWithCursorWord help', 'get help with the symbol at point', 1)

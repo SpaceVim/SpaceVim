@@ -8,10 +8,10 @@ lang: cn
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-0.9.0--dev-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png)
 
 # SpaceVim - 模块化 Vim IDE
 
@@ -46,7 +46,7 @@ SpaceVim 是一个社区驱动的模块化 Vim IDE，以模块的方式组织管
 
 - 最新的状态是什么？
 
-当前最新发布的稳定版本是 v0.7.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
+当前最新发布的稳定版本是 v0.8.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
 或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗?

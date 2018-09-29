@@ -17,10 +17,12 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
 
-  call add(plugins, ['rhysd/clever-f.vim'])
-  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1}])
+  if !g:spacevim_vimcompatible
+    call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+  endif
+  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
-  call add(plugins, ['andymass/vim-matchup'])
+  call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
@@ -227,6 +229,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 's'], '<Plug>NERDCommenterSexy', 'comment with sexy/pretty layout', 0, 1)
 
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>

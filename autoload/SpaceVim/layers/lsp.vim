@@ -11,7 +11,7 @@ function! SpaceVim#layers#lsp#plugins() abort
 
   if has('nvim')
     call add(plugins, ['autozimu/LanguageClient-neovim',
-          \ { 'merged': 0, 'if': has('python3') }])
+          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
@@ -95,7 +95,9 @@ let s:lsp_servers = {
       \ 'html' : ['html-languageserver', '--stdio'],
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
       \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
-      \ 'javascript' : ['javascript-typescript-stdio']
+      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'purescript' : ['purescript-language-server', '--stdio'],
+      \ 'vue' : ['vls']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort

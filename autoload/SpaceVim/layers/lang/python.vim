@@ -32,7 +32,6 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
-  call add(plugins, ['tell-k/vim-autoflake', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -51,6 +50,12 @@ function! SpaceVim#layers#lang#python#config() abort
 
   " }}}
 
+  let g:neoformat_python_autoflake = {
+        \ 'exe': 'autoflake',
+        \ 'args': ['--in-place', '--remove-duplicate-keys', '--expand-star-imports'],
+        \ 'stdin': 0,
+        \ }
+
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
@@ -63,9 +68,8 @@ function! SpaceVim#layers#lang#python#config() abort
         \ '# -*- coding: utf-8 -*-',
         \ '']
         \ )
-  let g:no_autoflake_maps = 1
   if executable('ipython')
-    call SpaceVim#plugins#repl#reg('python', 'ipython')
+    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', 'python')
   endif
@@ -80,7 +84,7 @@ function! s:language_specified_mappings() abort
         \ 'Neoformat isort',
         \ 'sort imports', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 'r'],
-        \ 'Autoflake',
+        \ 'Neoformat autoflake',
         \ 'remove unused imports', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],

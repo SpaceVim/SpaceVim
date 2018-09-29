@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '0.9.0-dev'
+let g:spacevim_version = '1.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -481,6 +481,8 @@ let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 let g:spacevim_filemanager             = 'vimfiler'
+
+let g:spacevim_sidebar_direction        = ''
 ""
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
@@ -764,6 +766,14 @@ function! SpaceVim#end() abort
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = 0
   endif
+
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
+  endif
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
@@ -878,7 +888,7 @@ function! SpaceVim#begin() abort
     endif
   endfunction
   let s:status = s:parser_argv()
-
+  call SpaceVim#logger#info('SpaceVim startup status is: ' . string(s:status) )
   " If do not start Vim with filename, Define autocmd for opening welcome page
   if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
@@ -894,7 +904,9 @@ function! SpaceVim#begin() abort
 endfunction
 
 function! SpaceVim#welcome() abort
+  call SpaceVim#logger#info('try to open SpaceVim welcome page')
   if get(g:, '_spacevim_session_loaded', 0) == 1
+    call SpaceVim#logger#info('start SpaceVim with session file, skip welcome page')
     return
   endif
   exe 'cd' fnameescape(g:_spacevim_enter_dir)
@@ -905,9 +917,6 @@ function! SpaceVim#welcome() abort
     Startify
     if isdirectory(bufname(1))
       bwipeout! 1
-    endif
-    if exists(':IndentLinesDisable')
-      IndentLinesDisable
     endif
   endif
   if g:spacevim_enable_vimfiler_welcome

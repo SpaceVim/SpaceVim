@@ -125,14 +125,14 @@ lang: cn
 - **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
 - **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
 - **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
-- **更易扩展:** 依照一些[约定](http://spacevim.org/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及 异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+- **更易扩展:** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
+- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
 **欢迎页面**
 
-![welcome-page](https://cloud.githubusercontent.com/assets/13142418/26402270/28ad72b8-40bc-11e7-945e-003f41e057be.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
 
 **工作界面**
 
@@ -194,11 +194,31 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 
 所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
 
-如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索的模块。
 
-```vim
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+**添加自定义插件**
+
+如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `custom_plugins` 片段：
+
+```toml
+[[custom_plugins]]
+    name = "lilydjwg/colorizer"
+    on_cmd = ["ColorHighlight", "ColorToggle"]
+    merged = 0
+```
+
+以上这段配置，添加了插件 `lilydjwg/colorizer`，并且，通过 `on_cmd` 这一选项使得这个插件延迟加载。
+该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其他的选项，
+可以通过 `:h dein-options` 查阅。
+
+**禁用插件**
+
+SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过 `disabled_plugins` 这一选项来操作：
+
+```toml
+[options]
+    # 请注意，该值为一个 List，每一个选项为插件的名称，而非 github 仓库地址。
+    disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### 启动函数
@@ -223,22 +243,40 @@ endf
 
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
 
+如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+
+```vim
+func! myspacevim#before() abort
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endf
+```
+
 ### Vim 兼容模式
 
-以下为 SpaceVim 中与 Vim 默认情况下的一些差异，而在兼容模式下，
-以下所有差异将不存在，可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式。
+以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
 - Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是 `Windows` 快捷键的前缀（可以在配置文件中设置成其他按键）。
-  如果希望回复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 使用一个空字符串来禁用这一功能。
-
+  它是窗口相关快捷键的前缀（可以在配置文件中设置成其他按键）。
+  如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
 - Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
-
 - Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
   即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其他按键。
+- 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
+- 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
+- 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
 
-- 命令行模式下 `<C-a>` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
+可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，
+以上所有差异将不存在。当然，也可通过对应的选项禁用某一个差异。比如，恢复逗号`,`的原始功能，
+可以通过禁用语言专用的前缀键：
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
+
+如果发现有其他区别，可以[提交 PR](http://spacevim.org/development/)。
 
 ### 私有模块
 
@@ -403,7 +441,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
 | `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
-| `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
+| `SPC t m p` | 显示/隐藏光标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
 | `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
@@ -433,7 +471,7 @@ _acpi_ 可展示电池电量剩余百分比.
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0 - 30%    | 红色 |
+| 0   - 30%  | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -471,8 +509,10 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **状态栏的颜色**
 
-当前版本的状态栏支持 `gruvbox`/`molokai`/`nord`/`one`/`onedark`，如果你需要使用其他主题，
-可以通过以下模板来设置：
+SpaceVim 默认为 [colorcheme 模块](../layers/colorscheme/)所包含的主题颜色提供了状态栏主题，若需要使用其他颜色主题，
+需要自行设置状态栏主题。若未设置，则使用 gruvbox 的主题。
+
+可以参考以下模板来设置：
 
 ```vim
 " the theme colors should be
@@ -510,7 +550,7 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-这一模板是 gruvbox 主题的，如果你需要在切换主题是，状态栏都使用同一种颜色主题，
+这一模板是 gruvbox 主题的，当你需要在切换主题时，状态栏都使用同一种颜色主题，
 可以设置 `custom_color_palette`：
 
 ```toml
@@ -543,12 +583,12 @@ custom_color_palette = [
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-标签栏上也支持鼠标操作，左键可以快速切换至该序号，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
+标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
 
-| 按键             | 描述               |
-| ---------------- | ------------------ |
-| `<Mouse-left>`   | 掉至标签该序号标签 |
-| `<Mouse-middle>` | 删除该序号标签     |
+| 按键             | 描述         |
+| ---------------- | ------------ |
+| `<Mouse-left>`   | 切换至该标签 |
+| `<Mouse-middle>` | 删除该标签   |
 
 **标签管理器**
 
@@ -1057,7 +1097,7 @@ SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 
 filemanager = "nerdtree"
 ```
 
-SpaceVim 的文件树提供了版本控制信息的借口，但是这一特性需要分析文件夹内容，
+SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
 可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
 
@@ -1221,7 +1261,7 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的
 
 如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools` 
 列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`. 
-举个例子 如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
+举个例子如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
 
 下表是全部的工具键:
 
@@ -1394,7 +1434,7 @@ FlyGrep 缓冲区的按键绑定:
 #### 保持高亮
 
 SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索.
-同样可以通过 `SPC s c` 或者 运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
+同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
 
 #### Highlight current symbol
 
@@ -1604,7 +1644,10 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c y`   | comment and yank          |
 | `SPC c Y`   | invert comment and yank   |
 
-**小提示:** 用 `SPC ; SPC j l` 组合键高效的注释一个文本块的所有内容.
+小提示：
+
+用 `SPC ;` 可以启动一个 operator 模式，在该模式下，可以使用移动命令确认注释的范围，
+比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
 
 #### 多方式编码
 
@@ -1639,7 +1682,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 | `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
 | `SPC e .` | error transient state                                                       |
 
-下一个/上一个 错误导航键 和 错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
+下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
 甚至可检查vim位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
 默认提示符:
 
@@ -1651,7 +1694,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录 或
+SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录或
 在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录.
 
 工程管理的命令以 `p` 开头:
