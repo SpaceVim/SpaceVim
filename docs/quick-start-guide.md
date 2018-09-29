@@ -94,6 +94,15 @@ merged = 0
 
 ## Learning SpaceVim
 
-- [SpaceVim Documentation](../documentation). Also known as "The Book", The SpaceVim Documentation will introduce
-  you to the main topics important to using SpaceVim. The book is the primary official document of the language.
+- [SpaceVim Documentation](../documentation). Also known as "The Book",
+The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
+The book is the primary official document of SpaceVim.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
+
+## Online tutor
+
+This is a list of online tutor for using SpaceVim as general IDE and programming language support:
+
+- use vim as general IDE:
+- use vim as java IDE:
+- use vim as python IDE:
