@@ -84,6 +84,7 @@ enable = false
 | [fzf](fzf/)                           | This layers provide a heavily customized fzf centric work-flow                                                                                                      |
 | [git](git/)                           | This layers adds extensive support for git                                                                                                                          |
 | [github](github/)                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
+| [japanese](japanese/)                 | Layer for japanese users, include japanese docs and runtime messages                                                                                                |
 | [lang#WebAssembly](lang/WebAssembly/) | This layer adds WebAssembly support to SpaceVim                                                                                                                     |
 | [lang#agda](lang/agda/)               | This layer adds agda language support to SpaceVim                                                                                                                   |
 | [lang#asciidoc](lang/asciidoc/)       | Edit asciidoc within vim, autopreview asciidoc in the default browser, with this layer you can also format asciidoc file.                                           |
