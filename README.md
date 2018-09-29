@@ -17,6 +17,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
+## About SpaceVim
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
@@ -25,9 +26,15 @@ SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many
 
 The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](https://spacevim.org/layers/) for more information.
-If you have any questions about SpaceVim, please follow the [Getting Help guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
+## Instructions
 
+**See the followings below for more information:**
+
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/)
+- [Documentation](https://spacevim.org/documentation/)
+- [Available Layers](https://spacevim.org/layers/)
+
+If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
 
 Here is a throughput graph of the repository for the last few weeks:
 
