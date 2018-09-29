@@ -28,9 +28,9 @@ The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceV
 
 ## Instructions
 
-**See the followings below for more informationL:**
+**See the followings below for more information:**
 
-- <a href="https://spacevim.org/quick-start-guide/" target="_blank">Quick Start Guide</a>
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/)
 - [Documentation](https://spacevim.org/documentation/)
 - [Available Layers](https://spacevim.org/layers/)
 
