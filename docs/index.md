@@ -22,13 +22,15 @@ syntax checking, and documentation lookup. This approach helps keep
 configuration organized and reduces overhead for the user by keeping them
 from having to think about what packages to install.
 
-If you like SpaceVim, feel free to star the project on github - it is a great way to show your
+If you like SpaceVim, feel free to star the project on github. It is a great way to show your
 appreciation while providing us motivation to continue working on this project.
-The extra visibility for the project doesn't hurt either!
 
-The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-See the [Quick start guide](quick-start-guide/), [documentation](documentation/) or the [available layers](layers/) for more information.
+- [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
+- [documentation](documentation/): the primary official document of SpaceVim
+- [available layers](layers/): a list of available layers which can be used in SpaceVim
+
+The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
