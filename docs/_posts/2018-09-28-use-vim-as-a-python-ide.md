@@ -11,7 +11,7 @@ commentsID: "使用 SpaceVim 搭建 Python 开发环境"
 
 # [Blogs](https://spacevim.org/community#blogs) > 使用 SpaceVim 搭建 Python 开发环境
 
-这篇文章主要介绍如何使用 SpaceVim 搭建 Python 的开发环境，介绍各种功能使用技巧。
+SpaceVim 是一个模块化的 Vim IDE，针对 python 这一语言的支持主要依靠 `lang#python` 模块以及与之相关的其他模块。的这篇文章主要介绍如何使用 SpaceVim 搭建 Python 的开发环境，侧重介绍跟 python 开发相关使用技巧。在阅读这篇文章之前，可以先阅读《[使用 Vim 搭建基础的开发环境](../use-vim-as-ide/)》，对语言相关以外的功能有一个大致的了解。
 
 <!-- vim-markdown-toc GFM -->
 
@@ -31,7 +31,7 @@ commentsID: "使用 SpaceVim 搭建 Python 开发环境"
 
 ## 安装模块
 
-SpaceVim 是一个模块化的 Vim IDE，初次安装时默认并未启用相关语言模块。首先需要启用
+SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启用
 `lang#python` 模块, 通过快捷键 `SPC f v d` 打开配置文件，添加：
 
 ```toml
@@ -39,122 +39,26 @@ SpaceVim 是一个模块化的 Vim IDE，初次安装时默认并未启用相关
   name = "lang#python"
 ```
 
-## 默认界面
-
-常规的编辑界面如下，左侧为文件树，快捷键为 `<F3>`；右侧是语法树，快捷键为 `<F2>`；底部通常展示语法错误列表。
-
-![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-
-## 模糊搜索
-
-SpaceVim 提供了5种模糊搜索模块，默认这些模块都没有载入，可选择其中一个载入。在这里，我们以载入 `denite` 模块为例，需在配置文件添加：
-
-```toml
-[[layers]]
-name = "denite"
-```
-
-## Version Contrl
+启用 `lang#python` 模块后，在打开 python 文件是，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
 
 ## Import packages
 
 ## Jump to test file
 
-## running code
+## 快速运行
 
-1. [unite](https://github.com/Shougo/unite.vim) - file and code fuzzy founder.
+在编辑 python 文件时，可以快速运行当前文件，这个功能有点类似于 vscode 的 code runner 插件，默认的快捷键是 `SPC l r`。按下后，
+会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
+这一功能是根据当前文件的路径调用相对应的 python 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-The next version of unite is [denite](https://github.com/Shougo/denite.nvim), Denite is a dark powered plugin for Neovim/Vim to unite all interfaces.
+## 代码格式化
 
-![unite](https://s3.amazonaws.com/github-csexton/unite-01.gif)
+Python 代码格式化，主要依赖 `format` 模块，该模块默认也未载入，需要在配置文件里添加：
 
-The unite or unite.vim plug-in can search and display information from arbitrary sources like files, buffers, recently used files or registers. You can run several pre-defined actions on a target displayed in the unite window.
-
-The difference between unite and similar plug-ins like fuzzyfinder, ctrl-p or ku is that unite provides an integration interface for several sources and you can create new interfaces using unite.
-
-You can also use unite with [ag](https://github.com/ggreer/the_silver_searcher), that will make searching faster.
-
-_config unite with ag or other tools support_
-
-```viml
-if executable('hw')
-    " Use hw (highway)
-    " https://github.com/tkengo/highway
-    let g:unite_source_grep_command = 'hw'
-    let g:unite_source_grep_default_opts = '--no-group --no-color'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ag')
-    " Use ag (the silver searcher)
-    " https://github.com/ggreer/the_silver_searcher
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor ' .
-                \ '--nogroup --hidden --ignore ' .
-                \ '''.hg'' --ignore ''.svn'' --ignore' .
-                \ ' ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt (the platinum searcher)
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack
-    " http://beyondgrep.com/
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading' .
-                \ ' --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    " Use jvgrep
-    " https://github.com/mattn/jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --exclude ''\.(git|svn|hg|bzr)'''
-    let g:unite_source_grep_recursive_opt = '-R'
-elseif executable('beagrep')
-    " Use beagrep
-    " https://github.com/baohaojun/beagrep
-    let g:unite_source_grep_command = 'beagrep'
-endif
+```toml
+[[layers]]
+  name = "format"
 ```
-
-2. [vimfiler](https://github.com/Shougo/vimfiler.vim) - A powerful file explorer implemented in Vim script
-
-_Use vimfiler as default file explorer_
-
-> for more information, you should read the documentation of vimfiler.
-
-```viml
-let g:vimfiler_as_default_explorer = 1
-call vimfiler#custom#profile('default', 'context', {
-            \ 'explorer' : 1,
-            \ 'winwidth' : 30,
-            \ 'winminwidth' : 30,
-            \ 'toggle' : 1,
-            \ 'columns' : 'type',
-            \ 'auto_expand': 1,
-            \ 'direction' : 'rightbelow',
-            \ 'parent': 0,
-            \ 'explorer_columns' : 'type',
-            \ 'status' : 1,
-            \ 'safe' : 0,
-            \ 'split' : 1,
-            \ 'hidden': 1,
-            \ 'no_quit' : 1,
-            \ 'force_hide' : 0,
-            \ })
-```
-
-3. [tagbar](https://github.com/majutsushi/tagbar) - Vim plugin that displays tags in a window, ordered by scope
-
-## Code formatting
 
 1. [neoformat](https://github.com/sbdchd/neoformat) - A (Neo)vim plugin for formatting code.
 
