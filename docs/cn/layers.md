@@ -80,6 +80,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [fzf](fzf/)                           | 提供以 fzf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                             |
 | [git](git/)                           | 这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。                                 |
 | [github](github/)                     | 该模块主要提供了 Github 数据管理功能，包括问题列表、动态等管理。                                                                          |
+| [japanese](japanese/)                 | 该模块为日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。                                                               |
 | [lang#WebAssembly](lang/WebAssembly/) | 这一模块为 WebAssembly 开发提供支持。                                                                                                     |
 | [lang#agda](lang/agda/)               | 这一模块为 SpaceVim 提供了 agda 语言开发的支持，主要包括语法高亮及一键运行。                                                              |
 | [lang#asciidoc](lang/asciidoc/)       | 这一模块为 asciidoc 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                            |
