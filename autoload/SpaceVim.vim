@@ -863,39 +863,53 @@ function! SpaceVim#end() abort
 endfunction
 
 
+" return [status, dir]
+" status: 0 : no argv
+"         1 : dir
+"         2 : filename
+function! s:parser_argv() abort
+  if !argc()
+    return [0]
+  elseif argv(0) =~# '/$'
+    let f = fnamemodify(expand(argv(0)), ':p')
+    if isdirectory(f)
+      return [1, f]
+    else
+      return [1, getcwd()]
+    endif
+  elseif argv(0) ==# '.'
+    return [1, getcwd()]
+  elseif isdirectory(expand(argv(0)))
+    return [1, fnamemodify(expand(argv(0)), ':p')]
+  else
+    return [2, argv()]
+  endif
+endfunction
+
 function! SpaceVim#begin() abort
 
   call zvim#util#source_rc('functions.vim')
   call zvim#util#source_rc('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
-  function! s:parser_argv() abort
-    if !argc()
-      return [1, getcwd()]
-    elseif argv(0) =~# '/$'
-      let f = fnamemodify(expand(argv(0)), ':p')
-      if isdirectory(f)
-        return [1, f]
-      else
-        return [1, getcwd()]
-      endif
-    elseif argv(0) ==# '.'
-      return [1, getcwd()]
-    elseif isdirectory(expand(argv(0)))
-      return [1, fnamemodify(expand(argv(0)), ':p')]
-    else
-      return [0]
-    endif
-  endfunction
   let s:status = s:parser_argv()
-  call SpaceVim#logger#info('SpaceVim startup status is: ' . string(s:status) )
   " If do not start Vim with filename, Define autocmd for opening welcome page
-  if s:status[0]
-    let g:_spacevim_enter_dir = s:status[1]
+  if s:status[0] == 0
+    let g:_spacevim_enter_dir = fnamemodify(getcwd(), ':~')
+    call SpaceVim#logger#info('Startup with no argv, current dir is used: ' . g:_spacevim_enter_dir )
     augroup SPwelcome
       au!
       autocmd VimEnter * call SpaceVim#welcome()
     augroup END
+  elseif s:status[0] == 1
+    let g:_spacevim_enter_dir = fnamemodify(s:status[1], ':~')
+    call SpaceVim#logger#info('Startup with directory: ' . g:_spacevim_enter_dir  )
+    augroup SPwelcome
+      au!
+      autocmd VimEnter * call SpaceVim#welcome()
+    augroup END
+  else
+    call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
