@@ -103,6 +103,6 @@ The book is the primary official document of SpaceVim.
 
 This is a list of online tutor for using SpaceVim as general IDE and programming language support:
 
-- use vim as general IDE:
-- use vim as java IDE:
-- use vim as python IDE:
+- [use vim as general IDE](../use-vim-as-ide/)
+- [use vim as java IDE](../use-vim-as-java-ide/):
+- [use vim as python IDE](../use-vim-as-python-ide/):
