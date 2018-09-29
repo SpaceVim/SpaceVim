@@ -17,7 +17,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
   - [Bootstrap Functions](#bootstrap-functions)
-  - [Vim Compatible Mode](#vim-compatible-mode)
+  - [Vim compatible mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
   - [Debug upstream plugins](#debug-upstream-plugins)
 - [Concepts](#concepts)
@@ -254,9 +254,9 @@ func! myspacevim#before() abort
 endf
 ```
 
-### Vim Compatible Mode
+### Vim compatible mode
 
-This a list of different key bindings between SpaceVim and origin vim. If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = true` in `[options]` section.
+This a list of different key bindings between SpaceVim and origin vim.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
@@ -271,6 +271,19 @@ the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
 - The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+- `Ctrl-b` in command line mode is mapped to `<Left>`, which will move cursor to the left.
+- `Ctrl-f` in command line mode is mapped to `<Right>`, which will move cursor to the right.
+
+SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the different points above will disappear,
+you can enable vimcompatible mode via `vimcompatible = true` in `[options]` section.
+
+If you want to disable one of these differences, use the relevant options.
+For example, to disable language specific leader, you may add following to your configuration file:
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
@@ -521,8 +534,10 @@ The letters displayed in the statusline correspond to the key bindings used to t
 
 **colorscheme of statusline:**
 
-current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to
-contribute theme please check the template of a statusline theme.
+By default SpaceVim only support colorschemes which has
+been included in [colorscheme layer](../layers/colorscheme/).
+
+If you want to contribute theme please check the template of a statusline theme.
 
 ```vim
 " the theme colors should be
@@ -1465,7 +1480,7 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 #### Highlight current symbol
 
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
 
 It is also possible to change the range of the navigation on the fly to:
 
@@ -1672,7 +1687,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c Y`   | invert comment and yank   |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
-For exmaple, `SPC ; 4 j` will comment current line and the following 4 lines.
+For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 

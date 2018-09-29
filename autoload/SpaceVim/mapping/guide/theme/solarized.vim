@@ -69,6 +69,8 @@ function! SpaceVim#mapping#guide#theme#solarized#palette() abort
           \ [s:gui_base03, s:gui_blue,   s:cterm_base03, s:cterm_blue],
           \ [s:gui_base03, s:gui_orange, s:cterm_base03, s:cterm_orange],
           \ [s:gui_base03, s:gui_cyan,   s:cterm_base03, s:cterm_cyan],
+          \ ['#282828', '#689d6a', 235, 72],
+          \ ['#282828', '#8f3f71', 235, 132],
           \ ]
   else
     return [
@@ -79,6 +81,8 @@ function! SpaceVim#mapping#guide#theme#solarized#palette() abort
           \ [s:gui_base3,  s:gui_blue,   s:cterm_base3, s:cterm_blue],
           \ [s:gui_base3,  s:gui_orange, s:cterm_base3, s:cterm_orange],
           \ [s:gui_base3,  s:gui_cyan,   s:cterm_base3, s:cterm_cyan],
+          \ ['#282828', '#689d6a', 235, 72],
+          \ ['#282828', '#8f3f71', 235, 132],
           \ ]
   endif
 endfunction

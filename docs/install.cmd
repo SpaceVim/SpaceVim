@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : 0.9.0-dev       by : spacevim.org             "
+echo "                      version : 1.0.0-dev           by : spacevim.org             "
 
 Push-Location ~
 
@@ -83,6 +83,14 @@ if (!(Test-Path "$HOME\vimfiles")) {
     cmd /c mklink $HOME\vimfiles $repo_path
 } else {
     echo "[OK] vimfiles already exists"
+	sleep 1
+}
+echo ""
+
+if (!(Test-Path "$HOME\AppData\Local\nvim")) {
+  cmd /c mklink "$HOME\AppData\Local\nvim" $repo_path
+} else {
+    echo "[OK] $HOME\AppData\Local\nvim already exists"
 	sleep 1
 }
 

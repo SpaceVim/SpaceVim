@@ -35,7 +35,7 @@ function! SpaceVim#mapping#space#init() abort
   vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
   vmap <Space> [SPC]
-  if g:spacevim_enable_language_specific_leader
+  if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
     xmap , [SPC]l
   endif

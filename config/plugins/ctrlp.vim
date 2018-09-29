@@ -18,7 +18,7 @@ let g:ctrlp_custom_ignore = get(g:, 'ctrlp_custom_ignore', {
       \ })
 if executable('rg') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
-        \ . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'rg', 1))
+        \ . join(zvim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', 1))
 elseif executable('ag') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'
 endif

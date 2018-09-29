@@ -16,5 +16,7 @@ function! SpaceVim#mapping#guide#theme#onedark#palette() abort
                 \ ['#282c34', '#00af87', 235, 36],
                 \ ['#282c34', '#ff8700', 235, 208],
                 \ ['#282c34', '#af5f5f', 235, 131],
+                \ ['#282828', '#689d6a', 235, 72],
+                \ ['#282828', '#8f3f71', 235, 132],
                 \ ]
 endfunction

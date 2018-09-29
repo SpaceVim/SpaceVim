@@ -25,6 +25,7 @@
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 
+let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#colorscheme#plugins() abort
   return [
@@ -61,19 +62,72 @@ let s:cs = [
       \ ]
 let s:NUMBER = SpaceVim#api#import('data#number')
 
+let s:time = {
+      \ 'daily' : 1 * 24 * 60 * 60 * 1000,
+      \ 'hourly' : 1 * 60 * 60 * 1000,
+      \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
+      \ }
+
+for n in range(1, 23)
+  call extend(s:time, {n . 'h' : n * 60 * 60 * 1000})
+endfor
+
+unlet n
+
+let s:random_colorscheme = 0
+let s:random_frequency = ''
+
 function! SpaceVim#layers#colorscheme#config() abort
-  if s:random_colorscheme == 1
-    let id = s:NUMBER.random(0, len(s:cs))
-    let g:spacevim_colorscheme = s:cs[id]
+  if s:random_colorscheme
+    let ctime = ''
+    " Use local file's save time, the local file is
+    " ~/.cache/SpaceVim/colorscheme_frequence.json
+    " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
+    if filereadable(expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
+      let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
+      if s:random_frequency !=# '' && !empty(conf)
+        let ctime = localtime()
+        if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+          let id = s:NUMBER.random(0, len(s:cs))
+          let g:spacevim_colorscheme = s:cs[id]
+          call s:update_conf()
+        else
+          let g:spacevim_colorscheme = conf.theme
+        endif
+      else
+        let id = s:NUMBER.random(0, len(s:cs))
+        let g:spacevim_colorscheme = s:cs[id]
+      endif
+    else
+      if s:random_frequency !=# ''
+        call s:update_conf()
+      endif
+    endif
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
         \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
         \ . ', [])', 'cycle-spacevim-theme', 1)
 endfunction
 
-let s:random_colorscheme = 0
+function! s:update_conf() abort
+  let conf = {
+        \ 'fequecnce' : s:random_frequency,
+        \ 'last' : localtime(),
+        \ 'theme' : g:spacevim_colorscheme
+        \ }
+  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
+endfunction
+
+
 function! SpaceVim#layers#colorscheme#set_variable(var) abort
-  let s:random_colorscheme = get(a:var, 'random-theme', 0)
+  let s:random_colorscheme = get(a:var, 'random_theme', get(a:var, 'random-theme', 0))
+  let s:random_frequency = get(a:var, 'frequency', 'hourly')
+endfunction
+
+function! SpaceVim#layers#colorscheme#get_options() abort
+
+  return ['random_theme']
+
 endfunction
 
 
@@ -93,5 +147,9 @@ else
 endif
 function! s:cycle_spacevim_theme() abort
   let id = s:NUMBER.random(0, len(s:cs))
-  exe 'colorscheme ' . s:cs[id]
+  " if the frequency is not empty and random_theme is on, SPC T n should
+  " update the cache file:
+  let g:spacevim_colorscheme = s:cs[id]
+  exe 'colorscheme ' . g:spacevim_colorscheme
+  call s:update_conf()
 endfunction

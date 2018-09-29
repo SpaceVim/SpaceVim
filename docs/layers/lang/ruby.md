@@ -46,8 +46,21 @@ gem install rubocop
 
 ### Inferior REPL process
 
-Start a `irb` inferior REPL process with `SPC l s i`. 
+Start a `irb` inferior REPL process with `SPC l s i`. You may change the REPL command by layer option `repl_command`. For example, if you want to use `pry`, load this layer via:
 
+```toml
+[[layers]]
+    name = "lang#ruby"
+    repl_command = "pry"
+```
+
+however, if the executable is not on your $PATH, then you need to specify a complete file path.
+
+```toml
+[[layers]]
+    name = "lang#ruby"
+    repl_command = "/NOT/IN/YOUR/PATH/rubocop"
+```
 Send code to inferior process commands:
 
 | Key Binding | Description                                      |

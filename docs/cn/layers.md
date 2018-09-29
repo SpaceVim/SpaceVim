@@ -72,7 +72,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [cscope](cscope/)                     | cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令                                       |
 | [ctrlp](ctrlp/)                       | 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                               |
 | [debug](debug/)                       | 这一模块为 SpaceVim 提供了 debug 的常用功能，采用 vebugger 作为后台框架，支持多种 debug 工具。                                            |
-| [default](default/)                   | SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置，                                                                           |
+| [default](default/)                   | SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置                                                                             |
 | [denite](denite/)                     | 提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                                          |
 | [edit](edit/)                         | 该模块提升了 SpaceVim 的文本编辑体验，提供更多种文本对象。                                                                                |
 | [floobits](floobits/)                 | 该模块为 SpaceVim 提供了 floobits 协作工具的支持，实现多人协作编辑等功能。                                                                |
@@ -82,6 +82,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [github](github/)                     | 该模块主要提供了 Github 数据管理功能，包括问题列表、动态等管理。                                                                          |
 | [lang#WebAssembly](lang/WebAssembly/) | 这一模块为 WebAssembly 开发提供支持。                                                                                                     |
 | [lang#agda](lang/agda/)               | 这一模块为 SpaceVim 提供了 agda 语言开发的支持，主要包括语法高亮及一键运行。                                                              |
+| [lang#asciidoc](lang/asciidoc/)       | 这一模块为 asciidoc 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                            |
 | [lang#autohotkey](lang/autohotkey/)   | 这一个模块为 SpaceVim 提供了 autohotkey 语言的开发支持，包括语法高亮和自动补全等功能。                                                    |
 | [lang#c](lang/c/)                     | 这一模块为 c/c++/object-c 的开发提供了支持，包括代码补全、语法检查等特性。                                                                |
 | [lang#clojure](lang/clojure/)         | 这一模块为 clojure 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                               |
@@ -109,6 +110,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#perl](lang/perl/)               | 这一模块为 perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |
 | [lang#php](lang/php/)                 | 这一模块为 php 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                   |
 | [lang#plantuml](lang/plantuml/)       | 这一模块为 plantuml 开发提供支持，包括语法高亮、实时预览等特性。                                                                          |
+| [lang#puppet](lang/puppet/)           | 该模块为 SpaceVim 提供了 puppet 语言开发支持，包括语法高亮、语言服务器支持。                                                              |
 | [lang#purescript](lang/purescript/)   | 这一模块为 purescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#python](lang/python/)           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                |
 | [lang#ruby](lang/ruby/)               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                                  |

@@ -254,20 +254,29 @@ endf
 
 ### Vim 兼容模式
 
-以下为 SpaceVim 中与 Vim 默认情况下的一些差异，而在兼容模式下，
-以下所有差异将不存在，可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式。
+以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
 - Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是 `Windows` 快捷键的前缀（可以在配置文件中设置成其他按键）。
-  如果希望回复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 使用一个空字符串来禁用这一功能。
-
+  它是窗口相关快捷键的前缀（可以在配置文件中设置成其他按键）。
+  如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
 - Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
-
 - Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
   即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其他按键。
+- 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
+- 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
+- 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
 
-- 命令行模式下 `<C-a>` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
+可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，
+以上所有差异将不存在。当然，也可通过对应的选项禁用某一个差异。比如，恢复逗号`,`的原始功能，
+可以通过禁用语言专用的前缀键：
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
+
+如果发现有其他区别，可以[提交 PR](http://spacevim.org/development/)。
 
 ### 私有模块
 
@@ -432,7 +441,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
 | `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
-| `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
+| `SPC t m p` | 显示/隐藏光标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
 | `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
@@ -462,7 +471,7 @@ _acpi_ 可展示电池电量剩余百分比.
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0 - 30%    | 红色 |
+| 0   - 30%  | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -500,8 +509,10 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **状态栏的颜色**
 
-当前版本的状态栏支持 `gruvbox`/`molokai`/`nord`/`one`/`onedark`，如果你需要使用其他主题，
-可以通过以下模板来设置：
+SpaceVim 默认为 [colorcheme 模块](../layers/colorscheme/)所包含的主题颜色提供了状态栏主题，若需要使用其他颜色主题，
+需要自行设置状态栏主题。若未设置，则使用 gruvbox 的主题。
+
+可以参考以下模板来设置：
 
 ```vim
 " the theme colors should be
@@ -539,7 +550,7 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-这一模板是 gruvbox 主题的，如果你需要在切换主题是，状态栏都使用同一种颜色主题，
+这一模板是 gruvbox 主题的，当你需要在切换主题时，状态栏都使用同一种颜色主题，
 可以设置 `custom_color_palette`：
 
 ```toml
@@ -572,7 +583,7 @@ custom_color_palette = [
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-标签栏上也支持鼠标操作，左键可以快速切换至该序号，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
+标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
 
 | 按键             | 描述         |
 | ---------------- | ------------ |

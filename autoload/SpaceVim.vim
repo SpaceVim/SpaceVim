@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '0.9.0-dev'
+let g:spacevim_version = '1.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -765,6 +765,14 @@ function! SpaceVim#end() abort
   if g:spacevim_vimcompatible == 1
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = 0
+  endif
+
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
   endif
   call SpaceVim#server#connect()
 

@@ -38,7 +38,7 @@ By default SpaceVim enable these layers:
 To enable a specific layer you need to edit SpaceVim configuration file.
 The key binding for opening SpaceVim configuration file is `SPC f v d`.
 
-here is an example for loadding `shell` layer with some specified options:
+here is an example for loading `shell` layer with some specified options:
 
 ```toml
 [[layers]]
@@ -86,6 +86,7 @@ enable = false
 | [github](github/)                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
 | [lang#WebAssembly](lang/WebAssembly/) | This layer adds WebAssembly support to SpaceVim                                                                                                                     |
 | [lang#agda](lang/agda/)               | This layer adds agda language support to SpaceVim                                                                                                                   |
+| [lang#asciidoc](lang/asciidoc/)       | Edit asciidoc within vim, autopreview asciidoc in the default browser, with this layer you can also format asciidoc file.                                           |
 | [lang#autohotkey](lang/autohotkey/)   | This layer adds autohotkey language support to SpaceVim                                                                                                             |
 | [lang#c](lang/c/)                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#clojure](lang/clojure/)         | This layer is for clojure development, provide autocompletion, syntax checking, code format for clojure file.                                                       |
@@ -113,6 +114,7 @@ enable = false
 | [lang#perl](lang/perl/)               | This layer is for perl development, provide autocompletion, syntax checking, code format for perl file.                                                             |
 | [lang#php](lang/php/)                 | This layer adds PHP language support to SpaceVim                                                                                                                    |
 | [lang#plantuml](lang/plantuml/)       | This layer is for plantuml development, syntax highlighting for plantuml file.                                                                                      |
+| [lang#puppet](lang/puppet/)           | This layer adds puppet language support to SpaceVim                                                                                                                 |
 | [lang#purescript](lang/purescript/)   | This layer is for purescript development, provide autocompletion, syntax checking, code format for purescript file.                                                 |
 | [lang#python](lang/python/)           | This layer is for Python development, provide autocompletion, syntax checking, code format for python file.                                                         |
 | [lang#ruby](lang/ruby/)               | This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file.                                                             |
