@@ -10,6 +10,8 @@ The next release is v1.0.0.
 
 ### Changed
 
+- Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
+
 ### Fixed
 
 ### Removed

@@ -801,9 +801,9 @@ function! SpaceVim#end() abort
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   if g:spacevim_vim_help_language ==# 'cn'
-    call SpaceVim#layers#load('chinese')
+    let &helplang = 'cn'
   elseif g:spacevim_vim_help_language ==# 'ja'
-    call SpaceVim#layers#load('japanese')
+    let &helplang = 'jp'
   endif
   ""
   " generate tags for SpaceVim
