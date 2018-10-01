@@ -78,7 +78,7 @@ function! SpaceVim#custom#SPCGroupName(keys, name) abort
 endfunction
 
 
-function! SpaceVim#custom#apply(config) abort
+function! SpaceVim#custom#apply(config, type) abort
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
@@ -130,12 +130,12 @@ function! SpaceVim#custom#load() abort
     if getftime(local_conf) < getftime(local_conf_cache)
       call SpaceVim#logger#info('loadding cached local conf: ' . local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'local')
     else
       let conf = s:TOML.parse_file(local_conf)
       call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'local')
     endif
     if g:spacevim_force_global_config
       call SpaceVim#logger#info('force loadding global config >>>')
@@ -173,11 +173,11 @@ function! s:load_glob_conf() abort
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'glob')
     else
       let conf = s:TOML.parse_file(local_conf)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'glob')
     endif
   elseif filereadable(global_dir . '/init.vim')
     let g:_spacevim_global_config_path = global_dir . '/init.vim'
