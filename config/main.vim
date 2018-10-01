@@ -29,7 +29,6 @@ let g:_spacevim_root_dir = fnamemodify(expand('<sfile>'),
 lockvar g:_spacevim_root_dir
 try
   call SpaceVim#begin()
-  let g:wsdrtp = &rtp
 catch
   " Update the rtp only when SpaceVim is not contained in runtimepath.
   let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
