@@ -9,6 +9,8 @@
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 
+call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
+
 function! SpaceVim#custom#profile(dict) abort
   for key in keys(a:dict)
     call s:set(key, a:dict[key])
