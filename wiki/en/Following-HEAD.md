@@ -8,6 +8,8 @@ The next release is v1.0.0.
 
 ### Improvement
 
+- Update runtime log for startup ([#2219](https://github.com/SpaceVim/SpaceVim/pull/2219))
+
 ### Changed
 
 - Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
