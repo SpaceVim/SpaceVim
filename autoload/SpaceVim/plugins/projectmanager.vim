@@ -15,6 +15,8 @@
 "
 
 
+call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
+
 let s:project_paths = {}
 
 function! s:cache_project(prj) abort
@@ -137,8 +139,10 @@ function! s:find_root_directory() abort
     let ftype = getftype(dir)
     if ftype == 'dir' || ftype == 'file'
       let dir = fnamemodify(dir, ':p')
-      call SpaceVim#logger#info("        (" . pattern . "):" . dir)
-      call add(dirs, dir)
+      if dir !=# expand('~/.SpaceVim.d/')
+        call SpaceVim#logger#info("        (" . pattern . "):" . dir)
+        call add(dirs, dir)
+      endif
     endif
   endfor
   return s:sort_dirs(deepcopy(dirs))
