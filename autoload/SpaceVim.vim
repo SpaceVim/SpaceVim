@@ -910,6 +910,7 @@ function! SpaceVim#begin() abort
     augroup END
   else
     call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
+    call SpaceVim#plugins#projectmanager#current_root()
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
