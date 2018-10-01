@@ -37,13 +37,13 @@ endfunction
 function! s:find_position() abort
   let start = search('^<!-- SpaceVim layer list start -->$','bwnc')
   let end = search('^<!-- SpaceVim layer list end -->$','bnwc')
-  return sort([start, end])
+  return sort([start, end], 'n')
 endfunction
 
 function! s:find_position_cn() abort
   let start = search('^<!-- SpaceVim layer cn list start -->$','bwnc')
   let end = search('^<!-- SpaceVim layer cn list end -->$','bnwc')
-  return sort([start, end])
+  return sort([start, end], 'n')
 endfunction
 
 function! s:generate_content() abort
@@ -92,6 +92,9 @@ function! s:layer_list_cn() abort
   for layer in layers
     let name = split(layer, '/docs/cn/layers/')[1][:-4] . '/'
     let url = name
+    if name ==# 'language-server-protocol/'
+      let name = 'lsp'
+    endif
     let content = readfile(layer)
     if len(content) > 3
       let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '

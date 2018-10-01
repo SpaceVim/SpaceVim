@@ -18,16 +18,35 @@
 function! SpaceVim#layers#lang#elixir#plugins() abort
   let plugins = []
   call add(plugins, ['elixir-editors/vim-elixir', {'on_ft' : ['elixir', 'eelixir']}])
-  call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
+  if !SpaceVim#layers#lsp#check_filetype('elixir')
+    call add(plugins, ['slashmili/alchemist.vim', {'on_ft' : 'elixir'}])
+  endif
   return plugins
 endfunction
 
 
-function! SpaceVim#layers#lang#elixir#config()
+function! SpaceVim#layers#lang#elixir#config() abort
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
   call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#gd#add('elixir', function('s:go_to_def'))
+  let g:alchemist_mappings_disable = 1
+  let g:alchemist_tag_disable = 1
 endfunction
 function! s:language_specified_mappings() abort
+  if SpaceVim#layers#lsp#check_filetype('elixir')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  else
+    nnoremap <silent><buffer> K :call alchemist#exdoc()<CR>
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call alchemist#exdoc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
+          \ 'call alchemist#jump_tag_stack()', 'jump to tag stack', 1)
+  endif
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("elixir")',
@@ -41,4 +60,12 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! s:go_to_def() abort
+  if SpaceVim#layers#lsp#check_filetype('elixir')
+    call SpaceVim#lsp#go_to_def()
+  else
+    ExDef
+  endif
 endfunction

@@ -8,12 +8,15 @@
 
 function! SpaceVim#layers#lang#clojure#plugins() abort
   let plugins = []
-  if has('nvim')
-    call add(plugins, ['clojure-vim/acid.nvim'])
-    call add(plugins, ['clojure-vim/async-clj-highlight'])
-    call add(plugins, ['clojure-vim/async-clj-omni'])
-  else
-  endif
+  " if has('nvim')
+  " call add(plugins, ['clojure-vim/acid.nvim', {'merged' : 0}])
+  " call add(plugins, ['clojure-vim/async-clj-highlight', {'merged' : 0}])
+  " call add(plugins, ['clojure-vim/async-clj-omni', {'merged' : 0}])
+  " else
+  " for vim, use guns's clojure plugin guide
+  call add(plugins, ['guns/vim-clojure-static', {'merged' : 0}])
+  call add(plugins, ['guns/vim-clojure-highlight', {'merged' : 0}])
+  " endif
   if !g:spacevim_enable_neomake && !g:spacevim_enable_ale
     call add(plugins, ['venantius/vim-eastwood', {'merged' : 0}])
   endif
@@ -24,5 +27,5 @@ endfunction
 
 
 function! SpaceVim#layers#lang#clojure#config() abort
-  
 endfunction
+

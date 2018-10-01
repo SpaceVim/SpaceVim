@@ -34,12 +34,15 @@ endfunction
 "  master
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
+    try
     let l:head = fugitive#head()
     if empty(l:head)
       call fugitive#detect(getcwd())
       let l:head = fugitive#head()
     endif
     return empty(l:head) ? '' : '  '.l:head . ' '
+    catch
+    endtry
   endif
   return ''
 endfunction

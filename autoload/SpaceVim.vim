@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '0.9.0-dev'
+let g:spacevim_version = '1.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -481,6 +481,8 @@ let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 let g:spacevim_filemanager             = 'vimfiler'
+
+let g:spacevim_sidebar_direction        = ''
 ""
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
@@ -764,6 +766,14 @@ function! SpaceVim#end() abort
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = 0
   endif
+
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
+  endif
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
@@ -791,9 +801,9 @@ function! SpaceVim#end() abort
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   if g:spacevim_vim_help_language ==# 'cn'
-    call SpaceVim#layers#load('chinese')
+    let &helplang = 'cn'
   elseif g:spacevim_vim_help_language ==# 'ja'
-    call SpaceVim#layers#load('japanese')
+    let &helplang = 'jp'
   endif
   ""
   " generate tags for SpaceVim
@@ -853,39 +863,54 @@ function! SpaceVim#end() abort
 endfunction
 
 
+" return [status, dir]
+" status: 0 : no argv
+"         1 : dir
+"         2 : filename
+function! s:parser_argv() abort
+  if !argc()
+    return [0]
+  elseif argv(0) =~# '/$'
+    let f = fnamemodify(expand(argv(0)), ':p')
+    if isdirectory(f)
+      return [1, f]
+    else
+      return [1, getcwd()]
+    endif
+  elseif argv(0) ==# '.'
+    return [1, getcwd()]
+  elseif isdirectory(expand(argv(0)))
+    return [1, fnamemodify(expand(argv(0)), ':p')]
+  else
+    return [2, argv()]
+  endif
+endfunction
+
 function! SpaceVim#begin() abort
 
   call zvim#util#source_rc('functions.vim')
   call zvim#util#source_rc('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
-  function! s:parser_argv() abort
-    if !argc()
-      return [1, getcwd()]
-    elseif argv(0) =~# '/$'
-      let f = fnamemodify(expand(argv(0)), ':p')
-      if isdirectory(f)
-        return [1, f]
-      else
-        return [1, getcwd()]
-      endif
-    elseif argv(0) ==# '.'
-      return [1, getcwd()]
-    elseif isdirectory(expand(argv(0)))
-      return [1, fnamemodify(expand(argv(0)), ':p')]
-    else
-      return [0]
-    endif
-  endfunction
   let s:status = s:parser_argv()
-
   " If do not start Vim with filename, Define autocmd for opening welcome page
-  if s:status[0]
-    let g:_spacevim_enter_dir = s:status[1]
+  if s:status[0] == 0
+    let g:_spacevim_enter_dir = fnamemodify(getcwd(), ':~')
+    call SpaceVim#logger#info('Startup with no argv, current dir is used: ' . g:_spacevim_enter_dir )
     augroup SPwelcome
       au!
       autocmd VimEnter * call SpaceVim#welcome()
     augroup END
+  elseif s:status[0] == 1
+    let g:_spacevim_enter_dir = fnamemodify(s:status[1], ':~')
+    call SpaceVim#logger#info('Startup with directory: ' . g:_spacevim_enter_dir  )
+    augroup SPwelcome
+      au!
+      autocmd VimEnter * call SpaceVim#welcome()
+    augroup END
+  else
+    call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
+    call SpaceVim#plugins#projectmanager#current_root()
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
@@ -894,7 +919,9 @@ function! SpaceVim#begin() abort
 endfunction
 
 function! SpaceVim#welcome() abort
+  call SpaceVim#logger#info('try to open SpaceVim welcome page')
   if get(g:, '_spacevim_session_loaded', 0) == 1
+    call SpaceVim#logger#info('start SpaceVim with session file, skip welcome page')
     return
   endif
   exe 'cd' fnameescape(g:_spacevim_enter_dir)
@@ -905,9 +932,6 @@ function! SpaceVim#welcome() abort
     Startify
     if isdirectory(bufname(1))
       bwipeout! 1
-    endif
-    if exists(':IndentLinesDisable')
-      IndentLinesDisable
     endif
   endif
   if g:spacevim_enable_vimfiler_welcome

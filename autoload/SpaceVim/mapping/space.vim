@@ -10,8 +10,6 @@ let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space['?'] =
-        \ ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
   let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
@@ -37,7 +35,7 @@ function! SpaceVim#mapping#space#init() abort
   vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
   vmap <Space> [SPC]
-  if g:spacevim_enable_language_specific_leader
+  if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
     xmap , [SPC]l
   endif
@@ -415,10 +413,11 @@ function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
 endfunction
 
-function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
+function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort
   if s:has_map_to_spc()
     return
   endif
+  let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
     let lcmd = a:cmd
@@ -432,6 +431,13 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
     endif
   endif
   exe a:m . ' <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+  if is_visual
+    if a:m ==# 'nnoremap'
+      exe 'xnoremap <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    elseif a:m ==# 'nmap'
+      exe 'xmap <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    endif
+  endif
   if len(a:keys) == 2
     let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
   elseif len(a:keys) == 3

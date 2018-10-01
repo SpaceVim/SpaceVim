@@ -92,10 +92,9 @@ function! s:start_parser(key, dict) " {{{
     return
   endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
-  let readmap = ""
-  redir => readmap
-  silent execute 'map '.key
-  redir END
+
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
+
   let lines = split(readmap, "\n")
   let visual = s:vis == "gv" ? 1 : 0
 
@@ -322,7 +321,7 @@ function! s:highlight_cursor() abort
         \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
         \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
         \ }
-  hi def link SpaceVimGuideCursor Cursor
+  hi! def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   if s:vis == 'gv'
     " [bufnum, lnum, col, off]

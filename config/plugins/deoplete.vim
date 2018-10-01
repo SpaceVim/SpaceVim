@@ -95,6 +95,11 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 " ocaml
 let g:deoplete#ignore_sources.ocaml = ['buffer', 'around', 'omni']
 
+" erlang
+let g:deoplete#omni#input_patterns.erlang = get(g:deoplete#omni#input_patterns, 'erlang', [
+      \'[^. \t0-9]\.\w*',
+      \])
+
 " public settings
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])

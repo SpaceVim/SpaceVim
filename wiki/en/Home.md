@@ -9,10 +9,11 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 
 ### Users
 
-- [Getting Help](getting-help): A guide for getting help about using SpaceVim.
+- [Getting Help](Getting-help): A guide for getting help about using SpaceVim.
 - [Quick start guide](https://spacevim.org/quick-start-guide/): A quick start guide about SpaceVim
 - [Documentation](https://spacevim.org/documentation): SpaceVim Documentation
 - [Community](http://spacevim.org/community/): Official community
+- [Following HEAD](Following-HEAD): Changes in master branch since last release
 
 ### Developers
 

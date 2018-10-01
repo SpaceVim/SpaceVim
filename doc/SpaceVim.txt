@@ -56,19 +56,19 @@ CONTENTS                                                   *SpaceVim-contents*
       12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
       13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
       14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      15. lang#go.....................................|SpaceVim-layer-lang-go|
-      16. lang#java.................................|SpaceVim-layer-lang-java|
-      17. lang#julia...............................|SpaceVim-layer-lang-julia|
-      18. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      19. lang#lua...................................|SpaceVim-layer-lang-lua|
-      20. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      21. lang#php...................................|SpaceVim-layer-lang-php|
-      22. lang#pony.................................|SpaceVim-layer-lang-pony|
-      23. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      24. lang#python.............................|SpaceVim-layer-lang-python|
-      25. lang#rust.................................|SpaceVim-layer-lang-rust|
-      26. lang#scala...............................|SpaceVim-layer-lang-scala|
-      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      15. lang#elm...................................|SpaceVim-layer-lang-elm|
+      16. lang#go.....................................|SpaceVim-layer-lang-go|
+      17. lang#java.................................|SpaceVim-layer-lang-java|
+      18. lang#julia...............................|SpaceVim-layer-lang-julia|
+      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      20. lang#lua...................................|SpaceVim-layer-lang-lua|
+      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      22. lang#php...................................|SpaceVim-layer-lang-php|
+      23. lang#pony.................................|SpaceVim-layer-lang-pony|
+      24. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      25. lang#python.............................|SpaceVim-layer-lang-python|
+      26. lang#rust.................................|SpaceVim-layer-lang-rust|
+      27. lang#scala...............................|SpaceVim-layer-lang-scala|
       28. lang#xml...................................|SpaceVim-layer-lang-xml|
       29. operator...................................|SpaceVim-layer-operator|
       30. shell.........................................|SpaceVim-layer-shell|
@@ -1014,6 +1014,14 @@ definition, mix integration, and iex integration for Elixir. SpaceVim uses
 neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
 
 ==============================================================================
+LANG#ELM                                             *SpaceVim-layer-lang-elm*
+
+INTRO
+The lang#elm layer provides code completion, documentation lookup, jump to
+definition, mix integration, and iex integration for elm. SpaceVim uses
+neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+
+==============================================================================
 LANG#GO                                               *SpaceVim-layer-lang-go*
 
 This layer includes code completion and syntax checking for Go development.
@@ -1123,9 +1131,9 @@ and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 ==============================================================================
 LANG#JULIA                                         *SpaceVim-layer-lang-julia*
 
-The layer provides synatax highlight and linting for julia.  The completeion
-only works in nvim with deoplete. However, the julia-vim could not be load
-on-demanding  due to its LaTeXToUnicode feature.
+The layer provides synatax highlight julia.  The completeion only works in
+nvim with deoplete. However, the julia-vim could not be load on-demanding  due
+to its LaTeXToUnicode feature.
 
 
 ==============================================================================
@@ -1201,8 +1209,7 @@ MAPPINGS
 ==============================================================================
 LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
-SpaceVim does not load this layer by default. If you are a rust developer, you
-should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
+This layer is for Rust development.
 
 Requirements:
 
@@ -1235,22 +1242,14 @@ MAPPINGS
   Mode        Key         Function
   -----------------------------------------------
   normal      gd          rust-definition
-  normal      gs          rust-definition-split
-  normal      gx          rust-definition-vertical
   normal      SPC l d     rust-doc
   normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
 <
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
-
-==============================================================================
-LANG#TMUX                                           *SpaceVim-layer-lang-tmux*
-
-INTRO
-The lang#tmux layer provides syntax highlighting, commenting, man page
-navigation and ability to execute lines as tmux commands.
-|SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
@@ -1277,10 +1276,11 @@ default_shell
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
 
-Adds integration between tmux and vim panes. Switch between panes seamlessly.
-This layer is not added by default. To include it, add
-`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If you are
-having issues with <C-h> in a neovim buffer, see
+Adds integration between tmux and vim panes. Switch between panes
+seamlessly.syntax highlighting, commenting, man page navigation and ability to
+execute lines as tmux commands. This layer is not added by default. To include
+it, add `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If
+you are having issues with <C-h> in a neovim buffer, see
 `https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
 
 MAPPINGS

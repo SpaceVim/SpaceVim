@@ -98,6 +98,7 @@ function! SpaceVim#commands#config(...) abort
       exe 'tabnew' g:_spacevim_config_path
     endif
   endif
+  setlocal omnifunc=SpaceVim#custom#complete
 endfunction
 
 function! SpaceVim#commands#update_plugin(...) abort

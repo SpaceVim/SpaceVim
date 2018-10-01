@@ -16,6 +16,7 @@ this is a list of most asked questions about SpaceVim.
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
 - [Why I can not update plugins?](#why-i-can-not-update-plugins)
 - [how to enable +py and +py3 in neovim?](#how-to-enable-py-and-py3-in-neovim)
+- [Why vim freeze after pressing Ctrl-s?](#why-vim-freeze-after-pressing-ctrl-s)
 
 <!-- vim-markdown-toc -->
 
@@ -87,4 +88,13 @@ for example:
 ```sh
 export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
 export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
+```
+
+### Why vim freeze after pressing Ctrl-s?
+
+This is feature of terminal emulator, you can use `Ctrl-q` to unfreeze your vim.
+To disable this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
+
+```sh
+stty -ixon
 ```
