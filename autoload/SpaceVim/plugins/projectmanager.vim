@@ -127,6 +127,7 @@ endif
 function! s:find_root_directory() abort
   let fd = expand('%:p')
   let dirs = []
+  call SpaceVim#logger#info('Start to find root for: ' . fd)
   for pattern in g:spacevim_project_rooter_patterns
     if stridx(pattern, '/') != -1
       let dir = SpaceVim#util#findDirInParent(pattern, fd)
@@ -134,9 +135,9 @@ function! s:find_root_directory() abort
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
     let ftype = getftype(dir)
-    if ftype == "dir" || ftype == "file"
+    if ftype == 'dir' || ftype == 'file'
       let dir = fnamemodify(dir, ':p')
-      call SpaceVim#logger#info("Find project root('" . pattern . "','" . fd . "'):" . dir)
+      call SpaceVim#logger#info("        (" . pattern . "):" . dir)
       call add(dirs, dir)
     endif
   endfor
