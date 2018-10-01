@@ -9,18 +9,16 @@ comments: true
 commentsID: "使用 SpaceVim 搭建 Jave 开发环境"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > 使用 SpaceVim 搭建 Jave 开发环境
+# [Blogs](../blog/) > 使用 SpaceVim 搭建 Jave 开发环境
 
-I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project.
+这篇文章主要介绍如何使用 SpaceVim 搭建 Java 开发的基础环境，主要涉及到 `lang#java` 模块。
 
 <!-- vim-markdown-toc GFM -->
 
-- [Installation](#installation)
-- [Default UI](#default-ui)
-- [Fuzzy finder](#fuzzy-finder)
-- [Version Contrl](#version-contrl)
-- [Import packages](#import-packages)
-- [Jump to test file](#jump-to-test-file)
+  - [启用模块](#启用模块)
+  - [代码补全](#代码补全)
+  - [导包](#导包)
+  - [跳转测试文件](#跳转测试文件)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
 - [Code completion](#code-completion)
@@ -29,32 +27,38 @@ I am a vimmer and a java developer. This is a guide for how to use SpaceVim deve
 
 <!-- vim-markdown-toc -->
 
-## Installation
+### 启用模块
 
-SpaceVim is a Vim configuration, so you need to install vim or neovim, here is a guide for installing neovim and vim8 with `+python3` feature.
-
-after installing Vim, following the quick start guide to install SpaceVim,
-
-
-## Default UI
-
-![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-
-## Fuzzy finder
-
-SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
-fuzzy finder layer. for example enable denite layer:
+SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启用
+`lang#java` 模块, 通过快捷键 `SPC f v d` 打开配置文件，添加：
 
 ```toml
 [[layers]]
-name = "denite"
+  name = "lang#java"
 ```
 
-## Version Contrl
+启用 `lang#java` 模块后，在打开 java 文件时，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
 
-## Import packages
+`lang#java` 模块主要采用插件 vim-javacomplete2，该插件可以自动读取工程配置文件，获取当前项目的 classpath，
+目前支持的项目包括 maven、gradle 以及 eclipse 下的配置文件。
 
-## Jump to test file
+### 代码补全
+
+vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 autocomplete 模块，可以在编辑代码时实时补全代码，并且可以模糊匹配。
+
+![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
+
+### 导包
+
+在编辑 java 文件时，导包的操作主要有两种，一种是自动导包，一种是手动导包。自动导包主要是在选中某个补全的类后，自动导入该类。
+手动导包的快捷键是 `<F4>`，可将光标移动到类名上，按下 F4 手动导入该包。会出现这样一种情况，classpath 内有多个可选择的类，
+此时会在屏幕下方弹出提示，选择相对应的类名即可。
+
+![import class](https://user-images.githubusercontent.com/13142418/46298485-c04e6500-c5d1-11e8-96f3-01d84f9fe237.png)
+
+### 跳转测试文件
+
+
 
 ## running code
 
