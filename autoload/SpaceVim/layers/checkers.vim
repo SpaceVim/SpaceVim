@@ -95,10 +95,10 @@ function! SpaceVim#layers#checkers#config() abort
 
         " when switch to Insert mode, stop timer and clear the signature
         if exists('##CmdLineEnter')
-          autocmd InsertEnter,WinLeave,CmdLineEnter *
+          autocmd InsertEnter,WinLeave *
                 \ call <SID>neomake_signatures_clear()
           autocmd CmdLineEnter *
-                \ call <SID>neomake_signatures_clear() | redraw
+                \ call <SID>neomake_signatures_clear()
         else
           autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear()
         endif
@@ -108,6 +108,13 @@ function! SpaceVim#layers#checkers#config() abort
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
   augroup END
+
+  if g:spacevim_enable_neomake
+    augroup SpaceVim_layer_checkers_signatures
+      autocmd!
+      autocmd 
+    augroup END
+  endif
 endfunction
 
 function! s:neomake_cursor_move_delay() abort
