@@ -15,15 +15,14 @@ commentsID: "使用 SpaceVim 搭建 Jave 开发环境"
 
 <!-- vim-markdown-toc GFM -->
 
-  - [启用模块](#启用模块)
-  - [代码补全](#代码补全)
-  - [导包](#导包)
-  - [跳转测试文件](#跳转测试文件)
-- [running code](#running-code)
-- [Code formatting](#code-formatting)
-- [Code completion](#code-completion)
-- [Syntax lint](#syntax-lint)
-- [REPL](#repl)
+- [启用模块](#启用模块)
+- [代码补全](#代码补全)
+- [语法检查](#语法检查)
+- [导包](#导包)
+- [跳转测试文件](#跳转测试文件)
+- [编译运行](#编译运行)
+- [代码格式化](#代码格式化)
+- [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
@@ -48,6 +47,20 @@ vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 a
 
 ![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
 
+### 语法检查
+
+`checkers` 模块为 SpaceVim 提供了异步语法检查功能，该模块主要包括插件 [neomake](https://github.com/neomake/neomake)。
+目前支持的项目包括 maven、gradle 以及 eclipse 下的配置文件。
+
+![lint-java](https://user-images.githubusercontent.com/13142418/46323584-99b81a80-c621-11e8-8ca5-d8eb7fbd93cf.png)
+
+从上图，我们可以看到，目前语法检查支持如下功能：
+
+- 在底部分割窗口列出所有语法问题
+- 在侧边使用标记符号标记错误信息
+- 在状态了显示错误及警告数量
+- 当光标所在位置存在错误，在光标的下一行展示错误细节，移动光标后，这个错误描述就会被清除，并不会影响代码内容
+
 ### 导包
 
 在编辑 java 文件时，导包的操作主要有两种，一种是自动导包，一种是手动导包。自动导包主要是在选中某个补全的类后，自动导入该类。
@@ -58,134 +71,39 @@ vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 a
 
 ### 跳转测试文件
 
+在编辑 java 源文件时，可以通过命令 `:A` 跳转到与之对应的测试文件，这一功能主要依赖 tpope 的 vim-project，以 maven 项目为例，
+需要在项目根目录添加配置文件 `.projections.json`，内容如下：
 
-
-## running code
-
-1. [unite](https://github.com/Shougo/unite.vim) - file and code fuzzy founder.
-
-The next version of unite is [denite](https://github.com/Shougo/denite.nvim), Denite is a dark powered plugin for Neovim/Vim to unite all interfaces.
-
-![unite](https://s3.amazonaws.com/github-csexton/unite-01.gif)
-
-The unite or unite.vim plug-in can search and display information from arbitrary sources like files, buffers, recently used files or registers. You can run several pre-defined actions on a target displayed in the unite window.
-
-The difference between unite and similar plug-ins like fuzzyfinder, ctrl-p or ku is that unite provides an integration interface for several sources and you can create new interfaces using unite.
-
-You can also use unite with [ag](https://github.com/ggreer/the_silver_searcher), that will make searching faster.
-
-_config unite with ag or other tools support_
-
-```viml
-if executable('hw')
-    " Use hw (highway)
-    " https://github.com/tkengo/highway
-    let g:unite_source_grep_command = 'hw'
-    let g:unite_source_grep_default_opts = '--no-group --no-color'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ag')
-    " Use ag (the silver searcher)
-    " https://github.com/ggreer/the_silver_searcher
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor ' .
-                \ '--nogroup --hidden --ignore ' .
-                \ '''.hg'' --ignore ''.svn'' --ignore' .
-                \ ' ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt (the platinum searcher)
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack
-    " http://beyondgrep.com/
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading' .
-                \ ' --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    " Use jvgrep
-    " https://github.com/mattn/jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --exclude ''\.(git|svn|hg|bzr)'''
-    let g:unite_source_grep_recursive_opt = '-R'
-elseif executable('beagrep')
-    " Use beagrep
-    " https://github.com/baohaojun/beagrep
-    let g:unite_source_grep_command = 'beagrep'
-endif
+```json
+{
+  "src/main/java/*.java": {"alternate": "src/test/java/{dirname}/Test{basename}.java"},
+  "src/test/java/**/Test*.java": {"alternate": "src/main/java/{}.java"}
+}
 ```
 
-2. [vimfiler](https://github.com/Shougo/vimfiler.vim) - A powerful file explorer implemented in Vim script
+基于这样的配置，就可以实现源文件和测试文件相互跳转了。
 
-_Use vimfiler as default file explorer_
+![jump-test](https://user-images.githubusercontent.com/13142418/46322905-12b57300-c61e-11e8-81a2-53c69d10140f.gif)
 
-> for more information, you should read the documentation of vimfiler.
+### 编译运行
 
-```viml
-let g:vimfiler_as_default_explorer = 1
-call vimfiler#custom#profile('default', 'context', {
-            \ 'explorer' : 1,
-            \ 'winwidth' : 30,
-            \ 'winminwidth' : 30,
-            \ 'toggle' : 1,
-            \ 'columns' : 'type',
-            \ 'auto_expand': 1,
-            \ 'direction' : 'rightbelow',
-            \ 'parent': 0,
-            \ 'explorer_columns' : 'type',
-            \ 'status' : 1,
-            \ 'safe' : 0,
-            \ 'split' : 1,
-            \ 'hidden': 1,
-            \ 'no_quit' : 1,
-            \ 'force_hide' : 0,
-            \ })
-```
+主要基于 JavaUnite，可以编译并运行当前类，也可以执行某个指定的函数。`SPC l r c` 执行光标函数， `SPC l r m` 执行 main 函数。
 
-3. [tagbar](https://github.com/majutsushi/tagbar) - Vim plugin that displays tags in a window, ordered by scope
+![run-main](https://user-images.githubusercontent.com/13142418/46323137-61174180-c61f-11e8-94df-61b6998b8907.gif)
 
-## Code formatting
 
-1. [neoformat](https://github.com/sbdchd/neoformat) - A (Neo)vim plugin for formatting code.
+### 代码格式化
 
-For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
-BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
+基于 `format` 模块，可以使用 `SPC b f` 对当前代码进行格式化，`format` 模块主要包括插件 [neoformat](https://github.com/sbdchd/neoformat)。
+该插件提供了格式化框架，对于 java 的支持，还需要安装 [uncrustify](http://astyle.sourceforge.net/) 或者 [astyle](http://astyle.sourceforge.net/)。
+同时，你也可以使用谷歌的 [java formatter](https://github.com/google/google-java-format)。
 
-## Code completion
+![format-java](https://user-images.githubusercontent.com/13142418/46323426-ccadde80-c620-11e8-9726-d99025f3bf76.gif)
 
-1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
-
-   - Demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
-
-   - Generics demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
-
-2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-
-3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
-
-## Syntax lint
-
-1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
-
-I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
-also you can set the classpath.
-
-## REPL
+### 交互式编程
 
 you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
 
 ![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
+
+
