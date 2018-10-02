@@ -40,7 +40,26 @@ for more info, you can read the [lang#python](../layers/lang/python/) layer docu
 
 ## Import packages
 
+When edit python file, you can import the package automatically, remove unused package and format package list.
+
+```sh
+pip install --user isort
+```
+
 ## Jump to test file
+
+SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+
+```json
+{
+  "src/*.py": {"alternate": "test/{dirname}/{basename}Test.py"},
+  "test/**/Test*.py": {"alternate": "src/{}.py"}
+}
+```
+
+with this configuration, you can jump between the source code and test file via command `:A`
+
+
 
 ## running code
 
