@@ -1681,6 +1681,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c L`   | invert comment lines      |
 | `SPC c p`   | comment paragraphs        |
 | `SPC c P`   | invert comment paragraphs |
+| `SPC c s`   | comment with pretty layout|
 | `SPC c t`   | comment to line           |
 | `SPC c T`   | invert comment to line    |
 | `SPC c y`   | comment and yank          |
