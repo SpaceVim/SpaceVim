@@ -12,7 +12,7 @@ SpaceVim 中文博客主要公布最新版本发布、新特性预览、以及�
 <ul>
     {% for post in site.categories.blog_cn %}
             <li>
-               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+               <h5><a href="{{ post.url }}">{{ post.title }}</a></h5>
                <span class="post-date">{{ post.date | date_to_string }}</span>
                <p>{{ post.excerpt | truncatewords: 100 }}</p>
             </li>

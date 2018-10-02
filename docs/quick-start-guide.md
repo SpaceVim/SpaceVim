@@ -15,6 +15,7 @@ show you how to install it, how to config it, and explain its features.
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
 - [Configuration](#configuration)
+- [Online tutor](#online-tutor)
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
@@ -92,17 +93,26 @@ name = "lilydjwg/colorizer"
 merged = 0
 ```
 
+## Online tutor
+
+This is a list of online tutor for using SpaceVim as general IDE and programming language support:
+
+- [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as IDE
+
+a list of guide for programming language support:
+
+
+<ul>
+    {% for post in site.categories.tutorials %}
+            <li>
+               <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
+
 ## Learning SpaceVim
 
 - [SpaceVim Documentation](../documentation). Also known as "The Book",
 The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
 The book is the primary official document of SpaceVim.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
-
-## Online tutor
-
-This is a list of online tutor for using SpaceVim as general IDE and programming language support:
-
-- [use vim as general IDE](../use-vim-as-ide/)
-- [use vim as java IDE](../use-vim-as-java-ide/):
-- [use vim as python IDE](../use-vim-as-python-ide/):

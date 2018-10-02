@@ -1,6 +1,6 @@
 ---
 title: "使用 Vim 搭建 Jave 开发环境"
-categories: [tutorials, blog_cn]
+categories: [tutorials_cn, blog_cn]
 excerpt: "如何使用 Vim 搭建 Java 的开发环境，自动补全、语法检查、代码格式化、交互式编程以及断点调试相关使用技巧"
 permalink: /cn/:title/
 lang: cn
