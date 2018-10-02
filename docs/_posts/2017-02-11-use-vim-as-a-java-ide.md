@@ -64,108 +64,40 @@ within above picture, we can see the checkers layer provides following feature:
 
 ## Import packages
 
+There are two kind features for importing packages, import packages automatically and manually. SpaceVim will import the packages after selecting the class name on popmenu.
+Also, you can sue key binding `<F4>` to import the class at the cursor point. If there are more than one class, a menu will be shown below current windows.
+
+![import class](https://user-images.githubusercontent.com/13142418/46298485-c04e6500-c5d1-11e8-96f3-01d84f9fe237.png)
+
 ## Jump to test file
+
+SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+
+```json
+{
+  "src/main/java/*.java": {"alternate": "src/test/java/{dirname}/Test{basename}.java"},
+  "src/test/java/**/Test*.java": {"alternate": "src/main/java/{}.java"}
+}
+```
+
+with this configuration, you can jump between the source code and test file via command `:A`
+
+![jump-test](https://user-images.githubusercontent.com/13142418/46322905-12b57300-c61e-11e8-81a2-53c69d10140f.gif)
+
 
 ## running code
 
-1. [unite](https://github.com/Shougo/unite.vim) - file and code fuzzy founder.
+Base on JavaUnite, you can use `SPC l r c` to run current function or use `SPC l r m` to run the main function of current Class.
 
-The next version of unite is [denite](https://github.com/Shougo/denite.nvim), Denite is a dark powered plugin for Neovim/Vim to unite all interfaces.
+![run-main](https://user-images.githubusercontent.com/13142418/46323137-61174180-c61f-11e8-94df-61b6998b8907.gif)
 
-![unite](https://s3.amazonaws.com/github-csexton/unite-01.gif)
-
-The unite or unite.vim plug-in can search and display information from arbitrary sources like files, buffers, recently used files or registers. You can run several pre-defined actions on a target displayed in the unite window.
-
-The difference between unite and similar plug-ins like fuzzyfinder, ctrl-p or ku is that unite provides an integration interface for several sources and you can create new interfaces using unite.
-
-You can also use unite with [ag](https://github.com/ggreer/the_silver_searcher), that will make searching faster.
-
-_config unite with ag or other tools support_
-
-```viml
-if executable('hw')
-    " Use hw (highway)
-    " https://github.com/tkengo/highway
-    let g:unite_source_grep_command = 'hw'
-    let g:unite_source_grep_default_opts = '--no-group --no-color'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ag')
-    " Use ag (the silver searcher)
-    " https://github.com/ggreer/the_silver_searcher
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor ' .
-                \ '--nogroup --hidden --ignore ' .
-                \ '''.hg'' --ignore ''.svn'' --ignore' .
-                \ ' ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt (the platinum searcher)
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack
-    " http://beyondgrep.com/
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading' .
-                \ ' --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    " Use jvgrep
-    " https://github.com/mattn/jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --exclude ''\.(git|svn|hg|bzr)'''
-    let g:unite_source_grep_recursive_opt = '-R'
-elseif executable('beagrep')
-    " Use beagrep
-    " https://github.com/baohaojun/beagrep
-    let g:unite_source_grep_command = 'beagrep'
-endif
-```
-
-2. [vimfiler](https://github.com/Shougo/vimfiler.vim) - A powerful file explorer implemented in Vim script
-
-_Use vimfiler as default file explorer_
-
-> for more information, you should read the documentation of vimfiler.
-
-```viml
-let g:vimfiler_as_default_explorer = 1
-call vimfiler#custom#profile('default', 'context', {
-            \ 'explorer' : 1,
-            \ 'winwidth' : 30,
-            \ 'winminwidth' : 30,
-            \ 'toggle' : 1,
-            \ 'columns' : 'type',
-            \ 'auto_expand': 1,
-            \ 'direction' : 'rightbelow',
-            \ 'parent': 0,
-            \ 'explorer_columns' : 'type',
-            \ 'status' : 1,
-            \ 'safe' : 0,
-            \ 'split' : 1,
-            \ 'hidden': 1,
-            \ 'no_quit' : 1,
-            \ 'force_hide' : 0,
-            \ })
-```
-
-3. [tagbar](https://github.com/majutsushi/tagbar) - Vim plugin that displays tags in a window, ordered by scope
 
 ## Code formatting
 
-1. [neoformat](https://github.com/sbdchd/neoformat) - A (Neo)vim plugin for formatting code.
-
 For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
 BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
+
+![format-java](https://user-images.githubusercontent.com/13142418/46323426-ccadde80-c620-11e8-9726-d99025f3bf76.gif)
 
 ## REPL
 
