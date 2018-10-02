@@ -9,14 +9,13 @@ commentsID: "Use Vim as a Python IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Python IDE
 
-I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project.
+This is a general guide for using SpaceVim as a python IDE, including layer configuration and usage. 
+Each of the following sections will be covered:
+
 
 <!-- vim-markdown-toc GFM -->
 
-- [Installation](#installation)
-- [Default UI](#default-ui)
-- [Fuzzy finder](#fuzzy-finder)
-- [Version Contrl](#version-contrl)
+- [Enable language layer](#enable-language-layer)
 - [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
@@ -27,28 +26,17 @@ I am a vimmer and a java developer. This is a guide for how to use SpaceVim deve
 
 <!-- vim-markdown-toc -->
 
-## Installation
+## Enable language layer
 
-SpaceVim is a Vim configuration, so you need to install vim or neovim, here is a guide for installing neovim and vim8 with `+python3` feature.
-
-after installing Vim, following the quick start guide to install SpaceVim,
-
-
-## Default UI
-
-![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-
-## Fuzzy finder
-
-SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
-fuzzy finder layer. for example enable denite layer:
+To add python language support in SpaceVim, you need to enable `lang#python` layer. Just press `SPC f v d` to open
+SpaceVim configuration file, and add following configuration:
 
 ```toml
 [[layers]]
-name = "denite"
+  name = "lang#python"
 ```
 
-## Version Contrl
+for more info, you can read the [lang#python](../layers/lang/python/) layer documentation.
 
 ## Import packages
 
