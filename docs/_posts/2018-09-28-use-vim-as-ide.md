@@ -16,22 +16,22 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Installation](#installation)
 - [Default UI](#default-ui)
 - [Fuzzy finder](#fuzzy-finder)
-- [Version Contrl](#version-contrl)
+- [Files and Windows](#files-and-windows)
 
 <!-- vim-markdown-toc -->
 
-## Installation
+### Installation
 
 SpaceVim is a Vim configuration, so you need to install vim or neovim, here is a guide for installing neovim and vim8 with `+python3` feature.
 
 after installing Vim, following the quick start guide to install SpaceVim,
 
 
-## Default UI
+### Default UI
 
 ![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
-## Fuzzy finder
+### Fuzzy finder
 
 SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
 fuzzy finder layer. for example enable denite layer:
@@ -41,5 +41,7 @@ fuzzy finder layer. for example enable denite layer:
 name = "denite"
 ```
 
-## Version Contrl
+### Files and Windows
+
+
 
