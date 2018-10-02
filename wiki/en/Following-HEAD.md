@@ -21,6 +21,8 @@ The next release is v1.0.0.
 
 ### Doc, Wiki && Website
 
+- Online tutorial ([#2004](https://github.com/SpaceVim/SpaceVim/pull/2004))
+
 ### Others
 
 ## Latest Release
