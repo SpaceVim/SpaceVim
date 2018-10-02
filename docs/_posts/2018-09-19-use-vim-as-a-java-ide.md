@@ -102,8 +102,9 @@ vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 a
 
 ### 交互式编程
 
-you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
+jdk9 引入了 `jshell`，让 java 的交互式编程成为了可能，在 SpaceVim 里，可以通过快捷键 `SPC l s i` 其同该功能。REPL 窗口打开后，
+可以通过 `SPC l s l` 和 `SPC l s s` 等快捷键发送代码给 jshell，目前支持发送当前行、选中内容及整个文件内容。
 
-![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
+![repl-java](https://user-images.githubusercontent.com/13142418/46323880-0b449880-c623-11e8-811a-919738c9ec5f.gif)
 
 
