@@ -41,19 +41,10 @@ for more info, you can read the [lang#python](../layers/lang/python/) layer docu
 
 ### Code completion
 
-1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
+Base on which completion engine is used, `lang#python` layer load the jedi plugin automatically.
+The completion menu will be opened as you type.
 
-   - Demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
-
-   - Generics demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
-
-2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-
-3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
+![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
 
 ### Syntax lint
 
