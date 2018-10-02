@@ -16,12 +16,12 @@ SpaceVim 是一个模块化的 Vim IDE，针对 python 这一语言的支持主�
 <!-- vim-markdown-toc GFM -->
 
 - [安装模块](#安装模块)
+- [代码自动补全](#代码自动补全)
+- [语法检查](#语法检查)
 - [导入模块](#导入模块)
 - [工程文件跳转](#工程文件跳转)
 - [快速运行](#快速运行)
 - [代码格式化](#代码格式化)
-- [代码自动补全](#代码自动补全)
-- [语法检查](#语法检查)
 - [交互式编程](#交互式编程)
 - [断点调试](#断点调试)
 
@@ -38,6 +38,19 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 ```
 
 启用 `lang#python` 模块后，在打开 python 文件是，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
+
+### 代码自动补全
+
+`autocomplete` 模块为 SpaceVim 提供了自动补全功能，该模块会根据当前环境自动在多种补全引擎之间选择合适的，默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。几种自动补全引擎当中，要数 deoplete 的体验效果最好。
+
+### 语法检查
+
+`checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
+这一异步语法检查工具。对于 python 的支持，是通过异步调用 flake8 命令，因此需安装，可通过 pip 命令来完成：
+
+```sh
+pip install --user flake8
+```
 
 ### 导入模块
 
@@ -72,19 +85,6 @@ Python 代码格式化，主要依赖 `format` 模块，同时需要安装相关
 
 ```sh
 pip install --user yapf
-```
-
-### 代码自动补全
-
-`autocomplete` 模块为 SpaceVim 提供了自动补全功能，该模块会根据当前环境自动在多种补全引擎之间选择合适的，默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。几种自动补全引擎当中，要数 deoplete 的体验效果最好。
-
-### 语法检查
-
-`checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 python 的支持，是通过异步调用 flake8 命令，因此需安装，可通过 pip 命令来完成：
-
-```sh
-pip install --user flake8
 ```
 
 ### 交互式编程
