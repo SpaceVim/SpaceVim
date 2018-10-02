@@ -8,48 +8,59 @@ comments: true
 commentsID: "Use Vim as a Java IDE"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
+# [Blogs](../blog/) >> Use Vim as a Java IDE
 
-I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project.
+This is a general guide for using SpaceVim as a Java IDE, including layer configuration and usage. 
+Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
 
 - [Installation](#installation)
-- [Default UI](#default-ui)
-- [Fuzzy finder](#fuzzy-finder)
-- [Version Contrl](#version-contrl)
+- [Code completion](#code-completion)
+- [Syntax lint](#syntax-lint)
 - [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
-- [Code completion](#code-completion)
-- [Syntax lint](#syntax-lint)
 - [REPL](#repl)
 
 <!-- vim-markdown-toc -->
 
 ## Installation
 
-SpaceVim is a Vim configuration, so you need to install vim or neovim, here is a guide for installing neovim and vim8 with `+python3` feature.
+SpaceVim is a Vim and neovim configuration, so you need to install vim or neovim,
+here are two guides for installing neovim and vim8 with `+python3` feature.
+following the [quick start guide](../quick-start-guide/) to install SpaceVim.
 
-after installing Vim, following the quick start guide to install SpaceVim,
+SpaceVim do not enable language layer by default, so you need to enable `lang#java` layer.
+Press `SPC f v d` to open SpaceVim configuration file, and add following section:
 
-
-## Default UI
-
-![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
-
-## Fuzzy finder
-
-SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
-fuzzy finder layer. for example enable denite layer:
 
 ```toml
 [[layers]]
-name = "denite"
+  name = "lang#java"
 ```
 
-## Version Contrl
+## Code completion
+
+javacomplete2 which has been included in `lang#java` layer provides omnifunc for java file and deoplete source.
+with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically。
+
+![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
+
+## Syntax lint
+
+`checkers` layer provides asynchronous linting feature, this layer use [neomake](https://github.com/neomake/neomake) by default.
+neomake support maven, gradle and eclipse project. it will generate classpath automatically for these project.
+
+![lint-java](https://user-images.githubusercontent.com/13142418/46323584-99b81a80-c621-11e8-8ca5-d8eb7fbd93cf.png)
+
+within above picture, we can see the checkers layer provides following feature:
+
+- list errors and warnings in quickfix windows
+- sign error and warning position on the left side
+- show numbers of errors and warnings on statusline
+- show cursor error and warning information below current line
 
 ## Import packages
 
@@ -155,29 +166,6 @@ call vimfiler#custom#profile('default', 'context', {
 
 For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
 BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
-
-## Code completion
-
-1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
-
-   - Demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
-
-   - Generics demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
-
-2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-
-3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
-
-## Syntax lint
-
-1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
-
-I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
-also you can set the classpath.
 
 ## REPL
 
