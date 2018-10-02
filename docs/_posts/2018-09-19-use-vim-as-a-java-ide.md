@@ -1,17 +1,17 @@
 ---
-title: "使用 SpaceVim 搭建 Jave 开发环境"
+title: "使用 Vim 搭建 Jave 开发环境"
 categories: [tutorials, blog_cn]
-excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Java 的开发环境，简介 lang#java 模块所支持的功能特性以及使用技巧"
+excerpt: "如何使用 Vim 搭建 Java 的开发环境，自动补全、语法检查、代码格式化、交互式编程以及断点调试相关使用技巧"
 permalink: /cn/:title/
 lang: cn
 type: BlogPosting
 comments: true
-commentsID: "使用 SpaceVim 搭建 Jave 开发环境"
+commentsID: "使用 Vim 搭建 Jave 开发环境"
 ---
 
-# [Blogs](../blog/) > 使用 SpaceVim 搭建 Jave 开发环境
+# [Blogs](../blog/) > 使用 Vim 搭建 Jave 开发环境
 
-这篇文章主要介绍如何使用 SpaceVim 搭建 Java 开发的基础环境，主要涉及到 `lang#java` 模块。
+这篇文章主要介绍如何使用 SpaceVim 搭建 Java 开发 Vim 环境，主要涉及到 `lang#java` 模块。
 
 <!-- vim-markdown-toc GFM -->
 
