@@ -9,7 +9,7 @@ comments: true
 commentsID: "使用 SpaceVim 搭建 Python 开发环境"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > 使用 SpaceVim 搭建 Python 开发环境
+# [Blogs](../blog/) >> 使用 SpaceVim 搭建 Python 开发环境
 
 SpaceVim 是一个模块化的 Vim IDE，针对 python 这一语言的支持主要依靠 `lang#python` 模块以及与之相关的其他模块。的这篇文章主要介绍如何使用 SpaceVim 搭建 Python 的开发环境，侧重介绍跟 python 开发相关使用技巧。在阅读这篇文章之前，可以先阅读《[使用 Vim 搭建基础的开发环境](../use-vim-as-ide/)》，对语言相关以外的功能有一个大致的了解。
 
@@ -41,7 +41,15 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 ### 导入模块
 
+在编辑 python 文件时，可以自动导入包、自动删除无用的包、排序格式化导包；需要安装 isort，可通过以下命令安装：
+
+```sh
+pip install --user isort
+```
+
 ### 工程文件跳转
+
+工程文件跳转，主要依赖 vim-projectionist， 需要在项目根目录加入 .projections.json 文件，标记源文件和测试文件之间的关系。
 
 ### 快速运行
 
@@ -53,11 +61,17 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 ### 代码格式化
 
-Python 代码格式化，主要依赖 `format` 模块，该模块默认也未载入，需要在配置文件里添加：
+Python 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 yapf：
 
 ```toml
 [[layers]]
   name = "format"
+```
+
+安装 yapf：
+
+```sh
+pip install --user yapf
 ```
 
 ### 代码自动补全
@@ -67,10 +81,10 @@ Python 代码格式化，主要依赖 `format` 模块，该模块默认也未载
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 python 的支持，是通过异步调用 yapf 命令，因此需安装，可通过 pip 命令来完成：
+这一异步语法检查工具。对于 python 的支持，是通过异步调用 flake8 命令，因此需安装，可通过 pip 命令来完成：
 
 ```sh
-pip install --user yapf
+pip install --user flake8
 ```
 
 ### 交互式编程
@@ -89,4 +103,4 @@ pip install --user yapf
    name = "debug"
 ```
 
-该模块提供了一套基本的调试快捷键，比如添加断点、单步执行等，更多的快捷键，可以参考 debug 模块文档。
+该模块提供了一套基本的调试快捷键，比如添加断点、单步执行等，更多的快捷键，可以参考 [debug 模块](../layers/debug/)文档。

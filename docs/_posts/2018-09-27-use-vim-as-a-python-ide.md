@@ -1,5 +1,5 @@
 ---
-title: "Use Vim as a Java IDE"
+title: "Use Vim as a Python IDE"
 categories: [tutorials, blog]
 excerpt: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
@@ -7,7 +7,7 @@ comments: true
 commentsID: "Use Vim as a Python IDE"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
+# [Blogs](../blog/) >> Use Vim as a Python IDE
 
 I am a vimmer and a java developer. This is a guide for how to use SpaceVim develop Java project.
 
