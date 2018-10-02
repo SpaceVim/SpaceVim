@@ -16,6 +16,7 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Installation](#installation)
 - [Default UI](#default-ui)
 - [Fuzzy finder](#fuzzy-finder)
+- [Files and Windows](#files-and-windows)
 
 <!-- vim-markdown-toc -->
 
@@ -40,4 +41,8 @@ fuzzy finder layer. for example enable denite layer:
 name = "denite"
 ```
 
+### Files and Windows
+
+The windows ID will be shown on the statusline, and users can use `SPC + number` to jump to specific windows, the buffer id or tabpage id will
+be shown on the tabline. To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
 
