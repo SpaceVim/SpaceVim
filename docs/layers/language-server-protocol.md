@@ -43,7 +43,7 @@ endif
 ## Features
 
 - Asynchronous calls
-- Code completion (provided by [autocomplet](https://spacevim.org/layers/autocomplete/) layer)
+- Code completion (provided by [autocomplete](https://spacevim.org/layers/autocomplete/) layer)
 - Lint on the fly
 - Rename symbol
 - Hover/Get identifer info.
