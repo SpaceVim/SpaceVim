@@ -33,6 +33,7 @@ function! s:self.apply(name, var) abort dict
   let self.index = 0
   let self.var = a:var
   let self.spinners = self._data[a:name].frames
+  exe 'let ' . self.var . '=  self.spinners[self.index]'
   let self.timer_id = timer_start(time, self.Onframe, {'repeat' : -1})
   return [self.timer_id, self._data[a:name].strwidth]
 endfunction
