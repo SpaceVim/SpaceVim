@@ -10,8 +10,8 @@ description: "This layer is for perl development, provide autocompletion, syntax
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Layer](#layer)
 - [Key bindings](#key-bindings)
+  - [Find documentation](#find-documentation)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
@@ -31,8 +31,6 @@ SpaceVim also provides REPL/Debug support for perl.
 
 ## Install
 
-### Layer
-
 To use this configuration layer, update custom configuration file with:
 
 ```toml
@@ -41,6 +39,14 @@ To use this configuration layer, update custom configuration file with:
 ```
 
 ## Key bindings
+
+### Find documentation
+
+| Key binding | Description                  |
+| ----------- | ---------------------------- |
+| `K`         | open Perldoc on the keywords |
+
+within perldoc windows, you can use `s` to toggle source code and the documentation.
 
 ### Inferior REPL process
 
