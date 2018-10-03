@@ -18,14 +18,23 @@ let s:self._data = {
 let s:self._id = 0
 
 function! s:self.Onframe(...) abort
-  
+  let self.str = self.spinners[self.index]
+  exe 'let ' . self.var . '=  self.str'
+  if self.index < len(self.spinners)
+    let self.index += 1
+  else
+    let self.index = 0
+  endif
 endfunction
 
 " return timer id and strwidth
-function! s:self.apply(name, time, var) abort
-  let time = self.data[a:name].timeout
-  let self.timer_id = timer_start(time, function('self.Onframe'))
-  return [self.timer_id, self.data[a:name].strwidth]
+function! s:self.apply(name, var) abort dict
+  let time = self._data[a:name].timeout
+  let self.index = 0
+  let self.var = a:var
+  let self.spinners = self._data[a:name].frames
+  let self.timer_id = timer_start(time, funcref('self.Onframe'))
+  return [self.timer_id, self._data[a:name].strwidth]
 endfunction
 
 
