@@ -17,7 +17,9 @@ description: "unicode#spinners API provides some basic functions for starting sp
 unicode#spinners API provides some basic functions for starting spinners timer
 
 ```vim
-
+let s:SPI = SpaceVim#api#import('unicode#spinners') 
+call s:SPI.apply('dot1',  'g:dotstr')
+set statusline+=%{g:dotstr}
 ```
 
 ## Functions
