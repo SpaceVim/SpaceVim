@@ -6,6 +6,8 @@ The next release is v1.0.0.
 
 ### Added
 
+- Add unicode#spinners api ([#1926](https://github.com/SpaceVim/SpaceVim/pull/1926))
+
 ### Improvement
 
 - Update runtime log for startup ([#2219](https://github.com/SpaceVim/SpaceVim/pull/2219))
