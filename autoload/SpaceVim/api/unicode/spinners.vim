@@ -22,8 +22,15 @@ function! s:self.Onframe(...) abort
 endfunction
 
 " return timer id and strwidth
-function! s:self.apply(name, var) abort
-  
+function! s:self.apply(name, time, var) abort
+  let time = self.data[a:name].timeout
+  let self.timer_id = timer_start(time, function('self.Onframe'))
+  return [self.timer_id, self.data[a:name].strwidth]
+endfunction
+
+
+function! s:self.get_str() abort
+  return self.str
 endfunction
 
 function! s:self.get_info(name) abort
