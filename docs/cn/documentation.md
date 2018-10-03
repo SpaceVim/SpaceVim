@@ -829,12 +829,12 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| 快捷键      | 描述                                         |
-| ----------- | -------------------------------------------- |
-| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录    |
-| `SPC h i`   | 获取光标下单词的帮助信息                     |
-| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
-| `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |
+| 快捷键      | 描述                                               |
+| ----------- | -------------------------------------------------- |
+| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
+| `SPC h i`   | 获取光标下单词的帮助信息                           |
+| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键       |
+| `SPC h m`   | 使用 Unite 浏览所有 man 文档                       |
 
 报告一个问题：
 
@@ -979,8 +979,8 @@ merged = 0
 | `SPC w TAB`/`<Tab>`  | 在统一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                                     |
-| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                                               |
+| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
+| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
 | `SPC w d`            | 删除一个窗口                                                                   |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
 | `SPC w D`            | 选择一个窗口，并且关闭                                                         |
@@ -1062,6 +1062,7 @@ Buffer 操作相关快捷键都是已 `SPC b` 为前缀的：
 
 | 快捷键      | 描述                                                   |
 | ----------- | ------------------------------------------------------ |
+| `SPC f /`   | 使用 `find` 命令查找文件，支持参数提示                 |
 | `SPC f b`   | 跳至文件书签                                           |
 | `SPC f c`   | copy current file to a different location(TODO)        |
 | `SPC f C d` | 修改文件编码 unix -> dos                               |
