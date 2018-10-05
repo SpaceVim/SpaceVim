@@ -218,8 +218,23 @@ function! SpaceVim#mapping#search#profile(opt) abort
 
 
   for key in keys(a:opt)
+    if has_key(s:search_tools.namespace, key)
+      for opt_key in keys(s:search_tools[s:search_tools.namespace[key]])
+        if has_key(a:opt[key], opt_key)
+          let s:search_tools[s:search_tools.namespace[key]][opt_key] = a:opt[key][opt_key]
+        endif
+      endfor
+    else
+      call s:add_new_search_tool(a:opt[key])
+    endif
   endfor
 
   
 
+endfunction
+
+
+function! s:add_new_search_tool(tool) abort
+  " TODO: add new tools,
+  " 1. we should check namespace
 endfunction
