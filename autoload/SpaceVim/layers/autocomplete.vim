@@ -194,6 +194,7 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
   let s:key_sequence_delay = get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
         \ 0.1)
+  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 50)
 
 endfunction
 

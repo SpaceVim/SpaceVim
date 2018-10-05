@@ -1,4 +1,8 @@
 " deoplete options
+call deoplete#custom#option({
+      \ 'auto_complete_delay': g:_spacevim_autocomplete_delay,
+      \ })
+
 let g:deoplete#enable_at_startup = get(g:, 'deoplete#enable_at_startup', 1)
 let g:deoplete#enable_ignore_case = get(g:, 'deoplete#enable_ignore_case', 1)
 let g:deoplete#enable_smart_case = get(g:, 'deoplete#enable_smart_case', 1)
