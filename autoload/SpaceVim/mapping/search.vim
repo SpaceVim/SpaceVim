@@ -201,3 +201,25 @@ function! SpaceVim#mapping#search#getFopt(exe) abort
   let key = s:search_tools.namespace[a:exe]
   return s:search_tools[key]['default_fopts']
 endfunction
+
+
+" the opt should be 
+" { 'rg' : {
+"            'namespace' : '',
+"            'default_exe' : '',
+"            'default_opt' : [],
+"            'default_ropt' : [],
+"            'expr_opt' : '',
+"            'fixed_string_opt' : '',
+"            'ignore_case' : '',
+"            'smart_case' : '',
+"          }
+function! SpaceVim#mapping#search#profile(opt) abort
+
+
+  for key in keys(a:opt)
+  endfor
+
+  
+
+endfunction
