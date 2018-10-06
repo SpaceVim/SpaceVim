@@ -14,6 +14,7 @@ show you how to install it, how to config it, and explain its features.
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
+- [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
 - [Online tutor](#online-tutor)
 - [Learning SpaceVim](#learning-spacevim)
@@ -44,6 +45,19 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### Windows
 
 The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+
+## Run in docker
+
+```sh
+docker pull spacevim/spacevim
+docker run -it --rm spacevim/spacevim nvim
+```
+
+you can also load local config:
+
+```sh
+docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+```
 
 ## Configuration
 
