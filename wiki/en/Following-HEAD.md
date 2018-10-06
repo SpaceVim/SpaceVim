@@ -7,6 +7,7 @@ The next release is v1.0.0.
 ### Added
 
 - Add unicode#spinners api ([#1926](https://github.com/SpaceVim/SpaceVim/pull/1926))
+- Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 
 ### Improvement
 
