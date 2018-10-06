@@ -42,10 +42,27 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 
-let s:tabline_items = []
+
+" each iterm should be :
+" {
+"  'bufnr': '',
+"  'len' : '',
+"  'bufname' : ''
+" }
+let s:buffer_items = []
 
 function! s:scroll_left() abort
-  
+  let nr = s:buffer_items[0].bufnr
+  if nr > s:buffers[0]
+    call remove(s:buffer_items[-1])
+    let bufnr = s:buffers[index(s:buffers, nr) - 1]
+    let item = {
+          \ 'bufnr' : bufnr,
+          \ 'len' :  '',
+          \ 'bufname' : '',
+          \     }
+    let s:buffer_items = item + s:buffer_items
+  endif
 endfunction
 
 
@@ -87,6 +104,9 @@ endfunction
 function! s:is_modified(nr) abort
   return getbufvar(a:nr, '&modified', 0)
 endfunction
+
+func! TablineGet() abort
+endf
 
 function! SpaceVim#layers#core#tabline#get() abort
   let nr = tabpagenr('$')
@@ -228,6 +248,7 @@ function! SpaceVim#layers#core#tabline#get() abort
   endif
   return t
 endfunction
+
 function! SpaceVim#layers#core#tabline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
   let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:separators['arrow'])
@@ -236,6 +257,11 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
+
+  " when load or create new buffer, add buffer nr to shown list, and update
+  " tabline
+  "
+  " when switch to a buffer, update the shown list
   for i in range(1, 9)
     exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
           \ . "', ':call SpaceVim#layers#core#tabline#jump("
