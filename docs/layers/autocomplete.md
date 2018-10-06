@@ -26,10 +26,10 @@ This layer provides auto-completion to SpaceVim.
 
 The following completion engines are supported:
 
--   [neocomplete](https://github.com/Shougo/neocomplete.vim) - vim with `+lua`
--   [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - vim without `+lua`
--   [deoplete](https://github.com/Shougo/deoplete.nvim) - neovim with `+python3`
--   [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - disabled by default, to enable ycm, see `:h g:spacevim_enable_ycm`
+- [neocomplete](https://github.com/Shougo/neocomplete.vim) - vim with `+lua`
+- [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - vim without `+lua`
+- [deoplete](https://github.com/Shougo/deoplete.nvim) - neovim with `+python3`
+- [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - disabled by default, to enable ycm, see `:h g:spacevim_enable_ycm`
 
 Snippets are supported via [neosnippet](https://github.com/Shougo/neosnippet.vim).
 
@@ -48,31 +48,29 @@ To use this configuration layer, add following snippet to your custom configurat
 
 You can customize the user experience of auto-completion with the following layer variables:
 
-1.  `auto-completion-return-key-behavior` set the action to perform when the `Return`/`Enter` key is pressed, the possible values are:
-
--   `complete` completes with the current selection
--   `smart` completes with current selection and expand snippet or argvs
--   `nil` 
-
-2.  `auto-completion-tab-key-behavior` set the action to perform when the `TAB` key is pressed, the possible values are:
-
--   `smart` cycle candidates, expand snippets, jump parameters
--   `complete` completes with the current selection
--   `cycle` completes the common prefix and cycle between candidates
--   `nil` insert a carriage return
-
-3.  `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
-4.  `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
+1. `auto-completion-return-key-behavior` set the action to perform when the `Return`/`Enter` key is pressed, the possible values are:
+   - `complete` completes with the current selection
+   - `smart` completes with current selection and expand snippet or argvs
+   - `nil` 
+2. `auto-completion-tab-key-behavior` set the action to perform when the `TAB` key is pressed, the possible values are:
+   - `smart` cycle candidates, expand snippets, jump parameters
+   - `complete` completes with the current selection
+   - `cycle` completes the common prefix and cycle between candidates
+   - `nil` insert a carriage return
+3. `auto-completion-delay` is a number to delay the completion after input in milliseconds, by default it is 50 ms.
+4. `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
+5. `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
 
 The default configuration of the layer is:
 
-```vim
-call SpaceVim#layers#load('autocomplete', {
-        \ 'auto-completion-return-key-behavior' : 'nil',
-        \ 'auto-completion-tab-key-behavior' : 'smart',
-        \ 'auto-completion-complete-with-key-sequence' : 'nil',
-        \ 'auto-completion-complete-with-key-sequence-delay' : 0.1,
-        \ })
+```toml
+[[layers]]
+  name = "autocomplete"
+  auto-completion-return-key-behavior = "nil"
+  auto-completion-tab-key-behavior = "smart"
+  auto-completion-delay = 200
+  auto-completion-complete-with-key-sequence = "nil"
+  auto-completion-complete-with-key-sequence-delay = 0.1,
 ```
 
 `jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.
@@ -81,11 +79,11 @@ call SpaceVim#layers#load('autocomplete', {
 
 The following snippets or directories are added by default:
 
--   [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
--   [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
--   `~/.SpaceVim/snippets/` : SpaceVim runtime snippets.
--   `~/.SpaceVim.d/snippets/` : custom global snippets.
--   `./.SpaceVim.d/snippets/` : custom local snippets (project's snippets)
+- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
+- [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
+- `~/.SpaceVim/snippets/` : SpaceVim runtime snippets.
+- `~/.SpaceVim.d/snippets/` : custom global snippets.
+- `./.SpaceVim.d/snippets/` : custom local snippets (project's snippets)
 
 You can provide additional directories by setting the variable `g:neosnippet#snippets_directory` which can take a string in case of a single path or a list of paths.
 
