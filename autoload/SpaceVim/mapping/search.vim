@@ -204,15 +204,16 @@ endfunction
 
 
 " the profile of a search tool should be:
-" { 
-"   'namespace' : '',        " a single char a-z
-"   'command' : '',          " executable
-"   'options' : [],          " default options
-"   'roptions' : [],         " default recursive options
-"   'expr_opt' : '',         " option for enable expr mode
-"   'string_opt' : '',       " option for enable fixed string mode
-"   'ignore_case_opt' : '',  " option for enable ignore case mode
-"   'smart_case_opt' : '',   " option for enable smart case mode
+" { 'ag' : { 
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
 "  }
 "
 "  so the finale command line is :
