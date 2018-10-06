@@ -252,6 +252,13 @@ function! SpaceVim#mapping#search#getprofile(...) abort
     for t in get(g:, 'spacevim_search_tools', ['rg', 'ag', 'pt', 'ack', 'grep'])
       if executable(t)
         let s:search_tools.default_exe = t
+        let key = s:search_tools.namespace[t]
+        let s:search_tools.default_opt = s:search_tools[key]['default_opts']
+        let s:search_tools.default_ropt = s:search_tools[key]['recursive_opt']
+        let s:search_tools.expr_opt = s:search_tools[key]['expr_opt']
+        let s:search_tools.fixed_string_opt = s:search_tools[key]['fixed_string_opt']
+        let s:search_tools.ignore_case = s:search_tools[key]['ignore_case']
+        let s:search_tools.smart_case = s:search_tools[key]['smart_case']
         break
       endif
     endfor
