@@ -64,6 +64,7 @@ lang: cn
   - [以 `z` 开头的命令](#以-z-开头的命令)
   - [搜索](#搜索)
     - [使用额外工具](#使用额外工具)
+      - [配置搜索工具](#配置搜索工具)
       - [常用按键绑定](#常用按键绑定)
       - [在当前文件中进行搜索](#在当前文件中进行搜索)
       - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
@@ -1290,6 +1291,36 @@ Notes:
 - 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
   **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
   同时也需要安装一个名叫 `pt` 的命令行工具.
+
+##### 配置搜索工具
+
+若需要修改默认搜索工具的选项，可以使用启动函数，在启动函数中配置各种搜索工具的默认选项。
+下面是一个修改 `rg` 默认搜索选项的配置示例：
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+搜索工具配置结构为：
+
+```vim
+" { 'ag' : { 
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
 
 ##### 常用按键绑定
 

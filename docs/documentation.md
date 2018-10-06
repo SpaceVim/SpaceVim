@@ -1352,7 +1352,6 @@ endfunction
 The structure of searching tool profile is:
 
 ```vim
-" the profile of a search tool should be:
 " { 'ag' : { 
 "   'namespace' : '',         " a single char a-z
 "   'command' : '',           " executable
