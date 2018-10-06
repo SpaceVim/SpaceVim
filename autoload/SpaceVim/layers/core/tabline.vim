@@ -54,12 +54,13 @@ let s:buffer_items = []
 function! s:scroll_left() abort
   let nr = s:buffer_items[0].bufnr
   if nr > s:buffers[0]
-    call remove(s:buffer_items[-1])
+    call remove(s:buffer_items, -1)
     let bufnr = s:buffers[index(s:buffers, nr) - 1]
+    let name = s:tabname(bufnr)
     let item = {
           \ 'bufnr' : bufnr,
-          \ 'len' :  '',
-          \ 'bufname' : '',
+          \ 'len' :  strlen(name),
+          \ 'bufname' : name,
           \     }
     let s:buffer_items = item + s:buffer_items
   endif
@@ -67,8 +68,47 @@ endfunction
 
 
 function! s:scroll_right() abort
-  
+  let nr = s:buffer_items[-1].bufnr
+  if nr < s:buffers[-1]
+    call remove(s:buffer_items, 0)
+    let bufnr = s:buffers[index(s:buffers, nr) + 1]
+    let name = s:tabname(bufnr)
+    let item = {
+          \ 'bufnr' : bufnr,
+          \ 'len' :  strlen(name),
+          \ 'bufname' : name,
+          \     }
+    let s:buffer_items = s:buffer_items + item
+  endif
 endfunction
+
+function! s:switch_index(idx) abort
+  let bufnr = s:buffer_items[a:idx + 1].bufnr 
+  exe 'b' . bufnr
+endfunction
+
+function! s:enter_new_buffer(bufnr) abort
+  let bufnr = a:bufnr
+  let name = s:tabname(bufnr)
+  let item = {
+        \ 'bufnr' : bufnr,
+        \ 'len' :  strlen(name),
+        \ 'bufname' : name,
+        \     }
+  let s:buffer_items = s:buffer_items + item
+  while s:check_len()
+    call remove(s:buffer_items, 0)
+  endwhile
+endfunction
+
+function! s:check_len() abort
+  let len = 0
+  for item in s:buffer_items
+    let len += item.len
+  endfor
+  return len > &columns
+endfunction
+
 
 function! s:tabname(id) abort
   if g:spacevim_buffer_index_type == 3
@@ -106,6 +146,86 @@ function! s:is_modified(nr) abort
 endfunction
 
 func! TablineGet() abort
+  let nr = tabpagenr('$')
+  let t = ''
+  " the stack should be the bufnr stack of tabline
+  let stack = []
+  let s:buffers = s:buffer_items
+  if len(s:buffers) == 0
+    return ''
+  endif
+  let ct = bufnr('%')
+  let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
+  if ct == get(s:buffers, 0, -1)
+    if getbufvar(ct, '&modified', 0)
+      let t = '%#SpaceVim_tabline_m# '
+    else
+      let t = '%#SpaceVim_tabline_a# '
+    endif
+  else
+    let t = '%#SpaceVim_tabline_b# '
+  endif
+  let index = 1
+  for i in s:buffers
+    if getbufvar(i, '&modified', 0) && i != ct
+      let t .= '%#SpaceVim_tabline_m_i#'
+    elseif i == ct
+      if s:is_modified(i)
+        let t .= '%#SpaceVim_tabline_m#'
+      else
+        let t .= '%#SpaceVim_tabline_a#'
+      endif
+    else
+      let t .= '%#SpaceVim_tabline_b#'
+    endif
+    let name = fnamemodify(bufname(i), ':t')
+    if empty(name)
+      let name = 'No Name'
+    endif
+    call add(stack, i)
+    call s:need_show_bfname(stack, i)
+    " here is the begin of a tab name
+    if has('tablineat')
+      let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+    endif
+    if g:spacevim_buffer_index_type == 3
+      let id = s:messletters.index_num(index(s:buffers, i) + 1)
+    elseif g:spacevim_buffer_index_type == 4
+      let id = index(s:buffers, i) + 1
+    else
+      let id = s:messletters.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+    endif
+    if g:spacevim_enable_tabline_filetype_icon
+      let icon = s:file.fticon(name)
+      if !empty(icon)
+        let name = name . ' ' . icon
+      endif
+    endif
+    let t .= id . ' ' . name
+    " here is the end of a tabname
+    if has('tablineat')
+      let t .= '%X'
+    endif
+    if i == ct
+      if s:is_modified(i)
+        let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
+      else
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
+      endif
+    elseif i == pt
+      if getbufvar(ct, '&modified', 0)
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . ' '
+      else
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
+      endif
+    else
+      let t .= ' %#SpaceVim_tabline_b#' . s:ilsep . ' '
+    endif
+    let index += 1
+  endfor
+  let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
+  let t .= '%#SpaceVim_tabline_a# Buffers '
+  return t
 endf
 
 function! SpaceVim#layers#core#tabline#get() abort
@@ -256,6 +376,7 @@ function! SpaceVim#layers#core#tabline#config() abort
   augroup SpaceVim_tabline
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
+    autocmd BufNew * call s:enter_new_buffer(expand("<abuf>")+0)
   augroup END
 
   " when load or create new buffer, add buffer nr to shown list, and update
