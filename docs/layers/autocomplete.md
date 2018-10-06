@@ -49,20 +49,15 @@ To use this configuration layer, add following snippet to your custom configurat
 You can customize the user experience of auto-completion with the following layer variables:
 
 1. `auto-completion-return-key-behavior` set the action to perform when the `Return`/`Enter` key is pressed, the possible values are:
-
-- `complete` completes with the current selection
-- `smart` completes with current selection and expand snippet or argvs
-- `nil` 
-
+   - `complete` completes with the current selection
+   - `smart` completes with current selection and expand snippet or argvs
+   - `nil` 
 2. `auto-completion-tab-key-behavior` set the action to perform when the `TAB` key is pressed, the possible values are:
-
-- `smart` cycle candidates, expand snippets, jump parameters
-- `complete` completes with the current selection
-- `cycle` completes the common prefix and cycle between candidates
-- `nil` insert a carriage return
-
-3. `auto-completion-delay` Delay the completion after input in milliseconds.
-
+   - `smart` cycle candidates, expand snippets, jump parameters
+   - `complete` completes with the current selection
+   - `cycle` completes the common prefix and cycle between candidates
+   - `nil` insert a carriage return
+3. `auto-completion-delay` is a number to delay the completion after input in milliseconds, by default it is 50 ms.
 4. `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
 5. `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
 
@@ -71,10 +66,10 @@ The default configuration of the layer is:
 ```toml
 [[layers]]
   name = "autocomplete"
-  auto-completion-return-key-behavior = 'nil'
-  auto-completion-tab-key-behavior = 'smart'
-  auto-completion-delay = 500
-  auto-completion-complete-with-key-sequence = 'nil'
+  auto-completion-return-key-behavior = "nil"
+  auto-completion-tab-key-behavior = "smart"
+  auto-completion-delay = 200
+  auto-completion-complete-with-key-sequence = "nil"
   auto-completion-complete-with-key-sequence-delay = 0.1,
 ```
 
