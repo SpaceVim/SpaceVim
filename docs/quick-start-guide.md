@@ -53,6 +53,12 @@ docker pull spacevim/spacevim
 docker run -it --rm spacevim/spacevim nvim
 ```
 
+you can also load local config:
+
+```sh
+docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+```
+
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
