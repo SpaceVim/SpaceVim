@@ -203,17 +203,26 @@ function! SpaceVim#mapping#search#getFopt(exe) abort
 endfunction
 
 
-" the opt should be 
-" { 'rg' : {
-"            'namespace' : '',
-"            'default_exe' : '',
-"            'default_opt' : [],
-"            'default_ropt' : [],
-"            'expr_opt' : '',
-"            'fixed_string_opt' : '',
-"            'ignore_case' : '',
-"            'smart_case' : '',
-"          }
+" the profile of a search tool should be:
+" { 
+"   'namespace' : '',        " a single char a-z
+"   'command' : '',          " executable
+"   'options' : [],          " default options
+"   'roptions' : [],         " default recursive options
+"   'expr_opt' : '',         " option for enable expr mode
+"   'string_opt' : '',       " option for enable fixed string mode
+"   'ignore_case_opt' : '',  " option for enable ignore case mode
+"   'smart_case_opt' : '',   " option for enable smart case mode
+"  }
+"
+"  so the finale command line is :
+"  [command] 
+"  + [ignore_case_opt]? 
+"  + [smart_case_opt]?
+"  + [string_opt]/[expr_opt]?
+"  + {expr}
+"  + {files or dir}
+"  + [roptions]
 function! SpaceVim#mapping#search#profile(opt) abort
 
   for key in keys(a:opt)
