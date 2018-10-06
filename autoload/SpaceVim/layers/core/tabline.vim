@@ -42,6 +42,17 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 
+let s:tabline_items = []
+
+function! s:scroll_left() abort
+  
+endfunction
+
+
+function! s:scroll_right() abort
+  
+endfunction
+
 function! s:tabname(id) abort
   if g:spacevim_buffer_index_type == 3
     let id = s:messletters.index_num(a:id)
