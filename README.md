@@ -10,12 +10,11 @@
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
+[![Docker Build Status](https://img.shields.io/docker/build/spacevim/spacevim.svg)](https://hub.docker.com/r/spacevim/spacevim/)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
 ![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)
-[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
+[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 
 ## About SpaceVim
 SpaceVim is a community-driven modular vim distribution. It manages collections
