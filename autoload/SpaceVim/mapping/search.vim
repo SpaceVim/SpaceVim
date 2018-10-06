@@ -216,7 +216,6 @@ endfunction
 "          }
 function! SpaceVim#mapping#search#profile(opt) abort
 
-
   for key in keys(a:opt)
     if has_key(s:search_tools.namespace, key)
       for opt_key in keys(s:search_tools[s:search_tools.namespace[key]])
@@ -229,10 +228,30 @@ function! SpaceVim#mapping#search#profile(opt) abort
     endif
   endfor
 
-  
-
 endfunction
 
+function! SpaceVim#mapping#search#getprofile(...) abort
+
+  if a:0 > 0
+    let tool = get(s:search_tools.namespace, a:1, '')
+    if !empty(tool)
+      return deepcopy(s:search_tools[tool])
+    endif
+  else
+  if !has_key(s:search_tools, 'default_exe')
+    for t in get(g:, 'spacevim_search_tools', ['rg', 'ag', 'pt', 'ack', 'grep'])
+      if executable(t)
+        let s:search_tools.default_exe = t
+        break
+      endif
+    endfor
+    if has_key(s:search_tools, 'default_exe')
+      return deepcopy(s:search_tools[s:search_tools.namespace[t]])
+    endif
+  endif
+  endif
+
+endfunction
 
 function! s:add_new_search_tool(tool) abort
   " TODO: add new tools,
