@@ -57,11 +57,11 @@ function! s:scroll_left() abort
     call remove(s:buffer_items, -1)
     let bufnr = s:buffers[index(s:buffers, nr) - 1]
     let name = s:tabname(bufnr)
-    let item = {
+    let item = [{
           \ 'bufnr' : bufnr,
           \ 'len' :  strlen(name),
           \ 'bufname' : name,
-          \     }
+          \     }]
     let s:buffer_items = item + s:buffer_items
   endif
 endfunction
@@ -73,11 +73,11 @@ function! s:scroll_right() abort
     call remove(s:buffer_items, 0)
     let bufnr = s:buffers[index(s:buffers, nr) + 1]
     let name = s:tabname(bufnr)
-    let item = {
+    let item = [{
           \ 'bufnr' : bufnr,
           \ 'len' :  strlen(name),
           \ 'bufname' : name,
-          \     }
+          \     }]
     let s:buffer_items = s:buffer_items + item
   endif
 endfunction
@@ -90,11 +90,11 @@ endfunction
 function! s:enter_new_buffer(bufnr) abort
   let bufnr = a:bufnr
   let name = s:tabname(bufnr)
-  let item = {
+  let item = [{
         \ 'bufnr' : bufnr,
         \ 'len' :  strlen(name),
         \ 'bufname' : name,
-        \     }
+        \     }]
   let s:buffer_items = s:buffer_items + item
   while s:check_len()
     call remove(s:buffer_items, 0)
@@ -156,7 +156,7 @@ func! TablineGet() abort
   endif
   let ct = bufnr('%')
   let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
-  if ct == get(s:buffers, 0, -1)
+  if ct == get(s:buffers, 0, {'bufnr' : -1})['bufnr']
     if getbufvar(ct, '&modified', 0)
       let t = '%#SpaceVim_tabline_m# '
     else
@@ -166,7 +166,7 @@ func! TablineGet() abort
     let t = '%#SpaceVim_tabline_b# '
   endif
   let index = 1
-  for i in s:buffers
+  for i in map(s:buffers, 'v:val.bufnr')
     if getbufvar(i, '&modified', 0) && i != ct
       let t .= '%#SpaceVim_tabline_m_i#'
     elseif i == ct
