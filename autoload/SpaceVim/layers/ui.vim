@@ -27,16 +27,19 @@ function! SpaceVim#layers#ui#plugins() abort
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
+  " IndentLine plugin settings
   if g:spacevim_colorscheme_bg ==# 'dark'
     let g:indentLine_color_term = get(g:, 'indentLine_color_term', 239)
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#504945')
   else
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
-  let g:indentLine_char = get(g:, 'indentLine_char', '┊')
+  let g:indentLine_char = get(g:, 'indentLine_char', '│')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
   let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
+  IndentLinesReset
+
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
