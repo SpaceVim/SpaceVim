@@ -12,6 +12,7 @@ The next release is v1.0.0.
 ### Improvement
 
 - Update runtime log for startup ([#2219](https://github.com/SpaceVim/SpaceVim/pull/2219))
+- Add doc for how run run spacevim in docker ([#2238](https://github.com/SpaceVim/SpaceVim/pull/2238))
 
 ### Changed
 
