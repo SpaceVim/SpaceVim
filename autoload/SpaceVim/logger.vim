@@ -47,7 +47,7 @@ function! SpaceVim#logger#viewRuntimeLog() abort
   setl nomodifiable
   setl buftype=nofile
   setl filetype=markdown
-
+  call s:syntax_extra()
 endfunction
 
 
@@ -84,7 +84,6 @@ function! SpaceVim#logger#viewLog(...) abort
       setl nomodifiable
       setl buftype=nofile
       setl filetype=markdown
-      call s:syntax_extra()
     else
       echo info
     endif
@@ -94,7 +93,8 @@ function! SpaceVim#logger#viewLog(...) abort
 endfunction
 
 function! s:syntax_extra() abort
-  call matchadd('Function','^[\stabline\s\].*')
+  call matchadd('ErrorMsg','.*[\sError\s\].*')
+  call matchadd('WarningMsg','.*[\sWarn\s\].*')
 endfunction
 
 ""
