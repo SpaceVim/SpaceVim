@@ -13,7 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
-let s:LOGGER =SpaceVim#logger#derive('flygrep')
+let s:LOGGER =SpaceVim#logger#derive('flygrep ')
 "}}}
 
 " Init local options: {{{

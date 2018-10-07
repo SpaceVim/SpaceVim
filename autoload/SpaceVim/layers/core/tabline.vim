@@ -24,7 +24,7 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
-let s:LOG = SpaceVim#logger#derive('tabline')
+let s:LOG = SpaceVim#logger#derive('tabline ')
 " }}}
 
 
