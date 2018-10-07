@@ -84,12 +84,17 @@ function! SpaceVim#logger#viewLog(...) abort
       setl nomodifiable
       setl buftype=nofile
       setl filetype=markdown
+      call s:syntax_extra()
     else
       echo info
     endif
   else
     return info
   endif
+endfunction
+
+function! s:syntax_extra() abort
+  call matchadd('Function','^[\stabline\s\].*')
 endfunction
 
 ""
