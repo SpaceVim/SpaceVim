@@ -111,3 +111,33 @@ endfunction
 function! SpaceVim#logger#setOutput(file) abort
   call s:LOGGER.set_file(a:file)
 endfunction
+
+
+" derive a logger for built-in plugins
+" [ name ] [11:31:26] [ Info ] log message here
+
+let s:derive = {}
+let s:derive.origin_name = s:LOGGER.get_name()
+
+function! s:derive.info(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.info(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! s:derive.warn(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.warn(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! s:derive.error(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.error(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! SpaceVim#logger#derive(name) abort
+  let s:derive.derive_name = a:name
+  return deepcopy(s:derive)
+endfunction

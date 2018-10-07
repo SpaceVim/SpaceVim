@@ -24,6 +24,7 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
+let s:LOG = SpaceVim#logger#derive('tabline')
 " }}}
 
 
@@ -94,6 +95,7 @@ endfunction
 
 function! s:enter_new_buffer(bufnr) abort
   let bufnr = a:bufnr
+  call s:LOG.info('enter new buffer: ' . a:bufnr)
   if getbufvar(a:bufnr, '&buflisted')
     let name = s:tabname(bufnr)
     let item = [{
