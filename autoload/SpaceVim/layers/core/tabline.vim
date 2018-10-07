@@ -113,7 +113,11 @@ endfunction
 
 function! s:delete_buffer(bufnr) abort
   let index = index(s:tabline_items, 'v:val.bufnr == a:bufnr')
-  call remove(s:tabline_items, index)
+  try
+    call remove(s:tabline_items, index)
+  catch
+    call s:LOG.warn('can not remove item from tabline: ' . a:bufnr)
+  endtry
 endfunction
 
 function! s:check_len() abort

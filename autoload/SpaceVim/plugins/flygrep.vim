@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:LOGGER =SpaceVim#logger#derive('flygrep')
 "}}}
 
 " Init local options: {{{
@@ -42,7 +43,7 @@ function! s:grep_timer(timer) abort
     let s:current_grep_pattern = s:grep_expr
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
-  call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  call s:LOGGER.info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -152,7 +153,7 @@ function! s:start_filter() abort
   try
     call writefile(getbufline('%', 1, '$'), s:filter_file, 'b')
   catch
-    call SpaceVim#logger#info('FlyGrep: Failed to write filter content to temp file')
+    call s:LOGGER.info('Failed to write filter content to temp file')
   endtry
   call s:MPT._build_prompt()
 endfunction
@@ -255,7 +256,7 @@ function! s:grep_stdout(id, data, event) abort
 endfunction
 
 function! s:grep_stderr(id, data, event) abort
-  call SpaceVim#logger#error(' flygerp stderr: ' . string(a:data))
+  call s:LOGGER.error(' flygerp stderr: ' . string(a:data))
 endfunction
 
 function! s:grep_exit(id, data, event) abort
@@ -505,7 +506,7 @@ endif
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(agrv) abort
   if empty(s:grep_default_exe)
-    call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
+    call s:LOGGER.warn(' [flygrep] make sure you have one search tool in your PATH', 1)
     return
   endif
   let s:mode = ''
@@ -540,17 +541,17 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)
   let s:grep_smart_case  = get(a:agrv, 'smart_case', s:grep_default_smart_case)
   let s:grep_expr_opt  = get(a:agrv, 'expr_opt', s:grep_default_expr_opt)
-  call SpaceVim#logger#info('FlyGrep startting ===========================')
-  call SpaceVim#logger#info('   executable    : ' . s:grep_exe)
-  call SpaceVim#logger#info('   option        : ' . string(s:grep_opt))
-  call SpaceVim#logger#info('   r_option      : ' . string(s:grep_ropt))
-  call SpaceVim#logger#info('   files         : ' . string(s:grep_files))
-  call SpaceVim#logger#info('   dir           : ' . string(s:grep_dir))
-  call SpaceVim#logger#info('   ignore_case   : ' . string(s:grep_ignore_case))
-  call SpaceVim#logger#info('   smart_case    : ' . string(s:grep_smart_case))
-  call SpaceVim#logger#info('   expr opt      : ' . string(s:grep_expr_opt))
+  call s:LOGGER.info('FlyGrep startting ===========================')
+  call s:LOGGER.info('   executable    : ' . s:grep_exe)
+  call s:LOGGER.info('   option        : ' . string(s:grep_opt))
+  call s:LOGGER.info('   r_option      : ' . string(s:grep_ropt))
+  call s:LOGGER.info('   files         : ' . string(s:grep_files))
+  call s:LOGGER.info('   dir           : ' . string(s:grep_dir))
+  call s:LOGGER.info('   ignore_case   : ' . string(s:grep_ignore_case))
+  call s:LOGGER.info('   smart_case    : ' . string(s:grep_smart_case))
+  call s:LOGGER.info('   expr opt      : ' . string(s:grep_expr_opt))
   call s:MPT.open()
-  call SpaceVim#logger#info('FlyGrep ending    ===========================')
+  call s:LOGGER.info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
 endfunction
 " }}}
