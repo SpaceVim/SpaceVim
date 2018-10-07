@@ -19,6 +19,12 @@
 
 scriptencoding utf-8
 
+if exists('g:_spacevim_tabline_loaded')
+  finish
+endif
+
+let g:_spacevim_tabline_loaded = 1
+
 " loadding APIs {{{
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
@@ -28,7 +34,6 @@ let s:LOG = SpaceVim#logger#derive('tabline ')
 " }}}
 
 
-let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
 
 " init
@@ -55,7 +60,41 @@ let s:i_separators = {
 "  'istab' : '',
 "  'bufname' : ''
 " }
-let s:tabline_items = []
+
+
+function! s:tabname(id) abort
+  if g:spacevim_buffer_index_type == 3
+    let id = s:MESSLETTERS.index_num(a:id)
+  elseif g:spacevim_buffer_index_type == 4
+    let id = a:id
+  else
+    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+  endif
+  let fn = fnamemodify(bufname(a:id), ':t')
+  if g:spacevim_enable_tabline_filetype_icon
+    let icon = s:FILE.fticon(fn)
+    if !empty(icon)
+      let fn = fn . ' ' . icon
+    endif
+  endif
+  if empty(fn)
+    return 'No Name'
+  else
+    return id . fn
+  endif
+endfunction
+
+function! s:buffer_item(bufnr) abort
+    let name = s:tabname(a:bufnr)
+    let item = [{
+          \ 'bufnr' : a:bufnr,
+          \ 'len' :  strlen(name),
+          \ 'bufname' : name,
+          \     }]
+    return item
+endfunction
+
+let s:tabline_items = map(deepcopy(s:buffers), 's:buffer_item(v:val)')
 
 function! s:scroll_left() abort
   let nr = s:tabline_items[0].bufnr
@@ -129,27 +168,6 @@ function! s:check_len() abort
 endfunction
 
 
-function! s:tabname(id) abort
-  if g:spacevim_buffer_index_type == 3
-    let id = s:MESSLETTERS.index_num(a:id)
-  elseif g:spacevim_buffer_index_type == 4
-    let id = a:id
-  else
-    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
-  endif
-  let fn = fnamemodify(bufname(a:id), ':t')
-  if g:spacevim_enable_tabline_filetype_icon
-    let icon = s:FILE.fticon(fn)
-    if !empty(icon)
-      let fn = fn . ' ' . icon
-    endif
-  endif
-  if empty(fn)
-    return 'No Name'
-  else
-    return id . fn
-  endif
-endfunction
 
 function! s:need_show_bfname(stack, nr) abort
   let dupbufs = filter(a:stack, "fnamemodify(bufname(v:val), ':t') ==# fnamemodify(bufname(a:nr), ':t')")
