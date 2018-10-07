@@ -86,11 +86,11 @@ endfunction
 
 function! s:buffer_item(bufnr) abort
     let name = s:tabname(a:bufnr)
-    let item = [{
+    let item = {
           \ 'bufnr' : a:bufnr,
           \ 'len' :  strlen(name),
           \ 'bufname' : name,
-          \     }]
+          \     }
     return item
 endfunction
 
