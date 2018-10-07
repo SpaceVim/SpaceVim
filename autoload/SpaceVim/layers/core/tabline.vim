@@ -51,14 +51,15 @@ let s:i_separators = {
 " {
 "  'bufnr': '',
 "  'len' : '',
+"  'istab' : '',
 "  'bufname' : ''
 " }
-let s:buffer_items = []
+let s:tabline_items = []
 
 function! s:scroll_left() abort
-  let nr = s:buffer_items[0].bufnr
+  let nr = s:tabline_items[0].bufnr
   if nr > s:buffers[0]
-    call remove(s:buffer_items, -1)
+    call remove(s:tabline_items, -1)
     let bufnr = s:buffers[index(s:buffers, nr) - 1]
     let name = s:tabname(bufnr)
     let item = [{
@@ -66,15 +67,15 @@ function! s:scroll_left() abort
           \ 'len' :  strlen(name),
           \ 'bufname' : name,
           \     }]
-    let s:buffer_items = item + s:buffer_items
+    let s:tabline_items = item + s:tabline_items
   endif
 endfunction
 
 
 function! s:scroll_right() abort
-  let nr = s:buffer_items[-1].bufnr
+  let nr = s:tabline_items[-1].bufnr
   if nr < s:buffers[-1]
-    call remove(s:buffer_items, 0)
+    call remove(s:tabline_items, 0)
     let bufnr = s:buffers[index(s:buffers, nr) + 1]
     let name = s:tabname(bufnr)
     let item = [{
@@ -82,32 +83,40 @@ function! s:scroll_right() abort
           \ 'len' :  strlen(name),
           \ 'bufname' : name,
           \     }]
-    let s:buffer_items = s:buffer_items + item
+    let s:tabline_items = s:tabline_items + item
   endif
 endfunction
 
 function! s:switch_index(idx) abort
-  let bufnr = s:buffer_items[a:idx + 1].bufnr 
+  let bufnr = s:tabline_items[a:idx + 1].bufnr 
   exe 'b' . bufnr
 endfunction
 
 function! s:enter_new_buffer(bufnr) abort
   let bufnr = a:bufnr
-  let name = s:tabname(bufnr)
-  let item = [{
-        \ 'bufnr' : bufnr,
-        \ 'len' :  strlen(name),
-        \ 'bufname' : name,
-        \     }]
-  let s:buffer_items = s:buffer_items + item
-  while s:check_len()
-    call remove(s:buffer_items, 0)
-  endwhile
+  if getbufvar(a:bufnr, '&buflisted')
+    let name = s:tabname(bufnr)
+    let item = [{
+          \ 'bufnr' : bufnr,
+          \ 'len' :  strlen(name),
+          \ 'bufname' : name,
+          \     }]
+    let s:tabline_items = s:tabline_items + item
+    while s:check_len()
+      call remove(s:tabline_items, 0)
+    endwhile
+  endif
+endfunction
+
+
+function! s:delete_buffer(bufnr) abort
+  let index = index(s:tabline_items, 'v:val.bufnr == a:bufnr')
+  call remove(s:tabline_items, index)
 endfunction
 
 function! s:check_len() abort
   let len = 0
-  for item in s:buffer_items
+  for item in s:tabline_items
     let len += item.len
   endfor
   return len > &columns
@@ -149,18 +158,23 @@ function! s:is_modified(nr) abort
   return getbufvar(a:nr, '&modified', 0)
 endfunction
 
+function! Test() abort
+  return s:
+endfunction
+
+
 func! TablineGet() abort
   let nr = tabpagenr('$')
   let t = ''
   " the stack should be the bufnr stack of tabline
   let stack = []
-  let s:buffers = s:buffer_items
-  if len(s:buffers) == 0
+  if len(s:tabline_items) == 0
     return ''
   endif
   let ct = bufnr('%')
-  let pt = index(s:buffers, ct) > 0 ? s:buffers[index(s:buffers, ct) - 1] : -1
-  if ct == get(s:buffers, 0, {'bufnr' : -1})['bufnr']
+  let ct_idex = index(s:tabline_items, 'v:val.bufnr ==# ct')
+  let pt = ct_idex > 0 ? s:tabline_items[ct_idex - 1] : -1
+  if ct == get(s:tabline_items, 0, {'bufnr' : -1})['bufnr']
     if getbufvar(ct, '&modified', 0)
       let t = '%#SpaceVim_tabline_m# '
     else
@@ -170,7 +184,7 @@ func! TablineGet() abort
     let t = '%#SpaceVim_tabline_b# '
   endif
   let index = 1
-  for i in map(s:buffers, 'v:val.bufnr')
+  for i in map(deepcopy(s:tabline_items), 'v:val.bufnr')
     if getbufvar(i, '&modified', 0) && i != ct
       let t .= '%#SpaceVim_tabline_m_i#'
     elseif i == ct
@@ -193,11 +207,11 @@ func! TablineGet() abort
       let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
     endif
     if g:spacevim_buffer_index_type == 3
-      let id = s:MESSLETTERS.index_num(index(s:buffers, i) + 1)
+      let id = s:MESSLETTERS.index_num(index)
     elseif g:spacevim_buffer_index_type == 4
-      let id = index(s:buffers, i) + 1
+      let id = index
     else
-      let id = s:MESSLETTERS.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
+      let id = s:MESSLETTERS.circled_num(index, g:spacevim_buffer_index_type)
     endif
     if g:spacevim_enable_tabline_filetype_icon
       let icon = s:FILE.fticon(name)
@@ -381,6 +395,7 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
     autocmd BufNew * call s:enter_new_buffer(expand("<abuf>")+0)
+    autocmd BufDelete,BufWipeout * call s:delete_buffer(expand("<abuf>")+0)
   augroup END
 
   " when load or create new buffer, add buffer nr to shown list, and update
