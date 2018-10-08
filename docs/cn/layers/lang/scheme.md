@@ -1,0 +1,34 @@
+---
+title: "SpaceVim lang#scheme layer"
+description: "This layer adds scheme language support to SpaceVim"
+---
+
+# [Available Layers](../../) >> lang#scheme
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Features](#features)
+- [Install](#install)
+
+<!-- vim-markdown-toc -->
+
+## Description
+
+This layer adds scheme language support to SpaceVim. scheme is known as mit-scheme, and the website is:
+
+
+
+## Features
+
+- code runner
+- REPL support
+
+## Install
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#scheme"
+```
