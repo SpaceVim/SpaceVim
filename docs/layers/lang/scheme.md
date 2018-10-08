@@ -1,35 +1,36 @@
 ---
-title: "SpaceVim lang#scheme 模块"
-description: "该模块为 SpaceVim 提供了 scheme 语言开发支持，包括语法高亮、语言服务器支持。"
-lang: cn
+title: "SpaceVim lang#scheme layer"
+description: "This layer adds scheme language support to SpaceVim"
 image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6-11e8-9366-6772d129a13b.png
 ---
 
-# [可用模块](../../) >> lang#scheme
+# [Available Layers](../../) >> lang#scheme
 
 <!-- vim-markdown-toc GFM -->
 
-- [模块简介](#模块简介)
-- [功能特性](#功能特性)
-- [启用模块](#启用模块)
+- [Description](#description)
+- [Features](#features)
+- [Install](#install)
 
 <!-- vim-markdown-toc -->
 
-## 模块简介
+## Description
 
-该模块为 SpaceVim 提供了 scheme 语言开发支持。
-
-## 功能特性
-
-- 一键运行
-- 交互式编程
+This layer adds scheme language support to SpaceVim. scheme is known as mit-scheme, and the website is:
 
 
-## 启用模块
 
-可通过在配置文件内加入如下配置来启用该模块：
+## Features
+
+- code runner
+- REPL support
+
+## Install
+
+To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#scheme"
 ```
+
