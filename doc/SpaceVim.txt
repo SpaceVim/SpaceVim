@@ -81,7 +81,8 @@ CONTENTS                                                   *SpaceVim-contents*
       4. sid............................................|SpaceVim-api-vim-sid|
       5. system..........................................|SpaceVim-api-system|
       6. vim#buffer..................................|SpaceVim-api-vim-buffer|
-      7. vim#message................................|SpaceVim-api-vim-message|
+      7. vim#command................................|SpaceVim-api-vim-command|
+      8. vim#message................................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1390,6 +1391,31 @@ is a dict with following keys:
     initfunc: the function which will be call after creating buffer
 
     cmd: the ex command which will be run after the new buffer is created
+
+==============================================================================
+VIM#COMMAND                                         *SpaceVim-api-vim-command*
+
+This api is for create complete function for custom vim command. This is
+example for create complete function for command TEST
+>
+  let s:CMD = SpaceVim#api#import('vim#command')
+  let s:CMD.options = {
+      \ '-f' : {
+      \ 'description' : '',
+      \ 'complete' : ['text'],
+      \ },
+      \ '-d' : {
+      \ 'description' : 'Root directory for sources',
+      \ 'complete' : 'file',
+      \ },
+      \ }
+  function! CompleteTest(a, b, c)
+    return s:CMD.complete(a:a, a:b, a:c)
+  endfunction
+  function! Test(...)
+  endfunction
+  command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
+<
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
