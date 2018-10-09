@@ -1327,20 +1327,34 @@ be a funcrc.
 ==============================================================================
 DATA#LIST                                             *SpaceVim-api-data-list*
 
+provides some functions to manipulate a list.
+
 pop({list})
 
-Removes the last element from {list} and returns the element, as if the {list}
-is a stack.
+  Removes the last element from {list} and returns the element, as if the
+{list} is a stack.
 
 push({list})
 
-Appends {val} to the end of {list} and returns the list itself, as if the
+  Appends {val} to the end of {list} and returns the list itself, as if the
 {list} is a stack.
 
 listpart({list}, {start}[, {len}])
 
-The result is a List, which is part of {list}, starting from index {start},
+  The result is a List, which is part of {list}, starting from index {start},
 with the length {len}
+
+replace(list, begin, end, re_list)
+
+  replace {list} from {begin} to {end} with {re_list}
+
+shift({list})
+
+  remove first item in a {list}, and return the item
+
+unshift({list})
+
+ insert an item to the begin of the {list}
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
