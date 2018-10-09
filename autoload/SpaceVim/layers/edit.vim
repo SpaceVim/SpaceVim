@@ -506,7 +506,7 @@ endif
 
 augroup spacevim_layer_edit
   au!
-  autocmd BufNewFile *.py call <SID>add_buffer_head()
+  autocmd BufNewFile * call <SID>add_buffer_head()
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
