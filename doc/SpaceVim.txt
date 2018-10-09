@@ -82,7 +82,8 @@ CONTENTS                                                   *SpaceVim-contents*
       5. system..........................................|SpaceVim-api-system|
       6. vim#buffer..................................|SpaceVim-api-vim-buffer|
       7. vim#command................................|SpaceVim-api-vim-command|
-      8. vim#message................................|SpaceVim-api-vim-message|
+      8. vim#compatible..........................|SpaceVim-api-vim-compatible|
+      9. vim#message................................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1416,6 +1417,28 @@ example for create complete function for command TEST
   endfunction
   command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
 <
+
+==============================================================================
+VIM#COMPATIBLE                                   *SpaceVim-api-vim-compatible*
+
+
+FUNCTIONS
+
+execute(cmd)
+
+  run vim command, and return the output of such command.
+
+system(cmd)
+
+  like |system()| but can accept list as argv.
+
+systemlist(cmd)
+
+  like |systemlist()| but can accept list as argv.
+
+has(feature)
+
+  check if {feature} is supported in current version.
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
