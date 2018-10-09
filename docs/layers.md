@@ -136,6 +136,7 @@ enable = false
 | [tools#dash](tools/dash/)    |   This layer provides Dash integration for SpaceVim | 
 | [tools](tools/)    |   This layer provides some tools for vim | 
 | [ui](ui/)    |   Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI | 
+
 <!-- SpaceVim layer list end -->
 
 <!-- vim:set nowrap: -->

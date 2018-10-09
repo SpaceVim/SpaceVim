@@ -65,12 +65,14 @@ endfunction
 function! s:generate_content() abort
   let content = ['', '## Available layers', '']
   let content += s:layer_list()
+  let content += ['']
   return content
 endfunction
 
 function! s:generate_content_cn() abort
   let content = ['', '## 可用模块', '']
   let content += s:layer_list_cn()
+  let content += ['']
   return content
 endfunction
 
