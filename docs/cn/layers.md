@@ -132,6 +132,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [tools#dash](tools/dash/)    |   该模块提供对 Dash 支持，可快速查找光标位置的单词 | 
 | [tools](tools/)    |   集成多种常用工具，包括日历、计算器、等等多种工具类插件，该模块针对 vim8 以及 neovim 提供了更好的插件选择。 | 
 | [ui](ui/)    |   SpaceVim ui 模块提供了一个 IDE-like 的界面，包括状态栏、文件树、语法数等等特性。 | 
+
 <!-- SpaceVim layer cn list end -->
 
 <!-- vim:set nowrap: -->
