@@ -8,8 +8,8 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-- [简介](#简介)
-- [使用方法](#使用方法)
+    - [简介](#简介)
+    - [使用方法](#使用方法)
 - [可用 APIs](#可用-apis)
 
 <!-- vim-markdown-toc -->
@@ -39,13 +39,14 @@ echom s:file.pathSeparator
 
 <!-- SpaceVim api cn list start -->
 
-#### 可用 APIs
+## 可用 APIs
 
-| 名称                            | 描述                                                           |
-| ------------------------------- | -------------------------------------------------------------- |
-| [file](file/)                   | can not find Description                                       |
-| [job](job/)                     | 兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制 |
-| [system](system/)               | can not find Description                                       |
-| [vim#highlight](vim/highlight/) | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。  |
+| 名称                                  | 描述                                                                    |
+| ------------------------------------- | ----------------------------------------------------------------------- |
+| [file](file/)                         | can not find Description                                                |
+| [job](job/)                           | 兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制          |
+| [system](system/)                     | can not find Description                                                |
+| [unicode#spinners](unicode/spinners/) | unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号 |
+| [vim#highlight](vim/highlight/)       | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。           |
 
 <!-- SpaceVim api cn list end -->

@@ -48,24 +48,21 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 为了提升用户体验，可以通过使用如下的模块选项来定制自动补全：
 
-- `auto-completion-return-key-behavior` 选项控制当按下 `Return`/`Enter` 键时的行为，
-默认为 `smart`，可用的值包括如下3种：
-
-1. `complete` 补全模式，插入当前选中的列表选项
-2. `smart` 智能模式，插入当前选中的列表选项，若当前选择的时 snippet，则自动展开代码块。
-3. `nil` 当设为 nil 时，则采用 Vim 默认的按键行为，插入新行
-
-- `auto-completion-tab-key-behavior` 选项控制当按下 `Tab` 键时的行为，默认为
-`smart`，可用的值包括如下4种：
-
-1. `smart` 智能模式，自动循环补全列表、展开代码块以及跳至下一个代码块的锚点
-2. `complete` 补全模式，插入当前选中的列表选项
-3. `cycle` 循环模式，自动再补全列表之间循环
-4. `nil` 当设为 nil 时，该行为和 `Tab` 的默认行为一致
-
-- `auto-completion-complete-with-key-sequence` 设置一个手动补全的按键序列，输入模式下按下这一快捷键，
-可以启动补全，设为 `nil` 时，这一特性将被禁用。
-- `auto-completion-complete-with-key-sequence-delay` 设置手动补全按键序列延迟时间，默认是 0.1
+1. `auto-completion-return-key-behavior` 选项控制当按下 `Return`/`Enter` 键时的行为，
+   默认为 `smart`，可用的值包括如下3种：
+   - `complete` 补全模式，插入当前选中的列表选项
+   - `smart` 智能模式，插入当前选中的列表选项，若当前选择的时 snippet，则自动展开代码块。
+   - `nil` 当设为 nil 时，则采用 Vim 默认的按键行为，插入新行
+2. `auto-completion-tab-key-behavior` 选项控制当按下 `Tab` 键时的行为，默认为
+   `smart`，可用的值包括如下4种：
+   - `smart` 智能模式，自动循环补全列表、展开代码块以及跳至下一个代码块的锚点
+   - `complete` 补全模式，插入当前选中的列表选项
+   - `cycle` 循环模式，自动再补全列表之间循环
+   - `nil` 当设为 nil 时，该行为和 `Tab` 的默认行为一致
+3. `auto-completion-delay` 设置自动补全延迟时间，默认 50 毫秒
+4. `auto-completion-complete-with-key-sequence` 设置一个手动补全的按键序列，输入模式下按下这一快捷键，
+   可以启动补全，设为 `nil` 时，这一特性将被禁用。
+5. `auto-completion-complete-with-key-sequence-delay` 设置手动补全按键序列延迟时间，默认是 0.1
 
 自动补全模块默认载入状态如下：
 
@@ -74,8 +71,9 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
   name = "autocomplete"
   auto-completion-return-key-behavior = "nil"
   auto-completion-tab-key-behavior = "smart"
+  auto-completion-delay = 200
   auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1
+  auto-completion-complete-with-key-sequence-delay = 0.1,
 ```
 
 通常会建议将 `auto-completion-complete-with-key-sequence` 的值设为 `jk`，如果你不用
@@ -107,17 +105,17 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 **自动补全相关快捷键**
 
-| 按键 | 描述                                   |
-| ------------ | --------------------------------------------- |
-| `<C-n>`      | 选择下一个列表选项                         |
-| `<C-p>`      | 选择上一个列表选项                     |
-| `<Tab>`      | 依据 `auto-completion-tab-key-behavior`    |
-| `<S-Tab>`    | 选择上一个列表选项                     |
-| `<Return>`   | 依据 `auto-completion-return-key-behavior` |
+| 按键       | 描述                                       |
+| ---------- | ------------------------------------------ |
+| `<C-n>`    | 选择下一个列表选项                         |
+| `<C-p>`    | 选择上一个列表选项                         |
+| `<Tab>`    | 依据 `auto-completion-tab-key-behavior`    |
+| `<S-Tab>`  | 选择上一个列表选项                         |
+| `<Return>` | 依据 `auto-completion-return-key-behavior` |
 
 **代码块模板相关快捷键**
 
-| 按键 | 描述                                                    |
-| ----------- | -------------------------------------------------------------- |
-| `M-/`       | 如果光标前的词语为一代码块模板缩写，则展开该代码块 |
-| `SPC i s`   | 列出所有可用的代码块模板，选择后并插入                      |
+| 按键      | 描述                                               |
+| --------- | -------------------------------------------------- |
+| `M-/`     | 如果光标前的词语为一代码块模板缩写，则展开该代码块 |
+| `SPC i s` | 列出所有可用的代码块模板，选择后并插入             |

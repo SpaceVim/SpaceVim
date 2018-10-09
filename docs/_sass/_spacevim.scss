@@ -2,6 +2,7 @@
 
 // Variables
 @import "variables";
+@import "gitment";
 
 /*! normalize.css 2012-02-07T12:37 UTC - https://github.com/necolas/normalize.css */
 /* ============================================================================= HTML5 display definitions ========================================================================== */
@@ -211,7 +212,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 .highlight .ss { color: #90a959; }
 
-body { padding: 0px 0 20px 0px; margin: 0px; font: 14px/1.5 "OpenSansRegular", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #f0e7d5; font-weight: normal; background: #252525; background-attachment: fixed !important; background: linear_gradient(#2a2a29, #1c1c1c); }
+body { padding: 0px 0 20px 0px; margin: 0px; font: 14px/1.5 "OpenSansRegular", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #f0e7d5; font-weight: normal; background: $background-color; background-attachment: fixed !important; background: linear_gradient(#2a2a29, #1c1c1c); }
 
 h1, h2, h3, h4, h5, h6 { color: #e8e8e8; margin: 0 0 10px; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; }
 

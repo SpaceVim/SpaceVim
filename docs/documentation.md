@@ -62,6 +62,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Searching](#searching)
     - [With an external tool](#with-an-external-tool)
+      - [Custom searching tool](#custom-searching-tool)
       - [Useful key bindings](#useful-key-bindings)
       - [Searching in current file](#searching-in-current-file)
       - [Searching in buffer directory](#searching-in-buffer-directory)
@@ -1103,6 +1104,7 @@ Files manipulation commands (start with f):
 
 | Key Binding | Description                                                    |
 | ----------- | -------------------------------------------------------------- |
+| `SPC f /`   | Find files with `find` command                                 |
 | `SPC f b`   | go to file bookmarks                                           |
 | `SPC f c`   | copy current file to a different location(TODO)                |
 | `SPC f C d` | convert file from unix to dos encoding                         |
@@ -1332,6 +1334,37 @@ Notes:
 - It is also possible to search in several directories at once by marking them in the unite buffer.
 
 **Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
+
+
+##### Custom searching tool
+
+to change the option of a search tool, you need to use bootstrap function. here is an example
+how to change the default option of searching tool `rg`.
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+The structure of searching tool profile is:
+
+```vim
+" { 'ag' : { 
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
 
 ##### Useful key bindings
 
@@ -1681,6 +1714,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c L`   | invert comment lines      |
 | `SPC c p`   | comment paragraphs        |
 | `SPC c P`   | invert comment paragraphs |
+| `SPC c s`   | comment with pretty layout|
 | `SPC c t`   | comment to line           |
 | `SPC c T`   | invert comment to line    |
 | `SPC c y`   | comment and yank          |

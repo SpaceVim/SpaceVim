@@ -64,6 +64,7 @@ lang: cn
   - [以 `z` 开头的命令](#以-z-开头的命令)
   - [搜索](#搜索)
     - [使用额外工具](#使用额外工具)
+      - [配置搜索工具](#配置搜索工具)
       - [常用按键绑定](#常用按键绑定)
       - [在当前文件中进行搜索](#在当前文件中进行搜索)
       - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
@@ -188,7 +189,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在`~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
 
-当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
+当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软链接来改变目录位置，以便配置备份。
 
 SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.toml` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
@@ -419,7 +420,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 | 快捷键      | 描述               |
 | ----------- | ------------------ |
-| `SPC [1-9]` | 跳至制定序号的窗口 |
+| `SPC [1-9]` | 跳至指定序号的窗口 |
 
 默认主题 gruvbox 的状态栏颜色和模式对照表：
 
@@ -829,12 +830,12 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| 快捷键      | 描述                                         |
-| ----------- | -------------------------------------------- |
-| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录    |
-| `SPC h i`   | 获取光标下单词的帮助信息                     |
-| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
-| `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |
+| 快捷键      | 描述                                               |
+| ----------- | -------------------------------------------------- |
+| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
+| `SPC h i`   | 获取光标下单词的帮助信息                           |
+| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键       |
+| `SPC h m`   | 使用 Unite 浏览所有 man 文档                       |
 
 报告一个问题：
 
@@ -979,8 +980,8 @@ merged = 0
 | `SPC w TAB`/`<Tab>`  | 在统一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                                     |
-| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                                               |
+| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
+| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
 | `SPC w d`            | 删除一个窗口                                                                   |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
 | `SPC w D`            | 选择一个窗口，并且关闭                                                         |
@@ -1062,6 +1063,7 @@ Buffer 操作相关快捷键都是已 `SPC b` 为前缀的：
 
 | 快捷键      | 描述                                                   |
 | ----------- | ------------------------------------------------------ |
+| `SPC f /`   | 使用 `find` 命令查找文件，支持参数提示                 |
 | `SPC f b`   | 跳至文件书签                                           |
 | `SPC f c`   | copy current file to a different location(TODO)        |
 | `SPC f C d` | 修改文件编码 unix -> dos                               |
@@ -1131,7 +1133,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ##### 文件树中打开文件
 
-如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要制定窗口来打开文件：
+如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要指定窗口来打开文件：
 
 | 快捷键         | 描述             |
 | -------------- | ---------------- |
@@ -1289,6 +1291,36 @@ Notes:
 - 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
   **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
   同时也需要安装一个名叫 `pt` 的命令行工具.
+
+##### 配置搜索工具
+
+若需要修改默认搜索工具的选项，可以使用启动函数，在启动函数中配置各种搜索工具的默认选项。
+下面是一个修改 `rg` 默认搜索选项的配置示例：
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+搜索工具配置结构为：
+
+```vim
+" { 'ag' : { 
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
 
 ##### 常用按键绑定
 

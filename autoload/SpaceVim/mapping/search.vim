@@ -201,3 +201,76 @@ function! SpaceVim#mapping#search#getFopt(exe) abort
   let key = s:search_tools.namespace[a:exe]
   return s:search_tools[key]['default_fopts']
 endfunction
+
+
+" the profile of a search tool should be:
+" { 'ag' : { 
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+"
+"  so the finale command line is :
+"  [command] 
+"  + [ignore_case_opt]? 
+"  + [smart_case_opt]?
+"  + [string_opt]/[expr_opt]?
+"  + {expr}
+"  + {files or dir}
+"  + [roptions]
+function! SpaceVim#mapping#search#profile(opt) abort
+
+  for key in keys(a:opt)
+    if has_key(s:search_tools.namespace, key)
+      for opt_key in keys(s:search_tools[s:search_tools.namespace[key]])
+        if has_key(a:opt[key], opt_key)
+          let s:search_tools[s:search_tools.namespace[key]][opt_key] = a:opt[key][opt_key]
+        endif
+      endfor
+    else
+      call s:add_new_search_tool(a:opt[key])
+    endif
+  endfor
+
+endfunction
+
+function! SpaceVim#mapping#search#getprofile(...) abort
+
+  if a:0 > 0
+    let tool = get(s:search_tools.namespace, a:1, '')
+    if !empty(tool)
+      return deepcopy(s:search_tools[tool])
+    endif
+  else
+    if !has_key(s:search_tools, 'default_exe')
+      for t in get(g:, 'spacevim_search_tools', ['rg', 'ag', 'pt', 'ack', 'grep'])
+        if executable(t)
+          let s:search_tools.default_exe = t
+          let key = s:search_tools.namespace[t]
+          let s:search_tools.default_opt = s:search_tools[key]['default_opts']
+          let s:search_tools.default_ropt = s:search_tools[key]['recursive_opt']
+          let s:search_tools.expr_opt = s:search_tools[key]['expr_opt']
+          let s:search_tools.fixed_string_opt = s:search_tools[key]['fixed_string_opt']
+          let s:search_tools.ignore_case = s:search_tools[key]['ignore_case']
+          let s:search_tools.smart_case = s:search_tools[key]['smart_case']
+          break
+        endif
+      endfor
+    endif
+    if has_key(s:search_tools, 'default_exe')
+      return deepcopy(s:search_tools[s:search_tools.namespace[s:search_tools.default_exe]])
+    endif
+  endif
+
+endfunction
+
+function! s:add_new_search_tool(tool) abort
+  " TODO: add new tools,
+  " 1. we should check namespace
+endfunction

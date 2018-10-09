@@ -1,142 +1,103 @@
 ---
 title: "Use Vim as a Java IDE"
 categories: [tutorials, blog]
-excerpt: "I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim."
+excerpt: "A general guide for using SpaceVim as Java IDE, including layer configuration and requiems installation."
 redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
 type: BlogPosting
 comments: true
 commentsID: "Use Vim as a Java IDE"
 ---
 
-# [Blogs](https://spacevim.org/community#blogs) > Use Vim as a Java IDE
+# [Blogs](../blog/) >> Use Vim as a Java IDE
 
-I am a vimmer and a java developer. Here are some useful plugins for developing java in vim/neovim.
+This is a general guide for using SpaceVim as a Java IDE, including layer configuration and usage. 
+Each of the following sections will be covered:
 
-![beautiful UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
+<!-- vim-markdown-toc GFM -->
 
-## Project manager
+- [Installation](#installation)
+- [Code completion](#code-completion)
+- [Syntax lint](#syntax-lint)
+- [Import packages](#import-packages)
+- [Jump to test file](#jump-to-test-file)
+- [running code](#running-code)
+- [Code formatting](#code-formatting)
+- [REPL](#repl)
 
-1. [unite](https://github.com/Shougo/unite.vim) - file and code fuzzy founder.
+<!-- vim-markdown-toc -->
 
-The next version of unite is [denite](https://github.com/Shougo/denite.nvim), Denite is a dark powered plugin for Neovim/Vim to unite all interfaces.
+## Installation
 
-![unite](https://s3.amazonaws.com/github-csexton/unite-01.gif)
+SpaceVim is a Vim and neovim configuration, so you need to install vim or neovim,
+here are two guides for installing neovim and vim8 with `+python3` feature.
+following the [quick start guide](../quick-start-guide/) to install SpaceVim.
 
-The unite or unite.vim plug-in can search and display information from arbitrary sources like files, buffers, recently used files or registers. You can run several pre-defined actions on a target displayed in the unite window.
+SpaceVim do not enable language layer by default, so you need to enable `lang#java` layer.
+Press `SPC f v d` to open SpaceVim configuration file, and add following section:
 
-The difference between unite and similar plug-ins like fuzzyfinder, ctrl-p or ku is that unite provides an integration interface for several sources and you can create new interfaces using unite.
 
-You can also use unite with [ag](https://github.com/ggreer/the_silver_searcher), that will make searching faster.
-
-_config unite with ag or other tools support_
-
-```viml
-if executable('hw')
-    " Use hw (highway)
-    " https://github.com/tkengo/highway
-    let g:unite_source_grep_command = 'hw'
-    let g:unite_source_grep_default_opts = '--no-group --no-color'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ag')
-    " Use ag (the silver searcher)
-    " https://github.com/ggreer/the_silver_searcher
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor ' .
-                \ '--nogroup --hidden --ignore ' .
-                \ '''.hg'' --ignore ''.svn'' --ignore' .
-                \ ' ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt (the platinum searcher)
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack
-    " http://beyondgrep.com/
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading' .
-                \ ' --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-    " Use jvgrep
-    " https://github.com/mattn/jvgrep
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --exclude ''\.(git|svn|hg|bzr)'''
-    let g:unite_source_grep_recursive_opt = '-R'
-elseif executable('beagrep')
-    " Use beagrep
-    " https://github.com/baohaojun/beagrep
-    let g:unite_source_grep_command = 'beagrep'
-endif
+```toml
+[[layers]]
+  name = "lang#java"
 ```
 
-2. [vimfiler](https://github.com/Shougo/vimfiler.vim) - A powerful file explorer implemented in Vim script
+## Code completion
 
-_Use vimfiler as default file explorer_
+javacomplete2 which has been included in `lang#java` layer provides omnifunc for java file and deoplete source.
+with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically。
 
-> for more information, you should read the documentation of vimfiler.
+![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
 
-```viml
-let g:vimfiler_as_default_explorer = 1
-call vimfiler#custom#profile('default', 'context', {
-            \ 'explorer' : 1,
-            \ 'winwidth' : 30,
-            \ 'winminwidth' : 30,
-            \ 'toggle' : 1,
-            \ 'columns' : 'type',
-            \ 'auto_expand': 1,
-            \ 'direction' : 'rightbelow',
-            \ 'parent': 0,
-            \ 'explorer_columns' : 'type',
-            \ 'status' : 1,
-            \ 'safe' : 0,
-            \ 'split' : 1,
-            \ 'hidden': 1,
-            \ 'no_quit' : 1,
-            \ 'force_hide' : 0,
-            \ })
+## Syntax lint
+
+`checkers` layer provides asynchronous linting feature, this layer use [neomake](https://github.com/neomake/neomake) by default.
+neomake support maven, gradle and eclipse project. it will generate classpath automatically for these project.
+
+![lint-java](https://user-images.githubusercontent.com/13142418/46323584-99b81a80-c621-11e8-8ca5-d8eb7fbd93cf.png)
+
+within above picture, we can see the checkers layer provides following feature:
+
+- list errors and warnings in quickfix windows
+- sign error and warning position on the left side
+- show numbers of errors and warnings on statusline
+- show cursor error and warning information below current line
+
+## Import packages
+
+There are two kind features for importing packages, import packages automatically and manually. SpaceVim will import the packages after selecting the class name on popmenu.
+Also, you can use key binding `<F4>` to import the class at the cursor point. If there are more than one class, a menu will be shown below current windows.
+
+![import class](https://user-images.githubusercontent.com/13142418/46298485-c04e6500-c5d1-11e8-96f3-01d84f9fe237.png)
+
+## Jump to test file
+
+SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+
+```json
+{
+  "src/main/java/*.java": {"alternate": "src/test/java/{dirname}/Test{basename}.java"},
+  "src/test/java/**/Test*.java": {"alternate": "src/main/java/{}.java"}
+}
 ```
 
-3. [tagbar](https://github.com/majutsushi/tagbar) - Vim plugin that displays tags in a window, ordered by scope
+with this configuration, you can jump between the source code and test file via command `:A`
+
+![jump-test](https://user-images.githubusercontent.com/13142418/46322905-12b57300-c61e-11e8-81a2-53c69d10140f.gif)
+
+
+## running code
+
+Base on JavaUnite, you can use `SPC l r c` to run current function or use `SPC l r m` to run the main function of current Class.
+
+![run-main](https://user-images.githubusercontent.com/13142418/46323137-61174180-c61f-11e8-94df-61b6998b8907.gif)
+
 
 ## Code formatting
-
-1. [neoformat](https://github.com/sbdchd/neoformat) - A (Neo)vim plugin for formatting code.
 
 For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
 BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
 
-## Code completion
-
-1. [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2) - Updated javacomplete plugin for vim
-
-   - Demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/demo.gif)
-
-   - Generics demo
-
-   ![vim-javacomplete2](https://github.com/artur-shaik/vim-javacomplete2/raw/master/doc/generics_demo.gif)
-
-2. [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) - Dark powered asynchronous completion framework for neovim
-
-3. [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) - Next generation completion framework after neocomplcache 
-
-## Syntax lint
-
-1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
-
-I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
-also you can set the classpath.
+![format-java](https://user-images.githubusercontent.com/13142418/46323426-ccadde80-c620-11e8-9726-d99025f3bf76.gif)
 
 ## REPL
 

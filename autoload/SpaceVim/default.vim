@@ -150,12 +150,21 @@ function! SpaceVim#default#keyBindings() abort
   endif
 
   " yank and paste
-  xnoremap <Leader>y "+y
-  xnoremap <Leader>d "+d
-  nnoremap <Leader>p "+p
-  nnoremap <Leader>P "+P
-  xnoremap <Leader>p "+p
-  xnoremap <Leader>P "+P
+  if has('unnamedplus')
+    xnoremap <Leader>y "+y
+    xnoremap <Leader>d "+d
+    nnoremap <Leader>p "+p
+    nnoremap <Leader>P "+P
+    xnoremap <Leader>p "+p
+    xnoremap <Leader>P "+P
+  else
+    xnoremap <Leader>y "*y
+    xnoremap <Leader>d "*d
+    nnoremap <Leader>p "*p
+    nnoremap <Leader>P "*P
+    xnoremap <Leader>p "*p
+    xnoremap <Leader>P "*P
+  endif
 
 
   " Location list movement
