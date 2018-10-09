@@ -67,6 +67,7 @@ fu! s:findDirInParent(what, where) abort " {{{2
 endf " }}}2
 fu! zvim#util#CopyToClipboard(...) abort
   if a:0
+    echom 1
     if executable('git')
       let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
       if repo_home !=# '' || !isdirectory(repo_home)
