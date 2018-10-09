@@ -79,7 +79,8 @@ CONTENTS                                                   *SpaceVim-contents*
       2. data#list....................................|SpaceVim-api-data-list|
       3. prompt..........................................|SpaceVim-api-prompt|
       4. sid............................................|SpaceVim-api-vim-sid|
-      5. vim#message................................|SpaceVim-api-vim-message|
+      5. system..........................................|SpaceVim-api-system|
+      6. vim#message................................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1358,6 +1359,14 @@ default mapping for prompt is:
 SID                                                     *SpaceVim-api-vim-sid*
 
 " Capture command
+
+==============================================================================
+SYSTEM                                                   *SpaceVim-api-system*
+
+name()
+
+Return the name of current os, availibel value is: linux, cygwin, windows and
+mac.
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
