@@ -6,6 +6,19 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section data#dict, api-data-dict
+" @parentsection api
+" provides some functions to manipulate a dict.
+"
+" make({keys}, {values})
+" 
+"   make a dictionary from two list, the {keys} and {values}.
+"
+" swap({dict})
+"
+"   swap the keys and values in a dictionary.
+
 function! SpaceVim#api#data#dict#get() abort
   return map({
         \ 'make' : '',

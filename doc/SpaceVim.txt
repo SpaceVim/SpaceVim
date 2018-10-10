@@ -76,14 +76,15 @@ CONTENTS                                                   *SpaceVim-contents*
       32. tools#dash...............................|SpaceVim-layer-tools-dash|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
-      2. data#list....................................|SpaceVim-api-data-list|
-      3. prompt..........................................|SpaceVim-api-prompt|
-      4. sid............................................|SpaceVim-api-vim-sid|
-      5. system..........................................|SpaceVim-api-system|
-      6. vim#buffer..................................|SpaceVim-api-vim-buffer|
-      7. vim#command................................|SpaceVim-api-vim-command|
-      8. vim#compatible..........................|SpaceVim-api-vim-compatible|
-      9. vim#message................................|SpaceVim-api-vim-message|
+      2. data#dict....................................|SpaceVim-api-data-dict|
+      3. data#list....................................|SpaceVim-api-data-list|
+      4. prompt..........................................|SpaceVim-api-prompt|
+      5. sid............................................|SpaceVim-api-vim-sid|
+      6. system..........................................|SpaceVim-api-system|
+      7. vim#buffer..................................|SpaceVim-api-vim-buffer|
+      8. vim#command................................|SpaceVim-api-vim-command|
+      9. vim#compatible..........................|SpaceVim-api-vim-compatible|
+      10. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -748,6 +749,10 @@ COMMANDS                                                   *SpaceVim-commands*
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
+SpaceVim#api#import({name})                            *SpaceVim#api#import()*
+  Import API base the given {name}, and return the API object. for all
+  available APIs please check |spacevim-api|
+
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
   |SpaceVim-layers|. the second argv is the layer variable.
@@ -1306,14 +1311,22 @@ This layer provides Dash integration for SpaceVim
 ==============================================================================
 API                                                             *SpaceVim-api*
 
-SpaceVim contains a variety of public apis. here is a list of all the apis.
+SpaceVim contains a variety of public apis. To using the api, you need to make
+sure SpaceVim has been added to your &rtp. after that, you can use
+|SpaceVim#api#import| to import the API you need.
+
 USAGE
+
 This is just an example, and it works well in old version vim.
 >
   let s:json = SpaceVim#api#import('data#json')
   let rst = s:json.json_encode(onject)
   let rst = s:json.json_decode(string)
 <
+
+here is list of resources where SpaceVim comes from:
+
+vital: https://github.com/vim-jp/vital.vim
 
 ==============================================================================
 CMDLINEMENU                                         *SpaceVim-api-cmdlinemenu*
@@ -1323,6 +1336,19 @@ menu({items})
 Create a cmdline selection menu from a list of {items}, each item should be a
 list of two value in it, first one is the description, and the next one should
 be a funcrc.
+
+==============================================================================
+DATA#DICT                                             *SpaceVim-api-data-dict*
+
+provides some functions to manipulate a dict.
+
+make({keys}, {values})
+
+  make a dictionary from two list, the {keys} and {values}.
+
+swap({dict})
+
+  swap the keys and values in a dictionary.
 
 ==============================================================================
 DATA#LIST                                             *SpaceVim-api-data-list*
