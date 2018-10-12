@@ -405,7 +405,7 @@ function! s:preview() abort
   let line = getline('.')
   let filename = fnameescape(split(line, ':\d\+:')[0])
   let linenr = matchstr(line, ':\d\+:')[1:-2]
-  exe 'silent pedit! +' . linenr . ' ' . filename
+  exe 'noautocmd silent pedit! +' . linenr . ' ' . filename
   resize 18
 endfunction
 
