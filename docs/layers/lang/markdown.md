@@ -37,6 +37,7 @@ npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
 npm -g install remark-frontmatter
+npm -g install wcwidth
 ```
 
 ### options
