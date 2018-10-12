@@ -37,6 +37,7 @@ SpaceVim 默认使用 remark 来格式化 markdown 文件，因此需要安装�
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
 ```
 
 ## 模块设置

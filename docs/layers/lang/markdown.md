@@ -36,6 +36,7 @@ SpaceVim use remark to formatting markdown file, so you need to install this pro
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
 ```
 
 ### options
@@ -55,7 +56,6 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 **listItemChar**
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
-
 
 ## Key bindings
 
