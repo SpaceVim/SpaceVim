@@ -10,15 +10,20 @@ let s:self.id = []
 let s:self._STRING = SpaceVim#api#import('data#string')
 let s:self._cmp = SpaceVim#api#import('vim#compatible')
 
+let s:self.hi_info_group = 'Comment'
+let s:self.hi_warn_group = 'WarningMsg'
+let s:self.hi_error_group = 'ErrorMsg'
+
+
 if exists('*nvim_buf_set_virtual_text')
   function! s:self.info(line, col, message)  abort
-    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "Comment"],], {})
+    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, self.hi_info_group],], {})
   endfunction
   function! s:self.warn(line, col, message)  abort
-    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "WarningMsg"],], {})
+    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, self.hi_warn_group],], {})
   endfunction
   function! s:self.error(line, col, message)  abort
-    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "ErrorMsg"],], {})
+    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, self.hi_error_group],], {})
   endfunction
 else
 
