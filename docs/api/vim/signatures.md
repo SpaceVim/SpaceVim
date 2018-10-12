@@ -1,6 +1,6 @@
 ---
 title: "vim#signatures api"
-description: "vim#signatures API provides some basic functions and values for getting and setting signatures info."
+description: "vim#signatures API provides some basic functions for showing signatures info."
 ---
 
 # [Available APIs](../../) >> vim#signatures
@@ -14,11 +14,14 @@ description: "vim#signatures API provides some basic functions and values for ge
 
 ## Intro
 
-vim#signatures API provides some basic functions and values for getting and setting signatures info.
+vim#signatures API provides some basic functions for showing signatures info.
 
 ## Functions
 
 | function name             | description                              |
 | ------------------------- | ---------------------------------------- |
-| `group2dict(name)`        | get a dict of highligh group info        |
+| `info(line, col, msg)`        | show info signature message on specific line and col        |
+| `warn(line, col, msg)`        | show warn signature message on specific line and col        |
+| `error(line, col, msg)`        | show error signature message on specific line and col        |
+| `clear()`        | clear signatures info        |
 

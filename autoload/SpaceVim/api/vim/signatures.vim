@@ -14,6 +14,12 @@ if exists('*nvim_buf_set_virtual_text')
   function! s:self.info(line, col, message)  abort
     call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "Comment"],], {})
   endfunction
+  function! s:self.warn(line, col, message)  abort
+    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "WarningMsg"],], {})
+  endfunction
+  function! s:self.error(line, col, message)  abort
+    call nvim_buf_set_virtual_text(0, bufnr('%'), a:line, [[a:message, "ErrorMsg"],], {})
+  endfunction
 else
 
   function! s:self.info(line, col, message)  abort
