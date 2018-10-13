@@ -79,13 +79,14 @@ CONTENTS                                                   *SpaceVim-contents*
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
       4. job................................................|SpaceVim-api-job|
-      5. prompt..........................................|SpaceVim-api-prompt|
-      6. sid............................................|SpaceVim-api-vim-sid|
-      7. system..........................................|SpaceVim-api-system|
-      8. vim#buffer..................................|SpaceVim-api-vim-buffer|
-      9. vim#command................................|SpaceVim-api-vim-command|
-      10. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      11. vim#message...............................|SpaceVim-api-vim-message|
+      5. logger..........................................|SpaceVim-api-logger|
+      6. prompt..........................................|SpaceVim-api-prompt|
+      7. sid............................................|SpaceVim-api-vim-sid|
+      8. system..........................................|SpaceVim-api-system|
+      9. vim#buffer..................................|SpaceVim-api-vim-buffer|
+      10. vim#command...............................|SpaceVim-api-vim-command|
+      11. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      12. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1403,6 +1404,16 @@ start({cmd}[, {opt}])
   on_exit: exit event handler (function name or Funcref)
 
   cwd: working directory of the job; defaults to current directory
+
+==============================================================================
+LOGGER                                                   *SpaceVim-api-logger*
+
+provides some functions to manager logger
+
+set_silent({silent})
+
+  {silent} is a Boolean. by default it is false, and log will be print to
+screen.
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
