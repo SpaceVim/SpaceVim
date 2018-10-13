@@ -1,3 +1,22 @@
+"=============================================================================
+" job.vim --- job api
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+
+""
+" @section job, api-job
+" @parentsection api
+" provides some functions to manager job
+"
+" start({cmd}[, {opt}])
+" 
+"   start a job with specific {cmd} and {opt}
+
 function! SpaceVim#api#job#get() abort
   return deepcopy(s:self)
 endfunction

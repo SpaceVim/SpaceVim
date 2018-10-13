@@ -78,13 +78,14 @@ CONTENTS                                                   *SpaceVim-contents*
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
-      4. prompt..........................................|SpaceVim-api-prompt|
-      5. sid............................................|SpaceVim-api-vim-sid|
-      6. system..........................................|SpaceVim-api-system|
-      7. vim#buffer..................................|SpaceVim-api-vim-buffer|
-      8. vim#command................................|SpaceVim-api-vim-command|
-      9. vim#compatible..........................|SpaceVim-api-vim-compatible|
-      10. vim#message...............................|SpaceVim-api-vim-message|
+      4. job................................................|SpaceVim-api-job|
+      5. prompt..........................................|SpaceVim-api-prompt|
+      6. sid............................................|SpaceVim-api-vim-sid|
+      7. system..........................................|SpaceVim-api-system|
+      8. vim#buffer..................................|SpaceVim-api-vim-buffer|
+      9. vim#command................................|SpaceVim-api-vim-command|
+      10. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      11. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1385,6 +1386,15 @@ shift({list})
 unshift({list})
 
  insert an item to the begin of the {list}
+
+==============================================================================
+JOB                                                         *SpaceVim-api-job*
+
+provides some functions to manager job
+
+start({cmd}[, {opt}])
+
+  start a job with specific {cmd} and {opt}
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
