@@ -15,7 +15,18 @@
 "
 " start({cmd}[, {opt}])
 " 
-"   start a job with specific {cmd} and {opt}
+"   spawns {cmd} as a job. {opts} is a dictionary with these keys:
+"
+"   on_stdout: stdout event handler (function name or Funcref)
+"
+"   on_stderr: stderr event handler (function name or Funcref)
+"   
+"   on_exit: exit event handler (function name or Funcref)
+"
+"   cwd: working directory of the job; defaults to current directory
+
+
+
 
 function! SpaceVim#api#job#get() abort
   return deepcopy(s:self)
