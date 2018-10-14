@@ -80,13 +80,14 @@ CONTENTS                                                   *SpaceVim-contents*
       3. data#list....................................|SpaceVim-api-data-list|
       4. job................................................|SpaceVim-api-job|
       5. logger..........................................|SpaceVim-api-logger|
-      6. prompt..........................................|SpaceVim-api-prompt|
-      7. sid............................................|SpaceVim-api-vim-sid|
-      8. system..........................................|SpaceVim-api-system|
-      9. vim#buffer..................................|SpaceVim-api-vim-buffer|
-      10. vim#command...............................|SpaceVim-api-vim-command|
-      11. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      12. vim#message...............................|SpaceVim-api-vim-message|
+      6. password......................................|SpaceVim-api-password|
+      7. prompt..........................................|SpaceVim-api-prompt|
+      8. sid............................................|SpaceVim-api-vim-sid|
+      9. system..........................................|SpaceVim-api-system|
+      10. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      11. vim#command...............................|SpaceVim-api-vim-command|
+      12. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      13. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -1414,6 +1415,31 @@ set_silent({silent})
 
   {silent} is a Boolean. by default it is false, and log will be print to
 screen.
+
+==============================================================================
+PASSWORD                                               *SpaceVim-api-password*
+
+provides some functions to generate password
+
+generate_simple({len})
+
+  generate simple password
+
+generate_strong({len})
+
+  generate strong password
+
+generate_paranoid({len})
+
+  generate paranoid password
+
+generate_numeric({len})
+
+  generate numeric password
+
+generate_phonetic({len})
+
+  generate phonetic password
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
