@@ -150,12 +150,21 @@ function! SpaceVim#default#keyBindings() abort
   endif
 
   " yank and paste
-  xnoremap <Leader>y "+y
-  xnoremap <Leader>d "+d
-  nnoremap <Leader>p "+p
-  nnoremap <Leader>P "+P
-  xnoremap <Leader>p "+p
-  xnoremap <Leader>P "+P
+  if has('unnamedplus')
+    xnoremap <Leader>y "+y
+    xnoremap <Leader>d "+d
+    nnoremap <Leader>p "+p
+    nnoremap <Leader>P "+P
+    xnoremap <Leader>p "+p
+    xnoremap <Leader>P "+P
+  else
+    xnoremap <Leader>y "*y
+    xnoremap <Leader>d "*d
+    nnoremap <Leader>p "*p
+    nnoremap <Leader>P "*P
+    xnoremap <Leader>p "*p
+    xnoremap <Leader>P "*P
+  endif
 
 
   " Location list movement
@@ -197,15 +206,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
   nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
   nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
-  if has('nvim')
-    exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
-    exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
-    exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
-    exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
-    exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
-    exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
-    exe 'tnoremap <silent><esc>     <C-\><C-n>'
-  endif
 
 
   "Use jk switch to normal mode
@@ -258,14 +258,7 @@ function! SpaceVim#default#keyBindings() abort
 
   " Navigate window
   nnoremap <silent><C-q> <C-w>
-  if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
-  endif
 
-  " Navigation in command line
-  cnoremap <C-a> <Home>
-  cnoremap <C-b> <Left>
-  cnoremap <C-f> <Right>
 
 
   " Fast saving

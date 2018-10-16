@@ -7,11 +7,10 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-0.9.0--dev-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
-
+![welcome-page](https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png)
 
 # SpaceVim - Modern vim distribution 
 
@@ -23,13 +22,15 @@ syntax checking, and documentation lookup. This approach helps keep
 configuration organized and reduces overhead for the user by keeping them
 from having to think about what packages to install.
 
-If you like SpaceVim, feel free to star the project on github - it is a great way to show your
+If you like SpaceVim, feel free to star the project on github. It is a great way to show your
 appreciation while providing us motivation to continue working on this project.
-The extra visibility for the project doesn't hurt either!
 
-The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-See the [Quick start guide](quick-start-guide/), [documentation](documentation/) or the [available layers](layers/) for more information.
+- [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
+- [documentation](documentation/): the primary official document of SpaceVim
+- [available layers](layers/): a list of available layers which can be used in SpaceVim
+
+The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 

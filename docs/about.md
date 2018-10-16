@@ -1,6 +1,6 @@
 ---
 title:  "About"
-description: "SpaceVim is a communicate driven vim distribution with layer feature, all contributors make SpaceVim what it is."
+description: "SpaceVim is a community-driven vim distribution with layer feature, all contributors make SpaceVim what it is."
 ---
 
 # About

@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#japanese#plugins() abort
     return [
-          \ ['vim-jp/vimdoc-ja'],
+          \ ['vim-jp/vimdoc-ja', {'merged' : 0}],
           \ ]
 endfunction
 

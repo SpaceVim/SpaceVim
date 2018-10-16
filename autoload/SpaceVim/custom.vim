@@ -78,7 +78,7 @@ function! SpaceVim#custom#SPCGroupName(keys, name) abort
 endfunction
 
 
-function! SpaceVim#custom#apply(config) abort
+function! SpaceVim#custom#apply(config, type) abort
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
@@ -124,18 +124,18 @@ function! SpaceVim#custom#load() abort
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
-    let local_conf = fnamemodify('.SpaceVim.d/init.toml', ':p')
-    call SpaceVim#logger#info('find config file: ' . local_conf)
+    let local_conf = g:_spacevim_config_path
+    call SpaceVim#logger#info('find local conf: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
-      call SpaceVim#logger#info('loadding cached config: ' . local_conf_cache)
+      call SpaceVim#logger#info('loadding cached local conf: ' . local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'local')
     else
       let conf = s:TOML.parse_file(local_conf)
-      call SpaceVim#logger#info('generate config cache: ' . local_conf_cache)
+      call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'local')
     endif
     if g:spacevim_force_global_config
       call SpaceVim#logger#info('force loadding global config >>>')
@@ -144,6 +144,8 @@ function! SpaceVim#custom#load() abort
   elseif filereadable('.SpaceVim.d/init.vim')
     let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.vim', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
+    let local_conf = g:_spacevim_config_path
+    call SpaceVim#logger#info('find local conf: ' . local_conf)
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config
       call SpaceVim#logger#info('force loadding global config >>>')
@@ -171,11 +173,11 @@ function! s:load_glob_conf() abort
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'glob')
     else
       let conf = s:TOML.parse_file(local_conf)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf)
+      call SpaceVim#custom#apply(conf, 'glob')
     endif
   elseif filereadable(global_dir . '/init.vim')
     let g:_spacevim_global_config_path = global_dir . '/init.vim'
@@ -195,3 +197,79 @@ function! s:load_glob_conf() abort
 
 endfunction
 
+" FIXME: the type should match the toml's type
+function! s:opt_type(opt) abort
+  let var = get(g:, 'spacevim_' . a:opt, '')
+  if type(var) == type('')
+    return '[string]'
+  elseif type(var) == 5
+    return '[boolean]'
+  elseif type(var) == 0
+    return '[number]'
+  elseif type(var) == 3
+    return '[list]'
+  endif
+endfunction
+
+function! s:short_desc_of_opt(opt) abort
+  " TODO: add short desc for each options
+  return ''
+endfunction
+
+function! SpaceVim#custom#complete(findstart, base) abort
+  if a:findstart
+    let s:complete_type = ''
+    let s:complete_layer_name = ''
+    " locate the start of the word
+    let section_line = search('^\s*\[','bn')
+    if section_line > 0
+      if getline(section_line) =~# '^\s*\[options\]\s*$'
+        if getline('.')[:col('.')-1] =~# '^\s*[a-zA-Z_]*$'
+          let s:complete_type = 'spacevim_options'
+        endif
+      elseif getline(section_line) =~# '^\s*\[\[layers\]\]\s*$'
+        let s:complete_type = 'layers_options'
+        let layer_name_line = search('^\s*name\s*=','bn')
+        if layer_name_line > section_line && layer_name_line < line('.')
+          let s:complete_layer_name = eval(split(getline(layer_name_line), '=')[1])
+        endif
+      endif
+    endif
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~# '[a-zA-Z_]'
+      let start -= 1
+    endwhile
+    return start
+  else
+    call SpaceVim#logger#info('Complete SpaceVim configuration file:')
+    call SpaceVim#logger#info('complete_type: ' . s:complete_type)
+    call SpaceVim#logger#info('complete_layer_name: ' . s:complete_layer_name)
+    let res = []
+    if s:complete_type ==# 'spacevim_options'
+      for m in map(getcompletion('g:spacevim_','var'), 'v:val[11:]')
+        if m =~ '^' . a:base
+          call add(res, {
+                \ 'word' : m,
+                \ 'kind' : s:opt_type(m),
+                \ 'menu' : s:short_desc_of_opt(m),
+                \ })
+        endif
+      endfor
+    elseif s:complete_type ==# 'layers_options'
+      let options = ['name']
+      if !empty(s:complete_layer_name)
+        try
+          let options = SpaceVim#layers#{s:complete_layer_name}#get_options()
+        catch
+        endtry
+      endif
+      for m in options
+        if m =~ '^' . a:base
+          call add(res, m)
+        endif
+      endfor
+    endif
+    return res
+  endif
+endfunction

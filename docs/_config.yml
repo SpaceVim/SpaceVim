@@ -42,4 +42,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /SpaceVim.png
+      image: https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png

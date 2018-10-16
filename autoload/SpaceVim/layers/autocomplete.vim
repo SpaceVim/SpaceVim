@@ -71,7 +71,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
       call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
     endif
-  elseif g:spacevim_autocomplete_method == 'asyncomplete'
+  elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -84,7 +84,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
-  elseif g:spacevim_autocomplete_method == 'completor'
+  elseif g:spacevim_autocomplete_method ==# 'completor'
     call add(plugins, ['maralla/completor.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -194,8 +194,23 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
   let s:key_sequence_delay = get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
         \ 0.1)
+  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 50)
 
 endfunction
 
+function! SpaceVim#layers#autocomplete#get_options() abort
+
+  return ['return_key_behavior',
+        \ 'tab_key_behavior',
+        \ 'auto-completion-complete-with-key-sequence',
+        \ 'auto-completion-complete-with-key-sequence-delay']
+
+endfunction
+
+function! SpaceVim#layers#autocomplete#getprfile() abort
+
+  
+
+endfunction
 
 " vim:set et sw=2 cc=80:

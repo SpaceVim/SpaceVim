@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core#statusline 模块"
-description: "这一模块为 SpaceVim 提供了默认的模式化的状态了支持。"
+description: "这一模块为 SpaceVim 提供了默认的模式化的状态栏支持。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了默认的模式化的状态了支持。
+这一模块为 SpaceVim 提供了默认的模式化的状态栏支持。
 
 ## 模块启用
 
