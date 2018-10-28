@@ -7,11 +7,10 @@ description: "The roadmap and milestones define the project direction and priori
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
-
 <!-- vim-markdown-toc GFM -->
 
 - [Next](#next)
-  - [v0.9.0](#v090)
+  - [v1.0.0](#v100)
 - [Meta](#meta)
 - [Completed](#completed)
   - [v0.1.0](#v010)
@@ -22,12 +21,14 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
   - [v0.5.0](#v050)
   - [v0.6.0](#v060)
   - [v0.7.0](#v070)
+  - [v0.8.0](#v080)
+  - [v0.9.0](#v090)
 
 <!-- vim-markdown-toc -->
 
 ## Next
 
-### [v0.9.0](https://github.com/SpaceVim/SpaceVim/milestone/12)
+### [v1.0.0](https://github.com/SpaceVim/SpaceVim/milestone/13)
 
 ## Meta
 
@@ -89,5 +90,13 @@ release note: [v0.6.0](http://spacevim.org/SpaceVim-release-v0.6.0/)
 - Improve all the lang#\* layers
 
 release note: [v0.7.0](http://spacevim.org/SpaceVim-release-v0.7.0/)
+
+### [v0.8.0](https://github.com/SpaceVim/SpaceVim/milestone/11)
+
+release note: [v0.8.0](http://spacevim.org/SpaceVim-release-v0.8.0/)
+
+### [v0.9.0](https://github.com/SpaceVim/SpaceVim/milestone/12)
+
+release note: [v0.9.0](http://spacevim.org/SpaceVim-release-v0.9.0/)
 
 <!-- SpaceVim roadmap completed items end -->
