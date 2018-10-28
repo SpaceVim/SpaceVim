@@ -5,6 +5,29 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section vim#compatible, api-vim-compatible
+" @parentsection api
+"
+" @subsection Functions
+"
+" execute(cmd)
+"
+"   run vim command, and return the output of such command.
+"
+" system(cmd)
+"
+"   like |system()| but can accept list as argv.
+"
+" systemlist(cmd)
+"
+"   like |systemlist()| but can accept list as argv.
+"
+" has(feature)
+"
+"   check if {feature} is supported in current version.
+
 function! SpaceVim#api#vim#compatible#get() abort
   return map({
         \ 'execute' : '',

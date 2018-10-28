@@ -6,11 +6,14 @@
 " License: GPLv3
 "=============================================================================
 
-let s:self = {}
-
-let s:self.options = {}
-
-" let s:options = {
+""
+" @section vim#command, api-vim-command
+" @parentsection api
+" This api is for create complete function for custom vim command. This is
+" example for create complete function for command TEST
+" >
+"   let s:CMD = SpaceVim#api#import('vim#command')
+"   let s:CMD.options = {
 "       \ '-f' : {
 "       \ 'description' : '',
 "       \ 'complete' : ['text'],
@@ -20,6 +23,17 @@ let s:self.options = {}
 "       \ 'complete' : 'file',
 "       \ },
 "       \ }
+"   function! CompleteTest(a, b, c)
+"     return s:CMD.complete(a:a, a:b, a:c)
+"   endfunction
+"   function! Test(...)
+"   endfunction
+"   command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
+" <
+
+let s:self = {}
+
+let s:self.options = {}
 
 let s:self._message = []
 
