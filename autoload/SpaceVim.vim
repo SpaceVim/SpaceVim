@@ -480,6 +480,7 @@ let g:spacevim_colorscheme_default     = 'desert'
 let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
 
 let g:spacevim_sidebar_direction        = ''
