@@ -49,12 +49,14 @@ endfunction
 function! s:generate_content() abort
   let content = ['', '## Available APIs', '', 'here is the list of all available APIs, and welcome to contribute to SpaceVim.', '']
   let content += s:layer_list()
+  let content += ['']
   return content
 endfunction
 
 function! s:generate_content_cn() abort
   let content = ['', '## 可用 APIs', '']
   let content += s:layer_list_cn()
+  let content += ['']
   return content
 endfunction
 

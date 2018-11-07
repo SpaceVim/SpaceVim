@@ -76,10 +76,18 @@ CONTENTS                                                   *SpaceVim-contents*
       32. tools#dash...............................|SpaceVim-layer-tools-dash|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
-      2. data#list....................................|SpaceVim-api-data-list|
-      3. prompt..........................................|SpaceVim-api-prompt|
-      4. sid............................................|SpaceVim-api-vim-sid|
-      5. vim#message................................|SpaceVim-api-vim-message|
+      2. data#dict....................................|SpaceVim-api-data-dict|
+      3. data#list....................................|SpaceVim-api-data-list|
+      4. job................................................|SpaceVim-api-job|
+      5. logger..........................................|SpaceVim-api-logger|
+      6. password......................................|SpaceVim-api-password|
+      7. prompt..........................................|SpaceVim-api-prompt|
+      8. sid............................................|SpaceVim-api-vim-sid|
+      9. system..........................................|SpaceVim-api-system|
+      10. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      11. vim#command...............................|SpaceVim-api-vim-command|
+      12. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      13. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -744,6 +752,10 @@ COMMANDS                                                   *SpaceVim-commands*
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
+SpaceVim#api#import({name})                            *SpaceVim#api#import()*
+  Import API base the given {name}, and return the API object. for all
+  available APIs please check |spacevim-api|
+
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
   |SpaceVim-layers|. the second argv is the layer variable.
@@ -1302,14 +1314,22 @@ This layer provides Dash integration for SpaceVim
 ==============================================================================
 API                                                             *SpaceVim-api*
 
-SpaceVim contains a variety of public apis. here is a list of all the apis.
+SpaceVim contains a variety of public apis. To using the api, you need to make
+sure SpaceVim has been added to your &rtp. after that, you can use
+|SpaceVim#api#import| to import the API you need.
+
 USAGE
+
 This is just an example, and it works well in old version vim.
 >
   let s:json = SpaceVim#api#import('data#json')
   let rst = s:json.json_encode(onject)
   let rst = s:json.json_decode(string)
 <
+
+here is list of resources where SpaceVim comes from:
+
+vital: https://github.com/vim-jp/vital.vim
 
 ==============================================================================
 CMDLINEMENU                                         *SpaceVim-api-cmdlinemenu*
@@ -1321,22 +1341,105 @@ list of two value in it, first one is the description, and the next one should
 be a funcrc.
 
 ==============================================================================
+DATA#DICT                                             *SpaceVim-api-data-dict*
+
+provides some functions to manipulate a dict.
+
+make({keys}, {values}[, {fill}])
+
+  make a dictionary from two list, the {keys} and {values}.
+
+swap({dict})
+
+  swap the keys and values in a dictionary.
+
+make_index
+
+  make a dictionary from a list, use
+
+==============================================================================
 DATA#LIST                                             *SpaceVim-api-data-list*
+
+provides some functions to manipulate a list.
 
 pop({list})
 
-Removes the last element from {list} and returns the element, as if the {list}
-is a stack.
+  Removes the last element from {list} and returns the element, as if the
+{list} is a stack.
 
 push({list})
 
-Appends {val} to the end of {list} and returns the list itself, as if the
+  Appends {val} to the end of {list} and returns the list itself, as if the
 {list} is a stack.
 
 listpart({list}, {start}[, {len}])
 
-The result is a List, which is part of {list}, starting from index {start},
+  The result is a List, which is part of {list}, starting from index {start},
 with the length {len}
+
+replace(list, begin, end, re_list)
+
+  replace {list} from {begin} to {end} with {re_list}
+
+shift({list})
+
+  remove first item in a {list}, and return the item
+
+unshift({list})
+
+ insert an item to the begin of the {list}
+
+==============================================================================
+JOB                                                         *SpaceVim-api-job*
+
+provides some functions to manager job
+
+start({cmd}[, {opt}])
+
+  spawns {cmd} as a job. {opts} is a dictionary with these keys:
+
+  on_stdout: stdout event handler (function name or Funcref)
+
+  on_stderr: stderr event handler (function name or Funcref)
+
+  on_exit: exit event handler (function name or Funcref)
+
+  cwd: working directory of the job; defaults to current directory
+
+==============================================================================
+LOGGER                                                   *SpaceVim-api-logger*
+
+provides some functions to manager logger
+
+set_silent({silent})
+
+  {silent} is a Boolean. by default it is false, and log will be print to
+screen.
+
+==============================================================================
+PASSWORD                                               *SpaceVim-api-password*
+
+provides some functions to generate password
+
+generate_simple({len})
+
+  generate simple password
+
+generate_strong({len})
+
+  generate strong password
+
+generate_paranoid({len})
+
+  generate paranoid password
+
+generate_numeric({len})
+
+  generate numeric password
+
+generate_phonetic({len})
+
+  generate phonetic password
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
@@ -1358,6 +1461,83 @@ default mapping for prompt is:
 SID                                                     *SpaceVim-api-vim-sid*
 
 " Capture command
+
+==============================================================================
+SYSTEM                                                   *SpaceVim-api-system*
+
+name()
+
+Return the name of current os, availibel value is: linux, cygwin, windows and
+mac.
+
+==============================================================================
+VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
+
+FUNCTIONS
+
+is_cmdwin()
+
+Check if current windows is command line windows.
+
+open(opt)
+
+Open a new buffer with specifice options, return the buffer number, the {opt}
+is a dict with following keys:
+
+    bufname : the buffer name of the new buffer
+
+    mode: how to open the new buffer, default is vertical topleft split
+
+    initfunc: the function which will be call after creating buffer
+
+    cmd: the ex command which will be run after the new buffer is created
+
+==============================================================================
+VIM#COMMAND                                         *SpaceVim-api-vim-command*
+
+This api is for create complete function for custom vim command. This is
+example for create complete function for command TEST
+>
+  let s:CMD = SpaceVim#api#import('vim#command')
+  let s:CMD.options = {
+      \ '-f' : {
+      \ 'description' : '',
+      \ 'complete' : ['text'],
+      \ },
+      \ '-d' : {
+      \ 'description' : 'Root directory for sources',
+      \ 'complete' : 'file',
+      \ },
+      \ }
+  function! CompleteTest(a, b, c)
+    return s:CMD.complete(a:a, a:b, a:c)
+  endfunction
+  function! Test(...)
+  endfunction
+  command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
+<
+
+==============================================================================
+VIM#COMPATIBLE                                   *SpaceVim-api-vim-compatible*
+
+
+FUNCTIONS
+
+execute(cmd)
+
+  run vim command, and return the output of such command.
+
+system(cmd)
+
+  like |system()| but can accept list as argv.
+
+systemlist(cmd)
+
+  like |systemlist()| but can accept list as argv.
+
+has(feature)
+
+  check if {feature} is supported in current version.
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
