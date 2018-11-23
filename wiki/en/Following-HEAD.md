@@ -10,6 +10,7 @@ The next release is v1.0.0.
 - Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 - Add function for customizing searching tools ([#2235](https://github.com/SpaceVim/SpaceVim/pull/2235))
 - Add `lang#scheme` layer ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2248))
+- Add automated adjustment of indentation with heuristics ([#2304](https://github.com/SpaceVim/SpaceVim/pull/2248))
 
 ### Improvement
 

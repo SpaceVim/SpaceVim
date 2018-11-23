@@ -16,6 +16,7 @@ function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
         \ ['tpope/vim-surround'],
         \ ['tpope/vim-repeat'],
+        \ ['tpope/vim-sleuth'],
         \ ['junegunn/vim-emoji'],
         \ ['terryma/vim-multiple-cursors', { 'loadconf' : 1, 'merged' : 0}],
         \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
