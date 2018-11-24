@@ -55,6 +55,8 @@ function! SpaceVim#layers#ui#config() abort
         \ 'highlight-long-lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
         \ 'toggle background', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call ToggleConceal()',
+        \ 'toggle conceal', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'Open tabs manager', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
