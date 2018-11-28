@@ -421,6 +421,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t i`   | toggle indentation guide at point                        |
 | `SPC t n`   | toggle line numbers                                      |
 | `SPC t b`   | toggle background                                        |
+| `SPC t c`   | toggle conceal                                           |
 | `SPC t t`   | open tabs manager                                        |
 | `SPC T ~`   | display ~ in the fringe on empty lines                   |
 | `SPC T F`   | toggle frame fullscreen                                  |
