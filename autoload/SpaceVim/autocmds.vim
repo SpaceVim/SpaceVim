@@ -34,9 +34,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
-    autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-    autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
+    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+    autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
+    autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd FileType lua set comments=f:--
     autocmd FileType xml call XmlFileTypeInit()
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
