@@ -25,6 +25,7 @@ The next release is v1.0.0.
 ### Fixed
 
 - Do not load matchup in old version ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2324))
+- Ctrlp support in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2325))
 
 ### Removed
 

@@ -7,6 +7,8 @@
   "docs/cn/*.cmd": {"alternate": "docs/{}.cmd"},
   "wiki/en/Project-layout.md": {"alternate": "wiki/cn/Project-layout.md"},
   "wiki/cn/Project-layout.md": {"alternate": "wiki/en/Project-layout.md"},
+  "wiki/en/Following-HEAD.md": {"alternate": "wiki/cn/Following-HEAD.md"},
+  "wiki/cn/Following-HEAD.md": {"alternate": "wiki/en/Following-HEAD.md"},
   "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md": {"alternate": "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md"},
   "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md": {"alternate": "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md"},
   "docs/_posts/2018-09-27-use-vim-as-a-python-ide.md": {"alternate": "docs/_posts/2018-09-28-use-vim-as-a-python-ide.md"},
