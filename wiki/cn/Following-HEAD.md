@@ -26,6 +26,7 @@
 
 - Do not load matchup in old version ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2324))
 - Ctrlp support in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2325))
+- Fix layers list in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2327))
 
 ### 移除的功能
 
