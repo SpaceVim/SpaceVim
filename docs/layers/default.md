@@ -26,6 +26,8 @@ To use this configuration layer, add it to your configuration file.
 name = "default"
 ```
 
+## Options
+
 ## Key Mappings
 
 | Key binding  | Description                 |

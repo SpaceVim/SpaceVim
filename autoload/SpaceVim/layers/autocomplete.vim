@@ -147,9 +147,10 @@ function! SpaceVim#layers#autocomplete#config() abort
   elseif s:tab_key_behavior ==# 'nil'
   endif
   if s:return_key_behavior ==# 'smart'
-    imap <silent><expr><CR> SpaceVim#mapping#enter()
+    inoremap <silent><expr><CR> SpaceVim#mapping#enter()
   elseif s:return_key_behavior ==# 'complete'
-    imap <silent><expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
+    " inoremap <silent><expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
+    inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-Y>" : "\<lt>CR>"<CR>
   elseif s:return_key_behavior ==# 'nil'
   endif
 
