@@ -106,6 +106,24 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
         \ 'toggle highlight tail spaces', 1)
+  " basic vim settings
+  if has('gui_running')
+    set guioptions-=m " Hide menu bar.
+    set guioptions-=T " Hide toolbar
+    set guioptions-=L " Hide left-hand scrollbar
+    set guioptions-=r " Hide right-hand scrollbar
+    set guioptions-=b " Hide bottom scrollbar
+    set showtabline=0 " Hide tabline
+    set guioptions-=e " Hide tab
+    if s:SYSTEM.isWindows
+      " please install the font in 'Dotfiles\font'
+      set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
+    elseif s:SYSTEM.isOSX
+      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+    else
+      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+    endif
+  endif
 endfunction
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

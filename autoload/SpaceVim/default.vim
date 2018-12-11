@@ -12,120 +12,6 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 " Default options {{{
 function! SpaceVim#default#options() abort
-  " basic vim settings
-  if has('gui_running')
-    set guioptions-=m " Hide menu bar.
-    set guioptions-=T " Hide toolbar
-    set guioptions-=L " Hide left-hand scrollbar
-    set guioptions-=r " Hide right-hand scrollbar
-    set guioptions-=b " Hide bottom scrollbar
-    set showtabline=0 " Hide tabline
-    set guioptions-=e " Hide tab
-    if s:SYSTEM.isWindows
-      " please install the font in 'Dotfiles\font'
-      set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif s:SYSTEM.isOSX
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-    else
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
-    endif
-  endif
-
-  " indent use backspace delete indent, eol use backspace delete line at
-  " begining start delete the char you just typed in if you do not use set
-  " nocompatible ,you need this
-  set backspace=indent,eol,start
-  set nrformats-=octal
-  set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
-  set fillchars=vert:│,fold:·
-
-  set laststatus=2
-
-  " hide cmd
-  set noshowcmd
-
-  " indent
-  set autoindent
-  set smartindent
-  set cindent
-
-  " show wildmenu
-  set wildmenu
-
-  " do not break words.
-  set linebreak
-
-  " Enable line number
-  set number
-
-  " Automatically read a file changed outside of vim
-  set autoread
-
-  " Set SpaceVim data directory {{{
-  " use ~/.cache/SpaceVim/ as default data directory, create the directory if
-  " it does not exist.
-  set backup
-  set undofile
-  set undolevels=1000
-  let g:data_dir = $HOME . '/.cache/SpaceVim/'
-  let g:backup_dir = g:data_dir . 'backup'
-  let g:swap_dir = g:data_dir . 'swap'
-  let g:undo_dir = g:data_dir . 'undofile'
-  let g:conf_dir = g:data_dir . 'conf'
-  if finddir(g:data_dir) ==# ''
-    silent call mkdir(g:data_dir, 'p', 0700)
-  endif
-  if finddir(g:backup_dir) ==# ''
-    silent call mkdir(g:backup_dir, 'p', 0700)
-  endif
-  if finddir(g:swap_dir) ==# ''
-    silent call mkdir(g:swap_dir, 'p', 0700)
-  endif
-  if finddir(g:undo_dir) ==# ''
-    silent call mkdir(g:undo_dir, 'p', 0700)
-  endif
-  if finddir(g:conf_dir) ==# ''
-    silent call mkdir(g:conf_dir, 'p', 0700)
-  endif
-  unlet g:data_dir
-  unlet g:backup_dir
-  unlet g:swap_dir
-  unlet g:undo_dir
-  unlet g:conf_dir
-  set undodir=$HOME/.cache/SpaceVim/undofile
-  set backupdir=$HOME/.cache/SpaceVim/backup
-  set directory=$HOME/.cache/SpaceVim/swap
-  " }}}
-
-  set nowritebackup
-  set matchtime=0
-  set ruler
-  set showmatch
-  set showmode
-  "menuone: show the pupmenu when only one match
-  " disable preview scratch window,
-  set completeopt=menu,menuone,longest
-  " h: 'complete'
-  set complete=.,w,b,u,t
-  " limit completion menu height
-  set pumheight=15
-  set scrolloff=1
-  set sidescrolloff=5
-  set display+=lastline
-  set incsearch
-  set hlsearch
-  set wildignorecase
-  set mouse=nv
-  set hidden
-  set ttimeout
-  set ttimeoutlen=50
-  if has('patch-7.4.314')
-    " don't give ins-completion-menu messages.
-    set shortmess+=c
-  endif
-  set shortmess+=s
-  " Do not wrap lone lines
-  set nowrap
 
   set foldtext=SpaceVim#default#Customfoldtext()
 
@@ -133,11 +19,9 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
-  call SpaceVim#layers#load('autocomplete')
-  call SpaceVim#layers#load('checkers')
-  call SpaceVim#layers#load('format')
-  call SpaceVim#layers#load('edit')
+  call SpaceVim#layers#load('default')
   call SpaceVim#layers#load('ui')
+  call SpaceVim#layers#load('edit')
   call SpaceVim#layers#load('core')
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
@@ -149,22 +33,6 @@ function! SpaceVim#default#keyBindings() abort
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
   endif
 
-  " yank and paste
-  if has('unnamedplus')
-    xnoremap <Leader>y "+y
-    xnoremap <Leader>d "+d
-    nnoremap <Leader>p "+p
-    nnoremap <Leader>P "+P
-    xnoremap <Leader>p "+p
-    xnoremap <Leader>P "+P
-  else
-    xnoremap <Leader>y "*y
-    xnoremap <Leader>d "*d
-    nnoremap <Leader>p "*p
-    nnoremap <Leader>P "*P
-    xnoremap <Leader>p "*p
-    xnoremap <Leader>P "*P
-  endif
 
 
   " Location list movement
