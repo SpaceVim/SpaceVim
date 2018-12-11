@@ -6,10 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-function! SpaceVim#layers#default#plugins() abort
-endfunction
-
-function! SpaceVim#layers#defaultconfig() abort
+function! SpaceVim#layers#default#config() abort
 
   " indent use backspace delete indent, eol use backspace delete line at
   " begining start delete the char you just typed in if you do not use set
@@ -123,4 +120,11 @@ function! SpaceVim#layers#defaultconfig() abort
     xnoremap <Leader>p "*p
     xnoremap <Leader>P "*P
   endif
+
+  "]<End> or ]<Home> move current line to the end or the begin of current buffer
+  nnoremap <silent>]<End> ddGp``
+  nnoremap <silent>]<Home> ddggP``
+  vnoremap <silent>]<End> dGp``
+  vnoremap <silent>]<Home> dggP``
+
 endfunction

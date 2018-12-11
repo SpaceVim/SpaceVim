@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+let s:SYSTEM = SpaceVim#api#import('system')
 scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [

@@ -21,7 +21,6 @@ endfunction
 function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('default')
   call SpaceVim#layers#load('ui')
-  call SpaceVim#layers#load('edit')
   call SpaceVim#layers#load('core')
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
@@ -78,12 +77,6 @@ function! SpaceVim#default#keyBindings() abort
 
   "Use jk switch to normal mode
   inoremap jk <esc>
-
-  "]<End> or ]<Home> move current line to the end or the begin of current buffer
-  nnoremap <silent>]<End> ddGp``
-  nnoremap <silent>]<Home> ddggP``
-  vnoremap <silent>]<End> dGp``
-  vnoremap <silent>]<Home> dggP``
 
 
   "Ctrl+Shift+Up/Down to move up and down
