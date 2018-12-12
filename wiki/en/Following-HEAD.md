@@ -10,6 +10,7 @@ The next release is v1.0.0.
 - Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 - Add function for customizing searching tools ([#2235](https://github.com/SpaceVim/SpaceVim/pull/2235))
 - Add `lang#scheme` layer ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2248))
+- Add log for bootstrap function ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2323))
 
 ### Improvement
 
@@ -22,6 +23,11 @@ The next release is v1.0.0.
 - Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221)) 
 
 ### Fixed
+
+- Do not load matchup in old version ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2324))
+- Ctrlp support in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2325))
+- Fix layers list in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2327))
+- Fix statusline icon ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2328))
 
 ### Removed
 

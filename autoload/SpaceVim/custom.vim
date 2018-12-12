@@ -106,6 +106,8 @@ function! SpaceVim#custom#apply(config, type) abort
         call call(bootstrap_before, [])
       catch
         call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
+        call SpaceVim#logger#error('       exception: ' . v:exception)
+        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
       endtry
     endif
   endif
