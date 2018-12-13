@@ -67,11 +67,21 @@ function! SpaceVim#layers#checkers#config() abort
         \ 'clear all errors', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe a syntax checker', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify syntax checker setup', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'lnext', 'next-error', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'lopen | wincmd w', 'toggle showing the error list', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'lopen', 'toggle showing the error list', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'lprevious', 'previous-error', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'lNext', 'previous-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
+        \ . string(s:_function('s:jump_to_next_error')) . ', [])',
+        \ 'next-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
+        \ . string(s:_function('s:toggle_show_error')) . ', [0])',
+        \ 'toggle showing the error list', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
+        \ . string(s:_function('s:toggle_show_error')) . ', [1])',
+        \ 'toggle showing the error list', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
+        \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+        \ 'previous-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
+        \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+        \ 'previous-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
         \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
         \ 'verify syntax setup', 1)
@@ -114,6 +124,54 @@ function! s:neomake_cursor_move_delay() abort
   call s:neomake_signatures_clear()
   let s:neomake_cursormoved_timer = timer_start(g:neomake_cursormoved_delay,
         \ function('s:neomake_signatures_current_error'))
+endfunction
+
+function! s:toggle_show_error(...) abort
+  try
+    botright lopen
+  catch
+    try
+      if len(getqflist()) == 0
+        echohl WarningMsg
+        echon 'There is no errors!'
+        echohl None
+      else
+        botright copen
+      endif
+    catch
+    endtry
+  endtry
+  if a:1 == 1
+    wincmd w
+  endif
+endfunction
+
+function! s:jump_to_next_error() abort
+  try
+    lnext
+  catch
+    try
+      cnext
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
+endfunction
+
+function! s:jump_to_previous_error() abort
+  try
+    lprevious
+  catch
+    try
+      cprevious
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
 endfunction
 
 let s:last_echoed_error = ''
