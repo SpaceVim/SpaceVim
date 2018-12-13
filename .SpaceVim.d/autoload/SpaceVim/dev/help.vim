@@ -14,7 +14,8 @@ function! SpaceVim#dev#help#generate() abort
   if !empty(profile)
     let content = SpaceVim#dev#help#content#parser(profile, '.')
   endif
-  call writefile(content, 'doc/' . profile.name  . '.txt')
+  call writefile(content.en, 'doc/' . profile.name  . '.txt')
+  call writefile(content.cn, 'doc/' . profile.name  . '.cnx')
 endfunction
 
 
