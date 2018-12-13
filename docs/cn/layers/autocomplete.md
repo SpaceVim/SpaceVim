@@ -49,12 +49,12 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 为了提升用户体验，可以通过使用如下的模块选项来定制自动补全：
 
 1. `auto-completion-return-key-behavior` 选项控制当按下 `Return`/`Enter` 键时的行为，
-   默认为 `smart`，可用的值包括如下3种：
+   默认为 `complete`，可用的值包括如下3种：
    - `complete` 补全模式，插入当前选中的列表选项
    - `smart` 智能模式，插入当前选中的列表选项，若当前选择的时 snippet，则自动展开代码块。
    - `nil` 当设为 nil 时，则采用 Vim 默认的按键行为，插入新行
 2. `auto-completion-tab-key-behavior` 选项控制当按下 `Tab` 键时的行为，默认为
-   `smart`，可用的值包括如下4种：
+   `complete`，可用的值包括如下4种：
    - `smart` 智能模式，自动循环补全列表、展开代码块以及跳至下一个代码块的锚点
    - `complete` 补全模式，插入当前选中的列表选项
    - `cycle` 循环模式，自动再补全列表之间循环
