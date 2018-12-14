@@ -49,6 +49,7 @@ function! s:parser_file(file) abort
           elseif line =~ '^\s*$'
             call s:parser_core(block)
           endif
+          let block = ''
         endif
       endif
     endif
@@ -56,14 +57,17 @@ function! s:parser_file(file) abort
 endfunction
 
 function! s:parser_let(block) abort
+  echom a:block
 
 endfunction
 
 function! s:parser_fu(block) abort
+  echom a:block
 
 endfunction
 
 function! s:parser_core(block) abort
+  echom a:block
   let section = {'name' : ''}
   for line in split(a:block, "\n")
     if line =~ '^@section\s'
