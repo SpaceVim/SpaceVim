@@ -535,6 +535,9 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:grep_dir = ''
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
+    let s:grep_files = '*.*'
+  endif
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
   let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)
