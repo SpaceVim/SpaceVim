@@ -104,6 +104,8 @@ endfunction
 function! s:generate_doc() abort
   if filereadable('./addon-info.json') && executable('vimdoc')
     call SpaceVim#api#import('job').start(['vimdoc', '.'])
+  elseif filereadable('./addon-info.json') && executable('python')
+    call SpaceVim#api#import('job').start(['python', '-m', 'vimdoc', '.'])
   endif
 endfunction
 
