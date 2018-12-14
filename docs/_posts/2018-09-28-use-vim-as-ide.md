@@ -34,7 +34,7 @@ after installing Vim, following the quick start guide to install SpaceVim,
 ### Fuzzy finder
 
 SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
-fuzzy finder layer. for example enable denite layer:
+fuzzy finder layer. for example enable denite layer in `~/.SpaceVim.d/init.toml`:
 
 ```toml
 [[layers]]
