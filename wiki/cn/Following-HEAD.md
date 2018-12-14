@@ -30,6 +30,7 @@
 - Fix layers list in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2327))
 - Fix statusline icon ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2328))
 - Fix vimdoc command in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2338))
+- Fix comment paragraphs key bindings ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2340))
 
 ### 移除的功能
 
