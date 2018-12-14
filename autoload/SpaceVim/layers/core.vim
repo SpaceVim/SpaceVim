@@ -234,12 +234,12 @@ function! SpaceVim#layers#core#config() abort
 
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-  nnoremap <silent> <Plug>CommentToParagraphs :call <SID>comment_to_paragraphs(0)<Cr>
-  nnoremap <silent> <Plug>CommentToParagraphsInvert :call <SID>comment_to_paragraphs(1)<Cr>
+  nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
+  nnoremap <silent> <Plug>CommentParagraphsInvert :call <SID>comment_paragraphs(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], '<Plug>CommentToParagraphs', 'comment paragraphs', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], '<Plug>CommentToParagraphsInvert', 'toggle comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], '<Plug>CommentParagraphs', 'comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], '<Plug>CommentParagraphsInvert', 'toggle comment paragraphs', 0, 1)
 
   nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
   let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
@@ -605,7 +605,7 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
-function! s:comment_to_line(invert) abort
+function! s:comment_paragraphs(invert) abort
   if a:invert
     call feedkeys("vip\<Plug>NERDCommenterInvert")
   else
