@@ -12,6 +12,13 @@ if exists('g:GuiLoaded')
   else
     exe 'Guifont! ' . g:spacevim_guifont
   endif
+elseif 
+  " As using neovim-qt by default
+
+  " Disable gui popupmenu
+  if exists(':GuiPopupmenu') == 2
+    GuiPopupmenu 0
+  endif
   if g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
