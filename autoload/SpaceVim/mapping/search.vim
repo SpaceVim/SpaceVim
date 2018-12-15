@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+" How to add new search tools?
+"
+" first, namespace should avoid b d f j p B D F J P
+" then, the exist namespace should be avoid too
+
 let s:search_tools = {}
 let s:search_tools.namespace = {
       \ 'rg' : 'r',
@@ -13,6 +18,7 @@ let s:search_tools.namespace = {
       \ 'pt' : 't',
       \ 'ack' : 'k',
       \ 'grep' : 'g',
+      \ 'findstr' : 'i',
       \ }
 let s:search_tools.a = {}
 let s:search_tools.a.command = 'ag'
@@ -70,6 +76,16 @@ let s:search_tools.g.recursive_opt = ['.']
 let s:search_tools.g.default_fopts = []
 let s:search_tools.g.smart_case = []
 let s:search_tools.g.ignore_case = ['-i']
+
+let s:search_tools.i = {}
+let s:search_tools.i.command = 'findstr'
+let s:search_tools.i.default_opts = ['/RSN']
+let s:search_tools.i.recursive_opt = []
+let s:search_tools.i.expr_opt = []
+let s:search_tools.i.fixed_string_opt = []
+let s:search_tools.i.default_fopts = []
+let s:search_tools.i.smart_case = []
+let s:search_tools.i.ignore_case = ['/I']
 
 function! SpaceVim#mapping#search#grep(key, scope) abort
   let cmd = s:search_tools[a:key]['command']
