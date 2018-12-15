@@ -10,7 +10,8 @@
 - Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 - Add function for customizing searching tools ([#2235](https://github.com/SpaceVim/SpaceVim/pull/2235))
 - Add `lang#scheme` layer ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2248))
-- Add log for bootstrap function ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2323))
+- Add log for bootstrap function ([#2232](https://github.com/SpaceVim/SpaceVim/pull/2323))
+- Add findstr support in flygrep ([#2344](https://github.com/SpaceVim/SpaceVim/pull/2344))
 
 ### 功能改进
 
