@@ -23,10 +23,23 @@ endfunction
 
 function! s:spacevim_status() abort
   let pwd = getcwd()
-  exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
-  let status = system('git status')
+  try
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
+    let status = s:CMP.systemlist('git status')
+  catch
+    exe 'cd ~/.SpaceVim'
+    let status = s:CMP.systemlist('git status')
+  endtry
   exe 'cd ' . pwd
-  return split(status, "\n")
+  if type(status) == 3
+    return status
+  else
+    return [status]
+  endif
+endfunction
+
+function! Test() abort
+  return s:spacevim_status()
 endfunction
 
 function! s:template() abort
@@ -44,8 +57,8 @@ function! s:template() abort
         \ '',
         \ '```'
         \ ]
-        \ + s:spacevim_status() +
-        \ [
+  let info = info + s:spacevim_status()
+  let info = info + [
         \ '```',
         \ '',
         \ '## The reproduce ways from Vim starting (Required!)',
