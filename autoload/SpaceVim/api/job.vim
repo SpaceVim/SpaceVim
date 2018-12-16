@@ -101,11 +101,15 @@ endfunction
 " start a job, and return the job_id.
 function! s:self.start(argv, ...) abort
   if self.nvim_job
+    try
     if len(a:000) > 0
       let job = jobstart(a:argv, a:1)
     else
       let job = jobstart(a:argv)
     endi
+    catch /^Vim\%((\a\+)\)\=:E903/
+      return -1
+    endtry
     if job > 0
       let msg = ['process '. jobpid(job), ' run']
       call extend(self.jobs, {job : msg})

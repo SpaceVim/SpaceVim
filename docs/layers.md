@@ -132,6 +132,7 @@ enable = false
 | [shell](shell/)    |   This layer provide shell support in SpaceVim | 
 | [sudo](sudo/)    |   sudo layer provides ability to read and write file elevated privileges in SpaceVim | 
 | [tags](tags/)    |   This layer provide tags manager for project | 
+| [tests](tests/)    |  This layer allows to run tests directly on SpaceVim | 
 | [tmux](tmux/)    |   This layers adds extensive support for tmux | 
 | [tools#dash](tools/dash/)    |   This layer provides Dash integration for SpaceVim | 
 | [tools](tools/)    |   This layer provides some tools for vim | 

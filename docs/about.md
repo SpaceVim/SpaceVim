@@ -5,23 +5,23 @@ description: "SpaceVim is a community-driven vim distribution with layer feature
 
 # About
 
-## Version
+[SpaceVim](https://github.com/SpaceVim/SpaceVim) is a community-driven vim distribution with layer feature.
+SpaceVim manages collections of plugins in layers. Layers make it easy for you, the user, to enable a new
+language or feature by grouping all the related plugins together. It got inspired by spacemacs. 
 
-[SpaceVim](https://github.com/SpaceVim/SpaceVim) is a community-driven vim distribution that supports vim and Neovim.  SpaceVim manages collections of plugins in layers.  Layers make it easy for you, the user, to enable a new language or feature by grouping all the related plugins together. It got inspired by spacemacs. 
+### Goals
 
-## Goals
+- more IDE-like features in vim and neovim
+- better default different languages
 
-- Provide a consistent user experience across platforms.
-- Provide better default layer for different languages.
-
-## Principles
+### Principles
 
 - Do not regress from origin
 - Decide outcomes by weighing cost and benefit
 - prefer usability over tradition if the benefits are overwhelming
 - Give usability a chance
 
-## Credits & Thanks
+### Credits & Thanks
 
 This project exists thanks to all the people who have contributed to SpaceVim:
 

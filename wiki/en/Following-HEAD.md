@@ -10,12 +10,15 @@ The next release is v1.0.0.
 - Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 - Add function for customizing searching tools ([#2235](https://github.com/SpaceVim/SpaceVim/pull/2235))
 - Add `lang#scheme` layer ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2248))
-- Add log for bootstrap function ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2323))
+- Add log for bootstrap function ([#2232](https://github.com/SpaceVim/SpaceVim/pull/2323))
+- Add findstr support in flygrep ([#2344](https://github.com/SpaceVim/SpaceVim/pull/2344))
 
 ### Improvement
 
 - Update runtime log for startup ([#2219](https://github.com/SpaceVim/SpaceVim/pull/2219))
 - Add doc for how run run spacevim in docker ([#2238](https://github.com/SpaceVim/SpaceVim/pull/2238))
+- Improve error key bindings ([#2336](https://github.com/SpaceVim/SpaceVim/pull/2336))
+- Improve spacevim debug info ([#2349](https://github.com/SpaceVim/SpaceVim/pull/2349))
 
 ### Changed
 
@@ -24,10 +27,13 @@ The next release is v1.0.0.
 
 ### Fixed
 
-- Do not load matchup in old version ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2324))
-- Ctrlp support in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2325))
-- Fix layers list in windows ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2327))
-- Fix statusline icon ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2328))
+- Do not load matchup in old version ([#2324](https://github.com/SpaceVim/SpaceVim/pull/2324))
+- Ctrlp support in windows ([#2325](https://github.com/SpaceVim/SpaceVim/pull/2325))
+- Fix layers list in windows ([#2327](https://github.com/SpaceVim/SpaceVim/pull/2327))
+- Fix statusline icon ([#2328](https://github.com/SpaceVim/SpaceVim/pull/2328))
+- Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338))
+- Fix comment paragraphs key bindings ([#2340](https://github.com/SpaceVim/SpaceVim/pull/2340))
+- Fix dein-ui error ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352))
 
 ### Removed
 
