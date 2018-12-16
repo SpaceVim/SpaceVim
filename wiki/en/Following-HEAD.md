@@ -36,6 +36,7 @@ The next release is v1.0.0.
 - Fix comment paragraphs key bindings ([#2340](https://github.com/SpaceVim/SpaceVim/pull/2340))
 - Fix dein-ui error, add syntax ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352), [`c9e1d4c`](https://github.com/SpaceVim/SpaceVim/commit/c9e1d4c9635c483bb3334c00ed36026d18950070))
 - Fix fullscreen key binding ([#2351](https://github.com/SpaceVim/SpaceVim/pull/2351))
+- Added missed syntax for detached FlyGrep ([#2353](https://github.com/SpaceVim/SpaceVim/pull/2353), [`08d0713`](https://github.com/SpaceVim/SpaceVim/commit/08d0713c4494ca401942a6ca10a48a1ac8484ce1))
 
 ### Removed
 
