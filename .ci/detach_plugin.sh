@@ -43,6 +43,7 @@ main () {
         dein-ui)
             git clone https://github.com/wsdjeg/dein-ui.vim.git detach/$1
             cd detach/$1
+            _checkdir syntax/
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/api/vim
@@ -54,6 +55,7 @@ main () {
             _detect autoload/SpaceVim/api/job.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect syntax/SpaceVimPlugManager.vim
             _detect LICENSE
             git add .
             git commit -m "Auto Update"
