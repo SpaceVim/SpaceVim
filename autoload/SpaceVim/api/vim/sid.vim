@@ -44,6 +44,11 @@ function! s:self.scriptnames() abort
   endfor
   return sdict
 endfunction
+
+function! s:self.get_sid_from_path(path) abort
+  
+endfunction
+
 function! SpaceVim#api#vim#sid#get() abort
     return deepcopy(s:self)
 endfunction

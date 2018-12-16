@@ -46,7 +46,12 @@ endfunction
 function! s:eval_cursor() abort
   let is_keyword = &iskeyword
   set iskeyword+=:
-  echo expand('<cword>') 'is' eval(expand('<cword>'))
+  let cword = expand('<cword>')
+  if cword =~# '^g:'
+    echo  cword . ' is ' eval(cword)
+  elseif cword =~# '^s:'
+  else
+  endif
   let &iskeyword = is_keyword
 endfunction
 
