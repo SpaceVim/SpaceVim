@@ -327,8 +327,6 @@ let g:spacevim_enable_cursorline       = 1
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
 
-let g:spacevim_tmux_navigator_modifier = 'ctrl'
-
 ""
 " Define the left section of statusline in active windows. By default:
 " >

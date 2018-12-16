@@ -37,10 +37,9 @@ lang: cn
 
 ## 模块选项
 
-- `tmuxline_separators`: default value is same as SpaceVim options `statusline_separator`, available
-  values include: `arrow`, `curve`, `slant`, `barce`, `fire`, `nil`.
-- `tmuxline_separators_alt`: default value is same as SpaceVim options `statusline_inactive_separator`
-  available values include: `arrow`, `bar`, `nil`.
+- `tmuxline_separators`: 设置tmux的主要分隔符，默认等同于SpaceVim的 `statusline_separator`, 可选值包括: `arrow`, `curve`, `slant`, `barce`, `fire`, `nil`
+- `tmuxline_separators_alt`: 设置tmux的分隔符，默认等同于SpaceVim的 `statusline_inactive_separator`，可选值包括: `arrow`, `bar`, `nil`
+- `tmux_navigator_modifier`: 设置 tmux 的移动快捷键，默认是 `ctrl`，可选值包括：`alt`, `ctrl`
 
 ## 快捷键
 

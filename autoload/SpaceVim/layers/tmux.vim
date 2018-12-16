@@ -53,7 +53,6 @@ function! SpaceVim#layers#tmux#config() abort
     nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
     nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
   else
-  " elseif s:tmux_navigator_modifier ==# 'ctrl'
     nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
     nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
     nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
@@ -120,6 +119,7 @@ let s:i_separators = {
 
 let s:tmuxline_separators = g:spacevim_statusline_separator
 let s:tmuxline_separators_alt = g:spacevim_statusline_inactive_separator
+let s:tmux_navigator_modifier = 'ctrl'
 
 function! SpaceVim#layers#tmux#set_variable(var) abort
 
@@ -133,7 +133,7 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
 
   let s:tmux_navigator_modifier = get(a:var,
         \ 'tmux_navigator_modifier',
-        \ g:spacevim_tmux_navigator_modifier)
+        \ s:tmux_navigator_modifier)
 
 endfunction
 
