@@ -21,8 +21,8 @@ lang: cn
 
 关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
 
-- <i class="fab fa-weibo"></i> 新浪微博：[@SpaceVim](https://weibo.com/SpaceVim)
-- <i class="fab fa-weixin"></i> 微信公众号：SpaceVim
+- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
+- <i class="fab fa-weixin"></i> [微信微官网](https://mp.weixin.qq.com/mp/homepage?__biz=MzU5MzAwNzUyMA==&hid=1&sn=08a81b9451f0ede9103e96e9e361fcbc)
 
 
 ### 问题及需求提交
@@ -53,11 +53,3 @@ lang: cn
 - <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)
-
-以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
-
-- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群（满）](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-- <i class="fab fa-qq"></i> [`755208473` Vim/SpaceVim 用户 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
-- <i class="fab fa-qq"></i> [`748697811` Vim/SpaceVim 用户 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
-- <i class="fab fa-qq"></i> [`667379969` Vim/SpaceVim 用户 ④ 群](https://jq.qq.com/?_wv=1027&k=5z2C7BM)
-

@@ -1,3 +1,5 @@
+let s:SYS = SpaceVim#api#import('system')
+
 let g:ctrlp_map = get(g:,'ctrlp_map', '<c-p>')
 let g:ctrlp_cmd = get(g:, 'ctrlp_cmd', 'CtrlP')
 let g:ctrlp_working_path_mode = get(g:, 'ctrlp_working_path_mode', 'ra')
@@ -18,9 +20,15 @@ let g:ctrlp_custom_ignore = get(g:, 'ctrlp_custom_ignore', {
       \ })
 if executable('rg') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
-        \ . join(zvim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', 1))
+        \ . join(zvim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', SpaceVim#api#import('system').isWindows ? 0 : 1))
 elseif executable('ag') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'
+elseif s:SYS.isWindows
+  let g:ctrlp_user_command =
+    \ 'dir %s /-n /b /s /a-d | findstr /v /l ".jpg \\tmp\\"' " Windows
+else
+  let g:ctrlp_user_command =
+    \ 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'          " MacOSX/Linux
 endif
 if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }

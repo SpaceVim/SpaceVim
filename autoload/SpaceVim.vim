@@ -203,6 +203,8 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "     let g:spacevim_autocomplete_method = 'neocomplcache'
   "   endif
   " <
+  "
+  " and you can alse set this option to coc, then coc.nvim will be useed.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
@@ -616,7 +618,10 @@ let g:spacevim_enable_powerline_fonts  = 1
 "   let g:spacevim_lint_on_save = 0
 " <
 let g:spacevim_lint_on_save            = 1
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep']
+""
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
 ""
 " Set the project rooter patterns, by default it is
 " `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`

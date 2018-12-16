@@ -6,7 +6,6 @@
 " License: GPLv3
 "=============================================================================
 
-
 function! SpaceVim#layers#lang#vim#plugins() abort
   let plugins = [
         \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
@@ -21,6 +20,8 @@ function! SpaceVim#layers#lang#vim#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
+  elseif g:spacevim_autocomplete_method == 'coc'
+    call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
   endif
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
   return plugins
@@ -45,7 +46,12 @@ endfunction
 function! s:eval_cursor() abort
   let is_keyword = &iskeyword
   set iskeyword+=:
-  echo expand('<cword>') 'is' eval(expand('<cword>'))
+  let cword = expand('<cword>')
+  if cword =~# '^g:'
+    echo  cword . ' is ' eval(cword)
+  elseif cword =~# '^s:'
+  else
+  endif
   let &iskeyword = is_keyword
 endfunction
 

@@ -1742,7 +1742,8 @@ write
 
 ### Errors handling
 
-SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly.
+The checks are only performed at save time by default.
 
 Errors management mappings (start with e):
 
