@@ -38,10 +38,6 @@ function! s:spacevim_status() abort
   endif
 endfunction
 
-function! Test() abort
-  return s:spacevim_status()
-endfunction
-
 function! s:template() abort
   let info = [
         \ '<!-- please remove the issue template when request for a feature -->',
