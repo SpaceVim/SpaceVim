@@ -210,9 +210,6 @@ function! SpaceVim#default#keyBindings() abort
   inoremap <silent><C-S-Up> <Esc>:m .-2<CR>==gi
   vnoremap <silent><C-S-Down> :m '>+1<CR>gv=gv
   vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
-  " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
-  " the directory that has gvim.exe
-  nnoremap <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
 
   " Start new line
   inoremap <S-Return> <C-o>o
