@@ -45,3 +45,11 @@ To use this configuration layer, update custom configuration file with:
 | `Ctrl-j`     | Switch to vim/tmux pane in down direction  |
 | `Ctrl-k`     | Switch to vim/tmux pane in up direction    |
 | `Ctrl-l`     | Switch to vim/tmux pane in right direction |
+
+To use `alt` as the default navigator modifier:
+
+```toml
+[[layers]]
+  name = "tmux"
+  tmux_navigator_modifier = "alt"
+```

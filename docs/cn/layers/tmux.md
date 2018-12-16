@@ -49,3 +49,11 @@ lang: cn
 | `Ctrl-j` | Switch to vim/tmux pane in down direction  |
 | `Ctrl-k` | Switch to vim/tmux pane in up direction    |
 | `Ctrl-l` | Switch to vim/tmux pane in right direction |
+
+若要使用 `alt` 键作为快捷键前缀，可以设置模块选项：
+
+```toml
+[[layers]]
+  name = "tmux"
+  tmux_navigator_modifier = "alt"
+```
