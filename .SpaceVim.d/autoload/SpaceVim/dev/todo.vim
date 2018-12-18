@@ -28,17 +28,20 @@ function! s:open_win() abort
   nnoremap <buffer><silent> <Enter> :call <SID>open_todo()<cr>
 endfunction
 
+" @todo Improve todo manager
 function! s:update_todo_content() abort
   let s:todos = []
   let argv = ['rg', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column',
       \ '-g', '!.git','@t'. 'odo ']
   call s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
+        \ 'on_stderr' : function('s:stderr'),
         \ 'on_exit' : function('s:exit'),
         \ })
 endfunction
 
 function! s:stdout(id, data, event) abort
+  call SpaceVim#logger#info('todomanager stdout: ' . string(a:data))
   for data in a:data
     if !empty(data)
       let file = fnameescape(split(data, ':\d\+:')[0])
@@ -57,7 +60,12 @@ function! s:stdout(id, data, event) abort
   endfor
 endfunction
 
+function! s:stderr(id, data, event) abort
+  call SpaceVim#logger#info('todomanager stderr: ' . string(a:data))
+endfunction
+
 function! s:exit(id, data, event ) abort
+  call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
   let g:lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
   call setline(1, g:lines)
 endfunction
