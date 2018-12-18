@@ -77,10 +77,18 @@ function! s:on_ft() abort
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
     else
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'], 'TsuTypeDefinition',
+            \ 'type definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
             \ 'show document', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TsuquyomiRenameSymbol',
             \ 'rename symbol', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TsuImport',
+            \ 'import', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'm'], 'TsuImplementation',
+            \ 'interface implementations', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'TsuquyomiReferences',
+            \ 'references', 1)
     endif
   endif
 endfunction
