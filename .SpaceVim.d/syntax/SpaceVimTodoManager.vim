@@ -6,7 +6,7 @@ syntax case ignore
 
 syn match FileName /^[^ ]*/
 syn match TODOTAG  /^\s*@[a-zA-Z]*/
-syn match TODOCHECKBOX /[\d\+/\d\+\]/
+" syn match TODOCHECKBOX /[\d\+/\d\+\]/
 syn match TODOINDEX /^\s\+\d\+\.\s/
 syn match TODOCHECKBOXPANDING /\s\+√\s\+/
 syn match TODOCHECKBOXDONE /\s\+□\s\+/
