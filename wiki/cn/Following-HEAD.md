@@ -26,6 +26,7 @@
 
 - Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
 - Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221)) 
+- Use forked neoformat repo ([#2360](https://github.com/SpaceVim/SpaceVim/pull/2360), [#2355](https://github.com/SpaceVim/SpaceVim/pull/2355))
 
 ### 问题修复
 
