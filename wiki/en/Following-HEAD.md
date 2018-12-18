@@ -20,6 +20,7 @@ The next release is v1.0.0.
 - Add doc for how run run spacevim in docker ([#2238](https://github.com/SpaceVim/SpaceVim/pull/2238))
 - Improve error key bindings ([#2336](https://github.com/SpaceVim/SpaceVim/pull/2336))
 - Improve spacevim debug info ([#2349](https://github.com/SpaceVim/SpaceVim/pull/2349))
+- Improve cursor eval in `lang#vim` layer ([#2358](https://github.com/SpaceVim/SpaceVim/pull/2358))
 
 ### Changed
 
