@@ -248,6 +248,10 @@ else
   endfunction
 endif
 
+function! s:self.set_buf_line() abort
+  
+endfunction
+
 function! SpaceVim#api#vim#compatible#get() abort
   return deepcopy(s:self)
 endfunction

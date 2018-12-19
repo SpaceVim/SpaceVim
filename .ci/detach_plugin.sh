@@ -15,6 +15,7 @@ main () {
         flygrep)
             git clone https://github.com/wsdjeg/FlyGrep.vim.git detach/$1
             cd detach/$1
+            _checkdir syntax/
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
@@ -31,6 +32,7 @@ main () {
             _detect autoload/SpaceVim/api/system.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/logger.vim
+            _detect syntax/SpaceVimFlyGrep.vim
             _detect LICENSE
             git add .
             git commit -m "Auto Update"
