@@ -26,7 +26,7 @@ The next release is v1.0.0.
 ### Changed
 
 - Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
-- Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221)) 
+- Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221))
 - Use forked neoformat repo ([#2360](https://github.com/SpaceVim/SpaceVim/pull/2360), [#2355](https://github.com/SpaceVim/SpaceVim/pull/2355))
 
 ### Fixed
@@ -41,6 +41,7 @@ The next release is v1.0.0.
 - Fix fullscreen key binding ([#2351](https://github.com/SpaceVim/SpaceVim/pull/2351))
 - Added missed syntax for detached FlyGrep ([#2353](https://github.com/SpaceVim/SpaceVim/pull/2353), [`08d0713`](https://github.com/SpaceVim/SpaceVim/commit/08d0713c4494ca401942a6ca10a48a1ac8484ce1))
 - Fix FlyGrep syntax to support different outputs ([#2363](https://github.com/SpaceVim/SpaceVim/pull/2363), [`0b26f40`](https://github.com/SpaceVim/SpaceVim/commit/0b26f407d879427505418f5c3b4c1d753f3f4317))
+- Fix `project_rooter_automatically = 0` option to not change directory to project root ([#2363](https://github.com/SpaceVim/SpaceVim/pull/2365))
 
 ### Removed
 
