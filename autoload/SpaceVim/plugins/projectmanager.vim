@@ -81,10 +81,16 @@ endfunction
 function! SpaceVim#plugins#projectmanager#current_root() abort
   let rootdir = getbufvar('%', 'rootDir', '')
   if empty(rootdir)
-    let rootdir = s:change_to_root_directory()
-  else
+    let rootdir = s:find_root_directory()
+    if empty(rootdir)
+      let rootdir = getcwd()
+    endif
+    call setbufvar('%', 'rootDir', rootdir)
+  endif
+  if !empty(rootdir) && g:spacevim_project_rooter_automatically
+    echo g:spacevim_project_rooter_automatically
     call s:change_dir(rootdir)
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   endif
   return rootdir
 endfunction
@@ -160,21 +166,12 @@ function! s:sort_dirs(dirs) abort
     else
       let dir = fnamemodify(dir, ':p:h')
     endif
-    call s:change_dir(dir)
-    call setbufvar('%', 'rootDir', getcwd())
-    return b:rootDir
+    return dir
   endif
 endfunction
 
 function! s:compare(d1, d2) abort
   return len(split(a:d2, '/')) - len(split(a:d1, '/'))
-endfunction
-
-function! s:change_to_root_directory() abort
-  if !empty(s:find_root_directory())
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback() 
-  endif
-  return getbufvar('%', 'rootDir', '')
 endfunction
 
 
