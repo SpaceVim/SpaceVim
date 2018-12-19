@@ -87,7 +87,7 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
     endif
     call setbufvar('%', 'rootDir', rootdir)
   endif
-  if !empty(rootdir) && g:spacevim_project_rooter_automatically
+  if !empty(rootdir)
     call s:change_dir(rootdir)
     call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   endif
