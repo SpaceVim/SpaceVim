@@ -34,4 +34,22 @@ function! SpaceVim#layers#lang#sh#config()
     autocmd!
     autocmd FileType sh setlocal omnifunc=SpaceVim#plugins#bashcomplete#omnicomplete
   augroup END
+  call SpaceVim#mapping#gd#add('sh', function('s:go_to_def'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('sh', function('s:language_specified_mappings'))
+endfunction
+function! s:language_specified_mappings() abort
+  if SpaceVim#layers#lsp#check_filetype('sh')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
+endfunction
+
+function! s:go_to_def() abort
+  if SpaceVim#layers#lsp#check_filetype('sh')
+    call SpaceVim#lsp#go_to_def()
+  endif
 endfunction

@@ -67,6 +67,7 @@ fu! s:findDirInParent(what, where) abort " {{{2
 endf " }}}2
 fu! zvim#util#CopyToClipboard(...) abort
   if a:0
+    echom 1
     if executable('git')
       let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
       if repo_home !=# '' || !isdirectory(repo_home)
@@ -96,9 +97,9 @@ fu! zvim#util#CopyToClipboard(...) abort
             echo 'Copied to clipboard'
           catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
-              echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
+              echohl WarningMsg | echom 'Cannot find clipboard, for more info see :h clipboard' | echohl None
             else
-              echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+              echohl WarningMsg | echom 'You need to compile your vim with +clipboard feature' | echohl None
             endif
           endtry
         else
@@ -108,7 +109,7 @@ fu! zvim#util#CopyToClipboard(...) abort
         echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
       endif
     else
-      echohl WarningMsg | echom 'You need install git!' | echohl None
+      echohl WarningMsg | echom 'You need to install git!' | echohl None
     endif
   else
     try
@@ -118,7 +119,7 @@ fu! zvim#util#CopyToClipboard(...) abort
       if has('nvim')
         echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
       else
-        echohl WarningMsg | echom 'You need compile you vim with +clipboard feature' | echohl None
+        echohl WarningMsg | echom 'You need to compile you vim with +clipboard feature' | echohl None
       endif
     endtry
   endif
@@ -262,7 +263,7 @@ fu! zvim#util#Generate_ignore(ignore,tool, ...) abort
   elseif a:tool ==# 'rg'
     for ig in split(a:ignore,',')
       call add(ignore, '-g')
-      if a:0 > 0
+      if get(a:000, 0, 0) == 1
         call add(ignore, "'!" . ig . "'")
       else
         call add(ignore, '!' . ig)

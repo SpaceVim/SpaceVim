@@ -59,9 +59,9 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ ]
           \ ]
     nnoremap <silent> [Window]o
-          \ :<C-u>only<CR>
+          \ :<C-u>only<Space><Bar><Space>doautocmd WinEnter<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.o = ['only',
+    let g:_spacevim_mappings_windows.o = ['only | doautocmd WinEnter',
           \ 'Close other windows',
           \ [
           \ '[WIN o] is to close all other windows',
@@ -165,7 +165,7 @@ function! SpaceVim#mapping#leader#defindDeniteLeader(key) abort
           \ -buffer-name=register register<CR>
     let g:_spacevim_mappings_denite.e = ['Denite register', 'denite register']
     nnoremap <silent> [denite]<Space> :Denite menu:CustomKeyMaps<CR>
-    let g:_spacevim_mappings_denite['<space>'] = ['Denite menu:CustomKeyMaps',
+    let g:_spacevim_mappings_denite['<Space>'] = ['Denite menu:CustomKeyMaps',
           \ 'denite customkeymaps']
   endif
 endfunction
@@ -189,7 +189,7 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindKEYs() abort
   let g:_spacevim_mappings_prefixs = {}
-  if !g:spacevim_vimcompatible
+  if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
     let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
     call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)
   endif

@@ -36,12 +36,19 @@ endfunction
 "  master
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
+    try
     let l:head = fugitive#head()
     if empty(l:head)
       call fugitive#detect(getcwd())
       let l:head = fugitive#head()
     endif
+  if g:spacevim_statusline_unicode_symbols == 1
     return empty(l:head) ? '' : '  '.l:head . ' '
+  else
+    return empty(l:head) ? '' : ' '.l:head . ' '
+  endif
+    catch
+    endtry
   endif
   return ''
 endfunction

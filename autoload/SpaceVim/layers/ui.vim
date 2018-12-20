@@ -27,7 +27,7 @@ function! SpaceVim#layers#ui#plugins() abort
 endfunction
 
 function! SpaceVim#layers#ui#config() abort
-  if g:spacevim_colorscheme_bg == 'dark'
+  if g:spacevim_colorscheme_bg ==# 'dark'
     let g:indentLine_color_term = get(g:, 'indentLine_color_term', 239)
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#504945')
   else
@@ -37,6 +37,10 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
   let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
+  let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
+        \ 'qf', 'help', 'markdown', 'leaderGuide',
+        \ 'startify'
+        \ ]
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
   noremap <silent> <F2> :silent TagbarToggle<CR>
@@ -51,13 +55,20 @@ function! SpaceVim#layers#ui#config() abort
         \ 'highlight-long-lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
         \ 'toggle background', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call ToggleConceal()',
+        \ 'toggle conceal', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'Open tabs manager', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
         \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
         \ 'fill-column-indicator', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'set cursorline!',
-        \ 'toggle highlight of the current line', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'call call('
+        \ . string(s:_function('s:toggle_cursorline')) . ', [])',
+        \ ['toggle highlight of the current line',
+        \ [
+        \ 'SPC t h h is to toggle the highlighting of cursorline'
+        \ ]
+        \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
         \ . string(s:_function('s:toggle_indentline')) . ', [])',
         \ ['toggle highlight indentation levels',
@@ -88,10 +99,34 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
         \ . string(s:_function('s:toggle_spell_check')) . ', [])',
         \ 'toggle spell checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
+        \ 'toggle hidden listchars', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
+        \ 'toggle wrap line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
-        \ 'toggle the whitespace', 1)
+        \ 'toggle highlight tail spaces', 1)
+
+  " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
+  " the directory that has gvim.exe
+  if has('nvim')
+    nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
+  else
+    nnoremap <silent> <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
+  endif
 endfunction
+
+let s:fullscreen_flag = 0
+function! s:toggle_full_screen() abort
+  if s:fullscreen_flag == 0
+    call GuiWindowFullScreen(1)
+    let s:fullscreen_flag = 1
+  else
+    call GuiWindowFullScreen(0)
+    let s:fullscreen_flag = 0
+  endif
+endfunction
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
@@ -205,6 +240,12 @@ function! s:toggle_win_fringe() abort
   endif
 endfunction
 
+let g:_spacevim_cursorline_flag = -1
+function! s:toggle_cursorline() abort
+  setl cursorline!
+  let g:_spacevim_cursorline_flag = g:_spacevim_cursorline_flag * -1
+endfunction
+
 function! s:toggle_spell_check() abort
   if &l:spell
     let &l:spell = 0
@@ -219,7 +260,15 @@ function! s:toggle_spell_check() abort
   endif
 endfunction
 
+let s:whitespace_enable = 0
 function! s:toggle_whitespace() abort
+  if s:whitespace_enable
+    DisableWhitespace
+    let s:whitespace_enable = 0
+  else
+    EnableWhitespace
+    let s:whitespace_enable = 1
+  endif
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction

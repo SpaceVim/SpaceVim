@@ -10,8 +10,6 @@ let s:file = expand('<sfile>:~')
 function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space['?'] =
-        \ ['Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings']
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
   let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
@@ -37,7 +35,7 @@ function! SpaceVim#mapping#space#init() abort
   vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
   vmap <Space> [SPC]
-  if g:spacevim_enable_language_specific_leader
+  if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
     xmap , [SPC]l
   endif
@@ -275,6 +273,26 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
         \ 'Background search cursor words in project with rg', 1)
+
+  " findstr
+  let g:_spacevim_mappings_space.s.i = {'name' : '+findstr'}
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'b'], 'call SpaceVim#mapping#search#grep("i", "b")', 'search in all buffers with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'B'], 'call SpaceVim#mapping#search#grep("i", "B")',
+        \ 'search cursor word in all buffers with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'd'], 'call SpaceVim#mapping#search#grep("i", "d")', 'search in buffer directory with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'D'], 'call SpaceVim#mapping#search#grep("i", "D")',
+        \ 'search cursor word in buffer directory with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'p'], 'call SpaceVim#mapping#search#grep("i", "p")', 'search in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'P'], 'call SpaceVim#mapping#search#grep("i", "P")',
+        \ 'search cursor word in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'f'], 'call SpaceVim#mapping#search#grep("i", "f")',
+        \ 'search in arbitrary directory  with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'F'], 'call SpaceVim#mapping#search#grep("i", "F")',
+        \ 'search cursor word in arbitrary directory  with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'j'], 'call SpaceVim#plugins#searcher#find("", "findstr")',
+        \ 'Background search cursor words in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "findstr")',
+        \ 'Background search cursor words in project with findstr', 1)
   " pt
   let g:_spacevim_mappings_space.s.t = {'name' : '+pt'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)
@@ -415,10 +433,11 @@ function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
 endfunction
 
-function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
+function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort
   if s:has_map_to_spc()
     return
   endif
+  let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
     let lcmd = a:cmd
@@ -432,6 +451,13 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd) abort
     endif
   endif
   exe a:m . ' <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+  if is_visual
+    if a:m ==# 'nnoremap'
+      exe 'xnoremap <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    elseif a:m ==# 'nmap'
+      exe 'xmap <silent> <buffer> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+    endif
+  endif
   if len(a:keys) == 2
     let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]] = [lcmd, a:desc]
   elseif len(a:keys) == 3

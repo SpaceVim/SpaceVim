@@ -26,7 +26,7 @@ let [
       \ s:grep_default_ignore_case,
       \ s:grep_default_smart_case
       \ ] = SpaceVim#mapping#search#default_tool()
-let s:grep_timer_id = 0
+let s:grep_timer_id = -1
 let s:grepid = 0
 let s:grep_history = []
 let s:complete_input_history_num = [0,0]
@@ -68,7 +68,11 @@ function! s:get_search_cmd(expr) abort
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
     let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
-    let cmd += [a:expr] + [s:grep_dir]
+    if s:grep_exe == 'findstr'
+      let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
+    else
+      let cmd += [a:expr] + [s:grep_dir]
+    endif
   else
     let cmd += [a:expr] + s:grep_ropt
   endif
@@ -129,10 +133,7 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  try
-    call timer_stop(s:grep_timer_id)
-  catch
-  endtry
+  call timer_stop(s:grep_timer_id)
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
@@ -218,9 +219,7 @@ function! s:close_buffer() abort
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
-  endif
+  call timer_stop(s:grep_timer_id)
   noautocmd pclose
   noautocmd q
 endfunction
@@ -232,9 +231,7 @@ function! s:close_grep_job() abort
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
-  endif
+  call timer_stop(s:grep_timer_id)
   normal! "_ggdG
 endfunction
 
@@ -542,6 +539,11 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:grep_dir = ''
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
+    let s:grep_files = '*.*'
+  elseif s:grep_exe == 'findstr' && !empty(s:grep_dir)
+    let s:grep_dir = '/D:' . s:grep_dir
+  endif
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
   let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)

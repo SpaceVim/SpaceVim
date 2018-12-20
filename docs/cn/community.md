@@ -21,13 +21,13 @@ lang: cn
 
 关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
 
-- <i class="fab fa-weibo"></i> 新浪微博：[@SpaceVim](https://weibo.com/SpaceVim)
-- <i class="fab fa-weixin"></i> 微信公众号：SpaceVim
+- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
+- <i class="fab fa-weixin"></i> [微信微官网](https://mp.weixin.qq.com/mp/homepage?__biz=MzU5MzAwNzUyMA==&hid=1&sn=08a81b9451f0ede9103e96e9e361fcbc)
 
 
 ### 问题及需求提交
 
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者 码云的问题列表来提交。
+在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
 - [码云](https://gitee.com/spacevim/SpaceVim/issues) - （中文）
 - [GitHub](https://github.com/SpaceVim/SpaceVim) - （英文）
@@ -45,11 +45,11 @@ lang: cn
 
 ### 聊天
 
-作为 SpaceVim 用户的日常交流群，进群后，请不要发布无意义的内容，在你提问前，
+以下几个频道作为 SpaceVim 中文用户交流平台，之间消息实现了互通，请选择任意合适的频道参与交流。
+也可以在网页右下角点击加入聊天，进群后，请不要发布无意义的内容，在你提问前，
 请务必要阅读[《提问的智慧》](http://doc.zengrong.net/smart-questions/cn.html)。
 
-- <i class="fab fa-gitter"></i> [`SpaceVim/cn` SpaceVim gitter 聊天室](https://gitter.im/SpaceVim/cn)
-- <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` SpaceVim 中文 telegram 群](https://t.me/SpaceVim_cn)
-- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-- <i class="fab fa-qq"></i> [`755208473` Vim/SpaceVim 用户 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
-- <i class="fab fa-qq"></i> [`748697811` Vim/SpaceVim 用户 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
+- <i class="fab fa-gitter"></i> [`SpaceVim/cn` Gitter 聊天室](https://gitter.im/SpaceVim/cn)
+- <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
+- <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
+- <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)

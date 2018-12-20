@@ -8,8 +8,18 @@
 
 " Enable nocompatible
 if has('vim_starting')
+  " set default encoding to utf-8
+  " Let Vim use utf-8 internally, because many scripts require this
+  set encoding=utf-8
   if &compatible
     set nocompatible
+  endif
+  " python host
+  if !empty($PYTHON_HOST_PROG)
+    let g:python_host_prog  = $PYTHON_HOST_PROG
+  endif
+  if !empty($PYTHON3_HOST_PROG)
+    let g:python3_host_prog = $PYTHON3_HOST_PROG
   endif
 endif
 " Detect root directory of SpaceVim

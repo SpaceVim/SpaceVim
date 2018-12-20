@@ -1,31 +1,40 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
-[Documentation](http://spacevim.org/documentation/) \|
+[Documentation](https://spacevim.org/documentation/) \|
 [Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
-[Sponsors](http://spacevim.org/sponsors/) \|
+[Sponsors](https://spacevim.org/sponsors/) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
-[中文官网](http://spacevim.org/cn/)
+[中文官网](https://spacevim.org/cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-0.9.0--dev-FF69B4.svg)
+![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
+## About SpaceVim
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png)
 
-The last release is v0.8.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-See the [quick start guide](https://spacevim.org/quick-start-guide/), [documentation](https://spacevim.org/documentation/) or the [available layers](http://spacevim.org/layers/) for more information.
+## Instructions
+
+**See the followings below for more information:**
+
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/)
+- [Documentation](https://spacevim.org/documentation/)
+- [Available Layers](https://spacevim.org/layers/)
+
+If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
 
 Here is a throughput graph of the repository for the last few weeks:
 
@@ -57,7 +66,7 @@ here is an example for using toml as SpaceVim config:
     # if you want to use more colorscheme, please load the colorscheme
     # layer
     colorscheme = "gruvbox"
-    background = "dark"
+    colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     enable_guicolors = false
@@ -91,7 +100,7 @@ SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
-![iedit mode](https://user-images.githubusercontent.com/13142418/37873892-c76afb14-2fea-11e8-9149-aa955b8265f1.gif)
+![iedit mode](https://user-images.githubusercontent.com/13142418/44941560-be2a9800-add2-11e8-8fa5-e6118ff9ddcb.gif)
 
 **Highlight cursor symbol**
 
@@ -108,20 +117,20 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-[**Mnemonic key bindings navigation**](http://spacevim.org/mnemonic-key-bindings-navigation/)
+[**Mnemonic key bindings navigation**](https://spacevim.org/mnemonic-key-bindings-navigation/)
 
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
 The mapping guide is also available for `g`, `z`, and `s`.
 
 ![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
-[**Help description for key bindings**](http://spacevim.org/help-description-for-key-bindings/)
+[**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
 
 use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-[**Asynchronous plugin manager**](http://spacevim.org/Asynchronous-plugin-manager/)
+[**Asynchronous plugin manager**](https://spacevim.org/Asynchronous-plugin-manager/)
 
 create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
 
@@ -152,7 +161,7 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 The best way to support SpaceVim is to contribute to it either by reporting bugs,
 helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
 
-For more info please check our [development guidelines](http://spacevim.org/development/).
+For more info please check our [development guidelines](https://spacevim.org/development/).
 
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.

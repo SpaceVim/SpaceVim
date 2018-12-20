@@ -1,6 +1,6 @@
 ---
 title: "messletters api"
-description: "messletters API provides some besic functions for generating messletters"
+description: "messletters API provides some basic functions for generating messletters"
 ---
 
 # [Available APIs](../) >> messletters

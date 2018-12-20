@@ -15,6 +15,8 @@ this is a list of most asked questions about SpaceVim.
 - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
 - [Why I can not update plugins?](#why-i-can-not-update-plugins)
+- [how to enable +py and +py3 in neovim?](#how-to-enable-py-and-py3-in-neovim)
+- [Why vim freeze after pressing Ctrl-s?](#why-vim-freeze-after-pressing-ctrl-s)
 
 <!-- vim-markdown-toc -->
 
@@ -74,3 +76,25 @@ Sometimes you will see `Updating failed, The plugin dir is dirty`. Since the dir
 directory is dirty, you can not use `git pull` to update plugin. To fix this issue, just move your cursor to the
 error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. for more info, please read
 documentation of git.
+
+### how to enable +py and +py3 in neovim?
+
+In neovim we can use `g:python_host_prog` and `g:python3_host_prog` to config python prog. but in SpaceVim
+the custom configuration file is loaded after SpaceVim core code. so in SpaceVim itself, if we using `:py` command, it may cause errors.
+so we intrude two new environment variable: `PYTHON_HOST_PROG` and `PYTHON3_HOST_PROG`.
+
+for example:
+
+```sh
+export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
+```
+
+### Why vim freeze after pressing Ctrl-s?
+
+This is feature of terminal emulator, you can use `Ctrl-q` to unfreeze your vim.
+To disable this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
+
+```sh
+stty -ixon
+```

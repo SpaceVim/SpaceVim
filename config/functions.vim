@@ -43,6 +43,13 @@ function! ToggleBG()
         set background=dark
     endif
 endfunction
+function! ToggleConceal()
+    if &conceallevel == 0 
+        setlocal conceallevel=2
+    else
+        setlocal conceallevel=0
+    endif
+endfunction
 function! BracketsFunc()
     let line = getline('.')
     let col = col('.')

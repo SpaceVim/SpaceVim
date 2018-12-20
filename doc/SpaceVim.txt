@@ -50,36 +50,45 @@ CONTENTS                                                   *SpaceVim-contents*
       6. exprfold....................................|SpaceVim-layer-exprfold|
       7. format........................................|SpaceVim-layer-format|
       8. github........................................|SpaceVim-layer-github|
-      9. incsearch..................................|SpaceVim-layer-incsearch|
-      10. indentmove...............................|SpaceVim-layer-indentmove|
-      11. lang#c.......................................|SpaceVim-layer-lang-c|
-      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      15. lang#go.....................................|SpaceVim-layer-lang-go|
-      16. lang#java.................................|SpaceVim-layer-lang-java|
-      17. lang#julia...............................|SpaceVim-layer-lang-julia|
-      18. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      19. lang#lua...................................|SpaceVim-layer-lang-lua|
-      20. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      21. lang#php...................................|SpaceVim-layer-lang-php|
-      22. lang#pony.................................|SpaceVim-layer-lang-pony|
-      23. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      24. lang#python.............................|SpaceVim-layer-lang-python|
-      25. lang#rust.................................|SpaceVim-layer-lang-rust|
-      26. lang#scala...............................|SpaceVim-layer-lang-scala|
-      27. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      28. lang#xml...................................|SpaceVim-layer-lang-xml|
-      29. operator...................................|SpaceVim-layer-operator|
-      30. shell.........................................|SpaceVim-layer-shell|
-      31. tmux...........................................|SpaceVim-layer-tmux|
-      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+      9. github..........................................|SpaceVim-layer-test|
+      10. incsearch.................................|SpaceVim-layer-incsearch|
+      11. indentmove...............................|SpaceVim-layer-indentmove|
+      12. lang#c.......................................|SpaceVim-layer-lang-c|
+      13. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      14. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      16. lang#elm...................................|SpaceVim-layer-lang-elm|
+      17. lang#go.....................................|SpaceVim-layer-lang-go|
+      18. lang#java.................................|SpaceVim-layer-lang-java|
+      19. lang#julia...............................|SpaceVim-layer-lang-julia|
+      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      21. lang#lua...................................|SpaceVim-layer-lang-lua|
+      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      23. lang#php...................................|SpaceVim-layer-lang-php|
+      24. lang#pony.................................|SpaceVim-layer-lang-pony|
+      25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      26. lang#python.............................|SpaceVim-layer-lang-python|
+      27. lang#rust.................................|SpaceVim-layer-lang-rust|
+      28. lang#scala...............................|SpaceVim-layer-lang-scala|
+      29. lang#xml...................................|SpaceVim-layer-lang-xml|
+      30. operator...................................|SpaceVim-layer-operator|
+      31. shell.........................................|SpaceVim-layer-shell|
+      32. tmux...........................................|SpaceVim-layer-tmux|
+      33. tools#dash...............................|SpaceVim-layer-tools-dash|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
-      2. data#list....................................|SpaceVim-api-data-list|
-      3. prompt..........................................|SpaceVim-api-prompt|
-      4. sid............................................|SpaceVim-api-vim-sid|
-      5. vim#message................................|SpaceVim-api-vim-message|
+      2. data#dict....................................|SpaceVim-api-data-dict|
+      3. data#list....................................|SpaceVim-api-data-list|
+      4. job................................................|SpaceVim-api-job|
+      5. logger..........................................|SpaceVim-api-logger|
+      6. password......................................|SpaceVim-api-password|
+      7. prompt..........................................|SpaceVim-api-prompt|
+      8. sid............................................|SpaceVim-api-vim-sid|
+      9. system..........................................|SpaceVim-api-system|
+      10. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      11. vim#command...............................|SpaceVim-api-vim-command|
+      12. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      13. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -266,7 +275,7 @@ this feature, or you can set to another char.
 CONFIGURATION                                                *SpaceVim-config*
 
 If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-please check bellowing options.
+please take a look at the following options.
 
 
                                                           *g:spacevim_version*
@@ -346,6 +355,8 @@ Set the autocomplete engine of spacevim, the default logic is:
     let g:spacevim_autocomplete_method = 'neocomplcache'
   endif
 <
+
+and you can alse set this option to coc, then coc.nvim will be useed.
 
                                                    *g:spacevim_enable_neomake*
 SpaceVim default checker is neomake. If you want to use syntastic, use:
@@ -646,6 +657,10 @@ Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
   let g:spacevim_lint_on_save = 0
 <
 
+                                                     *g:spacevim_search_tools*
+Default search tools supported by flygrep. The default order is ['rg', 'ag',
+'pt', 'ack', 'grep', 'findstr']
+
                                           *g:spacevim_project_rooter_patterns*
 Set the project rooter patterns, by default it is `['.git/', '_darcs/',
 '.hg/', '.bzr/', '.svn/']`
@@ -743,6 +758,10 @@ COMMANDS                                                   *SpaceVim-commands*
 
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
+
+SpaceVim#api#import({name})                            *SpaceVim#api#import()*
+  Import API base the given {name}, and return the API object. for all
+  available APIs please check |spacevim-api|
 
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
@@ -888,6 +907,23 @@ MAPPINGS
 <
 
 ==============================================================================
+GITHUB                                                   *SpaceVim-layer-test*
+
+This layer allows to run tests on SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key         Function
+  -------------------------------------------------------------
+  normal    SPC k n     run nearest test
+  normal    SPC k f     run test file
+  normal    SPC k s     run test suite
+  normal    SPC k l     run the latest test
+  normal    SPC k v     visits the last run test file
+<
+
+==============================================================================
 INCSEARCH                                           *SpaceVim-layer-incsearch*
 
 This layer improved incremental searching for neovim/vim
@@ -907,7 +943,7 @@ mappings
   z/          n           incsearch fuzzy /
   z?          n           incsearch fuzzy ?
   zg?         n           incsearch fuzzy g?
-  <space>/    n           incsearch easymotion
+  <Space>/    n           incsearch easymotion
 <
 
 ==============================================================================
@@ -1011,6 +1047,14 @@ LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
 INTRO
 The lang#elixir layer provides code completion, documentation lookup, jump to
 definition, mix integration, and iex integration for Elixir. SpaceVim uses
+neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+
+==============================================================================
+LANG#ELM                                             *SpaceVim-layer-lang-elm*
+
+INTRO
+The lang#elm layer provides code completion, documentation lookup, jump to
+definition, mix integration, and iex integration for elm. SpaceVim uses
 neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
 
 ==============================================================================
@@ -1123,9 +1167,9 @@ and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 ==============================================================================
 LANG#JULIA                                         *SpaceVim-layer-lang-julia*
 
-The layer provides synatax highlight and linting for julia.  The completeion
-only works in nvim with deoplete. However, the julia-vim could not be load
-on-demanding  due to its LaTeXToUnicode feature.
+The layer provides synatax highlight julia.  The completeion only works in
+nvim with deoplete. However, the julia-vim could not be load on-demanding  due
+to its LaTeXToUnicode feature.
 
 
 ==============================================================================
@@ -1201,8 +1245,7 @@ MAPPINGS
 ==============================================================================
 LANG#RUST                                           *SpaceVim-layer-lang-rust*
 
-SpaceVim does not load this layer by default. If you are a rust developer, you
-should add `call SpaceVim#layers#load('lang#rust')` to your |SpaceVim-config|
+This layer is for Rust development.
 
 Requirements:
 
@@ -1235,22 +1278,14 @@ MAPPINGS
   Mode        Key         Function
   -----------------------------------------------
   normal      gd          rust-definition
-  normal      gs          rust-definition-split
-  normal      gx          rust-definition-vertical
   normal      SPC l d     rust-doc
   normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
 <
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
-
-==============================================================================
-LANG#TMUX                                           *SpaceVim-layer-lang-tmux*
-
-INTRO
-The lang#tmux layer provides syntax highlighting, commenting, man page
-navigation and ability to execute lines as tmux commands.
-|SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
@@ -1277,10 +1312,11 @@ default_shell
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*
 
-Adds integration between tmux and vim panes. Switch between panes seamlessly.
-This layer is not added by default. To include it, add
-`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If you are
-having issues with <C-h> in a neovim buffer, see
+Adds integration between tmux and vim panes. Switch between panes
+seamlessly.syntax highlighting, commenting, man page navigation and ability to
+execute lines as tmux commands. This layer is not added by default. To include
+it, add `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If
+you are having issues with <C-h> in a neovim buffer, see
 `https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
 
 MAPPINGS
@@ -1302,14 +1338,22 @@ This layer provides Dash integration for SpaceVim
 ==============================================================================
 API                                                             *SpaceVim-api*
 
-SpaceVim contains a variety of public apis. here is a list of all the apis.
+SpaceVim contains a variety of public apis. To using the api, you need to make
+sure SpaceVim has been added to your &rtp. after that, you can use
+|SpaceVim#api#import| to import the API you need.
+
 USAGE
+
 This is just an example, and it works well in old version vim.
 >
   let s:json = SpaceVim#api#import('data#json')
   let rst = s:json.json_encode(onject)
   let rst = s:json.json_decode(string)
 <
+
+here is list of resources where SpaceVim comes from:
+
+vital: https://github.com/vim-jp/vital.vim
 
 ==============================================================================
 CMDLINEMENU                                         *SpaceVim-api-cmdlinemenu*
@@ -1321,22 +1365,105 @@ list of two value in it, first one is the description, and the next one should
 be a funcrc.
 
 ==============================================================================
+DATA#DICT                                             *SpaceVim-api-data-dict*
+
+provides some functions to manipulate a dict.
+
+make({keys}, {values}[, {fill}])
+
+  make a dictionary from two list, the {keys} and {values}.
+
+swap({dict})
+
+  swap the keys and values in a dictionary.
+
+make_index
+
+  make a dictionary from a list, use
+
+==============================================================================
 DATA#LIST                                             *SpaceVim-api-data-list*
+
+provides some functions to manipulate a list.
 
 pop({list})
 
-Removes the last element from {list} and returns the element, as if the {list}
-is a stack.
+  Removes the last element from {list} and returns the element, as if the
+{list} is a stack.
 
 push({list})
 
-Appends {val} to the end of {list} and returns the list itself, as if the
+  Appends {val} to the end of {list} and returns the list itself, as if the
 {list} is a stack.
 
 listpart({list}, {start}[, {len}])
 
-The result is a List, which is part of {list}, starting from index {start},
+  The result is a List, which is part of {list}, starting from index {start},
 with the length {len}
+
+replace(list, begin, end, re_list)
+
+  replace {list} from {begin} to {end} with {re_list}
+
+shift({list})
+
+  remove first item in a {list}, and return the item
+
+unshift({list})
+
+ insert an item to the begin of the {list}
+
+==============================================================================
+JOB                                                         *SpaceVim-api-job*
+
+provides some functions to manager job
+
+start({cmd}[, {opt}])
+
+  spawns {cmd} as a job. {opts} is a dictionary with these keys:
+
+  on_stdout: stdout event handler (function name or Funcref)
+
+  on_stderr: stderr event handler (function name or Funcref)
+
+  on_exit: exit event handler (function name or Funcref)
+
+  cwd: working directory of the job; defaults to current directory
+
+==============================================================================
+LOGGER                                                   *SpaceVim-api-logger*
+
+provides some functions to manager logger
+
+set_silent({silent})
+
+  {silent} is a Boolean. by default it is false, and log will be print to
+screen.
+
+==============================================================================
+PASSWORD                                               *SpaceVim-api-password*
+
+provides some functions to generate password
+
+generate_simple({len})
+
+  generate simple password
+
+generate_strong({len})
+
+  generate strong password
+
+generate_paranoid({len})
+
+  generate paranoid password
+
+generate_numeric({len})
+
+  generate numeric password
+
+generate_phonetic({len})
+
+  generate phonetic password
 
 ==============================================================================
 PROMPT                                                   *SpaceVim-api-prompt*
@@ -1358,6 +1485,83 @@ default mapping for prompt is:
 SID                                                     *SpaceVim-api-vim-sid*
 
 " Capture command
+
+==============================================================================
+SYSTEM                                                   *SpaceVim-api-system*
+
+name()
+
+Return the name of current os, availibel value is: linux, cygwin, windows and
+mac.
+
+==============================================================================
+VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
+
+FUNCTIONS
+
+is_cmdwin()
+
+Check if current windows is command line windows.
+
+open(opt)
+
+Open a new buffer with specifice options, return the buffer number, the {opt}
+is a dict with following keys:
+
+    bufname : the buffer name of the new buffer
+
+    mode: how to open the new buffer, default is vertical topleft split
+
+    initfunc: the function which will be call after creating buffer
+
+    cmd: the ex command which will be run after the new buffer is created
+
+==============================================================================
+VIM#COMMAND                                         *SpaceVim-api-vim-command*
+
+This api is for create complete function for custom vim command. This is
+example for create complete function for command TEST
+>
+  let s:CMD = SpaceVim#api#import('vim#command')
+  let s:CMD.options = {
+      \ '-f' : {
+      \ 'description' : '',
+      \ 'complete' : ['text'],
+      \ },
+      \ '-d' : {
+      \ 'description' : 'Root directory for sources',
+      \ 'complete' : 'file',
+      \ },
+      \ }
+  function! CompleteTest(a, b, c)
+    return s:CMD.complete(a:a, a:b, a:c)
+  endfunction
+  function! Test(...)
+  endfunction
+  command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
+<
+
+==============================================================================
+VIM#COMPATIBLE                                   *SpaceVim-api-vim-compatible*
+
+
+FUNCTIONS
+
+execute(cmd)
+
+  run vim command, and return the output of such command.
+
+system(cmd)
+
+  like |system()| but can accept list as argv.
+
+systemlist(cmd)
+
+  like |systemlist()| but can accept list as argv.
+
+has(feature)
+
+  check if {feature} is supported in current version.
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
@@ -1409,10 +1613,10 @@ FAQ                                                             *SpaceVim-faq*
   `<leader>+<c-f>`.
 <
 
-  4. How to use `<space>` as `<leader>`?
+  4. How to use `<Space>` as `<Leader>`?
 
 >
-  Add `let mapleader = "\<space>"` to `~/.SpaceVim.d/init.vim`
+  Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
 <
 
 ==============================================================================

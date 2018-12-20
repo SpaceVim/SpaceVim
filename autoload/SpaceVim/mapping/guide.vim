@@ -92,10 +92,9 @@ function! s:start_parser(key, dict) " {{{
     return
   endif
   let key = a:key ==? ' ' ? "<Space>" : a:key
-  let readmap = ""
-  redir => readmap
-  silent execute 'map '.key
-  redir END
+
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
+
   let lines = split(readmap, "\n")
   let visual = s:vis == "gv" ? 1 : 0
 
@@ -322,7 +321,7 @@ function! s:highlight_cursor() abort
         \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
         \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
         \ }
-  hi def link SpaceVimGuideCursor Cursor
+  hi! def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
   if s:vis == 'gv'
     " [bufnum, lnum, col, off]
@@ -626,14 +625,14 @@ if get(g:, 'mapleader', '\') == ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings')
 else
-  call SpaceVim#mapping#guide#register_prefix_descriptions('\',
+  call SpaceVim#mapping#guide#register_prefix_descriptions(get(g:, 'mapleader', '\'),
         \ 'g:_spacevim_mappings')
   call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
-if !g:spacevim_vimcompatible
+if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
   call SpaceVim#mapping#guide#register_prefix_descriptions(
         \ g:spacevim_windows_leader,
         \ 'g:_spacevim_mappings_windows')

@@ -32,7 +32,7 @@ description: "conventions of contributing to SpaceVim, including the coding styl
     - [Whitespace](#whitespace)
     - [Line Continuations](#line-continuations)
     - [Naming](#naming)
-- [Markdown style guide](#markdown-style-guide)
+- [Key notations](#key-notations)
 - [Thanks:](#thanks)
 
 <!-- vim-markdown-toc -->
@@ -99,7 +99,7 @@ The same applies to other commands not listed here.
 
 **Match error codes, not error text.**
 
-Error text may be locale dependant.
+Error text may be locale dependent.
 
 ### General Guidelines
 
@@ -286,7 +286,13 @@ Always prefix variables with their scope.
   - b: changes the variable semantics; use it when you want buffer-local semantics.
   - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
-## Markdown style guide
+## Key notations
+
+- use capital case and angle brackets for keyboard button: `<Down>`, `<Up>`
+- use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`
+- use space as delimiter for key sequences: `SPC t w`, `<Leader> f f`
+- use `/` for alternative sequences: `<Tab>` / `<C-n>`
+- Use `Ctrl-e` instead of `<C-e>` in documentation
 
 ## Thanks:
 

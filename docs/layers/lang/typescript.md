@@ -52,5 +52,13 @@ npm install -g typescript
 
 | key binding | Description        |
 | ----------- | ------------------ |
+| `SPC l c`   | type definition    |
 | `SPC l d`   | show documentation |
 | `SPC l e`   | rename symbol      |
+| `SPC l f`   | code fix           |
+| `SPC l g`   | definition         |
+| `SPC l i`   | import             |
+| `SPC l r`   | references         |
+| `SPC l s`   | search             |
+| `SPC l t`   | type               |
+| `g d`   | defintion preview  |
