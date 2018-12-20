@@ -22,6 +22,7 @@
 - Improve spacevim debug info ([#2349](https://github.com/SpaceVim/SpaceVim/pull/2349))
 - Improve cursor eval in `lang#vim` layer ([#2358](https://github.com/SpaceVim/SpaceVim/pull/2358))
 - Add more key bindings for typescript ([#2356](https://github.com/SpaceVim/SpaceVim/pull/2356))
+- Improve align feature ([#2213](https://github.com/SpaceVim/SpaceVim/pull/2213))
 
 ### 非兼容性变动
 
