@@ -41,4 +41,15 @@ Key binding           | desc
 
 - `=`: align `===`, `==`, `!=`, `>=` etc.
 - `&`: align `&`
+- `¦`: align `¦`
+- `;`: align `;`
+- `:`: align `:`
+- `,`: align `,`
+- `.`: align `.`
+- `[`: align `[`
+- `(`: align `(`
+- `{`: align `{`
+- `]`: align `]`
+- `}`: align `}`
+- `)`: align `)`
 
