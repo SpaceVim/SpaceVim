@@ -40,3 +40,5 @@ Key binding           | desc
 **default delimiters**
 
 - `=`: align `===`, `==`, `!=`, `>=` etc.
+- `&`: align `&`
+
