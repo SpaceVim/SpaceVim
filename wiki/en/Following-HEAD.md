@@ -6,17 +6,6 @@ The next release is v1.0.0.
 
 ### Added
 
-
-- Add material theme ([#1833](https://github.com/SpaceVim/SpaceVim/pull/1833))
-- Add floobits layer ([#1697](https://github.com/SpaceVim/SpaceVim/pull/1697))
-- Add `SPC b b ` key binding in fzf layer ([#1725](https://github.com/SpaceVim/SpaceVim/pull/1725))
-- Add test for toml, number, file, icon and highlight API ([#1849](https://github.com/SpaceVim/SpaceVim/pull/1849))
-- Add lsp support for julia ([#1850](https://github.com/SpaceVim/SpaceVim/pull/1850))
-- Add lsp support for typescript ([#1870](https://github.com/SpaceVim/SpaceVim/pull/1870))
-- Add option for disabling parentheses autocompletion ([#1920](https://github.com/SpaceVim/SpaceVim/pull/1920))
-- Add Docker build of Neovim and SpaceVim ([#1923](https://github.com/SpaceVim/SpaceVim/pull/1923))
-- Add gist manager vim-gista ([#1936](https://github.com/SpaceVim/SpaceVim/pull/1936))
-- Implement git log popup feature ([#1963](https://github.com/SpaceVim/SpaceVim/pull/1963))
 - Add unicode#spinners api ([#1926](https://github.com/SpaceVim/SpaceVim/pull/1926))
 - Add layer option for autocomplete layer ([#2236](https://github.com/SpaceVim/SpaceVim/pull/2236))
 - Add function for customizing searching tools ([#2235](https://github.com/SpaceVim/SpaceVim/pull/2235))
@@ -24,7 +13,6 @@ The next release is v1.0.0.
 - Add log for bootstrap function ([#2232](https://github.com/SpaceVim/SpaceVim/pull/2323))
 - Add findstr support in flygrep ([#2344](https://github.com/SpaceVim/SpaceVim/pull/2344))
 - Add API: `get_sid_from_path` ([#2350](https://github.com/SpaceVim/SpaceVim/pull/2350))
-
 
 ### Improvement
 
