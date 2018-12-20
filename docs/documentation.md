@@ -323,7 +323,7 @@ use toml file to add custom forked plugins:
 
 ```toml
 [[custom_plugins]]
-   name = 'wsdjeg/neomake.vim'
+   name = "wsdjeg/neomake.vim"
    # note: you need to disable merged feature
    merged = false
 ```
@@ -400,7 +400,7 @@ to install it on your system if you wish to use it.
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = 'DejaVu Sans Mono for Powerline:h11'
+    guifont = "DejaVu Sans Mono for Powerline:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
@@ -1558,62 +1558,62 @@ In highlight symbol transient state:
 
 Text related commands (start with `x`):
 
-| Key Binding   | Description                                                          |     |
-| ------------- | -------------------------------------------------------------------- | --- |
-| `SPC x a &`   | align region at &                                                    |     |
-| `SPC x a (`   | align region at (                                                    |     |
-| `SPC x a )`   | align region at )                                                    |     |
-| `SPC x a [`   | align region at \[                                                   |     |
-| `SPC x a ]`   | align region at ]                                                    |     |
-| `SPC x a {`   | align region at {                                                    |     |
-| `SPC x a }`   | align region at }                                                    |     |
-| `SPC x a ,`   | align region at ,                                                    |     |
-| `SPC x a .`   | align region at . (for numeric tables)                               |     |
-| `SPC x a :`   | align region at :                                                    |     |
-| `SPC x a ;`   | align region at ;                                                    |     |
-| `SPC x a =`   | align region at =                                                    |     |
-| `SPC x a ¦`   | align region at ¦                                                    |     |
-| `SPC x a |`   | align region at                                                      |     |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |     |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |     |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |     |
-| `SPC x a r`   | align region using user-specified regexp (TODO)                      |     |
-| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |     |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |     |
-| `SPC x d w`   | delete trailing whitespaces                                          |     |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |     |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |     |
-| `SPC x g t`   | translate current word using Google Translate                        |     |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |     |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |     |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |     |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |     |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i _`   | change symbol style to `under_score`                                 |     |
-| `SPC x i u`   | change symbol style to `under_score`                                 |     |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |     |
-| `SPC x j c`   | set the justification to center (TODO)                               |     |
-| `SPC x j f`   | set the justification to full (TODO)                                 |     |
-| `SPC x j l`   | set the justification to left (TODO)                                 |     |
-| `SPC x j n`   | set the justification to none (TODO)                                 |     |
-| `SPC x j r`   | set the justification to right (TODO)                                |     |
-| `SPC x J`     | move down a line of text (enter transient state)                     |     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |     |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |     |
-| `SPC x l s`   | sort lines (TODO)                                                    |     |
-| `SPC x l u`   | uniquify lines (TODO)                                                |     |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |     |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |     |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |     |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |     |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |     |
-| `SPC x u`     | set the selected text to lower case (TODO)                           |     |
-| `SPC x U`     | set the selected text to upper case (TODO)                           |     |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |     |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |     |
-| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |     |
+| Key Binding   | Description                                                          |
+| ------------- | -------------------------------------------------------------------- | 
+| `SPC x a &`   | align region at &                                                    |     
+| `SPC x a (`   | align region at (                                                    |     
+| `SPC x a )`   | align region at )                                                    |     
+| `SPC x a [`   | align region at \[                                                   |     
+| `SPC x a ]`   | align region at ]                                                    |     
+| `SPC x a {`   | align region at {                                                    |     
+| `SPC x a }`   | align region at }                                                    |     
+| `SPC x a ,`   | align region at ,                                                    |     
+| `SPC x a .`   | align region at . (for numeric tables)                               |     
+| `SPC x a :`   | align region at :                                                    |     
+| `SPC x a ;`   | align region at ;                                                    |     
+| `SPC x a =`   | align region at =                                                    |     
+| `SPC x a ¦`   | align region at ¦                                                    |     
+| `SPC x a |`   | align region at                                                      |     
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |     
+| `SPC x a c`   | align current indentation region using default rules (TODO)          |     
+| `SPC x a l`   | left-align with evil-lion (TODO)                                     |     
+| `SPC x a L`   | right-align with evil-lion (TODO)                                    |     
+| `SPC x a r`   | align region using user-specified regexp (TODO)                      |     
+| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |     
+| `SPC x c`     | count the number of chars/words/lines in the selection region        |     
+| `SPC x d w`   | delete trailing whitespaces                                          |     
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |     
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |     
+| `SPC x g t`   | translate current word using Google Translate                        |     
+| `SPC x g T`   | reverse source and target languages (TODO)                           |     
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |     
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |     
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |     
+| `SPC x i -`   | change symbol style to `kebab-case`                                  |     
+| `SPC x i k`   | change symbol style to `kebab-case`                                  |     
+| `SPC x i _`   | change symbol style to `under_score`                                 |     
+| `SPC x i u`   | change symbol style to `under_score`                                 |     
+| `SPC x i U`   | change symbol style to `UP_CASE`                                     |     
+| `SPC x j c`   | set the justification to center (TODO)                               |     
+| `SPC x j f`   | set the justification to full (TODO)                                 |     
+| `SPC x j l`   | set the justification to left (TODO)                                 |     
+| `SPC x j n`   | set the justification to none (TODO)                                 |    
+| `SPC x j r`   | set the justification to right (TODO)                                |     
+| `SPC x J`     | move down a line of text (enter transient state)                     |     
+| `SPC x K`     | move up a line of text (enter transient state)                       |     
+| `SPC x l d`   | duplicate line or region (TODO)                                      |     
+| `SPC x l s`   | sort lines (TODO)                                                    |     
+| `SPC x l u`   | uniquify lines (TODO)                                                |     
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |     
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |     
+| `SPC x t c`   | swap (transpose) the current character with the previous one         |     
+| `SPC x t w`   | swap (transpose) the current word with the previous one              |     
+| `SPC x t l`   | swap (transpose) the current line with the previous one              |     
+| `SPC x u`     | set the selected text to lower case (TODO)                           |     
+| `SPC x U`     | set the selected text to upper case (TODO)                           |     
+| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |     
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |     
+| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |     
 
 #### Text insertion commands
 
