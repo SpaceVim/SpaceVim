@@ -20,10 +20,10 @@
 " SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file.
 " You can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
 " also be added to runtimepath, so you can write your own scripts in it.
-" SpaceVim also supports local config for each project. Place local config 
+" SpaceVim also supports local config for each project. Place local config
 " settings in `.SpaceVim.d/init.toml` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
-" 
+"
 " here is an example setting SpaceVim options:
 " >
 "   [options]
@@ -124,7 +124,7 @@ let g:spacevim_enable_googlesuggest    = 0
 ""
 " @section windows_leader, options-windows_leader
 " @parentsection options
-" Window functions leader for SpaceVim. Default is `s`. 
+" Window functions leader for SpaceVim. Default is `s`.
 " Set to empty to disable this feature, or you can set to another char.
 " >
 "   windows_leader = ""
@@ -132,7 +132,7 @@ let g:spacevim_enable_googlesuggest    = 0
 
 
 ""
-" Window functions leader for SpaceVim. Default is `s`. 
+" Window functions leader for SpaceVim. Default is `s`.
 " Set to empty to disable this feature, or you can set to another char.
 " >
 "   let g:spacevim_windows_leader = ''
@@ -330,7 +330,7 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 ""
 " Define the left section of statusline in active windows. By default:
 " >
-"   let g:spacevim_statusline_left_sections = 
+"   let g:spacevim_statusline_left_sections =
 "     \ [
 "     \ 'winnr',
 "     \ 'filename',
@@ -430,7 +430,7 @@ let g:spacevim_warning_symbol          = '⚠'
 " <
 let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
 ""
-" Set the SpaceVim cursor shape in the terminal. 
+" Set the SpaceVim cursor shape in the terminal.
 " >
 "   0 : to prevent Nvim from changing the cursor shape.
 "   1 : to enable non-blinking mode-sensitive cursor.
@@ -444,7 +444,7 @@ let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circ
 " <
 let g:spacevim_terminal_cursor_shape = 2
 ""
-" Set the help language of vim. Default is 'en'. 
+" Set the help language of vim. Default is 'en'.
 " You can change it to Chinese.
 " >
 "   let g:spacevim_vim_help_language = 'cn'
@@ -466,8 +466,8 @@ let g:spacevim_colorscheme             = 'gruvbox'
 " The background of colorscheme. Default is 'dark'.
 let g:spacevim_colorscheme_bg             = 'dark'
 ""
-" The default colorscheme of SpaceVim. Default is 'desert'. 
-" This colorscheme will be used if the colorscheme set by 
+" The default colorscheme of SpaceVim. Default is 'desert'.
+" This colorscheme will be used if the colorscheme set by
 " `g:spacevim_colorscheme` is not installed.
 " >
 "   let g:spacevim_colorscheme_default = 'other_color'
@@ -549,7 +549,7 @@ let g:spacevim_gitcommit_issue_icon    = ''
 " Set SpaceVim buffer index type, default is 0.
 " >
 "   " types:
-"   " 0: 1 ➛ ➊ 
+"   " 0: 1 ➛ ➊
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
 "   " 3: 1 ➛ ¹
@@ -561,7 +561,7 @@ let g:spacevim_buffer_index_type = 0
 " Set SpaceVim windows index type, default is 0.
 " >
 "   " types:
-"   " 0: 1 ➛ ➊ 
+"   " 0: 1 ➛ ➊
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
 "   " 3: 1 ➛ 1
@@ -604,7 +604,7 @@ let g:spacevim_custom_plugins          = []
 let g:spacevim_filetype_icons           = {}
 ""
 " SpaceVim will load the global config after local config if set to 1. Default
-" is 0. If you have a local config, the global config will not be loaded. 
+" is 0. If you have a local config, the global config will not be loaded.
 " >
 "   let g:spacevim_force_global_config = 1
 " <
@@ -645,9 +645,9 @@ let g:spacevim_project_rooter_automatically = 1
 " <
 let g:spacevim_lint_on_the_fly         = 0
 ""
-" Enable/Disable vimfiler in the welcome windows. Default is 1. 
+" Enable/Disable vimfiler in the welcome windows. Default is 1.
 " This will cause vim to start up slowly if there are too many files in the
-" current directory. 
+" current directory.
 " >
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
@@ -746,7 +746,7 @@ endif
 let g:spacevim_leader_guide_max_size = 0
 
 if !exists('g:leaderGuide_submode_mappings')
-  let g:leaderGuide_submode_mappings = 
+  let g:leaderGuide_submode_mappings =
         \ { '<C-C>': 'win_close', 'n': 'page_down', 'p': 'page_up', 'u' : 'undo'}
 endif
 
@@ -915,7 +915,6 @@ function! SpaceVim#begin() abort
     augroup END
   else
     call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
-    call SpaceVim#plugins#projectmanager#current_root()
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
@@ -941,7 +940,7 @@ function! SpaceVim#welcome() abort
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
-    if exists(':VimFiler') == 2 
+    if exists(':VimFiler') == 2
       VimFiler
       wincmd p
     endif
@@ -950,7 +949,7 @@ endfunction
 
 ""
 " @section FAQ, faq
-"1. How do I enable YouCompleteMe? 
+"1. How do I enable YouCompleteMe?
 " >
 "   I do not recommend using YouCompleteMe.
 "   It is too big as a vim plugin. Also, I do not like using submodules in a vim
@@ -974,13 +973,13 @@ endfunction
 " >
 "   SpaceVim uses neosnippet as the default snippet engine. If you want to add
 "   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-"   command. A buffer will be opened and you can add your custom snippet. 
-"   By default this buffer will be save in `~/.SpaceVim/snippets`. 
+"   command. A buffer will be opened and you can add your custom snippet.
+"   By default this buffer will be save in `~/.SpaceVim/snippets`.
 "   If you want to use another directory:
 "
 "   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
-"   
-"   For more info about how to write snippet, please 
+"
+"   For more info about how to write snippet, please
 "   read |neosnippet-snippet-syntax|.
 " <
 "
@@ -999,7 +998,7 @@ endfunction
 ""
 " @section Changelog, changelog
 " Following HEAD: changes in master branch since last release v0.7.0
-" 
+"
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
 " 2018-03-19: v0.7.0

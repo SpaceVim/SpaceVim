@@ -12,6 +12,7 @@
 - Add `lang#scheme` layer ([#2248](https://github.com/SpaceVim/SpaceVim/pull/2248))
 - Add log for bootstrap function ([#2232](https://github.com/SpaceVim/SpaceVim/pull/2323))
 - Add findstr support in flygrep ([#2344](https://github.com/SpaceVim/SpaceVim/pull/2344))
+- Add API: `get_sid_from_path` ([#2350](https://github.com/SpaceVim/SpaceVim/pull/2350))
 
 ### 功能改进
 
@@ -19,11 +20,15 @@
 - Add doc for how run run spacevim in docker ([#2238](https://github.com/SpaceVim/SpaceVim/pull/2238))
 - Improve error key bindings ([#2336](https://github.com/SpaceVim/SpaceVim/pull/2336))
 - Improve spacevim debug info ([#2349](https://github.com/SpaceVim/SpaceVim/pull/2349))
+- Improve cursor eval in `lang#vim` layer ([#2358](https://github.com/SpaceVim/SpaceVim/pull/2358))
+- Add more key bindings for typescript ([#2356](https://github.com/SpaceVim/SpaceVim/pull/2356))
+- Improve align feature ([#2213](https://github.com/SpaceVim/SpaceVim/pull/2213))
 
 ### 非兼容性变动
 
 - Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
 - Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221)) 
+- Use forked neoformat repo ([#2360](https://github.com/SpaceVim/SpaceVim/pull/2360), [#2355](https://github.com/SpaceVim/SpaceVim/pull/2355))
 
 ### 问题修复
 
@@ -33,7 +38,9 @@
 - Fix statusline icon ([#2328](https://github.com/SpaceVim/SpaceVim/pull/2328))
 - Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338))
 - Fix comment paragraphs key bindings ([#2340](https://github.com/SpaceVim/SpaceVim/pull/2340))
-- Fix dein-ui error ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352))
+- Fix dein-ui error, add syntax ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352), [`c9e1d4c`](https://github.com/SpaceVim/SpaceVim/commit/c9e1d4c9635c483bb3334c00ed36026d18950070))
+- Fix fullscreen key binding ([#2351](https://github.com/SpaceVim/SpaceVim/pull/2351))
+- Added missed syntax for detached FlyGrep ([#2353](https://github.com/SpaceVim/SpaceVim/pull/2353), [`08d0713`](https://github.com/SpaceVim/SpaceVim/commit/08d0713c4494ca401942a6ca10a48a1ac8484ce1))
 
 ### 移除的功能
 

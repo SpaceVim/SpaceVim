@@ -106,7 +106,27 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
         \ 'toggle highlight tail spaces', 1)
+
+  " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
+  " the directory that has gvim.exe
+  if has('nvim')
+    nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
+  else
+    nnoremap <silent> <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
+  endif
 endfunction
+
+let s:fullscreen_flag = 0
+function! s:toggle_full_screen() abort
+  if s:fullscreen_flag == 0
+    call GuiWindowFullScreen(1)
+    let s:fullscreen_flag = 1
+  else
+    call GuiWindowFullScreen(0)
+    let s:fullscreen_flag = 0
+  endif
+endfunction
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort

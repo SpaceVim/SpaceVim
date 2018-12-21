@@ -29,7 +29,7 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add python language support in SpaceVim, you need to enable `lang#python` layer. Just press `SPC f v d` to open
+To add python language support in SpaceVim, you need to enable the `lang#python` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
 ```toml
@@ -41,17 +41,16 @@ for more info, you can read the [lang#python](../layers/lang/python/) layer docu
 
 ### Code completion
 
-Base on which completion engine is used, `lang#python` layer load the jedi plugin automatically.
+`lang#python` layer will load the jedi plugin automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
 ![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
 
-### Syntax lint
+### Syntax linting
 
 1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
 
-I am maintainer of javac maker in neomake, the javac maker support maven project, gradle project or eclipse project.
-also you can set the classpath.
+The javac maker in neomake supports maven projects, gradle projects or eclipse projects. You can also set the classpath.
 
 ### Import packages
 
