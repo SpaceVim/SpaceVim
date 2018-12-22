@@ -43,6 +43,7 @@ function! s:grep_timer(timer) abort
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  call SpaceVim#logger#info('full cmd: ' . join(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -64,17 +65,28 @@ function! s:get_search_cmd(expr) abort
   endif
   let cmd += s:grep_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
+    " grep files is a list, which mean to use flygrep searching in 
+    " multiple files
     let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    " grep file is a single file
     let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
+    " grep dir is not a empty string
     if s:grep_exe == 'findstr'
       let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
     else
       let cmd += [a:expr] + [s:grep_dir]
     endif
   else
-    let cmd += [a:expr] + s:grep_ropt
+    " if grep dir is empty, grep files is empty, which means searhing in
+    " current directory.
+    let cmd += [a:expr] 
+    " in window, when using rg, ag, need to add '.' at the end.
+    if s:SYS.isWindows && (s:grep_exe == 'rg' || s:grep_exe == 'ag' )
+      let cmd += ['.']
+    endif
+    let cmd += s:grep_ropt
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
@@ -211,7 +223,7 @@ endfunction
 " }}}
 
 " API: MPT._prompt {{{
-let s:MPT._prompt.mpt = '➭ '
+let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 " }}}
 
 " API: MPT._onclose {{{
@@ -250,6 +262,8 @@ function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
   " let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
   if bufnr('%') == s:flygrep_buffer_id
+    " You probably split lines by \n, but Windows ses \r\n, so the \r (displayed via ^M) is still left.
+    " ag support is broken in windows + neovim-qt
     if getline(1) ==# ''
       call setline(1, datas)
     else
