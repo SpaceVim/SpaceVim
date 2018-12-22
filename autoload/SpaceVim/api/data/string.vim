@@ -7,6 +7,16 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section data#string, api-data-string
+" @parentsection api
+"
+" @subsection Functions
+"
+" split(str [, sep [, keepempty[, max]]])
+"
+"   run vim command, and return the output of such command.
+
 let s:self = {}
 
 function! s:self.trim(str) abort
@@ -123,6 +133,28 @@ function! s:self.strB2Q(str) abort
   endfor
   return join(bchars, '')
   
+endfunction
+
+
+function! s:self.split(str, ...) abort
+  let sep = get(a:000, 0, '')
+  let keepempty = get(a:000, 1, 0)
+  let max = get(a:000, 2, -1)
+  let rlist = split(a:str, sep, keepempty)
+  if max >= 2
+    let rst = []
+    for item in rlist
+      call add(rst, item)
+      if len(rst) >= max
+        break
+      endif
+    endfor
+    let last = join(rlist[max-1:], sep)
+    call add(rst, last)
+    return rst
+  else
+    return rlist
+  endif
 endfunction
 
 function! SpaceVim#api#data#string#get() abort
