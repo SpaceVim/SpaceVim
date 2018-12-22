@@ -258,9 +258,21 @@ endfunction
 
 if exists('*getjumplist')
   function! s:self.getjumplist() abort
-
+    return getjumplist()
   endfunction
 else
+  function! s:self.getjumplist() abort
+    let jumpinfo = split(self.execute(':jumps'), "\n")[1:-2]
+    let result = []
+    "   20   281   23 -invalid-
+    for info in jumpinfo
+      let jump = 20
+      let line = 281
+      let col = 23
+      let file_text = ''
+    endfor
+    return jumps
+  endfunction
 endif
 
 
