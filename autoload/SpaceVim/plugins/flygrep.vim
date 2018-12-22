@@ -536,7 +536,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   if !empty(dir) && isdirectory(dir)
     let s:grep_dir = dir
   else
-    let s:grep_dir = getcwd()
+    let s:grep_dir = '.'
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
   if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
