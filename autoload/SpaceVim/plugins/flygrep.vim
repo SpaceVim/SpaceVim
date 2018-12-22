@@ -64,17 +64,28 @@ function! s:get_search_cmd(expr) abort
   endif
   let cmd += s:grep_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
+    " grep files is a list, which mean to use flygrep searching in 
+    " multiple files
     let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    " grep file is a single file
     let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
+    " grep dir is not a empty string
     if s:grep_exe == 'findstr'
       let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
     else
       let cmd += [a:expr] + [s:grep_dir]
     endif
   else
-    let cmd += [a:expr] + s:grep_ropt
+    " if grep dir is empty, grep files is empty, which means searhing in
+    " current directory.
+    let cmd += [a:expr] 
+    " in window, when using rg, ag, need to add '.' at the end.
+    if s:SYS.isWindows && s:grep_exe == 'rg'
+      let cmd += ['.']
+    endif
+    let cmd += s:grep_ropt
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
@@ -536,7 +547,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   if !empty(dir) && isdirectory(dir)
     let s:grep_dir = dir
   else
-    let s:grep_dir = '.'
+    let s:grep_dir = ''
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
   if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
