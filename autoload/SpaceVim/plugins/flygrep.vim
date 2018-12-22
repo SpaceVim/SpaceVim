@@ -262,6 +262,8 @@ function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
   " let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
   if bufnr('%') == s:flygrep_buffer_id
+    " You probably split lines by \n, but Windows ses \r\n, so the \r (displayed via ^M) is still left.
+    " ag support is broken in windows + neovim-qt
     if getline(1) ==# ''
       call setline(1, datas)
     else
