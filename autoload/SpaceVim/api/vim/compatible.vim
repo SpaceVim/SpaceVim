@@ -27,6 +27,10 @@
 " has(feature)
 "
 "   check if {feature} is supported in current version.
+"
+" getjumplist()
+"
+"   return a list of jump position, like result of |:jump|
 
 let s:self = {}
 
@@ -249,8 +253,16 @@ else
 endif
 
 function! s:self.set_buf_line() abort
-  
+
 endfunction
+
+if exists('*getjumplist')
+  function! s:self.getjumplist() abort
+
+  endfunction
+else
+endif
+
 
 function! SpaceVim#api#vim#compatible#get() abort
   return deepcopy(s:self)
