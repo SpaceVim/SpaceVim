@@ -211,7 +211,7 @@ endfunction
 " }}}
 
 " API: MPT._prompt {{{
-let s:MPT._prompt.mpt = '➭ '
+let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 " }}}
 
 " API: MPT._onclose {{{
