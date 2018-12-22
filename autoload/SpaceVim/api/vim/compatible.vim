@@ -32,6 +32,11 @@
 "
 "   return a list of jump position, like result of |:jump|
 
+
+" Load SpaceVim API:
+
+let s:STRING = SpaceVim#api#import('data#string')
+
 let s:self = {}
 
 function! s:self.has(feature) abort
@@ -266,12 +271,14 @@ else
     let result = []
     "   20   281   23 -invalid-
     for info in jumpinfo
-      let jump = 20
-      let line = 281
-      let col = 23
-      let file_text = ''
+      let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      call add(result, {
+            \ 'bufnr' : jump,
+            \ 'lnum' : line,
+            \ 'col' : col,
+            \ })
     endfor
-    return jumps
+    return result
   endfunction
 endif
 
