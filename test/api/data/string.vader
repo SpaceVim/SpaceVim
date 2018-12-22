@@ -1,5 +1,6 @@
 Execute ( SpaceVim api: data#string ):
   let str = SpaceVim#api#import('data#string')
+  AssertEqual str.split(' s b c d e', ' ', 0, 3)[2], 'c d e'
   AssertEqual str.trim(' s b '), 's b'
   AssertEqual str.trim_start(' s b '), 's b '
   AssertEqual str.trim_end(' s b '), ' s b'

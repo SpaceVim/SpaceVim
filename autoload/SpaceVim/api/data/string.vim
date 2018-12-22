@@ -144,10 +144,10 @@ function! s:self.split(str, ...) abort
   if max >= 2
     let rst = []
     for item in rlist
-      call add(rst, item)
-      if len(rst) >= max
+      if len(rst) >= max - 1
         break
       endif
+      call add(rst, item)
     endfor
     let last = join(rlist[max-1:], sep)
     call add(rst, last)
