@@ -43,6 +43,7 @@ function! s:grep_timer(timer) abort
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  call SpaceVim#logger#info('full cmd: ' . join(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -82,7 +83,7 @@ function! s:get_search_cmd(expr) abort
     " current directory.
     let cmd += [a:expr] 
     " in window, when using rg, ag, need to add '.' at the end.
-    if s:SYS.isWindows && s:grep_exe == 'rg'
+    if s:SYS.isWindows && (s:grep_exe == 'rg' || s:grep_exe == 'ag' )
       let cmd += ['.']
     endif
     let cmd += s:grep_ropt
