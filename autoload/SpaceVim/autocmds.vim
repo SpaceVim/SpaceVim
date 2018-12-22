@@ -163,6 +163,8 @@ function! SpaceVim#autocmds#VimEnter() abort
       call call(g:_spacevim_bootstrap_after, [])
     catch
       call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+      call SpaceVim#logger#error('       exception: ' . v:exception)
+      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
     endtry
   endif
 endfunction
