@@ -394,13 +394,13 @@ in `[options]` section:
 
 ### Font
 
-The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended
+The default font used by SpaceVim is [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip). It is recommended
 to install it on your system if you wish to use it.
 
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = "DejaVu Sans Mono for Powerline:h11"
+    guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
