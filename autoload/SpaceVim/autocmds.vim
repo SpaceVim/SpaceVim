@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+
+let s:SYS = SpaceVim#api#import('system')
+let s:JOB = SpaceVim#api#import('job')
+
+
 "autocmds
 function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
@@ -102,10 +107,12 @@ function! s:fixindentline() abort
   endif
 endfunction
 function! s:generate_doc() abort
-  if filereadable('./addon-info.json') && executable('vimdoc')
-    call SpaceVim#api#import('job').start(['vimdoc', '.'])
+  " neovim in windows executable function is broken
+  " https://github.com/neovim/neovim/issues/9391
+  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
+    call s:JOB.start(['vimdoc', '.'])
   elseif filereadable('./addon-info.json') && executable('python')
-    call SpaceVim#api#import('job').start(['python', '-m', 'vimdoc', '.'])
+    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
   endif
 endfunction
 
