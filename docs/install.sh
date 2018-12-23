@@ -90,16 +90,6 @@ System="$(uname -s)"
 
 # }}}
 
-# need_cmd {{{
-need_cmd () {
-    if ! hash "$1" &>/dev/null; then
-        error "Need '$1' (command not found)"
-        exit 1
-    fi
-}
-# }}}
-
-# success/info/error/warn {{{
 msg() {
     printf '%b\n' "$1" >&2
 }
@@ -107,12 +97,6 @@ msg() {
 success() {
     if [ "$ret" -eq '0' ]; then
         msg "${Green}[✔]${Color_off} ${1}${2}"
-    fi
-}
-
-debug() {
-    if [ "$debug_mode" -eq '1' ] && [ "$ret" -gt '1' ]; then
-        msg "An error occurred in function \"${FUNCNAME[$i+1]}\" on line ${BASH_LINENO[$i+1]}, we're sorry for that."
     fi
 }
 
@@ -128,10 +112,23 @@ error() {
 warn () {
     msg "${Red}[✘]${Color_off} ${1}${2}"
 }
-# }}}
 
-# echo_with_color {{{
-echo_with_color () {
+debug() {
+    if [ "$debug_mode" -eq '1' ] && [ "$ret" -gt '1' ]; then
+        msg "An error occurred in function \"${FUNCNAME[$i+1]}\" on line ${BASH_LINENO[$i+1]}, we're sorry for that."
+    fi
+}
+
+need_cmd () {
+    if ! hash "$1" &>/dev/null; then
+        error "Need '$1' (command not found)"
+        exit 1
+    fi
+}
+
+
+# _echo_with_coloe {{{
+_echo_with_coloe () {
     printf '%b\n' "$1$2$Color_off" >&2
 }
 # }}}
@@ -330,14 +327,14 @@ usage () {
 # install_done {{{
 
 install_done () {
-    echo_with_color ${Yellow} ""
-    echo_with_color ${Yellow} "Almost done!"
-    echo_with_color ${Yellow} "=============================================================================="
-    echo_with_color ${Yellow} "==    Open Vim or Neovim and it will install the plugins automatically      =="
-    echo_with_color ${Yellow} "=============================================================================="
-    echo_with_color ${Yellow} ""
-    echo_with_color ${Yellow} "That's it. Thanks for installing SpaceVim. Enjoy!"
-    echo_with_color ${Yellow} ""
+    _echo_with_coloe ${Yellow} ""
+    _echo_with_coloe ${Yellow} "Almost done!"
+    _echo_with_coloe ${Yellow} "=============================================================================="
+    _echo_with_coloe ${Yellow} "==    Open Vim or Neovim and it will install the plugins automatically      =="
+    _echo_with_coloe ${Yellow} "=============================================================================="
+    _echo_with_coloe ${Yellow} ""
+    _echo_with_coloe ${Yellow} "That's it. Thanks for installing SpaceVim. Enjoy!"
+    _echo_with_coloe ${Yellow} ""
 }
 
 # }}}
@@ -346,19 +343,19 @@ install_done () {
 
 
 welcome () {
-    echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
-    echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
-        echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
-        echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
-        echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
-        echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
-        echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
-        echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               |__/                                                           "
-            echo_with_color ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
-        }
+    _echo_with_coloe ${Yellow} "        /######                                     /##    /##/##             "
+    _echo_with_coloe ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
+    _echo_with_coloe ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+    _echo_with_coloe ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+    _echo_with_coloe ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+    _echo_with_coloe ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+    _echo_with_coloe ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+    _echo_with_coloe ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+    _echo_with_coloe ${Yellow} "               | ##                                                           "
+    _echo_with_coloe ${Yellow} "               | ##                                                           "
+    _echo_with_coloe ${Yellow} "               |__/                                                           "
+    _echo_with_coloe ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
+}
 
 # }}}
 
@@ -412,7 +409,7 @@ main () {
                 info "Trying to uninstall SpaceVim"
                 uninstall_vim
                 uninstall_neovim
-                echo_with_color ${BWhite} "Thanks!"
+                _echo_with_coloe ${BWhite} "Thanks!"
                 exit 0
                 ;;
             --checkRequirements|-c)
