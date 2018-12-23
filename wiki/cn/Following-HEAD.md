@@ -36,7 +36,7 @@
 - Ctrlp support in windows ([#2325](https://github.com/SpaceVim/SpaceVim/pull/2325))
 - Fix layers list in windows ([#2327](https://github.com/SpaceVim/SpaceVim/pull/2327))
 - Fix statusline icon ([#2328](https://github.com/SpaceVim/SpaceVim/pull/2328))
-- Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338))
+- Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338), [#2372](https://github.com/SpaceVim/SpaceVim/pull/2372))
 - Fix comment paragraphs key bindings ([#2340](https://github.com/SpaceVim/SpaceVim/pull/2340))
 - Fix dein-ui error, add syntax ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352), [`c9e1d4c`](https://github.com/SpaceVim/SpaceVim/commit/c9e1d4c9635c483bb3334c00ed36026d18950070))
 - Fix fullscreen key binding ([#2351](https://github.com/SpaceVim/SpaceVim/pull/2351))
