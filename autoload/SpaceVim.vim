@@ -251,13 +251,13 @@ let g:spacevim_enable_ale          = 0
 " @parentsection options
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+"   guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+"   let g:spacevim_guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 let g:spacevim_guifont                 = ''
 
@@ -629,6 +629,10 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+
+""
+" Config the command line prompt for flygrep and denite etc.
+let g:spacevim_commandline_prompt = '➭'
 
 ""
 " @section lint_on_the_fly, options-lint_on_the_fly

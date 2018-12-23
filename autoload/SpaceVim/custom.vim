@@ -8,6 +8,7 @@
 
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
+let s:FILE = SpaceVim#api#import('file')
 
 function! SpaceVim#custom#profile(dict) abort
   for key in keys(a:dict)
@@ -41,15 +42,17 @@ function! SpaceVim#custom#autoconfig(...) abort
   call menu.menu(ques)
 endfunction
 
+
+
 function! s:awesome_mode() abort
-  let sep = SpaceVim#api#import('file').separator
+  let sep = s:FILE.separator
   let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
-  let sep = SpaceVim#api#import('file').separator
+  let sep = s:FILE.separator
   let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
@@ -61,10 +64,12 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
+    call SpaceVim#logger#warn("Failed to generate config file, It is not readable: " . cf)
     return
   endif
-  if !isdirectory(fnamemodify(cf, ':p:h'))
-    call mkdir(expand(fnamemodify(cf, ':p:h')), 'p')
+  let dir = expand(fnamemodify(cf, ':p:h'))
+  if !isdirectory(dir)
+    call mkdir(dir), 'p')
   endif
   call writefile(a:config, cf, '')
 endfunction

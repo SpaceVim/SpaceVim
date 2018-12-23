@@ -154,14 +154,18 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>y "+y
     xnoremap <Leader>d "+d
     nnoremap <Leader>p "+p
+    let g:_spacevim_mappings.p = ['normal! "+p', 'paste after here']
     nnoremap <Leader>P "+P
+    let g:_spacevim_mappings.P = ['normal! "+P', 'paste before here']
     xnoremap <Leader>p "+p
     xnoremap <Leader>P "+P
   else
     xnoremap <Leader>y "*y
     xnoremap <Leader>d "*d
     nnoremap <Leader>p "*p
+    let g:_spacevim_mappings.p = ['normal! "*p', 'paste after here']
     nnoremap <Leader>P "*P
+    let g:_spacevim_mappings.P = ['normal! "*P', 'paste before here']
     xnoremap <Leader>p "*p
     xnoremap <Leader>P "*P
   endif

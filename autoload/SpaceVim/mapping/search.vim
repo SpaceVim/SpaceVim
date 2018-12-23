@@ -24,7 +24,7 @@ let s:search_tools.a = {}
 let s:search_tools.a.command = 'ag'
 let s:search_tools.a.default_opts =
       \ [
-      \ '-i', '--column', '--hidden', '--ignore',
+      \ '-i', '--nocolor', '--filename', '--noheading', '--column', '--hidden', '--ignore',
       \ '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
       \ ]
 let s:search_tools.a.recursive_opt = []

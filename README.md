@@ -18,6 +18,7 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/SpaceVim/SpaceVim.svg)](http://isitmaintained.com/project/SpaceVim/SpaceVim "Percentage of issues still open")
 
 ## About SpaceVim
+
 SpaceVim is a community-driven modular vim distribution. It manages collections
 of plugins in layers, which help collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.

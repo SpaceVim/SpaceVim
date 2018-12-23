@@ -29,6 +29,7 @@
 - Do not load language layer ([#2220](https://github.com/SpaceVim/SpaceVim/pull/2220))
 - Changed the behavior of 2-LeftMouse in vimfiler ([#2221](https://github.com/SpaceVim/SpaceVim/pull/2221)) 
 - Use forked neoformat repo ([#2360](https://github.com/SpaceVim/SpaceVim/pull/2360), [#2355](https://github.com/SpaceVim/SpaceVim/pull/2355))
+- Change default font to SauceCodePro ([#2373](https://github.com/SpaceVim/SpaceVim/pull/2373))
 
 ### 问题修复
 
@@ -36,11 +37,16 @@
 - Ctrlp support in windows ([#2325](https://github.com/SpaceVim/SpaceVim/pull/2325))
 - Fix layers list in windows ([#2327](https://github.com/SpaceVim/SpaceVim/pull/2327))
 - Fix statusline icon ([#2328](https://github.com/SpaceVim/SpaceVim/pull/2328))
-- Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338))
+- Fix vimdoc command in windows ([#2338](https://github.com/SpaceVim/SpaceVim/pull/2338), [#2372](https://github.com/SpaceVim/SpaceVim/pull/2372))
 - Fix comment paragraphs key bindings ([#2340](https://github.com/SpaceVim/SpaceVim/pull/2340))
 - Fix dein-ui error, add syntax ([#2352](https://github.com/SpaceVim/SpaceVim/pull/2352), [`c9e1d4c`](https://github.com/SpaceVim/SpaceVim/commit/c9e1d4c9635c483bb3334c00ed36026d18950070))
 - Fix fullscreen key binding ([#2351](https://github.com/SpaceVim/SpaceVim/pull/2351))
 - Added missed syntax for detached FlyGrep ([#2353](https://github.com/SpaceVim/SpaceVim/pull/2353), [`08d0713`](https://github.com/SpaceVim/SpaceVim/commit/08d0713c4494ca401942a6ca10a48a1ac8484ce1))
+- Add log for generate configuration file ([#2369](https://github.com/SpaceVim/SpaceVim/pull/2369))
+- Fix FlyGrep syntax to support different outputs ([#2363](https://github.com/SpaceVim/SpaceVim/pull/2363), [`0b26f40`](https://github.com/SpaceVim/SpaceVim/commit/0b26f407d879427505418f5c3b4c1d753f3f4317))
+- Fix `project_rooter_automatically = 0` option to not change directory to project root ([#2363](https://github.com/SpaceVim/SpaceVim/pull/2365))
+- Add log for generate configuration file ([#2369](https://github.com/SpaceVim/SpaceVim/pull/2369))
+- Fix flygrep and neovim support in windows os ([#2371](https://github.com/SpaceVim/SpaceVim/pull/2371))
 
 ### 移除的功能
 
@@ -52,7 +58,6 @@
 
 ## 上一个版本
 
-SpaceVim 于 2018-09-26 发布 v0.9.0 版本，可查阅办法发布文章：
+SpaceVim 于 2018-09-26 发布 v0.9.0 版本，可查阅版本发布文章：
 
 - [SpaceVim 发布 v0.9.0 版本](https://spacevim.org/SpaceVim-release-v0.9.0/)
-
