@@ -62,6 +62,8 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+  elseif g:spacevim_autocomplete_method ==# 'coc'
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0}])
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
@@ -194,6 +196,7 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
   let s:key_sequence_delay = get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
         \ 0.1)
+  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 50)
 
 endfunction
 
@@ -203,6 +206,12 @@ function! SpaceVim#layers#autocomplete#get_options() abort
         \ 'tab_key_behavior',
         \ 'auto-completion-complete-with-key-sequence',
         \ 'auto-completion-complete-with-key-sequence-delay']
+
+endfunction
+
+function! SpaceVim#layers#autocomplete#getprfile() abort
+
+  
 
 endfunction
 

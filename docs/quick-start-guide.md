@@ -14,7 +14,9 @@ show you how to install it, how to config it, and explain its features.
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
+- [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
+- [Online tutor](#online-tutor)
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
@@ -43,6 +45,19 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ### Windows
 
 The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+
+## Run in docker
+
+```sh
+docker pull spacevim/spacevim
+docker run -it --rm spacevim/spacevim nvim
+```
+
+you can also load local config:
+
+```sh
+docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+```
 
 ## Configuration
 
@@ -92,8 +107,26 @@ name = "lilydjwg/colorizer"
 merged = 0
 ```
 
+## Online tutor
+
+This is a list of online tutor for using SpaceVim as general IDE and programming language support:
+
+- [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as IDE
+
+a list of guide for programming language support:
+
+
+<ul>
+    {% for post in site.categories.tutorials %}
+            <li>
+               <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
+
 ## Learning SpaceVim
 
-- [SpaceVim Documentation](../documentation). Also known as "The Book", The SpaceVim Documentation will introduce
-  you to the main topics important to using SpaceVim. The book is the primary official document of the language.
+- [SpaceVim Documentation](../documentation). Also known as "The Book",
+The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
+The book is the primary official document of SpaceVim.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.

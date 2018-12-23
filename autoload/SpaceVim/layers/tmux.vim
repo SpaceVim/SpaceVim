@@ -47,10 +47,17 @@ function! SpaceVim#layers#tmux#config() abort
     autocmd FocusLost * set nocursorline | redraw!
   augroup END
 
-  nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
-  nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
-  nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
-  nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
+  if s:tmux_navigator_modifier ==# 'alt'
+    nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
+    nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
+    nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
+    nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
+  else
+    nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
+    nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
+    nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
+    nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
+  endif
   let g:neomake_tmux_enabled_makers = ['tmux']
   let g:neomake_tmux_tmux_maker = {
         \ 'exe': 'tmux',
@@ -112,6 +119,7 @@ let s:i_separators = {
 
 let s:tmuxline_separators = g:spacevim_statusline_separator
 let s:tmuxline_separators_alt = g:spacevim_statusline_inactive_separator
+let s:tmux_navigator_modifier = 'ctrl'
 
 function! SpaceVim#layers#tmux#set_variable(var) abort
 
@@ -123,11 +131,15 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
         \ 'tmuxline_separators_alt',
         \ g:spacevim_statusline_inactive_separator)
 
+  let s:tmux_navigator_modifier = get(a:var,
+        \ 'tmux_navigator_modifier',
+        \ s:tmux_navigator_modifier)
+
 endfunction
 
 
 function! SpaceVim#layers#tmux#get_options() abort
 
-  return ['tmuxline_separators', 'tmuxline_separators_alt']
+  return ['tmuxline_separators', 'tmuxline_separators_alt', 'tmux_navigator_modifier']
 
 endfunction

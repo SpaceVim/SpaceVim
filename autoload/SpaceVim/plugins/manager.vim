@@ -205,7 +205,8 @@ function! SpaceVim#plugins#manager#update(...) abort
     let s:plugins = a:0 == 0 ? sort(map(neobundle#config#get_neobundles(), 'v:val.name')) : sort(copy(a:1))
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
-  if a:0 == 0
+  " make dein-ui only update SpaceVim for SpaceVim users
+  if a:0 == 0 && exists('g:spacevim_version')
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)

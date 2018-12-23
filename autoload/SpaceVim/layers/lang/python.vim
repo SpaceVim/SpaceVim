@@ -50,12 +50,6 @@ function! SpaceVim#layers#lang#python#config() abort
 
   " }}}
 
-  let g:neoformat_python_autoflake = {
-        \ 'exe': 'autoflake',
-        \ 'args': ['--in-place', '--remove-duplicate-keys', '--expand-star-imports'],
-        \ 'stdin': 0,
-        \ }
-
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),

@@ -302,19 +302,19 @@ If you have some ASCII skills you can submit your artwork!
 
 You are free to choose a reasonable height size but the width size should be around 75 characters.
 
-## Build with SpaceVim
+## 基于 SpaceVim 开发
 
-SpaceVim provide a lot of public [APIs](../api/), you can create plugins base on this APIs. also you can add a badge to the README.md of your plugin.
+SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 vim 和 neovim 的插件。同时，也可以像插件的 README 中添加 SpaceVim 的图标：
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
-markdown
+markdown 语法如下：
 
 ```md
-[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
+[![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org/cn/)
 ```
 
-## Changelog
+## 更新日志
 
 <ul>
     {% for post in site.categories.changelog_cn %}

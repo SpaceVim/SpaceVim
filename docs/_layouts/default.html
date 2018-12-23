@@ -4,7 +4,9 @@
   <head>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     {% seo %}
+    {% if page.lang == "cn" %}
     <script type="text/javascript" src="https://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script>
+    {% endif %}
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script>
       (function(w, d, s, l, i) {
@@ -111,7 +113,6 @@
         {% if page.comments %}
 
             <div id="container"></div>
-            <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
             <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
             <script>
             var gitment = new Gitment({

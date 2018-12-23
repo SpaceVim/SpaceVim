@@ -58,7 +58,7 @@ npm install -g typescript
 | `SPC l f`   | code fix           |
 | `SPC l g`   | definition         |
 | `SPC l i`   | import             |
-| `SPC l p`   | defintion preview  |
 | `SPC l r`   | references         |
 | `SPC l s`   | search             |
 | `SPC l t`   | type               |
+| `g d`   | defintion preview  |
