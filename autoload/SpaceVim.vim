@@ -251,13 +251,13 @@ let g:spacevim_enable_ale          = 0
 " @parentsection options
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+"   guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+"   let g:spacevim_guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 let g:spacevim_guifont                 = ''
 
