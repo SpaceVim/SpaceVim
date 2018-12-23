@@ -136,8 +136,8 @@ echo_with_color () {
 }
 # }}}
 
-# fetch_repo {{{
-fetch_repo () {
+# pull_or_clone_repo {{{
+pull_or_clone_repo () {
     if [[ -d "$HOME/.SpaceVim" ]]; then
         info "Trying to update SpaceVim"
         cd "$HOME/.SpaceVim"
@@ -223,15 +223,18 @@ uninstall_vim () {
     if [[ -d "$HOME/.vim" ]]; then
         if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.vim"
+            ret="$?"
             success "Uninstall SpaceVim for vim"
             if [[ -d "$HOME/.vim_back" ]]; then
                 mv "$HOME/.vim_back" "$HOME/.vim"
+                ret="$?"
                 success "Recover from $HOME/.vim_back"
             fi
         fi
     fi
     if [[ -f "$HOME/.vimrc_back" ]]; then
         mv "$HOME/.vimrc_back" "$HOME/.vimrc"
+        ret="$?"
         success "Recover from $HOME/.vimrc_back"
     fi
 }
@@ -242,9 +245,11 @@ uninstall_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
             rm "$HOME/.config/nvim"
+            ret="$?"
             success "Uninstall SpaceVim for neovim"
             if [[ -d "$HOME/.config/nvim_back" ]]; then
                 mv "$HOME/.config/nvim_back" "$HOME/.config/nvim"
+                ret="$?"
                 success "Recover from $HOME/.config/nvim_back"
             fi
         fi
@@ -343,17 +348,17 @@ install_done () {
 welcome () {
     echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
     echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
-    echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
-    echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
-    echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
-    echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
-    echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
-    echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
-    echo_with_color ${Yellow} "               | ##                                                           "
-    echo_with_color ${Yellow} "               | ##                                                           "
-    echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
-}
+        echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+        echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+        echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+        echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+        echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+        echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+        echo_with_color ${Yellow} "               | ##                                                           "
+        echo_with_color ${Yellow} "               | ##                                                           "
+        echo_with_color ${Yellow} "               |__/                                                           "
+            echo_with_color ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
+        }
 
 # }}}
 
@@ -382,15 +387,6 @@ install_fonts () {
     download_font "DejaVu Sans Mono Bold for Powerline.ttf"
     download_font "DejaVu Sans Mono Oblique for Powerline.ttf"
     download_font "DejaVu Sans Mono for Powerline.ttf"
-    download_font "DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf"
-    download_font "Ubuntu Mono derivative Powerline Nerd Font Complete.ttf"
-    download_font "WEBDINGS.TTF"
-    download_font "WINGDNG2.ttf"
-    download_font "WINGDNG3.ttf"
-    download_font "devicons.ttf"
-    download_font "mtextra.ttf"
-    download_font "symbol.ttf"
-    download_font "wingding.ttf"
     info "Updating font cache, please wait ..."
     if [ $System == "Darwin" ];then
         if [ ! -e "$HOME/Library/Fonts" ];then
@@ -426,8 +422,8 @@ main () {
             --install|-i)
                 welcome
                 need_cmd 'git'
-                fetch_repo
-                if [ $# -eq 2 ]
+                pull_or_clone_repo
+                if [ $# -eq 2 ] && [ $ret -eq 0 ]
                 then
                     case $2 in
                         neovim)
@@ -441,10 +437,13 @@ main () {
                             exit 0
                     esac
                 fi
-                install_vim
-                install_neovim
-                install_done
-                exit 0
+                if [ $ret -eq 0 ]
+                then
+                    install_vim
+                    install_neovim
+                    install_done
+                    exit 0
+                fi
                 ;;
             --help|-h)
                 usage
@@ -457,7 +456,7 @@ main () {
     else
         welcome
         need_cmd 'git'
-        fetch_repo
+        pull_or_clone_repo
         install_vim
         install_neovim
         install_package_manager
