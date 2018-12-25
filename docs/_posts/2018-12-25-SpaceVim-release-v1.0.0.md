@@ -31,9 +31,9 @@ of SpaceVim v1.0.0 has been released.
 
 ![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
-- [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
-- [documentation](documentation/): the primary official document of SpaceVim
-- [available layers](layers/): a list of available layers which can be used in SpaceVim
+- [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
+- [documentation](../documentation/): the primary official document of SpaceVim
+- [available layers](../layers/): a list of available layers which can be used in SpaceVim
 
 ## Release Notes
 
