@@ -13,8 +13,7 @@ comments: true
 
 <!-- vim-markdown-toc GFM -->
 
-- [Features](#features)
-- [Pull requests list](#pull-requests-list)
+- [Release Notes](#release-notes)
   - [Added](#added)
   - [Improvement](#improvement)
   - [Changed](#changed)
@@ -24,16 +23,12 @@ comments: true
 <!-- vim-markdown-toc -->
 
 The first commit of the project is on 2016-12-26, after two years development, the first stable version
-of SpaceVim v1.0.0 has been released. so let's take a look at some of the new features in SpaceVim.
+of SpaceVim v1.0.0 has been released. so let's take a look at what happened in the new release v1.0.0.
 
 ![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
 
-## Features
-
-Since last release, SpaceVim has 
-
-## Pull requests list
+## Release Notes
 
 ### Added
 
