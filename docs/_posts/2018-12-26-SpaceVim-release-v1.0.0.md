@@ -13,14 +13,13 @@ comments: true
 
 <!-- vim-markdown-toc GFM -->
 
-- [New features](#new-features)
+- [Features](#features)
 - [Pull requests list](#pull-requests-list)
   - [Added](#added)
   - [Improvement](#improvement)
   - [Changed](#changed)
   - [Fixed](#fixed)
-  - [Removed](#removed)
-  - [Doc, Wiki && Website](#doc-wiki--website)
+  - [Doc](#doc)
 
 <!-- vim-markdown-toc -->
 
@@ -30,7 +29,7 @@ of SpaceVim v1.0.0 has been released. so let's take a look at some of the new fe
 ![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png)
 
 
-## New features
+## Features
 
 Since last release, SpaceVim has 
 
@@ -80,8 +79,6 @@ Since last release, SpaceVim has
 - Add log for generate configuration file ([#2369](https://github.com/SpaceVim/SpaceVim/pull/2369))
 - Fix flygrep and neovim support in windows os ([#2371](https://github.com/SpaceVim/SpaceVim/pull/2371))
 
-### Removed
-
-### Doc, Wiki && Website
+### Doc
 
 - Online tutorial ([#2004](https://github.com/SpaceVim/SpaceVim/pull/2004))
