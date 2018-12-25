@@ -22,11 +22,18 @@ comments: true
 
 <!-- vim-markdown-toc -->
 
-The first commit of the project is on 2016-12-26, after two years development, the first stable version
-of SpaceVim v1.0.0 has been released. so let's take a look at what happened in the new release v1.0.0.
+SpaceVim is a distribution of the vim editor that's inspired by spacemacs.
+It manages collections of plugins in layers, which help collect related
+packages together to provide features.
+
+The first commit of SpaceVim is on 2016-12-26, after two years development, the first stable version
+of SpaceVim v1.0.0 has been released.
 
 ![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
+- [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
+- [documentation](documentation/): the primary official document of SpaceVim
+- [available layers](layers/): a list of available layers which can be used in SpaceVim
 
 ## Release Notes
 
