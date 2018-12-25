@@ -330,7 +330,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
+    echo_with_color ${Yellow} "                      version : 1.0.0           by : spacevim.org             "
 }
 
 # }}}
