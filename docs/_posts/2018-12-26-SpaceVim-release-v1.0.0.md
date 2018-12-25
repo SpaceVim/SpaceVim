@@ -3,7 +3,7 @@ title: SpaceVim release v1.0.0
 categories: [changelog, blog]
 excerpt: "A community-driven modular vim distribution - The ultimate vim configuration"
 type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png
+image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
 commentsID: "SpaceVim release v1.0.0"
 comments: true
 ---
@@ -26,7 +26,7 @@ comments: true
 The first commit of the project is on 2016-12-26, after two years development, the first stable version
 of SpaceVim v1.0.0 has been released. so let's take a look at some of the new features in SpaceVim.
 
-![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png)
+![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
 
 ## Features
