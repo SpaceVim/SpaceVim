@@ -122,7 +122,18 @@ function! s:open_default_shell() abort
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
       if has('nvim')
-        exe 'terminal'
+        terminal
+        " @bug cursor is not cleared when open terminal windows.
+        " in neovim-qt when using :terminal to open a shell windows, the orgin
+        " cursor position will be highlighted. switch to normal mode and back
+        " is to clear the highlight.
+        " This seem a bug of neovim-qt in windows.
+        "
+        " cc @equalsraf
+        if s:SYSTEM.isWindows && has('nvim')
+          stopinsert
+          startinsert
+        endif
       else
         if s:SYSTEM.isWindows
           let shell = empty($SHELL) ? 'cmd.exe' : $SHELL

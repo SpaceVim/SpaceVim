@@ -141,7 +141,7 @@ endf
 
 func! s:self._build_prompt() abort
   normal! :
-  let ident = repeat(' ', self.__cmp.win_screenpos(0)[1])
+  let ident = repeat(' ', self.__cmp.win_screenpos(0)[1] - 1)
   echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
