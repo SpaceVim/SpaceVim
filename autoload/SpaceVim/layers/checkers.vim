@@ -118,13 +118,6 @@ function! SpaceVim#layers#checkers#config() abort
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
   augroup END
-
-  if g:spacevim_enable_neomake
-    augroup SpaceVim_layer_checkers_signatures
-      autocmd!
-      autocmd 
-    augroup END
-  endif
 endfunction
 
 function! s:neomake_cursor_move_delay() abort
