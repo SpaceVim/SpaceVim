@@ -18,6 +18,8 @@ The next release is v1.0.1
 
 ### Doc, Wiki && Website
 
+- Updated the faq page with additional links and rephrased for clarity.
+
 ### Others
 
 ## Latest Release
