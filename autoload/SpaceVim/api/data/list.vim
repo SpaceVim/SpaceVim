@@ -27,20 +27,34 @@ endfunction
 ""
 " @section data#list, api-data-list
 " @parentsection api
-" pop({list})
+" provides some functions to manipulate a list.
 "
-" Removes the last element from {list} and returns the element,
+" pop({list})
+" 
+"   Removes the last element from {list} and returns the element,
 " as if the {list} is a stack.
 "
 " push({list})
 "
-" Appends {val} to the end of {list} and returns the list itself,
+"   Appends {val} to the end of {list} and returns the list itself,
 " as if the {list} is a stack.
 "
 " listpart({list}, {start}[, {len}])
 " 
-" The result is a List, which is part of {list}, starting from
+"   The result is a List, which is part of {list}, starting from
 " index {start}, with the length {len}
+"
+" replace(list, begin, end, re_list)
+"
+"   replace {list} from {begin} to {end} with {re_list}
+"
+" shift({list})
+"
+"   remove first item in a {list}, and return the item
+"
+" unshift({list})
+"
+"  insert an item to the begin of the {list} 
 
 function! s:pop(list) abort
     return remove(a:list, -1)

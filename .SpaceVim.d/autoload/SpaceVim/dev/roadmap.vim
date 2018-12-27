@@ -6,23 +6,9 @@
 " License: GPLv3
 "=============================================================================
 
-
-function! SpaceVim#dev#roadmap#updateCompletedItems() abort
-  let [start, end] = s:find_position()
-  if start != 0 && end != 0
-    if end - start > 1
-      exe (start + 1) . ',' . (end - 1) . 'delete'
-    endif
-    call append(start, s:generate_content())
-    silent! Neoformat
-  endif
-endfunction
-
-function! s:find_position() abort
-  let start = search('^<!-- SpaceVim roadmap completed items start -->$','bwnc')
-  let end = search('^<!-- SpaceVim roadmap completed items end -->$','bnwc')
-  return sort([start, end])
-endfunction
+let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
+let s:AUTODOC.begin = '^<!-- SpaceVim roadmap completed items start -->$'
+let s:AUTODOC.end = '^<!-- SpaceVim roadmap completed items end -->$'
 
 function! s:generate_content() abort
   let content = ['## Completed',
@@ -30,6 +16,13 @@ function! s:generate_content() abort
         \ ]
   let content += s:get_milestones()
   return content
+endfunction
+
+let s:AUTODOC.content_func = function('s:generate_content')
+let s:AUTODOC.autoformat = 1
+
+function! SpaceVim#dev#roadmap#updateCompletedItems() abort
+  call s:AUTODOC.update()
 endfunction
 
 function! s:get_milestones() abort

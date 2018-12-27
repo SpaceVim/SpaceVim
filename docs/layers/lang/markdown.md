@@ -56,7 +56,6 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
-
 ## Key bindings
 
 | Key        | mode   | description                |

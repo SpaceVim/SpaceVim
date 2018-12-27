@@ -1,5 +1,5 @@
 ---
-title:  "SpaceVim 中文手册"
+title: "SpaceVim 中文手册"
 description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行、以及 REPL 和 DEBUG 支持。"
 redirect_from: "/README_zh_cn/"
 lang: cn
@@ -64,6 +64,7 @@ lang: cn
   - [以 `z` 开头的命令](#以-z-开头的命令)
   - [搜索](#搜索)
     - [使用额外工具](#使用额外工具)
+      - [配置搜索工具](#配置搜索工具)
       - [常用按键绑定](#常用按键绑定)
       - [在当前文件中进行搜索](#在当前文件中进行搜索)
       - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
@@ -123,10 +124,10 @@ lang: cn
 - **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
 - **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
 - **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
-- **更快的启动时间:** 得益于 dein.vim, SpaceVim 中90% 的插件都是按需载入的。
-- **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。 
+- **更快的启动时间:** 得益于 dein.vim, SpaceVim 中 90% 的插件都是按需载入的。
+- **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
 - **更易扩展:** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+- **完美支持 Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
@@ -188,7 +189,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在`~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
 
-当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
+当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软链接来改变目录位置，以便配置备份。
 
 SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.toml` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
@@ -308,9 +309,9 @@ SpaceVim 的[模块首页](../layers/)。
     disabled_plugins = ["neomake.vim"]
 ```
 
-2. 添加自己fork的插件，或者本地克隆版本：
+2. 添加自己 fork 的插件，或者本地克隆版本：
 
-修搞配置文件 init.toml， 加入以下部分，来添加自己fork的版本：
+修搞配置文件 init.toml， 加入以下部分，来添加自己 fork 的版本：
 
 ```toml
 [[custom_plugins]]
@@ -339,7 +340,7 @@ SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复�
 
 ## 优雅的界面
 
-SpaceVim  集成了多种使用 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
+SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
 ### 颜色主题
 
@@ -373,12 +374,12 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 ### 字体
 
-在 SpaceVim 中默认的字体是 DejaVu Sans Mono for Powerline.
+在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip).
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
 如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `guifont`，默认值为:
 
 ```toml
-    guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+    guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
@@ -389,7 +390,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 | 快捷键      | 描述                                      |
 | ----------- | ----------------------------------------- |
-| `SPC t 8`   | 高亮所有超过80列的字符                    |
+| `SPC t 8`   | 高亮所有超过 80 列的字符                  |
 | `SPC t f`   | 高亮临界列，默认 `max_column` 是第 120 列 |
 | `SPC t h h` | 高亮当前行                                |
 | `SPC t h i` | 高亮代码对齐线                            |
@@ -419,7 +420,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 | 快捷键      | 描述               |
 | ----------- | ------------------ |
-| `SPC [1-9]` | 跳至制定序号的窗口 |
+| `SPC [1-9]` | 跳至指定序号的窗口 |
 
 默认主题 gruvbox 的状态栏颜色和模式对照表：
 
@@ -471,7 +472,7 @@ _acpi_ 可展示电池电量剩余百分比.
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0   - 30%  | 红色 |
+| 0 - 30%    | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -569,7 +570,7 @@ custom_color_palette = [
 
 ### 标签栏
 
-如果只有一个Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
+如果只有一个 Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
 | 快捷键       | 描述             |
 | ------------ | ---------------- |
@@ -631,68 +632,68 @@ SpaceVim 选项 `window_leader` 的值来设为其他按键：
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<leader> q r`
 
-| Key                   |      Mode     | Action                                                                         |
+| Key                   |     Mode      | Action                                                                         |
 | --------------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<leader>`+`y`        |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl`+`c`            |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<leader>`+`Ctrl`+`c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<leader>`+`y`        |    visual     | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl`+`c`            |    Normal     | Copy full path of current buffer to X11 clipboard                              |
+| `<leader>`+`Ctrl`+`c` |    Normal     | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
 | `<leader>`+`Ctrl`+`l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
 | `<leader>`+`p`        | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl`+`f`            |     Normal    | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl`+`b`            |     Normal    | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl`+`e`            |     Normal    | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl`+`y`            |     Normal    | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl`+`q`            |     Normal    | `Ctrl`+`w`                                                                     |
-| `Ctrl`+`x`            |     Normal    | Switch buffer and placement                                                    |
-| `Up,Down`             |     Normal    | Smart up and down                                                              |
-| `}`                   |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
+| `Ctrl`+`f`            |    Normal     | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl`+`b`            |    Normal     | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl`+`e`            |    Normal     | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl`+`y`            |    Normal     | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl`+`q`            |    Normal     | `Ctrl`+`w`                                                                     |
+| `Ctrl`+`x`            |    Normal     | Switch buffer and placement                                                    |
+| `Up,Down`             |    Normal     | Smart up and down                                                              |
+| `}`                   |    Normal     | After paragraph motion go to first non-blank char (}^)                         |
 | `<`                   | Visual/Normal | Indent to left and re-select                                                   |
 | `>`                   | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`                 |     Visual    | Indent to right and re-select                                                  |
-| `Shift`+`Tab`         |     Visual    | Indent to left and re-select                                                   |
-| `gp`                  |     Normal    | Select last paste                                                              |
-| `Q`/`gQ`              |     Normal    | Disable EX-mode (<Nop>)                                                        |
+| `Tab`                 |    Visual     | Indent to right and re-select                                                  |
+| `Shift`+`Tab`         |    Visual     | Indent to left and re-select                                                   |
+| `gp`                  |    Normal     | Select last paste                                                              |
+| `Q`/`gQ`              |    Normal     | Disable EX-mode (<Nop>)                                                        |
 | `Ctrl`+`a`            |    Command    | Navigation in command line                                                     |
 | `Ctrl`+`b`            |    Command    | Move cursor backward in command line                                           |
 | `Ctrl`+`f`            |    Command    | Move cursor forward in command line                                            |
 
 ### File Operations
 
-| Key             |          Mode         | Action                                     |
+| Key             |         Mode          | Action                                     |
 | --------------- | :-------------------: | ------------------------------------------ |
-| `<leader>`+`cd` |         Normal        | Switch to the directory of the open buffer |
+| `<leader>`+`cd` |        Normal         | Switch to the directory of the open buffer |
 | `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
 | `Ctrl`+`s`      | Normal/visual/Command | Write (:w)                                 |
 | `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
 
 ### Editor UI
 
-| Key                     |      Mode     | Action                                                           |
+| Key                     |     Mode      | Action                                                           |
 | ----------------------- | :-----------: | ---------------------------------------------------------------- |
 | `F2`                    |     _All_     | Toggle tagbar                                                    |
 | `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
-| `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`         |     Normal    | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`         |     Normal    | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`         |     Normal    | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`         |     Normal    | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                    |     Normal    | Go to first tab (:tabfirst)                                      |
-| `g$`                    |     Normal    | Go to last tab (:tablast)                                        |
-| `gr`                    |     Normal    | Go to previous tab (:tabprevious)                                |
-| `Ctrl`+`<Dow>`          |     Normal    | Move to split below (<C-w>j)                                     |
-| `Ctrl`+`<Up>`           |     Normal    | Move to upper split (<C-w>k)                                     |
-| `Ctrl`+`<Left>`         |     Normal    | Move to left split (<C-w>h)                                      |
-| `Ctrl`+`<Right>`        |     Normal    | Move to right split (<C-w>l)                                     |
-| `*`                     |     Visual    | Search selection forwards                                        |
-| `#`                     |     Visual    | Search selection backwards                                       |
-| `,`+`Space`             |     Normal    | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`              |     Visual    | Replace selection                                                |
-| `<leader>`+`lj`         |     Normal    | Next on location list                                            |
-| `<leader>`+`lk`         |     Normal    | Previous on location list                                        |
+| `<leader>` + num        |    Normal     | Jump to the buffer with the num index                            |
+| `<Alt>` + num           |    Normal     | Jump to the buffer with the num index, this only works in neovim |
+| `<Alt>` + `h`/`<Left>`  |    Normal     | Jump to left buffer in the tabline, this only works in neovim    |
+| `<Alt>` + `l`/`<Right>` |    Normal     | Jump to Right buffer in the tabline, this only works in neovim   |
+| `<leader>`+`ts`         |    Normal     | Toggle spell-checker (:setlocal spell!)                          |
+| `<leader>`+`tn`         |    Normal     | Toggle line numbers (:setlocal nonumber!)                        |
+| `<leader>`+`tl`         |    Normal     | Toggle hidden characters (:setlocal nolist!)                     |
+| `<leader>`+`th`         |    Normal     | Toggle highlighted search (:set hlsearch!)                       |
+| `<leader>`+`tw`         |    Normal     | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g0`                    |    Normal     | Go to first tab (:tabfirst)                                      |
+| `g$`                    |    Normal     | Go to last tab (:tablast)                                        |
+| `gr`                    |    Normal     | Go to previous tab (:tabprevious)                                |
+| `Ctrl`+`<Dow>`          |    Normal     | Move to split below (<C-w>j)                                     |
+| `Ctrl`+`<Up>`           |    Normal     | Move to upper split (<C-w>k)                                     |
+| `Ctrl`+`<Left>`         |    Normal     | Move to left split (<C-w>h)                                      |
+| `Ctrl`+`<Right>`        |    Normal     | Move to right split (<C-w>l)                                     |
+| `*`                     |    Visual     | Search selection forwards                                        |
+| `#`                     |    Visual     | Search selection backwards                                       |
+| `,`+`Space`             |    Normal     | Remove all spaces at EOL                                         |
+| `Ctrl`+`r`              |    Visual     | Replace selection                                                |
+| `<leader>`+`lj`         |    Normal     | Next on location list                                            |
+| `<leader>`+`lk`         |    Normal     | Previous on location list                                        |
 | `<leader>`+`S`          | Normal/visual | Source selection                                                 |
 
 ### Native functions
@@ -829,12 +830,12 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| 快捷键      | 描述                                         |
-| ----------- | -------------------------------------------- |
-| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录    |
-| `SPC h i`   | 获取光标下单词的帮助信息                     |
-| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键 |
-| `SPC h m`   | 使用 Unite 浏览所有 man 文档                 |
+| 快捷键      | 描述                                               |
+| ----------- | -------------------------------------------------- |
+| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
+| `SPC h i`   | 获取光标下单词的帮助信息                           |
+| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键       |
+| `SPC h m`   | 使用 Unite 浏览所有 man 文档                       |
 
 报告一个问题：
 
@@ -888,9 +889,9 @@ merged = 0
 
 类似于 Firefox 的 vimperator 的 `f` 键的功能。
 
-| 快捷键                          | 描述             |
-| ------------------------------- | ---------------- |
-| `SPC j u`/(`o` for help buffer) | 快速跳到/打开url |
+| 快捷键                          | 描述              |
+| ------------------------------- | ----------------- |
+| `SPC j u`/(`o` for help buffer) | 快速跳到/打开 url |
 
 #### 常用的成对快捷键
 
@@ -979,8 +980,8 @@ merged = 0
 | `SPC w TAB`/`<Tab>`  | 在统一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                                     |
-| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                                               |
+| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
+| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
 | `SPC w d`            | 删除一个窗口                                                                   |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
 | `SPC w D`            | 选择一个窗口，并且关闭                                                         |
@@ -1020,7 +1021,7 @@ Buffer 操作相关快捷键都是已 `SPC b` 为前缀的：
 
 | 快捷键          | 描述                                                                           |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC TAB`       | 切换至前一buffer，可用于两个 buffer 来回切换                                   |
+| `SPC TAB`       | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
 | `SPC b .`       | 启用 buffer 临时快捷键                                                         |
 | `SPC b b`       | 切换至某一 buffer，通过 Unite/Denite 进行筛选                                  |
 | `SPC b d`       | 删除当前 buffer，但保留 Vim 窗口                                               |
@@ -1062,6 +1063,7 @@ Buffer 操作相关快捷键都是已 `SPC b` 为前缀的：
 
 | 快捷键      | 描述                                                   |
 | ----------- | ------------------------------------------------------ |
+| `SPC f /`   | 使用 `find` 命令查找文件，支持参数提示                 |
 | `SPC f b`   | 跳至文件书签                                           |
 | `SPC f c`   | copy current file to a different location(TODO)        |
 | `SPC f C d` | 修改文件编码 unix -> dos                               |
@@ -1131,7 +1133,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ##### 文件树中打开文件
 
-如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要制定窗口来打开文件：
+如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要指定窗口来打开文件：
 
 | 快捷键         | 描述             |
 | -------------- | ---------------- |
@@ -1171,7 +1173,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `g]`      | tselect cursor tag                              |
 | `g^`      | go to leftmost no-white character               |
 | `g_`      | go to last char                                 |
-| ``g` ``   | 跳至标签，等同于 `g'`                           |
+| `` g` ``  | 跳至标签，等同于 `g'`                           |
 | `ga`      | 打印光标字符的 ascii 值                         |
 | `gd`      | 跳至定义处                                      |
 | `ge`      | go to end of previous word                      |
@@ -1253,14 +1255,14 @@ SpaceVim 像下面那样调用不同搜索工具的搜索接口:
 - [ack](https://beyondgrep.com/)
 - grep
 
-SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的工具,后一个键是范围. 
+SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的工具,后一个键是范围.
 例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索.
 
-如果最后一个键(决定范围)是大写字母, 那么就会对当前光标下的单词进行搜索. 
+如果最后一个键(决定范围)是大写字母, 那么就会对当前光标下的单词进行搜索.
 举个例子 `SPC s a b` 将会搜索当前光标下的单词.
 
-如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools` 
-列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`. 
+如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools`
+列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`.
 举个例子如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
 
 下表是全部的工具键:
@@ -1281,21 +1283,50 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的
 | files in a given directory | f   |
 | current project            | p   |
 
-可以双击按键序列中的第二个键来在当前文件中进行搜索.  举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索.
+可以双击按键序列中的第二个键来在当前文件中进行搜索. 举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索.
 
 Notes:
 
 - 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉, 但是他们可以在任意目录中正常运行.
 - 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
-  **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) 
+  **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html)
   同时也需要安装一个名叫 `pt` 的命令行工具.
+
+##### 配置搜索工具
+
+若需要修改默认搜索工具的选项，可以使用启动函数，在启动函数中配置各种搜索工具的默认选项。
+下面是一个修改 `rg` 默认搜索选项的配置示例：
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+搜索工具配置结构为：
+
+```vim
+" { 'ag' : {
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
 
 ##### 常用按键绑定
 
 | Key Binding     | Description                               |
 | --------------- | ----------------------------------------- |
 | `SPC r l`       | resume the last completion buffer         |
-| ``SPC s ` ``    | go back to the previous place before jump |
+| `` SPC s ` ``   | go back to the previous place before jump |
 | Prefix argument | will ask for file extensions              |
 
 ##### 在当前文件中进行搜索
@@ -1379,7 +1410,7 @@ Notes:
 | `SPC s r p`          | rg                                                  |
 | `SPC s r P`          | rg with default text                                |
 
-**提示**: 在工程中进行搜索的话, 无需提前打开文件. 在工程保存目录中使用 `SPC　p p` 和　`C-s`　，　就比如 `SPC s p`.(TODO)　
+**提示**: 在工程中进行搜索的话, 无需提前打开文件. 在工程保存目录中使用 `SPC p p` 和　`C-s`　，　就比如 `SPC s p`.(TODO)
 
 ##### 后台进行工程搜索
 
@@ -1408,7 +1439,7 @@ Notes:
 | `SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在　vim　中使用谷歌　suggestions ，　你需要在你的默认配置文件中加入　`let g:spacevim_enable_googlesuggest = 1`. 
+**注意**: 为了在　 vim 　中使用谷歌　 suggestions ，　你需要在你的默认配置文件中加入　`let g:spacevim_enable_googlesuggest = 1`.
 
 #### 实时代码检索
 
@@ -1482,62 +1513,62 @@ In highlight symbol transient state:
 
 文本相关的命令 (以 `x` 开头):
 
-| Key Binding   | Description                                                          |     |
-| ------------- | -------------------------------------------------------------------- | --- |
-| `SPC x a &`   | align region at &                                                    |     |
-| `SPC x a (`   | align region at (                                                    |     |
-| `SPC x a )`   | align region at )                                                    |     |
-| `SPC x a [`   | align region at \[                                                   |     |
-| `SPC x a ]`   | align region at ]                                                    |     |
-| `SPC x a {`   | align region at {                                                    |     |
-| `SPC x a }`   | align region at }                                                    |     |
-| `SPC x a ,`   | align region at ,                                                    |     |
-| `SPC x a .`   | align region at . (for numeric tables)                               |     |
-| `SPC x a :`   | align region at :                                                    |     |
-| `SPC x a ;`   | align region at ;                                                    |     |
-| `SPC x a =`   | align region at =                                                    |     |
-| `SPC x a ¦`   | align region at ¦                                                    |     |
-| `SPC x a |`   | align region at                                                      |     |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |     |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |     |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |     |
-| `SPC x a r`   | align region using user-specified regexp (TODO)                      |     |
-| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |     |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |     |
-| `SPC x d w`   | delete trailing whitespaces                                          |     |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |     |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |     |
-| `SPC x g t`   | translate current word using Google Translate                        |     |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |     |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |     |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |     |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |     |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i _`   | change symbol style to `under_score`                                 |     |
-| `SPC x i u`   | change symbol style to `under_score`                                 |     |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |     |
-| `SPC x j c`   | set the justification to center (TODO)                               |     |
-| `SPC x j f`   | set the justification to full (TODO)                                 |     |
-| `SPC x j l`   | set the justification to left (TODO)                                 |     |
-| `SPC x j n`   | set the justification to none (TODO)                                 |     |
-| `SPC x j r`   | set the justification to right (TODO)                                |     |
-| `SPC x J`     | move down a line of text (enter transient state)                     |     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |     |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |     |
-| `SPC x l s`   | sort lines (TODO)                                                    |     |
-| `SPC x l u`   | uniquify lines (TODO)                                                |     |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |     |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |     |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |     |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |     |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |     |
-| `SPC x u`     | set the selected text to lower case (TODO)                           |     |
-| `SPC x U`     | set the selected text to upper case (TODO)                           |     |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |     |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |     |
-| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |     |
+| Key Binding   | Description                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| `SPC x a &`   | align region at &                                                    |
+| `SPC x a (`   | align region at (                                                    |
+| `SPC x a )`   | align region at )                                                    |
+| `SPC x a [`   | align region at \[                                                   |
+| `SPC x a ]`   | align region at ]                                                    |
+| `SPC x a {`   | align region at {                                                    |
+| `SPC x a }`   | align region at }                                                    |
+| `SPC x a ,`   | align region at ,                                                    |
+| `SPC x a .`   | align region at . (for numeric tables)                               |
+| `SPC x a :`   | align region at :                                                    |
+| `SPC x a ;`   | align region at ;                                                    |
+| `SPC x a =`   | align region at =                                                    |
+| `SPC x a ¦`   | align region at ¦                                                    |
+| `SPC x a |`   | align region at                                                      |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
+| `SPC x a c`   | align current indentation region using default rules (TODO)          |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
+| `SPC x a r`   | align region using user-specified regexp (TODO)                      |
+| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |
+| `SPC x c`     | count the number of chars/words/lines in the selection region        |
+| `SPC x d w`   | delete trailing whitespaces                                          |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
+| `SPC x g t`   | translate current word using Google Translate                        |
+| `SPC x g T`   | reverse source and target languages (TODO)                           |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
+| `SPC x i -`   | change symbol style to `kebab-case`                                  |
+| `SPC x i k`   | change symbol style to `kebab-case`                                  |
+| `SPC x i _`   | change symbol style to `under_score`                                 |
+| `SPC x i u`   | change symbol style to `under_score`                                 |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
+| `SPC x j c`   | set the justification to center (TODO)                               |
+| `SPC x j f`   | set the justification to full (TODO)                                 |
+| `SPC x j l`   | set the justification to left (TODO)                                 |
+| `SPC x j n`   | set the justification to none (TODO)                                 |
+| `SPC x j r`   | set the justification to right (TODO)                                |
+| `SPC x J`     | move down a line of text (enter transient state)                     |
+| `SPC x K`     | move up a line of text (enter transient state)                       |
+| `SPC x l d`   | duplicate line or region (TODO)                                      |
+| `SPC x l s`   | sort lines (TODO)                                                    |
+| `SPC x l u`   | uniquify lines (TODO)                                                |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
+| `SPC x t c`   | swap (transpose) the current character with the previous one         |
+| `SPC x t w`   | swap (transpose) the current word with the previous one              |
+| `SPC x t l`   | swap (transpose) the current line with the previous one              |
+| `SPC x u`     | set the selected text to lower case (TODO)                           |
+| `SPC x U`     | set the selected text to upper case (TODO)                           |
+| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
+| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |
 
 #### 文本插入命令
 
@@ -1682,15 +1713,15 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 | `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
 | `SPC e .` | error transient state                                                       |
 
-下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误, 
-甚至可检查vim位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
+下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误,
+甚至可检查 vim 位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
 默认提示符:
 
 | Symbol | Description | Custom option               |
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`   | Info        | `g:spacevim_info_symbol`    |
+| `🛈`    | Info        | `g:spacevim_info_symbol`    |
 
 ### 工程管理
 

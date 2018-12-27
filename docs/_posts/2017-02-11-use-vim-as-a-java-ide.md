@@ -65,7 +65,7 @@ within above picture, we can see the checkers layer provides following feature:
 ## Import packages
 
 There are two kind features for importing packages, import packages automatically and manually. SpaceVim will import the packages after selecting the class name on popmenu.
-Also, you can sue key binding `<F4>` to import the class at the cursor point. If there are more than one class, a menu will be shown below current windows.
+Also, you can use key binding `<F4>` to import the class at the cursor point. If there are more than one class, a menu will be shown below current windows.
 
 ![import class](https://user-images.githubusercontent.com/13142418/46298485-c04e6500-c5d1-11e8-96f3-01d84f9fe237.png)
 
