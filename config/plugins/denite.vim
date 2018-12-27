@@ -52,7 +52,7 @@ else
     " For Pt(the platinum searcher)
     " NOTE: It also supports windows.
     call denite#custom#var('file_rec', 'command',
-          \ ['pt', '--follow', '--nocolor', '-g=', '.'])
+          \ ['pt', '--follow', '--nocolor', '--hidden', '-g=', '.'])
   endif
 endif
 
