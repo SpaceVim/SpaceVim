@@ -12,7 +12,11 @@ The next release is v1.0.1
 
 ### Fixed
 
-### Doc
+- Clear rootDir cache after rooter pattern change([#2370](https://github.com/SpaceVim/SpaceVim/pull/2370))
+
+### Removed
+
+### Doc, Wiki && Website
 
 ### Others
 
