@@ -236,7 +236,16 @@ function! s:close_buffer() abort
     call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
-  noautocmd pclose
+  if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
+    noautocmd pclose
+    let s:preview_able = 0
+  endif
   noautocmd q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
