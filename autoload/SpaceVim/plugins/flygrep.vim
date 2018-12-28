@@ -307,12 +307,6 @@ function! s:next_item() abort
     normal! j
   endif
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -323,12 +317,6 @@ endfunction
 function! s:page_up() abort
   exe "normal! \<PageUp>"
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -339,12 +327,6 @@ endfunction
 function! s:page_down() abort
   exe "normal! \<PageDown>"
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -355,12 +337,6 @@ endfunction
 function! s:page_home() abort
   normal! gg
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -371,12 +347,6 @@ endfunction
 function! s:page_end() abort
   normal! G
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -391,12 +361,6 @@ function! s:previous_item() abort
     normal! k
   endif
   if s:preview_able == 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   endif
   redraw
@@ -464,12 +428,6 @@ let s:preview_able = 0
 function! s:toggle_preview() abort
   if s:preview_able == 0
     let s:preview_able = 1
-    for id in s:previewd_bufnrs
-      try
-        exe 'silent bd ' . id
-      catch
-      endtry
-    endfor
     call s:preview()
   else
     pclose
@@ -487,6 +445,9 @@ function! Test() abort
 endfunction
 
 function! s:preview() abort
+  for id in filter(s:previewd_bufnrs, 'bufexist(v:val)')
+      exe 'silent bd ' . id
+  endfor
   let br = bufnr('$')
   let line = getline('.')
   let filename = fnameescape(split(line, ':\d\+:')[0])
