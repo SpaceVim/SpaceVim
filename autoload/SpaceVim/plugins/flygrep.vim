@@ -298,6 +298,12 @@ function! s:next_item() abort
     normal! j
   endif
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -308,6 +314,12 @@ endfunction
 function! s:page_up() abort
   exe "normal! \<PageUp>"
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -318,6 +330,12 @@ endfunction
 function! s:page_down() abort
   exe "normal! \<PageDown>"
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -328,6 +346,12 @@ endfunction
 function! s:page_home() abort
   normal! gg
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -338,6 +362,12 @@ endfunction
 function! s:page_end() abort
   normal! G
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -352,6 +382,12 @@ function! s:previous_item() abort
     normal! k
   endif
   if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   endif
   redraw
@@ -415,6 +451,12 @@ let s:preview_able = 0
 function! s:toggle_preview() abort
   if s:preview_able == 0
     let s:preview_able = 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
     call s:preview()
   else
     pclose
@@ -424,11 +466,24 @@ function! s:toggle_preview() abort
   call s:MPT._build_prompt()
 endfunction
 
+
+let s:previewd_bufnrs = []
+
+function! Test() abort
+  return s:previewd_bufnrs
+endfunction
+
 function! s:preview() abort
+  let br = bufnr('$')
   let line = getline('.')
   let filename = fnameescape(split(line, ':\d\+:')[0])
   let linenr = matchstr(line, ':\d\+:')[1:-2]
-  exe 'noautocmd silent pedit! +' . linenr . ' ' . filename
+  exe 'silent pedit! +' . linenr . ' ' . filename
+  wincmd p
+  if bufnr('%') > br
+    call add(s:previewd_bufnrs, bufnr('%'))
+  endif
+  wincmd p
   resize 18
 endfunction
 
