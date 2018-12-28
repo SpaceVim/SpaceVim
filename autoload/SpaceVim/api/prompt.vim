@@ -149,6 +149,7 @@ func! s:self._build_prompt() abort
   if empty(self._prompt.cursor) && !has('nvim')
     echohl Comment | echon '_' | echohl None
   endif
+  " FIXME: Macvim need extra redraw, 
 endf
 
 function! s:self._clear_prompt() abort

@@ -230,7 +230,8 @@ let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 
 " API: MPT._onclose {{{
 function! s:close_buffer() abort
-  if s:grepid != 0
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
@@ -242,7 +243,8 @@ let s:MPT._onclose = function('s:close_buffer')
 
 " API: MPT._oninputpro {{{
 function! s:close_grep_job() abort
-  if s:grepid != 0
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
