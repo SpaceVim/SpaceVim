@@ -417,6 +417,10 @@ function! s:open_item() abort
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      pclose
+    endif
+    let s:preview_able = 0
     noautocmd q
     exe 'e ' . filename
     call cursor(linenr, colum)
