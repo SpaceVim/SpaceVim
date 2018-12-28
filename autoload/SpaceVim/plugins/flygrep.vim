@@ -445,7 +445,7 @@ function! Test() abort
 endfunction
 
 function! s:preview() abort
-  for id in filter(s:previewd_bufnrs, 'bufexist(v:val)')
+  for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
       exe 'silent bd ' . id
   endfor
   let br = bufnr('$')
