@@ -8,6 +8,18 @@
 
 let s:self = {}
 
+
+" the key of a highlight should be:
+" name: the name of the highlight group
+" ctermbg: background color in cterm
+" ctermfg: fround color in cterm
+" bold: if bold?
+" italic: if italic?
+" underline: if underline
+" guibg: gui background color
+" guifg: found color in gui
+" reverse: if reverse
+
 function! s:self.group2dict(name) abort
     let id = index(map(range(1999), "synIDattr(v:val, 'name')"), a:name)
     if id == -1
@@ -17,6 +29,7 @@ function! s:self.group2dict(name) abort
                     \ 'ctermfg' : '',
                     \ 'bold' : '',
                     \ 'italic' : '',
+                    \ 'reverse' : '',
                     \ 'underline' : '',
                     \ 'guibg' : '',
                     \ 'guifg' : '',
@@ -28,6 +41,7 @@ function! s:self.group2dict(name) abort
                 \ 'ctermfg' : synIDattr(id, 'fg', 'cterm'),
                 \ 'bold' : synIDattr(id, 'bold'),
                 \ 'italic' : synIDattr(id, 'italic'),
+                \ 'reverse' : synIDattr(id, 'reverse'),
                 \ 'underline' : synIDattr(id, 'underline'),
                 \ 'guibg' : synIDattr(id, 'bg#'),
                 \ 'guifg' : synIDattr(id, 'fg#'),
@@ -52,6 +66,7 @@ function! s:self.hi(info) abort
     if empty(a:info) || get(a:info, 'name', '') ==# ''
         return
     endif
+    exe 'hi clear ' . a:info.name
     let cmd = 'hi! ' .  a:info.name
     if !empty(a:info.ctermbg)
         let cmd .= ' ctermbg=' . a:info.ctermbg
@@ -66,7 +81,7 @@ function! s:self.hi(info) abort
         let cmd .= ' guifg=' . a:info.guifg
     endif
     let style = []
-    for sty in ['bold', 'italic', 'underline']
+    for sty in ['bold', 'italic', 'underline', 'reverse']
         if get(a:info, sty, '') ==# '1'
             call add(style, sty)
         endif

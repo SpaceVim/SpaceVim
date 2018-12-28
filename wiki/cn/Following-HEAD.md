@@ -8,9 +8,13 @@
 
 ### 功能改进
 
+- Add debug info for flygrep ([#2388](https://github.com/SpaceVim/SpaceVim/pull/2388))
+
 ### 非兼容性变动
 
 ### 问题修复
+
+- Clear rootDir cache after rooter pattern change([#2370](https://github.com/SpaceVim/SpaceVim/pull/2370))
 
 ### 移除的功能
 
