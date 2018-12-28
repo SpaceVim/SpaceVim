@@ -13,6 +13,8 @@
 
 let s:self = {}
 
+let s:DICT = SpaceVim#api#import('data#dict')
+
 let s:self._cache = {}
 
 function! s:self._capture(command) abort
@@ -44,6 +46,17 @@ function! s:self.scriptnames() abort
   endfor
   return sdict
 endfunction
+
+function! s:self.get_sid_from_path(path) abort
+  let path = self._unify_path(a:path)
+  let scriptnames = s:DICT.swap(self.scriptnames())
+  if has_key(scriptnames, path)
+    return scriptnames[path]
+  else
+    return -1
+  endif
+endfunction
+
 function! SpaceVim#api#vim#sid#get() abort
     return deepcopy(s:self)
 endfunction

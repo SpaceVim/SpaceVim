@@ -8,18 +8,18 @@ lang: cn
 
 <!-- vim-markdown-toc GFM -->
 
-    - [简介](#简介)
-    - [使用方法](#使用方法)
+- [简介](#简介)
+- [使用方法](#使用方法)
 - [可用 APIs](#可用-apis)
 
 <!-- vim-markdown-toc -->
 
-#### 简介
+## 简介
 
 为了兼容不同版本的 Vim，避免使用重复的兼容函数，SpaceVim 提供了一套兼容的公共 API。开发插件时，
 可以在你的插件中使用这些公共 API，这一思想主要借鉴于 [vital.vim](https://github.com/vim-jp/vital.vim)。
 
-#### 使用方法
+## 使用方法
 
 可以通过 `SpaceVim#api#import()` 函数导入相关 API，参考以下示例：
 
