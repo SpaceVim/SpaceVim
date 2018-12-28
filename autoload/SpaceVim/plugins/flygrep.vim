@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:HI = SpaceVim#api#import('vim#highlight')
 "}}}
 
 " Init local options: {{{
@@ -538,6 +539,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=
+  if has('gui_running')
+    let cursor_hi = s:HI.group2dict('Cursor')
+    call s:HI.hide_in_normal('Cursor')
+  endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
@@ -581,6 +586,9 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   call s:MPT.open()
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
+  if has('gui_running')
+    call s:HI.hi(cursor_hi)
+  endif
 endfunction
 " }}}
 
@@ -596,5 +604,4 @@ endfunction
 function! SpaceVim#plugins#flygrep#mode() abort
   return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
 endfunction
-
 " }}}
