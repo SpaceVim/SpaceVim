@@ -2,7 +2,7 @@ This page documents changes in master branch since last release v1.0.0
 
 ## PreRelease
 
-The next release is v1.0.1
+The next release is v1.1.0
 
 ### Added
 
