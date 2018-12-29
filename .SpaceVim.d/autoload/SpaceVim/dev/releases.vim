@@ -106,11 +106,14 @@ function! SpaceVim#dev#releases#content() abort
   if s:prs == []
     let s:prs =s:get_list_of_PRs() 
   endif
-  let md = md + SpaceVim#dev#releases#parser_prs(s:prs)
+  let md = md + SpaceVim#dev#releases#parser_prs(s:prs, 'en')
   return join(md, "\n")
 endfunction
 
-function! SpaceVim#dev#releases#parser_prs(prs) abort
+" this function is to generate markdown form pull request list
+function! SpaceVim#dev#releases#parser_prs(prs, ...) abort
+  let is_cn = get(a:000, 0, '') == 'cn'
+  let g:is_cn = is_cn
   let md = []
   let adds = []
   let changes = []
@@ -129,28 +132,28 @@ function! SpaceVim#dev#releases#parser_prs(prs) abort
   endfor
   if !empty(adds)
     call add(md, '')
-    call add(md, '#### New Features')
+    call add(md, is_cn ? '#### 新特性' : '#### New Features')
     call add(md, '')
     call extend(md, adds)
     call add(md, '')
   endif
   if !empty(changes)
     call add(md, '')
-    call add(md, '#### Feature Changes')
+    call add(md, is_cn ? '#### 改变' : '#### Feature Changes')
     call add(md, '')
     call extend(md, changes)
     call add(md, '')
   endif
   if !empty(fixs)
     call add(md, '')
-    call add(md, '#### Bug Fixs')
+    call add(md, is_cn ? '#### 问题修复' : '#### Bug Fixs')
     call add(md, '')
     call extend(md, fixs)
     call add(md, '')
   endif
   if !empty(others)
     call add(md, '')
-    call add(md, '#### Unmarked PRs')
+    call add(md, is_cn ? '#### 未知' : '#### Unmarked PRs')
     call add(md, '')
     call extend(md, others)
     call add(md, '')

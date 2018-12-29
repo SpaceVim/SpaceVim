@@ -4,25 +4,25 @@
 
 下一个版本号为 v1.1.0
 
-### 新特性
+<!-- call SpaceVim#dev#followHEAD#update('cn') -->
+<!-- SpaceVim follow HEAD en start -->
 
-### 功能改进
+#### 新特性
 
-- Add debug info for flygrep ([#2388](https://github.com/SpaceVim/SpaceVim/pull/2388))
-- Improve preview feature of flygrep ([#2256](https://github.com/SpaceVim/SpaceVim/pull/2256))
+- Add some log for flygrep [#2388](https://github.com/SpaceVim/SpaceVim/pull/2388)
 
-### 非兼容性变动
+#### 问题修复
 
-### 问题修复
+- Fix debug command [#2226](https://github.com/SpaceVim/SpaceVim/pull/2226)
+- Fix preview in flygrep [#2256](https://github.com/SpaceVim/SpaceVim/pull/2256)
 
-- Clear rootDir cache after rooter pattern change([#2370](https://github.com/SpaceVim/SpaceVim/pull/2370))
+#### 未知
 
-### 移除的功能
+- Rework faq.md phrasing. [#2386](https://github.com/SpaceVim/SpaceVim/pull/2386)
+- Update to v1.1.0-dev [#2382](https://github.com/SpaceVim/SpaceVim/pull/2382)
+- Doc: add some tweaks on doc instructions [#2056](https://github.com/SpaceVim/SpaceVim/pull/2056)
 
-### 文档、wiki 及官网变动
-
-
-### 其他
+<!-- SpaceVim follow HEAD en end -->
 
 ## 上一个版本
 

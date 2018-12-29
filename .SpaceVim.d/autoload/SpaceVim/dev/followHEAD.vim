@@ -18,7 +18,9 @@ endfunction
 let s:AUTODOC.content_func = function('s:generate_content')
 let s:AUTODOC.autoformat = 1
 
-function! SpaceVim#dev#followHEAD#update() abort
+let s:lang = 'en'
+function! SpaceVim#dev#followHEAD#update(lang) abort
+  let s:lang = a:lang
   call s:AUTODOC.update()
 endfunction
 
@@ -29,7 +31,7 @@ endfunction
 
 function! s:get_list_of_PRs() abort
   let prs = []
-  for i in range(1, 10)
+  for i in range(1, 2)
     let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
     call extend(prs,
           \ filter(issues,
@@ -51,12 +53,10 @@ endfunction
 
 let s:prs = []
 function! s:follow_head_content() abort
-  let md = [
-        \ '### SpaceVim release ' . g:spacevim_version
-        \ ]
+  let md = []
   if s:prs == []
     let s:prs =s:get_list_of_PRs() 
   endif
-  let md = md + SpaceVim#dev#releases#parser_prs(s:prs)
+  let md = md + SpaceVim#dev#releases#parser_prs(s:prs, s:lang)
   return join(md, "\n")
 endfunction
