@@ -4,26 +4,25 @@ This page documents changes in master branch since last release v1.0.0
 
 The next release is v1.1.0
 
-### Added
+<!-- call SpaceVim#dev#followHEAD#update('en') -->
+<!-- SpaceVim follow HEAD en start -->
 
-### Improvement
+#### New Features
 
-- Add debug info for flygrep ([#2388](https://github.com/SpaceVim/SpaceVim/pull/2388))
-- Improve preview feature of flygrep ([#2256](https://github.com/SpaceVim/SpaceVim/pull/2256))
+- Add some log for flygrep [#2388](https://github.com/SpaceVim/SpaceVim/pull/2388)
 
-### Changed
+#### Bug Fixs
 
-### Fixed
+- Fix debug command [#2226](https://github.com/SpaceVim/SpaceVim/pull/2226)
+- Fix preview in flygrep [#2256](https://github.com/SpaceVim/SpaceVim/pull/2256)
 
-- Clear rootDir cache after rooter pattern change([#2370](https://github.com/SpaceVim/SpaceVim/pull/2370))
+#### Unmarked PRs
 
-### Removed
+- Rework faq.md phrasing. [#2386](https://github.com/SpaceVim/SpaceVim/pull/2386)
+- Update to v1.1.0-dev [#2382](https://github.com/SpaceVim/SpaceVim/pull/2382)
+- Doc: add some tweaks on doc instructions [#2056](https://github.com/SpaceVim/SpaceVim/pull/2056)
 
-### Doc, Wiki && Website
-
-- Updated the faq page with additional links and rephrased for clarity.
-
-### Others
+<!-- SpaceVim follow HEAD en end -->
 
 ## Latest Release
 
