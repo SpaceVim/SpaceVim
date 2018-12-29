@@ -9,6 +9,7 @@
 ### 功能改进
 
 - Add debug info for flygrep ([#2388](https://github.com/SpaceVim/SpaceVim/pull/2388))
+- Improve preview feature of flygrep ([#2256](https://github.com/SpaceVim/SpaceVim/pull/2256))
 
 ### 非兼容性变动
 

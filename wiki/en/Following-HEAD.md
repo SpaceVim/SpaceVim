@@ -9,6 +9,7 @@ The next release is v1.0.1
 ### Improvement
 
 - Add debug info for flygrep ([#2388](https://github.com/SpaceVim/SpaceVim/pull/2388))
+- Improve preview feature of flygrep ([#2256](https://github.com/SpaceVim/SpaceVim/pull/2256))
 
 ### Changed
 

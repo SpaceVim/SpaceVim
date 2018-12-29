@@ -28,6 +28,7 @@ let [
       \ s:grep_default_smart_case
       \ ] = SpaceVim#mapping#search#default_tool()
 let s:grep_timer_id = -1
+let s:preview_timer_id = -1
 let s:grepid = 0
 let s:grep_history = []
 let s:complete_input_history_num = [0,0]
@@ -236,7 +237,17 @@ function! s:close_buffer() abort
     call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
-  noautocmd pclose
+  call timer_stop(s:preview_timer_id)
+  if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
+    noautocmd pclose
+    let s:preview_able = 0
+  endif
   noautocmd q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
@@ -249,6 +260,7 @@ function! s:close_grep_job() abort
     call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
+  call timer_stop(s:preview_timer_id)
   normal! "_ggdG
 endfunction
 
@@ -372,6 +384,10 @@ function! s:open_item() abort
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      pclose
+    endif
+    let s:preview_able = 0
     noautocmd q
     exe 'e ' . filename
     call cursor(linenr, colum)
@@ -424,12 +440,35 @@ function! s:toggle_preview() abort
   call s:MPT._build_prompt()
 endfunction
 
-function! s:preview() abort
+
+let s:previewd_bufnrs = []
+
+function! Test() abort
+  return s:previewd_bufnrs
+endfunction
+
+function! s:preview_timer(timer) abort
+  for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+  endfor
+  let br = bufnr('$')
   let line = getline('.')
   let filename = fnameescape(split(line, ':\d\+:')[0])
   let linenr = matchstr(line, ':\d\+:')[1:-2]
   exe 'silent pedit! +' . linenr . ' ' . filename
+  wincmd p
+  if bufnr('%') > br
+    call add(s:previewd_bufnrs, bufnr('%'))
+  endif
+  wincmd p
   resize 18
+  call s:MPT._build_prompt()
+endfunction
+
+
+function! s:preview() abort
+  call timer_stop(s:preview_timer_id)
+  let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
 endfunction
 
 let s:grep_mode = 'expr'
