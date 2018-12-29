@@ -462,6 +462,7 @@ function! s:preview_timer(timer) abort
   endif
   wincmd p
   resize 18
+  redraw
 endfunction
 
 
