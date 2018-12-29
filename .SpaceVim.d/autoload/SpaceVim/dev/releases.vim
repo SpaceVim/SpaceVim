@@ -16,11 +16,13 @@
 " v1.0.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2377
 
 " this option can only be changed after release
-let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838, 1926, 2004, 2056, 2101, 2155 ]
+let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838, 1926, 2004, 2056, 2101, 2155, 1963, 1977, 1993,  2014, 2016,  2092, 2131, 2150, 2164, 2165, 2190]
 " these options can be changed when going to release new tag
 let s:last_release_number = 2203
 let s:current_release_number = 2377
-let s:unmerged_prs_since_current_release = [1963, 1977, 1993,  2014, 2016,  2092, 2131, 2150, 2164, 2165, 2190, 2226, 2370]
+" this is a list of pull request number which > last_release_number and <
+" current_release_number
+let s:unmerged_prs_since_current_release = [ 2226, 2370]
 
 " the logic should be from last_release_number to current_release_number,
 " include prs in unmerged_prs_since_last_release which is merged.
