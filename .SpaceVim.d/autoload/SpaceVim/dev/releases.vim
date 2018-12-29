@@ -29,6 +29,22 @@ let s:unmerged_prs_since_current_release = []
 " include prs in unmerged_prs_since_last_release which is merged.
 " exclude prs in unmerged_prs_since_current_release
 
+function! SpaceVim#dev#releases#get_unmerged_prs() abort
+  return copy(s:unmerged_prs_since_last_release)
+endfunction
+
+function! SpaceVim#dev#releases#last_release_number() abort
+  return s:last_release_number
+endfunction
+
+function! SpaceVim#dev#releases#current_release_number() abort
+  return s:current_release_number > 0 ? s:current_release_number : 999999
+endfunction
+
+function! SpaceVim#dev#releases#unmerged_prs_since_current_release() abort
+return  s:unmerged_prs_since_current_release
+endfunction
+
 function! s:body() abort
   return 'SpaceVim development (pre-release:' . g:spacevim_version . ') build.'
 endfunction
@@ -82,19 +98,25 @@ endfunction
 function! s:pr_to_list(pr) abort
   return '- ' . a:pr.title . ' [#' . a:pr.number . '](' . a:pr.html_url . ')'
 endfunction
-let g:wsd = []
+let s:prs = []
 function! SpaceVim#dev#releases#content() abort
   let md = [
         \ '### SpaceVim release ' . g:spacevim_version
         \ ]
+  if s:prs == []
+    let s:prs =s:get_list_of_PRs() 
+  endif
+  let md = md + SpaceVim#dev#releases#parser_prs(s:prs)
+  return join(md, "\n")
+endfunction
+
+function! SpaceVim#dev#releases#parser_prs(prs) abort
+  let md = []
   let adds = []
   let changes = []
   let fixs = []
   let others = []
-  if g:wsd == []
-    let g:wsd =s:get_list_of_PRs() 
-  endif
-  for pr in g:wsd
+  for pr in a:prs
     if pr.title =~? '^ADD'
       call add(adds, s:pr_to_list(pr))
     elseif pr.title =~? '^CHANGE'
@@ -133,6 +155,5 @@ function! SpaceVim#dev#releases#content() abort
     call extend(md, others)
     call add(md, '')
   endif
-  return join(md, "\n")
-
+  return md
 endfunction
