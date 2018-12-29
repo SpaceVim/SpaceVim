@@ -47,6 +47,7 @@ of SpaceVim v1.0.0 has been released.
 - Add findstr support in flygrep ([#2344](https://github.com/SpaceVim/SpaceVim/pull/2344))
 - Add API: `get_sid_from_path` ([#2350](https://github.com/SpaceVim/SpaceVim/pull/2350))
 - Add better way to use find with vim ([#1777](https://github.com/SpaceVim/SpaceVim/pull/1777))
+- Add `test` layer ([#2101](https://github.com/SpaceVim/SpaceVim/pull/2101))
 
 ### Improvement
 
@@ -85,3 +86,4 @@ of SpaceVim v1.0.0 has been released.
 ### Doc
 
 - Online tutorial ([#2004](https://github.com/SpaceVim/SpaceVim/pull/2004))
+- Add some tweaks on doc instructions ([#2056](https://github.com/SpaceVim/SpaceVim/pull/2056))
