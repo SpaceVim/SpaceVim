@@ -12,13 +12,15 @@
 " v0.6.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1205
 " v0.7.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1610
 " v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1841
+" v0.9.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2203
+" v1.0.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2377
 
 " this option can only be changed after release
-let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838]
+let s:unmerged_prs_since_last_release = [1306, 1697, 1725, 1777, 1786, 1802, 1833, 1838, 1926, 2004, 2056, 2101, 2155 ]
 " these options can be changed when going to release new tag
-let s:last_release_number = 1841
-let s:current_release_number = 2203
-let s:unmerged_prs_since_current_release = [1926, 1963, 1977, 1993, 2004, 2014, 2016, 2056, 2092, 2101, 2131, 2150, 2155, 2164, 2165, 2190]
+let s:last_release_number = 2203
+let s:current_release_number = 2377
+let s:unmerged_prs_since_current_release = [1963, 1977, 1993,  2014, 2016,  2092, 2131, 2150, 2164, 2165, 2190, 2226, 2370]
 
 " the logic should be from last_release_number to current_release_number,
 " include prs in unmerged_prs_since_last_release which is merged.
