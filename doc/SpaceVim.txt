@@ -79,16 +79,17 @@ CONTENTS                                                   *SpaceVim-contents*
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
-      4. job................................................|SpaceVim-api-job|
-      5. logger..........................................|SpaceVim-api-logger|
-      6. password......................................|SpaceVim-api-password|
-      7. prompt..........................................|SpaceVim-api-prompt|
-      8. sid............................................|SpaceVim-api-vim-sid|
-      9. system..........................................|SpaceVim-api-system|
-      10. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      11. vim#command...............................|SpaceVim-api-vim-command|
-      12. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      13. vim#message...............................|SpaceVim-api-vim-message|
+      4. data#string................................|SpaceVim-api-data-string|
+      5. job................................................|SpaceVim-api-job|
+      6. logger..........................................|SpaceVim-api-logger|
+      7. password......................................|SpaceVim-api-password|
+      8. prompt..........................................|SpaceVim-api-prompt|
+      9. sid............................................|SpaceVim-api-vim-sid|
+      10. system.........................................|SpaceVim-api-system|
+      11. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      12. vim#command...............................|SpaceVim-api-vim-command|
+      13. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      14. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -105,7 +106,7 @@ OPTIONS                                                     *SpaceVim-options*
 SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file. You
 can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
 be added to runtimepath, so you can write your own scripts in it. SpaceVim
-also supports local config for each project. Place local config  settings in
+also supports local config for each project. Place local config settings in
 `.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
 
@@ -199,7 +200,7 @@ GUIFONT                                             *SpaceVim-options-guifont*
 
 Set the guifont of SpaceVim. Default is empty.
 >
-  guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+  guifont = "SauceCodePro Nerd Font Mono:h11"
 <
 
 ==============================================================================
@@ -265,7 +266,7 @@ ultisnips:
 ==============================================================================
 WINDOWS_LEADER                               *SpaceVim-options-windows_leader*
 
-Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+Window functions leader for SpaceVim. Default is `s`. Set to empty to disable
 this feature, or you can set to another char.
 >
   windows_leader = ""
@@ -312,7 +313,7 @@ Enable/Disable Google suggestions for neocomplete. Default is 0.
 <
 
                                                    *g:spacevim_windows_leader*
-Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+Window functions leader for SpaceVim. Default is `s`. Set to empty to disable
 this feature, or you can set to another char.
 >
   let g:spacevim_windows_leader = ''
@@ -373,7 +374,7 @@ Use ale for syntax checking, disabled by default.
                                                           *g:spacevim_guifont*
 Set the guifont of SpaceVim. Default is empty.
 >
-  let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+  let g:spacevim_guifont = "SauceCodePro Nerd Font Mono:h11"
 <
 
                                                        *g:spacevim_enable_ycm*
@@ -413,6 +414,9 @@ Set the statusline separators of statusline, default is 'arrow'
 
 See more details in: http://spacevim.org/documentation/#statusline
 
+
+                                         *g:spacevim_enable_statusline_bfpath*
+Enable/Disable showing full path of current buffer on statusline
 
                                          *g:spacevim_statusline_left_sections*
 Define the left section of statusline in active windows. By default:
@@ -513,7 +517,7 @@ the following to ~/.tmux.conf:
 <
 
                                                 *g:spacevim_vim_help_language*
-Set the help language of vim. Default is 'en'.  You can change it to Chinese.
+Set the help language of vim. Default is 'en'. You can change it to Chinese.
 >
   let g:spacevim_vim_help_language = 'cn'
 <
@@ -534,8 +538,8 @@ The colorscheme of SpaceVim. Default is 'gruvbox'.
 The background of colorscheme. Default is 'dark'.
 
                                               *g:spacevim_colorscheme_default*
-The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
-will be used if the colorscheme set by  `g:spacevim_colorscheme` is not
+The default colorscheme of SpaceVim. Default is 'desert'. This colorscheme
+will be used if the colorscheme set by `g:spacevim_colorscheme` is not
 installed.
 >
   let g:spacevim_colorscheme_default = 'other_color'
@@ -668,6 +672,9 @@ Set the project rooter patterns, by default it is `['.git/', '_darcs/',
                                      *g:spacevim_project_rooter_automatically*
 Enable/Disable changing directory automatically. Enabled by default.
 
+                                               *g:spacevim_commandline_prompt*
+Config the command line prompt for flygrep and denite etc.
+
                                                   *g:spacevim_lint_on_the_fly*
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 >
@@ -675,7 +682,7 @@ Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 <
 
                                           *g:spacevim_enable_vimfiler_welcome*
-Enable/Disable vimfiler in the welcome windows. Default is 1.  This will cause
+Enable/Disable vimfiler in the welcome windows. Default is 1. This will cause
 vim to start up slowly if there are too many files in the current directory.
 >
   let g:spacevim_enable_vimfiler_welcome = 0
@@ -1414,6 +1421,16 @@ unshift({list})
  insert an item to the begin of the {list}
 
 ==============================================================================
+DATA#STRING                                         *SpaceVim-api-data-string*
+
+
+FUNCTIONS
+
+split(str [, sep [, keepempty[, max]]])
+
+  run vim command, and return the output of such command.
+
+==============================================================================
 JOB                                                         *SpaceVim-api-job*
 
 provides some functions to manager job
@@ -1562,6 +1579,10 @@ systemlist(cmd)
 has(feature)
 
   check if {feature} is supported in current version.
+
+getjumplist()
+
+  return a list of jump position, like result of |:jump|
 
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*

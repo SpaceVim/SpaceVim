@@ -27,6 +27,15 @@
 " has(feature)
 "
 "   check if {feature} is supported in current version.
+"
+" getjumplist()
+"
+"   return a list of jump position, like result of |:jump|
+
+
+" Load SpaceVim API:
+
+let s:STRING = SpaceVim#api#import('data#string')
 
 let s:self = {}
 
@@ -249,8 +258,30 @@ else
 endif
 
 function! s:self.set_buf_line() abort
-  
+
 endfunction
+
+if exists('*getjumplist')
+  function! s:self.getjumplist() abort
+    return getjumplist()
+  endfunction
+else
+  function! s:self.getjumplist() abort
+    let jumpinfo = split(self.execute(':jumps'), "\n")[1:-2]
+    let result = []
+    "   20   281   23 -invalid-
+    for info in jumpinfo
+      let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      call add(result, {
+            \ 'bufnr' : jump,
+            \ 'lnum' : line,
+            \ 'col' : col,
+            \ })
+    endfor
+    return result
+  endfunction
+endif
+
 
 function! SpaceVim#api#vim#compatible#get() abort
   return deepcopy(s:self)

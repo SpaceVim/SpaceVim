@@ -286,8 +286,10 @@ function! s:check_mode() abort
 endfunction
 
 " only when there are more than two buffers have same name.
+" show buffer name all the time need
+" enable_statusline_bfpath true
 function! s:buffer_name() abort
-  if get(b:, '_spacevim_statusline_showbfname', 0) == 1
+  if get(b:, '_spacevim_statusline_showbfname', 0) == 1 || g:spacevim_enable_statusline_bfpath
     return  ' ' . bufname('%')
   else
     return ''
@@ -456,7 +458,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
   augroup SpaceVim_statusline
     autocmd!
-    autocmd BufWinEnter,WinEnter,FileType
+    autocmd BufWinEnter,WinEnter,FileType,BufWritePost
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
     autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()

@@ -88,3 +88,22 @@ function! SpaceVim#issue#new() abort
     endif
   endif
 endfunction
+
+
+function! SpaceVim#issue#reopen(id)
+  let issue = {
+        \ 'state' : 'open'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
+endfunction
+
+function! SpaceVim#issue#close(id) abort
+  let issue = {
+        \ 'state' : 'closed'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
+endfunction

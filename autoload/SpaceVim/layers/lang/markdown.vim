@@ -6,6 +6,9 @@
 " License: GPLv3
 "=============================================================================
 
+let s:SYS = SpaceVim#api#import('system')
+
+
 let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
 let s:md_listItemChar = '-'
@@ -40,7 +43,11 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \},
         \}
   let remarkrc = s:generate_remarkrc()
-  let g:neoformat_enabled_markdown = ['remark']
+  if s:SYS.isWindows
+    let g:neoformat_enabled_markdown = ['prettier']
+  else
+    let g:neoformat_enabled_markdown = ['remark']
+  endif
   let g:neoformat_markdown_remark = {
         \ 'exe': 'remark',
         \ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),
