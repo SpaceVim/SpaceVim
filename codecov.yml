@@ -5,6 +5,8 @@ codecov:
   branch: master
 coverage:
   status:
+    patch:
+      default: false
     project:
       default: false  # disable the default status that measures entire project
       tests:  # declare a new status context "tests"
