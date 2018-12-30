@@ -69,7 +69,7 @@ function! s:write_to_config(config) abort
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
   if !isdirectory(dir)
-    call mkdir(dir), 'p')
+    call mkdir(dir, 'p')
   endif
   call writefile(a:config, cf, '')
 endfunction
@@ -127,7 +127,7 @@ function! s:path_to_fname(path) abort
 endfunction
 
 function! SpaceVim#custom#load() abort
-  " if file .SpaceVim.d/init.toml exist 
+  " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
