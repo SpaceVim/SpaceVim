@@ -22,7 +22,15 @@ function! s:open_win() abort
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist
+        \ noswapfile
+        \ nowrap
+        \ cursorline
+        \ nospell
+        \ nonu
+        \ norelativenumber
+        \ winfixheight
+        \ nomodifiable
   set filetype=SpaceVimRunner
   nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
   let s:bufnr = bufnr('%')
