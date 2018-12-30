@@ -1,9 +1,13 @@
-coverage:
-  range: 30..60
-  round: down
-  precision: 2
 comment:
   layout: "header, diff, changes, uncovered"
   behavior: default  # update if exists else create new
 codecov:
-  branch: dev
+  branch: master
+coverage:
+  status:
+  default: false  # disable the default status that measures entire project
+  api:  # check SpaceVim api
+    target: 50%  # we always want 100% coverage here
+    paths: "autoload/SpaceVim/api/"  # only include coverage in api folder
+  app:  # declare a new status context "app"
+    paths: "!tests/"  # remove all files in "tests/"
