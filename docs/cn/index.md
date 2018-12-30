@@ -44,7 +44,7 @@ SpaceVim 是一个社区驱动的模块化 Vim IDE，以模块的方式组织管
 
 ## 常见问题
 
-- 最新的状态是什么？
+- 目前 SpaceVim 的开发状态如何？
 
 当前最新发布的稳定版本是 v1.0.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
 或者阅读 [Roadmap](roadmap/) 获取开发计划。
