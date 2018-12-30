@@ -86,10 +86,10 @@ endfunction
 function! SpaceVim#custom#apply(config, type) abort
   " the type can be local or global
   " local config can override global config
-  let type = a:type
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
+    call SpaceVim#logger#info('start to apply config [' . a:type . ']')
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
@@ -122,7 +122,8 @@ function! SpaceVim#custom#apply(config, type) abort
 endfunction
 
 function! SpaceVim#custom#write(force) abort
-  let force = a:force
+  if a:force
+  endif
 endfunction
 
 function! s:path_to_fname(path) abort
@@ -225,7 +226,9 @@ function! s:opt_type(opt) abort
 endfunction
 
 function! s:short_desc_of_opt(opt) abort
-  " TODO: add short desc for each options
+  if a:opt =~# '^enable_'
+  else
+  endif
   return ''
 endfunction
 
