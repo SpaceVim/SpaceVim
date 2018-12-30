@@ -84,6 +84,9 @@ endfunction
 
 
 function! SpaceVim#custom#apply(config, type) abort
+  " the type can be local or global
+  " local config can override global config
+  let type = a:type
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
@@ -119,7 +122,7 @@ function! SpaceVim#custom#apply(config, type) abort
 endfunction
 
 function! SpaceVim#custom#write(force) abort
-
+  let force = a:force
 endfunction
 
 function! s:path_to_fname(path) abort
@@ -206,7 +209,10 @@ endfunction
 
 " FIXME: the type should match the toml's type
 function! s:opt_type(opt) abort
-  let var = get(g:, 'spacevim_' . a:opt, '')
+  " autoload/SpaceVim/custom.vim:221:31:Error: EVL103: unused argument `a:opt`
+  " @bugupstream viml-parser seem do not think this is used argument
+  let opt = a:opt
+  let var = get(g:, 'spacevim_' . opt, '')
   if type(var) == type('')
     return '[string]'
   elseif type(var) == 5
