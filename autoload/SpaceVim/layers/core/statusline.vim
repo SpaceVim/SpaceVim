@@ -456,7 +456,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
   augroup SpaceVim_statusline
     autocmd!
-    autocmd BufWinEnter,WinEnter,FileType
+    autocmd BufWinEnter,WinEnter,FileType,BufWritePost
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
     autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
