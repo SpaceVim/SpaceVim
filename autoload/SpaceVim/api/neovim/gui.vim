@@ -19,6 +19,14 @@ function! s:self.gui_name() abort
 endfunction
 
 
+function! s:self.toggle_tabline(enable) abort
+  call rpcnotify(0, 'Gui', 'Option', 'Tabline', a:enable)
+endfunction
+
+function! s:self.toggle_popupmenu(enable) abort
+  call rpcnotify(0, 'Gui', 'Option', 'Popupmenu', a:enable)
+endfunction
+
 function! SpaceVim#api#neovim#gui#get()
 
   return deepcopy(s:self)
