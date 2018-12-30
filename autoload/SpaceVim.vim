@@ -328,6 +328,10 @@ let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
 
 ""
+" Enable/Disable showing full path of current buffer on statusline
+let g:spacevim_enable_statusline_bfpath = 0
+
+""
 " Define the left section of statusline in active windows. By default:
 " >
 "   let g:spacevim_statusline_left_sections =

@@ -415,6 +415,9 @@ Set the statusline separators of statusline, default is 'arrow'
 See more details in: http://spacevim.org/documentation/#statusline
 
 
+                                         *g:spacevim_enable_statusline_bfpath*
+Enable/Disable showing full path of current buffer on statusline
+
                                          *g:spacevim_statusline_left_sections*
 Define the left section of statusline in active windows. By default:
 >
