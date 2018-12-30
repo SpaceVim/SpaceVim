@@ -5,9 +5,10 @@ codecov:
   branch: master
 coverage:
   status:
-  default: false  # disable the default status that measures entire project
-  api:  # check SpaceVim api
-    target: 50%  # we always want 100% coverage here
-    paths: "autoload/SpaceVim/api/"  # only include coverage in api folder
-  app:  # declare a new status context "app"
-    paths: "!tests/"  # remove all files in "tests/"
+    project:
+      default: false  # disable the default status that measures entire project
+      tests:  # declare a new status context "tests"
+        target: 100%  # we always want 100% coverage here
+        paths: "tests/"  # only include coverage in "tests/" folder
+      app:  # declare a new status context "app"
+        paths: "!tests/"  # remove all files in "tests/"
