@@ -106,7 +106,9 @@ function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
   let s:runners[a:ft] = a:runner
 endfunction
 
-function! SpaceVim#plugins#runner#open() abort
+" this func should support specific a runner
+" the runner can be a string
+function! SpaceVim#plugins#runner#open(...) abort
   let s:lines = 0
   let s:status = {
         \ 'is_running' : 0,
@@ -114,7 +116,7 @@ function! SpaceVim#plugins#runner#open() abort
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
-  let runner = get(s:runners, &filetype, '')
+  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner)
