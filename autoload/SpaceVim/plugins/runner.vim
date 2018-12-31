@@ -127,6 +127,7 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'exit_code' : 0
         \ }
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  let s:selected_language = &filetype
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner)
@@ -211,6 +212,7 @@ function! SpaceVim#plugins#runner#status() abort
   elseif s:status.is_exit == 1
     return 'exit code : ' . s:status.exit_code 
           \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
+          \ . '    language: ' . get(s:, 'selected_language', &ft)
   endif
   return ''
 endfunction
@@ -232,6 +234,7 @@ function! SpaceVim#plugins#runner#select_file() abort
         \ }
   let s:selected_file = browse(0,'select a file to run', getcwd(), '')
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  let s:selected_language = &filetype
   if !empty(runner)
     call SpaceVim#logger#info('Code runner startting:')
     call SpaceVim#logger#info('selected file :' . s:selected_file)
@@ -239,5 +242,12 @@ function! SpaceVim#plugins#runner#select_file() abort
     call s:async_run(runner)
     call s:update_statusline()
   endif
+endfunction
+
+function! SpaceVim#plugins#runner#set_select_language()
+  " @todo use denite or unite to select language
+  " and set the s:selected_language
+  
+
 endfunction
 
