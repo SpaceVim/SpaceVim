@@ -332,6 +332,18 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 let g:spacevim_enable_statusline_bfpath = 0
 
 ""
+" @section enable_statusline_tag, options-enable_statusline_tag
+" @parentsection options
+" Enable/Disable showing current tag on statusline
+" >
+"   enable_statusline_tag = false
+" <
+
+""
+" Enable/Disable showing current tag on statusline
+let g:spacevim_enable_statusline_tag = 1
+
+""
 " Define the left section of statusline in active windows. By default:
 " >
 "   let g:spacevim_statusline_left_sections =
