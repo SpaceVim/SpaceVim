@@ -42,7 +42,7 @@ let s:target = ''
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
     try
-      let cmd = printf(a:runner, bufname('%'))
+      let cmd = printf(a:runner, get(s:, 'selected_file', bufname('%')))
     catch
       let cmd = a:runner
     endtry
@@ -219,3 +219,21 @@ function! SpaceVim#plugins#runner#close() abort
   endif
   exe 'bd ' s:bufnr
 endfunction
+
+function! SpaceVim#plugins#runner#select_file() abort
+  let s:lines = 0
+  let s:status = {
+        \ 'is_running' : 0,
+        \ 'is_exit' : 0,
+        \ 'has_errors' : 0,
+        \ 'exit_code' : 0
+        \ }
+  let s:selected_file = browse(0,'select a file to run', getcwd(), '')
+  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  if !empty(runner)
+    call s:open_win()
+    call s:async_run(runner)
+    call s:update_statusline()
+  endif
+endfunction
+
