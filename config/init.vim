@@ -13,7 +13,7 @@ try
   if s:SYSTEM.isWindows
     silent exec 'lan mes en_US.UTF-8'
   elseif s:SYSTEM.isOSX
-    silent exec 'language en_US'
+    silent exec 'language en_US.UTF-8'
   else
     let s:uname = system('uname -s')
     if s:uname ==# "Darwin\n"
