@@ -114,6 +114,9 @@ endfunction
 
 function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
   let s:runners[a:ft] = a:runner
+  let desc = '[' . a:ft . '] ' . string(a:runner)
+  let cmd = "call SpaceVim#plugins#runner#set_language('" . a:ft . "')"
+  call add(g:unite_source_menu_menus.RunnerLanguage.command_candidates, [desc,cmd])
 endfunction
 
 " this func should support specific a runner
@@ -244,10 +247,23 @@ function! SpaceVim#plugins#runner#select_file() abort
   endif
 endfunction
 
-function! SpaceVim#plugins#runner#set_select_language()
+let g:unite_source_menu_menus =
+      \ get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.RunnerLanguage = {'description':
+      \ 'Custom mapped keyboard shortcuts                   [SPC] p p'}
+let g:unite_source_menu_menus.RunnerLanguage.command_candidates =
+      \ get(g:unite_source_menu_menus.RunnerLanguage,'command_candidates', [])
+
+function! SpaceVim#plugins#runner#select_language()
   " @todo use denite or unite to select language
   " and set the s:selected_language
-  
-
+  " the all language is keys(s:runners)
+  Denite menu:RunnerLanguage
 endfunction
 
+function! SpaceVim#plugins#runner#set_language(lang)
+  " @todo use denite or unite to select language
+  " and set the s:selected_language
+  " the all language is keys(s:runners)
+  let s:selected_language = a:lang
+endfunction
