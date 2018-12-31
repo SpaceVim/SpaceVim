@@ -87,6 +87,7 @@ lang: cn
       - [Examples](#examples)
     - [注释(Commentings)](#注释commentings)
     - [多方式编码](#多方式编码)
+  - [异步运行器](#异步运行器)
   - [错误处理](#错误处理)
   - [工程管理](#工程管理)
     - [Searching files in project](#searching-files-in-project)
@@ -1695,6 +1696,24 @@ SpaceVim 默认使用 utf-8 码进行编码. 下面是 utf-8 编码的四个设�
 set enc=utf-8
 write
 ```
+
+### 异步运行器
+
+SpaceVim 提供了一个异步执行命令的插件，该插件的接口函数为：
+
+```vim
+SpaceVim#plugins#runner#open(cmd)
+```
+
+在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为`SPC l r`。
+如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。
+
+```viml
+nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
+```
+
+
+
 
 ### 错误处理
 

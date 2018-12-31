@@ -85,6 +85,7 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Examples](#examples)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
+  - [Code runner](#code-runner)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
@@ -1737,6 +1738,23 @@ to fix messy display: `SPC e a` is the mapping for auto detect the file encoding
 set enc=utf-8
 write
 ```
+
+### Code runner
+
+SpaceVim provides an asynchronously code runner plugin, the plugin API is:
+
+```vim
+SpaceVim#plugins#runner#open(cmd)
+```
+
+In most language layer, we have defind a key bidning `SPC l r` for running current
+buffer, If you need to add new command, you can use bootstrap func. for example:
+use `F5` to build project asynchronously.
+
+```viml
+nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
+```
+
 
 ### Errors handling
 
