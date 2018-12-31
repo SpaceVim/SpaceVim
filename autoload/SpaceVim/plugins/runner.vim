@@ -130,7 +130,7 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'exit_code' : 0
         \ }
   let s:selected_language = get(s:, 'selected_language', &filetype)
-  let runner = get(a:000, 0, get(s:runners, s:selected_language, ''))
+  let runner = get(a:000, 0, get(s:runners, empty(s:selected_language) ? &filetype : s:selected_language , ''))
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner)
