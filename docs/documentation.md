@@ -85,7 +85,7 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Examples](#examples)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
-  - [Code runner](#code-runner)
+  - [Code runner and REPL](#code-runner-and-repl)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
@@ -1739,22 +1739,28 @@ set enc=utf-8
 write
 ```
 
-### Code runner
+### Code runner and REPL
 
-SpaceVim provides an asynchronously code runner plugin, the plugin API is:
-
-```vim
-SpaceVim#plugins#runner#open(cmd)
-```
-
-In most language layer, we have defind a key bidning `SPC l r` for running current
-buffer, If you need to add new command, you can use bootstrap func. for example:
+SpaceVim provides an asynchronously code runner plugin. In most language layer,
+we have defind a key bidning `SPC l r` for running current
+buffer. If you need to add new command, you can use bootstrap func. for example:
 use `F5` to build project asynchronously.
 
 ```viml
 nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
 ```
 
+These following features have been added to runner and repl plugin:
+
+- Run current file with default command
+- Run code file through system file explorer, only supported in gvim.
+- Run code per Shebang
+- Stop code running
+- View output in Output Window
+- Set default language to run
+- Select language to run
+- REPL support
+- Run selected code snippet
 
 ### Errors handling
 
