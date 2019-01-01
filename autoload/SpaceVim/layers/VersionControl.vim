@@ -251,10 +251,6 @@ function! s:open_log_popup_buffer() abort
   call s:highlight_options()
 endfunction
 
-function! GitLog() abort
-  call s:show_repo_log()
-endfunction
-
 function! s:show_repo_log() abort
   call s:open_log_popup_buffer()
 endfunction
