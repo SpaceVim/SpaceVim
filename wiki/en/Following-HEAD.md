@@ -7,6 +7,7 @@ The next release is v1.1.0
 <!-- call SpaceVim#dev#followHEAD#update('en') -->
 <!-- SpaceVim follow HEAD en start -->
 
+
 #### New Features
 
 - Add some log for flygrep [#2388](https://github.com/SpaceVim/SpaceVim/pull/2388)
