@@ -170,7 +170,9 @@ function! s:highlight_switches() abort
       call add(poses, [line, len(s:git_log_switches[k].desc) + 6, len(s:git_log_switches[k].option)])
     endif
   endfor
-  let s:switches_hi_id = s:CMP.matchaddpos('Normal', poses)
+  " vim has a bug, Normal higlight group does not work will matchaddpos
+  " So we need to use new highlight group
+  let s:switches_hi_id = s:CMP.matchaddpos('MoreMsg', poses)
 endfunction
 
 function! s:toggle_switches(key) abort
