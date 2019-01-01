@@ -353,7 +353,7 @@ function! s:git_transient_state() abort
         \ {
         \ 'key' : {
         \ 'name' : 'r/s/h',
-        \ 'pos' : [[0,1], [2,3], [4,5]],
+        \ 'pos' : [[1,2], [3,4], [5,6]],
         \ 'handles' : [
         \ ['r' , 'call call(' . string(s:_function('s:revert_hunk')) . ', [])'],
         \ ['s' , 'call call(' . string(s:_function('s:stage_hunk')) . ', [])'],
