@@ -418,18 +418,12 @@ function! s:git_transient_state() abort
         \ 'exit' : 1,
         \ },
         \ {
-        \ 'key' : {
-        \ 'name' : 'l/D',
-        \ 'pos' : [[0,1], [2,3]],
-        \ 'handles' : [
-        \ ['l' , 'call call(' . string(s:_function('s:show_repo_log')) . ', [])'],
-        \ ['D' , 'call call(' . string(s:_function('s:show_diff_of_unstaged_hunks')) . ', [])'],
-        \ ],
-        \ },
+        \ 'key' : 'l',
         \ 'desc' : 'log/diff popup',
         \ 'func' : '',
         \ 'cmd' : '',
         \ 'exit' : 1,
+        \ 'exit_cmd' : 'call call(' . string(s:_function('s:show_repo_log')) . ', [])',
         \ },
         \ ],
         \ }
