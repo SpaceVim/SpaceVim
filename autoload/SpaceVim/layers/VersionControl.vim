@@ -282,7 +282,12 @@ function! s:Log_current() abort
   let t:_spacevim_tab_name = 'Git log'
   let argv = join(s:get_log_argv(), ' ')
   call SpaceVim#logger#info(argv)
-  call termopen(argv, {'curwin' : 1, 'term_finish' : 'close'})
+  " in gvim only have term_start function
+  if !has('nvim')
+    call term_start(argv, {'curwin' : 1, 'term_finish' : 'close'})
+  else
+    call termopen(argv)
+  endif
   nnoremap <buffer><silent> q :bd!<cr>
   startinsert
 endfunction
