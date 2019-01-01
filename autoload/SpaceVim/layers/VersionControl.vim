@@ -21,7 +21,7 @@ function! SpaceVim#layers#VersionControl#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   let g:_spacevim_mappings_space.g.v = get(g:_spacevim_mappings_space.g, 'v',  {'name' : '+VersionControl'})
   call SpaceVim#mapping#space#def('nnoremap', ['g', '.'], 'call call('
-        \ . string(s:_function('s:buffer_transient_state')) . ', [])',
+        \ . string(s:_function('s:git_transient_state')) . ', [])',
         \ 'buffer transient state', 1)
   call SpaceVim#layers#core#statusline#register_sections('vcs', s:_function('s:git_branch'))
   call SpaceVim#layers#core#statusline#register_sections('hunks', s:_function('s:hunks'))
@@ -329,7 +329,7 @@ function! s:show_hunk_diff() abort
 
 endfunction
 
-function! s:buffer_transient_state() abort
+function! s:git_transient_state() abort
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('VCS Transient State')
   call state.defind_keys(
