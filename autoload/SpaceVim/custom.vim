@@ -64,12 +64,12 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn("Failed to generate config file, It is not readable: " . cf)
+    call SpaceVim#logger#warn('Failed to generate config file, It is not readable: ' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
   if !isdirectory(dir)
-    call mkdir(dir), 'p')
+    call mkdir(dir, 'p')
   endif
   call writefile(a:config, cf, '')
 endfunction
@@ -84,9 +84,12 @@ endfunction
 
 
 function! SpaceVim#custom#apply(config, type) abort
+  " the type can be local or global
+  " local config can override global config
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
+    call SpaceVim#logger#info('start to apply config [' . a:type . ']')
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
@@ -119,7 +122,8 @@ function! SpaceVim#custom#apply(config, type) abort
 endfunction
 
 function! SpaceVim#custom#write(force) abort
-
+  if a:force
+  endif
 endfunction
 
 function! s:path_to_fname(path) abort
@@ -127,7 +131,7 @@ function! s:path_to_fname(path) abort
 endfunction
 
 function! SpaceVim#custom#load() abort
-  " if file .SpaceVim.d/init.toml exist 
+  " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
     let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
@@ -206,7 +210,10 @@ endfunction
 
 " FIXME: the type should match the toml's type
 function! s:opt_type(opt) abort
-  let var = get(g:, 'spacevim_' . a:opt, '')
+  " autoload/SpaceVim/custom.vim:221:31:Error: EVL103: unused argument `a:opt`
+  " @bugupstream viml-parser seem do not think this is used argument
+  let opt = a:opt
+  let var = get(g:, 'spacevim_' . opt, '')
   if type(var) == type('')
     return '[string]'
   elseif type(var) == 5
@@ -219,7 +226,9 @@ function! s:opt_type(opt) abort
 endfunction
 
 function! s:short_desc_of_opt(opt) abort
-  " TODO: add short desc for each options
+  if a:opt =~# '^enable_'
+  else
+  endif
   return ''
 endfunction
 

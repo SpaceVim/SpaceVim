@@ -16,6 +16,7 @@
 
 
 call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
+let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
 
 let s:project_paths = {}
 
@@ -79,6 +80,12 @@ function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
+  " if rooter patterns changed, clear cache.
+  " https://github.com/SpaceVim/SpaceVim/issues/2367
+  if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
+    call setbufvar('%', 'rootDir', '')
+    let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
+  endif
   let rootdir = getbufvar('%', 'rootDir', '')
   if empty(rootdir)
     let rootdir = s:find_root_directory()

@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.0.0-dev'
+let g:spacevim_version = '1.1.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -326,6 +326,22 @@ let g:spacevim_enable_cursorline       = 1
 "
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
+
+""
+" Enable/Disable showing full path of current buffer on statusline
+let g:spacevim_enable_statusline_bfpath = 0
+
+""
+" @section enable_statusline_tag, options-enable_statusline_tag
+" @parentsection options
+" Enable/Disable showing current tag on statusline
+" >
+"   enable_statusline_tag = false
+" <
+
+""
+" Enable/Disable showing current tag on statusline
+let g:spacevim_enable_statusline_tag = 1
 
 ""
 " Define the left section of statusline in active windows. By default:

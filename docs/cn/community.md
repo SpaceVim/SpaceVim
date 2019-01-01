@@ -50,3 +50,5 @@ spacevim-cn@googlegroups.com
 - <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)
+- <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
+- <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)

@@ -140,8 +140,8 @@ func! s:self._handle_input(...) abort
 endf
 
 func! s:self._build_prompt() abort
-  normal! :
   let ident = repeat(' ', self.__cmp.win_screenpos(0)[1] - 1)
+  redraw
   echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
@@ -149,6 +149,7 @@ func! s:self._build_prompt() abort
   if empty(self._prompt.cursor) && !has('nvim')
     echohl Comment | echon '_' | echohl None
   endif
+  " FIXME: Macvim need extra redraw, 
 endf
 
 function! s:self._clear_prompt() abort

@@ -335,7 +335,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                    版本 : 1.0.0-dev  中文官网 : https://spacevim.org/cn/     "
+    echo_with_color ${Yellow} "                    版本 : 1.1.0-dev  中文官网 : https://spacevim.org/cn/     "
 }
 
 # }}}
