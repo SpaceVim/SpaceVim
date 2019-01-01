@@ -200,7 +200,10 @@ function! s:highlight_options() abort
       call add(poses, [line, len(s:git_log_options[k].desc) + 6, len(s:git_log_options[k].option)])
     endif
   endfor
-  let s:options_hi_id = s:CMP.matchaddpos('Normal', poses)
+  " vim has a bug, Normal higlight group does not work will matchaddpos
+  " So we need to use new highlight group
+  " ref: https://github.com/vim/vim/issues/3752
+  let s:options_hi_id = s:CMP.matchaddpos('MoreMsg', poses)
 endfunction
 
 function! s:change_options(key) abort
