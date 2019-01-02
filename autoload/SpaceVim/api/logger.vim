@@ -5,6 +5,18 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+
+""
+" @section logger, api-logger
+" @parentsection api
+" provides some functions to manager logger
+"
+" set_silent({silent})
+"
+"   {silent} is a Boolean. by default it is false, and log will be print to
+"   screen.
+
 let s:self = {
       \ 'name' : '',
       \ 'silent' : 1,

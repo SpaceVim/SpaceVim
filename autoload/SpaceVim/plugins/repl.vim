@@ -88,20 +88,28 @@ if has('nvim') && exists('*chanclose')
     let s:_out_data[-1] .= a:data[0]
     call extend(s:_out_data, a:data[1:])
     if s:_out_data[-1] ==# '' && len(s:_out_data) > 1
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
-      let s:lines += len(s:_out_data) - 1
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+        let s:lines += len(s:_out_data) - 1
+        call s:update_statusline()
+      endif
       let s:_out_data = ['']
     elseif  s:_out_data[-1] !=# '' && len(s:_out_data) > 1
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
-      let s:lines += len(s:_out_data) - 1
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+        let s:lines += len(s:_out_data) - 1
+        call s:update_statusline()
+      endif
       let s:_out_data = [s:_out_data[-1]]
     endif
   endfunction
 else
   function! s:on_stdout(job_id, data, event) abort
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    let s:lines += len(a:data)
-    call s:update_statusline()
+    if bufexists(s:bufnr)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+      let s:lines += len(a:data)
+      call s:update_statusline()
+    endif
   endfunction
 endif
 
@@ -119,7 +127,6 @@ function! s:on_exit(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   endif
   call s:update_statusline()
-
 endfunction
 
 function! s:update_statusline() abort

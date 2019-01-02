@@ -47,8 +47,12 @@ RUN mkdir -p $HOME/.config $HOME/.SpaceVim.d
 
 RUN pip install --user neovim pipenv
 
+RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
+
 RUN curl -sLf https://spacevim.org/install.sh | bash
 
 RUN nvim --headless +'call dein#install()' +qall
+
+RUN rm $HOME/.SpaceVim.d/init.toml
 
 ENTRYPOINT /usr/local/bin/nvim

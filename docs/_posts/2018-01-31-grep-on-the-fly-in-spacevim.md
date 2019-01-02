@@ -20,6 +20,18 @@ SpaceVim 中代码检索采用的是 FlyGrep 这个插件，包括了常用的�
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
+## 安装搜索工具
+
+FlyGrep 异步调用搜索工具，搜索并展示结果，目前支持的搜索工具包括：`rg`, `ag`, `pt`, `grep`, `findstr`, `ack`。
+以上这些工具在 Linux 系统下默认包含了 `grep`，Windows 系统下默认包含了 `findstr`。其他工具安装方式如下：
+
+### Windows
+
+在 Windows 下，可以直接下载解压，可执行文件所在目录加入 `PATH` 即可。
+
+- rg: [ripgrep releases](https://github.com/BurntSushi/ripgrep/releases)
+- ag: [the_silver_searcher-win32](https://github.com/k-takata/the_silver_searcher-win32/releases)
+
 ## 特性
 
 - 实时检索全工程文件

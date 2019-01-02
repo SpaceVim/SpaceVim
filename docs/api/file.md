@@ -1,6 +1,6 @@
 ---
 title: "file api"
-description: "file API provides some besic functions and values for current os."
+description: "file API provides some basic functions and values for current os."
 ---
 
 # [Available APIs](../) >> file
