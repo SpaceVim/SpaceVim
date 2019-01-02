@@ -5,6 +5,34 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section password, api-password
+" @parentsection api
+" provides some functions to generate password
+"
+" generate_simple({len})
+"
+"   generate simple password
+"    
+" generate_strong({len})
+"
+"   generate strong password
+"
+" generate_paranoid({len})
+"
+"   generate paranoid password
+"
+" generate_numeric({len})
+" 
+"   generate numeric password
+"
+" generate_phonetic({len})
+"
+"   generate phonetic password
+
+
+
 let s:self = {}
 
 let s:NUMBER = SpaceVim#api#import('data#number')

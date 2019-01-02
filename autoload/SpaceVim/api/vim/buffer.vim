@@ -6,6 +6,29 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section vim#buffer, api-vim-buffer
+" @parentsection api
+" @subsection Functions
+"
+" is_cmdwin()
+" 
+" Check if current windows is command line windows.
+" 
+" open(opt)
+"
+" Open a new buffer with specifice options, return the buffer number, the {opt} 
+" is a dict with following keys:
+" 
+"     bufname : the buffer name of the new buffer
+"
+"     mode: how to open the new buffer, default is vertical topleft split
+"
+"     initfunc: the function which will be call after creating buffer
+"
+"     cmd: the ex command which will be run after the new buffer is created
+
+
 let s:self = {}
 
 

@@ -1,6 +1,6 @@
 ---
 title: "system api"
-description: "system API provides some besic functions and values for current os."
+description: "system API provides some basic functions and values for current os."
 ---
 
 # [Available APIs](../) >> system

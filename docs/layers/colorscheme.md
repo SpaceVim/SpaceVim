@@ -77,11 +77,22 @@ Vim background color. SpaceVim support to change the background color with
   colorscheme_bg = "dark"
 ```
 
-colorscheme layer support random colorscheme on startup. just load this layer with layer option `random-theme`
+Colorscheme layer support random colorscheme on startup. just load this layer with layer option `random_theme`
 
 ```toml
 [[layers]]
   name = "colorscheme"
-  random-theme = true
+  random_theme = true
 ```
+
+The frequency can be changed via `frequency` layer options, the available values are  `daily`, `hourly`, `weekly`.
+You can also use `number + unit`, for example: `1h`.
+
+```toml
+[[layers]]
+  name = "colorscheme"
+  random_theme = true
+  frequency = "daily"
+```
+
 

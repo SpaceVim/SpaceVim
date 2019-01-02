@@ -15,19 +15,21 @@ lang: cn
 - [安装](#安装)
   - [Linux 或 macOS](#linux-或-macos)
   - [Windows](#windows)
+- [在 Docker 中运行](#在-docker-中运行)
 - [配置](#配置)
 - [学习SpaceVim](#学习spacevim)
+- [在线指南](#在线指南)
 
 <!-- vim-markdown-toc -->
 
-## 安装
+### 安装
 
 在安装 SpaceVim 之前，你需要确保电脑上已经安装了 `git` 和 `curl`。这两个工具用来
 下载插件以及字体。
 
 如果在终端中使用 vim 或者 neovim，还需要设置终端的字体。
 
-### Linux 或 macOS
+#### Linux 或 macOS
 
 ```bash
 curl -sLf https://spacevim.org/cn/install.sh | bash
@@ -41,11 +43,26 @@ curl -sLf https://spacevim.org/cn/install.sh | bash
 curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ```
 
-### Windows
+#### Windows
 
-window 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
+windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
-## 配置
+
+### 在 Docker 中运行
+
+```sh
+docker pull spacevim/spacevim
+docker run -it --rm spacevim/spacevim nvim
+```
+
+也可以通过挂载的方式，载入本地配置：
+
+```sh
+docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+```
+
+
+### 配置
 
 SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单的配置示例。
 如果需要查阅更多 SpaceVim 配置相关的信息，请阅读 SpaceVim 用户文档。
@@ -104,8 +121,26 @@ name = "lilydjwg/colorizer"
 merged = 0
 ```
 
-## 学习SpaceVim
+### 学习SpaceVim
 
 - [SpaceVim 用户文档](../documentation/). SpaceVim 官方文档，包含了 SpaceVim 配置及使用的每一个细节，是熟悉和掌握 SpaceVim 使用技巧的必备资料。
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
 - [SpaceVim 入门教程](https://everettjf.gitbooks.io/spacevimtutorial/content/)：everettjf 所著的 SpaceVim 入门教程
+
+### 在线指南
+
+以下主要为 SpaceVim 的基本使用教程，侧重于各种语言开发环境的搭建，可以理解为 SpaceVim 用户文档的精简版，主要包括以下内容：
+
+- [使用 SpaceVim 搭建基本的开发环境](../use-vim-as-ide/)：涵盖一些窗口及文件的常规操作
+
+
+针对不同语言，一些基础的配置及使用技巧：
+
+
+<ul>
+    {% for post in site.categories.tutorials_cn %}
+            <li>
+               <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>

@@ -20,10 +20,10 @@
 " SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file.
 " You can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will
 " also be added to runtimepath, so you can write your own scripts in it.
-" SpaceVim also supports local config for each project. Place local config 
+" SpaceVim also supports local config for each project. Place local config
 " settings in `.SpaceVim.d/init.toml` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
-" 
+"
 " here is an example setting SpaceVim options:
 " >
 "   [options]
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '0.9.0-dev'
+let g:spacevim_version = '1.1.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -124,7 +124,7 @@ let g:spacevim_enable_googlesuggest    = 0
 ""
 " @section windows_leader, options-windows_leader
 " @parentsection options
-" Window functions leader for SpaceVim. Default is `s`. 
+" Window functions leader for SpaceVim. Default is `s`.
 " Set to empty to disable this feature, or you can set to another char.
 " >
 "   windows_leader = ""
@@ -132,7 +132,7 @@ let g:spacevim_enable_googlesuggest    = 0
 
 
 ""
-" Window functions leader for SpaceVim. Default is `s`. 
+" Window functions leader for SpaceVim. Default is `s`.
 " Set to empty to disable this feature, or you can set to another char.
 " >
 "   let g:spacevim_windows_leader = ''
@@ -203,6 +203,8 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "     let g:spacevim_autocomplete_method = 'neocomplcache'
   "   endif
   " <
+  "
+  " and you can alse set this option to coc, then coc.nvim will be useed.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
@@ -249,13 +251,13 @@ let g:spacevim_enable_ale          = 0
 " @parentsection options
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+"   guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 
 ""
 " Set the guifont of SpaceVim. Default is empty.
 " >
-"   let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+"   let g:spacevim_guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
 let g:spacevim_guifont                 = ''
 
@@ -326,9 +328,25 @@ let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_statusline_inactive_separator = 'arrow'
 
 ""
+" Enable/Disable showing full path of current buffer on statusline
+let g:spacevim_enable_statusline_bfpath = 0
+
+""
+" @section enable_statusline_tag, options-enable_statusline_tag
+" @parentsection options
+" Enable/Disable showing current tag on statusline
+" >
+"   enable_statusline_tag = false
+" <
+
+""
+" Enable/Disable showing current tag on statusline
+let g:spacevim_enable_statusline_tag = 1
+
+""
 " Define the left section of statusline in active windows. By default:
 " >
-"   let g:spacevim_statusline_left_sections = 
+"   let g:spacevim_statusline_left_sections =
 "     \ [
 "     \ 'winnr',
 "     \ 'filename',
@@ -428,7 +446,7 @@ let g:spacevim_warning_symbol          = '⚠'
 " <
 let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
 ""
-" Set the SpaceVim cursor shape in the terminal. 
+" Set the SpaceVim cursor shape in the terminal.
 " >
 "   0 : to prevent Nvim from changing the cursor shape.
 "   1 : to enable non-blinking mode-sensitive cursor.
@@ -442,7 +460,7 @@ let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circ
 " <
 let g:spacevim_terminal_cursor_shape = 2
 ""
-" Set the help language of vim. Default is 'en'. 
+" Set the help language of vim. Default is 'en'.
 " You can change it to Chinese.
 " >
 "   let g:spacevim_vim_help_language = 'cn'
@@ -464,8 +482,8 @@ let g:spacevim_colorscheme             = 'gruvbox'
 " The background of colorscheme. Default is 'dark'.
 let g:spacevim_colorscheme_bg             = 'dark'
 ""
-" The default colorscheme of SpaceVim. Default is 'desert'. 
-" This colorscheme will be used if the colorscheme set by 
+" The default colorscheme of SpaceVim. Default is 'desert'.
+" This colorscheme will be used if the colorscheme set by
 " `g:spacevim_colorscheme` is not installed.
 " >
 "   let g:spacevim_colorscheme_default = 'other_color'
@@ -547,7 +565,7 @@ let g:spacevim_gitcommit_issue_icon    = ''
 " Set SpaceVim buffer index type, default is 0.
 " >
 "   " types:
-"   " 0: 1 ➛ ➊ 
+"   " 0: 1 ➛ ➊
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
 "   " 3: 1 ➛ ¹
@@ -559,7 +577,7 @@ let g:spacevim_buffer_index_type = 0
 " Set SpaceVim windows index type, default is 0.
 " >
 "   " types:
-"   " 0: 1 ➛ ➊ 
+"   " 0: 1 ➛ ➊
 "   " 1: 1 ➛ ➀
 "   " 2: 1 ➛ ⓵
 "   " 3: 1 ➛ 1
@@ -602,7 +620,7 @@ let g:spacevim_custom_plugins          = []
 let g:spacevim_filetype_icons           = {}
 ""
 " SpaceVim will load the global config after local config if set to 1. Default
-" is 0. If you have a local config, the global config will not be loaded. 
+" is 0. If you have a local config, the global config will not be loaded.
 " >
 "   let g:spacevim_force_global_config = 1
 " <
@@ -616,7 +634,10 @@ let g:spacevim_enable_powerline_fonts  = 1
 "   let g:spacevim_lint_on_save = 0
 " <
 let g:spacevim_lint_on_save            = 1
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep']
+""
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
 ""
 " Set the project rooter patterns, by default it is
 " `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
@@ -624,6 +645,10 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+
+""
+" Config the command line prompt for flygrep and denite etc.
+let g:spacevim_commandline_prompt = '➭'
 
 ""
 " @section lint_on_the_fly, options-lint_on_the_fly
@@ -640,9 +665,9 @@ let g:spacevim_project_rooter_automatically = 1
 " <
 let g:spacevim_lint_on_the_fly         = 0
 ""
-" Enable/Disable vimfiler in the welcome windows. Default is 1. 
+" Enable/Disable vimfiler in the welcome windows. Default is 1.
 " This will cause vim to start up slowly if there are too many files in the
-" current directory. 
+" current directory.
 " >
 "   let g:spacevim_enable_vimfiler_welcome = 0
 " <
@@ -741,7 +766,7 @@ endif
 let g:spacevim_leader_guide_max_size = 0
 
 if !exists('g:leaderGuide_submode_mappings')
-  let g:leaderGuide_submode_mappings = 
+  let g:leaderGuide_submode_mappings =
         \ { '<C-C>': 'win_close', 'n': 'page_down', 'p': 'page_up', 'u' : 'undo'}
 endif
 
@@ -765,6 +790,14 @@ function! SpaceVim#end() abort
   if g:spacevim_vimcompatible == 1
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = 0
+  endif
+
+  if !g:spacevim_vimcompatible
+    nnoremap <silent><C-x> <C-w>x
+    cnoremap <C-f> <Right>
+    " Navigation in command line
+    cnoremap <C-a> <Home>
+    cnoremap <C-b> <Left>
   endif
   call SpaceVim#server#connect()
 
@@ -793,9 +826,9 @@ function! SpaceVim#end() abort
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
   if g:spacevim_vim_help_language ==# 'cn'
-    call SpaceVim#layers#load('chinese')
+    let &helplang = 'cn'
   elseif g:spacevim_vim_help_language ==# 'ja'
-    call SpaceVim#layers#load('japanese')
+    let &helplang = 'jp'
   endif
   ""
   " generate tags for SpaceVim
@@ -855,39 +888,53 @@ function! SpaceVim#end() abort
 endfunction
 
 
+" return [status, dir]
+" status: 0 : no argv
+"         1 : dir
+"         2 : filename
+function! s:parser_argv() abort
+  if !argc()
+    return [0]
+  elseif argv(0) =~# '/$'
+    let f = fnamemodify(expand(argv(0)), ':p')
+    if isdirectory(f)
+      return [1, f]
+    else
+      return [1, getcwd()]
+    endif
+  elseif argv(0) ==# '.'
+    return [1, getcwd()]
+  elseif isdirectory(expand(argv(0)))
+    return [1, fnamemodify(expand(argv(0)), ':p')]
+  else
+    return [2, argv()]
+  endif
+endfunction
+
 function! SpaceVim#begin() abort
 
   call zvim#util#source_rc('functions.vim')
   call zvim#util#source_rc('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
-  function! s:parser_argv() abort
-    if !argc()
-      return [1, getcwd()]
-    elseif argv(0) =~# '/$'
-      let f = fnamemodify(expand(argv(0)), ':p')
-      if isdirectory(f)
-        return [1, f]
-      else
-        return [1, getcwd()]
-      endif
-    elseif argv(0) ==# '.'
-      return [1, getcwd()]
-    elseif isdirectory(expand(argv(0)))
-      return [1, fnamemodify(expand(argv(0)), ':p')]
-    else
-      return [0]
-    endif
-  endfunction
   let s:status = s:parser_argv()
-  call SpaceVim#logger#info('SpaceVim startup status is: ' . string(s:status) )
   " If do not start Vim with filename, Define autocmd for opening welcome page
-  if s:status[0]
-    let g:_spacevim_enter_dir = s:status[1]
+  if s:status[0] == 0
+    let g:_spacevim_enter_dir = fnamemodify(getcwd(), ':~')
+    call SpaceVim#logger#info('Startup with no argv, current dir is used: ' . g:_spacevim_enter_dir )
     augroup SPwelcome
       au!
       autocmd VimEnter * call SpaceVim#welcome()
     augroup END
+  elseif s:status[0] == 1
+    let g:_spacevim_enter_dir = fnamemodify(s:status[1], ':~')
+    call SpaceVim#logger#info('Startup with directory: ' . g:_spacevim_enter_dir  )
+    augroup SPwelcome
+      au!
+      autocmd VimEnter * call SpaceVim#welcome()
+    augroup END
+  else
+    call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
@@ -913,7 +960,7 @@ function! SpaceVim#welcome() abort
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
-    if exists(':VimFiler') == 2 
+    if exists(':VimFiler') == 2
       VimFiler
       wincmd p
     endif
@@ -922,7 +969,7 @@ endfunction
 
 ""
 " @section FAQ, faq
-"1. How do I enable YouCompleteMe? 
+"1. How do I enable YouCompleteMe?
 " >
 "   I do not recommend using YouCompleteMe.
 "   It is too big as a vim plugin. Also, I do not like using submodules in a vim
@@ -946,13 +993,13 @@ endfunction
 " >
 "   SpaceVim uses neosnippet as the default snippet engine. If you want to add
 "   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-"   command. A buffer will be opened and you can add your custom snippet. 
-"   By default this buffer will be save in `~/.SpaceVim/snippets`. 
+"   command. A buffer will be opened and you can add your custom snippet.
+"   By default this buffer will be save in `~/.SpaceVim/snippets`.
 "   If you want to use another directory:
 "
 "   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
-"   
-"   For more info about how to write snippet, please 
+"
+"   For more info about how to write snippet, please
 "   read |neosnippet-snippet-syntax|.
 " <
 "
@@ -971,7 +1018,7 @@ endfunction
 ""
 " @section Changelog, changelog
 " Following HEAD: changes in master branch since last release v0.7.0
-" 
+"
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
 " 2018-03-19: v0.7.0

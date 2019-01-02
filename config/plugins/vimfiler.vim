@@ -6,8 +6,8 @@ let g:vimfiler_as_default_explorer = get(g:, 'vimfiler_as_default_explorer', 1)
 let g:vimfiler_restore_alternate_file = get(g:, 'vimfiler_restore_alternate_file', 1)
 let g:vimfiler_tree_indentation = get(g:, 'vimfiler_tree_indentation', 1)
 let g:vimfiler_tree_leaf_icon = get(g:, 'vimfiler_tree_leaf_icon', '')
-let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', '▼')
-let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '▷')
+let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', '-')
+let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '+')
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
@@ -98,6 +98,7 @@ function! s:vimfilerinit()
   nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
+  nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
 endf
 
 function! s:vimfiler_vsplit() abort

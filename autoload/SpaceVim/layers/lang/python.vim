@@ -50,12 +50,6 @@ function! SpaceVim#layers#lang#python#config() abort
 
   " }}}
 
-  let g:neoformat_python_autoflake = {
-        \ 'exe': 'autoflake',
-        \ 'args': ['--in-place', '--remove-duplicate-keys', '--expand-star-imports'],
-        \ 'stdin': 0,
-        \ }
-
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
@@ -117,6 +111,14 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+
+  " Format on save
+  if s:format_on_save
+    augroup SpaceVim_layer_lang_python
+      autocmd!
+      autocmd BufWritePost *.py Neoformat yapf
+    augroup end
+  endif
 endfunction
 
 func! s:getexe() abort
@@ -135,4 +137,12 @@ function! s:go_to_def() abort
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+  let s:format_on_save = 0
+function! SpaceVim#layers#lang#python#set_variable(var) abort
+
+  let s:format_on_save = get(a:var,
+        \ 'format-on-save',
+        \ 0)
 endfunction

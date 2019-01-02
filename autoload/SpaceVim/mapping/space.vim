@@ -35,7 +35,7 @@ function! SpaceVim#mapping#space#init() abort
   vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
   nmap <Space> [SPC]
   vmap <Space> [SPC]
-  if g:spacevim_enable_language_specific_leader
+  if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
     xmap , [SPC]l
   endif
@@ -273,6 +273,26 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with rg', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
         \ 'Background search cursor words in project with rg', 1)
+
+  " findstr
+  let g:_spacevim_mappings_space.s.i = {'name' : '+findstr'}
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'b'], 'call SpaceVim#mapping#search#grep("i", "b")', 'search in all buffers with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'B'], 'call SpaceVim#mapping#search#grep("i", "B")',
+        \ 'search cursor word in all buffers with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'd'], 'call SpaceVim#mapping#search#grep("i", "d")', 'search in buffer directory with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'D'], 'call SpaceVim#mapping#search#grep("i", "D")',
+        \ 'search cursor word in buffer directory with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'p'], 'call SpaceVim#mapping#search#grep("i", "p")', 'search in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'P'], 'call SpaceVim#mapping#search#grep("i", "P")',
+        \ 'search cursor word in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'f'], 'call SpaceVim#mapping#search#grep("i", "f")',
+        \ 'search in arbitrary directory  with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'F'], 'call SpaceVim#mapping#search#grep("i", "F")',
+        \ 'search cursor word in arbitrary directory  with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'j'], 'call SpaceVim#plugins#searcher#find("", "findstr")',
+        \ 'Background search cursor words in project with findstr', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "findstr")',
+        \ 'Background search cursor words in project with findstr', 1)
   " pt
   let g:_spacevim_mappings_space.s.t = {'name' : '+pt'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)

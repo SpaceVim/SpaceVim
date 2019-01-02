@@ -51,7 +51,15 @@ npm install -g typescript
 
 ## 快捷键
 
-| 快捷键    | 按键描述             |
-| --------- | -------------------- |
-| `SPC l d` | 显示相关文档         |
-| `SPC l e` | 重命名光标函数或变量 |
+| 快捷键 | 功能描述        |
+| ----------- | ------------------ |
+| `SPC l c`   | type definition    |
+| `SPC l d`   | show documentation |
+| `SPC l e`   | rename symbol      |
+| `SPC l f`   | code fix           |
+| `SPC l g`   | definition         |
+| `SPC l i`   | import             |
+| `SPC l r`   | references         |
+| `SPC l s`   | search             |
+| `SPC l t`   | type               |
+| `g d`   | defintion preview  |

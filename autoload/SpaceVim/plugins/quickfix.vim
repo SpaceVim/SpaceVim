@@ -6,6 +6,13 @@
 " License: GPLv3
 "=============================================================================
 
+" this is a build-in quickfix list and location list plugin for SpaceVim, and
+" it should works well for both quickfix list and location list. The public
+" key bindings is:
+" 1. jump to next position in qflist
+" 2. jump to previous position in qflist
+" 3. open qflist if it is available
+
 let s:qflist = []
 
 let s:qf_title = ''

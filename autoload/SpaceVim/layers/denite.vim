@@ -24,39 +24,131 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Denite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Denite help -input=SpaceVim', 'find-SpaceVim-help', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'buffer list', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite file_mru', 'open-recent-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Denite -resume', 'resume denite buffer', 1)
-  nnoremap <silent> <C-p> :Denite file_rec<cr>
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
-  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
-  call s:defind_fuzzy_finder()
+
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-        \ 'DeniteBufferDir file_rec',
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
+        \ ['show mappings',
+        \ [
+        \ 'SPC ? is to show mappings',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite help -input=SpaceVim"])',
+        \ ['find-SpaceVim-help',
+        \ [
+        \ 'SPC h SPC is to find SpaceVim help',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
+        \ ['buffer-list',
+        \ [
+        \ 'SPC b b is to open buffer list via denite',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite file_mru"])',
+        \ ['open-recent-file',
+        \ [
+        \ 'SPC f r is to open recent file list',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite outline"])',
+        \ ['jump to a definition in buffer',
+        \ [
+        \ 'SPC j i is to jump to a definition in buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite -resume"])',
+        \ ['resume denite buffer',
+        \ [
+        \ 'SPC r l is to resume denite buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite colorscheme"])',
+        \ ['fuzzy find colorschemes',
+        \ [
+        \ 'SPC T s is to fuzzy find colorschemes',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file_rec"])',
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
-        \ ]
-        \ , 1)
+        \ ],
+        \ 1)
+
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
-        \ 'Denite file_rec',
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite file_rec"])',
         \ ['find files in current project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
+        \ ],
+        \ 1)
+  nnoremap <silent> <C-p> :call <SID>warp_denite('Denite file_rec')<cr>
+
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["DeniteCursorWord help"])',
+        \ ['get help with the symbol at point',
+        \ [
+        \ '[SPC h i] is to get help with the symbol at point',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
-        \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'DeniteCursorWord help', 'get help with the symbol at point', 1)
+        \ ],
+        \ 1)
+
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
 endfunction
 
 let s:file = expand('<sfile>:~')
@@ -159,4 +251,24 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 endfunction
+
+function! s:warp_denite(cmd) abort
+  exe a:cmd
+  doautocmd WinEnter
+endfunction
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
 " vim:set et sw=2 cc=80:

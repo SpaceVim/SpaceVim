@@ -1,5 +1,5 @@
 ---
-title:  "Documentation"
+title: "Documentation"
 description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
@@ -17,7 +17,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
   - [Bootstrap Functions](#bootstrap-functions)
-  - [Vim Compatible Mode](#vim-compatible-mode)
+  - [Vim compatible mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
   - [Debug upstream plugins](#debug-upstream-plugins)
 - [Concepts](#concepts)
@@ -62,6 +62,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Searching](#searching)
     - [With an external tool](#with-an-external-tool)
+      - [Custom searching tool](#custom-searching-tool)
       - [Useful key bindings](#useful-key-bindings)
       - [Searching in current file](#searching-in-current-file)
       - [Searching in buffer directory](#searching-in-buffer-directory)
@@ -84,6 +85,7 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Examples](#examples)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
+  - [Code runner and REPL](#code-runner-and-repl)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
@@ -204,7 +206,7 @@ Comprehensive documentation is available for each layer by `:h SpaceVim`.
 
 **Add custom plugins**
 
-If you want to add plugin from github, just add the repo name to the  `custom_plugins` section:
+If you want to add plugin from github, just add the repo name to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
@@ -254,9 +256,9 @@ func! myspacevim#before() abort
 endf
 ```
 
-### Vim Compatible Mode
+### Vim compatible mode
 
-This a list of different key bindings between SpaceVim and origin vim. If you still want to use this origin function, you can enable vimcompatible mode, via `vimcompatible = true` in `[options]` section.
+This a list of different key bindings between SpaceVim and origin vim.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
@@ -271,6 +273,19 @@ the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
 the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
 - The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+- `Ctrl-b` in command line mode is mapped to `<Left>`, which will move cursor to the left.
+- `Ctrl-f` in command line mode is mapped to `<Right>`, which will move cursor to the right.
+
+SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the different points above will disappear,
+you can enable vimcompatible mode via `vimcompatible = true` in `[options]` section.
+
+If you want to disable one of these differences, use the relevant options.
+For example, to disable language specific leader, you may add following to your configuration file:
+
+```toml
+[options]
+    enable_language_specific_leader = false
+```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
 
@@ -309,7 +324,7 @@ use toml file to add custom forked plugins:
 
 ```toml
 [[custom_plugins]]
-   name = 'wsdjeg/neomake.vim'
+   name = "wsdjeg/neomake.vim"
    # note: you need to disable merged feature
    merged = false
 ```
@@ -380,13 +395,13 @@ in `[options]` section:
 
 ### Font
 
-The default font used by SpaceVim is DejaVu Sans Mono for Powerline. It is recommended
+The default font used by SpaceVim is [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip). It is recommended
 to install it on your system if you wish to use it.
 
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = 'DejaVu Sans Mono for Powerline:h11'
+    guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
@@ -407,6 +422,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t i`   | toggle indentation guide at point                        |
 | `SPC t n`   | toggle line numbers                                      |
 | `SPC t b`   | toggle background                                        |
+| `SPC t c`   | toggle conceal                                           |
 | `SPC t t`   | open tabs manager                                        |
 | `SPC T ~`   | display ~ in the fringe on empty lines                   |
 | `SPC T F`   | toggle frame fullscreen                                  |
@@ -610,7 +626,7 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 
 **Tab manager:**
 
-You can also use `SPC t t` to open the tab manager windows. 
+You can also use `SPC t t` to open the tab manager windows.
 
 key bindings within tab manager windows:
 
@@ -656,27 +672,27 @@ can change it via `windows_leader` option:
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
 
-| Key               |      Mode     | Action                                                                         |
+| Key               |     Mode      | Action                                                                         |
 | ----------------- | :-----------: | ------------------------------------------------------------------------------ |
-| `<Leader> y`      |     visual    | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`          |     Normal    | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c` |     Normal    | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> y`      |    visual     | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`          |    Normal     | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c` |    Normal     | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
 | `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
 | `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`          |     Normal    | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl-b`          |     Normal    | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl-e`          |     Normal    | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl-y`          |     Normal    | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl-q`          |     Normal    | `Ctrl`+`w`                                                                     |
-| `Ctrl-x`          |     Normal    | Switch buffer and placement                                                    |
-| `<Up>`, `<Down>`  |     Normal    | Smart up and down                                                              |
-| `}`               |     Normal    | After paragraph motion go to first non-blank char (}^)                         |
+| `Ctrl-f`          |    Normal     | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl-b`          |    Normal     | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl-e`          |    Normal     | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl-y`          |    Normal     | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl-q`          |    Normal     | `Ctrl`+`w`                                                                     |
+| `Ctrl-x`          |    Normal     | Switch buffer and placement                                                    |
+| `<Up>`, `<Down>`  |    Normal     | Smart up and down                                                              |
+| `}`               |    Normal     | After paragraph motion go to first non-blank char (}^)                         |
 | `<`               | Visual/Normal | Indent to left and re-select                                                   |
 | `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`           |     Visual    | Indent to right and re-select                                                  |
-| `Shift-Tab`       |     Visual    | Indent to left and re-select                                                   |
-| `g p`             |     Normal    | Select last paste                                                              |
-| `Q` / `g Q`       |     Normal    | Disable EX-mode (<Nop>)                                                        |
+| `<Tab>`           |    Visual     | Indent to right and re-select                                                  |
+| `Shift-Tab`       |    Visual     | Indent to left and re-select                                                   |
+| `g p`             |    Normal     | Select last paste                                                              |
+| `Q` / `g Q`       |    Normal     | Disable EX-mode (<Nop>)                                                        |
 | `Ctrl-a`          |    Command    | Navigation in command line                                                     |
 | `Ctrl-b`          |    Command    | Move cursor backward in command line                                           |
 | `Ctrl-f`          |    Command    | Move cursor forward in command line                                            |
@@ -861,7 +877,7 @@ then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` w
 
 #### Getting help
 
-fuzzy finder layer is powerful tool to  unite all interfaces. it was meant to be
+fuzzy finder layer is powerful tool to unite all interfaces. it was meant to be
 like [Helm](https://github.com/emacs-helm/helm) for Vim. These mappings is for
 getting help info about functions, variables etc:
 
@@ -1007,7 +1023,7 @@ Windows manipulation commands (start with `w`):
 | `SPC w TAB`          | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`            | balance split windows                                                                                         |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`            | Distraction-free reading current window  (tools layer)                                                        |
+| `SPC w c`            | Distraction-free reading current window (tools layer)                                                         |
 | `SPC w C`            | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
 | `SPC w d`            | delete a window                                                                                               |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)                                      |
@@ -1090,6 +1106,7 @@ Files manipulation commands (start with f):
 
 | Key Binding | Description                                                    |
 | ----------- | -------------------------------------------------------------- |
+| `SPC f /`   | Find files with `find` command                                 |
 | `SPC f b`   | go to file bookmarks                                           |
 | `SPC f c`   | copy current file to a different location(TODO)                |
 | `SPC f C d` | convert file from unix to dos encoding                         |
@@ -1203,7 +1220,7 @@ which will tell you the functional of all mappings starting with `g`.
 | `g ]`       | tselect cursor tag                              |
 | `g ^`       | go to leftmost no-white character               |
 | `g _`       | go to last char                                 |
-| ``g ` ``    | jump to mark                                    |
+| `` g ` ``   | jump to mark                                    |
 | `g a`       | print ascii value of cursor character           |
 | `g d`       | goto definition                                 |
 | `g e`       | go to end of previous word                      |
@@ -1320,12 +1337,41 @@ Notes:
 
 **Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
 
+##### Custom searching tool
+
+to change the option of a search tool, you need to use bootstrap function. here is an example
+how to change the default option of searching tool `rg`.
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+The structure of searching tool profile is:
+
+```vim
+" { 'ag' : {
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
 ##### Useful key bindings
 
 | Key Binding     | Description                               |
 | --------------- | ----------------------------------------- |
 | `SPC r l`       | resume the last completion buffer         |
-| ``SPC s ` ``    | go back to the previous place before jump |
+| `` SPC s ` ``   | go back to the previous place before jump |
 | Prefix argument | will ask for file extensions              |
 
 ##### Searching in current file
@@ -1467,7 +1513,7 @@ SpaceVim uses `g:spacevim_search_highlight_persist` to keep the searched express
 
 #### Highlight current symbol
 
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
 
 It is also possible to change the range of the navigation on the fly to:
 
@@ -1511,62 +1557,62 @@ In highlight symbol transient state:
 
 Text related commands (start with `x`):
 
-| Key Binding   | Description                                                          |     |
-| ------------- | -------------------------------------------------------------------- | --- |
-| `SPC x a &`   | align region at &                                                    |     |
-| `SPC x a (`   | align region at (                                                    |     |
-| `SPC x a )`   | align region at )                                                    |     |
-| `SPC x a [`   | align region at \[                                                   |     |
-| `SPC x a ]`   | align region at ]                                                    |     |
-| `SPC x a {`   | align region at {                                                    |     |
-| `SPC x a }`   | align region at }                                                    |     |
-| `SPC x a ,`   | align region at ,                                                    |     |
-| `SPC x a .`   | align region at . (for numeric tables)                               |     |
-| `SPC x a :`   | align region at :                                                    |     |
-| `SPC x a ;`   | align region at ;                                                    |     |
-| `SPC x a =`   | align region at =                                                    |     |
-| `SPC x a ¦`   | align region at ¦                                                    |     |
-| `SPC x a |`   | align region at                                                      |     |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |     |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |     |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |     |
-| `SPC x a r`   | align region using user-specified regexp (TODO)                      |     |
-| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |     |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |     |
-| `SPC x d w`   | delete trailing whitespaces                                          |     |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |     |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |     |
-| `SPC x g t`   | translate current word using Google Translate                        |     |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |     |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |     |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |     |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |     |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |     |
-| `SPC x i _`   | change symbol style to `under_score`                                 |     |
-| `SPC x i u`   | change symbol style to `under_score`                                 |     |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |     |
-| `SPC x j c`   | set the justification to center (TODO)                               |     |
-| `SPC x j f`   | set the justification to full (TODO)                                 |     |
-| `SPC x j l`   | set the justification to left (TODO)                                 |     |
-| `SPC x j n`   | set the justification to none (TODO)                                 |     |
-| `SPC x j r`   | set the justification to right (TODO)                                |     |
-| `SPC x J`     | move down a line of text (enter transient state)                     |     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |     |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |     |
-| `SPC x l s`   | sort lines (TODO)                                                    |     |
-| `SPC x l u`   | uniquify lines (TODO)                                                |     |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |     |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |     |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |     |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |     |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |     |
-| `SPC x u`     | set the selected text to lower case (TODO)                           |     |
-| `SPC x U`     | set the selected text to upper case (TODO)                           |     |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |     |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |     |
-| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |     |
+| Key Binding   | Description                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| `SPC x a &`   | align region at &                                                    |
+| `SPC x a (`   | align region at (                                                    |
+| `SPC x a )`   | align region at )                                                    |
+| `SPC x a [`   | align region at \[                                                   |
+| `SPC x a ]`   | align region at ]                                                    |
+| `SPC x a {`   | align region at {                                                    |
+| `SPC x a }`   | align region at }                                                    |
+| `SPC x a ,`   | align region at ,                                                    |
+| `SPC x a .`   | align region at . (for numeric tables)                               |
+| `SPC x a :`   | align region at :                                                    |
+| `SPC x a ;`   | align region at ;                                                    |
+| `SPC x a =`   | align region at =                                                    |
+| `SPC x a ¦`   | align region at ¦                                                    |
+| `SPC x a |`   | align region at                                                      |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
+| `SPC x a c`   | align current indentation region using default rules (TODO)          |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
+| `SPC x a r`   | align region using user-specified regexp (TODO)                      |
+| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |
+| `SPC x c`     | count the number of chars/words/lines in the selection region        |
+| `SPC x d w`   | delete trailing whitespaces                                          |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
+| `SPC x g t`   | translate current word using Google Translate                        |
+| `SPC x g T`   | reverse source and target languages (TODO)                           |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
+| `SPC x i -`   | change symbol style to `kebab-case`                                  |
+| `SPC x i k`   | change symbol style to `kebab-case`                                  |
+| `SPC x i _`   | change symbol style to `under_score`                                 |
+| `SPC x i u`   | change symbol style to `under_score`                                 |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
+| `SPC x j c`   | set the justification to center (TODO)                               |
+| `SPC x j f`   | set the justification to full (TODO)                                 |
+| `SPC x j l`   | set the justification to left (TODO)                                 |
+| `SPC x j n`   | set the justification to none (TODO)                                 |
+| `SPC x j r`   | set the justification to right (TODO)                                |
+| `SPC x J`     | move down a line of text (enter transient state)                     |
+| `SPC x K`     | move up a line of text (enter transient state)                       |
+| `SPC x l d`   | duplicate line or region (TODO)                                      |
+| `SPC x l s`   | sort lines (TODO)                                                    |
+| `SPC x l u`   | uniquify lines (TODO)                                                |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
+| `SPC x t c`   | swap (transpose) the current character with the previous one         |
+| `SPC x t w`   | swap (transpose) the current word with the previous one              |
+| `SPC x t l`   | swap (transpose) the current line with the previous one              |
+| `SPC x u`     | set the selected text to lower case (TODO)                           |
+| `SPC x U`     | set the selected text to upper case (TODO)                           |
+| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
+| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |
 
 #### Text insertion commands
 
@@ -1660,21 +1706,22 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
 
-| Key Binding | Description               |
-| ----------- | ------------------------- |
-| `SPC ;`     | comment operator          |
-| `SPC c h`   | hide/show comments        |
-| `SPC c l`   | comment lines             |
-| `SPC c L`   | invert comment lines      |
-| `SPC c p`   | comment paragraphs        |
-| `SPC c P`   | invert comment paragraphs |
-| `SPC c t`   | comment to line           |
-| `SPC c T`   | invert comment to line    |
-| `SPC c y`   | comment and yank          |
-| `SPC c Y`   | invert comment and yank   |
+| Key Binding | Description                |
+| ----------- | -------------------------- |
+| `SPC ;`     | comment operator           |
+| `SPC c h`   | hide/show comments         |
+| `SPC c l`   | comment lines              |
+| `SPC c L`   | invert comment lines       |
+| `SPC c p`   | comment paragraphs         |
+| `SPC c P`   | invert comment paragraphs  |
+| `SPC c s`   | comment with pretty layout |
+| `SPC c t`   | comment to line            |
+| `SPC c T`   | invert comment to line     |
+| `SPC c y`   | comment and yank           |
+| `SPC c Y`   | invert comment and yank    |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
-For exmaple, `SPC ; 4 j` will comment current line and the following 4 lines.
+For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 
@@ -1692,9 +1739,33 @@ set enc=utf-8
 write
 ```
 
+### Code runner and REPL
+
+SpaceVim provides an asynchronously code runner plugin. In most language layer,
+we have defind a key bidning `SPC l r` for running current
+buffer. If you need to add new command, you can use bootstrap func. for example:
+use `F5` to build project asynchronously.
+
+```viml
+nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
+```
+
+These following features have been added to runner and repl plugin:
+
+- Run current file with default command
+- Run code file through system file explorer, only supported in gvim.
+- Run code per Shebang
+- Stop code running
+- View output in Output Window
+- Set default language to run
+- Select language to run
+- REPL support
+- Run selected code snippet
+
 ### Errors handling
 
-SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly. The checks are only performed at save time by default.
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly.
+The checks are only performed at save time by default.
 
 Errors management mappings (start with e):
 
@@ -1717,7 +1788,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`   | Info        | `g:spacevim_info_symbol`    |
+| `🛈`    | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 

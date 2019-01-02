@@ -84,5 +84,17 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
 ```toml
 [[layers]]
   name = "colorscheme"
-  random-theme = true
+  random_theme = true
 ```
+
+除了在每次启用时自动应用随即主题以外，也可以设置它的更新频率，默认是为空，
+表示，每次启用 Vim 是随即选择一种主题。可供选择的频率有：`daily`、`hourly`、`weekly`, 
+以及 `数字 + 单位` 这种格式，如 `1h`。
+
+```toml
+[[layers]]
+  name = "colorscheme"
+  random_theme = true
+  frequency = "daily"
+```
+
