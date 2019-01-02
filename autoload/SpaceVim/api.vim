@@ -53,8 +53,4 @@ function! SpaceVim#api#register(name, api) abort
   endif
 endfunction
 
-function! Test() abort
-  return s:apis
-endfunction
-
 " vim:set fdm=marker sw=2 nowrap:
