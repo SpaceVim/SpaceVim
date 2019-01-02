@@ -44,13 +44,14 @@ let s:self._quit = 1
 let s:self._handle_fly = ''
 let s:self._onclose = ''
 let s:self._oninputpro = ''
-
+let s:last_search_str  = ''
 
 
 func! s:self.open() abort
   let self._quit = 0
   let save_redraw = &lazyredraw
   set nolazyredraw
+  let  self._prompt.begin = s:last_search_str 
   call self._build_prompt()
   if !empty(self._prompt.begin)
     call self._handle_input(self._prompt.begin)
@@ -121,11 +122,13 @@ func! s:self._handle_input(...) abort
     elseif char ==# "\<bs>"
       let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
       call self._build_prompt()
-    elseif char == self._keys.close
+    elseif((char == self._keys.close) || (char ==# "\<C-l>" ))
       call self.close()
       break
     elseif char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
       continue
+    elseif char ==# "\<C-d>"
+      call self._clear_prompt()
     else
       let self._prompt.begin .= char
       call self._build_prompt()
@@ -153,6 +156,7 @@ func! s:self._build_prompt() abort
 endf
 
 function! s:self._clear_prompt() abort
+  let s:last_search_str = self._prompt.begin
   let self._prompt = {
         \ 'mpt' : self._prompt.mpt,
         \ 'begin' : '',
@@ -168,6 +172,7 @@ function! s:self.close() abort
   call self._clear_prompt()
   normal! :
   let self._quit = 1
+  let g:flygrep_status = 'exit' 
 endfunction
 
 function! SpaceVim#api#prompt#get() abort
