@@ -44,7 +44,7 @@ let s:STRING = SpaceVim#api#import('data#string')
 
 let s:self = {}
 
-function! s:has(feature) abort
+function! s:self.has(feature) abort
   if has_key(s:has_cache, a:feature)
     return s:has_cache[a:feature]
   endif
