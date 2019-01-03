@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+
+let s:has_cache = {}
+
+
+
 ""
 " @section vim#compatible, api-vim-compatible
 " @parentsection api
@@ -27,29 +32,48 @@
 " has(feature)
 "
 "   check if {feature} is supported in current version.
+"
+" getjumplist()
+"
+"   return a list of jump position, like result of |:jump|
+
+
+" Load SpaceVim API:
+
+let s:STRING = SpaceVim#api#import('data#string')
 
 let s:self = {}
 
 function! s:self.has(feature) abort
+  if has_key(s:has_cache, a:feature)
+    return s:has_cache[a:feature]
+  endif
+
   if a:feature ==# 'python'
     try
       py import vim
+      let s:has_cache['python'] = 1
       return 1
     catch
+      let s:has_cache['python'] = 0
       return 0
     endtry
   elseif a:feature ==# 'python3'
     try
       py3 import vim
+      let s:has_cache['python3'] = 1
       return 1
     catch
+      let s:has_cache['python3'] = 0
       return 0
     endtry
   elseif a:feature ==# 'pythonx'
     try
       pyx import vim
+      let s:has_cache['pythonx'] = 1
       return 1
     catch
+      let s:has_cache['pythonx'] = 0
       return 0
     endtry
   else
@@ -61,8 +85,10 @@ if has('patch-8.0.1364')
   function! s:self.win_screenpos(nr) abort
     return win_screenpos(a:nr)
   endfunction
-elseif s:self.has('python')
+
+
   function! s:self.win_screenpos(nr) abort
+
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
     elseif a:nr == 0
@@ -72,8 +98,10 @@ elseif s:self.has('python')
     return [pyeval('vim.windows[' . a:nr . '].row'),
           \ pyeval('vim.windows[' . a:nr . '].col')]
   endfunction
+
 elseif s:self.has('python3')
   function! s:self.win_screenpos(nr) abort
+
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
     elseif a:nr == 0
@@ -249,8 +277,30 @@ else
 endif
 
 function! s:self.set_buf_line() abort
-  
+
 endfunction
+
+if exists('*getjumplist')
+  function! s:self.getjumplist() abort
+    return getjumplist()
+  endfunction
+else
+  function! s:self.getjumplist() abort
+    let jumpinfo = split(self.execute(':jumps'), "\n")[1:-2]
+    let result = []
+    "   20   281   23 -invalid-
+    for info in jumpinfo
+      let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      call add(result, {
+            \ 'bufnr' : jump,
+            \ 'lnum' : line,
+            \ 'col' : col,
+            \ })
+    endfor
+    return result
+  endfunction
+endif
+
 
 function! SpaceVim#api#vim#compatible#get() abort
   return deepcopy(s:self)

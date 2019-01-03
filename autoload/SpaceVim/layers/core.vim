@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+let s:SYS = SpaceVim#api#import('system')
+
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
@@ -216,7 +218,13 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', '/'], 'Grepper', 'fuzzy search for text in current project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'q'], 'qa', 'prompt-kill-vim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'Q'], 'qa!', 'kill-vim', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
+  if has('nvim') && s:SYS.isWindows
+    call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], 'call call('
+          \ . string(s:_function('s:restart_neovim_qt')) . ', [])',
+          \ 'restrat neovim-qt', 1)
+  else
+    call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
@@ -611,4 +619,9 @@ function! s:comment_paragraphs(invert) abort
   else
     call feedkeys("vip\<Plug>NERDCommenterComment")
   endif
+endfunction
+
+" this func only for neovim-qt in windows
+function! s:restart_neovim_qt() abort
+  call system('taskkill /f /t /im nvim.exe')
 endfunction

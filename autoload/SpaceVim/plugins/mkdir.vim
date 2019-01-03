@@ -17,7 +17,11 @@ endfunction
 
 fun! s:Mkdirp(dir) abort
   if exists('*mkdir')
-    call mkdir(a:dir, 'p')
+    try
+      call mkdir(a:dir, 'p')
+    catch      
+      call SpaceVim#logger#error('failed to create dir:' . a:dir)
+    endtry
   else
     " @todo mkdir only exist in *nix os
     call system('mkdir -p '.shellescape(a:dir))

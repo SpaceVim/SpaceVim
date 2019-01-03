@@ -15,6 +15,14 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
 This ia a built-in plugin in SpaceVim, and we also separated a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
 
+## Install
+
+In linux os, flygrep use grep by default, if you want a more fast tool, you can choose one of following:
+
+- [ripgrep(rg)](https://github.com/BurntSushi/ripgrep)
+- [the_silver_searcher(ag)](https://github.com/ggreer/the_silver_searcher)
+- [the_platinum_searcher(pt)](https://github.com/monochromegane/the_platinum_searcher)
+
 ## Features
 
 - **Search in a project**
