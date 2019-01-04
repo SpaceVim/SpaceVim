@@ -108,8 +108,8 @@ function! SpaceVim#layers#shell#get_options() abort
 
 endfunction
 
-let s:shell_win_nr = 0
-let s:term_buf_nr = 0
+let s:shell_win_nr = -1
+let s:term_buf_nr = -1
 " shell windows shoud be toggleable, and can be hide.
 function! s:open_default_shell() abort
   if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
