@@ -98,14 +98,24 @@ function! SpaceVim#layers#shell#get_options() abort
 endfunction
 
 let s:shell_win_nr = 0
+" shell windows shoud be toggleable, and can be hide.
 function! s:open_default_shell() abort
   if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
     exe s:shell_win_nr .  'wincmd w'
-    startinsert
+    " fuck gvim bug, startinsert do not work in gvim
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
     return
   endif
   if &buftype ==# 'terminal'
-    bwipeout! %
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
     return
   endif
   let cmd = s:default_position ==# 'top' ?
@@ -144,8 +154,8 @@ function! s:open_default_shell() abort
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
-      setlocal nobuflisted
-      " use q to close terminal buffer in vim, if vimcompatible mode is not
+      setlocal nobuflisted nonumber norelativenumber
+      " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
       if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
         nnoremap <buffer><silent> q :bd!<CR>
