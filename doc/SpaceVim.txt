@@ -1324,9 +1324,17 @@ SHELL                                                   *SpaceVim-layer-shell*
 
 SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
 For more info, read |deol| and |vimshell|.
-VARIABLE
-default_shell
 
+VARIABLE
+
+default_shell: config the default shell to be used by shell layer.
+
+KEY BINDINGS
+
+>
+  SPC '   Open or switch to terminal windows
+  q       Hide terminal windows in normal mode
+<
 
 ==============================================================================
 TMUX                                                     *SpaceVim-layer-tmux*

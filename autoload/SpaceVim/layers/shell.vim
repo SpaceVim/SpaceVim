@@ -11,9 +11,16 @@
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
-" @subsection variable
-" default_shell
 "
+" @subsection variable
+"
+" default_shell: config the default shell to be used by shell layer.
+"
+" @subsection key bindings
+" >
+"   SPC '   Open or switch to terminal windows
+"   q       Hide terminal windows in normal mode
+" <
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
@@ -84,11 +91,16 @@ endfunction
 let s:default_shell = 'terminal'
 let s:default_position = 'top'
 let s:default_height = 30
+" the shell should be cached base on the root of a project, cache the terminal
+" buffer id in: s:shell_cached_br 
+let s:enable_project_shell = 1
+let s:shell_cached_br = {}
 
 function! SpaceVim#layers#shell#set_variable(var) abort
   let s:default_shell = get(a:var, 'default_shell', 'terminal')
   let s:default_position = get(a:var, 'default_position', 'top')
   let s:default_height = get(a:var, 'default_height', 30)
+  let s:enable_project_shell = get(a:var, 'enable_project_shell', 1)
 endfunction
 
 function! SpaceVim#layers#shell#get_options() abort
@@ -156,6 +168,7 @@ function! s:open_default_shell() abort
           startinsert
         endif
         let s:term_buf_nr = bufnr('%')
+        call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
       else
         if s:SYSTEM.isWindows
           let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
