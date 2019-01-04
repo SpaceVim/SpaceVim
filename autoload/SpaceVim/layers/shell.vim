@@ -98,6 +98,7 @@ function! SpaceVim#layers#shell#get_options() abort
 endfunction
 
 let s:shell_win_nr = 0
+let s:term_buf_nr = 0
 " shell windows shoud be toggleable, and can be hide.
 function! s:open_default_shell() abort
   if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
@@ -129,6 +130,15 @@ function! s:open_default_shell() abort
   if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
     exe 'resize ' . lines
   endif
+  if bufexists(s:term_buf_nr)
+    exe 'b' . s:term_buf_nr
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
+    return
+  endif
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
       if has('nvim')
@@ -144,6 +154,7 @@ function! s:open_default_shell() abort
           stopinsert
           startinsert
         endif
+        let s:term_buf_nr = bufnr('%')
       else
         if s:SYSTEM.isWindows
           let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
@@ -158,7 +169,7 @@ function! s:open_default_shell() abort
       " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
       if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
-        nnoremap <buffer><silent> q :bd!<CR>
+        nnoremap <buffer><silent> q :hide<CR>
       endif
       startinsert
     else
