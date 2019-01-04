@@ -61,7 +61,7 @@ The default shell is quickly accessible via a the default shortcut key `SPC '`.
 | -------- | ---------------------------------- |
 | `SPC '`  | 打开或跳至已打开的终端窗口         |
 | `Ctrl-d` | 输入模式下关闭终端窗口             |
-| `q`      | Normal 模式下关闭终端窗口          |
+| `q`      | Normal 模式下隐藏终端窗口          |
 | `<Esc>`  | 从 Terminal 模式切换到 Normal 模式 |
 | `Ctrl-h` | 切换到左侧窗口                     |
 | `Ctrl-j` | 切换到上方窗口                     |
