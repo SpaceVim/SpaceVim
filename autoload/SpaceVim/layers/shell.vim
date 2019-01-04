@@ -131,7 +131,8 @@ function! s:open_default_shell() abort
     exe 'resize ' . lines
   endif
   if bufexists(s:term_buf_nr)
-    exe 'b' . s:term_buf_nr
+    exe 'silent b' . s:term_buf_nr
+    " clear the message 
     if has('nvim')
       startinsert
     else
