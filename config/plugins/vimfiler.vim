@@ -71,6 +71,7 @@ augroup END
 " in this function, we should check if shell terminal still exists,
 " then close the terminal job before close vimfiler
 function! s:close_last_vimfiler_windows() abort
+  call SpaceVim#layers#shell#close_terminal()
   q
 endfunction
 

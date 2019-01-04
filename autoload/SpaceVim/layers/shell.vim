@@ -181,3 +181,9 @@ function! s:open_default_shell() abort
     imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
   endif
 endfunction
+
+function! SpaceVim#layers#shell#close_terminal()
+  if bufexists(s:term_buf_nr)
+    exe 'silent bd!' . s:term_buf_nr
+  endif
+endfunction
