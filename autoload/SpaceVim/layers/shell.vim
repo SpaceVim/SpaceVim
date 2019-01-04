@@ -77,7 +77,6 @@ func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('$')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
-  return "\<C-u>"
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort
