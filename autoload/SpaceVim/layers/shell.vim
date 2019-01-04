@@ -67,8 +67,7 @@ endfunction
 " FIXME: 
 func! SpaceVim#layers#shell#terminal() abort
   let line = getline('$')
-  let pwd = getcwd()
-  if line ==# pwd . '>'
+  if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
   return "\<C-d>"
