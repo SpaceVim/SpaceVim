@@ -1,20 +1,21 @@
 ---
 title: "vim#command api"
-description: "vim#command API provides some basic functions and values for creatting vim custom command."
+description: "vim#command API 提供一些设置和获取 Vim 命令的基础函数。"
+lang: cn
 ---
 
-# [Available APIs](../../) >> vim#command
+# [可用 APIs](../../) >> vim#command
 
 <!-- vim-markdown-toc GFM -->
 
-- [Intro](#intro)
-- [Functions](#functions)
+- [简介](#简介)
+- [函数及变量](#函数及变量)
 
 <!-- vim-markdown-toc -->
 
-## Intro
+## 简介
 
-vim#command API provides some basic functions and values for creatting vim custom command.
+vim#command API 提供一些设置和获取 Vim 命令的基础函数。
 
 ```vim
 let s:CMD = SpaceVim#api#import('vim#command')
@@ -37,9 +38,9 @@ command! -nargs=* -complete=custom,CompleteTest
     \ TEST :call Test(<f-args>)
 ```
 
-## Functions
+## 函数及变量
 
-| function name                               | description                    |
+| 函数名称                                    | 功能描述                       |
 | ------------------------------------------- | ------------------------------ |
 | `complete(ArgLead, CmdLine, CursorPos)`     | custom completion function     |
 | `completelist(ArgLead, CmdLine, CursorPos)` | customlist completion function |
