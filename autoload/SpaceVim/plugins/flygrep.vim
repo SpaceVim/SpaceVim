@@ -9,7 +9,7 @@
 "search result chose line indent
 let s:line_indent = 0 
 "running status for flygrep
-let g:flygrep_status = ''
+let s:flygrep_status = 'run'
 
 " Loadding SpaceVim api {{{
 scriptencoding utf-8
@@ -154,10 +154,10 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   "if no restart , line_indent show be reset
-  if g:flygrep_status !=# 'restart'
+  if s:flygrep_status !=# 'restart'
     let s:line_indent = 0 
   else
-    let g:flygrep_status = 'run'
+    let s:flygrep_status = 'run'
   endif
   
   let s:grep_expr = a:expr
@@ -586,7 +586,6 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 
-let g:flygrep_status = 'run'
 function! SpaceVim#plugins#flygrep#open(agrv) abort
     if empty(s:grep_default_exe)
       call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
