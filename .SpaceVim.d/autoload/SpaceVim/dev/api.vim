@@ -8,6 +8,10 @@
 
 scriptencoding utf-8
 
+let s:FILE = SpaceVim#api#import('file')
+let s:SYS = SpaceVim#api#import('system')
+
+
 let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
 let s:AUTODOC.begin = '^<!-- SpaceVim api list start -->$'
 let s:AUTODOC.end = '^<!-- SpaceVim api list end -->$'
@@ -44,14 +48,19 @@ function! s:layer_list() abort
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
+  if s:SYS.isWindows
+    let pattern = join(['', 'docs', 'api', ''], s:FILE.separator . s:FILE.separator)
+  else
+    let pattern = join(['', 'docs', 'api', ''], s:FILE.separator)
+  endif
   for layer in layers
-    let name = split(layer, '/docs/api/')[1][:-4] . '/'
-    let url = name
+    let name = split(layer, pattern)[1][:-4] . s:FILE.separator
+    let url = join(split(name, s:FILE.separator), '/') . '/'
     let content = readfile(layer)
     if len(content) > 3
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
     else
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   can not find Description |'
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   can not find Description |'
     endif
     call add(list, line)
   endfor
@@ -64,8 +73,9 @@ function! s:layer_list_cn() abort
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'
         \ ]
+  let pattern = join(['', 'docs', 'cn', 'api', ''], s:FILE.separator)
   for layer in layers
-    let name = split(layer, '/docs/cn/api/')[1][:-4] . '/'
+    let name = split(layer, pattern)[1][:-4] . '/'
     let url = name
     let content = readfile(layer)
     if len(content) > 3
