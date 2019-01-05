@@ -585,9 +585,9 @@ endif
 " keys:
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
+
+let g:flygrep_status = 'run'
 function! SpaceVim#plugins#flygrep#open(agrv) abort
-  let g:flygrep_status = 'restart'
-  while g:flygrep_status !=# 'exit' 
     if empty(s:grep_default_exe)
       call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
       return
@@ -651,7 +651,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     if has('gui_running')
       call s:HI.hi(cursor_hi)
     endif
-  endwhile
+    let s:flygrep_status = 'restart'
 endfunction
 " }}}
 
