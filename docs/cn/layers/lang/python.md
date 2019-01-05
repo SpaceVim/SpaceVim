@@ -14,13 +14,13 @@ lang: cn
   - [启用模块](#启用模块)
   - [语法检查](#语法检查)
   - [代码格式化](#代码格式化)
-  - [格式化 imports](#格式化-imports)
+  - [格式化 Imports](#格式化-imports)
 - [快捷键](#快捷键)
   - [跳至定义处](#跳至定义处)
   - [代码生成](#代码生成)
   - [交互式编程](#交互式编程)
   - [运行当前脚本](#运行当前脚本)
-  - [整理 Imports](#整理-imports)
+  - [整理 imports](#整理-imports)
 
 <!-- vim-markdown-toc -->
 
@@ -58,13 +58,13 @@ pip install --user flake8
 
 ### 代码格式化
 
-默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。若需要在保存文件是自动格式化该 python 文件，需要设置 `format-on-save` 为 `true`。
+默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。若需要在保存文件时自动格式化该 python 文件，需要设置 `format-on-save` 为 `true`。
 
 ```sh
 pip install --user yapf
 ```
 
-### 格式化 imports
+### 格式化 Imports
 
 若需要更便捷地删除未使用的 imports，需要安装 [autoflake](https://github.com/myint/autoflake)：
 
@@ -107,9 +107,9 @@ pip install --user isort
 
 ### 运行当前脚本
 
-在编辑 python 文件是，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
+在编辑 python 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
 
-### 整理 Imports
+### 整理 imports
 
 | 快捷键      | 按键描述                        |
 | ----------- | ------------------------------- |
