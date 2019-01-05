@@ -1,9 +1,22 @@
 ---
-title: "system api"
-description: "system API provides some basic functions and values for current os."
+title: "系统函数"
+description: "system 函数提供了系统相关函数，包括判断当前系统平台，文件格式等函数。"
+lang: cn
 ---
 
-# [Available APIs](../) >> system
+# [公共 API](../) >> system
+
+<!-- vim-markdown-toc GFM -->
+
+- [简介](#简介)
+- [values](#values)
+- [functions](#functions)
+
+<!-- vim-markdown-toc -->
+
+## 简介
+
+system 函数提供了系统相关函数，包括判断当前系统平台，文件格式等函数。
 
 ## values
 

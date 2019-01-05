@@ -1,17 +1,23 @@
 ---
-title: "file api"
-description: "file API provides some basic functions and values for current os."
+title: "文件函数"
+description: "文件函数提供了基础的文件读写相关函数，兼容不同系统平台。"
+lang: cn
 ---
 
-# [Available APIs](../) >> file
+# [公共 API](../) >> file
 
 
 <!-- vim-markdown-toc GFM -->
 
+- [简介](#简介)
 - [values](#values)
 - [functions](#functions)
 
 <!-- vim-markdown-toc -->
+
+## 简介
+
+文件函数提供了基础的文件读写相关函数，兼容不同系统平台。
 
 ## values
 
