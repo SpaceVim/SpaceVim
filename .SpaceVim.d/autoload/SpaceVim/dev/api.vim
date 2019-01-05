@@ -8,54 +8,32 @@
 
 scriptencoding utf-8
 
+let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
+let s:AUTODOC.begin = '^<!-- SpaceVim api list start -->$'
+let s:AUTODOC.end = '^<!-- SpaceVim api list end -->$'
+let s:AUTODOC.autoformat = 1
+
 function! SpaceVim#dev#api#update() abort
-
-  let [start, end] = s:find_position()
-  if start != 0 && end != 0
-    if end - start > 1
-      exe (start + 1) . ',' . (end - 1) . 'delete'
-    endif
-    call append(start, s:generate_content())
-    silent! Neoformat
-  endif
-
+  let s:AUTODOC.content_func = function('s:generate_content')
+  call s:AUTODOC.update()
 endfunction
 
 function! SpaceVim#dev#api#updateCn() abort
-
-  let [start, end] = s:find_position_cn()
-  if start != 0 && end != 0
-    if end - start > 1
-      exe (start + 1) . ',' . (end - 1) . 'delete'
-    endif
-    call append(start, s:generate_content_cn())
-    silent! Neoformat
-  endif
-
+  let s:AUTODOC.content_func = function('s:generate_content_cn')
+  call s:AUTODOC.update()
 endfunction
 
-function! s:find_position() abort
-  let start = search('^<!-- SpaceVim api list start -->$','bwnc')
-  let end = search('^<!-- SpaceVim api list end -->$','bnwc')
-  return sort([start, end])
-endfunction
 
-function! s:find_position_cn() abort
-  let start = search('^<!-- SpaceVim api cn list start -->$','bwnc')
-  let end = search('^<!-- SpaceVim api cn list end -->$','bnwc')
-  return sort([start, end])
+function! s:generate_content_cn() abort
+  let content = ['', '## 可用 APIs', '']
+  let content += s:layer_list_cn()
+  let content += ['']
+  return content
 endfunction
 
 function! s:generate_content() abort
   let content = ['', '## Available APIs', '', 'here is the list of all available APIs, and welcome to contribute to SpaceVim.', '']
   let content += s:layer_list()
-  let content += ['']
-  return content
-endfunction
-
-function! s:generate_content_cn() abort
-  let content = ['', '## 可用 APIs', '']
-  let content += s:layer_list_cn()
   let content += ['']
   return content
 endfunction
