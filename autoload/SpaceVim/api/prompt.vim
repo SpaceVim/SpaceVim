@@ -45,13 +45,19 @@ let s:self._handle_fly = ''
 let s:self._onclose = ''
 let s:self._oninputpro = ''
 let s:last_search_str  = ''
-
+let s:self.last_search = {
+      \ 'begin' : '',
+      \ 'cursor' : '',
+      \ 'end' : '',
+      \ }
 
 func! s:self.open() abort
   let self._quit = 0
   let save_redraw = &lazyredraw
   set nolazyredraw
-  let  self._prompt.begin = s:last_search_str 
+  let self._prompt.begin = s:self.last_search.begin
+  let self._prompt.cursor = s:self.last_search.cursor
+  let self._prompt.end = s:self.last_search.end
   call self._build_prompt()
   if !empty(self._prompt.begin)
     call self._handle_input(self._prompt.begin)
@@ -77,6 +83,7 @@ func! s:self._handle_input(...) abort
     endif
     call self._build_prompt()
   endif
+
   while self._quit == 0
     let char = self._getchar()
     if has_key(self._function_key, char)
@@ -145,6 +152,7 @@ endf
 func! s:self._build_prompt() abort
   let ident = repeat(' ', self.__cmp.win_screenpos(0)[1] - 1)
   redraw
+
   echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
@@ -152,11 +160,14 @@ func! s:self._build_prompt() abort
   if empty(self._prompt.cursor) && !has('nvim')
     echohl Comment | echon '_' | echohl None
   endif
+  redraw
   " FIXME: Macvim need extra redraw, 
 endf
 
 function! s:self._clear_prompt() abort
-  let s:last_search_str = self._prompt.begin
+  let s:self.last_search.begin = self._prompt.begin 
+  let s:self.last_search.cursor = self._prompt.cursor
+  let s:self.last_search.end = self._prompt.end 
   let self._prompt = {
         \ 'mpt' : self._prompt.mpt,
         \ 'begin' : '',
@@ -172,7 +183,6 @@ function! s:self.close() abort
   call self._clear_prompt()
   normal! :
   let self._quit = 1
-  let g:flygrep_status = 'exit' 
 endfunction
 
 function! SpaceVim#api#prompt#get() abort
