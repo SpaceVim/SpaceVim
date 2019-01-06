@@ -56,17 +56,15 @@ function! Log() abort
 endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, root)
-  try
-    return s:project_config[a:root][a:file]['alternate']
-  catch
+  if !has_key(s:project_config, a:root)
     let altconfa = s:JSON.json_decode(join(readfile(a:root), "\n"))
     let s:project_config[a:root] = {}
     call s:paser(altconfa, a:root)
-    try
-      return s:project_config[a:root][a:file]['alternate']
-    catch
-      return ''
-    endtry
+  endif
+  try
+    return s:project_config[a:root][a:file]['alternate']
+  catch
+    return ''
   endtry
 endfunction
 
