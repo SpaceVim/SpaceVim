@@ -24,3 +24,5 @@ function! s:language_specified_mappings() abort
         \ 'execute current file', 1)
 endfunction
 call SpaceVim#mapping#space#regesit_lang_mappings('vader', function('s:language_specified_mappings'))
+call SpaceVim#plugins#a#set_config_name('.projections.json')
+
