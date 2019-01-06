@@ -12,20 +12,21 @@ function! SpaceVim#plugins#a#set_config_name(name)
 endfunction
 
 function! SpaceVim#plugins#a#alt()
+  let conf_file = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file)
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
   if !empty(alt)
     exe 'e ' . alt
   endif
 endfunction
 
-function! s:paser(conf) abort
+function! s:paser(conf, root) abort
   for key in keys(a:conf)
     for file in s:CMP.globpath('.', substitute(key, '*', '**/*', 'g'))
       let file = s:FILE.unify_path(file, ':.')
       if has_key(a:conf, file)
         if has_key(a:conf[file], 'alternate')
-          let s:project_config[s:conf][file] = {'alternate' : a:conf[file]['alternate']}
+          let s:project_config[a:root][file] = {'alternate' : a:conf[file]['alternate']}
           continue
         endif
       endif
@@ -33,7 +34,7 @@ function! s:paser(conf) abort
       if has_key(conf, 'alternate')
         let begin_end = split(key, '*')
         if len(begin_end) == 2
-          let s:project_config[s:conf][file] = {'alternate' : s:add_alternate_file(begin_end, file, a:conf[key]['alternate'])}
+          let s:project_config[a:root][file] = {'alternate' : s:add_alternate_file(begin_end, file, a:conf[key]['alternate'])}
         endif
       endif
     endfor
@@ -54,17 +55,22 @@ function! Log() abort
   return s:project_config
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file)
+function! SpaceVim#plugins#a#get_alt(file, root)
   try
-    return s:project_config[s:conf][a:file]['alternate']
+    return s:project_config[a:root][a:file]['alternate']
   catch
-    let g:altconfa = s:JSON.json_decode(join(readfile(s:conf), "\n"))
-    let s:project_config[s:conf] = {}
-    call s:paser(g:altconfa)
+    let altconfa = s:JSON.json_decode(join(readfile(a:root), "\n"))
+    let s:project_config[a:root] = {}
+    call s:paser(altconfa, a:root)
     try
-      return s:project_config[s:conf][a:file]['alternate']
+      return s:project_config[a:root][a:file]['alternate']
     catch
       return ''
     endtry
   endtry
+endfunction
+
+
+function! SpaceVim#plugins#a#get_root()
+  return s:FILE.unify_path(s:conf, ':p')
 endfunction
