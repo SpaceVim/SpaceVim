@@ -12,25 +12,11 @@ function! SpaceVim#plugins#a#set_config_name(name)
 endfunction
 
 function! SpaceVim#plugins#a#alt()
-  let g:altconfa = {}
-  try
-    let g:altconfa = s:JSON.json_decode(join(readfile(s:conf), "\n"))
-    let s:project_config[s:conf] = {}
-  catch
-  endtry
-  if empty(g:altconfa)
-    echohl WarningMsg
-    echo 'failed to file .projections.json'
-    echohl None
-  endif
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  if has_key(g:altconfa, file)
-    let alt = get(g:altconfa[file], 'alternate', '')
-    if !empty(alt)
-      exe 'e ' . alt
-    endif
+  let alt = SpaceVim#plugins#a#get_alt(file)
+  if !empty(alt)
+    exe 'e ' . alt
   endif
-  call s:paser(g:altconfa)
 endfunction
 
 function! s:paser(conf) abort
