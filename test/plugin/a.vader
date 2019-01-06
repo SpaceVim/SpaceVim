@@ -2,4 +2,5 @@ Execute ( SpaceVim plugin: a.vim ):
   call SpaceVim#plugins#a#set_config_name('.projections.json')
   AssertEqual SpaceVim#plugins#a#get_alt('docs/index.md'), 'docs/cn/index.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md'), 'docs/index.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-28-use-vim-as-ide.md'), 'docs/_posts/2018-09-27-use-vim-as-ide.md'
 

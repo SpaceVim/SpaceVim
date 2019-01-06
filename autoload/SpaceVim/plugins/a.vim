@@ -37,18 +37,24 @@ function! s:paser(conf) abort
   for key in keys(a:conf)
     for file in s:CMP.globpath('.', key)
       let file = s:FILE.unify_path(file, ':.')
+      if has_key(a:conf, file)
+        if has_key(a:conf[file], 'alternate')
+          let s:project_config[s:conf][file] = {'alternate' : a:conf[file]['alternate']}
+          continue
+        endif
+      endif
       let conf = a:conf[key]
       if has_key(conf, 'alternate')
         let begin_end = split(key, '*')
         if len(begin_end) == 2
-          let s:project_config[s:conf][file] = {'alternate' : s:generate(begin_end, file, a:conf[key]['alternate'])}
+          let s:project_config[s:conf][file] = {'alternate' : s:add_alternate_file(begin_end, file, a:conf[key]['alternate'])}
         endif
       endif
     endfor
   endfor
 endfunction
 
-function! s:generate(a, f, b) abort
+function! s:add_alternate_file(a, f, b) abort
   let begin_len = strlen(a:a[0])
   let end_len = strlen(a:a[1])
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
