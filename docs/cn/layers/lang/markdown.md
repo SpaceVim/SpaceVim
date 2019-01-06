@@ -43,10 +43,10 @@ npm -g install remark-stringify
 
 **listItemIndent**
 
-设置有序列表对其方式 (`tab`, `mixed` 或者 1 , 默认: 1).
+设置有序列表对齐方式 (`tab`, `mixed` 或者 `1` , 默认: `1`)。
 
-- `'tab'`: 使用 tab stops 对其
-- `'1'`: 使用空格对其
+- `'tab'`: 使用 tab stops 对齐
+- `'1'`: 使用空格对齐
 - `'mixed'`: use `1` for tight and `tab` for loose list items
 
 **enableWcwidth**
@@ -55,7 +55,7 @@ npm -g install remark-stringify
 
 **listItemChar**
 
-设置无序列表前缀 (`'-'`, `'*'`, or `'+'`, default: `'-'`).
+设置无序列表前缀 (`'-'`, `'*'`, or `'+'`, 默认: `'-'`)。
 
 ## 快捷键
 
@@ -63,4 +63,5 @@ npm -g install remark-stringify
 | ---------- | ------ | -------------------------- |
 | `SPC b f`  | Normal | 格式化当前文件             |
 | `SPC l ft` | Normal | 格式化光标处的表格         |
+| `SPC l k`  | Normal | 增加链接 URL               |
 | `SPC l p`  | Normal | 通过浏览器实时预览当前文件 |
