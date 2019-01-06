@@ -408,7 +408,7 @@ function! s:add_history(grep_expr) abort
       let s:grep_history_head = (s:grep_history_head + 1) % s:grep_history_max
     endif
     let  s:grep_history[ s:grep_history_old_front ] = a:grep_expr
-    let s:grep_history_current = s:grep_history_old_front 
+    let s:grep_history_current = s:grep_history_front 
   endif
 
 endfunction
@@ -534,12 +534,12 @@ function! s:previous_match_history() abort
 endfunction
 
 function! s:next_match_history() abort
-  if(s:grep_history_current != s:grep_history_old_front)
+  if(s:grep_history_current != s:grep_history_front)
     let s:grep_history_current = (s:grep_history_current + 1 ) % s:grep_history_max
-    let s:MPT._prompt.begin = s:grep_history[s:grep_history_current] 
-    normal! "_ggdG
-    call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
   endif
+  let s:MPT._prompt.begin = s:grep_history[s:grep_history_current] 
+  normal! "_ggdG
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
 let s:MPT._function_key = {
@@ -586,6 +586,7 @@ endif
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 
+let s:flygrep_status = 'run'
 function! SpaceVim#plugins#flygrep#open(agrv) abort
     if empty(s:grep_default_exe)
       call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
