@@ -6,6 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+let s:save_cpo = &cpo
+set cpo&vim
+scriptencoding utf-8
+
+
+" Load SpaceVim API
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -81,3 +87,8 @@ endfunction
 function! SpaceVim#plugins#a#get_root()
   return s:FILE.unify_path(s:conf, ':p')
 endfunction
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim:set et sw=2 cc=80:
