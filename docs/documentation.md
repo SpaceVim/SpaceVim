@@ -1792,7 +1792,7 @@ Custom sign symbol:
 
 ### Managing projects
 
-Projects in SpaceVim are managed by vim-projectionist and vim-rooter, vim-rooter will find the root of the project when a `.git` directory or a `.projections.json` file is encountered in the file tree.
+SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
 
 project manager commands start with `p`:
 
