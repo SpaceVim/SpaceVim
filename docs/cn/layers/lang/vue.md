@@ -4,7 +4,7 @@ description: "这一模块为 vue 开发提供支持，包括代码补全、语�
 lang: cn
 ---
 
-# [可用模块](../../) >> lang#perl
+# [可用模块](../../) >> lang#vue
 
 <!-- vim-markdown-toc GFM -->
 
@@ -21,6 +21,7 @@ lang: cn
 ## 功能特性
 
 - 语法高亮
+- lsp 支持（需要 [lsp](/cn/layers/language-server-protocol/) 模块）
 
 ## 启用模块
 
