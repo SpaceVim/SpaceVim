@@ -1,3 +1,12 @@
+"=============================================================================
+" a.vim --- plugin for manager alternate file
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
