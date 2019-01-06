@@ -185,6 +185,10 @@ endfunction " }}}
 
 function! s:escape_mappings(mapping) " {{{
   let feedkeyargs = a:mapping.noremap ? "nt" : "mt"
+  " patch for #2214
+  if a:mapping.mode ==# ' '
+    let feedkeyargs = ''
+  endif
   let rstring = substitute(a:mapping.rhs, '\', '\\\\', 'g')
   let rstring = substitute(rstring, '<\([^<>]*\)>', '\\<\1>', 'g')
   let rstring = substitute(rstring, '"', '\\"', 'g')
