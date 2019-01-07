@@ -373,7 +373,7 @@ install_fonts () {
   if [ $System == "Darwin" ];then
     if [ ! -e "$HOME/Library/Fonts" ];then
       mkdir "$HOME/Library/Fonts"
-    fi 
+    fi
     cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
   else
     fc-cache -fv > /dev/null
