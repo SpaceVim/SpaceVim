@@ -103,7 +103,7 @@ enable = false
 | [lang#haskell](lang/haskell/)    |   haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for haskell | 
 | [lang#html](lang/html/)    |   Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html. | 
 | [lang#java](lang/java/)    |   This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer. | 
-| [lang#javascript](lang/javascript/)    |   This layer is for JaveScript development | 
+| [lang#javascript](lang/javascript/)    |   This layer is for JavaScript development | 
 | [lang#julia](lang/julia/)    |   This layer is for julia development, provide autocompletion, syntax checking and code formatting | 
 | [lang#kotlin](lang/kotlin/)    |   This layer adds kotlin language support to SpaceVim | 
 | [lang#latex](lang/latex/)    |   This layer provides support for writing LaTeX documents, including syntax highlighting, code completion, formatting etc. | 
