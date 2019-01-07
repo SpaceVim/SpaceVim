@@ -68,6 +68,7 @@ function! SpaceVim#layers#lang#go#config() abort
     call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
 endfunction
 
 function! s:go_to_def() abort
