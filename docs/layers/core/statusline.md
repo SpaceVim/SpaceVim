@@ -17,6 +17,6 @@ description: "This layer provides default statusline for SpaceVim"
  This layer provides default statusline for SpaceVim.
 
 ## Configuration
-  
+
 All statusline key bindings can be find on [SpaceVim documentation](../../../documentation/#statusline)
-  
+

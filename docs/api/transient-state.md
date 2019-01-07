@@ -14,7 +14,7 @@ description: "transient state API provides some besic functions and values for c
 
 ## Intro
 
-transient state api provides functions for defining transient state key bindings. For example, the 
+transient state api provides functions for defining transient state key bindings. For example, the
 buffer transient state key binding (`SPC b .`).
 
 ## functions
