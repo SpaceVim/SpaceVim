@@ -58,6 +58,7 @@ function! SpaceVim#layers#shell#config() abort
       exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
       exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
       exe 'tnoremap <expr><silent><C-w>  SpaceVim#layers#shell#ctrl_w()'
+      exe 'tnoremap <expr><silent><C-r>  SpaceVim#layers#shell#ctrl_r()'
     endif
   endif
   " in window gvim, use <C-d> to close terminal buffer
@@ -76,6 +77,13 @@ func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('$')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
+endfunction
+
+func! SpaceVim#layers#shell#ctrl_r() abort
+  let reg = getchar()
+  if reg == 43
+    return @+
+  endif
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort
