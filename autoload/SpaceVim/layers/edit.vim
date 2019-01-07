@@ -80,7 +80,7 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align region at .', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align region at :', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align region at ;', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/r1c1l0', 'align region at =', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align region at =', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align region at ¦', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align region at |', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
