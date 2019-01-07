@@ -11,12 +11,6 @@ coverage:
       default: false  # disable the default status that measures entire project
       api:  # declare a new status context "api"
         target: 35%  # we always want 100% coverage here
-        paths: "autoload/SpaceVim/api/"  # only include coverage in "tests/" folder
-      leyer:  # declare a new status context "api"
-        target: 35%  # we always want 100% coverage here
-        paths: "autoload/SpaceVim/layers/"  # only include coverage in "tests/" folder
-      plugins:  # declare a new status context "api"
-        target: 35%  # we always want 100% coverage here
-        paths: "autoload/SpaceVim/plugins/"  # only include coverage in "tests/" folder
-      all:  # declare a new status context "app"
+        paths: "autoload/SpaceVim/api/"  # only include coverage in "autoload/SpaceVim/api/" folder
+      all:  # declare a new status context "all"
         paths: "!tests/"  # remove all files in "tests/"
