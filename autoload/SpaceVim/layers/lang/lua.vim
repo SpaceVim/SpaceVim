@@ -37,7 +37,11 @@ function! SpaceVim#layers#lang#lua#config() abort
   endif
 
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
+  if executable('lua53')
+    call SpaceVim#plugins#runner#reg_runner('lua', 'lua53 %s')
+  else
+    call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
+  endif
   if !empty(s:lua_repl_command)
       call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
   else
@@ -72,5 +76,3 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
-
-au BufEnter *.lua :LuaOutputMethod buffer
