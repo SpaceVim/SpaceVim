@@ -350,6 +350,13 @@ function! SpaceVim#layers#core#statusline#get(...) abort
       call fugitive#detect(getcwd())
     catch
     endtry
+    let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+    if index(g:spacevim_statusline_left_sections, 'vcs') != -1
+      let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
+            \ . '%#SpaceVim_statusline_z_SpaceVim_statusline_c#' . s:lsep
+    endif
+    return st
   elseif &filetype ==# 'SpaceVimLayerManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
