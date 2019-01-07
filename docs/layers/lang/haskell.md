@@ -32,5 +32,5 @@ To use this configuration layer, update custom configuration file with:
 - syntax checking
 - goto definition
 - refernce finder
-- language server protocol (need lsp layer) 
+- language server protocol (need lsp layer)
 

@@ -43,7 +43,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `fsharpi --readline-` inferior REPL process with `SPC l s i`. 
+Start a `fsharpi --readline-` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

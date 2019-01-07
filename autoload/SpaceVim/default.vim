@@ -189,6 +189,10 @@ function! SpaceVim#default#keyBindings() abort
         \ 'Toggle recording',
         \ '',
         \ 'Toggle recording mode')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qc', ':call setqflist([])<CR>',
+        \ 'Clear quickfix list',
+        \ '',
+        \ 'Clear quickfix')
 
   " Use Ctrl+* to jump between windows
   nnoremap <silent><C-Right> :<C-u>wincmd l<CR>

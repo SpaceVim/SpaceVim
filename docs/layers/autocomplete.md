@@ -52,7 +52,7 @@ You can customize the user experience of auto-completion with the following laye
 when the `Return`/`Enter` key is pressed, the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
-   - `nil` 
+   - `nil`
 By default it is `complete`.
 2. `auto-completion-tab-key-behavior` set the action to
 perform when the `TAB` key is pressed, the possible values are:
