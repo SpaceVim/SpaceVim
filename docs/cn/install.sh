@@ -118,7 +118,7 @@ error() {
 }
 
 warn () {
-  msg "${Red}[✘]${Color_off} ${1}${2}"
+  msg "${Yellow}[⚠]${Color_off} ${1}${2}"
 }
 # }}}
 
