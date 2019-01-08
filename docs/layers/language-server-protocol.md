@@ -22,9 +22,12 @@ This layers adds extensive support for [language-server-protocol](https://micros
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
 The upstream is rewritten by rust.
 
-we also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
 
-the neovim team is going to implement the build-in LSP support, the
+Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
+it will be used as lsp client.
+
+The neovim team is going to implement the build-in LSP support, the
 PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
 create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
 
@@ -33,6 +36,8 @@ SpaceVim should works well in different version of vim/neovim, so in the feature
 ```vim
 if has('nvim')
   " use neovim build-in lsp
+if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
+  " use coc.nvim
 elseif has('python3')
   " use LanguageClient-neovim
 else
