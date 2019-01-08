@@ -9,6 +9,7 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
+let s:FILE = SpaceVim#api#import('file')
 
 
 let s:runners = {}
@@ -56,7 +57,7 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
   elseif type(a:runner) == type([])
-    let s:target = tempname()
+    let s:target = s:FILE.unify_path(tempname(), ':p')
     let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
           \ '[Compile] ' . compile_cmd,
