@@ -99,7 +99,7 @@ lang: cn
 
 ## 核心思想
 
-四大核心思想：记忆辅助，可视化交互， 一致性，社区驱动。
+四大核心思想：记忆辅助，可视化交互，一致性，社区驱动。
 
 如果违背了以上四大核心思想，我们将会尽力修复。
 
@@ -142,7 +142,7 @@ lang: cn
 
 Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-dark_
 
-展示了一个通用的前端开发界面，用于开发：JavaScript (jQuery), SASS, and PHP buffers.
+展示了一个通用的前端开发界面，用于开发：JavaScript (jQuery), SASS, 和 PHP buffers。
 
 图中包含了一个 Neovim 的终端，一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
 
@@ -335,7 +335,7 @@ endfunction
 
 SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
 
-文本移动临时快捷键:
+文本移动临时快捷键：
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
@@ -347,7 +347,7 @@ SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等�
 
 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 `:h gruvbox`。
 
-如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`:
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`：
 
 ```toml
 [options]
@@ -362,7 +362,7 @@ SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等�
 
 可以在[主题模块](../layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
-**注意**:
+**注意**：
 
 SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色。
 可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
@@ -377,7 +377,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
-如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `guifont`，默认值为:
+如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改选项 `guifont`，默认值为：
 
 ```toml
     guifont = "SauceCodePro Nerd Font Mono:h11"
@@ -451,7 +451,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 **nerd 字体安装:**
 
-SpaceVim 默认使用 nerd fonts，可参阅其安装指南进行安装。
+SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 **语法检查信息:**
 
@@ -467,13 +467,13 @@ SpaceVim 默认使用 nerd fonts，可参阅其安装指南进行安装。
 
 _acpi_ 可展示电池电量剩余百分比。
 
-使用不同颜色展示不同的电池状态:
+使用不同颜色展示不同的电池状态：
 
 | 电池状态   | 颜色 |
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0 - 30%    | 红色 |
+| 0%  - 30%  | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -716,7 +716,7 @@ can be get by `<leader> q r`
 | `m`+`p` | Normal | Jump to previous bookmark       |
 | `m`+`i` | Normal | Annotate bookmark               |
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
 ### Fuzzy finder
 
@@ -1196,7 +1196,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ### 以 `z` 开头的命令
 
-当你不记得按键映射时，你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射.
+当你不记得按键映射时，你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射。
 
 | 快捷键      | 描述                                         |
 | ----------- | -------------------------------------------- |
@@ -1248,7 +1248,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 #### 使用额外工具
 
-SpaceVim 像下面那样调用不同搜索工具的搜索接口:
+SpaceVim 像下面那样调用不同搜索工具的搜索接口：
 
 - [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
 - [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
@@ -1262,11 +1262,11 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用�
 如果最后一个键(决定范围)是大写字母，那么就会对当前光标下的单词进行搜索。
 举个例子 `SPC s a b` 将会搜索当前光标下的单词。
 
-如果工具键被省略了，那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools`
+如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `g:spacevim_search_tools`
 列表中的第一个工具。列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack`, `grep`。
 举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
 
-下表是全部的工具键:
+下表是全部的工具键：
 
 | 工具 | 键 |
 | ---- | -- |
@@ -1276,7 +1276,7 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用�
 | rg   | r  |
 | pt   | t  |
 
-应当避免的范围和对应按键为:
+应当避免的范围和对应按键为：
 
 | 范围           | 键 |
 | -------------  | -- |
@@ -1284,9 +1284,9 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用�
 | 给定目录的文件 | f  |
 | 当前工程       | p  |
 
-可以双击按键序列中的第二个键来在当前文件中进行搜索. 举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
+可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
 
-注意:
+注意：
 
 - 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉，但是他们可以在任意目录中正常运行。
 - 也可以通过将它们标记在联合缓冲区来一次搜索多个目录。
@@ -1450,7 +1450,7 @@ endfunction
 | ----------- | -------------------------------- |
 | `SPC s g G` | 在工程中使用默认工具实时检索代码 |
 
-FlyGrep 缓冲区的按键绑定:
+FlyGrep 缓冲区的按键绑定：
 
 | 快捷键           | 描述                              |
 | ---------------- | --------------------------------- |
@@ -1514,7 +1514,7 @@ In highlight symbol transient state:
 
 #### 文本操作命令
 
-文本相关的命令 (以 `x` 开头):
+文本相关的命令 (以 `x` 开头)：
 
 | 快捷键     | 描述                 |
 | ------------- | -------------------------------------------------------------------- |
@@ -1599,7 +1599,7 @@ In highlight symbol transient state:
 | `SPC n +` | 为光标下的数字加 1 并 initiate transient state     |
 | `SPC n -` | 为光标下的数字减 1 uaj 并 initiate transient state |
 
-In transient state:
+In transient state：
 
 | 快捷键     | 描述                 |
 | ---------- | -------------------- |
@@ -1663,7 +1663,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 #### 注释(Commentings)
 
-注释(comment)通过下面的工具来处理 [nerdcommenter](https://github.com/scrooloose/nerdcommenter), 它用下面的按键来界定范围.
+注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
 | 快捷键      | 描述                      |
 | ----------- | ------------------------- |
@@ -1685,14 +1685,14 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 #### 多方式编码
 
-SpaceVim 默认使用 utf-8 码进行编码. 下面是 utf-8 编码的四个设置:
+SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四个设置：
 
-- fileencodings (fencs): ucs-bom,utf-8,default,latin1
-- fileencoding (fenc): utf-8
-- encoding (enc): utf-8
-- termencoding (tenc): utf-8 (only supported in Vim)
+- fileencodings (fencs) : ucs-bom, utf-8, default, latin1
+- fileencoding (fenc)   : utf-8
+- encoding (enc)        : utf-8
+- termencoding (tenc)   : utf-8 (only supported in Vim)
 
-修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射. 在选择好文件编码方式后，你可以运行下面的代码来修复编码：
+修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射。在选择好文件编码方式后，你可以运行下面的代码来修复编码：
 
 ```vim
 set enc=utf-8
@@ -1725,7 +1725,7 @@ nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
 
 SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进行错误反馈。默认在操作保存时进行错误检查。
 
-错误管理导航键 (以 `e` 开头):
+错误管理导航键 (以 `e` 开头)：
 
 | 快捷键    | 描述                                                                        |
 | --------- | --------------------------------------------------------------------------- |
@@ -1750,10 +1750,10 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录或
-在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录.
+SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
+在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录。
 
-工程管理的命令以 `p` 开头:
+工程管理的命令以 `p` 开头：
 
 | 快捷键      | 描述                                           |
 | ----------- | ---------------------------------------------- |
@@ -1781,7 +1781,7 @@ SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 V
 
 **连接到 Vim 服务器**
 
-如果你使用Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)， 然后增加如下配置到你的 bashrc。
+如果你使用Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)，然后增加如下配置到你的 bashrc。
 
     export PATH=$PATH:$HOME/.SpaceVim/bin
 
