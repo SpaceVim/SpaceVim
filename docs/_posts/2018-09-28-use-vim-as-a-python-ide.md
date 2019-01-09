@@ -62,7 +62,7 @@ pip install --user isort
 
 ### 工程文件跳转
 
-工程文件跳转，主要依赖 vim-projectionist， 需要在项目根目录加入 .projections.json 文件，标记源文件和测试文件之间的关系。
+SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转alternate文件。
 
 ### 快速运行
 

@@ -1,4 +1,6 @@
 {
+  "autoload/SpaceVim/api/*.vim": {"alternate": "test/api/{}.vader"},
+  "test/api/*.vader": {"alternate": "autoload/SpaceVim/api/{}.vim"},
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
   "docs/cn/*.md": {"alternate": "docs/{}.md"},
   "doc/*.txt": {"alternate": "doc/{}.cnx"},

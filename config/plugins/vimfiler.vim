@@ -23,10 +23,10 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \])
 
 if has('mac') 
-   let g:vimfiler_quick_look_command = 
-         \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
+  let g:vimfiler_quick_look_command = 
+        \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
 else 
-   let g:vimfiler_quick_look_command = 
+  let g:vimfiler_quick_look_command = 
         \ get(g:, 'vimfiler_quick_look_command', 'gloobus-preview') 
 endif
 
@@ -65,8 +65,16 @@ augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()
   autocmd BufEnter * nested if (!has('vim_starting') && winnr('$') == 1 && &filetype ==# 'vimfiler') |
-        \ q | endif
+        \ call s:close_last_vimfiler_windows() | endif
 augroup END
+
+" in this function, we should check if shell terminal still exists,
+" then close the terminal job before close vimfiler
+function! s:close_last_vimfiler_windows() abort
+  call SpaceVim#layers#shell#close_terminal()
+  q
+endfunction
+
 function! s:vimfilerinit()
   setl nonumber
   setl norelativenumber

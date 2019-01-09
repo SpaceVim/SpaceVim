@@ -9,7 +9,9 @@
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
-  if has('nvim')
+  if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
+    " nop
+  elseif has('nvim')
     call add(plugins, ['autozimu/LanguageClient-neovim',
           \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
   else

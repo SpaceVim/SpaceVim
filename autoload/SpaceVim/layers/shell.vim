@@ -11,9 +11,16 @@
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
-" @subsection variable
-" default_shell
 "
+" @subsection variable
+"
+" default_shell: config the default shell to be used by shell layer.
+"
+" @subsection key bindings
+" >
+"   SPC '   Open or switch to terminal windows
+"   q       Hide terminal windows in normal mode
+" <
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
@@ -60,8 +67,7 @@ endfunction
 " FIXME: 
 func! SpaceVim#layers#shell#terminal() abort
   let line = getline('$')
-  let pwd = getcwd()
-  if line ==# pwd . '>'
+  if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
   return "\<C-d>"
@@ -70,7 +76,6 @@ func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('$')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
-  return "\<C-u>"
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort
@@ -84,11 +89,16 @@ endfunction
 let s:default_shell = 'terminal'
 let s:default_position = 'top'
 let s:default_height = 30
+" the shell should be cached base on the root of a project, cache the terminal
+" buffer id in: s:shell_cached_br 
+let s:enable_project_shell = 1
+let s:shell_cached_br = {}
 
 function! SpaceVim#layers#shell#set_variable(var) abort
   let s:default_shell = get(a:var, 'default_shell', 'terminal')
   let s:default_position = get(a:var, 'default_position', 'top')
   let s:default_height = get(a:var, 'default_height', 30)
+  let s:enable_project_shell = get(a:var, 'enable_project_shell', 1)
 endfunction
 
 function! SpaceVim#layers#shell#get_options() abort
@@ -97,15 +107,26 @@ function! SpaceVim#layers#shell#get_options() abort
 
 endfunction
 
-let s:shell_win_nr = 0
+let s:shell_win_nr = -1
+let s:term_buf_nr = -1
+" shell windows shoud be toggleable, and can be hide.
 function! s:open_default_shell() abort
   if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
     exe s:shell_win_nr .  'wincmd w'
-    startinsert
+    " fuck gvim bug, startinsert do not work in gvim
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
     return
   endif
   if &buftype ==# 'terminal'
-    bwipeout! %
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
     return
   endif
   let cmd = s:default_position ==# 'top' ?
@@ -118,6 +139,16 @@ function! s:open_default_shell() abort
   let lines = &lines * s:default_height / 100
   if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
     exe 'resize ' . lines
+  endif
+  if bufexists(s:term_buf_nr)
+    exe 'silent b' . s:term_buf_nr
+    " clear the message 
+    if has('nvim')
+      startinsert
+    else
+      normal! a
+    endif
+    return
   endif
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
@@ -134,6 +165,8 @@ function! s:open_default_shell() abort
           stopinsert
           startinsert
         endif
+        let s:term_buf_nr = bufnr('%')
+        call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
       else
         if s:SYSTEM.isWindows
           let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
@@ -144,11 +177,11 @@ function! s:open_default_shell() abort
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
-      setlocal nobuflisted
-      " use q to close terminal buffer in vim, if vimcompatible mode is not
+      setlocal nobuflisted nonumber norelativenumber
+      " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
       if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
-        nnoremap <buffer><silent> q :bd!<CR>
+        nnoremap <buffer><silent> q :hide<CR>
       endif
       startinsert
     else
@@ -157,5 +190,11 @@ function! s:open_default_shell() abort
   elseif s:default_shell ==# 'VimShell'
     VimShell
     imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
+  endif
+endfunction
+
+function! SpaceVim#layers#shell#close_terminal()
+  if bufexists(s:term_buf_nr)
+    exe 'silent bd!' . s:term_buf_nr
   endif
 endfunction

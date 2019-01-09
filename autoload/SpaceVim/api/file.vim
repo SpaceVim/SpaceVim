@@ -219,7 +219,16 @@ function! s:updatefiles(files) abort
   return failed
 endfunction
 
+
 let s:file['updateFiles'] = function('s:updatefiles')
+
+function! s:unify_path(path, ...) abort
+  let mod = a:0 > 0 ? a:1 : ':p'
+  return resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+endfunction
+
+let s:file['unify_path'] = function('s:unify_path')
+
 
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)

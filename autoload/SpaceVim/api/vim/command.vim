@@ -46,6 +46,15 @@ function! s:self._complete_opt(part, opt) abort
   endif
 endfunction
 
+function! s:self._complete_opt_list(part, opt) abort
+  let complete = self.options[a:opt].complete
+  if type(complete) == type([])
+    return complete
+  else
+    return getcompletion(a:part, complete)
+  endif
+endfunction
+
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
   let argvs = split(a:CmdLine)
   let last_argv = split(a:CmdLine)[-1]
@@ -65,6 +74,30 @@ function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
         \ (len(argvs) ==2 )
         \ )
     return join(keys(self.options), "\n")
+  endif
+
+endfunction
+
+
+function! s:self.completelist(ArgLead, CmdLine, CursorPos) abort
+  let argvs = split(a:CmdLine)
+  let last_argv = split(a:CmdLine)[-1]
+  let msg = 'ArgLead: ' . a:ArgLead . ' CmdLine: ' . a:CmdLine . ' CursorPos: '
+        \ . a:CursorPos . ' LastArgv: ' . last_argv
+  call add(self._message, msg)
+  if a:ArgLead == '' && index(keys(self.options), last_argv) == -1
+    return keys(self.options)
+  elseif a:ArgLead == '' && index(keys(self.options), last_argv) != -1
+    return self._complete_opt_list(a:ArgLead, last_argv)
+  elseif !empty(a:ArgLead) && len(argvs) >= 3
+        \ && index(keys(self.options), argvs[-2]) != -1
+    return self._complete_opt_list(a:ArgLead, argvs[-2])
+  elseif !empty(a:ArgLead) && (
+        \ (len(argvs) >= 3 && index(keys(self.options), argvs[-2]) == -1) 
+        \ || 
+        \ (len(argvs) ==2 )
+        \ )
+    return keys(self.options)
   endif
 
 endfunction

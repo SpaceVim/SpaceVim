@@ -162,33 +162,31 @@ There are several methods of updating the core files of SpaceVim. It is recommen
 
 **Automatic Updates**
 
-NOTE: By default, this feature is disabled, It will slow down the startup of vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
+NOTE: By default, this feature is disabled, It will slow down the startup of Vim/neovim. If you like this feature, add `let g:spacevim_automatic_update = 1` to your custom configuration file.
 
-SpaceVim will automatically check for a new version every startup. You must restart Vim after updating.
+SpaceVim will automatically check for a new version every startup. You have restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
-Use `:SPUpdate SpaceVim` in SpaceVim buffer, This command will open a buffer to show the process of updating.
+Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer to show the process of updating.
 
 **Updating Manually with git**
 
-To update manually close Vim and update the git repository:
+Yor can close Vim/neovim and update the git repository to update manually:
 
 `git -C ~/.SpaceVim pull`.
 
 ### Update plugins
 
-Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use `Tab` to complete plugin names after `:SPUpdate`.
+Use `:SPUpdate` command to update all the plugins and SpaceVim itself. After `:SPUpdate`, you can assign plugins need to be updated. Use `Tab` to complete plugin names after `:SPUpdate`.
 
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command will display the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
+Use `:SPDebugInfo!` command to display the log of SpaceVim. You also can use `SPC h I` to open a buffer with the issue template.
 
 ## Custom Configuration
 
-The very first time SpaceVim starts up, it will ask you to choose a mode,
-then create the `SpaceVim.d/init.toml` in your `HOME` directory. All User
-configuration can be stored in your `~/.SpaceVim.d` directory.
+The very first time SpaceVim starts up, it will ask you to choose a mode, then it will create a `SpaceVim.d/init.toml` in your `HOME` directory. All User configurations can be stored in your `~/.SpaceVim.d` directory.
 
 `~/.SpaceVim.d/` will be added to `&runtimepath` of vim.
 
@@ -206,7 +204,7 @@ Comprehensive documentation is available for each layer by `:h SpaceVim`.
 
 **Add custom plugins**
 
-If you want to add plugin from github, just add the repo name to the `custom_plugins` section:
+If you want to add plugins from github, just add the repo name to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
@@ -229,7 +227,7 @@ if you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 
 ### Bootstrap Functions
 
-SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable it you need to add `bootstrap_before = "myspacevim#before"` or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
+SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
 The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
 
@@ -247,7 +245,7 @@ endf
 the `bootstrap_before` will be called after custom configuration file is loaded. and the `bootstrap_after` will
 be called after VimEnter autocmd.
 
-if you want to add custom `SPC` prefix key bindings, you can add this to bootstrap function, **be sure** the key bindings is not used in SpaceVim.
+If you want to add custom `SPC` prefix key bindings, you can add them to bootstrap function, **be sure** the key bindings are not used in SpaceVim.
 
 ```vim
 func! myspacevim#before() abort
@@ -258,29 +256,29 @@ endf
 
 ### Vim compatible mode
 
-This a list of different key bindings between SpaceVim and origin vim.
+The different key bindings between SpaceVim and origin vim are shown as below.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
-the option is `g:spacevim_windows_leader`, default value is `s`.
+The option is `g:spacevim_windows_leader`, default value is `s`.
 
 - The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
 
-the option is `g:spacevim_enable_language_specific_leader`, default value is 1.
+The option is `g:spacevim_enable_language_specific_leader`, default value is `1`.
 
-- The `q` key does recording, but in SpaceVim it is used for smart close window.
+- The `q` key does recording, but in SpaceVim it is used for closing window smart. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
 
-the option is `g:spacevim_windows_smartclose`, default value is `q`. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
+The option is `g:spacevim_windows_smartclose`, default value is `q`.
 
-- The `Ctrl-a` binding on the command line auto-completes variable names, but in SpaceVim it moves to the cursor to the beginning of the command.
+- The `Ctrl-a` binding on the command line can auto-complete variable names, but in SpaceVim it moves to the cursor to the beginning of the command line.
 - `Ctrl-b` in command line mode is mapped to `<Left>`, which will move cursor to the left.
 - `Ctrl-f` in command line mode is mapped to `<Right>`, which will move cursor to the right.
 
-SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the different points above will disappear,
-you can enable vimcompatible mode via `vimcompatible = true` in `[options]` section.
+SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the differences above will disappear.
+You can enable the vimcompatible mode via adding `vimcompatible = true` to `[options]` section.
 
-If you want to disable one of these differences, use the relevant options.
-For example, to disable language specific leader, you may add following to your configuration file:
+If you want to disable any differences above, use the relevant options.
+For example, in order to disable language specific leader, you may add the following lines to your configuration file:
 
 ```toml
 [options]
@@ -295,11 +293,11 @@ This section is an overview of layers. A more extensive introduction to writing 
 
 **Purpose**
 
-Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configuration file.
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for users by keeping them from having to think about what packages to install. To install all the `python` features users only need to add the `lang#python` layer to their custom configuration file.
 
 **Structure**
 
-In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
+In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are three public functions:
 
 - `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
 - `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
@@ -307,20 +305,20 @@ In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` l
 
 ### Debug upstream plugins
 
-If you think one of the built-in plugin has some bugs, and you want to debug that plugin. you can follow these step:
+If you found one of the built-in plugins has bugs, and you want to debug that plugin. you can follow these steps:
 
-1. disable this plugin
+1. Disable this plugin
 
-for example, disable neomake.vim:
+For example, disable neomake.vim:
 
 ```toml
 [option]
     disabled_plugins = ["neomake.vim"]
 ```
 
-2. add a forked plugin or add a local plugin
+2. Add a forked plugin or add a local plugin
 
-use toml file to add custom forked plugins:
+Use toml file to add custom forked plugins:
 
 ```toml
 [[custom_plugins]]
@@ -329,7 +327,7 @@ use toml file to add custom forked plugins:
    merged = false
 ```
 
-use `bootstrap_before` function to add local plugin:
+Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
@@ -379,15 +377,14 @@ the variable colorschemes. For instance, to specify `desert`:
 | `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
 | `SPC T s` | select a theme using a unite buffer.                           |
 
-all the included colorscheme can be found in [colorscheme layer](../layers/colorscheme/).
+All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
 **NOTE**:
 
-SpaceVim use true colors by default, so you should make sure your terminal support true colors.
-for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728)
+SpaceVim uses true colors by default, so you should make sure your terminal supports true colors.
+for more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728).
 
-If your terminal do not supports true colors, you can disable SpaceVim true colors feature
-in `[options]` section:
+If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:
 
 ```toml
     enable_guicolors = false
@@ -432,7 +429,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 
 ### Statusline
 
-The `core#statusline` layer provide a heavily customized powerline with the following capabilities:
+The `core#statusline` layer provides a heavily customized powerline with the following capabilities:
 
 - show the window number
 - show the current mode
@@ -456,7 +453,7 @@ Reminder of the color codes for the states:
 | Visual  | Orange |
 | Replace | Aqua   |
 
-all the colors based on the current colorscheme
+All the colors based on the current colorscheme
 
 Some elements can be dynamically toggled:
 
@@ -499,7 +496,7 @@ A color code is used for the battery status:
 | Discharging   | Orange |
 | Critical      | Red    |
 
-all the colors based on the current colorscheme
+All the colors are based on the current colorscheme.
 
 **Statusline separators:**
 
@@ -578,7 +575,7 @@ function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
 endfunction
 ```
 
-this example is for gruvbox colorscheme, if you want to use same colors when
+This example is the gruvbox colorscheme, if you want to use same colors when
 switch between different colorschemes, you may need to set
 `custom_color_palette` in your custom configuration file. for example:
 
@@ -599,7 +596,7 @@ custom_color_palette = [
 ### tabline
 
 Buffers will be listed on tabline if there is only one tab, each item contains
-the index, bufname and the filetype icon. if there are more than one tab, all
+the index, bufname and the filetype icon. If there are more than one tab, all
 tabs will be listed on the tabline. each item can be quickly accessed using
 `<Leader> number`. default `<Leader>` is `\`.
 
@@ -615,9 +612,9 @@ tabs will be listed on the tabline. each item can be quickly accessed using
 | `<Leader> 8` | Jump to index 8 on tabline |
 | `<Leader> 9` | Jump to index 9 on tabline |
 
-SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
+SpaceVim tabline also supports mouse click, left mouse button will switch to buffer, while middle button will delete the buffer.
 
-**NOTE:** this feature is only supported in neovim with `has('tablineat')`.
+**NOTE:** This feature is only supported in neovim with `has('tablineat')`.
 
 | Key Binding      | Description        |
 | ---------------- | ------------------ |
@@ -628,7 +625,7 @@ SpaceVim tabline also support mouse click, left mouse button will switch to buff
 
 You can also use `SPC t t` to open the tab manager windows.
 
-key bindings within tab manager windows:
+Key bindings within tab manager windows:
 
 | Key Binding       | Description                               |
 | ----------------- | ----------------------------------------- |
@@ -759,15 +756,15 @@ Bookmarks manager are included in `tools` layer, to use following key bindings, 
 | `m p`       | Jump to previous bookmark       |
 | `m i`       | Annotate bookmark               |
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+As SpaceVim use above bookmarks mappings, so you cannot use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
+If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you can use `a` registers via `\ma`.
 
 ### Fuzzy finder
 
 SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
-User only need to load one of these layers, then will be able to get these
-features.
+Users only need to load one of these layers, they will be able to get these features.
 
 **Key bindings**
 
@@ -784,7 +781,7 @@ features.
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
+But in current version of SpaceVim, leaderf/ctrlp and fzf layer have not be finished.
 
 | Feature            | unite | denite | leaderf | ctrlp | fzf |
 | ------------------ | ----- | ------ | ------- | ----- | --- |
@@ -824,7 +821,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 | `r`            | Normal        | Replace ('search' profile) or rename |
 | `Ctrl-z`       | Normal/insert | Toggle transpose window              |
 
-The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
+The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
 
 ### Discovering
 
@@ -835,7 +832,7 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short description.
 The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
 
-The default key of these prefix is:
+The default key of these prefixs are:
 
 | Prefix name | custom option and default value | description                         |
 | ----------- | ------------------------------- | ----------------------------------- |
@@ -843,15 +840,16 @@ The default key of these prefix is:
 | `[WIN]`     | `windows_leader` / `s`          | window mapping prefix of SpaceVim   |
 | `<Leader>`  | default vim leader              | default leader prefix of vim/neovim |
 
-By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+By default the guide buffer will be displayed 1000ms after the key has been pressed.
+You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
-for example, after pressing `<Space>` in normal mode, you will see :
+For example, after pressing `<Space>` in normal mode, you will see :
 
 ![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
-this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
+This guide shows you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 
-after pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
+After pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
 
 | key | description                   |
 | --- | ----------------------------- |
@@ -859,7 +857,7 @@ after pressing `Ctrl-h` in guide buffer, you will get paging and help info in th
 | `n` | next page of guide buffer     |
 | `p` | previous page of guide buffer |
 
-to defined custom SPC mappings, use `SpaceVim#custom#SPC()`. here is an example:
+Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For instance:
 
 ```vim
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
@@ -873,7 +871,7 @@ To narrow the list, just insert the mapping keys or description of what mapping 
 
 ![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
-then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` will execute that command.
+Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 
 #### Getting help
 
@@ -904,7 +902,7 @@ All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
-both the toggles mappings started with `[SPC] t` or `[SPC] T`. you can find it in the mapping guide.
+Both the toggles mappings start with `[SPC] t` or `[SPC] T`. You can find them in the mapping guide.
 
 ### Navigating
 
@@ -1136,18 +1134,18 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 
 #### File tree
 
-SpaceVim use vimfiler as the default file tree, and the default key binding is `<F3>`, and
-SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree.
-to change the file explore to nerdtree:
+SpaceVim uses vimfiler as the default file tree, and the default key binding is `<F3>`.
+And SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
+To replace the file explorer to nerdtree:
 
 ```toml
 # the default value is vimfiler
 filemanager = "nerdtree"
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so
-it is not enabled by default. to enable this feature, add `enable_vimfiler_gitstatus = true` to your custom config.
-here is any picture for this feature:
+VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default.
+To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
+Here is a picture for this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
 
@@ -1189,7 +1187,7 @@ If there is only one file buffer opened, a file is opened in the active window, 
 
 ### Commands starting with `g`
 
-after pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide
+After pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `g`.
 
 | Key Binding | Description                                     |
@@ -1242,7 +1240,7 @@ which will tell you the functional of all mappings starting with `g`.
 
 ### Commands starting with `z`
 
-after pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
+After pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `z`.
 
 | Key Binding | Description                                  |
@@ -1303,9 +1301,9 @@ SpaceVim can be interfaced with different searching tools like:
 - [ack](https://beyondgrep.com/)
 - grep
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
+The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
+If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
 
 If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
 
@@ -1339,7 +1337,7 @@ Notes:
 
 ##### Custom searching tool
 
-to change the option of a search tool, you need to use bootstrap function. here is an example
+To change the options of a search tool, you need to use bootstrap function. Here is an example
 how to change the default option of searching tool `rg`.
 
 ```vim
@@ -1648,7 +1646,7 @@ In transient state:
 | `-`           | decrease the number under point by one |
 | Any other key | leave the transient state              |
 
-**Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+**Tips:** You can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
 
 #### Replace text with iedit
 
@@ -1725,14 +1723,14 @@ For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
 #### Multi-Encodings
 
-SpaceVim use utf-8 as default encoding. there are four options for these case:
+SpaceVim uses utf-8 as default encoding. There are four options for these case:
 
 - fileencodings (fencs): ucs-bom,utf-8,default,latin1
 - fileencoding (fenc): utf-8
 - encoding (enc): utf-8
 - termencoding (tenc): utf-8 (only supported in vim)
 
-to fix messy display: `SPC e a` is the mapping for auto detect the file encoding. after detecting file encoding, you can run the command below to fix the encoding:
+To fix messy display: `SPC e a` is the mapping for auto detect the file encoding. After detecting file encoding, you can run the command below to fix the encoding:
 
 ```vim
 set enc=utf-8
@@ -1742,9 +1740,9 @@ write
 ### Code runner and REPL
 
 SpaceVim provides an asynchronously code runner plugin. In most language layer,
-we have defind a key bidning `SPC l r` for running current
-buffer. If you need to add new command, you can use bootstrap func. for example:
-use `F5` to build project asynchronously.
+we have defined a key bidning `SPC l r` for running current buffer.
+If you need to add new commands, you can use bootstrap func. for example:
+Use `F5` to build project asynchronously.
 
 ```viml
 nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
@@ -1792,7 +1790,7 @@ Custom sign symbol:
 
 ### Managing projects
 
-Projects in SpaceVim are managed by vim-projectionist and vim-rooter, vim-rooter will find the root of the project when a `.git` directory or a `.projections.json` file is encountered in the file tree.
+SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
 
 project manager commands start with `p`:
 

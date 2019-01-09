@@ -44,7 +44,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `perl` inferior REPL process with `SPC l s i`. 
+Start a `perl` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

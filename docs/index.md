@@ -12,7 +12,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
-# SpaceVim - Modern vim distribution 
+# SpaceVim - Modern vim distribution
 
 SpaceVim is a distribution of the vim editor that's inspired by spacemacs.
 It manages collections of plugins in layers, which help collect related
@@ -47,13 +47,13 @@ The last release is v1.0.0, check out [following-HEAD](https://github.com/SpaceV
 
 More posts are in the [SpaceVim's Blog](blog/)
 
-[Follow @SpaceVim](https://twitter.com/SpaceVim) 
+[Follow @SpaceVim](https://twitter.com/SpaceVim)
 
 ## Participating
 
 Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
 
-Contribute code, report bugs and request features at [GitHub](https://github.com/SpaceVim/SpaceVim). 
+Contribute code, report bugs and request features at [GitHub](https://github.com/SpaceVim/SpaceVim).
 
 ## FAQ
 

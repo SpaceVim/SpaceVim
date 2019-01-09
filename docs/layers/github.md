@@ -42,7 +42,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Extra configuration for GitHub and Gist
 
-For avoid repeating input the account name and passwrod, you need to add the belowing contennt for auto .SpaceVim.d/autoload/myspacevim.vim [Bootstrap Functions](https://spacevim.org/documentation/#bootstrap-functions). 
+For avoid repeating input the account name and passwrod, you need to add the belowing contennt for auto .SpaceVim.d/autoload/myspacevim.vim [Bootstrap Functions](https://spacevim.org/documentation/#bootstrap-functions).
 
 ```vim
 func! myspacevim#before() abort

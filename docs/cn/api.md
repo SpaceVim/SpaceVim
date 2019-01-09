@@ -37,16 +37,20 @@ echom s:file.separator
 echom s:file.pathSeparator
 ```
 
+<!-- call SpaceVim#dev#api#updateCn() -->
+
 <!-- SpaceVim api cn list start -->
 
 ## 可用 APIs
 
 | 名称                                  | 描述                                                                    |
 | ------------------------------------- | ----------------------------------------------------------------------- |
-| [file](file/)                         | can not find Description                                                |
+| [data#dict](data/dict/)               | data#dict api 提供了一些处理字典变量的常用方法                          |
+| [file](file/)                         | 文件函数提供了基础的文件读写相关函数，兼容不同系统平台。                |
 | [job](job/)                           | 兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制          |
-| [system](system/)                     | can not find Description                                                |
+| [system](system/)                     | system 函数提供了系统相关函数，包括判断当前系统平台，文件格式等函数。   |
 | [unicode#spinners](unicode/spinners/) | unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号 |
+| [vim#command](vim/command/)           | vim#command API 提供一些设置和获取 Vim 命令的基础函数。                 |
 | [vim#highlight](vim/highlight/)       | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。           |
 
 <!-- SpaceVim api cn list end -->

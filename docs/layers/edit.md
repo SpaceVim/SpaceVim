@@ -16,11 +16,11 @@ description: "Improve code edit expr in SpaceVim, provide more text opjects."
 
 ## Description
 
-This layer provide many edit key bindings for SpaceVim, and also porvide more text objects. 
+This layer provides many edit key bindings for SpaceVim, and also provides more text objects.
 
 ## Features
 
-- chang surround symbol via vim-surround
+- change surround symbol via vim-surround
 - repeat latest action via vim-repeat
 - multiple cursor
 - align
