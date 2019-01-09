@@ -6,7 +6,7 @@ lang: cn
 
 # SpaceVim 开发者文档
 
-<!-- Vim-markdown-toc GFM -->
+<!-- vim-markdown-toc GFM -->
 
 - [寻求帮助](#寻求帮助)
 - [反馈问题](#反馈问题)
@@ -15,17 +15,18 @@ lang: cn
   - [公约](#公约)
   - [拉取请求](#拉取请求)
     - [PR 标题前缀](#pr-标题前缀)
-     - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
-    - [抽象化的简单 PRs(绝大多数PRs都是这样的):](#抽象化的简单-prs绝大多数prs都是这样的)
-    - [复杂的PRs (大的重构, 等):](#复杂的prs-大的重构-等)  - [贡献一个模块](#贡献一个模块)
+    - [在上游的主分支顶部压缩你的 PR 分支](#在上游的主分支顶部压缩你的-pr-分支)
+    - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-prs绝大多数-prs-都是这样的)
+    - [复杂的 PRs (大的重构，等)：](#复杂的-prs-大的重构等)
+  - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
-    - [新layer的作者](#新layer的作者)
-    - [对现有的layer进行贡献](#对现有的layer进行贡献)
+    - [新 layer 的作者](#新-layer-的作者)
+    - [对现有的-layer-进行贡献](#对现有的-layer-进行贡献)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
-- [Build with SpaceVim](#build-with-spacevim)
-- [Changelog](#changelog)
+- [基于 SpaceVim 开发](#基于-spacevim-开发)
+- [更新日志](#更新日志)
 
 <!-- vim-markdown-toc -->
 
