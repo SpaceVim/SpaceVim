@@ -7,7 +7,7 @@ lang: cn
 
 # SpaceVim 使用文档
 
-<!-- Vim-markdown-toc GFM -->
+<!-- vim-markdown-toc GFM -->
 
 - [核心思想](#核心思想)
 - [显著特性](#显著特性)
