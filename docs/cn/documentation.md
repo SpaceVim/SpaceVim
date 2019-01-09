@@ -56,7 +56,7 @@ lang: cn
       - [新建空白 buffer](#新建空白-buffer)
       - [特殊 buffer](#特殊-buffer)
       - [文件操作相关快捷键](#文件操作相关快捷键)
-      - [Vim 和 SpaceVim 相关文件](#Vim和 spacevim-相关文件)
+      - [Vim 和 SpaceVim 相关文件](#Vim-和-spacevim-相关文件)
     - [文件树](#文件树)
       - [文件树中的常用操作](#文件树中的常用操作)
       - [文件树中打开文件](#文件树中打开文件)
@@ -312,7 +312,7 @@ SpaceVim 的[模块首页](../layers/)。
 
 2. 添加自己 fork 的插件，或者本地克隆版本：
 
-修搞配置文件 init.toml，加入以下部分，来添加自己 fork 的版本：
+修改配置文件 `init.toml`，加入以下部分，来添加自己 fork 的版本：
 
 ```toml
 [[custom_plugins]]
