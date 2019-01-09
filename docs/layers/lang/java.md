@@ -101,7 +101,7 @@ to SpaceVim custom configuration file.
 
 ### Inferior REPL process
 
-Start a `jshell` inferior REPL process with `SPC l s i`. 
+Start a `jshell` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

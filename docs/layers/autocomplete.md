@@ -10,6 +10,7 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
 - [Description](#description)
 - [Install](#install)
 - [Configuration](#configuration)
+  - [Choose which completion engine to be used](#choose-which-completion-engine-to-be-used)
   - [Key bindings](#key-bindings)
   - [Snippets directories](#snippets-directories)
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
@@ -29,7 +30,10 @@ The following completion engines are supported:
 - [neocomplete](https://github.com/Shougo/neocomplete.vim) - vim with `+lua`
 - [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - vim without `+lua`
 - [deoplete](https://github.com/Shougo/deoplete.nvim) - neovim with `+python3`
+- [coc](https://github.com/neoclide/coc.nvim) - vim >= 8.1 or neovim >= 0.3.1
 - [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - disabled by default, to enable ycm, see `:h g:spacevim_enable_ycm`
+- [Completor](https://github.com/maralla/completor.vim) - vim8 with `+python` or `+python3`
+- [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim) - vim8 or neovim with `timers`
 
 Snippets are supported via [neosnippet](https://github.com/Shougo/neosnippet.vim).
 
@@ -44,6 +48,20 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Configuration
 
+### Choose which completion engine to be used
+
+You can choose the completion engine (among the supported ones) to be used
+with the following variable:
+
+- `g:spacevim_autocomplete_method`: the possible values are:
+    - `ycm`: for YouCompleteMe
+    - `neocomplcache`
+    - `coc`: **Note** that coc.nvim is also a language server protocol client. 
+See [lsp layer](language-server-protocol.md) for more information.
+    - `deoplete`
+    - `asyncomplete`
+    - `completor`
+
 ### Key bindings
 
 You can customize the user experience of auto-completion with the following layer variables:
@@ -52,7 +70,7 @@ You can customize the user experience of auto-completion with the following laye
 when the `Return`/`Enter` key is pressed, the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
-   - `nil` 
+   - `nil`
 By default it is `complete`.
 2. `auto-completion-tab-key-behavior` set the action to
 perform when the `TAB` key is pressed, the possible values are:

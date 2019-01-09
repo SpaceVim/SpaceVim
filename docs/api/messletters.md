@@ -20,7 +20,7 @@ This api provides some basic Functions for generating messletters.
 let s:PW = SpaceVim#api#import('messletters')
 let messletters = s:PW.circled_num(1, 2)
 " generate circled number 1, all available types:
-" 0: 1 ➛ ➊ 
+" 0: 1 ➛ ➊
 " 1: 1 ➛ ➀
 " 2: 1 ➛ ⓵
 echom messletters

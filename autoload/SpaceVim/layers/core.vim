@@ -34,8 +34,6 @@ function! SpaceVim#layers#core#plugins() abort
         \'on_map' : '<Plug>(openbrowser-',
         \ 'loadconf' : 1,
         \}])
-  call add(plugins, ['tpope/vim-projectionist',         { 'on_cmd' : ['A', 'AS', 'AV',
-        \ 'AT', 'AD', 'Cd', 'Lcd', 'ProjectDo']}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
   return plugins

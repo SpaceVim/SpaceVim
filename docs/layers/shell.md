@@ -44,7 +44,7 @@ The default shell is quickly accessible via a the default shortcut key `SPC '`.
 
 ### Default shell position and height
 
-It is possible to choose where the shell should pop up by setting the 
+It is possible to choose where the shell should pop up by setting the
 variable `default_position` to either `top`, `bottom`, `left`, `right`, or
 `full`. Default value is `top`. It is also possible to set the default height
 in percents with the variable `default_height`. Default value is 30.

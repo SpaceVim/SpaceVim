@@ -1,6 +1,6 @@
 ---
-title: "FAQ" 
-description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community" 
+title: "FAQ"
+description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community"
 ---
 
 # SpaceVim FAQ
@@ -46,7 +46,7 @@ We decided going forward to use a more robust configuration mechanism in SpaceVi
 whole configuration file and if there are syntax errors in the configuration file, the entire configuration needs to
 be discarded.
 
-We compared TOML, YAML, XML, and JSON. We chose TOML as the default configuration language. Here are some of the 
+We compared TOML, YAML, XML, and JSON. We chose TOML as the default configuration language. Here are some of the
 drawbacks we found with the other choices considered:
 
 1.  YAML: It is error-prone due to indentation being significant and when configuring transitions.
