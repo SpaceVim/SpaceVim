@@ -585,7 +585,7 @@ custom_color_palette = [
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
+标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
 | 按键             | 描述         |
 | ---------------- | ------------ |
@@ -646,7 +646,7 @@ can be get by `<leader> q r`
 | `Ctrl`+`y`            |    Normal     | Smart scroll up (3C-y/k)                                                       |
 | `Ctrl`+`q`            |    Normal     | `Ctrl`+`w`                                                                     |
 | `Ctrl`+`x`            |    Normal     | Switch buffer and placement                                                    |
-| `Up,Down`             |    Normal     | Smart up and down                                                              |
+| `Up, Down`             |    Normal     | Smart up and down                                                              |
 | `}`                   |    Normal     | After paragraph motion go to first non-blank char (}^)                         |
 | `<`                   | Visual/Normal | Indent to left and re-select                                                   |
 | `>`                   | Visual/Normal | Indent to right and re-select                                                  |
@@ -674,9 +674,9 @@ can be get by `<leader> q r`
 | `F2`                    |     _All_     | Toggle tagbar                                                    |
 | `F3`                    |     _All_     | Toggle Vimfiler                                                  |
 | `<leader>` + num        |    Normal     | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |    Normal     | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |    Normal     | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |    Normal     | Jump to Right buffer in the tabline, this only works in neovim   |
+| `<Alt>` + num           |    Normal     | Jump to the buffer with the num index, this only works in Neovim |
+| `<Alt>` + `h`/`<Left>`  |    Normal     | Jump to left buffer in the tabline, this only works in Neovim    |
+| `<Alt>` + `l`/`<Right>` |    Normal     | Jump to Right buffer in the tabline, this only works in Neovim   |
 | `<leader>`+`ts`         |    Normal     | Toggle spell-checker (:setlocal spell!)                          |
 | `<leader>`+`tn`         |    Normal     | Toggle line numbers (:setlocal nonumber!)                        |
 | `<leader>`+`tl`         |    Normal     | Toggle hidden characters (:setlocal nolist!)                     |
@@ -797,7 +797,7 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 | ---------- | ---------------------- | ----------------------- |
 | `[SPC]`    | 空格键                 | SpaceVim 默认前缀键     |
 | `[Window]` | `windows_leader` / `s` | SpaceVim 默认窗口前缀键 |
-| `<leader>` | 默认的 Vim leader 键   | Vim/neovim 默认前缀键   |
+| `<leader>` | 默认的 Vim leader 键   | Vim/Neovim 默认前缀键   |
 
 默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 Vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
@@ -1516,12 +1516,12 @@ In highlight symbol transient state:
 
 文本相关的命令 (以 `x` 开头)：
 
-| 快捷键     | 描述                 |
+| 快捷键        | 描述                                                                 |
 | ------------- | -------------------------------------------------------------------- |
 | `SPC x a &`   | align region at &                                                    |
 | `SPC x a (`   | align region at (                                                    |
 | `SPC x a )`   | align region at )                                                    |
-| `SPC x a [`   | align region at \[                                                   |
+| `SPC x a [`   | align region at [                                                    |
 | `SPC x a ]`   | align region at ]                                                    |
 | `SPC x a {`   | align region at {                                                    |
 | `SPC x a }`   | align region at }                                                    |
@@ -1531,7 +1531,7 @@ In highlight symbol transient state:
 | `SPC x a ;`   | align region at ;                                                    |
 | `SPC x a =`   | align region at =                                                    |
 | `SPC x a ¦`   | align region at ¦                                                    |
-| `SPC x a |`   | align region at                                                      |
+| `SPC x a |`   | align region at |                                                    |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`   | align current indentation region using default rules (TODO)          |
 | `SPC x a l`   | left-align with evil-lion (TODO)                                     |
@@ -1597,7 +1597,7 @@ In highlight symbol transient state:
 | 快捷键    | 描述                                               |
 | --------- | -------------------------------------------------- |
 | `SPC n +` | 为光标下的数字加 1 并 initiate transient state     |
-| `SPC n -` | 为光标下的数字减 1 uaj 并 initiate transient state |
+| `SPC n -` | 为光标下的数字减 1 并 initiate transient state     |
 
 In transient state：
 
@@ -1607,7 +1607,7 @@ In transient state：
 | `-`        | 为光标下的数字减 1   |
 | 其它任意键 | 离开 transient state |
 
-**提示：** 如果你想为光标下的数字所增加的值大于 1，你可以使用前缀参数。例如：`10 SPC n +` 将为为光标下的数字增加 10。
+**提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为为光标下的数字增加 `10`。
 
 #### Replace text with iedit
 
@@ -1781,11 +1781,13 @@ SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 V
 
 **连接到 Vim 服务器**
 
-如果你使用Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)，然后增加如下配置到你的 bashrc。
+如果你使用 Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)，然后增加如下配置到你的 bashrc。
 
+```bash
     export PATH=$PATH:$HOME/.SpaceVim/bin
+```
 
-Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
+Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing Neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
