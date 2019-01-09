@@ -21,7 +21,7 @@ lang: cn
   - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
     - [新 layer 的作者](#新-layer-的作者)
-    - [对现有的-layer-进行贡献](#对现有的-layer-进行贡献)
+    - [对现有的 layer 进行贡献](#对现有的-layer-进行贡献)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
@@ -260,7 +260,7 @@ endfunction
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-#### 对现有的-layer-进行贡献
+#### 对现有的 layer 进行贡献
 
 If you contribute to an already existing layer, you should not modify any header file.
 如果你正在对一个已经存在的 layer 进行贡献的话，你不能修改文件头的任意地方。
