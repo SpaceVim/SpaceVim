@@ -15,13 +15,13 @@ lang: cn
   - [公约](#公约)
   - [拉取请求](#拉取请求)
     - [PR 标题前缀](#pr-标题前缀)
-    - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
-    - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-PRs绝大多数-PRs-都是这样的)
+    - [在上游的主分支顶部压缩你的 PR分支](#在上游的主分支顶部压缩你的-pr分支)
+    - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-PRs（绝大多数-PRs-都是这样的）)
     - [复杂的 PRs (大的重构，等)：](#复杂的-PRs-大的重构等)
   - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
-    - [新layer的作者](#新layer的作者)
-    - [对现有的layer进行贡献](#对现有的-layer-进行贡献)
+    - [新 layer 的作者](#新-layer-的作者)
+    - [对现有的 layer进行贡献](#对现有的-layer-进行贡献)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
@@ -45,7 +45,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ## 寻求帮助
 
-在你建立 issue 之前，先确认你已经浏览过下面的faq以及SpaceVim文档。
+在你建立 issue 之前，先确认你已经浏览过下面的 faq 以及 SpaceVim 文档。
 
 - <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
 - [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim的官方文档
@@ -57,7 +57,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 - 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认，错误追踪中是否存在重复的问题
 
-- 检查问题是否在最新版的SpaceVim中修复，请更新你的SpaceVim，然后进行 bug 重现操作。
+- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 bug 重现操作。
 
 - 按照下面的问题格式，立清晰的问题标题
 
@@ -97,7 +97,7 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 
 `Website: update the lang#c layer page`
 
-#### 在上游的主分支顶部压缩你的PR分支
+#### 在上游的主分支顶部压缩你的 PR分支
 
 - fork SpaceVim 仓库
 - 克隆你自己的仓库
@@ -122,9 +122,9 @@ git rebase upstream/master
 #### 抽象化的简单 PRs（绝大多数 PRs 都是这样的）：
 
 - 'master'中的分支
-- 每个PR一个主题
-- 每个PR一个提交
-- 如果你有一些不同主题的提交，请关闭PR 然后为每个主题创建一个新的PR.
+- 每个 PR 一个主题
+- 每个 PR 一个提交
+- 如果你有一些不同主题的提交，请关闭 PR 然后为每个主题创建一个新的 PR
 - 如果你仍然有很多提交，请把他们打包成一个提交
 
 #### 复杂的 PRs (大的重构，等)：
@@ -167,7 +167,7 @@ Further paragraphs come after blank lines.
     - Use a hanging indent
 ```
 
-[Gita] provide Vim mode for Git commit messages, which helps you to comply to these guidelines.
+[Gita] provides Vim mode for Git commit messages, which helps you comply with these guidelines.
 
 
 ### 贡献一个模块
@@ -194,11 +194,11 @@ Vim 脚本的文件头，应该按照下面的格式：
 
 You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also.
 你可以用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
-#### 新layer的作者
+#### 新 layer 的作者
 
 把文件头中的默认作者名字(Shidong Wang)改为你自己的名字。
 
-下面是一个创建一个名字为`foo`的新的layer的实例
+下面是一个创建一个名字为`foo`的新的 layer 的实例
 
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
