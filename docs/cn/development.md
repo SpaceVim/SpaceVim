@@ -6,7 +6,7 @@ lang: cn
 
 # SpaceVim 开发者文档
 
-<!-- vim-markdown-toc GFM -->
+<!-- Vim-markdown-toc GFM -->
 
 - [寻求帮助](#寻求帮助)
 - [反馈问题](#反馈问题)
@@ -16,19 +16,19 @@ lang: cn
   - [拉取请求](#拉取请求)
     - [PR 标题前缀](#pr-标题前缀)
     - [在上游的主分支顶部压缩你的PR分支](#在上游的主分支顶部压缩你的pr分支)
-    - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-prs绝大多数-prs-都是这样的)
-    - [复杂的 PRs (大的重构，等)：](#复杂的-prs-大的重构等)
+    - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-PRs绝大多数-PRs-都是这样的)
+    - [复杂的 PRs (大的重构，等)：](#复杂的-PRs-大的重构等)
   - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
     - [新layer的作者](#新layer的作者)
-    - [对现有的layer进行贡献](#对现有的layer进行贡献)
+    - [对现有的layer进行贡献](#对现有的-layer-进行贡献)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
-- [基于 SpaceVim 开发](#基于-spacevim-开发)
+- [基于 SpaceVim 开发](#基于-SpaceVim-开发)
 - [更新日志](#更新日志)
 
-<!-- vim-markdown-toc -->
+<!-- Vim-markdown-toc -->
 
 SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，SpaceVim 是由社区驱动的。
 下面是关于每个贡献者都应当遵守的简单规则的引导。
@@ -39,13 +39,13 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 你可以只阅读下面内容中的，你需要用到的部分：
 
-- [Asking for help](#寻求帮助) 建立issue的帮助
+- [Asking for help](#寻求帮助) 建立 issue 的帮助
 - [Reporting issues](#反馈错误) 反馈问题的帮助
-- [Contributing code](#贡献代码) 建立PR的帮助
+- [Contributing code](#贡献代码) 建立 PR 的帮助
 
 ## 寻求帮助
 
-在你建立issue 之前，先确认你已经浏览过下面的faq以及SpaceVim文档。
+在你建立 issue 之前，先确认你已经浏览过下面的faq以及SpaceVim文档。
 
 - <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
 - [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim的官方文档
@@ -57,11 +57,11 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 - 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认，错误追踪中是否存在重复的问题
 
-- 检查问题是否在最新版的SpaceVim中修复，请更新你的SpaceVim，然后进行bug重现操作。
+- 检查问题是否在最新版的SpaceVim中修复，请更新你的SpaceVim，然后进行 bug 重现操作。
 
 - 按照下面的问题格式，立清晰的问题标题
 
-- 包括bug出现的细节，一步一步重现bug出现的操作
+- 包括 bug 出现的细节，一步一步重现 bug 出现的操作
 
 ## 贡献代码
 
@@ -131,10 +131,10 @@ git rebase upstream/master
 
 只打包一些枯燥的提交，比如修改错别字，语法修复，等等... 把重要和独立的步骤分别放在不同的提交中。
 Those PRs are merged and explicitly not fast-forwarded.
-这些PRs被合并并且非明试快速转发。
+这些 PRs 被合并并且非明试快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
- 
+
 
 - 用现在时和祈使句：例如"Fix bug"，而不是"fixed bug" 或者"fixes bug"。
 - 以大写字母开头，短摘要开头(72个字符或者更少)，以空行结尾。
@@ -167,7 +167,7 @@ Further paragraphs come after blank lines.
     - Use a hanging indent
 ```
 
-[Gita] provide vim mode for Git commit messages, which helps you to comply to these guidelines.
+[Gita] provide Vim mode for Git commit messages, which helps you to comply to these guidelines.
 
 
 ### 贡献一个模块
@@ -180,9 +180,9 @@ Layer with no associated configuration will be rejected. For instance a layer wi
 
 #### 文件头
 
-vim 脚本的文件头，应该按照下面的格式：
+Vim 脚本的文件头，应该按照下面的格式：
 
-```viml
+```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
@@ -192,7 +192,7 @@ vim 脚本的文件头，应该按照下面的格式：
 "=============================================================================
 ```
 
-You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also. 
+You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also.
 你可以用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
 #### 新layer的作者
 
@@ -260,10 +260,10 @@ endfunction
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-#### 对现有的layer进行贡献
+#### 对现有的-layer-进行贡献
 
-If you are contributing to an already existing layer, you should not modify any header file.
-如果你正在对一个已经存在的layer进行贡献的话，你不能修改文件头的任意地方。
+If you contribute to an already existing layer, you should not modify any header file.
+如果你正在对一个已经存在的 layer 进行贡献的话，你不能修改文件头的任意地方。
 
 #### 贡献按键绑定
 
@@ -305,7 +305,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## 基于 SpaceVim 开发
 
-SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 vim 和 neovim 的插件。同时，也可以像插件的 README 中添加 SpaceVim 的图标：
+SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 Vim 和 Neovim 的插件。同时，也可以像插件的 README 中添加 SpaceVim 的图标：
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
