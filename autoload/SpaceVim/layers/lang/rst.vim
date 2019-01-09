@@ -9,7 +9,9 @@
 
 function! SpaceVim#layers#lang#rst#plugins() abort
   let plugins = []
-  call add(plugins, ['gu-fan/riv.vim', {'merged' : 0}])
+  " this is forked repo, 
+  " @todo push to upstream
+  call add(plugins, ['wsdjeg/riv.vim', {'merged' : 0}])
   return plugins
 endfunction
 

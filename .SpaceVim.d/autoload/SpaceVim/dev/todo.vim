@@ -65,10 +65,12 @@ endfunction
 
 function! s:exit(id, data, event ) abort
   call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
-  let g:lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
-  call setbufvar(s:bufnr, '&modifiable', 1)
-  call setline(1, g:lines)
-  call setbufvar(s:bufnr, '&modifiable', 0)
+  let lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
+  if bufnr('%') == s:bufnr
+    call setbufvar(s:bufnr, '&modifiable', 1)
+    call setline(1, lines)
+    call setbufvar(s:bufnr, '&modifiable', 0)
+  endif
 endfunction
 
 

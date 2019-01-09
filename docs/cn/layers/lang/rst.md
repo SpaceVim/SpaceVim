@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rst 模块"
-description: "这一模块为 rst 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
+description: "这一模块为 rst 编辑提供支持，包括实时预览。"
 lang: cn
 ---
 

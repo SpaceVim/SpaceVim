@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rst layer"
-description: "Edit rst within vim, autopreview markdown in the default browser, with this layer you can also format markdown file."
+description: "Take Notes in reStructuredText, autopreview in the default browser."
 ---
 
 # [Available Layers](../../) >> lang#rst
@@ -14,7 +14,7 @@ description: "Edit rst within vim, autopreview markdown in the default browser, 
 
 ## Description
 
-This layer is for editing rst file.
+This layer is for taking notes in reStructuredText.
 
 ## Install
 
