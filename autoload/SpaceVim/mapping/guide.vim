@@ -100,6 +100,14 @@ function! s:start_parser(key, dict) " {{{
 
   for line in lines
     let mapd = maparg(split(line[3:])[0], line[0], 0, 1)
+    if mapd.lhs == '\\'
+      echom string(mapd)
+      let mapd.feedkeyargs = ""
+    elseif mapd.noremap == 1
+      let mapd.feedkeyargs = "nt"
+    else
+      let mapd.feedkeyargs = "mt"
+    endif
     if mapd.lhs =~ '<Plug>.*' || mapd.lhs =~ '<SNR>.*'
       continue
     endif
@@ -184,15 +192,10 @@ endfunction " }}}
 
 
 function! s:escape_mappings(mapping) " {{{
-  let feedkeyargs = a:mapping.noremap ? "nt" : "mt"
-  " patch for #2214
-  if a:mapping.mode ==# ' '
-    let feedkeyargs = ''
-  endif
   let rstring = substitute(a:mapping.rhs, '\', '\\\\', 'g')
   let rstring = substitute(rstring, '<\([^<>]*\)>', '\\<\1>', 'g')
   let rstring = substitute(rstring, '"', '\\"', 'g')
-  let rstring = 'call feedkeys("'.rstring.'", "'.feedkeyargs.'")'
+  let rstring = 'call feedkeys("'.rstring.'", "'.a:mapping.feedkeyargs.'")'
   return rstring
 endfunction " }}}
 function! s:string_to_keys(input) " {{{
