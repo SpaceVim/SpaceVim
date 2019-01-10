@@ -96,7 +96,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 显示/隐藏顶部标签栏上的文件类型图标，这一图标需要安装 nerd fonts ，
     # 如果未能成功安装这一字体，可以隐藏图标
     enable_tabline_filetype_icon = true
-    # 是否在状态栏上显示当前模式，默认情况下，不显示 `Normal/Insert` 等
+    # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等
     # 字样，只以颜色区分当前模式
     enable_statusline_display_mode = false
 
