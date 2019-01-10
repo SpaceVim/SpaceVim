@@ -68,7 +68,7 @@ documentation.
 ```toml
 # This is basic configuration example for SpaceVim
 
-# All SpaceVim option below [option] section
+# All SpaceVim options are below [options] section
 [options]
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
