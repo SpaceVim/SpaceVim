@@ -19,7 +19,7 @@ lang: cn
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
   - [启动函数](#启动函数)
-  - [Vim 兼容模式](#vim-兼容模式)
+  - [Vim 兼容模式](#Vim-兼容模式)
   - [私有模块](#私有模块)
   - [调试上游插件](#调试上游插件)
 - [概念](#概念)
@@ -56,7 +56,7 @@ lang: cn
       - [新建空白 buffer](#新建空白-buffer)
       - [特殊 buffer](#特殊-buffer)
       - [文件操作相关快捷键](#文件操作相关快捷键)
-      - [Vim 和 SpaceVim 相关文件](#vim-和-spacevim-相关文件)
+      - [Vim 和 SpaceVim 相关文件](#Vim-和-spacevim-相关文件)
     - [文件树](#文件树)
       - [文件树中的常用操作](#文件树中的常用操作)
       - [文件树中打开文件](#文件树中打开文件)
@@ -90,22 +90,22 @@ lang: cn
   - [异步运行器和交互式编程](#异步运行器和交互式编程)
   - [错误处理](#错误处理)
   - [工程管理](#工程管理)
-    - [Searching files in project](#searching-files-in-project)
+    - [在工程中搜索文件](#在工程中搜索文件)
 - [EditorConfig](#editorconfig)
-- [Vim Server](#vim-server)
+- [Vim 服务器](#Vim-服务器)
 - [成就](#成就)
 
-<!-- vim-markdown-toc -->
+<!-- Vim-markdown-toc -->
 
 ## 核心思想
 
-四大核心思想: 记忆辅助, 可视化交互, 一致性，社区驱动.
+四大核心思想：记忆辅助，可视化交互，一致性，社区驱动。
 
 如果违背了以上四大核心思想，我们将会尽力修复。
 
 **记忆辅助**
 
-所有快捷键，根据其功能的不同分为不同的组，以相应的按键作为前缀，例如 `b` 为 buffer 相关快捷键前缀，`p` 为 project 相关快捷键前缀， `s` 为 search 相关快捷键前缀，`h` 为 help 相关快捷键前缀。
+所有快捷键，根据其功能的不同分为不同的组，以相应的按键作为前缀，例如 `b` 为 buffer 相关快捷键前缀，`p` 为 project 相关快捷键前缀，`s` 为 search 相关快捷键前缀，`h` 为 help 相关快捷键前缀。
 
 **可视化交互**
 
@@ -142,15 +142,15 @@ lang: cn
 
 Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-dark_
 
-展示了一个通用的前端开发界面，用于开发： JavaScript (jQuery), SASS, and PHP buffers.
+展示了一个通用的前端开发界面，用于开发：JavaScript (jQuery), SASS, 和 PHP buffers。
 
-图中包含了一个 Neovim 的终端， 一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
+图中包含了一个 Neovim 的终端，一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
 
 想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
 ## 谁将从 SpaceVim 中获益？
 
-- **初级** Vim 用户.
+- **初级** Vim 用户
 - 追求优雅界面的 Vim 用户
 - 追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
 - 想要学习一种不一样的编辑文件方式的 Vim 用户
@@ -170,12 +170,12 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 **通过插件管理器更新**
 
-使用 `:SPUpdate SpaceVim` 这一命令，将会打开 SpaceVim 的插件管理器，更新 SpaceVim， 具体进度会在插件管理器 buffer 中展示。
+使用 `:SPUpdate SpaceVim` 这一命令，将会打开 SpaceVim 的插件管理器，更新 SpaceVim，具体进度会在插件管理器 buffer 中展示。
 
 **通过 git 进行更新**
 
-可通过在 SpaceVim 目录中手动执行 `git pull`， SpaceVim 在 windows 下默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
-`git -C ~/.SpaceVim pull`.
+可通过在 SpaceVim 目录中手动执行 `git pull`，SpaceVim 在 Windows 下默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
+`git -C ~/.SpaceVim pull`
 
 ### 更新插件
 
@@ -230,7 +230,7 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
 
 启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
-文件名： `~/.SpaceVim.d/autoload/myspacevim.vim`
+文件名：`~/.SpaceVim.d/autoload/myspacevim.vim`
 
 ```vim
 func! myspacevim#before() abort
@@ -312,7 +312,7 @@ SpaceVim 的[模块首页](../layers/)。
 
 2. 添加自己 fork 的插件，或者本地克隆版本：
 
-修搞配置文件 init.toml， 加入以下部分，来添加自己 fork 的版本：
+修改配置文件 `init.toml`，加入以下部分，来添加自己 fork 的版本：
 
 ```toml
 [[custom_plugins]]
@@ -335,7 +335,7 @@ endfunction
 
 SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
 
-文本移动临时快捷键:
+文本移动临时快捷键：
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
@@ -347,7 +347,7 @@ SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等�
 
 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 `:h gruvbox`。
 
-如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`:
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`：
 
 ```toml
 [options]
@@ -362,7 +362,7 @@ SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等�
 
 可以在[主题模块](../layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
-**注意**:
+**注意**：
 
 SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色。
 可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
@@ -375,9 +375,9 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 ### 字体
 
-在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip).
+在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
-如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改 `guifont`，默认值为:
+如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改选项 `guifont`，默认值为：
 
 ```toml
     guifont = "SauceCodePro Nerd Font Mono:h11"
@@ -451,7 +451,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 **nerd 字体安装:**
 
-SpaceVim 默认使用 nerd fonts，可参阅其安装指南进行安装。
+SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 **语法检查信息:**
 
@@ -465,15 +465,15 @@ SpaceVim 默认使用 nerd fonts，可参阅其安装指南进行安装。
 
 **电池状态信息:**
 
-_acpi_ 可展示电池电量剩余百分比.
+_acpi_ 可展示电池电量剩余百分比。
 
-使用不同颜色展示不同的电池状态:
+使用不同颜色展示不同的电池状态：
 
 | 电池状态   | 颜色 |
 | ---------- | ---- |
 | 75% - 100% | 绿色 |
 | 30% - 75%  | 黄色 |
-| 0 - 30%    | 红色 |
+| 0%  - 30%  | 红色 |
 
 所有的颜色都取决于不同的主题。
 
@@ -585,7 +585,7 @@ custom_color_palette = [
 | `<Leader> 8` | 跳至标签栏序号 8 |
 | `<Leader> 9` | 跳至标签栏序号 9 |
 
-标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 neovim，并且需要 `has('tablineat')` 特性。
+标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
 | 按键             | 描述         |
 | ---------------- | ------------ |
@@ -646,7 +646,7 @@ can be get by `<leader> q r`
 | `Ctrl`+`y`            |    Normal     | Smart scroll up (3C-y/k)                                                       |
 | `Ctrl`+`q`            |    Normal     | `Ctrl`+`w`                                                                     |
 | `Ctrl`+`x`            |    Normal     | Switch buffer and placement                                                    |
-| `Up,Down`             |    Normal     | Smart up and down                                                              |
+| `Up, Down`             |    Normal     | Smart up and down                                                              |
 | `}`                   |    Normal     | After paragraph motion go to first non-blank char (}^)                         |
 | `<`                   | Visual/Normal | Indent to left and re-select                                                   |
 | `>`                   | Visual/Normal | Indent to right and re-select                                                  |
@@ -674,9 +674,9 @@ can be get by `<leader> q r`
 | `F2`                    |     _All_     | Toggle tagbar                                                    |
 | `F3`                    |     _All_     | Toggle Vimfiler                                                  |
 | `<leader>` + num        |    Normal     | Jump to the buffer with the num index                            |
-| `<Alt>` + num           |    Normal     | Jump to the buffer with the num index, this only works in neovim |
-| `<Alt>` + `h`/`<Left>`  |    Normal     | Jump to left buffer in the tabline, this only works in neovim    |
-| `<Alt>` + `l`/`<Right>` |    Normal     | Jump to Right buffer in the tabline, this only works in neovim   |
+| `<Alt>` + num           |    Normal     | Jump to the buffer with the num index, this only works in Neovim |
+| `<Alt>` + `h`/`<Left>`  |    Normal     | Jump to left buffer in the tabline, this only works in Neovim    |
+| `<Alt>` + `l`/`<Right>` |    Normal     | Jump to Right buffer in the tabline, this only works in Neovim   |
 | `<leader>`+`ts`         |    Normal     | Toggle spell-checker (:setlocal spell!)                          |
 | `<leader>`+`tn`         |    Normal     | Toggle line numbers (:setlocal nonumber!)                        |
 | `<leader>`+`tl`         |    Normal     | Toggle hidden characters (:setlocal nolist!)                     |
@@ -716,7 +716,7 @@ can be get by `<leader> q r`
 | `m`+`p` | Normal | Jump to previous bookmark       |
 | `m`+`i` | Normal | Annotate bookmark               |
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. if you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
 
 ### Fuzzy finder
 
@@ -726,9 +726,9 @@ These layers have the same key bindings and features. But they need different de
 User only need to load one of these layers, then will be able to get these
 features.
 
-**Key bindings**
+**快捷键**
 
-| Key bindings         | Description                   |
+| 快捷键               | 描述                          |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
@@ -758,7 +758,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Key bindings within fuzzy finder buffer**
 
-| key bindings          | Mode   | description                               |
+| 快捷键                | 模式   | 描述                                      |
 | --------------------- | ------ | ----------------------------------------- |
 | `Tab`/`<C-j>`         | -      | Select next line                          |
 | `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
@@ -772,7 +772,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Denite/Unite normal mode key bindings**
 
-| key bindings     | Mode          | description                          |
+| 快捷键           | 模式          | 描述                                 |
 | ---------------- | ------------- | ------------------------------------ |
 | `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
 | `Ctrl`+`l`       | Normal        | Redraw                               |
@@ -797,9 +797,9 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 | ---------- | ---------------------- | ----------------------- |
 | `[SPC]`    | 空格键                 | SpaceVim 默认前缀键     |
 | `[Window]` | `windows_leader` / `s` | SpaceVim 默认窗口前缀键 |
-| `<leader>` | 默认的 Vim leader 键   | Vim/neovim 默认前缀键   |
+| `<leader>` | 默认的 Vim leader 键   | Vim/Neovim 默认前缀键   |
 
-默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
+默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 Vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
 例如，Normal 模式下按下空格键，你将会看到：
 
@@ -942,7 +942,7 @@ merged = 0
 | `SPC j l` | 跳至某一行 (easymotion)                          |
 | `SPC j q` | show the dumb-jump quick look tooltip (TODO)     |
 | `SPC j u` | 跳至窗口某个 url （TODO）                        |
-| `SPC j v` | 跳至某个 vim 函数的定义处 (TODO)                 |
+| `SPC j v` | 跳至某个 Vim 函数的定义处 (TODO)                 |
 | `SPC j w` | 跳至 Buffer 中某个单词 (easymotion)              |
 
 ##### 合并，拆分
@@ -1196,9 +1196,9 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ### 以 `z` 开头的命令
 
-当你不记得按键映射时, 你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射.
+当你不记得按键映射时，你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射。
 
-| Key Binding | Description                                  |
+| 快捷键      | 描述                                         |
 | ----------- | -------------------------------------------- |
 | `z<Right>`  | scroll screen N characters to left           |
 | `z+`        | cursor to screen top line N                  |
@@ -1248,7 +1248,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 #### 使用额外工具
 
-SpaceVim 像下面那样调用不同搜索工具的搜索接口:
+SpaceVim 像下面那样调用不同搜索工具的搜索接口：
 
 - [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
 - [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
@@ -1256,19 +1256,19 @@ SpaceVim 像下面那样调用不同搜索工具的搜索接口:
 - [ack](https://beyondgrep.com/)
 - grep
 
-SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的工具,后一个键是范围.
-例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索.
+SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用的工具，后一个键是范围。
+例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索。
 
-如果最后一个键(决定范围)是大写字母, 那么就会对当前光标下的单词进行搜索.
-举个例子 `SPC s a b` 将会搜索当前光标下的单词.
+如果最后一个键(决定范围)是大写字母，那么就会对当前光标下的单词进行搜索。
+举个例子 `SPC s a b` 将会搜索当前光标下的单词。
 
-如果工具键被省略了, 那么会用默认的搜索工具进行搜索. 默认的搜索工具对应在 `g:spacevim_search_tools`
-列表中的第一个工具. 列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack` then `grep`.
-举个例子如果 `rg` 和 `ag` 没有在系统中找到, 那么 `SPC s b` 会使用 `pt` 进行搜索.
+如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `g:spacevim_search_tools`
+列表中的第一个工具。列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack`, `grep`。
+举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
 
-下表是全部的工具键:
+下表是全部的工具键：
 
-| Tool | Key |
+| 工具 | 键  |
 | ---- | --- |
 | ag   | a   |
 | grep | g   |
@@ -1276,22 +1276,22 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的, 前一个键是使用的
 | rg   | r   |
 | pt   | t   |
 
-应当避免的范围和对应按键为:
+应当避免的范围和对应按键为：
 
-| 范围                       | 键  |
-| -------------------------- | --- |
-| opened buffers             | b   |
-| files in a given directory | f   |
-| current project            | p   |
+| 范围           | 键  |
+| -------------  | --- |
+| 打开的缓冲区   | b   |
+| 给定目录的文件 | f   |
+| 当前工程       | p   |
 
-可以双击按键序列中的第二个键来在当前文件中进行搜索. 举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索.
+可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
 
-Notes:
+注意：
 
-- 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉, 但是他们可以在任意目录中正常运行.
-- 也可以通过将它们标记在联合缓冲区来一次搜索多个目录.
+- 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉，但是他们可以在任意目录中正常运行。
+- 也可以通过将它们标记在联合缓冲区来一次搜索多个目录。
   **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html)
-  同时也需要安装一个名叫 `pt` 的命令行工具.
+  同时也需要安装一个名叫 `pt` 的命令行工具。
 
 ##### 配置搜索工具
 
@@ -1324,7 +1324,7 @@ endfunction
 
 ##### 常用按键绑定
 
-| Key Binding     | Description                               |
+| 快捷键          | 描述                                      |
 | --------------- | ----------------------------------------- |
 | `SPC r l`       | resume the last completion buffer         |
 | `` SPC s ` ``   | go back to the previous place before jump |
@@ -1332,7 +1332,7 @@ endfunction
 
 ##### 在当前文件中进行搜索
 
-| Key Binding | Description                                         |
+| 快捷键      | 描述                                                |
 | ----------- | --------------------------------------------------- |
 | `SPC s s`   | search with the first found tool                    |
 | `SPC s S`   | search with the first found tool with default input |
@@ -1345,7 +1345,7 @@ endfunction
 
 ##### 搜索当前文件所在的文件夹
 
-| Key Binding | Description                                                 |
+| 快捷键      | 描述                                                        |
 | ----------- | ----------------------------------------------------------- |
 | `SPC s d`   | searching in buffer directory with default tool             |
 | `SPC s D`   | searching in buffer directory cursor word with default tool |
@@ -1362,7 +1362,7 @@ endfunction
 
 ##### 在所有打开的缓冲区中进行搜索
 
-| Key Binding | Description                                         |
+| 快捷键      | 描述                                                |
 | ----------- | --------------------------------------------------- |
 | `SPC s b`   | search with the first found tool                    |
 | `SPC s B`   | search with the first found tool with default input |
@@ -1379,7 +1379,7 @@ endfunction
 
 ##### 在任意目录中进行搜索
 
-| Key Binding | Description                                         |
+| 快捷键      | 描述                                                |
 | ----------- | --------------------------------------------------- |
 | `SPC s f`   | search with the first found tool                    |
 | `SPC s F`   | search with the first found tool with default input |
@@ -1396,7 +1396,7 @@ endfunction
 
 ##### 在工程中进行搜索
 
-| Key Binding          | Description                                         |
+| 快捷键               | 描述                                                |
 | -------------------- | --------------------------------------------------- |
 | `SPC /` or `SPC s p` | search with the first found tool                    |
 | `SPC *` or `SPC s P` | search with the first found tool with default input |
@@ -1411,13 +1411,13 @@ endfunction
 | `SPC s r p`          | rg                                                  |
 | `SPC s r P`          | rg with default text                                |
 
-**提示**: 在工程中进行搜索的话, 无需提前打开文件. 在工程保存目录中使用 `SPC p p` 和　`C-s`　，　就比如 `SPC s p`.(TODO)
+**提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`　，就比如 `SPC s p`。(TODO)
 
 ##### 后台进行工程搜索
 
 在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
 
-| Key Binding | Description                                                |
+| 快捷键      | 描述                                                       |
 | ----------- | ---------------------------------------------------------- |
 | `SPC s j`   | searching input expr background with the first found tool  |
 | `SPC s J`   | searching cursor word background with the first found tool |
@@ -1435,22 +1435,24 @@ endfunction
 
 ##### 在网上进行搜索
 
-| Key Binding | Description                                                              |
+| 快捷键      | 描述                                                                     |
 | ----------- | ------------------------------------------------------------------------ |
-| `SPC s w g` | Get Google suggestions in vim. Opens Google results in Browser.          |
-| `SPC s w w` | Get Wikipedia suggestions in vim. Opens Wikipedia page in Browser.(TODO) |
+| `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
+| `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在　 vim 　中使用谷歌　 suggestions ，　你需要在你的默认配置文件中加入　`let g:spacevim_enable_googlesuggest = 1`.
+**注意**: 为了在 Vim 中使用谷歌 suggestions，你需要在你的配置文件中加入如下配置：
+
+`let g:spacevim_enable_googlesuggest = 1`
 
 #### 实时代码检索
 
-| Key Binding | Description                                        |
-| ----------- | -------------------------------------------------- |
-| `SPC s g G` | Searching in project on the fly with default tools |
+| 快捷键      | 描述                             |
+| ----------- | -------------------------------- |
+| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
 
-FlyGrep 缓冲区的按键绑定:
+FlyGrep 缓冲区的按键绑定：
 
-| Key Binding      | Description                       |
+| 快捷键           | 描述                              |
 | ---------------- | --------------------------------- |
 | `<Esc>`          | close FlyGrep buffer              |
 | `<Enter>`        | open file at the cursor line      |
@@ -1465,8 +1467,8 @@ FlyGrep 缓冲区的按键绑定:
 
 #### 保持高亮
 
-SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索.
-同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示.
+SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
+同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示。
 
 #### Highlight current symbol
 
@@ -1478,11 +1480,11 @@ It is also possible to change the range of the navigation on the fly to:
 - function
 - visible area
 
-To Highlight the current symbol under point press `SPC s h`.
+使用快捷键 `SPC s h`来高亮光标下的符号。
 
 Navigation between the highlighted symbols can be done with the commands:
 
-| Key Binding | Description                                                                  |
+| 快捷键      | 描述                                                                         |
 | ----------- | ---------------------------------------------------------------------------- |
 | `*`         | initiate navigation transient state on current symbol and jump forwards      |
 | `#`         | initiate navigation transient state on current symbol and jump backwards     |
@@ -1492,7 +1494,7 @@ Navigation between the highlighted symbols can be done with the commands:
 
 In highlight symbol transient state:
 
-| Key Binding   | Description                                                   |
+| 快捷键        | 描述                                                          |
 | ------------- | ------------------------------------------------------------- |
 | `e`           | edit occurrences (`*`)                                        |
 | `n`           | go to next occurrence                                         |
@@ -1512,14 +1514,14 @@ In highlight symbol transient state:
 
 #### 文本操作命令
 
-文本相关的命令 (以 `x` 开头):
+文本相关的命令 (以 `x` 开头)：
 
-| Key Binding   | Description                                                          |
+| 快捷键        | 描述                                                                 |
 | ------------- | -------------------------------------------------------------------- |
 | `SPC x a &`   | align region at &                                                    |
 | `SPC x a (`   | align region at (                                                    |
 | `SPC x a )`   | align region at )                                                    |
-| `SPC x a [`   | align region at \[                                                   |
+| `SPC x a [`   | align region at [                                                    |
 | `SPC x a ]`   | align region at ]                                                    |
 | `SPC x a {`   | align region at {                                                    |
 | `SPC x a }`   | align region at }                                                    |
@@ -1529,7 +1531,7 @@ In highlight symbol transient state:
 | `SPC x a ;`   | align region at ;                                                    |
 | `SPC x a =`   | align region at =                                                    |
 | `SPC x a ¦`   | align region at ¦                                                    |
-| `SPC x a |`   | align region at                                                      |
+| `SPC x a |`   | align region at |                                                    |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`   | align current indentation region using default rules (TODO)          |
 | `SPC x a l`   | left-align with evil-lion (TODO)                                     |
@@ -1573,9 +1575,9 @@ In highlight symbol transient state:
 
 #### 文本插入命令
 
-文本插入相关命令(以 `i` 开头):
+文本插入相关命令（以 `i` 开头）：
 
-| Key binding | Description                                                           |
+| 快捷键      | 描述                                                                  |
 | ----------- | --------------------------------------------------------------------- |
 | `SPC i l l` | insert lorem-ipsum list                                               |
 | `SPC i l p` | insert lorem-ipsum paragraph                                          |
@@ -1590,22 +1592,22 @@ In highlight symbol transient state:
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
-#### Increase/Decrease numbers
+#### 增加或减小数字
 
-| Key Binding | Description                                                         |
-| ----------- | ------------------------------------------------------------------- |
-| `SPC n +`   | increase the number under point by one and initiate transient state |
-| `SPC n -`   | decrease the number under point by one and initiate transient state |
+| 快捷键    | 描述                                               |
+| --------- | -------------------------------------------------- |
+| `SPC n +` | 为光标下的数字加 1 并 initiate transient state     |
+| `SPC n -` | 为光标下的数字减 1 并 initiate transient state     |
 
-In transient state:
+In transient state：
 
-| Key Binding   | Description                            |
-| ------------- | -------------------------------------- |
-| `+`           | increase the number under point by one |
-| `-`           | decrease the number under point by one |
-| Any other key | leave the transient state              |
+| 快捷键     | 描述                 |
+| ---------- | -------------------- |
+| `+`        | 为光标下的数字加 1   |
+| `-`        | 为光标下的数字减 1   |
+| 其它任意键 | 离开 transient state |
 
-**Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+**提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为为光标下的数字增加 `10`。
 
 #### Replace text with iedit
 
@@ -1619,7 +1621,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **State transitions:**
 
-| Key Binding | From             | to           |
+| 快捷键      | From             | to           |
 | ----------- | ---------------- | ------------ |
 | `SPC s e`   | normal or visual | iedit-Normal |
 
@@ -1627,7 +1629,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| Key Binding   | Description                                                                     |
+| 快捷键        | 描述                                                                            |
 | ------------- | ------------------------------------------------------------------------------- |
 | `Esc`         | go back to `Normal` mode                                                        |
 | `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
@@ -1649,7 +1651,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **In iedit-Insert mode:**
 
-| Key Binding | Description                    |
+| 快捷键      | 描述                           |
 | ----------- | ------------------------------ |
 | `Esc`       | go back to `iedit-Normal` mode |
 | `<Left>`    | Move cursor to left            |
@@ -1661,9 +1663,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 #### 注释(Commentings)
 
-注释(comment)通过下面的工具来处理 [nerdcommenter](https://github.com/scrooloose/nerdcommenter), 它用下面的按键来界定范围.
+注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
-| Key Binding | Description               |
+| 快捷键      | 描述                      |
 | ----------- | ------------------------- |
 | `SPC ;`     | comment operator          |
 | `SPC c h`   | hide/show comments        |
@@ -1683,14 +1685,14 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 #### 多方式编码
 
-SpaceVim 默认使用 utf-8 码进行编码. 下面是 utf-8 编码的四个设置:
+SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四个设置：
 
-- fileencodings (fencs): ucs-bom,utf-8,default,latin1
-- fileencoding (fenc): utf-8
-- encoding (enc): utf-8
-- termencoding (tenc): utf-8 (only supported in vim)
+- fileencodings (fencs) : ucs-bom, utf-8, default, latin1
+- fileencoding (fenc)   : utf-8
+- encoding (enc)        : utf-8
+- termencoding (tenc)   : utf-8 (only supported in Vim)
 
-修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射. 在选择好文件编码方式后, 你可以运行下面的代码来修复编码:
+修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射。在选择好文件编码方式后，你可以运行下面的代码来修复编码：
 
 ```vim
 set enc=utf-8
@@ -1721,26 +1723,26 @@ nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
 
 ### 错误处理
 
-SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进行错误反馈. 默认在操作保存时进行错误检查.
+SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进行错误反馈。默认在操作保存时进行错误检查。
 
-错误管理导航键 (以 `e` 开头):
+错误管理导航键 (以 `e` 开头)：
 
-| Mappings  | Description                                                                 |
+| 快捷键    | 描述                                                                        |
 | --------- | --------------------------------------------------------------------------- |
-| `SPC t s` | toggle syntax checker                                                       |
-| `SPC e c` | clear all errors                                                            |
+| `SPC t s` | 切换语法检查器                                                              |
+| `SPC e c` | 清除所有错误                                                                |
 | `SPC e h` | describe a syntax checker                                                   |
-| `SPC e l` | toggle the display of the list of errors/warnings                           |
-| `SPC e n` | go to the next error                                                        |
-| `SPC e p` | go to the previous error                                                    |
+| `SPC e l` | 切换显示错误/警告列表                                                       |
+| `SPC e n` | 跳至下一错误                                                                |
+| `SPC e p` | 跳至上一个错误                                                              |
 | `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
-| `SPC e .` | error transient state                                                       |
+| `SPC e .` | 错误暂态（error transient state)                                            |
 
-下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误,
-甚至可检查 vim 位置列表的所有错误. 这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索.
-默认提示符:
+下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误，
+甚至可检查 Vim 位置列表的所有错误。这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索。
+默认提示符：
 
-| Symbol | Description | Custom option               |
+| 提示符 | 描述        | 自定义选项                  |
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
@@ -1748,24 +1750,24 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理. 当发现一个 `.git` 目录或
-在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录.
+SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
+在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录。
 
-工程管理的命令以 `p` 开头:
+工程管理的命令以 `p` 开头：
 
-| Key Binding | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `SPC p '`   | open a shell in project’s root (with the shell layer) |
+| 快捷键      | 描述                                           |
+| ----------- | ---------------------------------------------- |
+| `SPC p '`   | 在当前工程的根目录打开 shell（需要shell 模块） |
 
-#### Searching files in project
+#### 在工程中搜索文件
 
-| Key Binding | Description                              |
-| ----------- | ---------------------------------------- |
-| `SPC p f`   | find files in current project            |
-| `SPC p /`   | fuzzy search for text in current project |
-| `SPC p k`   | kill all buffers of current project      |
-| `SPC p t`   | find project root                        |
-| `SPC p p`   | list all projects                        |
+| 快捷键      | 描述                                         |
+| ----------- | -------------------------------------------- |
+| `SPC p f`   | 在当前工程中查找文件                         |
+| `SPC p /`   | 在当前工程中搜索文件（fuzzy search for text) |
+| `SPC p k`   | 关闭当前工程的所有缓冲区                     |
+| `SPC p t`   | find project root                            |
+| `SPC p p`   | 显示所有工程                                 |
 
 ## EditorConfig
 
@@ -1773,17 +1775,19 @@ SpaceVim has support for [EditorConfig](http://editorconfig.org/), a configurati
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 
-## Vim Server
+## Vim 服务器
 
-SpaceVim starts a server at launch. This server is killed whenever you close your Vim windows.
+SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。
 
-**Connecting to the Vim server**
+**连接到 Vim 服务器**
 
-If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
+如果你使用 Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)，然后增加如下配置到你的 bashrc。
 
+```bash
     export PATH=$PATH:$HOME/.SpaceVim/bin
+```
 
-Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
+Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing Neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
