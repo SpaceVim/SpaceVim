@@ -19,7 +19,7 @@ lang: cn
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
   - [启动函数](#启动函数)
-  - [Vim 兼容模式](#Vim-兼容模式)
+  - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
   - [调试上游插件](#调试上游插件)
 - [概念](#概念)
@@ -56,7 +56,7 @@ lang: cn
       - [新建空白 buffer](#新建空白-buffer)
       - [特殊 buffer](#特殊-buffer)
       - [文件操作相关快捷键](#文件操作相关快捷键)
-      - [Vim 和 SpaceVim 相关文件](#Vim-和-spacevim-相关文件)
+      - [Vim 和 SpaceVim 相关文件](#vim-和-spacevim-相关文件)
     - [文件树](#文件树)
       - [文件树中的常用操作](#文件树中的常用操作)
       - [文件树中打开文件](#文件树中打开文件)
@@ -75,13 +75,13 @@ lang: cn
       - [在网上进行搜索](#在网上进行搜索)
     - [实时代码检索](#实时代码检索)
     - [保持高亮](#保持高亮)
-    - [Highlight current symbol](#highlight-current-symbol)
+    - [高亮光标下变量](#高亮光标下变量)
   - [编辑](#编辑)
     - [粘贴文本](#粘贴文本)
       - [粘贴文本自动缩进](#粘贴文本自动缩进)
     - [文本操作命令](#文本操作命令)
     - [文本插入命令](#文本插入命令)
-    - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [增加或减小数字](#增加或减小数字)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
       - [Examples](#examples)
@@ -92,10 +92,10 @@ lang: cn
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
 - [EditorConfig](#editorconfig)
-- [Vim 服务器](#Vim-服务器)
+- [Vim 服务器](#vim-服务器)
 - [成就](#成就)
 
-<!-- Vim-markdown-toc -->
+<!-- vim-markdown-toc -->
 
 ## 核心思想
 
@@ -1470,7 +1470,7 @@ FlyGrep 缓冲区的按键绑定：
 SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
 同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示。
 
-#### Highlight current symbol
+#### 高亮光标下变量
 
 SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
 
@@ -1813,4 +1813,4 @@ Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a f
 
 <!-- SpaceVim Achievements end -->
 
-<!-- vim:set nowrap: -->
+<!-- vim:set nowrap cole=0: -->
