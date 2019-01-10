@@ -174,6 +174,9 @@ function! s:open_default_shell() abort
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
         let s:term_buf_nr = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
+        let b:_spacevim_shell = shell
+        " use WinEnter autocmd to update statusline
+        doautocmd WinEnter
       endif
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
