@@ -121,13 +121,13 @@ lang: cn
 
 ## 显著特性
 
-- **详细的文档:** 在 SpaceVim 中通过`:h SpaceVim`来访问 SpaceVim 帮助文档。
-- **优雅简洁的界面:** 你将会喜欢这样的优雅而实用的界面。
-- **确保手指不离开主键盘区域:** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
-- **快捷键辅助系统:** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
-- **更快的启动时间:** 得益于 dein.vim, SpaceVim 中 90% 的插件都是按需载入的。
-- **更少的肌肉损伤:** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
-- **更易扩展:** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
+- **详细的文档：** 在 SpaceVim 中通过`:h SpaceVim`来访问 SpaceVim 帮助文档。
+- **优雅简洁的界面：** 你将会喜欢这样的优雅而实用的界面。
+- **确保手指不离开主键盘区域：** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
+- **快捷键辅助系统：** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
+- **更快的启动时间：** 得益于 dein.vim, SpaceVim 中 90% 的插件都是按需载入的。
+- **更少的肌肉损伤：** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
+- **更易扩展：** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
 - **完美支持 Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
@@ -449,21 +449,21 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
 | `SPC t m v` | 显示/隐藏版本控制信息                                               |
 
-**nerd 字体安装:**
+**nerd 字体安装：**
 
 SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
-**语法检查信息:**
+**语法检查信息：**
 
 状态栏中语法检查信息元素如果被启用了，当语法检查结束后，会在状态栏中展示当前语法错误和警告的数量。
 
-**搜索结果信息:**
+**搜索结果信息：**
 
 当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，类似于 `20/22` 显示搜索结果总数以及当前结果的序号。具体的效果图如下：
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
-**电池状态信息:**
+**电池状态信息：**
 
 _acpi_ 可展示电池电量剩余百分比。
 
@@ -477,7 +477,7 @@ _acpi_ 可展示电池电量剩余百分比。
 
 所有的颜色都取决于不同的主题。
 
-**状态栏分割符:**
+**状态栏分割符：**
 
 可通过使用 `statusline_separator` 来定制状态栏分割符，例如使用非常常用的方向箭头作为状态栏分割符：
 
@@ -495,7 +495,7 @@ SpaceVim 所支持的分割符以及截图如下：
 | `nil`   | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
 | `fire`  | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
-**SpaceVim 功能模块:**
+**SpaceVim 功能模块：**
 
 功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `statusline_unicode_symbols = false` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
 
@@ -821,7 +821,7 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 **通过 Unite/Denite 浏览快捷键**
 
-可以通过 `SPC ？` 使用 Unite 将当前快捷键罗列出来。然后可以输入快捷键按键字母或者描述，Unite 可以通过模糊匹配，并展示结果。
+可以通过 `SPC ?` 使用 Unite 将当前快捷键罗列出来。然后可以输入快捷键按键字母或者描述，Unite 可以模糊匹配并展示结果。
 
 ![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
@@ -829,7 +829,7 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 #### 获取帮助信息
 
-Denite/Unite 是一个强大的信息筛选浏览器，这类似于 emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
+Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
 | 快捷键      | 描述                                               |
 | ----------- | -------------------------------------------------- |
@@ -941,7 +941,7 @@ merged = 0
 | `SPC j k` | 跳至下一行，并且对齐下一行                       |
 | `SPC j l` | 跳至某一行 (easymotion)                          |
 | `SPC j q` | show the dumb-jump quick look tooltip (TODO)     |
-| `SPC j u` | 跳至窗口某个 url （TODO）                        |
+| `SPC j u` | 跳至窗口某个 URL (TODO)                          |
 | `SPC j v` | 跳至某个 Vim 函数的定义处 (TODO)                 |
 | `SPC j w` | 跳至 Buffer 中某个单词 (easymotion)              |
 
@@ -1196,7 +1196,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ### 以 `z` 开头的命令
 
-当你不记得按键映射时，你可以在普通模式下输入前缀 `z` , 然后你会看到所有以 `z` 为前缀的函数映射。
+当你不记得按键映射时，你可以在普通模式下输入前缀 `z`, 然后你会看到所有以 `z` 为前缀的函数映射。
 
 | 快捷键      | 描述                                         |
 | ----------- | -------------------------------------------- |
@@ -1263,7 +1263,7 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用�
 举个例子 `SPC s a b` 将会搜索当前光标下的单词。
 
 如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `g:spacevim_search_tools`
-列表中的第一个工具。列表中的工具默认的顺序为: `rg`, `ag`, `pt`, `ack`, `grep`。
+列表中的第一个工具。列表中的工具默认的顺序为：`rg`, `ag`, `pt`, `ack`, `grep`。
 举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
 
 下表是全部的工具键：
@@ -1284,7 +1284,7 @@ SpaceVim 中的搜索命令是以 `SPC s` 为前缀的，前一个键是使用�
 | 给定目录的文件 | f   |
 | 当前工程       | p   |
 
-可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子: `SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
+可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子：`SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
 
 注意：
 
@@ -1411,7 +1411,7 @@ endfunction
 | `SPC s r p`          | rg                                                  |
 | `SPC s r P`          | rg with default text                                |
 
-**提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`　，就比如 `SPC s p`。(TODO)
+**提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
 
 ##### 后台进行工程搜索
 
@@ -1692,7 +1692,7 @@ SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四�
 - encoding (enc)        : utf-8
 - termencoding (tenc)   : utf-8 (only supported in Vim)
 
-修复混乱的显示: `SPC e a` 是自动选择文件编码的按键映射。在选择好文件编码方式后，你可以运行下面的代码来修复编码：
+修复混乱的显示：`SPC e a` 是自动选择文件编码的按键映射。在选择好文件编码方式后，你可以运行下面的代码来修复编码：
 
 ```vim
 set enc=utf-8
@@ -1739,7 +1739,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 | `SPC e .` | 错误暂态（error transient state)                                            |
 
 下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误，
-甚至可检查 Vim 位置列表的所有错误。这包括下面的例子: 在已被保存的位置列表缓冲区进行搜索。
+甚至可检查 Vim 位置列表的所有错误。这包括下面的例子：在已被保存的位置列表缓冲区进行搜索。
 默认提示符：
 
 | 提示符 | 描述        | 自定义选项                  |
@@ -1771,7 +1771,7 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 
 ## EditorConfig
 
-SpaceVim has support for [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+SpaceVim has supported for [EditorConfig](http://editorconfig.org/), a configuration file to "define and maintain consistent coding styles between different editors and IDEs."
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 

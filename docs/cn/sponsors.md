@@ -19,7 +19,7 @@ lang: cn
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | <img src="../../img/weixin.png" height="150" width="150"> | <img src="../../img/zhifubao.png" height="150" width="150"> |
 
-比特币: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
+比特币：1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ## 历史赞助
 

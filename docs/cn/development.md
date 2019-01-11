@@ -1,5 +1,5 @@
 ---
-title:  "开发者文档"
+title: "开发者文档"
 description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提交问题 2. 如何贡献代码 3. 代码格式规则 4. 版本迭代信息"
 lang: cn
 ---
@@ -45,7 +45,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ## 寻求帮助
 
-在你建立 issue 之前，先确认你已经浏览过下面的 faq 以及 SpaceVim 文档。
+在你建立 issue 之前，先确认你已经浏览过下面的 FAQ 以及 SpaceVim 文档。
 
 - <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
 - [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim的官方文档
@@ -61,7 +61,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 - 按照下面的问题格式，建立清晰的问题标题
 
-- 包括 bug 出现的细节，一步一步重现 bug 出现的操作
+- 包括 Bug 出现的细节，一步一步重现 Bug 出现的操作
 
 ## 贡献代码
 
@@ -198,7 +198,7 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 
 把文件头中的默认作者名字(Shidong Wang)改为你自己的名字。
 
-下面是一个创建一个名字为`foo`的新的 layer 的实例
+下面是一个创建一个名字为`foo`的新 layer 的实例
 
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.

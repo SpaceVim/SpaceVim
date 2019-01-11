@@ -1,5 +1,5 @@
 ---
-title:  "主页"
+title: "主页"
 description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织和管理插件，提高 Vim 环境配置效率。"
 lang: cn
 ---
@@ -49,13 +49,13 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 当前最新发布的稳定版本是 v1.0.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
 或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
-- SpaceVim 是尝试搭建一个 IDE 吗?
+- SpaceVim 是尝试搭建一个 IDE 吗？
 
 是的，通过模块的方式，将各种功能封装成相应的模块，对多种语言提供了语言开发模块，目标是尝试模拟简易的集成开发环境。
 
 - SpaceVim 支持什么版本的 Vim/Neovim？
 
-建议使用 Vim7.4 或者 Neovim v0.1.7及其以上版本。
+建议使用 Vim 7.4 或者 Neovim v0.1.7及其以上版本。
 
 更多常见问题请阅读 [《SpaceVim FAQ》](faq/)
 

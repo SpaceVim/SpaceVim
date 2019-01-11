@@ -1,5 +1,5 @@
 ---
-title:  "入门指南"
+title: "入门指南"
 description: "SpaceVim 入门教程，包括安装初始化配置等内容"
 lang: cn
 ---
@@ -7,8 +7,8 @@ lang: cn
 
 # SpaceVim 入门指南
 
-如果你从未使用过 SpaceVim ，建议先阅读这篇简短的教程。这篇教程主要讲述：
-如何安装 SpaceVim ，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。
+如果你从未使用过 SpaceVim，建议先阅读这篇简短的教程。这篇教程主要讲述：
+如何安装 SpaceVim，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。
 
 <!-- vim-markdown-toc GFM -->
 
@@ -27,7 +27,7 @@ lang: cn
 在安装 SpaceVim 之前，你需要确保电脑上已经安装了 `Git` 和 `cURL`。这两个工具用来
 下载插件以及字体。
 
-如果在终端中使用 Vim 或 Neovim ，还需要设置终端的字体。
+如果在终端中使用 Vim 或 Neovim，还需要设置终端的字体。
 
 #### Linux 或 macOS
 
@@ -93,7 +93,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 3: 1 ➛ ¹
     # 4: 1 ➛ 1
     buffer_index_type = 4
-    # 显示/隐藏顶部标签栏上的文件类型图标，这一图标需要安装 nerd fonts ，
+    # 显示/隐藏顶部标签栏上的文件类型图标，这一图标需要安装 nerd fonts，
     # 如果未能成功安装这一字体，可以隐藏图标
     enable_tabline_filetype_icon = true
     # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等

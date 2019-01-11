@@ -1,5 +1,5 @@
 ---
-title:  "约定"
+title: "约定"
 description: "描述贡献代码所需遵循的约定俗成的规范，包括 Vim 脚本的代码规范以及 markdown 文件的代码规范。"
 lang: cn
 ---
@@ -34,7 +34,7 @@ lang: cn
     - [连续行](#连续行)
     - [命名](#命名)
 - [markdown 代码规范](#markdown-代码规范)
-- [感谢:](#感谢)
+- [感谢：](#感谢)
 
 <!-- vim-markdown-toc -->
 
@@ -80,11 +80,11 @@ Vim 具有高度可定制性。用户可以更改很多的默认设置，包括�
 
 **避免命令意想不到的副作用**
 
-避免使用 :s[ubtitute] 因为它引动光标并打印错误消息。首选功能(例如 search()) 比 s[ubtitute] 更适用于脚本。
+避免使用 `:s[ubtitute]` 因为它引动光标并打印错误消息。首选功能(例如 search()) 比 s[ubtitute] 更适用于脚本。
 
-这意味着 g 标志取决于上层中 gdefault 设置。如果你用了 :subtitute 你必须要保存 gdefault, 把它设置为 0 或 1 预先生成替换并且在操作完成后还原它。
+这意味着 g 标志取决于上层中 gdefault 设置。如果你用了 `:subtitute` 你必须要保存 gdefault, 把它设置为 0 或 1 预先生成替换并且在操作完成后还原它。
 For many Vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
-有很多内置的Vim命令，函数，可以在更小的影响下完成同样的事情。查看:help functions() 查看内置的函数表。
+有很多内置的 Vim 命令，函数，可以在更小的影响下完成同样的事情。查看 `:help functions()` 查看内置的函数表。
 
 #### 脆弱命令
 
@@ -92,7 +92,7 @@ For many Vim commands, functions exist that do the same thing with fewer side ef
 
 一直使用普通模式(normal) 在普通模式下安装。后者取决于用户的按键映射，可以做任何事情。
 
-避免 `:s[ubtitute]` ，因为它的行为取决于上层的一些运行设置。
+避免 `:s[ubtitute]`，因为它的行为取决于上层的一些运行设置。
 
 其它同样的命令的应用，在此不再列出。
 
@@ -123,7 +123,7 @@ Vim 脚本在处理一些类型(style)时有不安全，不直观的行为。举
 
 在使用变量前，明确检查变量的类型。使用 maktaba#ensure 中的函数(functions from maktaba#ensure) 或 check maktaba#value 或 type() 找出你自己的错误。
 
-使用 :unlet 对变量使用(:unlet)可能更改变量的类型，尤其是在循环中赋值的时候。
+使用 `:unlet` 对变量使用(:unlet)可能更改变量的类型，尤其是在循环中赋值的时候。
 
 #### Python
 
@@ -259,7 +259,7 @@ autocommand BufEnter <buffer>
 
 #### 命名
 
-总的来说，使用像这样的插件名 plugin-names-like-this ，像这样的函数名 FunctionNamesLikeThis ，像这样的命令名 CommandNamesLikeThis ，像这样的参数组 augroup_names_like_this ，像这样的变量名 variable_names_like_this 。
+总的来说，使用像这样的插件名 plugin-names-like-this，像这样的函数名 FunctionNamesLikeThis ，像这样的命令名 CommandNamesLikeThis ，像这样的参数组 augroup_names_like_this ，像这样的变量名 variable_names_like_this 。
 
 总是在变量名前加上它们的范围前缀
 - plugin-names-like-this
@@ -280,13 +280,13 @@ autocommand BufEnter <buffer>
   - 本地函数的变量前缀为 l:
   - Vim 预定义(Vim-predefinded)变量前缀为 v:
   - 本地缓冲区(Buffer-local)变量的前缀为 b:
-  - g:, s:, 和 a: 前缀必须使用。
+  - g:, s:, 和 a: 前缀必须使用
   - b: 当你想要改变本地缓冲区(buffer-local)的变量的语义时前缀为 b:
   - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 ## markdown 代码规范
 
-## 感谢:
+## 感谢：
 
 - link : <https://google.github.io/styleguide/vimscriptguide.xml>
 - link : <https://google.github.io/styleguide/vimscriptfull.xml>
