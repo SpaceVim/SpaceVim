@@ -306,7 +306,7 @@ SpaceVim 的[模块首页](../layers/)。
 比如，调试内置语法检查插件 neomake.vim
 
 ```toml
-[option]
+[options]
     disabled_plugins = ["neomake.vim"]
 ```
 
