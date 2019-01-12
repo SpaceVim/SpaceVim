@@ -153,6 +153,11 @@ function! s:open_default_shell() abort
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
       if has('nvim')
+        if s:SYSTEM.isWindows
+          let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+        else
+          let shell = empty($SHELL) ? 'bash' : $SHELL
+        endif
         terminal
         " @bug cursor is not cleared when open terminal windows.
         " in neovim-qt when using :terminal to open a shell windows, the orgin
@@ -175,6 +180,9 @@ function! s:open_default_shell() abort
         endif
         let s:term_buf_nr = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
       endif
+      let b:_spacevim_shell = shell
+      " use WinEnter autocmd to update statusline
+      doautocmd WinEnter
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
       setlocal nobuflisted nonumber norelativenumber
