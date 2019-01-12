@@ -14,7 +14,7 @@ call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#dev#todo#list()'
 
 " after run make test, the vader will be downloaded to ./build/vader/
 
-set rtp+=build/vader
+let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/build/vader'
 
 " vader language specific key bindings
 
