@@ -575,7 +575,7 @@ function! SpaceVim#layers#core#statusline#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
-        \ 'toggle the statuline itself', 1)
+        \ 'toggle the statusline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(1),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',
