@@ -13,5 +13,5 @@ coverage:
         target: 35%  # we always want 35% coverage here
         paths: "autoload/SpaceVim/api/"  # only include coverage in "autoload/SpaceVim/api/" folder
       all:  # declare a new status context "all"
-        target: 35%  # we always want 35% coverage here
+        target: 25%  # we always want 35% coverage here
         paths: "!tests/"  # remove all files in "tests/"
