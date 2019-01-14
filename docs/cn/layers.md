@@ -64,9 +64,9 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [checkers](checkers/)                 | 这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置。                                          |
 | [chinese](chinese/)                   | 这一模块为 SpaceVim 的中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。                                           |
 | [colorscheme](colorscheme/)           | 这一模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随机主题等特性。 |
-| [core#banner](core/banner/)           | 这一模块为 SpaceVim 提供了许多可以默认显示在首页的 Logo。                                                                  |
+| [core#banner](core/banner/)           | 这一模块为 SpaceVim 提供了许多可以默认显示在首页的 Logo。                                                                           |
 | [core#statusline](core/statusline/)   | 这一模块为 SpaceVim 提供了默认的模式化的状态栏支持。                                                                                |
-| [core#tabline](core/tabline/)         | 这一模块为 SpaceVim 提供了一个更好的标签栏。                                                                               |
+| [core#tabline](core/tabline/)         | 这一模块为 SpaceVim 提供了一个更好的标签栏。                                                                                        |
 | [core](core/)                         | 这一模块为 SpaceVim 提供了启动及基本操作所必须的插件及配置。                                                                        |
 | [cscope](cscope/)                     | 这一模块为 SpaceVim 提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令。                                    |
 | [ctrlp](ctrlp/)                       | 这一模块为 SpaceVim 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。                                     |
