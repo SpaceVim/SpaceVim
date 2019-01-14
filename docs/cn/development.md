@@ -48,7 +48,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 在你建立 issue 之前，先确认你已经浏览过下面的 FAQ 以及 SpaceVim 文档。
 
 - <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
-- [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim的官方文档
+- [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim 的官方文档
 
 ## 反馈问题
 
@@ -137,8 +137,8 @@ Those PRs are merged and explicitly not fast-forwarded.
 
 
 - 用现在时和祈使句：例如"Fix bug"，而不是"fixed bug" 或者"fixes bug"。
-- 以大写字母开头，短摘要开头(72个字符或者更少)，以空行结尾。
-- 如果需要的话，可以用每行72个字符的格式添加一个或多个详细的段落。
+- 以大写字母开头，短摘要开头（72 个字符或者更少），以空行结尾。
+- 如果需要的话，可以用每行 72 个字符的格式添加一个或多个详细的段落。
 - 每个独立的段落以空行结尾。
 
 这是一个提交信息的模版：

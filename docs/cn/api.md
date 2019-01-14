@@ -21,7 +21,7 @@ lang: cn
 
 ## 使用方法
 
-可以通过 `SpaceVim#api#import()` 函数导入相关 API ，参考以下示例：
+可以通过 `SpaceVim#api#import()` 函数导入相关 API，参考以下示例：
 
 ```vim
 " 导入 file API，并赋值给变量 s:file
