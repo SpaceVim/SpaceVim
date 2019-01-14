@@ -60,6 +60,8 @@ function! SpaceVim#layers#lang#markdown#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
   nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
   xnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
+  nnoremap <silent> <plug>(format-all-tables)    :call <SID>format_all_tables()<Cr>
+  xnoremap <silent> <plug>(format-all-tables)    :call <SID>format_all_tables()<Cr>
   augroup spacevim_layer_lang_markdown
     autocmd!
     autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -71,9 +73,10 @@ function! s:mappings() abort
     let g:_spacevim_mappings_space = {}
   endif
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
+  call SpaceVim#mapping#space#langSPC('nmap' , ['l' , 'ft']  , "Tabularize /|"                , 'Format table under cursor'           , 1)
+  call SpaceVim#mapping#space#langSPC('nmap' , ['l' , 'fa']  , "<plug>(format-all-tables)"    , 'Format all tables in current buffer' , 0  , 1)
+  call SpaceVim#mapping#space#langSPC('nmap' , ['l' , 'p']   , "MarkdownPreview"              , 'Real-time markdown preview'          , 1)
+  call SpaceVim#mapping#space#langSPC('nmap' , ['l' , 'k']   , '<plug>(markdown-insert-link)' , 'add link url'                        , 0  , 1)
 endfunction
 
 function! s:generate_remarkrc() abort
@@ -112,4 +115,19 @@ function! s:markdown_insert_url() abort
   keepjumps call cursor(pos1[1], scope[0])
 endfunction
 
-
+function! s:format_all_tables() abort
+    let l:save_cursor = getpos(".")
+    let l:last_linenr = 0
+    let l:linenr = 0
+    execute "normal! gg"
+    while v:true
+        let l:linenr = search('\v\|(\s*:?-+:?\s*\|)+', 'nW')
+        if l:linenr != l:last_linenr
+            let l:last_linenr = l:linenr
+            execute l:linenr . "Tabularize /|"
+        else
+            break
+        endif
+    endwhile
+    call setpos(".", save_cursor)
+endfunction
