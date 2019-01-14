@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core 模块"
-description: "core 模块主要包括 SpaceVim 启动及基本操作所必须的插件及配置。"
+description: "这一模块为 SpaceVim 提供了启动及基本操作所必须的插件及配置。"
 lang: cn
 ---
 

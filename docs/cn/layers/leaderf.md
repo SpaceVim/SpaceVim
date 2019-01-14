@@ -1,6 +1,6 @@
 ---
-title: "SpaceVim leaderf模块"
-description: "提供以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
+title: "SpaceVim leaderf 模块"
+description: "这一模块为 SpaceVim 提供了以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块介绍
 
-这一模块在 leaderf 的基础上做了时当的包装和定制，提供了搜索文件、函数列表、
+这一模块在 leaderf 的基础上做了适当的包装和定制，提供了搜索文件、函数列表、
 命令历史等等特性。
 
 ## 启用模块

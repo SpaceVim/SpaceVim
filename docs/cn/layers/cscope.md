@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim cscope 模块"
-description: "cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令"
+description: "这一模块为 SpaceVim 提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令。"
 lang: cn
 ---
 
@@ -25,8 +25,8 @@ lang: cn
 
 ## 模块特性
 
-- 通过 cscope 为 c 和 c++ 建立索引，并提供查询功能
-- 通过 Pycscope 为 python 建立索引，并提供查询功能
+- 通过 cscope 为 C 和 C++ 建立索引，并提供查询功能
+- 通过 Pycscope 为 Python 建立索引，并提供查询功能
 
 ## 安装依赖及启用模块
 

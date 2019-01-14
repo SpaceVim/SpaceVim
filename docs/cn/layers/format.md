@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim format 模块"
-description: "该模块为 SpaceVim 提供了代码异步格式化的功能，支持高度自定义配置和多种语言。"
+description: "这一模块为 SpaceVim 提供了代码异步格式化功能，支持高度自定义配置和多种语言。"
 lang: cn
 ---
 
