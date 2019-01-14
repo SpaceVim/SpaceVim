@@ -94,7 +94,7 @@ Base on JavaUnite, you can use `SPC l r c` to run current function or use `SPC l
 
 ## Code formatting
 
-For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
+For formatting java code, you also nEed have [uncrustify](https://github.com/uncrustify/uncrustify) or [astyle](http://astyle.sourceforge.net/) in your PATH.
 BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
 
 ![format-java](https://user-images.githubusercontent.com/13142418/46323426-ccadde80-c620-11e8-9726-d99025f3bf76.gif)
