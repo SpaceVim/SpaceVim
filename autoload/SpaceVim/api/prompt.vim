@@ -89,15 +89,16 @@ func! s:self._handle_input(...) abort
     endif
     if self._c_r_mode ==# 1 && char =~# '[a-zA-Z0-9"+:/]'
       let reg = '@' . char
-      let paste = eval(reg)
+      let paste = get(split(eval(reg), "\n"), 0, '')
       let self._prompt.begin = self._prompt.begin . paste
       let self._prompt.cursor = matchstr(self._prompt.end, '.$')
       let self._c_r_mode = 0
       call self._build_prompt()
-      continue
     elseif char ==# "\<C-r>"
       let self._c_r_mode = 1
-      call timer_start(400, self._c_r_mode_off)
+      call timer_start(2000, self._c_r_mode_off)
+      call self._build_prompt()
+      continue
     elseif char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
