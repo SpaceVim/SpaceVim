@@ -174,7 +174,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 **通过 git 进行更新**
 
-可通过在 SpaceVim 目录中手动执行 `git pull`，SpaceVim 在 Windows 下默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
+可通过在 SpaceVim 目录中手动执行 `git pull`，SpaceVim 在 Windows 下的默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
 `git -C ~/.SpaceVim pull`
 
 ### 更新插件
@@ -1440,9 +1440,9 @@ endfunction
 | `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在 Vim 中使用谷歌 suggestions，你需要在你的配置文件中加入如下配置：
+**注意**: 为了在 Vim 中使用谷歌 suggestions，你需要在你的配置文件的[options]片断中加入如下配置：
 
-`let g:spacevim_enable_googlesuggest = 1`
+`enable_googlesuggest = 1`
 
 #### 实时代码检索
 
@@ -1467,7 +1467,7 @@ FlyGrep 缓冲区的按键绑定：
 
 #### 保持高亮
 
-SPaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
+SpaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
 同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示。
 
 #### 高亮光标下变量
