@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#extra 模块"
-description: "该模块主要为一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性"
+description: "这一模块为 SpaceVim 提供了一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性。"
 lang: cn
 ---
 
@@ -28,8 +28,8 @@ lang: cn
 | coffee script       | 语法高亮                     |
 | irssi config        | 语法高亮                     |
 | vimperator config   | 语法高亮                     |
-| Pug (formerly Jade) | 语法高亮, 代码对齐           |
-| mustache            | 语法高亮, 括号跳转, 文本对象 |
+| Pug (formerly Jade) | 语法高亮，代码对齐           |
+| mustache            | 语法高亮，括号跳转，文本对象 |
 
 ## 启用模块
 

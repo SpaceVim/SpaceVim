@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim chinese 模块"
-description: "该模块为中文用户提供了中文的 Vim 帮助文档，同时为部分插件提供了中文帮助文档。"
+description: "这一模块为 SpaceVim 的中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。"
 lang: cn
 ---
 

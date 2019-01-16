@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim japanese 模块"
-description: "该模块为日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。"
+description: "这一模块为 SpaceVim 的日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。"
 lang: cn
 ---
 
@@ -29,7 +29,7 @@ lang: cn
 
 ## 模块配置
 
-加在该模块后，默认的帮助文件语言并为设置为日文，可以通过 SpaceVim 选项
+加载该模块后，默认的帮助文件语言并未设置为日文，可以通过 SpaceVim 选项
 `vim_help_language` 来设置，可将其值设为 `"jp"`。
 
 ```toml

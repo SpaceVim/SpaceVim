@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#asciidoc layer"
-description: "这一模块为 asciidoc 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
+description: "这一模块为 SpaceVim 提供了 AsciiDoc 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。"
 lang: cn
 ---
 
@@ -15,7 +15,7 @@ lang: cn
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 asciidoc 文件夹编辑支持。该模块包括以下插件：
+这一模块为 SpaceVim 提供了 AsciiDoc 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。该模块包括以下插件：
 
 - `wsdjeg/vim-asciidoc`
 - `Raimondi/VimRegStyle`

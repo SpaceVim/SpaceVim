@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim denite 模块"
-description: "提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
+description: "这一模块为 SpaceVim 提供了以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。"
 lang: cn
 ---
 
@@ -16,9 +16,7 @@ lang: cn
 
 ## 模块描述
 
-提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。这一模块需要 Vim
-或者 Neovim 支持 `+python3`。
-
+提供以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。这一模块需要 Vim/Neovim 支持 `+python3`。
 ## 启用模块
 
 denite 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：

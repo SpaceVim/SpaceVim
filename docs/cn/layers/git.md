@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim git 模块"
-description: "这一模块为 SpaceVim 提供了 git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 git 插件。"
+description: "这一模块为 SpaceVim 提供了 Git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 Git 插件。"
 lang: cn
 ---
 
