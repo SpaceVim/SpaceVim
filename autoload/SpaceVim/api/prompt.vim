@@ -60,6 +60,10 @@ func! s:self.open() abort
   let &lazyredraw = save_redraw
 endf
 
+func! s:self._c_r_mode_off(timer) abort
+  let self._c_r_mode = 0
+endf
+
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
   return (type(ret) == type(0) ? nr2char(ret) : ret)
@@ -76,23 +80,24 @@ func! s:self._handle_input(...) abort
     endif
     call self._build_prompt()
   endif
-  let self.c_r_mode = 0
+  let self._c_r_mode = 0
   while self._quit == 0
     let char = self._getchar()
     if has_key(self._function_key, char)
       call call(self._function_key[char], [])
       continue
     endif
-    if self.c_r_mode ==# 1
+    if self._c_r_mode ==# 1 && char =~# '[a-zA-Z0-9"+:/]'
       let reg = '@' . char
       let paste = eval(reg)
       let self._prompt.begin = self._prompt.begin . paste
       let self._prompt.cursor = matchstr(self._prompt.end, '.$')
-      let self.c_r_mode = 0
+      let self._c_r_mode = 0
       call self._build_prompt()
       continue
     elseif char ==# "\<C-r>"
-      let self.c_r_mode = 1
+      let self._c_r_mode = 1
+      call timer_start(400, self._c_r_mode_off)
     elseif char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
