@@ -58,6 +58,7 @@ function! SpaceVim#layers#shell#config() abort
       exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
       exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
       exe 'tnoremap <expr><silent><C-w>  SpaceVim#layers#shell#ctrl_w()'
+      exe 'tnoremap <expr><silent><C-r>  SpaceVim#layers#shell#ctrl_r()'
     endif
   endif
   " in window gvim, use <C-d> to close terminal buffer
@@ -76,6 +77,13 @@ func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('$')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
+endfunction
+
+func! SpaceVim#layers#shell#ctrl_r() abort
+  let reg = getchar()
+  if reg == 43
+    return @+
+  endif
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort
@@ -153,6 +161,11 @@ function! s:open_default_shell() abort
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
       if has('nvim')
+        if s:SYSTEM.isWindows
+          let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+        else
+          let shell = empty($SHELL) ? 'bash' : $SHELL
+        endif
         terminal
         " @bug cursor is not cleared when open terminal windows.
         " in neovim-qt when using :terminal to open a shell windows, the orgin
@@ -175,6 +188,9 @@ function! s:open_default_shell() abort
         endif
         let s:term_buf_nr = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
       endif
+      let b:_spacevim_shell = shell
+      " use WinEnter autocmd to update statusline
+      doautocmd WinEnter
       let s:shell_win_nr = winnr()
       let w:shell_layer_win = 1
       setlocal nobuflisted nonumber norelativenumber

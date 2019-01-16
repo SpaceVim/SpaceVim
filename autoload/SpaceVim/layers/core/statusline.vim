@@ -342,6 +342,15 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
           \ . s:lsep
           \ . '%#SpaceVim_statusline_b# Gista %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &buftype ==# 'terminal'
+    let st =  '%#SpaceVim_statusline_ia#'
+          \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . '%#SpaceVim_statusline_b# Terminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+    if !empty(get(b:, '_spacevim_shell', ''))
+      let st .= '%#SpaceVim_statusline_c# %{b:_spacevim_shell} %#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+    endif
+    return st
   elseif &filetype ==# 'gina-status'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Gina status %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
@@ -575,7 +584,7 @@ function! SpaceVim#layers#core#statusline#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
-        \ 'toggle the statuline itself', 1)
+        \ 'toggle the statusline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(1),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',

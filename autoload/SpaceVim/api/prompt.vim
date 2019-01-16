@@ -76,13 +76,24 @@ func! s:self._handle_input(...) abort
     endif
     call self._build_prompt()
   endif
+  let self.c_r_mode = 0
   while self._quit == 0
     let char = self._getchar()
     if has_key(self._function_key, char)
       call call(self._function_key[char], [])
       continue
     endif
-    if char ==# "\<Right>"
+    if self.c_r_mode ==# 1
+      let reg = '@' . char
+      let paste = eval(reg)
+      let self._prompt.begin = self._prompt.begin . paste
+      let self._prompt.cursor = matchstr(self._prompt.end, '.$')
+      let self.c_r_mode = 0
+      call self._build_prompt()
+      continue
+    elseif char ==# "\<C-r>"
+      let self.c_r_mode = 1
+    elseif char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
       let self._prompt.end = substitute(self._prompt.end, '^.', '', 'g')
