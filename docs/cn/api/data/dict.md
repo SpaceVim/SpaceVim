@@ -1,6 +1,6 @@
 ---
 title: "data#dict api"
-description: "data#dict api 提供了一些处理字典变量的常用方法"
+description: "data#dict API 提供了一些处理字典变量的常用方法，包括基础的增删改查。"
 ---
 
 # [Available APIs](../../) >> data#dict

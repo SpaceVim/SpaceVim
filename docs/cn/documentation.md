@@ -960,7 +960,7 @@ merged = 0
 
 ##### 窗口操作常用快捷键
 
-每一个窗口，都有一个编号，该编号显示在状态栏的最前端，可通过 `SPC 编号` 进行快速窗口跳转。
+每一个窗口都有一个编号，该编号显示在状态栏的最前端，可通过 `SPC 编号` 进行快速窗口跳转。
 
 | 快捷键  | 描述       |
 | ------- | ---------- |
@@ -978,14 +978,14 @@ merged = 0
 
 | 快捷键               | 描述                                                                           |
 | -------------------- | ------------------------------------------------------------------------------ |
-| `SPC w TAB`/`<Tab>`  | 在统一标签内进行窗口切换                                                       |
+| `SPC w TAB`/`<Tab>`  | 在同一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
 | `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
 | `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
 | `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
 | `SPC w d`            | 删除一个窗口                                                                   |
 | `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
-| `SPC w D`            | 选择一个窗口，并且关闭                                                         |
+| `SPC w D`            | 选择一个窗口并关闭                                                             |
 | `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)        |
 | `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
 | `SPC w f`            | toggle follow mode (TODO)                                                      |
@@ -993,17 +993,17 @@ merged = 0
 | `SPC w h`            | 移至左边窗口                                                                   |
 | `SPC w H`            | 将窗口向左移动                                                                 |
 | `SPC w j`            | 移至下方窗口                                                                   |
-| `SPC w J`            | 将窗口移至下方                                                                 |
+| `SPC w J`            | 将窗口向下移动                                                                 |
 | `SPC w k`            | 移至上方窗口                                                                   |
-| `SPC w K`            | 将窗口移至上方                                                                 |
+| `SPC w K`            | 将窗口向上移动                                                                 |
 | `SPC w l`            | 移至右方窗口                                                                   |
-| `SPC w L`            | 将窗口移至右方                                                                 |
+| `SPC w L`            | 将窗口向右移动                                                                 |
 | `SPC w m`            | 最大化/最小化窗口（最大化相当于关闭其他窗口）(TODO, now only support maximize) |
 | `SPC w M`            | 选择窗口进行替换                                                               |
 | `SPC w o`            | 按序切换标签页                                                                 |
 | `SPC w p m`          | open messages buffer in a popup window (TODO)                                  |
 | `SPC w p p`          | close the current sticky popup window (TODO)                                   |
-| `SPC w r`            | 按序切换窗口                                                                   |
+| `SPC w r`            | 顺序切换窗口                                                                   |
 | `SPC w R`            | 逆序切换窗口                                                                   |
 | `SPC w s or SPC w -` | 水平分割窗口                                                                   |
 | `SPC w S`            | 水平分割窗口，并切换至新窗口                                                   |
