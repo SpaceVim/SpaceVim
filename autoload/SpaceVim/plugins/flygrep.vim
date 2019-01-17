@@ -580,7 +580,6 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   if has('gui_running')
     let cursor_hi = s:HI.group2dict('Cursor')
-    let g:wsd = cursor_hi
     call s:HI.hide_in_normal('Cursor')
   endif
   " setlocal nomodifiable
