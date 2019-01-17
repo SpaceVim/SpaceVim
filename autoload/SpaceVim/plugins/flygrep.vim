@@ -294,6 +294,8 @@ function! s:grep_stderr(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+  redraw
+  call s:MPT._build_prompt()
   redrawstatus
   let s:grepid = 0
 endfunction
