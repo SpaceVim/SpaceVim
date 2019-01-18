@@ -7,7 +7,9 @@ commentsID: "Grep on the fly"
 comments: true
 ---
 
-# Asynchronous grep on the fly
+# [Blogs](../blog/) >> Asynchronous grep on the fly
+
+{{ page.date | date_to_string }}
 
 FlyGrep means **grep on the fly**, it will update the result as you type. Of course, it is running
 asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
