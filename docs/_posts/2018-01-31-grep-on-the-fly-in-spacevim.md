@@ -13,48 +13,50 @@ lang: cn
 
 {{ page.date | date_to_string }}
 
-FlyGrep means **grep on the fly**, it will update the result as you type. Of course, it is running
-asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
-through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
-This ia a built-in plugin in SpaceVim, and we also separated a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
+FlyGrep 指的是 **grep on the fly**，将根据用户输入实时展示搜索结果。当然，这些搜索命令都是异步执行的。
+在使用这一功能之前，需要安装一个命令行搜索工具。目前 FlyGrep 支持的工具包括：`ag`、`rg`、`ack`、`pt` 和 `grep`，
+选择你喜欢的工具安装即可。
 
-## Install
+这是一个 SpaceVim 内置插件，当然也自动剥离出一个独立的插件供非 SpaceVim 用户使用：[FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
 
-In linux os, flygrep use grep by default, if you want a more fast tool, you can choose one of following:
+### 安装
+
+在 Linux 系统下，flygrep 默认使用 grep，如果需要使用更快的工具，可以安装以下某一个工具：
 
 - [ripgrep(rg)](https://github.com/BurntSushi/ripgrep)
 - [the_silver_searcher(ag)](https://github.com/ggreer/the_silver_searcher)
 - [the_platinum_searcher(pt)](https://github.com/monochromegane/the_platinum_searcher)
 
-## Features
+### 功能特性
 
-- **Search in a project**
+- 全工程实时检索
 
-In SpaceVim, you can use `SPC s p` or `SPC s /` to search in the current project.
+在 SpaceVim 中，可以使用快捷键 `SPC s p` 或者 `SPC s /` 进行全工程检索。
 
 ![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
-- **Search in current file**
+- 仅搜索当前文件
 
-You can use `SPC s s` to search in the current file. To search word under the cursor, you can press `SPC s S`.
+同时，可以使用快捷键 `SPC s s` 仅搜索当前文件中的内容，如果需要在当前文件中搜索光标下的词，可以使用快捷键 `SPC s S`。
 
 ![searching current file](https://user-images.githubusercontent.com/13142418/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
 
-- **Search in all loaded buffers**
+- 在所有已经载入的文件中搜索
 
-To searching in all loaded buffers, you need to press `SPC s b`, and you can also use `SPC s B` to search word under the point.
+如果需要在所有已经打开的文件中搜索，可以使用快捷键 `SPC s b`，如果需要在所有已打开的文件中搜索光标下的词语，
+则可以使用快捷键 `SPC s B`。
 
 ![searching-loaded-buffer](https://user-images.githubusercontent.com/13142418/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
 
-- **Search in an arbitrary directory**
+- 搜索指定的文件夹
 
-If you want to searching in a different directory instead of current directory, you can
-use `SPC s f`. Then insert the path of the arbitrary directory.
+如果需要指定一个文件夹来搜索，可以使用快捷键 `SPC s f`，然后输入需要搜索的文件夹即可。同理，
+如果需要在指定文件夹下搜索光标下的词语，可以使用快捷键 `SPC s F`。
 
-- **Search in a project in the background**
+- 全工程后台检索
 
-If you need background searching, you can press `SPC s j`, after searching is done, the index will be displayed on statusline. you can use `SPC s l` to list all the search results.
+如果需要全工程后台检索，可以使用快捷键 `SPC s j`，搜索结束后，数量会展示在状态栏上。可以使用 `SPC s l` 打开搜索列表。
 
 ## Key bindings
 
