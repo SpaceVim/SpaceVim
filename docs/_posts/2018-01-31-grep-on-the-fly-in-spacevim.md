@@ -13,7 +13,6 @@ lang: cn
 
 {{ page.date | date_to_string }}
 
-
 FlyGrep 指的是 **grep on the fly**，将根据用户输入实时展示搜索结果。当然，这些搜索命令都是异步执行的。
 在使用这一功能之前，需要安装一个命令行搜索工具。目前 FlyGrep 支持的工具包括：`ag`、`rg`、`ack`、`pt` 和 `grep`，
 选择你喜欢的工具安装即可。
@@ -56,19 +55,30 @@ FlyGrep 指的是 **grep on the fly**，将根据用户输入实时展示搜索�
 
 - 全工程后台检索
 
-如果需要全工程后台检索，可以使用快捷键 `SPC s j`，搜索结束后，数量会展示在状态栏上。可以使用 `SPC s l` 打开搜索列表。
+首先，需要启用 incsearch 模块：
 
-## Key bindings
+```toml
+[[layers]]
+    name = 'incsearch'
+```
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance `SPC s a b` will search in all opened buffers using `ag`.
+全工程后台检索，可以使用快捷键 `SPC s j`，搜索结束后，数量会展示在状态栏上。可以使用 `SPC s l` 打开搜索列表。
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance `SPC s a B` will search with word under cursor.
+### 快捷键
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `g:spacevim_search_tools`, the default calling sequence is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工具，后一个键是范围。
+例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索。
 
-The tool keys are:
+如果最后一个键（决定范围）是大写字母，那么就会对当前光标下的单词进行搜索。
+举个例子 `SPC s a B` 将会搜索当前光标下的单词。
 
-| Tool | Key |
+如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `g:spacevim_search_tools`
+列表中的第一个工具。列表中的工具默认的顺序为：`rg`, `ag`, `pt`, `ack`, `grep`。
+举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
+
+下表是全部的工具键：
+
+| 工具 | 键  |
 | ---- | --- |
 | ag   | a   |
 | grep | g   |
@@ -76,27 +86,27 @@ The tool keys are:
 | rg   | r   |
 | pt   | t   |
 
-The available scopes and corresponding keys are:
+应当避免的范围和对应按键为：
 
-| Scope                      | Key |
-| -------------------------- | --- |
-| opened buffers             | b   |
-| files in a given directory | f   |
-| current project            | p   |
+| 范围           | 键  |
+| -------------- | --- |
+| 打开的缓冲区   | b   |
+| 给定目录的文件 | f   |
+| 当前工程       | p   |
 
-**Within FlyGrep buffer:**
+在 FlyGrep 内的快捷键如下：
 
-| Key Binding      | Description                       |
-| ---------------- | --------------------------------- |
-| `<Esc>`          | close FlyGrep buffer              |
-| `<Enter>`        | open file at the cursor line      |
-| `<Tab>`          | move cursor line down             |
-| `<C-j>`          | move cursor line down             |
-| `<S-Tab>`        | move cursor line up               |
-| `<C-k>`          | move cursor line up               |
-| `<Bs>`           | remove last character             |
-| `<C-w>`          | remove the word before the cursor |
-| `<C-u>`          | remove the line before the cursor |
-| `<C-k>`          | remove the line after the cursor  |
-| `<C-a>`/`<Home>` | Go to the beginning of the line   |
-| `<C-e>`/`<End>`  | Go to the end of the line         |
+| 快捷键           | 功能描述           |
+| ---------------- | ------------------ |
+| `<Esc>`          | 关闭 FlyGrep 窗口  |
+| `<Enter>`        | 打开光标下文件位置 |
+| `<Tab>`          | 移动至下一行       |
+| `<C-j>`          | 移动至下一行       |
+| `<S-Tab>`        | 移动至上一行       |
+| `<C-k>`          | 移动至上一行       |
+| `<Bs>`           | 删除光标前一个字符 |
+| `<C-w>`          | 删除光标后的单词   |
+| `<C-u>`          | 删除光标前所有字符 |
+| `<C-k>`          | 删除光标后所有字符 |
+| `<C-a>`/`<Home>` | 将光标定位到行首   |
+| `<C-e>`/`<End>`  | 将光标定位到行尾   |
