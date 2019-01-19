@@ -40,11 +40,6 @@ function! s:range_logo() abort
   endtry
   let s:hi_range_id = s:CMP.matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
   let s:hi_range_index = s:CMP.matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
-  redraw!
-  echon ' Change current range to:'
-  exe 'echohl HiRrange' . s:current_range
-  echon s:current_range
-  echohl None
 endfunction
 " }}}
 
@@ -249,7 +244,11 @@ function! s:change_range() abort
     call s:clear_highlight()
     call s:highlight()
   endif
-  let s:state.noredraw = 1
+  let s:state._clear_cmdline = 0
+  echon ' Change current range to:'
+  exe 'echohl HiRrange' . s:current_range
+  echon s:current_range
+  echohl None
 endfunction
 " }}}
 
