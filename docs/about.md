@@ -14,13 +14,6 @@ language or feature by grouping all the related plugins together. It got inspire
 - more IDE-like features in vim and neovim
 - better default different languages
 
-### Principles
-
-- Do not regress from origin
-- Decide outcomes by weighing cost and benefit
-- prefer usability over tradition if the benefits are overwhelming
-- Give usability a chance
-
 ### Credits & Thanks
 
 This project exists thanks to all the people who have contributed to SpaceVim:
@@ -29,7 +22,3 @@ This project exists thanks to all the people who have contributed to SpaceVim:
 
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
-- [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
-- [Rafael Bodill](https://github.com/rafi) and his vim-config
-- [Bailey Ling](https://github.com/bling) and his dotvim
-- authors of all the plugins used in SpaceVim.
