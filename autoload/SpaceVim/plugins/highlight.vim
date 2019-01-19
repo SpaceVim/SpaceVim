@@ -17,6 +17,7 @@
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:HI = SpaceVim#api#import('vim#highlight')
 "}}}
 
 " init local variable {{{
@@ -190,7 +191,17 @@ function! SpaceVim#plugins#highlight#start() abort
         \ ],
         \ }
         \ )
+  let save_tve = &t_ve
+  setlocal t_ve=
+  if has('gui_running')
+    let cursor_hi = s:HI.group2dict('Cursor')
+    call s:HI.hide_in_normal('Cursor')
+  endif
   call s:state.open()
+  let &t_ve = save_tve
+  if has('gui_running')
+    call s:HI.hi(cursor_hi)
+  endif
   try
     call s:clear_highlight()
   catch
