@@ -1,6 +1,6 @@
 ---
 title: "入门指南"
-description: "SpaceVim 入门教程，包括安装初始化配置等内容"
+description: "SpaceVim 入门教程，包括安装、初始化配置等内容"
 lang: cn
 ---
 
@@ -105,19 +105,19 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
 # 启用 autocomplete 模块，启用模块时，可以列出一些模块选项，并赋值，
 # 关于模块的选项，请阅读各个模块的文档
 [[layers]]
-name = "autocomplete"
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+    name = "autocomplete"
+    auto-completion-return-key-behavior = "complete"
+    auto-completion-tab-key-behavior = "cycle"
 
 # 禁用 shell 模块，禁用模块时，需要加入 enable = false
 [[layers]]
-name = "shell"
-enable = false
+    name = "shell"
+    enable = false
 
 # 添加自定义插件
 [[custom_plugins]]
-name = "lilydjwg/colorizer"
-merged = 0
+    name = "lilydjwg/colorizer"
+    merged = false
 ```
 
 ### 学习 SpaceVim

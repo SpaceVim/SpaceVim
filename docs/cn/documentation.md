@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim 中文手册"
-description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行、以及 REPL 和 DEBUG 支持。"
+description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行以及 REPL 和 DEBUG 支持。"
 redirect_from: "/README_zh_cn/"
 lang: cn
 ---
@@ -164,7 +164,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 **自动更新**
 
-注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：`let g:spacevim_automatic_update = 1`。
+注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：`automatic_update = true`。
 
 启用这一特性后，SpaceVim 将会在每次启动时候检测是否有新版本。更新后需重启 SpaceVim。
 
@@ -196,26 +196,26 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 
 所有的 SpaceVim 选项可以使用 `:h SpaceVim-config` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
 
-完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索的模块。
+完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索模块。
 
 **添加自定义插件**
 
-如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `custom_plugins` 片段：
+如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `[[custom_plugins]]` 片段：
 
 ```toml
 [[custom_plugins]]
     name = "lilydjwg/colorizer"
     on_cmd = ["ColorHighlight", "ColorToggle"]
-    merged = 0
+    merged = false
 ```
 
 以上这段配置，添加了插件 `lilydjwg/colorizer`，并且，通过 `on_cmd` 这一选项使得这个插件延迟加载。
-该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其他的选项，
+该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其它的选项，
 可以通过 `:h dein-options` 查阅。
 
 **禁用插件**
 
-SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过 `disabled_plugins` 这一选项来操作：
+SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过`~/.SpaceVim.d/init.toml`的`[options]`片段中的 `disabled_plugins` 这一选项来操作：
 
 ```toml
 [options]
@@ -226,21 +226,25 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
 ### 启动函数
 
 由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
-可通过设置这两个选项值来指定函数名称。
-
+可通过`~/.SpaceVim.d/init.toml`的`[options]`片段中的这两个选项`bootstrap_before` 和 `bootstrap_after`来指定函数名称，例如：
+```toml
+[options]
+    bootstrap_before = "myspacevim#before"
+    bootstrap_after  = "myspacevim#after"
+```
 启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
 文件名：`~/.SpaceVim.d/autoload/myspacevim.vim`
 
 ```vim
-func! myspacevim#before() abort
+function! myspacevim#before() abort
     let g:neomake_enabled_c_makers = ['clang']
     nnoremap jk <esc>
-endf
+endfunction
 
-func! myspacevim#after() abort
+function! myspacevim#after() abort
     iunmap jk
-endf
+endfunction
 ```
 
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
@@ -248,10 +252,10 @@ endf
 如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
 
 ```vim
-func! myspacevim#before() abort
+function! myspacevim#before() abort
     call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
     call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
-endf
+endfunction
 ```
 
 ### Vim 兼容模式
@@ -259,26 +263,25 @@ endf
 以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
 - Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是窗口相关快捷键的前缀（可以在配置文件中设置成其他按键）。
+  它是窗口相关快捷键的前缀（可以在配置文件中设置成其它按键）。
   如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
 - Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
 - Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
-  即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其他按键。
+  即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其它按键。
 - 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
 - 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
 - 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
 
-可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，
-以上所有差异将不存在。当然，也可通过对应的选项禁用某一个差异。比如，恢复逗号`,`的原始功能，
-可以通过禁用语言专用的前缀键：
+可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，以上所有差异将不存在。
+当然，也可通过对应的选项禁用某一个差异。例如，恢复逗号`,`的原始功能，可以通过禁用语言专用的前缀键：
 
 ```toml
 [options]
     enable_language_specific_leader = false
 ```
 
-如果发现有其他区别，可以[提交 PR](http://spacevim.org/development/)。
+如果发现有其它区别，可以[提交 PR](http://spacevim.org/development/)。
 
 ### 私有模块
 
@@ -291,7 +294,7 @@ SpaceVim 的[模块首页](../layers/)。
 
 **结构**
 
-在 SpaceVim 中，一个模块是一单个 Vim 文件，比如，`autocomplete` 模块存储在 `autoload/SpaceVim/layers/autocomplete.vim`，在这个文件内有以下几种公共函数：
+在 SpaceVim 中，一个模块是一个单个的 Vim 文件，例如，`autocomplete` 模块存储在 `autoload/SpaceVim/layers/autocomplete.vim`，在这个文件内有以下几个公共函数：
 
 - `SpaceVim#layers#autocomplete#plugins()`: 返回该模块插件列表
 - `SpaceVim#layers#autocomplete#config()`: 模块相关设置
@@ -299,30 +302,25 @@ SpaceVim 的[模块首页](../layers/)。
 
 ### 调试上游插件
 
-当发现某个内置上游插件存在问题时，需要修改并调试上游插件，可以依照以下步骤：
+当发现某个内置上游插件存在问题，需要修改并调试上游插件时，可以依照以下步骤操作：
 
 1. 禁用内置上游插件
-
 比如，调试内置语法检查插件 neomake.vim
-
 ```toml
 [options]
     disabled_plugins = ["neomake.vim"]
 ```
 
-2. 添加自己 fork 的插件，或者本地克隆版本：
-
-修改配置文件 `init.toml`，加入以下部分，来添加自己 fork 的版本：
-
+2. 添加自己 fork 的插件
+修改配置文件`init.toml`，加入以下部分，来添加自己 fork 的版本：
 ```toml
 [[custom_plugins]]
    name = 'wsdjeg/neomake.vim'
    # note: you need to disable merged feature
    merged = false
 ```
-
-或者使用 `bootstrap_before` 函数添加本地路径：
-
+或者添加本地克隆版本
+使用`bootstrap_before`函数来添加本地路径：
 ```vim
 function! myspacevim#before() abort
     set rtp+=~/path/to/your/localplugin
@@ -333,7 +331,7 @@ endfunction
 
 **临时快捷键菜单**
 
-SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
+SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
 
 文本移动临时快捷键：
 
@@ -341,13 +339,13 @@ SpaceVim 根据需要定义了很多临时快捷键，这将避免需要重复�
 
 ## 优雅的界面
 
-SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
+SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
 ### 颜色主题
 
 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 `:h gruvbox`。
 
-如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 中修改 `colorscheme`。例如，使用 Vim 自带的内置主题 `desert`：
+如果需要修改 SpaceVim 的主题，可以在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改 `colorscheme`选项。例如，使用 Vim 自带的内置主题 `desert`：
 
 ```toml
 [options]
@@ -367,7 +365,7 @@ SpaceVim 集成了多种使用 UI 插件，如常用的文件树、语法树等�
 SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色。
 可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
 
-如果你的终端不支持真色，可以在 SpaceVim 用户配置 `[options]` 中禁用真色支持：
+如果你的终端不支持真色，可以在 `~/.SpaceVim.d/init.toml` 的`[options]`片段中禁用真色支持：
 
 ```toml
     enable_guicolors = false
@@ -377,12 +375,12 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
-如果需要修改 SpaceVim 的字体，可以在用户配置文件中修改选项 `guifont`，默认值为：
+如果需要修改 SpaceVim 的字体，可以在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改选项 `guifont`，默认值为：
 
 ```toml
+[options]
     guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
-
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
 
 ### 界面元素切换
@@ -459,7 +457,7 @@ SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 **搜索结果信息：**
 
-当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，类似于 `20/22` 显示搜索结果总数以及当前结果的序号。具体的效果图如下：
+当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，使用类似于 `20/22` 这样的分数显示搜索结果的当前序号以及结果总数。具体的效果图如下：
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
@@ -479,10 +477,10 @@ _acpi_ 可展示电池电量剩余百分比。
 
 **状态栏分割符：**
 
-可通过使用 `statusline_separator` 来定制状态栏分割符，例如使用非常常用的方向箭头作为状态栏分割符：
+可通过使用 `statusline_separator` 来定制状态栏分割符，例如使用常用的方向箭头作为状态栏分割符：
 
 ```toml
-  statusline_separator = 'arrow'
+    statusline_separator = 'arrow'
 ```
 
 SpaceVim 所支持的分割符以及截图如下：
@@ -511,7 +509,7 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **状态栏的颜色**
 
-SpaceVim 默认为 [colorcheme 模块](../layers/colorscheme/)所包含的主题颜色提供了状态栏主题，若需要使用其他颜色主题，
+SpaceVim 默认为 [colorcheme 模块](../layers/colorscheme/)所包含的主题颜色提供了状态栏主题，若需要使用其它颜色主题，
 需要自行设置状态栏主题。若未设置，则使用 gruvbox 的主题。
 
 可以参考以下模板来设置：
@@ -556,16 +554,17 @@ endfunction
 可以设置 `custom_color_palette`：
 
 ```toml
-custom_color_palette = [
-    ["#282828", "#a89984", 246, 235],
-    ["#a89984", "#504945", 239, 246],
-    ["#a89984", "#3c3836", 237, 246],
-    ["#665c54", 241],
-    ["#282828", "#83a598", 235, 109],
-    ["#282828", "#fe8019", 235, 208],
-    ["#282828", "#8ec07c", 235, 108],
-    ["#282828", "#689d6a", 235, 72],
-    ["#282828", "#8f3f71", 235, 132],
+[options]
+    custom_color_palette = [
+        ["#282828", "#a89984", 246, 235],
+        ["#a89984", "#504945", 239, 246],
+        ["#a89984", "#3c3836", 237, 246],
+        ["#665c54", 241],
+        ["#282828", "#83a598", 235, 109],
+        ["#282828", "#fe8019", 235, 208],
+        ["#282828", "#8ec07c", 235, 108],
+        ["#282828", "#689d6a", 235, 72],
+        ["#282828", "#8f3f71", 235, 132],
     ]
 ```
 
@@ -612,7 +611,7 @@ custom_color_palette = [
 ### 窗口管理器
 
 窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀按键为 `s`，可以在配置文件中通过修改
-SpaceVim 选项 `window_leader` 的值来设为其他按键：
+SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 | 按键            | 描述                                                                                                                                                                                                                           |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -854,12 +853,12 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 **添加用户自定义插件**
 
-如果添加来自于 github.com 的插件，可以 `用户名/仓库名` 这一格式，将该插件添加到 `custom_plugins`，示例如下：
+如果添加来自于 github.com 的插件，可以 `用户名/仓库名` 这一格式，将该插件添加到 `[[ustom_plugins]]`，示例如下：
 
 ```toml
 [[custom_plugins]]
 name = 'lilydjwg/colorizer'
-merged = 0
+merged = false
 ```
 
 #### 界面元素显示切换
@@ -998,7 +997,7 @@ merged = 0
 | `SPC w K`            | 将窗口向上移动                                                                 |
 | `SPC w l`            | 移至右方窗口                                                                   |
 | `SPC w L`            | 将窗口向右移动                                                                 |
-| `SPC w m`            | 最大化/最小化窗口（最大化相当于关闭其他窗口）(TODO, now only support maximize) |
+| `SPC w m`            | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
 | `SPC w M`            | 选择窗口进行替换                                                               |
 | `SPC w o`            | 按序切换标签页                                                                 |
 | `SPC w p m`          | open messages buffer in a popup window (TODO)                                  |
@@ -1029,7 +1028,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
 | `SPC b D`       | 选择一个窗口，并删除其 buffer                                                  |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | 删除其他 buffer                                                                |
+| `SPC b C-d`     | 删除其它 buffers                                                               |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
 | `SPC b e`       | 清除当前 buffer 内容，需要手动确认                                             |
 | `SPC b h`       | 打开 _SpaceVim_ 欢迎界面                                                       |
@@ -1093,11 +1092,12 @@ SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 Sp
 
 #### 文件树
 
-SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要设置：
+SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改选项 vimfiler：
 
 ```toml
-# 默认值为 vimfiler
-filemanager = "nerdtree"
+[options]
+    # 默认值为 vimfiler
+    filemanager = "nerdtree"
 ```
 
 SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
@@ -1262,7 +1262,7 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 如果最后一个键（决定范围）是大写字母，那么就会对当前光标下的单词进行搜索。
 举个例子 `SPC s a B` 将会搜索当前光标下的单词。
 
-如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `g:spacevim_search_tools`
+如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `search_tools`
 列表中的第一个工具。列表中的工具默认的顺序为：`rg`, `ag`, `pt`, `ack`, `grep`。
 举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
 
@@ -1440,9 +1440,11 @@ endfunction
 | `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在 Vim 中使用谷歌 suggestions，你需要在你的配置文件的[options]片断中加入如下配置：
+**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的`[[options]]`片段中加入如下配置：
 
-`enable_googlesuggest = 1`
+```toml
+    enable_googlesuggest = true
+```
 
 #### 实时代码检索
 
@@ -1467,7 +1469,7 @@ FlyGrep 缓冲区的按键绑定：
 
 #### 保持高亮
 
-SpaceVim 使用 `g:spacevim_search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
+SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
 同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示。
 
 #### 高亮光标下变量
@@ -1607,7 +1609,7 @@ In transient state：
 | `-`        | 为光标下的数字减 1   |
 | 其它任意键 | 离开 transient state |
 
-**提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为为光标下的数字增加 `10`。
+**提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为光标下的数字加 `10`。
 
 #### Replace text with iedit
 
@@ -1744,9 +1746,9 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 | 提示符 | 描述        | 自定义选项                  |
 | ------ | ----------- | --------------------------- |
-| `✖`    | Error       | `g:spacevim_error_symbol`   |
-| `➤`    | warning     | `g:spacevim_warning_symbol` |
-| `🛈`    | Info        | `g:spacevim_info_symbol`    |
+| `✖`    | Error       | `error_symbol`   |
+| `➤`    | warning     | `warning_symbol` |
+| `🛈`    | Info        | `info_symbol`    |
 
 ### 工程管理
 
@@ -1756,7 +1758,7 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 工程管理的命令以 `p` 开头：
 
 | 快捷键      | 描述                                            |
-| ----------- | ----------------------------------------------  |
+| ----------- | ----------------------------------------------- |
 | `SPC p '`   | 在当前工程的根目录打开 shell（需要 shell 模块） |
 
 #### 在工程中搜索文件
