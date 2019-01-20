@@ -73,7 +73,9 @@ It is running asynchronously, and will not block your vim.
 
 ### Code formatting
 
-1. [neoformat](https://github.com/sbdchd/neoformat) - A (Neo)vim plugin for formatting code.
+The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
+Before using this feature, please install luaformatter.
 
-For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
-BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
+```sh
+luarocks install formatter
+```
