@@ -49,7 +49,7 @@ default_height = 30
 
 ### Disable layers
 
-Some layers are enabled by defalut, here is an example for disable `shell` layer:
+Some layers are enabled by default, here is an example for disable `shell` layer:
 
 ```toml
 [[layers]]
