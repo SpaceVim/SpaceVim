@@ -1,6 +1,7 @@
 ---
 title: "使用 Vim 搭建 Lua 开发环境"
 categories: [tutorials_cn, blog_cn]
+images: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Lua 的开发环境，简介 lang#lua 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: cn
@@ -45,10 +46,14 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
+![lua](https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png)
+
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
 这一异步语法检查工具。对于 luac 的支持，是通过异步调用 luac 命令来完成的。
+
+![luac](https://user-images.githubusercontent.com/13142418/51438866-b8cfda80-1cec-11e9-8645-b43fc6481e42.png)
 
 ### 工程文件跳转
 
