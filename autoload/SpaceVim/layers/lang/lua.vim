@@ -57,6 +57,8 @@ function! SpaceVim#layers#lang#lua#config() abort
   else
     if executable('luap')
       call SpaceVim#plugins#repl#reg('lua', 'luap')
+    elseif !empty(luaexe)
+      call SpaceVim#plugins#repl#reg('lua', luaexe)
     else
       call SpaceVim#plugins#repl#reg('lua', 'lua')
     endif
