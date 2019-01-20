@@ -21,20 +21,14 @@
 function! SpaceVim#layers#lang#lua#plugins() abort
   let plugins = []
   " Improved Lua 5.3 syntax and indentation support for Vim
-  call add(plugins, ['tbastos/vim-lua', {'on_ft' : 'lua'}])
+  call add(plugins, ['wsdjeg/vim-lua', {'on_ft' : 'lua'}])
   call add(plugins, ['WolfgangMehner/lua-support', {'on_ft' : 'lua'}])
-  call add(plugins, ['SpaceVim/vim-luacomplete', {'on_ft' : 'lua', 'if' : has('lua')}])
   return plugins
 endfunction
 
 let s:lua_repl_command = ''
 
 function! SpaceVim#layers#lang#lua#config() abort
-  if has('lua')
-    augroup spacevim_lua
-      autocmd FileType lua setlocal omnifunc=luacomplete#complete
-    augroup END
-  endif
 
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
   let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
@@ -43,8 +37,23 @@ function! SpaceVim#layers#lang#lua#config() abort
   else
     call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
   endif
+  let g:neomake_lua_enabled_makers = ['luac']
+  let luacexe = filter(['luac53', 'luac52', 'luac51'], 'executable(v:val)')
+  if !empty(luacexe)
+    let g:neomake_lua_luac_maker = {
+          \ 'exe': luacexe[0],
+          \ 'args': ['-p'],
+          \ 'errorformat': '%*\f: %#%f:%l: %m',
+          \ }
+  else
+    let g:neomake_lua_luac_maker = {
+          \ 'exe': 'luac',
+          \ 'args': ['-p'],
+          \ 'errorformat': '%*\f: %#%f:%l: %m',
+          \ }
+  endif
   if !empty(s:lua_repl_command)
-      call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
+    call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
   else
     if executable('luap')
       call SpaceVim#plugins#repl#reg('lua', 'luap')
