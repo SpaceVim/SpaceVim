@@ -23,7 +23,6 @@ SpaceVim 是一个模块化的 Vim IDE，针对 lua 这一语言的支持主要�
 - [工程文件跳转](#工程文件跳转)
 - [快速运行](#快速运行)
 - [代码格式化](#代码格式化)
-- [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
@@ -61,11 +60,11 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 lua 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
+![luarunner](https://user-images.githubusercontent.com/13142418/51438907-76f36400-1ced-11e9-8838-441965a22ce9.png)
 
 ### 代码格式化
 
-Python 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 luaformatter：
+lua 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 luaformatter：
 
 ```toml
 [[layers]]
@@ -77,11 +76,3 @@ Python 代码格式化，主要依赖 `format` 模块，同时需要安装相关
 ```sh
 luarocks install formatter
 ```
-
-### 交互式编程
-
-在编辑 lua 代码时，经常需要执行代码中的某一行，或者某一段代码。这时候，就可以使用 SpaceVim 的交互式编程框架。首先需要启用一个后台进程，
-可以是 lua 命令，快捷键为 `SPC l s i`。 启动后效果图如下：
-
-之后，可以通过 `SPC l s l` 进行逐行发送，也可以选中区域后按 `SPC l s s` 发送选中的区域：
-
