@@ -21,8 +21,6 @@ Each of the following sections will be covered:
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
-- [REPL](#repl)
-- [Debug](#debug)
 
 <!-- vim-markdown-toc -->
 
@@ -43,11 +41,14 @@ for more info, you can read the [lang#lua](../layers/lang/lua/) layer documentat
 `lang#lua` layer will load the vim-lua plugin automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
+![lua](https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png)
 
 ### Syntax linting
 
-1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
+The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
+It will run luac asynchronously.
+
+![luac](https://user-images.githubusercontent.com/13142418/51438866-b8cfda80-1cec-11e9-8645-b43fc6481e42.png)
 
 ### Jump to test file
 
@@ -68,7 +69,7 @@ To run current script, you can press `SPC l r`, and a split windows
 will be openen, the output of the script will be shown in this windows.
 It is running asynchronously, and will not block your vim.
 
-![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
+![luarunner](https://user-images.githubusercontent.com/13142418/51438907-76f36400-1ced-11e9-8838-441965a22ce9.png)
 
 ### Code formatting
 
@@ -76,14 +77,3 @@ It is running asynchronously, and will not block your vim.
 
 For formatting java code, you also nEed have [uncrustify](http://astyle.sourceforge.net/) or [astyle](http://astyle.sourceforge.net/) in your PATH.
 BTW, the google's [java formatter](https://github.com/google/google-java-format) also works well with neoformat.
-
-
-### REPL
-
-you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
-
-![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
-
-
-### Debug
-
