@@ -1,15 +1,15 @@
 ---
-title: "Use Vim as a Python IDE"
+title: "Use Vim as a Lua IDE"
 categories: [tutorials, blog]
-excerpt: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
+excerpt: "A general guide for using SpaceVim as Lua IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
-commentsID: "Use Vim as a Python IDE"
+commentsID: "Use Vim as a Lua IDE"
 ---
 
-# [Blogs](../blog/) >> Use Vim as a Python IDE
+# [Blogs](../blog/) >> Use Vim as a Lua IDE
 
-This is a general guide for using SpaceVim as a python IDE, including layer configuration and usage. 
+This is a general guide for using SpaceVim as a lua IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
 
 
@@ -18,7 +18,6 @@ Each of the following sections will be covered:
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
 - [Syntax linting](#syntax-linting)
-- [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
@@ -29,19 +28,19 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add python language support in SpaceVim, you need to enable the `lang#python` layer. Press `SPC f v d` to open
+To add lua language support in SpaceVim, you need to enable the `lang#lua` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
 ```toml
 [[layers]]
-  name = "lang#python"
+  name = "lang#lua"
 ```
 
-for more info, you can read the [lang#python](../layers/lang/python/) layer documentation.
+for more info, you can read the [lang#lua](../layers/lang/lua/) layer documentation.
 
 ### Code completion
 
-`lang#python` layer will load the jedi plugin automatically, unless overriden in your `init.toml`.
+`lang#lua` layer will load the vim-lua plugin automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
 ![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
@@ -50,28 +49,18 @@ The completion menu will be opened as you type.
 
 1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
 
-### Import packages
-
-When edit python file, you can import the package automatically, remove unused package and format package list.
-
-```sh
-pip install --user isort
-```
-
 ### Jump to test file
 
-SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+SpaceVim use built-in plugin to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
 
 ```json
 {
-  "src/*.py": {"alternate": "test/{dirname}/{basename}Test.py"},
-  "test/**/Test*.py": {"alternate": "src/{}.py"}
+  "src/*.lua": {"alternate": "test/{}.lua"},
+  "test/*.lua": {"alternate": "src/{}.lua"}
 }
 ```
 
 with this configuration, you can jump between the source code and test file via command `:A`
-
-
 
 ### running code
 
@@ -97,3 +86,4 @@ you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim u
 
 
 ### Debug
+
