@@ -5,7 +5,7 @@ description: "A list of questions and answers relating to SpaceVim, especially t
 
 # SpaceVim FAQ
 
-This is a list of the most asked questions about SpaceVim.
+This is a list of the frequently asked questions about SpaceVim.
 
 <!-- vim-markdown-toc GFM -->
 
@@ -15,31 +15,31 @@ This is a list of the most asked questions about SpaceVim.
 - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
 - [Why can't I update plugins?](#why-cant-i-update-plugins)
-- [how to enable +py and +py3 in neovim?](#how-to-enable-py-and-py3-in-neovim)
-- [Why does vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
+- [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
+- [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
 
 <!-- vim-markdown-toc -->
 
 ### Can I try SpaceVim without overwriting my vimrc?
 
 The SpaceVim install script will move your `~/.vimrc` to `~/.vimrc_back`. If you want to have a try SpaceVim without
-overwriting your own vim configuration you can:
+overwriting your own Vim configuration you can:
 
-clone SpaceVim manually.
+Clone SpaceVim manually.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
 ```
 
-then, start vim via `vim -u ~/.SpaceVim/vimrc`. You can also put this alias into your bashrc.
+Then, start Vim via `vim -u ~/.SpaceVim/vimrc`. You can also put this alias into your bashrc.
 
 ```sh
 alias svim='vim -u ~/.SpaceVim/vimrc'
 ```
 ### Why use toml as the default configuration file format?
 
-In the old version of SpaceVim, we used a vim file (`init.vim`) for configuration. This introduced a lot of problems.
-When loading a vim file the file content is executed line by line. This means that when there was an error the content
+In the old version of SpaceVim, we used a Vim file (`init.vim`) for configuration. This introduced a lot of problems.
+When loading a Vim file the file content is executed line by line. This means that when there was an error the content
 before the error was still executed. This led to unforeseen problems.
 
 We decided going forward to use a more robust configuration mechanism in SpaceVim. SpaceVim must be able to load the
@@ -78,9 +78,9 @@ directory is dirty (has changes that haven't been committed to git) you can not 
 issue, just move your cursor to the error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. For
 more info please read git documentation.
 
-### How to enable +py and +py3 in neovim?
+### How to enable +py and +py3 in Neovim?
 
-In neovim we can use `g:python_host_prog` and `g:python3_host_prog` to config python prog. In SpaceVim
+In Neovim we can use `g:python_host_prog` and `g:python3_host_prog` to config python prog. In SpaceVim
 the custom configuration file is loaded after SpaceVim core code. So in SpaceVim itself, if we using `:py` command, it may cause errors.
 So we introduce two new environment variables: `PYTHON_HOST_PROG` and `PYTHON3_HOST_PROG`.
 
@@ -91,9 +91,9 @@ export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
 export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 ```
 
-### Why does vim freeze after pressing Ctrl-s?
+### Why does Vim freeze after pressing Ctrl-s?
 
-This is a [feature of terminal emulators](https://unix.stackexchange.com/a/137846). You can use `Ctrl-q` to unfreeze vim. To disable
+This is a [feature of terminal emulators](https://unix.stackexchange.com/a/137846). You can use `Ctrl-q` to unfreeze Vim. To disable
 this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
 
 ```sh
