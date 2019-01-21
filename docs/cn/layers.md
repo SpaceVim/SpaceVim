@@ -34,9 +34,9 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 
 ```toml
 [[layers]]
-  name = "shell"
-  default_position = "top"
-  default_height = 30
+    name = "shell"
+    default_position = "top"
+    default_height = 30
 ```
 
 ### 禁用模块
@@ -47,8 +47,8 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 
 ```toml
 [[layers]]
-  name = "shell"
-  enable = false
+    name = "shell"
+    enable = false
 ```
 
 <!-- 更新模块列表 call SpaceVim#dev#layers#updateCn() -->

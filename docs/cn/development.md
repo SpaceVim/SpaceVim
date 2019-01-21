@@ -57,7 +57,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 - 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认，错误追踪中是否存在重复的问题
 
-- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 bug 重现操作。
+- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 Bug 重现操作。
 
 - 按照下面的问题格式，建立清晰的问题标题
 
@@ -125,11 +125,11 @@ git rebase upstream/master
 - 每个 PR 一个主题
 - 每个 PR 一个提交
 - 如果你有一些不同主题的提交，请关闭 PR 然后为每个主题创建一个新的 PR
-- 如果你仍然有很多提交，请把他们打包成一个提交
+- 如果你仍然有很多提交，请把它们打包成一个提交
 
 #### 复杂的 PRs (大的重构，等)：
 
-只打包一些枯燥的提交，比如修改错别字，语法修复，等等... 把重要和独立的步骤分别放在不同的提交中。
+只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
 Those PRs are merged and explicitly not fast-forwarded.
 这些 PRs 被合并并且非明试快速转发。
 提交信息
@@ -269,11 +269,11 @@ If you contribute to an already existing layer, you should not modify any header
 
 按键映射是 SpaceVim 中非常重要的一部分。
 
-如果你只想要拥有自己的按键映射的话，你可以在`~/.SpaceVim.d/init.vim`文件中进行修改。
+如果你只想要拥有自己的按键映射的话，你可以在 bootstrap function 文件中进行修改。
 
 如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
 
-始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。他应该是层文件和 [documentation.md](https://spacevim.org/cn/documentation)。
+始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。它应该是 layername.md 和 [documentation.md](https://spacevim.org/cn/documentation)。
 
 
 ##### 特定语言的按键绑定
@@ -305,7 +305,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## 基于 SpaceVim 开发
 
-SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 Vim 和 Neovim 的插件。同时，也可以像插件的 README 中添加 SpaceVim 的图标：
+SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 Vim 和 Neovim 的插件。同时，也可以向插件的 README 中添加 SpaceVim 的图标：
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
