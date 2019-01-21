@@ -26,7 +26,7 @@ function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'e'], 'VBGevalWordUnderCursor', 'Evaluate the <cword> under the cursor', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'S'], 'VBGexecuteSelectedText', 'Execute the selected text', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
-        \ . string(s:_function('s:buffer_transient_state')) . ', [])',
+        \ . string(s:_function('s:debug_transient_state')) . ', [])',
         \ 'debug transient state', 1)
   let g:vebugger_breakpoint_text = '🞊'
   let g:vebugger_currentline_text = '🠲'
@@ -44,7 +44,7 @@ function! SpaceVim#layers#debug#launching(ft) abort
   endif
 endfunction
 
-function! s:buffer_transient_state() abort
+function! s:debug_transient_state() abort
     let state = SpaceVim#api#import('transient_state') 
     call state.set_title('Debug Transient State')
     call state.defind_keys(

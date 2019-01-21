@@ -22,9 +22,12 @@ This layers adds extensive support for [language-server-protocol](https://micros
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
 The upstream is rewritten by rust.
 
-we also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
 
-the neovim team is going to implement the build-in LSP support, the
+Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
+it will be used as lsp client.
+
+The neovim team is going to implement the build-in LSP support, the
 PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
 create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
 
@@ -33,6 +36,8 @@ SpaceVim should works well in different version of vim/neovim, so in the feature
 ```vim
 if has('nvim')
   " use neovim build-in lsp
+if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
+  " use coc.nvim
 elseif has('python3')
   " use LanguageClient-neovim
 else
@@ -43,7 +48,7 @@ endif
 ## Features
 
 - Asynchronous calls
-- Code completion (provided by [autocomplet](https://spacevim.org/layers/autocomplete/) layer)
+- Code completion (provided by [autocomplete](https://spacevim.org/layers/autocomplete/) layer)
 - Lint on the fly
 - Rename symbol
 - Hover/Get identifer info.
@@ -102,6 +107,12 @@ in REPL, hit `]` to enter the package management mode, then `add LanguageServer`
 npm install -g purescript-language-server
 ```
 
+**Vue:**
+
+```sh
+npm install vue-language-server -g
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -135,6 +146,7 @@ default language server commands:
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `vue`        | `['vls']`                                                                                                                                                                                        |
 
 To override the server command, you may need to use `override_cmd` option:
 

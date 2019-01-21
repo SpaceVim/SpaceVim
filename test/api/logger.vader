@@ -20,3 +20,4 @@ Execute ( SpaceVim api: logger ):
   AssertEqual len(split(log.view(1), "\n")), 7
   AssertEqual len(split(log.view(2), "\n")), 6
   AssertEqual len(split(log.view(3), "\n")), 4
+  unlet log

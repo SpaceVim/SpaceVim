@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim default 模块"
-description: "SpaceVim default 模块并不包含插件，但提供了一些更好的默认设置，"
+description: "这一模块未为 SpaceVim 提供任何插件，但提供了一些更好的默认设置。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块描述
 
-这一模块主要优化了一些 Vim 设置，包含了一些默认的设置选项，和快捷键。
+这一模块主要优化了一些 Vim 设置，包含了一些默认的设置选项和快捷键。
 
 ## 启用模块
 

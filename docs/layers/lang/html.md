@@ -42,7 +42,7 @@ npm install --global vscode-html-languageserver-bin
 - Tags navigation on key % using matchit.vim
 - auto-completion
 - syntax checking
-- language server protocol (need `lsp` layer) 
+- language server protocol (need `lsp` layer)
 
 ## Key bindings
 

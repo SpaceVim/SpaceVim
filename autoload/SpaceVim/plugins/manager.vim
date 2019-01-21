@@ -205,7 +205,8 @@ function! SpaceVim#plugins#manager#update(...) abort
     let s:plugins = a:0 == 0 ? sort(map(neobundle#config#get_neobundles(), 'v:val.name')) : sort(copy(a:1))
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
   endif
-  if a:0 == 0
+  " make dein-ui only update SpaceVim for SpaceVim users
+  if a:0 == 0 && exists('g:spacevim_version')
     call add(s:plugins, 'SpaceVim')
   endif
   let s:total = len(s:plugins)
@@ -294,8 +295,10 @@ function! s:on_pull_exit(id, data, event) abort
             \ 'name' : 'SpaceVim',
             \ 'path' : expand('~/.SpaceVim')
             \ }
-    else
+    elseif g:spacevim_plugin_manager ==# 'dein'
       let repo = dein#get(name)
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      let repo = neobundle#get(name)
     endif
     call s:pull(repo)
   endif
@@ -385,7 +388,11 @@ function! s:on_install_exit(id, data, event) abort
   endif
   call remove(s:pulling_repos, string(id))
   if !empty(s:plugins)
-    call s:install(dein#get(s:LIST.shift(s:plugins)))
+    if g:spacevim_plugin_manager ==# 'dein'
+      call s:install(dein#get(s:LIST.shift(s:plugins)))
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      call s:install(neobundle#get(s:LIST.shift(s:plugins)))
+    endif
   endif
   call s:recache_rtp(a:id)
 endfunction

@@ -87,16 +87,16 @@ SpaceVim is based on conventions, mainly for naming functions, keybindings defin
 
 #### Title prefix of pull request
 
-pull request title should contains one of these prefix:
+Pull request titles should contain one of these prefix:
 
 - `Add:` Adding a new feature.
 - `Change:` Change default behaviors or the existing features.
 - `Fixed:` Fix some bugs
 - `Remove:` Remove any existing features.
 - `Doc:` update the help file.
-- `Website:` Update the contend of website.
+- `Website:` Update the content of website.
 
-here is an example:
+Here is an example:
 
 `Website: update the lang#c layer page`
 
@@ -119,7 +119,7 @@ git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 
 ```sh
 git fetch upstream
-git rebase upstream/master master
+git rebase upstream/master
 ```
 
 #### Ideally for simple PRs
@@ -199,7 +199,7 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 
 In the files header, change the default author name (Shidong Wang) to your name.
 
-here is an example for creating a new layer names `foo`:
+Here is an example for creating a new layer names `foo`:
 
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.

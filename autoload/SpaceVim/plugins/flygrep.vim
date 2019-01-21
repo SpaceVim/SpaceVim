@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:HI = SpaceVim#api#import('vim#highlight')
 "}}}
 
 " Init local options: {{{
@@ -26,7 +27,8 @@ let [
       \ s:grep_default_ignore_case,
       \ s:grep_default_smart_case
       \ ] = SpaceVim#mapping#search#default_tool()
-let s:grep_timer_id = 0
+let s:grep_timer_id = -1
+let s:preview_timer_id = -1
 let s:grepid = 0
 let s:grep_history = []
 let s:complete_input_history_num = [0,0]
@@ -49,6 +51,9 @@ function! s:grep_timer(timer) abort
         \ 'in_io' : 'null',
         \ 'on_exit' : function('s:grep_exit'),
         \ })
+  " sometimes the flygrep command failed to run, so we need to log the jobid
+  " of the grep command.
+  call SpaceVim#logger#info('flygrep job id is: ' . string(s:grepid))
 endfunction
 
 function! s:get_search_cmd(expr) abort
@@ -64,13 +69,28 @@ function! s:get_search_cmd(expr) abort
   endif
   let cmd += s:grep_expr_opt
   if !empty(s:grep_files) && type(s:grep_files) == 3
+    " grep files is a list, which mean to use flygrep searching in 
+    " multiple files
     let cmd += [a:expr] + s:grep_files
   elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    " grep file is a single file
     let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
-    let cmd += [a:expr] + [s:grep_dir]
+    " grep dir is not a empty string
+    if s:grep_exe == 'findstr'
+      let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
+    else
+      let cmd += [a:expr] + [s:grep_dir]
+    endif
   else
-    let cmd += [a:expr] + s:grep_ropt
+    " if grep dir is empty, grep files is empty, which means searhing in
+    " current directory.
+    let cmd += [a:expr] 
+    " in window, when using rg, ag, need to add '.' at the end.
+    if s:SYS.isWindows && (s:grep_exe == 'rg' || s:grep_exe == 'ag' || s:grep_exe == 'pt' )
+      let cmd += ['.']
+    endif
+    let cmd += s:grep_ropt
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
@@ -129,10 +149,7 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  try
-    call timer_stop(s:grep_timer_id)
-  catch
-  endtry
+  call timer_stop(s:grep_timer_id)
   let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
@@ -210,18 +227,27 @@ endfunction
 " }}}
 
 " API: MPT._prompt {{{
-let s:MPT._prompt.mpt = '➭ '
+let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 " }}}
 
 " API: MPT._onclose {{{
 function! s:close_buffer() abort
-  if s:grepid != 0
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
+  call timer_stop(s:grep_timer_id)
+  call timer_stop(s:preview_timer_id)
+  if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
+    noautocmd pclose
+    let s:preview_able = 0
   endif
-  noautocmd pclose
   noautocmd q
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
@@ -229,12 +255,12 @@ let s:MPT._onclose = function('s:close_buffer')
 
 " API: MPT._oninputpro {{{
 function! s:close_grep_job() abort
-  if s:grepid != 0
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
-  if s:grep_timer_id != 0
-    call timer_stop(s:grep_timer_id)
-  endif
+  call timer_stop(s:grep_timer_id)
+  call timer_stop(s:preview_timer_id)
   normal! "_ggdG
 endfunction
 
@@ -253,6 +279,8 @@ function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
   " let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
   if bufnr('%') == s:flygrep_buffer_id
+    " You probably split lines by \n, but Windows ses \r\n, so the \r (displayed via ^M) is still left.
+    " ag support is broken in windows + neovim-qt
     if getline(1) ==# ''
       call setline(1, datas)
     else
@@ -266,6 +294,8 @@ function! s:grep_stderr(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+  redraw
+  call s:MPT._build_prompt()
   redrawstatus
   let s:grepid = 0
 endfunction
@@ -356,6 +386,10 @@ function! s:open_item() abort
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      pclose
+    endif
+    let s:preview_able = 0
     noautocmd q
     exe 'e ' . filename
     call cursor(linenr, colum)
@@ -408,12 +442,35 @@ function! s:toggle_preview() abort
   call s:MPT._build_prompt()
 endfunction
 
-function! s:preview() abort
+
+let s:previewd_bufnrs = []
+
+function! Test() abort
+  return s:previewd_bufnrs
+endfunction
+
+function! s:preview_timer(timer) abort
+  for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+  endfor
+  let br = bufnr('$')
   let line = getline('.')
   let filename = fnameescape(split(line, ':\d\+:')[0])
   let linenr = matchstr(line, ':\d\+:')[1:-2]
   exe 'silent pedit! +' . linenr . ' ' . filename
+  wincmd p
+  if bufnr('%') > br
+    call add(s:previewd_bufnrs, bufnr('%'))
+  endif
+  wincmd p
   resize 18
+  call s:MPT._build_prompt()
+endfunction
+
+
+function! s:preview() abort
+  call timer_stop(s:preview_timer_id)
+  let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
 endfunction
 
 let s:grep_mode = 'expr'
@@ -478,7 +535,7 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
-      \ "\<C-r>" : function('s:start_replace'),
+      \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
       \ "\<Up>" : function('s:previous_match_history'),
@@ -523,6 +580,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=
+  if has('gui_running')
+    let cursor_hi = s:HI.group2dict('Cursor')
+    call s:HI.hide_in_normal('Cursor')
+  endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
@@ -542,6 +603,11 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:grep_dir = ''
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
+    let s:grep_files = '*.*'
+  elseif s:grep_exe == 'findstr' && !empty(s:grep_dir)
+    let s:grep_dir = '/D:' . s:grep_dir
+  endif
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
   let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)
@@ -556,9 +622,14 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   call SpaceVim#logger#info('   ignore_case   : ' . string(s:grep_ignore_case))
   call SpaceVim#logger#info('   smart_case    : ' . string(s:grep_smart_case))
   call SpaceVim#logger#info('   expr opt      : ' . string(s:grep_expr_opt))
+  " sometimes user can not see the flygrep windows, redraw only once.
+  redraw
   call s:MPT.open()
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
+  if has('gui_running')
+    call s:HI.hi(cursor_hi)
+  endif
 endfunction
 " }}}
 
@@ -574,5 +645,4 @@ endfunction
 function! SpaceVim#plugins#flygrep#mode() abort
   return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
 endfunction
-
 " }}}

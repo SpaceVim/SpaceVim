@@ -125,12 +125,12 @@ function! s:filename() abort
   return "%{ &modified ? ' * ' : ' - '}" . s:filesize() . name . ' '
 endfunction
 
-if g:spacevim_statusline_unicode_symbols == 1
-  let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
-else
-  let g:_spacevim_statusline_fileformat = &ff
-endif
 function! s:fileformat() abort
+  if g:spacevim_statusline_unicode_symbols == 1
+    let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
+  else
+    let g:_spacevim_statusline_fileformat = &ff
+  endif
   return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
 endfunction
 
@@ -286,8 +286,10 @@ function! s:check_mode() abort
 endfunction
 
 " only when there are more than two buffers have same name.
+" show buffer name all the time need
+" enable_statusline_bfpath true
 function! s:buffer_name() abort
-  if get(b:, '_spacevim_statusline_showbfname', 0) == 1
+  if get(b:, '_spacevim_statusline_showbfname', 0) == 1 || g:spacevim_enable_statusline_bfpath
     return  ' ' . bufname('%')
   else
     return ''
@@ -329,11 +331,35 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     call setwinvar(nr, 'winid', nr)
   endfor
   if &filetype ==# 'vimfiler'
-    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+    return '%#SpaceVim_statusline_ia#' 
+          \ . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep
   elseif &filetype ==# 'gista-list'
-    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+    return '%#SpaceVim_statusline_ia#'
+          \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
+          \ . s:lsep
           \ . '%#SpaceVim_statusline_b# Gista %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &buftype ==# 'terminal'
+    let st =  '%#SpaceVim_statusline_ia#'
+          \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . '%#SpaceVim_statusline_b# Terminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+    if !empty(get(b:, '_spacevim_shell', ''))
+      let st .= '%#SpaceVim_statusline_c# %{b:_spacevim_shell} %#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+    endif
+    return st
+  elseif &filetype ==# 'gina-status'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Gina status %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'gina-commit'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Gina commit %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'diff' && bufname('%') =~ '^gina://'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Gina diff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'nerdtree'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Nerdtree %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
@@ -348,13 +374,22 @@ function! SpaceVim#layers#core#statusline#get(...) abort
       call fugitive#detect(getcwd())
     catch
     endtry
+    let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+    if index(g:spacevim_statusline_left_sections, 'vcs') != -1
+      let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
+            \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+    endif
+    return st
   elseif &filetype ==# 'SpaceVimLayerManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'SpaceVimGitLogPopup'
-    return '%#SpaceVim_statusline_a# Git log popup %#SpaceVim_statusline_a_SpaceVim_statusline_b# '
+    return '%#SpaceVim_statusline_a# Git log popup %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+
   elseif &filetype ==# 'SpaceVimTodoManager'
-    return '%#SpaceVim_statusline_a# TODO manager %#SpaceVim_statusline_a_SpaceVim_statusline_b# '
+    return '%#SpaceVim_statusline_a# TODO manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+
   elseif &filetype ==# 'SpaceVimPlugManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -456,7 +491,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#init() abort
   augroup SpaceVim_statusline
     autocmd!
-    autocmd BufWinEnter,WinEnter,FileType
+    autocmd BufWinEnter,WinEnter,FileType,BufWritePost
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
     autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
@@ -549,7 +584,7 @@ function! SpaceVim#layers#core#statusline#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
         \ 'toggle the cursor position', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'T'], 'if &laststatus == 2 | let &laststatus = 0 | else | let &laststatus = 2 | endif',
-        \ 'toggle the statuline itself', 1)
+        \ 'toggle the statusline itself', 1)
   function! TagbarStatusline(...) abort
     let name = (strwidth(a:3) > (g:spacevim_sidebar_width - 15)) ? a:3[:g:spacevim_sidebar_width - 20] . '..' : a:3
     return s:STATUSLINE.build([s:winnr(1),' Tagbar ', ' ' . name . ' '], [], s:lsep, s:rsep, '', '',

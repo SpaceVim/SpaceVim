@@ -7,7 +7,7 @@ commentsID: "SpaceVim release v0.3.1"
 comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.3.1
+# [Changelogs](../development#changelog) > SpaceVim release v0.3.1
 
 **Install:**  https://github.com/SpaceVim/SpaceVim/wiki/Installing-SpaceVim
 

@@ -28,7 +28,7 @@ We just make a general discussion about how to use SpaceVim, and what feature ne
 
 ### Improve Tab manager
 
-These new features has been added to tab manager in [#1887](https://github.com/SpaceVim/SpaceVim/pull/1887)
+These new features have been added to tab manager in [#1887](https://github.com/SpaceVim/SpaceVim/pull/1887)
 
 - Display tab name on tabline and tab manager, you can also rename the tab via key binding `r` in tab manager buffer.
 ![rename](https://user-images.githubusercontent.com/13142418/42123061-26d938aa-7c11-11e8-8e98-b089fbc53f30.gif)
@@ -42,7 +42,7 @@ These new features has been added to tab manager in [#1887](https://github.com/S
 
 ### Improve flygrep
 
-- remvoe the unneeded `!` after redraw in flygrep and other plugins which is using prompt API.
+- remove the unneeded `!` after redraw in flygrep and other plugins which is using prompt API.
 - improve the flygrep 
 
 Just open a new pull request [#1898](https://github.com/SpaceVim/SpaceVim/pull/1898) which is based on [#1802](https://github.com/SpaceVim/SpaceVim/pull/1802).

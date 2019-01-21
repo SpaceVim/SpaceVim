@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#purescript 模块"
-description: "这一模块为 purescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 SpaceVim 提供了 PureScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -19,7 +19,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 purescript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 PureScript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
 
 ## 功能特性
 
@@ -27,7 +27,7 @@ lang: cn
 - 文档查询
 - 跳转定义处
 
-同时，SpaceVim 还为 purescript 开发提供了交互式编程、一键运行和语言服务器等功能。若要启用语言服务器，需要载入 `lsp` 模块。
+同时，SpaceVim 还为 PureScript 开发提供了交互式编程、一键运行和语言服务器等功能。若要启用语言服务器，需要载入 `lsp` 模块。
 
 ## 启用模块
 
@@ -60,7 +60,7 @@ lang: cn
 
 ### 交互式编程
 
-启动 `pulp repl` 交互进程，快捷键为： `SPC l s i`。
+启动 `pulp repl` 交互进程，快捷键为：`SPC l s i`。
 
 将代码传输给 REPL 进程执行：
 
