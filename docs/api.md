@@ -14,8 +14,8 @@ description: "A list of available APIs in SpaceVim, provide compatible functions
 
 #### Introduction
 
-SpaceVim provides many public apis, you can use this apis in your plugins.
-This is an example for how to load API, and how to use the public functions within the APIs.
+SpaceVim provides many public APIs, you can use these APIs in your plugins.
+The following example shows how to load APIs, and how to use the public functions within the APIs.
 
 ```vim
 " use SpaceVim#api#import() to load the API
@@ -36,7 +36,7 @@ echom s:file.pathSeparator
 
 ## Available APIs
 
-here is the list of all available APIs, and welcome to contribute to SpaceVim.
+Here is the list of all available APIs, and welcome to contribute to SpaceVim.
 
 | Name                                  | Description                                                                                        |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------- |

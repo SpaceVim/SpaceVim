@@ -39,9 +39,9 @@ description: "conventions of contributing to SpaceVim, including the coding styl
 
 ## Commit emoji convention
 
-- `:memo:` Add comment or doc
+- `:memo:` Add comment or doc.
 - `:gift:` New feature.
-- `:bug:` Bug fix
+- `:bug:` Bug fix.
 - `:bomb:` Breaking compatibility.
 - `:white_check_mark:` Write test.
 - `:fire:` Remove something.
@@ -83,7 +83,7 @@ Avoid using :s[ubstitute] as it moves the cursor and prints error messages. Pref
 
 The meaning of the g flag depends upon the gdefault setting. If you do use :substitute you must save gdefault, set it to 0 or 1, perform the substitution, and then restore it.
 
-For many vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
+For many Vim commands, functions exist that do the same thing with fewer side effects. See `:help functions` for a list of built-in functions.
 
 #### Fragile commands
 
@@ -132,9 +132,9 @@ Use python only when it provides critical functionality, for example when writin
 
 #### Other Languages
 
-**Use vimscript instead.**
+**Use Vimscript instead.**
 
-Avoid using other scripting languages such as ruby and lua. We can not guarantee that the end user's vim has been compiled with support for non-vimscript languages.
+Avoid using other scripting languages such as ruby and lua. We cannot guarantee that the end user's Vim has been compiled with support for non-vimscript languages.
 
 #### Plugin layout
 
@@ -198,8 +198,7 @@ Use :setlocal and &l: instead of :set and & unless you have explicit reason to d
 
 ### Style
 
-Follow google style conventions. When in doubt, treat vimscript style like
-python style.
+Follow google style conventions. When in doubt, treat vimscript style like python style.
 
 #### Whitespace
 
@@ -247,7 +246,7 @@ such as "noremap <leader>gf :grep -f ".
 
 When continuing a multi-line command a pipe can be substituted for this space as necessary, as follows:
 
-```viml
+```vim
 autocommand BufEnter <buffer>
     \ if !empty(s:var)
     \|  call some#function()
@@ -288,11 +287,11 @@ Always prefix variables with their scope.
 
 ## Key notations
 
-- use capital case and angle brackets for keyboard button: `<Down>`, `<Up>`
-- use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`
-- use space as delimiter for key sequences: `SPC t w`, `<Leader> f f`
-- use `/` for alternative sequences: `<Tab>` / `<C-n>`
-- Use `Ctrl-e` instead of `<C-e>` in documentation
+- Use capital case and angle brackets for keyboard buttons: `<Down>`, `<Up>`.
+- Use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`.
+- Use space as delimiter for key sequences: `SPC t w`, `<Leader> f f`.
+- Use `/` for alternative sequences: `<Tab>` / `<C-n>`.
+- Use `Ctrl-e` rather than `<C-e>` in documentation.
 
 ## Thanks:
 
