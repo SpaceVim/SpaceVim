@@ -16,9 +16,13 @@ language or feature by grouping all the related plugins together. It got inspire
 
 ### Credits & Thanks
 
-This project exists thanks to all the people who have contributed to SpaceVim:
+This project exists to thank all the people who have [contributed](CONTRIBUTING.md):
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
+- [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
+- [Rafael Bodill](https://github.com/rafi) and his vim-config
+- [Bailey Ling](https://github.com/bling) and his dotvim
+- Authors of all the plugins used in SpaceVim.
