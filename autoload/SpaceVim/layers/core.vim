@@ -170,6 +170,7 @@ function! SpaceVim#layers#core#config() abort
         \ 'delete-current-buffer-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call SpaceVim#plugins#windisk#open()', 'open-windisk-manager', 1)
   if g:spacevim_filemanager ==# 'vimfiler'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle', 'show_file_tree', 1)
