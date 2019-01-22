@@ -857,8 +857,8 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ```toml
 [[custom_plugins]]
-name = 'lilydjwg/colorizer'
-merged = false
+    name = 'lilydjwg/colorizer'
+    merged = false
 ```
 
 #### 界面元素显示切换
@@ -1440,9 +1440,10 @@ endfunction
 | `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的`[[options]]`片段中加入如下配置：
+**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的`[options]`片段中加入如下配置：
 
 ```toml
+[options]
     enable_googlesuggest = true
 ```
 
