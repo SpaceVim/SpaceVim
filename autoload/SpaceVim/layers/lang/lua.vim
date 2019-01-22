@@ -30,6 +30,10 @@ let s:lua_repl_command = ''
 
 function! SpaceVim#layers#lang#lua#config() abort
 
+  augroup spacevim_lang_lua
+    autocmd!
+    autocmd FileType lua set comments=f:--
+  augroup END
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
   let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
   if !empty(luaexe)

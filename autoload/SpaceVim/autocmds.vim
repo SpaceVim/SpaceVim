@@ -43,10 +43,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
-    autocmd FileType lua set comments=f:--
-    autocmd FileType xml call XmlFileTypeInit()
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
