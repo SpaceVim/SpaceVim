@@ -11,3 +11,8 @@ function! SpaceVim#layers#lang#r#plugins() abort
   call add(plugins, ['wsdjeg/Nvim-R', {'merged' : 0}])
   return plugins
 endfunction
+
+
+function! SpaceVim#layers#lang#r#config() abort
+  
+endfunction
