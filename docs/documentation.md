@@ -1172,7 +1172,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 
 ##### Open file with file tree.
 
-If there is only one file buffer opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
+If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
 
 | Key Bindings   | Descriptions                              |
 | -------------- | ----------------------------------------- |
@@ -1641,11 +1641,11 @@ In transient state:
 | `-`           | decrease the number under point by one |
 | Any other key | leave the transient state              |
 
-**Tips:** You can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+**Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
 
 #### Replace text with iedit
 
-SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
+SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
 
 **Two new modes:** `iedit-Normal`/`iedit-Insert`
 
@@ -1757,7 +1757,7 @@ These following features have been added to runner and repl plugin:
 
 ### Errors handling
 
-SpaceVim uses [neomake](https://github.com/neomake/neomake) to gives error feedback on the fly.
+SpaceVim uses [neomake](https://github.com/neomake/neomake) to give error feedback on the fly.
 The checks are only performed at save time by default.
 
 Errors management mappings (start with e):
@@ -1805,7 +1805,7 @@ Project manager commands start with `p`:
 
 ## EditorConfig
 
-SpaceVim has support [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 

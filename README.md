@@ -59,13 +59,13 @@ This is a list of latest features implemented in SpaceVim:
 Here is an example for using toml as SpaceVim config:
 
 ```toml
-# This is basic configuration example for SpaceVim
+# This is basic configuration example for SpaceVim.
 
-# All SpaceVim options below [option] section
+# All SpaceVim options below [options] snippet.
 [options]
-    # set spacevim theme. by default colorscheme layer is not loaded,
-    # if you want to use more colorschemes, please load the colorscheme
-    # layer
+    # Set SpaceVim theme. By default colorscheme layer is not loaded.
+    # If you want to use more colorschemes, please load the colorscheme
+    # layer.
     colorscheme = "gruvbox"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
@@ -85,14 +85,14 @@ Here is an example for using toml as SpaceVim config:
 
 # Enable autocomplete layer
 [[layers]]
-name = 'autocomplete'
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+    name = 'autocomplete'
+    auto-completion-return-key-behavior = "complete"
+    auto-completion-tab-key-behavior = "cycle"
 
 [[layers]]
-name = 'shell'
-default_position = 'top'
-default_height = 30
+    name = 'shell'
+    default_position = 'top'
+    default_height = 30
 ```
 
 **Iedit mode**
