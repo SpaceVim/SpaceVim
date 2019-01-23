@@ -99,18 +99,19 @@ function! s:layer_list() abort
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/layers/index.md'))
+  if s:SYS.isWindows
+    let pattern = join(['', 'docs', 'layers', ''], s:FILE.separator . s:FILE.separator)
+  else
+    let pattern = join(['', 'docs', 'layers', ''], s:FILE.separator)
+  endif
   for layer in layers
-    let name = split(layer, '/docs/layers/')[1][:-4] . '/'
-    let url = name
-    if name ==# 'language-server-protocol/'
-      let name = 'lsp'
-    endif
+    let name = split(layer, pattern)[1][:-4] . s:FILE.separator
+    let url = join(split(name, s:FILE.separator), '/') . '/'
     let content = readfile(layer)
     if len(content) > 3
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
     else
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   can not find Description |'
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   can not find Description |'
     endif
     call add(list, line)
   endfor
@@ -123,18 +124,19 @@ function! s:layer_list_cn() abort
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'
         \ ]
-  call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/cn/layers/index.md'))
+  if s:SYS.isWindows
+    let pattern = join(['', 'docs', 'cn', 'layers', ''], s:FILE.separator . s:FILE.separator)
+  else
+    let pattern = join(['', 'docs', 'cn', 'layers', ''], s:FILE.separator)
+  endif
   for layer in layers
-    let name = split(layer, '/docs/cn/layers/')[1][:-4] . '/'
-    let url = name
-    if name ==# 'language-server-protocol/'
-      let name = 'lsp'
-    endif
+    let name = split(layer, pattern)[1][:-4] . s:FILE.separator
+    let url = join(split(name, s:FILE.separator), '/') . '/'
     let content = readfile(layer)
     if len(content) > 3
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   ' . content[2][14:-2] . ' | '
     else
-      let line = '| [' . join(split(name, '/'), '#') . '](' . url . ')    |   can not find Description |'
+      let line = '| [' . join(split(name, s:FILE.separator), '#') . '](' . url . ')    |   can not find Description |'
     endif
     call add(list, line)
   endfor

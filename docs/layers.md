@@ -57,6 +57,8 @@ Some layers are enabled by default. The following example shows how to disable `
     enable = false
 ```
 
+<!-- Update layer list: call SpaceVim#dev#layers#update()  -->
+
 <!-- SpaceVim layer list start -->
 
 ## Available layers

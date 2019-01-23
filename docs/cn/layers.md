@@ -51,7 +51,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
     enable = false
 ```
 
-<!-- 更新模块列表 call SpaceVim#dev#layers#updateCn() -->
+<!-- 更新模块列表： call SpaceVim#dev#layers#updateCn() -->
 
 <!-- SpaceVim layer cn list start -->
 
