@@ -260,7 +260,13 @@ autocommand BufEnter <buffer>
 
 #### 命名
 
-总的来说，使用像这样的插件名 plugin-names-like-this，像这样的函数名 FunctionNamesLikeThis，像这样的命令名 CommandNamesLikeThis，像这样的参数组 augroup_names_like_this，像这样的变量名 variable_names_like_this。
+总的来说，使用
+- 像这样的插件名 plugin-names-like-this
+- 像这样的函数名 FunctionNamesLikeThis
+- 像这样的命令名 CommandNamesLikeThis
+- 像这样的参数组 augroup_names_like_this
+- 像这样的变量名 variable_names_like_this
+- 像这样的提示 hints-like-this
 
 总是在变量名前加上它们的范围前缀
 - plugin-names-like-this
