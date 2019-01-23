@@ -1699,19 +1699,19 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
 
-| Key Bindings | Descriptions               |
-| ------------ | -------------------------- |
-| `SPC ;`      | comment operator           |
-| `SPC c h`    | hide/show comments         |
-| `SPC c l`    | comment lines              |
-| `SPC c L`    | invert comment lines       |
-| `SPC c p`    | comment paragraphs         |
-| `SPC c P`    | invert comment paragraphs  |
-| `SPC c s`    | comment with pretty layout |
-| `SPC c t`    | comment to line            |
-| `SPC c T`    | invert comment to line     |
-| `SPC c y`    | comment and yank           |
-| `SPC c Y`    | invert comment and yank    |
+| Key Bindings | Descriptions                  |
+| ------------ | ----------------------------- |
+| `SPC ;`      | comment operator              |
+| `SPC c h`    | hide/show comments            |
+| `SPC c l`    | toggle comment lines          |
+| `SPC c L`    | comment lines                 |
+| `SPC c p`    | comment paragraphs            |
+| `SPC c P`    | toggle comment paragraphs     |
+| `SPC c s`    | comment with pretty layout    |
+| `SPC c t`    | comment to line               |
+| `SPC c T`    | toggle comment to line        |
+| `SPC c y`    | comment and yank(TODO)        |
+| `SPC c Y`    | toggle comment and yank(TODO) |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
 For example, `SPC ; 4 j` will comment current line and the following 4 lines.

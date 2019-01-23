@@ -1672,14 +1672,14 @@ The default color for iedit is `red`/`green` which is based on the current color
 | ----------- | ------------------------- |
 | `SPC ;`     | comment operator          |
 | `SPC c h`   | hide/show comments        |
-| `SPC c l`   | comment lines             |
-| `SPC c L`   | invert comment lines      |
+| `SPC c l`   | toggle comment lines      |
+| `SPC c L`   | comment lines             |
 | `SPC c p`   | comment paragraphs        |
-| `SPC c P`   | invert comment paragraphs |
+| `SPC c P`   | toggle comment paragraphs |
 | `SPC c t`   | comment to line           |
-| `SPC c T`   | invert comment to line    |
+| `SPC c T`   | toggle comment to line    |
 | `SPC c y`   | comment and yank          |
-| `SPC c Y`   | invert comment and yank   |
+| `SPC c Y`   | toggle comment and yank   |
 
 小提示：
 
