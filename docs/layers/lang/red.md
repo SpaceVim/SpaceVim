@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#r layer"
-description: "This layer is for R development, provide autocompletion, syntax checking and code format."
+title: "SpaceVim lang#red layer"
+description: "This layer is for red development, provide autocompletion, syntax checking and code format."
 ---
 
-# [Available Layers](../../) >> lang#r
+# [Available Layers](../../) >> lang#red
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,7 +18,7 @@ description: "This layer is for R development, provide autocompletion, syntax ch
 
 ## Description
 
-This layer is for R development.
+This layer is for red development.
 
 ## Install
 
@@ -28,19 +28,19 @@ To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#r"
+  name = "lang#red"
 ```
 
 ## Key bindings
 
 ### Inferior REPL process
 
-Start a `R` inferior REPL process with `SPC l s i`. You may change the REPL command by layer option `repl_command`. For example, if you want to use `pry`, load this layer via:
+Start a `red` inferior REPL process with `SPC l s i`. You may change the REPL command by layer option `repl_command`. For example, if you want to use `pry`, load this layer via:
 
 ```toml
 [[layers]]
-    name = "lang#r"
-    repl_command = "R"
+    name = "lang#red"
+    repl_command = "red --cli"
 ```
 
 Send code to inferior process commands:
@@ -53,4 +53,5 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a r script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+
