@@ -8,17 +8,26 @@
 
 scriptencoding utf-8
 
+let s:FILE = SpaceVim#api#import('file')
+let s:SYS = SpaceVim#api#import('system')
+
+
+
+let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
+let s:AUTODOC.autoformat = 1
+
 function! SpaceVim#dev#layers#update() abort
+  let s:AUTODOC.begin = '^<!-- SpaceVim layer list start -->$'
+  let s:AUTODOC.end = '^<!-- SpaceVim layer list end -->$'
+  let s:AUTODOC.content_func = function('s:generate_content')
+  call s:AUTODOC.update()
+endfunction
 
-  let [start, end] = s:find_position()
-  if start != 0 && end != 0
-    if end - start > 1
-      exe (start + 1) . ',' . (end - 1) . 'delete'
-    endif
-    call append(start, s:generate_content())
-    silent! Neoformat
-  endif
-
+function! SpaceVim#dev#layers#updateCn() abort
+  let s:AUTODOC.begin = '^<!-- SpaceVim layer cn list start -->$'
+  let s:AUTODOC.end = '^<!-- SpaceVim layer cn list end -->$'
+  let s:AUTODOC.content_func = function('s:generate_content_cn')
+  call s:AUTODOC.update()
 endfunction
 
 function! SpaceVim#dev#layers#updatedocker() abort
@@ -29,19 +38,6 @@ function! SpaceVim#dev#layers#updatedocker() abort
     endif
     call append(start, s:generate_docker_content())
   endif
-endfunction
-
-function! SpaceVim#dev#layers#updateCn() abort
-
-  let [start, end] = s:find_position_cn()
-  if start != 0 && end != 0
-    if end - start > 1
-      exe (start + 1) . ',' . (end - 1) . 'delete'
-    endif
-    call append(start, s:generate_content_cn())
-    silent! Neoformat
-  endif
-
 endfunction
 
 function! s:find_position() abort
