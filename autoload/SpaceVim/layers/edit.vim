@@ -242,7 +242,7 @@ function! s:lowerCamelCase() abort
   " fooFzz
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
-    let rst = [cword[0]]
+    let rst = [substitute(cword[0], '^.', '\l&', '')]
     if len(cword) > 1
       let rst += map(cword[1:], "substitute(v:val, '^.', '\\u&', 'g')")
     endif
