@@ -434,10 +434,10 @@ endfunction
 
 function! s:delete_current_buffer_file() abort
   if s:MESSAGE.confirm('Are you sure you want to delete this file')
-    let f = fnameescape(expand('%:p'))
+    let f = expand('%')
     if delete(f) == 0
       call SpaceVim#mapping#close_current_buffer()
-      echo "File '" . f . "' successfully removed"
+      echo "File '" . f . "' successfully deleted!"
     else
       call s:MESSAGE.warn('Failed to delete file:' . f)
     endif
