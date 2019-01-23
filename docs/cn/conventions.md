@@ -291,7 +291,7 @@ autocommand BufEnter <buffer>
   - 本地缓冲区(Buffer-local)变量的前缀为`b:`
   - `g:`, `s:`, 和 `a:` 前缀必须使用
   - `b:` 当你想要改变本地缓冲区(buffer-local)的变量的语义时前缀为 `b:`
-  - `l:` and `v:` should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them everywhere.
+  - `l:` and `v:` should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 ## markdown 代码规范
 

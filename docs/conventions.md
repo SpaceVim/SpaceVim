@@ -264,15 +264,15 @@ In general, use `plugin-names-like-this`, `FunctionNamesLikeThis`,
 
 Always prefix variables with their scope.
 
-- plugin-names-like-this
+- `plugin-names-like-this`
     Keep them short and sweet.
-- FunctionNamesLikeThis
+- `FunctionNamesLikeThis`
   - Prefix script-local functions with s:
   - Autoloaded functions may not have a scope prefix.
   - Do not create global functions. Use autoloaded functions instead.
-- CommandNamesLikeThis
+- `CommandNamesLikeThis`
     Prefer succinct command names over common command prefixes.
-- variable_names_like_this
+- `variable_names_like_this`
     Augroup names count as variables for naming purposes.
 - Prefix all variables with their scope.
   - Global variables with g:
