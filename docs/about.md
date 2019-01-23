@@ -16,7 +16,7 @@ language or feature by grouping all the related plugins together. It got inspire
 
 ### Credits & Thanks
 
-This project exists to thank all the people who have [contributed](CONTRIBUTING.md):
+This project exists to thank all the people who have contributed:
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
