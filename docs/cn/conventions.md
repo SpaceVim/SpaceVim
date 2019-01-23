@@ -212,8 +212,10 @@ Excluding [!] prevents your plugin from silently clobbering existing commands. C
 
 不要以参数列表(arguments)的形式来使用命令。
 
+```vim
 let s:variable = "concatenated " . "strings"
 command -range=% MyCommand
+```
 
 - 不要在空白行处留下空白字符
 
@@ -260,18 +262,24 @@ autocommand BufEnter <buffer>
 
 #### 命名
 
-总的来说，使用像这样的插件名 plugin-names-like-this，像这样的函数名 FunctionNamesLikeThis，像这样的命令名 CommandNamesLikeThis，像这样的参数组 augroup_names_like_this，像这样的变量名 variable_names_like_this。
+总的来说，使用
+- 像这样的插件名 `plugin-names-like-this`
+- 像这样的函数名 `FunctionNamesLikeThis`
+- 像这样的命令名 `CommandNamesLikeThis`
+- 像这样的参数组 `augroup_names_like_this`
+- 像这样的变量名 `variable_names_like_this`
+- 像这样的提示 `hints-like-this`
 
 总是在变量名前加上它们的范围前缀
-- plugin-names-like-this
+- `plugin-names-like-this`
     保持简单易于理解
-- FunctionNamesLikeThis
+- `FunctionNamesLikeThis`
   - 本地脚本函数的前缀为`s:`
   - 自动运行函数(autoload functions)可以没有范围前缀。
   - 不要编写(creat)全局函数。用自动运行函数(autoloaded functions)来替代全局函数。
-- CommandNamesLikeThis
+- `CommandNamesLikeThis`
     通用命令优先于一般的前缀
-- variable_names_like_this
+- `variable_names_like_this`
     Augroup names count as variables for naming purposes.
     参数组(augroup)名字计数作为变量的命名方向。
 - 所有的变量据需要加上它们的范围前缀。

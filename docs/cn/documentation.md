@@ -1054,7 +1054,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 ##### 特殊 buffer
 
-在 SpaceVim 中，有很多特殊的 buffer，这些 buffer 是由插件或者 SpaceVim 自身新建的，并不会被列出。
+在 SpaceVim 中，有很多特殊的 buffer，这些 buffer 是由插件或者 SpaceVim 自身建立的，并不会被列出。
 
 ##### 文件操作相关快捷键
 
@@ -1596,8 +1596,8 @@ In highlight symbol transient state:
 
 #### 增加或减小数字
 
-| 快捷键    | 描述                                                |
-| --------- | --------------------------------------------------- |
+| 快捷键    | 描述                                               |
+| --------- | -------------------------------------------------- |
 | `SPC n +` | 为光标下的数字加 1 并进入 initiate transient state |
 | `SPC n -` | 为光标下的数字减 1 并进入 initiate transient state |
 
@@ -1667,22 +1667,23 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
-| 快捷键      | 描述                      |
-| ----------- | ------------------------- |
-| `SPC ;`     | comment operator          |
-| `SPC c h`   | hide/show comments        |
-| `SPC c l`   | comment lines             |
-| `SPC c L`   | invert comment lines      |
-| `SPC c p`   | comment paragraphs        |
-| `SPC c P`   | invert comment paragraphs |
-| `SPC c t`   | comment to line           |
-| `SPC c T`   | invert comment to line    |
-| `SPC c y`   | comment and yank          |
-| `SPC c Y`   | invert comment and yank   |
+| 快捷键      | 描述                            |
+| ----------- | ------------------------------- |
+| `SPC ;`     | enter comment operator mode     |
+| `SPC c h`   | hide/show comments(TODO)        |
+| `SPC c l`   | comment lines                   |
+| `SPC c L`   | invert comment lines            |
+| `SPC c p`   | comment paragraphs              |
+| `SPC c P`   | invert comment paragraphs       |
+| `SPC c s`   | comment with sexy/pretty layout |
+| `SPC c t`   | comment to line                 |
+| `SPC c T`   | invert comment to line          |
+| `SPC c y`   | comment and yank(TODO)          |
+| `SPC c Y`   | invert comment and yank(TODO)   |
 
 小提示：
 
-用 `SPC ;` 可以启动一个 operator 模式，在该模式下，可以使用移动命令确认注释的范围，
+用 `SPC ;` 可以启动一个 comment operator 模式，在该模式下，可以使用移动命令确认注释的范围，
 比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
 
 #### 多方式编码
@@ -1744,11 +1745,11 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 甚至可检查 Vim 位置列表的所有错误。这包括下面的例子：在已被保存的位置列表缓冲区进行搜索。
 默认提示符：
 
-| 提示符 | 描述        | 自定义选项                  |
-| ------ | ----------- | --------------------------- |
-| `✖`    | Error       | `error_symbol`   |
-| `➤`    | warning     | `warning_symbol` |
-| `🛈`    | Info        | `info_symbol`    |
+| 提示符 | 描述    | 自定义选项       |
+| ------ | ------- | ---------------- |
+| `✖`    | Error   | `error_symbol`   |
+| `➤`    | warning | `warning_symbol` |
+| `🛈`    | Info    | `info_symbol`    |
 
 ### 工程管理
 
