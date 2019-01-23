@@ -289,7 +289,7 @@ Always prefix variables with their scope.
 
 - Use capital case and angle brackets for keyboard buttons: `<Down>`, `<Up>`.
 - Use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`.
-- Use space as delimiter for key sequences: `SPC t w`, `<Leader> f f`.
+- Use space as delimiter for key sequences: `SPC t w`, `<Leader> f o`.
 - Use `/` for alternative sequences: `<Tab>` / `<C-n>`.
 - Use `Ctrl-e` rather than `<C-e>` in documentation.
 
