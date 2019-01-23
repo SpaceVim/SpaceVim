@@ -1668,18 +1668,18 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
-| 快捷键      | 描述                      |
-| ----------- | ------------------------- |
-| `SPC ;`     | comment operator          |
-| `SPC c h`   | hide/show comments        |
-| `SPC c l`   | toggle comment lines      |
-| `SPC c L`   | comment lines             |
-| `SPC c p`   | comment paragraphs        |
-| `SPC c P`   | toggle comment paragraphs |
-| `SPC c t`   | comment to line           |
-| `SPC c T`   | toggle comment to line    |
-| `SPC c y`   | comment and yank          |
-| `SPC c Y`   | toggle comment and yank   |
+| 快捷键      | 描述                           |
+| ----------- | ------------------------------ |
+| `SPC ;`     | comment operator               |
+| `SPC c h`   | hide/show comments             |
+| `SPC c l`   | toggle comment lines           |
+| `SPC c L`   | comment lines                  |
+| `SPC c p`   | comment paragraphs             |
+| `SPC c P`   | toggle comment paragraphs      |
+| `SPC c t`   | comment to line                |
+| `SPC c T`   | toggle comment to line         |
+| `SPC c y`   | comment and yank(TODOO)        |
+| `SPC c Y`   | toggle comment and yank(TODOO) |
 
 小提示：
 
