@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#plantuml 模块"
-description: "这一模块为 plantuml 开发提供支持，包括语法高亮、实时预览等特性。"
+description: "这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 plantuml 开发支持。
+这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。
 
 ## 功能特性
 

@@ -51,7 +51,7 @@ func! myspacevim#before() abort
   let g:gista#client#default_username = 'monkeyxite'
 endf
 ```
-Refer [github dashboar](https://github.com/junegunn/vim-github-dashboard), for security concerns you could create a Personal Access Token, export it as an environment variable and use it as a password.
+Refer [github dashboard](https://github.com/junegunn/vim-github-dashboard), for security concerns you could create a Personal Access Token, export it as an environment variable and use it as a password.
 ```shell
 # in some secure file sourced in your .bashrc, .bash_profile, .zshrc, etc.
 export GITHUB_TOKEN="<your 40 char token>"

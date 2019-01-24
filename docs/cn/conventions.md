@@ -1,6 +1,6 @@
 ---
-title:  "约定"
-description: "描述贡献代码所需遵循的约定俗成的规范，包括 Vim 脚本的代码规范以及 markdown 文件的代码规范。"
+title: "约定"
+description: "描述贡献代码所需遵循的约定俗成的规范，包括 Vim 脚本的代码规范以及 MarkDown 文件的代码规范。"
 lang: cn
 ---
 
@@ -34,14 +34,14 @@ lang: cn
     - [连续行](#连续行)
     - [命名](#命名)
 - [markdown 代码规范](#markdown-代码规范)
-- [感谢:](#感谢)
+- [感谢：](#感谢)
 
 <!-- vim-markdown-toc -->
 
 ## Commit emoji 规范
 
 - `:memo:` 添加一个备注或者文档
-- `:gift:` 新的特新
+- `:gift:` 新的特性
 - `:bug:` bug 修复
 - `:bomb:` 破坏向后兼容
 - `:white_check_mark:` 添加测试
@@ -52,7 +52,7 @@ lang: cn
 
 ### 可移植性
 
-Vim 具有高度可定制性。用户可以更改很多的默认设置，包括区分大小写，正则表达式规则，替换规则，还有很多别的。为了让你的脚本可以适用于所有用户，请遵循下面的引导：
+Vim 具有高度可定制性。用户可以更改很多的默认设置，包括区分大小写，正则表达式规则，替换规则，还有很多别的。为了让你的脚本可以适用于所有用户，请遵循下面的规则：
 
 #### 字符串
 
@@ -64,9 +64,10 @@ Vim 具有高度可定制性。用户可以更改很多的默认设置，包括�
 
 #### 匹配字符串
 
-**用 =~# 或者 =~? 操作符家族替换=~家族**
+**用`=~#`或者`=~?`操作符家族替换`=~`家族**
 
-匹配行为取决于用户的忽略大小写设置(ignorecase)和智能大小写(smartcase)设置以及你是否将它们与 =~, =~# 或 =~?操作符家族进行比较。使用 =~# 和 =~? 操作符家族显式的比较字符串，除非明确的要遵守用户的大小写语义设置。
+匹配行为取决于用户的忽略大小写设置(ignorecase)和智能大小写(smartcase)设置以及你是否将它们与`=~,` `=~#` 或 `=~?`操作符家族进行比较。
+使用`=~#`和`=~?` 操作符家族显式的比较字符串，除非明确的要遵守用户的大小写语义设置。
 
 #### 正则表达式
 
@@ -80,11 +81,11 @@ Vim 具有高度可定制性。用户可以更改很多的默认设置，包括�
 
 **避免命令意想不到的副作用**
 
-避免使用 :s[ubtitute] 因为它引动光标并打印错误消息。首选功能(例如 search()) 比 s[ubtitute] 更适用于脚本。
+避免使用 `:s[ubstitute]` 因为它会移动光标并打印错误消息。函数（例如 search()）更适用于脚本。
 
-这意味着 g 标志取决于上层中 gdefault 设置。如果你用了 :subtitute 你必须要保存 gdefault, 把它设置为 0 或 1 预先生成替换并且在操作完成后还原它。
-For many Vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
-有很多内置的Vim命令，函数，可以在更小的影响下完成同样的事情。查看:help functions() 查看内置的函数表。
+这意味着 g 标志取决于上层中 gdefault 的设置。如果你用了 `:substitute` 你必须要保存 gdefault, 把它设置为 0 或 1，预先生成替换并且在操作完成后还原它。
+For many Vim commands, functions exist that do the same thing with fewer side effects. See `:help functions()` for a list of built-in functions.
+有很多内置的 Vim 命令、函数，可以在更小的影响下完成同样的事情。查看 `:help functions` 查看内置的函数表。
 
 #### 脆弱命令
 
@@ -92,7 +93,7 @@ For many Vim commands, functions exist that do the same thing with fewer side ef
 
 一直使用普通模式(normal) 在普通模式下安装。后者取决于用户的按键映射，可以做任何事情。
 
-避免 `:s[ubtitute]` ，因为它的行为取决于上层的一些运行设置。
+避免 `:s[ubstitute]`，因为它的行为取决于上层的一些运行设置。
 
 其它同样的命令的应用，在此不再列出。
 
@@ -123,7 +124,7 @@ Vim 脚本在处理一些类型(style)时有不安全，不直观的行为。举
 
 在使用变量前，明确检查变量的类型。使用 maktaba#ensure 中的函数(functions from maktaba#ensure) 或 check maktaba#value 或 type() 找出你自己的错误。
 
-使用 :unlet 对变量使用(:unlet)可能更改变量的类型，尤其是在循环中赋值的时候。
+使用 `:unlet` 对变量使用(:unlet)可能更改变量的类型，尤其是在循环中赋值的时候。
 
 #### Python
 
@@ -135,13 +136,13 @@ Vim 脚本在处理一些类型(style)时有不安全，不直观的行为。举
 
 **用 Vim 脚本替代**
 
-避免使用其它的脚本语言，例如 Ruby 和 Lua 。 我们不能保证，用户的 Vim 已经完成了对 non-vimscript languages的支持。
+避免使用其它的脚本语言，例如 Ruby 和 Lua。 我们不能保证，用户的 Vim 已经完成了对 non-vimscript languages 的支持。
 
 #### 插件布局
 
 **将功能组织到模块化插件中**
 
-把你的功能组织成为一个插件，统一放在一个文件夹中(或者是代码仓库)分享你的插件名(用一个 "vim-" 前缀或者需要的话使用 ".vim" 后缀)。它应该可以被拆分到 plugin/, autoload/, 等等。子目录应该以addon-info.json格式声明元数据(详情参见 VAM 文档)。
+把你的功能组织成为一个插件，统一放在一个文件夹中(或者是代码仓库)分享你的插件名(用一个 "vim-" 前缀或者需要的话使用 ".vim" 后缀)。它应该可以被拆分到 plugin/, autoload/, 等等。子目录应该以 addon-info.json 格式声明元数据(详情参见 Vim 文档)。
 
 #### 功能
 
@@ -155,11 +156,11 @@ Vim 脚本在处理一些类型(style)时有不安全，不直观的行为。举
 
 [!] 允许开发者无需申诉(complaint)便可重新加载它们的功能。
 
-[abort] 强制函数再遇到错误时停止。
+[abort] 强制函数在遇到错误时停止。
 
 #### 命令
 
-**在 plugin/commands.vim 中或  the ftplugin/ 目录中，不用[!]定义**
+**在 plugin/commands.vim 中或 ftplugin/ 目录中，不用[!]定义**
 
 一般命令(general commands)进入 plugin/commands.vim. 文件类型特殊命令(Filetype-specific) 进入 ftplugin/ 。
 
@@ -177,11 +178,11 @@ Excluding [!] prevents your plugin from silently clobbering existing commands. C
 
 #### 映射
 
-**在 plugin/mappings.vim 中用  maktaba#plugin#MapPrefix 获取前缀**
+**在 plugin/mappings.vim 中用 maktaba#plugin#MapPrefix 获取前缀**
 
 所有的按键映射都应当在 plugin/mappings.vim 中被定义。
 
-练习映射(参看:help using-<Plugin>)应当在 plugin/plugs.vim 中被定义。
+练习映射(参看`:help using-<Plugin>`)应当在 plugin/plugs.vim 中被定义。
 
 **一直使用 noremap family 命令**
 
@@ -195,7 +196,7 @@ Excluding [!] prevents your plugin from silently clobbering existing commands. C
 
 **在本地更改设置**
 
-用 :setlocal 和 &l: 替代 :set 和 & 除非你有明确的原因不去使用它们。
+用 `:setlocal` 和 &l: 替代 `:set` 和 & 除非你有明确的原因不去使用它们。
 
 ### 风格
 
@@ -203,25 +204,27 @@ Excluding [!] prevents your plugin from silently clobbering existing commands. C
 
 #### 空白行
 
-**类似python**
+**类似 Python**
 
 - 缩进使用两个空格
-- 不要使用tabs
+- 不要使用 Tabs
 - 在操作符(operators)前后使用空格
 
 不要以参数列表(arguments)的形式来使用命令。
 
+```vim
 let s:variable = "concatenated " . "strings"
 command -range=% MyCommand
+```
 
 - 不要在空白行处留下空白字符
 
 你无需用自己的方法去清除它。
 
-准备获取用户输入的命令映射中允许留空白字符，例如 "noremap <leader>gf :grep -f "
+准备获取用户输入的命令映射中允许留空白字符，例如 `noremap <leader>gf :grep -f`
 
-- 每行限制80个字符的宽度
-- 缩进保持4个空格
+- 每行限制 80 个字符的宽度
+- 缩进保持 4 个空格
 - 不要对齐命令的参数列表
 
 ```diff
@@ -242,7 +245,7 @@ command -range=% MyCommand
 -    \ some#function()
 ```
 
-- 反斜杠后添加一个空格代表续行。
+- 反斜杠后添加一个空格代表续行
 
 如果需要连续使用多行命令，可以使用管道符来代替空格，就像下面这样：
 
@@ -255,40 +258,46 @@ autocommand BufEnter <buffer>
     \|endif
 ```
 
-- 你应该尽量避免使用多行命令，可以用函数调用来替代它。
+- 你应该尽量避免使用多行命令，可以用函数调用来替代它
 
 #### 命名
 
-总的来说，使用像这样的插件名 plugin-names-like-this ，像这样的函数名 FunctionNamesLikeThis ，像这样的命令名 CommandNamesLikeThis ，像这样的参数组 augroup_names_like_this ，像这样的变量名 variable_names_like_this 。
+总的来说，使用
+- 像这样的插件名 `plugin-names-like-this`
+- 像这样的函数名 `FunctionNamesLikeThis`
+- 像这样的命令名 `CommandNamesLikeThis`
+- 像这样的参数组 `augroup_names_like_this`
+- 像这样的变量名 `variable_names_like_this`
+- 像这样的提示 `hints-like-this`
 
 总是在变量名前加上它们的范围前缀
-- plugin-names-like-this
+- `plugin-names-like-this`
     保持简单易于理解
-- FunctionNamesLikeThis
-  - 本地脚本函数的前缀为s:
+- `FunctionNamesLikeThis`
+  - 本地脚本函数的前缀为`s:`
   - 自动运行函数(autoload functions)可以没有范围前缀。
   - 不要编写(creat)全局函数。用自动运行函数(autoloaded functions)来替代全局函数。
-- CommandNamesLikeThis
+- `CommandNamesLikeThis`
     通用命令优先于一般的前缀
-- variable_names_like_this
+- `variable_names_like_this`
     Augroup names count as variables for naming purposes.
     参数组(augroup)名字计数作为变量的命名方向。
 - 所有的变量据需要加上它们的范围前缀。
-  - 全局变量的前缀为 g:
-  - 本地脚本变量的前缀为 s:
-  - 函数的参数前缀为 a:
-  - 本地函数的变量前缀为 l:
-  - Vim 预定义(Vim-predefinded)变量前缀为 v:
-  - 本地缓冲区(Buffer-local)变量的前缀为 b:
-  - g:, s:, 和 a: 前缀必须使用。
-  - b: 当你想要改变本地缓冲区(buffer-local)的变量的语义时前缀为 b:
-  - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
+  - 全局变量的前缀为`g:`
+  - 本地脚本变量的前缀为`s:`
+  - 函数的参数前缀为`a:`
+  - 本地函数的变量前缀为`l:`
+  - Vim 预定义(Vim-predefinded)变量前缀为`v:`
+  - 本地缓冲区(Buffer-local)变量的前缀为`b:`
+  - `g:`, `s:`, 和 `a:` 前缀必须使用
+  - `b:` 当你想要改变本地缓冲区(buffer-local)的变量的语义时前缀为 `b:`
+  - `l:` and `v:` should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
 
 ## markdown 代码规范
 
-## 感谢:
+## 感谢：
 
-- link : <https://google.github.io/styleguide/vimscriptguide.xml>
-- link : <https://google.github.io/styleguide/vimscriptfull.xml>
-- link : <https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt>
+- link: <https://google.github.io/styleguide/vimscriptguide.xml>
+- link: <https://google.github.io/styleguide/vimscriptfull.xml>
+- link: <https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt>
 - [google's markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)

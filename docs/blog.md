@@ -6,7 +6,7 @@ description: "A list of latest blog about the feature of SpaceVim and tutorials 
 # Blog
 
 Here you can learn more about SpaceVim with our tutorials and find out what's
-going on. feel free to [feed this blog via RSS](../../feed.xml)：
+going on. Feel free to [feed this blog via RSS](../../feed.xml)：
 
 <ul>
     {% for post in site.categories.blog %}

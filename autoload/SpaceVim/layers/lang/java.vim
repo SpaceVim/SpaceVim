@@ -98,6 +98,7 @@ function! SpaceVim#layers#lang#java#config() abort
     au!
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
     autocmd FileType java call s:java_mappings()
+    autocmd FileType jsp call JspFileTypeInit()
   augroup END
   let g:neoformat_enabled_java = ['googlefmt']
   let g:neoformat_java_googlefmt = {

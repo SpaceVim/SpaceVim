@@ -143,15 +143,15 @@ endfunction
 command! FzfColors call <SID>colors()
 function! s:colors() abort
   let s:source = 'colorscheme'
-  call fzf#run({'source': map(split(globpath(&rtp, 'colors/*.vim')),
+  call fzf#run(fzf#wrap({'source': map(split(globpath(&rtp, 'colors/*.vim')),
         \               "fnamemodify(v:val, ':t:r')"),
-        \ 'sink': 'colo','options': '--reverse',  'down': '40%'})
+        \ 'sink': 'colo','options': '--reverse',  'down': '40%'}))
 endfunction
 
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run({'sink': 'e', 'options': '--reverse', 'down' : '40%'})
+  call fzf#run(fzf#wrap("files", {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
 endfunction
 
 let s:source = ''
@@ -194,12 +194,12 @@ function! s:jumps() abort
   function! s:jumplist() abort
     return split(s:CMP.execute('jumps'), '\n')[1:]
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("jumps", {
         \   'source':  reverse(<sid>jumplist()),
         \   'sink':    function('s:bufopen'),
         \   'options': '+m',
         \   'down':    len(<sid>jumplist()) + 2
-        \ })
+        \ }))
 endfunction
 command! FzfMessages call <SID>message()
 function! s:yankmessage(e) abort
@@ -213,12 +213,12 @@ function! s:message() abort
   function! s:messagelist() abort
     return split(s:CMP.execute('message'), '\n')
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("messages", {
         \   'source':  reverse(<sid>messagelist()),
         \   'sink':    function('s:yankmessage'),
         \   'options': '+m',
         \   'down':    len(<sid>messagelist()) + 2
-        \ })
+        \ }))
 endfunction
 
 command! FzfQuickfix call s:quickfix()
@@ -238,12 +238,12 @@ function! s:quickfix() abort
   function! s:quickfix_list() abort
     return map(getqflist(), 's:quickfix_to_grep(v:val)')
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("quickfix", {
         \ 'source':  reverse(<sid>quickfix_list()),
         \ 'sink':    function('s:open_quickfix_item'),
         \ 'options': '--reverse',
         \ 'down' : '40%',
-        \ })
+        \ }))
 endfunction
 command! FzfLocationList call s:location_list()
 function! s:location_list_to_grep(v) abort
@@ -262,12 +262,12 @@ function! s:location_list() abort
   function! s:get_location_list() abort
     return map(getloclist(0), 's:location_list_to_grep(v:val)')
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("location_list", {
         \ 'source':  reverse(<sid>get_location_list()),
         \ 'sink':    function('s:open_location_item'),
         \ 'options': '--reverse',
         \ 'down' : '40%',
-        \ })
+        \ }))
 endfunction
 
 
@@ -337,12 +337,12 @@ function! s:register() abort
   function! s:registers_list() abort
     return split(s:CMP.execute('registers'), '\n')[1:]
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("registers", {
         \   'source':  reverse(<sid>registers_list()),
         \   'sink':    function('s:yankregister'),
         \   'options': '+m',
         \   'down': '40%'
-        \ })
+        \ }))
 endfunction
 
 command! Fzfbuffers call <SID>buffers()
@@ -354,12 +354,12 @@ function! s:buffers() abort
   function! s:buffer_list() abort
     return split(s:CMP.execute('buffers'), '\n')
   endfunction
-  call fzf#run({
+  call fzf#run(fzf#wrap("buffers", {
         \   'source':  reverse(<sid>buffer_list()),
         \   'sink':    function('s:open_buffer'),
         \   'options': '+m',
         \   'down': '40%'
-        \ })
+        \ }))
 endfunction
 
 let s:ansi = {'black': 30, 'red': 31, 'green': 32, 'yellow': 33, 'blue': 34, 'magenta': 35, 'cyan': 36}
@@ -419,11 +419,11 @@ function! s:helptags(...)
   let s:helptags_script = tempname()
   call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('.s:green('%-40s', 'Label').'\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
   let s:source = 'help'
-  call fzf#run({
+  call fzf#run(fzf#wrap("helptags", {
         \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
         \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
         \ 'sink':    function('s:helptag_sink'),
         \ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'] + (empty(query) ? [] : ['--query', query]),
         \   'down': '40%'
-        \ })
+        \ }))
 endfunction

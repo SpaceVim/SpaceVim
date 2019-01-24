@@ -61,6 +61,7 @@ however, if the executable is not on your $PATH, then you need to specify a comp
     name = "lang#ruby"
     repl_command = "/NOT/IN/YOUR/PATH/rubocop"
 ```
+
 Send code to inferior process commands:
 
 | Key Binding | Description                                      |
