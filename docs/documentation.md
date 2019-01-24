@@ -766,7 +766,6 @@ Users only need to load one of these layers, they will be able to get these feat
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
-| `<Leader> f f`       | Fuzzy find file               |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
 | `<Leader> f l`       | Fuzzy find location list      |
