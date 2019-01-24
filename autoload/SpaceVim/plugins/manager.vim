@@ -465,6 +465,7 @@ function! s:build(repo) abort
     elseif jobid == 0
       call s:msg_on_build_failed(a:repo.name)
     elseif jobid == -1
+      let s:building_repos[s:jobpid . ''] = a:repo
       if type(argv) == type([])
         call s:msg_on_build_failed(a:repo.name, argv[0] . ' is not executable')
       else

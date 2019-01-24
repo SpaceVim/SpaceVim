@@ -32,6 +32,8 @@ function! SpaceVim#api#job#get() abort
   return deepcopy(s:self)
 endfunction
 
+let s:SYS = SpaceVim#api#import('system')
+
 " make vim and neovim use same job func.
 let s:self = {}
 let s:self.jobs = {}
@@ -102,11 +104,11 @@ endfunction
 function! s:self.start(argv, ...) abort
   if self.nvim_job
     try
-    if len(a:000) > 0
-      let job = jobstart(a:argv, a:1)
-    else
-      let job = jobstart(a:argv)
-    endi
+      if len(a:000) > 0
+        let job = jobstart(a:argv, a:1)
+      else
+        let job = jobstart(a:argv)
+      endi
     catch /^Vim\%((\a\+)\)\=:E903/
       return -1
     endtry
@@ -143,8 +145,16 @@ function! s:self.start(argv, ...) abort
     endif
     " note, in vim, if the command is not executable, the job is failed,
     " and on_exit will not be called, this should be fixed.
-    call extend(self.jobs, {id : job})
-    return id
+    if job_status(job) == 'dead' && !s:SYS.isWindows
+      call timer_start(20, {-> call(opts.on_exit, [id, 1, 'exit'])})
+      return -1
+    elseif job_status(job) == 'fail' && s:SYS.isWindows
+      call timer_start(20, {-> call(opts.on_exit, [id, 1, 'exit'])})
+      return -1
+    else
+      call extend(self.jobs, {id : job})
+      return id
+    endif
   else
     if len(a:000) > 0
       let opts = a:1
@@ -249,7 +259,7 @@ function! s:self.status(id) abort
       return job_status(get(self.jobs, a:id))
     endif
   else
-      call self.warn('[job API] Failed to get job status: ' . a:id)
+    call self.warn('[job API] Failed to get job status: ' . a:id)
   endif
 endfunction
 
