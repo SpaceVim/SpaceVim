@@ -203,6 +203,19 @@ function! s:battery_status() abort
   endif
 endfunction
 
+function! s:input_method() abort
+  " use fcitx-remote get current method
+  if executable('fcitx-remote')
+    if system('fcitx-remote') == 1
+      return ' cn '
+    else
+      return ' en '
+    endif
+  endif
+  return ''
+endfunction
+
+
 if g:spacevim_enable_neomake
   function! s:syntax_checking()
     if !exists('g:loaded_neomake')
@@ -269,6 +282,7 @@ let s:registed_sections = {
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),
       \ 'battery status' : function('s:battery_status'),
+      \ 'input method' : function('s:input_method'),
       \ 'search status' : function('s:search_status'),
       \ }
 
@@ -580,6 +594,8 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'toggle the battery status', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'd'], 'call SpaceVim#layers#core#statusline#toggle_section("date")',
         \ 'toggle the date', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'i'], 'call SpaceVim#layers#core#statusline#toggle_section("input method")',
+        \ 'toggle the input methon', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
         \ 'toggle the time', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',

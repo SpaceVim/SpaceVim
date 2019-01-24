@@ -308,14 +308,16 @@ In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` l
 If you found one of the built-in plugins has bugs, and you want to debug that plugin. You can follow these steps:
 
 1. Disable this plugin
-Take disabling neomake.vim for instance:
+   Take disabling neomake.vim for instance:
+
 ```toml
 [options]
     disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
-Use toml file to add custom forked plugins:
+   Use toml file to add custom forked plugins:
+
 ```toml
 [[custom_plugins]]
    name = "wsdjeg/neomake.vim"
@@ -324,6 +326,7 @@ Use toml file to add custom forked plugins:
 ```
 
 Use the `bootstrap_before` function to add local plugin:
+
 ```vim
 function! myspacevim#before() abort
     set rtp+=~/path/to/your/localplugin
@@ -456,6 +459,7 @@ Some elements can be dynamically toggled:
 | ------------ | ------------------------------------------------------------------- |
 | `SPC t m b`  | toggle the battery status (need to install acpi)                    |
 | `SPC t m c`  | toggle the org task clock (available in org layer)(TODO)            |
+| `SPC t m i`  | toggle the input method                                             |
 | `SPC t m m`  | toggle the minor mode lighters                                      |
 | `SPC t m M`  | toggle the major mode                                               |
 | `SPC t m n`  | toggle the cat! (If colors layer is declared in your dotfile)(TODO) |
@@ -663,30 +667,30 @@ can change it via `windows_leader` option:
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
 
-| Key               |     Mode      | Action                                                                         |
+| Key               | Mode          | Action                                                                         |
 | ----------------- | ------------- | ------------------------------------------------------------------------------ |
-| `<Leader> y`      |    visual     | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`          |    Normal     | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c` |    Normal     | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> y`      | visual        | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`          | Normal        | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
 | `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
 | `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`          |    Normal     | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl-b`          |    Normal     | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl-e`          |    Normal     | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl-y`          |    Normal     | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl-q`          |    Normal     | `Ctrl`+`w`                                                                     |
-| `Ctrl-x`          |    Normal     | Switch buffer and placement                                                    |
-| `<Up>`, `<Down>`  |    Normal     | Smart up and down                                                              |
-| `}`               |    Normal     | After paragraph motion go to first non-blank char (}^)                         |
+| `Ctrl-f`          | Normal        | Smart page forward (C-f/C-d)                                                   |
+| `Ctrl-b`          | Normal        | Smart page backwards (C-b/C-u)                                                 |
+| `Ctrl-e`          | Normal        | Smart scroll down (3C-e/j)                                                     |
+| `Ctrl-y`          | Normal        | Smart scroll up (3C-y/k)                                                       |
+| `Ctrl-q`          | Normal        | `Ctrl`+`w`                                                                     |
+| `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
+| `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
+| `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
 | `<`               | Visual/Normal | Indent to left and re-select                                                   |
 | `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`           |    Visual     | Indent to right and re-select                                                  |
-| `Shift-Tab`       |    Visual     | Indent to left and re-select                                                   |
-| `g p`             |    Normal     | Select last paste                                                              |
-| `Q` / `g Q`       |    Normal     | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl-a`          |    Command    | Navigation in command line                                                     |
-| `Ctrl-b`          |    Command    | Move cursor backward in command line                                           |
-| `Ctrl-f`          |    Command    | Move cursor forward in command line                                            |
+| `<Tab>`           | Visual        | Indent to right and re-select                                                  |
+| `Shift-Tab`       | Visual        | Indent to left and re-select                                                   |
+| `g p`             | Normal        | Select last paste                                                              |
+| `Q` / `g Q`       | Normal        | Disable EX-mode (<Nop>)                                                        |
+| `Ctrl-a`          | Command       | Navigation in command line                                                     |
+| `Ctrl-b`          | Command       | Move cursor backward in command line                                           |
+| `Ctrl-f`          | Command       | Move cursor forward in command line                                            |
 
 ### File Operations
 
@@ -1776,11 +1780,11 @@ The next/previous error mappings and the error transient state can be used to br
 
 Custom sign symbol:
 
-| Symbol | Descriptions | Custom options              |
-| ------ | -----------  | --------------------------- |
-| `✖`    | Error        | `error_symbol`              |
-| `➤`    | warning      | `warning_symbol`            |
-| `🛈`    | Info         | `info_symbol`               |
+| Symbol | Descriptions | Custom options   |
+| ------ | ------------ | ---------------- |
+| `✖`    | Error        | `error_symbol`   |
+| `➤`    | warning      | `warning_symbol` |
+| `🛈`    | Info         | `info_symbol`    |
 
 ### Managing projects
 

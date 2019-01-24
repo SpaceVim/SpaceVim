@@ -438,6 +438,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | ----------- | ------------------------------------------------------------------- |
 | `SPC t m b` | 显示/隐藏电池状态 (需要安装 acpi)                                   |
 | `SPC t m c` | toggle the org task clock (available in org layer)(TODO)            |
+| `SPC t m i` | 显示/隐藏输入法                                                   |
 | `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
 | `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
