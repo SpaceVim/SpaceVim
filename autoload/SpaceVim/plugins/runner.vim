@@ -47,6 +47,8 @@ function! s:async_run(runner) abort
     catch
       let cmd = a:runner
     endtry
+    let cmd = substitute(cmd, "'", " ", "g")
+    
     call SpaceVim#logger#info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
