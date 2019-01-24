@@ -141,6 +141,8 @@ function! s:self.start(argv, ...) abort
     if exists('old_wd')
       exe 'cd' fnameescape(old_wd)
     endif
+    " note, in vim, if the command is not executable, the job is failed,
+    " and on_exit will not be called, this should be fixed.
     call extend(self.jobs, {id : job})
     return id
   else
