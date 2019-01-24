@@ -100,9 +100,10 @@ function! s:self.warp(argv, opts) abort
   return obj
 endfunction
 
-" start a job, and return the job_id.
+" start a job, and return the id.
 function! s:self.start(argv, ...) abort
   if self.nvim_job
+    let id = len(self.jobs) + 1
     try
       if len(a:000) > 0
         let job = jobstart(a:argv, a:1)
@@ -113,16 +114,16 @@ function! s:self.start(argv, ...) abort
       return -1
     endtry
     if job > 0
-      let msg = ['process '. jobpid(job), ' run']
-      call extend(self.jobs, {job : msg})
+      call extend(self.jobs, {id : job})
     else
       if job == -1
         call add(self._message, 'Failed to start job:' . (type(a:argv) == 3 ? a:argv[0] : a:argv) . ' is not executeable')
       elseif job == 0
         call add(self._message, 'Failed to start job: invalid arguments')
       endif
+      call extend(self.jobs, {id : job})
     endif
-    return job
+    return id
   elseif self.vim_job
     if len(a:000) > 0
       let opts = a:1
@@ -147,9 +148,11 @@ function! s:self.start(argv, ...) abort
     " and on_exit will not be called, this should be fixed.
     if job_status(job) == 'dead' && !s:SYS.isWindows
       call timer_start(20, {-> call(opts.on_exit, [id, 1, 'exit'])})
+      call extend(self.jobs, {id : job})
       return -1
     elseif job_status(job) == 'fail' && s:SYS.isWindows
       call timer_start(20, {-> call(opts.on_exit, [id, 1, 'exit'])})
+      call extend(self.jobs, {id : job})
       return -1
     else
       call extend(self.jobs, {id : job})
@@ -206,7 +209,7 @@ endfunction
 function! s:self.stop(id) abort
   if self.nvim_job
     if has_key(self.jobs, a:id)
-      call jobstop(a:id)
+      call jobstop(self.jobs[a:id])
       call remove(self.jobs, a:id)
     else
       call self.warn('[job API] Failed to stop job :' . a:id)
@@ -225,9 +228,9 @@ function! s:self.send(id, data) abort
   if self.nvim_job
     if has_key(self.jobs, a:id)
       if type(a:data) == type('')
-        call jobsend(a:id, [a:data, ''])
+        call jobsend(self.jobs[a:id], [a:data, ''])
       else
-        call jobsend(a:id, a:data)
+        call jobsend(self.jobs[a:id], a:data)
       endif
     else
       call self.warn('[job API] Failed to send data to job: ' . a:id)

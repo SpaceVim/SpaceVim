@@ -20,13 +20,13 @@ lang: cn
 
 #### 函数及变量
 
-| 名称               | 描述                         |
-| ------------------ | ---------------------------- |
-| `start(cmd, argv)` | 开始一个 job, 并返回 job id. |
-| `send(id, data)`   | 传递数据至指定 id 的 job     |
-| `stop(id)`         | 终止指定 id 的 job           |
-| `status(id)`       | 查看指定 id 的 job 的状态    |
-| `list()`           | 列出所有 job                 |
+| 名称               | 描述                      |
+| ------------------ | ------------------------- |
+| `start(cmd, argv)` | 开始一个 job, 并返回 id   |
+| `send(id, data)`   | 传递数据至指定 id 的 job  |
+| `stop(id)`         | 终止指定 id 的 job        |
+| `status(id)`       | 查看指定 id 的 job 的状态 |
+| `list()`           | 列出所有 job              |
 
 以上这个 api 仅提供了基础的 job 函数，当你的脚本需要用到 job 高级功能时，建议直接使用 neovim 或 vim 内置函数。
 
@@ -63,5 +63,3 @@ call s:JOB.start(cmd,
 ```
 
 以上代码可以在 vim 或者 neovim 中异步运行命令，甚至对于老版本的 vim 也兼容，但是在老版本 vim 中执行的时候不是异步的。
-
-
