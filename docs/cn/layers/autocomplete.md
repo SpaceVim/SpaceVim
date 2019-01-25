@@ -73,7 +73,7 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
   auto-completion-tab-key-behavior = "smart"
   auto-completion-delay = 200
   auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1,
+  auto-completion-complete-with-key-sequence-delay = 0.1
 ```
 
 通常会建议将 `auto-completion-complete-with-key-sequence` 的值设为 `jk`，如果你不用
