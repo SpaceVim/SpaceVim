@@ -32,11 +32,11 @@
 "   normal          SPC l L         list declarations in dir
 "   normal          SPC l m         format improts
 "   normal          SPC l M         add import
-"   normal          SPC l r         go referrers
+"   normal          SPC l x         go referrers
 "   normal          SPC l s         fill struct
 "   normal          SPC l t         go test
 "   normal          SPC l v         freevars
-"   normal          SPC l x         go run
+"   normal          SPC l r         go run
 " <
 
 
@@ -128,7 +128,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
         \ ':GoImport ',
         \ 'add import', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'],
         \ ':GoReferrers',
         \ 'go referrers', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
@@ -140,5 +140,5 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
         \ ':GoFreevars',
         \ 'freevars', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
