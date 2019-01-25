@@ -46,14 +46,10 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![Go](https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png)
-
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
 这一异步语法检查工具。对于 luac 的支持，是通过异步调用 luac 命令来完成的。
-
-![luac](https://user-images.githubusercontent.com/13142418/51438866-b8cfda80-1cec-11e9-8645-b43fc6481e42.png)
 
 ### 工程文件跳转
 
@@ -65,20 +61,14 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 Go 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![luarunner](https://user-images.githubusercontent.com/13142418/51438907-76f36400-1ced-11e9-8838-441965a22ce9.png)
+![gorun](https://user-images.githubusercontent.com/13142418/50751761-22300200-1286-11e9-8b4f-76836438d913.png)
 
 ### 代码格式化
 
-Go 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 luaformatter：
+Go 代码格式化，主要依赖 `format` 模块，该模块默认使用 neoformat 这一插件，对当前文件执行 `gofmt` 命令，
+默认的快捷键是 `SPC b f`。
 
 ```toml
 [[layers]]
   name = "format"
 ```
-
-安装 luaformatter：
-
-```sh
-luarocks install formatter
-```
-

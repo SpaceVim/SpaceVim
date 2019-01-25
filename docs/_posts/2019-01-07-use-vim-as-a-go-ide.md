@@ -44,3 +44,8 @@ And the stdout will be shown on a runner buffer.
 
 The format layer use neoformat as default tool to format code, it will run `gofmt` on current file.
 And the default key binding is `SPC b f`.
+
+```toml
+[[layers]]
+  name = "format"
+```
