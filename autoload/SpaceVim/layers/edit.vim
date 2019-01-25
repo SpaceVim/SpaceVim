@@ -167,7 +167,9 @@ endfunction
 function! s:transpose_with_previous(type) abort
   if a:type ==# 'line'
     if line('.') > 1
+      let l:save_register = @"
       normal! kddp
+      let @" = l:save_register
     endif
   elseif a:type ==# 'word'
     let save_register = @k
@@ -181,14 +183,12 @@ function! s:transpose_with_previous(type) abort
       let @k = tw
       normal! eviw"kp
     endif
-    let @k =save_register
+    let @k = save_register
   elseif a:type ==# 'character'
     if col('.') > 1
-      let save_register_k = @k
-      let save_register_m = @m
-      normal! v"kyhv"myv"kplv"mp
-      let @k =save_register_k
-      let @m =save_register_m
+      let l:save_register = @"
+      normal! hxp
+      let @" = l:save_register
     endif
   endif
 endfunction
@@ -196,15 +196,18 @@ endfunction
 function! s:move_text_down_transient_state() abort   
   if line('.') == line('$')
   else
+    let l:save_register = @"
     normal! ddp
+    let @" = l:save_register
   endif
   call s:text_transient_state()
 endfunction
 
 function! s:move_text_up_transient_state() abort
-  if line('.') == 1
-  else
+  if line('.') > 1
+    let l:save_register = @"
     normal! ddkP
+    let @" = l:save_register
   endif
   call s:text_transient_state()
 endfunction
