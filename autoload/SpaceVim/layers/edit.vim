@@ -168,7 +168,7 @@ function! s:transpose_with_previous(type) abort
   if a:type ==# 'line'
     if line('.') > 1
       let l:save_register = @"
-      normal! ddkP
+      normal! kddP
       let @" = l:save_register
     endif
   elseif a:type ==# 'word'
