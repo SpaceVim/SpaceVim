@@ -11,7 +11,7 @@ function! SpaceVim#layers#lang#perl#plugins() abort
   let plugins = []
   call add(plugins, ['c9s/perlomni.vim', {'on_ft' : 'perl'}])
   call add(plugins, ['vim-perl/vim-perl', {'on_ft' : 'perl'}])
-  call add(plugins, ['hotchpotch/perldoc-vim', {'on_cmd' : 'Perldoc'}])
+  call add(plugins, ['wsdjeg/perldoc-vim', {'on_cmd' : 'Perldoc'}])
   return plugins
 endfunction
 

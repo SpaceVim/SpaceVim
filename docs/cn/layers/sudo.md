@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim sudo 模块"
-description: "sudo 提供了在 SpaceVim 中以管理员身份读写文件的功能。"
+description: "这一模块为 SpaceVim 提供了以管理员身份读写文件的功能。"
 lang: cn
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "SpaceVim tags 模块"
-description: "tags 模块提供全局的 tags 索引管理，提供快速检索定义和引用的功能。"
+description: "这一模块为 SpaceVim 提供了全局的 tags 索引管理，提供快速检索定义和引用的功能。"
+lang: cn
 ---
 
 # [可用模块](../) >> tags
@@ -90,7 +91,7 @@ sudo make install
 
 ##### 配置 pygments 和 ctags 环境
 
-To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or 
+To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or
 如果需要启用 pygments 和 ctags，需要复制示例 gtags.conf 至 `/etc/gtags.conf` 或者 `$HOME/.globalrc`。例如：
 
 ```sh
@@ -145,20 +146,20 @@ gtags --gtagslabel=pygments
 
 #### 通过 exuberant ctags 支持的语言
 
-如果你启用了 `exuberant ctags`，并且使用其作为后台(i.e., GTAGSLABEL=ctags or –gtagslabel=ctags)，那么如下的语言将也得到支持：
+如果你启用了 `exuberant ctags`，并且使用其作为后台(i.e., GTAGSLABEL=ctags or–gtagslabel=ctags)，那么如下的语言将也得到支持：
 
-- c#
-- erlang
-- javascript
+- C#
+- Erlang
+- JavaScript
 - common-lisp
-- emacs-lisp
-- lua
-- ocaml
-- python
-- ruby
-- scheme
-- vimscript
-- windows-scripts (.bat .cmd files)
+- Emacs-lisp
+- Lua
+- Ocaml
+- Python
+- Ruby
+- Scheme
+- Vimscript
+- Windows-scripts (.bat .cmd files)
 
 #### 通过 Universal ctags 支持的语言
 
@@ -177,13 +178,13 @@ pygments 后，可以通过 gtags 查询函数和变量的定义以及引用处�
 当 pygments 启用后，如下语言将得以支持：
 
 - elixir
-- fsharp
-- haskell
-- octave
+- FSharp
+- Haskell
+- Octave
 - racket
-- scala
+- Scala
 - shell-scripts
-- tex
+- TeX
 
 ## 快捷键
 

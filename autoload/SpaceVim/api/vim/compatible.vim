@@ -86,7 +86,7 @@ if has('patch-8.0.1364')
     return win_screenpos(a:nr)
   endfunction
 
-
+elseif s:self.has('python')
   function! s:self.win_screenpos(nr) abort
 
     if winnr('$') < a:nr || a:nr < 0

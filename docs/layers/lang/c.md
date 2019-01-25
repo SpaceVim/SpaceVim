@@ -80,4 +80,8 @@ here is an example how to use above options:
 
 | key binding | description                  |
 | ----------- | ---------------------------- |
+| `SPC l d`   | show documentation           |
+| `SPC l e`   | rename symbol                |
+| `SPC l f`   | references                   |
 | `SPC l r`   | compile and run current file |
+| `g d`       | defintion preview            |

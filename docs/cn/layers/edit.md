@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim edit 模块"
-description: "该模块提升了 SpaceVim 的文本编辑体验，提供更多种文本对象。"
+description: "这一模块为 SpaceVim 提供了更好的文本编辑体验，提供更多种文本对象。"
 lang: cn
 ---
 
@@ -27,16 +27,17 @@ lang: cn
 - 对齐文档内容
 - 高亮行为符号
 - 自动载入 editorconfig 配置，需要 `+python` 或者 `+python3` 支持
+- 默认已启用
 
 ## 模块选项
 
-- `textobj`: specified a list of text opjects to be enabled, the avaliable list is :`indent`, `line`, `entire`
+- `textobj`: specified a list of text opjects to be enabled, the avaliable list is: `indent`, `line`, `entire`
 
 ## 快捷键
 
-快捷键           | 功能描述
----                  | ---
-`SPC x a {分隔符}` | 基于分隔符进行文本对齐
+| 快捷键             | 功能描述               |
+| ------------------ | ---------------------- |
+| `SPC x a {分隔符}` | 基于分隔符进行文本对齐 |
 
 **默认的分隔符：**
 

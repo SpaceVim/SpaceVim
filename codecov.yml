@@ -1,6 +1,4 @@
-comment:
-  layout: "header, diff, changes, uncovered"
-  behavior: default  # update if exists else create new
+comment: off
 codecov:
   branch: master
 coverage:
@@ -10,7 +8,8 @@ coverage:
     project:
       default: false  # disable the default status that measures entire project
       api:  # declare a new status context "api"
-        target: 35%  # we always want 100% coverage here
+        target: 35%  # we always want 35% coverage here
         paths: "autoload/SpaceVim/api/"  # only include coverage in "autoload/SpaceVim/api/" folder
       all:  # declare a new status context "all"
+        target: 25%  # we always want 35% coverage here
         paths: "!tests/"  # remove all files in "tests/"

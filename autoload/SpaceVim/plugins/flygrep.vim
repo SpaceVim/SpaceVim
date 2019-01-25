@@ -294,6 +294,8 @@ function! s:grep_stderr(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+  redraw
+  call s:MPT._build_prompt()
   redrawstatus
   let s:grepid = 0
 endfunction
@@ -533,7 +535,7 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
-      \ "\<C-r>" : function('s:start_replace'),
+      \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
       \ "\<Up>" : function('s:previous_match_history'),
@@ -580,7 +582,6 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal t_ve=
   if has('gui_running')
     let cursor_hi = s:HI.group2dict('Cursor')
-    let g:wsd = cursor_hi
     call s:HI.hide_in_normal('Cursor')
   endif
   " setlocal nomodifiable

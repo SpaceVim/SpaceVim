@@ -33,7 +33,7 @@ Visit these resources for help or general questions.
 ### Chat
 
 All of these channels are bridged together. Click on one of the badges
-below to join the chat, In all of these channels, messages from
+below to join the chat. In all of these channels, messages from
 `SpaceVimBot` is sent by remote user, and the format of the remote
 messages is:
 

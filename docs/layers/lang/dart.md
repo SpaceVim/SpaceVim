@@ -60,7 +60,7 @@ pub global activate dart_repl
 
 ### Inferior REPL process
 
-Start a `dart.repl` inferior REPL process with `SPC l s i`. 
+Start a `dart.repl` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='0.9.0'
+Version='1.0.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -118,7 +118,7 @@ error() {
 }
 
 warn () {
-  msg "${Red}[✘]${Color_off} ${1}${2}"
+  msg "${Yellow}[⚠]${Color_off} ${1}${2}"
 }
 # }}}
 

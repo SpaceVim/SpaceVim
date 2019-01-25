@@ -17,7 +17,7 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
-- [Syntax lint](#syntax-lint)
+- [Syntax linting](#syntax-linting)
 - [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
@@ -49,8 +49,6 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 1. [neomake](https://github.com/neomake/neomake) - Asynchronous linting and make framework for Neovim/Vim
-
-The javac maker in neomake supports maven projects, gradle projects or eclipse projects. You can also set the classpath.
 
 ### Import packages
 

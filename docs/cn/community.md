@@ -1,5 +1,5 @@
 ---
-title:  "中文社区"
+title: "中文社区"
 description: "SpaceVim 中文社区，包括中文技术问答、资讯订阅、Bug 提交以及需求提交，让沟通更加便利。"
 lang: cn
 ---
@@ -27,8 +27,8 @@ lang: cn
 
 在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
-- [码云](https://gitee.com/spacevim/SpaceVim/issues) - （中文）
-- [GitHub](https://github.com/SpaceVim/SpaceVim) - （英文）
+- [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
+- [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
 
 ### 邮件列表
 

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim github 模块"
-description: "该模块主要提供了 Github 数据管理功能，包括问题列表、动态等管理。"
+description: "这一模块为 SpaceVim 提供了 Github 数据管理功能，包括问题列表、动态等管理。"
 lang: cn
 ---
 

@@ -57,7 +57,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `iex` inferior REPL process with `SPC l s i`. 
+Start a `iex` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

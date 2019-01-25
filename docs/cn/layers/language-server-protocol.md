@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lsp 模块"
-description: "lsp 模块为 SpaceVim 提供 language server protocol 的支持，提供更多语言相关服务"
+description: "这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。"
 lang: cn
 ---
 
@@ -23,9 +23,9 @@ lsp 模块提供了 [language-server-protocol](https://microsoft.github.io/langu
 这以模块在 [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) 基础上做了许多定制，
 这一链接为一克隆的版本，需要 `+python` 支持。
 
-同时，当你的 Vim 不支持 `+python3` 时，我们采用 [vim-lsp](https://github.com/prabirshrestha/vim-lsp) 这一使用纯 vim 脚本书写的插件。
+同时，当你的 Vim 不支持 `+python3` 时，我们采用 [vim-lsp](https://github.com/prabirshrestha/vim-lsp) 这一使用纯 Vim 脚本书写的插件。
 
-neovim 团队也在尝试实现一个内置的 [lsp 框架](https://github.com/neovim/neovim/pull/6856)，后续该框架完成后，在 neovim 内将默认使用该框架。
+Neovim 团队也在尝试实现一个内置的 [lsp 框架](https://github.com/neovim/neovim/pull/6856)，后续该框架完成后，在 Neovim 内将默认使用该框架。
 
 在 SpaceVim 内部，lsp 的框架选择逻辑大致时这样的：
 
@@ -52,11 +52,11 @@ endif
 - 代码格式化
 - 代码自动修复
 
-**注:** 以上所有信息依赖于语言服务器所实现的功能，请查阅 [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/) 列表。
+**注：** 以上所有信息依赖于语言服务器所实现的功能，请查阅 [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/) 列表。
 
 ## 模块安装
 
-默认未载入，如需载入该模块，可在配置文件加入:
+默认未载入，如需载入该模块，可在配置文件加入：
 
 ```toml
 [[layers]]
@@ -118,7 +118,7 @@ npm install vue-language-server -g
 | 语言         | 命令                                                                                                                                                                                             |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
-| `sh`       | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
