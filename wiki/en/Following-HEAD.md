@@ -13,7 +13,6 @@ The next release is v1.1.0:
 - [red]()
 - [R]()
 
-
 ### Pull Requests
 
 <!-- call SpaceVim#dev#followHEAD#update('en') -->
@@ -26,10 +25,8 @@ The next release is v1.1.0:
 - add lang#red layer [#2486](https://github.com/SpaceVim/SpaceVim/pull/2486)
 - Add chinese linter to layer chinese [#2473](https://github.com/SpaceVim/SpaceVim/pull/2473)
 - Add: zeal layer [#2469](https://github.com/SpaceVim/SpaceVim/pull/2469)
-- Add: add a new feature 'format all tables' for markdown. [#2457](https://github.com/SpaceVim/SpaceVim/pull/2457)
 - add ctrl - r [#2436](https://github.com/SpaceVim/SpaceVim/pull/2436)
 - Add plugin for git log [#1963](https://github.com/SpaceVim/SpaceVim/pull/1963)
-- Add disk explorer for windows [#2165](https://github.com/SpaceVim/SpaceVim/pull/2165)
 
 #### Feature Changes
 
@@ -49,9 +46,6 @@ The next release is v1.1.0:
 - Fix runner close job [#2441](https://github.com/SpaceVim/SpaceVim/pull/2441)
 - Fix rust runner in windows [#2438](https://github.com/SpaceVim/SpaceVim/pull/2438)
 - Fixed: fix typos. [#2437](https://github.com/SpaceVim/SpaceVim/pull/2437)
-- Fix debug command [#2226](https://github.com/SpaceVim/SpaceVim/pull/2226)
-- Fix perl support [#2230](https://github.com/SpaceVim/SpaceVim/pull/2230)
-- Fix preview in flygrep [#2256](https://github.com/SpaceVim/SpaceVim/pull/2256)
 
 #### Unmarked PRs
 
@@ -84,7 +78,6 @@ The next release is v1.1.0:
 - Doc, cosmetics: remove trailing spaces [#2433](https://github.com/SpaceVim/SpaceVim/pull/2433)
 - Doc: add some tweaks on doc instructions [#2056](https://github.com/SpaceVim/SpaceVim/pull/2056)
 - Improve startup experience [#1977](https://github.com/SpaceVim/SpaceVim/pull/1977)
-- [issue#2367]: clear rootDir cache after rooter pattern changed [#2370](https://github.com/SpaceVim/SpaceVim/pull/2370)
 
 <!-- SpaceVim follow HEAD en end -->
 

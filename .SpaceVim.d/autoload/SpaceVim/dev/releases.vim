@@ -83,6 +83,7 @@ function! s:get_list_of_PRs() abort
           \ . s:last_release_number
           \ . " && v:val['number'] < "
           \ . s:current_release_number
+          \ . ' && !empty(get(v:val, "merged_at", ""))'
           \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
           \ ))
   endfor
