@@ -242,7 +242,7 @@ check_requirements () {
     warn "缺少依赖：git"
   fi
   if hash "vim" &>/dev/null; then
-    is_vim8=$(vim --version | grep "Vi IMproved 8.0")
+    is_vim8=$(vim --version | grep "Vi IMproved 8")
     is_vim74=$(vim --version | grep "Vi IMproved 7.4")
     if [ -n "$is_vim8" ]; then
       success "检测到 Vim 版本: vim 8.0"
