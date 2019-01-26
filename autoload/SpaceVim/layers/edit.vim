@@ -371,7 +371,7 @@ endfunction
 function! s:delete_extra_space() abort
   if !empty(getline('.'))
     if getline('.')[col('.')-1] ==# ' '
-      execute "normal! \"_ciwi\<Space>\<Esc>"
+      execute "normal! \"_ciw\<Space>\<Esc>"
     endif
   endif
 endfunction
