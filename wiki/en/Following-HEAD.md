@@ -4,15 +4,6 @@ This page documents changes in master branch since last release v1.0.0
 
 The next release is v1.1.0:
 
-1. Rename tags layer to gtags
-
-2. Improve cscope layer
-
-**New language layers:**
-
-- [red]()
-- [R]()
-
 ### Pull Requests
 
 <!-- call SpaceVim#dev#followHEAD#update('en') -->
