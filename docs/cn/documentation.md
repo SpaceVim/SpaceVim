@@ -1555,11 +1555,11 @@ In highlight symbol transient state:
 | `SPC x i _`   | change symbol style to `under_score`                                 |
 | `SPC x i u`   | change symbol style to `under_score`                                 |
 | `SPC x i U`   | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`   | set the justification to center (TODO)                               |
+| `SPC x j c`   | 居中对齐当前段落                                                     |
 | `SPC x j f`   | set the justification to full (TODO)                                 |
-| `SPC x j l`   | set the justification to left (TODO)                                 |
+| `SPC x j l`   | 左对齐当前段落                                                       |
 | `SPC x j n`   | set the justification to none (TODO)                                 |
-| `SPC x j r`   | set the justification to right (TODO)                                |
+| `SPC x j r`   | 右对齐当前段落                                                       |
 | `SPC x J`     | move down a line of text (enter transient state)                     |
 | `SPC x K`     | move up a line of text (enter transient state)                       |
 | `SPC x l d`   | duplicate line or region (TODO)                                      |

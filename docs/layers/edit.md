@@ -24,7 +24,8 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - repeat latest action via vim-repeat
 - multiple cursor
 - align
-- highlight whitespace at the end of a line
+- set justification for paragraph
+- highlight whitespaces at the end of a line
 - load ditorconfig config, need `+python` or `+python3`
 
 ## Options
@@ -33,9 +34,9 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 
 ## Key bindings
 
-Key binding           | desc
----                  | ---
-`SPC x a {delimiter}` | align content based on delimiter
+| Key bindings          | Descraptions                     |
+| --------------------  | -------------------------------  |
+| `SPC x a {delimiter}` | align content based on delimiter |
 
 **default delimiters**
 
@@ -53,3 +54,8 @@ Key binding           | desc
 - `}`: align `}`
 - `)`: align `)`
 
+| Key bindings | Descraptions                    |
+| ------------ | ------------------------------- |
+| `SPC x j c`  | set the justification to center |
+| `SPC x j l`  | set the justification to left   |
+| `SPC x j r`  | set the justification to right  |
