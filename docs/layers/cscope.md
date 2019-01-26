@@ -41,7 +41,7 @@ To use this configuration layer, add it to your configuration file.
 
 ```toml
 [[layers]]
-name = "cscope"
+    name = "cscope"
 ```
 
 ## Key bindings
