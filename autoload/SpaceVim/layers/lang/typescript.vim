@@ -60,7 +60,7 @@ function! s:on_ft() abort
     if has('nvim')
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'], 'TSTypeDef',
             \ 'type definition', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsDoc',
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TSDoc',
             \ 'show document', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TSRename',
             \ 'rename symbol', 1)
