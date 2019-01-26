@@ -91,6 +91,9 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
         \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
         \ 'toggle syntax checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
+        \ . string(s:_function('s:explain_the_error')) . ', [])',
+        \ 'explain the error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
@@ -219,6 +222,28 @@ function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
   call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
   verbose NeomakeToggle
+endfunction
+
+
+function! s:explain_the_error() abort
+  if g:spacevim_enable_neomake
+    try
+      let message = neomake#GetCurrentErrorMsg()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let message = ''
+    endtry
+  elseif g:spacevim_enable_ale
+    try
+      let message = neomake#GetCurrentErrorMsg()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let message = ''
+    endtry
+  endif
+  if !empty(message)
+    echo message
+  else
+    echo 'no error message at this point!'
+  endif
 endfunction
 
 function! s:error_transient_state() abort
