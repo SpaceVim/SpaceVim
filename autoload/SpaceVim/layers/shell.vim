@@ -37,10 +37,19 @@ let s:file = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ["'"], 'call call('
-        \ . string(function('s:open_default_shell')) . ', [])',
+        \ . string(function('s:open_default_shell')) . ', [0])',
         \ ['open shell',
         \ [
         \ "[SPC '] is to open or jump to default shell window",
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ], 1)
+  call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
+        \ . string(function('s:open_default_shell')) . ', [1])',
+        \ ["open shell in current file's path",
+        \ [
+        \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
@@ -115,28 +124,43 @@ function! SpaceVim#layers#shell#get_options() abort
 
 endfunction
 
-let s:shell_win_nr = -1
-let s:term_buf_nr = -1
+let s:open_terminals_buffers = []
 " shell windows shoud be toggleable, and can be hide.
-function! s:open_default_shell() abort
-  if s:shell_win_nr != 0 && getwinvar(s:shell_win_nr, '&buftype') ==# 'terminal' && &buftype !=# 'terminal'
-    exe s:shell_win_nr .  'wincmd w'
-    " fuck gvim bug, startinsert do not work in gvim
-    if has('nvim')
-      startinsert
+function! s:open_default_shell(open_with_file_cwd) abort
+  if a:open_with_file_cwd
+    if getwinvar(winnr(), '&buftype') ==# 'terminal'
+      let path = getbufvar(winbufnr(winnr()), '_spacevim_shell_cwd', SpaceVim#plugins#projectmanager#current_root())
     else
-      normal! a
+      let path = expand('%:p:h')
     endif
-    return
+  else
+    let path = SpaceVim#plugins#projectmanager#current_root()
   endif
-  if &buftype ==# 'terminal'
-    if has('nvim')
-      startinsert
-    else
-      normal! a
+
+  " look for already opened terminal windows
+  let windows = [] 
+  windo call add(windows, winnr()) 
+  for window in windows
+    if getwinvar(window, '&buftype') ==# 'terminal'
+      exe window .  'wincmd w'
+      if getbufvar(winbufnr(window), '_spacevim_shell_cwd') ==# l:path
+        " fuck gvim bug, startinsert do not work in gvim
+        if has('nvim')
+          startinsert
+        else
+          normal! a
+        endif
+        return
+      else
+        " the opened terminal window is not the one we want.
+        " close it, we're gonna open a new terminal window with the given l:path
+        exe 'wincmd c'
+        break
+      endif
     endif
-    return
-  endif
+  endfor
+
+  " no terminal window found. Open a new window
   let cmd = s:default_position ==# 'top' ?
         \ 'topleft split' :
         \ s:default_position ==# 'bottom' ?
@@ -144,20 +168,30 @@ function! s:open_default_shell() abort
         \ s:default_position ==# 'right' ?
         \ 'rightbelow vsplit' : 'leftabove vsplit'
   exe cmd
+  let w:shell_layer_win = 1
   let lines = &lines * s:default_height / 100
   if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
     exe 'resize ' . lines
   endif
-  if bufexists(s:term_buf_nr)
-    exe 'silent b' . s:term_buf_nr
-    " clear the message 
-    if has('nvim')
-      startinsert
+  for open_terminal in s:open_terminals_buffers
+    if bufexists(open_terminal)
+      if getbufvar(open_terminal, "_spacevim_shell_cwd") ==# l:path
+        exe 'silent b' . open_terminal
+        " clear the message 
+        if has('nvim')
+          startinsert
+        else
+          normal! a
+        endif
+        return
+      endif
     else
-      normal! a
+      " remove closed buffer from list
+      call remove(s:open_terminals_buffers, 0)
     endif
-    return
-  endif
+  endfor
+
+  " no terminal window with l:path as cwd has been found, let's open one
   if s:default_shell ==# 'terminal'
     if exists(':terminal')
       if has('nvim')
@@ -166,7 +200,8 @@ function! s:open_default_shell() abort
         else
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
-        terminal
+        enew
+        call termopen(shell, {'cwd': l:path})
         " @bug cursor is not cleared when open terminal windows.
         " in neovim-qt when using :terminal to open a shell windows, the orgin
         " cursor position will be highlighted. switch to normal mode and back
@@ -178,22 +213,25 @@ function! s:open_default_shell() abort
           stopinsert
           startinsert
         endif
-        let s:term_buf_nr = bufnr('%')
-        call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
-      else
+        let l:term_buf_nr = bufnr('%')
+        call extend(s:shell_cached_br, {getcwd() : l:term_buf_nr})
+      else 
+        " handle vim terminal
         if s:SYSTEM.isWindows
           let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
         else
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
-        let s:term_buf_nr = term_start(shell, {'curwin' : 1, 'term_finish' : 'close'})
+        let l:term_buf_nr = term_start(shell, {'cwd': l:path, 'curwin' : 1, 'term_finish' : 'close'})
       endif
+      call add(s:open_terminals_buffers, l:term_buf_nr)
       let b:_spacevim_shell = shell
+      let b:_spacevim_shell_cwd = l:path
+
       " use WinEnter autocmd to update statusline
       doautocmd WinEnter
-      let s:shell_win_nr = winnr()
-      let w:shell_layer_win = 1
       setlocal nobuflisted nonumber norelativenumber
+
       " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
       if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
@@ -210,7 +248,9 @@ function! s:open_default_shell() abort
 endfunction
 
 function! SpaceVim#layers#shell#close_terminal()
-  if bufexists(s:term_buf_nr)
-    exe 'silent bd!' . s:term_buf_nr
-  endif
+  for terminal_bufnr in s:open_terminals_buffers
+    if bufexists(terminal_bufnr)
+      exe 'silent bd!' . terminal_bufnr
+    endif
+  endfor
 endfunction
