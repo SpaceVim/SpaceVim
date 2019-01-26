@@ -8,9 +8,7 @@
 
 function! SpaceVim#layers#tags#plugins() abort
   return [
-        \ ['ludovicchabant/vim-gutentags', {'merged' : 0, 'loadconf' : 1}],
         \ ['SpaceVim/gtags.vim', {'merged' : 0}],
-        \ ['tsukkee/unite-tag', {'merged' : 0}],
         \ ]
 endfunction
 
