@@ -33,7 +33,7 @@ lang: cn
 ```
 ## 模块选项
 
-`enable-gtm-status`: 在状态栏展示当前分支工作的时间。
+`enable-gtm-status`: 在状态栏展示当前分支工作的时间，这一特性需要安装 [gtm](https://github.com/git-time-metric/gtm) 命令。
 
 ## 快捷键
 

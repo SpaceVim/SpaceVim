@@ -36,7 +36,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Layer options
 
-`enable-gtm-status`: Enable diplaying time spent within SpaceVim's statusline.
+`enable-gtm-status`: Enable diplaying time spent within SpaceVim's statusline. This feature need [gtm](https://github.com/git-time-metric/gtm) command to be installed.
 
 
 ## Key bindings
