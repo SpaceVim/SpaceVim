@@ -109,6 +109,17 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:kebab_case')) . ', [])',
         \ 'change symbol style to kebab-case', 1)
 
+  " justification
+  let g:_spacevim_mappings_space.x.j = {'name' : 'justification'}
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'l'], 'silent call call('
+        \ . string(s:_function('s:set_justification_to')) . ', ["left"])',
+        \ 'set-the-justification-to-left', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'c'], 'silent call call('
+        \ . string(s:_function('s:set_justification_to')) . ', ["center"])',
+        \ 'set-the-justification-to-center', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'r'], 'silent call call('
+        \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
+        \ 'set-the-justification-to-right', 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -360,10 +371,43 @@ endfunction
 function! s:delete_extra_space() abort
   if !empty(getline('.'))
     if getline('.')[col('.')-1] ==# ' '
-      exe "normal! viw\"_di\<Space>\<Esc>"
+      execute "normal! \"_ciw\<Space>\<Esc>"
     endif
   endif
 endfunction
+
+function! s:set_justification_to(align) abort
+    let l:startlinenr = line("'{")
+    let l:endlinenr = line("'}")
+    if getline(l:startlinenr) ==# ''
+        let l:startlinenr += 1
+    endif
+    if getline(l:endlinenr) ==# ''
+        let l:endlinenr -= 1
+    endif
+    let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
+    let l:maxlength = 0
+    for l:line in l:lineList
+        let l:length = strlen(l:line)
+        if l:length > l:maxlength
+            let l:maxlength = l:length
+        endif
+    endfor
+
+    if a:align ==# 'left'
+        execute l:startlinenr . "," . l:endlinenr . ":left\<cr>"
+    elseif a:align ==# 'center'
+        execute l:startlinenr . "," . l:endlinenr . ":center " . l:maxlength . "\<cr>"
+    elseif a:align ==# 'right'
+        execute l:startlinenr . "," . l:endlinenr . ":right  " . l:maxlength . "\<cr>"
+    endif
+
+    unlet l:startlinenr
+    unlet l:endlinenr
+    unlet l:lineList
+    unlet l:maxlength
+endfunction
+
 let s:local_lorem_ipsum = [
       \ 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
       \ 'Donec hendrerit tempor tellus.',
