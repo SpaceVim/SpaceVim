@@ -68,7 +68,7 @@ function! s:self.fill_middle(str, length) abort
   if l:numofspaces % 2
     let l:rst .= ' '
   endif
-  return rst
+  return l:rst
 endfunction
 
 function! s:self.trim_start(str) abort
