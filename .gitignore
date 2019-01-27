@@ -30,3 +30,4 @@ cscope.po.out
 build/
 .coverage.covimerage
 *.swp
+.gtm/
