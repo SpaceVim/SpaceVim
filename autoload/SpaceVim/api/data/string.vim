@@ -16,6 +16,15 @@
 " split(str [, sep [, keepempty[, max]]])
 "
 "   run vim command, and return the output of such command.
+"
+" trim(str)
+"
+"   remove space at the begin and end of a string, same as vim's build in
+"   |trim()|
+"
+" fill(str, length[, char])
+"
+"   fill string to length with {char}, if {char} is omnit, a space is used.
 
 let s:self = {}
 
@@ -24,7 +33,7 @@ function! s:self.trim(str) abort
   return substitute(str, '^\s*', '', 'g')
 endfunction
 
-function! s:self.fill(str, length) abort
+function! s:self.fill(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
@@ -34,7 +43,11 @@ function! s:self.fill(str, length) abort
     endwhile
     let l:string = strcharpart(a:str, 0, l:rightmost)
   endif
-  let l:spaces = repeat(' ', a:length - strwidth(l:string))
+  let char = get(a:000, 0, ' ')
+  if type(char) !=# 1 || len(char) > 1
+    let char = ' '
+  endif
+  let l:spaces = repeat(char, a:length - strwidth(l:string))
   return l:string . l:spaces
 endfunction
 
