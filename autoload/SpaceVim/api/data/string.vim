@@ -26,41 +26,47 @@ endfunction
 
 function! s:self.fill(str, length) abort
   if strwidth(a:str) <= a:length
-    return a:str . repeat(' ', a:length - strwidth(a:str))
+    let l:string = a:str
   else
-    let l = 0
-    for i in range(strchars(a:str) - 1)
-      if strwidth(strcharpart(a:str, 0, i)) > a:length
-        break
-      else
-        let l = i
-      endif
-    endfor
-    let str = strcharpart(a:str, 0, l)
-    return str . repeat(' ', a:length - strwidth(str))
+    let l:rightmost = 0
+    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
+      let l:rightmost += 1
+    endwhile
+    let l:string = strcharpart(a:str, 0, l:rightmost)
   endif
+  let l:spaces = repeat(' ', a:length - strwidth(l:string))
+  return l:string . l:spaces
+endfunction
+
+function! s:self.fill_left(str, length) abort
+  if strwidth(a:str) <= a:length
+    let l:string = a:str
+  else
+    let l:rightmost = 0
+    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
+      let l:rightmost += 1
+    endwhile
+    let l:string = strcharpart(a:str, 0, l:rightmost)
+  endif
+  let l:spaces = repeat(' ', a:length - strwidth(l:string))
+  return l:spaces . l:string
 endfunction
 
 function! s:self.fill_middle(str, length) abort
   if strwidth(a:str) <= a:length
-    "return a:str . repeat(' ', a:length - strwidth(a:str))
-    let n = a:length - strwidth(a:str)
-    if n % 2 == 0
-      return repeat(' ', (a:length - strwidth(a:str))/2) . a:str . repeat(' ', (a:length - strwidth(a:str))/2)
-    else
-      return repeat(' ', (a:length - strwidth(a:str))/2) . a:str . repeat(' ', (a:length + 1 - strwidth(a:str))/2)
-    endif
+    let l:string = a:str
   else
-    let l = 0
-    for i in range(strchars(a:str) - 1)
-      if strwidth(strcharpart(a:str, 0, i)) > a:length
-        break
-      else
-        let l = i
-      endif
-    endfor
-    let str = strcharpart(a:str, 0, l)
-    return str . repeat(' ', a:length - strwidth(str))
+    let l:rightmost = 0
+    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
+      let l:rightmost += 1
+    endwhile
+    let l:string = strcharpart(a:str, 0, l:rightmost)
+  endif
+  let l:numofspaces = a:length - strwidth(l:string)
+  if l:numofspaces % 2 == 0
+    return repeat(' ', l:numofspaces/2) . a:str . repeat(' ', l:numofspaces/2)
+  else
+    return repeat(' ', l:numofspaces/2) . a:str . repeat(' ', l:numofspaces/2 + 1)
   endif
 endfunction
 
