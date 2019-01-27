@@ -63,11 +63,12 @@ function! s:self.fill_middle(str, length) abort
     let l:string = strcharpart(a:str, 0, l:rightmost)
   endif
   let l:numofspaces = a:length - strwidth(l:string)
-  if l:numofspaces % 2 == 0
-    return repeat(' ', l:numofspaces/2) . a:str . repeat(' ', l:numofspaces/2)
-  else
-    return repeat(' ', l:numofspaces/2) . a:str . repeat(' ', l:numofspaces/2 + 1)
+  let l:halfspaces = repeat(' ', l:numofspaces/2)
+  let rst = l:halfspaces . a:str . l:halfspaces
+  if l:numofspaces % 2
+    let rst = rst . ' '
   endif
+  return rst
 endfunction
 
 function! s:self.trim_start(str) abort
