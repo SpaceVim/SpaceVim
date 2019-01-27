@@ -64,9 +64,9 @@ function! s:self.fill_middle(str, length) abort
   endif
   let l:numofspaces = a:length - strwidth(l:string)
   let l:halfspaces = repeat(' ', l:numofspaces/2)
-  let rst = l:halfspaces . a:str . l:halfspaces
+  let l:rst = l:halfspaces . a:str . l:halfspaces
   if l:numofspaces % 2
-    let rst = rst . ' '
+    let l:rst .= ' '
   endif
   return rst
 endfunction
