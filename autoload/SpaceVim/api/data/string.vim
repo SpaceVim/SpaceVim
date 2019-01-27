@@ -54,11 +54,7 @@ function! s:self.fill_left(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:rightmost = 0
-    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
-      let l:rightmost += 1
-    endwhile
-    let l:string = strcharpart(a:str, 0, l:rightmost)
+    let l:string = strcharpart(a:str, strwidth(a:str) - a:length, a:length)
   endif
   let char = get(a:000, 0, ' ')
   if type(char) !=# 1 || len(char) > 1
@@ -72,11 +68,7 @@ function! s:self.fill_middle(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:rightmost = 0
-    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
-      let l:rightmost += 1
-    endwhile
-    let l:string = strcharpart(a:str, 0, l:rightmost)
+    let l:string = strcharpart(a:str, (a:length/2 < 1 ? 1 : a:length/2), a:length)
   endif
   let l:numofspaces = a:length - strwidth(l:string)
   let char = get(a:000, 0, ' ')
@@ -84,7 +76,7 @@ function! s:self.fill_middle(str, length, ...) abort
     let char = ' '
   endif
   let l:halfspaces = repeat(char, l:numofspaces/2)
-  let l:rst = l:halfspaces . a:str . l:halfspaces
+  let l:rst = l:halfspaces . l:string . l:halfspaces
   if l:numofspaces % 2
     let l:rst .= char
   endif
