@@ -16,9 +16,6 @@ function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
   call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
   call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
-  if s:enable_gtm_status
-    call add(plugins, ['git-time-metric/gtm-vim-plugin',   { 'merged' : 0}])
-  endif
   return plugins
 endfunction
 
@@ -37,6 +34,12 @@ function! SpaceVim#layers#VersionControl#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
         \ 'toggle the hunks summary', 1)
   let g:gtm_plugin_status_enabled = s:enable_gtm_status
+  if s:enable_gtm_status
+    augroup gtm_plugin
+      autocmd!
+      autocmd BufReadPost,BufWritePost,CursorMoved,CursorMovedI * silent call s:record()
+    augroup END
+  endif
 endfunction
 
 function! SpaceVim#layers#VersionControl#set_variable(var) abort
@@ -68,14 +71,36 @@ endfunction
 
 function! s:gtm_status() abort
   if s:enable_gtm_status
-    let status = ''
-    if exists('*GTMStatusline')
-      let status = GTMStatusline()
-    endif
+    let status = s:gtm_statusline()
     return empty(status) ? '' : ' (' . status . ') '
   else
     return ''
   endif
+endfunction
+
+let s:last_update = 0
+let s:last_file = ''
+let s:update_interval = 30
+let s:gtm_plugin_status = ''
+
+function! s:record()
+  let fpath = expand('%:p')
+  " record if file path has changed or last update is greater than update_interval
+  if (s:last_file != fpath || localtime() - s:last_update > s:update_interval) && filereadable(fpath)
+    let s:cmd = (s:enable_gtm_status == 1 ? 'gtm record --status' : 'gtm record')
+    let output=system(s:cmd . ' ' . shellescape(fpath))
+    if v:shell_error
+      echoerr s:no_gtm_err
+    else
+      let s:gtm_plugin_status = (s:enable_gtm_status ? substitute(output, '\n\+$', '', '') : '')
+    endif
+    let s:last_update = localtime()
+    let s:last_file = fpath
+  endif
+endfunction
+
+function! s:gtm_statusline() abort
+  return s:gtm_plugin_status
 endfunction
 
 " +0 ~0 -0 
