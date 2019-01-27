@@ -1,32 +1,32 @@
 ---
-title: "data#string API"
-description: "data#string API provides some basic functions and values for string."
+title: "data#string 函数"
+description: "data#string 函数主要提供一些操作字符串的常用工具。"
 ---
 
 # [Available APIs](../../) >> data#string
 
 <!-- vim-markdown-toc GFM -->
 
-- [Intro](#intro)
-- [functions](#functions)
+- [简介](#简介)
+- [函数](#函数)
 
 <!-- vim-markdown-toc -->
 
-## Intro
+## 简介
 
-`data#string` API provides some functions to manipulate a string. Here is an example for using this api:
+`data#string` 函数提供了一些操作字符串的工具方法，以下为使用这一函数的示例：
 
 ```vim
 let s:STR = SpaceVim#api#import('data#string')
 let str1 = '  hello world   '
 let str2 = s:STR.trim(str1)
 echo str1
-" then you will see only `hello world`
+" 此时将看到打印 `hello world`
 ```
 
-## functions
+## 函数
 
-| name                            | description                                                              |
+| 名称                            | 功能描述                                                                 |
 | ------------------------------- | ------------------------------------------------------------------------ |
 | `trim(str)`                     | remove spaces from the beginning and end of a string, return the resuilt |
 | `trim_start(str)`               | remove spaces from the beginning a string, return the resuilt            |
