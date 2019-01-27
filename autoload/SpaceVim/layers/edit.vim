@@ -388,7 +388,7 @@ function! s:set_justification_to(align) abort
     let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
     let l:maxlength = 0
     for l:line in l:lineList
-        let l:length = strlen(l:line)
+        let l:length = strdisplaywidth(l:line)
         if l:length > l:maxlength
             let l:maxlength = l:length
         endif
