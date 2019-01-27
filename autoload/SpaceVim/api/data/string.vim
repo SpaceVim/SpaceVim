@@ -93,8 +93,8 @@ endfunction
 
 function! s:self.string2chars(str) abort
   let chars = []
-  for i in range(len(a:str))
-    call add(chars, a:str[i : i])
+  for i in range(strchars(a:str))
+    call add(chars, strcharpart(a:str,  i , 1))
   endfor
   return chars
 endfunction
@@ -126,7 +126,7 @@ function! s:self.strQ2B(str) abort
     let nr = char2nr(char)
     if nr == 12288
       call add(bchars, nr2char(32))
-    elseif nr == 8216 &&  nr == 8217
+    elseif nr == 8216 ||  nr == 8217
       call add(bchars, nr2char(39))
     elseif nr >= 65281 && nr <= 65374
       call add(bchars, nr2char(nr - 65248))
