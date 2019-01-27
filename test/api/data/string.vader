@@ -3,6 +3,8 @@ Execute ( SpaceVim api: data#string ):
   AssertEqual str.trim(' s b '), 's b'
   AssertEqual str.fill('s b', 10), 's b       '
   AssertEqual str.fill('s b', 10, '*'), 's b*******'
+  AssertEqual str.fill_left('s b', 10, '*'), '*******s b'
+  AssertEqual str.fill_middle('s b', 9, '*'), '***s b***'
   AssertEqual str.split('   20   281   23 -invalid-', '', 0, 4)[2], '23'
   AssertEqual str.trim_start(' s b '), 's b '
   AssertEqual str.trim_end(' s b '), ' s b'

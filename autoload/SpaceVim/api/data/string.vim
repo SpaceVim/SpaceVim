@@ -19,8 +19,7 @@
 "
 " trim(str)
 "
-"   remove space at the begin and end of a string, same as vim's build in
-"   |trim()|
+"   remove space at the begin and end of a string, same as |trim()|
 "
 " fill(str, length[, char])
 "
@@ -51,7 +50,7 @@ function! s:self.fill(str, length, ...) abort
   return l:string . l:spaces
 endfunction
 
-function! s:self.fill_left(str, length) abort
+function! s:self.fill_left(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
@@ -61,11 +60,15 @@ function! s:self.fill_left(str, length) abort
     endwhile
     let l:string = strcharpart(a:str, 0, l:rightmost)
   endif
-  let l:spaces = repeat(' ', a:length - strwidth(l:string))
+  let char = get(a:000, 0, ' ')
+  if type(char) !=# 1 || len(char) > 1
+    let char = ' '
+  endif
+  let l:spaces = repeat(char, a:length - strwidth(l:string))
   return l:spaces . l:string
 endfunction
 
-function! s:self.fill_middle(str, length) abort
+function! s:self.fill_middle(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
@@ -76,10 +79,14 @@ function! s:self.fill_middle(str, length) abort
     let l:string = strcharpart(a:str, 0, l:rightmost)
   endif
   let l:numofspaces = a:length - strwidth(l:string)
-  let l:halfspaces = repeat(' ', l:numofspaces/2)
+  let char = get(a:000, 0, ' ')
+  if type(char) !=# 1 || len(char) > 1
+    let char = ' '
+  endif
+  let l:halfspaces = repeat(char, l:numofspaces/2)
   let l:rst = l:halfspaces . a:str . l:halfspaces
   if l:numofspaces % 2
-    let l:rst .= ' '
+    let l:rst .= char
   endif
   return l:rst
 endfunction

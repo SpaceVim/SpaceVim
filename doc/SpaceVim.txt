@@ -1458,8 +1458,7 @@ split(str [, sep [, keepempty[, max]]])
 
 trim(str)
 
-  remove space at the begin and end of a string, same as vim's build in
-|trim()|
+  remove space at the begin and end of a string, same as |trim()|
 
 fill(str, length[, char])
 
