@@ -10,10 +10,15 @@ scriptencoding utf-8
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
+let s:enable_gtm_status = 0
+
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
   call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
   call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
+  if s:enable_gtm_status
+    call add(plugins, ['git-time-metric/gtm-vim-plugin',   { 'merged' : 0}])
+  endif
   return plugins
 endfunction
 
@@ -31,26 +36,46 @@ function! SpaceVim#layers#VersionControl#config() abort
         \ 'version control info', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
         \ 'toggle the hunks summary', 1)
+  let g:gtm_plugin_status_enabled = s:enable_gtm_status
+endfunction
+
+function! SpaceVim#layers#VersionControl#set_variable(var) abort
+  let s:enable_gtm_status = get(a:var,
+        \ 'enable_gtm_status',
+        \ s:enable_gtm_status)
 endfunction
 
 "  master
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
     try
-    let l:head = fugitive#head()
-    if empty(l:head)
-      call fugitive#detect(getcwd())
       let l:head = fugitive#head()
-    endif
-  if g:spacevim_statusline_unicode_symbols == 1
-    return empty(l:head) ? '' : '  '.l:head . ' '
-  else
-    return empty(l:head) ? '' : ' '.l:head . ' '
-  endif
+      if empty(l:head)
+        call fugitive#detect(getcwd())
+        let l:head = fugitive#head()
+      endif
+      if g:spacevim_statusline_unicode_symbols == 1
+        return empty(l:head) ? '' : '  '.l:head . s:gtm_status()
+      else
+        return empty(l:head) ? '' : ' '.l:head . s:gtm_status()
+      endif
     catch
     endtry
   endif
   return ''
+endfunction
+
+
+function! s:gtm_status() abort
+  if s:enable_gtm_status
+    let status = ''
+    if exists('*GTMStatusline')
+      let status = GTMStatusline()
+    endif
+    return empty(status) ? '' : ' (' . status . ') '
+  else
+    return ''
+  endif
 endfunction
 
 " +0 ~0 -0 

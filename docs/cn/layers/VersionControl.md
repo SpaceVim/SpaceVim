@@ -10,6 +10,7 @@ lang: cn
 
 - [模块介绍](#模块介绍)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -30,6 +31,9 @@ lang: cn
 [[layers]]
   name = "VersionControl"
 ```
+## 模块选项
+
+`enable-gtm-status`: 在状态栏展示当前分支工作的时间。
 
 ## 快捷键
 
