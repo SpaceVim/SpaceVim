@@ -91,11 +91,17 @@ function! s:self.trim_end(str) abort
   return substitute(a:str, '\s*$', '', 'g')
 endfunction
 
+
+" note: this function only works when encoding is utf-8
+" ref: https://github.com/SpaceVim/SpaceVim/pull/2515
 function! s:self.string2chars(str) abort
+  let save_enc = &encoding
+  let &encoding = 'utf-8'
   let chars = []
   for i in range(strchars(a:str))
     call add(chars, strcharpart(a:str,  i , 1))
   endfor
+  let &encoding = save_enc
   return chars
 endfunction
 

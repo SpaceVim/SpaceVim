@@ -1,4 +1,3 @@
-set encoding=utf-8
 filetype off
 set rtp+=build/vader
 set rtp+=.
