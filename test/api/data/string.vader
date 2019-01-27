@@ -29,8 +29,6 @@ Execute ( SpaceVim api: data#string ):
   AssertEqual str.trim_start(' s b '), 's b '
   Log 'test string2chars()'
   AssertEqual str.string2chars(' a b '), [' ', 'a', ' ', 'b', ' ']
-  Log '&encoding is:' . &encoding
-  Log 'strchars("你好") result is: ' . strchars('你好')
   AssertEqual str.string2chars('你好'), ['你', '好']
   Log 'test strQ2B()'
   AssertEqual str.strQ2B('％'), '%'

@@ -126,6 +126,8 @@ function! s:self.strAllIndex(str, need, use_expr) abort
 endfunction
 
 function! s:self.strQ2B(str) abort
+  let save_enc = &encoding
+  let &encoding = 'utf-8'
   let chars = self.string2chars(a:str)
   let bchars = []
   for char in chars
@@ -140,10 +142,13 @@ function! s:self.strQ2B(str) abort
       call add(bchars, char)
     endif
   endfor
+  let &encoding = save_enc
   return join(bchars, '')
 endfunction
 
 function! s:self.strB2Q(str) abort
+  let save_enc = &encoding
+  let &encoding = 'utf-8'
   let chars = self.string2chars(a:str)
   let bchars = []
   for char in chars
@@ -156,6 +161,7 @@ function! s:self.strB2Q(str) abort
       call add(bchars, char)
     endif
   endfor
+  let &encoding = save_enc
   return join(bchars, '')
   
 endfunction
