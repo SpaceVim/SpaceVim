@@ -31,7 +31,6 @@ echo str1
 | `trim(str)`                     | remove spaces from the beginning and end of a string, return the resuilt |
 | `trim_start(str)`               | remove spaces from the beginning a string, return the resuilt            |
 | `trim_end(str)`                 | remove spaces from the end of a string, return the resuilt               |
-| `trim(str)`                     | remove spaces from the beginning and end of a string, return the resuilt |
 | `fill(str, len[, char])`        | fill the char after string                                               |
 | `fill_left(str, len[, char])`   | same as fill(), but the char will be append on the left                  |
 | `fill_middle(str, len[, char])` | same as fill(), but the char will be append arround the string           |
