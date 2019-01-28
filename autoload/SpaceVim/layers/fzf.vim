@@ -171,14 +171,11 @@ function! s:bufopen(e) abort
   let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
   let lines = getbufline(file_text, linenr)
   let path = file_text
-  let bufnr = bufnr(file_text)
   if empty(lines)
     if stridx(join(split(getline(linenr))), file_text) == 0
       let lines = [file_text]
       let path = bufname('%')
-      let bufnr = bufnr('%')
     elseif filereadable(path)
-      let bufnr = 0
       let lines = ['buffer unloaded']
     else
       " Skip.
@@ -291,6 +288,7 @@ function! s:outline_source(tag_cmds) abort
     throw 'Save the file first'
   endif
 
+  let lines = []
   for cmd in a:tag_cmds
     let lines = split(system(cmd), "\n")
     if !v:shell_error
@@ -314,7 +312,6 @@ endfunction
 
 function! s:outline(...) abort
   let s:source = 'outline'
-  let args = copy(a:000)
   let tag_cmds = [
         \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
         \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
@@ -398,6 +395,7 @@ for s:color_name in keys(s:ansi)
 endfor
 function! s:helptag_sink(line) abort
   let [tag, file, path] = split(a:line, "\t")[0:2]
+  unlet file
   let rtp = fnamemodify(path, ':p:h:h')
   if stridx(&rtp, rtp) < 0
     execute 'set rtp+='. fnameescape(rtp)
