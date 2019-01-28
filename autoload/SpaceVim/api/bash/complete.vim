@@ -14,6 +14,9 @@ let s:COP = SpaceVim#api#import('vim#compatible')
 
 " this is for vim command completion 
 
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
   if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
@@ -25,9 +28,6 @@ endfunction
 
 " this is for vim input()
 
-" @vimlint(EVL103, 1, a:ArgLead)
-" @vimlint(EVL103, 1, a:CmdLine)
-" @vimlint(EVL103, 1, a:CursorPos)
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
   if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
