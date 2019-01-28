@@ -449,6 +449,7 @@ function! Test() abort
   return s:previewd_bufnrs
 endfunction
 
+" @vimlint(EVL103, 1, a:timer)
 function! s:preview_timer(timer) abort
   for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
       exe 'silent bd ' . id
@@ -466,6 +467,7 @@ function! s:preview_timer(timer) abort
   resize 18
   call s:MPT._build_prompt()
 endfunction
+" @vimlint(EVL103, 0, a:timer)
 
 
 function! s:preview() abort
@@ -580,6 +582,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
   setlocal t_ve=
+  let cursor_hi = {}
   if has('gui_running')
     let cursor_hi = s:HI.group2dict('Cursor')
     call s:HI.hide_in_normal('Cursor')
