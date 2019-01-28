@@ -9,7 +9,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             VIMLINT_LOG=`cat build_log`
             echo "$VIMLINT_LOG"
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
-            docker run -e TRAVIS_PULL_REQUEST="$TRAVIS_PULL_REQUEST" \
+            docker run -e TRAVIS_PULL_REQUEST=`cat pull_requst_id` \
                 -it --rm \
                 -v $PWD/.ci:/.ci \
                 -v $PWD/autoload/SpaceVim/api:/API/autoload/SpaceVim/api \

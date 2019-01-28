@@ -37,4 +37,5 @@ elif [ "$LINT" = "vader" ]; then
 elif [ "$LINT" = "jekyll" ]; then
     .ci/build-production
 fi
+echo $TRAVIS_PULL_REQUEST >> pull_requst_id 2>&1
 set +x
