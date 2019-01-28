@@ -8,7 +8,6 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             fi
             VIMLINT_LOG=`cat build_log`
             echo "$VIMLINT_LOG"
-            echo "$TRAVIS_PULL_REQUEST"
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm \
                 -v $PWD/.ci:/.ci \
