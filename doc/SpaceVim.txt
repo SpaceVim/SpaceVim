@@ -76,6 +76,7 @@ CONTENTS                                                   *SpaceVim-contents*
       31. shell.........................................|SpaceVim-layer-shell|
       32. tmux...........................................|SpaceVim-layer-tmux|
       33. tools#dash...............................|SpaceVim-layer-tools-dash|
+      34. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1363,6 +1364,11 @@ TOOLS#DASH                                         *SpaceVim-layer-tools-dash*
 This layer provides Dash integration for SpaceVim
 
 ==============================================================================
+TOOLS#ZEAL                                         *SpaceVim-layer-tools-zeal*
+
+This layer provides Zeal integration for SpaceVim
+
+==============================================================================
 API                                                             *SpaceVim-api*
 
 SpaceVim contains a variety of public apis. To using the api, you need to make
@@ -1449,6 +1455,14 @@ FUNCTIONS
 split(str [, sep [, keepempty[, max]]])
 
   run vim command, and return the output of such command.
+
+trim(str)
+
+  remove space at the begin and end of a string, same as |trim()|
+
+fill(str, length[, char])
+
+  fill string to length with {char}, if {char} is omnit, a space is used.
 
 ==============================================================================
 JOB                                                         *SpaceVim-api-job*
