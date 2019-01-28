@@ -11,6 +11,7 @@ if has('vim_starting')
   " set default encoding to utf-8
   " Let Vim use utf-8 internally, because many scripts require this
   set encoding=utf-8
+  scriptencoding utf-8
   if &compatible
     set nocompatible
   endif

@@ -11,7 +11,7 @@
 " This function should not be called twice!
 
 let s:flag = 0
-function! SpaceVim#server#connect()
+function! SpaceVim#server#connect() abort
   if s:flag == 0
     if empty($SPACEVIM_SERVER_ADDRESS)
       let $SPACEVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'spacevim_nvim_' : 'spacevim_vim_') . 'server', ':p')
@@ -36,17 +36,17 @@ function! SpaceVim#server#connect()
 endfunction
 
 
-function! SpaceVim#server#export_server()
+function! SpaceVim#server#export_server() abort
   if executable('export')
     call system('export $TEST_SPACEVIM="test"') 
   endif
 endfunction
 
-function! SpaceVim#server#terminate()
+function! SpaceVim#server#terminate() abort
 
 endfunction
 
-function! SpaceVim#server#list()
+function! SpaceVim#server#list() abort
   if has('nvim')
     return join(serverlist(), "\n")
   else

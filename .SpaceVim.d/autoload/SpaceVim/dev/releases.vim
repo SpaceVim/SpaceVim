@@ -112,7 +112,7 @@ endfunction
 
 " this function is to generate markdown form pull request list
 function! SpaceVim#dev#releases#parser_prs(prs, ...) abort
-  let is_cn = get(a:000, 0, '') == 'cn'
+  let is_cn = get(a:000, 0, '') ==# 'cn'
   let g:is_cn = is_cn
   let md = []
   let adds = []

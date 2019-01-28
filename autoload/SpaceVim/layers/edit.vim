@@ -395,11 +395,11 @@ function! s:set_justification_to(align) abort
     endfor
 
     if a:align ==# 'left'
-        execute l:startlinenr . "," . l:endlinenr . ":left\<cr>"
+        execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
     elseif a:align ==# 'center'
-        execute l:startlinenr . "," . l:endlinenr . ":center " . l:maxlength . "\<cr>"
+        execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
     elseif a:align ==# 'right'
-        execute l:startlinenr . "," . l:endlinenr . ":right  " . l:maxlength . "\<cr>"
+        execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
     endif
 
     unlet l:startlinenr

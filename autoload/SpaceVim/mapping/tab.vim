@@ -28,7 +28,7 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
     endif
   endfunction
 elseif g:spacevim_snippet_engine ==# 'ultisnips'
-  function! SpaceVim#mapping#tab#expandable()
+  function! SpaceVim#mapping#tab#expandable() abort
     let snippet = UltiSnips#ExpandSnippetOrJump()
     if g:ulti_expand_or_jump_res > 0
       return snippet

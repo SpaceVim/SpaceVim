@@ -15,7 +15,7 @@ let s:COP = SpaceVim#api#import('vim#compatible')
 " this is for vim command completion 
 
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
-  if a:CmdLine =~ '^\s\{0,\}\w\+$'
+  if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
   endif
   let result = s:COP.systemlist([s:completer, a:CmdLine])
@@ -26,11 +26,11 @@ endfunction
 " this is for vim input()
 
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
-  if a:CmdLine =~ '^\s\{0,\}\w\+$'
+  if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
   endif
   let result = s:COP.systemlist([s:completer, a:CmdLine])
-  if a:ArgLead == ''
+  if a:ArgLead ==# ''
     let result = map(result, 'a:CmdLine . v:val')
   else
     let leader = substitute(a:CmdLine, '[^ ]*$', '', 'g')
@@ -41,7 +41,7 @@ function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
 endfunction
 
 
-function! SpaceVim#api#bash#complete#get()
+function! SpaceVim#api#bash#complete#get() abort
 
   return deepcopy(s:self)
 

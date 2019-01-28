@@ -175,7 +175,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
   endif
   for open_terminal in s:open_terminals_buffers
     if bufexists(open_terminal)
-      if getbufvar(open_terminal, "_spacevim_shell_cwd") ==# l:path
+      if getbufvar(open_terminal, '_spacevim_shell_cwd') ==# l:path
         exe 'silent b' . open_terminal
         " clear the message 
         if has('nvim')
@@ -213,8 +213,8 @@ function! s:open_default_shell(open_with_file_cwd) abort
           stopinsert
           startinsert
         endif
-        let l:term_buf_nr = bufnr('%')
-        call extend(s:shell_cached_br, {getcwd() : l:term_buf_nr})
+        let s:term_buf_nr = bufnr('%')
+        call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
       else 
         " handle vim terminal
         if s:SYSTEM.isWindows
@@ -222,9 +222,9 @@ function! s:open_default_shell(open_with_file_cwd) abort
         else
           let shell = empty($SHELL) ? 'bash' : $SHELL
         endif
-        let l:term_buf_nr = term_start(shell, {'cwd': l:path, 'curwin' : 1, 'term_finish' : 'close'})
+        let s:term_buf_nr = term_start(shell, {'cwd': l:path, 'curwin' : 1, 'term_finish' : 'close'})
       endif
-      call add(s:open_terminals_buffers, l:term_buf_nr)
+      call add(s:open_terminals_buffers, s:term_buf_nr)
       let b:_spacevim_shell = shell
       let b:_spacevim_shell_cwd = l:path
 
@@ -247,7 +247,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
   endif
 endfunction
 
-function! SpaceVim#layers#shell#close_terminal()
+function! SpaceVim#layers#shell#close_terminal() abort
   for terminal_bufnr in s:open_terminals_buffers
     if bufexists(terminal_bufnr)
       exe 'silent bd!' . terminal_bufnr

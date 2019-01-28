@@ -15,7 +15,7 @@ endif
 
 " complete input
 
-function! SpaceVim#plugins#bashcomplete#complete(ArgLead, CmdLine, CursorPos)
+function! SpaceVim#plugins#bashcomplete#complete(ArgLead, CmdLine, CursorPos) abort
   return s:BASH_COMPLETE.complete_input(a:ArgLead, a:CmdLine, a:CursorPos)
 endfunction
 

@@ -90,7 +90,7 @@ function! SpaceVim#issue#new() abort
 endfunction
 
 
-function! SpaceVim#issue#reopen(id)
+function! SpaceVim#issue#reopen(id) abort
   let issue = {
         \ 'state' : 'open'
         \ }

@@ -77,7 +77,7 @@ function! s:get_search_cmd(expr) abort
     let cmd += [a:expr] + [s:grep_files]
   elseif !empty(s:grep_dir)
     " grep dir is not a empty string
-    if s:grep_exe == 'findstr'
+    if s:grep_exe ==# 'findstr'
       let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
     else
       let cmd += [a:expr] + [s:grep_dir]
@@ -87,7 +87,7 @@ function! s:get_search_cmd(expr) abort
     " current directory.
     let cmd += [a:expr] 
     " in window, when using rg, ag, need to add '.' at the end.
-    if s:SYS.isWindows && (s:grep_exe == 'rg' || s:grep_exe == 'ag' || s:grep_exe == 'pt' )
+    if s:SYS.isWindows && (s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt' )
       let cmd += ['.']
     endif
     let cmd += s:grep_ropt
@@ -603,9 +603,9 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:grep_dir = ''
   endif
   let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
-  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe == 'findstr'
+  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe ==# 'findstr'
     let s:grep_files = '*.*'
-  elseif s:grep_exe == 'findstr' && !empty(s:grep_dir)
+  elseif s:grep_exe ==# 'findstr' && !empty(s:grep_dir)
     let s:grep_dir = '/D:' . s:grep_dir
   endif
   let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)

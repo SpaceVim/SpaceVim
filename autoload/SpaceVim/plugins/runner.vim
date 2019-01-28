@@ -255,14 +255,14 @@ let g:unite_source_menu_menus.RunnerLanguage = {'description':
 let g:unite_source_menu_menus.RunnerLanguage.command_candidates =
       \ get(g:unite_source_menu_menus.RunnerLanguage,'command_candidates', [])
 
-function! SpaceVim#plugins#runner#select_language()
+function! SpaceVim#plugins#runner#select_language() abort
   " @todo use denite or unite to select language
   " and set the s:selected_language
   " the all language is keys(s:runners)
   Denite menu:RunnerLanguage
 endfunction
 
-function! SpaceVim#plugins#runner#set_language(lang)
+function! SpaceVim#plugins#runner#set_language(lang) abort
   " @todo use denite or unite to select language
   " and set the s:selected_language
   " the all language is keys(s:runners)

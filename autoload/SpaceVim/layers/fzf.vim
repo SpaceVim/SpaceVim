@@ -151,7 +151,7 @@ endfunction
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run(fzf#wrap("files", {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
+  call fzf#run(fzf#wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
 endfunction
 
 let s:source = ''
@@ -194,7 +194,7 @@ function! s:jumps() abort
   function! s:jumplist() abort
     return split(s:CMP.execute('jumps'), '\n')[1:]
   endfunction
-  call fzf#run(fzf#wrap("jumps", {
+  call fzf#run(fzf#wrap('jumps', {
         \   'source':  reverse(<sid>jumplist()),
         \   'sink':    function('s:bufopen'),
         \   'options': '+m',
@@ -213,7 +213,7 @@ function! s:message() abort
   function! s:messagelist() abort
     return split(s:CMP.execute('message'), '\n')
   endfunction
-  call fzf#run(fzf#wrap("messages", {
+  call fzf#run(fzf#wrap('messages', {
         \   'source':  reverse(<sid>messagelist()),
         \   'sink':    function('s:yankmessage'),
         \   'options': '+m',
@@ -238,7 +238,7 @@ function! s:quickfix() abort
   function! s:quickfix_list() abort
     return map(getqflist(), 's:quickfix_to_grep(v:val)')
   endfunction
-  call fzf#run(fzf#wrap("quickfix", {
+  call fzf#run(fzf#wrap('quickfix', {
         \ 'source':  reverse(<sid>quickfix_list()),
         \ 'sink':    function('s:open_quickfix_item'),
         \ 'options': '--reverse',
@@ -262,7 +262,7 @@ function! s:location_list() abort
   function! s:get_location_list() abort
     return map(getloclist(0), 's:location_list_to_grep(v:val)')
   endfunction
-  call fzf#run(fzf#wrap("location_list", {
+  call fzf#run(fzf#wrap('location_list', {
         \ 'source':  reverse(<sid>get_location_list()),
         \ 'sink':    function('s:open_location_item'),
         \ 'options': '--reverse',
@@ -337,7 +337,7 @@ function! s:register() abort
   function! s:registers_list() abort
     return split(s:CMP.execute('registers'), '\n')[1:]
   endfunction
-  call fzf#run(fzf#wrap("registers", {
+  call fzf#run(fzf#wrap('registers', {
         \   'source':  reverse(<sid>registers_list()),
         \   'sink':    function('s:yankregister'),
         \   'options': '+m',
@@ -354,7 +354,7 @@ function! s:buffers() abort
   function! s:buffer_list() abort
     return split(s:CMP.execute('buffers'), '\n')
   endfunction
-  call fzf#run(fzf#wrap("buffers", {
+  call fzf#run(fzf#wrap('buffers', {
         \   'source':  reverse(<sid>buffer_list()),
         \   'sink':    function('s:open_buffer'),
         \   'options': '+m',
@@ -364,7 +364,7 @@ endfunction
 
 let s:ansi = {'black': 30, 'red': 31, 'green': 32, 'yellow': 33, 'blue': 34, 'magenta': 35, 'cyan': 36}
 
-function! s:get_color(attr, ...)
+function! s:get_color(attr, ...) abort
   let gui = has('termguicolors') && &termguicolors
   let fam = gui ? 'gui' : 'cterm'
   let pat = gui ? '^#[a-f0-9]\+' : '^[0-9]\+$'
@@ -376,15 +376,15 @@ function! s:get_color(attr, ...)
   endfor
   return ''
 endfunction
-function! s:csi(color, fg)
+function! s:csi(color, fg) abort
   let prefix = a:fg ? '38;' : '48;'
-  if a:color[0] == '#'
+  if a:color[0] ==# '#'
     return prefix.'2;'.join(map([a:color[1:2], a:color[3:4], a:color[5:6]], 'str2nr(v:val, 16)'), ';')
   endif
   return prefix.'5;'.a:color
 endfunction
 
-function! s:ansi(str, group, default, ...)
+function! s:ansi(str, group, default, ...) abort
   let fg = s:get_color('fg', a:group)
   let bg = s:get_color('bg', a:group)
   let color = s:csi(empty(fg) ? s:ansi[a:default] : fg, 1) .
@@ -392,11 +392,11 @@ function! s:ansi(str, group, default, ...)
   return printf("\x1b[%s%sm%s\x1b[m", color, a:0 ? ';1' : '', a:str)
 endfunction
 for s:color_name in keys(s:ansi)
-  execute "function! s:".s:color_name."(str, ...)\n"
+  execute 'function! s:'.s:color_name."(str, ...)\n"
         \ "  return s:ansi(a:str, get(a:, 1, ''), '".s:color_name."')\n"
-        \ "endfunction"
+        \ 'endfunction'
 endfor
-function! s:helptag_sink(line)
+function! s:helptag_sink(line) abort
   let [tag, file, path] = split(a:line, "\t")[0:2]
   let rtp = fnamemodify(path, ':p:h:h')
   if stridx(&rtp, rtp) < 0
@@ -405,7 +405,7 @@ function! s:helptag_sink(line)
   execute 'help' tag
 endfunction
 command! -nargs=? FzfHelpTags call <SID>helptags(<q-args>)
-function! s:helptags(...)
+function! s:helptags(...) abort
   let query = get(a:000, 0, '')
   if !executable('grep') || !executable('perl')
     call SpaceVim#logger#warn('FzfHelpTags command requires grep and perl')
@@ -419,7 +419,7 @@ function! s:helptags(...)
   let s:helptags_script = tempname()
   call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('.s:green('%-40s', 'Label').'\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
   let s:source = 'help'
-  call fzf#run(fzf#wrap("helptags", {
+  call fzf#run(fzf#wrap('helptags', {
         \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
         \ ' | perl -n '. shellescape(s:helptags_script).' | sort',
         \ 'sink':    function('s:helptag_sink'),
