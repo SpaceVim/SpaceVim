@@ -31,7 +31,6 @@ if !empty(s:log)
     let s:summary = $LINT . ' build log'
   endif
   let s:log = '<details><summary>' . s:summary . "</summary>\n" . s:log . "\n</details>"
-  echom $TRAVIS_PULL_REQUEST
   let s:comments = github#api#issues#List_comments('SpaceVim', 'SpaceVim',$TRAVIS_PULL_REQUEST ,'')
   if empty(s:comments)
     call github#api#issues#Create_comment('SpaceVim','SpaceVim', $TRAVIS_PULL_REQUEST, {'body': s:log}, 'SpaceVimBot', $BOTSECRET)
