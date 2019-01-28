@@ -36,7 +36,7 @@ let s:cterm09 = '209'
 let s:cterm0A = '221'
 let s:cterm0B = '22'
 let s:cterm0C = '73'
-let s:cterm0D = "25"
+let s:cterm0D = '25'
 let s:cterm0E = '176'
 let s:cterm0F = '137'
 

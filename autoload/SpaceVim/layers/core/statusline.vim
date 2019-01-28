@@ -572,7 +572,7 @@ function! SpaceVim#layers#core#statusline#toggle_section(name) abort
     let s:section_old_pos[a:name] = ['l', index(s:loaded_sections_l, a:name)]
     call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
   elseif has_key(s:section_old_pos, a:name)
-    if s:section_old_pos[a:name][0] == 'r'
+    if s:section_old_pos[a:name][0] ==# 'r'
       call insert(s:loaded_sections_r, a:name, s:section_old_pos[a:name][1])
     else
       call insert(s:loaded_sections_l, a:name, s:section_old_pos[a:name][1])
