@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 set -ex
-echo $TRAVIS_PULL_REQUEST
-echo $TRAVIS_PULL_REQUEST >> pull_requst_id 2>&1
-echo cat `pull_requst_id`
+export TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
 if [ "$LINT" = "vimlint" ]; then
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
