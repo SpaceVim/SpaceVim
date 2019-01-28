@@ -25,6 +25,9 @@ endfunction
 
 " this is for vim input()
 
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
   if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
@@ -39,6 +42,9 @@ function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
   return result
 
 endfunction
+" @vimlint(EVL103, 0, a:ArgLead)
+" @vimlint(EVL103, 0, a:CmdLine)
+" @vimlint(EVL103, 0, a:CursorPos)
 
 
 function! SpaceVim#api#bash#complete#get() abort
