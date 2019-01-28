@@ -1,7 +1,7 @@
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
-let b:current_syntax = "SpaceVimFindArgv"
+let b:current_syntax = 'SpaceVimFindArgv'
 syntax case ignore
 
 syn match CMDFindArgvOpt /-[a-zA-Z]*\ /

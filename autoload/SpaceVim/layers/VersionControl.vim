@@ -83,14 +83,14 @@ let s:last_file = ''
 let s:update_interval = 30
 let s:gtm_plugin_status = ''
 
-function! s:record()
+function! s:record() abort
   let fpath = expand('%:p')
   " record if file path has changed or last update is greater than update_interval
   if (s:last_file != fpath || localtime() - s:last_update > s:update_interval) && filereadable(fpath)
     let s:cmd = (s:enable_gtm_status == 1 ? 'gtm record --status' : 'gtm record')
     let output=system(s:cmd . ' ' . shellescape(fpath))
     if v:shell_error
-      echoerr s:no_gtm_err
+      echoerr 'failed to run ' . s:cmd . ' ' . shellescape(fpath)
     else
       let s:gtm_plugin_status = (s:enable_gtm_status ? substitute(output, '\n\+$', '', '') : '')
     endif

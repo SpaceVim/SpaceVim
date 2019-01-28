@@ -172,13 +172,13 @@ endfunction
 
 
 function! SpaceVim#mapping#leader#getName(key) abort
-  if a:key == ' '
+  if a:key ==# ' '
     return '[SPC]'
-  elseif a:key == 'g'
+  elseif a:key ==# 'g'
     return '[g]'
-  elseif a:key == 'z'
+  elseif a:key ==# 'z'
     return '[z]'
-  elseif a:key == g:spacevim_windows_leader
+  elseif a:key ==# g:spacevim_windows_leader
     return '[WIN]'
   elseif a:key ==# '\'
     return '<leader>'

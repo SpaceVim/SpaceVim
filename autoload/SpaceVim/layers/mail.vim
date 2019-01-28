@@ -13,6 +13,6 @@ function! SpaceVim#layers#mail#plugins() abort
 endfunction
 
 
-function! SpaceVim#layers#mail#config()
+function! SpaceVim#layers#mail#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['a', 'm'], 'call mail#client#open()', 'Start mail client', 1)
 endfunction
