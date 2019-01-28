@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
 
 " 2017-08-05 v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
 " 2017-11-16 v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
