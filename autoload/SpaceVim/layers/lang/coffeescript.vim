@@ -53,6 +53,13 @@ function! s:language_specified_mappings() abort
         \ }
   let g:neomake_coffee_coffee_remove_invalid_entries = 1
   " \ 'filter_output' : function('s:filter_coffee_lint'),
+
+  let g:neoformat_enabled_coffee = ['coffeefmt']
+  let g:neoformat_coffee_coffeefmt = {
+        \ 'exe': 'coffee-fmt',
+        \ 'args': ['--indent_stype', 'space', '-i'],
+        \ 'stdin': 0,
+        \ }
 endfunction
 
 
