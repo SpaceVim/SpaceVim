@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a CoffeeScript IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
+image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
 excerpt: "A general guide for using SpaceVim as CoffeeScript IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
@@ -56,11 +56,14 @@ To install coffeelint, just run following command in terminal.
 npm install -g coffeelint
 ```
 
+Note: if no coffeelint is installed, neomake will ues default command `coffee`.
+
 ![coffeecheckers](https://user-images.githubusercontent.com/13142418/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with following content:
+SpaceVim use built-in plugin to manager the files in a project,
+you can add a `.project_alt.json` to the root of your project with following content:
 
 ```json
 {
@@ -87,4 +90,3 @@ Before using this feature, please install coffee-fmt.
 ```sh
 npm install -g coffee-fmt
 ```
-
