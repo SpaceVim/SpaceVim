@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 CoffeeScript 开发环境"
 categories: [tutorials_cn, blog_cn]
-images: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
+image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 CoffeeScript 的开发环境，简介 lang#coffeescript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: cn
@@ -46,7 +46,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![coffeescript](https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png)
+![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
 
 ### 语法检查
 
