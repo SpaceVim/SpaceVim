@@ -82,23 +82,24 @@ endfunction
 let s:enabled_fts = []
 
 let s:lsp_servers = {
-      \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'sh' : ['bash-language-server', 'start'],
-      \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
+      \ 'css' : ['css-languageserver', '--stdio'],
+      \ 'dart' : ['dart_language_server'],
+      \ 'dockerfile' : ['docker-langserver', '--stdio'],
+      \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'haskell' : ['hie-wrapper', '--lsp'],
+      \ 'html' : ['html-languageserver', '--stdio'],
+      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
-      \ 'dart' : ['dart_language_server'],
-      \ 'go' : ['go-langserver', '-mode', 'stdio'],
-      \ 'dockerfile' : ['docker-langserver', '--stdio'],
-      \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
-      \ 'python' : ['pyls'],
-      \ 'html' : ['html-languageserver', '--stdio'],
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
-      \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
-      \ 'javascript' : ['javascript-typescript-stdio'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
+      \ 'python' : ['pyls'],
+      \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'sh' : ['bash-language-server', 'start'],
+      \ 'typescript' : ['typescript-language-server', '--stdio'],
       \ 'vue' : ['vls']
       \ }
 
