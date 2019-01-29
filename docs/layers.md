@@ -65,6 +65,7 @@ Some layers are enabled by default. The following example shows how to disable `
 
 | Name                                                  | Description                                                                                                                                                         |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [VersionControl](VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…                         |
 | [autocomplete](autocomplete/)                         | Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically                           |
 | [chat](chat/)                                         | SpaceVim chatting layer provide chatting with qq and weixin in vim.                                                                                                 |
 | [checkers](checkers/)                                 | Syntax checking automatically within SpaceVim, display error on the sign column and statusline.                                                                     |
@@ -86,11 +87,13 @@ Some layers are enabled by default. The following example shows how to disable `
 | [git](git/)                                           | This layers adds extensive support for git                                                                                                                          |
 | [github](github/)                                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
 | [japanese](japanese/)                                 | Layer for japanese users, include japanese docs and runtime messages                                                                                                |
+| [lang#WebAssembly](lang/WebAssembly/)                 | This layer adds WebAssembly support to SpaceVim                                                                                                                     |
 | [lang#agda](lang/agda/)                               | This layer adds agda language support to SpaceVim                                                                                                                   |
 | [lang#asciidoc](lang/asciidoc/)                       | Edit asciidoc within vim, autopreview asciidoc in the default browser, with this layer you can also format asciidoc file.                                           |
 | [lang#autohotkey](lang/autohotkey/)                   | This layer adds autohotkey language support to SpaceVim                                                                                                             |
 | [lang#c](lang/c/)                                     | c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#clojure](lang/clojure/)                         | This layer is for clojure development, provide autocompletion, syntax checking, code format for clojure file.                                                       |
+| [lang#coffeescript](lang/coffeescript/)               | This layer is for coffeescript development, provide autocompletion, syntax checking, code format for coffeescript file.                                             |
 | [lang#csharp](lang/csharp/)                           | This layer is for csharp development                                                                                                                                |
 | [lang#dart](lang/dart/)                               | This layer is for dart development, provide autocompletion, syntax checking, code format for dart file.                                                             |
 | [lang#dockerfile](lang/dockerfile/)                   | This layer adds DockerFile to SpaceVim                                                                                                                              |
@@ -130,7 +133,6 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#typescript](lang/typescript/)                   | This layer is for TypeScript development                                                                                                                            |
 | [lang#vim](lang/vim/)                                 | This layer is for writting vim script, including code completion, syntax checking and buffer formatting                                                             |
 | [lang#vue](lang/vue/)                                 | This layer adds vue language support to SpaceVim                                                                                                                    |
-| [lang#WebAssembly](lang/WebAssembly/)                 | This layer adds WebAssembly support to SpaceVim                                                                                                                     |
 | [language-server-protocol](language-server-protocol/) | This layers provides language server protocol for vim and neovim                                                                                                    |
 | [leaderf](leaderf/)                                   | This layers provide a heavily customized LeaderF centric work-flow                                                                                                  |
 | [shell](shell/)                                       | This layer provide shell support in SpaceVim                                                                                                                        |
@@ -143,7 +145,6 @@ Some layers are enabled by default. The following example shows how to disable `
 | [tools](tools/)                                       | This layer provides some tools for vim                                                                                                                              |
 | [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
 | [unite](unite/)                                       | This layers provide a heavily customized Unite centric work-flow                                                                                                    |
-| [VersionControl](VersionControl/)                     | This layers provides general version control feature for vim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc…                         |
 
 <!-- SpaceVim layer list end -->
 
