@@ -56,7 +56,7 @@ To install coffeelint, just run following command in terminal.
 npm install -g coffeelint
 ```
 
-![luac](https://user-images.githubusercontent.com/13142418/51438866-b8cfda80-1cec-11e9-8645-b43fc6481e42.png)
+![coffeecheckers](https://user-images.githubusercontent.com/13142418/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
 
 ### Jump to test file
 

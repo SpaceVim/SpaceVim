@@ -37,6 +37,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+  let g:neomake_coffee_enabled_makers = ['coffee', 'coffeelint']
   let g:neomake_coffee_coffeelint_maker =  {
         \ 'args': ['--reporter=csv'],
         \ 'errorformat': '%f\,%l\,%\d%#\,%trror\,%m,' .
@@ -45,7 +46,13 @@ function! s:language_specified_mappings() abort
         \ '%f\,%l\,%tarn\,%m'
         \ }
   let g:neomake_coffee_coffeelint_remove_invalid_entries = 1
-        " \ 'filter_output' : function('s:filter_coffee_lint'),
+  let g:neomake_coffee_coffee_maker =  {
+        \ 'args': [],
+        \ 'output_stream': 'stderr',
+        \ 'errorformat': '%f:%l:%c: %m',
+        \ }
+  let g:neomake_coffee_coffee_remove_invalid_entries = 1
+  " \ 'filter_output' : function('s:filter_coffee_lint'),
 endfunction
 
 
