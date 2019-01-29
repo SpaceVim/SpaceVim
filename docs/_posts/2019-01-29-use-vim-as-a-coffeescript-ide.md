@@ -74,19 +74,19 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 coffeescript 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![luarunner](https://user-images.githubusercontent.com/13142418/51438907-76f36400-1ced-11e9-8838-441965a22ce9.png)
+![coffeerunner](https://user-images.githubusercontent.com/13142418/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
 
 ### 代码格式化
 
-coffeescript 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 luaformatter：
+coffeescript 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 coffee-fmt：
 
 ```toml
 [[layers]]
   name = "format"
 ```
 
-安装 luaformatter：
+安装 coffee-fmt：
 
 ```sh
-luarocks install formatter
+npm install -g coffee-fmt
 ```

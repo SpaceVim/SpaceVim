@@ -39,10 +39,10 @@ for more info, you can read the [lang#coffeescript](../layers/lang/coffeescript/
 
 ### Code completion
 
-`lang#lua` layer will load the vim-lua plugin automatically, unless overriden in your `init.toml`.
+`lang#coffeescript` layer will load the vim-coffeescript plugin automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![lua](https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png)
+![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
 
 ### Syntax linting
 
@@ -60,16 +60,16 @@ npm install -g coffeelint
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with following content:
 
 ```json
 {
-  "src/*.lua": {"alternate": "test/{}.lua"},
-  "test/*.lua": {"alternate": "src/{}.lua"}
+  "src/*.coffee": {"alternate": "test/{}.coffee"},
+  "test/*.coffee": {"alternate": "src/{}.coffee"}
 }
 ```
 
-with this configuration, you can jump between the source code and test file via command `:A`
+with this configuration, you can jump between the source code and test file via command `:A`.
 
 ### running code
 
@@ -77,14 +77,14 @@ To run current script, you can press `SPC l r`, and a split windows
 will be openen, the output of the script will be shown in this windows.
 It is running asynchronously, and will not block your vim.
 
-![luarunner](https://user-images.githubusercontent.com/13142418/51438907-76f36400-1ced-11e9-8838-441965a22ce9.png)
+![coffeerunner](https://user-images.githubusercontent.com/13142418/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
 
 ### Code formatting
 
 The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install luaformatter.
+Before using this feature, please install coffee-fmt.
 
 ```sh
-luarocks install formatter
+npm install -g coffee-fmt
 ```
 
