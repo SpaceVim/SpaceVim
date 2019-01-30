@@ -11,7 +11,7 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
       if neosnippet#expandable()
         return "\<plug>(neosnippet_expand)"
       else
-        return "\<c-y>"
+        return "\<c-e>"
       endif
     elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
       return "\<Enter>\<esc>ko"

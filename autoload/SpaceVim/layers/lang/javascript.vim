@@ -77,6 +77,10 @@ function! SpaceVim#layers#lang#javascript#config() abort
       autocmd FocusGained * call <SID>checktime_if_javascript()
     augroup END
   endif
+  " just add a note here, when using `node -`, the Buffered stdout will not
+  " be flushed by sender.
+  " Use node -i will show the output of repl command.
+  call SpaceVim#plugins#repl#reg('javascript', ['node', '-i'])
 endfunction
 
 function! s:on_ft() abort
@@ -125,6 +129,20 @@ function! s:on_ft() abort
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("javascript")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 function! s:tern_go_to_def() abort

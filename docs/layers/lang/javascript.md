@@ -14,6 +14,7 @@ description: "This layer is for JaveScript development"
 - [Key bindings](#key-bindings)
   - [Import key bindings](#import-key-bindings)
   - [Generate key bindings](#generate-key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
 
@@ -70,3 +71,16 @@ enable_flow_syntax = true
 | Mode          | Key Binding | Description                           |
 | ------------- | ----------- | ------------------------------------- |
 | normal        | `SPC l g d` | Generate JSDoc                        |
+
+### Inferior REPL process
+
+Start a `node -i` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
+
