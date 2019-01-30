@@ -27,19 +27,19 @@ Each of the following sections will be covered:
 ### Enable language layer
 
 By default `lang#javascript` layer is not loaded. To add JavaScript language support in SpaceVim,
-you need to enable the `lang#coffeescript` layer. Press `SPC f v d` to open
+you need to enable the `lang#javascript` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
 ```toml
 [[layers]]
-  name = "lang#coffeescript"
+  name = "lang#javascript"
 ```
 
-for more info, you can read the [lang#coffeescript](../layers/lang/coffeescript/) layer documentation.
+for more info, you can read the [lang#javascript](../layers/lang/javascript/) layer documentation.
 
 ### Code completion
 
-`lang#coffeescript` layer will load the vim-coffeescript plugin automatically, unless overriden in your `init.toml`.
+`lang#javascript` layer will load the javascript plugins automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
 ![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
@@ -47,18 +47,15 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run [coffeelint](https://github.com/clutchski/coffeelint) asynchronously.
+It will run [eslint](https://eslint.org/) asynchronously.
 
-The coffeelint is command line lint for coffeescript, currently is maintained by [Shuan Wang](https://github.com/swang).
-To install coffeelint, just run following command in terminal.
+To install eslint, just run following command in terminal.
 
 ```sh
-npm install -g coffeelint
+npm install -g eslint
 ```
 
-Note: if no coffeelint is installed, neomake will ues default command `coffee`.
-
-![coffeecheckers](https://user-images.githubusercontent.com/13142418/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
+![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
 
 ### Jump to test file
 

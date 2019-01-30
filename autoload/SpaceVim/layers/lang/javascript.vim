@@ -62,12 +62,20 @@ function! SpaceVim#layers#lang#javascript#config() abort
     call SpaceVim#mapping#gd#add('javascript', function('s:tern_go_to_def'))
   endif
 
+  let g:neomake_javascript_enabled_makers = ['eslint']
+  let g:neomake_javascript_eslint_maker =  {
+        \ 'args': ['--format=compact'],
+        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+        \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#',
+        \ 'cwd': '%:p:h',
+        \ 'output_stream': 'stdout',
+        \ }
+
   if s:auto_fix
-    " Only use eslint
-    let g:neomake_javascript_enabled_makers = ['eslint']
     " Use the fix option of eslint
     let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
   endif
+  " Only use eslint
 
   if s:auto_fix
     augroup SpaceVim_lang_javascript
