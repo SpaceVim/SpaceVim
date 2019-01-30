@@ -21,6 +21,7 @@ Each of the following sections will be covered:
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
@@ -82,9 +83,16 @@ It is running asynchronously, and will not block your vim.
 ### Code formatting
 
 The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install coffee-fmt.
+Before using this feature, please install js-beautify.
 
 ```sh
-npm install -g coffee-fmt
+npm install -g js-beautify
 ```
 
+### REPL support
+
+Start a `node -i` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can 
+send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+send whole buffer.
+
+![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
