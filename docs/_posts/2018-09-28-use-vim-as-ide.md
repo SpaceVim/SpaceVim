@@ -17,6 +17,7 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Default UI](#default-ui)
 - [Fuzzy finder](#fuzzy-finder)
 - [Files and Windows](#files-and-windows)
+- [Language support](#language-support)
 
 <!-- vim-markdown-toc -->
 
@@ -30,6 +31,8 @@ after installing Vim, following the quick start guide to install SpaceVim,
 ### Default UI
 
 ![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
+
+The welcome screen will show the recent files of current project. 
 
 ### Fuzzy finder
 
@@ -46,3 +49,6 @@ name = "denite"
 The windows ID will be shown on the statusline, and users can use `SPC + number` to jump to specific windows, the buffer id or tabpage id will
 be shown on the tabline. To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
 
+### Language support
+
+By default, SpaceVim do not load any lanaguge layer, please checkout the [available layers](../layers/) page.
