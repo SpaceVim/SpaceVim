@@ -64,8 +64,8 @@ you can add a `.project_alt.json` to the root of your project with following con
 
 ```json
 {
-  "src/*.coffee": {"alternate": "test/{}.coffee"},
-  "test/*.coffee": {"alternate": "src/{}.coffee"}
+  "src/*.js": {"alternate": "test/{}.js"},
+  "test/*.js": {"alternate": "src/{}.js"}
 }
 ```
 
@@ -77,7 +77,7 @@ To run current script, you can press `SPC l r`, and a split windows
 will be openen, the output of the script will be shown in this windows.
 It is running asynchronously, and will not block your vim.
 
-![coffeerunner](https://user-images.githubusercontent.com/13142418/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
+![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
 
 ### Code formatting
 
