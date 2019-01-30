@@ -14,7 +14,7 @@ let s:enable_gtm_status = 0
 
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
-  call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
+  call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
   call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
   return plugins
 endfunction
@@ -122,7 +122,6 @@ function! s:hunks() abort
   endif
   return empty(rst) ? '' : ' ' . rst
 endfunction
-
 " vcs transient state functions:
 
 " first we need to open a buffer contains:
