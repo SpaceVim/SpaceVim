@@ -62,4 +62,5 @@ npm install -g typescript
 | `SPC l r`   | references         |
 | `SPC l s`   | search             |
 | `SPC l t`   | type               |
+| `SPC l g d` | generate doc       |
 | `g d`       | defintion preview  |
