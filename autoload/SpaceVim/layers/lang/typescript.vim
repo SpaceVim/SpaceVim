@@ -10,6 +10,7 @@
 function! SpaceVim#layers#lang#typescript#plugins() abort
   let plugins = []
   call add(plugins, ['leafgarland/typescript-vim'])
+  call add(plugins, ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }])
   if !SpaceVim#layers#lsp#check_filetype('typescript')
     if has('nvim')
       call add(plugins, ['mhartington/nvim-typescript', {'build': './install.sh'}])
@@ -91,6 +92,11 @@ function! s:on_ft() abort
             \ 'references', 1)
     endif
   endif
+  let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
+        \ 'generate JSDoc', 1)
+
 endfunction
 
 function! s:go_to_def() abort

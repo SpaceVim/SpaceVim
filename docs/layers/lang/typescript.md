@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#typescript layer"
-description: "This layer is for TypeScript development"
+description: "This layer is for TypeScript development, includding code completion, Syntax lint, and doc generation."
 ---
 
 # [Available Layers](../../) >> lang#typescript
@@ -17,7 +17,7 @@ description: "This layer is for TypeScript development"
 
 ## Description
 
-This layer is for TypeScript development.
+This layer is for TypeScript development, includding code completion, Syntax lint, and doc generation.
 
 ## Install
 
@@ -61,4 +61,5 @@ npm install -g typescript
 | `SPC l r`   | references         |
 | `SPC l s`   | search             |
 | `SPC l t`   | type               |
-| `g d`   | defintion preview  |
+| `SPC l g d` | generate doc       |
+| `g d`       | defintion preview  |
