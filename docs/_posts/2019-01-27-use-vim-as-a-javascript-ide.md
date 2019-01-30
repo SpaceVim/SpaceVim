@@ -57,7 +57,7 @@ SpaceVim 初次安装时默认并未启用 JavaScript 相关语言模块。首�
 可通过以下命令安装：
 
 ```sh
-npm install -g eslint
+npm install -g eslint-cli
 ```
 
 ![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)

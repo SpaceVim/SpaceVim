@@ -53,7 +53,7 @@ It will run [eslint](https://eslint.org/) asynchronously.
 To install eslint, just run following command in terminal.
 
 ```sh
-npm install -g eslint
+npm install -g eslint-cli
 ```
 
 ![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
