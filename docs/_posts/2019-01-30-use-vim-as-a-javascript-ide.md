@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a JavaScript IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
+image: https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png
 excerpt: "A general guide for using SpaceVim as JavaScript IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
@@ -43,7 +43,7 @@ for more info, you can read the [lang#javascript](../layers/lang/javascript/) la
 `lang#javascript` layer will load the javascript plugins automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
+![jside](https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
 
 ### Syntax linting
 
