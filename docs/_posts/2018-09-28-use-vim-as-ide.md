@@ -50,3 +50,5 @@ The windows ID will be shown on the statusline, and users can use `SPC + number`
 be shown on the tabline. To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
 
 ### Language support
+
+By default, SpaceVim do not load any lanaguge layer, please checkout the [available layers](../layers/) page.
