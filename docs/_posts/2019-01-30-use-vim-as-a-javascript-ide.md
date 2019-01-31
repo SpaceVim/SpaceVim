@@ -74,8 +74,8 @@ with this configuration, you can jump between the source code and test file via 
 
 ### running code
 
-To run current script, you can press `SPC l r`, and a split windows
-will be openen, the output of the script will be shown in this windows.
+To run code in current buffer, you can press `SPC l r`, and a split windows
+will be openen, the output will be shown in this windows.
 It is running asynchronously, and will not block your vim.
 
 ![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)

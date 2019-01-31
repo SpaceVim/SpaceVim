@@ -62,4 +62,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.

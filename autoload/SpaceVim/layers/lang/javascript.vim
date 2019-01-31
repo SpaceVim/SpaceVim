@@ -51,7 +51,11 @@ function! SpaceVim#layers#lang#javascript#config() abort
 
   call add(g:spacevim_project_rooter_patterns, 'package.json')
 
-  call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
+  call SpaceVim#plugins#runner#reg_runner('javascript', {
+        \ 'exe' : 'node',
+        \ 'usestdin' : 1,
+        \ 'opt': ['-'],
+        \ })
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ function('s:on_ft'))
 
