@@ -73,7 +73,12 @@ function! s:async_run(runner) abort
           \ })
   elseif type(a:runner) == type({})
     let exe = call(a:runner.exe, [])
-    let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
+    let usestdin = get(a:runner, 'usestdin', 0)
+    if usestdin
+      let cmd = exe + a:runner.opt
+    else
+      let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
+    endif
     call SpaceVim#logger#info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd), '', repeat('-', 20)])
     let s:lines += 3
@@ -83,6 +88,9 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    if usestdin
+      call s:JOB.send(s:job_id, join(getline(1, '$'), "\n"))
+    endif
   endif
 endfunction
 
