@@ -37,7 +37,7 @@ name = "lang#javascript"
 - auto-completion
 - syntax checking
 - goto definition
-- refernce finder
+- reference finder
 
 ## Layer configuration
 
