@@ -94,7 +94,7 @@ function! s:async_run(runner) abort
           \ })
     if usestdin
       call s:JOB.send(s:job_id, getline(1, '$'))
-      call chanclose(s:job_id, 'stdin')
+      call s:JOB.chanclose(s:job_id, 'stdin')
     endif
   endif
 endfunction
