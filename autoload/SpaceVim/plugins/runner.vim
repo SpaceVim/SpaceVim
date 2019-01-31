@@ -72,7 +72,11 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
   elseif type(a:runner) == type({})
-    let exe = call(a:runner.exe, [])
+    if type(a:runner.exe) == 2
+      let exe = call(a:runner.exe, [])
+    elseif type(a:runner.exe) ==# type('')
+      let exe = [a:runner.exe]
+    endif
     let usestdin = get(a:runner, 'usestdin', 0)
     if usestdin
       let cmd = exe + a:runner.opt
@@ -80,7 +84,7 @@ function! s:async_run(runner) abort
       let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
     endif
     call SpaceVim#logger#info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd), '', repeat('-', 20)])
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
     let s:job_id =  s:JOB.start(cmd,{
@@ -89,7 +93,8 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
     if usestdin
-      call s:JOB.send(s:job_id, join(getline(1, '$'), "\n"))
+      call s:JOB.send(s:job_id, getline(1, '$'))
+      call chanclose(s:job_id, 'stdin')
     endif
   endif
 endfunction
