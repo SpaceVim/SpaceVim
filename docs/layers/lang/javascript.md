@@ -14,6 +14,7 @@ description: "This layer is for JaveScript development"
 - [Key bindings](#key-bindings)
   - [Import key bindings](#import-key-bindings)
   - [Generate key bindings](#generate-key-bindings)
+  - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
@@ -71,6 +72,11 @@ enable_flow_syntax = true
 | Mode          | Key Binding | Description                           |
 | ------------- | ----------- | ------------------------------------- |
 | normal        | `SPC l g d` | Generate JSDoc                        |
+
+### Code runner
+
+To run javascript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
