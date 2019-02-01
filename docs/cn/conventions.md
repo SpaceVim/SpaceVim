@@ -33,7 +33,8 @@ lang: cn
     - [空白行](#空白行)
     - [连续行](#连续行)
     - [命名](#命名)
-- [Vimscript 代码规范：](#vimscript-代码规范)
+- [按键表示](#按键表示)
+- [Vimscript 代码规范](#vimscript-代码规范)
 - [Markdown 代码规范](#markdown-代码规范)
 
 <!-- vim-markdown-toc -->
@@ -100,7 +101,7 @@ Vim 具有高度可定制性。用户可以更改很多的默认设置，包括�
 
 #### 捕获异常
 
-**匹配异常代码，而非异常文本**
+**匹配错误代码，而非错误文本**
 
 错误文本可能与语言环境(local dependant)有关。
 
@@ -260,13 +261,13 @@ autocommand BufEnter <buffer>
     \|endif
 ```
 
-- 你应该尽量避免使用多行命令，可以用函数调用来替代它
+- 应当尽量避免使用多行命令，可以用函数调用来替代它
 
 #### 命名
 
 - 保持简单易于理解
 
-总的来说，使用
+- 总的来说，使用
     - 像这样的插件名 `plugin-names-like-this`
     - 像这样的函数名 `FunctionNamesLikeThis`
     - 像这样的命令名 `CommandNamesLikeThis`
@@ -276,7 +277,7 @@ autocommand BufEnter <buffer>
 
 - 不要编写(create)全局函数，用自动运行函数(autoloaded functions)来替代全局函数。
 - 通用命令优先于一般的前缀
-- 参数组(augroup)名字计数作为变量的命名方向。(Augroup names count as variables for naming purposes.)
+- 参数组(augroup)名字像变量一样命名。(Augroup names count as variables for naming purposes.)
 - 所有的变量据需要加上它们的范围前缀。
     - 全局变量的前缀为`g:`
     - 本地脚本变量的前缀为`s:`
@@ -289,7 +290,15 @@ autocommand BufEnter <buffer>
     - `l:`and`v:`should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
     - 自动运行函数(autoloaded functions)可以没有范围前缀。
 
-## Vimscript 代码规范：
+## 按键表示
+
+- 使用首字母大写的单词和尖括号来表示按键：`<Down>`, `<Up>`。
+- 使用大写字母来表示custom leader：`SPC`, `WIN`, `UNITE`, `DENITE`。
+- 使用空格来分隔按键序列：`SPC t w`, `<Leader> f o`.
+- 使用`/` 来分隔多个可选的按键序列：`<Tab>` / `<C-n>`.
+- 在文档中使用`Ctrl-e`而不是`<C-e>`。
+
+## Vimscript 代码规范
 
 - [Google Vimscript Style Guide](https://google.github.io/styleguide/vimscriptguide.xml)
 - [Google Vimscript Guide](https://google.github.io/styleguide/vimscriptfull.xml)
