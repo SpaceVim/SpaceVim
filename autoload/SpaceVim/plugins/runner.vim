@@ -156,6 +156,7 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 if has('nvim') && exists('*chanclose')
+  " remoet  at the end of each 
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
     let s:_out_data[-1] .= a:data[0]
@@ -167,6 +168,7 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     if !empty(lines)
+      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
     endif
     let s:lines += len(lines)
