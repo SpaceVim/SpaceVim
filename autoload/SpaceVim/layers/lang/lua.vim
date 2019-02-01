@@ -43,7 +43,11 @@ function! SpaceVim#layers#lang#lua#config() abort
           \ 'usestdin' : 1,
           \ })
   else
-    call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
+    call SpaceVim#plugins#runner#reg_runner('lua', {
+          \ 'exe' : 'lua',
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
   endif
   let g:neomake_lua_enabled_makers = ['luac']
   let luacexe = filter(['luac53', 'luac52', 'luac51'], 'executable(v:val)')
@@ -66,9 +70,9 @@ function! SpaceVim#layers#lang#lua#config() abort
     if executable('luap')
       call SpaceVim#plugins#repl#reg('lua', 'luap')
     elseif !empty(luaexe)
-      call SpaceVim#plugins#repl#reg('lua', luaexe)
+      call SpaceVim#plugins#repl#reg('lua', luaexe + ['-i'])
     else
-      call SpaceVim#plugins#repl#reg('lua', 'lua')
+      call SpaceVim#plugins#repl#reg('lua', ['lua', '-i'])
     endif
   endif
 endfunction

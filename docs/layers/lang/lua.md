@@ -9,8 +9,7 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 
 - [Description](#description)
 - [Install](#install)
-  - [Layer](#layer)
-  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+- [Features](#features)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -23,29 +22,30 @@ This layer is for lua development.
 
 ## Install
 
-### Layer
-
 To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#lua"
 ```
+## Features
 
-### Syntax checking && Code formatting
-
+- syntax checking
+- code formatting
+- code completion
+- repl support
+- code runner
 
 ## Key bindings
 
 ### Inferior REPL process
 
-Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
+Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
 
-```vim
-call SpaceVim#layers#load('lang#lua'
-    \ {
-    \ 'repl_command' : '~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua',
-    \ }
+```toml
+[[layers]]
+  name = "lang#lua"
+  repl_command = "~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua"
 ```
 
 Send code to inferior process commands:
