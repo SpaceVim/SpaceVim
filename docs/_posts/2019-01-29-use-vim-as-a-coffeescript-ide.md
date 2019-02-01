@@ -24,6 +24,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 CoffeeScript 这一语言的支�
 - [工程文件跳转](#工程文件跳转)
 - [快速运行](#快速运行)
 - [代码格式化](#代码格式化)
+- [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
@@ -100,3 +101,10 @@ CoffeeScript 代码格式化，主要依赖 `format` 模块，同时需要安装
 ```sh
 npm install -g coffee-fmt
 ```
+
+### 交互式编程
+
+在编辑 CoffeeScript 文件时，可通过快捷键 `SPC l s i` 启动 `coffee -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
+可以发送光标所在行内容，也可以发送选择区域的内容，甚至是整个 buffer 内容。
+
+![coffeerepl](https://user-images.githubusercontent.com/13142418/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)
