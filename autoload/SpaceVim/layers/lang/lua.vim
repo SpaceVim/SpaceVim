@@ -37,7 +37,11 @@ function! SpaceVim#layers#lang#lua#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
   let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
   if !empty(luaexe)
-    call SpaceVim#plugins#runner#reg_runner('lua', luaexe[0] . ' %s')
+    call SpaceVim#plugins#runner#reg_runner('lua', {
+          \ 'exe' : luaexe[0],
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
   else
     call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
   endif
