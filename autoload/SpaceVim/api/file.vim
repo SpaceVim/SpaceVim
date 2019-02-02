@@ -229,7 +229,7 @@ endfunction
 
 let s:file['unify_path'] = function('s:unify_path')
 
-function! s:path_to_fname(path)
+function! s:path_to_fname(path) abort
   return substitute(s:unify_path(a:path), '[\\/:;.]', '_', 'g')
 endfunction
 

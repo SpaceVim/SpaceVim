@@ -47,7 +47,7 @@ let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
 lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]
-  if s:qtdir =~ 'nvim-qt'
+  if s:qtdir =~# 'nvim-qt'
     let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
   else
     let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
