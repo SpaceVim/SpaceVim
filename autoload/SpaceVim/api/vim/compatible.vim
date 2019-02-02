@@ -293,9 +293,9 @@ else
     let result = []
     "   20   281   23 -invalid-
     for info in jumpinfo
-      " @vimlint(EVL103, 1, l:file_text)
+      " @vimlint(EVL102, 1, l:file_text)
       let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
-      " @vimlint(EVL103, 0, l:file_text)
+      " @vimlint(EVL102, 0, l:file_text)
       call add(result, {
             \ 'bufnr' : jump,
             \ 'lnum' : line,
