@@ -310,7 +310,6 @@ if s:SYS.isWindows
     " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
     " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
     silent let rst = system(cmd)
-    let @+=rst
     if !v:shell_error
       let dir = split(rst)[-1][1:-2]
       return dir
