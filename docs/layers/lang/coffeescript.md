@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#coffeescript layer"
-description: "This layer is for coffeescript development, provide autocompletion, syntax checking, code format for coffeescript file."
+description: "This layer is for CoffeeScript development, provide autocompletion, syntax checking, code format for CoffeeScript file."
 ---
 
 # [Available Layers](../../) >> lang#coffeescript
@@ -15,7 +15,7 @@ description: "This layer is for coffeescript development, provide autocompletion
 
 ## Description
 
-This layer is for coffeescript development, and it includes vim-coffeescript.
+This layer is for CoffeeScript development, and it includes vim-coffeescript.
 
 ## Features
 

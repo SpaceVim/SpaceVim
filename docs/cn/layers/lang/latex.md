@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#latex 模块"
-description: "这一模块为 latex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 LaTex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -17,7 +17,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 latex 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 LaTex 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 主要包含插件：
 
@@ -40,7 +40,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键      | 描述                    |
+| 快捷键    | 功能描述                |
 | --------- | ----------------------- |
 | `SPC l i` | vimtex-info             |
 | `SPC l I` | vimtex-info-full        |

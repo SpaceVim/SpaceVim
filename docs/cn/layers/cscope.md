@@ -21,7 +21,7 @@ lang: cn
 
 这以模块为 SpaceVim 提供了一个智能的[Cscope](http://cscope.sourceforge.net/) 和 [PyCscope](https://github.com/portante/pycscope) 辅助工具。
 
-如果想要了解更多关于 cscope 和其他类似工具之间的区别，请阅读 [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
+如果想要了解更多关于 cscope 和其它类似工具之间的区别，请阅读 [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
 
 ## 模块特性
 
@@ -49,7 +49,7 @@ sudo pacman -S cscope
 
 ## 快捷键
 
-| 按键        | 描述                            |
+| 快捷键      | 功能描述                        |
 | ----------- | ------------------------------- |
 | `SPC m c =` | Find assignments to this symbol |
 | `SPC m c i` | 建立 cscope 索引                |

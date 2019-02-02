@@ -43,7 +43,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键     | 功能描述                                   |
+| 快捷键   | 功能描述                                   |
 | -------- | ------------------------------------------ |
 | `Ctrl-h` | Switch to vim/tmux pane in left direction  |
 | `Ctrl-j` | Switch to vim/tmux pane in down direction  |

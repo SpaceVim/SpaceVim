@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#red layer"
-description: "This layer is for red development, provide autocompletion, syntax checking and code format."
+description: "This layer is for Red development, provide autocompletion, syntax checking and code format."
 ---
 
 # [Available Layers](../../) >> lang#red
@@ -18,7 +18,7 @@ description: "This layer is for red development, provide autocompletion, syntax 
 
 ## Description
 
-This layer is for red development.
+This layer is for Red development.
 
 ## Install
 
@@ -45,13 +45,13 @@ Start a `red` inferior REPL process with `SPC l s i`. You may change the REPL co
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 ### Running current script
 
-To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a Red script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
 

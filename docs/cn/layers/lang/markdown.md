@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#markdown 模块"
-description: "这一模块为 markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
+description: "这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
 lang: cn
 ---
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供 markdown 编辑支持，包括格式化、实时预览、自动生成 TOC 等特性。
+这一模块为 SpaceVim 提供 Markdown 编辑支持，包括格式化、实时预览、自动生成 TOC 等特性。
 
 ## 启用模块
 
@@ -31,7 +31,7 @@ lang: cn
 
 ## 代码格式化
 
-SpaceVim 默认使用 remark 来格式化 markdown 文件，因此需要安装该命令，可通过如下命令来安装：
+SpaceVim 默认使用 remark 来格式化 Markdown 文件，因此需要安装该命令，可通过如下命令来安装：
 
 ```sh
 npm -g install remark
