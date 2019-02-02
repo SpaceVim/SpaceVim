@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
 
 let s:has_cache = {}
 
@@ -112,9 +113,11 @@ elseif s:self.has('python3')
           \ py3eval('vim.windows[' . a:nr . '].col')]
   endfunction
 else
+  " @vimlint(EVL103, 1, a:nr)
   function! s:self.win_screenpos(nr) abort
     return [0, 0]
   endfunction
+  " @vimlint(EVL103, 0, a:nr)
 endif
 
 if exists('*execute')
@@ -290,7 +293,9 @@ else
     let result = []
     "   20   281   23 -invalid-
     for info in jumpinfo
+      " @vimlint(EVL103, 1, l:file_text)
       let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      " @vimlint(EVL103, 0, l:file_text)
       call add(result, {
             \ 'bufnr' : jump,
             \ 'lnum' : line,
