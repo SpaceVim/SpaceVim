@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim gtags layer"
 description: "This layer provide gtags manager for project"
-redirect_from: "/tags/"
+redirect_from: "/layers/tags/"
 ---
 
 # [Available Layers](../) >> tags

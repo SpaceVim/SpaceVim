@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim gtags 模块"
 description: "这一模块为 SpaceVim 提供了全局的 gtags 索引管理，提供快速检索定义和引用的功能。"
-redirect_from: "/cn/tags/"
+redirect_from: "/cn/layers/tags/"
 lang: cn
 ---
 
