@@ -68,11 +68,11 @@ let s:time = {
       \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
       \ }
 
-for n in range(1, 23)
-  call extend(s:time, {n . 'h' : n * 60 * 60 * 1000})
+for s:n in range(1, 23)
+  call extend(s:time, {s:n . 'h' : s:n * 60 * 60 * 1000})
 endfor
 
-unlet n
+unlet s:n
 
 let s:random_colorscheme = 0
 let s:random_frequency = ''
