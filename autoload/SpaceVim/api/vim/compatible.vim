@@ -9,7 +9,7 @@
 
 let s:has_cache = {}
 
-
+let s:SYS = SpaceVim#api#import('system')
 
 ""
 " @section vim#compatible, api-vim-compatible
@@ -300,6 +300,25 @@ else
     return result
   endfunction
 endif
+
+if s:SYS.isWindows
+  function! s:self.resolve(path) abort
+    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
+    silent let rst = system(cmd)
+    let @+=rst
+    if !v:shell_error
+      let dir = split(rst)[-1][1:-2]
+      return dir
+    endif
+    return a:path
+  endfunction
+else
+  function! s:self.resolve(path) abort
+    return resolve(a:path)
+  endfunction
+endif
+
 
 
 function! SpaceVim#api#vim#compatible#get() abort
