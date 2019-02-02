@@ -22,6 +22,7 @@ Each of the following sections will be covered:
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
@@ -80,3 +81,11 @@ Before using this feature, please install luaformatter.
 ```sh
 luarocks install formatter
 ```
+
+### REPL support
+
+Start a `lua -i` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can 
+send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+send whole buffer.
+
+![luarepl](https://user-images.githubusercontent.com/13142418/52158892-075f7a80-26d8-11e9-9bf2-2be8ab2363ab.gif)
