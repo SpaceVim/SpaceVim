@@ -832,7 +832,7 @@ function! SpaceVim#end() abort
   endif
   ""
   " generate tags for SpaceVim
-  let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
+  let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
     exe 'helptags ' . help
   catch

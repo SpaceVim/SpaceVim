@@ -47,14 +47,14 @@ endfunction
 
 function! s:awesome_mode() abort
   let sep = s:FILE.separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.toml'], sep)
+  let f = g:_spacevim_root_dir . join(['', 'mode', 'dark_powered.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
   let sep = s:FILE.separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.toml'], sep)
+  let f = g:_spacevim_root_dir . join(['', 'mode', 'basic.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction

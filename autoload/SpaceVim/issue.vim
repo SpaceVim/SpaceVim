@@ -24,7 +24,7 @@ endfunction
 function! s:spacevim_status() abort
   let pwd = getcwd()
   try
-    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
     let status = s:CMP.systemlist('git status')
   catch
     exe 'cd ~/.SpaceVim'
