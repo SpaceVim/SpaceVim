@@ -13,6 +13,7 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
+  - [Inferior REPL process](#inferior-repl-process-1)
 
 <!-- vim-markdown-toc -->
 
@@ -63,3 +64,15 @@ Send code to inferior process commands:
 ### Running current script
 
 To running a lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+
+### Inferior REPL process
+
+Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l s b` | send buffer and keep code buffer focused         |
+| `SPC l s l` | send line and keep code buffer focused           |
+| `SPC l s s` | send selection text and keep code buffer focused |
