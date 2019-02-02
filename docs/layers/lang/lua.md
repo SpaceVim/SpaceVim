@@ -11,9 +11,9 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 - [Install](#install)
 - [Features](#features)
 - [Key bindings](#key-bindings)
-  - [Inferior REPL process](#inferior-repl-process)
+  - [General Key bindings](#general-key-bindings)
   - [Running current script](#running-current-script)
-  - [Inferior REPL process](#inferior-repl-process-1)
+  - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
 
@@ -39,6 +39,17 @@ To use this configuration layer, update custom configuration file with:
 
 ## Key bindings
 
+### General Key bindings
+
+| Key Binding | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `SPC l b`   | compile current lua buffer                       |
+
+
+### Running current script
+
+To running a lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+
 ### Inferior REPL process
 
 Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
@@ -48,26 +59,6 @@ Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may chan
   name = "lang#lua"
   repl_command = "~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua"
 ```
-
-Send code to inferior process commands:
-
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l b`   | compile current lua buffer                       |
-| `SPC l r`   | run current lua file                             |
-| `SPC l f`   | format current lua file                          |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
-
-
-### Running current script
-
-To running a lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
-
-### Inferior REPL process
-
-Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
