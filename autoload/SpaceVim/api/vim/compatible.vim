@@ -6,10 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
 
 let s:has_cache = {}
 
-
+let s:SYS = SpaceVim#api#import('system')
 
 ""
 " @section vim#compatible, api-vim-compatible
@@ -112,9 +113,11 @@ elseif s:self.has('python3')
           \ py3eval('vim.windows[' . a:nr . '].col')]
   endfunction
 else
+  " @vimlint(EVL103, 1, a:nr)
   function! s:self.win_screenpos(nr) abort
     return [0, 0]
   endfunction
+  " @vimlint(EVL103, 0, a:nr)
 endif
 
 if exists('*execute')
@@ -290,7 +293,7 @@ else
     let result = []
     "   20   281   23 -invalid-
     for info in jumpinfo
-      let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      let [jump, line, col] = s:STRING.split(info, '', 0, 4)[0:2]
       call add(result, {
             \ 'bufnr' : jump,
             \ 'lnum' : line,
@@ -300,6 +303,26 @@ else
     return result
   endfunction
 endif
+
+if s:SYS.isWindows
+  function! s:self.resolve(path) abort
+    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
+    " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
+    silent let rst = system(cmd)
+    let @+=rst
+    if !v:shell_error
+      let dir = split(rst)[-1][1:-2]
+      return dir
+    endif
+    return a:path
+  endfunction
+else
+  function! s:self.resolve(path) abort
+    return resolve(a:path)
+  endfunction
+endif
+
 
 
 function! SpaceVim#api#vim#compatible#get() abort
