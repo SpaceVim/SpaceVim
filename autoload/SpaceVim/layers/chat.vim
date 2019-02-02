@@ -14,7 +14,7 @@ endfunction
 
 let s:BASE64 = SpaceVim#api#import('data#base64')
 
-function! SpaceVim#layers#chat#config()
+function! SpaceVim#layers#chat#config() abort
   let g:chatting_server_ip = s:BASE64.decode('NDUuNzYuMTAwLjQ5')
   let g:chatting_server_port = 8989
   if !exists('g:chatting_server_lib')

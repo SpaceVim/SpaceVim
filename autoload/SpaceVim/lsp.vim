@@ -9,7 +9,7 @@
 scriptencoding utf-8
 
 
-if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
+if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
@@ -30,7 +30,7 @@ if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_me
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
     
-    if stridx(a:cmds[0], ".") >= 0 
+    if stridx(a:cmds[0], '.') >= 0 
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
       let l:key = a:cmds[0]
@@ -52,23 +52,26 @@ if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_me
 
     let s:coc_language_servers_key_id_map[l:key] = s:coc_language_servers_key_id_map[l:key] + 1
 
-    autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+    augroup spacevim_lsp_layer
+      autocmd!
+      autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+    augroup END
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
-    call CocActionAsync("doHover")
+    call CocActionAsync('doHover')
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
-    call CocActionAsync("jumpDefinition")
+    call CocActionAsync('jumpDefinition')
   endfunction
 
   function! SpaceVim#lsp#rename() abort
-    call CocActionAsync("rename")
+    call CocActionAsync('rename')
   endfunction
 
   function! SpaceVim#lsp#references() abort
-    call CocActionAsync("jumpReferences")
+    call CocActionAsync('jumpReferences')
   endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
@@ -94,11 +97,11 @@ elseif has('nvim')
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    exe "au User lsp_setup call lsp#register_server({"
+    exe 'au User lsp_setup call lsp#register_server({'
           \ . "'name': 'LSP',"
-          \ . "'cmd': {server_info -> " . string(a:cmds) . "},"
+          \ . "'cmd': {server_info -> " . string(a:cmds) . '},'
           \ . "'whitelist': ['" .  a:ft . "' ],"
-          \ . "})"
+          \ . '})'
     exe 'autocmd FileType ' . a:ft . ' setlocal omnifunc=lsp#complete'
   endfunction
 

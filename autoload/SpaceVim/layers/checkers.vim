@@ -58,6 +58,8 @@ function! SpaceVim#layers#checkers#config() abort
   let g:neomake_cursormoved_delay = get(g:, 'neomake_cursormoved_delay', 300)
   "" }}}
 
+  let g:neomake_virtualtext_current_error = get(g:, 'neomake_virtualtext_current_error', !s:show_cursor_error)
+
   "" w0rp/ale {{{
   let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
   "" }}}

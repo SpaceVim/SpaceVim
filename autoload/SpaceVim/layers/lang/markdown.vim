@@ -38,8 +38,8 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:markdown_enable_insert_mode_leader_mappings = 0
   let g:markdown_enable_spell_checking = 0
   let g:markdown_quote_syntax_filetypes = {
-        \ "vim" : {
-        \   "start" : "\\%(vim\\|viml\\)",
+        \ 'vim' : {
+        \   'start' : "\\%(vim\\|viml\\)",
         \},
         \}
   let remarkrc = s:generate_remarkrc()
@@ -71,8 +71,8 @@ function! s:mappings() abort
     let g:_spacevim_mappings_space = {}
   endif
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], 'Tabularize /|', 'Format table under cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], 'MarkdownPreview', 'Real-time markdown preview', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
 endfunction
 

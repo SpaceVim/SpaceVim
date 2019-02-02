@@ -17,14 +17,14 @@ function! SpaceVim#layers#lang#vim#plugins() abort
         \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
         \ ]
   call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
-  call add(plugins,['mhinz/vim-lookup', {'merged' : 0}])
+  call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
   call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
-  if g:spacevim_autocomplete_method == 'asyncomplete'
+  if g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
-  elseif g:spacevim_autocomplete_method == 'coc'
+  elseif g:spacevim_autocomplete_method ==# 'coc'
     call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
   endif
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])

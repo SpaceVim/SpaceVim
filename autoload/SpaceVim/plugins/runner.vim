@@ -72,10 +72,19 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
   elseif type(a:runner) == type({})
-    let exe = call(a:runner.exe, [])
-    let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
+    if type(a:runner.exe) == 2
+      let exe = call(a:runner.exe, [])
+    elseif type(a:runner.exe) ==# type('')
+      let exe = [a:runner.exe]
+    endif
+    let usestdin = get(a:runner, 'usestdin', 0)
+    if usestdin
+      let cmd = exe + a:runner.opt
+    else
+      let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
+    endif
     call SpaceVim#logger#info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd), '', repeat('-', 20)])
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
     let s:job_id =  s:JOB.start(cmd,{
@@ -83,6 +92,10 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    if usestdin
+      call s:JOB.send(s:job_id, getline(1, '$'))
+      call s:JOB.chanclose(s:job_id, 'stdin')
+    endif
   endif
 endfunction
 
@@ -143,6 +156,7 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 if has('nvim') && exists('*chanclose')
+  " remoet  at the end of each 
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
     let s:_out_data[-1] .= a:data[0]
@@ -154,6 +168,7 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     if !empty(lines)
+      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
     endif
     let s:lines += len(lines)
@@ -255,14 +270,14 @@ let g:unite_source_menu_menus.RunnerLanguage = {'description':
 let g:unite_source_menu_menus.RunnerLanguage.command_candidates =
       \ get(g:unite_source_menu_menus.RunnerLanguage,'command_candidates', [])
 
-function! SpaceVim#plugins#runner#select_language()
+function! SpaceVim#plugins#runner#select_language() abort
   " @todo use denite or unite to select language
   " and set the s:selected_language
   " the all language is keys(s:runners)
   Denite menu:RunnerLanguage
 endfunction
 
-function! SpaceVim#plugins#runner#set_language(lang)
+function! SpaceVim#plugins#runner#set_language(lang) abort
   " @todo use denite or unite to select language
   " and set the s:selected_language
   " the all language is keys(s:runners)

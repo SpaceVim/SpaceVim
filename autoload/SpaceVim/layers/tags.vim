@@ -47,7 +47,7 @@ endfunction
 
 function! MyTagfuncBack() abort
     if exists('s:MyTagfunc_flag')&&s:MyTagfunc_flag
-        exe "normal! `H"
+        exe 'normal! `H'
         let s:MyTagfunc_flag =0
     endif
 endfunction

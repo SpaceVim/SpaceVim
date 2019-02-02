@@ -9,6 +9,7 @@
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#custom#profile(dict) abort
   for key in keys(a:dict)
@@ -133,7 +134,7 @@ endfunction
 function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
-    let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
+    let g:_spacevim_config_path = s:CMP.resolve(fnamemodify('.SpaceVim.d/init.toml', ':p'))
     let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
@@ -176,11 +177,11 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d') : $SPACEVIMDIR
-  if filereadable(global_dir . '/init.toml')
-    let g:_spacevim_global_config_path = global_dir . '/init.toml'
-    let local_conf = global_dir . '/init.toml'
-    let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
+  let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d'))) : $SPACEVIMDIR
+  if filereadable(global_dir . 'init.toml')
+    let g:_spacevim_global_config_path = global_dir . 'init.toml'
+    let local_conf = global_dir . 'init.toml'
+    let local_conf_cache = s:FILE.unify_path(expand('~/.cache/SpaceVim/conf/init.json'))
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
@@ -190,9 +191,9 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf, 'glob')
     endif
-  elseif filereadable(global_dir . '/init.vim')
-    let g:_spacevim_global_config_path = global_dir . '/init.vim'
-    let custom_glob_conf = global_dir . '/init.vim'
+  elseif filereadable(global_dir . 'init.vim')
+    let g:_spacevim_global_config_path = global_dir . 'init.vim'
+    let custom_glob_conf = global_dir . 'init.vim'
     let &rtp = global_dir . ',' . &rtp
     exe 'source ' . custom_glob_conf
   else

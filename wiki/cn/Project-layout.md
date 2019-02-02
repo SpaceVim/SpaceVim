@@ -13,6 +13,7 @@ SpaceVim 组织正常维护的仓库有如下这些，其中 `SpaceVim/SpaceVim`
 | [SpaceVim/vim-luacomplete](https://github.com/SpaceVim/vim-luacomplete)   | lua complete plugin for vim                              |
 | [SpaceVim/unite-unicode](https://github.com/SpaceVim/unite-unicode)       | Unite.vim plugin to insert unicode gyphs                 |
 | [SpaceVim/vim-material](https://github.com/SpaceVim/vim-material)         | Vim colorscheme inspired by equinusocio's Material Theme |
+| [wsdjeg/vim-lookup](https://github.com/wsdjeg/vim-lookup)                 | A fork of mhinz/vim-lookup, base on SpaceVim API         |
 
 主仓库的文件结构如下：
 

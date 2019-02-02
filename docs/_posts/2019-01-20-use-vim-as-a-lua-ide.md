@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Lua 开发环境"
 categories: [tutorials_cn, blog_cn]
-images: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
+image: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Lua 的开发环境，简介 lang#lua 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: cn
@@ -24,6 +24,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 lua 这一语言的支持主要�
 - [工程文件跳转](#工程文件跳转)
 - [快速运行](#快速运行)
 - [代码格式化](#代码格式化)
+- [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
@@ -81,3 +82,9 @@ lua 代码格式化，主要依赖 `format` 模块，同时需要安装相关的
 ```sh
 luarocks install formatter
 ```
+
+### 交互式编程
+
+在编辑 lua 文件时，可通过快捷键 `SPC l s i` 启动 `lua -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
+
+![luarepl](https://user-images.githubusercontent.com/13142418/52158892-075f7a80-26d8-11e9-9bf2-2be8ab2363ab.gif)

@@ -15,7 +15,7 @@ function! SpaceVim#layers#lang#fsharp#plugins() abort
 endfunction
 
 
-function! SpaceVim#layers#lang#fsharp#config()
+function! SpaceVim#layers#lang#fsharp#config() abort
     call SpaceVim#plugins#repl#reg('fsharp', ['fsharpi', '--readline-'])
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
 endfunction

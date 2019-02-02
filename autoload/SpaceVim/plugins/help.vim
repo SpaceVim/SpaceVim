@@ -9,10 +9,10 @@
 let s:KEY = SpaceVim#api#import('vim#key')
 let s:key_describ = {}
 
-function! SpaceVim#plugins#help#describe_bindings()
+function! SpaceVim#plugins#help#describe_bindings() abort
 endfunction
 
-function! SpaceVim#plugins#help#regist_root(dict)
+function! SpaceVim#plugins#help#regist_root(dict) abort
   let keys = keys(a:dict)
   if type(a:dict) == 4 && len(keys) == 1
     call extend(s:key_describ, a:dict)
@@ -20,7 +20,7 @@ function! SpaceVim#plugins#help#regist_root(dict)
 endfunction
 
 
-function! SpaceVim#plugins#help#describe_key()
+function! SpaceVim#plugins#help#describe_key() abort
   let defined = 1
   let root = s:key_describ
   let prompt = 'Describe key:'

@@ -1568,7 +1568,7 @@ Text related commands (start with `x`):
 | `SPC x a ;`   | align region at ;                                                    |
 | `SPC x a =`   | align region at =                                                    |
 | `SPC x a ¦`   | align region at ¦                                                    |
-| `SPC x a |`   | align region at                                                      |
+| `SPC x a |`   | align region at |                                                    |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`   | align current indentation region using default rules (TODO)          |
 | `SPC x a l`   | left-align with evil-lion (TODO)                                     |
@@ -1589,11 +1589,11 @@ Text related commands (start with `x`):
 | `SPC x i _`   | change symbol style to `under_score`                                 |
 | `SPC x i u`   | change symbol style to `under_score`                                 |
 | `SPC x i U`   | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`   | set the justification to center (TODO)                               |
+| `SPC x j c`   | set the justification to center                                      |
 | `SPC x j f`   | set the justification to full (TODO)                                 |
-| `SPC x j l`   | set the justification to left (TODO)                                 |
+| `SPC x j l`   | set the justification to left                                        |
 | `SPC x j n`   | set the justification to none (TODO)                                 |
-| `SPC x j r`   | set the justification to right (TODO)                                |
+| `SPC x j r`   | set the justification to right                                       |
 | `SPC x J`     | move down a line of text (enter transient state)                     |
 | `SPC x K`     | move up a line of text (enter transient state)                       |
 | `SPC x l d`   | duplicate line or region (TODO)                                      |

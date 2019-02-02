@@ -175,7 +175,7 @@ function! SpaceVim#mapping#close_current_buffer() abort
     endif
   endif
 
-  if &buftype == 'terminal'
+  if &buftype ==# 'terminal'
     exe 'bd!'
     return
   endif
@@ -252,7 +252,7 @@ function! SpaceVim#mapping#menu(desc, key, cmd) abort
         \ a:cmd])
 endfunction
 
-function! SpaceVim#mapping#clear_saved_buffers()
+function! SpaceVim#mapping#clear_saved_buffers() abort
   call s:BUFFER.filter_do(
         \ {
         \ 'expr' : [
