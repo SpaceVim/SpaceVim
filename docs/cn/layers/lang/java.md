@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#java 模块"
-description: "这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -23,7 +23,7 @@ lang: cn
 
 ## 模块描述
 
-这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
+这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
 
 ## 功能特性
 
@@ -76,10 +76,10 @@ lang: cn
 
 ### 代码格式化
 
-默认的代码格式化快捷键是 `SPC b f`，该快捷键又 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
+默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
-为了使 format 模块支持 java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
-同时，需要设置 `layer_lang_java_formatter` SpaceVim 选项：
+为了使 format 模块支持 Java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
+同时，需要设置 SpaceVim 选项`layer_lang_java_formatter`：
 
 ```toml
 [options]
@@ -88,7 +88,7 @@ lang: cn
 
 ### Maven
 
-| Key Binding | Description                    |
+| 快捷键      | 功能描述                       |
 | ----------- | ------------------------------ |
 | `SPC l m i` | Run maven clean install        |
 | `SPC l m I` | Run maven install              |
@@ -99,7 +99,7 @@ lang: cn
 
 ### Jump
 
-| Key Binding | Description            |
+| 快捷键      | 描述                   |
 | ----------- | ---------------------- |
 | `SPC l j a` | jump to alternate file |
 
@@ -109,8 +109,8 @@ lang: cn
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                        |
+| 快捷键      | 功能描述                    |
 | ----------- | --------------------------- |
-| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s b` | 发送整个文件内容至 REPL     |
 | `SPC l s l` | 发送当前行内容至 REPL       |
 | `SPC l s s` | 发送已选中的内容至 REPL     |

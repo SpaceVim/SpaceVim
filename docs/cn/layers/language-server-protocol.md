@@ -157,7 +157,7 @@ npm install -g vscode-css-languageserver-bin
 
 ## 快捷键
 
-| 按键            | 描述          |
+| 快捷键          | 功能描述      |
 | --------------- | ------------- |
 | `K` / `SPC l d` | 显示文档      |
 | `SPC l e`       | 重命名 symbol |

@@ -57,7 +57,7 @@ enable_flow_syntax = true
 
 ### Import key bindings
 
-| Key Binding          | Description                     |
+| Key Bindings         | Descriptions                    |
 | -------------------- | ------------------------------- |
 | `F4` (Insert/Normal) | Import symbol under cursor      |
 | `SPC j i`            | Import symbol under cursor      |
@@ -75,7 +75,7 @@ enable_flow_syntax = true
 
 ### Code runner
 
-To run javascript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+To run JavaScript code in current buffer, you can press `SPC l r`. It will run without loss focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
@@ -84,9 +84,9 @@ Start a `node -i` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| -----------  | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 

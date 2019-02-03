@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#kotlin layer"
-description: "This layer adds kotlin language support to SpaceVim"
+description: "This layer adds Kotlin language support to SpaceVim"
 ---
 
 # [Available Layers](../../) >> lang#kotlin
@@ -15,7 +15,7 @@ description: "This layer adds kotlin language support to SpaceVim"
 
 ## Description
 
-This layer adds kotlin language support to SpaceVim.
+This layer adds Kotlin language support to SpaceVim.
 
 ## Features
 
@@ -31,6 +31,6 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#kotlin"
 ```
 
-to enable language server protocol, you need to install:
+To enable language server protocol, you need to install:
 
 https://github.com/fwcd/KotlinLanguageServer

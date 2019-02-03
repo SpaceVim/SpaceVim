@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#kotlin 模块"
-description: "该模块为 SpaceVim 提供了 kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
+description: "该模块为 SpaceVim 提供了 Kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 kotlin 语言开发支持。
+该模块为 SpaceVim 提供了 Kotlin 语言开发支持。
 
 ## 功能特性
 
@@ -33,6 +33,6 @@ lang: cn
   name = "lang#kotlin"
 ```
 
-若需要启用语言服务器支持，需要额外安装 kotlin 的语言服务器 [KotlinLanguageServer](https://github.com/fwcd/KotlinLanguageServer)。
+若需要启用语言服务器支持，需要额外安装 Kotlin 的语言服务器 [KotlinLanguageServer](https://github.com/fwcd/KotlinLanguageServer)。
 
 
