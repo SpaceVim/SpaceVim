@@ -23,7 +23,7 @@ function! s:open_win() abort
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist nomodifiable
         \ noswapfile
         \ nowrap
         \ cursorline
