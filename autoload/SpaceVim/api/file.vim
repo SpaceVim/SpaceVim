@@ -222,9 +222,20 @@ endfunction
 
 let s:file['updateFiles'] = function('s:updatefiles')
 
+" this function should return a unify path
+" 1. the sep is /
+" 2. if it is a dir, end with /
+" 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
   let mod = a:0 > 0 ? a:1 : ':p'
-  return resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+  let path = resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+  if isdirectory(path) && path[-1:] !=# '/'
+    return path . '/'
+  elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'
+    return path . '/'
+  else
+    return path
+  endif
 endfunction
 
 let s:file['unify_path'] = function('s:unify_path')
