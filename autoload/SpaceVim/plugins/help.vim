@@ -94,15 +94,20 @@ endfunction
 
 
 function! s:open_describe_buffer(desc) abort
+  " FIXME: check if the help windows exist in current tab
+  " if the windows exit switch to that windows, clear content, update desc and
+  " key binding
   noautocmd botright split __help_describe__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
   set filetype=HelpDescribe
+  setlocal modifiable
   call setline(1, a:desc)
+  setlocal nomodifiable
   let b:defind_file_name = split(a:desc[-1][12:], ':')
   let lines = &lines * 30 / 100
   if lines < winheight(0)
     exe 'resize ' . lines
   endif
-  setlocal nofoldenable
+  setlocal nofoldenable nomodifiable
   nnoremap <buffer><silent> q :bd<cr>
 endfunction
