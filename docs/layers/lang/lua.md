@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#lua layer"
-description: "This layer is for lua development, provide autocompletion, syntax checking, code format for lua file."
+description: "This layer is for Lua development, provide autocompletion, syntax checking, code format for Lua file."
 ---
 
 # [Available Layers](../../) >> lang#lua
@@ -19,7 +19,7 @@ description: "This layer is for lua development, provide autocompletion, syntax 
 
 ## Description
 
-This layer is for lua development.
+This layer is for Lua development.
 
 ## Install
 
@@ -43,16 +43,16 @@ To use this configuration layer, update custom configuration file with:
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
-| `SPC l b`   | compile current lua buffer                       |
+| `SPC l b`   | compile current Lua buffer                       |
 
 
 ### Running current script
 
-To running a lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a Lua script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
-Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
+Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer the option `repl_command`. For example, if you want to use `lua.repl`, load this layer via:
 
 ```toml
 [[layers]]
@@ -62,8 +62,8 @@ Start a `lua -i` or `luap` inferior REPL process with `SPC l s i`.  You may chan
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#javascript 模块"
-description: "这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -21,7 +21,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 javascript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 JavaScript 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 启用模块
 
@@ -79,7 +79,7 @@ lang: cn
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                    |
+| 快捷键      | 功能描述                |
 | ----------- | ----------------------- |
 | `SPC l s b` | 发送整个文件内容至 REPL |
 | `SPC l s l` | 发送当前行内容至 REPL   |

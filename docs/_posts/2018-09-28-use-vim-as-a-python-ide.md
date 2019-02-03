@@ -11,7 +11,7 @@ commentsID: "使用 Vim 搭建 Python 开发环境"
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Python 开发环境
 
-SpaceVim 是一个模块化的 Vim IDE，针对 python 这一语言的支持主要依靠 `lang#python` 模块以及与之相关的其他模块。的这篇文章主要介绍如何使用 SpaceVim 搭建 Python 的开发环境，侧重介绍跟 python 开发相关使用技巧。在阅读这篇文章之前，可以先阅读《[使用 Vim 搭建基础的开发环境](../use-vim-as-ide/)》，对语言相关以外的功能有一个大致的了解。
+SpaceVim 是一个模块化的 Vim IDE，针对 python 这一语言的支持主要依靠 `lang#python` 模块以及与之相关的其它模块。的这篇文章主要介绍如何使用 SpaceVim 搭建 Python 的开发环境，侧重介绍跟 python 开发相关使用技巧。在阅读这篇文章之前，可以先阅读《[使用 Vim 搭建基础的开发环境](../use-vim-as-ide/)》，对语言相关以外的功能有一个大致的了解。
 
 <!-- vim-markdown-toc GFM -->
 

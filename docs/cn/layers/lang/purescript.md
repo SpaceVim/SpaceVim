@@ -19,7 +19,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 PureScript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 PureScript 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 功能特性
 
@@ -42,7 +42,7 @@ lang: cn
 
 ### 语言专属快捷键
 
-| 按键      | 描述                              |
+| 快捷键    | 功能描述                          |
 | --------- | --------------------------------- |
 | `g d`     | 跳至定义处                        |
 | `SPC l L` | 列出所有已载入的模块              |
@@ -55,7 +55,7 @@ lang: cn
 | `SPC l A` | 应用所有修改建议                  |
 | `SPC l C` | 添加 case expression              |
 | `SPC l i` | 导入光标下的模块                  |
-| `SPC l p` | 搜索 pursuit for cursor ident |
+| `SPC l p` | 搜索 pursuit for cursor ident     |
 | `SPC l T` | 查询光标符号类型                  |
 
 ### 交互式编程
@@ -64,7 +64,7 @@ lang: cn
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                    |
+| 快捷键      | 功能描述                |
 | ----------- | ----------------------- |
 | `SPC l s b` | 发送整个文件内容至 REPL |
 | `SPC l s l` | 发送当前行内容至 REPL   |
