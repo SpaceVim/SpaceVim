@@ -94,6 +94,8 @@ pip install --user yapf
 
 之后，可以通过 `SPC l s l` 进行逐行发送，也可以选中区域后按 `SPC l s s` 发送选中的区域：
 
+![pythonrepl](https://user-images.githubusercontent.com/13142418/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)
+
 ### 断点调试
 
 首先，需要载入 debug 模块：
