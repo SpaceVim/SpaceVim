@@ -74,8 +74,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
-        \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
+        \ ['delete window (other windows)',
+        \ [
+        \ '[SPC w D] is to select a windows to close',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
         \ 'tabnew', 'create new tab', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 
