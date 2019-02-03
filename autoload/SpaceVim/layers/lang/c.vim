@@ -92,6 +92,7 @@ function! SpaceVim#layers#lang#c#config() abort
         \ function('s:go_to_def'))
   call SpaceVim#mapping#gd#add('cpp',
         \ function('s:go_to_def'))
+  " TODO: add stdin suport flex -t lexer.l | gcc -o lexer.o -xc -
   call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', function('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('cpp', ['g++ -o #TEMP# %s', '#TEMP#'])
