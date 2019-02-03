@@ -23,7 +23,6 @@ Each of the following sections will be covered:
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
 - [REPL](#repl)
-- [Debug](#debug)
 
 <!-- vim-markdown-toc -->
 
@@ -91,9 +90,9 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 
 ### REPL
 
-you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
+Start a `ipython` or `python` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can 
+send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+send whole buffer.
 
 ![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
 
-
-### Debug
