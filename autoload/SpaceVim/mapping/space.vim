@@ -58,7 +58,7 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(s:_function('s:windows_transient_state')) . ', [])',
         \ ['buffer transient state',
         \ [
-        \ '[SPC b .] is to open the buffer transient state',
+        \ '[SPC w .] is to open the buffer transient state',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]

@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:KEY = SpaceVim#api#import('vim#key')
+let s:TABs = SpaceVim#api#import('vim#tab')
 let s:key_describ = {}
 
 function! SpaceVim#plugins#help#describe_bindings() abort
@@ -92,22 +93,40 @@ function! s:build_mpt(mpt) abort
   echohl NONE
 endfunction
 
-
 function! s:open_describe_buffer(desc) abort
   " FIXME: check if the help windows exist in current tab
   " if the windows exit switch to that windows, clear content, update desc and
   " key binding
-  noautocmd botright split __help_describe__
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
-  set filetype=HelpDescribe
-  setlocal modifiable
-  call setline(1, a:desc)
-  setlocal nomodifiable
-  let b:defind_file_name = split(a:desc[-1][12:], ':')
-  let lines = &lines * 30 / 100
-  if lines < winheight(0)
-    exe 'resize ' . lines
+  let tabtree = s:TABs.get_tree()
+  if index(map(tabtree[tabpagenr()], 'bufname(v:val)'), '__help_describe__') == -1
+    noautocmd botright split __help_describe__
+    let s:helpbufnr = bufnr('%')
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
+    set filetype=HelpDescribe
+    setlocal modifiable
+    silent normal! "_ggdG
+    silent call setline(1, a:desc)
+    setlocal nomodifiable
+    let b:defind_file_name = split(a:desc[-1][12:], ':')
+    let lines = &lines * 30 / 100
+    if lines < winheight(0)
+      exe 'resize ' . lines
+    endif
+    setlocal nofoldenable nomodifiable
+    nnoremap <buffer><silent> q :bd<cr>
+  else
+    let winnr = bufwinnr(s:helpbufnr)
+    exe winnr .  'wincmd w'
+    setlocal modifiable
+    silent normal! "_ggdG
+    silent call setline(1, a:desc)
+    setlocal nomodifiable
+    let b:defind_file_name = split(a:desc[-1][12:], ':')
+    let lines = &lines * 30 / 100
+    if lines < winheight(0)
+      exe 'resize ' . lines
+    endif
+    setlocal nofoldenable nomodifiable
+    nnoremap <buffer><silent> q :bd<cr>
   endif
-  setlocal nofoldenable nomodifiable
-  nnoremap <buffer><silent> q :bd<cr>
 endfunction
