@@ -52,7 +52,8 @@ sudo pacman -S cscope
 | 按键        | 描述                            |
 | ----------- | ------------------------------- |
 | `SPC m c =` | Find assignments to this symbol |
-| `SPC m c i` | 建立 cscope 索引                |
+| `SPC m c i` | 建立当前项目 cscope 索引        |
+| `SPC m c u` | 更新所有项目 cscope 索引        |
 | `SPC m c c` | 列出某个方法调用的所有函数      |
 | `SPC m c C` | 列出某个方法被哪些函数调用      |
 | `SPC m c d` | 查询 symbol 的定义处            |

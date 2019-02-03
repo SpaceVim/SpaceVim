@@ -8,7 +8,7 @@
 
 let s:self = {}
 
-let s:completer = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/autoload/SpaceVim/bin/get_complete'
+let s:completer = g:_spacevim_root_dir . '/autoload/SpaceVim/bin/get_complete'
 
 let s:COP = SpaceVim#api#import('vim#compatible')
 
