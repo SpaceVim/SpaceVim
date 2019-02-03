@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:file = expand('<sfile>:~')
+let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
@@ -52,7 +53,7 @@ function! SpaceVim#mapping#space#init() abort
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
-  let s:lnum = expand('<slnum>') + 3
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '.'], 'call call('
         \ . string(s:_function('s:windows_transient_state')) . ', [])',
         \ ['buffer transient state',
@@ -63,8 +64,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'],
-        \ 'close', 'delete window', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'], 'close',
+        \ ['close-current-windows',
+        \ [
+        \ '[SPC w d] is to close current windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
         \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
@@ -119,7 +128,7 @@ function! SpaceVim#mapping#space#init() abort
         \ 'ChooseWin', 'select window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
-  let s:lnum = expand('<slnum>') + 3
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'bnext', ['next buffer',
         \ [
         \ '[SPC b n] is running :bnext, jump to next buffer',
