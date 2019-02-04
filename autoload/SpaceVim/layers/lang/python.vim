@@ -30,8 +30,6 @@ function! SpaceVim#layers#lang#python#plugins() abort
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
-  call add(plugins, ['Vimjas/vim-python-pep8-indent', 
-        \ { 'on_ft' : 'python'}])
   return plugins
 endfunction
 
