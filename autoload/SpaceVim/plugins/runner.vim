@@ -104,7 +104,8 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
     if usestdin
-      call s:JOB.send(s:job_id, getline(1, '$'))
+      let range = get(a:runner, 'range', [1, '$'])
+      call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
     endif
   endif
@@ -142,6 +143,10 @@ function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
   let desc = '[' . a:ft . '] ' . string(a:runner)
   let cmd = "call SpaceVim#plugins#runner#set_language('" . a:ft . "')"
   call add(g:unite_source_menu_menus.RunnerLanguage.command_candidates, [desc,cmd])
+endfunction
+
+function! SpaceVim#plugins#runner#get(ft) abort
+  return deepcopy(get(s:runners, a:ft , ''))
 endfunction
 
 " this func should support specific a runner
