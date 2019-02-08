@@ -42,6 +42,7 @@ let s:target = ''
 
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
+    " the runner is a string, the %s will be replaced as a file name.
     try
       let cmd = printf(a:runner, get(s:, 'selected_file', bufname('%')))
     catch
@@ -57,6 +58,8 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
   elseif type(a:runner) == type([])
+    " the runner is a list
+    " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
     let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
@@ -72,6 +75,14 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
   elseif type(a:runner) == type({})
+    " the runner is a dict
+    " keys:
+    "   exe : function, return a cmd list
+    "         string
+    "   usestdin: true, use stdin
+    "             false, use file name
+    "   range: empty, whole buffer
+    "          getline(a, b)
     if type(a:runner.exe) == 2
       let exe = call(a:runner.exe, [])
     elseif type(a:runner.exe) ==# type('')
