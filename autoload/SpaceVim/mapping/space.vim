@@ -84,12 +84,28 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
-        \ 'tabnew', 'create new tab', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 
-        \ 'call call('
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'tabnew',
+        \ ['create new tab',
+        \ [
+        \ '[SPC w f] is to create new tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
         \ . string(function('s:create_new_named_tab'))
-        \ . ', [])', 'create new named tab', 1)
+        \ . ', [])',
+        \ ['create new named tab',
+        \ [
+        \ '[SPC w F] is to create new named tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'],
         \ 'wincmd h', 'window-left', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'],
