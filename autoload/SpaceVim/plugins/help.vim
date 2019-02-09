@@ -39,7 +39,7 @@ function! SpaceVim#plugins#help#describe_key() abort
     let root = root[name]
     if type(root) == 3
       if len(root) == 3
-        redraw!
+        normal! :
         call s:open_describe_buffer(root[-1])
       else
         call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
@@ -49,9 +49,9 @@ function! SpaceVim#plugins#help#describe_key() abort
       call s:build_mpt([prompt, join(keys + [''], ' - ')])
     endif
   else
-    redraw!
+    normal! :
     echohl Comment
-    echo   join(keys, ' - ') . ' is undefined'
+    echon   join(keys, ' - ') . ' is undefined'
     echohl NONE
     let defined = 0
   endif
@@ -63,7 +63,7 @@ function! SpaceVim#plugins#help#describe_key() abort
       let root = root[name]
       if type(root) == 3
         if len(root) == 3
-          redraw!
+          call s:build_mpt([prompt, join(keys, ' - ')])
           call s:open_describe_buffer(root[-1])
         else
           call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
@@ -73,9 +73,9 @@ function! SpaceVim#plugins#help#describe_key() abort
         call s:build_mpt([prompt, join(keys + [''], ' - ')])
       endif
     else
-      redraw!
+      normal! :
       echohl Comment
-      echo   join(keys, ' - ') . ' is undefined'
+      echon   join(keys, ' - ') . ' is undefined'
       echohl NONE
       let defined = 0
     endif
@@ -83,12 +83,12 @@ function! SpaceVim#plugins#help#describe_key() abort
 endfunction
 
 function! s:build_mpt(mpt) abort
-  redraw!
+  normal! :
   echohl Comment
   if type(a:mpt) == 1
-    echo a:mpt
+    echon a:mpt
   elseif type(a:mpt) == 3
-    echo join(a:mpt)
+    echon join(a:mpt)
   endif
   echohl NONE
 endfunction

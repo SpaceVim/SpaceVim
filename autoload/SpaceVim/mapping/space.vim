@@ -200,7 +200,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap',
         \ ['swap window',
         \ [
-        \ '[SPC w m] is to swap window',
+        \ '[SPC w M] is to swap window',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
