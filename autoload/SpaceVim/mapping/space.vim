@@ -146,14 +146,46 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'],
-        \ 'wincmd H', 'window-far-left', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'],
-        \ 'wincmd J', 'window-far-down', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'],
-        \ 'wincmd K', 'window-far-up', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'],
-        \ 'wincmd L', 'window-far-right', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'], 'wincmd H',
+        \ ['window-far-left',
+        \ [
+        \ '[SPC w H] is to jump to the far left window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J',
+        \ ['window-far-down',
+        \ [
+        \ '[SPC w J] is to jump to the far down window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K',
+        \ ['window-far-up',
+        \ [
+        \ '[SPC w K] is to jump to the far up window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L',
+        \ ['window-far-right',
+        \ [
+        \ '[SPC w L] is to jump to the far right window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'],
         \ 'only', 'maximize/minimize window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
