@@ -186,10 +186,26 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'],
-        \ 'only', 'maximize/minimize window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
-        \ 'ChooseWinSwap', 'swap window', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'only',
+        \ ['maximize/minimize window',
+        \ [
+        \ '[SPC w m] is to maximize/minimize window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap',
+        \ ['swap window',
+        \ [
+        \ '[SPC w m] is to swap window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'],
         \ 'tabnext', 'other tabs', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '/'],
