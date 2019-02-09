@@ -17,7 +17,7 @@ description: "This layer is for TypeScript development, includding code completi
 
 ## Description
 
-This layer is for TypeScript development, includding code completion, Syntax lint, and doc generation.
+This layer is for TypeScript development, includding code completion, Syntax lint and doc generation.
 
 ## Install
 
@@ -50,16 +50,16 @@ npm install -g typescript
 
 ## Key bindings
 
-| key binding | Description        |
-| ----------- | ------------------ |
-| `SPC l c`   | type definition    |
-| `SPC l d`   | show documentation |
-| `SPC l e`   | rename symbol      |
-| `SPC l f`   | code fix           |
-| `SPC l g`   | definition         |
-| `SPC l i`   | import             |
-| `SPC l r`   | references         |
-| `SPC l s`   | search             |
-| `SPC l t`   | type               |
-| `SPC l g d` | generate doc       |
-| `g d`       | defintion preview  |
+| Key Bindings | Descriptions       |
+| ------------ | ------------------ |
+| `SPC l c`    | type definition    |
+| `SPC l d`    | show documentation |
+| `SPC l e`    | rename symbol      |
+| `SPC l f`    | code fix           |
+| `SPC l g`    | definition         |
+| `SPC l i`    | import             |
+| `SPC l r`    | references         |
+| `SPC l s`    | search             |
+| `SPC l t`    | type               |
+| `SPC l g d`  | generate doc       |
+| `g d`        | defintion preview  |

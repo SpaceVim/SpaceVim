@@ -69,7 +69,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ### 证书
 
-SpaceVim 所有部分采用 MIT 许可。
+SpaceVim 所有部分采用 GPLv3 许可。
 
 - 初始化及核心代码
 - 所有模块相关文件
@@ -278,19 +278,19 @@ If you contribute to an already existing layer, you should not modify any header
 
 ##### 特定语言的按键绑定
 
-所有语言的特殊按键绑定都是以 `SPC l`前缀开始的。
+所有语言的专属按键绑定都是以 `SPC l`前缀开始的。
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| SPC l r     | start a runner for current file                  |
-| SPC l e     | rename symbol                                    |
-| SPC l d     | show doc                                         |
-| SPC l i r   | remove unused imports                            |
-| SPC l i s   | sort imports with isort                          |
-| SPC l s i   | Start a language specified inferior REPL process |
-| SPC l s b   | send buffer and keep code buffer focused         |
-| SPC l s l   | send line and keep code buffer focused           |
-| SPC l s s   | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l r`    | start a runner for current file                  |
+| `SPC l e`    | rename symbol                                    |
+| `SPC l d`    | show doc                                         |
+| `SPC l i r`  | remove unused imports                            |
+| `SPC l i s`  | sort imports with isort                          |
+| `SPC l s i`  | Start a language specified inferior REPL process |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 上面所有的按键绑定都是默认的建议，但是它同样是基于自身的语言层的。
 

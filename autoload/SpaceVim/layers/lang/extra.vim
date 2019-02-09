@@ -9,7 +9,7 @@
 
  function! SpaceVim#layers#lang#extra#plugins() abort
     let plugins = [
-                \ ['digitaltoad/vim-jade',                   { 'on_ft' : ['jade']}],
+                \ ['digitaltoad/vim-pug',                    { 'on_ft' : ['pug', 'jade']}],
                 \ ['juvenn/mustache.vim',                    { 'on_ft' : ['mustache']}],
                 \ ['kchmck/vim-coffee-script',               { 'on_ft' : ['coffee']}],
                 \ ['PotatoesMaster/i3-vim-syntax',           { 'on_ft' : 'i3'}],

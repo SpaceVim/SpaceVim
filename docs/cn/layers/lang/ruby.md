@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#ruby 模块"
-description: "这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 Ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -21,7 +21,7 @@ lang: cn
 
 ## 模块描述
 
-这一模块为 SpaceVim 提供了 ruby 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 Ruby 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 依赖安装及启用模块
 
@@ -36,7 +36,7 @@ lang: cn
 
 ### 依赖安装
 
-为了启用 ruby 语法检查和代码格式化，需要安装 [cobocop](https://github.com/bbatsov/rubocop).
+为了启用 Ruby 语法检查和代码格式化，需要安装 [cobocop](https://github.com/bbatsov/rubocop)。
 
 ```sh
 gem install rubocop
@@ -50,7 +50,7 @@ gem install rubocop
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                    |
+| 快捷键      | 功能描述                |
 | ----------- | ----------------------- |
 | `SPC l s b` | 发送整个文件内容至 REPL |
 | `SPC l s l` | 发送当前行内容至 REPL   |
@@ -64,4 +64,4 @@ gem install rubocop
 
 ### 运行当前脚本
 
-在编辑 ruby 文件是，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
+在编辑 Ruby 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。

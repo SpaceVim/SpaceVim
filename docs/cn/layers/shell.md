@@ -57,7 +57,7 @@ The default shell is quickly accessible via a the default shortcut key `SPC '`.
 
 ## 快捷键
 
-| 按键     | 描述                               |
+| 快捷键   | 功能描述                           |
 | -------- | ---------------------------------- |
 | `SPC '`  | 打开或跳至已打开的终端窗口         |
 | `Ctrl-d` | 输入模式下关闭终端窗口             |

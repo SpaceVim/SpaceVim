@@ -21,7 +21,7 @@ lang: cn
 ## 功能特性
 
 - 语法高亮
-- lsp 支持（需要 [lsp](../../language-server-protocol/) 模块）
+- LSP 支持（需要 [lsp](../../language-server-protocol/) 模块）
 
 ## 启用模块
 
