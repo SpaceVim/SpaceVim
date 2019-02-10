@@ -55,6 +55,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - `}`: align `}`
 - `)`: align `)`
 - `[SPC]`: align `[SPC]`
+- `o`: align `+ - * / % ^` etc.
 
 | Key bindings | Descraptions                         |
 | ------------ | ------------------------------------ |
