@@ -206,16 +206,56 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'],
-        \ 'tabnext', 'other tabs', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'],
-        \ 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'],
-        \ 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'],
-        \ 'bel split | wincmd w', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'],
-        \ 'bel split | wincmd w', 'split-window-below', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext',
+        \ ['other tabs',
+        \ [
+        \ '[SPC w o] is to switch to next tabs',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'belowright vsplit | wincmd w',
+        \ ['split-windows-right',
+        \ [
+        \ '[SPC w /] is to split windows on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'belowright vsplit | wincmd w',
+        \ ['split-windows-right',
+        \ [
+        \ '[SPC w v] is to split windows on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w',
+        \ ['split-windows-below',
+        \ [
+        \ '[SPC w -] is to split windows below',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w',
+        \ ['split-windows-below',
+        \ [
+        \ '[SPC w s] is to split windows below',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'],
         \ 'bel split', 'split-focus-window-below', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '2'],
