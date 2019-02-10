@@ -63,7 +63,7 @@ function! SpaceVim#plugins#help#describe_key() abort
       let root = root[name]
       if type(root) == 3
         if len(root) == 3
-          call s:build_mpt([prompt, join(keys, ' - ')])
+          normal! :
           call s:open_describe_buffer(root[-1])
         else
           call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
