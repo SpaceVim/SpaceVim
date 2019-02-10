@@ -28,6 +28,7 @@ lang: cn
 - 代码补全
 - 语法高亮
 - 文档查询
+- 拼写检查
 
 ## 启用模块
 
@@ -37,6 +38,8 @@ lang: cn
 [[layers]]
   name = "lang#latex"
 ```
+
+若需要拼写检查功能，可以安装 [proselint](http://proselint.com/)，checkers 模块将后台运行该工具进行拼写检查。
 
 ## 快捷键
 

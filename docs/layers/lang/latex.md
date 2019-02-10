@@ -23,6 +23,7 @@ This layer is for LaTex development. [vimtex](https://github.com/lervag/vimtex) 
 - Code completion
 - Syntax highlighting
 - Syntax lint
+- English grammar checker
 
 ## Install
 
@@ -32,6 +33,8 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#latex"
 ```
+
+To enable grammar checker, you need to install [proselint](http://proselint.com/) which will be used by checkers layer.
 
 ## Key bindings
 
