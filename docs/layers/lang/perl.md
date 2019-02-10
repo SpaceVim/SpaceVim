@@ -50,7 +50,7 @@ within Perl doc windows, you can use `s` to toggle source code and the documenta
 
 ### Inferior REPL process
 
-Start a `perl` inferior REPL process with `SPC l s i`.
+Start a `perl -del` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
