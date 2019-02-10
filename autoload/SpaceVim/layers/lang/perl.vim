@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+" let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#lang#perl#plugins() abort
   let plugins = []
@@ -23,7 +24,11 @@ function! SpaceVim#layers#lang#perl#config() abort
         \ 'usestdin' : 1,
         \ })
   call SpaceVim#mapping#space#regesit_lang_mappings('perl', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#repl#reg('perl', ['perl', '-de1'])
+  " if executable('perli')
+    " call SpaceVim#plugins#repl#reg('perl', ['perli'. (s:SYS.isWindows ? '.CMD' : '')])
+  " else
+    call SpaceVim#plugins#repl#reg('perl', ['perl', '-de1'])
+  " endif
 endfunction
 function! s:language_specified_mappings() abort
   nnoremap <silent><buffer> K :Perldoc<CR>
