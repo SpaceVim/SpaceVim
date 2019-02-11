@@ -34,8 +34,19 @@ function! s:open_win() abort
         \ nomodifiable
   set filetype=SpaceVimRunner
   nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
+  nnoremap <silent><buffer> i :call <SID>insert()<cr>
   let s:bufnr = bufnr('%')
   wincmd p
+endfunction
+
+function! s:insert() abort
+  call inputsave()
+  let input = input('input >')
+  if !empty(input) && s:status.is_running == 1
+    call s:JOB.send(s:job_id, input)
+  endif
+  normal! :
+  call inputrestore()
 endfunction
 
 let s:target = ''
@@ -129,6 +140,14 @@ function! s:async_run(runner) abort
       call s:JOB.chanclose(s:job_id, 'stdin')
     endif
   endif
+  if s:job_id > 0
+    let s:status = {
+          \ 'is_running' : 1,
+          \ 'is_exit' : 0,
+          \ 'has_errors' : 0,
+          \ 'exit_code' : 0
+          \ }
+  endif
 endfunction
 
 " @vimlint(EVL103, 1, a:id)
@@ -141,14 +160,22 @@ function! s:on_compile_exit(id, data, event) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    if s:job_id > 0
+      let s:status = {
+            \ 'is_running' : 1,
+            \ 'is_exit' : 0,
+            \ 'has_errors' : 0,
+            \ 'exit_code' : 0
+            \ }
+    endif
   else
     let s:end_time = reltime(s:start_time)
     let s:status.is_exit = 1
     let s:status.exit_code = a:data
     let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
-    call s:update_statusline()
   endif
+  call s:update_statusline()
 endfunction
 " @vimlint(EVL103, 0, a:id)
 " @vimlint(EVL103, 0, a:data)
@@ -179,12 +206,13 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
-  let s:selected_language = get(s:, 'selected_language', &filetype)
-  let runner = get(a:000, 0, get(s:runners, empty(s:selected_language) ? &filetype : s:selected_language , ''))
+  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner)
     call s:update_statusline()
+  else
+    let s:selected_language = get(s:, 'selected_language', '')
   endif
 endfunction
 
