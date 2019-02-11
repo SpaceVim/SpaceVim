@@ -1568,7 +1568,7 @@ Text related commands (start with `x`):
 | `SPC x a ;`     | align region at ;                                                    |
 | `SPC x a =`     | align region at =                                                    |
 | `SPC x a ¦`     | align region at ¦                                                    |
-| `SPC x a |`     | align region at |                                                    |
+| `SPC x a |`     | align region at \|                                                   |
 | `SPC x a [SPC]` | align region at [SPC]                                                |
 | `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |

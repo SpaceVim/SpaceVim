@@ -1279,7 +1279,7 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 应当避免的范围和对应按键为：
 
 | 范围           | 键  |
-| -------------  | --- |
+| -------------- | --- |
 | 打开的缓冲区   | b   |
 | 给定目录的文件 | f   |
 | 当前工程       | p   |
@@ -1534,7 +1534,7 @@ In highlight symbol transient state:
 | `SPC x a ;`     | align region at ;                                                    |
 | `SPC x a =`     | align region at =                                                    |
 | `SPC x a ¦`     | align region at ¦                                                    |
-| `SPC x a |`     | align region at |                                                    |
+| `SPC x a |`     | align region at \|                                                   |
 | `SPC x a [SPC]` | align region at [SPC]                                                |
 | `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
