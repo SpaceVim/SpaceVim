@@ -35,7 +35,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 ## Key bindings
 
 | Key bindings          | Descraptions                     |
-| --------------------  | -------------------------------  |
+| --------------------  | -------------------------------- |
 | `SPC x a {delimiter}` | align content based on delimiter |
 
 **default delimiters**
@@ -43,6 +43,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - `=`: align `===`, `==`, `!=`, `>=` etc.
 - `&`: align `&`
 - `¦`: align `¦`
+- `|`: align `|`
 - `;`: align `;`
 - `:`: align `:`
 - `,`: align `,`
@@ -53,9 +54,13 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - `]`: align `]`
 - `}`: align `}`
 - `)`: align `)`
+- `[SPC]`: align `[SPC]`
+- `o`: align `+ - * / % ^` etc.
 
-| Key bindings | Descraptions                    |
-| ------------ | ------------------------------- |
-| `SPC x j c`  | set the justification to center |
-| `SPC x j l`  | set the justification to left   |
-| `SPC x j r`  | set the justification to right  |
+| Key bindings | Descraptions                         |
+| ------------ | ------------------------------------ |
+| `SPC x j c`  | set the justification to center      |
+| `SPC x j f`  | set the justification to full (TODO) |
+| `SPC x j l`  | set the justification to left        |
+| `SPC x j n`  | set the justification to none (TODO) |
+| `SPC x j r`  | set the justification to right       |
