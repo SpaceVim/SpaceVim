@@ -61,9 +61,24 @@ function! s:async_run(runner) abort
     " the runner is a list
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
-    let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    if type(a:runner[0]) == type({})
+      if type(a:runner[0].exe) == 2
+        let exe = call(a:runner[0].exe, [])
+      elseif type(a:runner[0].exe) ==# type('')
+        let exe = [a:runner[0].exe]
+      endif
+      let usestdin = get(a:runner[0], 'usestdin', 0)
+      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [s:target]
+      if usestdin
+        let compile_cmd = compile_cmd + a:runner[0].opt
+      else
+        let compile_cmd = compile_cmd + a:runner[0].opt + [get(s:, 'selected_file', bufname('%'))]
+      endif
+    else
+      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
-          \ '[Compile] ' . compile_cmd,
+          \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
@@ -74,6 +89,11 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
+    if usestdin
+      let range = get(a:runner[0], 'range', [1, '$'])
+      call s:JOB.send(s:job_id, call('getline', range))
+      call s:JOB.chanclose(s:job_id, 'stdin')
+    endif
   elseif type(a:runner) == type({})
     " the runner is a dict
     " keys:
