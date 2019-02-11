@@ -11,6 +11,7 @@
 " @parentsection layers
 " This layer is for kotlin development. 
 
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#lang#kotlin#plugins() abort
   let plugins = []
@@ -33,6 +34,13 @@ function! SpaceVim#layers#lang#kotlin#config() abort
     let g:neomake_kotlin_enabled_makers = ['kotlinc']
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
+  let runner = {
+        \ 'exe' : 'kotlinc'. (s:SYS.isWindows ? '.BAT' : ''),
+        \ 'targetopt' : '-o',
+        \ 'opt' : [],
+        \ 'usestdin' : 0,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -44,6 +52,7 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 func! s:classpath() abort
 
