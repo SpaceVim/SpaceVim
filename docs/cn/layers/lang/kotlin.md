@@ -11,20 +11,22 @@ lang: cn
 - [模块简介](#模块简介)
 - [功能特性](#功能特性)
 - [启用模块](#启用模块)
+- [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
-## 模块简介
+### 模块简介
 
 该模块为 SpaceVim 提供了 Kotlin 语言开发支持。
 
-## 功能特性
+### 功能特性
 
 - 语法高亮
 - 语言服务器支持（需要启用 [lsp](https://spacevim.org/layers/language-server-protocol/) 模块）
+- 一键运行
+- 交互式编程
 
-
-## 启用模块
+### 启用模块
 
 可通过在配置文件内加入如下配置来启用该模块：
 
@@ -35,4 +37,8 @@ lang: cn
 
 若需要启用语言服务器支持，需要额外安装 Kotlin 的语言服务器 [KotlinLanguageServer](https://github.com/fwcd/KotlinLanguageServer)。
 
+### 快捷键
 
+| 按键      | 功能描述         |
+| --------- | ---------------- |
+| `SPC l r` | 一键运行当前文件 |

@@ -41,6 +41,7 @@ function! SpaceVim#layers#lang#kotlin#config() abort
         \ 'usestdin' : 0,
         \ }
   call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
+  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : '')])
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -53,6 +54,19 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("kotlin")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 func! s:classpath() abort
 

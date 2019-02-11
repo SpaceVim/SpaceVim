@@ -21,6 +21,8 @@ This layer adds Kotlin language support to SpaceVim.
 
 - syntax highlighting
 - lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
+- code runner
+- REPL support
 
 ## Install
 
