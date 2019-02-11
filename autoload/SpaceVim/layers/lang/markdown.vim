@@ -125,6 +125,10 @@ function! s:run_code_in_block() abort
       let runner['usestdin'] = 1
       let runner['range'] = [cf['range'][0][0], cf['range'][1][0]]
       call SpaceVim#plugins#runner#open(runner)
+    elseif type(runner) ==# 3 && type(runner[0]) == 4
+      let runner[0]['usestdin'] = 1
+      let runner[0]['range'] = [cf['range'][0][0], cf['range'][1][0]]
+      call SpaceVim#plugins#runner#open(runner)
     endif
   endif
 endfunction
