@@ -39,6 +39,12 @@ lang: cn
   name = "lang#perl"
 ```
 
+为了更好的体验 perl 的交互式编程，可以安装 `perli`：
+
+```sh
+npm install -g perli
+```
+
 ## 快捷键
 
 ### 语言专属快捷键
@@ -49,7 +55,8 @@ lang: cn
 
 ### 交互式编程
 
-启动 `perl -del` 交互进程，快捷键为： `SPC l s i`。
+启动 `perli` 或者 `perl -del` 交互进程，快捷键为：`SPC l s i`。
+当 `perli` 已安装时，则默认使用 `perli` 作为交互式编程后台命令。
 
 将代码传输给 REPL 进程执行：
 

@@ -38,6 +38,12 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#perl"
 ```
 
+To enable REPL support for perl, you may also need to install `perli`.
+
+```sh
+npm install -g perli
+```
+
 ## Key bindings
 
 ### Find documentation
