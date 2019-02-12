@@ -57,10 +57,10 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 使用 cpan 安装 perlcritic 命令：
 
 ```sh
-cpan Perl::Critic
+cpanm Perl::Critic
 ```
 
-![luac](https://user-images.githubusercontent.com/13142418/51438866-b8cfda80-1cec-11e9-8645-b43fc6481e42.png)
+![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
 
 ### 工程文件跳转
 
@@ -86,12 +86,13 @@ perl 代码格式化，主要依赖 `format` 模块，同时需要安装相关�
 使用 cpan 安装 perltidy：
 
 ```sh
-cpan Perl::Tidy
+cpanm Perl::Tidy
 ```
+
+![perlformat](https://user-images.githubusercontent.com/13142418/52614978-71dd9b00-2ece-11e9-884d-a5c2328b53ae.gif)
 
 ### 交互式编程
 
 在编辑 perl 文件时，可通过快捷键 `SPC l s i` 启动 `perli` 或者 `perl -del` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 ![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
-
