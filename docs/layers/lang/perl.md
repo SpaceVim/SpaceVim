@@ -50,7 +50,8 @@ within Perl doc windows, you can use `s` to toggle source code and the documenta
 
 ### Inferior REPL process
 
-Start a `perl -del` inferior REPL process with `SPC l s i`.
+Start a `perli` or `perl -del` inferior REPL process with `SPC l s i`.
+If `perli` is available in system executable search paths, it will be used to launch perl shell.
 
 Send code to inferior process commands:
 
@@ -59,6 +60,7 @@ Send code to inferior process commands:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
+
 
 ### Running current script
 

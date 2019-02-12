@@ -24,11 +24,11 @@ function! SpaceVim#layers#lang#perl#config() abort
         \ 'usestdin' : 1,
         \ })
   call SpaceVim#mapping#space#regesit_lang_mappings('perl', function('s:language_specified_mappings'))
-  " if executable('perli')
-    " call SpaceVim#plugins#repl#reg('perl', ['perli'. (s:SYS.isWindows ? '.CMD' : '')])
-  " else
+  if executable('perli')
+    call SpaceVim#plugins#repl#reg('perl', ['perli'. (s:SYS.isWindows ? '.CMD' : '')])
+  else
     call SpaceVim#plugins#repl#reg('perl', ['perl', '-del'])
-  " endif
+  endif
 endfunction
 function! s:language_specified_mappings() abort
   nnoremap <silent><buffer> K :Perldoc<CR>
