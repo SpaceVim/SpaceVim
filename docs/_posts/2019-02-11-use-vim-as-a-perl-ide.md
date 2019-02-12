@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Perl 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
+image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Perl 的开发环境，简介 lang#perl 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: cn
@@ -70,17 +70,17 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 
 ### 代码格式化
 
-lua 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 luaformatter：
+perl 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 perltidy，默认快捷键为 `SPC b f`：
 
 ```toml
 [[layers]]
   name = "format"
 ```
 
-安装 luaformatter：
+使用 cpan 安装 perltidy：
 
 ```sh
-luarocks install formatter
+cpan Perl::Tidy
 ```
 
 ### 交互式编程
