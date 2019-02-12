@@ -121,7 +121,7 @@ git rebase upstream/master
 ```
 #### 抽象化的简单 PRs（绝大多数 PRs 都是这样的）：
 
-- 'master'中的分支
+- `master`中的分支
 - 每个 PR 一个主题
 - 每个 PR 一个提交
 - 如果你有一些不同主题的提交，请关闭 PR 然后为每个主题创建一个新的 PR
@@ -131,7 +131,7 @@ git rebase upstream/master
 
 只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
 Those PRs are merged and explicitly not fast-forwarded.
-这些 PRs 被合并并且非明试快速转发。
+这些 PRs 被合并并且明示非快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
 
@@ -278,7 +278,7 @@ If you contribute to an already existing layer, you should not modify any header
 
 ##### 特定语言的按键绑定
 
-所有语言的专属按键绑定都是以 `SPC l`前缀开始的。
+所有语言的专属按键绑定都是以`SPC l`前缀开始的。
 
 | Key Bindings | Descriptions                                     |
 | ------------ | ------------------------------------------------ |
