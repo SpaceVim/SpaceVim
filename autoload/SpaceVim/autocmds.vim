@@ -113,6 +113,10 @@ function! s:generate_doc() abort
   endif
 endfunction
 
+function! s:remove_crlf() abort
+  
+endfunction
+
 function! s:fix_VertSplit() abort
   if &background ==# 'dark'
     if g:colors_name ==# 'gruvbox'
