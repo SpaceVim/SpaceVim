@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-" let s:SYS = SpaceVim#api#import('system')
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#lang#perl#plugins() abort
   let plugins = []
