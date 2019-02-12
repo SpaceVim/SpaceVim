@@ -88,9 +88,26 @@ function! SpaceVim#layers#lang#c#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#c#config() abort
-  call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
+  call SpaceVim#mapping#gd#add('c',
+        \ function('s:go_to_def'))
+  call SpaceVim#mapping#gd#add('cpp',
+        \ function('s:go_to_def'))
+  " TODO: add stdin suport flex -t lexer.l | gcc -o lexer.o -xc -
+  let runner1 = {
+        \ 'exe' : 'gcc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-xc', '-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('cpp', ['g++ -o #TEMP# %s', '#TEMP#'])
+  let runner2 = {
+        \ 'exe' : 'g++',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-xc++', '-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('cpp', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
   if executable('clang')
@@ -130,6 +147,8 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
+          \ 'call SpaceVim#lsp#references()', 'references', 1)
   endif
 endfunction
 
@@ -194,3 +213,10 @@ function! s:update_neoinclude(argv, fts) abort
   let b:neoinclude_paths = path
 endfunction
 
+function! s:go_to_def() abort
+  if !SpaceVim#layers#lsp#check_filetype(&ft)
+    execute "norm! g\<c-]>"
+  else
+    call SpaceVim#lsp#go_to_def()
+  endif
+endfunction

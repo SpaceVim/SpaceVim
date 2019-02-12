@@ -30,7 +30,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## formatting
 
-SpaceVim use remark to formatting markdown file, so you need to install this program. you can install it via npm:
+SpaceVim use remark to formatting markdown file, so you need to install this program. You can install it via npm:
 
 ```sh
 npm -g install remark
@@ -56,11 +56,10 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
-
 ## Key bindings
 
-| Key        | mode   | description                |
-| ---------- | ------ | -------------------------- |
-| `SPC b f`  | Normal | Format current buffer      |
-| `SPC l ft` | Normal | Format table under cursor  |
-| `SPC l p`  | Normal | Real-time markdown preview |
+| Key bindings | mode   | Descriptions               |
+| ------------ | ------ | -------------------------- |
+| `SPC b f`    | Normal | Format current buffer      |
+| `SPC l ft`   | Normal | Format table under cursor  |
+| `SPC l p`    | Normal | Real-time markdown preview |

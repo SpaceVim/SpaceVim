@@ -1,11 +1,11 @@
 ---
 title: "SpaceVim core#tabline 模块"
-description: "SpaceVim core#tabline layer provides a better tabline for SpaceVim"
+description: "这一模块为 SpaceVim 提供了更好的标签栏。"
 lang: cn
 ---
 
 # [可用模块](../) >> core#tabline
- 
+
 <!-- vim-markdown-toc GFM -->
 
 - [模块简介](#模块简介)
@@ -22,10 +22,10 @@ lang: cn
 
 ## 相关选项
 
-以下均为 SpaceVim 选项，不同于模块选项，需要写在 `[options]` 下面：
+以下均为 SpaceVim 选项，不同于模块选项，这些选项需要写在 `[options]` 下面：
 
 - `enable_tabline_filetype_icon`：展示或者隐藏标签栏上的文件类型图标，需要安装 nerd 字体。默认开启的，
-若需要禁用，可将其值设为 `false`
+若需要禁用，可将其值设为 `false`。
 
 ```toml
 [options]
@@ -34,4 +34,4 @@ lang: cn
 
 ## 快捷键
 
-所有的标签栏相关的快捷键可以在[《使用文档》](../../../documentation/#标签栏)中查询到。
+所有与标签栏相关的快捷键可以在[《使用文档》](../../../documentation/#标签栏)中查询到。

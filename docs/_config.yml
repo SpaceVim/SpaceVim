@@ -4,7 +4,7 @@ description: A community-driven vim distribution
 show_downloads: false
 google_analytics: UA-89745542-1
 gitment_client_id: 8f0cd1f544d1e4219798
-gitment_client_secret: a673bd197859abb8f0157b91eedf85bcbc7e4f61
+gitment_client_secret: b8ac9c26cc5ab8cff84adda7a491ba24ca869688
 project_repo_url: https://github.com/SpaceVim/SpaceVim
 url: https://spacevim.org
 logo: https://spacevim.org/SpaceVim.png
@@ -42,4 +42,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png
+      image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png

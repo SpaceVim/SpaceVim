@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#dockerfile 模块"
-description: "这一模块为 dockerfile 的编辑提供了部分功能支持，包括语法高亮和自动补全。"
+description: "这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 dockerfile 的编辑提供了部分功能支持，包括语法高亮和自动补全。
+这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。
 
 ## 功能特性
 
@@ -32,7 +32,7 @@ lang: cn
   name = "lang#dockerfile"
 ```
 
-若需要启用语言服务器支持，需要额外安装 dockerfile 的语言服务器 [dockerfile-language-server-nodejs](https://github.com/rcjsuen/dockerfile-language-server-nodejs)。
+若需要启用语言服务器支持，需要额外安装 Dockerfile 的语言服务器 [dockerfile-language-server-nodejs](https://github.com/rcjsuen/dockerfile-language-server-nodejs)。
 
 ```sh
 npm install -g dockerfile-language-server-nodejs

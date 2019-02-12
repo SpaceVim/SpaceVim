@@ -60,7 +60,7 @@ function! s:pop(list) abort
     return remove(a:list, -1)
 endfunction
 
-function! s:listpart(list, start, ...)
+function! s:listpart(list, start, ...) abort
   let idx = range(a:start, a:start + get(a:000, 0, 0))
   let rst = []
   for i in idx
@@ -140,7 +140,7 @@ function! s:has_index(list, index) abort
     return 0 <= a:index && a:index < len(a:list)
 endfunction
 
-function! s:replace(list, begin, end, re_list)
+function! s:replace(list, begin, end, re_list) abort
   if a:begin <= a:end && a:begin >= 0 && a:end < len(a:list)
     return a:list[:a:begin - 1] + a:re_list + a:list[a:end + 1:]
   else

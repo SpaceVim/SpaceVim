@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#swift 模块"
-description: "该模块主要为 SpaceVim 提供了 swift 开发支持，包括语法高亮、语法检查等特性。"
+description: "这一模块为 SpaceVim 提供了 Swift 的开发支持，包括语法高亮、语法检查等特性。"
 lang: cn
 ---
 
@@ -17,7 +17,7 @@ lang: cn
 
 ## 模块简介
 
-该模块主要为 SpaceVim 提供了 swift 开发支持。
+这一模块为 SpaceVim 提供了 Swift 的开发支持，包括语法高亮、语法检查等特性。
 
 ## 功能特性
 
@@ -35,6 +35,6 @@ lang: cn
 
 ## 快捷键
 
-| 按键      | 功能描述                 |
+| 快捷键      | 功能描述                |
 | ----------- | ----------------------- |
 | `SPC l k`   | jumping to placeholders |

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#elm 模块"
-description: "这一模块为 elm 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 SpaceVim 提供了 Elm 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
 image: https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png
 lang: cn
 ---
@@ -22,7 +22,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 elm 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 Elm 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 功能特性
 
@@ -32,7 +32,7 @@ lang: cn
 - 语法检查
 - 文档查询
 
-同时，SpaceVim 还为 elm 开发提供了交互式编程。
+同时，SpaceVim 还为 Elm 开发提供了交互式编程。
 
 ## 依赖安装及启用模块
 
@@ -75,7 +75,7 @@ npm install -g elm-format
 
 ### 语言专属快捷键
 
-| 快捷键          | 描述                   |
+| 快捷键          | 功能描述               |
 | --------------- | ---------------------- |
 | `SPC l d` / `K` | 查询光标下符号的文档   |
 | `SPC l m`       | 编译当前文档           |
@@ -91,7 +91,7 @@ npm install -g elm-format
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                    |
+| 快捷键      | 功能描述                |
 | ----------- | ----------------------- |
 | `SPC l s b` | 发送整个文件内容至 REPL |
 | `SPC l s l` | 发送当前行内容至 REPL   |

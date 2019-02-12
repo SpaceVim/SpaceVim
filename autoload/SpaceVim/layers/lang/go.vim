@@ -68,6 +68,7 @@ function! SpaceVim#layers#lang#go#config() abort
     call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
 endfunction
 
 function! s:go_to_def() abort
@@ -139,7 +140,5 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
         \ ':GoFreevars',
         \ 'freevars', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'],
-        \ '<Plug>(go-run)',
-        \ 'go run', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction

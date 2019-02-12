@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim floobits 模块"
-description: "该模块为 SpaceVim 提供了 floobits 协作工具的支持，实现多人协作编辑等功能。"
+description: "这一模块为 SpaceVim 提供了 floobits 协作工具的支持，实现多人协作编辑等功能。"
 lang: cn
 ---
 
@@ -17,7 +17,7 @@ lang: cn
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了多人协作工具 floobits 的支持，该模块目前仅支持在 neovim 下正常工作。
+该模块为 SpaceVim 提供了多人协作工具 floobits 的支持，该模块目前仅支持在 Neovim 下正常工作。
 
 
 ## 功能特性
@@ -38,7 +38,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键      | 功能描述                 |
+| 快捷键       | 功能描述                                                  |
 | ------------ | --------------------------------------------------------- |
 | `SPC m f j`  | Join workspace                                            |
 | `SPC m f t`  | Toggle follow mode                                        |

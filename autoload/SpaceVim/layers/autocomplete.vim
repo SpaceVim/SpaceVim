@@ -26,6 +26,7 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
@@ -62,6 +63,12 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+  elseif g:spacevim_autocomplete_method ==# 'coc'
+    if s:SYS.isWindows
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.cmd'}])
+    else
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
+    endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
@@ -179,6 +186,7 @@ let s:return_key_behavior = 'smart'
 let s:tab_key_behavior = 'smart'
 let s:key_sequence = 'nil'
 let s:key_sequence_delay = 0.1
+let g:_spacevim_autocomplete_delay = 50
 
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
@@ -194,7 +202,8 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
   let s:key_sequence_delay = get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
         \ 0.1)
-  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 50)
+  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 
+        \ g:_spacevim_autocomplete_delay)
 
 endfunction
 
@@ -209,7 +218,7 @@ endfunction
 
 function! SpaceVim#layers#autocomplete#getprfile() abort
 
-  
+
 
 endfunction
 

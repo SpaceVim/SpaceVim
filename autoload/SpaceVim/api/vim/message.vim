@@ -46,6 +46,8 @@ function! s:self.confirm(msg) abort
     echon a:msg . '? (y or n) '
     echohl NONE
     let rst = nr2char(getchar())
+    " clear the cmdline
+    redraw!
     if rst =~? 'y' || rst == nr2char(13)
         return 1
     else

@@ -15,7 +15,7 @@ description: "SpaceVim default layer contains no plugins, but It provides some b
 
 ## Description
 
-SpaceVim default layer contains none plugins, but it has some better default config for vim and neovim.
+SpaceVim default layer contains no plugins, but it has some better default config for vim and neovim.
 
 ## Install
 

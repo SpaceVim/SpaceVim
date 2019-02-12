@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim tmux 模块"
-description: "该模块主要提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。"
+description: "这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。"
 lang: cn
 ---
 
@@ -37,16 +37,23 @@ lang: cn
 
 ## 模块选项
 
-- `tmuxline_separators`: default value is same as SpaceVim options `statusline_separator`, available
-  values include: `arrow`, `curve`, `slant`, `barce`, `fire`, `nil`.
-- `tmuxline_separators_alt`: default value is same as SpaceVim options `statusline_inactive_separator`
-  available values include: `arrow`, `bar`, `nil`.
+- `tmuxline_separators`: 设置 tmux 的主要分隔符，默认等同于 SpaceVim 的 `statusline_separator`, 可选值包括：`arrow`, `curve`, `slant`, `barce`, `fire`, `nil`
+- `tmuxline_separators_alt`: 设置 tmux 的分隔符，默认等同于 SpaceVim 的 `statusline_inactive_separator`，可选值包括：`arrow`, `bar`, `nil`
+- `tmux_navigator_modifier`: 设置 tmux 的移动快捷键，默认是 `ctrl`，可选值包括：`alt`, `ctrl`
 
 ## 快捷键
 
-| 按键     | 功能描述                                   |
+| 快捷键   | 功能描述                                   |
 | -------- | ------------------------------------------ |
 | `Ctrl-h` | Switch to vim/tmux pane in left direction  |
 | `Ctrl-j` | Switch to vim/tmux pane in down direction  |
 | `Ctrl-k` | Switch to vim/tmux pane in up direction    |
 | `Ctrl-l` | Switch to vim/tmux pane in right direction |
+
+若要使用 `alt` 键作为快捷键前缀，可以设置模块选项：
+
+```toml
+[[layers]]
+  name = "tmux"
+  tmux_navigator_modifier = "alt"
+```

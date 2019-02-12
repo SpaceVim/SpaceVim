@@ -68,11 +68,11 @@ let s:time = {
       \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
       \ }
 
-for n in range(1, 23)
-  call extend(s:time, {n . 'h' : n * 60 * 60 * 1000})
+for s:n in range(1, 23)
+  call extend(s:time, {s:n . 'h' : s:n * 60 * 60 * 1000})
 endfor
 
-unlet n
+unlet s:n
 
 let s:random_colorscheme = 0
 let s:random_frequency = ''
@@ -83,6 +83,8 @@ function! SpaceVim#layers#colorscheme#config() abort
     " Use local file's save time, the local file is
     " ~/.cache/SpaceVim/colorscheme_frequence.json
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
+    " FIXME: when global config cache is updated, check the cache also should
+    " be updated
     if filereadable(expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
       let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)

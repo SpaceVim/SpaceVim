@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+
+let s:SYS = SpaceVim#api#import('system')
+let s:JOB = SpaceVim#api#import('job')
+
+
 "autocmds
 function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
@@ -15,7 +20,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
           \   bd|
           \   q | endif
-    autocmd FileType jsp call JspFileTypeInit()
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
@@ -32,15 +36,13 @@ function! SpaceVim#autocmds#init() abort
           \   exe "normal! g`\"" |
           \ endif
     autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+    autocmd WinLeave * let b:_winview = winsaveview()
+    autocmd WinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
-    autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-    autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
-    autocmd FileType lua set comments=f:--
-    autocmd FileType xml call XmlFileTypeInit()
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+    autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
+    autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
@@ -102,8 +104,12 @@ function! s:fixindentline() abort
   endif
 endfunction
 function! s:generate_doc() abort
-  if filereadable('./addon-info.json') && executable('vimdoc')
-    call SpaceVim#api#import('job').start(['vimdoc', '.'])
+  " neovim in windows executable function is broken
+  " https://github.com/neovim/neovim/issues/9391
+  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
+    call s:JOB.start(['vimdoc', '.'])
+  elseif filereadable('./addon-info.json') && executable('python')
+    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
   endif
 endfunction
 
@@ -161,6 +167,8 @@ function! SpaceVim#autocmds#VimEnter() abort
       call call(g:_spacevim_bootstrap_after, [])
     catch
       call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+      call SpaceVim#logger#error('       exception: ' . v:exception)
+      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
     endtry
   endif
 endfunction

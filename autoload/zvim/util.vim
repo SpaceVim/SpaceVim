@@ -27,8 +27,8 @@ fu! zvim#util#defineMap(type,key,value,desc,...) abort
 
 endf
 fu! zvim#util#source_rc(file) abort
-  if filereadable(g:_spacevim_root_dir. '/' . a:file)
-    execute 'source ' . g:_spacevim_root_dir  . '/' . a:file
+  if filereadable(g:_spacevim_root_dir. '/config/' . a:file)
+    execute 'source ' . g:_spacevim_root_dir  . '/config/' . a:file
   endif
 endf
 
@@ -263,7 +263,7 @@ fu! zvim#util#Generate_ignore(ignore,tool, ...) abort
   elseif a:tool ==# 'rg'
     for ig in split(a:ignore,',')
       call add(ignore, '-g')
-      if a:0 > 0
+      if get(a:000, 0, 0) == 1
         call add(ignore, "'!" . ig . "'")
       else
         call add(ignore, '!' . ig)

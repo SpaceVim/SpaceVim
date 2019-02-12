@@ -9,7 +9,7 @@
 ""
 " @section lang#java, layer-lang-java
 " @parentsection layers
-" This layer is for Java development. 
+" This layer is for Java development.
 "
 " @subsection Mappings
 " >
@@ -30,46 +30,46 @@
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l g A    generate accessors
-"   normal    SPC l g s    generate setter accessor
-"   normal    SPC l g g    generate getter accessor
-"   normal    SPC l g a    generate setter and getter accessor
-"   normal    SPC l g t    generate toString function
-"   normal    SPC l g e    generate equals and hashcode function
-"   normal    SPC l g c    generate constructor
-"   normal    SPC l g C    generate default constructor
-"   insert    <c-j>s       generate setter accessor
-"   insert    <c-j>g       generate getter accessor
-"   insert    <c-j>a       generate getter and setter accessor
-"   visual    SPC l g s    generate setter accessor
-"   visual    SPC l g g    generate getter accessor
-"   visual    SPC l g a    generate setter and getter accessor
+"   normal    SPC l g A     generate accessors
+"   normal    SPC l g s     generate setter accessor
+"   normal    SPC l g g     generate getter accessor
+"   normal    SPC l g a     generate setter and getter accessor
+"   normal    SPC l g t     generate toString function
+"   normal    SPC l g e     generate equals and hashcode function
+"   normal    SPC l g c     generate constructor
+"   normal    SPC l g C     generate default constructor
+"   insert    <c-j>s        generate setter accessor
+"   insert    <c-j>g        generate getter accessor
+"   insert    <c-j>a        generate getter and setter accessor
+"   visual    SPC l g s     generate setter accessor
+"   visual    SPC l g g     generate getter accessor
+"   visual    SPC l g a     generate setter and getter accessor
 "
 "   Maven key bindings:
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l m i   	Run maven clean install
-"   normal    SPC l m I	    Run maven install
-"   normal    SPC l m p	    Run one already goal from list
-"   normal    SPC l m r	    Run maven goals
-"   normal    SPC l m R	    Run one maven goal
-"   normal    SPC l m t	    Run maven test
+"   normal    SPC l m i     run maven clean install
+"   normal    SPC l m I     run maven install
+"   normal    SPC l m p     run one already goal from list
+"   normal    SPC l m r     run maven goals
+"   normal    SPC l m R     run one maven goal
+"   normal    SPC l m t     run maven test
 "
 "   Jump key bindings:
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l j a   	jump to alternate file
+"   normal    SPC l j a     jump to alternate file
 "
 "   REPL key bindings:
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l s i	    start a jshell inferior REPL process
-"   normal    SPC l s b	    send buffer and keep code buffer focused
-"   normal    SPC l s l	    send line and keep code buffer focused
-"   normal    SPC l s s	    send selection text and keep code buffer focused
+"   normal    SPC l s i     start a jshell inferior REPL process
+"   normal    SPC l s b     send buffer and keep code buffer focused
+"   normal    SPC l s l     send line and keep code buffer focused
+"   normal    SPC l s s     send selection text and keep code buffer focused
 " <
 " @subsection Code formatting
 " To make neoformat support java file, you should install uncrustify.
@@ -81,11 +81,11 @@
 
 function! SpaceVim#layers#lang#java#plugins() abort
   let plugins = [
-        \ ['wsdjeg/vim-dict',                        { 'on_ft' : 'java'}],
-        \ ['wsdjeg/java_getset.vim',                 { 'on_ft' : 'java', 'loadconf' : 1}],
-        \ ['wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'}],
-        \ ['vim-jp/vim-java',                        { 'on_ft' : 'java'}],
-        \ ['artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
+        \ ['wsdjeg/vim-dict',               { 'on_ft' : 'java'}],
+        \ ['wsdjeg/java_getset.vim',        { 'on_ft' : 'java', 'loadconf' : 1}],
+        \ ['wsdjeg/JavaUnit.vim',           { 'on_ft' : 'java'}],
+        \ ['vim-jp/vim-java',               { 'on_ft' : 'java'}],
+        \ ['artur-shaik/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
         \ ]
   return plugins
 endfunction
@@ -98,6 +98,7 @@ function! SpaceVim#layers#lang#java#config() abort
     au!
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
     autocmd FileType java call s:java_mappings()
+    autocmd FileType jsp call JspFileTypeInit()
   augroup END
   let g:neoformat_enabled_java = ['googlefmt']
   let g:neoformat_java_googlefmt = {

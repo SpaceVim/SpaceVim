@@ -66,7 +66,7 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
       let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%='
     endif
   endif
-  if self.check_width(len, a:tag, a:winwidth)
+  if self.check_width(len, a:tag, a:winwidth) && g:spacevim_enable_statusline_tag
     let l .= '%#' . a:hi_z . '#' . a:tag
   endif
   let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep

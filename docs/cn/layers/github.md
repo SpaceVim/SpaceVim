@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim github 模块"
-description: "该模块主要提供了 Github 数据管理功能，包括问题列表、动态等管理。"
+description: "这一模块为 SpaceVim 提供了 Github 数据管理功能，包括问题列表、动态等管理。"
 lang: cn
 ---
 
@@ -29,7 +29,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键        | 功能描述                   |
+| 快捷键      | 功能描述                   |
 | ----------- | -------------------------- |
 | `SPC g h i` | 显示当前仓库问题列表       |
 | `SPC g h a` | 显示最新动态               |
