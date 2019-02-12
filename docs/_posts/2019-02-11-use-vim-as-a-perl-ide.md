@@ -64,7 +64,16 @@ cpanm Perl::Critic
 
 ### 工程文件跳转
 
-SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转alternate文件。
+SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转alternate文件。需要在项目根目录添加工程文件 `.project_alt.json`：
+
+```json
+{
+  "src/*.pl": {"alternate": "test/{}.pl"},
+  "test/*.pl": {"alternate": "src/{}.pl"}
+}
+```
+
+通过以上的配置，就可以使用命令 `:A` 在源文件和测试文件之间进行跳转。
 
 ### 快速运行
 

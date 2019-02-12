@@ -28,7 +28,7 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add lua language support in SpaceVim, you need to enable the `lang#perl` layer. Press `SPC f v d` to open
+To add perl language support in SpaceVim, you need to enable the `lang#perl` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
 ```toml
@@ -60,12 +60,12 @@ cpanm Perl::Critic
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with following content:
 
 ```json
 {
-  "src/*.lua": {"alternate": "test/{}.lua"},
-  "test/*.lua": {"alternate": "src/{}.lua"}
+  "src/*.pl": {"alternate": "test/{}.pl"},
+  "test/*.pl": {"alternate": "src/{}.pl"}
 }
 ```
 
