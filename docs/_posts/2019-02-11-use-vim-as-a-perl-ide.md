@@ -31,7 +31,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 Perl 这一语言的支持主要
 ### 安装模块
 
 SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启用
-`lang#perl`模块，通过快捷键`SPC f v d`打开配置文件，添加：
+`lang#perl`模块，通过快捷键`SPC f v d`打开配置文件，添加如下片断：
 
 ```toml
 [[layers]]
@@ -52,7 +52,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 ### 语法检查
 
 `checkers`模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 Perl 的支持，是通过异步调用 Perl 和 perlcritic 命令来完成的。
+这一异步语法检查工具。对于 Perl 的支持，是通过异步调用 perl 和 perlcritic 命令来完成的。
 
 使用 cpan 安装 perlcritic 命令：
 
