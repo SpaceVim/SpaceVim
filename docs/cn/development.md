@@ -57,7 +57,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 - 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认，错误追踪中是否存在重复的问题
 
-- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 Bug 重现操作。
+- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 Bug 重现操作
 
 - 按照下面的问题格式，建立清晰的问题标题
 
@@ -121,7 +121,7 @@ git rebase upstream/master
 ```
 #### 抽象化的简单 PRs（绝大多数 PRs 都是这样的）：
 
-- 'master'中的分支
+- `master`中的分支
 - 每个 PR 一个主题
 - 每个 PR 一个提交
 - 如果你有一些不同主题的提交，请关闭 PR 然后为每个主题创建一个新的 PR
@@ -131,7 +131,7 @@ git rebase upstream/master
 
 只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
 Those PRs are merged and explicitly not fast-forwarded.
-这些 PRs 被合并并且非明试快速转发。
+这些 PRs 被合并并且明示非快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
 
@@ -278,7 +278,7 @@ If you contribute to an already existing layer, you should not modify any header
 
 ##### 特定语言的按键绑定
 
-所有语言的专属按键绑定都是以 `SPC l`前缀开始的。
+所有语言的专属按键绑定都是以`SPC l`前缀开始的。
 
 | Key Bindings | Descriptions                                     |
 | ------------ | ------------------------------------------------ |
