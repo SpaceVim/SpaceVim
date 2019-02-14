@@ -10,7 +10,7 @@ commentsID: "Use Vim as a Perl IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Perl IDE
 
-This is a general guide for using SpaceVim as a perl IDE, including layer configuration and usage. 
+This is a general guide for using SpaceVim as a Perl IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 
@@ -28,19 +28,19 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add perl language support in SpaceVim, you need to enable the `lang#perl` layer. Press `SPC f v d` to open
-SpaceVim configuration file, and add following configuration:
+To add Perl language support in SpaceVim, you need to enable the `lang#perl` layer. Press `SPC f v d` to open
+SpaceVim configuration file, and add the following snippet:
 
 ```toml
 [[layers]]
   name = "lang#perl"
 ```
 
-for more info, you can read the [lang#perl](../layers/lang/perl/) layer documentation.
+For more info, you can read the [lang#perl](../layers/lang/perl/) layer documentation.
 
 ### Code completion
 
-`lang#perl` layer will load the perl plugin automatically, unless overriden in your `init.toml`.
+`lang#perl` layer will load the Perl plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
 ![perlcomplete](https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
@@ -48,7 +48,7 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run perl and perlcritic asynchronously.
+It will run Perl and perlcritic asynchronously.
 
 Install perlcritic via cpan:
 
@@ -60,7 +60,7 @@ cpanm Perl::Critic
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with following content:
+SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with the following content:
 
 ```json
 {
@@ -69,19 +69,19 @@ SpaceVim use built-in plugin to manager the files in a project, you can add a `.
 }
 ```
 
-with this configuration, you can jump between the source code and test file via command `:A`
+With this configuration, you can jump between the source code and test file via command `:A`
 
 ### running code
 
-To run current script, you can press `SPC l r`, and a split windows
-will be openen, the output of the script will be shown in this windows.
-It is running asynchronously, and will not block your vim.
+To run current script, you can press `SPC l r`, and a split window
+will be openen, the output of the script will be shown in this window.
+It is running asynchronously, and will not block your Vim.
 
 ![perlrunner](https://user-images.githubusercontent.com/13142418/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
 
 ### Code formatting
 
-The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
+The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
 Before using this feature, please install perltidy:
 
 ```sh
@@ -90,8 +90,8 @@ cpanm Perl::Tidy
 
 ### REPL support
 
-Start a `perli` or  `perl -del` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can 
-send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+Start a `perli` or  `perl -del` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
 ![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
