@@ -107,12 +107,6 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
-        \ . string(s:_function('s:split_string')) . ', [0])',
-        \ 'split sexp', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'S'], 'call call('
-        \ . string(s:_function('s:split_string')) . ', [1])',
-        \ 'split-and-add-newline', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'r'], 'call call('
         \ . string(s:_function('s:next_window')) . ', [])',
         \ 'rotate windows forward', 1)
@@ -363,37 +357,6 @@ function! s:previous_window() abort
   catch
     exe winnr('$') . 'wincmd w'
   endtry
-endfunction
-
-function! s:split_string(newline) abort
-  let syn_name = synIDattr(synID(line('.'), col('.'), 1), 'name')
-  if syn_name == &filetype . 'String'
-    let c = col('.')
-    let sep = ''
-    while c > 0
-      if s:is_string(line('.'), c)
-        let c = c - 1
-      else
-        let sep = getline('.')[c]
-        break
-      endif
-    endwhile
-    if a:newline
-      let save_register_m = @m
-      let @m = sep . "\n" . sep
-      normal! "mp
-      let @m = save_register_m
-    else
-      let save_register_m = @m
-      let @m = sep . sep
-      normal! "mp
-      let @m = save_register_m
-    endif
-  endif
-endfunction
-
-function! s:is_string(l,c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
 endfunction
 
 " function() wrapper
