@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#graphql layer"
-description: "This layer adds graphql file support to SpaceVim"
+description: "This layer adds GraphQL file support to SpaceVim"
 ---
 
 # [Available Layers](../../) >> lang#graphql
@@ -15,7 +15,7 @@ description: "This layer adds graphql file support to SpaceVim"
 
 ## Description
 
-This layer adds graphql file support to SpaceVim.
+This layer adds GraphQL file support to SpaceVim.
 
 ## Features
 

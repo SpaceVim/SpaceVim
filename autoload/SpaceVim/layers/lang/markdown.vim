@@ -38,8 +38,8 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:markdown_enable_insert_mode_leader_mappings = 0
   let g:markdown_enable_spell_checking = 0
   let g:markdown_quote_syntax_filetypes = {
-        \ "vim" : {
-        \   "start" : "\\%(vim\\|viml\\)",
+        \ 'vim' : {
+        \   'start' : "\\%(vim\\|viml\\)",
         \},
         \}
   let remarkrc = s:generate_remarkrc()
@@ -71,9 +71,13 @@ function! s:mappings() abort
     let g:_spacevim_mappings_space = {}
   endif
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], "Tabularize /|", 'Format table under cursor', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], "MarkdownPreview", 'Real-time markdown preview', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], 'Tabularize /|', 'Format table under cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], 'MarkdownPreview', 'Real-time markdown preview', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 
+        \ 'call call('
+        \ . string(function('s:run_code_in_block'))
+        \ . ', [])', 'run code in block', 1)
 endfunction
 
 function! s:generate_remarkrc() abort
@@ -112,4 +116,20 @@ function! s:markdown_insert_url() abort
   keepjumps call cursor(pos1[1], scope[0])
 endfunction
 
+" this function need context_filetype.vim
+function! s:run_code_in_block() abort
+  let cf = context_filetype#get()
+  if cf.filetype !=# 'markdown'
+    let runner = SpaceVim#plugins#runner#get(cf.filetype)
+    if type(runner) ==# 4
+      let runner['usestdin'] = 1
+      let runner['range'] = [cf['range'][0][0], cf['range'][1][0]]
+      call SpaceVim#plugins#runner#open(runner)
+    elseif type(runner) ==# 3 && type(runner[0]) == 4
+      let runner[0]['usestdin'] = 1
+      let runner[0]['range'] = [cf['range'][0][0], cf['range'][1][0]]
+      call SpaceVim#plugins#runner#open(runner)
+    endif
+  endif
+endfunction
 

@@ -20,13 +20,13 @@ let s:conf = '.project_alt.json'
 
 let s:project_config = {}
 
-function! SpaceVim#plugins#a#set_config_name(name)
+function! SpaceVim#plugins#a#set_config_name(name) abort
 
   let s:conf = a:name
 
 endfunction
 
-function! SpaceVim#plugins#a#alt()
+function! SpaceVim#plugins#a#alt() abort
   let conf_file = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
@@ -70,7 +70,7 @@ function! Log() abort
   return s:project_config
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file, root)
+function! SpaceVim#plugins#a#get_alt(file, root) abort
   if !has_key(s:project_config, a:root)
     let altconfa = s:JSON.json_decode(join(readfile(a:root), "\n"))
     let s:project_config[a:root] = {}
@@ -84,7 +84,7 @@ function! SpaceVim#plugins#a#get_alt(file, root)
 endfunction
 
 
-function! SpaceVim#plugins#a#get_root()
+function! SpaceVim#plugins#a#get_root() abort
   return s:FILE.unify_path(s:conf, ':p')
 endfunction
 

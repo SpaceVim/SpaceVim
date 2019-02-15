@@ -7,7 +7,7 @@ let g:javagetset_setterTemplate = get(g:, 'javagetset_setterTemplate',
       \ " */\n" .
       \ "%modifiers% void %funcname%(%type% %varname%){\n" .
       \ "    this.%varname% = %varname%;\n" .
-      \ "}")
+      \ '}')
 let g:javagetset_getterTemplate = get(g:, 'javagetset_getterTemplate',
       \ "/**\n" .
       \ " * Get %varname%.\n" .
@@ -16,6 +16,6 @@ let g:javagetset_getterTemplate = get(g:, 'javagetset_getterTemplate',
       \ " */\n" .
       \ "%modifiers% %type% %funcname%(){\n" .
       \ "    return %varname%;\n" .
-      \ "}")
+      \ '}')
 
 " vim:set et sw=2:

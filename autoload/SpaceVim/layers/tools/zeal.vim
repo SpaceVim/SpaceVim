@@ -10,6 +10,7 @@
 " @section tools#zeal, layer-tools-zeal
 " @parentsection layers
 " This layer provides Zeal integration for SpaceVim
+
 function! SpaceVim#layers#tools#zeal#plugins() abort
   return [
         \ ['KabbAmine/zeavim.vim', {

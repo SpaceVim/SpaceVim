@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#scala 模块"
-description: "这一模块为 scala 开发提供支持，包括语法高亮，函数列表等特性"
+description: "这一模块为 Scala 开发提供支持，包括语法高亮，函数列表等特性。"
 lang: cn
 ---
 
@@ -16,7 +16,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 scala 开发支持，包括插件 [vim-scala](https://github.com/derekwyatt/vim-scala)
+这一模块为 SpaceVim 提供了 Scala 开发支持，包括插件 [vim-scala](https://github.com/derekwyatt/vim-scala)
 
 ## 功能特性
 

@@ -15,7 +15,7 @@ description: "This layer adds DockerFile to SpaceVim"
 
 ## Description
 
-This layer adds dockerfile language support to SpaceVim.
+This layer adds DockerFile language support to SpaceVim.
 
 ## Features
 

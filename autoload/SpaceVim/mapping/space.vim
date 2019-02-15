@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:file = expand('<sfile>:~')
+let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
@@ -52,63 +53,239 @@ function! SpaceVim#mapping#space#init() abort
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
-  let s:lnum = expand('<slnum>') + 3
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '.'], 'call call('
         \ . string(s:_function('s:windows_transient_state')) . ', [])',
         \ ['buffer transient state',
         \ [
-        \ '[SPC b .] is to open the buffer transient state',
+        \ '[SPC w .] is to open the buffer transient state',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ]
         \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'],
-        \ 'close', 'delete window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'],
-        \ 'ChooseWin | close | wincmd w', 'delete window (other windows)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'],
-        \ 'tabnew', 'create new tab', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 
-        \ 'call call('
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'], 'close',
+        \ ['close-current-windows',
+        \ [
+        \ '[SPC w d] is to close current windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
+        \ ['delete window (other windows)',
+        \ [
+        \ '[SPC w D] is to select a windows to close',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'tabnew',
+        \ ['create new tab',
+        \ [
+        \ '[SPC w f] is to create new tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
         \ . string(function('s:create_new_named_tab'))
-        \ . ', [])', 'create new named tab', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'],
-        \ 'wincmd h', 'window-left', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'],
-        \ 'wincmd j', 'window-down', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'],
-        \ 'wincmd k', 'window-up', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'],
-        \ 'wincmd l', 'window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'],
-        \ 'wincmd H', 'window-far-left', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'],
-        \ 'wincmd J', 'window-far-down', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'],
-        \ 'wincmd K', 'window-far-up', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'],
-        \ 'wincmd L', 'window-far-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'],
-        \ 'only', 'maximize/minimize window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
-        \ 'ChooseWinSwap', 'swap window', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'],
-        \ 'tabnext', 'other tabs', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'],
-        \ 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'],
-        \ 'bel vs | wincmd w', 'split-window-right', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'],
-        \ 'bel split | wincmd w', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'],
-        \ 'bel split | wincmd w', 'split-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'],
-        \ 'bel split', 'split-focus-window-below', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'],
-        \ 'silent only | vs | wincmd w', 'layout-double-columns', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'],
-        \ 'silent only | vs | vs | wincmd H', 'split-window-below', 1)
+        \ . ', [])',
+        \ ['create new named tab',
+        \ [
+        \ '[SPC w F] is to create new named tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h',
+        \ ['window-left',
+        \ [
+        \ '[SPC w h] is to jump to the left window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j',
+        \ ['window-down',
+        \ [
+        \ '[SPC w j] is to jump to the window below current windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k',
+        \ ['window-up',
+        \ [
+        \ '[SPC w k] is to jump to the window above current windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'], 'wincmd l',
+        \ ['window-right',
+        \ [
+        \ '[SPC w l] is to jump to the right window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'], 'wincmd H',
+        \ ['window-far-left',
+        \ [
+        \ '[SPC w H] is to jump to the far left window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J',
+        \ ['window-far-down',
+        \ [
+        \ '[SPC w J] is to jump to the far down window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K',
+        \ ['window-far-up',
+        \ [
+        \ '[SPC w K] is to jump to the far up window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L',
+        \ ['window-far-right',
+        \ [
+        \ '[SPC w L] is to jump to the far right window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'only',
+        \ ['maximize/minimize window',
+        \ [
+        \ '[SPC w m] is to maximize/minimize window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap',
+        \ ['swap window',
+        \ [
+        \ '[SPC w M] is to swap window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext',
+        \ ['other tabs',
+        \ [
+        \ '[SPC w o] is to switch to next tabs',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'belowright vsplit | wincmd w',
+        \ ['split-windows-right',
+        \ [
+        \ '[SPC w /] is to split windows on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'belowright vsplit | wincmd w',
+        \ ['split-windows-right',
+        \ [
+        \ '[SPC w v] is to split windows on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w',
+        \ ['split-windows-below',
+        \ [
+        \ '[SPC w -] is to split windows below',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w',
+        \ ['split-windows-below',
+        \ [
+        \ '[SPC w s] is to split windows below',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'bel split',
+        \ ['split-focus-windows-below',
+        \ [
+        \ '[SPC w S] is to split windows below and focus on new windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vs | wincmd w',
+        \ ['layout-double-columns',
+        \ [
+        \ '[SPC w 2] is to change current windows layout to double columns',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H',
+        \ ['layout-three-columns',
+        \ [
+        \ '[SPC w 3] is to change current windows layout to three columns',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
         \ 'bel vs', 'split-window-right-focus', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
@@ -119,7 +296,7 @@ function! SpaceVim#mapping#space#init() abort
         \ 'ChooseWin', 'select window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
-  let s:lnum = expand('<slnum>') + 3
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'bnext', ['next buffer',
         \ [
         \ '[SPC b n] is running :bnext, jump to next buffer',

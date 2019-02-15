@@ -6,7 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
-au BufRead,BufNewFile *.rs set filetype=rust
-au BufNewFile,BufRead *.sol setf solidity
+augroup spacevim_filetype_script
+  autocmd!
+  au BufRead,BufNewFile *.rs set filetype=rust
+  au BufNewFile,BufRead *.sol setf solidity
+augroup END
 
 " vim:set et sw=2

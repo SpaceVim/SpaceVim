@@ -7,7 +7,6 @@ set -ue -o pipefail
 export LC_ALL=C
 
 docker pull spacevim/vims
-
 git fetch origin master:master
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then

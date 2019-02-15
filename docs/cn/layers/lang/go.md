@@ -39,7 +39,7 @@ lang: cn
 
 **语言专属快捷键：**
 
-| 快捷键    | 描述                      |
+| 快捷键    | 功能描述                  |
 | --------- | ------------------------- |
 | `SPC l a` | go alternate              |
 | `SPC l b` | go build                  |
@@ -65,7 +65,7 @@ lang: cn
 
 **代码格式化：**
 
-默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
+默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
 为了使得 `format` 模块支持 Go 文件，需要确认有可执行命令 [go-fmt](http://golang.org/cmd/gofmt/) 或者 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)，
-通常 `go-fmt` 命令为 go 自带的程序，请确认 go 开发环境是否配置正确。
+通常 `go-fmt` 命令为 Go 自带的程序，请确认 Go 开发环境是否配置正确。
