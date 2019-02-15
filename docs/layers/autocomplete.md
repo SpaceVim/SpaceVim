@@ -92,7 +92,7 @@ The default configuration of the layer is:
   auto-completion-tab-key-behavior = "smart"
   auto-completion-delay = 200
   auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1,
+  auto-completion-complete-with-key-sequence-delay = 0.1
 ```
 
 `jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.

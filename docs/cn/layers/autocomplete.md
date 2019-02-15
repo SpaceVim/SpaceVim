@@ -73,7 +73,7 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
   auto-completion-tab-key-behavior = "smart"
   auto-completion-delay = 200
   auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1,
+  auto-completion-complete-with-key-sequence-delay = 0.1
 ```
 
 通常会建议将 `auto-completion-complete-with-key-sequence` 的值设为 `jk`，如果你不用
@@ -105,7 +105,7 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 **自动补全相关快捷键**
 
-| 按键       | 描述                                       |
+| 快捷键     | 功能描述                                   |
 | ---------- | ------------------------------------------ |
 | `<C-n>`    | 选择下一个列表选项                         |
 | `<C-p>`    | 选择上一个列表选项                         |
@@ -115,7 +115,7 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 **代码块模板相关快捷键**
 
-| 按键      | 描述                                               |
+| 快捷键    | 功能描述                                           |
 | --------- | -------------------------------------------------- |
 | `M-/`     | 如果光标前的词语为一代码块模板缩写，则展开该代码块 |
 | `SPC i s` | 列出所有可用的代码块模板，选择后并插入             |

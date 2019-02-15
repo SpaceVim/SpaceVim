@@ -89,14 +89,14 @@ if has('nvim') && exists('*chanclose')
     call extend(s:_out_data, a:data[1:])
     if s:_out_data[-1] ==# '' && len(s:_out_data) > 1
       if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
         call s:update_statusline()
       endif
       let s:_out_data = ['']
     elseif  s:_out_data[-1] !=# '' && len(s:_out_data) > 1
       if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
         call s:update_statusline()
       endif
@@ -171,7 +171,7 @@ function! s:open_windows() abort
   botright split __REPL__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimREPL
   nnoremap <silent><buffer> q :call <SID>close()<cr>
   let s:bufnr = bufnr('%')

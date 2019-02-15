@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
 
 " 2017-08-05 v0.4.0 is released at https://github.com/SpaceVim/SpaceVim/pull/768
 " 2017-11-16 v0.5.0 is released at https://github.com/SpaceVim/SpaceVim/pull/966
@@ -83,6 +84,7 @@ function! s:get_list_of_PRs() abort
           \ . s:last_release_number
           \ . " && v:val['number'] < "
           \ . s:current_release_number
+          \ . ' && !empty(get(v:val, "merged_at", ""))'
           \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
           \ ))
   endfor
@@ -112,7 +114,7 @@ endfunction
 
 " this function is to generate markdown form pull request list
 function! SpaceVim#dev#releases#parser_prs(prs, ...) abort
-  let is_cn = get(a:000, 0, '') == 'cn'
+  let is_cn = get(a:000, 0, '') ==# 'cn'
   let g:is_cn = is_cn
   let md = []
   let adds = []

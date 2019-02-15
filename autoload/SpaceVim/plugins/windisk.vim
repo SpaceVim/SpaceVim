@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-func! SpaceVim#plugins#windisk#open()
+func! SpaceVim#plugins#windisk#open() abort
   let disks = s:get_disks()
   if !empty(disks)
     " 1. open plugin buffer
@@ -28,7 +28,7 @@ func! SpaceVim#plugins#windisk#open()
   endif
 endf
 
-func! s:get_disks()
+func! s:get_disks() abort
   return map(filter(range(65, 97), "isdirectory(nr2char(v:val) . ':/')"), 'nr2char(v:val) . ":/"')
 endf
 

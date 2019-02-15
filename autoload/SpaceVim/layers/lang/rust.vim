@@ -63,8 +63,13 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
-  call SpaceVim#plugins#runner#reg_runner('rust',
-        \ ['rustc %s -o #TEMP#', '#TEMP#'])
+  let runner = {
+        \ 'exe' : 'rustc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('rust',
         \ function('s:language_specified_mappings'))
 endfunction

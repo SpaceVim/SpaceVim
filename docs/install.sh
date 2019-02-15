@@ -240,7 +240,7 @@ check_requirements () {
     warn "Check Requirements : git"
   fi
   if hash "vim" &>/dev/null; then
-    is_vim8=$(vim --version | grep "Vi IMproved 8.0")
+    is_vim8=$(vim --version | grep "Vi IMproved 8")
     is_vim74=$(vim --version | grep "Vi IMproved 7.4")
     if [ -n "$is_vim8" ]; then
       success "Check Requirements: vim 8.0"

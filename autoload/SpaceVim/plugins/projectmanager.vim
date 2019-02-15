@@ -149,10 +149,10 @@ function! s:find_root_directory() abort
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
     let ftype = getftype(dir)
-    if ftype == 'dir' || ftype == 'file'
+    if ftype ==# 'dir' || ftype ==# 'file'
       let dir = fnamemodify(dir, ':p')
       if dir !=# expand('~/.SpaceVim.d/')
-        call SpaceVim#logger#info("        (" . pattern . "):" . dir)
+        call SpaceVim#logger#info('        (' . pattern . '):' . dir)
         call add(dirs, dir)
       endif
     endif
