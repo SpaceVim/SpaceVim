@@ -84,8 +84,7 @@ lang: cn
     - [增加或减小数字](#增加或减小数字)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
-      - [Examples](#examples)
-    - [注释(Commentings)](#注释commentings)
+    - [注释 (Commentings)](#注释-commentings)
     - [多方式编码](#多方式编码)
   - [异步运行器和交互式编程](#异步运行器和交互式编程)
   - [错误处理](#错误处理)
@@ -1521,21 +1520,21 @@ In highlight symbol transient state:
 
 | 快捷键          | 描述                                                                 |
 | --------------- | -------------------------------------------------------------------- |
-| `SPC x a &`     | align region at &                                                    |
-| `SPC x a (`     | align region at (                                                    |
-| `SPC x a )`     | align region at )                                                    |
-| `SPC x a [`     | align region at [                                                    |
-| `SPC x a ]`     | align region at ]                                                    |
-| `SPC x a {`     | align region at {                                                    |
-| `SPC x a }`     | align region at }                                                    |
-| `SPC x a ,`     | align region at ,                                                    |
-| `SPC x a .`     | align region at . (for numeric tables)                               |
-| `SPC x a :`     | align region at :                                                    |
-| `SPC x a ;`     | align region at ;                                                    |
-| `SPC x a =`     | align region at =                                                    |
-| `SPC x a ¦`     | align region at ¦                                                    |
-| `SPC x a |`     | align region at \|                                                   |
-| `SPC x a [SPC]` | align region at [SPC]                                                |
+| `SPC x a &`     | 基于分隔符 & 进行文本对齐                                            |
+| `SPC x a (`     | 基本分隔符 ( 进行文本对齐                                            |
+| `SPC x a )`     | 基本分隔符 ) 进行文本对齐                                            |
+| `SPC x a [`     | 基本分隔符 [ 进行文本对齐                                            |
+| `SPC x a ]`     | 基本分隔符 ] 进行文本对齐                                            |
+| `SPC x a {`     | 基本分隔符 { 进行文本对齐                                            |
+| `SPC x a }`     | 基本分隔符 } 进行文本对齐                                            |
+| `SPC x a ,`     | 基本分隔符 , 进行文本对齐                                            |
+| `SPC x a .`     | 基本分隔符 . 进行文本对齐(for numeric tables)                        |
+| `SPC x a :`     | 基本分隔符 : 进行文本对齐                                            |
+| `SPC x a ;`     | 基本分隔符 ; 进行文本对齐                                            |
+| `SPC x a =`     | 基本分隔符 = 进行文本对齐                                            |
+| `SPC x a ¦`     | 基本分隔符 ¦ 进行文本对齐                                            |
+| `SPC x a |`     | 基本分隔符 \| 进行文本对齐                                           |
+| `SPC x a [SPC]` | 基本分隔符 [SPC] 进行文本对齐                                        |
 | `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
@@ -1571,8 +1570,8 @@ In highlight symbol transient state:
 | `SPC x t c`     | swap (transpose) the current character with the previous one         |
 | `SPC x t w`     | swap (transpose) the current word with the previous one              |
 | `SPC x t l`     | swap (transpose) the current line with the previous one              |
-| `SPC x u`       | set the selected text to lower case (TODO)                           |
-| `SPC x U`       | set the selected text to upper case (TODO)                           |
+| `SPC x u`       | 将选中字符串转为小写                                                 |
+| `SPC x U`       | 将选中字符串转为大写                                                 |
 | `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
 | `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
 | `SPC x TAB`     | indent or dedent a region rigidly (TODO)                             |
@@ -1663,11 +1662,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `<C-w>`     | delete words before cursor     |
 | `<C-K>`     | delete words after cursor      |
 
-##### Examples
+#### 注释 (Commentings)
 
-#### 注释(Commentings)
-
-注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
+注释 (comment) 通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
 | 快捷键      | 描述                           |
 | ----------- | ------------------------------ |
@@ -1679,8 +1676,8 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c P`   | toggle comment paragraphs      |
 | `SPC c t`   | comment to line                |
 | `SPC c T`   | toggle comment to line         |
-| `SPC c y`   | comment and yank(TODOO)        |
-| `SPC c Y`   | toggle comment and yank(TODOO) |
+| `SPC c y`   | comment and yank(TODO)         |
+| `SPC c Y`   | toggle comment and yank(TODO)  |
 
 小提示：
 

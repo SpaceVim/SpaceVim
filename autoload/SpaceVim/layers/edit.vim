@@ -112,7 +112,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to kebab-case', 1)
 
   " justification
-  let g:_spacevim_mappings_space.x.j = {'name' : 'justification'}
+  let g:_spacevim_mappings_space.x.j = {'name' : '+Justification'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'l'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["left"])',
         \ 'set-the-justification-to-left', 1)
@@ -122,6 +122,9 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'r'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
+
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set-the-selected-text-to-lower-case', 0)
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set-the-selected-text-to-up-case', 0)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}

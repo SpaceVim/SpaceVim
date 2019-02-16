@@ -82,7 +82,6 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
-      - [Examples](#examples)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -1558,7 +1557,7 @@ Text related commands (start with `x`):
 | `SPC x a &`     | align region at &                                                    |
 | `SPC x a (`     | align region at (                                                    |
 | `SPC x a )`     | align region at )                                                    |
-| `SPC x a [`     | align region at \[                                                   |
+| `SPC x a [`     | align region at [                                                    |
 | `SPC x a ]`     | align region at ]                                                    |
 | `SPC x a {`     | align region at {                                                    |
 | `SPC x a }`     | align region at }                                                    |
@@ -1605,8 +1604,8 @@ Text related commands (start with `x`):
 | `SPC x t c`     | swap (transpose) the current character with the previous one         |
 | `SPC x t w`     | swap (transpose) the current word with the previous one              |
 | `SPC x t l`     | swap (transpose) the current line with the previous one              |
-| `SPC x u`       | set the selected text to lower case (TODO)                           |
-| `SPC x U`       | set the selected text to upper case (TODO)                           |
+| `SPC x u`       | set the selected text to lower case                                  |
+| `SPC x U`       | set the selected text to upper case                                  |
 | `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
 | `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
 | `SPC x TAB`     | indent or dedent a region rigidly (TODO)                             |
@@ -1696,8 +1695,6 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `<Right>`    | Move cursor to right           |
 | `Ctrl-w`     | delete words before cursor     |
 | `Ctrl-k`     | delete words after cursor      |
-
-##### Examples
 
 #### Commenting
 
