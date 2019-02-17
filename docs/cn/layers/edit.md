@@ -66,3 +66,8 @@ lang: cn
 | `SPC x j l`  | 左对齐当前段落                       |
 | `SPC x j n`  | set the justification to none (TODO) |
 | `SPC x j r`  | 右对齐当前段落                       |
+
+| 快捷键    | 功能描述             |
+| --------- | -------------------- |
+| `SPC x u` | 将选中字符串转为小写 |
+| `SPC x U` | 将选中字符串转为大写 |
