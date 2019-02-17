@@ -1672,6 +1672,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c h`   | 隐藏/显示注释                 |
 | `SPC c l`   | 注释/反注释当前行             |
 | `SPC c L`   | 注释行                        |
+| `SPC c u`   | 反注释行                      |
 | `SPC c p`   | 注释段落                      |
 | `SPC c P`   | 注释/反注释段落               |
 | `SPC c s`   | 使用完美格式注释              |
