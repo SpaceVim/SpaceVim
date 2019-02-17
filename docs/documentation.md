@@ -983,14 +983,14 @@ The `SPC j` prefix is for jumping, joining and splitting.
 
 ##### Joining and splitting
 
-| Key Bindings | Descriptions                                                             |
-| ------------ | ------------------------------------------------------------------------ |
-| `J`          | join the current line with the next line                                 |
-| `SPC j k`    | go to next line and indent it using auto-indent rules                    |
-| `SPC j n`    | split the current line at point, insert a new line and auto-indent       |
-| `SPC j o`    | split the current line at point but let point on current line            |
-| `SPC j s`    | split a quoted string or s-expression in place                           |
-| `SPC j S`    | split a quoted string or s-expression, insert a new line and auto-indent |
+| Key Bindings | Descriptions                                                                  |
+| ------------ | ----------------------------------------------------------------------------- |
+| `J`          | join the current line with the next line                                      |
+| `SPC j k`    | go to next line and indent it using auto-indent rules                         |
+| `SPC j n`    | split the current line at point, insert a new line and auto-indent            |
+| `SPC j o`    | split the current line at point but let point on current line                 |
+| `SPC j s`    | split a quoted string or s-expression in place                                |
+| `SPC j S`    | split a quoted string or s-expression with `\n`, and auto-indent the new line |
 
 #### Window manipulation
 
@@ -1573,7 +1573,7 @@ Text related commands (start with `x`):
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
 | `SPC x a L`     | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`     | align region using user-specified regexp                             |
+| `SPC x a r`     | align region at user-specified regexp                                |
 | `SPC x a o`     | align region at operators `+-*/`                                     |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |
