@@ -1539,7 +1539,7 @@ In highlight symbol transient state:
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
 | `SPC x a L`     | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`     | align region using user-specified regexp (TODO)                      |
+| `SPC x a r`     | 基本用户自定义的正则表达式进行文本对齐                               |
 | `SPC x a o`     | align region at arithmetic operators `+-*/`                          |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |
