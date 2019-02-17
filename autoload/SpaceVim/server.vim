@@ -7,6 +7,7 @@
 "=============================================================================
 
 
+let s:SYS = SpaceVim#api#import('system')
 
 " This function should not be called twice!
 
@@ -14,7 +15,13 @@ let s:flag = 0
 function! SpaceVim#server#connect() abort
   if s:flag == 0
     if empty($SPACEVIM_SERVER_ADDRESS)
-      let $SPACEVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'spacevim_nvim_' : 'spacevim_vim_') . 'server', ':p')
+      " in windows pipe server is used.
+      " call serverstart('\\.\pipe\nvim-pipe-1234')
+      if s:SYS.isWindows
+        let $SPACEVIM_SERVER_ADDRESS = fnamemodify('\\.\pipe\' . (has('nvim') ? 'spacevim-nvim-' : 'spacevim-vim-') . 'server', ':p')
+      else
+        let $SPACEVIM_SERVER_ADDRESS = fnamemodify('/tmp/' . (has('nvim') ? 'spacevim_nvim_' : 'spacevim_vim_') . 'server', ':p')
+      endif
     endif
     if has('nvim')
       try
