@@ -1573,7 +1573,7 @@ Text related commands (start with `x`):
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
 | `SPC x a L`     | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`     | align region using user-specified regexp (TODO)                      |
+| `SPC x a r`     | align region using user-specified regexp                             |
 | `SPC x a o`     | align region at operators `+-*/`                                     |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |

@@ -56,6 +56,8 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - `)`: align `)`
 - `[SPC]`: align `[SPC]`
 - `o`: align `+ - * / % ^` etc.
+- `r`: align user specified regular expression.
+
 
 | Key bindings | Descraptions                         |
 | ------------ | ------------------------------------ |
