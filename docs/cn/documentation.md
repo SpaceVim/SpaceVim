@@ -1674,10 +1674,12 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c L`   | 注释行                        |
 | `SPC c p`   | 注释段落                      |
 | `SPC c P`   | 注释/反注释段落               |
+| `SPC c s`   | 使用完美格式注释              |
 | `SPC c t`   | 注释到行                      |
 | `SPC c T`   | 注释/反注释到行               |
-| `SPC c y`   | yank and comment              |
+| `SPC c y`   | 复制到未命名寄存器后注释      |
 | `SPC c Y`   | toggle comment and yank(TODO) |
+| `SPC c $`   | 从光标位置开始注释当前行      |
 
 小提示：
 
