@@ -249,6 +249,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'toggle comment lines and keep visual', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 's'], '<Plug>NERDCommenterSexy', 'comment with sexy/pretty layout', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'y'], '<Plug>NERDCommenterYank', 'yank and comment', 0, 1)
 
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>

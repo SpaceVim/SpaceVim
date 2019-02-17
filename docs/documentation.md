@@ -1711,7 +1711,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c s`    | comment with pretty layout    |
 | `SPC c t`    | comment to line               |
 | `SPC c T`    | toggle comment to line        |
-| `SPC c y`    | comment and yank(TODO)        |
+| `SPC c y`    | yank and comment              |
 | `SPC c Y`    | toggle comment and yank(TODO) |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.

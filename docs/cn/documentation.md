@@ -1676,7 +1676,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `SPC c P`   | 注释/反注释段落               |
 | `SPC c t`   | 注释到行                      |
 | `SPC c T`   | 注释/反注释到行               |
-| `SPC c y`   | comment and yank(TODO)        |
+| `SPC c y`   | yank and comment              |
 | `SPC c Y`   | toggle comment and yank(TODO) |
 
 小提示：
