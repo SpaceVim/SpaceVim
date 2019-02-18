@@ -624,8 +624,8 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `s`+`x`         | Remove buffer, leave blank window                                                                                                                                                                                              |
 | `s`+`q`         | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
 | `s`+`Q`         | Close current buffer (:close)                                                                                                                                                                                                  |
-| `Tab`           | Next window or tab                                                                                                                                                                                                             |
-| `Shift`+`Tab`   | Previous window or tab                                                                                                                                                                                                         |
+| `<Tab>`         | Next window or tab                                                                                                                                                                                                             |
+| `Shift`+`<Tab>` | Previous window or tab                                                                                                                                                                                                         |
 | `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
 | `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
 
@@ -649,8 +649,8 @@ can be get by `<leader> q r`
 | `}`                   | Normal        | After paragraph motion go to first non-blank char (}^)                         |
 | `<`                   | Visual/Normal | Indent to left and re-select                                                   |
 | `>`                   | Visual/Normal | Indent to right and re-select                                                  |
-| `Tab`                 | Visual        | Indent to right and re-select                                                  |
-| `Shift`+`Tab`         | Visual        | Indent to left and re-select                                                   |
+| `<Tab>`               | Visual        | Indent to right and re-select                                                  |
+| `Shift`+`<Tab>`       | Visual        | Indent to left and re-select                                                   |
 | `gp`                  | Normal        | Select last paste                                                              |
 | `Q`/`gQ`              | Normal        | Disable EX-mode (<Nop>)                                                        |
 | `Ctrl`+`a`            | Command       | Navigation in command line                                                     |
@@ -756,17 +756,17 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Key bindings within fuzzy finder buffer**
 
-| 快捷键                | 模式   | 功能描述                                  |
-| --------------------- | ------ | ----------------------------------------- |
-| `Tab`/`<C-j>`         | -      | Select next line                          |
-| `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
-| `jk`                  | Insert | Leave Insert mode (Only for denite/unite) |
-| `Ctrl`+`w`            | Insert | Delete backward path                      |
-| `Enter`               | -      | Run default action                        |
-| `Ctrl`+`s`            | -      | Open in a split                           |
-| `Ctrl`+`v`            | -      | Open in a vertical split                  |
-| `Ctrl`+`t`            | -      | Open in a new tab                         |
-| `Ctrl`+`g`            | -      | Exit unite                                |
+| 快捷键                  | 模式   | 功能描述                                  |
+| ----------------------- | ------ | ----------------------------------------- |
+| `<Tab>`/`<C-j>`         | -      | Select next line                          |
+| `Shift + <Tab>`/`<C-k>` | -      | Select previous line                      |
+| `jk`                    | Insert | Leave Insert mode (Only for denite/unite) |
+| `Ctrl`+`w`              | Insert | Delete backward path                      |
+| `<Enter>`               | -      | Run default action                        |
+| `Ctrl`+`s`              | -      | Open in a split                           |
+| `Ctrl`+`v`              | -      | Open in a vertical split                  |
+| `Ctrl`+`t`              | -      | Open in a new tab                         |
+| `Ctrl`+`g`              | -      | Exit unite                                |
 
 **Denite/Unite normal mode key bindings**
 
@@ -774,10 +774,10 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 | ---------------- | ------------- | ------------------------------------ |
 | `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
 | `Ctrl`+`l`       | Normal        | Redraw                               |
-| `Tab`            | Normal        | Select actions                       |
+| `<Tab>`          | Normal        | Select actions                       |
 | `Space`          | Normal        | Toggle mark current candidate, up    |
 | `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/insert | Toggle transpose window              |
+| `Ctrl`+`z`       | Normal/Insert | Toggle transpose window              |
 
 The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
 
@@ -974,43 +974,43 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键               | 功能描述                                                                       |
-| -------------------- | ------------------------------------------------------------------------------ |
-| `SPC w TAB`/`<Tab>`  | 在同一标签内进行窗口切换                                                       |
-| `SPC w =`            | 对齐分离的窗口                                                                 |
-| `SPC w b`            | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`            | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
-| `SPC w C`            | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
-| `SPC w d`            | 删除一个窗口                                                                   |
-| `SPC u SPC w d`      | delete a window and its current buffer (does not delete the file) (TODO)       |
-| `SPC w D`            | 选择一个窗口并关闭                                                             |
-| `SPC u SPC w D`      | delete another window and its current buffer using vim-choosewin (TODO)        |
-| `SPC w t`            | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
-| `SPC w f`            | toggle follow mode (TODO)                                                      |
-| `SPC w F`            | 新建一个新的标签页                                                             |
-| `SPC w h`            | 移至左边窗口                                                                   |
-| `SPC w H`            | 将窗口向左移动                                                                 |
-| `SPC w j`            | 移至下方窗口                                                                   |
-| `SPC w J`            | 将窗口向下移动                                                                 |
-| `SPC w k`            | 移至上方窗口                                                                   |
-| `SPC w K`            | 将窗口向上移动                                                                 |
-| `SPC w l`            | 移至右方窗口                                                                   |
-| `SPC w L`            | 将窗口向右移动                                                                 |
-| `SPC w m`            | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
-| `SPC w M`            | 选择窗口进行替换                                                               |
-| `SPC w o`            | 按序切换标签页                                                                 |
-| `SPC w p m`          | open messages buffer in a popup window (TODO)                                  |
-| `SPC w p p`          | close the current sticky popup window (TODO)                                   |
-| `SPC w r`            | 顺序切换窗口                                                                   |
-| `SPC w R`            | 逆序切换窗口                                                                   |
-| `SPC w s or SPC w -` | 水平分割窗口                                                                   |
-| `SPC w S`            | 水平分割窗口，并切换至新窗口                                                   |
-| `SPC w u`            | undo window layout (used to effectively undo a closed window) (TODO)           |
-| `SPC w U`            | redo window layout (TODO)                                                      |
-| `SPC w v or SPC w /` | 垂直分离窗口                                                                   |
-| `SPC w V`            | 垂直分离窗口，并切换至新窗口                                                   |
-| `SPC w w`            | 切换至前一窗口                                                                 |
-| `SPC w W`            | 选择一个窗口                                                                   |
+| 快捷键                 | 功能描述                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| `SPC w `<Tab>`         | 在同一标签内进行窗口切换                                                       |
+| `SPC w =`              | 对齐分离的窗口                                                                 |
+| `SPC w b`              | force the focus back to the minibuffer (TODO)                                  |
+| `SPC w c`              | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
+| `SPC w C`              | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
+| `SPC w d`              | 删除一个窗口                                                                   |
+| `SPC u SPC w d`        | delete a window and its current buffer (does not delete the file) (TODO)       |
+| `SPC w D`              | 选择一个窗口并关闭                                                             |
+| `SPC u SPC w D`        | delete another window and its current buffer using vim-choosewin (TODO)        |
+| `SPC w t`              | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
+| `SPC w f`              | toggle follow mode (TODO)                                                      |
+| `SPC w F`              | 新建一个新的标签页                                                             |
+| `SPC w h`              | 移至左边窗口                                                                   |
+| `SPC w H`              | 将窗口向左移动                                                                 |
+| `SPC w j`              | 移至下方窗口                                                                   |
+| `SPC w J`              | 将窗口向下移动                                                                 |
+| `SPC w k`              | 移至上方窗口                                                                   |
+| `SPC w K`              | 将窗口向上移动                                                                 |
+| `SPC w l`              | 移至右方窗口                                                                   |
+| `SPC w L`              | 将窗口向右移动                                                                 |
+| `SPC w m`              | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
+| `SPC w M`              | 选择窗口进行替换                                                               |
+| `SPC w o`              | 按序切换标签页                                                                 |
+| `SPC w p m`            | open messages buffer in a popup window (TODO)                                  |
+| `SPC w p p`            | close the current sticky popup window (TODO)                                   |
+| `SPC w r`              | 顺序切换窗口                                                                   |
+| `SPC w R`              | 逆序切换窗口                                                                   |
+| `SPC w s` or `SPC w -` | 水平分割窗口                                                                   |
+| `SPC w S`              | 水平分割窗口，并切换至新窗口                                                   |
+| `SPC w u`              | undo window layout (used to effectively undo a closed window) (TODO)           |
+| `SPC w U`              | redo window layout (TODO)                                                      |
+| `SPC w v` or `SPC w /` | 垂直分离窗口                                                                   |
+| `SPC w V`              | 垂直分离窗口，并切换至新窗口                                                   |
+| `SPC w w`              | 切换至前一窗口                                                                 |
+| `SPC w W`              | 选择一个窗口                                                                   |
 
 #### 文件和 Buffer 操作
 
@@ -1020,7 +1020,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 | 快捷键          | 功能描述                                                                       |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC TAB`       | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
+| `SPC <TAB>`     | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
 | `SPC b .`       | 启用 buffer 临时快捷键                                                         |
 | `SPC b b`       | 切换至某一 buffer，通过 Unite/Denite 进行筛选                                  |
 | `SPC b d`       | 删除当前 buffer，但保留 Vim 窗口                                               |
@@ -1135,11 +1135,11 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要指定窗口来打开文件：
 
-| 快捷键         | 功能描述         |
-| -------------- | ---------------- |
-| `l` or `Enter` | 打开文件         |
-| `sg`           | 分屏打开文件     |
-| `sv`           | 垂直分屏打开文件 |
+| 快捷键           | 功能描述         |
+| ---------------- | ---------------- |
+| `l` or `<Enter>` | 打开文件         |
+| `sg`             | 分屏打开文件     |
+| `sv`             | 垂直分屏打开文件 |
 
 ### 以 `g` 为前缀的快捷键
 
@@ -1503,7 +1503,7 @@ In highlight symbol transient state:
 | `N`/`p`       | go to previous occurrence                                     |
 | `b`           | search occurrence in all buffers                              |
 | `/`           | search occurrence in whole project                            |
-| `Tab`         | toggle highlight current occurrence                           |
+| `<Tab>`       | toggle highlight current occurrence                           |
 | `r`           | change range (function, display area, whole buffer)           |
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
@@ -1543,7 +1543,7 @@ In highlight symbol transient state:
 | `SPC x a o`     | align region at arithmetic operators `+-*/`                          |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |
-| `SPC x d SPC`   | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x d [SPC]` | Delete all spaces and tabs around point, leaving one space           |
 | `SPC x g l`     | set lanuages used by translate commands (TODO)                       |
 | `SPC x g t`     | translate current word using Google Translate                        |
 | `SPC x g T`     | reverse source and target languages (TODO)                           |
@@ -1574,7 +1574,7 @@ In highlight symbol transient state:
 | `SPC x U`       | 将选中字符串转为大写                                                 |
 | `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
 | `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x TAB`     | indent or dedent a region rigidly (TODO)                             |
+| `SPC x <TAB>`   | indent or dedent a region rigidly (TODO)                             |
 
 #### 文本插入命令
 
@@ -1634,7 +1634,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 | 快捷键        | 功能描述                                                                        |
 | ------------- | ------------------------------------------------------------------------------- |
-| `Esc`         | go back to `Normal` mode                                                        |
+| `<Esc>`         | go back to `Normal` mode                                                        |
 | `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
 | `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
 | `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
@@ -1656,7 +1656,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 | 快捷键      | 功能描述                 |
 | ----------- | ------------------------ |
-| `Esc`       | 回到 `iedit-Normal` 模式 |
+| `<Esc>`       | 回到 `iedit-Normal` 模式 |
 | `<Left>`    | 左移光标                 |
 | `<Right>`   | 右移光标                 |
 | `<C-w>`     | 删除光标前的词           |
