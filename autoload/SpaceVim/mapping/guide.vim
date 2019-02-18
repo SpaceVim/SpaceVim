@@ -260,6 +260,28 @@ function! s:calc_layout() abort " {{{
   endif
   return ret
 endfunction " }}}
+
+" icon -> number -> A-Za-z 
+" 65-90 97-122
+function! s:compare_key(i1, i2) abort
+  let a = char2nr(a:i1)
+  let b = char2nr(a:i2)
+  if a - b == 32 && a >= 97 && a <= 122
+    return -1
+  elseif b - a == 32 && b >= 97 && b <= 122
+    return 1
+  elseif a >= 97 && a <= 122 && b >= 97 && b <= 122
+    return a == b ? 0 : a > b ? 1 : -1
+  elseif a >= 65 && a <= 90 && b >= 65 && b <= 90
+    return a == b ? 0 : a > b ? 1 : -1
+  elseif a >= 97 && a <= 122 && b >= 65 && b <= 90
+    return s:compare_key(nr2char(a), nr2char(b + 32))
+  elseif a >= 65 && a <= 90 && b >= 97 && b <= 122
+    return s:compare_key(nr2char(a), nr2char(b - 32))
+  endif
+  return a == b ? 0 : a > b ? 1 : -1
+endfunction
+
 function! s:create_string(layout) abort " {{{
   let l = a:layout
   let l.capacity = l.n_rows * l.n_cols
@@ -270,7 +292,7 @@ function! s:create_string(layout) abort " {{{
   let rows = []
   let row = 0
   let col = 0
-  let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'),'1')
+  let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'), function('s:compare_key'))
   for k in smap
     let desc = type(s:lmap[k]) == type({}) ? s:lmap[k].name : s:lmap[k][1]
     let displaystring = '['. k .'] '.desc
