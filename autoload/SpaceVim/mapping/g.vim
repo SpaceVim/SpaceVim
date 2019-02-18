@@ -17,7 +17,7 @@ function! SpaceVim#mapping#g#init() abort
 
     let g:_spacevim_mappings_g["'"] = ['call feedkeys("g' . "'" . '", "n")', 'jump to mark']
     nnoremap g' g'
-    let g:_spacevim_mappings_g["`"] = ['call feedkeys("g' . "`" . '", "n")', 'jump to mark']
+    let g:_spacevim_mappings_g['`'] = ['call feedkeys("g' . '`' . '", "n")', 'jump to mark']
     nnoremap g` g`
 
     let g:_spacevim_mappings_g['+'] = ['call feedkeys("g+", "n")', 'newer text state']

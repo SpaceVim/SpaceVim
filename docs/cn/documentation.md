@@ -84,8 +84,7 @@ lang: cn
     - [增加或减小数字](#增加或减小数字)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
-      - [Examples](#examples)
-    - [注释(Commentings)](#注释commentings)
+    - [注释 (Commentings)](#注释-commentings)
     - [多方式编码](#多方式编码)
   - [异步运行器和交互式编程](#异步运行器和交互式编程)
   - [错误处理](#错误处理)
@@ -99,7 +98,7 @@ lang: cn
 
 ## 核心思想
 
-四大核心思想：记忆辅助，可视化交互，一致性，社区驱动。
+四大核心思想：记忆辅助、可视化交互、一致性、社区驱动。
 
 如果违背了以上四大核心思想，我们将会尽力修复。
 
@@ -109,11 +108,11 @@ lang: cn
 
 **可视化交互**
 
-创新的实时快捷键辅助系统，以及查询系统，方便快捷查询到可用的模块、插件以及其他更多信息。
+创新的实时快捷键辅助系统，以及查询系统，方便快捷查询到可用的模块、插件以及其它更多信息。
 
 **一致性**
 
-相似的功能使用同样的快捷键，这在 SpaceVim 中随处可见。这得益于明确的约定。其他模块的文档都以此为基础。
+相似的功能使用同样的快捷键，这在 SpaceVim 中随处可见。这得益于明确的约定。其它模块的文档都以此为基础。
 
 **社区驱动**
 
@@ -331,7 +330,7 @@ endfunction
 
 **临时快捷键菜单**
 
-SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时，过多按下 `SPC` 前置键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些格外的辅助信息也将会体现出来。
+SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
 
 文本移动临时快捷键：
 
@@ -353,7 +352,7 @@ SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树�
     colorscheme_bg = "dark"
 ```
 
-| 快捷键    | 描述                 |
+| 快捷键    | 功能描述             |
 | --------- | -------------------- |
 | `SPC T n` | 切换至下一个随机主题 |
 | `SPC T s` | 通过 Unite 选择主题  |
@@ -387,7 +386,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 大多数界面元素可以通过快捷键来隐藏或者显示（这一组快捷键以 `t` 和 `T` 开头）：
 
-| 快捷键      | 描述                                      |
+| 快捷键      | 功能描述                                  |
 | ----------- | ----------------------------------------- |
 | `SPC t 8`   | 高亮所有超过 80 列的字符                  |
 | `SPC t f`   | 高亮临界列，默认 `max_column` 是第 120 列 |
@@ -399,7 +398,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t n`   | 显示/隐藏行号                             |
 | `SPC t b`   | 切换背景色                                |
 | `SPC t t`   | 打开 Tab 管理器                           |
-| `SPC T ~`   | 显示/隐藏 buffer 结尾空行行首的 `~`       |
+| `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
 | `SPC T F`   | 切换全屏(TODO)                            |
 | `SPC T f`   | 显示/隐藏 Vim 边框(GUI)                   |
 | `SPC T m`   | 显示/隐藏菜单栏                           |
@@ -417,7 +416,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 - 显示/隐藏 SpaceVim 功能启用状态
 - 显示版本控制信息（需要 `git` 和 `VersionControl` 模块）
 
-| 快捷键      | 描述               |
+| 快捷键      | 功能描述           |
 | ----------- | ------------------ |
 | `SPC [1-9]` | 跳至指定序号的窗口 |
 
@@ -434,10 +433,11 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 一些状态栏元素可以进行动态的切换：
 
-| 快捷键      | 描述                                                                |
+| 快捷键      | 功能描述                                                            |
 | ----------- | ------------------------------------------------------------------- |
 | `SPC t m b` | 显示/隐藏电池状态 (需要安装 acpi)                                   |
 | `SPC t m c` | toggle the org task clock (available in org layer)(TODO)            |
+| `SPC t m i` | 显示/隐藏输入法                                                     |
 | `SPC t m m` | 显示/隐藏 SpaceVim 已启用功能                                       |
 | `SPC t m M` | 显示/隐藏文件类型                                                   |
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
@@ -572,7 +572,7 @@ endfunction
 
 如果只有一个 Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
-| 快捷键       | 描述             |
+| 快捷键       | 功能描述         |
 | ------------ | ---------------- |
 | `<Leader> 1` | 跳至标签栏序号 1 |
 | `<Leader> 2` | 跳至标签栏序号 2 |
@@ -586,7 +586,7 @@ endfunction
 
 标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
-| 按键             | 描述         |
+| 快捷键           | 功能描述     |
 | ---------------- | ------------ |
 | `<Mouse-left>`   | 切换至该标签 |
 | `<Mouse-middle>` | 删除该标签   |
@@ -595,7 +595,7 @@ endfunction
 
 可使用 `SPC t t` 打开内置的标签管理器，标签管理器内的快捷键如下：
 
-| 按键         | 描述                       |
+| 快捷键       | 功能描述                   |
 | ------------ | -------------------------- |
 | `o`          | 展开或关闭标签目录         |
 | `r`          | 重命名光标下的标签页       |
@@ -613,7 +613,7 @@ endfunction
 窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀按键为 `s`，可以在配置文件中通过修改
 SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
-| 按键            | 描述                                                                                                                                                                                                                           |
+| 快捷键          | 功能描述                                                                                                                                                                                                                       |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `q`             | Smart buffer close                                                                                                                                                                                                             |
 | `s`+`p`         | Split nicely                                                                                                                                                                                                                   |
@@ -707,12 +707,12 @@ can be get by `<leader> q r`
 
 ### Bookmarks management
 
-| Key     |  Mode  | Action                          |
-| ------- | :----: | ------------------------------- |
-| `m`+`a` | Normal | Show list of all bookmarks      |
+| 快捷键  | 模式   | 功能描述                        |
+| ------- | ------ | ------------------------------- |
+| `m`+`a` | Normal | 显示书签列表                    |
 | `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | Jump to next bookmark           |
-| `m`+`p` | Normal | Jump to previous bookmark       |
+| `m`+`n` | Normal | 跳至下一个书签                  |
+| `m`+`p` | Normal | 跳至前一个书签                  |
 | `m`+`i` | Normal | Annotate bookmark               |
 
 As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
@@ -727,7 +727,7 @@ features.
 
 **快捷键**
 
-| 快捷键               | 描述                          |
+| 快捷键               | 功能描述                      |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
 | `<Leader> f e`       | Fuzzy find register           |
@@ -756,7 +756,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Key bindings within fuzzy finder buffer**
 
-| 快捷键                | 模式   | 描述                                      |
+| 快捷键                | 模式   | 功能描述                                  |
 | --------------------- | ------ | ----------------------------------------- |
 | `Tab`/`<C-j>`         | -      | Select next line                          |
 | `Shift + Tab`/`<C-k>` | -      | Select previous line                      |
@@ -770,7 +770,7 @@ But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finis
 
 **Denite/Unite normal mode key bindings**
 
-| 快捷键           | 模式          | 描述                                 |
+| 快捷键           | 模式          | 功能描述                             |
 | ---------------- | ------------- | ------------------------------------ |
 | `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
 | `Ctrl`+`l`       | Normal        | Redraw                               |
@@ -791,7 +791,7 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 
 这些前缀的按键为：
 
-| 前缀名称   | 用户选项以及默认值     | 描述                    |
+| 前缀名称   | 用户选项以及默认值     | 功能描述                |
 | ---------- | ---------------------- | ----------------------- |
 | `[SPC]`    | 空格键                 | SpaceVim 默认前缀键     |
 | `[Window]` | `windows_leader` / `s` | SpaceVim 默认窗口前缀键 |
@@ -805,7 +805,7 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 
 这一导航窗口将提示所有以空格键为前缀的快捷键，并且根据功能将这些快捷键进行了分组，例如 buffer 相关的快捷键都是 `b`，工程相关的快捷键都是 `p`。在代码导航窗口内，按下 `<C-h>` 键，可以获取一些帮助信息，这些信息将被显示在状态栏上，提示的是一些翻页和撤销按键的快捷键。
 
-| 按键 | 描述     |
+| 按键 | 功能描述 |
 | ---- | -------- |
 | `u`  | 撤销按键 |
 | `n`  | 向下翻页 |
@@ -829,7 +829,7 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| 快捷键      | 描述                                               |
+| 快捷键      | 功能描述                                           |
 | ----------- | -------------------------------------------------- |
 | `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
 | `SPC h i`   | 获取光标下单词的帮助信息                           |
@@ -838,7 +838,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 报告一个问题：
 
-| 快捷键    | 描述                            |
+| 快捷键    | 功能描述                        |
 | --------- | ------------------------------- |
 | `SPC h I` | 根据模板展示 Issue 所必须的信息 |
 
@@ -868,9 +868,9 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 #### 光标移动
 
-光标的移动默认采用 vi 的默认形式：`hjkl`。
+光标的移动默认采用 Vi 的默认形式：`hjkl`。
 
-| 快捷键    | 描述                                       |
+| 快捷键    | 功能描述                                   |
 | --------- | ------------------------------------------ |
 | `h`       | 向左移动光标（Vim 原生功能，无映射）       |
 | `j`       | 向下移动光标（Vim 原生功能，无映射）       |
@@ -888,13 +888,13 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 类似于 Firefox 的 Vimperator 的 `f` 键的功能。
 
-| 快捷键                          | 描述              |
+| 快捷键                          | 功能描述          |
 | ------------------------------- | ----------------- |
 | `SPC j u`/(`o` for help buffer) | 快速跳到/打开 URL |
 
 #### 常用的成对快捷键
 
-| 快捷键  | 描述                                           |
+| 快捷键  | 功能描述                                       |
 | ------- | ---------------------------------------------- |
 | `[ SPC` | 在当前行或已选区域上方添加空行                 |
 | `] SPC` | 在当前行或已选区域下方添加空行                 |
@@ -924,7 +924,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ##### 跳转
 
-| 快捷键    | 描述                                             |
+| 快捷键    | 功能描述                                         |
 | --------- | ------------------------------------------------ |
 | `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
 | `SPC j $` | 跳至行尾，并且在原始位置留下标签，以便跳回       |
@@ -945,14 +945,14 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ##### 合并，拆分
 
-| 快捷键    | 描述                                         |
-| --------- | -------------------------------------------- |
-| `J`       | 合并当前行和下一行                           |
-| `SPC j k` | 跳至下一行，并且对齐该行                     |
-| `SPC j n` | 从光标处断开当前行，并且插入空行以及进行对齐 |
-| `SPC j o` | 从光标处拆分该行，光标留在当前行             |
-| `SPC j s` | 从光标处进行拆分 String                      |
-| `SPC j S` | 从光标处进行拆分 String，并插入对齐的空行    |
+| 快捷键    | 功能描述                                      |
+| --------- | --------------------------------------------- |
+| `J`       | 合并当前行和下一行                            |
+| `SPC j k` | 跳至下一行，并且对齐该行                      |
+| `SPC j n` | 从光标处断开当前行，并且插入空行以及进行对齐  |
+| `SPC j o` | 从光标处拆分该行，光标停留在当前行行尾        |
+| `SPC j s` | 从光标处拆分 String                           |
+| `SPC j S` | 从光标处使用换行符拆分 String，并自动缩进新行 |
 
 #### 窗口操作
 
@@ -960,7 +960,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 每一个窗口都有一个编号，该编号显示在状态栏的最前端，可通过 `SPC 编号` 进行快速窗口跳转。
 
-| 快捷键  | 描述       |
+| 快捷键  | 功能描述   |
 | ------- | ---------- |
 | `SPC 1` | 跳至窗口 1 |
 | `SPC 2` | 跳至窗口 2 |
@@ -974,7 +974,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键               | 描述                                                                           |
+| 快捷键               | 功能描述                                                                       |
 | -------------------- | ------------------------------------------------------------------------------ |
 | `SPC w TAB`/`<Tab>`  | 在同一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
@@ -1018,7 +1018,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
-| 快捷键          | 描述                                                                           |
+| 快捷键          | 功能描述                                                                       |
 | --------------- | ------------------------------------------------------------------------------ |
 | `SPC TAB`       | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
 | `SPC b .`       | 启用 buffer 临时快捷键                                                         |
@@ -1044,7 +1044,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 ##### 新建空白 buffer
 
-| 快捷键      | 描述                                        |
+| 快捷键      | 功能描述                                    |
 | ----------- | ------------------------------------------- |
 | `SPC b N h` | 在左侧新建一个窗口，并在其中新建空白 buffer |
 | `SPC b N j` | 在下方新建一个窗口，并在其中新建空白 buffer |
@@ -1060,7 +1060,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 文件操作相关的快捷键都是以 `SPC f` 为前缀的：
 
-| 快捷键      | 描述                                                   |
+| 快捷键      | 功能描述                                               |
 | ----------- | ------------------------------------------------------ |
 | `SPC f /`   | 使用 `find` 命令查找文件，支持参数提示                 |
 | `SPC f b`   | 跳至文件书签                                           |
@@ -1084,7 +1084,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 SpaceVim 的配置文件：
 
-| 快捷键      | 描述                           |
+| 快捷键      | 功能描述                       |
 | ----------- | ------------------------------ |
 | `SPC f v v` | 复制并显示当前 SpaceVim 的版本 |
 | `SPC f v d` | 打开 SpaceVim 的用户配置文件   |
@@ -1109,7 +1109,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 文件树中主要以 `hjkl` 为核心，这类似于 [vifm](https://github.com/vifm) 中常用的快捷键：
 
-| 快捷键               | 描述                         |
+| 快捷键               | 功能描述                     |
 | -------------------- | ---------------------------- |
 | `<F3>` or `SPC f t`  | 切换文件树                   |
 | **文件树内的快捷键** |                              |
@@ -1135,7 +1135,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要指定窗口来打开文件：
 
-| 快捷键         | 描述             |
+| 快捷键         | 功能描述         |
 | -------------- | ---------------- |
 | `l` or `Enter` | 打开文件         |
 | `sg`           | 分屏打开文件     |
@@ -1145,7 +1145,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 在 Normal 模式下按下 `g` 之后，如果你不记得快捷键出现按键延迟，那么快捷键导航将会提示你所有以 `g` 为前缀的快捷键。
 
-| 快捷键    | 描述                                            |
+| 快捷键    | 功能描述                                        |
 | --------- | ----------------------------------------------- |
 | `g#`      | 反向搜索光标下的词                              |
 | `g$`      | 跳向本行最右侧字符                              |
@@ -1197,7 +1197,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 当你不记得按键映射时，你可以在普通模式下输入前缀 `z`, 然后你会看到所有以 `z` 为前缀的函数映射。
 
-| 快捷键      | 描述                                         |
+| 快捷键      | 功能描述                                     |
 | ----------- | -------------------------------------------- |
 | `z<Right>`  | scroll screen N characters to left           |
 | `z+`        | cursor to screen top line N                  |
@@ -1278,7 +1278,7 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 应当避免的范围和对应按键为：
 
 | 范围           | 键  |
-| -------------  | --- |
+| -------------- | --- |
 | 打开的缓冲区   | b   |
 | 给定目录的文件 | f   |
 | 当前工程       | p   |
@@ -1323,7 +1323,7 @@ endfunction
 
 ##### 常用按键绑定
 
-| 快捷键          | 描述                                      |
+| 快捷键          | 功能描述                                  |
 | --------------- | ----------------------------------------- |
 | `SPC r l`       | resume the last completion buffer         |
 | `` SPC s ` ``   | go back to the previous place before jump |
@@ -1331,7 +1331,7 @@ endfunction
 
 ##### 在当前文件中进行搜索
 
-| 快捷键      | 描述                                                |
+| 快捷键      | 功能描述                                            |
 | ----------- | --------------------------------------------------- |
 | `SPC s s`   | search with the first found tool                    |
 | `SPC s S`   | search with the first found tool with default input |
@@ -1344,7 +1344,7 @@ endfunction
 
 ##### 搜索当前文件所在的文件夹
 
-| 快捷键      | 描述                                                        |
+| 快捷键      | 功能描述                                                    |
 | ----------- | ----------------------------------------------------------- |
 | `SPC s d`   | searching in buffer directory with default tool             |
 | `SPC s D`   | searching in buffer directory cursor word with default tool |
@@ -1361,7 +1361,7 @@ endfunction
 
 ##### 在所有打开的缓冲区中进行搜索
 
-| 快捷键      | 描述                                                |
+| 快捷键      | 功能描述                                            |
 | ----------- | --------------------------------------------------- |
 | `SPC s b`   | search with the first found tool                    |
 | `SPC s B`   | search with the first found tool with default input |
@@ -1378,7 +1378,7 @@ endfunction
 
 ##### 在任意目录中进行搜索
 
-| 快捷键      | 描述                                                |
+| 快捷键      | 功能描述                                            |
 | ----------- | --------------------------------------------------- |
 | `SPC s f`   | search with the first found tool                    |
 | `SPC s F`   | search with the first found tool with default input |
@@ -1395,7 +1395,7 @@ endfunction
 
 ##### 在工程中进行搜索
 
-| 快捷键               | 描述                                                |
+| 快捷键               | 功能描述                                            |
 | -------------------- | --------------------------------------------------- |
 | `SPC /` or `SPC s p` | search with the first found tool                    |
 | `SPC *` or `SPC s P` | search with the first found tool with default input |
@@ -1416,7 +1416,7 @@ endfunction
 
 在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
 
-| 快捷键      | 描述                                                       |
+| 快捷键      | 功能描述                                                   |
 | ----------- | ---------------------------------------------------------- |
 | `SPC s j`   | searching input expr background with the first found tool  |
 | `SPC s J`   | searching cursor word background with the first found tool |
@@ -1434,7 +1434,7 @@ endfunction
 
 ##### 在网上进行搜索
 
-| 快捷键      | 描述                                                                     |
+| 快捷键      | 功能描述                                                                 |
 | ----------- | ------------------------------------------------------------------------ |
 | `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
@@ -1448,13 +1448,13 @@ endfunction
 
 #### 实时代码检索
 
-| 快捷键      | 描述                             |
+| 快捷键      | 功能描述                         |
 | ----------- | -------------------------------- |
 | `SPC s g G` | 在工程中使用默认工具实时检索代码 |
 
 FlyGrep 缓冲区的按键绑定：
 
-| 快捷键           | 描述                              |
+| 快捷键           | 功能描述                          |
 | ---------------- | --------------------------------- |
 | `<Esc>`          | close FlyGrep buffer              |
 | `<Enter>`        | open file at the cursor line      |
@@ -1486,7 +1486,7 @@ It is also possible to change the range of the navigation on the fly to:
 
 Navigation between the highlighted symbols can be done with the commands:
 
-| 快捷键      | 描述                                                                         |
+| 快捷键      | 功能描述                                                                     |
 | ----------- | ---------------------------------------------------------------------------- |
 | `*`         | initiate navigation transient state on current symbol and jump forwards      |
 | `#`         | initiate navigation transient state on current symbol and jump backwards     |
@@ -1496,7 +1496,7 @@ Navigation between the highlighted symbols can be done with the commands:
 
 In highlight symbol transient state:
 
-| 快捷键        | 描述                                                          |
+| 快捷键        | 功能描述                                                      |
 | ------------- | ------------------------------------------------------------- |
 | `e`           | edit occurrences (`*`)                                        |
 | `n`           | go to next occurrence                                         |
@@ -1518,68 +1518,69 @@ In highlight symbol transient state:
 
 文本相关的命令 (以 `x` 开头)：
 
-| 快捷键        | 描述                                                                 |
-| ------------- | -------------------------------------------------------------------- |
-| `SPC x a &`   | align region at &                                                    |
-| `SPC x a (`   | align region at (                                                    |
-| `SPC x a )`   | align region at )                                                    |
-| `SPC x a [`   | align region at [                                                    |
-| `SPC x a ]`   | align region at ]                                                    |
-| `SPC x a {`   | align region at {                                                    |
-| `SPC x a }`   | align region at }                                                    |
-| `SPC x a ,`   | align region at ,                                                    |
-| `SPC x a .`   | align region at . (for numeric tables)                               |
-| `SPC x a :`   | align region at :                                                    |
-| `SPC x a ;`   | align region at ;                                                    |
-| `SPC x a =`   | align region at =                                                    |
-| `SPC x a ¦`   | align region at ¦                                                    |
-| `SPC x a |`   | align region at |                                                    |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`   | align region using user-specified regexp (TODO)                      |
-| `SPC x a m`   | align region at arithmetic operators `(+-*/)` (TODO)                 |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |
-| `SPC x d w`   | delete trailing whitespaces                                          |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
-| `SPC x g t`   | translate current word using Google Translate                        |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |
-| `SPC x i _`   | change symbol style to `under_score`                                 |
-| `SPC x i u`   | change symbol style to `under_score`                                 |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`   | set the justification to center (TODO)                               |
-| `SPC x j f`   | set the justification to full (TODO)                                 |
-| `SPC x j l`   | set the justification to left (TODO)                                 |
-| `SPC x j n`   | set the justification to none (TODO)                                 |
-| `SPC x j r`   | set the justification to right (TODO)                                |
-| `SPC x J`     | move down a line of text (enter transient state)                     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |
-| `SPC x l s`   | sort lines (TODO)                                                    |
-| `SPC x l u`   | uniquify lines (TODO)                                                |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |
-| `SPC x u`     | set the selected text to lower case (TODO)                           |
-| `SPC x U`     | set the selected text to upper case (TODO)                           |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x TAB`   | indent or dedent a region rigidly (TODO)                             |
+| 快捷键          | 功能描述                                                             |
+| --------------- | -------------------------------------------------------------------- |
+| `SPC x a &`     | 基于分隔符 & 进行文本对齐                                            |
+| `SPC x a (`     | 基本分隔符 ( 进行文本对齐                                            |
+| `SPC x a )`     | 基本分隔符 ) 进行文本对齐                                            |
+| `SPC x a [`     | 基本分隔符 [ 进行文本对齐                                            |
+| `SPC x a ]`     | 基本分隔符 ] 进行文本对齐                                            |
+| `SPC x a {`     | 基本分隔符 { 进行文本对齐                                            |
+| `SPC x a }`     | 基本分隔符 } 进行文本对齐                                            |
+| `SPC x a ,`     | 基本分隔符 , 进行文本对齐                                            |
+| `SPC x a .`     | 基本分隔符 . 进行文本对齐(for numeric tables)                        |
+| `SPC x a :`     | 基本分隔符 : 进行文本对齐                                            |
+| `SPC x a ;`     | 基本分隔符 ; 进行文本对齐                                            |
+| `SPC x a =`     | 基本分隔符 = 进行文本对齐                                            |
+| `SPC x a ¦`     | 基本分隔符 ¦ 进行文本对齐                                            |
+| `SPC x a |`     | 基本分隔符 \| 进行文本对齐                                           |
+| `SPC x a [SPC]` | 基本分隔符 [SPC] 进行文本对齐                                        |
+| `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
+| `SPC x a c`     | align current indentation region using default rules (TODO)          |
+| `SPC x a l`     | left-align with evil-lion (TODO)                                     |
+| `SPC x a L`     | right-align with evil-lion (TODO)                                    |
+| `SPC x a r`     | 基本用户自定义正则表达式进行文本对齐                                 |
+| `SPC x a o`     | align region at arithmetic operators `+-*/`                          |
+| `SPC x c`       | count the number of chars/words/lines in the selection region        |
+| `SPC x d w`     | delete trailing whitespaces                                          |
+| `SPC x d SPC`   | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x g l`     | set lanuages used by translate commands (TODO)                       |
+| `SPC x g t`     | translate current word using Google Translate                        |
+| `SPC x g T`     | reverse source and target languages (TODO)                           |
+| `SPC x i c`     | change symbol style to `lowerCamelCase`                              |
+| `SPC x i C`     | change symbol style to `UpperCamelCase`                              |
+| `SPC x i i`     | cycle symbol naming styles (i to keep cycling)                       |
+| `SPC x i -`     | change symbol style to `kebab-case`                                  |
+| `SPC x i k`     | change symbol style to `kebab-case`                                  |
+| `SPC x i _`     | change symbol style to `under_score`                                 |
+| `SPC x i u`     | change symbol style to `under_score`                                 |
+| `SPC x i U`     | change symbol style to `UP_CASE`                                     |
+| `SPC x j c`     | 居中对齐当前段落                                                     |
+| `SPC x j f`     | set the justification to full (TODO)                                 |
+| `SPC x j l`     | 左对齐当前段落                                                       |
+| `SPC x j n`     | set the justification to none (TODO)                                 |
+| `SPC x j r`     | 右对齐当前段落                                                       |
+| `SPC x J`       | move down a line of text (enter transient state)                     |
+| `SPC x K`       | move up a line of text (enter transient state)                       |
+| `SPC x l d`     | duplicate line or region (TODO)                                      |
+| `SPC x l s`     | sort lines (TODO)                                                    |
+| `SPC x l u`     | uniquify lines (TODO)                                                |
+| `SPC x o`       | use avy to select a link in the frame and open it (TODO)             |
+| `SPC x O`       | use avy to select multiple links in the frame and open them (TODO)   |
+| `SPC x t c`     | swap (transpose) the current character with the previous one         |
+| `SPC x t w`     | swap (transpose) the current word with the previous one              |
+| `SPC x t l`     | swap (transpose) the current line with the previous one              |
+| `SPC x u`       | 将选中字符串转为小写                                                 |
+| `SPC x U`       | 将选中字符串转为大写                                                 |
+| `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
+| `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
+| `SPC x TAB`     | indent or dedent a region rigidly (TODO)                             |
 
 #### 文本插入命令
 
 文本插入相关命令（以 `i` 开头）：
 
-| 快捷键      | 描述                                                                  |
+| 快捷键      | 功能描述                                                              |
 | ----------- | --------------------------------------------------------------------- |
 | `SPC i l l` | insert lorem-ipsum list                                               |
 | `SPC i l p` | insert lorem-ipsum paragraph                                          |
@@ -1596,14 +1597,14 @@ In highlight symbol transient state:
 
 #### 增加或减小数字
 
-| 快捷键    | 描述                                               |
+| 快捷键    | 功能描述                                           |
 | --------- | -------------------------------------------------- |
 | `SPC n +` | 为光标下的数字加 1 并进入 initiate transient state |
 | `SPC n -` | 为光标下的数字减 1 并进入 initiate transient state |
 
 In transient state：
 
-| 快捷键     | 描述                 |
+| 快捷键     | 功能描述             |
 | ---------- | -------------------- |
 | `+`        | 为光标下的数字加 1   |
 | `-`        | 为光标下的数字减 1   |
@@ -1631,7 +1632,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| 快捷键        | 描述                                                                            |
+| 快捷键        | 功能描述                                                                        |
 | ------------- | ------------------------------------------------------------------------------- |
 | `Esc`         | go back to `Normal` mode                                                        |
 | `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
@@ -1653,33 +1654,33 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **In iedit-Insert mode:**
 
-| 快捷键      | 描述                           |
-| ----------- | ------------------------------ |
-| `Esc`       | go back to `iedit-Normal` mode |
-| `<Left>`    | Move cursor to left            |
-| `<Right>`   | Move cursor to right           |
-| `<C-w>`     | delete words before cursor     |
-| `<C-K>`     | delete words after cursor      |
+| 快捷键      | 功能描述                 |
+| ----------- | ------------------------ |
+| `Esc`       | 回到 `iedit-Normal` 模式 |
+| `<Left>`    | 左移光标                 |
+| `<Right>`   | 右移光标                 |
+| `<C-w>`     | 删除光标前的词           |
+| `<C-K>`     | 删除光标后的词           |
 
-##### Examples
+#### 注释 (Commentings)
 
-#### 注释(Commentings)
+注释 (comment) 通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
-注释(comment)通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
-
-| 快捷键      | 描述                            |
-| ----------- | ------------------------------- |
-| `SPC ;`     | enter comment operator mode     |
-| `SPC c h`   | hide/show comments(TODO)        |
-| `SPC c l`   | comment lines                   |
-| `SPC c L`   | invert comment lines            |
-| `SPC c p`   | comment paragraphs              |
-| `SPC c P`   | invert comment paragraphs       |
-| `SPC c s`   | comment with sexy/pretty layout |
-| `SPC c t`   | comment to line                 |
-| `SPC c T`   | invert comment to line          |
-| `SPC c y`   | comment and yank(TODO)          |
-| `SPC c Y`   | invert comment and yank(TODO)   |
+| 快捷键      | 功能描述                      |
+| ----------- | ----------------------------- |
+| `SPC ;`     | 进入注释操作模式              |
+| `SPC c h`   | 隐藏/显示注释                 |
+| `SPC c l`   | 注释/反注释当前行             |
+| `SPC c L`   | 注释行                        |
+| `SPC c u`   | 反注释行                      |
+| `SPC c p`   | 注释/反注释段落               |
+| `SPC c P`   | 注释段落                      |
+| `SPC c s`   | 使用完美格式注释              |
+| `SPC c t`   | 注释/反注释到行               |
+| `SPC c T`   | 注释到行                      |
+| `SPC c y`   | toggle comment and yank(TODO) |
+| `SPC c Y`   | 复制到未命名寄存器后注释      |
+| `SPC c $`   | 从光标位置开始注释当前行      |
 
 小提示：
 
@@ -1708,7 +1709,7 @@ SpaceVim 提供了一个异步执行命令和交互式编程的插件，
 在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为`SPC l r`。
 如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。
 
-```viml
+```vim
 nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
 ```
 
@@ -1730,7 +1731,7 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 
 错误管理导航键 (以 `e` 开头)：
 
-| 快捷键    | 描述                                                                        |
+| 快捷键    | 功能描述                                                                    |
 | --------- | --------------------------------------------------------------------------- |
 | `SPC t s` | 切换语法检查器                                                              |
 | `SPC e c` | 清除所有错误                                                                |
@@ -1758,13 +1759,13 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 
 工程管理的命令以 `p` 开头：
 
-| 快捷键      | 描述                                            |
+| 快捷键      | 功能描述                                        |
 | ----------- | ----------------------------------------------- |
 | `SPC p '`   | 在当前工程的根目录打开 shell（需要 shell 模块） |
 
 #### 在工程中搜索文件
 
-| 快捷键      | 描述                                         |
+| 快捷键      | 功能描述                                     |
 | ----------- | -------------------------------------------- |
 | `SPC p f`   | 在当前工程中查找文件                         |
 | `SPC p /`   | 在当前工程中搜索文件（fuzzy search for text) |
@@ -1787,7 +1788,7 @@ SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 V
 如果你使用 Neovim, 你需要安装[neovim-remote](https://github.com/mhinz/neovim-remote)，然后增加如下配置到你的 bashrc。
 
 ```bash
-    export PATH=$PATH:$HOME/.SpaceVim/bin
+export PATH=$PATH:$HOME/.SpaceVim/bin
 ```
 
 Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing Neovim server.

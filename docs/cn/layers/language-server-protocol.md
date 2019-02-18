@@ -100,6 +100,12 @@ julia> Pkg.clone("https://github.com/JuliaEditorSupport/LanguageServer.jl")
 npm install vue-language-server -g
 ```
 
+**css:**
+
+```sh
+npm install -g vscode-css-languageserver-bin
+```
+
 ## 模块配置
 
 为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
@@ -117,21 +123,23 @@ npm install vue-language-server -g
 
 | 语言         | 命令                                                                                                                                                                                             |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
-| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
-| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
-| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
-| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
-| `objc`       | `['clangd']`                                                                                                                                                                                     |
-| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
 | `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
-| `python`     | `['pyls']`                                                                                                                                                                                       |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
+| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
 | `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `objc`       | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `python`     | `['pyls']`                                                                                                                                                                                       |
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
 | `vue`        | `['vls']`                                                                                                                                                                                        |
 
 如果需要修改语言服务器的命令，在载入模块时，需要指定 `override_cmd` 选项：
@@ -149,7 +157,7 @@ npm install vue-language-server -g
 
 ## 快捷键
 
-| 按键            | 描述          |
+| 快捷键          | 功能描述      |
 | --------------- | ------------- |
 | `K` / `SPC l d` | 显示文档      |
 | `SPC l e`       | 重命名 symbol |

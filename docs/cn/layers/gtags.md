@@ -1,10 +1,11 @@
 ---
-title: "SpaceVim tags 模块"
-description: "这一模块为 SpaceVim 提供了全局的 tags 索引管理，提供快速检索定义和引用的功能。"
+title: "SpaceVim gtags 模块"
+description: "这一模块为 SpaceVim 提供了全局的 gtags 索引管理，提供快速检索定义和引用的功能。"
+redirect_from: "/cn/layers/tags/"
 lang: cn
 ---
 
-# [可用模块](../) >> tags
+# [可用模块](../) >> gtags
 
 <!-- vim-markdown-toc GFM -->
 
@@ -45,7 +46,7 @@ tags 模块提供了项目 tags 管理工具，依赖 SpaceVim 自身的项目�
 
 ### GNU Global (gtags)
 
-首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可更具当前使用的操作系统，
+首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可根据当前使用的操作系统，
 使用自带的软件包管理工具安装。
 
 ```sh
@@ -188,7 +189,7 @@ pygments 后，可以通过 gtags 查询函数和变量的定义以及引用处�
 
 ## 快捷键
 
-| 按键        | 描述                       |
+| 快捷键      | 功能描述                   |
 | ----------- | -------------------------- |
 | `SPC m g c` | 新建 tag 数据库            |
 | `SPC m g u` | 手动更新 tag 数据库        |

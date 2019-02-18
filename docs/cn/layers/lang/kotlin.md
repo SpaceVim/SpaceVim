@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#kotlin 模块"
-description: "该模块为 SpaceVim 提供了 kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
+description: "该模块为 SpaceVim 提供了 Kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
 lang: cn
 ---
 
@@ -11,18 +11,22 @@ lang: cn
 - [模块简介](#模块简介)
 - [功能特性](#功能特性)
 - [启用模块](#启用模块)
+- [快捷键](#快捷键)
+  - [交互式编程](#交互式编程)
+  - [运行当前文件](#运行当前文件)
 
 <!-- vim-markdown-toc -->
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 kotlin 语言开发支持。
+该模块为 SpaceVim 提供了 Kotlin 语言开发支持。
 
 ## 功能特性
 
 - 语法高亮
 - 语言服务器支持（需要启用 [lsp](https://spacevim.org/layers/language-server-protocol/) 模块）
-
+- 一键运行
+- 交互式编程
 
 ## 启用模块
 
@@ -33,6 +37,23 @@ lang: cn
   name = "lang#kotlin"
 ```
 
-若需要启用语言服务器支持，需要额外安装 kotlin 的语言服务器 [KotlinLanguageServer](https://github.com/fwcd/KotlinLanguageServer)。
+若需要启用语言服务器支持，需要额外安装 Kotlin 的语言服务器 [KotlinLanguageServer](https://github.com/fwcd/KotlinLanguageServer)。
 
+## 快捷键
+
+### 交互式编程
+
+启动 `kotlinc-jvm` 交互进程，快捷键为： `SPC l s i`。
+
+将代码传输给 REPL 进程执行：
+
+| 快捷键      | 功能描述                |
+| ----------- | ----------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL   |
+| `SPC l s s` | 发送已选中的内容至 REPL |
+
+### 运行当前文件
+
+在编辑 kotlin 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
 

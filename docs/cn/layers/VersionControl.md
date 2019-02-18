@@ -10,6 +10,7 @@ lang: cn
 
 - [模块介绍](#模块介绍)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -30,33 +31,36 @@ lang: cn
 [[layers]]
   name = "VersionControl"
 ```
+## 模块选项
+
+`enable-gtm-status`: 在状态栏展示当前分支工作的时间，这一特性需要安装 [gtm](https://github.com/git-time-metric/gtm) 命令。
 
 ## 快捷键
 
-| 按键      | 描述                       |
+| 快捷键    | 功能描述                   |
 | --------- | -------------------------- |
 | `SPC g .` | 打开版本控制临时快捷键菜单 |
 
 **临时快捷键菜单**
 
-| 按键  | 描述                         |
-| ----- | ---------------------------- |
-| `w`   | Stage 当前文件               |
-| `u`   | Unstage 当前文件             |
-| `n`   | 下一个 vcs hunk              |
-| `N/p` | 上一个 vcs hunk              |
-| `t`   | 启用/禁用 diff signs         |
-| `l`   | 显示仓库 log                 |
-| `D`   | Show diffs of unstaged hunks |
-| `f`   | Fetch for repo with popup    |
-| `F`   | Pull repo with popup         |
-| `P`   | Push repo with popup         |
-| `c`   | Commit with popup            |
-| `C`   | Commit                       |
+| 快捷键 | 功能描述                     |
+| -----  | ---------------------------- |
+| `w`    | Stage 当前文件               |
+| `u`    | Unstage 当前文件             |
+| `n`    | 下一个 vcs hunk              |
+| `N/p`  | 上一个 vcs hunk              |
+| `t`    | 启用/禁用 diff signs         |
+| `l`    | 显示仓库 log                 |
+| `D`    | Show diffs of unstaged hunks |
+| `f`    | Fetch for repo with popup    |
+| `F`    | Pull repo with popup         |
+| `P`    | Push repo with popup         |
+| `c`    | Commit with popup            |
+| `C`    | Commit                       |
 
 **通用快捷键**
 
-| 按键  | 描述                |
-| ----- | ------------------- |
-| `[ c` | 跳至上一个 vcs hunk |
-| `] c` | 跳至下一个 vcs hunk |
+| 快捷键 | 功能描述            |
+| ------ | ------------------- |
+| `[ c`  | 跳至上一个 vcs hunk |
+| `] c`  | 跳至下一个 vcs hunk |

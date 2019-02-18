@@ -61,9 +61,9 @@ function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
   let msg = 'ArgLead: ' . a:ArgLead . ' CmdLine: ' . a:CmdLine . ' CursorPos: '
         \ . a:CursorPos . ' LastArgv: ' . last_argv
   call add(self._message, msg)
-  if a:ArgLead == '' && index(keys(self.options), last_argv) == -1
+  if a:ArgLead ==# '' && index(keys(self.options), last_argv) == -1
     return join(keys(self.options), "\n")
-  elseif a:ArgLead == '' && index(keys(self.options), last_argv) != -1
+  elseif a:ArgLead ==# '' && index(keys(self.options), last_argv) != -1
     return self._complete_opt(a:ArgLead, last_argv)
   elseif !empty(a:ArgLead) && len(argvs) >= 3
         \ && index(keys(self.options), argvs[-2]) != -1
@@ -85,9 +85,9 @@ function! s:self.completelist(ArgLead, CmdLine, CursorPos) abort
   let msg = 'ArgLead: ' . a:ArgLead . ' CmdLine: ' . a:CmdLine . ' CursorPos: '
         \ . a:CursorPos . ' LastArgv: ' . last_argv
   call add(self._message, msg)
-  if a:ArgLead == '' && index(keys(self.options), last_argv) == -1
+  if a:ArgLead ==# '' && index(keys(self.options), last_argv) == -1
     return keys(self.options)
-  elseif a:ArgLead == '' && index(keys(self.options), last_argv) != -1
+  elseif a:ArgLead ==# '' && index(keys(self.options), last_argv) != -1
     return self._complete_opt_list(a:ArgLead, last_argv)
   elseif !empty(a:ArgLead) && len(argvs) >= 3
         \ && index(keys(self.options), argvs[-2]) != -1
@@ -108,7 +108,7 @@ endfunction
 
 
 
-function! SpaceVim#api#vim#command#get()
+function! SpaceVim#api#vim#command#get() abort
   return deepcopy(s:self)
 endfunction
 
