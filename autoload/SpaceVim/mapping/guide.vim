@@ -264,8 +264,8 @@ endfunction " }}}
 " icon -> number -> A-Za-z 
 " 65-90 97-122
 function! s:compare_key(i1, i2) abort
-  let a = char2nr(a:i1 ==# '[SPC]' ? ' ' : a:i1 == '<Tab>' ? "\t" : a:i1)
-  let b = char2nr(a:i2 ==# '[SPC]' ? ' ' : a:i2 == '<Tab>' ? "\t" : a:i2)
+  let a = char2nr(a:i1 ==# '[SPC]' ? ' ' : a:i1 ==? '<Tab>' ? "\t" : a:i1)
+  let b = char2nr(a:i2 ==# '[SPC]' ? ' ' : a:i2 ==? '<Tab>' ? "\t" : a:i2)
   if a - b == 32 && a >= 97 && a <= 122
     return -1
   elseif b - a == 32 && b >= 97 && b <= 122
