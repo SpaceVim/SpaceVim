@@ -369,33 +369,33 @@ function! s:previous_window() abort
 endfunction
 
 function! s:split_string(newline) abort
-  let syn_name = synIDattr(synID(line('.'), col('.'), 1), 'name')
-  if syn_name == &filetype . 'String'
+  if s:is_string(line('.'), col('.'))
     let c = col('.')
     let sep = ''
     while c > 0
       if s:is_string(line('.'), c)
-        let c = c - 1
+        let c -= 1
       else
         let sep = getline('.')[c]
         break
       endif
     endwhile
     if a:newline
-      let save_register_m = @m
-      let @m = sep . "\n" . sep
-      normal! "mp
-      let @m = save_register_m
+      let l:connector = "\n"
     else
-      let save_register_m = @m
-      let @m = sep . sep
-      normal! "mp
-      let @m = save_register_m
+      let l:connector = ''
+    endif
+    let l:save_register_m = @m
+    let @m = sep . l:connector . sep
+    normal! "mp
+    let @m = l:save_register_m
+    if a:newline
+      normal! j==k$
     endif
   endif
 endfunction
 
-function! s:is_string(l,c) abort
+function! s:is_string(l, c) abort
   return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
 endfunction
 

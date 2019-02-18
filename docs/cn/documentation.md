@@ -945,14 +945,14 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ##### 合并，拆分
 
-| 快捷键    | 描述                                         |
-| --------- | -------------------------------------------- |
-| `J`       | 合并当前行和下一行                           |
-| `SPC j k` | 跳至下一行，并且对齐该行                     |
-| `SPC j n` | 从光标处断开当前行，并且插入空行以及进行对齐 |
-| `SPC j o` | 从光标处拆分该行，光标留在当前行             |
-| `SPC j s` | 从光标处进行拆分 String                      |
-| `SPC j S` | 从光标处进行拆分 String，并插入对齐的空行    |
+| 快捷键    | 功能描述                                      |
+| --------- | --------------------------------------------- |
+| `J`       | 合并当前行和下一行                            |
+| `SPC j k` | 跳至下一行，并且对齐该行                      |
+| `SPC j n` | 从光标处断开当前行，并且插入空行以及进行对齐  |
+| `SPC j o` | 从光标处拆分该行，光标停留在当前行行尾        |
+| `SPC j s` | 从光标处拆分 String                           |
+| `SPC j S` | 从光标处使用换行符拆分 String，并自动缩进新行 |
 
 #### 窗口操作
 
@@ -960,7 +960,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 每一个窗口都有一个编号，该编号显示在状态栏的最前端，可通过 `SPC 编号` 进行快速窗口跳转。
 
-| 快捷键  | 描述       |
+| 快捷键  | 功能描述   |
 | ------- | ---------- |
 | `SPC 1` | 跳至窗口 1 |
 | `SPC 2` | 跳至窗口 2 |
@@ -974,7 +974,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键               | 描述                                                                           |
+| 快捷键               | 功能描述                                                                       |
 | -------------------- | ------------------------------------------------------------------------------ |
 | `SPC w TAB`/`<Tab>`  | 在同一标签内进行窗口切换                                                       |
 | `SPC w =`            | 对齐分离的窗口                                                                 |
@@ -1044,7 +1044,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 
 ##### 新建空白 buffer
 
-| 快捷键      | 描述                                        |
+| 快捷键      | 功能描述                                    |
 | ----------- | ------------------------------------------- |
 | `SPC b N h` | 在左侧新建一个窗口，并在其中新建空白 buffer |
 | `SPC b N j` | 在下方新建一个窗口，并在其中新建空白 buffer |
@@ -1539,7 +1539,7 @@ In highlight symbol transient state:
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
 | `SPC x a L`     | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`     | 基本用户自定义的正则表达式进行文本对齐                               |
+| `SPC x a r`     | 基本用户自定义正则表达式进行文本对齐                                 |
 | `SPC x a o`     | align region at arithmetic operators `+-*/`                          |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |
