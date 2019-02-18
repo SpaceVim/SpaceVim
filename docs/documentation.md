@@ -1707,13 +1707,13 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c l`    | toggle comment lines                                    |
 | `SPC c L`    | comment lines                                           |
 | `SPC c u`    | uncomment lines                                         |
-| `SPC c p`    | comment paragraphs                                      |
-| `SPC c P`    | toggle comment paragraphs                               |
+| `SPC c p`    | toggle comment paragraphs                               |
+| `SPC c P`    | comment paragraphs                                      |
 | `SPC c s`    | comment with pretty layout                              |
-| `SPC c t`    | comment to line                                         |
-| `SPC c T`    | toggle comment to line                                  |
-| `SPC c y`    | yank and comment                                        |
-| `SPC c Y`    | toggle comment and yank(TODO)                           |
+| `SPC c t`    | toggle comment to line                                  |
+| `SPC c T`    | comment to line                                         |
+| `SPC c y`    | toggle comment and yank(TODO)                           |
+| `SPC c Y`    | yank and comment                                        |
 | `SPC c $`    | comment current line from cursor to the end of the line |
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
