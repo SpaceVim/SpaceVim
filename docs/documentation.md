@@ -242,7 +242,7 @@ endfunction
 ```
 
 The `bootstrap_before` will be called after custom configuration file is loaded.
-And the `bootstrap_after` will be called after VimEnter autocmd.
+And the `bootstrap_after` will be called after Vim Enter autocmd.
 
 If you want to add custom `SPC` prefix key bindings, you can add them to bootstrap function, **be sure** the key bindings are not used in SpaceVim.
 
@@ -673,11 +673,11 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
 | `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
 | `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`          | Normal        | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl-b`          | Normal        | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl-e`          | Normal        | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl-y`          | Normal        | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl-q`          | Normal        | `Ctrl`+`w`                                                                     |
+| `Ctrl-f`          | Normal        | Smart page forward (`Ctrl-f` / `Ctrl-d`)                                       |
+| `Ctrl-b`          | Normal        | Smart page backwards (`C-b` / `C-u`)                                           |
+| `Ctrl-e`          | Normal        | Smart scroll down (`3 Ctrl-e/j`)                                               |
+| `Ctrl-y`          | Normal        | Smart scroll up (`3Ctrl-y/k`)                                                  |
+| `Ctrl-q`          | Normal        | `Ctrl-w`                                                                       |
 | `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
 | `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
 | `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
@@ -1012,43 +1012,43 @@ Every window has a number displayed at the start of the statusline and can be qu
 
 Windows manipulation commands (start with `w`):
 
-| Key Bindings           | Descriptions                                                                                                  |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w <TAB>`          | switch to alternate window in the current frame (switch back and forth)                                       |
-| `SPC w =`              | balance split windows                                                                                         |
-| `SPC w b`              | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`              | Distraction-free reading current window (tools layer)                                                         |
-| `SPC w C`              | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
-| `SPC w d`              | delete a window                                                                                               |
-| `SPC u SPC w d`        | delete a window and its current buffer (does not delete the file) (TODO)                                      |
-| `SPC w D`              | delete another window using vim-choosewin                                                                     |
-| `SPC u SPC w D`        | delete another window and its current buffer using vim-choosewin (TODO)                                       |
-| `SPC w t`              | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`              | toggle follow mode (TODO)                                                                                     |
-| `SPC w F`              | create new tab(frame)                                                                                         |
-| `SPC w h`              | move to window on the left                                                                                    |
-| `SPC w H`              | move window to the left                                                                                       |
-| `SPC w j`              | move to window below                                                                                          |
-| `SPC w J`              | move window to the bottom                                                                                     |
-| `SPC w k`              | move to window above                                                                                          |
-| `SPC w K`              | move window to the top                                                                                        |
-| `SPC w l`              | move to window on the right                                                                                   |
-| `SPC w L`              | move window to the right                                                                                      |
-| `SPC w m`              | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
-| `SPC w M`              | swap windows using vim-choosewin                                                                              |
-| `SPC w o`              | cycle and focus between tabs                                                                                  |
-| `SPC w p m`            | open messages buffer in a popup window (TODO)                                                                 |
-| `SPC w p p`            | close the current sticky popup window (TODO)                                                                  |
-| `SPC w r`              | rotate windows forward                                                                                        |
-| `SPC w R`              | rotate windows backward                                                                                       |
-| `SPC w s` or `SPC w -` | horizontal split                                                                                              |
-| `SPC w S`              | horizontal split and focus new window                                                                         |
-| `SPC w u`              | undo window layout (used to effectively undo a closed window) (TODO)                                          |
-| `SPC w U`              | redo window layout (TODO)                                                                                     |
-| `SPC w v` or `SPC w /` | vertical split                                                                                                |
-| `SPC w V`              | vertical split and focus new window                                                                           |
-| `SPC w w`              | cycle and focus between windows                                                                               |
-| `SPC w W`              | select window using vim-choosewin                                                                             |
+| Key Bindings          | Descriptions                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
+| `SPC w =`             | balance split windows                                                                                         |
+| `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
+| `SPC w c`             | Distraction-free reading current window (tools layer)                                                         |
+| `SPC w C`             | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
+| `SPC w d`             | delete a window                                                                                               |
+| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)                                      |
+| `SPC w D`             | delete another window using vim-choosewin                                                                     |
+| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)                                       |
+| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
+| `SPC w f`             | toggle follow mode (TODO)                                                                                     |
+| `SPC w F`             | create new tab(frame)                                                                                         |
+| `SPC w h`             | move to window on the left                                                                                    |
+| `SPC w H`             | move window to the left                                                                                       |
+| `SPC w j`             | move to window below                                                                                          |
+| `SPC w J`             | move window to the bottom                                                                                     |
+| `SPC w k`             | move to window above                                                                                          |
+| `SPC w K`             | move window to the top                                                                                        |
+| `SPC w l`             | move to window on the right                                                                                   |
+| `SPC w L`             | move window to the right                                                                                      |
+| `SPC w m`             | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
+| `SPC w M`             | swap windows using vim-choosewin                                                                              |
+| `SPC w o`             | cycle and focus between tabs                                                                                  |
+| `SPC w p m`           | open messages buffer in a popup window (TODO)                                                                 |
+| `SPC w p p`           | close the current sticky popup window (TODO)                                                                  |
+| `SPC w r`             | rotate windows forward                                                                                        |
+| `SPC w R`             | rotate windows backward                                                                                       |
+| `SPC w s` / `SPC w -` | horizontal split                                                                                              |
+| `SPC w S`             | horizontal split and focus new window                                                                         |
+| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)                                          |
+| `SPC w U`             | redo window layout (TODO)                                                                                     |
+| `SPC w v` / `SPC w /` | vertical split                                                                                                |
+| `SPC w V`             | vertical split and focus new window                                                                           |
+| `SPC w w`             | cycle and focus between windows                                                                               |
+| `SPC w W`             | select window using vim-choosewin                                                                             |
 
 #### Buffers and Files
 
@@ -1058,7 +1058,7 @@ Buffer manipulation commands (start with `b`):
 
 | Key Bindings    | Descriptions                                                                   |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC <TAB>`     | switch to alternate buffer in the current window (switch back and forth)       |
+| `SPC <Tab>`     | switch to alternate buffer in the current window (switch back and forth)       |
 | `SPC b .`       | buffer transient state                                                         |
 | `SPC b b`       | switch to a buffer (via denite/unite)                                          |
 | `SPC b d`       | kill the current buffer (does not delete the visited file)                     |
@@ -1178,7 +1178,7 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 
 | Key Bindings     | Descriptions                              |
 | ---------------- | ----------------------------------------- |
-| `l` or `<Enter>` | open file in one window                   |
+| `l` / `<Enter>` | open file in one window                   |
 | `sg`             | open file in an vertically split window   |
 | `sv`             | open file in an horizontally split window |
 
@@ -1435,20 +1435,20 @@ The structure of searching tool profile is:
 
 ##### Searching in a project
 
-| Key Bindings         | Descriptions                                        |
-| -------------------- | --------------------------------------------------- |
-| `SPC /` or `SPC s p` | search with the first found tool                    |
-| `SPC *` or `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`          | ag                                                  |
-| `SPC s a P`          | ag with default text                                |
-| `SPC s g p`          | grep                                                |
-| `SPC s g p`          | grep with default text                              |
-| `SPC s k p`          | ack                                                 |
-| `SPC s k P`          | ack with default text                               |
-| `SPC s t p`          | pt                                                  |
-| `SPC s t P`          | pt with default text                                |
-| `SPC s r p`          | rg                                                  |
-| `SPC s r P`          | rg with default text                                |
+| Key Bindings        | Descriptions                                        |
+| ------------------- | --------------------------------------------------- |
+| `SPC /` / `SPC s p` | search with the first found tool                    |
+| `SPC *` / `SPC s P` | search with the first found tool with default input |
+| `SPC s a p`         | ag                                                  |
+| `SPC s a P`         | ag with default text                                |
+| `SPC s g p`         | grep                                                |
+| `SPC s g p`         | grep with default text                              |
+| `SPC s k p`         | ack                                                 |
+| `SPC s k P`         | ack with default text                               |
+| `SPC s t p`         | pt                                                  |
+| `SPC s t P`         | pt with default text                                |
+| `SPC s r p`         | rg                                                  |
+| `SPC s r P`         | rg with default text                                |
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
@@ -1534,7 +1534,7 @@ In highlight symbol transient state:
 | ------------- | ------------------------------------------------------------- |
 | `e`           | edit occurrences (`*`)                                        |
 | `n`           | go to next occurrence                                         |
-| `N`/`p`       | go to previous occurrence                                     |
+| `N` / `p`     | go to previous occurrence                                     |
 | `b`           | search occurrence in all buffers                              |
 | `/`           | search occurrence in whole project                            |
 | `<Tab>`       | toggle highlight current occurrence                           |
@@ -1568,7 +1568,7 @@ Text related commands (start with `x`):
 | `SPC x a =`     | align region at =                                                    |
 | `SPC x a ¦`     | align region at ¦                                                    |
 | `SPC x a |`     | align region at \|                                                   |
-| `SPC x a [SPC]` | align region at [SPC]                                                |
+| `SPC x a SPC`   | align region at [SPC]                                                |
 | `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
 | `SPC x a c`     | align current indentation region using default rules (TODO)          |
 | `SPC x a l`     | left-align with evil-lion (TODO)                                     |
@@ -1577,7 +1577,7 @@ Text related commands (start with `x`):
 | `SPC x a o`     | align region at operators `+-*/`                                     |
 | `SPC x c`       | count the number of chars/words/lines in the selection region        |
 | `SPC x d w`     | delete trailing whitespaces                                          |
-| `SPC x d [SPC`] | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x d SPC`   | Delete all spaces and tabs around point, leaving one space           |
 | `SPC x g l`     | set lanuages used by translate commands (TODO)                       |
 | `SPC x g t`     | translate current word using Google Translate                        |
 | `SPC x g T`     | reverse source and target languages (TODO)                           |
@@ -1608,7 +1608,7 @@ Text related commands (start with `x`):
 | `SPC x U`       | set the selected text to upper case                                  |
 | `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
 | `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x <TAB>`   | indent or dedent a region rigidly (TODO)                             |
+| `SPC x <Tab>`   | indent or dedent a region rigidly (TODO)                             |
 
 #### Text insertion commands
 
