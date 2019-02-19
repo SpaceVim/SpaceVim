@@ -260,7 +260,7 @@ endfunction
 #### 对现有的 layer 进行贡献
 
 If you contribute to an already existing layer, you should not modify any header file.
-如果你想对一个已经存在的模块做贡献的话，你不能修改文件头的任意地方。
+如果你想对一个已经存在的模块做贡献，你不能修改文件头的任意地方。
 
 #### 贡献按键绑定
 
