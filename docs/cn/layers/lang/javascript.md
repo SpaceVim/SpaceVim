@@ -57,21 +57,21 @@ lang: cn
 
 ### 导包相关快捷键
 
-| 模式          | 快捷键    | 按键描述           |
-| ------------- | --------- | ------------------ |
-| Insert/Normal | `F4`      | 导入光标下的类     |
-| Normal        | `SPC l I` | 导入所有缺失的类   |
-| Normal        | `SPC l R` | 删除多余的导包     |
-| Normal        | `SPC l i` | 智能导入光标下的类 |
-| Insert        | `<C-j>I`  | 导入所有缺失的类   |
-| Insert        | `<C-j>R`  | 删除多余的导包     |
-| Insert        | `<C-j>i`  | 智能导入光标下的类 |
+| 模式          | 快捷键     | 按键描述           |
+| ------------- | ---------- | ------------------ |
+| Insert/Normal | `F4`       | 导入光标下的类     |
+| Normal        | `SPC l I`  | 导入所有缺失的类   |
+| Normal        | `SPC l R`  | 删除多余的导包     |
+| Normal        | `SPC l i`  | 智能导入光标下的类 |
+| Insert        | `Ctrl-j I` | 导入所有缺失的类   |
+| Insert        | `Ctrl-j R` | 删除多余的导包     |
+| Insert        | `Ctrl-j i` | 智能导入光标下的类 |
 
 ### 常规快捷键
 
 | 模式   | 快捷键      | 按键描述   |
 | ------ | ----------- | ---------- |
-| normal | `SPC l g d` | 生成 JSDoc |
+| Normal | `SPC l g d` | 生成 JSDoc |
 
 ### 交互式编程
 

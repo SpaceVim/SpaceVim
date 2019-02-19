@@ -47,6 +47,6 @@ npm install --global vscode-html-languageserver-bin
 
 ## 快捷键
 
-| 快捷键  | 功能描述     |
-| ------- | ------------ |
-| `<C-e>` | emmet 前缀键 |
+| 快捷键   | 功能描述     |
+| -------  | ------------ |
+| `Ctrl-e` | emmet 前缀键 |
