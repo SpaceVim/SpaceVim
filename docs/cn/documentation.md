@@ -659,12 +659,12 @@ can be get by `<leader> q r`
 
 ### File Operations
 
-| Key             |         Mode          | Action                                     |
-| --------------- | :-------------------: | ------------------------------------------ |
-| `<leader>`+`cd` |        Normal         | Switch to the directory of the open buffer |
-| `<leader>`+`w`  |     Normal/Visual     | Write (:w)                                 |
-| `Ctrl-s`      | Normal/Visual/Command | Write (:w)                                 |
-| `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
+| Key             | Mode                  | Action                                     |
+| --------------- | --------------------- | ------------------------------------------ |
+| `<leader>`+`cd` | Normal                | Switch to the directory of the open buffer |
+| `<leader>`+`w`  | Normal/Visual         | Write (:w)                                 |
+| `Ctrl-s`        | Normal/Visual/Command | Write (:w)                                 |
+| `:w!!`          | Command               | Write as root (%!sudo tee > /dev/null %)   |
 
 ### Editor UI
 
