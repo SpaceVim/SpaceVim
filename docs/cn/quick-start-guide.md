@@ -85,7 +85,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 设置状态栏上分割符号形状，如果字体安装失败，可以将值设为 "nil" 以
     # 禁用分割符号，默认为箭头 "arrow"
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_inactive_separator = "bar"
     # 设置顶部标签列表序号类型，有以下五种类型，分别是 0 - 4
     # 0: 1 ➛ ➊
     # 1: 1 ➛ ➀
