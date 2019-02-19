@@ -662,8 +662,8 @@ can be get by `<leader> q r`
 | Key             |         Mode          | Action                                     |
 | --------------- | :-------------------: | ------------------------------------------ |
 | `<leader>`+`cd` |        Normal         | Switch to the directory of the open buffer |
-| `<leader>`+`w`  |     Normal/visual     | Write (:w)                                 |
-| `Ctrl-s`      | Normal/visual/Command | Write (:w)                                 |
+| `<leader>`+`w`  |     Normal/Visual     | Write (:w)                                 |
+| `Ctrl-s`      | Normal/Visual/Command | Write (:w)                                 |
 | `:w!!`          |        Command        | Write as root (%!sudo tee > /dev/null %)   |
 
 ### Editor UI
@@ -1624,9 +1624,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **State transitions:**
 
-| 快捷键      | From             | to           |
-| ----------- | ---------------- | ------------ |
-| `SPC s e`   | normal or visual | iedit-Normal |
+| 快捷键      | From          | to           |
+| ----------- | ------------- | ------------ |
+| `SPC s e`   | Normal/Visual | iedit-Normal |
 
 **In iedit-Normal mode:**
 

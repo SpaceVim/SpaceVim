@@ -222,8 +222,8 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 " >
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    <leader>jA    generate accessors
-"   normal    <leader>js    generate setter accessor
+"   Normal    <leader>jA    generate accessors
+"   Normal    <leader>js    generate setter accessor
 " <
 " @subsection Layer options
 " >
