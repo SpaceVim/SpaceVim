@@ -35,10 +35,10 @@ this guide show you all the available key bindings begin with `[SPC]`, you can t
 
 ## Get paging and help info
 
-after pressing `<C-h>` in guide buffer, you will get paging and help info in the statusline.
+after pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
 
-| key | description                   |
-| --- | ----------------------------- |
-| `u` | undo pressing                 |
-| `n` | next page of guide buffer     |
-| `p` | previous page of guide buffer |
+| keys | descriptions                  |
+| ---- | ----------------------------- |
+| `u`  | undo pressing                 |
+| `n`  | next page of guide buffer     |
+| `p`  | previous page of guide buffer |

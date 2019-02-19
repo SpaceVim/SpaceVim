@@ -48,13 +48,13 @@ To use this configuration layer, update custom configuration file with:
 
 | Key Bindings         | Descriptions                    |
 | -------------------- | ------------------------------- |
-| `F4` (Insert/Normal) | Import class under cursor       |
+| `<F4>` (Insert/Normal) | Import class under cursor       |
 | `SPC l I`            | Import missing classes          |
 | `SPC l R`            | Remove unused classes           |
 | `SPC l i`            | smart import class under cursor |
-| `<C-j>I` (Insert)    | Import missing classes          |
-| `<C-j>R` (Insert)    | Remove unused classes           |
-| `<C-j>i` (Insert)    | smart import class under cursor |
+| `Ctrl-j I` (Insert)  | Import missing classes          |
+| `Ctrl-j R` (Insert)  | Remove unused classes           |
+| `Ctrl-j i` (Insert)  | smart import class under cursor |
 
 ### Generate key bindings
 
@@ -65,9 +65,9 @@ To use this configuration layer, update custom configuration file with:
 | normal/visual | `SPC l g g`  | generate getter accessor              |
 | normal/visual | `SPC l g a`  | generate setter and getter accessor   |
 | normal        | `SPC l g M`  | generate abstract methods             |
-| insert        | `<c-j>s`     | generate setter accessor              |
-| insert        | `<c-j>g`     | generate getter accessor              |
-| insert        | `<c-j>a`     | generate getter and setter accessor   |
+| insert        | `Ctrl-j s`     | generate setter accessor              |
+| insert        | `Ctrl-j g`     | generate getter accessor              |
+| insert        | `Ctrl-j a`     | generate getter and setter accessor   |
 | normal        | `SPC l g t`  | generate toString function            |
 | normal        | `SPC l g e`  | generate equals and hashcode function |
 | normal        | `SPC l g c`  | generate constructor                  |
