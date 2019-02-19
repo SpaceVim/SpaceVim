@@ -38,7 +38,7 @@ lang: cn
 
 ## 相关选项
 
-在这里，将列出一些跟状态栏相关的 SpaceVim 相关选项，这些选项并非模块选项，需加以区分：
+在这里，将列出一些与状态栏相关的 SpaceVim 相关选项，这些选项并非模块选项，需加以区分：
 
 ```toml
 [options]
@@ -57,7 +57,7 @@ lang: cn
     # 2: 1 ➛ ⓵
     # 3: 1 ➛ ¹
     # 4: 1 ➛ 1
-#
+
     # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等
     enable_statusline_display_mode = true
 
@@ -65,7 +65,7 @@ lang: cn
     statusline_left_sections = ['winnr', 'major mode', 'filename', 'fileformat', 'minor mode lighters', 'version control info', 'search status']
     # 状态栏右端部分的构成
     statusline_right_sections = ['cursorpos', 'percentage', 'input method', 'date', 'time']
-    #列表可以由以下一项或多项组成
+    # 列表可以由以下一项或多项组成
 
     # 'winnr' 当前窗口编号
     # 'syntax checking' 
@@ -82,5 +82,4 @@ lang: cn
     # 'input method' 输入法
     # 'search status' 搜索状态
 ```
-
 
