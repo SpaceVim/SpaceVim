@@ -120,7 +120,7 @@ lang: cn
 
 ## 显著特性
 
-- **详细的文档：** 在 SpaceVim 中通过`:h SpaceVim`来访问 SpaceVim 帮助文档。
+- **详细的文档：** 在 SpaceVim 中通过 `:h SpaceVim` 来访问 SpaceVim 帮助文档。
 - **优雅简洁的界面：** 你将会喜欢这样的优雅而实用的界面。
 - **确保手指不离开主键盘区域：** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
 - **快捷键辅助系统：** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
@@ -187,7 +187,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 ## 用户配置
 
-初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在`~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
+初次启动 SpaceVim 时，他将提供选择目录，用户需要选择合适自己的配置模板。此时，SpaceVim 将自动在 `HOME` 目录生成 `~/.SpaceVim.d/init.toml`。所有用户脚本可以存储在 `~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。详情清阅读 `:h rtp`。
 
 当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。当然也可以通过软链接来改变目录位置，以便配置备份。
 
@@ -214,7 +214,7 @@ SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目�
 
 **禁用插件**
 
-SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过`~/.SpaceVim.d/init.toml`的`[options]`片段中的 `disabled_plugins` 这一选项来操作：
+SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中的 `disabled_plugins` 这一选项来操作：
 
 ```toml
 [options]
@@ -225,7 +225,7 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
 ### 启动函数
 
 由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
-可通过`~/.SpaceVim.d/init.toml`的`[options]`片段中的这两个选项`bootstrap_before` 和 `bootstrap_after`来指定函数名称，例如：
+可通过 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中的这两个选项 `bootstrap_before` 和 `bootstrap_after` 来指定函数名称，例如：
 ```toml
 [options]
     bootstrap_before = "myspacevim#before"
@@ -273,7 +273,7 @@ endfunction
 - 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
 
 可以通过设置 `vimcompatible = true` 来启用 Vim 兼容模式，而在兼容模式下，以上所有差异将不存在。
-当然，也可通过对应的选项禁用某一个差异。例如，恢复逗号`,`的原始功能，可以通过禁用语言专用的前缀键：
+当然，也可通过对应的选项禁用某一个差异。例如，恢复逗号 `,` 的原始功能，可以通过禁用语言专用的前缀键：
 
 ```toml
 [options]
@@ -311,7 +311,7 @@ SpaceVim 的[模块首页](../layers/)。
 ```
 
 2. 添加自己 fork 的插件
-修改配置文件`init.toml`，加入以下部分，来添加自己 fork 的版本：
+修改配置文件 `init.toml`，加入以下部分，来添加自己 fork 的版本：
 ```toml
 [[custom_plugins]]
    name = 'wsdjeg/neomake.vim'
@@ -319,7 +319,7 @@ SpaceVim 的[模块首页](../layers/)。
    merged = false
 ```
 或者添加本地克隆版本
-使用`bootstrap_before`函数来添加本地路径：
+使用 `bootstrap_before` 函数来添加本地路径：
 ```vim
 function! myspacevim#before() abort
     set rtp+=~/path/to/your/localplugin
@@ -344,7 +344,7 @@ SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树�
 
 默认的颜色主题采用的是 [gruvbox](https://github.com/morhetz/gruvbox)。这一主题有深色和浅色两种。关于这一主题一些详细的配置可以阅读 `:h gruvbox`。
 
-如果需要修改 SpaceVim 的主题，可以在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改 `colorscheme`选项。例如，使用 Vim 自带的内置主题 `desert`：
+如果需要修改 SpaceVim 的主题，可以在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改 `colorscheme` 选项。例如，使用 Vim 自带的内置主题 `desert`：
 
 ```toml
 [options]
@@ -364,9 +364,10 @@ SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树�
 SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下你的终端是否支持真色。
 可以阅读 [Colours in terminal](https://gist.github.com/XVilka/8346728) 了解根多关于真色的信息。
 
-如果你的终端不支持真色，可以在 `~/.SpaceVim.d/init.toml` 的`[options]`片段中禁用真色支持：
+如果你的终端不支持真色，可以在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中禁用真色支持：
 
 ```toml
+[options]
     enable_guicolors = false
 ```
 
@@ -374,7 +375,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
-如果需要修改 SpaceVim 的字体，可以在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改选项 `guifont`，默认值为：
+如果需要修改 SpaceVim 的字体，可以在 `~/.SpaceVim.d/init.toml` 的 `[options]`片段中修改选项 `guifont`，默认值为：
 
 ```toml
 [options]
@@ -1091,7 +1092,7 @@ SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 Sp
 
 #### 文件树
 
-SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要在`~/.SpaceVim.d/init.toml`的`[options]`片段中修改选项 vimfiler：
+SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改选项 vimfiler：
 
 ```toml
 [options]
@@ -1256,7 +1257,7 @@ SpaceVim 像下面那样调用不同搜索工具的搜索接口：
 - grep
 
 SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工具，后一个键是范围。
-例如 `SPC s a b`将使用 `ag`在当前所有已经打开的缓冲区中进行搜索。
+例如 `SPC s a b` 将使用 `ag` 在当前所有已经打开的缓冲区中进行搜索。
 
 如果最后一个键（决定范围）是大写字母，那么就会对当前光标下的单词进行搜索。
 举个例子 `SPC s a B` 将会搜索当前光标下的单词。
@@ -1439,7 +1440,7 @@ endfunction
 | `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
 | `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
 
-**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的`[options]`片段中加入如下配置：
+**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中加入如下配置：
 
 ```toml
 [options]
@@ -1470,7 +1471,7 @@ FlyGrep 缓冲区的按键绑定：
 #### 保持高亮
 
 SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
-同样可以通过 `SPC s c` 或者运行 ex 命令 `:noh` 来取消搜索结果的高亮表示。
+同样可以通过 `SPC s c` 或者运行 命令 `:nohlsearch` 来取消搜索结果的高亮表示。
 
 #### 高亮光标下变量
 
@@ -1482,7 +1483,7 @@ It is also possible to change the range of the navigation on the fly to:
 - function
 - visible area
 
-使用快捷键 `SPC s h`来高亮光标下的符号。
+使用快捷键 `SPC s h` 来高亮光标下的符号。
 
 Navigation between the highlighted symbols can be done with the commands:
 
@@ -1500,10 +1501,10 @@ In highlight symbol transient state:
 | ------------- | ------------------------------------------------------------- |
 | `e`           | edit occurrences (`*`)                                        |
 | `n`           | go to next occurrence                                         |
-| `N`/`p`       | go to previous occurrence                                     |
+| `N` / `p`     | go to previous occurrence                                     |
 | `b`           | search occurrence in all buffers                              |
 | `/`           | search occurrence in whole project                            |
-| `Tab`         | toggle highlight current occurrence                           |
+| `<Tab>`       | toggle highlight current occurrence                           |
 | `r`           | change range (function, display area, whole buffer)           |
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
@@ -1614,11 +1615,11 @@ In transient state：
 
 #### Replace text with iedit
 
-SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
+SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
 
-**Two new modes:** `iedit-Normal`/`iedit-Insert`
+**两个新模式：** `iedit-Normal` / `iedit-Insert`
 
-The default color for iedit is `red`/`green` which is based on the current colorscheme.
+`iedit` 模式默认的颜色是 `red`/`green`，但它也基于当前的主题。
 
 ##### iedit states key bindings
 
@@ -1628,29 +1629,29 @@ The default color for iedit is `red`/`green` which is based on the current color
 | ----------- | ---------------- | ------------ |
 | `SPC s e`   | normal or visual | iedit-Normal |
 
-**In iedit-Normal mode:**
+**在 iedit-Normal 模式中：**
 
-`iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
+`iedit-Normal` 模式继承自一般模式, 下面所列举的是 `iedit-Normal` 模式专属的快捷键。
 
-| 快捷键        | 功能描述                                                                        |
-| ------------- | ------------------------------------------------------------------------------- |
-| `Esc`         | go back to `Normal` mode                                                        |
-| `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
-| `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
-| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
-| `<Left>`/`h`  | Move cursor to left                                                             |
-| `<Right>`/`l` | Move cursor to right                                                            |
-| `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
-| `$`/`<End>`   | go to the end of the current occurrence                                         |
-| `D`           | delete the occurrences                                                          |
-| `S`           | delete the occurrences and switch to iedit-Insert mode                          |
-| `gg`          | go to first occurrence                                                          |
-| `G`           | go to last occurrence                                                           |
-| `n`           | go to next occurrence                                                           |
-| `N`           | go to previous occurrence                                                       |
-| `p`           | replace occurrences with last yanked (copied) text                              |
-| `<Tab>`       | toggle current occurrence                                                       |
+| 快捷键          | 功能描述                                        |
+| --------------- | ----------------------------------------------- |
+| `Esc`           | 切换回一般模式                                  |
+| `i`             | 切换至 `iedit-Insert` 模式，类似于 `i`          |
+| `a`             | 切换至 `iedit-Insert` 模式，类似于 `a`          |
+| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式  |
+| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式  |
+| `<Left>` / `h`  | 左移光标                                        |
+| `<Right>` / `l` | 右移光标                                        |
+| `0` / `<Home>`  | 跳至当前 occurrence 的开头                      |
+| `$` / `<End>`   | 跳至当前 occurrence 的结尾                      |
+| `D`             | 删除所有 occurrences                            |
+| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式 |
+| `gg`            | 跳至第一个 occurrence                           |
+| `G`             | 跳至最后一个 occurrence                         |
+| `n`             | 跳至下一个 occurrence                           |
+| `N`             | 跳至上一个 occurrence                           |
+| `p`             | 替换所有 occurrences 为最后复制的文本           |
+| `<Tab>`         | toggle current occurrence                       |
 
 **In iedit-Insert mode:**
 
@@ -1706,7 +1707,7 @@ write
 ### 异步运行器和交互式编程
 
 SpaceVim 提供了一个异步执行命令和交互式编程的插件，
-在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为`SPC l r`。
+在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为 `SPC l r`。
 如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。
 
 ```vim
@@ -1791,7 +1792,7 @@ SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 V
 export PATH=$PATH:$HOME/.SpaceVim/bin
 ```
 
-Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing Neovim server.
+使用命令 `svc` 在一个已存在的 Vim 服务器上打开文件，使用命令 `nsvc` 在一个已存在的 Neovim 服务器上打开文件。
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
