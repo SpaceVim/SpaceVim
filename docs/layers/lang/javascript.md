@@ -59,19 +59,19 @@ enable_flow_syntax = true
 
 | Key Bindings         | Descriptions                    |
 | -------------------- | ------------------------------- |
-| `F4` (Insert/Normal) | Import symbol under cursor      |
+| `<F4>` (Insert/Normal) | Import symbol under cursor      |
 | `SPC j i`            | Import symbol under cursor      |
 | `SPC j f`            | Import missing symbols          |
 | `SPC j g`            | Jump to module under cursor     |
-| `<C-j>i` (Insert)    | Import symbol under cursor      |
-| `<C-j>f` (Insert)    | Import missing symbols          |
-| `<C-j>g` (Insert)    | Jump to module under cursor     |
+| `Ctrl-j i` (Insert)  | Import symbol under cursor      |
+| `Ctrl-j f` (Insert)  | Import missing symbols          |
+| `Ctrl-j g` (Insert)  | Jump to module under cursor     |
 
 ### Generate key bindings
 
 | Mode          | Key Binding | Description                           |
 | ------------- | ----------- | ------------------------------------- |
-| normal        | `SPC l g d` | Generate JSDoc                        |
+| Normal        | `SPC l g d` | Generate JSDoc                        |
 
 ### Code runner
 
@@ -85,7 +85,7 @@ Start a `node -i` inferior REPL process with `SPC l s i`.
 Send code to inferior process commands:
 
 | Key Bindings | Descriptions                                     |
-| -----------  | ------------------------------------------------ |
+| ------------ | ------------------------------------------------ |
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |

@@ -104,13 +104,13 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 **自动补全相关快捷键**
 
-| 快捷键     | 功能描述                                   |
-| ---------- | ------------------------------------------ |
-| `<C-n>`    | 选择下一个列表选项                         |
-| `<C-p>`    | 选择上一个列表选项                         |
-| `<Tab>`    | 依据 `auto-completion-tab-key-behavior`    |
-| `<S-Tab>`  | 选择上一个列表选项                         |
-| `<Return>` | 依据 `auto-completion-return-key-behavior` |
+| 快捷键        | 功能描述                                   |
+| ------------- | ------------------------------------------ |
+| `Ctrl-n`      | 选择下一个列表选项                         |
+| `Ctrl-p`      | 选择上一个列表选项                         |
+| `<Tab>`       | 依据 `auto-completion-tab-key-behavior`    |
+| `Shift-<Tab>` | 选择上一个列表选项                         |
+| `<Return>`    | 依据 `auto-completion-return-key-behavior` |
 
 **代码块模板相关快捷键**
 

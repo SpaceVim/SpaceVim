@@ -684,26 +684,26 @@ can be get by `<leader> q r`
 | `g0`                    | Normal        | Go to first tab (:tabfirst)                                      |
 | `g$`                    | Normal        | Go to last tab (:tablast)                                        |
 | `gr`                    | Normal        | Go to previous tab (:tabprevious)                                |
-| `Ctrl-<Down>`           | Normal        | Move to split below (<C-w>j)                                     |
-| `Ctrl-<Up>`             | Normal        | Move to upper split (<C-w>k)                                     |
-| `Ctrl-<Left>`           | Normal        | Move to left split (<C-w>h)                                      |
-| `Ctrl-<Right>`          | Normal        | Move to right split (<C-w>l)                                     |
+| `Ctrl-<Down>`           | Normal        | Move to split below (Ctrl-w j)                                   |
+| `Ctrl-<Up>`             | Normal        | Move to upper split (Ctrl-w k)                                   |
+| `Ctrl-<Left>`           | Normal        | Move to left split (Ctrl-w h)                                    |
+| `Ctrl-<Right>`          | Normal        | Move to right split (Ctrl-w l)                                   |
 | `*`                     | Visual        | Search selection forwards                                        |
 | `#`                     | Visual        | Search selection backwards                                       |
-| `,`+`Space`             | Normal        | Remove all spaces at EOL                                         |
-| `Ctrl`+`r`              | Visual        | Replace selection                                                |
-| `<leader>`+`lj`         | Normal        | Next on location list                                            |
-| `<leader>`+`lk`         | Normal        | Previous on location list                                        |
-| `<leader>`+`S`          | Normal/visual | Source selection                                                 |
+| `, `<Space>`            | Normal        | Remove all spaces at EOL                                         |
+| `Ctrl-r`                | Visual        | Replace selection                                                |
+| `<leader> l j`          | Normal        | Next on location list                                            |
+| `<leader> l k`          | Normal        | Previous on location list                                        |
+| `<leader> S`            | Normal/Visual | Source selection                                                 |
 
 ### Native functions
 
-| Key                |  Mode  | Action                           |
-| ------------------ | :----: | -------------------------------- |
-| `<leader>` + `qr`  | Normal | Same as native `q`               |
-| `<leader>` + `qr/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
+| 快捷键          | 模式   | 功能描述                         |
+| --------------- | ------ | -------------------------------- |
+| `<leader> q r`  | Normal | Same as native `q`               |
+| `<leader> q r/` | Normal | Same as native `q/`, open cmdwin |
+| `<leader> q r?` | Normal | Same as native `q?`, open cmdwin |
+| `<leader> q r:` | Normal | Same as native `q:`, open cmdwin |
 
 ### Bookmarks management
 
@@ -803,7 +803,7 @@ The above key bindings only are part of fuzzy finder layers, please read the lay
 
 ![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
-这一导航窗口将提示所有以空格键为前缀的快捷键，并且根据功能将这些快捷键进行了分组，例如 buffer 相关的快捷键都是 `b`，工程相关的快捷键都是 `p`。在代码导航窗口内，按下 `<C-h>` 键，可以获取一些帮助信息，这些信息将被显示在状态栏上，提示的是一些翻页和撤销按键的快捷键。
+这一导航窗口将提示所有以空格键为前缀的快捷键，并且根据功能将这些快捷键进行了分组，例如 buffer 相关的快捷键都是 `b`，工程相关的快捷键都是 `p`。在代码导航窗口内，按下 `Ctrl-h` 键，可以获取一些帮助信息，这些信息将被显示在状态栏上，提示的是一些翻页和撤销按键的快捷键。
 
 | 按键 | 功能描述 |
 | ---- | -------- |
@@ -1173,25 +1173,25 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `g ]`      | tselect cursor tag                              |
 | `g ^`      | go to leftmost no-white character               |
 | `g _`      | go to last char                                 |
-| `` g```  | 跳至标签，等同于 `g'`                           |
-| `ga`      | 打印光标字符的 ascii 值                         |
-| `gd`      | 跳至定义处                                      |
-| `ge`      | go to end of previous word                      |
-| `gf`      | edit file under cursor                          |
-| `gg`      | go to line N                                    |
-| `gh`      | select mode                                     |
-| `gi`      | insert text after '^ mark                       |
-| `gj`      | move cursor down screen line                    |
-| `gk`      | move cursor up screen line                      |
-| `gm`      | go to middle of screenline                      |
-| `gn`      | visually select next match                      |
-| `go`      | goto byte N in the buffer                       |
-| `gs`      | sleep N seconds                                 |
-| `gt`      | next tag page                                   |
-| `gu`      | make motion text lowercase                      |
-| `g~`      | swap case for Nmove text                        |
-| `g<End>`  | 跳至本行最右侧字符，等同于 `g$`                 |
-| `g<C-G>`  | 显示光标信息                                    |
+| `` g ```   | 跳至标签，等同于 `g'`                           |
+| `g a`      | 打印光标字符的 ascii 值                         |
+| `g d`      | 跳至定义处                                      |
+| `g e`      | go to end of previous word                      |
+| `g f`      | edit file under cursor                          |
+| `g g`      | go to line N                                    |
+| `g h`      | select mode                                     |
+| `g i`      | insert text after '^ mark                       |
+| `g j`      | move cursor down screen line                    |
+| `g k`      | move cursor up screen line                      |
+| `g m`      | go to middle of screenline                      |
+| `g n`      | visually select next match                      |
+| `g o`      | goto byte N in the buffer                       |
+| `g s`      | sleep N seconds                                 |
+| `g t`      | next tag page                                   |
+| `g u`      | make motion text lowercase                      |
+| `g ~`      | swap case for Nmove text                        |
+| `g <End>`  | 跳至本行最右侧字符，等同于 `g$`                 |
+| `g Ctrl-G` | 显示光标信息                                    |
 
 ### 以 `z` 开头的命令
 
@@ -1199,49 +1199,49 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 | 快捷键      | 功能描述                                     |
 | ----------- | -------------------------------------------- |
-| `z<Right>`  | scroll screen N characters to left           |
-| `z+`        | cursor to screen top line N                  |
-| `z-`        | cursor to screen bottom line N               |
-| `z.`        | cursor line to center                        |
-| `z<Cr>`     | cursor line to top                           |
-| `z=`        | spelling suggestions                         |
-| `zA`        | toggle folds recursively                     |
-| `zC`        | close folds recursively                      |
-| `zD`        | delete folds recursively                     |
-| `zE`        | eliminate all folds                          |
-| `zF`        | create a fold for N lines                    |
-| `zG`        | mark good spelled(update internal-wordlist)  |
-| `zH`        | scroll half a screenwidth to the right       |
-| `zL`        | scroll half a screenwidth to the left        |
-| `zM`        | set `foldlevel` to zero                      |
-| `zN`        | set `foldenable`                             |
-| `zO`        | open folds recursively                       |
-| `zR`        | set `foldlevel` to deepest fold              |
-| `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldlevel`                         |
-| `z^`        | cursor to screen bottom line N               |
-| `za`        | toggle a fold                                |
-| `zb`        | redraw, cursor line at bottom                |
-| `zc`        | close a fold                                 |
-| `zd`        | delete a fold                                |
-| `ze`        | right scroll horizontally to cursor position |
-| `zf`        | create a fold for motion                     |
-| `zg`        | mark good spelled                            |
-| `zh`        | scroll screen N characters to right          |
-| `zi`        | toggle foldenable                            |
-| `zj`        | mode to start of next fold                   |
-| `zk`        | mode to end of previous fold                 |
-| `zl`        | scroll screen N characters to left           |
-| `zm`        | subtract one from `foldlevel`                |
-| `zn`        | reset `foldenable`                           |
-| `zo`        | open fold                                    |
-| `zr`        | add one to `foldlevel`                       |
-| `zs`        | left scroll horizontally to cursor position  |
-| `zt`        | cursor line at top of window                 |
-| `zv`        | open enough folds to view cursor line        |
-| `zx`        | re-apply foldlevel and do "zV"               |
-| `zz`        | smart scroll                                 |
-| `z<Left>`   | scroll screen N characters to right          |
+| `z <Right>`  | scroll screen N characters to left           |
+| `z +`        | cursor to screen top line N                  |
+| `z -`        | cursor to screen bottom line N               |
+| `z .`        | cursor line to center                        |
+| `z <Cr>`     | cursor line to top                           |
+| `z =`        | spelling suggestions                         |
+| `z A`        | toggle folds recursively                     |
+| `z C`        | close folds recursively                      |
+| `z D`        | delete folds recursively                     |
+| `z E`        | eliminate all folds                          |
+| `z F`        | create a fold for N lines                    |
+| `z G`        | mark good spelled(update internal-wordlist)  |
+| `z H`        | scroll half a screenwidth to the right       |
+| `z L`        | scroll half a screenwidth to the left        |
+| `z M`        | set `foldlevel` to zero                      |
+| `z N`        | set `foldenable`                             |
+| `z O`        | open folds recursively                       |
+| `z R`        | set `foldlevel` to deepest fold              |
+| `z W`        | mark wrong spelled                           |
+| `z X`        | re-apply `foldlevel`                         |
+| `z ^`        | cursor to screen bottom line N               |
+| `z a`        | toggle a fold                                |
+| `z b`        | redraw, cursor line at bottom                |
+| `z c`        | close a fold                                 |
+| `z d`        | delete a fold                                |
+| `z e`        | right scroll horizontally to cursor position |
+| `z f`        | create a fold for motion                     |
+| `z g`        | mark good spelled                            |
+| `z h`        | scroll screen N characters to right          |
+| `z i`        | toggle foldenable                            |
+| `z j`        | mode to start of next fold                   |
+| `z k`        | mode to end of previous fold                 |
+| `z l`        | scroll screen N characters to left           |
+| `z m`        | subtract one from `foldlevel`                |
+| `z n`        | reset `foldenable`                           |
+| `z o`        | open fold                                    |
+| `z r`        | add one to `foldlevel`                       |
+| `z s`        | left scroll horizontally to cursor position  |
+| `z t`        | cursor line at top of window                 |
+| `z v`        | open enough folds to view cursor line        |
+| `z x`        | re-apply foldlevel and do "zV"               |
+| `z z`        | smart scroll                                 |
+| `z <Left>`   | scroll screen N characters to right          |
 
 ### 搜索
 
