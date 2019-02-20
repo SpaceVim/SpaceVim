@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#markdown 模块"
-description: "这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
+description: "这一模块为 SpaceVim 提供了 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块、自动生成 TOC 等特性。"
 lang: cn
 ---
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供 Markdown 编辑支持，包括格式化、实时预览、自动生成 TOC 等特性。
+这一模块为 SpaceVim 提供了 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块、自动生成 TOC 等特性。
 
 ## 启用模块
 

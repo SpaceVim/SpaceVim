@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rust 模块"
-description: "这一模块为 Rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 SpaceVim 提供了 Rust 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 Rust 开发支持，包括代码补全、语法检查以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 Rust 的开发支持，包括代码补全、语法检查、代码格式化等特性。
 
 ## 功能特性
 

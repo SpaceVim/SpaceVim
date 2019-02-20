@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#kotlin 模块"
-description: "该模块为 SpaceVim 提供了 Kotlin 语言开发支持，包括语法高亮、语言服务器支持。"
+description: "这一模块为 SpaceVim 提供了 Kotlin 的开发支持，包括语法高亮、语言服务器支持。"
 lang: cn
 ---
 
@@ -55,5 +55,5 @@ lang: cn
 
 ### 运行当前文件
 
-在编辑 kotlin 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
+在编辑 Kotlin 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
 
