@@ -1174,7 +1174,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `g ]`      | tselect cursor tag                              |
 | `g ^`      | go to leftmost no-white character               |
 | `g _`      | go to last char                                 |
-| `` g ```   | 跳至标签，等同于 `g'`                           |
+| `` g ` ``   | 跳至标签，等同于 `g'`                           |
 | `g a`      | 打印光标字符的 ascii 值                         |
 | `g d`      | 跳至定义处                                      |
 | `g e`      | go to end of previous word                      |
