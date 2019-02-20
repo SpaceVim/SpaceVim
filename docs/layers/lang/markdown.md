@@ -61,5 +61,5 @@ Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 | Key bindings | mode   | Descriptions               |
 | ------------ | ------ | -------------------------- |
 | `SPC b f`    | Normal | Format current buffer      |
-| `SPC l ft`   | Normal | Format table under cursor  |
+| `SPC l k`    | Normal | Add URL                    |
 | `SPC l p`    | Normal | Real-time markdown preview |

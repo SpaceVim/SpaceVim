@@ -62,6 +62,5 @@ npm -g install remark-stringify
 | 快捷键     | 模式   | 按键描述                   |
 | ---------- | ------ | -------------------------- |
 | `SPC b f`  | Normal | 格式化当前文件             |
-| `SPC l ft` | Normal | 格式化光标处的表格         |
 | `SPC l k`  | Normal | 增加链接 URL               |
 | `SPC l p`  | Normal | 通过浏览器实时预览当前文件 |
