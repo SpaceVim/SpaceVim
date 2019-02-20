@@ -71,7 +71,6 @@ function! s:mappings() abort
     let g:_spacevim_mappings_space = {}
   endif
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','ft'], 'Tabularize /|', 'Format table under cursor', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','p'], 'MarkdownPreview', 'Real-time markdown preview', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 
