@@ -58,8 +58,8 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
-  nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
-  xnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url()<Cr>
+  nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_url(0)<Cr>
+  xnoremap <silent> <plug>(markdown-insert-link) :<C-u> call <SID>markdown_insert_url(1)<Cr>
   augroup spacevim_layer_lang_markdown
     autocmd!
     autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -100,19 +100,22 @@ function! s:generate_remarkrc() abort
   return f
 endfunction
 
-function! s:markdown_insert_url() abort
-  let pos1 = getpos("'<")
-  let pos2 = getpos("'>")
-  let scope = sort([pos1[2], pos2[2]], 'n')
-  "FIXME: list scope is not same as string scope index.
-  let url = @+
-  if !empty(url)
-    let line = getline(pos1[1])
-    let splits = [line[:scope[0]], line[scope[0] : scope[1]], line[scope[1]:]]
-    let result = splits[0] . '[' . splits[1] . '](' . url . ')' . splits[2]
-    call setline(pos1[1], result)
+function! s:markdown_insert_url(visual) abort
+  if !empty(@+)
+    let l:save_register_unnamed = @"
+    if a:visual
+      normal! gvx
+    else
+      normal! diw
+    endif
+    let @" = '[' . @" . '](' . @+ . ')'
+    if col('.') == col('$') - 1
+      normal! p
+    else
+      normal! P
+    endif
+    let @" = l:save_register_unnamed
   endif
-  keepjumps call cursor(pos1[1], scope[0])
 endfunction
 
 " this function need context_filetype.vim

@@ -70,8 +70,8 @@ Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
 ## Key bindings
 
-| Key bindings | mode   | Descriptions               |
-| ------------ | ------ | -------------------------- |
-| `SPC b f`    | Normal | Format current buffer      |
-| `SPC l k`    | Normal | Add URL                    |
-| `SPC l p`    | Normal | Real-time markdown preview |
+| Key bindings | mode          | Descriptions                                  |
+| ------------ | ------------- | --------------------------------------------- |
+| `SPC b f`    | Normal        | Format current buffer                         |
+| `SPC l k`    | Normal/Visual | Add URL for word under cursor or slected word |
+| `SPC l p`    | Normal        | Real-time markdown preview                    |
