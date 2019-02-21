@@ -106,7 +106,7 @@ function! s:markdown_insert_url(visual) abort
     if a:visual
       normal! gvx
     else
-      normal! viwx
+      normal! diw
     endif
     let @" = '[' . @" . '](' . @+ . ')'
     if col('.') == col('$') - 1
