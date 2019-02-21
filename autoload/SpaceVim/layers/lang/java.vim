@@ -96,8 +96,9 @@ function! SpaceVim#layers#lang#java#config() abort
   call add(g:spacevim_project_rooter_patterns, 'pom.xml')
   augroup SpaceVim_lang_java
     au!
-    autocmd FileType java setlocal omnifunc=javacomplete#Complete
-    autocmd FileType java call s:java_mappings()
+    if !SpaceVim#layers#lsp#check_filetype('java')
+      autocmd FileType java setlocal omnifunc=javacomplete#Complete
+    endif
     autocmd FileType jsp call JspFileTypeInit()
   augroup END
   let g:neoformat_enabled_java = ['googlefmt']
@@ -114,6 +115,23 @@ endfunction
 
 function! s:language_specified_mappings() abort
 
+  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+  if g:spacevim_enable_insert_leader
+    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
+    inoremap <silent> <buffer> <leader>uu <esc>bguwea
+    inoremap <silent> <buffer> <leader>ua <esc>bgulea
+    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+  endif
+  nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
+  imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
+
+  imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+  imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
+  imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+  imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
   " Import key bindings
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
         \ '<Plug>(JavaComplete-Imports-AddMissing)',
@@ -197,26 +215,18 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+
+  if SpaceVim#layers#lsp#check_filetype('java')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+  endif
 endfunction
 
 function! s:java_mappings() abort
-  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  if g:spacevim_enable_insert_leader
-    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-  endif
-  nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-  imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-
-  imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-  imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
-  imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-  imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
 
 endfunction
 
