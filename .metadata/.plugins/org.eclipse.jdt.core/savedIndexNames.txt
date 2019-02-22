@@ -1,2 +1,0 @@
-INDEX VERSION 1.131+C:\Users\Administrator\.SpaceVim\.metadata\.plugins\org.eclipse.jdt.core
-3315018925.index
