@@ -10,13 +10,17 @@ commentsID: "Use Vim as a Java IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Java IDE
 
-This is a general guide for using SpaceVim as a Java IDE, including layer configuration and usage. 
+This is a general guide for using SpaceVim as a Java IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
 
 - [Installation](#installation)
+- [Language server](#language-server)
 - [Code completion](#code-completion)
+- [Code outline](#code-outline)
+- [Rename symbol](#rename-symbol)
+- [Javadoc hovers](#javadoc-hovers)
 - [Syntax lint](#syntax-lint)
 - [Import packages](#import-packages)
 - [Jump to test file](#jump-to-test-file)
@@ -41,12 +45,76 @@ Press `SPC f v d` to open SpaceVim configuration file, and add following section
   name = "lang#java"
 ```
 
+## Language server
+
+To enable language server protocol support, you may need to enable lsp layer.
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "java"
+  ]
+  [layers.override_cmd]
+    java = [
+    "java",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=NONE",
+    "-noverify",
+    "-Xmx1G",
+    "-jar",
+    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "-configuration",
+    "D:\dev\jdt-language-server-latest\config_win",
+    "-data",
+    "C:\Users\Administrator\.SpaceVim"
+    ]
+```
+
+
+You need to replace `D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar` with the actual name of the org.eclipse.equinox.launcher jar
+
+The configuration flag can point to either:
+
+- config_win, for Windows
+- config_mac, for MacOS
+- config_linux, for Linux
+
+The data flag value should be the absolute path to the working directory of the server.
+This should be different from the path of the user's project files (which is sent during the initialize handshake).
+
 ## Code completion
 
 javacomplete2 which has been included in `lang#java` layer provides omnifunc for java file and deoplete source.
 with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically。
 
 ![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
+
+## Code outline
+
+The default outline plugin is tagbar, and the key binding is `F2`. This key binding will open an outline sidebar on the left.
+
+![java outline](https://user-images.githubusercontent.com/13142418/53250502-7c313d80-36f5-11e9-8fa2-8437ecf57a78.png)
+
+To fuzzy find outline in current buffer, you need to enable a fuzzy find layer, for example denite layer,
+then press `Leader f o`:
+
+![java fuzzy outline](https://user-images.githubusercontent.com/13142418/53250728-f1047780-36f5-11e9-923d-0b34568f9566.gif)
+
+## Rename symbol
+
+After enable lsp layer for java, you can use `SPC l e` to rename symbol under the cursor:
+
+![rename java symblo](https://user-images.githubusercontent.com/13142418/53250190-da115580-36f4-11e9-9590-bf945fa8dcc0.gif)
+
+## Javadoc hovers
+
+The default key binding to get doc of cursor symbol is `SPC l d` or `K`:
+
+![javadoc](https://user-images.githubusercontent.com/13142418/53250956-7be57200-36f6-11e9-9eb5-6fe8bfb0b940.gif)
 
 ## Syntax lint
 
@@ -104,3 +172,4 @@ BTW, the google's [java formatter](https://github.com/google/google-java-format)
 you need to install jdk9 which provide a build-in tools `jshell`, and SpaceVim use the `jshell` as default inferior REPL process:
 
 ![REPl-JAVA](https://user-images.githubusercontent.com/13142418/34159605-758461ba-e48f-11e7-873c-fc358ce59a42.gif)
+

@@ -1,0 +1,1455 @@
+!SESSION 2019-02-22 22:07:59.108 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=11.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -data C:\Users\Administrator\.SpaceVim
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:08.488
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+!SESSION 2019-02-22 22:07:59.133 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=11.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -data C:\Users\Administrator\.SpaceVim
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:08.784
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.162
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.167
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.221
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.222
+!MESSAGE Initializing Java Language Server 0.33.0.201902202353
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.279
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.280
+!MESSAGE Initializing Java Language Server 0.33.0.201902202353
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.290
+!MESSAGE >> document/didSave
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:09.683
+!MESSAGE Creating the Java project jdt.ls-java-project
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:10.956
+!MESSAGE Finished creating the Java project jdt.ls-java-project
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:14.362
+!MESSAGE Importing Eclipse project(s)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:14.468
+!MESSAGE Workspace initialized in 5228ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:16.769
+!MESSAGE Importing Eclipse project(s)
+
+!ENTRY org.eclipse.core.resources 4 77 2019-02-22 22:08:16.779
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-02-22 22:08:16.779
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-02-22 22:08:16.779
+!MESSAGE C:\Users\Administrator\.SpaceVim\workspace\jdt.ls-java-project overlaps the location of another project: 'jdt.ls-java-project (2)'
+
+!ENTRY org.eclipse.jdt.ls.core 4 0 2019-02-22 22:08:16.798
+!MESSAGE Initialization failed 
+!STACK 0
+java.lang.RuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:96)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.lambda$0(EclipseProjectImporter.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1083)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importToWorkspace(EclipseProjectImporter.java:63)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:137)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.access$1(ProjectsManager.java:131)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager$2.run(ProjectsManager.java:125)
+	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:41)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:736)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5810)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5767)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:117)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:242)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:173)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:57)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:267)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:251)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:92)
+	... 17 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:17.053
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:17.061
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:17.065
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:17.314
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:18.353
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:18.354
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:08:18.361
+!MESSAGE Reconciled 0, validated: 1. Took 596 ms
+!SESSION 2019-02-22 22:10:28.279 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=11.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -data C:\Users\Administrator\.SpaceVim
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-02-22 22:10:31.336
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-02-22 22:10:28.485 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=11.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -data C:\Users\Administrator\.SpaceVim
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-02-22 22:10:33.177
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:37.069
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:37.477
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:37.823
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:37.825
+!MESSAGE Initializing Java Language Server 0.33.0.201902202353
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:38.339
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:38.646
+!MESSAGE Initializing Java Language Server 0.33.0.201902202353
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:39.129
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:39.140
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:40.158
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:42.705
+!MESSAGE Importing Eclipse project(s)
+
+!ENTRY org.eclipse.core.resources 4 77 2019-02-22 22:10:42.715
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-02-22 22:10:42.715
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-02-22 22:10:42.715
+!MESSAGE C:\Users\Administrator\.SpaceVim\workspace\jdt.ls-java-project overlaps the location of another project: 'jdt.ls-java-project (2)'
+
+!ENTRY org.eclipse.jdt.ls.core 4 0 2019-02-22 22:10:42.720
+!MESSAGE Initialization failed 
+!STACK 0
+java.lang.RuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:96)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.lambda$0(EclipseProjectImporter.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1083)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importToWorkspace(EclipseProjectImporter.java:63)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:137)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.access$1(ProjectsManager.java:131)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager$2.run(ProjectsManager.java:125)
+	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:41)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:736)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5810)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5767)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:117)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:242)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:173)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:57)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:267)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:251)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:92)
+	... 17 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:43.911
+!MESSAGE Importing Eclipse project(s)
+
+!ENTRY org.eclipse.core.resources 4 77 2019-02-22 22:10:43.918
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2019-02-22 22:10:43.918
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2019-02-22 22:10:43.918
+!MESSAGE C:\Users\Administrator\.SpaceVim\workspace\jdt.ls-java-project overlaps the location of another project: 'jdt.ls-java-project (2)'
+
+!ENTRY org.eclipse.jdt.ls.core 4 0 2019-02-22 22:10:43.920
+!MESSAGE Initialization failed 
+!STACK 0
+java.lang.RuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:96)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.lambda$0(EclipseProjectImporter.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at java.base/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1083)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importToWorkspace(EclipseProjectImporter.java:63)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:137)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.access$1(ProjectsManager.java:131)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager$2.run(ProjectsManager.java:125)
+	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:41)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:736)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2295)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2322)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5810)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5767)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:117)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:242)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:173)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:57)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:267)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:251)
+	at org.eclipse.jdt.ls.core.internal.managers.EclipseProjectImporter.importDir(EclipseProjectImporter.java:92)
+	... 17 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:43.976
+!MESSAGE >> document/didSave
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.036
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.042
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.045
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.047
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.927
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.928
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:44.934
+!MESSAGE Reconciled 0, validated: 1. Took 434 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:50.455
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:50.944
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:50.944
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:50.945
+!MESSAGE Reconciled 0, validated: 1. Took 78 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:51.985
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.022
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.581
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.581
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.583
+!MESSAGE Reconciled 0, validated: 1. Took 167 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.779
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.851
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.854
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.939
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:52.942
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:53.487
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:53.488
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:53.489
+!MESSAGE Reconciled 0, validated: 1. Took 93 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:54.699
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:54.901
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:54.926
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:55.200
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:55.220
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:55.731
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:55.732
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:55.733
+!MESSAGE Reconciled 0, validated: 1. Took 61 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:56.994
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.028
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.277
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.446
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.465
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.561
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:57.789
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:58.288
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:58.291
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:10:58.292
+!MESSAGE Reconciled 0, validated: 1. Took 78 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:04.379
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:04.914
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:04.914
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:04.915
+!MESSAGE Reconciled 0, validated: 1. Took 69 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.216
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.253
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.509
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.711
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.712
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:16.713
+!MESSAGE Reconciled 0, validated: 1. Took 42 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:17.238
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:17.379
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:17.503
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:17.798
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:18.324
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:18.324
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:11:18.326
+!MESSAGE Reconciled 0, validated: 1. Took 75 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:35.265
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:35.790
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:35.790
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:35.791
+!MESSAGE Reconciled 0, validated: 1. Took 72 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:37.140
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:37.654
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:37.655
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:37.658
+!MESSAGE Reconciled 0, validated: 1. Took 64 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:37.976
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.009
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.030
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.221
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.725
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.726
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:38.726
+!MESSAGE Reconciled 0, validated: 1. Took 51 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:40.463
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:40.974
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:40.974
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:40.975
+!MESSAGE Reconciled 0, validated: 1. Took 60 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:43.615
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:43.645
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:43.751
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:43.931
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:43.933
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:44.006
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:44.114
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:44.675
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:44.676
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:44.677
+!MESSAGE Reconciled 0, validated: 1. Took 110 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.100
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.140
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.228
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.624
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.625
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:46.626
+!MESSAGE Reconciled 0, validated: 1. Took 54 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:47.792
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:48.309
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:48.309
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:48.310
+!MESSAGE Reconciled 0, validated: 1. Took 66 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:49.237
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:49.743
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:49.744
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:49.744
+!MESSAGE Reconciled 0, validated: 1. Took 54 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:49.863
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:50.375
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:50.375
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:50.376
+!MESSAGE Reconciled 0, validated: 1. Took 62 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:50.634
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:51.148
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:51.149
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:51.150
+!MESSAGE Reconciled 0, validated: 1. Took 62 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:52.071
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:52.430
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:52.689
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.189
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.203
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.204
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.204
+!MESSAGE Reconciled 0, validated: 1. Took 61 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.683
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.684
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:12:53.697
+!MESSAGE Reconciled 0, validated: 1. Took 81 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:31.860
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:32.379
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:32.379
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:32.381
+!MESSAGE Reconciled 0, validated: 1. Took 65 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:35.661
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:36.172
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:36.173
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:36.174
+!MESSAGE Reconciled 0, validated: 1. Took 60 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:40.093
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:40.599
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:40.600
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:40.601
+!MESSAGE Reconciled 0, validated: 1. Took 55 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:41.193
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:41.720
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:41.721
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:41.722
+!MESSAGE Reconciled 0, validated: 1. Took 77 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:43.545
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:43.574
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:43.638
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:44.052
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:44.053
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:44.053
+!MESSAGE Reconciled 0, validated: 1. Took 55 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:47.407
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:47.916
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:47.917
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:47.918
+!MESSAGE Reconciled 0, validated: 1. Took 60 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:49.528
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:49.951
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:50.458
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:50.458
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:50.459
+!MESSAGE Reconciled 0, validated: 1. Took 55 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:50.669
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.178
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.179
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.180
+!MESSAGE Reconciled 0, validated: 1. Took 58 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.338
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.872
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.872
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:51.873
+!MESSAGE Reconciled 0, validated: 1. Took 82 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:52.510
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:52.981
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:52.981
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:52.982
+!MESSAGE Reconciled 0, validated: 1. Took 56 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:55.965
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:56.246
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:56.766
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:56.767
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:56.767
+!MESSAGE Reconciled 0, validated: 1. Took 69 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:57.231
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:57.477
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:57.991
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:57.992
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:57.993
+!MESSAGE Reconciled 0, validated: 1. Took 64 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.162
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.192
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.229
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.668
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.669
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.670
+!MESSAGE Reconciled 0, validated: 1. Took 55 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.691
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.712
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:58.746
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.187
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.212
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.213
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.213
+!MESSAGE Reconciled 0, validated: 1. Took 71 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.350
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.396
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.700
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.700
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:17:59.701
+!MESSAGE Reconciled 0, validated: 1. Took 36 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:01.672
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:01.706
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:01.774
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:02.181
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:02.181
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:02.182
+!MESSAGE Reconciled 0, validated: 1. Took 57 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:25.607
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:26.070
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:26.071
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:26.073
+!MESSAGE Reconciled 0, validated: 1. Took 35 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:18:26.075
+!MESSAGE >> document/didSave
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:21.882
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:22.377
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:22.378
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:22.378
+!MESSAGE Reconciled 0, validated: 1. Took 44 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:23.290
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:23.793
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:23.794
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:23.795
+!MESSAGE Reconciled 0, validated: 1. Took 49 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:25.051
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:25.549
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:25.550
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:25.612
+!MESSAGE Reconciled 0, validated: 1. Took 48 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:26.614
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:27.132
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:27.133
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:27.134
+!MESSAGE Reconciled 0, validated: 1. Took 64 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:28.366
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:28.900
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:28.901
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:28.903
+!MESSAGE Reconciled 0, validated: 1. Took 55 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.111
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.136
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.329
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.557
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.557
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:29.558
+!MESSAGE Reconciled 0, validated: 1. Took 45 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:31.671
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:32.191
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:32.192
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:32.192
+!MESSAGE Reconciled 0, validated: 1. Took 68 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:34.899
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:23:47.588
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:26:59.087
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:33.915
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:45.418
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:45.931
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:45.932
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:45.933
+!MESSAGE Reconciled 0, validated: 1. Took 59 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.430
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.464
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.734
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.749
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.768
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:46.892
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:47.180
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:47.564
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.057
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.071
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.071
+!MESSAGE 2 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.072
+!MESSAGE Reconciled 0, validated: 1. Took 57 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.283
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.313
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.358
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.448
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.592
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:48.809
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:49.064
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:49.250
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:49.784
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:49.785
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:49.785
+!MESSAGE Reconciled 0, validated: 1. Took 82 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.013
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.387
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.428
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.452
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.510
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.544
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.552
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.648
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:50.836
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:51.334
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:51.335
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:51.336
+!MESSAGE Reconciled 0, validated: 1. Took 47 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:52.405
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:52.945
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:52.945
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:52.946
+!MESSAGE Reconciled 0, validated: 1. Took 89 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.606
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.744
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.768
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.772
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.859
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.885
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:54.891
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.019
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.052
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.059
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.514
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.515
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:55.515
+!MESSAGE Reconciled 0, validated: 1. Took 43 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.857
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.895
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.901
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.953
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.979
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:56.984
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:57.446
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:57.446
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:57.447
+!MESSAGE Reconciled 0, validated: 1. Took 42 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:58.387
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:58.888
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:58.889
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:49:58.891
+!MESSAGE Reconciled 0, validated: 1. Took 47 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:13.629
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.127
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.127
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.128
+!MESSAGE Reconciled 0, validated: 1. Took 45 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.662
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.695
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.852
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.889
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:14.979
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:15.048
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:15.139
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:15.631
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:15.631
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:15.632
+!MESSAGE Reconciled 0, validated: 1. Took 40 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:16.795
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:16.875
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.088
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.099
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.101
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.196
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.210
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.738
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.738
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.770
+!MESSAGE Reconciled 0, validated: 1. Took 109 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:17.771
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:18.267
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:18.269
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:18.269
+!MESSAGE Reconciled 0, validated: 1. Took 48 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.002
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.024
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.075
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.240
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.286
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.339
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.417
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.442
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.504
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.620
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.654
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.728
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.773
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.806
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.907
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.958
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:19.985
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.175
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.189
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.528
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.604
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.762
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.813
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.887
+!MESSAGE >> document/completion
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:20.966
+!MESSAGE Completion request completed
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:21.006
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:21.497
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:21.497
+!MESSAGE 1 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:21.497
+!MESSAGE Reconciled 0, validated: 1. Took 40 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:22.496
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:23.002
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:23.003
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:23.004
+!MESSAGE Reconciled 0, validated: 1. Took 57 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:35.855
+!MESSAGE >> document/rename
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:36.396
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:36.892
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:36.893
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:50:36.894
+!MESSAGE Reconciled 0, validated: 1. Took 45 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:51:23.348
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:51:23.850
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:51:23.850
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:51:23.851
+!MESSAGE Reconciled 0, validated: 1. Took 49 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:52:10.431
+!MESSAGE >> document/rename
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:52:10.479
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:52:10.976
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:52:10.977
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:52:10.977
+!MESSAGE Reconciled 0, validated: 1. Took 45 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:53:07.867
+!MESSAGE >> document/rename
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:53:07.921
+!MESSAGE >> document/didChange
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:53:08.421
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:53:08.422
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:53:08.423
+!MESSAGE Reconciled 0, validated: 1. Took 49 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:42.341
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:42.423
+!MESSAGE Classpath is incomplete. Only syntax errors will be reported for file:///F:/Chatting-server/src/main/java/com/wsdjeg/chat/server/Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:43.285
+!MESSAGE begin problem for /Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:43.285
+!MESSAGE 0 problems reported for /Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:43.298
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:43.299
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:43.299
+!MESSAGE Reconciled 0, validated: 2. Took 418 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:54.894
+!MESSAGE >> document/didClose
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:54.916
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:56:54.916
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.094
+!MESSAGE >> document/didOpen
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.102
+!MESSAGE Classpath is incomplete. Only syntax errors will be reported for file:///F:/Chatting-server/src/main/java/com/wsdjeg/chat/server/Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.104
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.729
+!MESSAGE begin problem for /Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.730
+!MESSAGE 0 problems reported for /Message.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.742
+!MESSAGE begin problem for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.743
+!MESSAGE 0 problems reported for /Foo.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 22:57:13.744
+!MESSAGE Reconciled 0, validated: 2. Took 238 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 23:04:25.353
+!MESSAGE >> document/hover
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2019-02-22 23:04:51.852
+!MESSAGE >> document/hover
