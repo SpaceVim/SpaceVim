@@ -115,7 +115,9 @@ function! s:markdown_insert_url(visual) abort
     let @" = l:save_register_unnamed
     if a:visual
       let l:save_edge_left[2] += 1
-      let l:save_edge_right[2] += 1
+      if l:save_edge_left[1] == l:save_edge_right[1]
+        let l:save_edge_right[2] += 1
+      endif
     endif
     call setpos("'<", l:save_edge_left)
     call setpos("'>", l:save_edge_right)
