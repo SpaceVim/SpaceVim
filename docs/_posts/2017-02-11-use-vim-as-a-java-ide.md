@@ -114,7 +114,7 @@ After enable lsp layer for java, you can use `SPC l e` to rename symbol under th
 
 The default key binding to get doc of cursor symbol is `SPC l d` or `K`:
 
-![javadoc](https://user-images.githubusercontent.com/13142418/53250956-7be57200-36f6-11e9-9eb5-6fe8bfb0b940.gif)
+![javadoc](https://user-images.githubusercontent.com/13142418/53255520-bf44de00-3700-11e9-9f47-50bc50ed6e83.gif)
 
 ## Syntax lint
 

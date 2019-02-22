@@ -395,6 +395,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
     return st
+  elseif &buftype ==# 'nofile' && bufname('%') ==# '__LanguageClient__'
+    return '%#SpaceVim_statusline_a# LanguageClient %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# ' . &filetype . ' %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'SpaceVimLayerManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
