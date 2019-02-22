@@ -103,18 +103,22 @@ endfunction
 function! s:markdown_insert_url(visual) abort
   if !empty(@+)
     let l:save_register_unnamed = @"
-    if a:visual
-      normal! gvx
-    else
-      normal! diw
+    let l:save_edge_left = getpos("'<")
+    let l:save_edge_right = getpos("'>")
+    if !a:visual
+      execute "normal! viw\<esc>"
     endif
+    let l:paste = (col("'>") == col("$") - 1 ? 'p' : 'P')
+    normal! gvx
     let @" = '[' . @" . '](' . @+ . ')'
-    if col('.') == col('$') - 1
-      normal! p
-    else
-      normal! P
-    endif
+    execute 'normal! ' . l:paste
     let @" = l:save_register_unnamed
+    if a:visual
+      let l:save_edge_left[2] += 1
+      let l:save_edge_right[2] += 1
+    endif
+    call setpos("'<", l:save_edge_left)
+    call setpos("'>", l:save_edge_right)
   endif
 endfunction
 
