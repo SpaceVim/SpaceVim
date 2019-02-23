@@ -48,8 +48,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 ### 语言服务器
 
-To enable language server protocol support, you may need to enable lsp layer.
-若需要启动 Java 语言服务支持，可以启用 lsp 模块，以下配置示例使用 eclipse.jdt.ls：
+若需要启动 Java 语言服务支持，可以启用 lsp 模块，以下配置示例使用 [eclipse.jdt.ls](http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz)，下载后并解压：
 
 ```toml
 [[layers]]
