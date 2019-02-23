@@ -70,7 +70,7 @@ To enable language server protocol support, you may need to enable lsp layer.
     "-configuration",
     "D:\dev\jdt-language-server-latest\config_win",
     "-data",
-    "C:\Users\Administrator\.SpaceVim"
+    "C:\Users\Administrator\.cache\javalsp"
     ]
 ```
 
