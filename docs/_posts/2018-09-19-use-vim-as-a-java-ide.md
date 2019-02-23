@@ -16,6 +16,7 @@ commentsID: "使用 Vim 搭建 Java 开发环境"
 <!-- vim-markdown-toc GFM -->
 
 - [启用模块](#启用模块)
+- [语言服务器](#语言服务器)
 - [代码补全](#代码补全)
 - [语法检查](#语法检查)
 - [导包](#导包)
@@ -40,6 +41,49 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 `lang#java` 模块主要采用插件 vim-javacomplete2，该插件可以自动读取工程配置文件，获取当前项目的 classpath，
 目前支持的项目包括 maven、gradle 以及 eclipse 下的配置文件。
+
+
+### 语言服务器
+
+To enable language server protocol support, you may need to enable lsp layer.
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "java"
+  ]
+  [layers.override_cmd]
+    java = [
+    "java",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=NONE",
+    "-noverify",
+    "-Xmx1G",
+    "-jar",
+    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "-configuration",
+    "D:\dev\jdt-language-server-latest\config_win",
+    "-data",
+    "C:\Users\Administrator\.SpaceVim"
+    ]
+```
+
+
+You need to replace `D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar` with the actual name of the org.eclipse.equinox.launcher jar
+
+The configuration flag can point to either:
+
+- config_win, for Windows
+- config_mac, for MacOS
+- config_linux, for Linux
+
+The data flag value should be the absolute path to the working directory of the server.
+This should be different from the path of the user's project files (which is sent during the initialize handshake).
+
 
 ### 代码补全
 
