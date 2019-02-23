@@ -174,7 +174,7 @@ function! s:date() abort
 endfunction
 
 function! s:whitespace() abort
-  let ln = search('\s\+$', 'n')
+  let ln = search('\s\+$', 'nw')
   if ln != 0
     return ' trailing[' . ln . '] '
   else
