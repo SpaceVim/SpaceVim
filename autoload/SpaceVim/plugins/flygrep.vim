@@ -445,10 +445,6 @@ endfunction
 
 let s:previewd_bufnrs = []
 
-function! Test() abort
-  return s:previewd_bufnrs
-endfunction
-
 " @vimlint(EVL103, 1, a:timer)
 function! s:preview_timer(timer) abort
   for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
