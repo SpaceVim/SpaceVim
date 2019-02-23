@@ -66,11 +66,11 @@ To enable language server protocol support, you may need to enable lsp layer.
     "-noverify",
     "-Xmx1G",
     "-jar",
-    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "D:\\dev\\jdt-language-server-latest\\plugins\\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
     "-configuration",
-    "D:\dev\jdt-language-server-latest\config_win",
+    "D:\\dev\\jdt-language-server-latest\\config_win",
     "-data",
-    "C:\Users\Administrator\.cache\javalsp"
+    "C:\\Users\\Administrator\\.cache\\javalsp"
     ]
 ```
 
@@ -79,9 +79,9 @@ You need to replace `D:\dev\jdt-language-server-latest\plugins\org.eclipse.equin
 
 The configuration flag can point to either:
 
-- config_win, for Windows
-- config_mac, for MacOS
-- config_linux, for Linux
+- `config_win`, for Windows
+- `config_mac`, for MacOS
+- `config_linux`, for Linux
 
 The data flag value should be the absolute path to the working directory of the server.
 This should be different from the path of the user's project files (which is sent during the initialize handshake).

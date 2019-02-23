@@ -68,11 +68,11 @@ To enable language server protocol support, you may need to enable lsp layer.
     "-noverify",
     "-Xmx1G",
     "-jar",
-    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "D:\\dev\\jdt-language-server-latest\\plugins\\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
     "-configuration",
-    "D:\dev\jdt-language-server-latest\config_win",
+    "D:\\dev\\jdt-language-server-latest\\config_win",
     "-data",
-    "C:\Users\Administrator\.cache\javalsp"
+    "C:\\Users\\Administrator\\.cache\\javalsp"
     ]
 ```
 
@@ -82,9 +82,9 @@ To enable language server protocol support, you may need to enable lsp layer.
 
 根据当前系统，选择对应的配置文件：
 
-- config_win, Windows 系统
-- config_mac, MacOS 系统
-- config_linux, Linux 系统
+- `config_win`, Windows 系统
+- `config_mac`, MacOS 系统
+- `config_linux`, Linux 系统
 
 `-data` 选项指定语言服务器的运行绝对路径。这应该不同于用户项目文件的路径。
 
