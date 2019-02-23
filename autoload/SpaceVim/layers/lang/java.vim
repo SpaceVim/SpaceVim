@@ -96,8 +96,10 @@ function! SpaceVim#layers#lang#java#config() abort
   call add(g:spacevim_project_rooter_patterns, 'pom.xml')
   augroup SpaceVim_lang_java
     au!
-    autocmd FileType java setlocal omnifunc=javacomplete#Complete
     if !SpaceVim#layers#lsp#check_filetype('java')
+      " omnifunc will be used only when no java lsp support
+      autocmd FileType java setlocal omnifunc=javacomplete#Complete
+      call SpaceVim#mapping#gd#add('java', function('s:go_to_def'))
     endif
     autocmd FileType jsp call JspFileTypeInit()
   augroup END
@@ -228,6 +230,10 @@ endfunction
 
 function! s:java_mappings() abort
 
+endfunction
+
+function! s:go_to_def() abort
+    call SpaceVim#lsp#go_to_def()
 endfunction
 
 function! s:execCMD(cmd) abort
