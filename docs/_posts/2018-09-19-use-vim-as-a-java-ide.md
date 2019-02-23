@@ -19,8 +19,8 @@ commentsID: "使用 Vim 搭建 Java 开发环境"
 - [语言服务器](#语言服务器)
 - [代码补全](#代码补全)
 - [语法树](#语法树)
-- [Rename symbol](#rename-symbol)
-- [Javadoc hovers](#javadoc-hovers)
+- [重命名光标符号](#重命名光标符号)
+- [光标符号文档查询](#光标符号文档查询)
 - [语法检查](#语法检查)
 - [导包](#导包)
 - [跳转测试文件](#跳转测试文件)
@@ -111,15 +111,15 @@ vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 a
 
 ![java fuzzy outline](https://user-images.githubusercontent.com/13142418/53250728-f1047780-36f5-11e9-923d-0b34568f9566.gif)
 
-### Rename symbol
+### 重命名光标符号
 
-After enable lsp layer for java, you can use `SPC l e` to rename symbol under the cursor:
+当启用了 lsp 模块，并配置好 Java 语言服务器后，可以使用快捷键 `SPC l e` 对光标下的符号进行重命名：
 
 ![rename java symblo](https://user-images.githubusercontent.com/13142418/53250190-da115580-36f4-11e9-9590-bf945fa8dcc0.gif)
 
-### Javadoc hovers
+### 光标符号文档查询
 
-The default key binding to get doc of cursor symbol is `SPC l d` or `K`:
+同样的，这一功能也依赖 lsp 模块，默认的快捷键为 `SPC l d` 或者 `K`：
 
 ![javadoc](https://user-images.githubusercontent.com/13142418/53255520-bf44de00-3700-11e9-9f47-50bc50ed6e83.gif)
 
