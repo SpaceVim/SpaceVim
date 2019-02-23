@@ -68,7 +68,7 @@ lang: cn
     # 列表可以由以下一项或多项组成
 
     # 'winnr' 当前窗口编号
-    # 'syntax checking' 
+    # 'syntax checking'
     # 'filename' 文件名
     # 'fileformat' 文件格式
     # 'major mode'
@@ -77,7 +77,7 @@ lang: cn
     # 'percentage' 百分比
     # 'date' 日期
     # 'time' 时间
-    # 'whitespace'
+    # 'whitespace' 打开或者保存文件时，如果第 n 行的行尾有空格则显示 trailing[n]，并不能实时显示出行尾有空格的行号。
     # 'battery status' 电池状态
     # 'input method' 输入法
     # 'search status' 搜索状态
