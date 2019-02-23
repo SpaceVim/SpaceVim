@@ -92,7 +92,9 @@ lang: cn
     - [在工程中搜索文件](#在工程中搜索文件)
 - [EditorConfig](#editorconfig)
 - [Vim 服务器](#vim-服务器)
-- [成就](#成就)
+- [Achievements](#achievements)
+  - [issues](#issues)
+  - [Stars, forks and watchers](#stars-forks-and-watchers)
 
 <!-- vim-markdown-toc -->
 
@@ -1800,23 +1802,31 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 
 <!-- SpaceVim Achievements start -->
 
-## 成就
+## Achievements
 
-**错误**
+### issues
 
-| Achievements                                                          | Account                                     |
-| --------------------------------------------------------------------- | ------------------------------------------- |
-| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman) |
+Achievements | Account
+----- | -----
+[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
+[1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000) | [sei40kr](https://github.com/sei40kr)
+[2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000) | [nikolaussucher](https://github.com/nikolaussucher)
 
-**Stars, forks and watchers**
+### Stars, forks and watchers
 
-| Achievements      | Account                                         |
-| ----------------- | ----------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry) |
-| 100th stargazers  | [naraj](https://github.com/naraj)               |
-| 1000th stargazers | [icecity96](https://github.com/icecity96)       |
-| 2000th stargazers | [frowhy](https://github.com/frowhy)             |
-| 3000th stargazers | [purkylin](https://github.com/purkylin)         |
+Achievements | Account
+----- | -----
+First stargazers | [monkeydterry](https://github.com/monkeydterry)
+100th stargazers | [robertofarrell](https://github.com/robertofarrell)
+1000th stargazers | [linsongze](https://github.com/linsongze)
+2000th stargazers | [fated](https://github.com/fated)
+3000th stargazers | [urso](https://github.com/urso)
+4000th stargazers | [wanghe4096](https://github.com/wanghe4096)
+5000th stargazers | [xxxxha](https://github.com/xxxxha)
+6000th stargazers | [corenel](https://github.com/corenel)
+7000th stargazers | [mohab1989](https://github.com/mohab1989)
+8000th stargazers | [chocopowwwa](https://github.com/chocopowwwa)
+9000th stargazers | [mffathurr](https://github.com/mffathurr)
 
 <!-- SpaceVim Achievements end -->
 
