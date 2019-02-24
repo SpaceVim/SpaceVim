@@ -33,6 +33,10 @@ endfunction
 function! SpaceVim#layers#lang#markdown#config() abort
   " do not highlight markdown error
   let g:markdown_hi_error = 0
+  " the fenced languages based on loaded language layer
+  let g:markdown_fenced_languages = []
+  let g:markdown_nested_languages = map(filter(SpaceVim#layers#get(),
+        \ 'v:val =~# "^lang#" && v:val !=# "lang#markdown" && v:val !=# "lang#vim"'), 'v:val[5:]')
   let g:vmt_list_item_char = s:md_listItemChar
   let g:markdown_minlines = 100
   let g:markdown_syntax_conceal = 0
