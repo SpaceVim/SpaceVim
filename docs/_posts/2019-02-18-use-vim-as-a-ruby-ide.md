@@ -1,16 +1,16 @@
 ---
-title: "Use Vim as a Perl IDE"
+title: "Use Vim as a Ruby IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
-excerpt: "A general guide for using SpaceVim as Perl IDE, including layer configuration, requiems installation and usage."
+excerpt: "A general guide for using SpaceVim as Ruby IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
-commentsID: "Use Vim as a Perl IDE"
+commentsID: "Use Vim as a Ruby IDE"
 ---
 
-# [Blogs](../blog/) >> Use Vim as a Perl IDE
+# [Blogs](../blog/) >> Use Vim as a Ruby IDE
 
-This is a general guide for using SpaceVim as a Perl IDE, including layer configuration and usage.
+This is a general guide for using SpaceVim as a Ruby IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 
@@ -28,19 +28,19 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add Perl language support in SpaceVim, you need to enable the `lang#perl` layer. Press `SPC f v d` to open
+To add Ruby language support in SpaceVim, you need to enable the `lang#ruby` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add the following snippet:
 
 ```toml
 [[layers]]
-  name = "lang#perl"
+  name = "lang#ruby"
 ```
 
-For more info, you can read the [lang#perl](../layers/lang/perl/) layer documentation.
+For more info, you can read the [lang#ruby](../layers/lang/ruby/) layer documentation.
 
 ### Code completion
 
-`lang#perl` layer will load the Perl plugin automatically, unless it's overriden in your `init.toml`.
+`lang#ruby` layer will load the Ruby plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
 ![perlcomplete](https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
@@ -48,12 +48,12 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run Perl and perlcritic asynchronously.
+It will run rubocop asynchronously.
 
-Install perlcritic via cpan:
+Install rubocop via gem:
 
 ```sh
-cpanm Perl::Critic
+gem install rubocop
 ```
 
 ![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
@@ -64,8 +64,8 @@ SpaceVim use built-in plugin to manager the files in a project, you can add a `.
 
 ```json
 {
-  "src/*.pl": {"alternate": "test/{}.pl"},
-  "test/*.pl": {"alternate": "src/{}.pl"}
+  "src/*.rb": {"alternate": "test/{}.rb"},
+  "test/*.rb": {"alternate": "src/{}.rb"}
 }
 ```
 
@@ -77,20 +77,20 @@ To run current script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![perlrunner](https://user-images.githubusercontent.com/13142418/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
+![rubyrunner](https://user-images.githubusercontent.com/13142418/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
 
 ### Code formatting
 
 The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install perltidy:
+Before using this feature, please install rufo:
 
 ```sh
-cpanm Perl::Tidy
+gem install rufo
 ```
 
 ### REPL support
 
-Start a `perli` or  `perl -del` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+Start a `irb` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 

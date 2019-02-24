@@ -103,17 +103,17 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ### 代码格式化
 
-Ruby 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 perltidy，默认快捷键为 `SPC b f` ：
+Ruby 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 rufo，默认快捷键为 `SPC b f` ：
 
 ```toml
 [[layers]]
   name = "format"
 ```
 
-使用 cpan 安装 perltidy：
+使用 gem 安装 rufo：
 
 ```sh
-cpanm Ruby::Tidy
+gem install rufo
 ```
 
 ![perlformat](https://user-images.githubusercontent.com/13142418/52614978-71dd9b00-2ece-11e9-884d-a5c2328b53ae.gif)
