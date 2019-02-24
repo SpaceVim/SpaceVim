@@ -116,7 +116,7 @@ Ruby 代码格式化，主要依赖 `format` 模块，同时需要安装相关�
 gem install rufo
 ```
 
-![perlformat](https://user-images.githubusercontent.com/13142418/52614978-71dd9b00-2ece-11e9-884d-a5c2328b53ae.gif)
+![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### 交互式编程
 

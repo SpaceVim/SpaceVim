@@ -88,6 +88,8 @@ Before using this feature, please install rufo:
 gem install rufo
 ```
 
+![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
+
 ### REPL support
 
 Start a `irb` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
