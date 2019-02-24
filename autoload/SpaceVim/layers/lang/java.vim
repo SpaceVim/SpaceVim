@@ -56,6 +56,14 @@
 "   normal    SPC l m R     run one maven goal
 "   normal    SPC l m t     run maven test
 "
+"   Gradle key bindings:
+"
+"   Mode      Key           Function
+"   -------------------------------------------------------------
+"   normal    SPC l g b     run gradle clean build
+"   normal    SPC l g B     run gradle build
+"   normal    SPC l g t     run gradle test
+"
 "   Jump key bindings:
 "
 "   Mode      Key           Function
@@ -204,6 +212,18 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["mvn test"])',
         \ 'Run maven test', 1)
+
+  " Gradle
+  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
+        \ 'Run gradle clean build', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["gradle build"])',
+        \ 'Run gradle build', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["gradle test"])',
+        \ 'Run gradle test', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("java")',
