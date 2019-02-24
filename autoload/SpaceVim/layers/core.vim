@@ -174,8 +174,8 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call SpaceVim#plugins#windisk#open()', 'open-windisk-manager', 1)
   endif
   if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
