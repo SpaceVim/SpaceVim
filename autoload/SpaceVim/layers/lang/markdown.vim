@@ -31,6 +31,8 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#markdown#config() abort
+  " do not highlight markdown error
+  let g:markdown_hi_error = 0
   let g:vmt_list_item_char = s:md_listItemChar
   let g:markdown_minlines = 100
   let g:markdown_syntax_conceal = 0
