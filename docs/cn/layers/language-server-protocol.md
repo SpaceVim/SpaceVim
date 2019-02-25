@@ -106,6 +106,12 @@ npm install vue-language-server -g
 npm install -g vscode-css-languageserver-bin
 ```
 
+**ruby:**
+
+```sh
+gem install solargraph
+```
+
 ## 模块配置
 
 为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
@@ -137,6 +143,7 @@ npm install -g vscode-css-languageserver-bin
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
+| `ruby`       | `['solargraph',  'stdio']`
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |

@@ -100,6 +100,7 @@ let s:lsp_servers = {
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'ruby' : ['solargraph.BAT',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 
