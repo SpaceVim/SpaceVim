@@ -12,8 +12,9 @@ function! SpaceVim#layers#lsp#plugins() abort
   if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
   elseif has('nvim')
-    call add(plugins, ['autozimu/LanguageClient-neovim',
-          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
+    call add(plugins, ['bfredl/nvim-lspmirror', {'merged' : 0}])
+    call add(plugins, ['bfredl/nvim-lspext', {'merged' : 0}])
+    call add(plugins, ['shougo/deoplete-lsp', {'merged' : 0}])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])

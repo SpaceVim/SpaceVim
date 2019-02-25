@@ -76,15 +76,15 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
 elseif has('nvim')
   " use LanguageClient-neovim
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
+    call lsp#server#add(a:ft, a:cmds, {})
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
-    call LanguageClient_textDocument_hover()
+    lua require('lsp.plugin').client.request_async('textDocument/hover', {})
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
-    call LanguageClient_textDocument_definition()
+    call lsp#request_async('textDocument/definition')
   endfunction
 
   function! SpaceVim#lsp#rename() abort
