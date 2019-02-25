@@ -78,7 +78,7 @@ gem install solargraph
 gem install rubocop
 ```
 
-![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
+![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
 
 ### 工程文件跳转
 
@@ -123,5 +123,6 @@ gem install rufo
 在编辑 Ruby 文件时，可通过快捷键 `SPC l s i` 启动 `irb` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
+![rubyrepl](https://user-images.githubusercontent.com/13142418/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
+
 

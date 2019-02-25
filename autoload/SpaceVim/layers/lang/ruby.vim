@@ -47,4 +47,5 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'f'],
         \ 'Neoformat rubocop',
         \ 'Runs RuboCop on the currently visited file', 1)
+  let g:neomake_ruby_rubylint_remove_invalid_entries = 1
 endfunction
