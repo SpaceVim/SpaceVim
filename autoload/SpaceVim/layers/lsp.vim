@@ -24,6 +24,9 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
+  for ft in s:enabled_fts
+    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
+  endfor
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
@@ -75,9 +78,6 @@ function! SpaceVim#layers#lsp#config() abort
   let g:LanguageClient_autoStart = 1
   let g:lsp_async_completion = 1
   " }}}
-  for ft in s:enabled_fts
-    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
-  endfor
 endfunction
 
 let s:enabled_fts = []
