@@ -91,7 +91,7 @@ elseif has('nvim')
 
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')
-          \ .client.request_async('textDocument/hover',
+          \ .client.request('textDocument/hover',
           \ {}, require('spacevim.lsp').hover_callback)
   endfunction
 
