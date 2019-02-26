@@ -12,7 +12,11 @@ local function spliteof(data, delimiter)
     table.insert( result, string.sub( data, from  ) )
     return result
 end
-
+--
+-- if data.contents is a string and not empty
+--        silent put =a:data
+--        return 'markdown'
+-- if data 
 function lsp.hover_callback(success, data)
     if not success then
         vim.api.nvim_command('call SpaceVim#util#echoWarn("Failed to retrieve hover information")')
@@ -33,6 +37,22 @@ function lsp.hover_callback(success, data)
         -- end
         vim.api.nvim_command('leftabove split __lspdoc__')
         vim.api.nvim_command('set filetype=markdown.lspdoc')
+        vim.api.nvim_command('setlocal nobuflisted')
+        vim.api.nvim_command('setlocal buftype=nofile')
+        vim.api.nvim_command('setlocal bufhidden=wipe')
+        vim.api.nvim_buf_set_lines(0, 0, -1, 0, spliteof(data.contents, "\n"))
+    elseif type(data.contents.language) ~= 'string' and data.contents.language ~= '' then
+        vim.api.nvim_command('leftabove split __lspdoc__')
+        vim.api.nvim_command('set filetype=markdown.lspdoc')
+        vim.api.nvim_command('setlocal nobuflisted')
+        vim.api.nvim_command('setlocal buftype=nofile')
+        vim.api.nvim_command('setlocal bufhidden=wipe')
+        vim.api.nvim_buf_set_lines(0, 0, -1, 0, {'```' .. data.contents.language})
+        vim.api.nvim_buf_set_lines(0, 1, -1, 0, spliteof(data.contents, "\n"))
+        vim.api.nvim_buf_set_lines(0, -1, -1, 0, {'```'})
+    elseif type(data.contents.kind) ~= 'string' and data.contents.kind ~= '' then
+        vim.api.nvim_command('leftabove split __lspdoc__')
+        vim.api.nvim_command('set filetype=' .. data.contents.kind .. '.lspdoc')
         vim.api.nvim_command('setlocal nobuflisted')
         vim.api.nvim_command('setlocal buftype=nofile')
         vim.api.nvim_command('setlocal bufhidden=wipe')
