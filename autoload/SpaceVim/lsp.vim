@@ -92,14 +92,11 @@ elseif has('nvim')
   " show doc handle function
   function! s:show_doc_handle(sucess, data) abort
     if a:sucess
-      leftabove split __spacevim_lsp_doc__
-      setlocal filetype=markdown
-      call setline(1, a:data)
-      wincmd p
+      echom string(a:data)
     endif
   endfunction
   function! SpaceVim#lsp#show_doc() abort
-    call lsp#request('textDocument/hover', {}, string(function('s:show_doc_handle')))
+    lua require('lsp.plugin').client.request_async('textDocument/hover', {})
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
