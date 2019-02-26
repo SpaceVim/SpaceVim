@@ -89,12 +89,7 @@ elseif has('nvim')
     let s:server_info[a:ft] = a:cmds
   endfunction
 
-  " show doc handle function
-  function! s:show_doc_handle(sucess, data) abort
-    if a:sucess
-      echom string(a:data)
-    endif
-  endfunction
+  lua spacevim_lsp = require('spacevim.lsp')
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin').client.request_async('textDocument/hover', {})
   endfunction
