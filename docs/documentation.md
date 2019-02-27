@@ -1172,7 +1172,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`              | Execute with vimfiler associated                  |
 | `'`                | Toggle mark current line                          |
 | `V`                | Clear all marks                                   |
-| `Ctrl-r`           | Redraw                                            |
+| `Ctrl-l`           | Redraw                                            |
 
 ##### Open file with file tree.
 
