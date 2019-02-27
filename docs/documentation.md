@@ -1155,6 +1155,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | Key Bindings       | Descriptions                                      |
 | ------------------ | ------------------------------------------------- |
 | `<F3>` / `SPC f t` | Toggle file explorer                              |
+| **with in file tree** |                              |
 | `<Left>` / `h`     | go to parent node and collapse expanded directory |
 | `<Down>` / `j`     | select next file or directory                     |
 | `<Up>` / `k`       | select previous file or directory                 |
