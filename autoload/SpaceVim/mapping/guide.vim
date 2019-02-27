@@ -101,7 +101,6 @@ function! s:start_parser(key, dict) abort " {{{
   for line in lines
     let mapd = maparg(split(line[3:])[0], line[0], 0, 1)
     if mapd.lhs ==# '\\'
-      echom string(mapd)
       let mapd.feedkeyargs = ''
     elseif mapd.noremap == 1
       let mapd.feedkeyargs = 'nt'
