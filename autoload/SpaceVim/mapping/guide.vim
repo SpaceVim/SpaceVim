@@ -13,6 +13,7 @@ scriptencoding utf-8
 " Load SpaceVim API
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:STR = SpaceVim#api#import('data#string')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -403,6 +404,7 @@ function! s:start_buffer() abort " {{{
   if empty(maparg('<c-c>', 'c', 0, 1))
     execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
   endif
+  normal! :
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -460,13 +462,13 @@ function! s:wait_for_input() abort " {{{
       let s:prefix_key_inp = inp
       call s:handle_input(fsel)
     else
-      let s:prefix_key_inp = ''
-      let s:guide_help_mode = 0
       call s:winclose()
       doautocmd WinEnter
       let keys = get(s:, 'prefix_key_inp', '')
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      call s:build_mpt(['key bidings is not defined: ', name . keys])
+      call s:build_mpt(['key bidings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      let s:prefix_key_inp = ''
+      let s:guide_help_mode = 0
     endif
   endif
 endfunction " }}}
@@ -656,7 +658,6 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
   endif
   let s:lmap = rundict
   let s:lmap_undo = rundict
-
   call s:start_buffer()
 endfunction " }}}
 function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
