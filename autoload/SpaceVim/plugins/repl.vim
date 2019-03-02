@@ -36,21 +36,24 @@ endfunction
 " selection: send selection text to REPL process
 
 function! SpaceVim#plugins#repl#send(type) abort
-  if a:type ==# 'line'
-    call s:JOB.send(s:job_id, [getline('.'), ''])
-  elseif a:type ==# 'buffer'
-    call s:JOB.send(s:job_id, getline(1, '$') + [''])
-  elseif a:type ==# 'selection'
-    let begin = getpos("'<")
-    let end = getpos("'>")
-    if begin[1] != 0 && end[1] != 0
-      call s:JOB.send(s:job_id, getline(begin[1], end[1]) + [''])
-    else
-      echohl WarningMsg
-      echo 'no selection text'
-      echohl None
-    endif
+  if !exists('s:job_id')
+    echom('Please start REPL via the key binding "SPC l s i" first.')
   else
+    if a:type ==# 'line'
+      call s:JOB.send(s:job_id, [getline('.'), ''])
+    elseif a:type ==# 'buffer'
+      call s:JOB.send(s:job_id, getline(1, '$') + [''])
+    elseif a:type ==# 'selection'
+      let begin = getpos("'<")
+      let end = getpos("'>")
+      if begin[1] != 0 && end[1] != 0
+        call s:JOB.send(s:job_id, getline(begin[1], end[1]) + [''])
+      else
+        echohl WarningMsg
+        echo 'no selection text'
+        echohl None
+      endif
+    endif
   endif
 endfunction
 

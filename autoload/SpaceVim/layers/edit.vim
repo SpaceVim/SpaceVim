@@ -69,22 +69,25 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
   xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '['], 'Tabularize /[', 'align region at [', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ']'], 'Tabularize /]', 'align region at ]', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align region at {', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align region at }', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align region at ,', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align region at .', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align region at :', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align region at ;', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align region at =', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align region at operator, such as +,-,*,/,%,^,etc', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align region at ¦', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align region at |', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '[SPC]'], 'Tabularize /\s\+', 'align region at [SPC]', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align-region-at-&', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align-region-at-(', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align-region-at-)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '['], 'Tabularize /[', 'align-region-at-[', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ']'], 'Tabularize /]', 'align-region-at-]', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align-region-at-{', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align-region-at-}', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align-region-at-,', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align-region-at-.', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align-region-at-:', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align-region-at-;', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'r'], 'call call('
+        \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
+        \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
@@ -112,7 +115,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to kebab-case', 1)
 
   " justification
-  let g:_spacevim_mappings_space.x.j = {'name' : 'justification'}
+  let g:_spacevim_mappings_space.x.j = {'name' : '+Justification'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'l'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["left"])',
         \ 'set-the-justification-to-left', 1)
@@ -122,6 +125,9 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'r'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
+
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set-the-selected-text-to-lower-case', 0)
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set-the-selected-text-to-up-case', 0)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -536,6 +542,16 @@ function! s:uuidgen_U() abort
   let @k = uuid
   normal! "kPl
   let @k = save_register
+endfunction
+
+function! s:align_at_regular_expression() abort
+  let re = input(':Tabularize /')
+  if !empty(re)
+    exe 'Tabularize /' . re
+  else
+    normal! :
+    echo 'empty input, canceled!'
+  endif
 endfunction
 
 " function() wrapper

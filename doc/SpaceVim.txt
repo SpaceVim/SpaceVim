@@ -1164,6 +1164,14 @@ MAPPINGS
   normal    SPC l m R     run one maven goal
   normal    SPC l m t     run maven test
 
+  Gradle key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g b     run gradle clean build
+  normal    SPC l g B     run gradle build
+  normal    SPC l g t     run gradle test
+
   Jump key bindings:
 
   Mode      Key           Function

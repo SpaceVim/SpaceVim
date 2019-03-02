@@ -89,11 +89,11 @@ SpaceVim is based on conventions, mainly for naming functions, keybindings defin
 
 Pull request titles should contain one of these prefix:
 
-- `Add:` Adding a new feature.
+- `Add:` Adding new features.
 - `Change:` Change default behaviors or the existing features.
-- `Fixed:` Fix some bugs.
-- `Remove:` Remove any existing features.
-- `Doc:` Update the help file.
+- `Fix:` Fix some bugs.
+- `Remove:` Remove some existing features.
+- `Doc:` Update the help files.
 - `Website:` Update the content of website.
 
 Here is an example:
