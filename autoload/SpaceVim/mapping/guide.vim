@@ -424,9 +424,15 @@ function! s:handle_input(input) abort " {{{
     endtry
   endif
 endfunction " }}}
+
+function! s:getchar(...) abort
+  let ret = call('getchar', a:000)
+  return (type(ret) == type(0) ? nr2char(ret) : ret)
+endfunction
+
 function! s:wait_for_input() abort " {{{
   redraw!
-  let inp = input('')
+  let inp = s:getchar()
   if inp ==? ''
     let s:prefix_key_inp = ''
     call s:winclose()
