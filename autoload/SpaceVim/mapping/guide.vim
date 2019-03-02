@@ -447,7 +447,6 @@ function! s:wait_for_input() abort " {{{
     let s:guide_help_mode = 0
     call s:updateStatusline()
     redraw!
-    call s:wait_for_input()
   elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
@@ -599,10 +598,6 @@ function! s:handle_submode_mapping(cmd) abort " {{{
     call s:page_undo()
   elseif a:cmd ==# "\<C-c>"
     call s:winclose()
-  else
-    call feedkeys("\<c-c>", 'n')
-    redraw!
-    call s:wait_for_input()
   endif
 endfunction " }}}
 function! s:submode_mappings(key) abort " {{{
