@@ -437,7 +437,7 @@ function! s:wait_for_input() abort " {{{
     let s:prefix_key_inp = ''
     call s:winclose()
     doautocmd WinEnter
-  elseif match(inp, '^<LGCMD>paging_help') == 0
+  elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
     redraw!
@@ -563,13 +563,13 @@ endfunction " }}}
 function! s:handle_submode_mapping(cmd) abort " {{{
   let s:guide_help_mode = 0
   call s:updateStatusline()
-  if a:cmd ==? '<LGCMD>page_down'
+  if a:cmd ==# 'n'
     call s:page_down()
-  elseif a:cmd ==? '<LGCMD>page_up'
+  elseif a:cmd ==# 'p'
     call s:page_up()
-  elseif a:cmd ==? '<LGCMD>undo'
+  elseif a:cmd ==# 'u'
     call s:page_undo()
-  elseif a:cmd ==? '<LGCMD>win_close'
+  elseif a:cmd ==# "\<C-c>"
     call s:winclose()
   else
     call feedkeys("\<c-c>", 'n')
