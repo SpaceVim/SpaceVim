@@ -430,6 +430,8 @@ function! s:getchar(...) abort
   return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
+
+" wait for in input sub function should be not block vim
 function! s:wait_for_input() abort " {{{
   redraw!
   let inp = s:getchar()
@@ -437,11 +439,17 @@ function! s:wait_for_input() abort " {{{
     let s:prefix_key_inp = ''
     call s:winclose()
     doautocmd WinEnter
+  elseif s:guide_help_mode ==# 1
+    call s:submode_mappings(inp)
+    let s:guide_help_mode = 0
+    call s:updateStatusline()
+    redraw!
+    call s:wait_for_input()
   elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
     redraw!
-    call s:submode_mappings()
+    call s:wait_for_input()
   else
     if inp ==# ' '
       let inp = '[SPC]'
@@ -483,6 +491,7 @@ function! s:winopen() abort " {{{
     augroup END
   endif
   let s:gwin = winnr()
+  let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
   setlocal nonumber norelativenumber nolist nomodeline nowrap
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
@@ -577,20 +586,8 @@ function! s:handle_submode_mapping(cmd) abort " {{{
     call s:wait_for_input()
   endif
 endfunction " }}}
-function! s:submode_mappings() abort " {{{
-  let maplist = []
-  for key in items(g:leaderGuide_submode_mappings)
-    let map = maparg(key[0], 'c', 0, 1)
-    if !empty(map)
-      call add(maplist, map)
-    endif
-    execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-  endfor
-  let inp = input('')
-  for map in maplist
-    call s:mapmaparg(map)
-  endfor
-  silent call s:handle_submode_mapping(inp)
+function! s:submode_mappings(key) abort " {{{
+  silent call s:handle_submode_mapping(a:key)
 endfunction " }}}
 function! s:mapmaparg(maparg) abort " {{{
   let noremap = a:maparg.noremap ? 'noremap' : 'map'
