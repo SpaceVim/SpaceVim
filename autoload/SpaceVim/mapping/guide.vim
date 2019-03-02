@@ -596,7 +596,7 @@ function! s:handle_submode_mapping(cmd) abort " {{{
     call s:page_up()
   elseif a:cmd ==# 'u'
     call s:page_undo()
-  elseif a:cmd ==# "\<C-c>"
+  else
     call s:winclose()
   endif
 endfunction " }}}
