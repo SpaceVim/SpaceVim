@@ -566,7 +566,6 @@ plugins will be installed.
 <
 
                                                       *g:spacevim_filemanager*
-
 The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
 nerdtree or defx
 
