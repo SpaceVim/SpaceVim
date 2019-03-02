@@ -435,8 +435,9 @@ endfunction
 function! s:wait_for_input() abort " {{{
   redraw!
   let inp = s:getchar()
-  if inp ==? ''
+  if inp ==# "\<Esc>"
     let s:prefix_key_inp = ''
+    let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
   elseif s:guide_help_mode ==# 1
@@ -460,11 +461,27 @@ function! s:wait_for_input() abort " {{{
       call s:handle_input(fsel)
     else
       let s:prefix_key_inp = ''
+      let s:guide_help_mode = 0
       call s:winclose()
       doautocmd WinEnter
+      let keys = get(s:, 'prefix_key_inp', '')
+      let name = SpaceVim#mapping#leader#getName(s:prefix_key)
+      call s:build_mpt(['key bidings is not defined: ', name . keys])
     endif
   endif
 endfunction " }}}
+
+function! s:build_mpt(mpt) abort
+  normal! :
+  echohl Comment
+  if type(a:mpt) == 1
+    echon a:mpt
+  elseif type(a:mpt) == 3
+    echon join(a:mpt)
+  endif
+  echohl NONE
+endfunction
+
 function! s:winopen() abort " {{{
   if !exists('s:bufnr')
     let s:bufnr = -1
