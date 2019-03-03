@@ -323,7 +323,6 @@ function! s:create_string(layout) abort " {{{
         let col += 1
       endif
     endif
-    silent execute 'cnoremap <nowait> <buffer> '.substitute(k, '|', '<Bar>', ''). ' ' . s:escape_keys(k) .'<CR>'
   endfor
   let r = []
   let mlen = 0
@@ -400,12 +399,9 @@ function! s:start_buffer() abort " {{{
       noautocmd execute 'res '.layout.win_dim
     endif
   endif
-  silent 1put!=string
   normal! gg"_dd
+  silent 1put!=string
   setlocal nomodifiable
-  if empty(maparg('<c-c>', 'c', 0, 1))
-    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
-  endif
   normal! :
   call s:wait_for_input()
 endfunction " }}}
