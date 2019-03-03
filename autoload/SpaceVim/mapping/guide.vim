@@ -393,10 +393,12 @@ function! s:start_buffer() abort " {{{
   endif
 
   setlocal modifiable
-  if g:leaderGuide_vertical
-    noautocmd execute 'vert res '.layout.win_dim
-  else
-    noautocmd execute 'res '.layout.win_dim
+  if !exists('*nvim_open_win')
+    if g:leaderGuide_vertical
+      noautocmd execute 'vert res '.layout.win_dim
+    else
+      noautocmd execute 'res '.layout.win_dim
+    endif
   endif
   silent 1put!=string
   normal! gg"_dd
