@@ -489,24 +489,33 @@ function! s:winopen() abort " {{{
   endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
-  if bufexists(s:bufnr)
-    let qfbuf = &buftype ==# 'quickfix'
-    let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
-    noautocmd execute pos . splitcmd
-    let bnum = bufnr('%')
-    noautocmd execute 'buffer '.s:bufnr
-    cmapclear <buffer>
-    if qfbuf
-      noautocmd execute bnum.'bwipeout!'
+  if exists('*nvim_open_win')
+    if bufexists(s:bufnr)
+      call nvim_open_win(s:bufnr, v:true, 30, 30, {'relative': 'editor', 'row': 30, 'col': 30})
+    else
+      let s:bufnr = nvim_create_buf(v:false,v:false)
+      call nvim_open_win(s:bufnr, v:true, 30, 30, {'relative': 'editor', 'row': 30, 'col': 30})
     endif
   else
-    let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
-    noautocmd execute pos.splitcmd
-    let s:bufnr = bufnr('%')
-    augroup guide_autocmd
-      autocmd!
-      autocmd WinLeave <buffer> call s:winclose()
-    augroup END
+    if bufexists(s:bufnr)
+      let qfbuf = &buftype ==# 'quickfix'
+      let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
+      noautocmd execute pos . splitcmd
+      let bnum = bufnr('%')
+      noautocmd execute 'buffer '.s:bufnr
+      cmapclear <buffer>
+      if qfbuf
+        noautocmd execute bnum.'bwipeout!'
+      endif
+    else
+      let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
+      noautocmd execute pos.splitcmd
+      let s:bufnr = bufnr('%')
+      augroup guide_autocmd
+        autocmd!
+        autocmd WinLeave <buffer> call s:winclose()
+      augroup END
+    endif
   endif
   let s:gwin = winnr()
   let s:guide_help_mode = 0
