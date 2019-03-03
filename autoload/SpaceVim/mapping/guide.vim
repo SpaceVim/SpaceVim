@@ -252,11 +252,10 @@ function! s:calc_layout() abort " {{{
     let ret.col_width = maxlength
     let ret.win_dim = ret.n_cols * ret.col_width
   else
-    let ret.n_cols = winwidth(0) / maxlength
+    let ret.n_cols = winwidth(0) >= maxlength ? winwidth(0) / maxlength : 1
     let ret.col_width = winwidth(0) / ret.n_cols
     let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
     let ret.win_dim = ret.n_rows
-    "echom string(ret)
   endif
   return ret
 endfunction " }}}
@@ -392,7 +391,8 @@ function! s:start_buffer() abort " {{{
   endif
 
   setlocal modifiable
-  if !exists('*nvim_open_win')
+  if exists('*nvim_open_win')
+  else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
     else
