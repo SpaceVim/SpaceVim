@@ -13,6 +13,7 @@ scriptencoding utf-8
 " Load SpaceVim API
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:STR = SpaceVim#api#import('data#string')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -101,7 +102,6 @@ function! s:start_parser(key, dict) abort " {{{
   for line in lines
     let mapd = maparg(split(line[3:])[0], line[0], 0, 1)
     if mapd.lhs ==# '\\'
-      echom string(mapd)
       let mapd.feedkeyargs = ''
     elseif mapd.noremap == 1
       let mapd.feedkeyargs = 'nt'
@@ -404,6 +404,7 @@ function! s:start_buffer() abort " {{{
   if empty(maparg('<c-c>', 'c', 0, 1))
     execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
   endif
+  normal! :
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -425,18 +426,32 @@ function! s:handle_input(input) abort " {{{
     endtry
   endif
 endfunction " }}}
+
+function! s:getchar(...) abort
+  let ret = call('getchar', a:000)
+  return (type(ret) == type(0) ? nr2char(ret) : ret)
+endfunction
+
+
+" wait for in input sub function should be not block vim
 function! s:wait_for_input() abort " {{{
   redraw!
-  let inp = input('')
-  if inp ==? ''
+  let inp = s:getchar()
+  if inp ==# "\<Esc>"
     let s:prefix_key_inp = ''
+    let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
-  elseif match(inp, '^<LGCMD>paging_help') == 0
+  elseif s:guide_help_mode ==# 1
+    call s:submode_mappings(inp)
+    let s:guide_help_mode = 0
+    call s:updateStatusline()
+    redraw!
+  elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
     redraw!
-    call s:submode_mappings()
+    call s:wait_for_input()
   else
     if inp ==# ' '
       let inp = '[SPC]'
@@ -446,12 +461,28 @@ function! s:wait_for_input() abort " {{{
       let s:prefix_key_inp = inp
       call s:handle_input(fsel)
     else
-      let s:prefix_key_inp = ''
       call s:winclose()
       doautocmd WinEnter
+      let keys = get(s:, 'prefix_key_inp', '')
+      let name = SpaceVim#mapping#leader#getName(s:prefix_key)
+      call s:build_mpt(['key bidings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      let s:prefix_key_inp = ''
+      let s:guide_help_mode = 0
     endif
   endif
 endfunction " }}}
+
+function! s:build_mpt(mpt) abort
+  normal! :
+  echohl Comment
+  if type(a:mpt) == 1
+    echon a:mpt
+  elseif type(a:mpt) == 3
+    echon join(a:mpt)
+  endif
+  echohl NONE
+endfunction
+
 function! s:winopen() abort " {{{
   if !exists('s:bufnr')
     let s:bufnr = -1
@@ -478,6 +509,7 @@ function! s:winopen() abort " {{{
     augroup END
   endif
   let s:gwin = winnr()
+  let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
   setlocal nonumber norelativenumber nolist nomodeline nowrap
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
@@ -558,34 +590,18 @@ endfunction " }}}
 function! s:handle_submode_mapping(cmd) abort " {{{
   let s:guide_help_mode = 0
   call s:updateStatusline()
-  if a:cmd ==? '<LGCMD>page_down'
+  if a:cmd ==# 'n'
     call s:page_down()
-  elseif a:cmd ==? '<LGCMD>page_up'
+  elseif a:cmd ==# 'p'
     call s:page_up()
-  elseif a:cmd ==? '<LGCMD>undo'
+  elseif a:cmd ==# 'u'
     call s:page_undo()
-  elseif a:cmd ==? '<LGCMD>win_close'
-    call s:winclose()
   else
-    call feedkeys("\<c-c>", 'n')
-    redraw!
-    call s:wait_for_input()
+    call s:winclose()
   endif
 endfunction " }}}
-function! s:submode_mappings() abort " {{{
-  let maplist = []
-  for key in items(g:leaderGuide_submode_mappings)
-    let map = maparg(key[0], 'c', 0, 1)
-    if !empty(map)
-      call add(maplist, map)
-    endif
-    execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-  endfor
-  let inp = input('')
-  for map in maplist
-    call s:mapmaparg(map)
-  endfor
-  silent call s:handle_submode_mapping(inp)
+function! s:submode_mappings(key) abort " {{{
+  silent call s:handle_submode_mapping(a:key)
 endfunction " }}}
 function! s:mapmaparg(maparg) abort " {{{
   let noremap = a:maparg.noremap ? 'noremap' : 'map'
@@ -637,7 +653,6 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
   endif
   let s:lmap = rundict
   let s:lmap_undo = rundict
-
   call s:start_buffer()
 endfunction " }}}
 function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
