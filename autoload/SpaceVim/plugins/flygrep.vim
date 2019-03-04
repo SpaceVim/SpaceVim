@@ -19,13 +19,16 @@ let s:grepid = 0
 
 
 function! SpaceVim#plugins#flygrep#open() abort
-  if exists('*nvim_open_float_win')
-    let s:buffer_id = nvim_create_buf(v:false)
-    let opts = {'x':110, 'y':9, 'anchor': 'NE'}
-    let w =  nvim_open_float_win(s:buffer_id,v:false,100,20,opts)
+  if exists('*nvim_open_win')
+    let s:buffer_id = nvim_create_buf(v:false, v:false)
+    let w = nvim_open_win(s:buffer_id, v:true, &columns, 20,
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - 20,
+          \ 'col': 0
+          \ })
     " hi Floating guibg=#a89984
     " call setwinvar(w, '&winhl', 'Normal:Floating')
-    exe win_id2win(w) . 'wincmd w'
     setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
     setf SpaceVimFlyGrep
     let save_tve = &t_ve
