@@ -392,6 +392,13 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
+    call nvim_win_config(win_getid(s:gwin), &columns, layout.win_dim + 2, 
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - layout.win_dim - 4,
+          \ 'col': 0
+          \ })
+
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -400,9 +407,9 @@ function! s:start_buffer() abort " {{{
     endif
   endif
   normal! gg"_dd
-  silent 1put!=string
+  call setline(1, [''] + split(string, "\n") + [''])
   setlocal nomodifiable
-  normal! :
+  redraw!
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -488,12 +495,15 @@ function! s:winopen() abort " {{{
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if exists('*nvim_open_win')
-    if bufexists(s:bufnr)
-      call nvim_open_win(s:bufnr, v:true, 30, 30, {'relative': 'editor', 'row': 30, 'col': 30})
-    else
+    if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
-      call nvim_open_win(s:bufnr, v:true, 30, 30, {'relative': 'editor', 'row': 30, 'col': 30})
     endif
+    call nvim_open_win(s:bufnr, v:true, &columns, 12,
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - 14,
+          \ 'col': 0
+          \ })
   else
     if bufexists(s:bufnr)
       let qfbuf = &buftype ==# 'quickfix'
