@@ -22,7 +22,7 @@
     statusline_inactive_separator = "arrow"
     buffer_index_type = 4
     enable_tabline_filetype_icon = true
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
 
 # Enable autocomplete layer
 [[layers]]
