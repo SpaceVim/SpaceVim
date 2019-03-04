@@ -597,7 +597,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     noautocmd rightbelow split __flygrep__
   endif
   if exists('&winhighlight')
-    " set winhighlight=Normal:Pmenu
+    set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel
   endif
   let s:flygrep_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
