@@ -252,11 +252,10 @@ function! s:calc_layout() abort " {{{
     let ret.col_width = maxlength
     let ret.win_dim = ret.n_cols * ret.col_width
   else
-    let ret.n_cols = winwidth(0) / maxlength
+    let ret.n_cols = winwidth(0) >= maxlength ? winwidth(0) / maxlength : 1
     let ret.col_width = winwidth(0) / ret.n_cols
     let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
     let ret.win_dim = ret.n_rows
-    "echom string(ret)
   endif
   return ret
 endfunction " }}}
@@ -323,7 +322,6 @@ function! s:create_string(layout) abort " {{{
         let col += 1
       endif
     endif
-    silent execute 'cnoremap <nowait> <buffer> '.substitute(k, '|', '<Bar>', ''). ' ' . s:escape_keys(k) .'<CR>'
   endfor
   let r = []
   let mlen = 0
@@ -393,18 +391,25 @@ function! s:start_buffer() abort " {{{
   endif
 
   setlocal modifiable
-  if g:leaderGuide_vertical
-    noautocmd execute 'vert res '.layout.win_dim
+  if exists('*nvim_open_win')
+    call nvim_win_config(win_getid(s:gwin), &columns, layout.win_dim + 2, 
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - layout.win_dim - 4,
+          \ 'col': 0
+          \ })
+
   else
-    noautocmd execute 'res '.layout.win_dim
+    if g:leaderGuide_vertical
+      noautocmd execute 'vert res '.layout.win_dim
+    else
+      noautocmd execute 'res '.layout.win_dim
+    endif
   endif
-  silent 1put!=string
   normal! gg"_dd
+  call setline(1, [''] + split(string, "\n") + [''])
   setlocal nomodifiable
-  if empty(maparg('<c-c>', 'c', 0, 1))
-    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
-  endif
-  normal! :
+  redraw!
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
@@ -489,28 +494,43 @@ function! s:winopen() abort " {{{
   endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
-  if bufexists(s:bufnr)
-    let qfbuf = &buftype ==# 'quickfix'
-    let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
-    noautocmd execute pos . splitcmd
-    let bnum = bufnr('%')
-    noautocmd execute 'buffer '.s:bufnr
-    cmapclear <buffer>
-    if qfbuf
-      noautocmd execute bnum.'bwipeout!'
+  if exists('*nvim_open_win')
+    if !bufexists(s:bufnr)
+      let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
+    call nvim_open_win(s:bufnr, v:true, &columns, 12,
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - 14,
+          \ 'col': 0
+          \ })
   else
-    let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
-    noautocmd execute pos.splitcmd
-    let s:bufnr = bufnr('%')
-    augroup guide_autocmd
-      autocmd!
-      autocmd WinLeave <buffer> call s:winclose()
-    augroup END
+    if bufexists(s:bufnr)
+      let qfbuf = &buftype ==# 'quickfix'
+      let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
+      noautocmd execute pos . splitcmd
+      let bnum = bufnr('%')
+      noautocmd execute 'buffer '.s:bufnr
+      cmapclear <buffer>
+      if qfbuf
+        noautocmd execute bnum.'bwipeout!'
+      endif
+    else
+      let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
+      noautocmd execute pos.splitcmd
+      let s:bufnr = bufnr('%')
+      augroup guide_autocmd
+        autocmd!
+        autocmd WinLeave <buffer> call s:winclose()
+      augroup END
+    endif
   endif
   let s:gwin = winnr()
   let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
+  if exists('&winhighlight')
+    set winhighlight=Normal:Pmenu
+  endif
   setlocal nonumber norelativenumber nolist nomodeline nowrap
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
