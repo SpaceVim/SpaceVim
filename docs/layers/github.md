@@ -51,7 +51,7 @@ func! myspacevim#before() abort
   let g:gista#client#default_username = 'monkeyxite'
 endf
 ```
-We recommend generating a [personal access token](https://github.com/settings/tokens) and storing it securely in an environment variable. [Refer to github dashboard](https://github.com/junegunn/vim-github-dashboard) for more information.
+We recommend generating a [personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and storing it securely in an environment variable. [Refer to github dashboard](https://github.com/junegunn/vim-github-dashboard) for more information.
 ```shell
 # in some secure file sourced in your .bashrc, .bash_profile, .zshrc, etc.
 export GITHUB_TOKEN="<your 40 char token>"
