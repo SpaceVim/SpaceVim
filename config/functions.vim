@@ -9,9 +9,9 @@ function! WINDOWS()
     return (has('win16') || has('win32') || has('win64'))
 endfunction
 function! OnmiConfigForJsp()
-    let pos1 = search("</script>","nb",line("w0"))
-    let pos2 = search("<script","nb",line("w0"))
-    let pos3 = search("</script>","n",line("w$"))
+    let pos1 = search('</script>','nb',line('w0'))
+    let pos2 = search('<script','nb',line('w0'))
+    let pos3 = search('</script>','n',line('w$'))
     let pos0 = line('.')
     if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
         set omnifunc=javascriptcomplete#CompleteJS
@@ -37,16 +37,23 @@ endf
 function! ToggleBG()
     let s:tbg = &background
     " Inversion
-    if s:tbg == "dark"
+    if s:tbg ==# 'dark'
         set background=light
     else
         set background=dark
     endif
 endfunction
+function! ToggleConceal()
+    if &conceallevel == 0 
+        setlocal conceallevel=2
+    else
+        setlocal conceallevel=0
+    endif
+endfunction
 function! BracketsFunc()
     let line = getline('.')
     let col = col('.')
-    if line[col - 2] == "]"
+    if line[col - 2] ==# ']'
         return "{}\<esc>i"
     else
         return "{\<cr>}\<esc>O"
@@ -54,19 +61,19 @@ function! BracketsFunc()
 endf
 function! XmlFileTypeInit()
     set omnifunc=xmlcomplete#CompleteTags
-    if filereadable("AndroidManifest.xml")
+    if filereadable('AndroidManifest.xml')
         set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
 endf
 function! WSDAutoComplete(char)
-    if(getline(".")=~?'^\s*.*\/\/')==0
+    if(getline('.')=~?'^\s*.*\/\/')==0
         let line = getline('.')
         let col = col('.')
-        if a:char == "."
+        if a:char ==# '.'
             return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 2] == " "||line[col -2] == "("||line[col - 2] == ","
+        elseif line[col - 2] ==# ' ' ||line[col -2] ==# '(' ||line[col - 2] ==# ','
             return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 3] == " "&&line[col - 2] =="@"
+        elseif line[col - 3] ==# ' ' && line[col - 2] ==# '@'
             return a:char."\<c-x>\<c-o>\<c-p>"
         else
             return a:char
@@ -102,7 +109,7 @@ endf
 function! QuoteDelim(char)
     let line = getline('.')
     let col = col('.')
-    if line[col - 2] == "\\"
+    if line[col - 2] ==# "\\"
         "Inserting a quoted quotation mark into the string
         return a:char
     elseif line[col - 1] == a:char
@@ -120,38 +127,25 @@ function! JspFileTypeInit()
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
 endfunction
-function! MyTagfunc() abort
-    mark H
-    let s:MyTagfunc_flag = 1
-    UniteWithCursorWord -immediately tag
-endfunction
-
-function! MyTagfuncBack() abort
-    if exists('s:MyTagfunc_flag')&&s:MyTagfunc_flag
-        exe "normal! `H"
-        let s:MyTagfunc_flag =0
-    endif
-endfunction
-
 
 function! MyLeaderTabfunc() abort
-    if g:spacevim_autocomplete_method == 'deoplete'
+    if g:spacevim_autocomplete_method ==# 'deoplete'
         if g:spacevim_enable_javacomplete2_py
             return deoplete#mappings#manual_complete(['javacomplete2'])
         else
             return deoplete#mappings#manual_complete(['omni'])
         endif
-    elseif g:spacevim_autocomplete_method == 'neocomplete'
+    elseif g:spacevim_autocomplete_method ==# 'neocomplete'
         return neocomplete#start_manual_complete(['omni'])
     endif
 endfunction
 
 func! Openpluginrepo()
     try
-        exec "normal! ".'"ayi'."'"
+        exec 'normal! '.'"ayi'."'"
         exec 'OpenBrowser https://github.com/'.@a
     catch
-        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
+        echohl WarningMsg | echomsg 'can not open the web of current plugin' | echohl None
     endtry
 endf
 func! Update_current_plugin()
@@ -204,11 +198,3 @@ fu! UpdateStarredRepos()
     endfor
     return 1
 endf
-
-
-function! TestBot(argv) abort
-endfunction
-  
-function! TestBot(argv) abort
-  
-endfunction

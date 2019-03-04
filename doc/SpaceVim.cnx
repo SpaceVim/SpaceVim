@@ -1,0 +1,1430 @@
+*SpaceVim.txt*	
+
+                                                                          
+    /######                                     /##    /##/##             
+   /##__  ##                                   | ##   | #|__/             
+  | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### 
+  |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ## 
+   \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ## 
+   /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ## 
+  |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ## 
+   \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/ 
+           | ##                                                           
+           | ##                                                           
+           |__/                                                           
+wsdjeg                                                   *spacevim* *SpaceVim*
+
+==============================================================================
+CONTENTS                                                   *SpaceVim-contents*
+  1. Introduction.............................................|SpaceVim-intro|
+  2. Options................................................|SpaceVim-options|
+      1. checkinstall..........................|SpaceVim-options-checkinstall|
+      2. default_indent......................|SpaceVim-options-default_indent|
+      3. enable_ale..............................|SpaceVim-options-enable_ale|
+      4. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      5. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      6. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      7. enable_neomake......................|SpaceVim-options-enable_neomake|
+      8. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
+      9. enable_ycm..............................|SpaceVim-options-enable_ycm|
+      10. error_symbol.........................|SpaceVim-options-error_symbol|
+      11. guifont...................................|SpaceVim-options-guifont|
+      12. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      13. max_column.............................|SpaceVim-options-max_column|
+      14. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      15. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      16. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      17. relativenumber.....................|SpaceVim-options-relativenumber|
+      18. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      19. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      20. windows_leader.....................|SpaceVim-options-windows_leader|
+  3. Configuration...........................................|SpaceVim-config|
+  4. Commands..............................................|SpaceVim-commands|
+  5. Functions............................................|SpaceVim-functions|
+  6. Layers..................................................|SpaceVim-layers|
+      1. autocomplete..................................|SpaceVim-autocomplete|
+      2. checkers....................................|SpaceVim-layer-checkers|
+      3. colorscheme....................................|SpaceVim-colorscheme|
+      4. core#statusline......................|SpaceVim-layer-core-statusline|
+      5. core#tabline............................|SpaceVim-layer-core-tabline|
+      6. exprfold....................................|SpaceVim-layer-exprfold|
+      7. format........................................|SpaceVim-layer-format|
+      8. github........................................|SpaceVim-layer-github|
+      9. incsearch..................................|SpaceVim-layer-incsearch|
+      10. indentmove...............................|SpaceVim-layer-indentmove|
+      11. lang#c.......................................|SpaceVim-layer-lang-c|
+      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      15. lang#elm...................................|SpaceVim-layer-lang-elm|
+      16. lang#go.....................................|SpaceVim-layer-lang-go|
+      17. lang#java.................................|SpaceVim-layer-lang-java|
+      18. lang#julia...............................|SpaceVim-layer-lang-julia|
+      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      20. lang#lua...................................|SpaceVim-layer-lang-lua|
+      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      22. lang#php...................................|SpaceVim-layer-lang-php|
+      23. lang#pony.................................|SpaceVim-layer-lang-pony|
+      24. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      25. lang#python.............................|SpaceVim-layer-lang-python|
+      26. lang#rust.................................|SpaceVim-layer-lang-rust|
+      27. lang#scala...............................|SpaceVim-layer-lang-scala|
+      28. lang#xml...................................|SpaceVim-layer-lang-xml|
+      29. operator...................................|SpaceVim-layer-operator|
+      30. shell.........................................|SpaceVim-layer-shell|
+      31. tmux...........................................|SpaceVim-layer-tmux|
+      32. tools#dash...............................|SpaceVim-layer-tools-dash|
+  7. API........................................................|SpaceVim-api|
+      1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
+      2. data#list....................................|SpaceVim-api-data-list|
+      3. prompt..........................................|SpaceVim-api-prompt|
+      4. sid............................................|SpaceVim-api-vim-sid|
+      5. vim#message................................|SpaceVim-api-vim-message|
+  8. FAQ........................................................|SpaceVim-faq|
+  9. Changelog............................................|SpaceVim-changelog|
+
+==============================================================================
+INTRODUCTION                                                  *SpaceVim-intro*
+
+SpaceVim is a bundle of custom settings and plugins with a modular
+configuration for Vim. It was inspired by Spacemacs.
+
+
+==============================================================================
+OPTIONS                                                     *SpaceVim-options*
+
+SpaceVim uses `~/.SpaceVim.d/init.toml` as its default global config file. You
+can set all the SpaceVim options and layers in it. `~/.SpaceVim.d/` will also
+be added to runtimepath, so you can write your own scripts in it. SpaceVim
+also supports local config for each project. Place local config  settings in
+`.SpaceVim.d/init.toml` in the root directory of your project. `.SpaceVim.d/`
+will also be added to runtimepath.
+
+here is an example setting SpaceVim options:
+>
+  [options]
+    enable-guicolors = true
+    max-column = 120
+<
+
+==============================================================================
+CHECKINSTALL                                   *SpaceVim-options-checkinstall*
+
+Enable/Disable checkinstall on SpaceVim startup. Default is true.
+>
+  checkinstall = true
+<
+
+==============================================================================
+DEFAULT_INDENT                               *SpaceVim-options-default_indent*
+
+Change the default indentation of SpaceVim. Default is 2.
+>
+  default_indent = 2
+<
+
+==============================================================================
+ENABLE_ALE                                       *SpaceVim-options-enable_ale*
+
+Use ale for syntax checking, disabled by default.
+>
+  enable_ale = true
+<
+
+==============================================================================
+ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
+
+Enable/Disable Google suggestions for neocomplete. Default is false.
+>
+  enable_googlesuggest = false
+<
+
+==============================================================================
+ENABLE_GUICOLORS                           *SpaceVim-options-enable_guicolors*
+
+Enable true color support in terminal. Default is true.
+>
+  enable_guicolors = true
+<
+
+==============================================================================
+ENABLE_INSERT_LEADER                   *SpaceVim-options-enable_insert_leader*
+
+Enable/Disable spacevim's insert mode leader, default is enable
+
+==============================================================================
+ENABLE_NEOMAKE                               *SpaceVim-options-enable_neomake*
+
+SpaceVim default checker is neomake. If you want to use syntastic, use:
+>
+  enable_neomake = false
+<
+
+==============================================================================
+ENABLE_STATUSLINE_MODE               *SpaceVim-options-enable_statusline_mode*
+
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  enable_statusline_mode = true
+<
+
+==============================================================================
+ENABLE_YCM                                       *SpaceVim-options-enable_ycm*
+
+Enable/Disable YouCompleteMe. Default is false.
+>
+  enable_ycm = true
+<
+
+==============================================================================
+ERROR_SYMBOL                                   *SpaceVim-options-error_symbol*
+
+Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
+>
+  error_symbol = "+"
+<
+
+==============================================================================
+GUIFONT                                             *SpaceVim-options-guifont*
+
+Set the guifont of SpaceVim. Default is empty.
+>
+  guifont = "DejaVu\ Sans\ Mono\ for\ Powerline\ 11"
+<
+
+==============================================================================
+LINT_ON_THE_FLY                             *SpaceVim-options-lint_on_the_fly*
+
+Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
+>
+  lint_on_the_fly = false
+<
+
+==============================================================================
+MAX_COLUMN                                       *SpaceVim-options-max_column*
+
+Change the max number of columns for SpaceVim. Default is 120.
+>
+  max_column = 120
+<
+
+==============================================================================
+PLUGIN_BUNDLE_DIR                         *SpaceVim-options-plugin_bundle_dir*
+
+Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+>
+  plugin_bundle_dir = "~/.cache/vimplugs"
+<
+
+==============================================================================
+PLUGIN_MANAGER_PROCESSES           *SpaceVim-options-plugin_manager_processes*
+
+Set the max process of SpaceVim plugin manager
+
+==============================================================================
+REALTIME_LEADER_GUIDE                 *SpaceVim-options-realtime_leader_guide*
+
+Enable/Disable realtime leader guide. Default is true. to disable it:
+>
+  realtime_leader_guide = false
+<
+
+==============================================================================
+RELATIVENUMBER                               *SpaceVim-options-relativenumber*
+
+Enable/Disable relativenumber, by default it is enabled.
+>
+  relativenumber = true
+<
+
+==============================================================================
+SIDEBAR_WIDTH                                 *SpaceVim-options-sidebar_width*
+
+Set the width of the SpaceVim sidebar. Default is 30. This value will be used
+by tagbar and vimfiler.
+
+==============================================================================
+SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
+
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  snippet_engine = "ultisnips"
+<
+
+==============================================================================
+WINDOWS_LEADER                               *SpaceVim-options-windows_leader*
+
+Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+this feature, or you can set to another char.
+>
+  windows_leader = ""
+<
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
+please take a look at the following options.
+
+
+                                                          *g:spacevim_version*
+Version of SpaceVim , this value can not be changed.
+
+                                                   *g:spacevim_default_indent*
+Change the default indentation of SpaceVim. Default is 2.
+>
+  let g:spacevim_default_indent = 2
+<
+
+                                                       *g:spacevim_expand_tab*
+In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+
+                                                   *g:spacevim_relativenumber*
+Enable/Disable relativenumber, by default it is enabled.
+
+                                                       *g:spacevim_max_column*
+Change the max number of columns for SpaceVim. Default is 120.
+>
+  let g:spacevim_max_column = 120
+<
+
+                                                 *g:spacevim_enable_guicolors*
+Enable true color support in terminal. Default is 1.
+>
+  let g:spacevim_enable_guicolors = 1
+<
+
+                                             *g:spacevim_enable_googlesuggest*
+Enable/Disable Google suggestions for neocomplete. Default is 0.
+>
+  let g:spacevim_enable_googlesuggest = 1
+<
+
+                                                   *g:spacevim_windows_leader*
+Window functions leader for SpaceVim. Default is `s`.  Set to empty to disable
+this feature, or you can set to another char.
+>
+  let g:spacevim_windows_leader = ''
+<
+
+                                             *g:spacevim_enable_insert_leader*
+Enable/Disable spacevim's insert mode leader, default is enable
+
+                                                *g:spacevim_plugin_bundle_dir*
+Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+>
+  let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
+<
+
+                                            *g:spacevim_realtime_leader_guide*
+Enable/Disable realtime leader guide. Default is 1. to disable it:
+>
+  let g:spacevim_realtime_leader_guide = 0
+<
+
+                                             *g:spacevim_enable_key_frequency*
+Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+enable it:
+>
+  let g:spacevim_enable_key_frequency = 1
+<
+
+                                              *g:spacevim_autocomplete_method*
+Set the autocomplete engine of spacevim, the default logic is:
+>
+  if has('python3')
+    let g:spacevim_autocomplete_method = 'deoplete'
+  elseif has('lua')
+    let g:spacevim_autocomplete_method = 'neocomplete'
+  elseif has('python')
+    let g:spacevim_autocomplete_method = 'completor'
+  elseif has('timers')
+    let g:spacevim_autocomplete_method = 'asyncomplete'
+  else
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+<
+
+                                                   *g:spacevim_enable_neomake*
+SpaceVim default checker is neomake. If you want to use syntastic, use:
+>
+  let g:spacevim_enable_neomake = 0
+<
+
+                                                       *g:spacevim_enable_ale*
+Use ale for syntax checking, disabled by default.
+>
+  let g:spacevim_enable_ale = 1
+<
+
+                                                          *g:spacevim_guifont*
+Set the guifont of SpaceVim. Default is empty.
+>
+  let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
+<
+
+                                                       *g:spacevim_enable_ycm*
+Enable/Disable YouCompleteMe. Default is 0.
+>
+  let g:spacevim_enable_ycm = 1
+<
+
+                                                    *g:spacevim_sidebar_width*
+Set the width of the SpaceVim sidebar. Default is 30. This value will be used
+by tagbar and vimfiler.
+
+                                                   *g:spacevim_snippet_engine*
+Set the snippet engine of SpaceVim, default is neosnippet. to enable
+ultisnips:
+>
+  let g:spacevim_snippet_engine = "ultisnips"
+<
+
+                                                *g:spacevim_enable_cursorline*
+Enable/Disable cursorline. Default is 1, cursorline will be highlighted in
+normal mode.To disable this feature:
+>
+  let g:spacevim_enable_cursorline = 0
+<
+
+                                             *g:spacevim_statusline_separator*
+Set the statusline separators of statusline, default is 'arrow'
+>
+  Separators options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
+
+                                         *g:spacevim_statusline_left_sections*
+Define the left section of statusline in active windows. By default:
+>
+  let g:spacevim_statusline_left_sections =
+    \ [
+    \ 'winnr',
+    \ 'filename',
+    \ 'major mode',
+    \ 'minor mode lighters',
+    \ 'version control info'
+    \ ]
+<
+
+                                        *g:spacevim_statusline_right_sections*
+Define the right section of statusline in active windows. By default:
+>
+  g:spacevim_statusline_right_sections =
+    \ [
+    \ 'fileformat',
+    \ 'cursorpos',
+    \ 'percentage'
+    \ ]
+<
+
+                                       *g:spacevim_statusline_unicode_symbols*
+Enable/Disable unicode symbols in statusline
+
+                                  *g:spacevim_enable_language_specific_leader*
+Enable/Disable language specific leader, by default you can use `,` ket
+instead of `SPC` `l`.
+
+                                           *g:spacevim_enable_statusline_mode*
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  let g:spacevim_enable_statusline_mode = 1
+<
+
+                                             *g:spacevim_custom_color_palette*
+Set the statusline/tabline palette of color, default values depends on the
+theme
+>
+  let g:spacevim_custom_color_palette = [
+    \ ['#282828', '#b8bb26', 246, 235],
+    \ ['#a89984', '#504945', 239, 246],
+    \ ['#a89984', '#3c3836', 237, 246],
+    \ ['#665c54', 241],
+    \ ['#282828', '#83a598', 235, 109],
+    \ ['#282828', '#fe8019', 235, 208],
+    \ ['#282828', '#8ec07c', 235, 108],
+    \ ['#282828', '#689d6a', 235, 72],
+    \ ['#282828', '#8f3f71', 235, 132],
+    \ ]
+<
+
+
+                                              *g:spacevim_enable_cursorcolumn*
+Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
+normal mode. To enable this feature:
+>
+  let g:spacevim_enable_cursorcolumn = 1
+<
+
+                                                     *g:spacevim_error_symbol*
+Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
+>
+  let g:spacevim_error_symbol = '+'
+<
+
+                                                   *g:spacevim_warning_symbol*
+Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
+>
+  let g:spacevim_warning_symbol = '!'
+<
+
+                                                      *g:spacevim_info_symbol*
+Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+>
+  let g:spacevim_info_symbol = 'i'
+<
+
+                                            *g:spacevim_terminal_cursor_shape*
+Set the SpaceVim cursor shape in the terminal.
+>
+  0 : to prevent Nvim from changing the cursor shape.
+  1 : to enable non-blinking mode-sensitive cursor.
+  2 : to enable blinking mode-sensitive cursor (default).
+<
+
+>
+<
+Host terminal must support the DECSCUSR CSI escape sequence. Depending on the
+terminal emulator, using this option with nvim under tmux might require adding
+the following to ~/.tmux.conf:
+>
+  set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+<
+
+                                                *g:spacevim_vim_help_language*
+Set the help language of vim. Default is 'en'.  You can change it to Chinese.
+>
+  let g:spacevim_vim_help_language = 'cn'
+<
+
+                                                         *g:spacevim_language*
+Set the message language of vim. Default is 'en_US.UTF-8'.
+>
+  let g:spacevim_language = 'en_CA.utf8'
+<
+
+                                                *g:spacevim_keep_server_alive*
+Option for keep the spacevim server ailive
+
+                                                      *g:spacevim_colorscheme*
+The colorscheme of SpaceVim. Default is 'gruvbox'.
+
+                                                   *g:spacevim_colorscheme_bg*
+The background of colorscheme. Default is 'dark'.
+
+                                              *g:spacevim_colorscheme_default*
+The default colorscheme of SpaceVim. Default is 'desert'.  This colorscheme
+will be used if the colorscheme set by  `g:spacevim_colorscheme` is not
+installed.
+>
+  let g:spacevim_colorscheme_default = 'other_color'
+<
+
+                                                      *g:spacevim_simple_mode*
+Enable/disable simple mode of SpaceVim. Default is 0. In this mode, only few
+plugins will be installed.
+>
+  let g:spacevim_simple_mode = 1
+<
+
+                                                      *g:spacevim_filemanager*
+The default file manager of SpaceVim. Default is 'vimfiler'.
+
+                                         *g:spacevim_plugin_manager_processes*
+Set the max process of SpaceVim plugin manager
+
+                                                     *g:spacevim_checkinstall*
+Enable/Disable checkinstall on SpaceVim startup. Default is 1.
+>
+  let g:spacevim_checkinstall = 1
+<
+
+                                                    *g:spacevim_vimcompatible*
+Enable/Disable vimcompatible mode, by default it is disabled. In vimcompatible
+mode all vim origin key bindings will not be changed.
+
+Includes:
+>
+  q       smart quit windows
+  s       windows key bindings leader
+  <C-x>   switch buffer
+<
+
+                                                     *g:spacevim_enable_debug*
+Enable/Disable debug mode for SpaceVim. Default is 0.
+>
+  let g:spacevim_enable_debug = 1
+<
+
+                                            *g:spacevim_auto_disable_touchpad*
+Auto disable touchpad when switch to insert mode or focuslost in neovim.
+
+                                                      *g:spacevim_debug_level*
+Set the debug level of SpaceVim. Default is 1. see
+|SpaceVim#logger#setLevel()|
+
+                                                *g:spacevim_buffer_index_type*
+Set SpaceVim buffer index type, default is 0.
+>
+  " types:
+  " 0: 1 ➛ ➊
+  " 1: 1 ➛ ➀
+  " 2: 1 ➛ ⓵
+  " 3: 1 ➛ ¹
+  " 4: 1 ➛ 1
+  let g:spacevim_buffer_index_type = 1
+<
+
+                                               *g:spacevim_windows_index_type*
+Set SpaceVim windows index type, default is 0.
+>
+  " types:
+  " 0: 1 ➛ ➊
+  " 1: 1 ➛ ➀
+  " 2: 1 ➛ ⓵
+  " 3: 1 ➛ 1
+  let g:spacevim_windows_index_type = 1
+<
+
+                                     *g:spacevim_enable_tabline_filetype_icon*
+Enable/Disable tabline filetype icon. default is 0.
+
+                                        *g:spacevim_enable_os_fileformat_icon*
+Enable/Disable os fileformat icon. default is 0.
+
+                                                  *g:spacevim_github_username*
+Set the github username, It will be used for getting your starred repos, and
+fuzzy find the repo you want.
+
+                                               *g:spacevim_windows_smartclose*
+Set the default key for smart close windows, default is `q`.
+
+                                                 *g:spacevim_disabled_plugins*
+Disable plugins by name.
+>
+  let g:spacevim_disabled_plugins = ['vim-foo', 'vim-bar']
+<
+
+                                                   *g:spacevim_custom_plugins*
+Add custom plugins.
+>
+  let g:spacevim_custom_plugins = [
+              \ ['plasticboy/vim-markdown', 'on_ft' : 'markdown'],
+              \ ['wsdjeg/GitHub.vim'],
+              \ ]
+<
+
+                                                   *g:spacevim_filetype_icons*
+change the default filetype icon for a specific filtype.
+>
+  let g:spacevim_filetype_icons['md'] = ''
+<
+
+                                              *g:spacevim_force_global_config*
+SpaceVim will load the global config after local config if set to 1. Default
+is 0. If you have a local config, the global config will not be loaded.
+>
+  let g:spacevim_force_global_config = 1
+<
+
+                                           *g:spacevim_enable_powerline_fonts*
+Enable/Disable powerline symbols. Default is 1.
+
+                                                     *g:spacevim_lint_on_save*
+Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
+>
+  let g:spacevim_lint_on_save = 0
+<
+
+                                          *g:spacevim_project_rooter_patterns*
+Set the project rooter patterns, by default it is `['.git/', '_darcs/',
+'.hg/', '.bzr/', '.svn/']`
+
+                                     *g:spacevim_project_rooter_automatically*
+Enable/Disable changing directory automatically. Enabled by default.
+
+                                                  *g:spacevim_lint_on_the_fly*
+Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
+>
+  let g:spacevim_lint_on_the_fly = 0
+<
+
+                                          *g:spacevim_enable_vimfiler_welcome*
+Enable/Disable vimfiler in the welcome windows. Default is 1.  This will cause
+vim to start up slowly if there are too many files in the current directory.
+>
+  let g:spacevim_enable_vimfiler_welcome = 0
+<
+
+                                        *g:spacevim_enable_vimfiler_gitstatus*
+Enable/Disable gitstatus column in vimfiler buffer, default is 0.
+
+                                     *g:spacevim_enable_vimfiler_filetypeicon*
+Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
+
+                                              *g:spacevim_autocomplete_parens*
+Enable/Disable autocompletion of parentheses, default is 1 (enabled).
+
+                                                        *g:spacevim_hosts_url*
+The host file url. This option is for Chinese users who can not use Google and
+Twitter.
+
+                                                *g:neomake_echo_current_error*
+neomake/neomake {{{ This setting will echo the error for the line your cursor
+is on, if any.
+
+                                                            *g:ale_echo_delay*
+w0rp/ale {{{
+
+                                                     *g:github_issues_no_omni*
+jaxbot/github-issues.vim {{{ Disable completion by github-issues.vim. Because
+github-complete.vim provides more powerful completion.
+
+                                                          *g:github_dashboard*
+junegunn/vim-github-dashboard {{{
+
+                                                                  *g:dash_map*
+rizzatti/dash.vim {{{ Allows configuration of mappings between Vim filetypes
+and Dash's docsets.
+
+==============================================================================
+COMMANDS                                                   *SpaceVim-commands*
+
+:SPLayer {layers}                                                   *:SPLayer*
+  Load exist layer, {layers} can be a string of a layer name, or a list of
+  layer names.
+
+:SPVersion                                                        *:SPVersion*
+  Print the version of SpaceVim.  The following lines contain information
+  about which features were enabled.  When there is a preceding '+', the
+  feature is included, when there is a '-' it is excluded.
+
+:SPSet {opt} [value]                                                  *:SPSet*
+  Set or check SpaceVim option. {opt} should be the option name of spacevim,
+  This command will use [value] as the value of option name.
+
+:SPDebugInfo[!]                                                 *:SPDebugInfo*
+  print the debug information of spacevim, [!] forces the output into a new
+  buffer.
+
+:SPRuntimeLog                                                  *:SPRuntimeLog*
+  view runtime log
+
+:SPConfig                                                          *:SPConfig*
+  edit custom config file of SpaceVim, by default this command will open
+  global custom configuration file, '-l' option will load local custom
+  configuration file.
+>
+    :SPConfig -g
+<
+
+:SPUpdate                                                          *:SPUpdate*
+  Command for update plugin, support completion of plugin name. If run without
+  argv, All the plugin will be updated.
+>
+      :SPUpdate vim-airline
+<
+
+:SPReinstall                                                    *:SPReinstall*
+  Command for reinstall plugin, support completion of plugin name.
+
+:SPInstall                                                        *:SPInstall*
+  Command for install plugins.
+
+==============================================================================
+FUNCTIONS                                                 *SpaceVim-functions*
+
+SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
+  Load the {layer} you want. For all the layers SpaceVim supports, see
+  |SpaceVim-layers|. the second argv is the layer variable.
+
+SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
+  Set debug level of SpaceVim. Default is 1.
+
+      1 : log all messages
+
+      2 : log warning and error messages
+
+      3 : log error messages only
+
+SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
+  Set the log output file of SpaceVim. Default is empty.
+
+SpaceVim#plugins#iedit#start()                *SpaceVim#plugins#iedit#start()*
+  public API for iedit mode
+>
+    KEY:
+    expr     match expression
+    word     match word
+    stack    cursor pos stack
+<
+  if only argv 1 is given, use selected word as pattern
+
+==============================================================================
+LAYERS                                                       *SpaceVim-layers*
+
+  SpaceVim support such layers:
+
+==============================================================================
+AUTOCOMPLETE                                           *SpaceVim-autocomplete*
+
+CODE COMPLETION
+SpaceVim uses neocomplete as the default completion engine if vim has lua
+support. If there is no lua support, neocomplcache will be used for the
+completion engine. SpaceVim uses deoplete as the default completion engine for
+neovim. Deoplete requires neovim to be compiled with python support. For more
+information on python support, please read neovim's |provider-python|.
+
+SpaceVim includes YouCompleteMe, but it is disabled by default. To enable ycm,
+see |g:spacevim_enable_ycm|.
+
+SNIPPET
+SpaceVim use neosnippet as the default snippet engine. The default snippets
+are provided by `Shougo/neosnippet-snippets`. For more information, please
+read |neosnippet|. Neosnippet support custom snippets, and the default
+snippets directory is `~/.SpaceVim/snippets/`. If
+`g:spacevim_force_global_config = 1`, SpaceVim will not append
+`./.SpaceVim/snippets` as default snippets directory.
+
+==============================================================================
+CHECKERS                                             *SpaceVim-layer-checkers*
+
+SpaceVim uses neomake as default syntax checker.
+
+==============================================================================
+COLORSCHEME                                             *SpaceVim-colorscheme*
+
+The ldefault colorscheme for SpaceVim is gruvbox. The colorscheme can be
+changed with the `g:spacevim_colorscheme` option by adding the following line
+to your `~/.SpaceVim/init.vim`.
+>
+  let g:spacevim_colorscheme = 'solarized'
+<
+
+The following colorschemes are include in SpaceVim. If the colorscheme you
+want is not included in the list below, a PR is welcome.
+
+Also, there's one thing which everyone should know and pay attention to. NOT
+all of below colorschemes support spell check very well. For example, a
+colorscheme called atom doesn't support spell check very well.
+
+SpaceVim is not gonna fix them since these should be in charge of each author.
+
+==============================================================================
+CORE#STATUSLINE                               *SpaceVim-layer-core-statusline*
+
+This layer provides default statusline for SpaceVim If you want to use
+airline's statusline, just disable this layer
+>
+  [[layers]]
+    name = "core#statusline"
+    enable = false
+<
+
+==============================================================================
+CORE#TABLINE                                     *SpaceVim-layer-core-tabline*
+
+This layer provides default tabline for SpaceVim If you want to use airline's
+tabline, just disable this layer
+>
+  [[layers]]
+    name = "core#tabline"
+    enable = false
+<
+
+==============================================================================
+EXPRFOLD                                             *SpaceVim-layer-exprfold*
+
+Fold code quickly according to expr.
+
+Mappings:
+>
+  Key         Mode            Function
+  ----------------------------------------------------
+  ZB          normal          Open fold block template
+  ZF          normal          Fold block
+  ZC          normal          Fold block comment
+<
+
+==============================================================================
+FORMAT                                                 *SpaceVim-layer-format*
+
+SpaceVim uses neoformat as the default code format tools. Neoformat uses a
+variety of formatters for many filetypes. for more info see |neoformat| if you
+want to run a formatter on save, just put this config into bootstrap function.
+>
+  augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+  augroup END
+<
+
+==============================================================================
+GITHUB                                                 *SpaceVim-layer-github*
+
+This layer provides GitHub integration for SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC g h i     show issues
+  normal    SPC g h a     show activities
+  normal    SPC g h d     show dashboard
+  normal    SPC g h f     show current file in browser
+  normal    SPC g h I     show issues in browser
+  normal    SPC g h p     show PRs in browser
+<
+
+==============================================================================
+INCSEARCH                                           *SpaceVim-layer-incsearch*
+
+This layer improved incremental searching for neovim/vim
+
+mappings
+>
+  key         mode        description
+  /           n/v         incsearch forward
+  ?           n/v         incsearch backward
+  g/          n/v         incsearch stay
+  n           n           nohlsearch n
+  N           n           nohlsearch N
+  *           n           nohlsearch *
+  g*          n           nohlsearch g*
+  #           n           nohlsearch #
+  g#          n           nohlsearch g#
+  z/          n           incsearch fuzzy /
+  z?          n           incsearch fuzzy ?
+  zg?         n           incsearch fuzzy g?
+  <Space>/    n           incsearch easymotion
+<
+
+==============================================================================
+INDENTMOVE                                         *SpaceVim-layer-indentmove*
+
+Move cursor quickly according to indent.
+
+MAPPINGS
+
+>
+  Key         mode            function
+  -----------------------------------------------------------------
+  EH          normal/visual   move up to nearest line with smaller
+                              indent level
+  EL          normal/visual   move down to nearest line with larger
+                              indent level
+  EJ          normal/visual   move down to nearest line with smaller
+                              or same indent level
+  EK          normal/visual   move down to nearest line with larger
+                              or same indent level
+  EI          normal/visual   move down to nearest child indent
+<
+
+
+
+==============================================================================
+LANG#C                                                 *SpaceVim-layer-lang-c*
+
+This layer provides C family language code completion and syntax checking.
+Requires clang.
+
+Configuration for `tweekmonster/deoplete-clang2`:
+
+  1. Set the compile flags:
+
+      `let g:deoplete#sources#clang#flags = ['-Iwhatever', ...]`
+
+  2. Set the path to the clang executable:
+
+      `let g:deoplete#sources#clang#executable = '/usr/bin/clang'
+
+  3. `g:deoplete#sources#clang#autofill_neomake` is a boolean that tells this
+    plugin to fill in the `g:neomake_<filetype>_clang_maker` variable with the
+    clang executable path and flags. You will still need to enable it with
+    `g:neomake_<filetype>_enabled_make=['clang']`.
+
+  4. Set the standards for each language: `g:deoplete#sources#clang#std` is a
+    dict containing the standards you want to use. It's not used if you
+    already have `-std=whatever` in your flags. The defaults are:
+
+>
+      {
+          'c': 'c11',
+          'cpp': 'c++1z',
+          'objc': 'c11',
+          'objcpp': 'c++1z',
+      }
+<
+  5. `g:deoplete#sources#clang#preproc_max_lines` sets the maximum number of
+    lines to search for an #ifdef or #endif line. #ifdef lines are discarded
+    to get completions within conditional preprocessor blocks. The default is
+    50,  setting it to 0 disables this feature.
+
+
+==============================================================================
+LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
+
+INTRO
+The lang#crystal layer provides crystal filetype detection and syntax
+highlight, crystal tool and crystal spec integration.
+
+==============================================================================
+LANG#CSHARP                                       *SpaceVim-layer-lang-csharp*
+
+This layer includes utilities and language-specific mappings for csharp
+development.
+
+KEY MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l b         compile the project
+  normal          SPC l f         format current file
+  normal          SPC l d         show doc
+  normal          SPC l e         rename symbol under cursor
+  normal          SPC l g g       go to definition
+  normal          SPC l g i       find implementations
+  normal          SPC l g t       find type
+  normal          SPC l g s       find symbols
+  normal          SPC l g u       find usages of symbol under cursor
+  normal          SPC l g m       find members in the current buffer
+  normal          SPC l s r       reload the solution
+  normal          SPC l s s       start the OmniSharp server
+  normal          SPC l s S       stop the OmniSharp server
+<
+
+==============================================================================
+LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
+
+INTRO
+The lang#elixir layer provides code completion, documentation lookup, jump to
+definition, mix integration, and iex integration for Elixir. SpaceVim uses
+neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+
+==============================================================================
+LANG#ELM                                             *SpaceVim-layer-lang-elm*
+
+INTRO
+The lang#elm layer provides code completion, documentation lookup, jump to
+definition, mix integration, and iex integration for elm. SpaceVim uses
+neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+
+==============================================================================
+LANG#GO                                               *SpaceVim-layer-lang-go*
+
+This layer includes code completion and syntax checking for Go development.
+
+MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l a         go alternate
+  normal          SPC l b         go build
+  normal          SPC l c         go coverage
+  normal          SPC l d         go doc
+  normal          SPC l D         go doc vertical
+  normal          SPC l e         go rename
+  normal          SPC l g         go definition
+  normal          SPC l G         go generate
+  normal          SPC l h         go info
+  normal          SPC l i         go implements
+  normal          SPC l I         implement stubs
+  normal          SPC l k         add tags
+  normal          SPC l K         remove tags
+  normal          SPC l l         list declarations in file
+  normal          SPC l L         list declarations in dir
+  normal          SPC l m         format improts
+  normal          SPC l M         add import
+  normal          SPC l r         go referrers
+  normal          SPC l s         fill struct
+  normal          SPC l t         go test
+  normal          SPC l v         freevars
+  normal          SPC l x         go run
+<
+
+==============================================================================
+LANG#JAVA                                           *SpaceVim-layer-lang-java*
+
+This layer is for Java development.
+
+MAPPINGS
+
+>
+  Import key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    <F4>          import class under cursor
+  insert    <F4>          import class under cursor
+  normal    SPC l I       import missing classes
+  normal    SPC l R       remove unused imports
+  normal    SPC l i       smart import class under cursor
+  insert    <c-j>I        import missing imports
+  insert    <c-j>R        remove unused imports
+  insert    <c-j>i        smart import class under cursor
+
+  Generate key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g A    generate accessors
+  normal    SPC l g s    generate setter accessor
+  normal    SPC l g g    generate getter accessor
+  normal    SPC l g a    generate setter and getter accessor
+  normal    SPC l g t    generate toString function
+  normal    SPC l g e    generate equals and hashcode function
+  normal    SPC l g c    generate constructor
+  normal    SPC l g C    generate default constructor
+  insert    <c-j>s       generate setter accessor
+  insert    <c-j>g       generate getter accessor
+  insert    <c-j>a       generate getter and setter accessor
+  visual    SPC l g s    generate setter accessor
+  visual    SPC l g g    generate getter accessor
+  visual    SPC l g a    generate setter and getter accessor
+
+  Maven key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l m i           Run maven clean install
+  normal    SPC l m I       Run maven install
+  normal    SPC l m p       Run one already goal from list
+  normal    SPC l m r       Run maven goals
+  normal    SPC l m R       Run one maven goal
+  normal    SPC l m t       Run maven test
+
+  Jump key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l j a           jump to alternate file
+
+  REPL key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l s i       start a jshell inferior REPL process
+  normal    SPC l s b       send buffer and keep code buffer focused
+  normal    SPC l s l       send line and keep code buffer focused
+  normal    SPC l s s       send selection text and keep code buffer focused
+<
+CODE FORMATTING
+To make neoformat support java file, you should install uncrustify. or
+download google's formater jar from:
+https://github.com/google/google-java-format
+
+and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+
+==============================================================================
+LANG#JULIA                                         *SpaceVim-layer-lang-julia*
+
+The layer provides synatax highlight julia.  The completeion only works in
+nvim with deoplete. However, the julia-vim could not be load on-demanding  due
+to its LaTeXToUnicode feature.
+
+
+==============================================================================
+LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
+
+This layer is for kotlin development.
+
+==============================================================================
+LANG#LUA                                             *SpaceVim-layer-lang-lua*
+
+This layer includes utilities and language-specific mappings for lua
+development.
+
+MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         lua run
+<
+
+==============================================================================
+LANG#OCAML                                         *SpaceVim-layer-lang-ocaml*
+
+OCaml autocompletion provided by merlin.
+
+Requirements:
+>
+  opam
+  merlin
+<
+
+==============================================================================
+LANG#PHP                                             *SpaceVim-layer-lang-php*
+
+This layer is for PHP development. It proides code completion, syntax
+checking, and jump to definition.
+
+Requirements:
+>
+  PHP 5.3+
+  PCNTL Extension
+  Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
+  JSON(for Vim 7.4+)Extension
+  Composer Project
+<
+
+==============================================================================
+LANG#PONY                                           *SpaceVim-layer-lang-pony*
+
+==============================================================================
+LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
+
+This layer is for Puppet development. It provides syntax highlighting and
+syntax checking.
+
+Requirements:
+>
+  Puppet
+  Puppet Lint
+<
+
+==============================================================================
+LANG#PYTHON                                       *SpaceVim-layer-lang-python*
+
+To make this layer work well, you should install jedi.
+MAPPINGS
+
+>
+  mode            key             function
+<
+
+==============================================================================
+LANG#RUST                                           *SpaceVim-layer-lang-rust*
+
+This layer is for Rust development.
+
+Requirements:
+
+  1. Racer needs a copy of the rust source. The easiest way to do this is with
+    rustup. Once rustup is installed, download the source with:
+
+>
+      rustup component add rust-src
+<
+  2. Install racer:
+
+>
+      cargo install racer
+<
+  3. Set the RUST_SRC_PATH variable in your .bashrc:
+
+>
+      RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+      export RUST_SRC_PATH
+<
+  4. Add racer to your path, or set the path with:
+
+>
+      let g:racer_cmd = "/path/to/racer/bin"
+<
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      gd          rust-definition
+  normal      SPC l d     rust-doc
+  normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
+<
+
+==============================================================================
+LANG#SCALA                                         *SpaceVim-layer-lang-scala*
+
+==============================================================================
+LANG#XML                                             *SpaceVim-layer-lang-xml*
+
+When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
+read the documentation in autoload/xmlcomplete.vim in the vim or neovim
+runtime directory.
+
+==============================================================================
+OPERATOR                                             *SpaceVim-layer-operator*
+
+With this layer, you can confirm that text is yanked correctly and see yanked
+text by highlighting.
+
+==============================================================================
+SHELL                                                   *SpaceVim-layer-shell*
+
+SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
+For more info, read |deol| and |vimshell|.
+VARIABLE
+default_shell
+
+
+==============================================================================
+TMUX                                                     *SpaceVim-layer-tmux*
+
+Adds integration between tmux and vim panes. Switch between panes
+seamlessly.syntax highlighting, commenting, man page navigation and ability to
+execute lines as tmux commands. This layer is not added by default. To include
+it, add `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If
+you are having issues with <C-h> in a neovim buffer, see
+`https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
+
+MAPPINGS
+
+>
+  Key       Mode        Function
+  ------------------------------
+  <C-h>     normal      Switch to vim/tmux pane in left direction
+  <C-j>     normal      Switch to vim/tmux pane in down direction
+  <C-k>     normal      Switch to vim/tmux pane in up direction
+  <C-l>     normal      Switch to vim/tmux pane in right direction
+<
+
+==============================================================================
+TOOLS#DASH                                         *SpaceVim-layer-tools-dash*
+
+This layer provides Dash integration for SpaceVim
+
+==============================================================================
+API                                                             *SpaceVim-api*
+
+SpaceVim contains a variety of public apis. here is a list of all the apis.
+USAGE
+This is just an example, and it works well in old version vim.
+>
+  let s:json = SpaceVim#api#import('data#json')
+  let rst = s:json.json_encode(onject)
+  let rst = s:json.json_decode(string)
+<
+
+==============================================================================
+CMDLINEMENU                                         *SpaceVim-api-cmdlinemenu*
+
+menu({items})
+
+Create a cmdline selection menu from a list of {items}, each item should be a
+list of two value in it, first one is the description, and the next one should
+be a funcrc.
+
+==============================================================================
+DATA#LIST                                             *SpaceVim-api-data-list*
+
+pop({list})
+
+Removes the last element from {list} and returns the element, as if the {list}
+is a stack.
+
+push({list})
+
+Appends {val} to the end of {list} and returns the list itself, as if the
+{list} is a stack.
+
+listpart({list}, {start}[, {len}])
+
+The result is a List, which is part of {list}, starting from index {start},
+with the length {len}
+
+==============================================================================
+PROMPT                                                   *SpaceVim-api-prompt*
+
+open()
+
+Create a cmdline prompt, use while loop to get the input from user. The
+default mapping for prompt is:
+>
+  <Bs>            remove last character
+  <C-w>           remove the Word before the cursor
+  <C-u>           remove the Line before the cursor
+  <C-k>           remove the Line after the cursor
+  <C-a> / <Home>  Go to the beginning of the line
+  <C-e> / <End>   Go to the end of the line
+<
+
+==============================================================================
+SID                                                     *SpaceVim-api-vim-sid*
+
+" Capture command
+
+==============================================================================
+VIM#MESSAGE                                         *SpaceVim-api-vim-message*
+
+==============================================================================
+FAQ                                                             *SpaceVim-faq*
+
+  1. How do I enable YouCompleteMe?
+
+>
+  I do not recommend using YouCompleteMe.
+  It is too big as a vim plugin. Also, I do not like using submodules in a vim
+  plugin. It is hard to manage with a plugin manager.
+
+  Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
+  it should be `~/.SpaceVim.d/init.vim`.
+
+  Step 2: Get into the directory of YouCompleteMe's author. By default it
+  should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
+  directory `YouCompleteMe` in it, go into it. Otherwise clone
+  YouCompleteMe repo by
+  `git clone https://github.com/Valloric/YouCompleteMe.git`. After cloning,
+  get into it and run `git submodule update --init --recursive`.
+
+  Step 3: Compile YouCompleteMe with the features you want. If you just want
+  C family support, run `./install.py --clang-completer`.
+<
+
+  2. How to add custom snippet?
+
+>
+  SpaceVim uses neosnippet as the default snippet engine. If you want to add
+  a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
+  command. A buffer will be opened and you can add your custom snippet.
+  By default this buffer will be save in `~/.SpaceVim/snippets`.
+  If you want to use another directory:
+
+  let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+
+  For more info about how to write snippet, please
+  read |neosnippet-snippet-syntax|.
+<
+
+  3. Where is `<c-f>` in cmdline-mode?
+
+>
+  `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
+  binding as `<Right>`, so maybe you can change the `cedit` option or use
+  `<leader>+<c-f>`.
+<
+
+  4. How to use `<Space>` as `<Leader>`?
+
+>
+  Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
+<
+
+==============================================================================
+CHANGELOG                                                 *SpaceVim-changelog*
+
+Following HEAD: changes in master branch since last release v0.7.0
+
+https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+
+2018-03-19: v0.7.0
+
+https://spacevim.org/SpaceVim-release-v0.7.0/
+
+
+vim:tw=78:ts=8:ft=help:norl:

@@ -1,7 +1,7 @@
-if exists("b:current_syntax")
-    finish
+if exists('b:current_syntax') && b:current_syntax ==# 'SpaceVimRunner'
+  finish
 endif
-let b:current_syntax = "SpaceVimRunner"
+let b:current_syntax = 'SpaceVimRunner'
 syntax case ignore
 syn match KeyBindings /\[Running\]/
 syn match KeyBindings /\[Compile\]/

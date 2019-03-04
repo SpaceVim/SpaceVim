@@ -1,3 +1,33 @@
+"=============================================================================
+" job.vim --- job api
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+
+""
+" @section job, api-job
+" @parentsection api
+" provides some functions to manager job
+"
+" start({cmd}[, {opt}])
+" 
+"   spawns {cmd} as a job. {opts} is a dictionary with these keys:
+"
+"   on_stdout: stdout event handler (function name or Funcref)
+"
+"   on_stderr: stderr event handler (function name or Funcref)
+"   
+"   on_exit: exit event handler (function name or Funcref)
+"
+"   cwd: working directory of the job; defaults to current directory
+
+
+
+
 function! SpaceVim#api#job#get() abort
   return deepcopy(s:self)
 endfunction
@@ -71,11 +101,15 @@ endfunction
 " start a job, and return the job_id.
 function! s:self.start(argv, ...) abort
   if self.nvim_job
+    try
     if len(a:000) > 0
       let job = jobstart(a:argv, a:1)
     else
       let job = jobstart(a:argv)
     endi
+    catch /^Vim\%((\a\+)\)\=:E903/
+      return -1
+    endtry
     if job > 0
       let msg = ['process '. jobpid(job), ' run']
       call extend(self.jobs, {job : msg})
@@ -96,7 +130,7 @@ function! s:self.start(argv, ...) abort
     let id = len(self.jobs) + 1
     let opts.jobpid = id
     let wrapped = self.warp(a:argv, opts)
-    if has_key(wrapped.opts, 'cwd')
+    if has_key(wrapped.opts, 'cwd') && !has('patch-8.0.0902')
       let old_wd = getcwd()
       let cwd = expand(wrapped.opts.cwd, 1)
       " Avoid error E475: Invalid argument: cwd
@@ -163,7 +197,7 @@ function! s:self.stop(id) abort
       call jobstop(a:id)
       call remove(self.jobs, a:id)
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to stop job :' . a:id)
     endif
   elseif self.vim_job
     if has_key(self.jobs, a:id)
@@ -184,15 +218,19 @@ function! s:self.send(id, data) abort
         call jobsend(a:id, a:data)
       endif
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to send data to job: ' . a:id)
     endif
   elseif self.vim_job
     if has_key(self.jobs, a:id)
       let job = get(self.jobs, a:id)
       let chanel = job_getchannel(job)
-      call ch_sendraw(chanel, a:data . "\n")
+      if type(a:data) == type('')
+        call ch_sendraw(chanel, a:data . "\n")
+      else
+        call ch_sendraw(chanel, join(a:data, "\n"))
+      endif
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to send data to job: ' . a:id)
     endif
   else
     call self.warn()
@@ -209,7 +247,7 @@ function! s:self.status(id) abort
       return job_status(get(self.jobs, a:id))
     endif
   else
-    call self.warn('No job with such id!')
+      call self.warn('[job API] Failed to get job status: ' . a:id)
   endif
 endfunction
 
@@ -227,12 +265,23 @@ function! s:self.info(id) abort
     if has_key(self.jobs, a:id)
       return job_info(get(self.jobs, a:id))
     else
-      call self.warn('No job with such id!')
+      call self.warn('[job API] Failed to get job info: ' . a:id)
     endif
   else
     call self.warn()
   endif
 endfunction
+
+function! s:self.chanclose(id, type) abort
+  if self.nvim_job
+      call chanclose(a:id, a:type)
+  elseif self.vim_job
+    if has_key(self.jobs, a:id) && a:type ==# 'stdin'
+      call ch_close_in(get(self.jobs, a:id))
+    endif
+  endif
+endfunction
+
 
 function! s:self.debug() abort
   echo join(self._message, "\n")

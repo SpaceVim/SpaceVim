@@ -1,3 +1,19 @@
+"=============================================================================
+" system.vim --- SpaceVim system API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+""
+" @section system, api-system
+" @parentsection api
+" name()
+" 
+" Return the name of current os, availibel value is: linux, cygwin, windows
+" and mac.
+
 scriptencoding utf-8
 let s:system = {}
 
@@ -7,17 +23,24 @@ let s:system['isLinux'] = has('unix') && !has('macunix') && !has('win32unix')
 
 let s:system['isOSX'] = has('macunix')
 
+
+" windows, unix, cygwin, mac, linux
+
 function! s:name() abort
   if s:system.isLinux
-    return 'Linux'
+    return 'linux'
   elseif s:system.isWindows
-    return 'Windows'
+    if has('win32unix')
+      return 'cygwin'
+    else
+      return 'windows'
+    endif
   else
-    return 'OSX'
+    return 'mac'
   endif
 endfunction
 
-let s:system['name'] = function('s:name')
+let s:system['name'] = s:name()
 
 function! s:isDarwin() abort
   if exists('s:is_darwin')

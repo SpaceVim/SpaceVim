@@ -1,7 +1,7 @@
-if exists("b:current_syntax")
+if exists('b:current_syntax') && b:current_syntax ==# 'leaderguide'
     finish
 endif
-let b:current_syntax = "leaderguide"
+let b:current_syntax = 'leaderguide'
 
 syn region LeaderGuideKeys start="\["hs=e+1 end="\]\s"he=s-1
             \ contained

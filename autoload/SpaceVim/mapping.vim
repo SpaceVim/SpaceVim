@@ -1,3 +1,11 @@
+"=============================================================================
+" mapping.vim --- mapping functions in SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 scriptencoding utf-8
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
@@ -143,22 +151,52 @@ endfunction
 function! SpaceVim#mapping#close_current_buffer() abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
-  let index = index(buffers, bn) 
+  let f = ''
+  if getbufvar(bn, '&modified', 0)
+    redraw
+    echohl WarningMsg
+    echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
+    echohl None
+    let rs = nr2char(getchar())
+    if rs ==? 'y'
+      write
+    elseif rs ==? 'n'
+      let f = '!'
+      redraw
+      echohl ModeMsg
+      echon 'discarded!'
+      echohl None
+    else
+      redraw
+      echohl ModeMsg
+      echon 'canceled!'
+      echohl None
+      return
+    endif
+  endif
+
+  if &buftype ==# 'terminal'
+    exe 'bd!'
+    return
+  endif
+
+  let cmd_close_buf = 'bd' . f
+  let index = index(buffers, bn)
   if index != -1
     if index == 0
       if len(buffers) > 1
         exe 'b' . buffers[1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       else
-        exe 'bd ' . bn
+        exe cmd_close_buf . bn
       endif
     elseif index > 0
       if index + 1 == len(buffers)
         exe 'b' . buffers[index - 1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       else
         exe 'b' . buffers[index + 1]
-        exe 'bd' . bn
+        exe cmd_close_buf . bn
       endif
     endif
   endif
@@ -214,7 +252,7 @@ function! SpaceVim#mapping#menu(desc, key, cmd) abort
         \ a:cmd])
 endfunction
 
-function! SpaceVim#mapping#clear_saved_buffers()
+function! SpaceVim#mapping#clear_saved_buffers() abort
   call s:BUFFER.filter_do(
         \ {
         \ 'expr' : [

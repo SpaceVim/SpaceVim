@@ -1,0 +1,4 @@
+Execute ( SpaceVim api: data#number ):
+  let number = SpaceVim#api#import('data#number')
+  let random = number.random(5, 10)
+  AssertEqual  random <= 14 && random >= 5, 1

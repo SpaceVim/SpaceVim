@@ -1,3 +1,11 @@
+"=============================================================================
+" key.vim --- SpaceVim key API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:self = {}
 
 let s:specified_keys = {
@@ -25,6 +33,6 @@ function! s:self.nr2name(nr) abort
 endfunction
 
 
-function! SpaceVim#api#vim#key#get()
+function! SpaceVim#api#vim#key#get() abort
     return deepcopy(s:self)
 endfunction

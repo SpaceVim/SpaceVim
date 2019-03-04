@@ -1,4 +1,5 @@
 let s:NUM = SpaceVim#api#import('data#number')
+let s:FILE = SpaceVim#api#import('file')
 fu! s:update_logo()
   if !exists('g:startify_custom_header') && !exists('g:_spacevim_welcome_banners')
     let g:startify_custom_header = [
@@ -60,5 +61,18 @@ if !exists('g:startify_custom_header')
   call s:update_logo()
 endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
+
+if g:spacevim_enable_tabline_filetype_icon
+
+  function! FileIcon(path)
+    let icon = s:FILE.fticon(a:path)
+    return empty(icon) ? ' ' : icon
+  endfunction
+
+  function! StartifyEntryFormat()
+    return 'FileIcon(entry_path) ."  ". entry_path'
+  endfunction
+
+endif
 
 " vim:set et sw=2:

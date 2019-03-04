@@ -1,15 +1,21 @@
 "=============================================================================
-" tabline.vim --- core#tabline Layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" tabline.vim --- SpaceVim tabline
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
-" License: MIT license
+" License: GPLv3
 "=============================================================================
 
 ""
 " @section core#tabline, layer-core-tabline
 " @parentsection layers
 " This layer provides default tabline for SpaceVim
+" If you want to use airline's tabline, just disable this layer
+" >
+"   [[layers]]
+"     name = "core#tabline"
+"     enable = false
+" <
 
 scriptencoding utf-8
 let s:messletters = SpaceVim#api#import('messletters')
@@ -32,7 +38,7 @@ let s:separators = {
 
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
-      \ 'bar' : ["|", "|"],
+      \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
 
@@ -48,7 +54,7 @@ function! s:tabname(id) abort
   if g:spacevim_enable_tabline_filetype_icon
     let icon = s:file.fticon(fn)
     if !empty(icon)
-      let fn = icon . ' ' . fn
+      let fn = fn . ' ' . icon
     endif
   endif
   if empty(fn)
@@ -83,6 +89,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     else
       let t = '%#SpaceVim_tabline_b#  '
     endif
+    let index = 1
     for i in range(1, nr)
       if i == ct
         let t .= '%#SpaceVim_tabline_a#'
@@ -90,11 +97,12 @@ function! SpaceVim#layers#core#tabline#get() abort
       let buflist = tabpagebuflist(i)
       let winnr = tabpagewinnr(i)
       let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
-      if empty(name)
-        let name = 'No Name'
+      let tabname = gettabvar(i, '_spacevim_tab_name', '')
+      if has('tablineat')
+        let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      elseif !has('nvim')
+        let t .= '%' . index . 'T'
       endif
-      call add(stack, buflist[winnr - 1])
-      call s:need_show_bfname(stack, buflist[winnr - 1])
       if g:spacevim_buffer_index_type == 3
         let id = s:messletters.index_num(i)
       elseif g:spacevim_buffer_index_type == 4
@@ -102,13 +110,22 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let id = s:messletters.circled_num(i, g:spacevim_buffer_index_type)
       endif
-      if g:spacevim_enable_tabline_filetype_icon
-        let icon = s:file.fticon(name)
-        if !empty(icon)
-          let name = icon . ' ' . name
+      if empty(tabname)
+        if empty(name)
+          let name = 'No Name'
         endif
+        call add(stack, buflist[winnr - 1])
+        call s:need_show_bfname(stack, buflist[winnr - 1])
+        if g:spacevim_enable_tabline_filetype_icon
+          let icon = s:file.fticon(name)
+          if !empty(icon)
+            let name = name . ' ' . icon
+          endif
+        endif
+        let t .= id . ' ' . name
+      else
+        let t .= id . ' T:' . tabname
       endif
-      let t .= id . ' ' . name
       if i == ct - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
       elseif i == ct
@@ -116,6 +133,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let t .= ' ' . s:ilsep . ' '
       endif
+      let index += 1
     endfor
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Tabs '
@@ -169,7 +187,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       if g:spacevim_enable_tabline_filetype_icon
         let icon = s:file.fticon(name)
         if !empty(icon)
-          let name = icon . ' ' . name
+          let name = name . ' ' . icon
         endif
       endif
       let t .= id . ' ' . name
@@ -220,21 +238,34 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
-  if get(a:000, 2, '') == 'm'
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
-      bd
+  if get(a:000, 2, '') ==# 'm'
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+      quit
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+        bd
+      endif
     endif
-  elseif get(a:000, 2, '') == 'l'
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
+  elseif get(a:000, 2, '') ==# 'l'
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+      endif
     endif
   else
-    if len(s:buffers) >= a:id
-      let bid = s:buffers[a:id - 1]
-      exe 'silent b' . bid
+    if tabpagenr('$') > 1
+      exe 'tabnext' . a:id
+    else
+      if len(s:buffers) >= a:id
+        let bid = s:buffers[a:id - 1]
+        exe 'silent b' . bid
+      endif
     endif
   endif
 endfunction

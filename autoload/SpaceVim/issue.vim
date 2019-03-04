@@ -1,14 +1,42 @@
+"=============================================================================
+" issue.vim --- issue reporter for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 function! SpaceVim#issue#report() abort
   call s:open()
 endfunction
 
 function! s:open() abort
-  exe 'tabnew ' . tempname() . '/issue_report.md'
+  exe 'silent tabnew ' . tempname() . '/issue_report.md'
   let b:spacevim_issue_template = 1
-  call setline(1, s:template())
-  w
+  let template = s:template()
+  call setline(1, template)
+  let @+ = join(template, "\n")
+  silent w
 endfunction
 
+function! s:spacevim_status() abort
+  let pwd = getcwd()
+  try
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
+    let status = s:CMP.systemlist('git status')
+  catch
+    exe 'cd ~/.SpaceVim'
+    let status = s:CMP.systemlist('git status')
+  endtry
+  exe 'cd ' . pwd
+  if type(status) == 3
+    return status
+  else
+    return [status]
+  endif
+endfunction
 
 function! s:template() abort
   let info = [
@@ -17,15 +45,23 @@ function! s:template() abort
         \ '',
         \ '## Environment Information',
         \ '',
-        \ '- OS:' . SpaceVim#api#import('system').name(),
-        \ '- vim version:' . (has('nvim') ? '' : v:version),
-        \ '- neovim version:' . (has('nvim') ? v:version : ''),
+        \ '- OS: ' . SpaceVim#api#import('system').name,
+        \ '- vim version: ' . (has('nvim') ? '-' : s:CMP.version()),
+        \ '- neovim version: ' . (has('nvim') ? s:CMP.version() : '-'),
+        \ '- SpaceVim version: ' . g:spacevim_version,
+        \ '- SpaceVim status: ',
+        \ '',
+        \ '```'
+        \ ]
+  let info = info + s:spacevim_status()
+  let info = info + [
+        \ '```',
         \ '',
         \ '## The reproduce ways from Vim starting (Required!)',
         \ '',
         \ '## Output of the `:SPDebugInfo!`',
         \ '']
-        \ + split(SpaceVim#api#import('vim#compatible').execute(':SPDebugInfo'), "\n") +
+        \ + split(s:CMP.execute(':SPDebugInfo'), "\n") +
         \ [
         \ '## Screenshots',
         \ '',
@@ -36,7 +72,7 @@ endfunction
 
 
 
-function! SpaceVim#issue#new()
+function! SpaceVim#issue#new() abort
   if get(b:, 'spacevim_issue_template', 0) == 1
     let title = input('Issue title:')
     let username = input('github username:')
@@ -51,4 +87,23 @@ function! SpaceVim#issue#new()
       echo 'Failed to create issue, please check the username and password'
     endif
   endif
+endfunction
+
+
+function! SpaceVim#issue#reopen(id) abort
+  let issue = {
+        \ 'state' : 'open'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
+endfunction
+
+function! SpaceVim#issue#close(id) abort
+  let issue = {
+        \ 'state' : 'closed'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
 endfunction

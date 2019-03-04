@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : 0.6.0-dev       by : spacevim.org             "
+echo "                      version : 1.1.0-dev       by : spacevim.org             "
 
 Push-Location ~
 
@@ -20,13 +20,61 @@ $repo_url    = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
+Function Pause ($Message = "Press any key to continue . . . ") {
+    if ((Test-Path variable:psISE) -and $psISE) {
+        $Shell = New-Object -ComObject "WScript.Shell"
+        $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
+    } else {
+        Write-Host -NoNewline $Message
+        [void][System.Console]::ReadKey($true)
+        Write-Host
+    }
+}
+
+echo "==> Starting Testing Procedure..."
+echo ""
+sleep 1
+
+
+echo "==> Testing git"
+if (Get-Command "git" -ErrorAction SilentlyContinue) {
+    git version
+    echo "[OK] Test successfully. Moving to next..."
+    sleep 1
+} else {
+    echo ""
+    echo "[ERROR] Unable to find 'git.exe' in your PATH"
+    echo ">>> Ready to Exit......"
+    Pause
+    exit
+}
+
+echo ""
+
+echo "==> Testing vim"
+if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
+    echo ($(vim --version) -split '\n')[0]
+    echo "[OK] Test successfully. Moving to next..."
+    sleep 1
+} else {
+    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo ""
+    echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
+    Pause
+}
+
+echo "<== Testing Procedure Completed. Moving to next..."
+sleep 1
+echo ""
+echo ""
+
 if (!(Test-Path "$HOME\.SpaceVim")) {
     echo "==> Trying to clone $app_name"
     git clone $repo_url $repo_path
 } else {
     echo "==> Trying to update $app_name"
     Push-Location $repo_path
-    git pull origin dev
+    git pull origin master
 }
 
 echo ""
@@ -35,6 +83,15 @@ if (!(Test-Path "$HOME\vimfiles")) {
     cmd /c mklink $HOME\vimfiles $repo_path
 } else {
     echo "[OK] vimfiles already exists"
+	sleep 1
+}
+echo ""
+
+if (!(Test-Path "$HOME\AppData\Local\nvim")) {
+  cmd /c mklink "$HOME\AppData\Local\nvim" $repo_path
+} else {
+    echo "[OK] $HOME\AppData\Local\nvim already exists"
+	sleep 1
 }
 
 echo ""
@@ -46,15 +103,6 @@ echo ""
 echo "That's it. Thanks for installing $app_name. Enjoy!"
 echo ""
 
-Function Pause ($Message = "Press any key to continue . . . ") {
-    if ((Test-Path variable:psISE) -and $psISE) {
-        $Shell = New-Object -ComObject "WScript.Shell"
-        $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
-    } else {     
-        Write-Host -NoNewline $Message
-        [void][System.Console]::ReadKey($true)
-        Write-Host
-    }
-}
-
 Pause
+
+# vim:set ft=ps1:

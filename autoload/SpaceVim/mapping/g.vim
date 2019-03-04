@@ -1,3 +1,11 @@
+"=============================================================================
+" g.vim --- g key bindings
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#mapping#g#init() abort
     nnoremap <silent><nowait> [g] :<c-u>LeaderGuide "g"<CR>
     nmap g [g]
@@ -9,7 +17,7 @@ function! SpaceVim#mapping#g#init() abort
 
     let g:_spacevim_mappings_g["'"] = ['call feedkeys("g' . "'" . '", "n")', 'jump to mark']
     nnoremap g' g'
-    let g:_spacevim_mappings_g["`"] = ['call feedkeys("g' . "`" . '", "n")', 'jump to mark']
+    let g:_spacevim_mappings_g['`'] = ['call feedkeys("g' . '`' . '", "n")', 'jump to mark']
     nnoremap g` g`
 
     let g:_spacevim_mappings_g['+'] = ['call feedkeys("g+", "n")', 'newer text state']

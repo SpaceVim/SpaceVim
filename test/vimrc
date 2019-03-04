@@ -4,3 +4,4 @@ set rtp+=.
 set rtp+=after
 filetype plugin indent on
 syntax enable
+set nocompatible

@@ -1,65 +1,69 @@
-let g:Config_Main_Home = fnamemodify(expand('<sfile>'),
-      \ ':p:h:gs?\\?'.((has('win16') || has('win32')
-      \ || has('win64'))?'\':'/') . '?')
+"=============================================================================
+" main.vim --- Main file of SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
-
-" [dir?, path]
-function! s:parser_argv() abort
-    if !argc()
-        return [1, getcwd()]
-    elseif argv(0) =~# '/$'
-        let f = expand(argv(0))
-        if isdirectory(f)
-            return [1, f]
-        else
-            return [1, getcwd()]
-        endif
-    elseif argv(0) ==# '.'
-        return [1, getcwd()]
-    elseif isdirectory(expand(argv(0)))
-        return [1, expand(argv(0)) ]
-    else
-        return [0]
-    endif
-endfunction
-let s:status = s:parser_argv()
-if s:status[0]
-    let g:_spacevim_enter_dir = s:status[1]
-    augroup SPwelcome
-        au!
-        autocmd VimEnter * call SpaceVim#welcome()
-    augroup END
+" Enable nocompatible
+if has('vim_starting')
+  " set default encoding to utf-8
+  " Let Vim use utf-8 internally, because many scripts require this
+  exe 'set encoding=utf-8'
+  scriptencoding utf-8
+  if &compatible
+    set nocompatible
+  endif
+  " python host
+  if !empty($PYTHON_HOST_PROG)
+    let g:python_host_prog  = $PYTHON_HOST_PROG
+  endif
+  if !empty($PYTHON3_HOST_PROG)
+    let g:python3_host_prog = $PYTHON3_HOST_PROG
+  endif
 endif
-
+" Detect root directory of SpaceVim
+if has('win16') || has('win32') || has('win64')
+  function! s:resolve(path) abort
+    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
+    " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
+    silent let rst = system(cmd)
+    if !v:shell_error
+      let dir = split(rst)[-1][1:-2]
+      return dir
+    endif
+    return a:path
+  endfunction
+else
+  function! s:resolve(path) abort
+    return resolve(a:path)
+  endfunction
+endif
+let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
+      \ ':p:h:h:gs?\\?'.((has('win16') || has('win32')
+      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
+lockvar g:_spacevim_root_dir
+if has('nvim')
+  let s:qtdir = split(&rtp, ',')[-1]
+  if s:qtdir =~# 'nvim-qt'
+    let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
+  else
+    let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
+  endif
+else
+  let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
+endif
 try
-    call zvim#util#source_rc('functions.vim')
+  call SpaceVim#begin()
 catch
-    execute 'set rtp +=' . fnamemodify(g:Config_Main_Home, ':p:h:h')
-    call zvim#util#source_rc('functions.vim')
+  " Update the rtp only when SpaceVim is not contained in runtimepath.
+  let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h')
+  call SpaceVim#begin()
 endtry
 
-
-call zvim#util#source_rc('init.vim')
-
-call SpaceVim#default()
-
-call SpaceVim#loadCustomConfig()
-
-call SpaceVim#server#connect()
+call SpaceVim#custom#load()
 
 call SpaceVim#end()
-
-call zvim#util#source_rc('general.vim')
-
-
-
-call SpaceVim#autocmds#init()
-
-if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
-endif
-
-call zvim#util#source_rc('commands.vim')
-filetype plugin indent on
-syntax on
 " vim:set et sw=2 cc=80:

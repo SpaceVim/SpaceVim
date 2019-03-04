@@ -1,12 +1,14 @@
 ---
 title: "SpaceVim ui layer"
+description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) ui
+# [Available Layers](../) >> ui
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
+- [Install](#install)
 - [Plugins](#plugins)
 
 <!-- vim-markdown-toc -->
@@ -15,9 +17,28 @@ title: "SpaceVim ui layer"
 
 This is UI layer for SpaceVim, and it is loaded by default.
 
+## Install
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "ui"
+```
 
 ## Plugins
 
-- [mhinz/vim-startify](https://github.com/mhinz/vim-startify)
-- [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
+- [startify](https://github.com/mhinz/vim-startify): welcome page, default key binding is `SPC a s`.
+- [tagbar](https://github.com/majutsushi/tagbar): outline sidebar, default key binding is `<F2>`.
+- [indentLine](https://github.com/Yggdroot/indentLine): code indent line, toggle key binding is `SPC t i`.
+
+## Tips
+
+SpaceVim provide default statusline and tabline plugin which are provided by `core#statusline` and `core#tabline` layer, If you want to use airline, just disable that layer:
+
+```toml
+[[layers]]
+  name = "core#statusline"
+  enable = false
+```
 

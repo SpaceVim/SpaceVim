@@ -1,1 +1,0 @@
-If you need help, ask your question in the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim), a member of the community will help you out.

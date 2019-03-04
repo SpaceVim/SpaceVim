@@ -1,10 +1,18 @@
+"=============================================================================
+" autocomplete.vim --- SpaceVim autocomplete layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 ""
 " @section autocomplete, autocomplete
 " @parentsection layers
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
 " support. If there is no lua support, neocomplcache will be used for the
-" completion engine. Spacevim uses deoplete as the default completion engine
+" completion engine. SpaceVim uses deoplete as the default completion engine
 " for neovim. Deoplete requires neovim to be compiled with python support. For
 " more information on python support, please read neovim's |provider-python|.
 "
@@ -18,6 +26,7 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
@@ -28,8 +37,10 @@ function! SpaceVim#layers#autocomplete#plugins() abort
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],
         \ ['Shougo/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
-        \ ['Raimondi/delimitMate',        { 'merged' : 0}],
         \ ]
+  if g:spacevim_autocomplete_parens
+    call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
+  endif
   " snippet
   if g:spacevim_snippet_engine ==# 'neosnippet'
     call add(plugins,  ['Shougo/neosnippet.vim', { 'on_event' : 'InsertEnter',
@@ -52,6 +63,12 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+  elseif g:spacevim_autocomplete_method ==# 'coc'
+    if s:SYS.isWindows
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.cmd'}])
+    else
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
+    endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
@@ -61,7 +78,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
       call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
     endif
-  elseif g:spacevim_autocomplete_method == 'asyncomplete'
+  elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -74,7 +91,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
-  elseif g:spacevim_autocomplete_method == 'completor'
+  elseif g:spacevim_autocomplete_method ==# 'completor'
     call add(plugins, ['maralla/completor.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
@@ -99,17 +116,20 @@ endfunction
 
 
 function! SpaceVim#layers#autocomplete#config() abort
-  imap <expr>( 
-        \ pumvisible() ? 
-        \ complete_parameter#pre_complete("()") : 
-        \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
-        \ "\<Plug>delimitMate(" :
-        \ '('
+  if g:spacevim_autocomplete_parens
+    imap <expr>(
+          \ pumvisible() ?
+          \ complete_parameter#pre_complete("()") :
+          \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
+          \ "\<Plug>delimitMate(" :
+          \ '('
+  endif
 
   "mapping
   if s:tab_key_behavior ==# 'smart'
     if has('patch-7.4.774')
       imap <silent><expr><TAB> SpaceVim#mapping#tab()
+      imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
       if g:spacevim_snippet_engine ==# 'neosnippet'
         smap <expr><TAB>
               \ neosnippet#expandable_or_jumpable() ?
@@ -117,18 +137,14 @@ function! SpaceVim#layers#autocomplete#config() abort
               \ (complete_parameter#jumpable(1) ?
               \ "\<plug>(complete_parameter#goto_next_parameter)" :
               \ "\<TAB>")
-        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
       elseif g:spacevim_snippet_engine ==# 'ultisnips'
-        imap <silent><expr><TAB> SpaceVim#mapping#tab()
-        imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
         snoremap <silent> <TAB>
               \ <ESC>:call UltiSnips#JumpForwards()<CR>
         snoremap <silent> <S-TAB>
               \ <ESC>:call UltiSnips#JumpBackwards()<CR>
-      else
       endif
     else
-      call SpaceVim#logger#warn('smart tab in autocomplete layer need patch 7.4.774')
+      call SpaceVim#logger#info('smart tab in autocomplete layer need patch 7.4.774')
     endif
   elseif s:tab_key_behavior ==# 'complete'
     inoremap <expr> <Tab>       pumvisible() ? "\<C-y>" : "\<C-n>"
@@ -149,16 +165,28 @@ function! SpaceVim#layers#autocomplete#config() abort
   inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
   inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
   " in origin vim or neovim Alt + / will insert a /, this should be disabled.
-  imap <expr> <M-/>
-        \ neosnippet#expandable() ?
-        \ "\<Plug>(neosnippet_expand)" : ""
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+  let g:complete_parameter_use_ultisnips_mapping = 1
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    imap <expr> <M-/>
+          \ neosnippet#expandable() ?
+          \ "\<Plug>(neosnippet_expand)" : ""
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    inoremap <silent> <M-/> <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
+  endif
+
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
+  endif
 endfunction
 
 let s:return_key_behavior = 'smart'
 let s:tab_key_behavior = 'smart'
 let s:key_sequence = 'nil'
 let s:key_sequence_delay = 0.1
+let g:_spacevim_autocomplete_delay = 50
 
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
@@ -174,8 +202,24 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
   let s:key_sequence_delay = get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
         \ 0.1)
+  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 
+        \ g:_spacevim_autocomplete_delay)
 
 endfunction
 
+function! SpaceVim#layers#autocomplete#get_options() abort
+
+  return ['return_key_behavior',
+        \ 'tab_key_behavior',
+        \ 'auto-completion-complete-with-key-sequence',
+        \ 'auto-completion-complete-with-key-sequence-delay']
+
+endfunction
+
+function! SpaceVim#layers#autocomplete#getprfile() abort
+
+
+
+endfunction
 
 " vim:set et sw=2 cc=80:

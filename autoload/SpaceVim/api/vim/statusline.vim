@@ -1,3 +1,11 @@
+"=============================================================================
+" statusline.vim --- SpaceVim statusline API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:self = {}
 
 
@@ -18,7 +26,7 @@ function! s:self.eval(sec) abort
   return substitute(a:sec, '%{.*}', '', 'g')
 endfunction
 
-function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, hi_b, hi_c, hi_z, winwidth) abort
+function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi_a, hi_b, hi_c, hi_z, winwidth) abort
   let l = '%#' . a:hi_a . '#' . a:left_sections[0]
   let l .= '%#' . a:hi_a . '_' . a:hi_b . '#' . a:lsep
   let flag = 1
@@ -47,9 +55,9 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, h
   if self.check_width(len, a:fname, a:winwidth)
     let len += self.len(a:fname)
     if flag == 1
-      let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
+      let l .= '%#' . a:hi_c . '_' . a:hi_z . '#' . a:lsep . '%#' . a:hi_z . '#' . a:fname . '%='
     else
-      let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . a:fname . '%='
+      let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%#' . a:hi_z . '#' . a:fname . '%='
     endif
   else
     if flag == 1
@@ -57,6 +65,9 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, hi_a, h
     else
       let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%='
     endif
+  endif
+  if self.check_width(len, a:tag, a:winwidth) && g:spacevim_enable_statusline_tag
+    let l .= '%#' . a:hi_z . '#' . a:tag
   endif
   let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep
   let flag = 1

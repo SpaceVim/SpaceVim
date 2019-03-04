@@ -1,20 +1,22 @@
+"=============================================================================
+" haskell.vim --- SpaceVim lang#haskell layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#lang#haskell#plugins() abort
   let plugins = [
         \ ['neovimhaskell/haskell-vim', { 'on_ft': 'haskell' }],
         \ ['pbrisbin/vim-syntax-shakespeare', { 'on_ft': 'haskell' }],
         \ ]
 
-  if !s:use_lsp
+  if SpaceVim#layers#lsp#check_filetype('haskell')
     call add(plugins, ['eagletmt/neco-ghc', { 'on_ft': 'haskell' }])
   endif
 
   return plugins
-endfunction
-
-let s:use_lsp = 0
-
-function! SpaceVim#layers#lang#haskell#set_variable(var) abort
-  let s:use_lsp = get(a:var, 'use_lsp', 0) && has('nvim') && executable('hie')
 endfunction
 
 function! SpaceVim#layers#lang#haskell#config() abort
@@ -24,25 +26,24 @@ function! SpaceVim#layers#lang#haskell#config() abort
         \ 'ghc -v0 --make %s -o #TEMP#',
         \ '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('haskell',
-        \ funcref('s:on_ft'))
+        \ function('s:on_ft'))
 
-  if s:use_lsp
+  if SpaceVim#layers#lsp#check_filetype('haskell')
     call SpaceVim#mapping#gd#add('haskell',
           \ function('SpaceVim#lsp#go_to_def'))
-    call SpaceVim#lsp#reg_server('haskell', ['hie', '--lsp'])
   endif
 
   augroup SpaceVim_lang_haskell
     autocmd!
 
-    if !s:use_lsp
+  if SpaceVim#layers#lsp#check_filetype('haskell')
       autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
     endif
   augroup END
 endfunction
 
 function! s:on_ft() abort
-  if s:use_lsp
+  if SpaceVim#layers#lsp#check_filetype('haskell')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],

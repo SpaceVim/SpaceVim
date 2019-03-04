@@ -1,5 +1,5 @@
 Execute ( SpaceVim mode ):
-  so mode/basic.vim
-  AssertEqual g:spacevim_enable_guicolors, 0
-  so mode/dark_powered.vim
-  AssertEqual g:spacevim_enable_debug, 1
+  let toml = SpaceVim#api#import('data#toml')
+  let basic = toml.parse_file('mode/basic.toml')
+  let dark = toml.parse_file('mode/dark_powered.toml')
+  AssertEqual basic.options.statusline_separator, 'nil'

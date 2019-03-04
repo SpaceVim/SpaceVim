@@ -14,7 +14,7 @@ function! s:install_manager() abort
         "auto install neobundle
         if filereadable(expand(g:spacevim_plugin_bundle_dir)
                     \ . 'neobundle.vim'. s:Fsep. 'README.md')
-            let g:spacevim_neobundle_installed = 1
+            let g:_spacevim_neobundle_installed = 1
         else
             if executable('git')
                 exec '!git clone '
@@ -23,7 +23,7 @@ function! s:install_manager() abort
                             \ . ' '
                             \ . fnameescape(g:spacevim_plugin_bundle_dir)
                             \ . 'neobundle.vim'
-                let g:spacevim_neobundle_installed = 1
+                let g:_spacevim_neobundle_installed = 1
             else
                 echohl WarningMsg
                 echom 'You need install git!'
@@ -39,14 +39,14 @@ function! s:install_manager() abort
                     \ . join(['repos', 'github.com',
                     \ 'Shougo', 'dein.vim', 'README.md'],
                     \ s:Fsep))
-            let g:spacevim_dein_installed = 1
+            let g:_spacevim_dein_installed = 1
         else
             if executable('git')
                 exec '!git clone https://github.com/Shougo/dein.vim "'
                             \ . expand(g:spacevim_plugin_bundle_dir)
                             \ . join(['repos', 'github.com',
                             \ 'Shougo', 'dein.vim"'], s:Fsep)
-                let g:spacevim_dein_installed = 1
+                let g:_spacevim_dein_installed = 1
             else
                 echohl WarningMsg
                 echom 'You need install git!'
@@ -59,7 +59,7 @@ function! s:install_manager() abort
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
         "auto install vim-plug
         if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-            let g:spacevim_vim_plug_installed = 1
+            let g:_spacevim_vim_plug_installed = 1
         else
             if executable('curl')
                 exec '!curl -fLo '
@@ -67,7 +67,7 @@ function! s:install_manager() abort
                             \ . ' --create-dirs '
                             \ . 'https://raw.githubusercontent.com/'
                             \ . 'junegunn/vim-plug/master/plug.vim'
-                let g:spacevim_vim_plug_installed = 1
+                let g:_spacevim_vim_plug_installed = 1
             else
                 echohl WarningMsg
                 echom 'You need install curl!'
@@ -103,7 +103,13 @@ function! zvim#plug#end() abort
     if g:spacevim_plugin_manager ==# 'neobundle'
         call neobundle#end()
         if g:spacevim_checkinstall == 1
-            NeoBundleCheck
+            silent! let g:_spacevim_checking_flag = neobundle#exists_not_installed_bundles()
+            if g:_spacevim_checking_flag
+                augroup SpaceVimCheckInstall
+                    au!
+                    au VimEnter * SPInstall
+                augroup END
+            endif
         endif
     elseif g:spacevim_plugin_manager ==# 'dein'
         call dein#end()
@@ -194,9 +200,9 @@ function! zvim#plug#tap(plugin) abort
 endfunction
 
 function! zvim#plug#enable_plug() abort
-    return g:spacevim_neobundle_installed
-                \ || g:spacevim_dein_installed
-                \ || g:spacevim_vim_plug_installed
+    return g:_spacevim_neobundle_installed
+                \ || g:_spacevim_dein_installed
+                \ || g:_spacevim_vim_plug_installed
 endfunction
 
 function! zvim#plug#loadPluginBefore(plugin) abort

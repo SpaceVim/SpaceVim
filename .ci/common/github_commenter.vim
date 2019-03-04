@@ -1,11 +1,10 @@
 exe 'set nocp'
-set rtp+=build/GitHub.vim
-set rtp+=/API/
-so build/GitHub.vim/plugin/github.vim
-so build/GitHub.vim/autoload/github/api/issues.vim
-so build/GitHub.vim/autoload/github/api/util.vim
+set rtp+=/build/GitHub.vim
+set rtp+=/API
+so /build/GitHub.vim/plugin/github.vim
 let s:LIST = SpaceVim#api#import('data#list')
 let s:log = filereadable('build_log') ? system('cat build_log') : ''
+let g:githubapi_verbose = 1
 function! s:update_log(log, summary, new_log) abort
   let log = split(a:log, "\n")
   let begin = -1
@@ -26,7 +25,7 @@ function! s:update_log(log, summary, new_log) abort
 
 endfunction
 if !empty(s:log)
-  if $LINT == 'vader'
+  if $LINT ==# 'vader'
     let s:summary = $VIM . ' ' . $LINT . ' build log'
   else
     let s:summary = $LINT . ' build log'
@@ -51,7 +50,7 @@ if !empty(s:log)
     endif
   endif
 else
-  if $LINT == 'vader'
+  if $LINT ==# 'vader'
     let s:summary = $VIM . ' ' . $LINT . ' build log'
   else
     let s:summary = $LINT . ' build log'
@@ -72,4 +71,5 @@ else
     endif
   endif
 endif
+echom v:shell_error
 quit

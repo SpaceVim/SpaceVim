@@ -1,3 +1,11 @@
+"=============================================================================
+" plugins.vim --- plugin wrapper
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 scriptencoding utf-8
 function! SpaceVim#plugins#load() abort
   if zvim#plug#enable_plug()
@@ -10,7 +18,7 @@ function! SpaceVim#plugins#load() abort
 
 endfunction
 function! s:load_plugins() abort
-  for group in g:spacevim_plugin_groups
+  for group in SpaceVim#layers#get()
     let g:_spacevim_plugin_layer = group
     for plugin in s:getLayerPlugins(group)
       if len(plugin) == 2
@@ -55,9 +63,15 @@ function! s:loadLayerConfig(layer) abort
 endfunction
 
 function! s:disable_plugins(plugin_list) abort
-  for name in a:plugin_list
-    call dein#disable(name)
-  endfor
+  if g:spacevim_plugin_manager ==# 'dein'
+    for name in a:plugin_list
+      call dein#disable(name)
+    endfor
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    for name in a:plugin_list
+      call neobundle#config#disable(name)
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#plugins#get(...) abort

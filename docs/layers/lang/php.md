@@ -3,12 +3,13 @@ title: "SpaceVim lang#php layer"
 description: "This layer adds PHP language support to SpaceVim"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#php
+# [Available Layers](../../) >> lang#php
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Features](#features)
+- [Install](#install)
   - [Requirement](#requirement)
 
 <!-- vim-markdown-toc -->
@@ -17,9 +18,22 @@ description: "This layer adds PHP language support to SpaceVim"
 
 This layer adds PHP language support to SpaceVim.
 
-## Layer Installation
+## Features
 
-To use this configuration layer, add `SPLayer 'lang#php'` to your custom configuration file.
+- auto-completion
+- syntax checking
+- goto definition
+- refernce finder
+- lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
+
+## Install
+
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+  name = "lang#php"
+```
 
 ### Requirement
 
@@ -27,3 +41,4 @@ To use this configuration layer, add `SPLayer 'lang#php'` to your custom configu
 2.  [PCNTL](http://php.net/manual/en/book.pcntl.php) Extension
 3.  [Msgpack 0.5.7+(for NeoVim)](https://github.com/msgpack/msgpack-php) Extension or [JSON(for Vim 7.4+)](http://php.net/manual/en/intro.json.php) Extension
 4.  [Composer](https://getcomposer.org/) Project
+

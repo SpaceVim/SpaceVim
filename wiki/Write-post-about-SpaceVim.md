@@ -1,1 +1,0 @@
-if you want to write something about SpaceVim, and want your post be linked in [SpaceVim's blog page](https://spacevim.org/blog), please show us the link.

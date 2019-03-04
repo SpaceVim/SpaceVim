@@ -4,8 +4,6 @@ if get(g:, 'spacevim_lint_on_save', 0)
     let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
 endif
 
-let g:neomake_echo_current_error = 0
-
 if get(g:, 'spacevim_lint_on_the_fly', 0)
     let s:neomake_automake_events['TextChanged'] = {'delay': 750}
     let s:neomake_automake_events['TextChangedI'] = {'delay': 750}

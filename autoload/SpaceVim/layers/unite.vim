@@ -1,94 +1,221 @@
+"=============================================================================
+" unite.vim --- SpaceVim unite layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#unite#plugins() abort
+  " The default sources:
+  " file: <Leader>ff
+  " register: <Leader>fe
+  " jump: <Leader>fj
+  " messages: <Leader>fm
   let plugins = [
         \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
-        \ ['Shougo/neoyank.vim'],
-        \ ['soh335/unite-qflist'],
-        \ ['SpaceVim/unite-unicode'],
-        \ ['ujihisa/unite-equery'],
-        \ ['m2mdas/unite-file-vcs'],
-        \ ['Shougo/neomru.vim'],
-        \ ['andreicristianpetcu/vim-van'],
-        \ ['kmnk/vim-unite-svn'],
-        \ ['basyura/unite-rails'],
-        \ ['nobeans/unite-grails'],
-        \ ['choplin/unite-vim_hacks'],
-        \ ['mattn/webapi-vim'],
-        \ ['mattn/gist-vim', {'loadconf' : 1}],
-        \ ['henices/unite-stock'],
-        \ ['mattn/wwwrenderer-vim'],
-        \ ['thinca/vim-openbuf'],
-        \ ['ujihisa/unite-haskellimport'],
-        \ ['oppara/vim-unite-cake'],
-        \ ['thinca/vim-ref', {'loadconf' : 1}],
-        \ ['heavenshell/unite-zf'],
-        \ ['heavenshell/unite-sf2'],
-        \ ['osyo-manga/unite-vimpatches'],
-        \ ['rhysd/unite-emoji.vim'],
-        \ ['Shougo/unite-outline'],
-        \ ['hewes/unite-gtags' ,{'loadconf' : 1}],
-        \ ['rafi/vim-unite-issue'],
-        \ ['joker1007/unite-pull-request'],
-        \ ['tsukkee/unite-tag'],
-        \ ['ujihisa/unite-launch'],
-        \ ['ujihisa/unite-gem'],
-        \ ['osyo-manga/unite-filetype'],
-        \ ['thinca/vim-unite-history'],
-        \ ['Shougo/neobundle-vim-recipes'],
-        \ ['Shougo/unite-help'],
-        \ ['ujihisa/unite-locate'],
-        \ ['kmnk/vim-unite-giti'],
-        \ ['ujihisa/unite-font'],
-        \ ['t9md/vim-unite-ack'],
-        \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
-        \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
-        \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
-        \ ['daisuzu/unite-adb'],
-        \ ['osyo-manga/unite-airline_themes'],
-        \ ['mattn/unite-vim_advent-calendar'],
-        \ ['mattn/unite-remotefile'],
-        \ ['sgur/unite-everything'],
-        \ ['wsdjeg/unite-dwm'],
-        \ ['raw1z/unite-projects'],
-        \ ['SpaceVim/unite-ctags'],
-        \ ['Shougo/unite-session'],
-        \ ['osyo-manga/unite-quickfix'],
-        \ ['ujihisa/unite-colorscheme'],
-        \ ['mattn/unite-gist'],
-        \ ['tacroe/unite-mark'],
-        \ ['tacroe/unite-alias'],
-        \ ['tex/vim-unite-id'],
-        \ ['sgur/unite-qf'],
-        \ ['lambdalisue/vim-gista-unite'],
-        \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1}],
-        \ ['lambdalisue/unite-grep-vcs', {
-        \ 'autoload': {
-        \    'unite_sources': ['grep/git', 'grep/hg'],
-        \ }}],
-        \ ['lambdalisue/vim-gista', {
-        \ 'on_cmd': 'Gista'
-        \ }],
+        \ ['thinca/vim-unite-history', {'merged' : 0}],
+        \ ['Shougo/unite-help', {'merged' : 0}],
+        \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
+        \ ['hewes/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
         \ ]
+
+  " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
+  " \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
+  " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
+
+  " history/yank source <Leader>fh
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  " quickfix source <Leader>fq
+  call add(plugins, ['osyo-manga/unite-quickfix', {'merged' : 0}])
+  " outline source <Leader>fo
+  call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
+  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+
+  " This repo merge:
+  " - https://github.com/sgur/unite-qf locationlist
+  " - https://github.com/ujihisa/unite-colorscheme colorscheme
+  " - unicode
+  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
   if g:spacevim_enable_googlesuggest
     call add(plugins, ['mopp/googlesuggest-source.vim'])
     call add(plugins, ['mattn/googlesuggest-complete-vim'])
   endif
 
-  if g:spacevim_filemanager ==# 'vimfiler'
-    call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : 'VimFiler'}])
-  endif
   return plugins
 endfunction
 
+let s:filename = expand('<sfile>:~')
+let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'UniteWithCursorWord help', 'get help with the symbol at point', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Unite file_mru', 'open-recent-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
+  if has('nvim')
+    let cmd = 'Unite file_rec/neovim'
+  else
+    let cmd = 'Unite file_rec/async'
+  endif
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ cmd,
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['!'], 'call call('
         \ . string(s:_function('s:run_shell_cmd')) . ', [])',
-        \ 'shell cmd', 1)
+        \ 'shell cmd(current dir)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', '!'], 'call call('
+        \ . string(s:_function('s:run_shell_cmd_project')) . ', [])',
+        \ 'shell cmd(project root)', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'fuzzy find colorschemes', 1)
+  if has('nvim')
+    nnoremap <silent> <C-p> :Unite file_rec/neovim<cr>
+  else
+    nnoremap <silent> <C-p> :Unite file_rec/async<cr>
+  endif
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
+        \ 'UniteWithBufferDir file_rec/' . (has('nvim') ? 'neovim' : 'async'),
+        \ ['Find files in the directory of the current buffer',
+        \ [
+        \ '[SPC f f] is to find files in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
+endfunction
+
+let s:file = expand('<sfile>:~')
+let s:unite_lnum = expand('<slnum>') + 3
+function! s:defind_fuzzy_finder() abort
+  nnoremap <silent> <Leader>fr
+        \ :<C-u>Unite -buffer-name=resume resume<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.r = ['Unite -buffer-name=resume resume',
+        \ 'resume unite window',
+        \ [
+        \ '[Leader f r ] is to resume unite window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fe  :<C-u>Unite
+        \ -buffer-name=register register<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.e = ['Unite register',
+        \ 'fuzzy find register',
+        \ [
+        \ '[Leader f e] is to fuzzy find content in register',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fh
+        \ :<C-u>Unite history/yank<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.h = ['Unite history/yank',
+        \ 'fuzzy find yank history',
+        \ [
+        \ '[Leader f h] is to fuzzy find history and yank content',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fj
+        \ :<C-u>Unite jump<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.j = ['Unite jump',
+        \ 'fuzzy find jump list',
+        \ [
+        \ '[Leader f j] is to fuzzy find jump list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fl
+        \ :<C-u>Unite locationlist<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.l = ['Unite locationlist',
+        \ 'fuzzy find location list',
+        \ [
+        \ '[Leader f l] is to fuzzy find location list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fm
+        \ :<C-u>Unite output:message<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.m = ['Unite output:message',
+        \ 'fuzzy find message',
+        \ [
+        \ '[Leader f m] is to fuzzy find message',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fq
+        \ :<C-u>Unite quickfix<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.q = ['Unite quickfix',
+        \ 'fuzzy find quickfix list',
+        \ [
+        \ '[Leader f q] is to fuzzy find quickfix list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fo  :<C-u>Unite outline<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.o = ['Unite outline',
+        \ 'fuzzy find outline',
+        \ [
+        \ '[Leader f o] is to fuzzy find outline',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>f<Space>
+        \ :<C-u>Unite menu:CustomKeyMaps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f['[SPC]'] = ['Unite menu:CustomKeyMaps',
+        \ 'fuzzy find custom key bindings',
+        \ [
+        \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 function! s:run_shell_cmd() abort
   let cmd = input('Please input shell command:', '', 'customlist,SpaceVim#plugins#bashcomplete#complete')
   if !empty(cmd)
     call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
+  endif
+endfunction
+
+function! s:run_shell_cmd_project() abort
+  let cmd = input('Please input shell command:', '', 'customlist,SpaceVim#plugins#bashcomplete#complete')
+  if !empty(cmd)
+    call unite#start([['output/shellcmd', cmd]], {
+          \ 'log': 1,
+          \ 'wrap': 1,
+          \ 'start_insert':0,
+          \ 'path' : SpaceVim#plugins#projectmanager#current_root(),
+          \ })
   endif
 endfunction
 

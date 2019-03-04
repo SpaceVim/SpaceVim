@@ -1,0 +1,4 @@
+Execute ( Plugin config: openbrowser.vim ):
+  so config/plugins/open-browser.vim
+  AssertEqual g:netrw_nogx, 1
+

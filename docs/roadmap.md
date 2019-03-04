@@ -1,54 +1,132 @@
 ---
-title:  "Roadmap"
+title: "Roadmap"
+description: "The roadmap and milestones define the project direction and priorities."
 ---
 
 # Roadmap
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
-## Current
+<!-- vim-markdown-toc GFM -->
 
-### [0.6](https://github.com/SpaceVim/SpaceVim/milestone/9)
+- [Next](#next)
+  - [v1.1.0](#v110)
+- [Meta](#meta)
+- [Completed](#completed)
+  - [v0.1.0](#v010)
+  - [v0.2.0](#v020)
+  - [v0.3.0](#v030)
+  - [v0.3.1](#v031)
+  - [v0.4.0](#v040)
+  - [v0.5.0](#v050)
+  - [v0.6.0](#v060)
+  - [v0.7.0](#v070)
+  - [v0.8.0](#v080)
+  - [v0.9.0](#v090)
+  - [v1.0.0](#v100)
+
+<!-- vim-markdown-toc -->
+
+## Next
+
+### [v1.1.0](https://github.com/SpaceVim/SpaceVim/milestone/14)
 
 ## Meta
 
-There are release milestones and meta milestones ("buckets"). 
+There are release milestones and meta milestones ("buckets").
 
 - Version-number milestones (0.1, 0.2, 0.3, …) assign issues to production releases.
-    - The nearest upcoming version is assigned a target date.
-    - Low-risk fixes in the current branch are first committed to the stable branch, then merged to master. For example, if the current stable release is `0.1.1` and a bug-fix is assigned to the `0.2` milestone, it does not mean users need to wait until 0.2 to get the fix. The patch will be committed to the stable branch and released in `0.1.2`. 
+  - The nearest upcoming version is assigned a target date.
+  - Low-risk fixes in the current branch are first committed to the stable branch, then merged to master. For example, if the current stable release is `0.1.1` and a bug-fix is assigned to the `0.2` milestone, it does not mean users need to wait until 0.2 to get the fix. The patch will be committed to the stable branch and released in `0.1.2`.
 - [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
+<!-- call SpaceVim#dev#roadmap#updateCompletedItems() -->
+
+<!-- SpaceVim roadmap completed items start -->
+
 ## Completed
 
-### [0.5](https://github.com/SpaceVim/SpaceVim/milestone/8)
+### [v0.1.0](https://github.com/SpaceVim/SpaceVim/milestone/1)
 
-see the release note: [V0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
+the first public release of SpaceVim, and following feature will be implemented:
 
-### [0.4](https://github.com/SpaceVim/SpaceVim/milestone/7)
+- Neovim-centric
+- Modular configuration
+- multiple leader mode
+- Lazy-load 90% of plugins with dein.vim
+- Robust, yet light weight
+- Unite centric work-flow
+- Awesome ui
+- Language specific mode, code completion, syntax check, etc.
+  - c family
+  - java
+  - js
+  - rust
+  - php
+  - go
+  - php
+  - lua
+  - perl
+  - python
+- Extensive Neocomplete setup
+- Central location for tags
+- Lightweight simple status/tabline
+- Premium color-schemes
 
-- Improve git work  flow
-  - completion in commit message buffer
-  - manager github issues annd PRs
-- Improve autocomplete layer
+release note: [v0.1.0](http://spacevim.org/SpaceVim-release-v0.1.0/)
 
-### [0.3](https://github.com/SpaceVim/SpaceVim/milestone/3)
+### [v0.2.0](https://github.com/SpaceVim/SpaceVim/milestone/2)
 
-- statusline with mode support
-- Plugin manager ui for dein
-- Improve mapping guide
-- Tabs manager
-- Layers manager
+1. Many language support
+2. Improve default layer
+3. finish document
 
-### [0.2](https://github.com/SpaceVim/SpaceVim/milestone/2)
+release note: [v0.2.0](http://spacevim.org/SpaceVim-release-v0.2.0/)
 
-- Mnemonic key bindings
-- Denite support
-- Unite work flow
-- Windows support
+### [v0.3.0](https://github.com/SpaceVim/SpaceVim/milestone/3)
 
-### [0.1](https://github.com/SpaceVim/SpaceVim/milestone/1)
+- SpaceVim api
+- plugin manager ui ( for dein)
 
-- The primary goal of the 0.1 release ("first public release") is to reach a stable, functional baseline that can be built upon and used as a benchmark for further progress.
-- Layers feature
+release note: [v0.3.0](http://spacevim.org/SpaceVim-release-v0.3.0/)
+
+### [v0.3.1](https://github.com/SpaceVim/SpaceVim/milestone/6)
+
+features need to be implemented just after v0.3.0 has been released.
+
+release note: [v0.3.1](http://spacevim.org/SpaceVim-release-v0.3.1/)
+
+### [v0.4.0](https://github.com/SpaceVim/SpaceVim/milestone/7)
+
+release note: [v0.4.0](http://spacevim.org/SpaceVim-release-v0.4.0/)
+
+### [v0.5.0](https://github.com/SpaceVim/SpaceVim/milestone/8)
+
+release note: [v0.5.0](http://spacevim.org/SpaceVim-release-v0.5.0/)
+
+### [v0.6.0](https://github.com/SpaceVim/SpaceVim/milestone/9)
+
+release note: [v0.6.0](http://spacevim.org/SpaceVim-release-v0.6.0/)
+
+### [v0.7.0](https://github.com/SpaceVim/SpaceVim/milestone/10)
+
+- Improve all the lang#\* layers
+
+release note: [v0.7.0](http://spacevim.org/SpaceVim-release-v0.7.0/)
+
+### [v0.8.0](https://github.com/SpaceVim/SpaceVim/milestone/11)
+
+release note: [v0.8.0](http://spacevim.org/SpaceVim-release-v0.8.0/)
+
+### [v0.9.0](https://github.com/SpaceVim/SpaceVim/milestone/12)
+
+release note: [v0.9.0](http://spacevim.org/SpaceVim-release-v0.9.0/)
+
+### [v1.0.0](https://github.com/SpaceVim/SpaceVim/milestone/13)
+
+First stable release of SpaceVim
+
+release note: [v1.0.0](http://spacevim.org/SpaceVim-release-v1.0.0/)
+
+<!-- SpaceVim roadmap completed items end -->

@@ -1,3 +1,10 @@
+"=============================================================================
+" lua.vim --- SpaceVim lua checker
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 function! SpaceVim#health#lua#check() abort
   let result = ['SpaceVim lua support check report:']
   call add(result, 'Checking +lua:')

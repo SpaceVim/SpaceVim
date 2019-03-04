@@ -1,7 +1,16 @@
+"=============================================================================
+" base64.vim --- SpaceVim base64 API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:self = {}
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
-if has('python')
+if s:CMP.has('python')
   " @vimlint(EVL103, 1, a:text)
   function! s:self.encode(text) abort
     py import vim
@@ -116,7 +125,7 @@ endif
 
 
 
-function! SpaceVim#api#data#base64#get()
+function! SpaceVim#api#data#base64#get() abort
 
   return deepcopy(s:self)
 

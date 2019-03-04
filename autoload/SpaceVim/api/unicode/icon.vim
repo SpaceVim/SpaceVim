@@ -1,3 +1,11 @@
+"=============================================================================
+" icon.vim --- SpaceVim icon API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 scriptencoding utf-8
 let s:self = {}
 
@@ -15,7 +23,7 @@ function! s:self.battery_status(v) abort
   endif
 endfunction
 
-function! SpaceVim#api#unicode#icon#get()
+function! SpaceVim#api#unicode#icon#get() abort
 
   return deepcopy(s:self)
 

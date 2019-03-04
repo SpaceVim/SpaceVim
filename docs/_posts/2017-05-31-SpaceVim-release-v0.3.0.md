@@ -1,10 +1,13 @@
 ---
 title: SpaceVim release v0.3.0
-categories: changelog
+categories: [changelog, blog]
 excerpt: "Here you can check what has been done so far."
+type: NewsArticle
+commentsID: "SpaceVim release v0.3.0"
+comments: true
 ---
 
-# [Changelogs](https://spacevim.org/development#changelog) > SpaceVim release v0.3.0
+# [Changelogs](../development#changelog) > SpaceVim release v0.3.0
 
 ## FEATURES
 

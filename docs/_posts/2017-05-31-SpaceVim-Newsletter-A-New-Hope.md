@@ -1,7 +1,9 @@
 ---
-title: Newsletter #1 - A New Hope
-categories: newsletter
+title: "Newsletter #1 - A New Hope"
+categories: [newsletter, blog]
 excerpt: "A new hope: turn vim/neovim to be an IDE for most languages"
+comments: true
+commentsID: "A New Hope"
 ---
 
 # [newsletter](https://spacevim.org/development#newsletter) > A New Hope

@@ -1,4 +1,6 @@
 doc/tags
+doc/tags-cn
+.ropeproject/
 wiki/.git
 *.class
 .floo
@@ -27,3 +29,7 @@ cscope.in.out
 cscope.po.out
 build/
 .coverage.covimerage
+*.swp
+.gtm/
+.metadata/
+jdt.ls-java-project/

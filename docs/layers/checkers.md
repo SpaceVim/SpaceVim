@@ -1,14 +1,14 @@
 ---
 title: "SpaceVim checkers layer"
-description: "This layer provides syntax checking feature"
+description: "Syntax checking automatically within SpaceVim, display error on the sign column and statusline."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) checkers
+# [Available Layers](../) >> checkers
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
 - [Configuration](#configuration)
 - [Key bindings](#key-bindings)
 
@@ -18,26 +18,47 @@ description: "This layer provides syntax checking feature"
 
 This layer provides syntax checking feature.
 
-## Layer Installation
+## Install
 
-checkers layer is loaded by default.
+To use this configuration layer, add following snippet to your custom configuration file.
+
+```toml
+[[layers]]
+  name = "checkers"
+```
 
 ## Configuration
 
-| Name                         | default value | description                                              |
-| ---------------------------- | ------------- | -------------------------------------------------------- |
-| `g:spacevim_enable_neomake`  | 1             | Use neomake as default checking tools                    |
-| `g:spacevim_enable_ale`      | 0             | Use ale as default checking tools                        |
-| `g:spacevim_lint_on_the_fly` | 0             | Syntax checking on the fly feature, disabled by default. |
+**Layer options:**
+
+By default, the error will be display below current line, if you want to disabled this
+feature, you may need to load this layer with `show_cursor_error` to `false`.
+
+```toml
+[[layers]]
+  name = "checkers"
+  show_cursor_error = false
+```
+
+**Global options:**
+
+the following options are SpaceVim option, you need to config them in `[options]` section.
+
+| Name              | default value | description                                              |
+| ----------------- | ------------- | -------------------------------------------------------- |
+| `enable_neomake`  | `true`        | Use neomake as default checking tools                    |
+| `enable_ale`      | `false`       | Use ale as default checking tools                        |
+| `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default. |
 
 **NOTE:** if you want to use  ale, you need:
 
-```viml
-let g:spacevim_enable_neomake = 0
-let g:spacevim_enable_ale = 1
+```toml
+[options]
+    enable_neomake = false
+    enable_ale = true
 ```
 
-and if you want to use syntastic, set this two options to 0.
+and if you want to use syntastic, set this two options to `false`.
 
 ## Key bindings
 
@@ -52,7 +73,7 @@ and if you want to use syntastic, set this two options to 0.
 | `SPC e l` | Normal | display a list of all the errors                             |
 | `SPC e L` | Normal | display a list of all the errors and focus the errors buffer |
 | `SPC e e` | Normal | explain the error at point                                   |
-| `SPC e s` | Normal | set syntax checker (TODO)                                           |
-| `SPC e S` | Normal | set syntax checker executable (TODO)                                |
+| `SPC e s` | Normal | set syntax checker (TODO)                                    |
+| `SPC e S` | Normal | set syntax checker executable (TODO)                         |
 | `SPC e v` | Normal | verify syntax setup                                          |
 | `SPC t s` | Normal | toggle syntax                                                |

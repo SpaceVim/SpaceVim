@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        message.vim
-" Description: vim#message api of SpaceVim
-" Author:      L-stt
-" Website:     https://spacevim.org
-" License:     MIT
-" ============================================================================
+"=============================================================================
+" message.vim --- SpaceVim message API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 ""
 " @section vim#message, api-vim-message
@@ -46,6 +46,8 @@ function! s:self.confirm(msg) abort
     echon a:msg . '? (y or n) '
     echohl NONE
     let rst = nr2char(getchar())
+    " clear the cmdline
+    redraw!
     if rst =~? 'y' || rst == nr2char(13)
         return 1
     else

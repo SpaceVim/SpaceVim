@@ -1,3 +1,12 @@
+"=============================================================================
+" c.vim --- SpaceVim lang#c layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 ""
 " @section lang#c, layer-lang-c
 " @parentsection layers
@@ -40,37 +49,89 @@
 
 
 
-let s:use_libclang = 0
+let s:clang_executable = 'clang'
+let s:SYSTEM = SpaceVim#api#import('system')
+let s:CPT = SpaceVim#api#import('vim#compatible')
+
 
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
-  if has('nvim')
-    if s:use_libclang
-      call add(plugins, ['zchee/deoplete-clang'])
+  if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+      call add(plugins, ['Shougo/deoplete-clangx', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'ycm'
+      " no need extra plugins
+    elseif g:spacevim_autocomplete_method ==# 'completor'
+      " no need extra plugins
+    elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
+      call add(plugins, ['wsdjeg/asyncomplete-clang.vim', {'merged' : 0, 'loadconf' : 1}])
     else
-      call add(plugins, ['tweekmonster/deoplete-clang2'])
+      call add(plugins, ['Rip-Rip/clang_complete'])
     endif
-  else
-    call add(plugins, ['Rip-Rip/clang_complete'])
   endif
-  call add(plugins, ['lyuts/vim-rtags', { 'if' : has('python')}])
+  " chromatica is for neovim with py3
+  " clamp is for neovim rpcstart('python', " [s:script_folder_path.'/../python/engine.py'])]
+  " clighter8 is for vim8
+  " clighter is for old vim
+  if has('nvim')
+    if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+      call add(plugins, ['arakashic/chromatica.nvim', { 'merged' : 0}])
+    else
+      call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+    endif
+  elseif has('job')
+    call add(plugins, ['bbchung/clighter8', { 'if' : has('python')}])
+  else
+    call add(plugins, ['bbchung/clighter', { 'if' : has('python')}])
+  endif
   return plugins
 endfunction
 
 function! SpaceVim#layers#lang#c#config() abort
-  call SpaceVim#plugins#runner#reg_runner('c', ['gcc -o #TEMP# %s', '#TEMP#'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('c', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#gd#add('c',
+        \ function('s:go_to_def'))
+  call SpaceVim#mapping#gd#add('cpp',
+        \ function('s:go_to_def'))
+  " TODO: add stdin suport flex -t lexer.l | gcc -o lexer.o -xc -
+  let runner1 = {
+        \ 'exe' : 'gcc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-xc', '-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('c', function('s:language_specified_mappings'))
+  let runner2 = {
+        \ 'exe' : 'g++',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-xc++', '-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('cpp', funcref('s:language_specified_mappings'))
+  call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
+  if executable('clang')
+    let g:neomake_c_enabled_makers = ['clang']
+    let g:neomake_cpp_enabled_makers = ['clang']
+  endif
+  let g:chromatica#enable_at_startup=1
+  call add(g:spacevim_project_rooter_patterns, '.clang')
 endfunction
 
 function! SpaceVim#layers#lang#c#set_variable(var) abort
-  " use clang or libclang
-  let s:use_libclang = get(a:var,
-        \ 'use_libclang',
-        \ 'clang')
-
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
     let g:deoplete#sources#clang#executable = a:var.clang_executable
+    let g:neomake_c_enabled_makers = ['clang']
+    let g:neomake_cpp_enabled_makers = ['clang']
+    let s:clang_executable = a:var.clang_executable
+    let g:asyncomplete_clang_executable = a:var.clang_executable
+  endif
+
+  if has_key(a:var, 'libclang_path')
+    let g:chromatica#libclang_path = a:var.libclang_path
+    let g:asyncomplete_clang_libclang_path = a:var.libclang_path
+    let g:clamp_libclang_file = a:var.libclang_path
   endif
 endfunction
 
@@ -79,5 +140,83 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+  if SpaceVim#layers#lsp#check_filetype('c')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
+          \ 'call SpaceVim#lsp#references()', 'references', 1)
+  endif
 endfunction
 
+
+function! s:update_clang_flag() abort
+  if filereadable('.clang')
+    let argvs = readfile('.clang')
+    call s:update_checkers_argv(argvs, ['c', 'cpp'])
+    call s:update_autocomplete_argv(argvs, ['c', 'cpp'])
+    call s:update_neoinclude(argvs, ['c', 'cpp'])
+  endif
+endfunction
+
+if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
+  function! s:update_checkers_argv(argv, fts) abort
+    for ft in a:fts
+      let g:neomake_{ft}_clang_maker = {
+            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
+            \ 'exe' : s:clang_executable,
+            \ 'errorformat':
+            \ '%-G%f:%s:,' .
+            \ '%f:%l:%c: %trror: %m,' .
+            \ '%f:%l:%c: %tarning: %m,' .
+            \ '%I%f:%l:%c: note: %m,' .
+            \ '%f:%l:%c: %m,'.
+            \ '%f:%l: %trror: %m,'.
+            \ '%f:%l: %tarning: %m,'.
+            \ '%I%f:%l: note: %m,'.
+            \ '%f:%l: %m'
+            \ }
+    endfor
+  endfunction
+elseif g:spacevim_enable_ale
+  function! s:update_checkers_argv(argv, fts) abort
+    " g:ale_c_clang_options
+    for ft in a:fts
+      let g:ale_{ft}_clang_options = ' -fsyntax-only -Wall -Wextra -I./ ' . join(a:argv, ' ')
+      let g:ale_{ft}_clang_executable = s:clang_executable
+    endfor
+  endfunction
+else
+  function! s:update_checkers_argv(argv, fts) abort
+
+  endfunction
+endif
+
+function! s:update_autocomplete_argv(argv, fts) abort
+
+endfunction
+
+function! s:update_neoinclude(argv, fts) abort
+  if s:SYSTEM.isLinux
+    let path = '.,/usr/include,,' 
+  else
+    let path = '.,,' 
+  endif
+  for argv in a:argv
+    if argv =~# '^-I'
+      let path .= ',' . argv[2:]
+    endif
+  endfor
+  let b:neoinclude_paths = path
+endfunction
+
+function! s:go_to_def() abort
+  if !SpaceVim#layers#lsp#check_filetype(&ft)
+    execute "norm! g\<c-]>"
+  else
+    call SpaceVim#lsp#go_to_def()
+  endif
+endfunction

@@ -1,3 +1,21 @@
+"=============================================================================
+" logger.vim --- SpaceVim logger API
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+""
+" @section logger, api-logger
+" @parentsection api
+" provides some functions to manager logger
+"
+" set_silent({silent})
+"
+"   {silent} is a Boolean. by default it is false, and log will be print to
+"   screen.
 
 let s:self = {
       \ 'name' : '',
@@ -52,13 +70,13 @@ function! s:self.write(msg) abort
   call writefile([a:msg], self.file, flags)
 endfunction
 
-function! s:self.warn(msg) abort
+function! s:self.warn(msg, ...) abort
   if self.level > 2
     return
   endif
   let time = strftime('%H:%M:%S')
   let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[1] . ' ] ' . a:msg
-  if !self.silent && self.verbose >= 2
+  if (!self.silent && self.verbose >= 2) || get(a:000, 0, 0) == 1
     echohl WarningMsg
     echom log
     echohl None

@@ -7,3 +7,5 @@ policies:
     enabled: false
   ProhibitAbbreviationOption:
     enabled: false
+  ProhibitSetNoCompatible:
+    enabled: false

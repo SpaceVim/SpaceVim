@@ -3,14 +3,19 @@ title: "SpaceVim lang#javascript layer"
 description: "This layer is for JaveScript development"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#javascript
+# [Available Layers](../../) >> lang#javascript
 
 <!-- vim-markdown-toc GFM -->
 
-* [Description](#description)
-* [Layer Installation](#layer-installation)
-* [Features](#features)
-* [Layer configuration](#layer-configuration)
+- [Description](#description)
+- [Install](#install)
+- [Features](#features)
+- [Layer configuration](#layer-configuration)
+- [Key bindings](#key-bindings)
+  - [Import key bindings](#import-key-bindings)
+  - [Generate key bindings](#generate-key-bindings)
+  - [Code runner](#code-runner)
+  - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
 
@@ -18,27 +23,70 @@ description: "This layer is for JaveScript development"
 
 This layer is for JavaScript development.
 
-## Layer Installation
+## Install
 
-To use this configuration layer, add `call SpaceVim#layers#load('lang#javascript')` to your custom configuration file.
+To use this configuration layer, update custom configuration file with:
+
+```toml
+[[layers]]
+name = "lang#javascript"
+```
 
 ## Features
 
 - auto-completion
 - syntax checking
 - goto definition
-- refernce finder
+- reference finder
 
 ## Layer configuration
 
-`use_lsp`: Use language server if possible. The default value is `0`.
-`auto_fix`: auto fix problems when save files, disabled by default. if you need this feature, you can load this layer via:
+`auto_fix`: auto fix problems when saving files, disabled by default.
 
-```vim
-call SpaceVim#layers#load('lang#javascript',
-            \ {
-            \ 'auto_fix' : 1,
-            \ }
-            \ )
+`enable_flow_syntax`: Enable configuration for [flow](https://flow.org/), disabled by default.
 
+If you need these features, you can enable them in the layer config:
+```toml
+[[layers]]
+name = "lang#javascript"
+auto_fix = true
+enable_flow_syntax = true
 ```
+
+## Key bindings
+
+### Import key bindings
+
+| Key Bindings         | Descriptions                    |
+| -------------------- | ------------------------------- |
+| `<F4>` (Insert/Normal) | Import symbol under cursor      |
+| `SPC j i`            | Import symbol under cursor      |
+| `SPC j f`            | Import missing symbols          |
+| `SPC j g`            | Jump to module under cursor     |
+| `Ctrl-j i` (Insert)  | Import symbol under cursor      |
+| `Ctrl-j f` (Insert)  | Import missing symbols          |
+| `Ctrl-j g` (Insert)  | Jump to module under cursor     |
+
+### Generate key bindings
+
+| Mode          | Key Binding | Description                           |
+| ------------- | ----------- | ------------------------------------- |
+| Normal        | `SPC l g d` | Generate JSDoc                        |
+
+### Code runner
+
+To run JavaScript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+and the result will be shown in a runner buffer.
+
+### Inferior REPL process
+
+Start a `node -i` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
+

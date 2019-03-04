@@ -1,0 +1,7 @@
+Execute ( SpaceVim colorscheme ):
+  let g:current_colors = get(g:, 'colors_name', '')
+  colorscheme SpaceVim
+  AssertEqual g:colors_name, 'SpaceVim'
+  if !empty(g:current_colors)
+    exe 'colorscheme ' . g:current_colors
+  endif

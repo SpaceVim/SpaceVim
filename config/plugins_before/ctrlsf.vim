@@ -1,1 +1,1 @@
-nmap <silent><leader>sn <Plug>CtrlSFCwordExec
+" nmap <silent><leader>sn <Plug>CtrlSFCwordExec

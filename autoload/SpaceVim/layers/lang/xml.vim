@@ -1,3 +1,12 @@
+"=============================================================================
+" xml.vim --- SpaceVim lang#xml layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 ""
 " @section lang#xml, layer-lang-xml
 " @parentsection layers
@@ -14,5 +23,9 @@ function! SpaceVim#layers#lang#xml#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#xml#config() abort
-    
+  augroup spacevim_lang_xml
+    autocmd!
+    autocmd FileType xml call XmlFileTypeInit()
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  augroup END
 endfunction

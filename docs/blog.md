@@ -6,14 +6,14 @@ description: "A list of latest blog about the feature of SpaceVim and tutorials 
 # Blog
 
 Here you can learn more about SpaceVim with our tutorials and find out what's
-going on. 
+going on. Feel free to [feed this blog via RSS](../../feed.xml)：
 
 <ul>
-    {% for post in site.posts %}
+    {% for post in site.categories.blog %}
             <li>
-               <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+               <h5><a href="{{ post.url }}">{{ post.title }}</a></h5>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <h3>{{ post.excerpt | truncatewords: 100 }}</h3>
+               <p>{{ post.excerpt | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>
