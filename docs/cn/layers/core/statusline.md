@@ -59,7 +59,7 @@ lang: cn
     # 4: 1 ➛ 1
 
     # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等
-    enable_statusline_display_mode = true
+    enable_statusline_mode = true
 
     # 状态栏左端部分的构成
     statusline_left_sections = ['winnr', 'major mode', 'filename', 'fileformat', 'minor mode lighters', 'version control info', 'search status']

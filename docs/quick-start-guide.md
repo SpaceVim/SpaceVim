@@ -88,7 +88,7 @@ documentation.
     enable_tabline_filetype_icon = true
     # Display current mode text on statusline, by default It is disabled,
     # only color will be changed when switch modes.
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
 
 # Enable autocomplete layer
 [[layers]]
