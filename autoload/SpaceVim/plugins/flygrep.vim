@@ -14,41 +14,9 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
+" }}}
 
 let s:grepid = 0
-
-
-function! SpaceVim#plugins#flygrep#open() abort
-  if exists('*nvim_open_win')
-    let s:buffer_id = nvim_create_buf(v:false, v:false)
-    let w = nvim_open_win(s:buffer_id, v:true, &columns, 20,
-          \ {
-          \ 'relative': 'editor',
-          \ 'row': &lines - 20,
-          \ 'col': 0
-          \ })
-    " hi Floating guibg=#a89984
-    " call setwinvar(w, '&winhl', 'Normal:Floating')
-    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
-    setf SpaceVimFlyGrep
-    let save_tve = &t_ve
-    setlocal t_ve=
-    redraw!
-    call s:MPT.open()
-    let &t_ve = save_tve
-  else
-    rightbelow split __flygrep__
-    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
-    let save_tve = &t_ve
-    setlocal t_ve=
-    " setlocal nomodifiable
-    setf SpaceVimFlyGrep
-    redraw!
-    call s:MPT.open()
-    let &t_ve = save_tve
-  endif
-endfunction
-" }}}
 
 " Init local options: {{{
 let s:grep_expr = ''
@@ -311,14 +279,15 @@ endfunction
 " @vimlint(EVL103, 1, a:id)
 " @vimlint(EVL103, 1, a:event)
 
-if exists('*nvim_open_float_win')
-  let s:std_line = 0
-  function! s:grep_stdout(id, data, event) abort
-    let datas =filter(a:data, '!empty(v:val)')
-    call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
-    let s:std_line += len(datas)
-  endfunction
-else
+" if exists('*nvim_open_win')
+  " let s:std_line = 0
+  " function! s:grep_stdout(id, data, event) abort
+    " let datas =filter(a:data, '!empty(v:val)')
+    " call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
+    " let s:std_line += len(datas)
+    " call s:MPT._build_prompt()
+  " endfunction
+" else
   function! s:grep_stdout(id, data, event) abort
     let datas =filter(a:data, '!empty(v:val)')
     if getline(1) ==# ''
@@ -326,11 +295,13 @@ else
     else
       call append('$', datas)
     endif
-
     call s:MPT._build_prompt()
   endfunction
-endif
+" endif
 
+function! s:grep_stderr(id, data, event) abort
+  call SpaceVim#logger#error(' flygerp stderr: ' . string(a:data))
+endfunction
 
 function! s:grep_exit(id, data, event) abort
   redraw
@@ -488,7 +459,7 @@ let s:previewd_bufnrs = []
 " @vimlint(EVL103, 1, a:timer)
 function! s:preview_timer(timer) abort
   for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
-      exe 'silent bd ' . id
+    exe 'silent bd ' . id
   endfor
   let br = bufnr('$')
   let line = getline('.')
@@ -613,7 +584,21 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   let s:mode = ''
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')
-  noautocmd rightbelow split __flygrep__
+  if exists('*nvim_open_win')
+    let s:buffer_id = nvim_create_buf(v:false, v:false)
+    let flygrep_win_height = 16
+    let w = nvim_open_win(s:buffer_id, v:true, &columns, flygrep_win_height,
+          \ {
+          \ 'relative': 'editor',
+          \ 'row': &lines - flygrep_win_height - 2,
+          \ 'col': 0
+          \ })
+  else
+    noautocmd rightbelow split __flygrep__
+  endif
+  if exists('&winhighlight')
+    " set winhighlight=Normal:Pmenu
+  endif
   let s:flygrep_buffer_id = bufnr('%')
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
   let save_tve = &t_ve
