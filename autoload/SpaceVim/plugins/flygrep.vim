@@ -280,13 +280,13 @@ endfunction
 " @vimlint(EVL103, 1, a:event)
 
 " if exists('*nvim_open_win')
-  " let s:std_line = 0
-  " function! s:grep_stdout(id, data, event) abort
-    " let datas =filter(a:data, '!empty(v:val)')
-    " call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
-    " let s:std_line += len(datas)
-    " call s:MPT._build_prompt()
-  " endfunction
+" let s:std_line = 0
+" function! s:grep_stdout(id, data, event) abort
+" let datas =filter(a:data, '!empty(v:val)')
+" call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
+" let s:std_line += len(datas)
+" call s:MPT._build_prompt()
+" endfunction
 " else
 function! s:grep_stdout(id, data, event) abort
   let datas =filter(a:data, '!empty(v:val)')
@@ -461,23 +461,31 @@ endfunction
 let s:previewd_bufnrs = []
 
 " @vimlint(EVL103, 1, a:timer)
-function! s:preview_timer(timer) abort
-  for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
-    exe 'silent bd ' . id
-  endfor
-  let br = bufnr('$')
-  let line = getline('.')
-  let filename = fnameescape(split(line, ':\d\+:')[0])
-  let linenr = matchstr(line, ':\d\+:')[1:-2]
-  exe 'silent pedit! +' . linenr . ' ' . filename
-  wincmd p
-  if bufnr('%') > br
-    call add(s:previewd_bufnrs, bufnr('%'))
-  endif
-  wincmd p
-  resize 18
-  call s:MPT._build_prompt()
-endfunction
+" use floating windows to preview
+let s:preview_win_id = -1
+if exists('*nvim_open_win')
+  function! s:preview_timer(timer) abort
+
+  endfunction
+else
+  function! s:preview_timer(timer) abort
+    for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+    endfor
+    let br = bufnr('$')
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    exe 'silent pedit! +' . linenr . ' ' . filename
+    wincmd p
+    if bufnr('%') > br
+      call add(s:previewd_bufnrs, bufnr('%'))
+    endif
+    wincmd p
+    resize 18
+    call s:MPT._build_prompt()
+  endfunction
+endif
 " @vimlint(EVL103, 0, a:timer)
 
 
@@ -591,7 +599,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   if exists('*nvim_open_win')
     let s:buffer_id = nvim_create_buf(v:false, v:false)
     let flygrep_win_height = 16
-    let w = nvim_open_win(s:buffer_id, v:true, &columns, flygrep_win_height,
+    let s:flygrep_win_id = nvim_open_win(s:buffer_id, v:true, &columns, flygrep_win_height,
           \ {
           \ 'relative': 'editor',
           \ 'row': &lines - flygrep_win_height - 2,
@@ -599,6 +607,7 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
           \ })
   else
     noautocmd rightbelow split __flygrep__
+    let s:flygrep_win_id = win_getid()
   endif
   if exists('&winhighlight')
     set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel
