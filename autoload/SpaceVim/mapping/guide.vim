@@ -528,6 +528,9 @@ function! s:winopen() abort " {{{
   let s:gwin = winnr()
   let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
+  if exists('&winhighlight')
+    set winhighlight=Normal:Pmenu
+  endif
   setlocal nonumber norelativenumber nolist nomodeline nowrap
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
