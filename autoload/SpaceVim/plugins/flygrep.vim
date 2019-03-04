@@ -670,6 +670,42 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
 endfunction
 " }}}
 
+let s:statusline_win_id = -1
+let s:statusline_buf_id = -1
+function! s:create_statusline() abort
+  let s:statusline_buf_id = nvim_create_buf(0,0)
+  let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
+        \ v:true,
+        \ &columns ,
+        \ 1,
+        \ {
+        \   'relative': 'editor',
+        \   'row': &lines ,
+        \   'col': 10
+        \ })
+  call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
+  call setbufvar(s:statusline_buf_id, '&number', 0)
+  call nvim_buf_set_virtual_text(
+        \ s:statusline_buf_id,
+        \ -1,
+        \ 0,
+        \ [
+        \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
+        \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#mode(), 'SpaceVim_statusline_b'],
+        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
+        \ [getcwd(), 'SpaceVim_statusline_c'],
+        \ ['', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#lineNr(), 'SpaceVim_statusline_b'],
+        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
+        \ ],
+        \ {})
+endfunction
+
+function! Test_st() abort
+  call s:create_statusline()
+endfunction
+
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
 function! SpaceVim#plugins#flygrep#lineNr() abort
   if getline(1) ==# ''
