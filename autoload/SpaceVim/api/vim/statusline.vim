@@ -87,6 +87,31 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
   return l[:-4]
 endfunction
 
+
+function! s:self.open_float(st) abort
+  let s:statusline_buf_id = nvim_create_buf(0,0)
+  let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
+        \ v:true,
+        \ &columns ,
+        \ 1,
+        \ {
+        \   'relative': 'editor',
+        \   'row': &lines ,
+        \   'col': 10
+        \ })
+  call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
+  call setbufvar(s:statusline_buf_id, '&number', 0)
+  setlocal winhighlight=Normal:SpaceVim_statusline_a_bold
+  setlocal nocursorline
+  call nvim_buf_set_virtual_text(
+        \ s:statusline_buf_id,
+        \ -1,
+        \ 0,
+        \ a:st,
+        \ {})
+  
+endfunction
+
 function! SpaceVim#api#vim#statusline#get() abort
   return deepcopy(s:self)
 endfunction
