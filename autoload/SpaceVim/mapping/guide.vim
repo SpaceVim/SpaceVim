@@ -14,6 +14,7 @@ scriptencoding utf-8
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
+let s:SL = SpaceVim#api#import('vim#statusline')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -407,7 +408,11 @@ function! s:start_buffer() abort " {{{
     endif
   endif
   normal! gg"_dd
-  call setline(1, [''] + split(string, "\n") + [''])
+  if exists('*nvim_open_win')
+    call setline(1, [''] + split(string, "\n") + [''])
+  else
+    call setline(1, split(string, "\n"))
+  endif
   setlocal nomodifiable
   redraw!
   call s:wait_for_input()
@@ -540,23 +545,47 @@ function! s:winopen() abort " {{{
   call s:toggle_hide_cursor()
 endfunction " }}}
 
-function! s:updateStatusline() abort
-  call SpaceVim#mapping#guide#theme#hi()
-  let gname = get(s:guide_group, 'name', '')
-  if !empty(gname)
-    let gname = ' - ' . gname[1:]
-    let gname = substitute(gname,' ', '\\ ', 'g')
-  endif
-  let keys = get(s:, 'prefix_key_inp', '')
-  let keys = substitute(keys, '\', '\\\', 'g')
-  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
-        \ '%#LeaderGuiderSep1#' . s:lsep .
-        \ '%#LeaderGuiderName#\ ' .
-        \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . keys . gname
-        \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
-        \ . s:guide_help_msg()
-endfunction
+if exists('*nvim_open_win')
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = substitute(keys, '\', '\\\', 'g')
+    call s:SL.open_float([
+          \ ['Guide:', 'LeaderGuiderPrompt'],
+          \ ['', 'LeaderGuiderSep1'],
+          \ [SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname, 'LeaderGuiderName'],
+          \ ['', 'LeaderGuiderSep2'],
+          \ [s:guide_help_msg(), 'LeaderGuiderFill'],
+          \ ])
+  endfunction
+  function! s:close_float_statusline() abort
+    call s:SL.close_float()
+  endfunction
+else
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = substitute(keys, '\', '\\\', 'g')
+    exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
+          \ '%#LeaderGuiderSep1#' . s:lsep .
+          \ '%#LeaderGuiderName#\ ' .
+          \ SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname
+          \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
+          \ . s:guide_help_msg()
+  endfunction
+endif
 
 function! s:guide_help_msg() abort
   if s:guide_help_mode == 1
@@ -587,6 +616,9 @@ function! s:winclose() abort " {{{
     call winrestview(s:winv)
   endif
   call s:remove_cursor_highlight()
+  if exists('*nvim_open_win')
+    call s:close_float_statusline()
+  endif
 endfunction " }}}
 function! s:page_down() abort " {{{
   call feedkeys("\<c-c>", 'n')
