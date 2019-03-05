@@ -444,7 +444,7 @@ function! s:delete_current_buffer_file() abort
   if s:MESSAGE.confirm('The current buffer will be closed without saving. Are you sure you want to delete this file')
     let f = expand('%')
     if delete(f) == 0
-      execute bdelete!
+      execute "bdelete!"
       echo "File '" . f . "' successfully deleted!"
     else
       call s:MESSAGE.warn('Failed to delete file:' . f)
