@@ -441,10 +441,10 @@ function! s:safe_revert_buffer() abort
 endfunction
 
 function! s:delete_current_buffer_file() abort
-  if s:MESSAGE.confirm('Are you sure you want to delete this file')
+  if s:MESSAGE.confirm('The current buffer will be closed without saving. Are you sure you want to delete this file')
     let f = expand('%')
     if delete(f) == 0
-      call SpaceVim#mapping#close_current_buffer()
+      execute bdelete!
       echo "File '" . f . "' successfully deleted!"
     else
       call s:MESSAGE.warn('Failed to delete file:' . f)
