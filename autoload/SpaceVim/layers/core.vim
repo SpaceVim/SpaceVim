@@ -441,7 +441,7 @@ function! s:safe_revert_buffer() abort
 endfunction
 
 function! s:delete_current_buffer_file() abort
-  if s:MESSAGE.confirm('The current buffer will be closed without saving. Are you sure you want to delete this file')
+  if s:MESSAGE.confirm('Are you sure you want to delete this file')
     let f = expand('%')
     if delete(f) == 0
       execute "bdelete!"
