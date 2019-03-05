@@ -535,6 +535,7 @@ function! s:winopen() abort " {{{
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
   setlocal winfixwidth winfixheight
+  setlocal listchars=
   call s:updateStatusline()
   call s:toggle_hide_cursor()
 endfunction " }}}
