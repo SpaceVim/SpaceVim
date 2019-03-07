@@ -70,9 +70,9 @@ function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap z<Left> zh
     let g:_spacevim_mappings_z['i'] = ['call feedkeys("zi", "n")', 'toggle foldenable']
     nnoremap zi zi
-    let g:_spacevim_mappings_z['j'] = ['call feedkeys("zj", "n")', 'mode to start of next fold']
+    let g:_spacevim_mappings_z['j'] = ['call feedkeys("zj", "n")', 'move to start of next fold']
     nnoremap zj zj
-    let g:_spacevim_mappings_z['k'] = ['call feedkeys("zk", "n")', 'mode to end of previous fold']
+    let g:_spacevim_mappings_z['k'] = ['call feedkeys("zk", "n")', 'move to end of previous fold']
     nnoremap zk zk
     let g:_spacevim_mappings_z['l'] = ['call feedkeys("zl", "n")', 'scroll screen N characters to left']
     nnoremap zl zl
