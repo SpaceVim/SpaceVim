@@ -24,17 +24,18 @@
 
 function! SpaceVim#layers#test#plugins() abort
   return [
-        \ ['janko-m/vim-test'],
+        \ ['janko/vim-test'],
         \ ]
 endfunction
 
 function! SpaceVim#layers#test#config() abort
   let g:_spacevim_mappings_space.k = get(g:_spacevim_mappings_space, 'k',  {'name' : '+Test'})
-  
+
   call SpaceVim#mapping#space#def('nnoremap', ['k', 'n'], 'TestNearest', 'nearest', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['k', 'f'], 'TestFile', 'file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['k', 's'], 'TestSuite', 'suite', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['k', 'l'], 'TestLast', 'last', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['k', 'v'], 'TestVisit', 'visit', 1)
+  let g:test#custom_strategies = {'spacevim': function('SpaceVim#plugins#runner#open')}
+  let g:test#strategy = 'spacevim'
 endfunction
-

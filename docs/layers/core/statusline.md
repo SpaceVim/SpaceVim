@@ -56,7 +56,7 @@ Here is a list of SpaceVim options for statusline, these are different from laye
     # 4: 1 ➛ 1
 
     # Enable/Disable show mode on statusline
-    enable_statusline_display_mode = true
+    enable_statusline_mode = true
 
     # left sections of statusline
     statusline_left_sections = [
