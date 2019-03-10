@@ -965,6 +965,9 @@ function! SpaceVim#welcome() abort
     if exists(':VimFiler') == 2
       VimFiler
       wincmd p
+    elseif exists(':Defx') == 2
+      Defx
+      wincmd p
     endif
   endif
 endfunction
