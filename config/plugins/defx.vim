@@ -68,7 +68,13 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> h
         \ defx#is_directory() ?
         \ defx#do_action('close_tree') : ''
+  nnoremap <silent><buffer><expr> <Left>
+        \ defx#is_directory() ?
+        \ defx#do_action('close_tree') : ''
   nnoremap <silent><buffer><expr> l
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree') : defx#do_action('open')
+  nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('open')
   nnoremap <silent><buffer><expr> E
