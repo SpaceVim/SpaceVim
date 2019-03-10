@@ -42,6 +42,7 @@ augroup END
 function! s:defx_init()
   setl nonumber
   setl norelativenumber
+  setl listchars=
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>

@@ -686,6 +686,7 @@ let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
       \ 'vimfiler',
+      \ 'defx',
       \ 'SpaceVimRunner',
       \ 'SpaceVimREPL',
       \ 'SpaceVimQuickFix',
