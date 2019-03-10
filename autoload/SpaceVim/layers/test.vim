@@ -24,7 +24,7 @@
 
 function! SpaceVim#layers#test#plugins() abort
   return [
-        \ ['janko-m/vim-test'],
+        \ ['janko/vim-test'],
         \ ]
 endfunction
 
