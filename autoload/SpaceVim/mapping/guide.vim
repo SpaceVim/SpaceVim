@@ -407,7 +407,13 @@ function! s:start_buffer() abort " {{{
     endif
   endif
   normal! gg"_dd
-  call setline(1, [''] + split(string, "\n") + [''])
+  if exists('*nvim_open_win')
+    " when using floating windows, and the flaating windows do not support
+    " statusline, add extra black line at top and button of the content.
+    call setline(1, [''] + split(string, "\n") + [''])
+  else
+    call setline(1, split(string, "\n"))
+  endif
   setlocal nomodifiable
   redraw!
   call s:wait_for_input()
