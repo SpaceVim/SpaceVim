@@ -118,6 +118,12 @@ function! SpaceVim#plugins#highlight#start() abort
   let s:current_match = @k
   let @k = save_reg_k
   call setpos('.', curpos)
+  if s:current_match =~# '^\s*$'
+    echohl WarningMsg
+    echo 'cursor is not on symbol'
+    echohl None
+    return
+  endif
   let s:state = SpaceVim#api#import('transient_state') 
   call s:state.set_title('Highlight Transient State')
   call s:state.defind_keys(
