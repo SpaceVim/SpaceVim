@@ -61,10 +61,12 @@ function! s:defx_init()
   nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
   nmap <buffer> gx      <Plug>(vimfiler_execute_vimfiler_associated)
-  nmap <buffer> '       <Plug>(vimfiler_toggle_mark_current_line)
+  nnoremap <silent><buffer><expr> '
+        \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> V
+        \ defx#do_action('toggle_select_all')
   nmap <buffer> v       <Plug>(vimfiler_quick_look)
   nmap <buffer> p       <Plug>(vimfiler_preview_file)
-  nmap <buffer> V       <Plug>(vimfiler_clear_mark_all_lines)
   nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
   nmap <buffer> <Tab>   <Plug>(vimfiler_switch_to_other_window)
   nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
@@ -112,10 +114,6 @@ function! s:defx_init()
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> <Space>
-        \ defx#do_action('toggle_select') . 'j'
-  nnoremap <silent><buffer><expr> *
-        \ defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> j
         \ line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k
