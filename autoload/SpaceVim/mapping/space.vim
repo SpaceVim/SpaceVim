@@ -523,9 +523,11 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
+    let xcmd = ':' . a:cmd . '<CR>' 
     let lcmd = a:cmd
   else
     let cmd = a:cmd
+    let xcmd = a:cmd
     let feedkey_m = a:m =~# 'nore' ? 'n' : 'm'
     if a:cmd =~? '^<plug>'
       let lcmd = 'call feedkeys("\' . a:cmd . '", "' . feedkey_m . '")'
@@ -536,9 +538,9 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
   if is_visual
     if a:m ==# 'nnoremap'
-      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(xcmd, '|', '\\|', 'g')
     elseif a:m ==# 'nmap'
-      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(xcmd, '|', '\\|', 'g')
     endif
   endif
   if len(a:keys) == 2
