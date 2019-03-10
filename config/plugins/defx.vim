@@ -53,22 +53,15 @@ function! s:defx_init()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  nnoremap <silent><buffer> sg  :<C-u>call <SID>vimfiler_vsplit()<CR>
-  nnoremap <silent><buffer> sv  :<C-u>call <SID>vimfiler_split()<CR>
-  nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
-  nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
-  nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
+  " nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
+  " nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> V
         \ defx#do_action('toggle_select_all')
-  nmap <buffer> v       <Plug>(vimfiler_quick_look)
-  nmap <buffer> p       <Plug>(vimfiler_preview_file)
-  nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
-  nmap <buffer> <Tab>   <Plug>(vimfiler_switch_to_other_window)
-  nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
-  nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
-  nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
+  " nmap <buffer> v       <Plug>(vimfiler_quick_look)
+  " nmap <buffer> p       <Plug>(vimfiler_preview_file)
+  " nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
 
   " Define mappings
   nnoremap <silent><buffer><expr> gx
@@ -79,7 +72,7 @@ function! s:defx_init()
         \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> m
         \ defx#do_action('move')
-  nnoremap <silent><buffer><expr> p
+  nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
@@ -95,20 +88,18 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <2-LeftMouse>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> E
-        \ defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> P
+  nnoremap <silent><buffer><expr> sg
+        \ defx#do_action('drop', 'vsplit')
+  nnoremap <silent><buffer><expr> sv
+        \ defx#do_action('drop', 'split')
+  nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> K
-        \ defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> N
         \ defx#do_action('new_file')
   nnoremap <silent><buffer><expr> d
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> x
-        \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> yy
         \ defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> .
@@ -119,7 +110,7 @@ function! s:defx_init()
         \ line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k
         \ line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-l>
+  nnoremap <silent><buffer><expr> <C-r>
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <C-g>
         \ defx#do_action('print')
