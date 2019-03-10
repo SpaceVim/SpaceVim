@@ -53,9 +53,6 @@ function! s:defx_init()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  nnoremap <silent><buffer> gr  :<C-u>Denite grep:<C-R>=<SID>selected()<CR> -buffer-name=grep<CR>
-  nnoremap <silent><buffer> gf  :<C-u>Denite file_rec:<C-R>=<SID>selected()<CR><CR>
-  nnoremap <silent><buffer> gd  :<C-u>call <SID>change_vim_current_dir()<CR>
   nnoremap <silent><buffer> sg  :<C-u>call <SID>vimfiler_vsplit()<CR>
   nnoremap <silent><buffer> sv  :<C-u>call <SID>vimfiler_split()<CR>
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
@@ -75,8 +72,10 @@ function! s:defx_init()
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
 
   " Define mappings
-  nnoremap <silent><buffer><expr> c
+  nnoremap <silent><buffer><expr> yy
         \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> q
+        \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> m
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> p
@@ -85,10 +84,10 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l
         \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('open')
+        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
   nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('open')
+        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
   nnoremap <silent><buffer><expr> <Cr>
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
