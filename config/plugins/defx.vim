@@ -19,20 +19,21 @@ call defx#custom#option('_', {
       \ })
 
 call defx#custom#column('mark', {
-            \ 'readonly_icon': '',
-            \ 'selected_icon': '',
-            \ })
+      \ 'readonly_icon': '',
+      \ 'selected_icon': '',
+      \ })
 
 call defx#custom#column('filename', {
-            \ 'directory_icon': '',
-            \ 'opened_icon': '',
-            \ })
+      \ 'directory_icon': '',
+      \ 'opened_icon': '',
+      \ })
 
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
-  " autocmd BufEnter * nested if (!has('vim_starting') && winnr('$') == 1 && &filetype ==# 'vimfiler') |
+  " autocmd BufEnter * nested if (!has('vim_starting')
+  " \ && winnr('$') == 1 && &filetype ==# 'vimfiler') |
   " \ q | endif
 augroup END
 
@@ -67,7 +68,7 @@ function! s:defx_init()
   nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
-  nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
+
   " Define mappings
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
@@ -83,6 +84,12 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> l
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('open')
+  nnoremap <silent><buffer><expr> <Cr>
+        \ defx#is_directory() ?
+        \ defx#do_action('open_directory') : defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <2-LeftMouse>
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree') : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('open')
