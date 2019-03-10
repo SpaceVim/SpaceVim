@@ -8,6 +8,8 @@
 
 " defx supported is added in https://github.com/SpaceVim/SpaceVim/pull/2282
 
+let s:SYS = SpaceVim#api#import('system')
+
 call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
@@ -76,12 +78,12 @@ function! s:defx_init()
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> h
-        \ defx#do_action('close_tree')
-  nnoremap <silent><buffer><expr> <Left>
-        \ defx#is_directory() ?
-        \ defx#do_action('close_tree') : ''
+  nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree') : defx#do_action('open')
+  nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('open')
   nnoremap <silent><buffer><expr> <Cr>
@@ -90,9 +92,6 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <2-LeftMouse>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <Right>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('open')
   nnoremap <silent><buffer><expr> E
         \ defx#do_action('open', 'vsplit')
   nnoremap <silent><buffer><expr> P
@@ -128,3 +127,28 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
 endf
+
+function! DefxSmartH(_)
+  " candidate is opend tree?
+  if defx#is_opened_tree()
+    return defx#call_action('close_tree')
+  endif
+  
+  " parent is root?
+  let s:candidate = defx#get_candidate()
+  let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
+  let sep = s:SYS.isWindows ? '\\' :  '/'
+  if s:trim_right(s:parent, sep) == s:trim_right(b:defx.paths[0], sep)
+    return defx#call_action('cd', ['..'])
+  endif
+  
+  " move to parent.
+  call defx#call_action('search', s:parent)
+  
+  " if you want close_tree immediately, enable below line.
+  call defx#call_action('close_tree')
+endfunction
+
+function! s:trim_right(str, trim)
+  return substitute(a:str, printf('%s$', a:trim), '', 'g')
+endfunction
