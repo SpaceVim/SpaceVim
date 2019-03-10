@@ -8,6 +8,14 @@ call defx#custom#option('_', {
       \ 'resume': 1
       \ })
 
+call defx#custom#column('mark', {
+            \ 'directory_icon': '',
+            \ 'opened_icon': '',
+            \ 'readonly_icon': '',
+            \ 'root_icon': ' ',
+            \ 'selected_icon': '',
+            \ })
+
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
