@@ -58,7 +58,6 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
   nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
-  nmap <buffer> gx      <Plug>(vimfiler_execute_vimfiler_associated)
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> V
@@ -72,6 +71,8 @@ function! s:defx_init()
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
 
   " Define mappings
+  nnoremap <silent><buffer><expr> gx
+        \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> yy
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> q
