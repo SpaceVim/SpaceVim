@@ -1,3 +1,13 @@
+"=============================================================================
+" defx.vim --- defx config
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+" defx supported is added in https://github.com/SpaceVim/SpaceVim/pull/2282
+
 call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
@@ -59,8 +69,6 @@ function! s:defx_init()
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
   nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
   " Define mappings
-  nnoremap <silent><buffer><expr> <CR>
-        \ defx#do_action('call', 'Open_file_or_dir')
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> m
@@ -68,8 +76,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> h
-        \ defx#is_directory() ?
-        \ defx#do_action('close_tree') : ''
+        \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> <Left>
         \ defx#is_directory() ?
         \ defx#do_action('close_tree') : ''
@@ -114,8 +121,3 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
 endf
-
-function! Open_file_or_dir(content) abort
-  close
-  exe 'e' a:content.targets[0]
-endfunction
