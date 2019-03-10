@@ -57,6 +57,7 @@ function! s:defx_init()
   " nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
+  " TODO: we need an action to clear all selections
   nnoremap <silent><buffer><expr> V
         \ defx#do_action('toggle_select_all')
   " nmap <buffer> v       <Plug>(vimfiler_quick_look)
