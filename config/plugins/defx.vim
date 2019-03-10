@@ -34,10 +34,18 @@ augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
-  " autocmd BufEnter * nested if (!has('vim_starting')
-  " \ && winnr('$') == 1 && &filetype ==# 'vimfiler') |
-  " \ q | endif
+  autocmd BufEnter * nested if
+        \ (!has('vim_starting') && winnr('$') == 1
+        \ && &filetype ==# 'defx') |
+        \ call s:close_last_vimfiler_windows() | endif
 augroup END
+
+" in this function, we should check if shell terminal still exists,
+" then close the terminal job before close vimfiler
+function! s:close_last_vimfiler_windows() abort
+  call SpaceVim#layers#shell#close_terminal()
+  q
+endfunction
 
 function! s:defx_init()
   setl nonumber
