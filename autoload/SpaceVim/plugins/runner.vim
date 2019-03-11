@@ -49,7 +49,7 @@ function! s:insert() abort
   call inputrestore()
 endfunction
 
-let s:target = ''
+let s:running_cmd = ''
 
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
@@ -71,26 +71,29 @@ function! s:async_run(runner) abort
   elseif type(a:runner) == type([])
     " the runner is a list
     " the first item is compile cmd, and the second one is running cmd.
-    let s:target = s:FILE.unify_path(tempname(), ':p')
+    let target = s:FILE.unify_path(tempname(), ':p')
+    " concatenate compiling paramaters in runner[0] into a command
     if type(a:runner[0]) == type({})
-      if type(a:runner[0].exe) == 2
+      if type(a:runner[0].exe) == type(function("tr"))
         let exe = call(a:runner[0].exe, [])
       elseif type(a:runner[0].exe) ==# type('')
         let exe = [a:runner[0].exe]
       endif
       let usestdin = get(a:runner[0], 'usestdin', 0)
-      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [s:target]
+      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [target]
       if usestdin
         let compile_cmd = compile_cmd + a:runner[0].opt
       else
         let compile_cmd = compile_cmd + a:runner[0].opt + [get(s:, 'selected_file', bufname('%'))]
       endif
     else
-      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', target, 'g')
     endif
+    " determine the running command
+    let s:running_cmd = substitute(a:runner[1], '#TEMP#', target, 'g')
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
           \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
-          \ '[Running] ' . s:target,
+          \ '[Running] ' . target,
           \ '',
           \ repeat('-', 20)])
     let s:lines += 4
@@ -114,7 +117,7 @@ function! s:async_run(runner) abort
     "             false, use file name
     "   range: empty, whole buffer
     "          getline(a, b)
-    if type(a:runner.exe) == 2
+    if type(a:runner.exe) == type(function("tr"))
       let exe = call(a:runner.exe, [])
     elseif type(a:runner.exe) ==# type('')
       let exe = [a:runner.exe]
@@ -155,7 +158,7 @@ endfunction
 " @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
   if a:data == 0
-    let s:job_id =  s:JOB.start(s:target,{
+    let s:job_id =  s:JOB.start(s:running_cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
