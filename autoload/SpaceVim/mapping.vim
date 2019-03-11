@@ -135,10 +135,9 @@ function! SpaceVim#mapping#split_previous_buffer() abort
     wincmd w
     e#
   endif
-
 endfunction
 
-function! SpaceVim#mapping#vertical_split_previous_buffer() abort
+function! SpaceVim#mapping#vertical_split_previous_buffer(...) abort
   if bufnr('#') == -1
     call SpaceVim#util#echoWarn('There is no previous buffer')
   else
@@ -157,7 +156,12 @@ function! SpaceVim#mapping#close_current_buffer() abort
     echohl WarningMsg
     echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
     echohl None
-    let rs = nr2char(getchar())
+    if len(a:000) > 0
+      let rs = get(a:000, 0)
+    else
+      echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
+      let rs = nr2char(getchar())
+    endif
     if rs ==? 'y'
       write
     elseif rs ==? 'n'
