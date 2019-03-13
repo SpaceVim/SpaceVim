@@ -1134,12 +1134,16 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 
 SpaceVim uses vimfiler as the default file tree, and the default key binding is `<F3>`.
 And SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
-To replace the file explorer to nerdtree:
+
+To change the filemanager plugin:
 
 ```toml
 [options]
-    # The default value is vimfiler.
-    filemanager = "nerdtree"
+    # file manager plugins supported in SpaceVim:
+    # - vimfiler (default)
+    # - nerdtree
+    # - defx
+    filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default.
@@ -1153,8 +1157,6 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-    # The default value is vimfiler.
-    filemanager = "nerdtree"
     filetree_direction = "left"
 ```
 

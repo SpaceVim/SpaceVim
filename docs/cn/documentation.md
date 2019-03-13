@@ -1094,12 +1094,16 @@ SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 Sp
 
 #### 文件树
 
-SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树，如果需要使用 nerdtree 作为默认文件树，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改选项 vimfiler：
+SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树。
+如果需要修改默认文件树插件，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改选项 `filemanager`：
 
 ```toml
 [options]
-    # 默认值为 vimfiler
-    filemanager = "nerdtree"
+    # 文件树插件可选值包括：
+    # - vimfiler （默认）
+    # - nerdtree
+    # - defx
+    filemanager = "defx"
 ```
 
 SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
@@ -1107,6 +1111,16 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+
+There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
+you can use `filetree_direction` option:
+默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要添加如下内容。
+需要注意的是，当设置文件树在左边时，函数列表 tagbar 将会在右边。
+
+```toml
+[options]
+    filetree_direction = "left"
+```
 
 ##### 文件树中的常用操作
 
