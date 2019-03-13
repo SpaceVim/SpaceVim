@@ -10,10 +10,16 @@
 
 let s:SYS = SpaceVim#api#import('system')
 
+if g:spacevim_filetree_direction ==# 'right'
+  let s:direction = 'rightbelow'
+else
+  let s:direction = 'leftabove'
+endif
+
 call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
-      \ 'direction': 'botright',
+      \ 'direction': s:direction,
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
       \ 'toggle': 1,

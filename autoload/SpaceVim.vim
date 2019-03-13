@@ -501,6 +501,15 @@ let g:spacevim_simple_mode             = 0
 " you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
 
+""
+" The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
+" Config the direction of file tree. Default is 'right'. you can also set to
+" 'left'. 
+"
+" NOTE: if it is 'left', the tagbar will be move to right.
+let g:spacevim_filetree_direction             = 'right'
+
 let g:spacevim_sidebar_direction        = ''
 ""
 " The default plugin manager of SpaceVim.
