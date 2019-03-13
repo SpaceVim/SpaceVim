@@ -1148,6 +1148,16 @@ Here is a picture for this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
 
+There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
+you can use `filetree_direction` option:
+
+```toml
+[options]
+    # The default value is vimfiler.
+    filemanager = "nerdtree"
+    filetree_direction = "left"
+```
+
 ##### File tree navigation
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
