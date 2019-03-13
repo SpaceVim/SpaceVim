@@ -1112,9 +1112,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
 
-There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
-you can use `filetree_direction` option:
-默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要添加如下内容。
+默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要修改 `filetree_direction` 选项。
 需要注意的是，当设置文件树在左边时，函数列表 tagbar 将会在右边。
 
 ```toml
