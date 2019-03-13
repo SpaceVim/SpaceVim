@@ -189,7 +189,7 @@ function! SpaceVim#layers#core#config() abort
     " TODO: fix all these command
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'Defx -find', 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)

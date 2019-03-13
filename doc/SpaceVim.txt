@@ -569,6 +569,12 @@ plugins will be installed.
 The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
 nerdtree or defx
 
+                                               *g:spacevim_filetree_direction*
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
+
+NOTE: if it is 'left', the tagbar will be move to right.
+
                                          *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
 
