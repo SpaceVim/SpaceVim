@@ -502,8 +502,6 @@ let g:spacevim_simple_mode             = 0
 let g:spacevim_filemanager             = 'vimfiler'
 
 ""
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
 " Config the direction of file tree. Default is 'right'. you can also set to
 " 'left'. 
 "

@@ -570,9 +570,8 @@ The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
 nerdtree or defx
 
                                                *g:spacevim_filetree_direction*
-The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
-nerdtree or defx Config the direction of file tree. Default is 'right'. you
-can also set to 'left'.
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
 
 NOTE: if it is 'left', the tagbar will be move to right.
 
