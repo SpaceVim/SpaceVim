@@ -21,7 +21,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
   let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
   let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
-  let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
+  let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
   let g:_spacevim_mappings_space.h = {'name' : '+Help'}
   let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
   let g:_spacevim_mappings_space.q = {'name' : '+Quit'}

@@ -88,12 +88,6 @@ function! zvim#plug#begin(path) abort
         \ 'All the Added plugins'
         \ . '                    <leader>lp'}
   let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
-  if SpaceVim#layers#isLoaded('unite')
-    nnoremap <silent><Leader>lp :Unite -silent
-          \ -winheight=17 -start-insert menu:AddedPlugins<CR>
-  elseif SpaceVim#layers#isLoaded('denite')
-    nnoremap <silent><Leader>lp :Denite menu:AddedPlugins<Cr>
-  endif
   if g:spacevim_plugin_manager ==# 'neobundle'
     call neobundle#begin(a:path)
   elseif g:spacevim_plugin_manager ==# 'dein'
