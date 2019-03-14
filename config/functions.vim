@@ -1,13 +1,3 @@
-"Detect OS
-function! OSX()
-    return has('macunix')
-endfunction
-function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
-endfunction
-function! WINDOWS()
-    return (has('win16') || has('win32') || has('win64'))
-endfunction
 function! OnmiConfigForJsp()
     let pos1 = search('</script>','nb',line('w0'))
     let pos2 = search('<script','nb',line('w0'))
