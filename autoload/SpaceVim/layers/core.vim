@@ -17,6 +17,8 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  elseif g:spacevim_filemanager ==# 'defx'
+    call add(plugins, ['Shougo/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   endif
 
   if !g:spacevim_vimcompatible
@@ -183,6 +185,12 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
+  elseif g:spacevim_filemanager ==# 'defx'
+    " TODO: fix all these command
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
@@ -444,7 +452,7 @@ function! s:delete_current_buffer_file() abort
   if s:MESSAGE.confirm('Are you sure you want to delete this file')
     let f = expand('%')
     if delete(f) == 0
-      call SpaceVim#mapping#close_current_buffer()
+      call SpaceVim#mapping#close_current_buffer('n')
       echo "File '" . f . "' successfully deleted!"
     else
       call s:MESSAGE.warn('Failed to delete file:' . f)

@@ -409,6 +409,8 @@ function! s:start_buffer() abort " {{{
   endif
   normal! gg"_dd
   if exists('*nvim_open_win')
+    " when using floating windows, and the flaating windows do not support
+    " statusline, add extra black line at top and button of the content.
     call setline(1, [''] + split(string, "\n") + [''])
   else
     call setline(1, split(string, "\n"))

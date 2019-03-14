@@ -114,4 +114,4 @@ function! s:search_line(path, term) abort "{{{
   return 0
 endfunction "}}}
 
-" vim:set et sw=2:
+" vim:set et sw=2 cc=80 nowrap:
