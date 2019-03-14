@@ -671,40 +671,39 @@ can be get by `<leader> q r`
 
 | Key             | Mode                  | Action                                     |
 | --------------- | --------------------- | ------------------------------------------ |
-| `<leader>`+`cd` | Normal                | Switch to the directory of the open buffer |
-| `<leader>`+`w`  | Normal/Visual         | Write (:w)                                 |
+| `SPC f s`  | Normal/Visual         | Write (:w)                                 |
 | `Ctrl-s`        | Normal/Visual/Command | Write (:w)                                 |
 | `:w!!`          | Command               | Write as root (%!sudo tee > /dev/null %)   |
 
 ### Editor UI
 
-| Key                                             | Mode          | Action                                                           |
-| ----------------------------------------------- | ------------- | ---------------------------------------------------------------- |
-| `<F2>`                                          | _All_         | Toggle tagbar                                                    |
-| `<F3>`                                          | _All_         | Toggle Vimfiler                                                  |
-| `<leader>` + num                                | Normal        | Jump to the buffer with the num index                            |
-| `<Alt>` + num                                   | Normal        | Jump to the buffer with the num index, this only works in Neovim |
-| `Alt-h` / `<Left>`                              | Normal        | Jump to left buffer in the tabline, this only works in Neovim    |
-| `Alt-l` / `<Right>`                             | Normal        | Jump to Right buffer in the tabline, this only works in Neovim   |
-| `<leader>`+`ts`                                 | Normal        | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`                                 | Normal        | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`                                 | Normal        | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`                                 | Normal        | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`                                 | Normal        | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                                            | Normal        | Go to first tab (:tabfirst)                                      |
-| `g$`                                            | Normal        | Go to last tab (:tablast)                                        |
-| `gr`                                            | Normal        | Go to previous tab (:tabprevious)                                |
-| `Ctrl-<Down>`                                   | Normal        | Move to split below (Ctrl-w j)                                   |
-| `Ctrl-<Up>`                                     | Normal        | Move to upper split (Ctrl-w k)                                   |
-| `Ctrl-<Left>`                                   | Normal        | Move to left split (Ctrl-w h)                                    |
-| `Ctrl-<Right>`                                  | Normal        | Move to right split (Ctrl-w l)                                   |
-| `*`                                             | Visual        | Search selection forwards                                        |
-| `#`                                             | Visual        | Search selection backwards                                       |
-| `,`<Space>` | Normal | Remove all spaces at EOL |
-| `Ctrl-r`                                        | Visual        | Replace selection                                                |
-| `<leader> l j`                                  | Normal        | Next on location list                                            |
-| `<leader> l k`                                  | Normal        | Previous on location list                                        |
-| `<leader> S`                                    | Normal/Visual | Source selection                                                 |
+| Key                 | Mode          | Action                                                           |
+| ------------------- | ------------- | ---------------------------------------------------------------- |
+| `<F2>`              | _All_         | Toggle tagbar                                                    |
+| `<F3>`              | _All_         | Toggle Vimfiler                                                  |
+| `<leader>` + num    | Normal        | Jump to the buffer with the num index                            |
+| `<Alt>` + num       | Normal        | Jump to the buffer with the num index, this only works in Neovim |
+| `Alt-h` / `<Left>`  | Normal        | Jump to left buffer in the tabline, this only works in Neovim    |
+| `Alt-l` / `<Right>` | Normal        | Jump to Right buffer in the tabline, this only works in Neovim   |
+| `<leader>`+`ts`     | Normal        | Toggle spell-checker (:setlocal spell!)                          |
+| `<leader>`+`tn`     | Normal        | Toggle line numbers (:setlocal nonumber!)                        |
+| `<leader>`+`tl`     | Normal        | Toggle hidden characters (:setlocal nolist!)                     |
+| `<leader>`+`th`     | Normal        | Toggle highlighted search (:set hlsearch!)                       |
+| `<leader>`+`tw`     | Normal        | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g0`                | Normal        | Go to first tab (:tabfirst)                                      |
+| `g$`                | Normal        | Go to last tab (:tablast)                                        |
+| `gr`                | Normal        | Go to previous tab (:tabprevious)                                |
+| `Ctrl-<Down>`       | Normal        | Move to split below (Ctrl-w j)                                   |
+| `Ctrl-<Up>`         | Normal        | Move to upper split (Ctrl-w k)                                   |
+| `Ctrl-<Left>`       | Normal        | Move to left split (Ctrl-w h)                                    |
+| `Ctrl-<Right>`      | Normal        | Move to right split (Ctrl-w l)                                   |
+| `*`                 | Visual        | Search selection forwards                                        |
+| `#`                 | Visual        | Search selection backwards                                       |
+| `, <Space>`         | Normal        | Remove all spaces at EOL                                         |
+| `Ctrl-r`            | Visual        | Replace selection                                                |
+| `<leader> l j`      | Normal        | Next on location list                                            |
+| `<leader> l k`      | Normal        | Previous on location list                                        |
+| `<leader> S`        | Normal/Visual | Source selection                                                 |
 
 ### Native functions
 

@@ -697,7 +697,6 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 | Key Bindings   | Descriptions                               |
 | -------------- | ------------------------------------------ |
-| `<Leader> c d` | Switch to the directory of the open buffer |
 | `SPC f s`      | Write (:w)                                 |
 | `Ctrl-s`       | Write (:w)                                 |
 | `SPC f W`      | Write as root (need sudo layer)            |
