@@ -211,6 +211,10 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let index = index(buffers, abuf)
   if get(w:, 'shell_layer_win', 0) == 1
     exe 'bd!' . abuf
+    " fuck the terminal windows
+    if get(w:, 'shell_layer_win', 0) == 1
+      close
+    endif
     return
   endif
   if index != -1
