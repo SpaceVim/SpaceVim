@@ -154,14 +154,13 @@ function! SpaceVim#mapping#close_current_buffer() abort
   if getbufvar(bn, '&modified', 0)
     redraw
     echohl WarningMsg
-    echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
-    echohl None
     if len(a:000) > 0
       let rs = get(a:000, 0)
     else
       echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
       let rs = nr2char(getchar())
     endif
+    echohl None
     if rs ==? 'y'
       write
     elseif rs ==? 'n'
