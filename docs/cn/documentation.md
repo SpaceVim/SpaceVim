@@ -1,20 +1,21 @@
 ---
-title: "SpaceVim 中文手册"
+title: "使用文档"
 description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行以及 REPL 和 DEBUG 支持。"
 redirect_from: "/README_zh_cn/"
 lang: cn
 ---
 
-# SpaceVim 使用文档
+# 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
 - [核心思想](#核心思想)
 - [显著特性](#显著特性)
 - [运行截图](#运行截图)
-- [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
-- [更新和回滚](#更新和回滚)
-  - [SpaceVim 自身更新](#spacevim-自身更新)
+- [基本概念](#基本概念)
+- [适用人群](#适用人群)
+- [更新回滚](#更新回滚)
+  - [自身更新](#自身更新)
   - [更新插件](#更新插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
@@ -22,14 +23,13 @@ lang: cn
   - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
   - [调试上游插件](#调试上游插件)
-- [概念](#概念)
-- [优雅的界面](#优雅的界面)
+- [界面元素](#界面元素)
   - [颜色主题](#颜色主题)
   - [字体](#字体)
   - [界面元素切换](#界面元素切换)
   - [状态栏](#状态栏)
   - [标签栏](#标签栏)
-- [常规快捷键](#常规快捷键)
+- [基本操作](#基本操作)
   - [窗口管理器](#窗口管理器)
   - [文件操作](#文件操作)
   - [编辑器界面](#编辑器界面)
@@ -90,7 +90,7 @@ lang: cn
   - [错误处理](#错误处理)
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
-- [EditorConfig](#editorconfig)
+- [格式规范](#格式规范)
 - [Vim 服务器](#vim-服务器)
 - [Achievements](#achievements)
   - [issues](#issues)
@@ -149,7 +149,17 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
-## 谁将从 SpaceVim 中获益？
+## 基本概念
+
+**临时快捷键菜单**
+
+SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
+
+文本移动临时快捷键：
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
+## 适用人群
 
 - **初级** Vim 用户
 - 追求优雅界面的 Vim 用户
@@ -157,9 +167,9 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 - 想要学习一种不一样的编辑文件方式的 Vim 用户
 - 追求简单但是可高度配置系统的 Vim 用户
 
-## 更新和回滚
+## 更新回滚
 
-### SpaceVim 自身更新
+### 自身更新
 
 可通过很多种方式来更新 SpaceVim 的核心文件。建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
 
@@ -334,17 +344,7 @@ function! myspacevim#before() abort
 endfunction
 ```
 
-## 概念
-
-**临时快捷键菜单**
-
-SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
-
-文本移动临时快捷键：
-
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
-
-## 优雅的界面
+## 界面元素
 
 SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
@@ -616,7 +616,7 @@ endfunction
 | `Ctrl-S-<Down>` | 向下移动光标下的标签页     |
 | `<Enter>`       | 跳至光标所对应的标签窗口   |
 
-## 常规快捷键
+## 基本操作
 
 ### 窗口管理器
 
@@ -1810,7 +1810,7 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p t` | find project root                            |
 | `SPC p p` | 显示所有工程                                 |
 
-## EditorConfig
+## 格式规范
 
 SpaceVim has supported for [EditorConfig](http://editorconfig.org/), a configuration file to "define and maintain consistent coding styles between different editors and IDEs."
 
