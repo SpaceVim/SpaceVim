@@ -733,7 +733,13 @@ can be get by `<leader> q r`
 | `m i`  | 给当前行标签添加说明 |
 
 正因为占用了以上几个快捷键，以下几个寄存器无法用来记忆当前位置了：`a`, `m`, `n`, `p`, `i`。
-但是，在 SpaceVim 中，`<Leader> m` 被映射为了 `m` 键，因此，你可以使用 `<Leader> m a` 来代替 `m a`。
+当然，也可以在启动函数里将 `<Leader> m` 映射为 `m` 键，如此便可使用 `<Leader> m a` 来代替 `m a`。
+
+```viml
+function! myspacevim#before() abort
+    nnoremap <silent><Leader>m m
+endfunction
+```
 
 ### Fuzzy finder
 
