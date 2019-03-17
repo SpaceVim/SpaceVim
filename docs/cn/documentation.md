@@ -669,11 +669,10 @@ can be get by `<leader> q r`
 
 ### 文件操作
 
-| Key       | Mode                  | Action                                   |
-| --------- | --------------------- | ---------------------------------------- |
-| `SPC f s` | Normal/Visual         | Write (:w)                               |
-| `Ctrl-s`  | Normal/Visual/Command | Write (:w)                               |
-| `:w!!`    | Command               | Write as root (%!sudo tee > /dev/null %) |
+| 按键                 | 功能描述           |
+| -------------------- | ------------------ |
+| `SPC f s` / `Ctrl-s` | 保存文件 (:w)      |
+| `SPC f W`            | 使用管理员模式保存 |
 
 ### 编辑器界面
 
