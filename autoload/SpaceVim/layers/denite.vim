@@ -242,7 +242,7 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
-  let g:_spacevim_mappings.f['<Space>'] = ['Denite menu:CustomKeyMaps',
+  let g:_spacevim_mappings.f['[SPC]'] = ['Denite menu:CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
