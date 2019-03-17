@@ -695,11 +695,11 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 ### File Operations
 
-| Key Bindings   | Descriptions                               |
-| -------------- | ------------------------------------------ |
-| `SPC f s`      | Write (:w)                                 |
-| `Ctrl-s`       | Write (:w)                                 |
-| `SPC f W`      | Write as root (need sudo layer)            |
+| Key Bindings | Descriptions                    |
+| ------------ | ------------------------------- |
+| `SPC f s`    | Write (:w)                      |
+| `Ctrl-s`     | Write (:w)                      |
+| `SPC f W`    | Write as root (need sudo layer) |
 
 ### Editor UI
 
@@ -755,7 +755,7 @@ Bookmarks manager is included in `tools` layer, to use following key bindings, y
 | `m i`        | Annotate bookmark               |
 
 As SpaceVim use above bookmarks mappings, so you cannot use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
-If you really need to use these registers, you can map `<Leader> m` to  `m` in your bootstrap function,
+If you really need to use these registers, you can map `<Leader> m` to `m` in your bootstrap function,
 then you can use `a` registers via `<Leader> m a`.
 
 ```viml
@@ -1124,6 +1124,7 @@ Files manipulation commands (start with f):
 | `SPC f S`    | save all files                                                 |
 | `SPC f r`    | open a recent file                                             |
 | `SPC f t`    | toggle file tree side bar                                      |
+| `SPC f d`    | toggle disk manager in windows os                              |
 | `SPC f T`    | show file tree side bar                                        |
 | `SPC f y`    | show and copy current file absolute path in the cmdline        |
 
@@ -1170,38 +1171,38 @@ you can use `filetree_direction` option:
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-| Key Bindings       | Descriptions                                      |
-| ------------------ | ------------------------------------------------- |
-| `<F3>` / `SPC f t` | Toggle file explorer                              |
-| **with in file tree** |                              |
-| `<Left>` / `h`     | go to parent node and collapse expanded directory |
-| `<Down>` / `j`     | select next file or directory                     |
-| `<Up>` / `k`       | select previous file or directory                 |
-| `<Right>` / `l`    | open selected file or expand directory            |
-| `N`                | Create new file under corsor                      |
-| `y y`              | Copy file full path to system clipboard           |
-| `y Y`              | Copy file to system clipboard                     |
-| `P`                | Paste file to the position under the cursor       |
-| `.`                | toggle visible ignored files                      |
-| `s v`              | Split edit                                        |
-| `s g`              | Vertical split edit                               |
-| `p`                | Preview                                           |
-| `i`                | Switch to directory history                       |
-| `v`                | Quick look                                        |
-| `g x`              | Execute with vimfiler associated                  |
-| `'`                | Toggle mark current line                          |
-| `V`                | Clear all marks                                   |
-| `Ctrl-r`           | Redraw                                            |
+| Key Bindings          | Descriptions                                      |
+| --------------------- | ------------------------------------------------- |
+| `<F3>` / `SPC f t`    | Toggle file explorer                              |
+| **with in file tree** |                                                   |
+| `<Left>` / `h`        | go to parent node and collapse expanded directory |
+| `<Down>` / `j`        | select next file or directory                     |
+| `<Up>` / `k`          | select previous file or directory                 |
+| `<Right>` / `l`       | open selected file or expand directory            |
+| `N`                   | Create new file under corsor                      |
+| `y y`                 | Copy file full path to system clipboard           |
+| `y Y`                 | Copy file to system clipboard                     |
+| `P`                   | Paste file to the position under the cursor       |
+| `.`                   | toggle visible ignored files                      |
+| `s v`                 | Split edit                                        |
+| `s g`                 | Vertical split edit                               |
+| `p`                   | Preview                                           |
+| `i`                   | Switch to directory history                       |
+| `v`                   | Quick look                                        |
+| `g x`                 | Execute with vimfiler associated                  |
+| `'`                   | Toggle mark current line                          |
+| `V`                   | Clear all marks                                   |
+| `Ctrl-r`              | Redraw                                            |
 
 ##### Open file with file tree.
 
 If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
 
-| Key Bindings     | Descriptions                              |
-| ---------------- | ----------------------------------------- |
+| Key Bindings    | Descriptions                              |
+| --------------- | ----------------------------------------- |
 | `l` / `<Enter>` | open file in one window                   |
-| `sg`             | open file in an vertically split window   |
-| `sv`             | open file in an horizontally split window |
+| `sg`            | open file in an vertically split window   |
+| `sv`            | open file in an horizontally split window |
 
 ### Commands starting with `g`
 
@@ -1573,63 +1574,63 @@ In highlight symbol transient state:
 
 Text related commands (start with `x`):
 
-| Key Bindings    | Descriptions                                                         |
-| --------------- | -------------------------------------------------------------------- |
-| `SPC x a &`     | align region at &                                                    |
-| `SPC x a (`     | align region at (                                                    |
-| `SPC x a )`     | align region at )                                                    |
-| `SPC x a [`     | align region at [                                                    |
-| `SPC x a ]`     | align region at ]                                                    |
-| `SPC x a {`     | align region at {                                                    |
-| `SPC x a }`     | align region at }                                                    |
-| `SPC x a ,`     | align region at ,                                                    |
-| `SPC x a .`     | align region at . (for numeric tables)                               |
-| `SPC x a :`     | align region at :                                                    |
-| `SPC x a ;`     | align region at ;                                                    |
-| `SPC x a =`     | align region at =                                                    |
-| `SPC x a ¦`     | align region at ¦                                                    |
-| `SPC x a |`     | align region at \|                                                   |
-| `SPC x a SPC`   | align region at [SPC]                                                |
-| `SPC x a a`     | align region (or guessed section) using default rules (TODO)         |
-| `SPC x a c`     | align current indentation region using default rules (TODO)          |
-| `SPC x a l`     | left-align with evil-lion (TODO)                                     |
-| `SPC x a L`     | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`     | align region at user-specified regexp                                |
-| `SPC x a o`     | align region at operators `+-*/`                                     |
-| `SPC x c`       | count the number of chars/words/lines in the selection region        |
-| `SPC x d w`     | delete trailing whitespaces                                          |
-| `SPC x d SPC`   | Delete all spaces and tabs around point, leaving one space           |
-| `SPC x g l`     | set lanuages used by translate commands (TODO)                       |
-| `SPC x g t`     | translate current word using Google Translate                        |
-| `SPC x g T`     | reverse source and target languages (TODO)                           |
-| `SPC x i c`     | change symbol style to `lowerCamelCase`                              |
-| `SPC x i C`     | change symbol style to `UpperCamelCase`                              |
-| `SPC x i i`     | cycle symbol naming styles (i to keep cycling)                       |
-| `SPC x i -`     | change symbol style to `kebab-case`                                  |
-| `SPC x i k`     | change symbol style to `kebab-case`                                  |
-| `SPC x i _`     | change symbol style to `under_score`                                 |
-| `SPC x i u`     | change symbol style to `under_score`                                 |
-| `SPC x i U`     | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`     | set the justification to center                                      |
-| `SPC x j f`     | set the justification to full (TODO)                                 |
-| `SPC x j l`     | set the justification to left                                        |
-| `SPC x j n`     | set the justification to none (TODO)                                 |
-| `SPC x j r`     | set the justification to right                                       |
-| `SPC x J`       | move down a line of text (enter transient state)                     |
-| `SPC x K`       | move up a line of text (enter transient state)                       |
-| `SPC x l d`     | duplicate line or region (TODO)                                      |
-| `SPC x l s`     | sort lines (TODO)                                                    |
-| `SPC x l u`     | uniquify lines (TODO)                                                |
-| `SPC x o`       | use avy to select a link in the frame and open it (TODO)             |
-| `SPC x O`       | use avy to select multiple links in the frame and open them (TODO)   |
-| `SPC x t c`     | swap (transpose) the current character with the previous one         |
-| `SPC x t w`     | swap (transpose) the current word with the previous one              |
-| `SPC x t l`     | swap (transpose) the current line with the previous one              |
-| `SPC x u`       | set the selected text to lower case                                  |
-| `SPC x U`       | set the selected text to upper case                                  |
-| `SPC x w c`     | count the number of occurrences per word in the select region (TODO) |
-| `SPC x w d`     | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x <Tab>`   | indent or dedent a region rigidly (TODO)                             |
+| Key Bindings  | Descriptions                                                         |
+| ------------- | -------------------------------------------------------------------- |
+| `SPC x a &`   | align region at &                                                    |
+| `SPC x a (`   | align region at (                                                    |
+| `SPC x a )`   | align region at )                                                    |
+| `SPC x a [`   | align region at [                                                    |
+| `SPC x a ]`   | align region at ]                                                    |
+| `SPC x a {`   | align region at {                                                    |
+| `SPC x a }`   | align region at }                                                    |
+| `SPC x a ,`   | align region at ,                                                    |
+| `SPC x a .`   | align region at . (for numeric tables)                               |
+| `SPC x a :`   | align region at :                                                    |
+| `SPC x a ;`   | align region at ;                                                    |
+| `SPC x a =`   | align region at =                                                    |
+| `SPC x a ¦`   | align region at ¦                                                    |
+| `SPC x a |`   | align region at \|                                                   |
+| `SPC x a SPC` | align region at [SPC]                                                |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
+| `SPC x a c`   | align current indentation region using default rules (TODO)          |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
+| `SPC x a r`   | align region at user-specified regexp                                |
+| `SPC x a o`   | align region at operators `+-*/`                                     |
+| `SPC x c`     | count the number of chars/words/lines in the selection region        |
+| `SPC x d w`   | delete trailing whitespaces                                          |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
+| `SPC x g t`   | translate current word using Google Translate                        |
+| `SPC x g T`   | reverse source and target languages (TODO)                           |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
+| `SPC x i -`   | change symbol style to `kebab-case`                                  |
+| `SPC x i k`   | change symbol style to `kebab-case`                                  |
+| `SPC x i _`   | change symbol style to `under_score`                                 |
+| `SPC x i u`   | change symbol style to `under_score`                                 |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
+| `SPC x j c`   | set the justification to center                                      |
+| `SPC x j f`   | set the justification to full (TODO)                                 |
+| `SPC x j l`   | set the justification to left                                        |
+| `SPC x j n`   | set the justification to none (TODO)                                 |
+| `SPC x j r`   | set the justification to right                                       |
+| `SPC x J`     | move down a line of text (enter transient state)                     |
+| `SPC x K`     | move up a line of text (enter transient state)                       |
+| `SPC x l d`   | duplicate line or region (TODO)                                      |
+| `SPC x l s`   | sort lines (TODO)                                                    |
+| `SPC x l u`   | uniquify lines (TODO)                                                |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
+| `SPC x t c`   | swap (transpose) the current character with the previous one         |
+| `SPC x t w`   | swap (transpose) the current word with the previous one              |
+| `SPC x t l`   | swap (transpose) the current line with the previous one              |
+| `SPC x u`     | set the selected text to lower case                                  |
+| `SPC x U`     | set the selected text to upper case                                  |
+| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
+| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                             |
 
 #### Text insertion commands
 
@@ -1855,27 +1856,27 @@ Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a fil
 
 ### issues
 
-Achievements | Account
------ | -----
-[100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)
-[1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000) | [sei40kr](https://github.com/sei40kr)
-[2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000) | [nikolaussucher](https://github.com/nikolaussucher)
+| Achievements                                                          | Account                                             |
+| --------------------------------------------------------------------- | --------------------------------------------------- |
+| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)         |
+| [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)               |
+| [2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000)  | [nikolaussucher](https://github.com/nikolaussucher) |
 
 ### Stars, forks and watchers
 
-Achievements | Account
------ | -----
-First stargazers | [monkeydterry](https://github.com/monkeydterry)
-100th stargazers | [robertofarrell](https://github.com/robertofarrell)
-1000th stargazers | [linsongze](https://github.com/linsongze)
-2000th stargazers | [fated](https://github.com/fated)
-3000th stargazers | [urso](https://github.com/urso)
-4000th stargazers | [wanghe4096](https://github.com/wanghe4096)
-5000th stargazers | [xxxxha](https://github.com/xxxxha)
-6000th stargazers | [corenel](https://github.com/corenel)
-7000th stargazers | [mohab1989](https://github.com/mohab1989)
-8000th stargazers | [chocopowwwa](https://github.com/chocopowwwa)
-9000th stargazers | [mffathurr](https://github.com/mffathurr)
+| Achievements      | Account                                             |
+| ----------------- | --------------------------------------------------- |
+| First stargazers  | [monkeydterry](https://github.com/monkeydterry)     |
+| 100th stargazers  | [robertofarrell](https://github.com/robertofarrell) |
+| 1000th stargazers | [linsongze](https://github.com/linsongze)           |
+| 2000th stargazers | [fated](https://github.com/fated)                   |
+| 3000th stargazers | [urso](https://github.com/urso)                     |
+| 4000th stargazers | [wanghe4096](https://github.com/wanghe4096)         |
+| 5000th stargazers | [xxxxha](https://github.com/xxxxha)                 |
+| 6000th stargazers | [corenel](https://github.com/corenel)               |
+| 7000th stargazers | [mohab1989](https://github.com/mohab1989)           |
+| 8000th stargazers | [chocopowwwa](https://github.com/chocopowwwa)       |
+| 9000th stargazers | [mffathurr](https://github.com/mffathurr)           |
 
 <!-- SpaceVim Achievements end -->
 
