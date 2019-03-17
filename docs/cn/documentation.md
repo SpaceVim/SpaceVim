@@ -623,24 +623,23 @@ endfunction
 窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀按键为 `s`，可以在配置文件中通过修改
 SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
-| 快捷键          | 功能描述                                                                                                                                                                                                                       |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Smart buffer close                                                                                                                                                                                                             |
-| `s p`           | Split nicely                                                                                                                                                                                                                   |
-| `s v`           | :split                                                                                                                                                                                                                         |
-| `s g`           | :vsplit                                                                                                                                                                                                                        |
-| `s t`           | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s o`           | Close other windows (:only)                                                                                                                                                                                                    |
-| `s x`           | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s q`           | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s Q`           | Close current buffer (:close)                                                                                                                                                                                                  |
-| `<Tab>`         | Next window or tab                                                                                                                                                                                                             |
-| `Shift-<Tab>`   | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
+| 快捷键        | 功能描述                              |
+| ------------- | ------------------------------------- |
+| `q`           | 智能关闭当前窗口                      |
+| `s p`         | 垂直分屏，并切换到新窗口              |
+| `s v`         | 水平分屏（:split）                    |
+| `s V`         | 水平分屏（:split），并编辑上一个文件  |
+| `s g`         | 垂直分屏（:vsplit）                   |
+| `s G`         | 垂直分屏（:vsplit），并编辑上一个文件 |
+| `s t`         | 新建新的标签页（:tabnew）             |
+| `s o`         | 关闭其他窗口 (:only)                  |
+| `s x`         | 关闭当前缓冲区，并保留新的空白缓冲区  |
+| `s q`         | 关闭当前缓冲区                        |
+| `s Q`         | 关闭当前窗口 (:close)                 |
+| `<Tab>`       | 跳至下一个窗口                        |
+| `Shift-<Tab>` | 跳至上一个窗口                        |
 
-SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
-can be get by `<leader> q r`
+Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leaderj q r` 来代替。
 
 | 快捷键              | 模式          | 功能描述                                                                       |
 | ------------------- | ------------- | ------------------------------------------------------------------------------ |
