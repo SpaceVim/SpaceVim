@@ -1,20 +1,21 @@
 ---
-title: "SpaceVim 中文手册"
+title: "使用文档"
 description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行以及 REPL 和 DEBUG 支持。"
 redirect_from: "/README_zh_cn/"
 lang: cn
 ---
 
-# SpaceVim 使用文档
+# 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
 - [核心思想](#核心思想)
 - [显著特性](#显著特性)
 - [运行截图](#运行截图)
-- [谁将从 SpaceVim 中获益？](#谁将从-spacevim-中获益)
-- [更新和回滚](#更新和回滚)
-  - [SpaceVim 自身更新](#spacevim-自身更新)
+- [基本概念](#基本概念)
+- [适用人群](#适用人群)
+- [更新回滚](#更新回滚)
+  - [自身更新](#自身更新)
   - [更新插件](#更新插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
@@ -22,19 +23,18 @@ lang: cn
   - [Vim 兼容模式](#vim-兼容模式)
   - [私有模块](#私有模块)
   - [调试上游插件](#调试上游插件)
-- [概念](#概念)
-- [优雅的界面](#优雅的界面)
+- [界面元素](#界面元素)
   - [颜色主题](#颜色主题)
   - [字体](#字体)
   - [界面元素切换](#界面元素切换)
   - [状态栏](#状态栏)
   - [标签栏](#标签栏)
-- [常规快捷键](#常规快捷键)
+- [基本操作](#基本操作)
   - [窗口管理器](#窗口管理器)
-  - [File Operations](#file-operations)
-  - [Editor UI](#editor-ui)
-  - [Native functions](#native-functions)
-  - [Bookmarks management](#bookmarks-management)
+  - [文件操作](#文件操作)
+  - [编辑器界面](#编辑器界面)
+  - [原生功能](#原生功能)
+  - [标签管理](#标签管理)
   - [Fuzzy finder](#fuzzy-finder)
   - [交互](#交互)
     - [快捷键](#快捷键)
@@ -90,7 +90,7 @@ lang: cn
   - [错误处理](#错误处理)
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
-- [EditorConfig](#editorconfig)
+- [格式规范](#格式规范)
 - [Vim 服务器](#vim-服务器)
 - [Achievements](#achievements)
   - [issues](#issues)
@@ -149,7 +149,17 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
-## 谁将从 SpaceVim 中获益？
+## 基本概念
+
+**临时快捷键菜单**
+
+SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
+
+文本移动临时快捷键：
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
+## 适用人群
 
 - **初级** Vim 用户
 - 追求优雅界面的 Vim 用户
@@ -157,9 +167,9 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 - 想要学习一种不一样的编辑文件方式的 Vim 用户
 - 追求简单但是可高度配置系统的 Vim 用户
 
-## 更新和回滚
+## 更新回滚
 
-### SpaceVim 自身更新
+### 自身更新
 
 可通过很多种方式来更新 SpaceVim 的核心文件。建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
 
@@ -334,17 +344,7 @@ function! myspacevim#before() abort
 endfunction
 ```
 
-## 概念
-
-**临时快捷键菜单**
-
-SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
-
-文本移动临时快捷键：
-
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
-
-## 优雅的界面
+## 界面元素
 
 SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树等插件，配色主题默认采用的是 gruvbox。
 
@@ -616,31 +616,34 @@ endfunction
 | `Ctrl-S-<Down>` | 向下移动光标下的标签页     |
 | `<Enter>`       | 跳至光标所对应的标签窗口   |
 
-## 常规快捷键
+## 基本操作
 
 ### 窗口管理器
 
-窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀按键为 `s`，可以在配置文件中通过修改
+窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀（`WIN`）按键为 `s`，可以在配置文件中通过修改
 SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
-| 快捷键          | 功能描述                                                                                                                                                                                                                       |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`             | Smart buffer close                                                                                                                                                                                                             |
-| `s p`           | Split nicely                                                                                                                                                                                                                   |
-| `s v`           | :split                                                                                                                                                                                                                         |
-| `s g`           | :vsplit                                                                                                                                                                                                                        |
-| `s t`           | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `s o`           | Close other windows (:only)                                                                                                                                                                                                    |
-| `s x`           | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `s q`           | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `s Q`           | Close current buffer (:close)                                                                                                                                                                                                  |
-| `<Tab>`         | Next window or tab                                                                                                                                                                                                             |
-| `Shift-<Tab>`   | Previous window or tab                                                                                                                                                                                                         |
-| `<leader>`+`sv` | Split with previous buffer                                                                                                                                                                                                     |
-| `<leader>`+`sg` | Vertically split with previous buffer                                                                                                                                                                                          |
+```toml
+[options]
+    windows_leader = "s"
+```
 
-SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
-can be get by `<leader> q r`
+| 快捷键        | 功能描述                             |
+| ------------- | ------------------------------------ |
+| `q`           | 智能关闭当前窗口                     |
+| `WIN v`       | 水平分屏                             |
+| `WIN V`       | 水平分屏，并编辑上一个文件           |
+| `WIN g`       | 垂直分屏                             |
+| `WIN G`       | 垂直分屏，并编辑上一个文件           |
+| `WIN t`       | 新建新的标签页                       |
+| `WIN o`       | 关闭其他窗口                         |
+| `WIN x`       | 关闭当前缓冲区，并保留新的空白缓冲区 |
+| `WIN q`       | 关闭当前缓冲区                       |
+| `WIN Q`       | 关闭当前窗口                         |
+| `<Tab>`       | 跳至下一个窗口                       |
+| `Shift-<Tab>` | 跳至上一个窗口                       |
+
+Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leader> q r` 来代替。
 
 | 快捷键              | 模式          | 功能描述                                                                       |
 | ------------------- | ------------- | ------------------------------------------------------------------------------ |
@@ -667,64 +670,78 @@ can be get by `<leader> q r`
 | `Ctrl-b`            | Command       | Move cursor backward in command line                                           |
 | `Ctrl-f`            | Command       | Move cursor forward in command line                                            |
 
-### File Operations
+### 文件操作
 
-| Key             | Mode                  | Action                                     |
-| --------------- | --------------------- | ------------------------------------------ |
-| `SPC f s`  | Normal/Visual         | Write (:w)                                 |
-| `Ctrl-s`        | Normal/Visual/Command | Write (:w)                                 |
-| `:w!!`          | Command               | Write as root (%!sudo tee > /dev/null %)   |
+| 按键                 | 功能描述           |
+| -------------------- | ------------------ |
+| `SPC f s` / `Ctrl-s` | 保存文件 (:w)      |
+| `SPC f W`            | 使用管理员模式保存 |
 
-### Editor UI
+### 编辑器界面
 
-| Key                 | Mode          | Action                                                           |
-| ------------------- | ------------- | ---------------------------------------------------------------- |
-| `<F2>`              | _All_         | Toggle tagbar                                                    |
-| `<F3>`              | _All_         | Toggle Vimfiler                                                  |
-| `<leader>` + num    | Normal        | Jump to the buffer with the num index                            |
-| `<Alt>` + num       | Normal        | Jump to the buffer with the num index, this only works in Neovim |
-| `Alt-h` / `<Left>`  | Normal        | Jump to left buffer in the tabline, this only works in Neovim    |
-| `Alt-l` / `<Right>` | Normal        | Jump to Right buffer in the tabline, this only works in Neovim   |
-| `<leader>`+`ts`     | Normal        | Toggle spell-checker (:setlocal spell!)                          |
-| `<leader>`+`tn`     | Normal        | Toggle line numbers (:setlocal nonumber!)                        |
-| `<leader>`+`tl`     | Normal        | Toggle hidden characters (:setlocal nolist!)                     |
-| `<leader>`+`th`     | Normal        | Toggle highlighted search (:set hlsearch!)                       |
-| `<leader>`+`tw`     | Normal        | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g0`                | Normal        | Go to first tab (:tabfirst)                                      |
-| `g$`                | Normal        | Go to last tab (:tablast)                                        |
-| `gr`                | Normal        | Go to previous tab (:tabprevious)                                |
-| `Ctrl-<Down>`       | Normal        | Move to split below (Ctrl-w j)                                   |
-| `Ctrl-<Up>`         | Normal        | Move to upper split (Ctrl-w k)                                   |
-| `Ctrl-<Left>`       | Normal        | Move to left split (Ctrl-w h)                                    |
-| `Ctrl-<Right>`      | Normal        | Move to right split (Ctrl-w l)                                   |
-| `*`                 | Visual        | Search selection forwards                                        |
-| `#`                 | Visual        | Search selection backwards                                       |
-| `, <Space>`         | Normal        | Remove all spaces at EOL                                         |
-| `Ctrl-r`            | Visual        | Replace selection                                                |
-| `<leader> l j`      | Normal        | Next on location list                                            |
-| `<leader> l k`      | Normal        | Previous on location list                                        |
-| `<leader> S`        | Normal/Visual | Source selection                                                 |
+| 按键                | 功能描述                                                         |
+| ------------------- | ---------------------------------------------------------------- |
+| `<F2>`              | Toggle tagbar                                                    |
+| `<F3>`              | Toggle Vimfiler                                                  |
+| `<Leader>` + num    | Jump to the buffer with the num index                            |
+| `<Alt>` + num       | Jump to the buffer with the num index, this only works in Neovim |
+| `Alt-h` / `<Left>`  | Jump to left buffer in the tabline, this only works in Neovim    |
+| `Alt-l` / `<Right>` | Jump to Right buffer in the tabline, this only works in Neovim   |
+| `<Leader> t s`      | Toggle spell-checker (:setlocal spell!)                          |
+| `<Leader> t n`      | Toggle line numbers (:setlocal nonumber!)                        |
+| `<Leader> t l`      | Toggle hidden characters (:setlocal nolist!)                     |
+| `<Leader> t h`      | Toggle highlighted search (:set hlsearch!)                       |
+| `<Leader> t w`      | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g 0`               | Go to first tab (:tabfirst)                                      |
+| `g $`               | Go to last tab (:tablast)                                        |
+| `g r`               | Go to previous tab (:tabprevious)                                |
+| `Ctrl-<Down>`       | Move to split below (Ctrl-w j)                                   |
+| `Ctrl-<Up>`         | Move to upper split (Ctrl-w k)                                   |
+| `Ctrl-<Left>`       | Move to left split (Ctrl-w h)                                    |
+| `Ctrl-<Right>`      | Move to right split (Ctrl-w l)                                   |
+| `*`                 | Search selection forwards                                        |
+| `#`                 | Search selection backwards                                       |
+| `, <Space>`         | Remove all spaces at EOL                                         |
+| `Ctrl-r`            | Replace selection                                                |
+| `<Leader> l j`      | Next on location list                                            |
+| `<Leader> l k`      | Previous on location list                                        |
+| `<Leader> S`        | Source selection                                                 |
 
-### Native functions
+### 原生功能
 
-| 快捷键          | 模式   | 功能描述                         |
-| --------------- | ------ | -------------------------------- |
-| `<leader> q r`  | Normal | Same as native `q`               |
-| `<leader> q r/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader> q r?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader> q r:` | Normal | Same as native `q:`, open cmdwin |
+| 快捷键          | 功能描述                          |
+| --------------- | --------------------------------- |
+| `<leader> q r`  | 原生 `q` 快捷键                   |
+| `<leader> q r/` | 原生 `q /` 快捷键，打开命令行窗口 |
+| `<leader> q r?` | 原生 `q ?` 快捷键，打开命令行窗口 |
+| `<leader> q r:` | 原生 `q :` 快捷键，打开命令行窗口 |
 
-### Bookmarks management
+### 标签管理
 
-| 快捷键  | 模式   | 功能描述                        |
-| ------- | ------ | ------------------------------- |
-| `m`+`a` | Normal | 显示书签列表                    |
-| `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | 跳至下一个书签                  |
-| `m`+`p` | Normal | 跳至前一个书签                  |
-| `m`+`i` | Normal | Annotate bookmark               |
+在浏览代码时，通常需要给指定位置添加标签，方便快速跳转，在 SpaceVim
+中可以使用如下快捷键来管理标签。 这一功能需要载入 tools 模块：
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+```toml
+[layers]
+    name = "tools"
+```
+
+| 快捷键 | 功能描述             |
+| ------ | -------------------- |
+| `m a`  | 显示书签列表         |
+| `m m`  | 切换当前行标签状态   |
+| `m n`  | 跳至下一个书签       |
+| `m p`  | 跳至前一个书签       |
+| `m i`  | 给当前行标签添加说明 |
+
+正因为占用了以上几个快捷键，以下几个寄存器无法用来记忆当前位置了：`a`, `m`, `n`, `p`, `i`。
+当然，也可以在启动函数里将 `<Leader> m` 映射为 `m` 键，如此便可使用 `<Leader> m a` 来代替 `m a`。
+
+```viml
+function! myspacevim#before() abort
+    nnoremap <silent><Leader>m m
+endfunction
+```
 
 ### Fuzzy finder
 
@@ -1795,7 +1812,7 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p t` | find project root                            |
 | `SPC p p` | 显示所有工程                                 |
 
-## EditorConfig
+## 格式规范
 
 SpaceVim has supported for [EditorConfig](http://editorconfig.org/), a configuration file to "define and maintain consistent coding styles between different editors and IDEs."
 
