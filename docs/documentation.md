@@ -649,21 +649,20 @@ can change it via `windows_leader` option:
     windows_leader = "s"
 ```
 
-| Key Bindings   | Descriptions                                                                                                                                                                                                                   |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `q`            | Smart buffer close                                                                                                                                                                                                             |
-| `WIN p`        | Split nicely                                                                                                                                                                                                                   |
-| `WIN v`        | :split                                                                                                                                                                                                                         |
-| `WIN g`        | :vsplit                                                                                                                                                                                                                        |
-| `WIN t`        | Open new tab (:tabnew)                                                                                                                                                                                                         |
-| `WIN o`        | Close other windows (:only)                                                                                                                                                                                                    |
-| `WIN x`        | Remove buffer, leave blank window                                                                                                                                                                                              |
-| `WIN q`        | Remove current buffer, left buffer in the tabline will be displayed. If there is no buffer on the left, the right buffer will be displayed; if this is the last buffer in the tabline, then an empty buffer will be displayed. |
-| `WIN Q`        | Close current buffer (:close)                                                                                                                                                                                                  |
-| `<Tab>`        | Next window or tab                                                                                                                                                                                                             |
-| `Shift-Tab`    | Previous window or tab                                                                                                                                                                                                         |
-| `<Leader> s v` | Split with previous buffer                                                                                                                                                                                                     |
-| `<Leader> s g` | Vertically split with previous buffer                                                                                                                                                                                          |
+| Key Bindings | Descriptions                          |
+| ------------ | ------------------------------------- |
+| `q`          | Smart buffer close                    |
+| `WIN v`      | :split                                |
+| `WIN V`      | Split with previous buffer            |
+| `WIN g`      | :vsplit                               |
+| `WIN G`      | Vertically split with previous buffer |
+| `WIN t`      | Open new tab (:tabnew)                |
+| `WIN o`      | Close other windows (:only)           |
+| `WIN x`      | Remove buffer, leave blank window     |
+| `WIN q`      | Remove current buffer                 |
+| `WIN Q`      | Close current buffer (:close)         |
+| `<Tab>`      | Next window or tab                    |
+| `Shift-Tab`  | Previous window or tab                |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
