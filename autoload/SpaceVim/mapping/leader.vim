@@ -16,7 +16,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     let g:_spacevim_mappings_windows = {}
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
-    let lnum = expand('<slnum>') + s:lnum - 4Fix doc
+    let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.v = ['split',
           \ 'split window',
           \ [
