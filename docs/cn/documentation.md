@@ -1557,63 +1557,63 @@ In highlight symbol transient state:
 
 文本相关的命令 (以 `x` 开头)：
 
-| 快捷键        | 功能描述                                                             |
-| ------------- | -------------------------------------------------------------------- |
-| `SPC x a &`   | 基于分隔符 & 进行文本对齐                                            |
-| `SPC x a (`   | 基本分隔符 ( 进行文本对齐                                            |
-| `SPC x a )`   | 基本分隔符 ) 进行文本对齐                                            |
-| `SPC x a [`   | 基本分隔符 [ 进行文本对齐                                            |
-| `SPC x a ]`   | 基本分隔符 ] 进行文本对齐                                            |
-| `SPC x a {`   | 基本分隔符 { 进行文本对齐                                            |
-| `SPC x a }`   | 基本分隔符 } 进行文本对齐                                            |
-| `SPC x a ,`   | 基本分隔符 , 进行文本对齐                                            |
-| `SPC x a .`   | 基本分隔符 . 进行文本对齐(for numeric tables)                        |
-| `SPC x a :`   | 基本分隔符 : 进行文本对齐                                            |
-| `SPC x a ;`   | 基本分隔符 ; 进行文本对齐                                            |
-| `SPC x a =`   | 基本分隔符 = 进行文本对齐                                            |
-| `SPC x a ¦`   | 基本分隔符 ¦ 进行文本对齐                                            |
-| `SPC x a |`   | 基本分隔符 \| 进行文本对齐                                           |
-| `SPC x a SPC` | 基本分隔符 <Space> 进行文本对齐                                      |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`   | 基本用户自定义正则表达式进行文本对齐                                 |
-| `SPC x a o`   | align region at arithmetic operators `+-*/`                          |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |
-| `SPC x d w`   | delete trailing whitespaces                                          |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
-| `SPC x g t`   | translate current word using Google Translate                        |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |
-| `SPC x i _`   | change symbol style to `under_score`                                 |
-| `SPC x i u`   | change symbol style to `under_score`                                 |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`   | 居中对齐当前段落                                                     |
-| `SPC x j f`   | set the justification to full (TODO)                                 |
-| `SPC x j l`   | 左对齐当前段落                                                       |
-| `SPC x j n`   | set the justification to none (TODO)                                 |
-| `SPC x j r`   | 右对齐当前段落                                                       |
-| `SPC x J`     | move down a line of text (enter transient state)                     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |
-| `SPC x l s`   | sort lines (TODO)                                                    |
-| `SPC x l u`   | uniquify lines (TODO)                                                |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |
-| `SPC x u`     | 将选中字符串转为小写                                                 |
-| `SPC x U`     | 将选中字符串转为大写                                                 |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                             |
+| 快捷键        | 功能描述                                                           |
+| ------------- | ------------------------------------------------------------------ |
+| `SPC x a &`   | 基于分隔符 & 进行文本对齐                                          |
+| `SPC x a (`   | 基本分隔符 ( 进行文本对齐                                          |
+| `SPC x a )`   | 基本分隔符 ) 进行文本对齐                                          |
+| `SPC x a [`   | 基本分隔符 [ 进行文本对齐                                          |
+| `SPC x a ]`   | 基本分隔符 ] 进行文本对齐                                          |
+| `SPC x a {`   | 基本分隔符 { 进行文本对齐                                          |
+| `SPC x a }`   | 基本分隔符 } 进行文本对齐                                          |
+| `SPC x a ,`   | 基本分隔符 , 进行文本对齐                                          |
+| `SPC x a .`   | 基本分隔符 . 进行文本对齐(for numeric tables)                      |
+| `SPC x a :`   | 基本分隔符 : 进行文本对齐                                          |
+| `SPC x a ;`   | 基本分隔符 ; 进行文本对齐                                          |
+| `SPC x a =`   | 基本分隔符 = 进行文本对齐                                          |
+| `SPC x a ¦`   | 基本分隔符 ¦ 进行文本对齐                                          |
+| `SPC x a |`   | 基本分隔符 \| 进行文本对齐                                         |
+| `SPC x a SPC` | 基本分隔符 <Space> 进行文本对齐                                    |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
+| `SPC x a c`   | align current indentation region using default rules (TODO)        |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                   |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                  |
+| `SPC x a r`   | 基于用户自定义正则表达式进行文本对齐                               |
+| `SPC x a o`   | align region at arithmetic operators `+-*/`                        |
+| `SPC x c`     | count the number of chars/words/lines in the selection region      |
+| `SPC x d w`   | delete trailing whitespaces                                        |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
+| `SPC x g t`   | translate current word using Google Translate                      |
+| `SPC x g T`   | reverse source and target languages (TODO)                         |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
+| `SPC x i -`   | change symbol style to `kebab-case`                                |
+| `SPC x i k`   | change symbol style to `kebab-case`                                |
+| `SPC x i _`   | change symbol style to `under_score`                               |
+| `SPC x i u`   | change symbol style to `under_score`                               |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                   |
+| `SPC x j c`   | 居中对齐当前段落                                                   |
+| `SPC x j f`   | set the justification to full (TODO)                               |
+| `SPC x j l`   | 左对齐当前段落                                                     |
+| `SPC x j n`   | set the justification to none (TODO)                               |
+| `SPC x j r`   | 右对齐当前段落                                                     |
+| `SPC x J`     | move down a line of text (enter transient state)                   |
+| `SPC x K`     | move up a line of text (enter transient state)                     |
+| `SPC x l d`   | duplicate line or region (TODO)                                    |
+| `SPC x l s`   | sort lines (TODO)                                                  |
+| `SPC x l u`   | uniquify lines (TODO)                                              |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
+| `SPC x t c`   | swap (transpose) the current character with the previous one       |
+| `SPC x t w`   | swap (transpose) the current word with the previous one            |
+| `SPC x t l`   | swap (transpose) the current line with the previous one            |
+| `SPC x u`     | 将选中字符串转为小写                                               |
+| `SPC x U`     | 将选中字符串转为大写                                               |
+| `SPC x w c`   | 统计选中区域的单词数                                               |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
+| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
 
 #### 文本插入命令
 
