@@ -119,7 +119,7 @@ echo export GTAGSLABEL=pygments >> .profile
 在使用 gtags 之前，建议先新建 GTAGS 数据库，可通过如下两种方式新建数据库：
 
 - 在 SpaceVim 内，使用快捷键 `SPC m g c` 来新建 GTAGS 数据库，
-  如果 GUN Global 不能直接支持当墙语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
+  如果 GUN Global 不能直接支持当前语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
 - 在命令行，可以直接在项目根目录执行 gtags 命令。
 
 ```sh

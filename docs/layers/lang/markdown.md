@@ -33,6 +33,7 @@ To use this configuration layer, update custom configuration file with:
 SpaceVim uses remark to format Markdown file by default, but we suggest using [Prettier](https://github.com/prettier/prettier) on Windows.
 
 You can install remark via [npm](https://www.npmjs.com/get-npm), the commands are shown as below.
+
 ```sh
 npm -g install remark
 npm -g install remark-cli
@@ -42,10 +43,13 @@ npm -g install remark-stringify
 You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown as below:
 
 1. Via `yarn`
+
 ```sh
 yarn global add prettier
 ```
+
 2. Via `npm`
+
 ```sh
 npm install --global prettier
 ```
