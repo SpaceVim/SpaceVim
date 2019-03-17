@@ -33,8 +33,8 @@ lang: cn
   - [窗口管理器](#窗口管理器)
   - [文件操作](#文件操作)
   - [编辑器界面](#编辑器界面)
-  - [Native functions](#native-functions)
-  - [Bookmarks management](#bookmarks-management)
+  - [原生功能](#原生功能)
+  - [标签管理](#标签管理)
   - [Fuzzy finder](#fuzzy-finder)
   - [交互](#交互)
     - [快捷键](#快捷键)
@@ -685,14 +685,14 @@ can be get by `<leader> q r`
 | `<Alt>` + num       | Jump to the buffer with the num index, this only works in Neovim |
 | `Alt-h` / `<Left>`  | Jump to left buffer in the tabline, this only works in Neovim    |
 | `Alt-l` / `<Right>` | Jump to Right buffer in the tabline, this only works in Neovim   |
-| `<Leader> t s`     | Toggle spell-checker (:setlocal spell!)                          |
-| `<Leader> t n`     | Toggle line numbers (:setlocal nonumber!)                        |
-| `<Leader> t l`     | Toggle hidden characters (:setlocal nolist!)                     |
-| `<Leader> t h`     | Toggle highlighted search (:set hlsearch!)                       |
-| `<Leader> t w`     | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g 0`                | Go to first tab (:tabfirst)                                      |
-| `g $`                | Go to last tab (:tablast)                                        |
-| `g r`                | Go to previous tab (:tabprevious)                                |
+| `<Leader> t s`      | Toggle spell-checker (:setlocal spell!)                          |
+| `<Leader> t n`      | Toggle line numbers (:setlocal nonumber!)                        |
+| `<Leader> t l`      | Toggle hidden characters (:setlocal nolist!)                     |
+| `<Leader> t h`      | Toggle highlighted search (:set hlsearch!)                       |
+| `<Leader> t w`      | Toggle wrap (:setlocal wrap! breakindent!)                       |
+| `g 0`               | Go to first tab (:tabfirst)                                      |
+| `g $`               | Go to last tab (:tablast)                                        |
+| `g r`               | Go to previous tab (:tabprevious)                                |
 | `Ctrl-<Down>`       | Move to split below (Ctrl-w j)                                   |
 | `Ctrl-<Up>`         | Move to upper split (Ctrl-w k)                                   |
 | `Ctrl-<Left>`       | Move to left split (Ctrl-w h)                                    |
@@ -705,26 +705,35 @@ can be get by `<leader> q r`
 | `<Leader> l k`      | Previous on location list                                        |
 | `<Leader> S`        | Source selection                                                 |
 
-### Native functions
+### 原生功能
 
-| 快捷键          | 模式   | 功能描述                         |
-| --------------- | ------ | -------------------------------- |
-| `<leader> q r`  | Normal | Same as native `q`               |
-| `<leader> q r/` | Normal | Same as native `q/`, open cmdwin |
-| `<leader> q r?` | Normal | Same as native `q?`, open cmdwin |
-| `<leader> q r:` | Normal | Same as native `q:`, open cmdwin |
+| 快捷键          | 功能描述                          |
+| --------------- | --------------------------------- |
+| `<leader> q r`  | 原生 `q` 快捷键                   |
+| `<leader> q r/` | 原生 `q /` 快捷键，打开命令行窗口 |
+| `<leader> q r?` | 原生 `q ?` 快捷键，打开命令行窗口 |
+| `<leader> q r:` | 原生 `q :` 快捷键，打开命令行窗口 |
 
-### Bookmarks management
+### 标签管理
 
-| 快捷键  | 模式   | 功能描述                        |
-| ------- | ------ | ------------------------------- |
-| `m`+`a` | Normal | 显示书签列表                    |
-| `m`+`m` | Normal | Toggle bookmark in current line |
-| `m`+`n` | Normal | 跳至下一个书签                  |
-| `m`+`p` | Normal | 跳至前一个书签                  |
-| `m`+`i` | Normal | Annotate bookmark               |
+在浏览代码时，通常需要给指定位置添加标签，方便快速跳转，在 SpaceVim
+中可以使用如下快捷键来管理标签。 这一功能需要载入 tools 模块：
 
-As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should works will. If you really need to use these registers, you can add `nnoremap <leader>m m` to your custom configuration, then you use use `a` registers via `\ma`
+```toml
+[layers]
+    name = "tools"
+```
+
+| 快捷键 | 功能描述             |
+| ------ | -------------------- |
+| `m a`  | 显示书签列表         |
+| `m m`  | 切换当前行标签状态   |
+| `m n`  | 跳至下一个书签       |
+| `m p`  | 跳至前一个书签       |
+| `m i`  | 给当前行标签添加说明 |
+
+正因为占用了以上几个快捷键，以下几个寄存器无法用来记忆当前位置了：`a`, `m`, `n`, `p`, `i`。
+但是，在 SpaceVim 中，`<Leader> m` 被映射为了 `m` 键，因此，你可以使用 `<Leader> m a` 来代替 `m a`。
 
 ### Fuzzy finder
 
