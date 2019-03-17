@@ -33,6 +33,6 @@ function! s:self.nr2name(nr) abort
 endfunction
 
 
-function! SpaceVim#api#vim#key#get()
+function! SpaceVim#api#vim#key#get() abort
     return deepcopy(s:self)
 endfunction

@@ -4,8 +4,10 @@
   <head>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     {% seo %}
+    {% if page.lang == "cn" %}
     <script type="text/javascript" src="https://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    {% endif %}
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
     <script>
       (function(w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -42,7 +44,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    {% if page.lang == "cn" %}
+    <script src="https://cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
+    {% else %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    {% endif %}
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script>
@@ -107,8 +113,7 @@
         {% if page.comments %}
 
             <div id="container"></div>
-            <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-            <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+            <script src="https://wsdjeg.github.io/gitment/dist/gitment.browser.js"></script>
             <script>
             var gitment = new Gitment({
               id: '{{ page.commentsID | default: page.title }}', // 可选。默认为 location.href

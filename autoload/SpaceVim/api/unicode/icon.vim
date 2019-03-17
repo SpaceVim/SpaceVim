@@ -23,7 +23,7 @@ function! s:self.battery_status(v) abort
   endif
 endfunction
 
-function! SpaceVim#api#unicode#icon#get()
+function! SpaceVim#api#unicode#icon#get() abort
 
   return deepcopy(s:self)
 

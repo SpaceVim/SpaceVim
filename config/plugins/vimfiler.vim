@@ -6,12 +6,16 @@ let g:vimfiler_as_default_explorer = get(g:, 'vimfiler_as_default_explorer', 1)
 let g:vimfiler_restore_alternate_file = get(g:, 'vimfiler_restore_alternate_file', 1)
 let g:vimfiler_tree_indentation = get(g:, 'vimfiler_tree_indentation', 1)
 let g:vimfiler_tree_leaf_icon = get(g:, 'vimfiler_tree_leaf_icon', '')
-let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', '▼')
-let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '▷')
+let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', '-')
+let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '+')
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
-let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
+if g:spacevim_filetree_direction ==# 'right'
+  let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
+else
+  let g:vimfiler_direction = 'leftabove'
+endif
 "let g:vimfiler_preview_action = 'auto_preview'
 let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.git$',
@@ -23,10 +27,10 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \])
 
 if has('mac') 
-   let g:vimfiler_quick_look_command = 
-         \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
+  let g:vimfiler_quick_look_command = 
+        \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
 else 
-   let g:vimfiler_quick_look_command = 
+  let g:vimfiler_quick_look_command = 
         \ get(g:, 'vimfiler_quick_look_command', 'gloobus-preview') 
 endif
 
@@ -65,8 +69,16 @@ augroup vfinit
   au!
   autocmd FileType vimfiler call s:vimfilerinit()
   autocmd BufEnter * nested if (!has('vim_starting') && winnr('$') == 1 && &filetype ==# 'vimfiler') |
-        \ q | endif
+        \ call s:close_last_vimfiler_windows() | endif
 augroup END
+
+" in this function, we should check if shell terminal still exists,
+" then close the terminal job before close vimfiler
+function! s:close_last_vimfiler_windows() abort
+  call SpaceVim#layers#shell#close_terminal()
+  q
+endfunction
+
 function! s:vimfilerinit()
   setl nonumber
   setl norelativenumber
@@ -98,6 +110,7 @@ function! s:vimfilerinit()
   nmap <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
+  nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
 endf
 
 function! s:vimfiler_vsplit() abort

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#purescript layer"
-description: "This layer is for purescript development, provide autocompletion, syntax checking, code format for purescript file."
+description: "This layer is for PureScript development, provide autocompletion, syntax checking, code format for PureScript file."
 ---
 
 # [Available Layers](../../) >> lang#purescript
@@ -29,8 +29,8 @@ This layer is for Purescript development. PureScript is a strongly-typed functio
 - Documentation lookup for Modules and functions.
 - Jump to the definition.
 
-SpaceVim also provides REPL, code runner and Language Server protocol support for purescript. to enable language server protocol
-for purescript, you need to load `lsp` layer for purescript.
+SpaceVim also provides REPL, code runner and Language Server protocol support for PureScript. To enable language server protocol
+for PureScript, you need to load `lsp` layer for PureScript.
 
 ## Install
 
@@ -54,33 +54,33 @@ To use this configuration layer, update custom configuration file with:
 
 ### Language specific key bindings
 
-| Key binding | Description                           |
-| ----------- | ------------------------------------- |
-| `g d`       | Goto identifier.                      |
-| `SPC l L`   | list loaded modules                   |
-| `SPC l l`   | reset loaded modules and load externs |
-| `SPC l r`   | run current project                   |
-| `SPC l R`   | rubuild current buffer                |
-| `SPC l f`   | generate function template            |
-| `SPC l t`   | add type annotation                   |
-| `SPC l a`   | apply current line suggestion         |
-| `SPC l A`   | apply all suggestions                 |
-| `SPC l C`   | add case expression                   |
-| `SPC l i`   | import module under cursor            |
-| `SPC l p`   | search pursuit for cursor ident       |
-| `SPC l T`   | find type for cursor ident            |
+| Key Bindings | Descriptions                          |
+| ------------ | ------------------------------------- |
+| `g d`        | Goto identifier.                      |
+| `SPC l L`    | list loaded modules                   |
+| `SPC l l`    | reset loaded modules and load externs |
+| `SPC l r`    | run current project                   |
+| `SPC l R`    | rubuild current buffer                |
+| `SPC l f`    | generate function template            |
+| `SPC l t`    | add type annotation                   |
+| `SPC l a`    | apply current line suggestion         |
+| `SPC l A`    | apply all suggestions                 |
+| `SPC l C`    | add case expression                   |
+| `SPC l i`    | import module under cursor            |
+| `SPC l p`    | search pursuit for cursor ident       |
+| `SPC l T`    | find type for cursor ident            |
 
 ### Inferior REPL process
 
-Start a `pulp repl` inferior REPL process with `SPC l s i`. 
+Start a `pulp repl` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 ### Running current script
 

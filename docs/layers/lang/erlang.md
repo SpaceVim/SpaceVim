@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#elang layer"
-description: "This layer is for erlang development, provide autocompletion, syntax checking, code format for erlang file."
+description: "This layer is for Erlang development, provide autocompletion, syntax checking, code format for Erlang file."
 ---
 
 # [Available Layers](../../) >> lang#erlang
@@ -19,7 +19,7 @@ description: "This layer is for erlang development, provide autocompletion, synt
 
 ## Description
 
-This layer is for erlang development.
+This layer is for Erlang development.
 
 ## Features
 
@@ -27,8 +27,8 @@ This layer is for erlang development.
 - syntax highlighting
 - syntax checking
 
-SpaceVim also provides REPL, code runner and Language Server protocol support for erlang. to enable language server protocol
-for erlang, you need to load `lsp` layer for erlang.
+SpaceVim also provides REPL, code runner and Language Server protocol support for Erlang. To enable language server protocol
+for Erlang, you need to load `lsp` layer for Erlang.
 
 ## Install
 
@@ -45,7 +45,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Language specific key bindings
 
-| Key binding     | Description                                  |
+| Key Bindings    | Descriptions                                 |
 | --------------- | -------------------------------------------- |
 | `SPC l d` / `K` | Show doc of cursor symbol (need `lsp` layer) |
 | `SPC l e`       | Rename symbol (need `lsp` layer)             |
@@ -53,12 +53,12 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `erl` inferior REPL process with `SPC l s i`. 
+Start a `erl` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |

@@ -8,3 +8,5 @@ command! -nargs=* -complete=custom,zvim#util#complete_plugs Plugin :call zvim#ut
 command! -nargs=+ -complete=custom,zvim#util#complete_project OpenProject :call zvim#util#OpenProject(<f-args>)
 
 command! -nargs=* -complete=custom,SpaceVim#plugins#pmd#complete PMD :call SpaceVim#plugins#pmd#run(<f-args>)
+
+command! -nargs=0 A :call SpaceVim#plugins#a#alt()

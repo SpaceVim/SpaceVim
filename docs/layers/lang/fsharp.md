@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#fsharp layer"
-description: "This layer adds fsharp language support to SpaceVim"
+description: "This layer adds FSharp language support to SpaceVim"
 ---
 
 # [Available Layers](../../) >> lang#fsharp
@@ -17,7 +17,7 @@ description: "This layer adds fsharp language support to SpaceVim"
 
 ## Description
 
-This layer adds fsharp language support to SpaceVim.
+This layer adds FSharp language support to SpaceVim.
 
 ## Features
 
@@ -26,7 +26,7 @@ This layer adds fsharp language support to SpaceVim.
 
 ## Install
 
-**Install fsharp on Archlinux:**
+**Install FSharp on Archlinux:**
 
 ```sh
 yaourt -S fsharp-git
@@ -43,13 +43,13 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `fsharpi --readline-` inferior REPL process with `SPC l s i`. 
+Start a `fsharpi --readline-` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 

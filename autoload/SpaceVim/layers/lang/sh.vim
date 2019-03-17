@@ -17,7 +17,7 @@ function! SpaceVim#layers#lang#sh#plugins() abort
     return l:plugins
 endfunction
 
-function! SpaceVim#layers#lang#sh#config()
+function! SpaceVim#layers#lang#sh#config() abort
   " chrisbra/vim-zsh {{{
   let g:zsh_fold_enable = 1
   " }}}

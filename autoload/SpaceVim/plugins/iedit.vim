@@ -70,7 +70,7 @@ endfunction
 "   stack    cursor pos stack
 " <
 " if only argv 1 is given, use selected word as pattern
-function! SpaceVim#plugins#iedit#start(...)
+function! SpaceVim#plugins#iedit#start(...) abort
   let save_tve = &t_ve
   let save_cl = &l:cursorline
   setlocal nocursorline
@@ -112,7 +112,7 @@ function! SpaceVim#plugins#iedit#start(...)
   endif
   call s:highlight_cursor()
   redrawstatus!
-  while s:mode != ''
+  while s:mode !=# ''
     redraw!
     let char = getchar()
     if s:mode ==# 'n' && char == 27
@@ -176,7 +176,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
     redrawstatus!
-  elseif a:char == "\<Left>" || a:char == 104
+  elseif a:char ==# "\<Left>" || a:char == 104
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
@@ -184,19 +184,19 @@ function! s:handle_normal(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char == "\<Right>" || a:char == 108
+  elseif a:char ==# "\<Right>" || a:char == 108
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
-  elseif a:char == 48 || a:char == "\<Home>" " 0 or <Home>
+  elseif a:char == 48 || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char == 36 || a:char == "\<End>"  " $ or <End>
+  elseif a:char == 36 || a:char ==# "\<End>"  " $ or <End>
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '.$', '', 'g')
@@ -290,11 +290,11 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char == "\<bs>"
+  elseif a:char ==# "\<bs>"
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
-  elseif a:char == "\<Left>"
+  elseif a:char ==# "\<Left>"
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
@@ -302,7 +302,7 @@ function! s:handle_insert(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char == "\<Right>"
+  elseif a:char ==# "\<Right>"
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')

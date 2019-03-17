@@ -7,13 +7,23 @@ commentsID: "Grep on the fly"
 comments: true
 ---
 
-# Asynchronous grep on the fly
+# [Blogs](../blog/) >> Asynchronous grep on the fly
+
+{{ page.date | date_to_string }}
 
 FlyGrep means **grep on the fly**, it will update the result as you type. Of course, it is running
 asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
 through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
 This ia a built-in plugin in SpaceVim, and we also separated a plugin : [FlyGrep.vim](https://github.com/wsdjeg/FlyGrep.vim)
+
+## Install
+
+In linux os, flygrep use grep by default, if you want a more fast tool, you can choose one of following:
+
+- [ripgrep(rg)](https://github.com/BurntSushi/ripgrep)
+- [the_silver_searcher(ag)](https://github.com/ggreer/the_silver_searcher)
+- [the_platinum_searcher(pt)](https://github.com/monochromegane/the_platinum_searcher)
 
 ## Features
 
@@ -72,17 +82,17 @@ The available scopes and corresponding keys are:
 
 **Within FlyGrep buffer:**
 
-| Key Binding      | Description                       |
-| ---------------- | --------------------------------- |
-| `<Esc>`          | close FlyGrep buffer              |
-| `<Enter>`        | open file at the cursor line      |
-| `<Tab>`          | move cursor line down             |
-| `<C-j>`          | move cursor line down             |
-| `<S-Tab>`        | move cursor line up               |
-| `<C-k>`          | move cursor line up               |
-| `<Bs>`           | remove last character             |
-| `<C-w>`          | remove the word before the cursor |
-| `<C-u>`          | remove the line before the cursor |
-| `<C-k>`          | remove the line after the cursor  |
-| `<C-a>`/`<Home>` | Go to the beginning of the line   |
-| `<C-e>`/`<End>`  | Go to the end of the line         |
+| Key Bindings      | Descriptions                      |
+| ----------------- | --------------------------------- |
+| `<Esc>`           | close FlyGrep buffer              |
+| `<Enter>`         | open file at the cursor line      |
+| `<Tab>`           | move cursor line down             |
+| `Ctrl-j`          | move cursor line down             |
+| `Shift-<Tab>`     | move cursor line up               |
+| `Ctrl-k`          | move cursor line up               |
+| `<Backspace>`     | remove last character             |
+| `Ctrl-w`          | remove the word before the cursor |
+| `Ctrl-u`          | remove the line before the cursor |
+| `Ctrl-k`          | remove the line after the cursor  |
+| `Ctrl-a`/`<Home>` | Go to the beginning of the line   |
+| `Ctrl-e`/`<End>`  | Go to the end of the line         |
