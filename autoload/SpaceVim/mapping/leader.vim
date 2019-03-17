@@ -14,20 +14,9 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [Window]'
     let g:_spacevim_mappings_windows = {}
-    nnoremap <silent> [Window]p
-          \ :<C-u>vsplit<CR>:wincmd w<CR>
-    let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
-          \ 'vsplit vertically,switch to next window',
-          \ [
-          \ '[WIN p ] is to split windows vertically, switch to the new window',
-          \ '',
-          \ 'Definition: ' . s:file . ':' . lnum,
-          \ ]
-          \ ]
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
-    let lnum = expand('<slnum>') + s:lnum - 4
+    let lnum = expand('<slnum>') + s:lnum - 4Fix doc
     let g:_spacevim_mappings_windows.v = ['split',
           \ 'split window',
           \ [
