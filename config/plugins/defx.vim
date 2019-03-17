@@ -57,6 +57,8 @@ function! s:defx_init()
   setl nonumber
   setl norelativenumber
   setl listchars=
+  setl nofoldenable
+  setl foldmethod=manual
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
