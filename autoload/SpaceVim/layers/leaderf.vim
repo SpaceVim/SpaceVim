@@ -6,15 +6,18 @@
 " License: GPLv3
 "=============================================================================
 
+" NOTE: modified build
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
-  call add(plugins, 
-        \ ['Yggdroot/LeaderF',
-        \ {
-        \ 'loadconf' : 1,
-        \ 'merged' : 0,
-        \ }])
+  if s:SYS.isWindows
+    call add(plugins , ['Yggdroot/LeaderF', {'loadconf' : 1, 'merged' : 0,
+          \ 'build' : '.\install.bat'}])
+  else
+    call add(plugins , ['Yggdroot/LeaderF', {'loadconf' : 1, 'merged' : 0,
+          \ 'build' : './install.sh'}])
+  endif
   return plugins
 endfunction
 

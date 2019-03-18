@@ -111,7 +111,7 @@ function! SpaceVim#layers#denite#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file_rec"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file/rec"])',
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
@@ -123,7 +123,7 @@ function! SpaceVim#layers#denite#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite file_rec"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite file/rec"])',
         \ ['find files in current project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
@@ -132,7 +132,7 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
-  nnoremap <silent> <C-p> :call <SID>warp_denite('Denite file_rec')<cr>
+  nnoremap <silent> <C-p> :call <SID>warp_denite('Denite file/rec')<cr>
 
 
   let lnum = expand('<slnum>') + s:lnum - 1

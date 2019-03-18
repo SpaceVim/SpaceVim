@@ -98,7 +98,7 @@ function! SpaceVim#layers#checkers#config() abort
         \ 'explain the error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
-    if g:spacevim_enable_neomake
+    if g:spacevim_enable_neomake && !g:spacevim_enable_ale
       if SpaceVim#layers#isLoaded('core#statusline')
         autocmd User NeomakeFinished nested
               \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -152,31 +152,39 @@ function! s:toggle_show_error(...) abort
 endfunction
 
 function! s:jump_to_next_error() abort
-  try
-    lnext
-  catch
+  if exists(':Neomake')
     try
-      cnext
+      lnext
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cnext
+      catch
+        echohl WarningMsg
+        echon 'There is no errors!'
+        echohl None
+      endtry
     endtry
-  endtry
+  elseif exists(':ALEInfo')
+    ALENextWrap
+  endif
 endfunction
 
 function! s:jump_to_previous_error() abort
-  try
-    lprevious
-  catch
+  if exists(':Neomake')
     try
-      cprevious
+      lprevious
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cprevious
+      catch
+        echohl WarningMsg
+        echon 'There is no errors!'
+        echohl None
+      endtry
     endtry
-  endtry
+  elseif exists(':ALEInfo')
+    ALEPreviousWrap
+  endif
 endfunction
 
 let s:last_echoed_error = ''
@@ -213,17 +221,30 @@ function! s:neomake_signatures_clear() abort
 endfunction
 
 function! s:verify_syntax_setup() abort
-  if g:spacevim_enable_neomake
+  if exists(':Neomake')
     NeomakeInfo
-  elseif g:spacevim_enable_ale
-  else
+  elseif exists(':ALEInfo')
+    ALEInfo
   endif
 endfunction
 
+let s:ale_flag = 1
 function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
   call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-  verbose NeomakeToggle
+  if exists(':Neomake')
+    verbose NeomakeToggle
+  elseif exists(':ALEInfo')
+    if s:ale_flag == 1
+      ALEToggle
+      echo ' Ale is disabled globally.'
+      let s:ale_flag = 0
+    else
+      ALEToggle
+      echo ' Ale is enabled.'
+      let s:ale_flag = 1
+    endif
+  endif
 endfunction
 
 
@@ -249,7 +270,7 @@ function! s:explain_the_error() abort
 endfunction
 
 function! s:error_transient_state() abort
-  if g:spacevim_enable_neomake
+  if g:spacevim_enable_neomake && !g:spacevim_enable_ale
     let num_errors = neomake#statusline#LoclistCounts()
   elseif g:spacevim_enable_ale
     let counts = ale#statusline#Count(buffer_name('%'))
