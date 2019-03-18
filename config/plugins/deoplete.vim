@@ -113,12 +113,18 @@ call deoplete#custom#var('omni', 'input_patterns', {
       \ ],
       \})
 
+" python
+call deoplete#custom#option('ignore_sources', {'python': ['omni']})
+call deoplete#custom#source('python', 'mark', 'py')
+let g:deoplete#sources#jedi#python_path = '/home/alanding/software/anaconda3/envs/py36/bin/python3.6'
+let g:deoplete#sources#jedi#extra_path  = ''
+
 " public settings
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
 
-inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 set isfname-==
 
 " vim:set et sw=2:

@@ -6,7 +6,7 @@ let s:sys = SpaceVim#api#import('system')
 " denite option
 let s:denite_options = {
       \ 'default' : {
-      \ 'winheight' : 15,
+      \ 'winheight' : 10,
       \ 'mode' : 'insert',
       \ 'quit' : 1,
       \ 'highlight_matched_char' : 'MoreMsg',
@@ -105,7 +105,7 @@ call denite#custom#var('menu', 'unite_source_menu_compatibility', 1)
 
 " KEY MAPPINGS
 let s:insert_mode_mappings = [
-      \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
+      \ ['qw', '<denite:enter_mode:normal>', 'noremap'],
       \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
       \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
       \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
@@ -118,7 +118,7 @@ let s:insert_mode_mappings = [
       \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
       \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
       \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
-      \ ['<C-Y>', '<denite:redraw>', 'noremap'],
+      \ ['<C-r>', '<denite:redraw>', 'noremap'],
       \ ]
 
 let s:normal_mode_mappings = [

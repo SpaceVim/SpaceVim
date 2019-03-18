@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 " defx supported is added in https://github.com/SpaceVim/SpaceVim/pull/2282
 
@@ -33,8 +34,10 @@ call defx#custom#column('mark', {
 
 call defx#custom#column('filename', {
       \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'opened_icon'   : '',
+      \ 'root_icon'     : 'R',
       \ })
+
 
 augroup vfinit
   au!
@@ -59,6 +62,7 @@ function! s:defx_init()
   setl listchars=
   setl nofoldenable
   setl foldmethod=manual
+  setl conceallevel=0
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
@@ -74,7 +78,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
   " TODO: we need an action to clear all selections
-  nnoremap <silent><buffer><expr> V
+  nnoremap <silent><buffer><expr> U
         \ defx#do_action('toggle_select_all')
   " nmap <buffer> v       <Plug>(vimfiler_quick_look)
   " nmap <buffer> p       <Plug>(vimfiler_preview_file)
@@ -105,14 +109,18 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <2-LeftMouse>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> sg
-        \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv
+        \ defx#do_action('drop', 'vsplit')
+  nnoremap <silent><buffer><expr> ss
         \ defx#do_action('drop', 'split')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
   nnoremap <silent><buffer><expr> N
         \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> K
+        \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> M
+        \ defx#do_action('new_multiple_files')
   nnoremap <silent><buffer><expr> d
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
@@ -133,6 +141,9 @@ function! s:defx_init()
         \ defx#do_action('print')
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
+  nnoremap <silent><buffer><expr> T
+        \ defx#do_action('toggle_columns',
+        \                'mark:filename:type:size:time')
 endf
 
 function! DefxSmartH(_)

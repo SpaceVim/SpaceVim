@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+" NOTE: I amend the default space-mapping TODO
+"
 ""
 " @section shell, layer-shell
 " @parentsection layers
@@ -36,7 +38,7 @@ endfunction
 let s:file = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ["'"], 'call call('
+  call SpaceVim#mapping#space#def('nnoremap', ["9"], 'call call('
         \ . string(function('s:open_default_shell')) . ', [0])',
         \ ['open shell',
         \ [
@@ -45,7 +47,7 @@ function! SpaceVim#layers#shell#config() abort
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ], 1)
-  call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
+  call SpaceVim#mapping#space#def('nnoremap', ["0"], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
         \ ["open shell in current file's path",
         \ [
