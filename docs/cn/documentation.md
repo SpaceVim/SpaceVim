@@ -1608,10 +1608,10 @@ In highlight symbol transient state:
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
 | `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
 | `SPC x t c`   | 交换当前字符和前一个字符的位置                                     |
-| `SPC x t w`   | 交换当前单词和前一个单词的位置                                     |
-| `SPC x t l`   | 交换当前行和前一行的位置                                           |
 | `SPC x t C`   | 交换当前字符和后一个字符的位置                                     |
+| `SPC x t w`   | 交换当前单词和前一个单词的位置                                     |
 | `SPC x t W`   | 交换当前单词和后一个单词的位置                                     |
+| `SPC x t l`   | 交换当前行和前一行的位置                                           |
 | `SPC x t L`   | 交换当前行和后一行的位置                                           |
 | `SPC x u`     | 将选中字符串转为小写                                               |
 | `SPC x U`     | 将选中字符串转为大写                                               |
