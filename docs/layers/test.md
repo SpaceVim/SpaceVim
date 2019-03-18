@@ -34,8 +34,8 @@ To set or override any configuration ([see supported settings here](https://gith
 [[layers]]
   name = "test"
   [layers.override_config]
-    java-runner = "gradletest"
-    java-gradletest-executable = "./gradlew test"
+    java_runner = "gradletest"
+    java_gradletest_executable = "./gradlew test"
 ```
 
 In the example above is equivalent to adding the following in viml:
@@ -45,7 +45,7 @@ let test#java#runner = "gradletest"
 let test#java#gradletest#executable = "./gradlew test"
 ```
 
-In essence, it replaces `-` with `#` and prepends `test#` to the keys inside `override_config`.
+In essence, it replaces `_` with `#` and prepends `test#` to the keys inside `override_config`.
 
 ## Key bindings
 

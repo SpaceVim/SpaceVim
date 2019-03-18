@@ -44,7 +44,7 @@ function! SpaceVim#layers#test#set_variable(var) abort
   let l:override = get(a:var, 'override_config', {})
   if !empty(l:override)
     for l:option in keys(l:override)
-      let l:varname = 'test#'.substitute(l:option, '-', '#', 'g')
+      let l:varname = 'test#'.substitute(l:option, '_', '#', 'g')
       execute 'let g:'.l:varname.' = '."'".l:override[l:option]."'"
     endfor
   endif
