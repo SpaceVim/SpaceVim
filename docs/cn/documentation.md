@@ -1000,43 +1000,43 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键                                   | 功能描述                                                                       |
-| ---------------------------------------- | ------------------------------------------------------------------------------ |
-| `SPC w <Tab>`                            | 在同一标签内进行窗口切换                                                       |
-| `SPC w =`                                | 对齐分离的窗口                                                                 |
-| `SPC w b`                                | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`                                | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
-| `SPC w C`                                | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
-| `SPC w d`                                | 删除一个窗口                                                                   |
-| `SPC u SPC w d`                          | delete a window and its current buffer (does not delete the file) (TODO)       |
-| `SPC w D`                                | 选择一个窗口并关闭                                                             |
-| `SPC u SPC w D`                          | delete another window and its current buffer using vim-choosewin (TODO)        |
-| `SPC w t`                                | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
-| `SPC w f`                                | toggle follow mode (TODO)                                                      |
-| `SPC w F`                                | 新建一个新的标签页                                                             |
-| `SPC w h`                                | 移至左边窗口                                                                   |
-| `SPC w H`                                | 将窗口向左移动                                                                 |
-| `SPC w j`                                | 移至下方窗口                                                                   |
-| `SPC w J`                                | 将窗口向下移动                                                                 |
-| `SPC w k`                                | 移至上方窗口                                                                   |
-| `SPC w K`                                | 将窗口向上移动                                                                 |
-| `SPC w l`                                | 移至右方窗口                                                                   |
-| `SPC w L`                                | 将窗口向右移动                                                                 |
-| `SPC w m`                                | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
-| `SPC w M`                                | 选择窗口进行替换                                                               |
-| `SPC w o`                                | 按序切换标签页                                                                 |
-| `SPC w p m`                              | open messages buffer in a popup window (TODO)                                  |
-| `SPC w p p`                              | close the current sticky popup window (TODO)                                   |
-| `SPC w r`                                | 顺序切换窗口                                                                   |
-| `SPC w R`                                | 逆序切换窗口                                                                   |
-| `SPC w s` / `SPC w -`                    | 水平分割窗口                                                                   |
-| `SPC w S`                                | 水平分割窗口，并切换至新窗口                                                   |
-| `SPC w u`                                | undo window layout (used to effectively undo a closed window) (TODO)           |
-| `SPC w U`                                | redo window layout (TODO)                                                      |
-| `SPC w v` / `SPC w /`                    | 垂直分离窗口                                                                   |
-| `SPC w V`                                | 垂直分离窗口，并切换至新窗口                                                   |
-| `SPC w w`                                | 切换至前一窗口                                                                 |
-| `SPC w W`                                | 选择一个窗口                                                                   |
+| 快捷键                | 功能描述                                                                       |
+| --------------------- | ------------------------------------------------------------------------------ |
+| `SPC w <Tab>`         | 在同一标签内进行窗口切换                                                       |
+| `SPC w =`             | 对齐分离的窗口                                                                 |
+| `SPC w b`             | force the focus back to the minibuffer (TODO)                                  |
+| `SPC w c`             | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
+| `SPC w C`             | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
+| `SPC w d`             | 删除一个窗口                                                                   |
+| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)       |
+| `SPC w D`             | 选择一个窗口并关闭                                                             |
+| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)        |
+| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
+| `SPC w f`             | toggle follow mode (TODO)                                                      |
+| `SPC w F`             | 新建一个新的标签页                                                             |
+| `SPC w h`             | 移至左边窗口                                                                   |
+| `SPC w H`             | 将窗口向左移动                                                                 |
+| `SPC w j`             | 移至下方窗口                                                                   |
+| `SPC w J`             | 将窗口向下移动                                                                 |
+| `SPC w k`             | 移至上方窗口                                                                   |
+| `SPC w K`             | 将窗口向上移动                                                                 |
+| `SPC w l`             | 移至右方窗口                                                                   |
+| `SPC w L`             | 将窗口向右移动                                                                 |
+| `SPC w m`             | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
+| `SPC w M`             | 选择窗口进行替换                                                               |
+| `SPC w o`             | 按序切换标签页                                                                 |
+| `SPC w p m`           | open messages buffer in a popup window (TODO)                                  |
+| `SPC w p p`           | close the current sticky popup window (TODO)                                   |
+| `SPC w r`             | 顺序切换窗口                                                                   |
+| `SPC w R`             | 逆序切换窗口                                                                   |
+| `SPC w s` / `SPC w -` | 水平分割窗口                                                                   |
+| `SPC w S`             | 水平分割窗口，并切换至新窗口                                                   |
+| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)           |
+| `SPC w U`             | redo window layout (TODO)                                                      |
+| `SPC w v` / `SPC w /` | 垂直分离窗口                                                                   |
+| `SPC w V`             | 垂直分离窗口，并切换至新窗口                                                   |
+| `SPC w w`             | 切换至前一窗口                                                                 |
+| `SPC w W`             | 选择一个窗口                                                                   |
 
 #### 文件和 Buffer 操作
 
@@ -1580,12 +1580,12 @@ In highlight symbol transient state:
 | `SPC x a l`   | left-align with evil-lion (TODO)                                   |
 | `SPC x a L`   | right-align with evil-lion (TODO)                                  |
 | `SPC x a r`   | 基于用户自定义正则表达式进行文本对齐                               |
-| `SPC x a o`   | align region at arithmetic operators `+-*/`                        |
-| `SPC x c`     | count the number of chars/words/lines in the selection region      |
-| `SPC x d w`   | delete trailing whitespaces                                        |
+| `SPC x a o`   | 对齐算术运算符 `+-*/`                                              |
+| `SPC x c`     | 统计选中区域的字符/单词/行数                                       |
+| `SPC x d w`   | 删除行尾空白字符                                                   |
 | `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
 | `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
-| `SPC x g t`   | translate current word using Google Translate                      |
+| `SPC x g t`   | 使用 Google Translate 翻译当前单词                                 |
 | `SPC x g T`   | reverse source and target languages (TODO)                         |
 | `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
 | `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
@@ -1600,16 +1600,19 @@ In highlight symbol transient state:
 | `SPC x j l`   | 左对齐当前段落                                                     |
 | `SPC x j n`   | set the justification to none (TODO)                               |
 | `SPC x j r`   | 右对齐当前段落                                                     |
-| `SPC x J`     | move down a line of text (enter transient state)                   |
-| `SPC x K`     | move up a line of text (enter transient state)                     |
+| `SPC x J`     | 将当前行向下移动一行并进入临时快捷键状态                           |
+| `SPC x K`     | 将当前行向上移动一行并进入临时快捷键状态                           |
 | `SPC x l d`   | duplicate line or region (TODO)                                    |
 | `SPC x l s`   | sort lines (TODO)                                                  |
 | `SPC x l u`   | uniquify lines (TODO)                                              |
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
 | `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
-| `SPC x t c`   | swap (transpose) the current character with the previous one       |
-| `SPC x t w`   | swap (transpose) the current word with the previous one            |
-| `SPC x t l`   | swap (transpose) the current line with the previous one            |
+| `SPC x t c`   | 交换当前字符和前一个字符的位置                                     |
+| `SPC x t w`   | 交换当前单词和前一个单词的位置                                     |
+| `SPC x t l`   | 交换当前行和前一行的位置                                           |
+| `SPC x t C`   | 交换当前字符和后一个字符的位置                                     |
+| `SPC x t W`   | 交换当前单词和后一个单词的位置                                     |
+| `SPC x t L`   | 交换当前行和后一行的位置                                           |
 | `SPC x u`     | 将选中字符串转为小写                                               |
 | `SPC x U`     | 将选中字符串转为大写                                               |
 | `SPC x w c`   | 统计选中区域的单词数                                               |
@@ -1637,18 +1640,18 @@ In highlight symbol transient state:
 
 #### 增加或减小数字
 
-| 快捷键    | 功能描述                                           |
-| --------- | -------------------------------------------------- |
-| `SPC n +` | 为光标下的数字加 1 并进入 initiate transient state |
-| `SPC n -` | 为光标下的数字减 1 并进入 initiate transient state |
+| 快捷键    | 功能描述                                 |
+| --------- | ---------------------------------------- |
+| `SPC n +` | 为光标下的数字加 1 并进入 临时快捷键状态 |
+| `SPC n -` | 为光标下的数字减 1 并进入 临时快捷键状态 |
 
-In transient state：
+在临时快捷键模式：
 
-| 快捷键     | 功能描述             |
-| ---------- | -------------------- |
-| `+`        | 为光标下的数字加 1   |
-| `-`        | 为光标下的数字减 1   |
-| 其它任意键 | 离开 transient state |
+| 快捷键     | 功能描述           |
+| ---------- | ------------------ |
+| `+`        | 为光标下的数字加 1 |
+| `-`        | 为光标下的数字减 1 |
+| 其它任意键 | 离开临时快捷键状态 |
 
 **提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为光标下的数字加 `10`。
 
