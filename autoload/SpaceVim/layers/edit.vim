@@ -197,32 +197,28 @@ function! SpaceVim#layers#edit#config() abort
 endfunction
 
 function! s:transpose_with_previous(type) abort
+  let l:save_register = @"
   if a:type ==# 'line'
     if line('.') > 1
-      let l:save_register = @"
       normal! kddp
-      let @" = l:save_register
     endif
   elseif a:type ==# 'word'
-    let save_register = @k
-    normal! "kyiw
-    let cw = @k
-    normal! ge"kyiw
-    let tw = @k
-    if cw !=# tw
-      let @k = cw
-      normal! viw"kp
-      let @k = tw
-      normal! eviw"kp
+    normal! yiw
+    let l:cw = @"
+    normal! geyiw
+    let l:tw = @"
+    if l:cw !=# l:tw
+      let @" = l:cw
+      normal! viwp
+      let @" = l:tw
+      normal! eviwp
     endif
-    let @k = save_register
   elseif a:type ==# 'character'
     if col('.') > 1
-      let l:save_register = @"
       normal! hxp
-      let @" = l:save_register
     endif
   endif
+  let @" = l:save_register
 endfunction
 
 function! s:transpose_with_next(type) abort
