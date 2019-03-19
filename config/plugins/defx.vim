@@ -35,7 +35,7 @@ call defx#custom#column('mark', {
 call defx#custom#column('filename', {
       \ 'directory_icon': '',
       \ 'opened_icon'   : '',
-      \ 'root_icon'     : 'R',
+      \ 'root_icon'     : 'O(∩_∩)O',
       \ })
 
 
