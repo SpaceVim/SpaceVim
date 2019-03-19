@@ -17,7 +17,7 @@ scriptencoding utf-8
 " <
 
 
-function! layers#lang#ipynb#plugins() abort
+function! SpaceVim#layers#lang#ipynb#plugins() abort
   let plugins = [
         \ ['szymonmaszke/vimpyter'        , {'on_ft' : 'ipynb'}],
         \ ['heavenshell/vim-pydocstring'  , {'on_cmd': 'Pydocstring'}],
@@ -38,7 +38,7 @@ endfunction
 
 
 let s:format_on_save = 0
-function! layers#lang#ipynb#config() abort
+function! SpaceVim#layers#lang#ipynb#config() abort
   if !SpaceVim#layers#lsp#check_filetype('ipynb')
     let g:jedi#completions_command    = ''
     let g:jedi_auto_vim_configuration = 0
@@ -153,7 +153,7 @@ function! s:go_to_def() abort
 endfunction
 
   let s:format_on_save = 0
-function! SpaceVim#layers#lang#python#set_variable(var) abort
+function! SpaceVim#layers#lang#ipynb#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
         \ 'format-on-save',
