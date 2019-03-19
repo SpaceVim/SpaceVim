@@ -1623,8 +1623,11 @@ Text related commands (start with `x`):
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
 | `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
 | `SPC x t c`   | swap (transpose) the current character with the previous one       |
+| `SPC x t C`   | swap (transpose) the current character with the next one           |
 | `SPC x t w`   | swap (transpose) the current word with the previous one            |
+| `SPC x t W`   | swap (transpose) the current word with the next one                |
 | `SPC x t l`   | swap (transpose) the current line with the previous one            |
+| `SPC x t L`   | swap (transpose) the current line with the next one                |
 | `SPC x u`     | set the selected text to lower case                                |
 | `SPC x U`     | set the selected text to upper case                                |
 | `SPC x w c`   | count the words in the select region                               |

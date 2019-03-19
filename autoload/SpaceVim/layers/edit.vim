@@ -184,36 +184,66 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
         \ 'swap current line with previous one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["character"])',
+        \ 'swap current character with next one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["word"])',
+        \ 'swap current word with next one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
+        \ 'swap current line with next one', 1)
 
 endfunction
 
 function! s:transpose_with_previous(type) abort
+  let l:save_register = @"
   if a:type ==# 'line'
     if line('.') > 1
-      let l:save_register = @"
       normal! kddp
-      let @" = l:save_register
     endif
   elseif a:type ==# 'word'
-    let save_register = @k
-    normal! "kyiw
-    let cw = @k
-    normal! ge"kyiw
-    let tw = @k
-    if cw !=# tw
-      let @k = cw
-      normal! viw"kp
-      let @k = tw
-      normal! eviw"kp
+    normal! yiw
+    let l:cw = @"
+    normal! geyiw
+    let l:tw = @"
+    if l:cw !=# l:tw
+      let @" = l:cw
+      normal! viwp
+      let @" = l:tw
+      normal! eviwp
     endif
-    let @k = save_register
   elseif a:type ==# 'character'
     if col('.') > 1
-      let l:save_register = @"
       normal! hxp
-      let @" = l:save_register
     endif
   endif
+  let @" = l:save_register
+endfunction
+
+function! s:transpose_with_next(type) abort
+  let l:save_register = @"
+  if a:type ==# 'line'
+    if line('.') < line('$')
+      normal! ddp
+    endif
+  elseif a:type ==# 'word'
+    normal! yiw
+    let l:cw = @"
+    normal! wyiw
+    let l:nw = @"
+    if l:cw !=# l:nw
+      let @" = l:cw
+      normal! viwp
+      let @" = l:nw
+      normal! geviwp
+    endif
+  elseif a:type ==# 'character'
+    if col('.') < col('$')-1
+      normal! xp
+    endif
+  endif
+  let @" = l:save_register
 endfunction
 
 function! s:move_text_down_transient_state() abort   
