@@ -99,7 +99,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l
         \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
+        \ defx#do_action('open_tree') . 'j' : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
