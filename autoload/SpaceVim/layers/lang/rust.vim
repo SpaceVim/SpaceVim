@@ -76,7 +76,7 @@ function! SpaceVim#layers#lang#rust#config() abort
         \ function('s:language_specified_mappings'))
 endfunction
 
-function! SpaceVim#layers#rust#lang#set_variable(var) abort
+function! SpaceVim#layers#lang#rust#set_variable(var) abort
 
   let s:recommended_style = get(a:var,
         \ 'recommended-style',
