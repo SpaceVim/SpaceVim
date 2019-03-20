@@ -111,6 +111,8 @@ function! s:defx_init()
         \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv
         \ defx#do_action('drop', 'split')
+  nnoremap <silent><buffer><expr> st
+        \ defx#do_action('drop', 'tabedit')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
   nnoremap <silent><buffer><expr> N
