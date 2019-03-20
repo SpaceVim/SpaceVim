@@ -98,8 +98,17 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', '$'], 'm`g_', 'push mark and goto end of line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+
+  " file tree key bindings
+  if g:spacevim_filemanager ==# 'vimfiler'
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+  elseif g:spacevim_filemanager ==# 'defx'
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'let g:_spacevim_autoclose_defx = 0 | Defx -split=no | let g:_spacevim_autoclose_defx = 1', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'Defx', 'Explore current directory (other window)', 1)
+  endif
+
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
@@ -174,9 +183,11 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
   if s:SYS.isWindows
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call call('
-        \ . string(s:_function('s:ToggleWinDiskManager')) . ', [])',
-        \ 'toggle Windows disk manager', 1)
+          \ . string(s:_function('s:ToggleWinDiskManager')) . ', [])',
+          \ 'toggle Windows disk manager', 1)
   endif
+
+  " file tree key bindings
   if g:spacevim_filemanager ==# 'vimfiler'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
