@@ -48,43 +48,43 @@ function! SpaceVim#layers#core#config() abort
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
-  " Unimpaired bindings
-  " Quickly add empty lines
-  nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-
-  "]e or [e move current line ,count can be useed
-  nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
-  nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
-
-  " [b or ]n go to previous or next buffer
-  nnoremap <silent> [b :<c-u>bN \| stopinsert<cr>
-  nnoremap <silent> ]b :<c-u>bn \| stopinsert<cr>
-
-  " [f or ]f go to next or previous file in dir
-  nnoremap <silent> ]f :<c-u>call <SID>next_file()<cr>
-  nnoremap <silent> [f :<c-u>call <SID>previous_file()<cr>
-
-  " [l or ]l go to next and previous error
-  nnoremap <silent> [l :lprevious<cr>
-  nnoremap <silent> ]l :lnext<cr>
-
-  " [c or ]c go to next or previous vcs hunk
-
-  " [w or ]w go to next or previous window
-  nnoremap <silent> [w :call <SID>previous_window()<cr>
-  nnoremap <silent> ]w :call <SID>next_window()<cr>
-
-  " [t or ]t for next and previous tab
-  nnoremap <silent> [t :tabprevious<cr>
-  nnoremap <silent> ]t :tabnext<cr>
-
-  " [p or ]p for p and P
-  nnoremap <silent> [p P
-  nnoremap <silent> ]p p
-
-  " Select last paste
-  nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+  " " Unimpaired bindings
+  " " Quickly add empty lines
+  " nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+  " nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+  "
+  " "]e or [e move current line ,count can be useed
+  " nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
+  " nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
+  "
+  " " [b or ]n go to previous or next buffer
+  " nnoremap <silent> [b :<c-u>bN \| stopinsert<cr>
+  " nnoremap <silent> ]b :<c-u>bn \| stopinsert<cr>
+  "
+  " " [f or ]f go to next or previous file in dir
+  " nnoremap <silent> ]f :<c-u>call <SID>next_file()<cr>
+  " nnoremap <silent> [f :<c-u>call <SID>previous_file()<cr>
+  "
+  " " [l or ]l go to next and previous error
+  " nnoremap <silent> [l :lprevious<cr>
+  " nnoremap <silent> ]l :lnext<cr>
+  "
+  " " [c or ]c go to next or previous vcs hunk
+  "
+  " " [w or ]w go to next or previous window
+  " nnoremap <silent> [w :call <SID>previous_window()<cr>
+  " nnoremap <silent> ]w :call <SID>next_window()<cr>
+  "
+  " " [t or ]t for next and previous tab
+  " nnoremap <silent> [t :tabprevious<cr>
+  " nnoremap <silent> ]t :tabnext<cr>
+  "
+  " " [p or ]p for p and P
+  " nnoremap <silent> [p P
+  " nnoremap <silent> ]p p
+  "
+  " " Select last paste
+  " nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
@@ -124,7 +124,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
         \ . string(s:_function('s:jump_to_url')) . ', [])',
         \ 'jump to url', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
@@ -178,21 +178,21 @@ function! SpaceVim#layers#core#config() abort
         \ 'toggle Windows disk manager', 1)
   endif
   if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
   elseif g:spacevim_filemanager ==# 'defx'
     " TODO: fix all these command
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}

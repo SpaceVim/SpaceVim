@@ -20,9 +20,9 @@ function! SpaceVim#layers#chinese#plugins() abort
 endfunction
 
 function! SpaceVim#layers#chinese#config() abort
-  let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc'         , 'translate current word'  , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['l', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
+  " let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc'         , 'translate current word'  , 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['l', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
   " do not load vimcdoc plugin 
   let g:loaded_vimcdoc = 1
 endfunction

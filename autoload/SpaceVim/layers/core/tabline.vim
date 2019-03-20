@@ -233,8 +233,8 @@ function! SpaceVim#layers#core#tabline#config() abort
   endfor
   call SpaceVim#mapping#def('nmap', '<leader>-', ':bprevious<cr>', 'Switch to previous airline tag', '', 'window previous')
   call SpaceVim#mapping#def('nmap', '<leader>+', ':bnext<cr>', 'Switch to next airline tag', '', 'window next')
-  "call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
-  "call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
+  call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
+  call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
