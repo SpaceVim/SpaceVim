@@ -92,6 +92,22 @@ let g:spacevim_relativenumber          = 1
 let g:spacevim_max_column              = 120
 
 ""
+" @section max_column, options-home_files_number
+" @parentsection options
+" Change the list number of files for SpaceVim home. Default is 6.
+" >
+"   home_files_number = 6
+" <
+
+""
+" Change the list number of files for SpaceVim home. Default is 6.
+" >
+"   let g:spacevim_home_files_number = 6
+" <
+let g:spacevim_home_files_number        = 6
+
+
+""
 " @section enable_guicolors, options-enable_guicolors
 " @parentsection options
 " Enable true color support in terminal. Default is true.
