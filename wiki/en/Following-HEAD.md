@@ -85,4 +85,4 @@ The next release is v1.1.0:
 
 SpaceVim releases v1.0.0 at 2018-12-26, please check the release page:
 
-- [SpaceVim releases v0.9.0](https://spacevim.org/SpaceVim-release-v1.0.0/) for all the details
+- [SpaceVim releases v1.0.0](https://spacevim.org/SpaceVim-release-v1.0.0/) for all the details
