@@ -372,131 +372,131 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'l'], 'call SpaceVim#plugins#searcher#list()', 'List all searching results', 1)
 
-  " Searching tools
-  " ag
-  let g:_spacevim_mappings_space.s.a = {'name' : '+ag'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'b'], 'call SpaceVim#mapping#search#grep("a", "b")', 'search in all buffers with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'B'], 'call SpaceVim#mapping#search#grep("a", "B")',
-        \ 'search cursor word in all buffers with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'd'], 'call SpaceVim#mapping#search#grep("a", "d")', 'search in buffer directory with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'D'], 'call SpaceVim#mapping#search#grep("a", "D")',
-        \ 'search cursor word in buffer directory with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'p'], 'call SpaceVim#mapping#search#grep("a", "p")', 'search in project with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'P'], 'call SpaceVim#mapping#search#grep("a", "P")',
-        \ 'search cursor word in project with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'f'], 'call SpaceVim#mapping#search#grep("a", "f")',
-        \ 'search in arbitrary directory  with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'F'], 'call SpaceVim#mapping#search#grep("a", "F")',
-        \ 'search cursor word in arbitrary directory  with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'j'], 'call SpaceVim#plugins#searcher#find("", "ag")',
-        \ 'Background search cursor words in project with ag', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ag")',
-        \ 'Background search cursor words in project with ag', 1)
-  " grep
-  let g:_spacevim_mappings_space.s.g = {'name' : '+grep'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'b'], 'call SpaceVim#mapping#search#grep("g", "b")',
-        \ 'search in all buffers with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'B'], 'call SpaceVim#mapping#search#grep("g", "B")',
-        \ 'search cursor word in all buffers with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'd'], 'call SpaceVim#mapping#search#grep("g", "d")', 'search in buffer directory with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'D'], 'call SpaceVim#mapping#search#grep("g", "D")',
-        \ 'search cursor word in buffer directory with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'p'], 'call SpaceVim#mapping#search#grep("g", "p")', 'search in project with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'P'], 'call SpaceVim#mapping#search#grep("g", "P")',
-        \ 'search cursor word in project with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'f'], 'call SpaceVim#mapping#search#grep("g", "f")',
-        \ 'search in arbitrary directory  with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'F'], 'call SpaceVim#mapping#search#grep("g", "F")',
-        \ 'search cursor word in arbitrary directory  with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'j'], 'call SpaceVim#plugins#searcher#find("", "grep")',
-        \ 'Background search cursor words in project with grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "grep")',
-        \ 'Background search cursor words in project with grep', 1)
-  " ack
-  let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'B'], 'call SpaceVim#mapping#search#grep("k", "B")',
-        \ 'search cursor word in all buffers with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'd'], 'call SpaceVim#mapping#search#grep("k", "d")', 'search in buffer directory with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'D'], 'call SpaceVim#mapping#search#grep("k", "D")',
-        \ 'search cursor word in buffer directory with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'p'], 'call SpaceVim#mapping#search#grep("k", "p")', 'search in project with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'P'], 'call SpaceVim#mapping#search#grep("k", "P")',
-        \ 'search cursor word in project with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'f'], 'call SpaceVim#mapping#search#grep("k", "f")',
-        \ 'search in arbitrary directory  with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'F'], 'call SpaceVim#mapping#search#grep("k", "F")',
-        \ 'search cursor word in arbitrary directory  with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'j'], 'call SpaceVim#plugins#searcher#find("", "ack")',
-        \ 'Background search cursor words in project with ack', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ack")',
-        \ 'Background search cursor words in project with ack', 1)
-  " rg
-  let g:_spacevim_mappings_space.s.r = {'name' : '+rg'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'B'], 'call SpaceVim#mapping#search#grep("r", "B")',
-        \ 'search cursor word in all buffers with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'd'], 'call SpaceVim#mapping#search#grep("r", "d")', 'search in buffer directory with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'D'], 'call SpaceVim#mapping#search#grep("r", "D")',
-        \ 'search cursor word in buffer directory with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'P'], 'call SpaceVim#mapping#search#grep("r", "P")',
-        \ 'search cursor word in project with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'f'], 'call SpaceVim#mapping#search#grep("r", "f")',
-        \ 'search in arbitrary directory  with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'F'], 'call SpaceVim#mapping#search#grep("r", "F")',
-        \ 'search cursor word in arbitrary directory  with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'j'], 'call SpaceVim#plugins#searcher#find("", "rg")',
-        \ 'Background search cursor words in project with rg', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
-        \ 'Background search cursor words in project with rg', 1)
+  " " Searching tools
+  " " ag
+  " let g:_spacevim_mappings_space.s.a = {'name' : '+ag'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'b'], 'call SpaceVim#mapping#search#grep("a", "b")', 'search in all buffers with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'B'], 'call SpaceVim#mapping#search#grep("a", "B")',
+  "       \ 'search cursor word in all buffers with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'd'], 'call SpaceVim#mapping#search#grep("a", "d")', 'search in buffer directory with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'D'], 'call SpaceVim#mapping#search#grep("a", "D")',
+  "       \ 'search cursor word in buffer directory with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'p'], 'call SpaceVim#mapping#search#grep("a", "p")', 'search in project with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'P'], 'call SpaceVim#mapping#search#grep("a", "P")',
+  "       \ 'search cursor word in project with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'f'], 'call SpaceVim#mapping#search#grep("a", "f")',
+  "       \ 'search in arbitrary directory  with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'F'], 'call SpaceVim#mapping#search#grep("a", "F")',
+  "       \ 'search cursor word in arbitrary directory  with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'j'], 'call SpaceVim#plugins#searcher#find("", "ag")',
+  "       \ 'Background search cursor words in project with ag', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ag")',
+  "       \ 'Background search cursor words in project with ag', 1)
+  " " grep
+  " let g:_spacevim_mappings_space.s.g = {'name' : '+grep'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'b'], 'call SpaceVim#mapping#search#grep("g", "b")',
+  "       \ 'search in all buffers with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'B'], 'call SpaceVim#mapping#search#grep("g", "B")',
+  "       \ 'search cursor word in all buffers with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'd'], 'call SpaceVim#mapping#search#grep("g", "d")', 'search in buffer directory with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'D'], 'call SpaceVim#mapping#search#grep("g", "D")',
+  "       \ 'search cursor word in buffer directory with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'p'], 'call SpaceVim#mapping#search#grep("g", "p")', 'search in project with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'P'], 'call SpaceVim#mapping#search#grep("g", "P")',
+  "       \ 'search cursor word in project with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'f'], 'call SpaceVim#mapping#search#grep("g", "f")',
+  "       \ 'search in arbitrary directory  with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'F'], 'call SpaceVim#mapping#search#grep("g", "F")',
+  "       \ 'search cursor word in arbitrary directory  with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'j'], 'call SpaceVim#plugins#searcher#find("", "grep")',
+  "       \ 'Background search cursor words in project with grep', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "grep")',
+  "       \ 'Background search cursor words in project with grep', 1)
+  " " ack
+  " let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'B'], 'call SpaceVim#mapping#search#grep("k", "B")',
+  "       \ 'search cursor word in all buffers with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'd'], 'call SpaceVim#mapping#search#grep("k", "d")', 'search in buffer directory with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'D'], 'call SpaceVim#mapping#search#grep("k", "D")',
+  "       \ 'search cursor word in buffer directory with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'p'], 'call SpaceVim#mapping#search#grep("k", "p")', 'search in project with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'P'], 'call SpaceVim#mapping#search#grep("k", "P")',
+  "       \ 'search cursor word in project with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'f'], 'call SpaceVim#mapping#search#grep("k", "f")',
+  "       \ 'search in arbitrary directory  with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'F'], 'call SpaceVim#mapping#search#grep("k", "F")',
+  "       \ 'search cursor word in arbitrary directory  with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'j'], 'call SpaceVim#plugins#searcher#find("", "ack")',
+  "       \ 'Background search cursor words in project with ack', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ack")',
+  "       \ 'Background search cursor words in project with ack', 1)
+  " " rg
+  " let g:_spacevim_mappings_space.s.r = {'name' : '+rg'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'b'], 'call SpaceVim#mapping#search#grep("r", "b")', 'search in all buffers with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'B'], 'call SpaceVim#mapping#search#grep("r", "B")',
+  "       \ 'search cursor word in all buffers with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'd'], 'call SpaceVim#mapping#search#grep("r", "d")', 'search in buffer directory with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'D'], 'call SpaceVim#mapping#search#grep("r", "D")',
+  "       \ 'search cursor word in buffer directory with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'p'], 'call SpaceVim#mapping#search#grep("r", "p")', 'search in project with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'P'], 'call SpaceVim#mapping#search#grep("r", "P")',
+  "       \ 'search cursor word in project with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'f'], 'call SpaceVim#mapping#search#grep("r", "f")',
+  "       \ 'search in arbitrary directory  with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'F'], 'call SpaceVim#mapping#search#grep("r", "F")',
+  "       \ 'search cursor word in arbitrary directory  with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'j'], 'call SpaceVim#plugins#searcher#find("", "rg")',
+  "       \ 'Background search cursor words in project with rg', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'r', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "rg")',
+  "       \ 'Background search cursor words in project with rg', 1)
+  "
+  " " findstr
+  " let g:_spacevim_mappings_space.s.i = {'name' : '+findstr'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'b'], 'call SpaceVim#mapping#search#grep("i", "b")', 'search in all buffers with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'B'], 'call SpaceVim#mapping#search#grep("i", "B")',
+  "       \ 'search cursor word in all buffers with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'd'], 'call SpaceVim#mapping#search#grep("i", "d")', 'search in buffer directory with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'D'], 'call SpaceVim#mapping#search#grep("i", "D")',
+  "       \ 'search cursor word in buffer directory with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'p'], 'call SpaceVim#mapping#search#grep("i", "p")', 'search in project with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'P'], 'call SpaceVim#mapping#search#grep("i", "P")',
+  "       \ 'search cursor word in project with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'f'], 'call SpaceVim#mapping#search#grep("i", "f")',
+  "       \ 'search in arbitrary directory  with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'F'], 'call SpaceVim#mapping#search#grep("i", "F")',
+  "       \ 'search cursor word in arbitrary directory  with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'j'], 'call SpaceVim#plugins#searcher#find("", "findstr")',
+  "       \ 'Background search cursor words in project with findstr', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "findstr")',
+  "       \ 'Background search cursor words in project with findstr', 1)
+  " " pt
+  " let g:_spacevim_mappings_space.s.t = {'name' : '+pt'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'B'], 'call SpaceVim#mapping#search#grep("t", "B")',
+  "       \ 'search cursor word in all buffers with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'd'], 'call SpaceVim#mapping#search#grep("t", "d")', 'search in buffer directory with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'D'], 'call SpaceVim#mapping#search#grep("t", "D")',
+  "       \ 'search cursor word in buffer directory with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'p'], 'call SpaceVim#mapping#search#grep("t", "p")', 'search in project with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'P'], 'call SpaceVim#mapping#search#grep("t", "P")',
+  "       \ 'search cursor word in project with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'f'], 'call SpaceVim#mapping#search#grep("t", "f")',
+  "       \ 'search in arbitrary directory  with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'F'], 'call SpaceVim#mapping#search#grep("t", "F")',
+  "       \ 'search cursor word in arbitrary directory  with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'j'], 'call SpaceVim#plugins#searcher#find("", "pt")',
+  "       \ 'Background search cursor words in project with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
+  "       \ 'Background search cursor words in project with pt', 1)
 
-  " findstr
-  let g:_spacevim_mappings_space.s.i = {'name' : '+findstr'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'b'], 'call SpaceVim#mapping#search#grep("i", "b")', 'search in all buffers with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'B'], 'call SpaceVim#mapping#search#grep("i", "B")',
-        \ 'search cursor word in all buffers with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'd'], 'call SpaceVim#mapping#search#grep("i", "d")', 'search in buffer directory with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'D'], 'call SpaceVim#mapping#search#grep("i", "D")',
-        \ 'search cursor word in buffer directory with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'p'], 'call SpaceVim#mapping#search#grep("i", "p")', 'search in project with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'P'], 'call SpaceVim#mapping#search#grep("i", "P")',
-        \ 'search cursor word in project with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'f'], 'call SpaceVim#mapping#search#grep("i", "f")',
-        \ 'search in arbitrary directory  with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'F'], 'call SpaceVim#mapping#search#grep("i", "F")',
-        \ 'search cursor word in arbitrary directory  with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'j'], 'call SpaceVim#plugins#searcher#find("", "findstr")',
-        \ 'Background search cursor words in project with findstr', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'i', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "findstr")',
-        \ 'Background search cursor words in project with findstr', 1)
-  " pt
-  let g:_spacevim_mappings_space.s.t = {'name' : '+pt'}
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'b'], 'call SpaceVim#mapping#search#grep("t", "b")', 'search in all buffers with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'B'], 'call SpaceVim#mapping#search#grep("t", "B")',
-        \ 'search cursor word in all buffers with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'd'], 'call SpaceVim#mapping#search#grep("t", "d")', 'search in buffer directory with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'D'], 'call SpaceVim#mapping#search#grep("t", "D")',
-        \ 'search cursor word in buffer directory with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'p'], 'call SpaceVim#mapping#search#grep("t", "p")', 'search in project with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'P'], 'call SpaceVim#mapping#search#grep("t", "P")',
-        \ 'search cursor word in project with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'f'], 'call SpaceVim#mapping#search#grep("t", "f")',
-        \ 'search in arbitrary directory  with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'F'], 'call SpaceVim#mapping#search#grep("t", "F")',
-        \ 'search cursor word in arbitrary directory  with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'j'], 'call SpaceVim#plugins#searcher#find("", "pt")',
-        \ 'Background search cursor words in project with pt', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
-        \ 'Background search cursor words in project with pt', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open({})',
+        " \ 'grep on the fly', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
+        " \ 'grep on the fly', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open({})',
-        \ 'grep on the fly', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
-        \ 'grep on the fly', 1)
-
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
-        \ 'clear search highlight', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
+        " \ 'clear search highlight', 1)
 
   "Symbol
   nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>

@@ -40,7 +40,6 @@
   "java.signatureHelp.enabled"               : true,
   "java.referencesCodeLens.enabled"          : false,
   "java.import.maven.enabled"                : true,
-  "java.saveActions.organizeImports"         : false,
   "java.format.comments.enabled"             : true,
 
   "tsserver.enable"                          : true,
@@ -74,11 +73,11 @@
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
      },
-    "efm" : {
-      "command": "efm-langserver",
-      "args": ["-c", "$HOME/.config/efm-langserver/config.yaml"],
-      "filetypes": ["vim", "markdown"]
-     },
+//    "efm" : {
+//      "command": "efm-langserver",
+//      "args": ["-c", "$HOME/.config/efm-langserver/config.yaml"],
+//      "filetypes": ["vim", "markdown"]
+//    },
     "golang" : {
       "command": "go-langserver",
       "filetypes": ["go"],

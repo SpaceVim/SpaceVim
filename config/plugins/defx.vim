@@ -87,7 +87,7 @@ function! s:defx_init()
   " Define mappings
   nnoremap <silent><buffer><expr> gx
         \ defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> yy
+  nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> q
         \ defx#do_action('quit')
