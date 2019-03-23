@@ -4,11 +4,9 @@ scriptencoding utf-8
 
 " 1 open list and move cursor
 " 2 open list without move cursor
-let g:neomake_open_list = g:is_nvim ? 0 : 2
+let g:neomake_open_list = has('nvim') ? 0 : 2
 let g:neomake_echo_current_error = 1
-if !g:is_spacevim
-  let g:neomake_virtualtext_current_error = 1
-endif
+let g:neomake_virtualtext_current_error = 1
 let g:neomake_cursormoved_delay = 30
 
 let s:neomake_automake_events = {}
