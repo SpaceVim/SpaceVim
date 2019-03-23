@@ -83,7 +83,7 @@ function! s:defx_init()
   " Define mappings
   nnoremap <silent><buffer><expr> gx
         \ defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> yy
+  nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> q
         \ defx#do_action('quit')
@@ -95,7 +95,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l
         \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
+        \ defx#do_action('open_tree') . 'j' : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <Right>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
