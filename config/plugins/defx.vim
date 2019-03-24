@@ -35,9 +35,14 @@ call defx#custom#column('mark', {
 call defx#custom#column('filename', {
       \ 'directory_icon': '',
       \ 'opened_icon'   : '',
-      \ 'root_icon'     : 'O(∩_∩)O',
+      \ 'root_icon'     : 'R',
       \ })
-
+" call defx#custom#column('filename', {
+      " \ 'directory_icon': '',
+      " \ 'opened_icon'   : '',
+      " \ 'root_icon'     : 'O(∩_∩)O',
+      " \ })
+      
 
 augroup vfinit
   au!
@@ -73,16 +78,11 @@ function! s:defx_init()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  " nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
-  " nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
   " TODO: we need an action to clear all selections
   nnoremap <silent><buffer><expr> U
         \ defx#do_action('toggle_select_all')
-  " nmap <buffer> v       <Plug>(vimfiler_quick_look)
-  " nmap <buffer> p       <Plug>(vimfiler_preview_file)
-  " nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
 
   " Define mappings
   nnoremap <silent><buffer><expr> gx
@@ -141,9 +141,9 @@ function! s:defx_init()
         \ defx#do_action('print')
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
-  nnoremap <silent><buffer><expr> T
+  nnoremap <silent><buffer><expr> t
         \ defx#do_action('toggle_columns',
-        \                'mark:filename:type:size:time')
+        \                'git:icons:mark:filename:type:size:time')
 endf
 
 function! DefxSmartH(_)
