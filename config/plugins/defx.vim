@@ -36,12 +36,14 @@ call defx#custom#column('filename', {
       \ 'opened_icon': '',
       \ })
 
+let g:_spacevim_autoclose_defx = 1
+
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && winnr('$') == 1
+        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
@@ -109,6 +111,8 @@ function! s:defx_init()
         \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv
         \ defx#do_action('drop', 'split')
+  nnoremap <silent><buffer><expr> st
+        \ defx#do_action('drop', 'tabedit')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
   nnoremap <silent><buffer><expr> N
@@ -117,8 +121,7 @@ function! s:defx_init()
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> yy
-        \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> ~
@@ -140,7 +143,7 @@ function! DefxSmartH(_)
   if defx#is_opened_tree()
     return defx#call_action('close_tree')
   endif
-  
+
   " parent is root?
   let s:candidate = defx#get_candidate()
   let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
@@ -148,12 +151,18 @@ function! DefxSmartH(_)
   if s:trim_right(s:parent, sep) == s:trim_right(b:defx.paths[0], sep)
     return defx#call_action('cd', ['..'])
   endif
-  
+
   " move to parent.
   call defx#call_action('search', s:parent)
-  
+
   " if you want close_tree immediately, enable below line.
   call defx#call_action('close_tree')
+endfunction
+
+function! DefxYarkPath(_) abort
+  let candidate = defx#get_candidate()
+  let @+ = candidate['action__path']
+  echo 'yarked: ' . @+
 endfunction
 
 function! s:trim_right(str, trim)

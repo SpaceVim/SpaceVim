@@ -92,9 +92,6 @@ function! s:vimfilerinit()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  nnoremap <silent><buffer> gr  :<C-u>Denite grep:<C-R>=<SID>selected()<CR> -buffer-name=grep<CR>
-  nnoremap <silent><buffer> gf  :<C-u>Denite file_rec:<C-R>=<SID>selected()<CR><CR>
-  nnoremap <silent><buffer> gd  :<C-u>call <SID>change_vim_current_dir()<CR>
   nnoremap <silent><buffer> sg  :<C-u>call <SID>vimfiler_vsplit()<CR>
   nnoremap <silent><buffer> sv  :<C-u>call <SID>vimfiler_split()<CR>
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')

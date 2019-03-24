@@ -147,7 +147,7 @@ function! SpaceVim#mapping#vertical_split_previous_buffer(...) abort
   endif
 endfunction
 
-function! SpaceVim#mapping#close_current_buffer() abort
+function! SpaceVim#mapping#close_current_buffer(...) abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
   let f = ''
