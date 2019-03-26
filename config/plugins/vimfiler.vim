@@ -33,12 +33,12 @@ let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.'
       \])
 
-if has('mac') 
-  let g:vimfiler_quick_look_command = 
-        \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p') 
-else 
-  let g:vimfiler_quick_look_command = 
-        \ get(g:, 'vimfiler_quick_look_command', 'gloobus-preview') 
+if has('mac')
+  let g:vimfiler_quick_look_command =
+        \ get(g:, 'vimfiler_quick_look_command', 'qlmanage -p')
+else
+  let g:vimfiler_quick_look_command =
+        \ get(g:, 'vimfiler_quick_look_command', 'gloobus-preview')
 endif
 
 function! s:setcolum() abort
@@ -103,7 +103,7 @@ function! s:vimfilerinit()
     nnoremap <silent><buffer> gr  :<C-u>Denite grep:<C-R>=<SID>selected()<CR> -buffer-name=grep<CR>
     nnoremap <silent><buffer> gf  :<C-u>Denite file_rec:<C-R>=<SID>selected()<CR><CR>
   endif
-  
+
   nnoremap <silent><buffer> sv  :<C-u>call <SID>vimfiler_vsplit()<CR>
   nnoremap <silent><buffer> ss  :<C-u>call <SID>vimfiler_split()<CR>
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
@@ -114,12 +114,11 @@ function! s:vimfilerinit()
   nmap     <buffer> '       <Plug>(vimfiler_toggle_mark_current_line)
   nmap     <buffer> v       <Plug>(vimfiler_quick_look)
   nmap     <buffer> p       <Plug>(vimfiler_preview_file)
-  nmap     <buffer> V       <Plug>(vimfiler_clear_mark_all_lines)
+  nmap     <buffer> U       <Plug>(vimfiler_clear_mark_all_lines)
   nmap     <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
-  nmap     <buffer> <Tab>   <Plug>(vimfiler_switch_to_other_window)
+  nmap     <buffer> h       <Plug>(vimfiler_smart_h)
+  nmap     <buffer> l       <Plug>(vimfiler_smart_l)
   nmap     <buffer> <C-r>   <Plug>(vimfiler_redraw_screen)
-  nmap     <buffer> <Left>  <Plug>(vimfiler_smart_h)
-  nmap     <buffer> <Right> <Plug>(vimfiler_smart_l)
   nmap     <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
 endf
 
