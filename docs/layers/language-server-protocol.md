@@ -22,7 +22,7 @@ This layers adds extensive support for [language-server-protocol](https://micros
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
 The upstream is rewritten by rust.
 
-We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
 
 Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
 it will be used as lsp client.
