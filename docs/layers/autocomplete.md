@@ -92,7 +92,7 @@ The default configuration of the layer is:
   auto-completion-tab-key-behavior = "smart"
   auto-completion-delay = 200
   auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1,
+  auto-completion-complete-with-key-sequence-delay = 0.1
 ```
 
 `jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.
@@ -127,10 +127,10 @@ call SpaceVim#layers#load('autocomplete', {
 
 | Key bindings | Description                                   |
 | ------------ | --------------------------------------------- |
-| `<C-n>`      | select next candidate                         |
-| `<C-p>`      | select previous candidate                     |
+| `Ctrl-n`      | select next candidate                         |
+| `Ctrl-p`      | select previous candidate                     |
 | `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
-| `<S-Tab>`    | select previous candidate                     |
+| `Shift-Tab`    | select previous candidate                     |
 | `<Return>`   | base on `auto-completion-return-key-behavior` |
 
 ### Neosnippet

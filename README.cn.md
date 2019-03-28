@@ -32,7 +32,7 @@ Github: <https://github.com/SpaceVim/SpaceVim>
 
 <!-- vim-markdown-toc GFM -->
 
-- [最新特新](#最新特新)
+- [最新特性](#最新特性)
   - [多光标 Iedit 模式](#多光标-iedit-模式)
   - [高亮光标下的函数](#高亮光标下的函数)
   - [实时代码检索](#实时代码检索)
@@ -46,7 +46,7 @@ Github: <https://github.com/SpaceVim/SpaceVim>
 
 <!-- vim-markdown-toc -->
 
-## 最新特新
+## 最新特性
 
 以下为 SpaceVim 中最新实现的一些特性：
 
@@ -62,7 +62,7 @@ SpaceVim 内置了一种特殊的模式，Iedit 模式，这种模式提供了�
 
 SpaceVim 支持高亮当前光标函数，并且启动一个特殊模式，在该模式下可以快捷地切换高亮区域
 （方法内、屏幕内、整个文件内），并且可以快速在高亮函数间跳转、切换高亮状态（高亮、取消高亮），
-并且可以根据已选择的位置计入 Iedit 模式。
+并且可以根据已选择的位置进入 Iedit 模式。
 
 ![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
 
@@ -94,7 +94,7 @@ SpaceVim 利用了 Vim 8 和 Neovim 最新的异步机制，实现了异步插�
 
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
-想要获取更多关于 SpaceVim 的最新特新，请关注 [SpaceVim 官方博客](https://spacevim.org/blog/)
+想要获取更多关于 SpaceVim 的最新特性，请关注 [SpaceVim 官方博客](https://spacevim.org/blog/)
 
 ## 安装
 

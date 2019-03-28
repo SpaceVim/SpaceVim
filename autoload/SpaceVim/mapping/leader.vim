@@ -14,17 +14,6 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [Window]'
     let g:_spacevim_mappings_windows = {}
-    nnoremap <silent> [Window]p
-          \ :<C-u>vsplit<CR>:wincmd w<CR>
-    let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.p = ['vsplit | wincmd w',
-          \ 'vsplit vertically,switch to next window',
-          \ [
-          \ '[WIN p ] is to split windows vertically, switch to the new window',
-          \ '',
-          \ 'Definition: ' . s:file . ':' . lnum,
-          \ ]
-          \ ]
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
@@ -36,13 +25,35 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ 'Definition: ' . s:file . ':' . lnum,
           \ ]
           \ ]
+    nnoremap <silent> [Window]V
+          \ :<C-u>split +bp<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
+    let g:_spacevim_mappings_windows.V = ['split +bp',
+          \ 'split previous buffer',
+          \ [
+          \ '[WIN V] is to split previous buffer, switch to the new window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
     nnoremap <silent> [Window]g
           \ :<C-u>vsplit<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.g = ['vsplit',
           \ 'vsplit window',
           \ [
-          \ '[WIN g] is to split windows vertically, switch to the new window',
+          \ '[WIN g] is to split previous buffer vertically, switch to the new window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . lnum,
+          \ ]
+          \ ]
+    nnoremap <silent> [Window]G
+          \ :<C-u>vsplit +bp<CR>
+    let lnum = expand('<slnum>') + s:lnum - 4
+    let g:_spacevim_mappings_windows.G = ['vsplit +bp',
+          \ 'vsplit previous buffer',
+          \ [
+          \ '[WIN G] is to split windows vertically, switch to the new window',
           \ '',
           \ 'Definition: ' . s:file . ':' . lnum,
           \ ]
@@ -172,13 +183,13 @@ endfunction
 
 
 function! SpaceVim#mapping#leader#getName(key) abort
-  if a:key == ' '
+  if a:key ==# ' '
     return '[SPC]'
-  elseif a:key == 'g'
+  elseif a:key ==# 'g'
     return '[g]'
-  elseif a:key == 'z'
+  elseif a:key ==# 'z'
     return '[z]'
-  elseif a:key == g:spacevim_windows_leader
+  elseif a:key ==# g:spacevim_windows_leader
     return '[WIN]'
   elseif a:key ==# '\'
     return '<leader>'

@@ -135,10 +135,9 @@ function! SpaceVim#mapping#split_previous_buffer() abort
     wincmd w
     e#
   endif
-
 endfunction
 
-function! SpaceVim#mapping#vertical_split_previous_buffer() abort
+function! SpaceVim#mapping#vertical_split_previous_buffer(...) abort
   if bufnr('#') == -1
     call SpaceVim#util#echoWarn('There is no previous buffer')
   else
@@ -148,16 +147,20 @@ function! SpaceVim#mapping#vertical_split_previous_buffer() abort
   endif
 endfunction
 
-function! SpaceVim#mapping#close_current_buffer() abort
+function! SpaceVim#mapping#close_current_buffer(...) abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
   let f = ''
   if getbufvar(bn, '&modified', 0)
     redraw
     echohl WarningMsg
-    echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
+    if len(a:000) > 0
+      let rs = get(a:000, 0)
+    else
+      echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
+      let rs = nr2char(getchar())
+    endif
     echohl None
-    let rs = nr2char(getchar())
     if rs ==? 'y'
       write
     elseif rs ==? 'n'
@@ -175,7 +178,7 @@ function! SpaceVim#mapping#close_current_buffer() abort
     endif
   endif
 
-  if &buftype == 'terminal'
+  if &buftype ==# 'terminal'
     exe 'bd!'
     return
   endif
@@ -208,6 +211,10 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let index = index(buffers, abuf)
   if get(w:, 'shell_layer_win', 0) == 1
     exe 'bd!' . abuf
+    " fuck the terminal windows
+    if get(w:, 'shell_layer_win', 0) == 1
+      close
+    endif
     return
   endif
   if index != -1
@@ -252,7 +259,7 @@ function! SpaceVim#mapping#menu(desc, key, cmd) abort
         \ a:cmd])
 endfunction
 
-function! SpaceVim#mapping#clear_saved_buffers()
+function! SpaceVim#mapping#clear_saved_buffers() abort
   call s:BUFFER.filter_do(
         \ {
         \ 'expr' : [

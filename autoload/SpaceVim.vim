@@ -498,7 +498,15 @@ let g:spacevim_colorscheme_default     = 'desert'
 let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
+
+""
+" Config the direction of file tree. Default is 'right'. you can also set to
+" 'left'. 
+"
+" NOTE: if it is 'left', the tagbar will be move to right.
+let g:spacevim_filetree_direction             = 'right'
 
 let g:spacevim_sidebar_direction        = ''
 ""
@@ -685,6 +693,7 @@ let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
       \ 'vimfiler',
+      \ 'defx',
       \ 'SpaceVimRunner',
       \ 'SpaceVimREPL',
       \ 'SpaceVimQuickFix',
@@ -832,7 +841,7 @@ function! SpaceVim#end() abort
   endif
   ""
   " generate tags for SpaceVim
-  let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
+  let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
     exe 'helptags ' . help
   catch
@@ -962,6 +971,9 @@ function! SpaceVim#welcome() abort
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2
       VimFiler
+      wincmd p
+    elseif exists(':Defx') == 2
+      Defx
       wincmd p
     endif
   endif

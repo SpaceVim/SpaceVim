@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#javascript 模块"
-description: "这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -15,12 +15,13 @@ lang: cn
 - [快捷键](#快捷键)
   - [导包相关快捷键](#导包相关快捷键)
   - [常规快捷键](#常规快捷键)
+  - [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 javascript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 JavaScript 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 启用模块
 
@@ -56,18 +57,30 @@ lang: cn
 
 ### 导包相关快捷键
 
-| 模式          | 快捷键    | 按键描述           |
-| ------------- | --------- | ------------------ |
-| Insert/Normal | `F4`      | 导入光标下的类     |
-| Normal        | `SPC l I` | 导入所有缺失的类   |
-| Normal        | `SPC l R` | 删除多余的导包     |
-| Normal        | `SPC l i` | 智能导入光标下的类 |
-| Insert        | `<C-j>I`  | 导入所有缺失的类   |
-| Insert        | `<C-j>R`  | 删除多余的导包     |
-| Insert        | `<C-j>i`  | 智能导入光标下的类 |
+| 模式          | 快捷键     | 按键描述           |
+| ------------- | ---------- | ------------------ |
+| Insert/Normal | `F4`       | 导入光标下的类     |
+| Normal        | `SPC l I`  | 导入所有缺失的类   |
+| Normal        | `SPC l R`  | 删除多余的导包     |
+| Normal        | `SPC l i`  | 智能导入光标下的类 |
+| Insert        | `Ctrl-j I` | 导入所有缺失的类   |
+| Insert        | `Ctrl-j R` | 删除多余的导包     |
+| Insert        | `Ctrl-j i` | 智能导入光标下的类 |
 
 ### 常规快捷键
 
 | 模式   | 快捷键      | 按键描述   |
 | ------ | ----------- | ---------- |
-| normal | `SPC l g d` | 生成 JSDoc |
+| Normal | `SPC l g d` | 生成 JSDoc |
+
+### 交互式编程
+
+启动 `node -i` 交互进程，快捷键为： `SPC l s i`。
+
+将代码传输给 REPL 进程执行：
+
+| 快捷键      | 功能描述                |
+| ----------- | ----------------------- |
+| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s l` | 发送当前行内容至 REPL   |
+| `SPC l s s` | 发送已选中的内容至 REPL |

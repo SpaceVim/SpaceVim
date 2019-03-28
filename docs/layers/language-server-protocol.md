@@ -22,7 +22,7 @@ This layers adds extensive support for [language-server-protocol](https://micros
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
 The upstream is rewritten by rust.
 
-We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
 
 Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
 it will be used as lsp client.
@@ -113,6 +113,18 @@ npm install -g purescript-language-server
 npm install vue-language-server -g
 ```
 
+**css:**
+
+```sh
+npm install -g vscode-css-languageserver-bin
+```
+
+**ruby:**
+
+```sh
+gem install solargraph
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -130,22 +142,24 @@ default language server commands:
 
 | language     | server command                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
-| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
-| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
-| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
-| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
-| `objc`       | `['clangd']`                                                                                                                                                                                     |
-| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
 | `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
-| `python`     | `['pyls']`                                                                                                                                                                                       |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
+| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
 | `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `objc`       | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
+| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `python`     | `['pyls']`                                                                                                                                                                                       |
+| `ruby`       | `['solargraph',  'stdio']`
+| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
 | `vue`        | `['vls']`                                                                                                                                                                                        |
 
 To override the server command, you may need to use `override_cmd` option:

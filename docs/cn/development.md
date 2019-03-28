@@ -54,10 +54,9 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 请先阅读下面内容，再通过 [issues tracker](https://github.com/SpaceVim/SpaceVim/issues)进行反馈：
 
+- 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认错误追踪中是否存在重复的问题
 
-- 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认，错误追踪中是否存在重复的问题
-
-- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 bug 重现操作。
+- 检查问题是否在最新版的 SpaceVim 中修复，请更新你的 SpaceVim，然后进行 Bug 重现操作
 
 - 按照下面的问题格式，建立清晰的问题标题
 
@@ -69,7 +68,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ### 证书
 
-SpaceVim 所有部分采用 MIT 许可。
+SpaceVim 所有部分采用 GPLv3 许可。
 
 - 初始化及核心代码
 - 所有模块相关文件
@@ -86,16 +85,16 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 
 新开 pull request 时，应当标记该 PR 属于以下哪种前缀：
 
-- `Add:` 添加一新的特性
+- `Add:` 添加新的特性
 - `Change:` 修改已有特性的行为
-- `Fixed:` 修复某些问题
-- `Remove:` 移除原先支持的某种特性
+- `Fix:` 修复某些问题
+- `Remove:` 移除原先支持的某些特性
 - `Doc:` 更新帮助文档
 - `Website:` 更新网站内容
 
 示例如下：
 
-`Website: update the lang#c layer page`
+`Website: update the lang#c layer page.`
 
 #### 在上游的主分支顶部压缩你的 PR 分支
 
@@ -121,22 +120,22 @@ git rebase upstream/master
 ```
 #### 抽象化的简单 PRs（绝大多数 PRs 都是这样的）：
 
-- 'master'中的分支
+- `master`中的分支
 - 每个 PR 一个主题
 - 每个 PR 一个提交
 - 如果你有一些不同主题的提交，请关闭 PR 然后为每个主题创建一个新的 PR
-- 如果你仍然有很多提交，请把他们打包成一个提交
+- 如果你仍然有很多提交，请把它们打包成一个提交
 
 #### 复杂的 PRs (大的重构，等)：
 
-只打包一些枯燥的提交，比如修改错别字，语法修复，等等... 把重要和独立的步骤分别放在不同的提交中。
+只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
 Those PRs are merged and explicitly not fast-forwarded.
-这些 PRs 被合并并且非明试快速转发。
+这些 PRs 被合并并且明示非快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
 
 
-- 用现在时和祈使句：例如"Fix bug"，而不是"fixed bug" 或者"fixes bug"。
+- 用现在时和祈使句：例如："Fix bug"，而不是"fixed bug" 或者"fixes bug"。
 - 以大写字母开头，短摘要开头（72 个字符或者更少），以空行结尾。
 - 如果需要的话，可以用每行 72 个字符的格式添加一个或多个详细的段落。
 - 每个独立的段落以空行结尾。
@@ -174,13 +173,12 @@ Further paragraphs come after blank lines.
 
 首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
 
-
-Layer with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
+Layers with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 未关联配置的模块将会被拒绝。举个例子一个只有包和钩子的模块，就能被很简单地替换为变量 `g:spacevim_custom_plugins`。
 
 #### 文件头
 
-Vim 脚本的文件头，应该按照下面的格式：
+Vim 脚本的文件头，应该采用下面的格式：
 
 ```vim
 "=============================================================================
@@ -193,17 +191,17 @@ Vim 脚本的文件头，应该按照下面的格式：
 ```
 
 You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also.
-你可以用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
+你应该用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 的名字来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
+
 #### 新 layer 的作者
 
-把文件头中的默认作者名字(Shidong Wang)改为你自己的名字。
+把文件头中的默认作者名字（Shidong Wang）改为你自己的名字。
 
-下面是一个创建一个名字为`foo`的新 layer 的实例
+下面是一个创建一个名字为 `foo` 的新 layer 的示例
 
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
 3. edit layer file, check out the example below:
-
 ```vim
 "=============================================================================
 " foo.vim --- foo Layer file for SpaceVim
@@ -220,22 +218,22 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 "
 " @subsection Key Bindings
 " >
-"   Mode      Key           Function
+"   Modes     Keys            Functions
 "   -------------------------------------------------------------
-"   normal    <leader>jA    generate accessors
-"   normal    <leader>js    generate setter accessor
+"   normal    <leader> j A    generate accessors
+"   normal    <leader> j s    generate setter accessor
 " <
 " @subsection Layer options
 " >
-"   Name              Description                      Default
+"   Names             Descriptions                     Default
 "   -------------------------------------------------------------
-"   option1       Set option1 for foo layer               ''
-"   option2       Set option2 for foo layer               []
-"   option3       Set option3 for foo layer               {}
+"   option1           Set option1 for foo layer        ''
+"   option2           Set option2 for foo layer        []
+"   option3           Set option3 for foo layer        {}
 " <
 " @subsection Global options
 " >
-"   Name              Description                      Default
+"   Names             Descriptions                     Default
 "   -------------------------------------------------------------
 "   g:pluginA_opt1    Set opt1 for plugin A               ''
 "   g:pluginB_opt2    Set opt2 for plugin B               []
@@ -245,8 +243,8 @@ function! SpaceVim#layers#foo#plugins() abort
   let plugins = []
   call add(plugins, ['Shougo/foo.vim', {'option' : 'value'}])
   call add(plugins, ['Shougo/foo_test.vim', {'option' : 'value'}])
+  return plugins
 endfunction
-
 
 function! SpaceVim#layers#foo#config() abort
   let g:foo_option1 = get(g:, 'foo_option1', 1)
@@ -255,7 +253,6 @@ function! SpaceVim#layers#foo#config() abort
   " ...
 endfunction
 ```
-
 4. Add layer document `docs/layers/foo.md` for `foo` layer.
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
@@ -263,41 +260,41 @@ endfunction
 #### 对现有的 layer 进行贡献
 
 If you contribute to an already existing layer, you should not modify any header file.
-如果你正在对一个已经存在的 layer 进行贡献的话，你不能修改文件头的任意地方。
+如果你想对一个已经存在的模块做贡献，你不能修改文件头的任意地方。
 
 #### 贡献按键绑定
 
 按键映射是 SpaceVim 中非常重要的一部分。
 
-如果你只想要拥有自己的按键映射的话，你可以在`~/.SpaceVim.d/init.vim`文件中进行修改。
+如果你只想要拥有自己的按键映射的话，你可以在 `bootstrap function` 文件中进行修改。
 
 如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
 
-始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。他应该是层文件和 [documentation.md](https://spacevim.org/cn/documentation)。
+始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。它应该是 `layername.md` 和 [documentation.md](https://spacevim.org/cn/documentation)。
 
 
 ##### 特定语言的按键绑定
 
-所有语言的特殊按键绑定都是以 `SPC l`前缀开始的。
+所有语言的专属按键绑定都是以 `SPC l` 前缀开始的。
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| SPC l r     | start a runner for current file                  |
-| SPC l e     | rename symbol                                    |
-| SPC l d     | show doc                                         |
-| SPC l i r   | remove unused imports                            |
-| SPC l i s   | sort imports with isort                          |
-| SPC l s i   | Start a language specified inferior REPL process |
-| SPC l s b   | send buffer and keep code buffer focused         |
-| SPC l s l   | send line and keep code buffer focused           |
-| SPC l s s   | send selection text and keep code buffer focused |
+| 快捷键      | 功能描述                     |
+| ----------- | ---------------------------- |
+| `SPC l r`   | 为当前文件打开一个 runner    |
+| `SPC l e`   | rename symbol                |
+| `SPC l d`   | 显示文档                     |
+| `SPC l i r` | 删除未使用的导包             |
+| `SPC l i s` | 排序导包                     |
+| `SPC l s i` | 开启一个语言专属的 REPL 进程 |
+| `SPC l s b` | 后台发送当前缓冲区           |
+| `SPC l s l` | 后台发送当前行               |
+| `SPC l s s` | 后台发送选中文本             |
 
 上面所有的按键绑定都是默认的建议，但是它同样是基于自身的语言层的。
 
 
 #### Contributing a banner
 
-The startup banner is by default the SpaceVim logo but there are also ASCII banners available in the core/banner layer.
+The startup banner is by default the SpaceVim logo but there are also ASCII banners available in the `core/banner` layer.
 
 If you have some ASCII skills you can submit your artwork!
 
@@ -305,7 +302,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## 基于 SpaceVim 开发
 
-SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 Vim 和 Neovim 的插件。同时，也可以像插件的 README 中添加 SpaceVim 的图标：
+SpaceVim 提供了一套内置的公共函数库[（API）](../api/)，可以基于这个公共函数开发兼容 Vim 和 Neovim 的插件。同时，也可以向插件的 README 中添加 SpaceVim 的图标：
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 

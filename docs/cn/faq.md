@@ -42,11 +42,11 @@ SpaceVim 在启动时直接读取缓存的 json 文件，效率更高。
 ### 为什么 SpaceVim 颜色主题和官网不一致？
 
 因为在 SpaceVim 中，默认情况下启用了终端真色，因此你需要确保你的终端支持真色。
-但是并不是每种终端都支持真色。因此，当你的终端不支持真色时，
-你可以在配置文件里面禁用真色支持：
+但是并不是每种终端都支持真色。因此，当你的终端不支持真色时，你可以在配置文件里面禁用真色支持：
 
 ```toml
-  enable_guicolors = false
+[options]
+    enable_guicolors = false
 ```
 
 ### 如何增加自定义快捷键？
@@ -57,19 +57,17 @@ SpaceVim 在启动时直接读取缓存的 json 文件，效率更高。
 比如，我需要加入这样一个快捷键，使用 `<Leader> w` 来保存当前文件。那么，
 我需要修改配置文件，并指定一个载入时需要调用的方法：
 
-修改 `~/.SpaceVim.d/init.toml`，加入 `bootstrap_before` 选项：
-
+在`~/.SpaceVim.d/init.toml`的[options]片断中加入 `bootstrap_before` 选项：
 ```toml
 [options]
-  bootstrap_before = "myspacevim#init"
+    bootstrap_before = "myspacevim#init"
 ```
 
 添加文件 `~/.SpaceVim.d/autoload/myspacevim.vim`, 并加入如下内容：
 
-
 ```vim
 function! myspacevim#init() abort
-  nnoremap <Leader>w :w<cr>
+    nnoremap <Leader>w :w<cr>
 endfunction
 ```
 

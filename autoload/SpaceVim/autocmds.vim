@@ -20,7 +20,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
           \   bd|
           \   q | endif
-    autocmd FileType jsp call JspFileTypeInit()
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
@@ -37,17 +36,13 @@ function! SpaceVim#autocmds#init() abort
           \   exe "normal! g`\"" |
           \ endif
     autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-    autocmd BufLeave * let b:winview = winsaveview()
-    autocmd BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+    autocmd BufWinLeave * let b:_winview = winsaveview()
+    autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
     autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
-    autocmd FileType lua set comments=f:--
-    autocmd FileType xml call XmlFileTypeInit()
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()

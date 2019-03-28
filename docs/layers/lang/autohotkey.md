@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#autohotkey layer"
-description: "This layer adds autohotkey language support to SpaceVim"
+description: "This layer adds AutohotKey language support to SpaceVim."
 ---
 
 # [Available Layers](../../) >> lang#autohotkey
@@ -15,7 +15,7 @@ description: "This layer adds autohotkey language support to SpaceVim"
 
 ## Description
 
-This layer adds autohotkey language support to SpaceVim.
+This layer adds AutohotKey language support to SpaceVim.
 
 ## Features
 

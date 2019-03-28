@@ -76,6 +76,7 @@ CONTENTS                                                   *SpaceVim-contents*
       31. shell.........................................|SpaceVim-layer-shell|
       32. tmux...........................................|SpaceVim-layer-tmux|
       33. tools#dash...............................|SpaceVim-layer-tools-dash|
+      34. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -565,7 +566,14 @@ plugins will be installed.
 <
 
                                                       *g:spacevim_filemanager*
-The default file manager of SpaceVim. Default is 'vimfiler'.
+The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
+nerdtree or defx
+
+                                               *g:spacevim_filetree_direction*
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
+
+NOTE: if it is 'left', the tagbar will be move to right.
 
                                          *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
@@ -1161,6 +1169,14 @@ MAPPINGS
   normal    SPC l m R     run one maven goal
   normal    SPC l m t     run maven test
 
+  Gradle key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g b     run gradle clean build
+  normal    SPC l g B     run gradle build
+  normal    SPC l g t     run gradle test
+
   Jump key bindings:
 
   Mode      Key           Function
@@ -1363,6 +1379,11 @@ TOOLS#DASH                                         *SpaceVim-layer-tools-dash*
 This layer provides Dash integration for SpaceVim
 
 ==============================================================================
+TOOLS#ZEAL                                         *SpaceVim-layer-tools-zeal*
+
+This layer provides Zeal integration for SpaceVim
+
+==============================================================================
 API                                                             *SpaceVim-api*
 
 SpaceVim contains a variety of public apis. To using the api, you need to make
@@ -1449,6 +1470,14 @@ FUNCTIONS
 split(str [, sep [, keepempty[, max]]])
 
   run vim command, and return the output of such command.
+
+trim(str)
+
+  remove space at the begin and end of a string, same as |trim()|
+
+fill(str, length[, char])
+
+  fill string to length with {char}, if {char} is omnit, a space is used.
 
 ==============================================================================
 JOB                                                         *SpaceVim-api-job*

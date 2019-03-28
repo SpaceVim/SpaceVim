@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#asciidoc layer"
-description: "Edit asciidoc within vim, autopreview asciidoc in the default browser, with this layer you can also format asciidoc file."
+description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default browser, with this layer you can also format AsciiDoc file."
 ---
 
 # [Available Layers](../../) >> lang#asciidoc
@@ -14,7 +14,7 @@ description: "Edit asciidoc within vim, autopreview asciidoc in the default brow
 
 ## Description
 
-This layer is for editing asciidoc file. following plugins are included in this layer:
+This layer is for editing AsciiDoc file. Following plugins are included in this layer:
 
 - `wsdjeg/vim-asciidoc`
 - `Raimondi/VimRegStyle`

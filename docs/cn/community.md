@@ -14,6 +14,7 @@ lang: cn
 - [问题及需求提交](#问题及需求提交)
 - [邮件列表](#邮件列表)
 - [聊天](#聊天)
+- [其他](#其他)
 
 <!-- vim-markdown-toc -->
 
@@ -52,3 +53,8 @@ spacevim-cn@googlegroups.com
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
+- <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
+
+### 其他
+
+- <i class="fab fa-zhihu"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)

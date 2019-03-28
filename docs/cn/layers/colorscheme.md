@@ -53,7 +53,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 | material     | yes      | yes      | yes      | yes     | yes        |
 | SpaceVim     | yes      | yes      | yes      | yes     | yes        |
 
-默认情况下，SpaceVim 的 colorscheme 模块仅包含以上主题，如果需要使用 Github 上其他主题，
+默认情况下，SpaceVim 的 colorscheme 模块仅包含以上主题，如果需要使用 Github 上其它主题，
 可以在配置文件中使用 `custom_plugins` 来添加主题，例如：
 
 ```toml
@@ -88,8 +88,8 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
   random_theme = true
 ```
 
-除了在每次启用时自动应用随即主题以外，也可以设置它的更新频率，默认是为空，
-表示，每次启用 Vim 是随即选择一种主题。可供选择的频率有：`daily`、`hourly`、`weekly`, 
+除了在每次启用时自动应用随机主题以外，也可以设置它的更新频率，默认是为空，
+表示每次启用 Vim 是随机选择一种主题。可供选择的频率有：`daily`、`hourly`、`weekly`, 
 以及 `数字 + 单位` 这种格式，如 `1h`。
 
 ```toml

@@ -272,6 +272,17 @@ function! s:self.info(id) abort
   endif
 endfunction
 
+function! s:self.chanclose(id, type) abort
+  if self.nvim_job
+      call chanclose(a:id, a:type)
+  elseif self.vim_job
+    if has_key(self.jobs, a:id) && a:type ==# 'stdin'
+      call ch_close_in(get(self.jobs, a:id))
+    endif
+  endif
+endfunction
+
+
 function! s:self.debug() abort
   echo join(self._message, "\n")
 endfunction

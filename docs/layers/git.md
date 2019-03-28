@@ -19,7 +19,7 @@ This layers adds extensive support for [git](http://git-scm.com/).
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add following snippet to your custom configuration file (`SPC f v d`).
 
 ```toml
 [[layers]]

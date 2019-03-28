@@ -11,7 +11,11 @@ let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '+')
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
-let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
+if g:spacevim_filetree_direction ==# 'right'
+  let g:vimfiler_direction = get(g:, 'vimfiler_direction', 'rightbelow')
+else
+  let g:vimfiler_direction = 'leftabove'
+endif
 "let g:vimfiler_preview_action = 'auto_preview'
 let g:vimfiler_ignore_pattern = get(g:, 'vimfiler_ignore_pattern', [
       \ '^\.git$',
@@ -88,9 +92,6 @@ function! s:vimfilerinit()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  nnoremap <silent><buffer> gr  :<C-u>Denite grep:<C-R>=<SID>selected()<CR> -buffer-name=grep<CR>
-  nnoremap <silent><buffer> gf  :<C-u>Denite file_rec:<C-R>=<SID>selected()<CR><CR>
-  nnoremap <silent><buffer> gd  :<C-u>call <SID>change_vim_current_dir()<CR>
   nnoremap <silent><buffer> sg  :<C-u>call <SID>vimfiler_vsplit()<CR>
   nnoremap <silent><buffer> sv  :<C-u>call <SID>vimfiler_split()<CR>
   nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
