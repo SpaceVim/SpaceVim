@@ -187,7 +187,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
     redrawstatus!
-  elseif a:char == 65 " I
+  elseif a:char == 65 " A
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
