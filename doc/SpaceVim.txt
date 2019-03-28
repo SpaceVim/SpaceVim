@@ -67,16 +67,17 @@ CONTENTS                                                   *SpaceVim-contents*
       22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
       23. lang#php...................................|SpaceVim-layer-lang-php|
       24. lang#pony.................................|SpaceVim-layer-lang-pony|
-      25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      26. lang#python.............................|SpaceVim-layer-lang-python|
-      27. lang#rust.................................|SpaceVim-layer-lang-rust|
-      28. lang#scala...............................|SpaceVim-layer-lang-scala|
-      29. lang#xml...................................|SpaceVim-layer-lang-xml|
-      30. operator...................................|SpaceVim-layer-operator|
-      31. shell.........................................|SpaceVim-layer-shell|
-      32. tmux...........................................|SpaceVim-layer-tmux|
-      33. tools#dash...............................|SpaceVim-layer-tools-dash|
-      34. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      25. lang#processing.....................|SpaceVim-layer-lang-processing|
+      26. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      27. lang#python.............................|SpaceVim-layer-lang-python|
+      28. lang#rust.................................|SpaceVim-layer-lang-rust|
+      29. lang#scala...............................|SpaceVim-layer-lang-scala|
+      30. lang#xml...................................|SpaceVim-layer-lang-xml|
+      31. operator...................................|SpaceVim-layer-operator|
+      32. shell.........................................|SpaceVim-layer-shell|
+      33. tmux...........................................|SpaceVim-layer-tmux|
+      34. tools#dash...............................|SpaceVim-layer-tools-dash|
+      35. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1254,6 +1255,29 @@ Requirements:
 
 ==============================================================================
 LANG#PONY                                           *SpaceVim-layer-lang-pony*
+
+==============================================================================
+LANG#PROCESSING                               *SpaceVim-layer-lang-processing*
+
+This layer is for Processing development: https://processing.org
+
+This is based on the work from https://github.com/sophacles/vim-processing
+
+Requirements:
+
+  1. You will need a copy of processing-java. The best way to do this is to
+    get a copy of the Processing IDE from https://processing.org/download/
+
+      Once you have it, run it, and then select Tools -> install
+"processing-java"
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      SPC l r     execute current sketch
+<
 
 ==============================================================================
 LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
