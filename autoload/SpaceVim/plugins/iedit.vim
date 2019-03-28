@@ -149,12 +149,23 @@ endfunction
 
 let s:toggle_stack = {}
 
+" here is a list of normal command which can be handled by idedit
 function! s:handle_normal(char) abort
   silent! call s:remove_cursor_highlight()
   if a:char ==# 105 " i
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
+    redrawstatus!
+  elseif a:char == 73 " I
+    let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    let w:spacevim_statusline_mode = 'ii'
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].begin = ''
+    endfor
     redrawstatus!
   elseif a:char == 9 " <tab>
     if index(keys(s:toggle_stack), s:index . '') == -1
@@ -174,6 +185,16 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
+    redrawstatus!
+  elseif a:char == 65 " A
+    let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    let w:spacevim_statusline_mode = 'ii'
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+      let s:cursor_stack[i].cursor = ''
+      let s:cursor_stack[i].end = ''
     endfor
     redrawstatus!
   elseif a:char ==# "\<Left>" || a:char == 104
@@ -281,7 +302,11 @@ function! s:handle_insert(char) abort
     redraw!
     redrawstatus!
     return
-  elseif a:char == 23  " <c-w>
+  elseif a:char == 23  " ctrl-w : remove last word
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
+    endfor
+  elseif a:char == 21  " Ctrl-u
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
     endfor
