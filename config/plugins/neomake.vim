@@ -6,7 +6,7 @@ scriptencoding utf-8
 " 2 open list without move cursor
 let g:neomake_open_list = has('nvim') ? 0 : 2
 let g:neomake_virtualtext_current_error =
-      \ get(g:_checkers_var, 'show_cursor_error', 0)
+      \ get(get(g:, '_checkers_var', {}), 'show_cursor_error', 0)
 let g:neomake_echo_current_error = 1
 let g:neomake_cursormoved_delay = 30
 
