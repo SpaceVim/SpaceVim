@@ -38,4 +38,4 @@ but that isn't terribly useful since changes made inside the container won't be 
 
 Even better is an alias `dnvim` which will do this automatically:
 
-    alias dnvim="docker run -it -v $(pwd):/home/spacevim/src nvim"
+    alias dnvim='docker run -it -v $(pwd):/home/spacevim/src nvim'
