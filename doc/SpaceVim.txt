@@ -51,7 +51,7 @@ CONTENTS                                                   *SpaceVim-contents*
       6. exprfold....................................|SpaceVim-layer-exprfold|
       7. format........................................|SpaceVim-layer-format|
       8. github........................................|SpaceVim-layer-github|
-      9. github..........................................|SpaceVim-layer-test|
+      9. test............................................|SpaceVim-layer-test|
       10. incsearch.................................|SpaceVim-layer-incsearch|
       11. indentmove...............................|SpaceVim-layer-indentmove|
       12. lang#c.......................................|SpaceVim-layer-lang-c|
@@ -935,7 +935,7 @@ MAPPINGS
 <
 
 ==============================================================================
-GITHUB                                                   *SpaceVim-layer-test*
+TEST                                                     *SpaceVim-layer-test*
 
 This layer allows to run tests on SpaceVim
 
