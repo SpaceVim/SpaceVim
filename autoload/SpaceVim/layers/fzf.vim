@@ -425,3 +425,39 @@ function! s:helptags(...) abort
         \   'down': '40%'
         \ }))
 endfunction
+
+
+" fzf menu command
+function! SpaceVim#layers#fzf#complete_menu(ArgLead, CmdLine, CursorPos) abort
+  return join(keys(g:unite_source_menu_menus), "\n")
+endfunction
+
+command! -nargs=* -complete=custom,SpaceVim#layers#fzf#complete_menu FzfMenu call <SID>menu(<q-args>)
+function! s:menu_action(e) abort
+  let action = get(s:menu_action, a:e, '')
+  exe action
+endfunction
+function! s:menu(name) abort
+  let s:source = 'menu'
+  let s:menu_name = a:name
+  let s:menu_action = {}
+  function! s:menu_content() abort
+    let menu = get(g:unite_source_menu_menus, s:menu_name, {})
+    if has_key(menu, 'command_candidates')
+      let rt = []
+      for item in menu.command_candidates
+        call add(rt, item[0])
+        call extend(s:menu_action, {item[0] : item[1]}, 'force')
+      endfor
+      return rt
+    else
+      return []
+    endif
+  endfunction
+  call fzf#run(fzf#wrap('menu', {
+        \   'source':  reverse(<sid>menu_content()),
+        \   'sink':    function('s:menu_action'),
+        \   'options': '+m',
+        \   'down': '40%'
+        \ }))
+endfunction
