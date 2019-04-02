@@ -44,8 +44,10 @@ function! SpaceVim#plugins#projectmanager#list() abort
     Unite menu:Projects
   elseif SpaceVim#layers#isLoaded('denite')
     Denite menu:Projects
+  elseif SpaceVim#layers#isLoaded('fzf')
+    FzfMenu Projects
   else
-    call SpaceVim#logger#warn('denite or unite layer are needed to fuzzy find project!')
+    call SpaceVim#logger#warn('fuzzy find layer is needed to find project!')
   endif
 endfunction
 

@@ -447,7 +447,7 @@ function! s:menu(name) abort
       let rt = []
       for item in menu.command_candidates
         call add(rt, item[0])
-        call extend(s:menu_action, {item[0], item[1]}, 'force')
+        call extend(s:menu_action, {item[0] : item[1]}, 'force')
       endfor
       return rt
     else
