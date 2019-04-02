@@ -36,8 +36,17 @@ let g:unite_source_menu_menus.Projects = {'description':
 let g:unite_source_menu_menus.Projects.command_candidates =
       \ get(g:unite_source_menu_menus.Projects,'command_candidates', [])
 
+" this function will use fuzzy find layer, now only denite and unite are
+" supported.
+
 function! SpaceVim#plugins#projectmanager#list() abort
-  Unite menu:Projects
+  if SpaceVim#layers#isLoaded('unite')
+    Unite menu:Projects
+  elseif SpaceVim#layers#isLoaded('denite')
+    Denite menu:Projects
+  else
+    call SpaceVim#logger#warn('denite or unite layer are needed to fuzzy find project!')
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#open(project) abort
