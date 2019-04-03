@@ -32,13 +32,14 @@ CONTENTS                                                   *SpaceVim-contents*
       12. guifont...................................|SpaceVim-options-guifont|
       13. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
       14. max_column.............................|SpaceVim-options-max_column|
-      15. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      16. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      17. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      18. relativenumber.....................|SpaceVim-options-relativenumber|
-      19. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      20. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      21. windows_leader.....................|SpaceVim-options-windows_leader|
+      15. max_column......................|SpaceVim-options-home_files_number|
+      16. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      17. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      18. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      19. relativenumber.....................|SpaceVim-options-relativenumber|
+      20. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      21. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      22. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -231,6 +232,14 @@ Change the max number of columns for SpaceVim. Default is 120.
 <
 
 ==============================================================================
+MAX_COLUMN                                *SpaceVim-options-home_files_number*
+
+Change the list number of files for SpaceVim home. Default is 6.
+>
+  home_files_number = 6
+<
+
+==============================================================================
 PLUGIN_BUNDLE_DIR                         *SpaceVim-options-plugin_bundle_dir*
 
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
@@ -309,6 +318,12 @@ Enable/Disable relativenumber, by default it is enabled.
 Change the max number of columns for SpaceVim. Default is 120.
 >
   let g:spacevim_max_column = 120
+<
+
+                                                *g:spacevim_home_files_number*
+Change the list number of files for SpaceVim home. Default is 6.
+>
+  let g:spacevim_home_files_number = 6
 <
 
                                                  *g:spacevim_enable_guicolors*

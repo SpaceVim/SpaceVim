@@ -134,28 +134,33 @@ function! s:defx_init()
         \ defx#do_action('change_vim_cwd')
 endf
 
+" in this function we should vim-choosewin if possible
 function! DefxSmartL(_)
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
   else
     let filepath = defx#get_candidate()['action__path']
-    if tabpagewinnr(tabpagenr(), '$') >= 3
-      if has('nvim')
-        let input = input({
-              \ 'prompt'      : 'ChooseWin No.: ',
-              \ 'cancelreturn': 0,
-              \ })
-        if input == 0 | return | endif
+    if tabpagewinnr(tabpagenr(), '$') >= 3    " if there are more than 2 normal windows
+      if exists(':ChooseWin') == 2
+        ChooseWin
       else
-        let input = input('ChooseWin No.: ')
+        if has('nvim')
+          let input = input({
+                \ 'prompt'      : 'ChooseWin No.: ',
+                \ 'cancelreturn': 0,
+                \ })
+          if input == 0 | return | endif
+        else
+          let input = input('ChooseWin No.: ')
+        endif
+        if input == winnr() | return | endif
+        exec input . 'wincmd w'
       endif
-      if input == winnr() | return | endif
-      exec ': ' . input . 'wincmd w'
-      exec ':e' . filepath
+      exec 'e' filepath
     else
       exec 'wincmd w'
-      exec ':e' . filepath
+      exec 'e' filepath
     endif
   endif
 endfunction
