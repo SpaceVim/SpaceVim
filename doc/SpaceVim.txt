@@ -52,30 +52,30 @@ CONTENTS                                                   *SpaceVim-contents*
       6. exprfold....................................|SpaceVim-layer-exprfold|
       7. format........................................|SpaceVim-layer-format|
       8. github........................................|SpaceVim-layer-github|
-      9. github..........................................|SpaceVim-layer-test|
-      10. incsearch.................................|SpaceVim-layer-incsearch|
-      11. indentmove...............................|SpaceVim-layer-indentmove|
-      12. lang#c.......................................|SpaceVim-layer-lang-c|
-      13. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      14. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      16. lang#elm...................................|SpaceVim-layer-lang-elm|
-      17. lang#go.....................................|SpaceVim-layer-lang-go|
-      18. lang#java.................................|SpaceVim-layer-lang-java|
-      19. lang#julia...............................|SpaceVim-layer-lang-julia|
-      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      21. lang#lua...................................|SpaceVim-layer-lang-lua|
-      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      23. lang#php...................................|SpaceVim-layer-lang-php|
-      24. lang#pony.................................|SpaceVim-layer-lang-pony|
-      25. lang#processing.....................|SpaceVim-layer-lang-processing|
-      26. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      27. lang#python.............................|SpaceVim-layer-lang-python|
-      28. lang#rust.................................|SpaceVim-layer-lang-rust|
-      29. lang#scala...............................|SpaceVim-layer-lang-scala|
-      30. lang#xml...................................|SpaceVim-layer-lang-xml|
-      31. operator...................................|SpaceVim-layer-operator|
-      32. shell.........................................|SpaceVim-layer-shell|
+      9. incsearch..................................|SpaceVim-layer-incsearch|
+      10. indentmove...............................|SpaceVim-layer-indentmove|
+      11. lang#c.......................................|SpaceVim-layer-lang-c|
+      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      15. lang#elm...................................|SpaceVim-layer-lang-elm|
+      16. lang#go.....................................|SpaceVim-layer-lang-go|
+      17. lang#java.................................|SpaceVim-layer-lang-java|
+      18. lang#julia...............................|SpaceVim-layer-lang-julia|
+      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      20. lang#lua...................................|SpaceVim-layer-lang-lua|
+      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      22. lang#php...................................|SpaceVim-layer-lang-php|
+      23. lang#pony.................................|SpaceVim-layer-lang-pony|
+      24. lang#processing.....................|SpaceVim-layer-lang-processing|
+      25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      26. lang#python.............................|SpaceVim-layer-lang-python|
+      27. lang#rust.................................|SpaceVim-layer-lang-rust|
+      28. lang#scala...............................|SpaceVim-layer-lang-scala|
+      29. lang#xml...................................|SpaceVim-layer-lang-xml|
+      30. operator...................................|SpaceVim-layer-operator|
+      31. shell.........................................|SpaceVim-layer-shell|
+      32. test...........................................|SpaceVim-layer-test|
       33. tmux...........................................|SpaceVim-layer-tmux|
       34. tools#dash...............................|SpaceVim-layer-tools-dash|
       35. tools#zeal...............................|SpaceVim-layer-tools-zeal|
@@ -950,23 +950,6 @@ MAPPINGS
 <
 
 ==============================================================================
-GITHUB                                                   *SpaceVim-layer-test*
-
-This layer allows to run tests on SpaceVim
-
-MAPPINGS
-
->
-  Mode      Key         Function
-  -------------------------------------------------------------
-  normal    SPC k n     run nearest test
-  normal    SPC k f     run test file
-  normal    SPC k s     run test suite
-  normal    SPC k l     run the latest test
-  normal    SPC k v     visits the last run test file
-<
-
-==============================================================================
 INCSEARCH                                           *SpaceVim-layer-incsearch*
 
 This layer improved incremental searching for neovim/vim
@@ -1389,6 +1372,23 @@ KEY BINDINGS
 >
   SPC '   Open or switch to terminal windows
   q       Hide terminal windows in normal mode
+<
+
+==============================================================================
+TEST                                                     *SpaceVim-layer-test*
+
+This layer allows to run tests on SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key         Function
+  -------------------------------------------------------------
+  normal    SPC k n     run nearest test
+  normal    SPC k f     run test file
+  normal    SPC k s     run test suite
+  normal    SPC k l     run the latest test
+  normal    SPC k v     visits the last run test file
 <
 
 ==============================================================================

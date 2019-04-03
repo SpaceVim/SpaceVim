@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section github, layer-test
+" @section test, layer-test
 " @parentsection layers
 " This layer allows to run tests on SpaceVim
 "
