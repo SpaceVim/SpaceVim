@@ -24,7 +24,7 @@ fu! s:update_logo()
   endif
 endf
 let g:startify_session_dir = $HOME .  '/.data/' . ( has('nvim') ? 'nvim' : 'vim' ) . '/session'
-let g:startify_files_number = 6
+let g:startify_files_number = g:spacevim_home_files_number
 let g:startify_list_order = [
       \ ['   My most recently used files in the current directory:'],
       \ 'dir',
