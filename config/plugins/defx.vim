@@ -95,12 +95,8 @@ function! s:defx_init()
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> l
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <Right>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
+  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Cr>
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
@@ -137,6 +133,32 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
 endf
+
+function! DefxSmartL(_)
+  if defx#is_directory()
+    call defx#call_action('open_tree')
+    normal! j
+  else
+    let filepath = defx#get_candidate()['action__path']
+    if tabpagewinnr(tabpagenr(), '$') >= 3
+      if has('nvim')
+        let input = input({
+              \ 'prompt'      : 'ChooseWin No.: ',
+              \ 'cancelreturn': 0,
+              \ })
+        if input == 0 | return | endif
+      else
+        let input = input('ChooseWin No.: ')
+      endif
+      if input == winnr() | return | endif
+      exec ': ' . input . 'wincmd w'
+      exec ':e' . filepath
+    else
+      exec 'wincmd w'
+      exec ':e' . filepath
+    endif
+  endif
+endfunction
 
 function! DefxSmartH(_)
   " candidate is opend tree?
