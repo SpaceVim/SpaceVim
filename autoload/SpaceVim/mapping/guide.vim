@@ -392,13 +392,11 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
-    call nvim_win_set_config(win_getid(s:gwin), 
+    call nvim_win_config(win_getid(s:gwin), &columns, layout.win_dim + 2, 
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : &columns,
-          \ 'height'  : layout.win_dim + 2,
-          \ 'row'     : &lines - layout.win_dim - 4,
-          \ 'col'     : 0
+          \ 'row': &lines - layout.win_dim - 4,
+          \ 'col': 0
           \ })
 
   else
@@ -506,13 +504,11 @@ function! s:winopen() abort " {{{
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
-    call nvim_open_win(s:bufnr, v:true,
+    call nvim_open_win(s:bufnr, v:true, &columns, 12,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : &columns,
-          \ 'height'  : 12,
-          \ 'row'     : &lines - 14,
-          \ 'col'     : 0
+          \ 'row': &lines - 14,
+          \ 'col': 0
           \ })
   else
     if bufexists(s:bufnr)
