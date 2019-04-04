@@ -1702,8 +1702,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
 | `$`/`<End>`   | go to the end of the current occurrence                                         |
 | `D`           | delete the occurrences                                                          |
-| `s`           | delete the character under cursor in all the occurrences and switch to iedit-Insert mode                          |
+| `s`           | delete the character under cursor and switch to iedit-Insert mode               |
 | `S`           | delete the occurrences and switch to iedit-Insert mode                          |
+| `x`           | delete the character under cursor in all the occurrences                        |
 | `gg`          | go to first occurrence                                                          |
 | `G`           | go to last occurrence                                                           |
 | `n`           | go to next occurrence                                                           |
