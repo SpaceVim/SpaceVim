@@ -1687,6 +1687,7 @@ SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symb
 | `0` / `<Home>`  | 跳至当前 occurrence 的开头                      |
 | `$` / `<End>`   | 跳至当前 occurrence 的结尾                      |
 | `D`             | 删除所有 occurrences                            |
+| `s`             | 删除所有 occurrences 中光标下的字符 并进入 `iedit-Insert` 模式 |
 | `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式 |
 | `gg`            | 跳至第一个 occurrence                           |
 | `G`             | 跳至最后一个 occurrence                         |

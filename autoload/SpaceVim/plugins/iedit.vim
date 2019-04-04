@@ -197,6 +197,16 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = ''
     endfor
     redrawstatus!
+  elseif a:char == 115 " s
+    let s:mode = 'i'
+    let w:spacevim_iedit_mode = s:mode
+    let w:spacevim_statusline_mode = 'ii'
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
+    redrawstatus!
   elseif a:char ==# "\<Left>" || a:char == 104
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
