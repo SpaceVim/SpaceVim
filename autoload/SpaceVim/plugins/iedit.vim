@@ -230,14 +230,16 @@ function! s:handle_normal(char) abort
     endfor
   elseif a:char == 48 || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
+      let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
   elseif a:char == 36 || a:char ==# "\<End>"  " $ or <End>
     for i in range(len(s:cursor_stack))
+      let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '.$', '', 'g')
+      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '.$', '', 'g')
       let s:cursor_stack[i].end = ''
     endfor
   elseif a:char == 68 " D
@@ -361,8 +363,9 @@ function! s:handle_insert(char) abort
   elseif a:char == 1 || a:char ==# "\<Home>" " Ctrl-a or <Home>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
+      let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
   else
