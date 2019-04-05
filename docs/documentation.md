@@ -1720,8 +1720,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `<Left>`                 | move cursor to left                                         |
 | `<Right>`                | move cursor to right                                        |
 | `Ctrl-a` / `<Home>`      | moves the cursor to the beginning of the current occurrence |
+| `Ctrl-e` / `<End>`       | moves the cursor to the end of the current occurrence       |
 | `Ctrl-w`                 | delete word before cursor                                   |
-| `Ctrl-k`                 | delete words after cursor                                   |
+| `Ctrl-k`                 | delete all words after cursor                                   |
 | `Ctrl-u`                 | delete all characters before cursor                         |
 | `Ctrl-h` / `<Backspace>` | delete character before cursor                              |
 | `<Delete>`               | delete character after cursor                               |
