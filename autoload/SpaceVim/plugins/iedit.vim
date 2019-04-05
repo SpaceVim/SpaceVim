@@ -319,11 +319,13 @@ function! s:handle_insert(char) abort
     redraw!
     redrawstatus!
     return
-  elseif a:char == 23  " ctrl-w : remove last word
+  elseif a:char == 23
+    " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
     endfor
-  elseif a:char == 21  " Ctrl-u
+  elseif a:char == 21
+    " ctrl-u: delete all words before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
     endfor
