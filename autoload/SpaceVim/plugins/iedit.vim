@@ -162,8 +162,17 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let old_cursor_char = s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
+            \ . s:cursor_stack[i].end,
+            \ '^.')
+      let s:cursor_stack[i].end = substitute(
+            \ s:cursor_stack[i].begin
+            \ . old_cursor_char
+            \ . s:cursor_stack[i].end,
+            \ '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
     redrawstatus!
@@ -285,7 +294,8 @@ function! s:handle_normal(char) abort
     else
       let s:index += 1
     endif
-    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
+    call cursor(s:stack[s:index][0],
+          \ s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
   elseif a:char == 78 " N
     if s:index == 0
       let s:index = len(s:stack) - 1
@@ -356,17 +366,45 @@ function! s:handle_insert(char) abort
     " ctrl-f / <Right>: moves the cursor forward one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
+            \ '^.', '', 'g')
     endfor
-  elseif a:char == 1 || a:char ==# "\<Home>" " Ctrl-a or <Home>
+  elseif a:char == 1 || a:char ==# "\<Home>"
+    " Ctrl-a or <Home>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
       let old_cursor_char = s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].cursor = matchstr(
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
+            \ . s:cursor_stack[i].end,
+            \ '^.')
+      let s:cursor_stack[i].end = substitute(
+            \ s:cursor_stack[i].begin
+            \ . old_cursor_char
+            \ . s:cursor_stack[i].end,
+            \ '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
+    endfor
+  elseif a:char == 5 || a:char ==# "\<End>"
+    " Ctrl-e or <End>
+    let is_movement = 1
+    for i in range(len(s:cursor_stack))
+      let old_cursor_char = s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
+            \ . s:cursor_stack[i].end,
+            \ '.$')
+      let s:cursor_stack[i].begin = substitute(
+            \ s:cursor_stack[i].begin
+            \ . old_cursor_char
+            \ . s:cursor_stack[i].end,
+            \ '.$', '', 'g')
+      let s:cursor_stack[i].end = ''
     endfor
   else
     for i in range(len(s:cursor_stack))
