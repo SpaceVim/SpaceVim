@@ -312,6 +312,7 @@ endfunction
 function! s:handle_insert(char) abort
   silent! call s:remove_cursor_highlight()
   if a:char == 27
+    " <Esc>: switch to iedit normal mode
     let s:mode = 'n'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'in'
