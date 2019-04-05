@@ -1,8 +1,8 @@
-This page documents changes in master branch since last release v1.0.0
+This page documents changes in master branch since last release v1.1.0
 
 ## PreRelease
 
-The next release is v1.1.0:
+The next release is v1.2.0:
 
 ### Pull Requests
 
@@ -14,6 +14,6 @@ The next release is v1.1.0:
 
 ## Latest Release
 
-SpaceVim releases v1.0.0 at 2018-12-26, please check the release page:
+SpaceVim releases v1.1.0 at 2019-04-08, please check the release page:
 
 - [SpaceVim releases v1.0.0](https://spacevim.org/SpaceVim-release-v1.0.0/) for all the details
