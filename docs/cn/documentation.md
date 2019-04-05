@@ -1675,37 +1675,42 @@ SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symb
 
 `iedit-Normal` 模式继承自一般模式, 下面所列举的是 `iedit-Normal` 模式专属的快捷键。
 
-| 快捷键          | 功能描述                                        |
-| --------------- | ----------------------------------------------- |
-| `Esc`           | 切换回一般模式                                  |
-| `i`             | 切换至 `iedit-Insert` 模式，类似于 `i`          |
-| `a`             | 切换至 `iedit-Insert` 模式，类似于 `a`          |
-| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式  |
-| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式  |
-| `<Left>` / `h`  | 左移光标                                        |
-| `<Right>` / `l` | 右移光标                                        |
-| `0` / `<Home>`  | 跳至当前 occurrence 的开头                      |
-| `$` / `<End>`   | 跳至当前 occurrence 的结尾                      |
-| `D`             | 删除所有 occurrences                            |
+| 快捷键          | 功能描述                                                      |
+| --------------- | ------------------------------------------------------------- |
+| `Esc`           | 切换回一般模式                                                |
+| `i`             | 切换至 `iedit-Insert` 模式，类似于 `i`                        |
+| `a`             | 切换至 `iedit-Insert` 模式，类似于 `a`                        |
+| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式                |
+| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式                |
+| `<Left>` / `h`  | 左移光标                                                      |
+| `<Right>` / `l` | 右移光标                                                      |
+| `0` / `<Home>`  | 跳至当前 occurrence 的开头                                    |
+| `$` / `<End>`   | 跳至当前 occurrence 的结尾                                    |
+| `D`             | 删除所有 occurrences                                          |
 | `s`             | 删除所有 occurrences 中光标下的字符并进入 `iedit-Insert` 模式 |
-| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式 |
-| `x`             | 删除所有 occurrences 中光标下的字符 |
-| `gg`            | 跳至第一个 occurrence                           |
-| `G`             | 跳至最后一个 occurrence                         |
-| `n`             | 跳至下一个 occurrence                           |
-| `N`             | 跳至上一个 occurrence                           |
-| `p`             | 替换所有 occurrences 为最后复制的文本           |
-| `<Tab>`         | toggle current occurrence                       |
+| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式               |
+| `x`             | 删除所有 occurrences 中光标下的字符                           |
+| `gg`            | 跳至第一个 occurrence                                         |
+| `G`             | 跳至最后一个 occurrence                                       |
+| `n`             | 跳至下一个 occurrence                                         |
+| `N`             | 跳至上一个 occurrence                                         |
+| `p`             | 替换所有 occurrences 为最后复制的文本                         |
+| `<Tab>`         | toggle current occurrence                                     |
 
 **In iedit-Insert mode:**
 
-| 快捷键    | 功能描述                 |
-| --------- | ------------------------ |
-| `<Esc>`   | 回到 `iedit-Normal` 模式 |
-| `<Left>`  | 左移光标                 |
-| `<Right>` | 右移光标                 |
-| `Ctrl-w`  | 删除光标前的词           |
-| `Ctrl-K`  | 删除光标后的词           |
+| 快捷键                   | 功能描述                   |
+| ------------------------ | -------------------------- |
+| `Ctrl-g` / `<Esc>`       | 回到 `iedit-Normal` 模式   |
+| `Ctrl-b` / `<Left>`      | 左移光标                   |
+| `Ctrl-f` / `<Right>`     | 右移光标                   |
+| `Ctrl-a` / `<Home>`      | 跳至当前 occurrence 的开头 |
+| `Ctrl-e` / `<End>`       | 跳至当前 occurrence 的结尾 |
+| `Ctrl-w`                 | 删除光标前的词             |
+| `Ctrl-k`                 | 删除光标后的词             |
+| `Ctrl-u`                 | 删除光标前所有字符         |
+| `Ctrl-h` / `<BackSpace>` | 删除光标前字符             |
+| `<Delete>`               | 删除光标后字符             |
 
 #### 注释 (Commentings)
 
