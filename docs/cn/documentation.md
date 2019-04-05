@@ -1699,16 +1699,18 @@ SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symb
 
 **In iedit-Insert mode:**
 
-| 快捷键                   | 功能描述                 |
-| ------------------------ | ------------------------ |
-| `<Esc>`                  | 回到 `iedit-Normal` 模式 |
-| `<Left>`                 | 左移光标                 |
-| `<Right>`                | 右移光标                 |
-| `Ctrl-w`                 | 删除光标前的词           |
-| `Ctrl-k`                 | 删除光标后的词           |
-| `Ctrl-u`                 | 删除光标前所有字符       |
-| `Ctrl-h` / `<BackSpace>` | 删除光标前字符           |
-| `<Delete>`               | 删除光标后字符           |
+| 快捷键                   | 功能描述                   |
+| ------------------------ | -------------------------- |
+| `Ctrl-g` / `<Esc>`       | 回到 `iedit-Normal` 模式   |
+| `Ctrl-b` / `<Left>`      | 左移光标                   |
+| `Ctrl-f` / `<Right>`     | 右移光标                   |
+| `Ctrl-a` / `<Home>`      | 跳至当前 occurrence 的开头 |
+| `Ctrl-e` / `<End>`       | 跳至当前 occurrence 的结尾 |
+| `Ctrl-w`                 | 删除光标前的词             |
+| `Ctrl-k`                 | 删除光标后的词             |
+| `Ctrl-u`                 | 删除光标前所有字符         |
+| `Ctrl-h` / `<BackSpace>` | 删除光标前字符             |
+| `<Delete>`               | 删除光标后字符             |
 
 #### 注释 (Commentings)
 
