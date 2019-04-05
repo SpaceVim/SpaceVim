@@ -330,8 +330,8 @@ endfunction
 function! s:handle_insert(char) abort
   silent! call s:remove_cursor_highlight()
   let is_movement = 0
-  if a:char == 27
-    " <Esc>: switch to iedit normal mode
+  if a:char ==# 27 || a:char ==# 7
+    " Ctrl-g / <Esc>: switch to iedit normal mode
     let s:mode = 'n'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'in'
@@ -339,22 +339,24 @@ function! s:handle_insert(char) abort
     redraw!
     redrawstatus!
     return
-  elseif a:char == 23
+  elseif a:char ==# 23
     " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
     endfor
-  elseif a:char == 21
+  elseif a:char ==# 21
     " ctrl-u: delete all words before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char == 11 " <c-k>
+  elseif a:char ==# 11
+    " Ctrl-k: delete all words after cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char ==# "\<bs>" || a:char ==# 8   " BackSpace or Ctrl-h
+  elseif a:char ==# "\<bs>" || a:char ==# 8
+    " BackSpace or Ctrl-h: delete char before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
