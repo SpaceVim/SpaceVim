@@ -311,6 +311,7 @@ endfunction
 
 function! s:handle_insert(char) abort
   silent! call s:remove_cursor_highlight()
+  let is_movement = 0
   if a:char == 27
     " <Esc>: switch to iedit normal mode
     let s:mode = 'n'
@@ -340,6 +341,7 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
   elseif a:char ==# "\<Left>"
+    let is_movement = 1
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
@@ -348,17 +350,27 @@ function! s:handle_insert(char) abort
       endif
     endfor
   elseif a:char ==# "\<Right>"
+    let is_movement = 1
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
+  elseif a:char == 1 || a:char ==# "\<Home>" " Ctrl-a or <Home>
+    let is_movement = 1
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end , '^.', '', 'g')
+      let s:cursor_stack[i].begin = ''
     endfor
   else
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin .=  nr2char(a:char)
     endfor
   endif
-  call s:replace_symbol()
+  if !is_movement
+    call s:replace_symbol()
+  endif
   silent! call s:highlight_cursor()
 endfunction
 function! s:parse_symbol(begin, end, symbol, ...) abort
