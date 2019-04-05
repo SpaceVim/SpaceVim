@@ -138,6 +138,15 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+  nnoremap <silent> <Leader>f<Space> :FzfMenu CustomKeyMaps<CR>
+  let g:_spacevim_mappings.f['[SPC]'] = ['FzfMenu CustomKeyMaps',
+        \ 'fuzzy find custom key bindings',
+        \ [
+        \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
