@@ -46,6 +46,8 @@ and `Ctrl-f` etc.
 
 - improve fzf layer, add fzf menu support.
 
+![float](https://user-images.githubusercontent.com/13142418/55625484-84dc5f80-57db-11e9-894d-754e47b5e88b.gif)
+
 ## Release Notes
 
 the following release notes are generated from github pull request:
