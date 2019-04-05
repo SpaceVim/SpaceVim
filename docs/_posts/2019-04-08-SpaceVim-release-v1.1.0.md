@@ -3,7 +3,7 @@ title: SpaceVim release v1.1.0
 categories: [changelog, blog]
 excerpt: "A community-driven modular vim distribution - The ultimate vim configuration"
 type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
+image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
 commentsID: "SpaceVim release v1.1.0"
 comments: true
 ---
@@ -22,7 +22,7 @@ comments: true
 <!-- vim-markdown-toc -->
 
 
-![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
+![v1.1.0 welcome page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim
