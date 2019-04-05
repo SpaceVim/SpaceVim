@@ -340,7 +340,8 @@ function! s:handle_insert(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
-  elseif a:char ==# "\<Left>"
+  elseif a:char ==# 2 || a:char ==# "\<Left>"
+    " ctrl-b / <Left>: moves the cursor back one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
@@ -349,7 +350,8 @@ function! s:handle_insert(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char ==# "\<Right>"
+  elseif a:char ==# 6 || a:char ==# "\<Right>"
+    " ctrl-f / <Right>: moves the cursor forward one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
