@@ -13,14 +13,17 @@ comments: true
 
 <!-- vim-markdown-toc GFM -->
 
+- [What's New](#whats-new)
 - [Release Notes](#release-notes)
-    - [New Features](#new-features)
-    - [Feature Changes](#feature-changes)
-    - [Bug Fixs](#bug-fixs)
-    - [Unmarked PRs](#unmarked-prs)
+  - [New Features](#new-features)
+  - [Feature Changes](#feature-changes)
+  - [Bug Fixs](#bug-fixs)
+  - [Unmarked PRs](#unmarked-prs)
 
 <!-- vim-markdown-toc -->
 
+The last release is v1.0.0, the first stable release of SpaceVim. After four mounths development.
+The v1.1.0 has been released. So let's take a look at what happened since last relase.
 
 ![v1.1.0 welcome page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
 
@@ -28,9 +31,26 @@ comments: true
 - [documentation](../documentation/): the primary official document of SpaceVim
 - [available layers](../layers/): a list of available layers which can be used in SpaceVim
 
+## What's New
+
+- add floating windows support for mapping guide and flygrep.
+
+![floating windows](https://user-images.githubusercontent.com/13142418/55621918-67a29380-57d1-11e9-96b8-ba440aa46324.gif)
+
+- Add defx support and disk explorer for windows, the default key binding is `SPC f d`:
+
+![windisk](https://user-images.githubusercontent.com/13142418/55621479-2e1d5880-57d0-11e9-9b0e-6f7d9de9943d.png)
+
+- Improve the iedit mode, add iedit-normal command: `s` and `x`, add iedit-insert command `Ctrl-e` `Ctrl-a` `Ctrl-b`
+and `Ctrl-f` etc.
+
+- improve fzf layer, add fzf menu support.
+
 ## Release Notes
 
-#### New Features
+the following release notes are generated from github pull request:
+
+### New Features
 
 - Add: add a new key binding 's' for iedit-model. [#2723](https://github.com/SpaceVim/SpaceVim/pull/2723)
 - Add fzf menu support [#2718](https://github.com/SpaceVim/SpaceVim/pull/2718)
@@ -44,7 +64,7 @@ comments: true
 - Add floating windows support for flygrep [#2216](https://github.com/SpaceVim/SpaceVim/pull/2216)
 - Add defx support [#2282](https://github.com/SpaceVim/SpaceVim/pull/2282)
 
-#### Feature Changes
+### Feature Changes
 
 - change nvim floating window API functions [#2710](https://github.com/SpaceVim/SpaceVim/pull/2710)
 - change nvim_open_win API function [#2709](https://github.com/SpaceVim/SpaceVim/pull/2709)
@@ -52,7 +72,7 @@ comments: true
 - Change plugin list key binding [#2665](https://github.com/SpaceVim/SpaceVim/pull/2665)
 - Change markdown preview plugin [#2651](https://github.com/SpaceVim/SpaceVim/pull/2651)
 
-#### Bug Fixs
+### Bug Fixs
 
 - fix a typo in doc/SpaceVim.txt [#2717](https://github.com/SpaceVim/SpaceVim/pull/2717)
 - fix alias in Docker Hub README.md [#2715](https://github.com/SpaceVim/SpaceVim/pull/2715)
@@ -72,7 +92,7 @@ comments: true
 - Fix perl support [#2230](https://github.com/SpaceVim/SpaceVim/pull/2230)
 - Fix preview in flygrep [#2256](https://github.com/SpaceVim/SpaceVim/pull/2256)
 
-#### Unmarked PRs
+### Unmarked PRs
 
 - Improve iedit mode [#2725](https://github.com/SpaceVim/SpaceVim/pull/2725)
 - enhance defx keymap l, choosewin not plugin ChooseWin [#2720](https://github.com/SpaceVim/SpaceVim/pull/2720)
