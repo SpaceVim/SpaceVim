@@ -1714,13 +1714,16 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **In iedit-Insert mode:**
 
-| Key Bindings | Descriptions                   |
-| ------------ | ------------------------------ |
-| `<Esc>`      | go back to `iedit-Normal` mode |
-| `<Left>`     | Move cursor to left            |
-| `<Right>`    | Move cursor to right           |
-| `Ctrl-w`     | delete words before cursor     |
-| `Ctrl-k`     | delete words after cursor      |
+| Key Bindings             | Descriptions                        |
+| ------------------------ | ----------------------------------- |
+| `<Esc>`                  | go back to `iedit-Normal` mode      |
+| `<Left>`                 | Move cursor to left                 |
+| `<Right>`                | Move cursor to right                |
+| `Ctrl-w`                 | delete word before cursor           |
+| `Ctrl-k`                 | delete words after cursor           |
+| `Ctrl-u`                 | delete all characters before cursor |
+| `Ctrl-h` / `<Backspace>` | delete character before cursor      |
+| `<Delete>`               | delete character after cursor       |
 
 #### Commenting
 
