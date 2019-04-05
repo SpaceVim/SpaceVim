@@ -152,12 +152,14 @@ let s:toggle_stack = {}
 " here is a list of normal command which can be handled by idedit
 function! s:handle_normal(char) abort
   silent! call s:remove_cursor_highlight()
-  if a:char ==# 105 " i
+  if a:char ==# 105
+    " i: switch to iedit insert mode
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
-  elseif a:char == 73 " I
+  elseif a:char == 73
+    " I: move surcor to the begin, and switch to iedit insert mode
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
@@ -186,14 +188,18 @@ function! s:handle_normal(char) abort
       call insert(s:cursor_stack, s:toggle_stack[s:index][1] , s:index)
       call remove(s:toggle_stack, s:index)
     endif
-  elseif a:char == 97 " a
+  elseif a:char == 97
+    " a: goto iedit insert mode after cursor char
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].begin =
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
+            \ '^.', '', 'g')
     endfor
     redrawstatus!
   elseif a:char == 65 " A
