@@ -1706,6 +1706,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `s`           | delete the character under cursor and switch to iedit-Insert mode, same as `s` in `Normal` model                                   |
 | `S`           | delete the occurrences and switch to iedit-Insert mode, same as `S` in `Normal` model                                              |
 | `x`           | delete the character under cursor in all the occurrences, same as `x` in `Normal` model                                            |
+| `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
 | `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
 | `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
 | `n`           | go to next occurrence                                                                                                              |
