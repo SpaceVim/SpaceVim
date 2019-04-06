@@ -369,10 +369,16 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char ==# "\<bs>" || a:char ==# 8
+  elseif a:char ==# "\<bs>" || a:char ==# 8 " <Backspace>
     " BackSpace or Ctrl-h: delete char before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+    endfor
+  elseif a:char ==# "\<Delete>" || a:char ==# 127 " <Delete>
+    " Delete: delete char after cursor
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
   elseif a:char ==# 2 || a:char ==# "\<Left>"
     " ctrl-b / <Left>: moves the cursor back one character
