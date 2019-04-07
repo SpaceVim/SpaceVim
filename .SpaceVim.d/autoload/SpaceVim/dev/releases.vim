@@ -15,11 +15,12 @@ scriptencoding utf-8
 " v0.8.0 is released at https://github.com/SpaceVim/SpaceVim/pull/1841
 " 2018-09-26 v0.9.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2203
 " 2018-12-25 v1.0.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2377
+" 2019-04-08 v1.1.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2726
 
 " This is a list of PRs which has not be merged when v1.0.0 is released:
-let s:unmerged_prs_since_last_release = [2056, 1963, 1977, 1993,  2014, 2016,  2092, 2131, 2150, 2164, 2165, 2216, 2218, 2226, 2230, 2232, 2242, 2255, 2256, 2282, 2307, 2331, 2337, 2368, 2370]
+let s:unmerged_prs_since_last_release = [1993, 2014, 2016, 2092, 2131, 2150, 2164, 2218, 2232, 2242, 2255, 2307, 2331, 2337, 2368, 2390, 2396, 2407, 2429, 2446, 2447, 2526, 2534, 2541, 2583, 2627, 2652, 2655, 2664]
 " these options can be changed when going to release new tag
-let s:last_release_number = 2377
+let s:last_release_number = 2726
 let s:current_release_number = -1
 " this is a list of pull request number which > last_release_number and <
 " current_release_number

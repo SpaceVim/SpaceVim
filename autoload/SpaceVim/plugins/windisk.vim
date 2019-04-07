@@ -39,7 +39,7 @@ function! s:open_disk(d) abort
     exe 'VimFiler -no-toggle ' . a:d
   elseif g:spacevim_filemanager ==# 'nerdtree'
   elseif g:spacevim_filemanager ==# 'defx'
-    exe 'Defx -no-toggle ' . a:d
+    exe 'Defx -no-toggle -no-resume ' . a:d
   endif
   doautocmd WinEnter
 endfunction
