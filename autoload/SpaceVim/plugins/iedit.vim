@@ -368,7 +368,7 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char ==# "\<bs>" || a:char ==# 8 " <Backspace>
+  elseif a:char ==# "\<bs>" || a:char ==# 8
     " BackSpace or Ctrl-h: delete char before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
