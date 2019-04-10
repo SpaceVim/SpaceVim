@@ -217,7 +217,6 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
