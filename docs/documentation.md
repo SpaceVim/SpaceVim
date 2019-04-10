@@ -1690,27 +1690,29 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| Key Binding   | Descriptions                                                                    |
-| ------------- | ------------------------------------------------------------------------------- |
-| `<Esc>`       | go back to `Normal` mode                                                        |
-| `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
-| `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
-| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
-| `<Left>`/`h`  | Move cursor to left                                                             |
-| `<Right>`/`l` | Move cursor to right                                                            |
-| `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
-| `$`/`<End>`   | go to the end of the current occurrence                                         |
-| `D`           | delete the occurrences                                                          |
-| `s`           | delete the character under cursor and switch to iedit-Insert mode               |
-| `S`           | delete the occurrences and switch to iedit-Insert mode                          |
-| `x`           | delete the character under cursor in all the occurrences                        |
-| `gg`          | go to first occurrence                                                          |
-| `G`           | go to last occurrence                                                           |
-| `n`           | go to next occurrence                                                           |
-| `N`           | go to previous occurrence                                                       |
-| `p`           | replace occurrences with last yanked (copied) text                              |
-| `<Tab>`       | toggle current occurrence                                                       |
+| Key Binding   | Descriptions                                                                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `<Esc>`       | go back to `Normal` mode                                                                                                           |
+| `i`           | switch to `iedit-Insert` mode, same as `i` in `Normal` model                                                                       |
+| `a`           | switch to `iedit-Insert` mode, same as `a` in `Normal` model                                                                       |
+| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode, same as `I` in `Normal` model                     |
+| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode, same as `A` in `Normal` model                           |
+| `<Left>`/`h`  | Move cursor to left, same as `h` in `Normal` model                                                                                 |
+| `<Right>`/`l` | Move cursor to right, same as `l` in `Normal` model                                                                                |
+| `0`/`<Home>`  | go to the beginning of the current occurrence, same as `0` in `Normal` model                                                       |
+| `$`/`<End>`   | go to the end of the current occurrence, same as `$` in `Normal` model                                                             |
+| `C`           | delete the characters from the cursor to the end in all occurrences and switch to iedit-Insert mode, same as `C` in `Normal` model |
+| `D`           | delete the occurrences, same as `D` in `Normal` model                                                                              |
+| `s`           | delete the character under cursor and switch to iedit-Insert mode, same as `s` in `Normal` model                                   |
+| `S`           | delete the occurrences and switch to iedit-Insert mode, same as `S` in `Normal` model                                              |
+| `x`           | delete the character under cursor in all the occurrences, same as `x` in `Normal` model                                            |
+| `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
+| `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
+| `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
+| `n`           | go to next occurrence                                                                                                              |
+| `N`           | go to previous occurrence                                                                                                          |
+| `p`           | replace occurrences with last yanked (copied) text                                                                                 |
+| `<Tab>`       | toggle current occurrence                                                                                                          |
 
 **In iedit-Insert mode:**
 
