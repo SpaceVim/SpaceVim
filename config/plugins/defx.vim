@@ -129,10 +129,10 @@ function! s:defx_init()
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <C-g>
         \ defx#do_action('print')
-  nnoremap <silent><buffer><expr> cd
-        \ defx#do_action('change_vim_cwd')
   nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
+  nnoremap <silent><buffer><expr> <C-Home>
+        \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
 endf
 
 " in this function we should vim-choosewin if possible
