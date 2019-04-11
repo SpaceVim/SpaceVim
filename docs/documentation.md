@@ -765,16 +765,24 @@ endfunction
 
 ### Fuzzy finder
 
-SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
+
+for example, load the denite layer:
+
+```toml
+[[layers]]
+    name = "denite"
+```
 
 **Key bindings**
 
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
@@ -784,20 +792,21 @@ Users only need to load one of these layers, they will be able to get these feat
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer have not be finished.
+**Differences between these layers**
 
-| Feature            | unite | denite | leaderf | ctrlp | fzf |
-| ------------------ | ----- | ------ | ------- | ----- | --- |
-| menu CustomKeyMaps | yes   | yes    | no      | no    | no  |
-| register           | yes   | yes    | no      | yes   | yes |
-| file               | yes   | yes    | yes     | yes   | yes |
-| yank history       | yes   | yes    | no      | no    | yes |
-| jump               | yes   | yes    | no      | yes   | yes |
-| location list      | yes   | yes    | no      | no    | yes |
-| outline            | yes   | yes    | yes     | yes   | yes |
-| message            | yes   | yes    | no      | no    | yes |
-| quickfix list      | yes   | yes    | no      | yes   | yes |
-| resume windows     | yes   | yes    | no      | no    | no  |
+| Feature            | denite | unite | leaderf | ctrlp | fzf |
+| ------------------ | :----: | :---: | :-----: | :---: | --- |
+| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
+| register           |  yes   |  yes  |   no    |  yes  | yes |
+| file               |  yes   |  yes  |   yes   |  yes  | yes |
+| yank history       |  yes   |  yes  |   no    |  no   | yes |
+| jump               |  yes   |  yes  |   no    |  yes  | yes |
+| location list      |  yes   |  yes  |   no    |  no   | yes |
+| outline            |  yes   |  yes  |   yes   |  yes  | yes |
+| message            |  yes   |  yes  |   no    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   no    |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
@@ -1105,27 +1114,27 @@ In SpaceVim, there are many special buffers, these buffers are created by plugin
 
 Files manipulation commands (start with f):
 
-| Key Bindings | Descriptions                                                   |
-| ------------ | -------------------------------------------------------------- |
-| `SPC f /`    | Find files with `find` command                                 |
-| `SPC f b`    | go to file bookmarks                                           |
-| `SPC f c`    | copy current file to a different location(TODO)                |
-| `SPC f C d`  | convert file from unix to dos encoding                         |
-| `SPC f C u`  | convert file from dos to unix encoding                         |
-| `SPC f D`    | delete a file and the associated buffer (ask for confirmation) |
-| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)       |
-| `SPC f W`    | save a file with elevated privileges (sudo layer)              |
-| `SPC f f`    | open file                                                      |
-| `SPC f F`    | try to open the file under point                               |
-| `SPC f o`    | open a file using the default external program(TODO)           |
-| `SPC f R`    | rename the current file(TODO)                                  |
-| `SPC f s`    | save a file                                                    |
-| `SPC f S`    | save all files                                                 |
-| `SPC f r`    | open a recent file                                             |
-| `SPC f t`    | toggle file tree side bar                                      |
-| `SPC f d`    | toggle disk manager in windows os                              |
-| `SPC f T`    | show file tree side bar                                        |
-| `SPC f y`    | show and copy current file absolute path in the cmdline        |
+| Key Bindings | Descriptions                                              |
+| ------------ | --------------------------------------------------------- |
+| `SPC f /`    | Find files with `find` command                            |
+| `SPC f b`    | go to file bookmarks                                      |
+| `SPC f c`    | copy current file to a different location(TODO)           |
+| `SPC f C d`  | convert file from unix to dos encoding                    |
+| `SPC f C u`  | convert file from dos to unix encoding                    |
+| `SPC f D`    | delete a file and the associated buffer with confirmation |
+| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
+| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
+| `SPC f f`    | open file                                                 |
+| `SPC f F`    | try to open the file under point                          |
+| `SPC f o`    | Find current file in file tree      |
+| `SPC f R`    | rename the current file(TODO)                             |
+| `SPC f s`    | save a file                                               |
+| `SPC f S`    | save all files                                            |
+| `SPC f r`    | open a recent file                                        |
+| `SPC f t`    | toggle file tree side bar                                 |
+| `SPC f T`    | show file tree side bar                                   |
+| `SPC f d`    | toggle disk manager in Windows OS                         |
+| `SPC f y`    | show and copy current file absolute path in the cmdline   |
 
 ##### Vim and SpaceVim files
 
@@ -1191,6 +1200,9 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `<Home>`              | Jump to first line                                |
+| `<End>`               | Jump to last line                                 |
+| `Ctrl-Home`           | Switch to project root directory                  |
 | `Ctrl-r`              | Redraw                                            |
 
 ##### Open file with file tree.
@@ -1573,63 +1585,66 @@ In highlight symbol transient state:
 
 Text related commands (start with `x`):
 
-| Key Bindings  | Descriptions                                                         |
-| ------------- | -------------------------------------------------------------------- |
-| `SPC x a &`   | align region at &                                                    |
-| `SPC x a (`   | align region at (                                                    |
-| `SPC x a )`   | align region at )                                                    |
-| `SPC x a [`   | align region at [                                                    |
-| `SPC x a ]`   | align region at ]                                                    |
-| `SPC x a {`   | align region at {                                                    |
-| `SPC x a }`   | align region at }                                                    |
-| `SPC x a ,`   | align region at ,                                                    |
-| `SPC x a .`   | align region at . (for numeric tables)                               |
-| `SPC x a :`   | align region at :                                                    |
-| `SPC x a ;`   | align region at ;                                                    |
-| `SPC x a =`   | align region at =                                                    |
-| `SPC x a ¦`   | align region at ¦                                                    |
-| `SPC x a |`   | align region at \|                                                   |
-| `SPC x a SPC` | align region at [SPC]                                                |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)         |
-| `SPC x a c`   | align current indentation region using default rules (TODO)          |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                     |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                    |
-| `SPC x a r`   | align region at user-specified regexp                                |
-| `SPC x a o`   | align region at operators `+-*/`                                     |
-| `SPC x c`     | count the number of chars/words/lines in the selection region        |
-| `SPC x d w`   | delete trailing whitespaces                                          |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space           |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                       |
-| `SPC x g t`   | translate current word using Google Translate                        |
-| `SPC x g T`   | reverse source and target languages (TODO)                           |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                              |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                              |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                       |
-| `SPC x i -`   | change symbol style to `kebab-case`                                  |
-| `SPC x i k`   | change symbol style to `kebab-case`                                  |
-| `SPC x i _`   | change symbol style to `under_score`                                 |
-| `SPC x i u`   | change symbol style to `under_score`                                 |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                     |
-| `SPC x j c`   | set the justification to center                                      |
-| `SPC x j f`   | set the justification to full (TODO)                                 |
-| `SPC x j l`   | set the justification to left                                        |
-| `SPC x j n`   | set the justification to none (TODO)                                 |
-| `SPC x j r`   | set the justification to right                                       |
-| `SPC x J`     | move down a line of text (enter transient state)                     |
-| `SPC x K`     | move up a line of text (enter transient state)                       |
-| `SPC x l d`   | duplicate line or region (TODO)                                      |
-| `SPC x l s`   | sort lines (TODO)                                                    |
-| `SPC x l u`   | uniquify lines (TODO)                                                |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)             |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO)   |
-| `SPC x t c`   | swap (transpose) the current character with the previous one         |
-| `SPC x t w`   | swap (transpose) the current word with the previous one              |
-| `SPC x t l`   | swap (transpose) the current line with the previous one              |
-| `SPC x u`     | set the selected text to lower case                                  |
-| `SPC x U`     | set the selected text to upper case                                  |
-| `SPC x w c`   | count the number of occurrences per word in the select region (TODO) |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)                |
-| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                             |
+| Key Bindings  | Descriptions                                                       |
+| ------------- | ------------------------------------------------------------------ |
+| `SPC x a &`   | align region at &                                                  |
+| `SPC x a (`   | align region at (                                                  |
+| `SPC x a )`   | align region at )                                                  |
+| `SPC x a [`   | align region at [                                                  |
+| `SPC x a ]`   | align region at ]                                                  |
+| `SPC x a {`   | align region at {                                                  |
+| `SPC x a }`   | align region at }                                                  |
+| `SPC x a ,`   | align region at ,                                                  |
+| `SPC x a .`   | align region at . (for numeric tables)                             |
+| `SPC x a :`   | align region at :                                                  |
+| `SPC x a ;`   | align region at ;                                                  |
+| `SPC x a =`   | align region at =                                                  |
+| `SPC x a ¦`   | align region at ¦                                                  |
+| `SPC x a |`   | align region at \|                                                 |
+| `SPC x a SPC` | align region at [SPC]                                              |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
+| `SPC x a c`   | align current indentation region using default rules (TODO)        |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                   |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                  |
+| `SPC x a r`   | align region at user-specified regexp                              |
+| `SPC x a o`   | align region at operators `+-*/` etc                               |
+| `SPC x c`     | count the number of chars/words/lines in the selection region      |
+| `SPC x d w`   | delete trailing whitespaces                                        |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
+| `SPC x g t`   | translate current word using Google Translate                      |
+| `SPC x g T`   | reverse source and target languages (TODO)                         |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
+| `SPC x i -`   | change symbol style to `kebab-case`                                |
+| `SPC x i k`   | change symbol style to `kebab-case`                                |
+| `SPC x i _`   | change symbol style to `under_score`                               |
+| `SPC x i u`   | change symbol style to `under_score`                               |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                   |
+| `SPC x j c`   | set the justification to center                                    |
+| `SPC x j f`   | set the justification to full (TODO)                               |
+| `SPC x j l`   | set the justification to left                                      |
+| `SPC x j n`   | set the justification to none (TODO)                               |
+| `SPC x j r`   | set the justification to right                                     |
+| `SPC x J`     | move down a line of text (enter transient state)                   |
+| `SPC x K`     | move up a line of text (enter transient state)                     |
+| `SPC x l d`   | duplicate line or region (TODO)                                    |
+| `SPC x l s`   | sort lines (TODO)                                                  |
+| `SPC x l u`   | uniquify lines (TODO)                                              |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
+| `SPC x t c`   | swap (transpose) the current character with the previous one       |
+| `SPC x t C`   | swap (transpose) the current character with the next one           |
+| `SPC x t w`   | swap (transpose) the current word with the previous one            |
+| `SPC x t W`   | swap (transpose) the current word with the next one                |
+| `SPC x t l`   | swap (transpose) the current line with the previous one            |
+| `SPC x t L`   | swap (transpose) the current line with the next one                |
+| `SPC x u`     | set the selected text to lower case                                |
+| `SPC x U`     | set the selected text to upper case                                |
+| `SPC x w c`   | count the words in the select region                               |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
+| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
 
 #### Text insertion commands
 
@@ -1687,35 +1702,44 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| Key Binding   | Descriptions                                                                    |
-| ------------- | ------------------------------------------------------------------------------- |
-| `<Esc>`       | go back to `Normal` mode                                                        |
-| `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
-| `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
-| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
-| `<Left>`/`h`  | Move cursor to left                                                             |
-| `<Right>`/`l` | Move cursor to right                                                            |
-| `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
-| `$`/`<End>`   | go to the end of the current occurrence                                         |
-| `D`           | delete the occurrences                                                          |
-| `S`           | delete the occurrences and switch to iedit-Insert mode                          |
-| `gg`          | go to first occurrence                                                          |
-| `G`           | go to last occurrence                                                           |
-| `n`           | go to next occurrence                                                           |
-| `N`           | go to previous occurrence                                                       |
-| `p`           | replace occurrences with last yanked (copied) text                              |
-| `<Tab>`       | toggle current occurrence                                                       |
+| Key Binding   | Descriptions                                                                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `<Esc>`       | go back to `Normal` mode                                                                                                           |
+| `i`           | switch to `iedit-Insert` mode, same as `i` in `Normal` model                                                                       |
+| `a`           | switch to `iedit-Insert` mode, same as `a` in `Normal` model                                                                       |
+| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode, same as `I` in `Normal` model                     |
+| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode, same as `A` in `Normal` model                           |
+| `<Left>`/`h`  | Move cursor to left, same as `h` in `Normal` model                                                                                 |
+| `<Right>`/`l` | Move cursor to right, same as `l` in `Normal` model                                                                                |
+| `0`/`<Home>`  | go to the beginning of the current occurrence, same as `0` in `Normal` model                                                       |
+| `$`/`<End>`   | go to the end of the current occurrence, same as `$` in `Normal` model                                                             |
+| `C`           | delete the characters from the cursor to the end in all occurrences and switch to iedit-Insert mode, same as `C` in `Normal` model |
+| `D`           | delete the occurrences, same as `D` in `Normal` model                                                                              |
+| `s`           | delete the character under cursor and switch to iedit-Insert mode, same as `s` in `Normal` model                                   |
+| `S`           | delete the occurrences and switch to iedit-Insert mode, same as `S` in `Normal` model                                              |
+| `x`           | delete the character under cursor in all the occurrences, same as `x` in `Normal` model                                            |
+| `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
+| `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
+| `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
+| `n`           | go to next occurrence                                                                                                              |
+| `N`           | go to previous occurrence                                                                                                          |
+| `p`           | replace occurrences with last yanked (copied) text                                                                                 |
+| `<Tab>`       | toggle current occurrence                                                                                                          |
 
 **In iedit-Insert mode:**
 
-| Key Bindings | Descriptions                   |
-| ------------ | ------------------------------ |
-| `<Esc>`      | go back to `iedit-Normal` mode |
-| `<Left>`     | Move cursor to left            |
-| `<Right>`    | Move cursor to right           |
-| `Ctrl-w`     | delete words before cursor     |
-| `Ctrl-k`     | delete words after cursor      |
+| Key Bindings             | Descriptions                                                |
+| ------------------------ | ----------------------------------------------------------- |
+| `Ctrl-g` / `<Esc>`       | go back to `iedit-Normal` mode                              |
+| `Ctrl-b` / `<Left>`      | move cursor to left                                         |
+| `Ctrl-f` / `<Right>`     | move cursor to right                                        |
+| `Ctrl-a` / `<Home>`      | moves the cursor to the beginning of the current occurrence |
+| `Ctrl-e` / `<End>`       | moves the cursor to the end of the current occurrence       |
+| `Ctrl-w`                 | delete word before cursor                                   |
+| `Ctrl-k`                 | delete all words after cursor                               |
+| `Ctrl-u`                 | delete all characters before cursor                         |
+| `Ctrl-h` / `<Backspace>` | delete character before cursor                              |
+| `<Delete>`               | delete character after cursor                               |
 
 #### Commenting
 

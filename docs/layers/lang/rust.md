@@ -11,6 +11,7 @@ description: "This layer is for Rust development, provide autocompletion, syntax
 - [Features](#features)
 - [Install](#install)
   - [Layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Code runner](#code-runner)
 
@@ -42,6 +43,10 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#rust"
 ```
+
+## Layer options
+
+- `recommended-style`: Enable/Disable recommended code style for rust. This option is disabled by default.
 
 ## Key bindings
 

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section github, layer-test
+" @section test, layer-test
 " @parentsection layers
 " This layer allows to run tests on SpaceVim
 "
@@ -38,4 +38,14 @@ function! SpaceVim#layers#test#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['k', 'v'], 'TestVisit', 'visit', 1)
   let g:test#custom_strategies = {'spacevim': function('SpaceVim#plugins#runner#open')}
   let g:test#strategy = 'spacevim'
+endfunction
+
+function! SpaceVim#layers#test#set_variable(var) abort
+  let l:override = get(a:var, 'override_config', {})
+  if !empty(l:override)
+    for l:option in keys(l:override)
+      let l:varname = 'test#'.substitute(l:option, '_', '#', 'g')
+      execute 'let g:'.l:varname.' = '."'".l:override[l:option]."'"
+    endfor
+  endif
 endfunction

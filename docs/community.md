@@ -53,5 +53,4 @@ messages is:
 - <i class="fab fa-facebook"></i> [Facebook](https://www.facebook.com/SpaceVim)
 - <i class="fab fa-reddit"></i> [Reddit](https://reddit.com/r/spacevim)
 - <i class="fab fa-github"></i> [GitHub](https://github.com/SpaceVim/SpaceVim)
-- <i class="fab fa-google-plus-g"></i> [google plus](https://plus.google.com/communities/106181012794584190200)
 - <i class="fab fa-youtube"></i> [YouTube](https://www.youtube.com/channel/UC-3q4dVFS7gBpxhrON1WxIA)

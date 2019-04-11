@@ -2,7 +2,7 @@ let s:VCOP = SpaceVim#api#import('vim#compatible')
 if g:spacevim_filetree_direction ==# 'right'
   let g:NERDTreeWinPos = 'rightbelow'
 else
-  let g:NERDTreeWinPos = 'leftabove'
+  let g:NERDTreeWinPos = 'left'
 endif
 let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
