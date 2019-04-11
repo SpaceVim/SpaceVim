@@ -39,5 +39,4 @@ name = "fzf"
 | `<Leader> f m`       | Fuzzy find output messages    |
 | `<Leader> f o`       | Fuzzy find outline            |
 | `<Leader> f q`       | Fuzzy find quick fix          |
-| `<Leader> f r`       | Resumes Unite window          |
 | `SPC b b`            | List all buffers              |

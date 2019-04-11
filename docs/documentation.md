@@ -765,16 +765,24 @@ endfunction
 
 ### Fuzzy finder
 
-SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
+
+for example, load the denite layer:
+
+```toml
+[[layers]]
+    name = "denite"
+```
 
 **Key bindings**
 
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
@@ -784,20 +792,21 @@ Users only need to load one of these layers, they will be able to get these feat
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer have not be finished.
+**Differences between these layers**
 
-| Feature            | unite | denite | leaderf | ctrlp | fzf |
-| ------------------ | ----- | ------ | ------- | ----- | --- |
-| menu CustomKeyMaps | yes   | yes    | no      | no    | no  |
-| register           | yes   | yes    | no      | yes   | yes |
-| file               | yes   | yes    | yes     | yes   | yes |
-| yank history       | yes   | yes    | no      | no    | yes |
-| jump               | yes   | yes    | no      | yes   | yes |
-| location list      | yes   | yes    | no      | no    | yes |
-| outline            | yes   | yes    | yes     | yes   | yes |
-| message            | yes   | yes    | no      | no    | yes |
-| quickfix list      | yes   | yes    | no      | yes   | yes |
-| resume windows     | yes   | yes    | no      | no    | no  |
+| Feature            | denite | unite | leaderf | ctrlp | fzf |
+| ------------------ | :----: | :---: | :-----: | :---: | --- |
+| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
+| register           |  yes   |  yes  |   no    |  yes  | yes |
+| file               |  yes   |  yes  |   yes   |  yes  | yes |
+| yank history       |  yes   |  yes  |   no    |  no   | yes |
+| jump               |  yes   |  yes  |   no    |  yes  | yes |
+| location list      |  yes   |  yes  |   no    |  no   | yes |
+| outline            |  yes   |  yes  |   yes   |  yes  | yes |
+| message            |  yes   |  yes  |   no    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   no    |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 

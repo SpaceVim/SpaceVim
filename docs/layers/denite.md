@@ -24,19 +24,19 @@ To use this configuration layer, add it to your configuration file.
 
 ```toml
 [[layers]]
-name = "denite"
+    name = "denite"
 ```
-
 
 ## Configuration
 
-SpaceVim use `F` as the default customized key bindings prefix for denite layer.
+SpaceVim use `<Leader> f` as the default key bindings prefix for denite layer.
 
 ## Key bindings
 
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
