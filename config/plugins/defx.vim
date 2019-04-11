@@ -131,6 +131,8 @@ function! s:defx_init()
         \ defx#do_action('print')
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
+  nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
+  nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
 endf
 
 " in this function we should vim-choosewin if possible
