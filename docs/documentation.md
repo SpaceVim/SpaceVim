@@ -1117,7 +1117,7 @@ Files manipulation commands (start with f):
 | `SPC f W`    | save a file with elevated privileges (sudo layer)         |
 | `SPC f f`    | open file                                                 |
 | `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | open a file using the default external program(TODO)      |
+| `SPC f o`    | Find current file in file tree      |
 | `SPC f R`    | rename the current file(TODO)                             |
 | `SPC f s`    | save a file                                               |
 | `SPC f S`    | save all files                                            |
@@ -1191,6 +1191,9 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `<Home>`              | Jump to first line                                |
+| `<End>`               | Jump to last line                                 |
+| `Ctrl-Home`           | Switch to project root directory                  |
 | `Ctrl-r`              | Redraw                                            |
 
 ##### Open file with file tree.
