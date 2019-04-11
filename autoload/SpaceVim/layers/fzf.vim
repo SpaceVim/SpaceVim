@@ -140,11 +140,24 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
   nnoremap <silent> <Leader>f<Space> :FzfMenu CustomKeyMaps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f['[SPC]'] = ['FzfMenu CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
+  nnoremap <silent> <Leader>fp  :<C-u>FzfMenu AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['FzfMenu AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]

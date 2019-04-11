@@ -31,6 +31,7 @@ name = "fzf"
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
@@ -39,4 +40,4 @@ name = "fzf"
 | `<Leader> f o`       | Fuzzy find outline            |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
-| `<Leader> b b`       | List all buffers              |
+| `SPC b b`            | List all buffers              |
