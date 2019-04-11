@@ -1097,7 +1097,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 | `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO) |
 | `SPC f f`   | 打开文件                                               |
 | `SPC f F`   | 打开光标下的文件                                       |
-| `SPC f o`   | open a file using the default external program(TODO)   |
+| `SPC f o`   | 代开文件树，并定位到当前文件                           |
 | `SPC f R`   | rename the current file(TODO)                          |
 | `SPC f s`   | 保存文件                                               |
 | `SPC f S`   | 保存所有文件                                           |
