@@ -177,11 +177,6 @@ function! DefxSmartH(_)
     return defx#call_action('close_tree')
   endif
 
-  " if in empty dir
-  if line('$') ==# 1
-    return defx#call_action('cd', ['..'])
-  endif
-
   " parent is root?
   let s:candidate = defx#get_candidate()
   let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
