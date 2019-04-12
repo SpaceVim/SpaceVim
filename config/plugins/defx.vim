@@ -167,6 +167,11 @@ function! DefxSmartL(_)
 endfunction
 
 function! DefxSmartH(_)
+  " if cursor line is first line, or in empty dir
+  if line('.') ==# 1 || line('$') ==# 1
+    return defx#call_action('cd', ['..'])
+  endif
+
   " candidate is opend tree?
   if defx#is_opened_tree()
     return defx#call_action('close_tree')
