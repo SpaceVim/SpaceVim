@@ -14,14 +14,14 @@ lang: cn
   - [证书](#证书)
   - [公约](#公约)
   - [拉取请求](#拉取请求)
-    - [PR 标题前缀](#pr-标题前缀)
-    - [在上游的主分支顶部压缩你的 PR 分支](#在上游的主分支顶部压缩你的-pr-分支)
+    - [标题前缀](#标题前缀)
+    - [新建拉取请求步骤](#新建拉取请求步骤)
     - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-prs绝大多数-prs-都是这样的)
     - [复杂的 PRs (大的重构，等)：](#复杂的-prs-大的重构等)
   - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
     - [新 layer 的作者](#新-layer-的作者)
-    - [对现有的 layer 进行贡献](#对现有的-layer-进行贡献)
+    - [改进现有的模块](#改进现有的模块)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
     - [Contributing a banner](#contributing-a-banner)
@@ -81,9 +81,9 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 
 ### 拉取请求
 
-#### PR 标题前缀
+#### 标题前缀
 
-新开 pull request 时，应当标记该 PR 属于以下哪种前缀：
+新开拉取请求时，应当通过标题前缀来标记该拉取请求的性质：
 
 - `Add:` 添加新的特性
 - `Change:` 修改已有特性的行为
@@ -96,7 +96,7 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 
 `Website: update the lang#c layer page.`
 
-#### 在上游的主分支顶部压缩你的 PR 分支
+#### 新建拉取请求步骤
 
 - fork SpaceVim 仓库
 - 克隆你自己的仓库
@@ -129,11 +129,9 @@ git rebase upstream/master
 #### 复杂的 PRs (大的重构，等)：
 
 只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
-Those PRs are merged and explicitly not fast-forwarded.
 这些 PRs 被合并并且明示非快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
-
 
 - 用现在时和祈使句：例如："Fix bug"，而不是"fixed bug" 或者"fixes bug"。
 - 以大写字母开头，短摘要开头（72 个字符或者更少），以空行结尾。
@@ -190,7 +188,6 @@ Vim 脚本的文件头，应该采用下面的格式：
 "=============================================================================
 ```
 
-You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also.
 你应该用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 的名字来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
 
 #### 新 layer 的作者
@@ -254,14 +251,15 @@ function! SpaceVim#layers#foo#config() abort
   " ...
 endfunction
 ```
+
 4. Add layer document `docs/layers/foo.md` for `foo` layer.
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-#### 对现有的 layer 进行贡献
+#### 改进现有的模块
 
-If you contribute to an already existing layer, you should not modify any header file.
-如果你想对一个已经存在的模块做贡献，你不能修改文件头的任意地方。
+现有的模块头文件中包含了作者等信息，这些信息通常不可修改。
+对现有的模块进行改进时，需要尽量保持原先的默认行为。
 
 #### 贡献按键绑定
 
