@@ -96,6 +96,9 @@ function! SpaceVim#custom#apply(config, type) abort
       exe 'let g:spacevim_' . name . ' = value'
       unlet value
     endfor
+    if g:spacevim_debug_level !=# 1
+      call SpaceVim#logger#setLevel(g:spacevim_debug_level)
+    endif
     let layers = get(a:config, 'layers', [])
     for layer in layers
       if !get(layer, 'enable', 1)

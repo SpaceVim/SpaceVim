@@ -36,6 +36,10 @@ To use this configuration layer, update custom configuration file with:
 
 ## Configuration
 
+- `enable_clang_syntax_highlight` (boolean)
+
+Enable/Disable clang based syntax highlighting.
+
 - `clang_executable` (string)
 
 Set the path to the clang executable

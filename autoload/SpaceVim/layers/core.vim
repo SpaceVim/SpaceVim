@@ -17,6 +17,8 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  elseif g:spacevim_filemanager ==# 'defx'
+    call add(plugins, ['Shougo/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   endif
 
   if !g:spacevim_vimcompatible
@@ -96,8 +98,17 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', '$'], 'm`g_', 'push mark and goto end of line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+
+  " file tree key bindings
+  if g:spacevim_filemanager ==# 'vimfiler'
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+  elseif g:spacevim_filemanager ==# 'defx'
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'let g:_spacevim_autoclose_defx = 0 | Defx -split=no | let g:_spacevim_autoclose_defx = 1', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'Defx', 'Explore current directory (other window)', 1)
+  endif
+
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
@@ -171,8 +182,12 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
   if s:SYS.isWindows
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call SpaceVim#plugins#windisk#open()', 'open-windisk-manager', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call call('
+          \ . string(s:_function('s:ToggleWinDiskManager')) . ', [])',
+          \ 'toggle Windows disk manager', 1)
   endif
+
+  " file tree key bindings
   if g:spacevim_filemanager ==# 'vimfiler'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
@@ -183,6 +198,12 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
+  elseif g:spacevim_filemanager ==# 'defx'
+    " TODO: fix all these command
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
@@ -422,6 +443,14 @@ function! s:safe_erase_buffer() abort
   redraw!
 endfunction
 
+function! s:ToggleWinDiskManager() abort
+  if bufexists("__windisk__")
+    execute 'bd "__windisk__"'
+  else
+    call SpaceVim#plugins#windisk#open()
+  endif
+endfunction
+
 function! s:open_message_buffer() abort
   vertical topleft edit __Message_Buffer__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
@@ -444,7 +473,7 @@ function! s:delete_current_buffer_file() abort
   if s:MESSAGE.confirm('Are you sure you want to delete this file')
     let f = expand('%')
     if delete(f) == 0
-      call SpaceVim#mapping#close_current_buffer()
+      call SpaceVim#mapping#close_current_buffer('n')
       echo "File '" . f . "' successfully deleted!"
     else
       call s:MESSAGE.warn('Failed to delete file:' . f)

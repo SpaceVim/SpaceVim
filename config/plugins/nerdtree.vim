@@ -1,5 +1,9 @@
 let s:VCOP = SpaceVim#api#import('vim#compatible')
-let g:NERDTreeWinPos=get(g:,'NERDTreeWinPos',spacevim_sidebar_direction)
+if g:spacevim_filetree_direction ==# 'right'
+  let g:NERDTreeWinPos = 'rightbelow'
+else
+  let g:NERDTreeWinPos = 'left'
+endif
 let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
 augroup nerdtree_zvim

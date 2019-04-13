@@ -202,6 +202,7 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
 3. edit layer file, check out the example below:
+
 ```vim
 "=============================================================================
 " foo.vim --- foo Layer file for SpaceVim

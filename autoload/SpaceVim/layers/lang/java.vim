@@ -191,7 +191,7 @@ function! s:language_specified_mappings() abort
 
   " execute
   let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
-  " run main methon
+  " run main method
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'm'], 'JavaUnitTestMain', 'Run main method', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'JavaUnitExec', 'Run current method', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'a'], 'JavaUnitTestAll', 'Run all test methods', 1)

@@ -351,6 +351,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b#'
           \ . ' vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep
+  elseif &filetype ==# 'defx'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# defx %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'gista-list'
     return '%#SpaceVim_statusline_ia#'
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
@@ -600,7 +603,7 @@ function! SpaceVim#layers#core#statusline#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'd'], 'call SpaceVim#layers#core#statusline#toggle_section("date")',
         \ 'toggle the date', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'i'], 'call SpaceVim#layers#core#statusline#toggle_section("input method")',
-        \ 'toggle the input methon', 1)
+        \ 'toggle the input method', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 't'], 'call SpaceVim#layers#core#statusline#toggle_section("time")',
         \ 'toggle the time', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'p'], 'call SpaceVim#layers#core#statusline#toggle_section("cursorpos")',
