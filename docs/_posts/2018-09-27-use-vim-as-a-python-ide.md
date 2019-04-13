@@ -9,7 +9,7 @@ commentsID: "Use Vim as a Python IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Python IDE
 
-This is a general guide for using SpaceVim as a python IDE, including layer configuration and usage.
+This is a general guide for using SpaceVim as a Python IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
@@ -27,15 +27,15 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add python language support in SpaceVim, you need to enable the `lang#python` layer. Press `SPC f v d` to open
-SpaceVim configuration file, and add following configuration:
+To add Python language support in SpaceVim, you need to enable the `lang#python` layer. Press `SPC f v d` to open
+SpaceVim configuration file, and add the following snippet to your configuration:
 
 ```toml
 [[layers]]
   name = "lang#python"
 ```
 
-for more info, you can read the [lang#python](../layers/lang/python/) layer documentation.
+For more info, you can read the [lang#python](../layers/lang/python/) layer documentation.
 
 ### Code completion
 
@@ -57,7 +57,7 @@ pip install --user flake8
 
 ### Import packages
 
-When edit python file, you can import the package automatically, remove unused package and format package list.
+When edit Python file, you can import the package automatically, remove unused package and format package list.
 
 ```sh
 pip install --user isort
@@ -79,9 +79,9 @@ with this configuration, you can jump between the source code and test file via 
 
 ### running code
 
-To run current script, you can press `SPC l r`, and a split windows
-will be openen, the output of the script will be shown in this windows.
-It is running asynchronously, and will not block your vim.
+To run current script, you can press `SPC l r`, and a split window
+will be openen, the output of the script will be shown in this window.
+It is running asynchronously, and will not block your Vim.
 
 ![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
 
@@ -96,8 +96,8 @@ pip install --user yapf
 
 ### REPL
 
-Start a `ipython` or `python` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can
-send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+Start a `ipython` or `python` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
 ![pythonrepl](https://user-images.githubusercontent.com/13142418/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)

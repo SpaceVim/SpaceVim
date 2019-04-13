@@ -48,4 +48,4 @@ npm install --global vscode-html-languageserver-bin
 
 | Key Bindings | Descriptions |
 | ------------ | ------------ |
-| `<C-e>`      | emmet prefix |
+| `Ctrl-e`     | emmet prefix |

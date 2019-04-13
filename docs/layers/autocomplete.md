@@ -127,10 +127,10 @@ call SpaceVim#layers#load('autocomplete', {
 
 | Key bindings | Description                                   |
 | ------------ | --------------------------------------------- |
-| `<C-n>`      | select next candidate                         |
-| `<C-p>`      | select previous candidate                     |
+| `Ctrl-n`      | select next candidate                         |
+| `Ctrl-p`      | select previous candidate                     |
 | `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
-| `<S-Tab>`    | select previous candidate                     |
+| `Shift-Tab`    | select previous candidate                     |
 | `<Return>`   | base on `auto-completion-return-key-behavior` |
 
 ### Neosnippet

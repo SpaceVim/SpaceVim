@@ -23,10 +23,10 @@ function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
         \ ]
+  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
   if s:git_plugin ==# 'gina'
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
   elseif s:git_plugin ==# 'fugitive'
-    call add(plugins, ['tpope/vim-fugitive', { 'merged' : 0}])
     call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
   else
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])

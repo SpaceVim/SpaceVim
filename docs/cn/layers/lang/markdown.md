@@ -31,19 +31,31 @@ lang: cn
 
 ## 代码格式化
 
-SpaceVim 默认使用 remark 来格式化 Markdown 文件，因此需要安装该命令，可通过如下命令来安装：
+SpaceVim 默认使用 remark 来格式化 Markdown 文件，Windows 下建议使用 [Prettier](https://github.com/prettier/prettier) 来格式化 Markdown 文件。
 
+remark 可通过 [npm](https://www.npmjs.com/get-npm) 命令来安装：
 ```sh
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
 ```
 
+[Prettier](https://github.com/prettier/prettier) 可通过 [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) 或 [npm](https://www.npmjs.com/get-npm) 命令来安装：
+
+1. 通过 `yarn` 命令来安装
+```sh
+yarn global add prettier
+```
+2. 通过 `npm` 命令来安装
+```sh
+npm install --global prettier
+```
+
 ## 模块设置
 
 **listItemIndent**
 
-设置有序列表对齐方式 (`tab`, `mixed` 或者 `1` , 默认: `1`)。
+设置有序列表对齐方式 (`tab`, `mixed` 或者 `1` , 默认： `1`)。
 
 - `'tab'`: 使用 tab stops 对齐
 - `'1'`: 使用空格对齐
@@ -59,9 +71,9 @@ npm -g install remark-stringify
 
 ## 快捷键
 
-| 快捷键     | 模式   | 按键描述                   |
-| ---------- | ------ | -------------------------- |
-| `SPC b f`  | Normal | 格式化当前文件             |
-| `SPC l ft` | Normal | 格式化光标处的表格         |
-| `SPC l k`  | Normal | 增加链接 URL               |
-| `SPC l p`  | Normal | 通过浏览器实时预览当前文件 |
+| 快捷键     | 模式          | 按键描述                               |
+| ---------- | ------------- | -------------------------------------- |
+| `SPC b f`  | Normal        | 格式化当前文件                         |
+| `SPC l k`  | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接|
+| `SPC l K`  | Normal/Visual | 为光标下的单词或者选中文本增加图片链接 |
+| `SPC l p`  | Normal        | 通过浏览器实时预览当前文件             |

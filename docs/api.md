@@ -7,12 +7,12 @@ description: "A list of available APIs in SpaceVim, provide compatible functions
 
 <!-- vim-markdown-toc GFM -->
 
-    - [Introduction](#introduction)
+- [Introduction](#introduction)
 - [Available APIs](#available-apis)
 
 <!-- vim-markdown-toc -->
 
-#### Introduction
+## Introduction
 
 SpaceVim provides many public APIs, you can use these APIs in your plugins.
 The following example shows how to load APIs, and how to use the public functions within the APIs.

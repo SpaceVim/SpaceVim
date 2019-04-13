@@ -90,7 +90,7 @@ function! s:find_layers() abort
 endfunction
 
 function! SpaceVim#layers#get() abort
-  return s:enabled_layers
+  return deepcopy(s:enabled_layers)
 endfunction
 
 function! SpaceVim#layers#isLoaded(layer) abort

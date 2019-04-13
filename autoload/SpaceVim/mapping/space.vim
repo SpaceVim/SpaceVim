@@ -21,7 +21,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
   let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
   let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
-  let g:_spacevim_mappings_space.p = {'name' : '+Projects'}
+  let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
   let g:_spacevim_mappings_space.h = {'name' : '+Help'}
   let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
   let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
@@ -503,8 +503,10 @@ function! SpaceVim#mapping#space#init() abort
   xnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start(1)<cr>
   call SpaceVim#mapping#space#def('nmap', ['s', 'e'], '<plug>SpaceVim-plugin-iedit',
         \ 'start iedit mode', 0, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start()',
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'H'], 'call SpaceVim#plugins#highlight#start(1)',
         \ 'highlight all symbols', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start(0)',
+        \ 'highlight current symbols', 1)
   " Getting help
   let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
@@ -523,9 +525,11 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
     let cmd = ':<C-u>' . a:cmd . '<CR>' 
+    let xcmd = ':' . a:cmd . '<CR>' 
     let lcmd = a:cmd
   else
     let cmd = a:cmd
+    let xcmd = a:cmd
     let feedkey_m = a:m =~# 'nore' ? 'n' : 'm'
     if a:cmd =~? '^<plug>'
       let lcmd = 'call feedkeys("\' . a:cmd . '", "' . feedkey_m . '")'
@@ -536,9 +540,9 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   exe a:m . ' <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
   if is_visual
     if a:m ==# 'nnoremap'
-      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+      exe 'xnoremap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(xcmd, '|', '\\|', 'g')
     elseif a:m ==# 'nmap'
-      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(cmd, '|', '\\|', 'g')
+      exe 'xmap <silent> [SPC]' . join(a:keys, '') . ' ' . substitute(xcmd, '|', '\\|', 'g')
     endif
   endif
   if len(a:keys) == 2

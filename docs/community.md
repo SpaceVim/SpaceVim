@@ -45,6 +45,7 @@ messages is:
 - <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
+- <i class="fab fa-whatsapp"></i> [`SpaceVim` on WhatsApp](https://chat.whatsapp.com/E3HvOvKmFfHDDIq82Rfflx)
 
 
 ### Others
@@ -52,5 +53,4 @@ messages is:
 - <i class="fab fa-facebook"></i> [Facebook](https://www.facebook.com/SpaceVim)
 - <i class="fab fa-reddit"></i> [Reddit](https://reddit.com/r/spacevim)
 - <i class="fab fa-github"></i> [GitHub](https://github.com/SpaceVim/SpaceVim)
-- <i class="fab fa-google-plus-g"></i> [google plus](https://plus.google.com/communities/106181012794584190200)
 - <i class="fab fa-youtube"></i> [YouTube](https://www.youtube.com/channel/UC-3q4dVFS7gBpxhrON1WxIA)
