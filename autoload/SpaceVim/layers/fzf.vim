@@ -162,6 +162,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
+  nnoremap <silent> <Leader>ft  :<C-u>FzfTags<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.t = ['FzfTags',
+        \ 'fuzzy find global tags',
+        \ [
+        \ '[Leader f t] is to fuzzy find global tags',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
@@ -530,4 +541,4 @@ function! s:tags()
   \ 'sink':    function('s:tags_sink')})
 endfunction
 
-command! Tags call s:tags()
+command! FzfTags call s:tags()
