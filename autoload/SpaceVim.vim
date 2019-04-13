@@ -76,6 +76,20 @@ let g:spacevim_expand_tab              = 1
 " Enable/Disable relativenumber, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 
+
+""
+" @section enable_bepo_layout, options-enable_bepo_layout
+" @parentsection options
+" Enable/Disable bepo layout, by default it is disabled.
+" >
+"   enable_bepo_layout = true
+" <
+
+""
+" Enable/Disable bepo layout, by default it is disabled.
+let g:spacevim_enable_bepo_layout  = 0
+
+
 ""
 " @section max_column, options-max_column
 " @parentsection options
