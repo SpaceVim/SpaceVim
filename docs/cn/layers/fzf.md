@@ -41,6 +41,7 @@ fzf 模块默认并未启用，如果需要启用该模块，需要在配置文�
 | `<Leader> f j`       | 模糊搜索 jump, change          |
 | `<Leader> f l`       | 模糊搜索 location list         |
 | `<Leader> f m`       | 模糊搜索 output messages       |
-| `<Leader> f o`       | 模糊搜索函数列表               |
+| `<Leader> f o`       | 模糊搜索当前函数列表           |
+| `<Leader> f t`       | 模糊搜索全局函数列表           |
 | `<Leader> f q`       | 模糊搜索 quickfix list         |
 | `<Leader> f r`       | 重置上次搜索窗口               |
