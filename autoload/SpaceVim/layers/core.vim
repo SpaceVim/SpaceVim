@@ -11,7 +11,7 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
+    call add(plugins, ['scrooloose/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
@@ -674,6 +674,11 @@ function! s:explore_current_dir(cur) abort
       VimFilerCurrentDir -no-toggle
     endif
   elseif g:spacevim_filemanager ==# 'nerdtree'
+    if !a:cur
+      exe 'e ' . getcwd() 
+    else
+      NERDTreeCWD
+    endif
   elseif g:spacevim_filemanager ==# 'defx'
     if !a:cur
       let g:_spacevim_autoclose_filetree = 0
