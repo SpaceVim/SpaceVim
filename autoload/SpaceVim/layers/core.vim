@@ -100,18 +100,12 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
 
   " file tree key bindings
-  if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
-  elseif g:spacevim_filemanager ==# 'nerdtree'
-  elseif g:spacevim_filemanager ==# 'defx'
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
-          \ . string(s:_function('s:explore_current_dir')) . ', [0])',
-          \ 'Explore current directory', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
-          \ . string(s:_function('s:explore_current_dir')) . ', [1])',
-          \ 'Explore current directory(other windows)', 1)
-  endif
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [0])',
+        \ 'Explore current directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [1])',
+        \ 'Explore current directory(other windows)', 1)
 
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
@@ -669,12 +663,24 @@ function! s:restart_neovim_qt() abort
 endfunction
 
 
+let g:_spacevim_autoclose_filetree = 1
 function! s:explore_current_dir(cur) abort
-  if !a:cur
-    let g:_spacevim_autoclose_defx = 0
-    Defx -no-toggle -no-resume -split=no `getcwd()`
-    let g:_spacevim_autoclose_defx = 1
-  else
-    Defx -no-toggle
+  if g:spacevim_filemanager ==# 'vimfiler'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      VimFilerCurrentDir -no-split -no-toggle
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      VimFilerCurrentDir -no-toggle
+    endif
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+  elseif g:spacevim_filemanager ==# 'defx'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      Defx -no-toggle -no-resume -split=no `getcwd()`
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      Defx -no-toggle
+    endif
   endif
 endfunction
