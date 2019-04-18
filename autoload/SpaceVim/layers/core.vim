@@ -105,7 +105,9 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
   elseif g:spacevim_filemanager ==# 'defx'
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'let g:_spacevim_autoclose_defx = 0 | Defx -split=no | let g:_spacevim_autoclose_defx = 1', 'Explore current directory', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+          \ . string(s:_function('s:explore_current_dir')) . ', [])',
+          \ 'Explore current directory', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'Defx', 'Explore current directory (other window)', 1)
   endif
 
@@ -662,4 +664,11 @@ endfunction
 " this func only for neovim-qt in windows
 function! s:restart_neovim_qt() abort
   call system('taskkill /f /t /im nvim.exe')
+endfunction
+
+
+function! s:explore_current_dir() abort
+  let g:_spacevim_autoclose_defx = 0
+  Defx -no-toggle -no-resume -split=no `getcwd()`
+  let g:_spacevim_autoclose_defx = 1
 endfunction
