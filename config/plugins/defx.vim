@@ -34,14 +34,12 @@ call defx#custom#column('filename', {
       \ 'opened_icon': '',
       \ })
 
-let g:_spacevim_autoclose_defx = 1
-
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
+        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_filetree
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
