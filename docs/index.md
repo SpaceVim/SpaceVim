@@ -16,13 +16,13 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 SpaceVim is a distribution of the Vim editor that's inspired by spacemacs.
 It manages collections of plugins in layers, which help collecting related
-packages together to provide features. For example, the python layer collects
+packages together to provide features. For example, the `lang#python` layer collects
 deoplete.nvim, neomake and jedi-vim together to provide autocompletion,
 syntax checking, and documentation lookup. This approach helps keeping
 configuration organized and reduces overhead for the user by keeping them
 from having to think about what packages to install.
 
-If you like SpaceVim, please feel free to star the project on github. It is a great way to show your
+If you like SpaceVim, please feel free to star the project on [github](https://github.com/SpaceVim/SpaceVim). It is a great way to show your
 appreciation while providing us motivation to continue working on this project.
 
 
