@@ -29,9 +29,10 @@ call defx#custom#column('mark', {
       \ 'selected_icon': '',
       \ })
 
-call defx#custom#column('filename', {
+call defx#custom#column('icon', {
       \ 'directory_icon': '',
       \ 'opened_icon': '',
+      \ 'root_icon': ' ',
       \ })
 
 augroup vfinit
