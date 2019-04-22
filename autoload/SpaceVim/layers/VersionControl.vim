@@ -14,7 +14,9 @@ let s:enable_gtm_status = 0
 
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
-  call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  if !SpaceVim#layers#isLoaded('git')
+    call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  endif
   return plugins
 endfunction
 
