@@ -84,6 +84,9 @@ function! SpaceVim#layers#git#config() abort
         \ 'display the last commit message of the current line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'View git log of current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'View git log of current repo', 1)
+  nmap <Leader>ha <Plug>GitGutterStageHunk
+  nmap <Leader>hr <Plug>GitGutterUndoHunk
+  nmap <Leader>hv <Plug>GitGutterPreviewHunk
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort
