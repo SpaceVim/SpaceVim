@@ -1802,7 +1802,16 @@ SpaceVim 通过 [neomake](https://github.com/neomake/neomake) fly 工具来进�
 | ------ | ------- | ---------------- |
 | `✖`    | Error   | `error_symbol`   |
 | `➤`    | warning | `warning_symbol` |
-| `🛈`    | Info    | `info_symbol`    |
+| `ⓘ`    | Info    | `info_symbol`    |
+
+**quickfix 列表移动：**
+
+| 快捷键         | 功能描述                       |
+| -------------- | ------------------------------ |
+| `<Leader> q l` | 打开 quickfix 列表窗口         |
+| `<Leader> q c` | 清除 quickfix 列表             |
+| `<Leader> q n` | 跳到 quickfix 列表中下一个位置 |
+| `<Leader> q p` | 跳到 quickfix 列表中上一个位置 |
 
 ### 工程管理
 
