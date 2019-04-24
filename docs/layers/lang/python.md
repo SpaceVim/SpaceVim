@@ -17,6 +17,7 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
+  - [Text objects and motions](#text-objects-and-motions)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Testing](#testing)
@@ -93,6 +94,14 @@ pip install --user isort
 | Mode   | Key Binding | Description        |
 | ------ | ----------- | ------------------ |
 | normal | `SPC l g d` | Generate docstring |
+
+### Text objects and motions
+
+This layer contains vim-pythonsense which provides text objects and motions for Python classes, methods, functions, and doc strings.
+
+| Text Objects | Descriptions             |
+| ------------ | ------------------------ |
+| `ac`         | Outer class text object. |
 
 ### Inferior REPL process
 
