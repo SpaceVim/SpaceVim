@@ -1829,7 +1829,7 @@ Custom sign symbol:
 | ------ | ------------ | ---------------- |
 | `✖`    | Error        | `error_symbol`   |
 | `➤`    | warning      | `warning_symbol` |
-| `🛈`    | Info         | `info_symbol`    |
+| `ⓘ`    | Info         | `info_symbol`    |
 
 **quickfix list movement:**
 
