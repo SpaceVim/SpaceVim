@@ -15,6 +15,8 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
       endif
     elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
       return "\<Enter>\<esc>ko"
+    elseif getline('.')[col('.') - 2]==#'('&&getline('.')[col('.')-1]==#')'
+      return "\<Enter>\<esc>ko"
     else
       return "\<Enter>"
     endif
