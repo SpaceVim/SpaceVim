@@ -38,3 +38,6 @@ To use this configuration layer, add following snippet to your custom configurat
 | `SPC g d`   | view git diff          |
 | `SPC g A`   | stage all files        |
 | `SPC g b`   | open git blame windows |
+| `SPC g h a` | stage current hunk     |
+| `SPC g h r` | undo cursor hunk       |
+| `SPC g h v` | preview cursor hunk    |
