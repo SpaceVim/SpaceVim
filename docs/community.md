@@ -54,3 +54,4 @@ messages is:
 - <i class="fab fa-reddit"></i> [Reddit](https://reddit.com/r/spacevim)
 - <i class="fab fa-github"></i> [GitHub](https://github.com/SpaceVim/SpaceVim)
 - <i class="fab fa-youtube"></i> [YouTube](https://www.youtube.com/channel/UC-3q4dVFS7gBpxhrON1WxIA)
+- <i class="fab fa-product-hunt"></i> [Product Hunt](https://www.producthunt.com/posts/spacevim)
