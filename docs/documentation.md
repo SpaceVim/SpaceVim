@@ -1126,7 +1126,7 @@ Files manipulation commands (start with f):
 | `SPC f W`    | save a file with elevated privileges (sudo layer)         |
 | `SPC f f`    | open file                                                 |
 | `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree      |
+| `SPC f o`    | Find current file in file tree                            |
 | `SPC f R`    | rename the current file(TODO)                             |
 | `SPC f s`    | save a file                                               |
 | `SPC f S`    | save all files                                            |
@@ -1829,7 +1829,16 @@ Custom sign symbol:
 | ------ | ------------ | ---------------- |
 | `✖`    | Error        | `error_symbol`   |
 | `➤`    | warning      | `warning_symbol` |
-| `🛈`    | Info         | `info_symbol`    |
+| `ⓘ`    | Info         | `info_symbol`    |
+
+**quickfix list movement:**
+
+| Mappings       | Descriptions                           |
+| -------------- | -------------------------------------- |
+| `<Leader> q l` | Open quickfix list windows             |
+| `<Leader> q c` | clear quickfix list                    |
+| `<Leader> q n` | jump to next item in quickfix list     |
+| `<Leader> q p` | jump to previous item in quickfix list |
 
 ### Managing projects
 

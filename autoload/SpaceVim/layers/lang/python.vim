@@ -32,6 +32,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
+  call add(plugins, ['jeetsukumaran/vim-pythonsense', 
+        \ { 'on_ft' : 'python'}])
   return plugins
 endfunction
 

@@ -29,13 +29,16 @@ lang: cn
 
 ## 快捷键
 
-| 快捷键    | 功能描述             |
-| --------- | -------------------- |
-| `SPC g s` | 打开 git status 窗口 |
-| `SPC g S` | stage 当前文件       |
-| `SPC g U` | unstage 当前文件     |
-| `SPC g c` | 打开 git commit 窗口 |
-| `SPC g p` | 执行 git push        |
-| `SPC g d` | 打开 git diff 窗口   |
-| `SPC g A` | git add 所有文件     |
-| `SPC g b` | 打开 git blame 窗口  |
+| 快捷键      | 功能描述             |
+| ----------- | -------------------- |
+| `SPC g s`   | 打开 git status 窗口 |
+| `SPC g S`   | stage 当前文件       |
+| `SPC g U`   | unstage 当前文件     |
+| `SPC g c`   | 打开 git commit 窗口 |
+| `SPC g p`   | 执行 git push        |
+| `SPC g d`   | 打开 git diff 窗口   |
+| `SPC g A`   | git add 所有文件     |
+| `SPC g b`   | 打开 git blame 窗口  |
+| `SPC g h a` | stage current hunk   |
+| `SPC g h r` | undo cursor hunk     |
+| `SPC g h v` | preview cursor hunk  |

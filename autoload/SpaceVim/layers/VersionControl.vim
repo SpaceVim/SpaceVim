@@ -14,7 +14,9 @@ let s:enable_gtm_status = 0
 
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
-  call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  if !SpaceVim#layers#isLoaded('git')
+    call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  endif
   return plugins
 endfunction
 
@@ -103,10 +105,15 @@ function! s:gtm_statusline() abort
 endfunction
 
 " +0 ~0 -0 
+" if git layser is loaded, use vim-gitgutter instead.
 function! s:hunks() abort
   let hunks = [0,0,0]
   try
-    let hunks = sy#repo#get_stats()
+    if SpaceVim#layers#isLoaded('git')
+      let hunks = GitGutterGetHunkSummary()
+    else
+      let hunks = sy#repo#get_stats()
+    endif
   catch
   endtry
   let rst = ''

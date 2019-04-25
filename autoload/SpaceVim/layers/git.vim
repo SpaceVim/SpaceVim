@@ -24,6 +24,7 @@ function! SpaceVim#layers#git#plugins() abort
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
         \ ]
   call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
+  call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
   if s:git_plugin ==# 'gina'
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
   elseif s:git_plugin ==# 'fugitive'
@@ -39,6 +40,7 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
+  let g:signify_vcs_list = ['hg']
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   if s:git_plugin ==# 'gina'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git status', 1)
@@ -82,6 +84,10 @@ function! SpaceVim#layers#git#config() abort
         \ 'display the last commit message of the current line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'View git log of current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'View git log of current repo', 1)
+  let g:_spacevim_mappings_space.g.h = {'name' : '+Hunks'}
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'a'], '<Plug>GitGutterStageHunk', 'stage current hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>GitGutterUndoHunk', 'undo cursor hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>GitGutterPreviewHunk', 'preview cursor hunk', 0)
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort
