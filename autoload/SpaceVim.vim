@@ -73,7 +73,7 @@ let g:spacevim_expand_tab              = 1
 " <
 
 ""
-" Enable/Disable relativenumber, by default it is enabled.
+" Enable/Disable relativenumber in current windows, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 
 

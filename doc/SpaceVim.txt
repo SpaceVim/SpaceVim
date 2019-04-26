@@ -321,7 +321,7 @@ Change the default indentation of SpaceVim. Default is 2.
 In Insert mode: Use the appropriate number of spaces to insert a <Tab>
 
                                                    *g:spacevim_relativenumber*
-Enable/Disable relativenumber, by default it is enabled.
+Enable/Disable relativenumber in current windows, by default it is enabled.
 
                                                *g:spacevim_enable_bepo_layout*
 Enable/Disable bepo layout, by default it is disabled.
