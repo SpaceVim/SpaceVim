@@ -888,12 +888,6 @@ function! SpaceVim#end() abort
     call SpaceVim#layers#core#statusline#init()
   endif
 
-  if !g:spacevim_relativenumber
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
