@@ -14,6 +14,7 @@ scriptencoding utf-8
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
+let s:KEY = SpaceVim#api#import('vim#key')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -466,6 +467,8 @@ function! s:wait_for_input() abort " {{{
   else
     if inp ==# ' '
       let inp = '[SPC]'
+    else
+      let inp = s:KEY.nr2name(char2nr(inp))
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
