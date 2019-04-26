@@ -23,8 +23,8 @@ function! SpaceVim#autocmds#init() abort
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
     if g:spacevim_relativenumber
-      autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
-      autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
+      autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
+      autocmd BufLeave,WinLeave * if &nu | set nornu | endif
     endif
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
