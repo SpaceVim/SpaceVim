@@ -73,7 +73,7 @@ let g:spacevim_expand_tab              = 1
 " <
 
 ""
-" Enable/Disable relativenumber, by default it is enabled.
+" Enable/Disable relativenumber in current windows, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 
 
@@ -886,12 +886,6 @@ function! SpaceVim#end() abort
 
   if SpaceVim#layers#isLoaded('core#statusline')
     call SpaceVim#layers#core#statusline#init()
-  endif
-
-  if !g:spacevim_relativenumber
-    set norelativenumber
-  else
-    set relativenumber
   endif
 
   " tab options:
