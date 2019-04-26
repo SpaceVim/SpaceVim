@@ -9,6 +9,7 @@
 
 function! SpaceVim#layers#lang#ipynb#plugins() abort
   let plugins = []
+  " TODO: use remote plugin https://github.com/szymonmaszke/vimpyter
   call add(plugins, ['wsdjeg/vimpyter', {'merged' : 0}])
   return plugins
 endfunction
