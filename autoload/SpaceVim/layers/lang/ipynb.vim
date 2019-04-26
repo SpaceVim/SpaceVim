@@ -16,5 +16,20 @@ endfunction
 
 
 function! SpaceVim#layers#lang#ipynb#config() abort
-  
+  call SpaceVim#mapping#space#regesit_lang_mappings('ipynb', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','p'],
+        \ 'VimpyterInsertPythonBlock',
+        \ 'insert python block', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','u'],
+        \ 'VimpyterUpdate',
+        \ 'update note book', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','j'],
+        \ 'VimpyterStartJupyter',
+        \ 'start jupyter', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','n'],
+        \ 'VimpyterStartNteract',
+        \ 'start nteract', 1)
 endfunction
