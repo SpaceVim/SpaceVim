@@ -21,6 +21,7 @@ Each of the following sections will be covered:
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
@@ -90,3 +91,11 @@ Before using this feature, please install coffee-fmt.
 ```sh
 npm install -g coffee-fmt
 ```
+
+### REPL support
+
+Start a `coffee -i` inferior REPL process with `SPC l s i` when edit CoffeeScript file. After the REPL process has been started. you can 
+send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+send whole buffer.
+
+![coffeerepl](https://user-images.githubusercontent.com/13142418/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)

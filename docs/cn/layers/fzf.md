@@ -21,7 +21,7 @@ lang: cn
 
 ## 启用模块
 
-fzf 模块默认并为启用，如果需要启用该模块，需要在配置文件里面加入：
+fzf 模块默认并未启用，如果需要启用该模块，需要在配置文件里面加入：
 
 ```toml
 [[layers]]
@@ -30,10 +30,10 @@ fzf 模块默认并为启用，如果需要启用该模块，需要在配置文�
 
 ## 快捷键
 
-下列快捷键均以 `<Leader> f` 为前置键，`<Leader>` 在 SpaceVim 中默认没有修改，
+下列快捷键均以 `<Leader> f` 为前缀键，`<Leader>` 在 SpaceVim 中默认没有修改，
 为 `\` 键。
 
-| 按键                 | 描述                           |
+| 快捷键               | 功能描述                       |
 | -------------------- | ------------------------------ |
 | `<Leader> f <Space>` | 模糊查找快捷键，并执行该快捷键 |
 | `<Leader> f e`       | 模糊搜索寄存器                 |
@@ -41,6 +41,7 @@ fzf 模块默认并为启用，如果需要启用该模块，需要在配置文�
 | `<Leader> f j`       | 模糊搜索 jump, change          |
 | `<Leader> f l`       | 模糊搜索 location list         |
 | `<Leader> f m`       | 模糊搜索 output messages       |
-| `<Leader> f o`       | 模糊搜索函数列表               |
+| `<Leader> f o`       | 模糊搜索当前函数列表           |
+| `<Leader> f t`       | 模糊搜索全局函数列表           |
 | `<Leader> f q`       | 模糊搜索 quickfix list         |
 | `<Leader> f r`       | 重置上次搜索窗口               |

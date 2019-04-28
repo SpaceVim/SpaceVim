@@ -31,3 +31,5 @@ build/
 .coverage.covimerage
 *.swp
 .gtm/
+.metadata/
+jdt.ls-java-project/

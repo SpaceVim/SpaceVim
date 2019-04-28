@@ -10,8 +10,8 @@
 function! SpaceVim#layers#chinese#plugins() abort
   let plugins = [
         \ ['yianwillis/vimcdoc'          , {'merged' : 0}],
-        \ ['ianva/vim-youdao-translater' , {'on_cmd' : ['Ydv' , 'Ydc', 'Yde']}],
-        \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : ['CheckChinese']}],
+        \ ['ianva/vim-youdao-translater' , {'merged' : 0, 'on_cmd' : ['Ydv' , 'Ydc', 'Yde']}],
+        \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}],
         \ ]
   if SpaceVim#layers#isLoaded('ctrlp')
     call add(plugins, ['vimcn/ctrlp.cnx', {'merged' : 0}])

@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.0.0-dev'
+Version='1.2.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -330,7 +330,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                      version : 1.1.0-dev       by : spacevim.org             "
+    echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
 }
 
 # }}}

@@ -10,7 +10,7 @@ commentsID: "Use Vim as a Lua IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Lua IDE
 
-This is a general guide for using SpaceVim as a lua IDE, including layer configuration and usage. 
+This is a general guide for using SpaceVim as a Lua IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 
@@ -22,12 +22,13 @@ Each of the following sections will be covered:
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
 ### Enable language layer
 
-To add lua language support in SpaceVim, you need to enable the `lang#lua` layer. Press `SPC f v d` to open
+To add Lua language support in SpaceVim, you need to enable the `lang#lua` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
 ```toml
@@ -80,3 +81,11 @@ Before using this feature, please install luaformatter.
 ```sh
 luarocks install formatter
 ```
+
+### REPL support
+
+Start a `lua -i` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+send code to inferior process, all key bindings prefix with `SPC l s`, including sending line, sending selection or even
+send whole buffer.
+
+![luarepl](https://user-images.githubusercontent.com/13142418/52158892-075f7a80-26d8-11e9-9bf2-2be8ab2363ab.gif)

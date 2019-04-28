@@ -50,7 +50,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键        | 功能描述                           |
+| 快捷键      | 功能描述                           |
 | ----------- | ---------------------------------- |
 | `SPC l b`   | compile the project                |
 | `SPC l f`   | format current file                |

@@ -26,6 +26,7 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
@@ -63,7 +64,11 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
-    call add(plugins, ['neoclide/coc.nvim',  {'merged': 0}])
+    if s:SYS.isWindows
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.cmd'}])
+    else
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
+    endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',

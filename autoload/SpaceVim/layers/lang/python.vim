@@ -32,6 +32,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
+  call add(plugins, ['jeetsukumaran/vim-pythonsense', 
+        \ { 'on_ft' : 'python'}])
   return plugins
 endfunction
 
@@ -53,7 +55,8 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
-        \ 'opt' : [],
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
         \ })
   call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
@@ -65,7 +68,7 @@ function! SpaceVim#layers#lang#python#config() abort
   if executable('ipython')
     call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
   elseif executable('python')
-    call SpaceVim#plugins#repl#reg('python', 'python')
+    call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
 endfunction
 

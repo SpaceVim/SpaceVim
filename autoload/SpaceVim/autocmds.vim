@@ -22,6 +22,10 @@ function! SpaceVim#autocmds#init() abort
           \   q | endif
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
+    if g:spacevim_relativenumber
+      autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
+      autocmd BufLeave,WinLeave * if &nu | set nornu | endif
+    endif
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
@@ -36,8 +40,8 @@ function! SpaceVim#autocmds#init() abort
           \   exe "normal! g`\"" |
           \ endif
     autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-    autocmd BufLeave * let b:_winview = winsaveview()
-    autocmd BufEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
+    autocmd BufWinLeave * let b:_winview = winsaveview()
+    autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
     autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://

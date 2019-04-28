@@ -42,4 +42,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
+      image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png

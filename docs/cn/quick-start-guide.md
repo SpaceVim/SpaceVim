@@ -5,31 +5,31 @@ lang: cn
 ---
 
 
-# SpaceVim 入门指南
+# 入门指南
 
 如果你从未使用过 SpaceVim，建议先阅读这篇简短的教程。这篇教程主要讲述：
 如何安装 SpaceVim，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。
 
 <!-- vim-markdown-toc GFM -->
 
-- [安装](#安装)
+- [安装指南](#安装指南)
   - [Linux 或 macOS](#linux-或-macos)
   - [Windows](#windows)
-- [在 Docker 中运行](#在-docker-中运行)
-- [配置](#配置)
-- [学习 SpaceVim](#学习-spacevim)
-- [在线指南](#在线指南)
+- [Docker 支持](#docker-支持)
+- [基本配置](#基本配置)
+- [在线教程](#在线教程)
+- [其他资源](#其他资源)
 
 <!-- vim-markdown-toc -->
 
-### 安装
+## 安装指南
 
 在安装 SpaceVim 之前，你需要确保电脑上已经安装了 `Git` 和 `cURL`。这两个工具用来
 下载插件以及字体。
 
 如果在终端中使用 Vim 或 Neovim，还需要设置终端的字体。
 
-#### Linux 或 macOS
+### Linux 或 macOS
 
 ```sh
 curl -sLf https://spacevim.org/cn/install.sh | bash
@@ -43,12 +43,12 @@ curl -sLf https://spacevim.org/cn/install.sh | bash
 curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ```
 
-#### Windows
+### Windows
 
 Windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
 
-### 在 Docker 中运行
+## Docker 支持
 
 ```sh
 docker pull spacevim/spacevim
@@ -58,11 +58,15 @@ docker run -it --rm spacevim/spacevim nvim
 也可以通过挂载的方式载入本地配置：
 
 ```sh
-docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+docker run
+  \ -it -v
+  \ ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d
+  \ --rm
+  \ spacevim/spacevim nvim
 ```
 
 
-### 配置
+## 基本配置
 
 SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单的配置示例。
 如果需要查阅更多 SpaceVim 配置相关的信息，请阅读 SpaceVim 用户文档。
@@ -85,7 +89,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 设置状态栏上分割符号形状，如果字体安装失败，可以将值设为 "nil" 以
     # 禁用分割符号，默认为箭头 "arrow"
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_inactive_separator = "bar"
     # 设置顶部标签列表序号类型，有以下五种类型，分别是 0 - 4
     # 0: 1 ➛ ➊
     # 1: 1 ➛ ➀
@@ -98,7 +102,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     enable_tabline_filetype_icon = true
     # 是否在状态栏上显示当前模式，默认情况下，不显示 Normal/Insert 等
     # 字样，只以颜色区分当前模式
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
 
 # SpaceVim 模块设置，主要包括启用/禁用模块
 
@@ -120,18 +124,11 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     merged = false
 ```
 
-### 学习 SpaceVim
-
-- [SpaceVim 用户文档](../documentation/). SpaceVim 官方文档，包含了 SpaceVim 配置及使用的每一个细节，是熟悉和掌握 SpaceVim 使用技巧的必备资料。
-- [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
-- [SpaceVim 入门教程](https://everettjf.gitbooks.io/spacevimtutorial/content/)：everettjf 所著的 SpaceVim 入门教程。
-
-### 在线指南
+## 在线教程
 
 以下主要为 SpaceVim 的基本使用教程，侧重于各种语言开发环境的搭建，可以理解为 SpaceVim 用户文档的精简版，主要包括以下内容：
 
 - [使用 SpaceVim 搭建基本的开发环境](../use-vim-as-ide/)：涵盖一些窗口及文件的常规操作。
-
 
 针对不同语言，一些基础的配置及使用技巧：
 
@@ -142,3 +139,9 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
             </li>
     {% endfor %}
 </ul>
+
+## 其他资源
+
+- [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
+- [SpaceVim 入门教程](https://everettjf.gitbooks.io/spacevimtutorial/content/)：everettjf 所著的 SpaceVim 入门教程。
+

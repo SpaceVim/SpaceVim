@@ -16,7 +16,11 @@ commentsID: "使用 Vim 搭建 Java 开发环境"
 <!-- vim-markdown-toc GFM -->
 
 - [启用模块](#启用模块)
+- [语言服务器](#语言服务器)
 - [代码补全](#代码补全)
+- [语法树](#语法树)
+- [重命名光标符号](#重命名光标符号)
+- [光标符号文档查询](#光标符号文档查询)
 - [语法检查](#语法检查)
 - [导包](#导包)
 - [跳转测试文件](#跳转测试文件)
@@ -41,11 +45,82 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 `lang#java` 模块主要采用插件 vim-javacomplete2，该插件可以自动读取工程配置文件，获取当前项目的 classpath，
 目前支持的项目包括 maven、gradle 以及 eclipse 下的配置文件。
 
+
+### 语言服务器
+
+若需要启动 Java 语言服务支持，可以启用 lsp 模块，以下配置示例使用 [eclipse.jdt.ls](http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz)，下载后并解压：
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "java"
+  ]
+  [layers.override_cmd]
+    java = [
+    "java",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=NONE",
+    "-noverify",
+    "-Xmx1G",
+    "-jar",
+    "D:\\dev\\jdt-language-server-latest\\plugins\\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "-configuration",
+    "D:\\dev\\jdt-language-server-latest\\config_win",
+    "-data",
+    "C:\\Users\\Administrator\\.cache\\javalsp"
+    ]
+```
+
+
+需要将配置中 `D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar`
+改为 org.eclipse.equinox.launcher jar 文件的实际路径。
+
+根据当前系统，选择对应的配置文件：
+
+- `config_win`, Windows 系统
+- `config_mac`, MacOS 系统
+- `config_linux`, Linux 系统
+
+`-data` 选项指定语言服务器的运行绝对路径。这应该不同于用户项目文件的路径。
+
 ### 代码补全
 
 vim-javacomplete2 为 java 项目提供了很好的代码补全功能，配合 autocomplete 模块，可以在编辑代码时实时补全代码，并且可以模糊匹配。
 
 ![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
+
+### 语法树
+
+默认的语法树插件是 tagbar，快捷键为 `F2`。这一快捷键将会在左侧打开一个语法树侧栏，如下图所示：
+
+![java outline](https://user-images.githubusercontent.com/13142418/53250502-7c313d80-36f5-11e9-8fa2-8437ecf57a78.png)
+
+如果需要使用模糊搜索快速调到当前文件中的某个函数，首先需要载入一个模糊搜索的模块，比如 denite 模块：
+
+```toml
+[[layers]]
+  name = "denite"
+```
+
+之后使用快捷键 `Leader f o` 就可以打开模糊搜索窗口，效果图如下：
+
+![java fuzzy outline](https://user-images.githubusercontent.com/13142418/53250728-f1047780-36f5-11e9-923d-0b34568f9566.gif)
+
+### 重命名光标符号
+
+当启用了 lsp 模块，并配置好 Java 语言服务器后，可以使用快捷键 `SPC l e` 对光标下的符号进行重命名：
+
+![rename java symblo](https://user-images.githubusercontent.com/13142418/53250190-da115580-36f4-11e9-9590-bf945fa8dcc0.gif)
+
+### 光标符号文档查询
+
+同样的，这一功能也依赖 lsp 模块，默认的快捷键为 `SPC l d` 或者 `K`：
+
+![javadoc](https://user-images.githubusercontent.com/13142418/53255520-bf44de00-3700-11e9-9f47-50bc50ed6e83.gif)
 
 ### 语法检查
 

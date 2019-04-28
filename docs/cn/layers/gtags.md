@@ -1,10 +1,11 @@
 ---
-title: "SpaceVim tags 模块"
-description: "这一模块为 SpaceVim 提供了全局的 tags 索引管理，提供快速检索定义和引用的功能。"
+title: "SpaceVim gtags 模块"
+description: "这一模块为 SpaceVim 提供了全局的 gtags 索引管理，提供快速检索定义和引用的功能。"
+redirect_from: "/cn/layers/tags/"
 lang: cn
 ---
 
-# [可用模块](../) >> tags
+# [可用模块](../) >> gtags
 
 <!-- vim-markdown-toc GFM -->
 
@@ -45,7 +46,7 @@ tags 模块提供了项目 tags 管理工具，依赖 SpaceVim 自身的项目�
 
 ### GNU Global (gtags)
 
-首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可更具当前使用的操作系统，
+首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可根据当前使用的操作系统，
 使用自带的软件包管理工具安装。
 
 ```sh
@@ -118,7 +119,7 @@ echo export GTAGSLABEL=pygments >> .profile
 在使用 gtags 之前，建议先新建 GTAGS 数据库，可通过如下两种方式新建数据库：
 
 - 在 SpaceVim 内，使用快捷键 `SPC m g c` 来新建 GTAGS 数据库，
-  如果 GUN Global 不能直接支持当墙语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
+  如果 GUN Global 不能直接支持当前语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
 - 在命令行，可以直接在项目根目录执行 gtags 命令。
 
 ```sh
@@ -188,7 +189,7 @@ pygments 后，可以通过 gtags 查询函数和变量的定义以及引用处�
 
 ## 快捷键
 
-| 按键        | 描述                       |
+| 快捷键      | 功能描述                   |
 | ----------- | -------------------------- |
 | `SPC m g c` | 新建 tag 数据库            |
 | `SPC m g u` | 手动更新 tag 数据库        |

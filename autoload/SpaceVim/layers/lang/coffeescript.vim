@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#lang#coffeescript#plugins() abort
   let plugins = []
@@ -16,8 +16,13 @@ endfunction
 
 
 function! SpaceVim#layers#lang#coffeescript#config() abort
-  call SpaceVim#plugins#runner#reg_runner('coffee', 'coffee %s')
-  call SpaceVim#plugins#repl#reg('coffee', 'coffee')
+  call SpaceVim#plugins#runner#reg_runner('coffee', {
+        \ 'exe' : 'coffee' . (s:SYS.isWindows ? '.CMD' : ''),
+        \ 'usestdin' : 1,
+        \ 'opt': ['-s'],
+        \ })
+  " call SpaceVim#plugins#runner#reg_runner('coffee', 'coffee %s')
+  call SpaceVim#plugins#repl#reg('coffee', ['coffee' . (s:SYS.isWindows ? '.CMD' : ''), '-i'])
   call SpaceVim#mapping#space#regesit_lang_mappings('coffee', function('s:language_specified_mappings'))
 
 endfunction

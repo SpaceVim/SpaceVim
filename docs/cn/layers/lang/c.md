@@ -37,6 +37,10 @@ lang: cn
 
 ## 模块配置
 
+- `enable_clang_syntax_highlight` (布尔)
+
+设置是否启用基于 clang 的语法高亮。默认并未开启，开启该功能需要 vim8 或者 neovim。
+
 - `clang_executable`（字符串）
 
 设置可执行程序 clang 的路径。
@@ -78,6 +82,6 @@ lang: cn
 
 ## 快捷键
 
-| 按键      | 描述               |
+| 快捷键    | 功能描述           |
 | --------- | ------------------ |
 | `SPC l r` | 编译并执行当前文件 |

@@ -17,7 +17,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['tpope/vim-surround'],
         \ ['tpope/vim-repeat'],
         \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-multiple-cursors', { 'loadconf' : 1, 'merged' : 0}],
         \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
         \ ['kana/vim-textobj-user'],
         \ ['kana/vim-textobj-indent'],
@@ -33,6 +32,9 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ]
   if executable('fcitx')
     call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+  endif
+  if g:spacevim_enable_bepo_layout
+    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction
@@ -69,20 +71,25 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
   xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align region at &', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align region at (', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align region at )', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '['], 'Tabularize /[', 'align region at [', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ']'], 'Tabularize /]', 'align region at ]', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align region at {', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align region at }', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align region at ,', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align region at .', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align region at :', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align region at ;', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align region at =', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align region at ¦', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align region at |', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align-region-at-&', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align-region-at-(', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align-region-at-)', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '['], 'Tabularize /[', 'align-region-at-[', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ']'], 'Tabularize /]', 'align-region-at-]', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align-region-at-{', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align-region-at-}', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align-region-at-,', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align-region-at-.', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align-region-at-:', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align-region-at-;', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'r'], 'call call('
+        \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
+        \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
@@ -110,7 +117,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to kebab-case', 1)
 
   " justification
-  let g:_spacevim_mappings_space.x.j = {'name' : 'justification'}
+  let g:_spacevim_mappings_space.x.j = {'name' : '+Justification'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'l'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["left"])',
         \ 'set-the-justification-to-left', 1)
@@ -120,6 +127,13 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'j', 'r'], 'silent call call('
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
+
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
+
+  " word
+  let g:_spacevim_mappings_space.x.w = {'name' : '+word'}
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], "normal! " . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -172,36 +186,66 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
         \ 'swap current line with previous one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["character"])',
+        \ 'swap current character with next one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["word"])',
+        \ 'swap current word with next one', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
+        \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
+        \ 'swap current line with next one', 1)
 
 endfunction
 
 function! s:transpose_with_previous(type) abort
+  let l:save_register = @"
   if a:type ==# 'line'
     if line('.') > 1
-      let l:save_register = @"
       normal! kddp
-      let @" = l:save_register
     endif
   elseif a:type ==# 'word'
-    let save_register = @k
-    normal! "kyiw
-    let cw = @k
-    normal! ge"kyiw
-    let tw = @k
-    if cw !=# tw
-      let @k = cw
-      normal! viw"kp
-      let @k = tw
-      normal! eviw"kp
+    normal! yiw
+    let l:cw = @"
+    normal! geyiw
+    let l:tw = @"
+    if l:cw !=# l:tw
+      let @" = l:cw
+      normal! viwp
+      let @" = l:tw
+      normal! eviwp
     endif
-    let @k = save_register
   elseif a:type ==# 'character'
     if col('.') > 1
-      let l:save_register = @"
       normal! hxp
-      let @" = l:save_register
     endif
   endif
+  let @" = l:save_register
+endfunction
+
+function! s:transpose_with_next(type) abort
+  let l:save_register = @"
+  if a:type ==# 'line'
+    if line('.') < line('$')
+      normal! ddp
+    endif
+  elseif a:type ==# 'word'
+    normal! yiw
+    let l:cw = @"
+    normal! wyiw
+    let l:nw = @"
+    if l:cw !=# l:nw
+      let @" = l:cw
+      normal! viwp
+      let @" = l:nw
+      normal! geviwp
+    endif
+  elseif a:type ==# 'character'
+    if col('.') < col('$')-1
+      normal! xp
+    endif
+  endif
+  let @" = l:save_register
 endfunction
 
 function! s:move_text_down_transient_state() abort   
@@ -534,6 +578,16 @@ function! s:uuidgen_U() abort
   let @k = uuid
   normal! "kPl
   let @k = save_register
+endfunction
+
+function! s:align_at_regular_expression() abort
+  let re = input(':Tabularize /')
+  if !empty(re)
+    exe 'Tabularize /' . re
+  else
+    normal! :
+    echo 'empty input, canceled!'
+  endif
 endfunction
 
 " function() wrapper

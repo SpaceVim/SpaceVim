@@ -14,7 +14,7 @@ call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#dev#todo#list()'
 
 " after run make test, the vader will be downloaded to ./build/vader/
 
-let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/build/vader'
+let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h') . '/build/vader'
 
 " vader language specific key bindings
 
@@ -25,4 +25,5 @@ function! s:language_specified_mappings() abort
 endfunction
 call SpaceVim#mapping#space#regesit_lang_mappings('vader', function('s:language_specified_mappings'))
 call SpaceVim#plugins#a#set_config_name('.projections.json')
+command! -nargs=1 IssueEdit call SpaceVim#dev#issuemanager#edit(<f-args>)
 

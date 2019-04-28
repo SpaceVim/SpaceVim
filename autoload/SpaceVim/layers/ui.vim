@@ -55,7 +55,8 @@ function! SpaceVim#layers#ui#config() abort
         \ 'highlight-long-lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
         \ 'toggle background', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call ToggleConceal()',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
+        \ . string(s:_function('s:toggle_conceal')) . ', [])',
         \ 'toggle conceal', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'Open tabs manager', 1)
@@ -272,3 +273,11 @@ function! s:toggle_whitespace() abort
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction
+
+func! s:toggle_conceal()
+    if &conceallevel == 0 
+        setlocal conceallevel=2
+    else
+        setlocal conceallevel=0
+    endif
+endf

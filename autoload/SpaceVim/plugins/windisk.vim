@@ -35,7 +35,12 @@ endf
 
 function! s:open_disk(d) abort
   call s:close_disk_buffer()
-  exe 'VimFiler -no-toggle ' . a:d
+  if g:spacevim_filemanager ==# 'vimfiler'
+    exe 'VimFiler -no-toggle ' . a:d
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+  elseif g:spacevim_filemanager ==# 'defx'
+    exe 'Defx -no-toggle -no-resume ' . a:d
+  endif
   doautocmd WinEnter
 endfunction
 

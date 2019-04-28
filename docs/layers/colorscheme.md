@@ -52,8 +52,8 @@ Colorscheme list
 | material     | yes  | yes   | yes  | yes | yes        |
 | SpaceVim     | yes  | yes   | yes  | yes | yes        |
 
-By default this layer only include above colorschemes, if you want to use other colorscheme which
-is available on github, you can use `custom_plugins` section in configuration file, for examples:
+By default this layer only include above colorschemes. If you want to use other colorschemes which
+are available on Github, use the `custom_plugins` section in configuration file. For example:
 
 ```toml
 [options]

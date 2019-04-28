@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.1.0-dev'
+let g:spacevim_version = '1.2.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -73,8 +73,22 @@ let g:spacevim_expand_tab              = 1
 " <
 
 ""
-" Enable/Disable relativenumber, by default it is enabled.
+" Enable/Disable relativenumber in current windows, by default it is enabled.
 let g:spacevim_relativenumber          = 1
+
+
+""
+" @section enable_bepo_layout, options-enable_bepo_layout
+" @parentsection options
+" Enable/Disable bepo layout, by default it is disabled.
+" >
+"   enable_bepo_layout = true
+" <
+
+""
+" Enable/Disable bepo layout, by default it is disabled.
+let g:spacevim_enable_bepo_layout  = 0
+
 
 ""
 " @section max_column, options-max_column
@@ -90,6 +104,22 @@ let g:spacevim_relativenumber          = 1
 "   let g:spacevim_max_column = 120
 " <
 let g:spacevim_max_column              = 120
+
+""
+" @section max_column, options-home_files_number
+" @parentsection options
+" Change the list number of files for SpaceVim home. Default is 6.
+" >
+"   home_files_number = 6
+" <
+
+""
+" Change the list number of files for SpaceVim home. Default is 6.
+" >
+"   let g:spacevim_home_files_number = 6
+" <
+let g:spacevim_home_files_number        = 6
+
 
 ""
 " @section enable_guicolors, options-enable_guicolors
@@ -498,7 +528,15 @@ let g:spacevim_colorscheme_default     = 'desert'
 let g:spacevim_simple_mode             = 0
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
+
+""
+" Config the direction of file tree. Default is 'right'. you can also set to
+" 'left'. 
+"
+" NOTE: if it is 'left', the tagbar will be move to right.
+let g:spacevim_filetree_direction             = 'right'
 
 let g:spacevim_sidebar_direction        = ''
 ""
@@ -685,6 +723,7 @@ let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
       \ 'vimfiler',
+      \ 'defx',
       \ 'SpaceVimRunner',
       \ 'SpaceVimREPL',
       \ 'SpaceVimQuickFix',
@@ -832,7 +871,7 @@ function! SpaceVim#end() abort
   endif
   ""
   " generate tags for SpaceVim
-  let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
+  let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
     exe 'helptags ' . help
   catch
@@ -847,12 +886,6 @@ function! SpaceVim#end() abort
 
   if SpaceVim#layers#isLoaded('core#statusline')
     call SpaceVim#layers#core#statusline#init()
-  endif
-
-  if !g:spacevim_relativenumber
-    set norelativenumber
-  else
-    set relativenumber
   endif
 
   " tab options:
@@ -962,6 +995,9 @@ function! SpaceVim#welcome() abort
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
     if exists(':VimFiler') == 2
       VimFiler
+      wincmd p
+    elseif exists(':Defx') == 2
+      Defx
       wincmd p
     endif
   endif
