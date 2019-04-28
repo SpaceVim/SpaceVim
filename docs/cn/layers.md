@@ -64,9 +64,9 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [chat](chat/)                                         | 这一模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。                           |
 | [checkers](checkers/)                                 | 这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置。                               |
 | [chinese](chinese/)                                   | 这一模块为 SpaceVim 的中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。                                |
-| [colorscheme](colorscheme/)                           | 这一模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随机主题等特性。|
+| [colorscheme](colorscheme/)                           | im colorscheme 模块                                                                                                      |
 | [core#banner](core/banner/)                           | 这一模块为 SpaceVim 提供了许多显示在启动界面的 Logo。                                                                    |
-| [core#statusline](core/statusline/)                   | 这一模块为 SpaceVim 提供了默认的模式化的状态栏支持。                                                                     |
+| [core#statusline](core/statusline/)                   | 这一模块为 SpaceVim 提供了一个高度定制的状态栏。                                                                         |
 | [core#tabline](core/tabline/)                         | 这一模块为 SpaceVim 提供了更好的标签栏。                                                                                 |
 | [core](core/)                                         | 这一模块为 SpaceVim 提供了启动及基本操作所必须的插件及配置。                                                             |
 | [cscope](cscope/)                                     | 这一模块为 SpaceVim 提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令。                         |
@@ -93,48 +93,50 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#dockerfile](lang/dockerfile/)                   | 这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。                                       |
 | [lang#elixir](lang/elixir/)                           | 这一模块为 SpaceVim 提供了 Elixir 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                 |
 | [lang#elm](lang/elm/)                                 | 这一模块为 SpaceVim 提供了 Elm 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                    |
-| [lang#erlang](lang/erlang/)                           | 这一模块为 erlang 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                               |
+| [lang#erlang](lang/erlang/)                           | 这一模块为 Erlang 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#extra](lang/extra/)                             | 这一模块为 SpaceVim 提供了一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性。                                   |
 | [lang#fsharp](lang/fsharp/)                           | 这一模块为 SpaceVim 提供了 FSharp 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                 |
 | [lang#go](lang/go/)                                   | 这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                     |
 | [lang#haskell](lang/haskell/)                         | 这一模块为 SpaceVim 提供了 Haskell 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                |
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                   |
-| [lang#java](lang/java/)                               | 这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
-| [lang#javascript](lang/javascript/)                   | 这一模块为 javascript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                           |
-| [lang#julia](lang/julia/)                             | 这一模块为 julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                |
-| [lang#kotlin](lang/kotlin/)                           | 该模块为 SpaceVim 提供了 kotlin 语言开发支持，包括语法高亮、语言服务器支持。                                             |
-| [lang#latex](lang/latex/)                             | 这一模块为 latex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                |
-| [lang#lisp](lang/lisp/)                               | 这一模块为 lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
-| [lang#lua](lang/lua/)                                 | 这一模块为 lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                  |
-| [lang#markdown](lang/markdown/)                       | 这一模块为 markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                           |
-| [lang#nim](lang/nim/)                                 | 该模块为 SpaceVim 提供 nim 开发支持，包括语法高亮、代码补全、编译运行以及交互式编程等功能。                              |
-| [lang#ocaml](lang/ocaml/)                             | 这一模块为 ocaml 开发提供了支持，包括语法高亮、代码补全、以及定义处跳转等功能。                                          |
-| [lang#perl](lang/perl/)                               | 这一模块为 perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
+| [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                           |
+| [lang#java](lang/java/)                               | 这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
+| [lang#javascript](lang/javascript/)                   | 这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                           |
+| [lang#julia](lang/julia/)                             | 这一模块为 Julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                |
+| [lang#kotlin](lang/kotlin/)                           | 该模块为 SpaceVim 提供了 Kotlin 语言开发支持，包括语法高亮、语言服务器支持。                                             |
+| [lang#latex](lang/latex/)                             | 这一模块为 LaTex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                |
+| [lang#lisp](lang/lisp/)                               | 这一模块为 Lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
+| [lang#lua](lang/lua/)                                 | 这一模块为 Lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                  |
+| [lang#markdown](lang/markdown/)                       | 这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                           |
+| [lang#nim](lang/nim/)                                 | 该模块为 SpaceVim 提供 Nim 开发支持，包括语法高亮、代码补全、编译运行以及交互式编程等功能。                              |
+| [lang#ocaml](lang/ocaml/)                             | 这一模块为 OCaml 开发提供了支持，包括语法高亮、代码补全、以及定义处跳转等功能。                                          |
+| [lang#perl](lang/perl/)                               | 这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
 | [lang#php](lang/php/)                                 | 这一模块为 SpaceVim 提供了 PHP 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                    |
 | [lang#plantuml](lang/plantuml/)                       | 这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。                                           |
 | [lang#puppet](lang/puppet/)                           | 这一模块为 SpaceVim 提供了 Puppet 的开发支持，包括语法高亮、语言服务器支持。                                             |
 | [lang#purescript](lang/purescript/)                   | 这一模块为 SpaceVim 提供了 PureScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                             |
-| [lang#python](lang/python/)                           | 这一模块为 python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                               |
+| [lang#python](lang/python/)                           | 这一模块为 Python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#r](lang/r/)                                     | 这一模块为 R 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                    |
-| [lang#red](lang/red/)                                 | 这一模块为 red 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                  |
-| [lang#ruby](lang/ruby/)                               | 这一模块为 ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
-| [lang#rust](lang/rust/)                               | 这一模块为 rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
-| [lang#scala](lang/scala/)                             | 这一模块为 scala 开发提供支持，包括语法高亮，函数列表等特性                                                              |
+| [lang#red](lang/red/)                                 | 这一模块为 Red 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                  |
+| [lang#ruby](lang/ruby/)                               | 这一模块为 Ruby 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
+| [lang#rust](lang/rust/)                               | 这一模块为 Rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                 |
+| [lang#scala](lang/scala/)                             | 这一模块为 Scala 开发提供支持，包括语法高亮，函数列表等特性。                                                            |
 | [lang#scheme](lang/scheme/)                           | 这一模块为 SpaceVim 提供了 Scheme 语言开发支持，包括语法高亮、语言服务器支持。                                           |
 | [lang#sh](lang/sh/)                                   | 这一模块为 SpaceVim 提供了 Shell Script 的开发支持，包括代码补全、语法检查、代码格式化等特性。                           |
 | [lang#swift](lang/swift/)                             | 这一模块为 SpaceVim 提供了 Swift 的开发支持，包括语法高亮、语法检查等特性。                                              |
-| [lang#typescript](lang/typescript/)                   | 这一模块为 SpaceVim 提供了 Typescript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                             |
+| [lang#typescript](lang/typescript/)                   | 这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                             |
 | [lang#vim](lang/vim/)                                 | 这一模块为 SpaceVim 提供了 Vimscript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                              |
 | [lang#vue](lang/vue/)                                 | 这一模块为 SpaceVim 提供了 Vue 的的开发支持，包括代码补全、语法检查、代码格式化等特性。                                  |
 | [language-server-protocol](language-server-protocol/) | 这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。                                       |
 | [leaderf](leaderf/)                                   | 这一模块为 SpaceVim 提供了以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。                  |
 | [shell](shell/)                                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验。                                                         |
 | [sudo](sudo/)                                         | 这一模块为 SpaceVim 提供了以管理员身份读写文件的功能。                                                                   |
+| [test](test/)                                         | 这一模块为 SpaceVim 提供了一个测试框架，支持快速运行多种语言的单元测试。                                                 |
 | [tmux](tmux/)                                         | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。                              |
 | [tools#dash](tools/dash/)                             | 这一模块为 SpaceVim 提供了 Dash 支持，可快速查找光标位置的单词。                                                         |
 | [tools](tools/)                                       | 这一模块为 SpaceVim 提供了多种常用工具，包括日历、计算器等多种工具类插件，并针对 Vim8 以及 Neovim 提供了更好的插件选择。 |
 | [ui](ui/)                                             | 这一模块为 SpaceVim 提供了 IDE-like 的界面，包括状态栏、文件树、语法树等等特性。                                         |
-| [unite](unite/)                                       | 这一模块为 SpaceVim 提供以 unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                          |
+| [unite](unite/)                                       | 这一模块为 SpaceVim 提供以 Unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                          |
 
 <!-- SpaceVim layer cn list end -->
 
