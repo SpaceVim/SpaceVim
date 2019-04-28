@@ -71,6 +71,13 @@ function! SpaceVim#layers#lsp#config() abort
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 'ALEInfoSign'
   endif
 
+
+  if !SpaceVim#layers#isLoaded('checkers')
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
+          \ . string(s:_function('s:clear_errors')) . ', [])',
+          \ 'clear all errors', 1)
+  endif
+
   let g:LanguageClient_autoStart = 1
   let g:lsp_async_completion = 1
   " }}}
@@ -125,4 +132,23 @@ endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
   return index(s:enabled_fts, a:ft) != -1
+endfunction
+
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
+
+" TODO clear errors
+function! s:clear_errors() abort
+  sign unplace *
 endfunction
