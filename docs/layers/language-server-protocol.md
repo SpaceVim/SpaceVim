@@ -156,7 +156,7 @@ default language server commands:
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
-| `ruby`       | `['solargraph',  'stdio']`
+| `ruby`       | `['solargraph', 'stdio']`                                                                                                                                                                        |
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
@@ -181,3 +181,14 @@ To override the server command, you may need to use `override_cmd` option:
 | --------------- | ------------- |
 | `K` / `SPC l d` | show document |
 | `SPC l e`       | rename symbol |
+
+if the checkers layer is not loaded, these key bindings will be added:
+
+| Key       | description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `SPC e c` | clear errors                                                 |
+| `SPC e n` | jump to the position of next error                           |
+| `SPC e N` | jump to the position of previous error                       |
+| `SPC e p` | jump to the position of previous error                       |
+| `SPC e l` | display a list of all the errors                             |
+| `SPC e L` | display a list of all the errors and focus the errors buffer |
