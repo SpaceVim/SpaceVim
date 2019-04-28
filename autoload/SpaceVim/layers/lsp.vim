@@ -85,6 +85,12 @@ function! SpaceVim#layers#lsp#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
           \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
           \ 'previous-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [0])',
+          \ 'toggle showing the error list', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [1])',
+          \ 'toggle showing the error list', 1)
   endif
 
   let g:LanguageClient_autoStart = 1
@@ -141,6 +147,54 @@ endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
   return index(s:enabled_fts, a:ft) != -1
+endfunction
+
+function! s:jump_to_next_error() abort
+  try
+    lnext
+  catch
+    try
+      cnext
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
+endfunction
+
+function! s:jump_to_previous_error() abort
+  try
+    lprevious
+  catch
+    try
+      cprevious
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
+endfunction
+
+function! s:toggle_show_error(...) abort
+  try
+    botright lopen
+  catch
+    try
+      if len(getqflist()) == 0
+        echohl WarningMsg
+        echon 'There is no errors!'
+        echohl None
+      else
+        botright copen
+      endif
+    catch
+    endtry
+  endtry
+  if a:1 == 1
+    wincmd w
+  endif
 endfunction
 
 if v:version > 703 || v:version == 703 && has('patch1170')
