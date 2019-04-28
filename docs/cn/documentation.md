@@ -1561,20 +1561,20 @@ In highlight symbol transient state:
 | 快捷键        | 功能描述                                                           |
 | ------------- | ------------------------------------------------------------------ |
 | `SPC x a &`   | 基于分隔符 & 进行文本对齐                                          |
-| `SPC x a (`   | 基本分隔符 ( 进行文本对齐                                          |
-| `SPC x a )`   | 基本分隔符 ) 进行文本对齐                                          |
-| `SPC x a [`   | 基本分隔符 [ 进行文本对齐                                          |
-| `SPC x a ]`   | 基本分隔符 ] 进行文本对齐                                          |
-| `SPC x a {`   | 基本分隔符 { 进行文本对齐                                          |
-| `SPC x a }`   | 基本分隔符 } 进行文本对齐                                          |
-| `SPC x a ,`   | 基本分隔符 , 进行文本对齐                                          |
-| `SPC x a .`   | 基本分隔符 . 进行文本对齐(for numeric tables)                      |
-| `SPC x a :`   | 基本分隔符 : 进行文本对齐                                          |
-| `SPC x a ;`   | 基本分隔符 ; 进行文本对齐                                          |
-| `SPC x a =`   | 基本分隔符 = 进行文本对齐                                          |
-| `SPC x a ¦`   | 基本分隔符 ¦ 进行文本对齐                                          |
-| `SPC x a |`   | 基本分隔符 \| 进行文本对齐                                         |
-| `SPC x a SPC` | 基本分隔符 <Space> 进行文本对齐                                    |
+| `SPC x a (`   | 基于分隔符 ( 进行文本对齐                                          |
+| `SPC x a )`   | 基于分隔符 ) 进行文本对齐                                          |
+| `SPC x a [`   | 基于分隔符 [ 进行文本对齐                                          |
+| `SPC x a ]`   | 基于分隔符 ] 进行文本对齐                                          |
+| `SPC x a {`   | 基于分隔符 { 进行文本对齐                                          |
+| `SPC x a }`   | 基于分隔符 } 进行文本对齐                                          |
+| `SPC x a ,`   | 基于分隔符 , 进行文本对齐                                          |
+| `SPC x a .`   | 基于分隔符 . 进行文本对齐(for numeric tables)                      |
+| `SPC x a :`   | 基于分隔符 : 进行文本对齐                                          |
+| `SPC x a ;`   | 基于分隔符 ; 进行文本对齐                                          |
+| `SPC x a =`   | 基于分隔符 = 进行文本对齐                                          |
+| `SPC x a ¦`   | 基于分隔符 ¦ 进行文本对齐                                          |
+| `SPC x a |`   | 基于分隔符 \| 进行文本对齐                                         |
+| `SPC x a SPC` | 基于分隔符 <Space> 进行文本对齐                                    |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
 | `SPC x a c`   | align current indentation region using default rules (TODO)        |
 | `SPC x a l`   | left-align with evil-lion (TODO)                                   |
