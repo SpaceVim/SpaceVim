@@ -8,6 +8,10 @@
 
 scriptencoding utf-8
 
+function! NeovimSwitchWindow(timer) abort
+  let doc_nr = bufwinnr('__LanguageClient__')
+  exe doc_nr.'wincmd w'
+endfunction
 
 if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
@@ -77,6 +81,13 @@ elseif has('nvim')
   " use LanguageClient-neovim
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
+    augroup spacevim_lsp_layer
+      autocmd!
+      autocmd! BufReadPost,FileType markdown if &buftype ==# 'nofile'
+            \ | exe "nmap <buffer><silent> q :quit<CR>"
+            \ | call timer_start(100, 'NeovimSwitchWindow')
+            \ | endif
+    augroup END
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort

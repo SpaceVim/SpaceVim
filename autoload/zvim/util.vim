@@ -35,13 +35,14 @@ endf
 fu! zvim#util#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
+  let ignorebt = get(g:, 'spacevim_smartcloseignorebt',[])
   let win_count = winnr('$')
   let num = win_count
   for i in range(1,win_count)
     if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
       let num = num - 1
     endif
-    if getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
+    if index(ignorebt, getbufvar(winbufnr(i),'&buftype')) != -1
       let num = num - 1
     endif
   endfor
