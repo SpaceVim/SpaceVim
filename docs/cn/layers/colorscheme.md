@@ -1,5 +1,4 @@
 ---
-
 title: "SpaceVim colorscheme 模块"
 description: "这一模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随机主题等特性。"
 lang: cn
@@ -40,18 +39,19 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 
 **主题列表**
 
-| 名称         | 深色主题 | 浅色主题 | 终端支持 | Gui支持 | 状态栏支持 |
-| ------------ | -------- | -------- | -------- | ------- | ---------- |
-| molokai      | yes      | no       | yes      | yes     | yes        |
-| onedark      | yes      | no       | yes      | yes     | yes        |
-| jellybeans   | yes      | no       | yes      | yes     | yes        |
-| one          | yes      | yes      | yes      | yes     | yes        |
-| nord         | yes      | no       | yes      | yes     | yes        |
-| gruvbox      | yes      | yes      | yes      | yes     | yes        |
-| NeoSolarized | yes      | yes      | yes      | yes     | yes        |
-| hybrid       | yes      | yes      | yes      | yes     | yes        |
-| material     | yes      | yes      | yes      | yes     | yes        |
-| SpaceVim     | yes      | yes      | yes      | yes     | yes        |
+| 名称         | 深色主题 | 浅色主题 | 终端支持 | Gui 支持 | 状态栏支持 |
+| ------------ | -------- | -------- | -------- | -------- | ---------- |
+| molokai      | yes      | no       | yes      | yes      | yes        |
+| srcery       | yes      | no       | yes      | yes      | yes        |
+| onedark      | yes      | no       | yes      | yes      | yes        |
+| jellybeans   | yes      | no       | yes      | yes      | yes        |
+| one          | yes      | yes      | yes      | yes      | yes        |
+| nord         | yes      | no       | yes      | yes      | yes        |
+| gruvbox      | yes      | yes      | yes      | yes      | yes        |
+| NeoSolarized | yes      | yes      | yes      | yes      | yes        |
+| hybrid       | yes      | yes      | yes      | yes      | yes        |
+| material     | yes      | yes      | yes      | yes      | yes        |
+| SpaceVim     | yes      | yes      | yes      | yes      | yes        |
 
 默认情况下，SpaceVim 的 colorscheme 模块仅包含以上主题，如果需要使用 Github 上其它主题，
 可以在配置文件中使用 `custom_plugins` 来添加主题，例如：
@@ -66,7 +66,6 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
   name = "mhartington/oceanic-next"
   merged = 0
 ```
-
 
 部分主题提供了深色和浅色两系列的主题，可以通过设置主题背景色来切换这两种主题。
 SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置。
@@ -89,7 +88,7 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
 ```
 
 除了在每次启用时自动应用随机主题以外，也可以设置它的更新频率，默认是为空，
-表示每次启用 Vim 是随机选择一种主题。可供选择的频率有：`daily`、`hourly`、`weekly`, 
+表示每次启用 Vim 是随机选择一种主题。可供选择的频率有：`daily`、`hourly`、`weekly`,
 以及 `数字 + 单位` 这种格式，如 `1h`。
 
 ```toml
@@ -98,4 +97,3 @@ SpaceVim 支持在配置文件中通过 `colorscheme_bg` 这一选项来设置�
   random_theme = true
   frequency = "daily"
 ```
-

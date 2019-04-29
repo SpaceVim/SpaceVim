@@ -71,6 +71,28 @@ function! SpaceVim#layers#lsp#config() abort
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 'ALEInfoSign'
   endif
 
+
+  if !SpaceVim#layers#isLoaded('checkers')
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
+          \ . string(s:_function('s:clear_errors')) . ', [])',
+          \ 'clear all errors', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
+          \ . string(s:_function('s:jump_to_next_error')) . ', [])',
+          \ 'next-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
+          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+          \ 'previous-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
+          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+          \ 'previous-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [0])',
+          \ 'toggle showing the error list', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [1])',
+          \ 'toggle showing the error list', 1)
+  endif
+
   let g:LanguageClient_autoStart = 1
   let g:lsp_async_completion = 1
   " }}}
@@ -125,4 +147,71 @@ endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
   return index(s:enabled_fts, a:ft) != -1
+endfunction
+
+function! s:jump_to_next_error() abort
+  try
+    lnext
+  catch
+    try
+      cnext
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
+endfunction
+
+function! s:jump_to_previous_error() abort
+  try
+    lprevious
+  catch
+    try
+      cprevious
+    catch
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+    endtry
+  endtry
+endfunction
+
+function! s:toggle_show_error(...) abort
+  try
+    botright lopen
+  catch
+    try
+      if len(getqflist()) == 0
+        echohl WarningMsg
+        echon 'There is no errors!'
+        echohl None
+      else
+        botright copen
+      endif
+    catch
+    endtry
+  endtry
+  if a:1 == 1
+    wincmd w
+  endif
+endfunction
+
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
+
+" TODO clear errors
+function! s:clear_errors() abort
+  sign unplace *
 endfunction
