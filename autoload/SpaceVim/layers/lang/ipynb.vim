@@ -1,5 +1,5 @@
 "=============================================================================
-" ipynb.vim --- SpaceVim lang#ipynb layer
+" ipynb.vim --- lang#ipynb layer for SpaceVim
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
