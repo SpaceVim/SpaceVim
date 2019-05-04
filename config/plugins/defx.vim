@@ -145,15 +145,8 @@ function! DefxSmartL(_)
       if exists(':ChooseWin') == 2
         ChooseWin
       else
-        if has('nvim')
-          let input = input({
-                \ 'prompt'      : 'ChooseWin No.: ',
-                \ 'cancelreturn': 0,
-                \ })
-          if input == 0 | return | endif
-        else
-          let input = input('ChooseWin No.: ')
-        endif
+        let input = input('ChooseWin No./Cancel(n): ')
+        if input ==# 'n' | return | endif
         if input == winnr() | return | endif
         exec input . 'wincmd w'
       endif
