@@ -373,7 +373,7 @@ function! s:on_build_exit(id, data, event) abort
   if a:data == 0 && a:event ==# 'exit'
     call s:msg_on_build_done(s:building_repos[id].name)
   else
-    " call s:add_to_failed_list(s:pulling_repos[id].name)
+    call s:add_to_failed_list(s:building_repos[id].name)
     call s:msg_on_build_failed(s:building_repos[id].name)
   endif
   let s:pct_done += 1
