@@ -11,15 +11,6 @@ function! OnmiConfigForJsp()
         return "\<esc>a."
     endif
 endf
-function! ToggleBG()
-    let s:tbg = &background
-    " Inversion
-    if s:tbg ==# 'dark'
-        set background=light
-    else
-        set background=dark
-    endif
-endfunction
 function! BracketsFunc()
     let line = getline('.')
     let col = col('.')
