@@ -64,7 +64,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [chat](chat/)                                         | 这一模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。                           |
 | [checkers](checkers/)                                 | 这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置。                               |
 | [chinese](chinese/)                                   | 这一模块为 SpaceVim 的中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。                                |
-| [colorscheme](colorscheme/)                           | im colorscheme 模块                                                                                                      |
+| [colorscheme](colorscheme/)                           | 这一模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随机主题等特性。|
 | [core#banner](core/banner/)                           | 这一模块为 SpaceVim 提供了许多显示在启动界面的 Logo。                                                                    |
 | [core#statusline](core/statusline/)                   | 这一模块为 SpaceVim 提供了一个高度定制的状态栏。                                                                         |
 | [core#tabline](core/tabline/)                         | 这一模块为 SpaceVim 提供了更好的标签栏。                                                                                 |
