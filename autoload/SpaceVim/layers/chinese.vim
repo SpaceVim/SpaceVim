@@ -10,7 +10,7 @@
 function! SpaceVim#layers#chinese#plugins() abort
   let plugins = [
         \ ['yianwillis/vimcdoc'          , {'merged' : 0}],
-        \ ['ianva/vim-youdao-translater' , {'merged' : 0, 'on_cmd' : ['Ydv' , 'Ydc', 'Yde']}],
+        \ ['wsdjeg/vim-translate-me' , {'merged' : 0, 'on_cmd' : ['Translate']}],
         \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}],
         \ ]
   if SpaceVim#layers#isLoaded('ctrlp')
@@ -21,7 +21,7 @@ endfunction
 
 function! SpaceVim#layers#chinese#config() abort
   let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Ydc'         , 'translate current word'  , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Translate'         , 'translate current word'  , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['l', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
   " do not load vimcdoc plugin 
   let g:loaded_vimcdoc = 1
