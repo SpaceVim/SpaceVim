@@ -10,7 +10,7 @@
 function! SpaceVim#layers#chinese#plugins() abort
   let plugins = [
         \ ['yianwillis/vimcdoc'          , {'merged' : 0}],
-        \ ['wsdjeg/vim-translate-me' , {'merged' : 0, 'on_cmd' : ['Translate']}],
+        \ ['voldikss/vim-translate-me' , {'merged' : 0, 'on_cmd' : ['Translate']}],
         \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}],
         \ ]
   if SpaceVim#layers#isLoaded('ctrlp')
