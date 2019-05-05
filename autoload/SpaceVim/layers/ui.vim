@@ -53,8 +53,9 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
         \ . string(s:_function('s:toggle_fill_column')) . ', [])',
         \ 'highlight-long-lines', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call ToggleBG()',
-        \ 'toggle background', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call call('
+        \ . string(s:_function('s:toggle_background')) . ', [])',
+        \ 'toggle conceal', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
         \ . string(s:_function('s:toggle_conceal')) . ', [])',
         \ 'toggle conceal', 1)
@@ -281,3 +282,13 @@ func! s:toggle_conceal()
         setlocal conceallevel=0
     endif
 endf
+
+function! s:toggle_background()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg ==# 'dark'
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
