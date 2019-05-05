@@ -80,7 +80,7 @@ with this configuration, you can jump between the source code and test file via 
 ### running code
 
 To run current script, you can press `SPC l r`, and a split window
-will be openen, the output of the script will be shown in this window.
+will open, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
 ![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
