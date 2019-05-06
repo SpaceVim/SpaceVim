@@ -599,9 +599,11 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   if exists('*nvim_open_win')
     let s:buffer_id = nvim_create_buf(v:false, v:false)
     let flygrep_win_height = 16
-    let s:flygrep_win_id = nvim_open_win(s:buffer_id, v:true, &columns, flygrep_win_height,
+    let s:flygrep_win_id = nvim_open_win(s:buffer_id, v:true,
           \ {
           \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : flygrep_win_height,
           \ 'row': &lines - flygrep_win_height - 2,
           \ 'col': 0
           \ })
@@ -676,12 +678,12 @@ function! s:create_statusline() abort
   let s:statusline_buf_id = nvim_create_buf(0,0)
   let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
         \ v:true,
-        \ &columns ,
-        \ 1,
         \ {
         \   'relative': 'editor',
-        \   'row': &lines ,
-        \   'col': 10
+        \   'width'   : &columns ,
+        \   'height'  : 1,
+        \   'row'     : &lines ,
+        \   'col'     : 10
         \ })
   call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
   call setbufvar(s:statusline_buf_id, '&number', 0)
