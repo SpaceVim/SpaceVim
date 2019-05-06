@@ -23,10 +23,19 @@ endfunction
 
 function! s:spacevim_status() abort
   let pwd = getcwd()
-  exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
-  let status = system('git status')
+  try
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
+    let status = s:CMP.systemlist('git status')
+  catch
+    exe 'cd ~/.SpaceVim'
+    let status = s:CMP.systemlist('git status')
+  endtry
   exe 'cd ' . pwd
-  return split(status, "\n")
+  if type(status) == 3
+    return status
+  else
+    return [status]
+  endif
 endfunction
 
 function! s:template() abort
@@ -44,8 +53,8 @@ function! s:template() abort
         \ '',
         \ '```'
         \ ]
-        \ + s:spacevim_status() +
-        \ [
+  let info = info + s:spacevim_status()
+  let info = info + [
         \ '```',
         \ '',
         \ '## The reproduce ways from Vim starting (Required!)',
@@ -78,4 +87,23 @@ function! SpaceVim#issue#new() abort
       echo 'Failed to create issue, please check the username and password'
     endif
   endif
+endfunction
+
+
+function! SpaceVim#issue#reopen(id) abort
+  let issue = {
+        \ 'state' : 'open'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
+endfunction
+
+function! SpaceVim#issue#close(id) abort
+  let issue = {
+        \ 'state' : 'closed'
+        \ }
+    let username = input('github username:')
+    let password = input('github password:')
+  call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
 endfunction

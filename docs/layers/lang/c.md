@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#c layer"
-description: "c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner."
+description: "C/C++/Object-C language support for SpaceVim, include code completion, jump to definition, quick runner."
 ---
 
 # [Available Layers](../../) >> lang#c
@@ -36,13 +36,17 @@ To use this configuration layer, update custom configuration file with:
 
 ## Configuration
 
+- `enable_clang_syntax_highlight` (boolean)
+
+Enable/Disable clang based syntax highlighting.
+
 - `clang_executable` (string)
 
 Set the path to the clang executable
 
 - `libclang_path` (string)
 
-The libclang shared object (dynamic library) file path. by default it is empty.
+The libclang shared object (dynamic library) file path. By default it is empty.
 
 - `clang_std` (dict)
 
@@ -61,8 +65,7 @@ A dict containing the standards you want to use. The default is:
 
 Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
 
-
-here is an example how to use above options:
+Here is an example how to use above options:
 
 ```toml
 [[layers]]
@@ -78,6 +81,10 @@ here is an example how to use above options:
 
 ## Key bindings
 
-| key binding | description                  |
-| ----------- | ---------------------------- |
-| `SPC l r`   | compile and run current file |
+| key bindings | Descriptions                 |
+| ------------ | ---------------------------- |
+| `SPC l d`    | show documentation           |
+| `SPC l e`    | rename symbol                |
+| `SPC l f`    | references                   |
+| `SPC l r`    | compile and run current file |
+| `g d`        | defintion preview            |

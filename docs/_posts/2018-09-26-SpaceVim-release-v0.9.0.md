@@ -181,6 +181,7 @@ the name of the tab will be displayed on tabline and tabmanger.
 - Fix toggle cursorline 
 - Fix cn install script ([#2181](https://github.com/SpaceVim/SpaceVim/pull/2181))
 - Fix searching for the cursor word in the project w/ FlyGrep ([#2183](https://github.com/SpaceVim/SpaceVim/pull/2183))
+- Fix cscope layer ([#1786](https://github.com/SpaceVim/SpaceVim/pull/1786))
 
 ### Doc, Wiki && Website
 

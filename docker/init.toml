@@ -1,0 +1,232 @@
+#=============================================================================
+# init.toml --- Docker config temp file
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+#=============================================================================
+
+# SpaceVim options {{{
+[options]
+    # vimcompatible = true
+    # enable_language_specific_leader = false
+# }}}
+
+## -- SpaceVim layer list start
+[[layers]]
+  name = "VersionControl"
+
+[[layers]]
+  name = "autocomplete"
+
+[[layers]]
+  name = "chat"
+
+[[layers]]
+  name = "checkers"
+
+[[layers]]
+  name = "chinese"
+
+[[layers]]
+  name = "colorscheme"
+
+[[layers]]
+  name = "core#banner"
+
+[[layers]]
+  name = "core#statusline"
+
+[[layers]]
+  name = "core#tabline"
+
+[[layers]]
+  name = "core"
+
+[[layers]]
+  name = "cscope"
+
+[[layers]]
+  name = "ctrlp"
+
+[[layers]]
+  name = "debug"
+
+[[layers]]
+  name = "default"
+
+[[layers]]
+  name = "denite"
+
+[[layers]]
+  name = "edit"
+
+[[layers]]
+  name = "floobits"
+
+[[layers]]
+  name = "format"
+
+[[layers]]
+  name = "fzf"
+
+[[layers]]
+  name = "git"
+
+[[layers]]
+  name = "github"
+
+[[layers]]
+  name = "japanese"
+
+[[layers]]
+  name = "lang#WebAssembly"
+
+[[layers]]
+  name = "lang#agda"
+
+[[layers]]
+  name = "lang#asciidoc"
+
+[[layers]]
+  name = "lang#autohotkey"
+
+[[layers]]
+  name = "lang#c"
+
+[[layers]]
+  name = "lang#clojure"
+
+[[layers]]
+  name = "lang#csharp"
+
+[[layers]]
+  name = "lang#dart"
+
+[[layers]]
+  name = "lang#dockerfile"
+
+[[layers]]
+  name = "lang#elixir"
+
+[[layers]]
+  name = "lang#elm"
+
+[[layers]]
+  name = "lang#erlang"
+
+[[layers]]
+  name = "lang#extra"
+
+[[layers]]
+  name = "lang#fsharp"
+
+[[layers]]
+  name = "lang#go"
+
+[[layers]]
+  name = "lang#haskell"
+
+[[layers]]
+  name = "lang#html"
+
+[[layers]]
+  name = "lang#java"
+
+[[layers]]
+  name = "lang#javascript"
+
+[[layers]]
+  name = "lang#julia"
+
+[[layers]]
+  name = "lang#kotlin"
+
+[[layers]]
+  name = "lang#latex"
+
+[[layers]]
+  name = "lang#lisp"
+
+[[layers]]
+  name = "lang#lua"
+
+[[layers]]
+  name = "lang#markdown"
+
+[[layers]]
+  name = "lang#nim"
+
+[[layers]]
+  name = "lang#ocaml"
+
+[[layers]]
+  name = "lang#perl"
+
+[[layers]]
+  name = "lang#php"
+
+[[layers]]
+  name = "lang#plantuml"
+
+[[layers]]
+  name = "lang#puppet"
+
+[[layers]]
+  name = "lang#purescript"
+
+[[layers]]
+  name = "lang#python"
+
+[[layers]]
+  name = "lang#ruby"
+
+[[layers]]
+  name = "lang#rust"
+
+[[layers]]
+  name = "lang#scala"
+
+[[layers]]
+  name = "lang#sh"
+
+[[layers]]
+  name = "lang#swift"
+
+[[layers]]
+  name = "lang#typescript"
+
+[[layers]]
+  name = "lang#vim"
+
+[[layers]]
+  name = "lang#vue"
+
+[[layers]]
+  name = "lsp"
+
+[[layers]]
+  name = "leaderf"
+
+[[layers]]
+  name = "shell"
+
+[[layers]]
+  name = "sudo"
+
+[[layers]]
+  name = "tags"
+
+[[layers]]
+  name = "tmux"
+
+[[layers]]
+  name = "tools#dash"
+
+[[layers]]
+  name = "tools"
+
+[[layers]]
+  name = "ui"
+
+## -- SpaceVim layer list end
+

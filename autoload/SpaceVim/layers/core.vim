@@ -6,15 +6,19 @@
 " License: GPLv3
 "=============================================================================
 
+let s:SYS = SpaceVim#api#import('system')
+
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
+    call add(plugins, ['scrooloose/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  elseif g:spacevim_filemanager ==# 'defx'
+    call add(plugins, ['Shougo/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   endif
 
   if !g:spacevim_vimcompatible
@@ -22,7 +26,9 @@ function! SpaceVim#layers#core#plugins() abort
   endif
   call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
-  call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
+  if exists('*matchaddpos')
+    call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
+  endif
   call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
@@ -30,8 +36,6 @@ function! SpaceVim#layers#core#plugins() abort
         \'on_map' : '<Plug>(openbrowser-',
         \ 'loadconf' : 1,
         \}])
-  call add(plugins, ['tpope/vim-projectionist',         { 'on_cmd' : ['A', 'AS', 'AV',
-        \ 'AT', 'AD', 'Cd', 'Lcd', 'ProjectDo']}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
   return plugins
@@ -94,8 +98,15 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', '$'], 'm`g_', 'push mark and goto end of line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
+
+  " file tree key bindings
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [0])',
+        \ 'Explore current directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [1])',
+        \ 'Explore current directory(other windows)', 1)
+
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
@@ -167,9 +178,17 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
         \ 'delete-current-buffer-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
+  if s:SYS.isWindows
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call call('
+          \ . string(s:_function('s:ToggleWinDiskManager')) . ', [])',
+          \ 'toggle Windows disk manager', 1)
+  endif
+
+  " file tree key bindings
   if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
@@ -177,11 +196,26 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
+  elseif g:spacevim_filemanager ==# 'defx'
+    " TODO: fix all these command
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig', 'open-custom-configuration', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
+        \ ['open-custom-configuration',
+        \ [
+        \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '-'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["-"])',
@@ -213,7 +247,13 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', '/'], 'Grepper', 'fuzzy search for text in current project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'q'], 'qa', 'prompt-kill-vim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'Q'], 'qa!', 'kill-vim', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
+  if has('nvim') && s:SYS.isWindows
+    call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], 'call call('
+          \ . string(s:_function('s:restart_neovim_qt')) . ', [])',
+          \ 'restrat neovim-qt', 1)
+  else
+    call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
@@ -224,17 +264,22 @@ function! SpaceVim#layers#core#config() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
-  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterInvert', 'comment or uncomment lines invert', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'comment or uncomment lines and keep visual', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], 'vip<Plug>NERDCommenterComment', 'comment paragraphs', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], 'vip<Plug>NERDCommenterInvert', 'toggle comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'toggle comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterComment', 'comment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'u'], '<Plug>NERDCommenterUncomment', 'uncomment lines', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'toggle comment lines and keep visual', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 's'], '<Plug>NERDCommenterSexy', 'comment with sexy/pretty layout', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'Y'], '<Plug>NERDCommenterYank', 'yank and comment', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', '$'], '<Plug>NERDCommenterToEOL', 'comment current line from cursor to the end of the line', 0, 1)
 
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
-  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
+  nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
+  nnoremap <silent> <Plug>CommentParagraphsInvert :call <SID>comment_paragraphs(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLineInvert', 'toggle comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLine', 'comment until the line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'p'], '<Plug>CommentParagraphsInvert', 'toggle comment paragraphs', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'P'], '<Plug>CommentParagraphs', 'comment paragraphs', 0, 1)
 
   nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
   let g:_spacevim_mappings_space[';'] = ['call feedkeys("\<Plug>CommentOperator")', 'comment operator']
@@ -343,33 +388,29 @@ function! s:previous_window() abort
 endfunction
 
 function! s:split_string(newline) abort
-  let syn_name = synIDattr(synID(line('.'), col('.'), 1), 'name')
-  if syn_name == &filetype . 'String'
+  if s:is_string(line('.'), col('.'))
     let c = col('.')
     let sep = ''
     while c > 0
       if s:is_string(line('.'), c)
-        let c = c - 1
+        let c -= 1
       else
         let sep = getline('.')[c]
         break
       endif
     endwhile
+    let l:connector = a:newline ? "\n" : ""
+    let l:save_register_m = @m
+    let @m = sep . l:connector . sep
+    normal! "mp
+    let @m = l:save_register_m
     if a:newline
-      let save_register_m = @m
-      let @m = sep . "\n" . sep
-      normal! "mp
-      let @m = save_register_m
-    else
-      let save_register_m = @m
-      let @m = sep . sep
-      normal! "mp
-      let @m = save_register_m
+      normal! j==k$
     endif
   endif
 endfunction
 
-function! s:is_string(l,c) abort
+function! s:is_string(l, c) abort
   return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
 endfunction
 
@@ -400,6 +441,14 @@ function! s:safe_erase_buffer() abort
   redraw!
 endfunction
 
+function! s:ToggleWinDiskManager() abort
+  if bufexists("__windisk__")
+    execute 'bd "__windisk__"'
+  else
+    call SpaceVim#plugins#windisk#open()
+  endif
+endfunction
+
 function! s:open_message_buffer() abort
   vertical topleft edit __Message_Buffer__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
@@ -420,14 +469,14 @@ endfunction
 
 function! s:delete_current_buffer_file() abort
   if s:MESSAGE.confirm('Are you sure you want to delete this file')
-    let f = fnameescape(expand('%:p'))
-    call SpaceVim#mapping#close_current_buffer()
+    let f = expand('%')
     if delete(f) == 0
-      echo "File '" . f . "' successfully removed"
+      call SpaceVim#mapping#close_current_buffer('n')
+      echo "File '" . f . "' successfully deleted!"
+    else
+      call s:MESSAGE.warn('Failed to delete file:' . f)
     endif
   endif
-  redraw!
-
 endfunction
 
 function! s:swap_buffer_with_nth_win(nr) abort
@@ -597,5 +646,46 @@ function! s:comment_to_line(invert) abort
     call feedkeys("\<Plug>NERDCommenterInvert")
   else
     call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+endfunction
+
+function! s:comment_paragraphs(invert) abort
+  if a:invert
+    call feedkeys("vip\<Plug>NERDCommenterInvert")
+  else
+    call feedkeys("vip\<Plug>NERDCommenterComment")
+  endif
+endfunction
+
+" this func only for neovim-qt in windows
+function! s:restart_neovim_qt() abort
+  call system('taskkill /f /t /im nvim.exe')
+endfunction
+
+
+let g:_spacevim_autoclose_filetree = 1
+function! s:explore_current_dir(cur) abort
+  if g:spacevim_filemanager ==# 'vimfiler'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      VimFilerCurrentDir -no-split -no-toggle
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      VimFilerCurrentDir -no-toggle
+    endif
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+    if !a:cur
+      exe 'e ' . getcwd() 
+    else
+      NERDTreeCWD
+    endif
+  elseif g:spacevim_filemanager ==# 'defx'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      Defx -no-toggle -no-resume -split=no `getcwd()`
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      Defx -no-toggle
+    endif
   endif
 endfunction

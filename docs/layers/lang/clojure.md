@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#clojure layer"
-description: "This layer is for clojure development, provide autocompletion, syntax checking, code format for clojure file."
+description: "This layer is for Clojure development, provide autocompletion, syntax checking, code format for Clojure file."
 ---
 
 # [Available Layers](../../) >> lang#clojure
@@ -16,7 +16,7 @@ description: "This layer is for clojure development, provide autocompletion, syn
 
 ## Description
 
-This layer is for clojure development, and it includes vim-clojure-static and vim-fireplace.
+This layer is for Clojure development, and it includes vim-clojure-static and vim-fireplace.
 
 ## Features
 

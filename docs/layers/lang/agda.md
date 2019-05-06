@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#agda layer"
-description: "This layer adds agda language support to SpaceVim"
+description: "This layer adds Agda language support to SpaceVim."
 ---
 
 # [Available Layers](../../) >> lang#agda
@@ -16,8 +16,8 @@ description: "This layer adds agda language support to SpaceVim"
 
 ## Description
 
-Agda is a dependently typed functional programming language. 
-This layer adds [agda](https://github.com/agda/agda) language support to SpaceVim.
+Agda is a dependently typed functional programming language.
+This layer adds [Agda](https://github.com/agda/agda) language support to SpaceVim.
 
 ## Features
 

@@ -23,5 +23,9 @@ function! SpaceVim#layers#lang#xml#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#xml#config() abort
-    
+  augroup spacevim_lang_xml
+    autocmd!
+    autocmd FileType xml call XmlFileTypeInit()
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  augroup END
 endfunction

@@ -30,3 +30,6 @@ cscope.po.out
 build/
 .coverage.covimerage
 *.swp
+.gtm/
+.metadata/
+jdt.ls-java-project/

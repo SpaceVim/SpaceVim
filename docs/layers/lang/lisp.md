@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#lisp layer"
-description: "This layer is for lisp development, provide autocompletion, syntax checking, code format for lisp file."
+description: "This layer is for Lisp development, provide autocompletion, syntax checking, code format for Lisp file."
 ---
 
 # [Available Layers](../../) >> lang#lisp
@@ -16,7 +16,7 @@ description: "This layer is for lisp development, provide autocompletion, syntax
 
 ## Description
 
-This layer is for lisp development.
+This layer is for Lisp development.
 
 ## Install
 
@@ -37,4 +37,4 @@ To use this configuration layer, update custom configuration file with:
 
 ## mappings
 
-all the language special mappings is begin with `[SPC] l`, please checkout it in mapping guide.
+All the language special mappings begin with `[SPC] l`, please checkout it in mapping guide.

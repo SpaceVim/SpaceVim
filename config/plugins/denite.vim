@@ -13,7 +13,7 @@ let s:denite_options = {
       \ 'highlight_matched_range' : 'MoreMsg',
       \ 'direction': 'rightbelow',
       \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
-      \ 'prompt' : '➭',
+      \ 'prompt' : g:spacevim_commandline_prompt,
       \ }}
 
 function! s:profile(opts) abort
@@ -36,13 +36,13 @@ if !s:sys.isWindows
   if executable('rg')
     " For ripgrep
     " Note: It is slower than ag
-    call denite#custom#var('file_rec', 'command',
+    call denite#custom#var('file/rec', 'command',
           \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
           \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
           \ )
   elseif executable('ag')
-    " Change file_rec command.
-    call denite#custom#var('file_rec', 'command',
+    " Change file/rec command.
+    call denite#custom#var('file/rec', 'command',
           \ ['ag' , '--nocolor', '--nogroup', '-g', '']
           \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
           \ )
@@ -51,13 +51,13 @@ else
   if executable('pt')
     " For Pt(the platinum searcher)
     " NOTE: It also supports windows.
-    call denite#custom#var('file_rec', 'command',
-          \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
+    call denite#custom#var('file/rec', 'command',
+          \ ['pt', '--nocolor', '--ignore', '.git', '--hidden', '-g=', ''])
   endif
 endif
 
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " FIND and GREP COMMANDS

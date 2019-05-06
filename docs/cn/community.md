@@ -1,5 +1,5 @@
 ---
-title:  "中文社区"
+title: "中文社区"
 description: "SpaceVim 中文社区，包括中文技术问答、资讯订阅、Bug 提交以及需求提交，让沟通更加便利。"
 lang: cn
 ---
@@ -12,8 +12,9 @@ lang: cn
 
 - [资讯订阅](#资讯订阅)
 - [问题及需求提交](#问题及需求提交)
-- [技术问答](#技术问答)
+- [邮件列表](#邮件列表)
 - [聊天](#聊天)
+- [其他](#其他)
 
 <!-- vim-markdown-toc -->
 
@@ -21,27 +22,24 @@ lang: cn
 
 关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
 
-- <i class="fab fa-weibo"></i> 新浪微博：[@SpaceVim](https://weibo.com/SpaceVim)
-- <i class="fab fa-weixin"></i> 微信公众号：SpaceVim
-
+- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
 
 ### 问题及需求提交
 
 在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
-- [码云](https://gitee.com/spacevim/SpaceVim/issues) - （中文）
-- [GitHub](https://github.com/SpaceVim/SpaceVim) - （英文）
+- [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
+- [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
 
-### 技术问答
+### 邮件列表
 
-在使用 SpaceVim 时请阅读官网提供的中文文档和常见问题列表。如若还有问题，可以在知乎或者思否上提问，
-并标记 `SpaceVim` 话题。
+SpaceVim 开通了谷歌中文邮件组，可以发送邮件至邮件列表参与讨论：
 
-- [知乎问题列表](https://www.zhihu.com/topic/20168681/hot)
-- [segmentfault 问题列表](https://segmentfault.com/t/spacevim)
+- <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim-cn)
 
-与此同时[《知乎专栏》](https://zhuanlan.zhihu.com/SpaceVim)定期更新最新资讯、
-新特性预览以及使用技巧。
+```
+spacevim-cn@googlegroups.com
+```
 
 ### 聊天
 
@@ -53,11 +51,10 @@ lang: cn
 - <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)
+- <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
+- <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
+- <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
 
-以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
+### 其他
 
-- <i class="fab fa-qq"></i> [`121056965` Vim/SpaceVim 用户 ① 群（满）](https://jq.qq.com/?_wv=1027&k=43DB6SG)
-- <i class="fab fa-qq"></i> [`755208473` Vim/SpaceVim 用户 ② 群](https://jq.qq.com/?_wv=1027&k=5uBbMuA)
-- <i class="fab fa-qq"></i> [`748697811` Vim/SpaceVim 用户 ③ 群](https://jq.qq.com/?_wv=1027&k=5DqbuMV)
-- <i class="fab fa-qq"></i> [`667379969` Vim/SpaceVim 用户 ④ 群](https://jq.qq.com/?_wv=1027&k=5z2C7BM)
-
+- <i class="fab fa-zhihu"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)

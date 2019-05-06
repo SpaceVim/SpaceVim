@@ -51,7 +51,11 @@ function! SpaceVim#layers#lang#javascript#config() abort
 
   call add(g:spacevim_project_rooter_patterns, 'package.json')
 
-  call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
+  call SpaceVim#plugins#runner#reg_runner('javascript', {
+        \ 'exe' : 'node',
+        \ 'usestdin' : 1,
+        \ 'opt': ['-'],
+        \ })
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ function('s:on_ft'))
 
@@ -62,12 +66,20 @@ function! SpaceVim#layers#lang#javascript#config() abort
     call SpaceVim#mapping#gd#add('javascript', function('s:tern_go_to_def'))
   endif
 
+  let g:neomake_javascript_enabled_makers = ['eslint']
+  let g:neomake_javascript_eslint_maker =  {
+        \ 'args': ['--format=compact'],
+        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+        \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#',
+        \ 'cwd': '%:p:h',
+        \ 'output_stream': 'stdout',
+        \ }
+
   if s:auto_fix
-    " Only use eslint
-    let g:neomake_javascript_enabled_makers = ['eslint']
     " Use the fix option of eslint
     let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
   endif
+  " Only use eslint
 
   if s:auto_fix
     augroup SpaceVim_lang_javascript
@@ -77,6 +89,10 @@ function! SpaceVim#layers#lang#javascript#config() abort
       autocmd FocusGained * call <SID>checktime_if_javascript()
     augroup END
   endif
+  " just add a note here, when using `node -`, the Buffered stdout will not
+  " be flushed by sender.
+  " Use node -i will show the output of repl command.
+  call SpaceVim#plugins#repl#reg('javascript', ['node', '-i'])
 endfunction
 
 function! s:on_ft() abort
@@ -125,6 +141,20 @@ function! s:on_ft() abort
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("javascript")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 function! s:tern_go_to_def() abort

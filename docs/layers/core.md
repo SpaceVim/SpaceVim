@@ -4,7 +4,7 @@ description: "SpaceVim core layer provides many default key bindings and feature
 ---
 
 # [Available Layers](../) >> core
- 
+
 <!-- vim-markdown-toc GFM -->
 
 - [Intro](#intro)
@@ -14,8 +14,8 @@ description: "SpaceVim core layer provides many default key bindings and feature
 <!-- vim-markdown-toc -->
 
 ## Intro
- 
+
 ## Features
- 
+
 ## Configuration
- 
+

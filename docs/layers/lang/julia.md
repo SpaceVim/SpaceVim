@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#julia layer"
-description: "This layer is for julia development, provide autocompletion, syntax checking and code formatting"
+description: "This layer is for Julia development, provide autocompletion, syntax checking and code formatting"
 ---
 
 # [Available Layers](../../) >> lang#julia
@@ -10,7 +10,6 @@ description: "This layer is for julia development, provide autocompletion, synta
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Layer](#layer)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -19,7 +18,7 @@ description: "This layer is for julia development, provide autocompletion, synta
 
 ## Description
 
-This layer is for julia development.
+This layer is for Julia development.
 
 ## Features
 
@@ -29,7 +28,7 @@ This layer include these plugins: [julia-vim](https://github.com/JuliaEditorSupp
 - Completion for Modules and functions.
 - syntax highlighting
 
-SpaceVim also provides REPL support for julia.
+SpaceVim also provides REPL support for Julia.
 
 ## Install
 
@@ -44,15 +43,15 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `julia` inferior REPL process with `SPC l s i`. 
+Start a `julia` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 ### Running current script
 

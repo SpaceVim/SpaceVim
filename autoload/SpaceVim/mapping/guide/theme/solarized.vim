@@ -24,23 +24,23 @@
 " group_v: window id in visual mode
 " group_r: window id in select mode
 
-let s:gui_base03      = "#002b36"
-let s:gui_base02      = "#073642"
-let s:gui_base01      = "#586e75"
-let s:gui_base00      = "#657b83"
-let s:gui_base0       = "#839496"
-let s:gui_base1       = "#93a1a1"
-let s:gui_base2       = "#eee8d5"
-let s:gui_base3       = "#fdf6e3"
-let s:gui_yellow      = "#b58900"
-let s:gui_orange      = "#cb4b16"
-let s:gui_red         = "#dc322f"
-let s:gui_magenta     = "#d33682"
-let s:gui_violet      = "#6c71c4"
-let s:gui_blue        = "#268bd2"
-let s:gui_cyan        = "#2aa198"
+let s:gui_base03      = '#002b36'
+let s:gui_base02      = '#073642'
+let s:gui_base01      = '#586e75'
+let s:gui_base00      = '#657b83'
+let s:gui_base0       = '#839496'
+let s:gui_base1       = '#93a1a1'
+let s:gui_base2       = '#eee8d5'
+let s:gui_base3       = '#fdf6e3'
+let s:gui_yellow      = '#b58900'
+let s:gui_orange      = '#cb4b16'
+let s:gui_red         = '#dc322f'
+let s:gui_magenta     = '#d33682'
+let s:gui_violet      = '#6c71c4'
+let s:gui_blue        = '#268bd2'
+let s:gui_cyan        = '#2aa198'
 "let s:gui_green       = "#859900" "original
-let s:gui_green       = "#719e07" "experimental
+let s:gui_green       = '#719e07' "experimental
 
 let s:cterm_base03      = 8
 let s:cterm_base02      = 0

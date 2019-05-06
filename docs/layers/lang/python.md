@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#python layer"
-description: "This layer is for Python development, provide autocompletion, syntax checking, code format for python file."
+description: "This layer is for Python development, provide autocompletion, syntax checking, code format for Python file."
 ---
 
 # [Available Layers](../../) >> lang#python
@@ -17,6 +17,7 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
+  - [Text objects and motions](#text-objects-and-motions)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Testing](#testing)
@@ -46,7 +47,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ### Syntax Checking
 
-`checker` layer provide syntax checking feature, and for python it uses `flake8` package:
+`checker` layer provide syntax checking feature, and for Python it uses `flake8` package:
 
 ```sh
 pip install --user flake8
@@ -84,9 +85,9 @@ pip install --user isort
 
 ### Jump to definition
 
-| Mode   | Key Binding | Description                                      |
-| ------ | ----------- | ------------------------------------------------ |
-| normal | `g d`       | Jump to the definition position of cursor symbol |
+| Mode   | Key Bindings | Description                                      |
+| ------ | ------------ | ------------------------------------------------ |
+| normal | `g d`        | Jump to the definition position of cursor symbol |
 
 ### Code generation
 
@@ -94,27 +95,35 @@ pip install --user isort
 | ------ | ----------- | ------------------ |
 | normal | `SPC l g d` | Generate docstring |
 
+### Text objects and motions
+
+This layer contains vim-pythonsense which provides text objects and motions for Python classes, methods, functions, and doc strings.
+
+| Text Objects | Descriptions             |
+| ------------ | ------------------------ |
+| `ac`         | Outer class text object. |
+
 ### Inferior REPL process
 
-Start a Python or iPython inferior REPL process with `SPC l s i`. If `ipython` is available in system executable search paths, `ipython` will be used to launch python shell; otherwise, default `python` interpreter will be used. You may change your system executable search path by activating a virtual environment.
+Start a Python or iPython inferior REPL process with `SPC l s i`. If `ipython` is available in system executable search paths, `ipython` will be used to launch Python shell; otherwise, default `python` interpreter will be used. You may change your system executable search path by activating a virtual environment.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 ### Running current script
 
-To running a python script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a Python script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
 
 ### Testing
 
 ### Refactoring
 
-| Key Binding | Description                          |
-| ----------- | ------------------------------------ |
-| `SPC l i r` | remove unused imports with autoflake |
-| `SPC l i s` | sort imports with isort              |
+| Key Bindings | Descriptions                         |
+| ------------ | ------------------------------------ |
+| `SPC l i r`  | remove unused imports with autoflake |
+| `SPC l i s`  | sort imports with isort              |

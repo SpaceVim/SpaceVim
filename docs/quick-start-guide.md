@@ -14,17 +14,19 @@ show you how to install it, how to config it, and explain its features.
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
+- [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
+- [Online tutor](#online-tutor)
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
 
 ## Install
 
-At a minimum, SpaceVim requires `git` and `curl` to be installed. These tools
+At a minimum, SpaceVim requires `git` and `curl` to be installed. Both tools
 are needed for downloading plugins and fonts.
 
-If you are using vim/neovim in terminal, you also need to set the font of your terminal.
+If you are using Vim/Neovim in terminal, you also need to set the font of your terminal.
 
 ### Linux and macOS
 
@@ -32,7 +34,7 @@ If you are using vim/neovim in terminal, you also need to set the font of your t
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
+After SpaceVim being installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
 For more info about the install script, please check:
 
@@ -44,6 +46,19 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 
 The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
 
+## Run in docker
+
+```sh
+docker pull spacevim/spacevim
+docker run -it --rm spacevim/spacevim nvim
+```
+
+You can also load local config:
+
+```sh
+docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
+```
+
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
@@ -51,9 +66,9 @@ an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
 documentation.
 
 ```toml
-# This is basic configuration example for SpaceVim
+# This is a basic configuration example for SpaceVim
 
-# All SpaceVim option below [option] section
+# All SpaceVim options are below [options] snippet
 [options]
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
@@ -73,27 +88,45 @@ documentation.
     enable_tabline_filetype_icon = true
     # Display current mode text on statusline, by default It is disabled,
     # only color will be changed when switch modes.
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
 
 # Enable autocomplete layer
 [[layers]]
-name = "autocomplete"
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+    name = "autocomplete"
+    auto-completion-return-key-behavior = "complete"
+    auto-completion-tab-key-behavior = "cycle"
 
 [[layers]]
-name = "shell"
-default_position = "top"
-default_height = 30
+    name = "shell"
+    default_position = "top"
+    default_height = 30
 
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
-name = "lilydjwg/colorizer"
-merged = 0
+    name = "lilydjwg/colorizer"
+    merged = false
 ```
+
+## Online tutor
+
+This is a list of online tutor for using SpaceVim as general IDE and programming language support:
+
+- [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as IDE
+
+A list of guide for programming language support:
+
+
+<ul>
+    {% for post in site.categories.tutorials %}
+            <li>
+               <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+    {% endfor %}
+</ul>
 
 ## Learning SpaceVim
 
-- [SpaceVim Documentation](../documentation). Also known as "The Book", The SpaceVim Documentation will introduce
-  you to the main topics important to using SpaceVim. The book is the primary official document of the language.
+- [SpaceVim Documentation](../documentation). Also known as "The Book",
+The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
+The book is the primary official document of SpaceVim.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.

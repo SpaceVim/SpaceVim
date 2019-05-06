@@ -52,10 +52,12 @@ function! SpaceVim#layers#lang#rust#plugins() abort
   return plugins
 endfunction
 
+let s:recommended_style = 0
+
 function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
   let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
-
+  let g:rust_recommended_style = s:recommended_style
   if SpaceVim#layers#lsp#check_filetype('rust')
     call SpaceVim#mapping#gd#add('rust',
           \ function('SpaceVim#lsp#go_to_def'))
@@ -63,10 +65,23 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
-  call SpaceVim#plugins#runner#reg_runner('rust',
-        \ ['rustc %s -o #TEMP#', '#TEMP#'])
+  let runner = {
+        \ 'exe' : 'rustc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('rust',
         \ function('s:language_specified_mappings'))
+endfunction
+
+function! SpaceVim#layers#lang#rust#set_variable(var) abort
+
+  let s:recommended_style = get(a:var,
+        \ 'recommended-style',
+        \ s:recommended_style)
+
 endfunction
 
 function! s:language_specified_mappings() abort

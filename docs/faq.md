@@ -1,60 +1,61 @@
 ---
-title: "FAQ" 
-description: "A list of questions and answers relating to SpaceVim, especially one most asked in SpaceVim community" 
+title: "FAQ"
+description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community"
 ---
 
 # SpaceVim FAQ
 
-this is a list of most asked questions about SpaceVim.
+This is a list of the frequently asked questions about SpaceVim.
 
 <!-- vim-markdown-toc GFM -->
 
-- [Have a try with SpaceVim without overwrite vimrc?](#have-a-try-with-spacevim-without-overwrite-vimrc)
+- [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
 - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
 - [Where should I put my configuration?](#where-should-i-put-my-configuration)
 - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
 - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
-- [Why I can not update plugins?](#why-i-can-not-update-plugins)
-- [how to enable +py and +py3 in neovim?](#how-to-enable-py-and-py3-in-neovim)
-- [Why vim freeze after pressing Ctrl-s?](#why-vim-freeze-after-pressing-ctrl-s)
+- [Why can't I update plugins?](#why-cant-i-update-plugins)
+- [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
+- [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
 
 <!-- vim-markdown-toc -->
 
-### Have a try with SpaceVim without overwrite vimrc?
+### Can I try SpaceVim without overwriting my vimrc?
 
-The install script of SpaceVim will move your `~/.vimrc` to `~/.vimrc_back`. If you want to have a try with SpaceVim without overwrite
-your own vim configuration. you can clone SpaceVim manually.
+The SpaceVim install script will move your `~/.vimrc` to `~/.vimrc_back`. If you want to have a try SpaceVim without
+overwriting your own Vim configuration you can:
+
+Clone SpaceVim manually.
 
 ```sh
 git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
 ```
 
-then, start vim via `vim -u ~/.SpaceVim/vimrc`. you can also put this alias into your bashrc.
+Then, start Vim via `vim -u ~/.SpaceVim/vimrc`. You can also put this alias into your bashrc.
 
 ```sh
 alias svim='vim -u ~/.SpaceVim/vimrc'
 ```
-
-
 ### Why use toml as the default configuration file format?
 
-In the old version of SpaceVim, we used a vim file (`init.vim`) for configuration. But this introduced a lot of problems. When loading the vim file the file content is executed line by line. That means if there is an error then the content before the error also will be executed. This will lead to unforeseen problems.
+In the old version of SpaceVim, we used a Vim file (`init.vim`) for configuration. This introduced a lot of problems.
+When loading a Vim file the file content is executed line by line. This means that when there was an error the content
+before the error was still executed. This led to unforeseen problems.
 
-So we're going to use a more robust way to configure SpaceVim. SpaceVim will be able to load the whole configuration file; if there are syntax errors in the configuration file, the entire configuration will be discarded.
+We decided going forward to use a more robust configuration mechanism in SpaceVim. SpaceVim must be able to load the
+whole configuration file and if there are syntax errors in the configuration file, the entire configuration needs to
+be discarded.
 
-1.  YAML: It is error-prone due to indentation being significant and is error-prone when configuring transitions.
-2.  XML: vim lacks a parsing library and is hard for humans to write.
-3.  JSON is a good configuration format and Vim has a parsing function. However, JSON does not support comments.
+We compared TOML, YAML, XML, and JSON. We chose TOML as the default configuration language. Here are some of the
+drawbacks we found with the other choices considered:
 
-After comparing TOML, YAML, XML, and JSON, we chose TOML as the default configuration language.
-
-<!-- I don't understand this -->
-
-The yaml file is parsed into json and cached in the cache folder, and when SpaceVim is started again, the configuration file inside the cache is read directly
+1.  YAML: It is error-prone due to indentation being significant and when configuring transitions.
+2.  XML: Vim lacks a parsing library for XML and XML is hard for humans to write.
+3.  JSON: Is a good configuration format and Vim has a parsing function. However, JSON does not support comments.
 
 ### Where should I put my configuration?
 
-SpaceVim load custom global configuration from `~/.SpaceVim.d/init.toml`. It also support project specific configuration, 
+SpaceVim loads custom global configuration from `~/.SpaceVim.d/init.toml`. It also supports project specific configuration.
 That means it will load `.SpaceVim.d/init.toml` from the root of your project.
 
 ### E492: Not an editor command: ^M
@@ -67,33 +68,33 @@ git config --global core.autocrlf input
 
 ### Why SpaceVim can not display default colorscheme?
 
-By default, SpaceVim use true colors, so you should make sure your terminal support true colors, This is an articl about
-what is true colors and the terminals which support true colors.
+By default, SpaceVim uses true colors, so you should make sure your terminal supports true colors. [This is an article about
+what true colors are and which terminals support true colors.](https://gist.github.com/XVilka/8346728)
 
-### Why I can not update plugins?
+### Why can't I update plugins?
 
-Sometimes you will see `Updating failed, The plugin dir is dirty`. Since the dir of a plugin is a git repo, if the
-directory is dirty, you can not use `git pull` to update plugin. To fix this issue, just move your cursor to the
-error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. for more info, please read
-documentation of git.
+Sometimes you will see `Updating failed, The plugin dir is dirty`. Since the plugin dir is a git repo, if the
+directory is dirty (has changes that haven't been committed to git) you can not use `git pull` to update plugin. To fix this
+issue, just move your cursor to the error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. For
+more info please read git documentation.
 
-### how to enable +py and +py3 in neovim?
+### How to enable +py and +py3 in Neovim?
 
-In neovim we can use `g:python_host_prog` and `g:python3_host_prog` to config python prog. but in SpaceVim
-the custom configuration file is loaded after SpaceVim core code. so in SpaceVim itself, if we using `:py` command, it may cause errors.
-so we intrude two new environment variable: `PYTHON_HOST_PROG` and `PYTHON3_HOST_PROG`.
+In Neovim we can use `g:python_host_prog` and `g:python3_host_prog` to config python prog. In SpaceVim
+the custom configuration file is loaded after SpaceVim core code. So in SpaceVim itself, if we using `:py` command, it may cause errors.
+So we introduce two new environment variables: `PYTHON_HOST_PROG` and `PYTHON3_HOST_PROG`.
 
-for example:
+For example:
 
 ```sh
 export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
 export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 ```
 
-### Why vim freeze after pressing Ctrl-s?
+### Why does Vim freeze after pressing Ctrl-s?
 
-This is feature of terminal emulator, you can use `Ctrl-q` to unfreeze your vim.
-To disable this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
+This is a [feature of terminal emulators](https://unix.stackexchange.com/a/137846). You can use `Ctrl-q` to unfreeze Vim. To disable
+this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
 
 ```sh
 stty -ixon

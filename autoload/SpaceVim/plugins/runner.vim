@@ -9,6 +9,7 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
+let s:FILE = SpaceVim#api#import('file')
 
 
 let s:runners = {}
@@ -22,22 +23,43 @@ function! s:open_win() abort
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist nomodifiable
+        \ noswapfile
+        \ nowrap
+        \ cursorline
+        \ nospell
+        \ nonu
+        \ norelativenumber
+        \ winfixheight
+        \ nomodifiable
   set filetype=SpaceVimRunner
   nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
+  nnoremap <silent><buffer> i :call <SID>insert()<cr>
   let s:bufnr = bufnr('%')
   wincmd p
+endfunction
+
+function! s:insert() abort
+  call inputsave()
+  let input = input('input >')
+  if !empty(input) && s:status.is_running == 1
+    call s:JOB.send(s:job_id, input)
+  endif
+  normal! :
+  call inputrestore()
 endfunction
 
 let s:target = ''
 
 function! s:async_run(runner) abort
   if type(a:runner) == type('')
+    " the runner is a string, the %s will be replaced as a file name.
     try
-      let cmd = printf(a:runner, bufname('%'))
+      let cmd = printf(a:runner, get(s:, 'selected_file', bufname('%')))
     catch
       let cmd = a:runner
     endtry
+    call SpaceVim#logger#info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -47,10 +69,28 @@ function! s:async_run(runner) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
   elseif type(a:runner) == type([])
-    let s:target = tempname()
-    let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    " the runner is a list
+    " the first item is compile cmd, and the second one is running cmd.
+    let s:target = s:FILE.unify_path(tempname(), ':p')
+    if type(a:runner[0]) == type({})
+      if type(a:runner[0].exe) == 2
+        let exe = call(a:runner[0].exe, [])
+      elseif type(a:runner[0].exe) ==# type('')
+        let exe = [a:runner[0].exe]
+      endif
+      let usestdin = get(a:runner[0], 'usestdin', 0)
+      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [s:target]
+      if usestdin
+        let compile_cmd = compile_cmd + a:runner[0].opt
+      else
+        let compile_cmd = compile_cmd + a:runner[0].opt + [get(s:, 'selected_file', bufname('%'))]
+      endif
+    else
+      let usestdin =  0
+      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+    endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
-          \ '[Compile] ' . compile_cmd,
+          \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
@@ -61,10 +101,33 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
+    if usestdin
+      let range = get(a:runner[0], 'range', [1, '$'])
+      call s:JOB.send(s:job_id, call('getline', range))
+      call s:JOB.chanclose(s:job_id, 'stdin')
+    endif
   elseif type(a:runner) == type({})
-    let exe = call(a:runner.exe, [])
-    let cmd = exe + a:runner.opt + [bufname('%')]
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd), '', repeat('-', 20)])
+    " the runner is a dict
+    " keys:
+    "   exe : function, return a cmd list
+    "         string
+    "   usestdin: true, use stdin
+    "             false, use file name
+    "   range: empty, whole buffer
+    "          getline(a, b)
+    if type(a:runner.exe) == 2
+      let exe = call(a:runner.exe, [])
+    elseif type(a:runner.exe) ==# type('')
+      let exe = [a:runner.exe]
+    endif
+    let usestdin = get(a:runner, 'usestdin', 0)
+    if usestdin
+      let cmd = exe + a:runner.opt
+    else
+      let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
+    endif
+    call SpaceVim#logger#info('   cmd:' . string(cmd))
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
     let s:job_id =  s:JOB.start(cmd,{
@@ -72,6 +135,19 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    if usestdin
+      let range = get(a:runner, 'range', [1, '$'])
+      call s:JOB.send(s:job_id, call('getline', range))
+      call s:JOB.chanclose(s:job_id, 'stdin')
+    endif
+  endif
+  if s:job_id > 0
+    let s:status = {
+          \ 'is_running' : 1,
+          \ 'is_exit' : 0,
+          \ 'has_errors' : 0,
+          \ 'exit_code' : 0
+          \ }
   endif
 endfunction
 
@@ -85,14 +161,22 @@ function! s:on_compile_exit(id, data, event) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    if s:job_id > 0
+      let s:status = {
+            \ 'is_running' : 1,
+            \ 'is_exit' : 0,
+            \ 'has_errors' : 0,
+            \ 'exit_code' : 0
+            \ }
+    endif
   else
     let s:end_time = reltime(s:start_time)
     let s:status.is_exit = 1
     let s:status.exit_code = a:data
     let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
-    call s:update_statusline()
   endif
+  call s:update_statusline()
 endfunction
 " @vimlint(EVL103, 0, a:id)
 " @vimlint(EVL103, 0, a:data)
@@ -104,9 +188,18 @@ endfunction
 
 function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
   let s:runners[a:ft] = a:runner
+  let desc = '[' . a:ft . '] ' . string(a:runner)
+  let cmd = "call SpaceVim#plugins#runner#set_language('" . a:ft . "')"
+  call add(g:unite_source_menu_menus.RunnerLanguage.command_candidates, [desc,cmd])
 endfunction
 
-function! SpaceVim#plugins#runner#open() abort
+function! SpaceVim#plugins#runner#get(ft) abort
+  return deepcopy(get(s:runners, a:ft , ''))
+endfunction
+
+" this func should support specific a runner
+" the runner can be a string
+function! SpaceVim#plugins#runner#open(...) abort
   let s:lines = 0
   let s:status = {
         \ 'is_running' : 0,
@@ -114,11 +207,13 @@ function! SpaceVim#plugins#runner#open() abort
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
-  let runner = get(s:runners, &filetype, '')
+  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner)
     call s:update_statusline()
+  else
+    let s:selected_language = get(s:, 'selected_language', '')
   endif
 endfunction
 
@@ -126,6 +221,7 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 if has('nvim') && exists('*chanclose')
+  " remoet  at the end of each 
   let s:_out_data = ['']
   function! s:on_stdout(job_id, data, event) abort
     let s:_out_data[-1] .= a:data[0]
@@ -137,6 +233,7 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     if !empty(lines)
+      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
     endif
     let s:lines += len(lines)
@@ -199,13 +296,55 @@ function! SpaceVim#plugins#runner#status() abort
   elseif s:status.is_exit == 1
     return 'exit code : ' . s:status.exit_code 
           \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
+          \ . '    language: ' . get(s:, 'selected_language', &ft)
   endif
   return ''
 endfunction
 
 function! SpaceVim#plugins#runner#close() abort
   if s:status.is_exit == 0
-    call s:JOB.close(s:job_id)
+    call s:JOB.stop(s:job_id)
   endif
   exe 'bd ' s:bufnr
+endfunction
+
+function! SpaceVim#plugins#runner#select_file() abort
+  let s:lines = 0
+  let s:status = {
+        \ 'is_running' : 0,
+        \ 'is_exit' : 0,
+        \ 'has_errors' : 0,
+        \ 'exit_code' : 0
+        \ }
+  let s:selected_file = browse(0,'select a file to run', getcwd(), '')
+  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  let s:selected_language = &filetype
+  if !empty(runner)
+    call SpaceVim#logger#info('Code runner startting:')
+    call SpaceVim#logger#info('selected file :' . s:selected_file)
+    call s:open_win()
+    call s:async_run(runner)
+    call s:update_statusline()
+  endif
+endfunction
+
+let g:unite_source_menu_menus =
+      \ get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.RunnerLanguage = {'description':
+      \ 'Custom mapped keyboard shortcuts                   [SPC] p p'}
+let g:unite_source_menu_menus.RunnerLanguage.command_candidates =
+      \ get(g:unite_source_menu_menus.RunnerLanguage,'command_candidates', [])
+
+function! SpaceVim#plugins#runner#select_language() abort
+  " @todo use denite or unite to select language
+  " and set the s:selected_language
+  " the all language is keys(s:runners)
+  Denite menu:RunnerLanguage
+endfunction
+
+function! SpaceVim#plugins#runner#set_language(lang) abort
+  " @todo use denite or unite to select language
+  " and set the s:selected_language
+  " the all language is keys(s:runners)
+  let s:selected_language = a:lang
 endfunction

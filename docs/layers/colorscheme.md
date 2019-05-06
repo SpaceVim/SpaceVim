@@ -42,6 +42,7 @@ Colorscheme list
 | Name         | dark | light | term | gui | statusline |
 | ------------ | ---- | ----- | ---- | --- | ---------- |
 | molokai      | yes  | no    | yes  | yes | yes        |
+| srcery       | yes  | no    | yes  | yes | yes        |
 | onedark      | yes  | no    | yes  | yes | yes        |
 | jellybeans   | yes  | no    | yes  | yes | yes        |
 | one          | yes  | yes   | yes  | yes | yes        |
@@ -52,8 +53,8 @@ Colorscheme list
 | material     | yes  | yes   | yes  | yes | yes        |
 | SpaceVim     | yes  | yes   | yes  | yes | yes        |
 
-By default this layer only include above colorschemes, if you want to use other colorscheme which
-is available on github, you can use `custom_plugins` section in configuration file, for examples:
+By default this layer only include above colorschemes. If you want to use other colorschemes which
+are available on Github, use the `custom_plugins` section in configuration file. For example:
 
 ```toml
 [options]
@@ -65,7 +66,6 @@ is available on github, you can use `custom_plugins` section in configuration fi
   name = "mhartington/oceanic-next"
   merged = 0
 ```
-
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
 Vim background color. SpaceVim support to change the background color with
@@ -85,7 +85,7 @@ Colorscheme layer support random colorscheme on startup. just load this layer wi
   random_theme = true
 ```
 
-The frequency can be changed via `frequency` layer options, the available values are  `daily`, `hourly`, `weekly`.
+The frequency can be changed via `frequency` layer options, the available values are `daily`, `hourly`, `weekly`.
 You can also use `number + unit`, for example: `1h`.
 
 ```toml
@@ -94,5 +94,3 @@ You can also use `number + unit`, for example: `1h`.
   random_theme = true
   frequency = "daily"
 ```
-
-

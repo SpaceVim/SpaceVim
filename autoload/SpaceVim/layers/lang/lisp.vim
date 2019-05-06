@@ -117,46 +117,46 @@ function! SpaceVim#layers#lang#lisp#config() abort
 endfunction
 
 
-fu! s:lisp()
+fu! s:lisp() abort
     let g:_spacevim_mappings_space.l.c = {'name' : '+Connection Management'}
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'c'], "call VlimeConnectREPL()", 'Connect to Vlime server', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'], "call VlimeSelectCurConnection()", 'Switch Vlime connections', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'd'], "call VlimeCloseCurConnection()", 'Disconnect', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'R'], "call VlimeRenameCurConnection()", 'Rename the current connection', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'c'], 'call VlimeConnectREPL()', 'Connect to Vlime server', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'], 'call VlimeSelectCurConnection()', 'Switch Vlime connections', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'd'], 'call VlimeCloseCurConnection()', 'Disconnect', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'R'], 'call VlimeRenameCurConnection()', 'Rename the current connection', 1)
 
     let g:_spacevim_mappings_space.l.r = {'name' : '+Server Management'}
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'r'], "call VlimeNewServer()", 'Run a new Vlime server and connect to it', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'v'], "call VlimeShowSelectedServer()", 'View the console output of a server', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'R'], "call VlimeRenameSelectedServer()", 'Rename a server', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'r'], 'call VlimeNewServer()', 'Run a new Vlime server and connect to it', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'v'], 'call VlimeShowSelectedServer()', 'View the console output of a server', 1)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'R'], 'call VlimeRenameSelectedServer()', 'Rename a server', 1)
 
     let g:_spacevim_mappings_space.l.s = {'name' : '+Sending Stuff To The REPL'}
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','s'], "call VlimeSendToREPL(vlime#ui#CurExprOrAtom())",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','s'], 'call VlimeSendToREPL(vlime#ui#CurExprOrAtom())',
                 \ 'Send s-expr or atom under the cursor to REPL', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','e'], "call VlimeSendToREPL(vlime#ui#CurExpr())",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','e'], 'call VlimeSendToREPL(vlime#ui#CurExpr())',
                 \ 'Send s-expr under the cursor to REPL', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','t'], "VlimeSendToREPL(vlime#ui#CurTopExpr())",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','t'], 'VlimeSendToREPL(vlime#ui#CurTopExpr())',
                 \ 'Send to-level s-expr under the cursor to REPL', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','a'], "call VlimeSendToREPL(vlime#ui#CurAtom())",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','a'], 'call VlimeSendToREPL(vlime#ui#CurAtom())',
                 \ 'Send atom under the cursor to REPL', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','i'], "call VlimeSendToREPL()",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','s','i'], 'call VlimeSendToREPL()',
                 \ 'Open vlime input buffer for REPL', 1)
-    call SpaceVim#mapping#space#langSPC('vmap', ['l','s','v'], "call VlimeSendToREPL(vlime#ui#CurSelection())",
+    call SpaceVim#mapping#space#langSPC('vmap', ['l','s','v'], 'call VlimeSendToREPL(vlime#ui#CurSelection())',
                 \ 'Send the current selection to the REPL', 1)
 
     let g:_spacevim_mappings_space.l.m = {'name' : '+Expanding Macros'}
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','m','l'], "call VlimeExpandMacro(vlime#ui#CurExpr(), v:false)",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','m','l'], 'call VlimeExpandMacro(vlime#ui#CurExpr(), v:false)',
                 \ 'Expand the macro under the cursor', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','m','a'], "call VlimeExpandMacro(vlime#ui#CurExpr(), v:true)",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','m','a'], 'call VlimeExpandMacro(vlime#ui#CurExpr(), v:true)',
                 \ 'Expand the macro under the cursor and all nested macros', 1)
 
     let g:_spacevim_mappings_space.l.o = {'name' : '+Compiling'}
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','o','e'], "call VlimeCompile(vlime#ui#CurExpr(v:true))",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','o','e'], 'call VlimeCompile(vlime#ui#CurExpr(v:true))',
                 \ 'Compile the form under the cursor', 1)
-    call SpaceVim#mapping#space#langSPC('nmap', ['l','o','t'], "call VlimeCompile(vlime#ui#CurTopExpr(v:true))",
+    call SpaceVim#mapping#space#langSPC('nmap', ['l','o','t'], 'call VlimeCompile(vlime#ui#CurTopExpr(v:true))',
                 \ 'Compile the top-level form under the cursor', 1)
     call SpaceVim#mapping#space#langSPC('nmap', ['l','o','f'], "call VlimeCompileFile(expand('%:p'))",
                 \ 'Compile the current file', 1)
-    call SpaceVim#mapping#space#langSPC('vmap', ['l','o','v'], "call VlimeCompile(vlime#ui#CurSelection(v:true))",
+    call SpaceVim#mapping#space#langSPC('vmap', ['l','o','v'], 'call VlimeCompile(vlime#ui#CurSelection(v:true))',
                 \ 'Compile the current selection', 1)
 
     let g:_spacevim_mappings_space.l.x = {'name' : '+Cross references'}
@@ -220,23 +220,23 @@ fu! s:lisp()
                 \ 'Prompt for the expression to inspect', 1)
 endf
 
-fu! s:vlime_sldb()
+fu! s:vlime_sldb() abort
 endf
-fu! s:vlime_repl()
+fu! s:vlime_repl() abort
 endf
-fu! s:vlime_inspector()
+fu! s:vlime_inspector() abort
 endf
-fu! s:vlime_xref()
+fu! s:vlime_xref() abort
 endf
-fu! s:vlime_notes()
+fu! s:vlime_notes() abort
 endf
-fu! s:vlime_threads()
+fu! s:vlime_threads() abort
 endf
-fu! s:vlime_server()
+fu! s:vlime_server() abort
 endf
-fu! s:vlime_preview()
+fu! s:vlime_preview() abort
 endf
-fu! s:vlime_arglist()
+fu! s:vlime_arglist() abort
 endf
-fu! s:vlime_input()
+fu! s:vlime_input() abort
 endf

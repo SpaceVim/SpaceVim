@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='0.9.0'
+Version='1.2.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -118,7 +118,7 @@ error() {
 }
 
 warn () {
-  msg "${Red}[✘]${Color_off} ${1}${2}"
+  msg "${Yellow}[⚠]${Color_off} ${1}${2}"
 }
 # }}}
 
@@ -240,7 +240,7 @@ check_requirements () {
     warn "Check Requirements : git"
   fi
   if hash "vim" &>/dev/null; then
-    is_vim8=$(vim --version | grep "Vi IMproved 8.0")
+    is_vim8=$(vim --version | grep "Vi IMproved 8")
     is_vim74=$(vim --version | grep "Vi IMproved 7.4")
     if [ -n "$is_vim8" ]; then
       success "Check Requirements: vim 8.0"
@@ -330,7 +330,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                      version : 1.0.0-dev       by : spacevim.org             "
+    echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
 }
 
 # }}}
@@ -373,7 +373,7 @@ install_fonts () {
   if [ $System == "Darwin" ];then
     if [ ! -e "$HOME/Library/Fonts" ];then
       mkdir "$HOME/Library/Fonts"
-    fi 
+    fi
     cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
   else
     fc-cache -fv > /dev/null

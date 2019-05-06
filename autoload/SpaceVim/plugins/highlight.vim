@@ -17,6 +17,7 @@
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:HI = SpaceVim#api#import('vim#highlight')
 "}}}
 
 " init local variable {{{
@@ -40,11 +41,6 @@ function! s:range_logo() abort
   endtry
   let s:hi_range_id = s:CMP.matchaddpos('HiRrange' . s:current_range, [[3, begin, len(s:current_range) + 2]])
   let s:hi_range_index = s:CMP.matchaddpos('HiRrangeIndex', [[3, begin + len(s:current_range) + 2, len(index) + 2]])
-  redraw!
-  echon ' Change current range to:'
-  exe 'echohl HiRrange' . s:current_range
-  echon s:current_range
-  echohl None
 endfunction
 " }}}
 
@@ -114,14 +110,23 @@ function! s:init() abort
 endfunction
 " }}}
 
+" use SPC s H to highlight all symbol on default range.
+" use SPC s h to highlight current symbol on default range.
+
 " public API func: start Highlight mode {{{
-function! SpaceVim#plugins#highlight#start() abort
+function! SpaceVim#plugins#highlight#start(current) abort
   let curpos = getcurpos()
   let save_reg_k = @k
   normal! viw"ky
   let s:current_match = @k
   let @k = save_reg_k
   call setpos('.', curpos)
+  if s:current_match =~# '^\s*$' || empty(s:current_match) || s:current_match ==# "\n"
+    echohl WarningMsg
+    echo 'cursor is not on symbol'
+    echohl None
+    return
+  endif
   let s:state = SpaceVim#api#import('transient_state') 
   call s:state.set_title('Highlight Transient State')
   call s:state.defind_keys(
@@ -195,7 +200,17 @@ function! SpaceVim#plugins#highlight#start() abort
         \ ],
         \ }
         \ )
+  let save_tve = &t_ve
+  setlocal t_ve=
+  if has('gui_running')
+    let cursor_hi = s:HI.group2dict('Cursor')
+    call s:HI.hide_in_normal('Cursor')
+  endif
   call s:state.open()
+  let &t_ve = save_tve
+  if has('gui_running')
+    call s:HI.hi(cursor_hi)
+  endif
   try
     call s:clear_highlight()
   catch
@@ -249,7 +264,11 @@ function! s:change_range() abort
     call s:clear_highlight()
     call s:highlight()
   endif
-  let s:state.noredraw = 1
+  let s:state._clear_cmdline = 0
+  echon ' Change current range to:'
+  exe 'echohl HiRrange' . s:current_range
+  echon s:current_range
+  echohl None
 endfunction
 " }}}
 

@@ -144,9 +144,9 @@ function! SpaceVim#commands#install_plugin(...) abort
 endfunction
 
 function! SpaceVim#commands#version() abort
-  echo 'SpaceVim ' . g:spacevim_version . '-' . s:SHA() . "\n" .
+  echo 'SpaceVim ' . g:spacevim_version  . s:SHA() . "\n" .
         \ "\n" .
-        \ 'Optional features included (+) or not (-):' . "\n"
+        \ 'Optional features included (+) or not (-):' . "\n" .
         \ s:check_features([
         \ 'tui',
         \ 'jemalloc',
@@ -246,12 +246,13 @@ endfunction
 
 function! s:check_features(features) abort
   let flist = map(a:features, "(has(v:val) ? '+' : '-') . v:val")
-  let rst = '    '
+  let rst = ''
   let id = 1
   for f in flist
+    let rst .= '    '
     let rst .= f . repeat(' ', 20 - len(f))
     if id == 3
-      let rst .= "\n    "
+      let rst .= "\n"
       let id = 1
     else
       let id += 1
@@ -261,7 +262,11 @@ function! s:check_features(features) abort
 endfunction
 
 function! s:SHA() abort
-  return system('git --no-pager -C ~/.SpaceVim  log -n 1 --oneline')[:7]
+  let sha = system('git --no-pager -C ~/.SpaceVim  log -n 1 --oneline')[:7]
+  if v:shell_error
+    return ''
+  endif
+  return '-' . sha
 endfunction
 
 

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#java 模块"
-description: "这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -23,7 +23,7 @@ lang: cn
 
 ## 模块描述
 
-这一模块为 java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
+这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
 
 ## 功能特性
 
@@ -47,39 +47,39 @@ lang: cn
 
 ### 导包相关快捷键
 
-| 模式          | 快捷键    | 按键描述           |
-| ------------- | --------- | ------------------ |
-| Insert/Normal | `F4`      | 导入光标下的类     |
-| Normal        | `SPC l I` | 导入所有缺失的类   |
-| Normal        | `SPC l R` | 删除多余的导包     |
-| Normal        | `SPC l i` | 智能导入光标下的类 |
-| Insert        | `<C-j>I`  | 导入所有缺失的类   |
-| Insert        | `<C-j>R`  | 删除多余的导包     |
-| Insert        | `<C-j>i`  | 智能导入光标下的类 |
+| 模式          | 快捷键     | 按键描述           |
+| ------------- | ---------  | ------------------ |
+| Insert/Normal | `<F4>`     | 导入光标下的类     |
+| Normal        | `SPC l I`  | 导入所有缺失的类   |
+| Normal        | `SPC l R`  | 删除多余的导包     |
+| Normal        | `SPC l i`  | 智能导入光标下的类 |
+| Insert        | `Ctrl-j I` | 导入所有缺失的类   |
+| Insert        | `Ctrl-j R` | 删除多余的导包     |
+| Insert        | `Ctrl-j i` | 智能导入光标下的类 |
 
 ### 代码生成相关快捷键
 
 | 模式          | 快捷键      | 按键描述                              |
 | ------------- | ----------- | ------------------------------------- |
-| normal        | `SPC l g A` | generate accessors                    |
-| normal/visual | `SPC l g s` | generate setter accessor              |
-| normal/visual | `SPC l g g` | generate getter accessor              |
-| normal/visual | `SPC l g a` | generate setter and getter accessor   |
-| normal        | `SPC l g M` | generate abstract methods             |
-| insert        | `<c-j>s`    | generate setter accessor              |
-| insert        | `<c-j>g`    | generate getter accessor              |
-| insert        | `<c-j>a`    | generate getter and setter accessor   |
-| normal        | `SPC l g t` | generate toString function            |
-| normal        | `SPC l g e` | generate equals and hashcode function |
-| normal        | `SPC l g c` | generate constructor                  |
-| normal        | `SPC l g C` | generate default constructor          |
+| Normal        | `SPC l g A` | generate accessors                    |
+| Normal/Visual | `SPC l g s` | generate setter accessor              |
+| Normal/Visual | `SPC l g g` | generate getter accessor              |
+| Normal/Visual | `SPC l g a` | generate setter and getter accessor   |
+| Normal        | `SPC l g M` | generate abstract methods             |
+| Insert        | `Ctrl-j s`  | generate setter accessor              |
+| Insert        | `Ctrl-j g`  | generate getter accessor              |
+| Insert        | `Ctrl-j a`  | generate getter and setter accessor   |
+| Normal        | `SPC l g t` | generate toString function            |
+| Normal        | `SPC l g e` | generate equals and hashcode function |
+| Normal        | `SPC l g c` | generate constructor                  |
+| Normal        | `SPC l g C` | generate default constructor          |
 
 ### 代码格式化
 
-默认的代码格式化快捷键是 `SPC b f`，该快捷键又 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
+默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
-为了使 format 模块支持 java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
-同时，需要设置 `layer_lang_java_formatter` SpaceVim 选项：
+为了使 format 模块支持 Java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
+同时，需要设置 SpaceVim 选项`layer_lang_java_formatter`：
 
 ```toml
 [options]
@@ -88,7 +88,7 @@ lang: cn
 
 ### Maven
 
-| Key Binding | Description                    |
+| 快捷键      | 功能描述                       |
 | ----------- | ------------------------------ |
 | `SPC l m i` | Run maven clean install        |
 | `SPC l m I` | Run maven install              |
@@ -99,7 +99,7 @@ lang: cn
 
 ### Jump
 
-| Key Binding | Description            |
+| 快捷键      | 描述                   |
 | ----------- | ---------------------- |
 | `SPC l j a` | jump to alternate file |
 
@@ -109,8 +109,8 @@ lang: cn
 
 将代码传输给 REPL 进程执行：
 
-| 快捷键      | 描述                        |
+| 快捷键      | 功能描述                    |
 | ----------- | --------------------------- |
-| `SPC l s b` | 发送整个文件内容至 REPL |
+| `SPC l s b` | 发送整个文件内容至 REPL     |
 | `SPC l s l` | 发送当前行内容至 REPL       |
 | `SPC l s s` | 发送已选中的内容至 REPL     |

@@ -2,7 +2,8 @@
 # the repo. Unless a later match takes precedence,
 # @wsdjeg will be requested for review when someone opens a
 # pull request.
-*       @wsdjeg
+# Just watching this repo, disable duplicate message
+# *       @wsdjeg
 
 # lang#julia layer
 autoload/SpaceVim/layers/lang/julia.vim      @jingpengw
