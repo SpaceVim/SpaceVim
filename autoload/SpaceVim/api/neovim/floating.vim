@@ -38,8 +38,13 @@ function! s:self.open_win(buf, focuce, opt) abort
 endfunction
 
 function! s:self.win_config(winid, opt) abort
-
+" Neovim 这一函数有三种状态：
+" 1：最初名称为 nvim_win_config，并且接受 4 个参数
+" 2：名称被重命名为 nvim_win_set_config，并且任然接受四个参数
+" 3：最新版本名称为 nvim_win_set_config，只接受 2 个参数
   try
+    call nvim_win_set_config(a:winid, a:opt)
+  catch /^Vim\%((\a\+)\)\=:E117/
     call nvim_win_config(a:winid, a:opt)
   catch /^Vim\%((\a\+)\)\=:E119/
     call nvim_win_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
