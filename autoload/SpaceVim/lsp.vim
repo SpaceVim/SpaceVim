@@ -59,6 +59,10 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     augroup spacevim_lsp_layer
       autocmd!
       autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+      autocmd! BufReadPost,FileType markdown if &buftype ==# 'nofile'
+            \ | exe "nmap <buffer><silent> q :quit<CR>"
+            \ | call timer_start(100, 'NeovimSwitchWindow')
+            \ | endif
     augroup END
   endfunction
 
@@ -114,6 +118,13 @@ else
           \ . "'whitelist': ['" .  a:ft . "' ],"
           \ . '})'
     exe 'autocmd FileType ' . a:ft . ' setlocal omnifunc=lsp#complete'
+    augroup spacevim_lsp_layer
+      autocmd!
+      autocmd! BufReadPost,FileType markdown if &buftype ==# 'nofile'
+            \ | exe "nmap <buffer><silent> q :quit<CR>"
+            \ | call timer_start(100, 'NeovimSwitchWindow')
+            \ | endif
+    augroup END
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
