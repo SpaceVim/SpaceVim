@@ -105,6 +105,9 @@ let g:spacevim_enable_bepo_layout  = 0
 " <
 let g:spacevim_max_column              = 120
 
+
+let g:spacevim_mapping_leader = '<Space>'
+
 ""
 " @section max_column, options-home_files_number
 " @parentsection options
