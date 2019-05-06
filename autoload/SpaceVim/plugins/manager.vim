@@ -619,7 +619,7 @@ function! s:new_window() abort
     let winnr = bufwinnr(s:plugin_manager_buffer)
     if winnr > -1
       exe winnr . 'wincmd w'
-      silent exe '1,$d'
+      silent normal! gg"_dG
       redraw!
     endif
     exe current_nr . 'wincmd w'
