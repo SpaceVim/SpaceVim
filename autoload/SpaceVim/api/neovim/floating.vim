@@ -45,19 +45,20 @@ function! s:self.win_config(winid, opt) abort
   " 这里实现的逻辑就是优先使用最新的api调用方式，当报错时顺历史变更顺序去尝试。
   try
     call nvim_win_set_config(a:winid, a:opt)
+  catch /^Vim\%((\a\+)\)\=:E119/
+    call nvim_win_set_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
+          \ {
+          \ 'relative' : get(a:opt, 'relative', 'editor'),
+          \ 'row' : get(a:opt, 'row', 5),
+          \ 'col' : get(a:opt, 'col', 5),
+          \ }) 
   catch /^Vim\%((\a\+)\)\=:E117/
-    try
-
-      call nvim_win_config(a:winid, a:opt)
-    catch /^Vim\%((\a\+)\)\=:E119/
-
-      call nvim_win_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
-            \ {
-            \ 'relative' : get(a:opt, 'relative', 'editor'),
-            \ 'row' : get(a:opt, 'row', 5),
-            \ 'col' : get(a:opt, 'col', 5),
-            \ }) 
-    endtry
+    call nvim_win_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
+          \ {
+          \ 'relative' : get(a:opt, 'relative', 'editor'),
+          \ 'row' : get(a:opt, 'row', 5),
+          \ 'col' : get(a:opt, 'col', 5),
+          \ }) 
   endtry
 
 endfunction
