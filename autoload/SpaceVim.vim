@@ -106,7 +106,20 @@ let g:spacevim_enable_bepo_layout  = 0
 let g:spacevim_max_column              = 120
 
 
-let g:spacevim_mapping_leader = '<Space>'
+""
+" @section default_custom_leader, options-default_custom_leader
+" @parentsection options
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   default_custom_leader = "<Space>"
+" <
+
+""
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   let g:spacevim_default_custom_leader = '<Space>'
+" <
+let g:spacevim_default_custom_leader = '<Space>'
 
 ""
 " @section max_column, options-home_files_number

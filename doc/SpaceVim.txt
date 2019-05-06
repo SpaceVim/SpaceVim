@@ -19,29 +19,30 @@ CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
       1. checkinstall..........................|SpaceVim-options-checkinstall|
-      2. default_indent......................|SpaceVim-options-default_indent|
-      3. enable_ale..............................|SpaceVim-options-enable_ale|
-      4. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
-      5. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      6. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      7. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
-      8. enable_neomake......................|SpaceVim-options-enable_neomake|
-      9. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
-      10. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      11. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      12. error_symbol.........................|SpaceVim-options-error_symbol|
-      13. guifont...................................|SpaceVim-options-guifont|
-      14. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      15. max_column.............................|SpaceVim-options-max_column|
-      16. max_column......................|SpaceVim-options-home_files_number|
-      17. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      18. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      19. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      20. relativenumber.....................|SpaceVim-options-relativenumber|
-      21. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      22. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      23. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      24. windows_leader.....................|SpaceVim-options-windows_leader|
+      2. default_custom_leader........|SpaceVim-options-default_custom_leader|
+      3. default_indent......................|SpaceVim-options-default_indent|
+      4. enable_ale..............................|SpaceVim-options-enable_ale|
+      5. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
+      6. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      7. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      8. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      9. enable_neomake......................|SpaceVim-options-enable_neomake|
+      10. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      11. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      12. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      13. error_symbol.........................|SpaceVim-options-error_symbol|
+      14. guifont...................................|SpaceVim-options-guifont|
+      15. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      16. max_column.............................|SpaceVim-options-max_column|
+      17. max_column......................|SpaceVim-options-home_files_number|
+      18. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      19. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      20. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      21. relativenumber.....................|SpaceVim-options-relativenumber|
+      22. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      23. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      24. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      25. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -129,6 +130,14 @@ CHECKINSTALL                                   *SpaceVim-options-checkinstall*
 Enable/Disable checkinstall on SpaceVim startup. Default is true.
 >
   checkinstall = true
+<
+
+==============================================================================
+DEFAULT_CUSTOM_LEADER                 *SpaceVim-options-default_custom_leader*
+
+Change the default custom leader of SpaceVim. Default is <Space>.
+>
+  default_custom_leader = "<Space>"
 <
 
 ==============================================================================
@@ -340,6 +349,12 @@ Enable/Disable bepo layout, by default it is disabled.
 Change the max number of columns for SpaceVim. Default is 120.
 >
   let g:spacevim_max_column = 120
+<
+
+                                            *g:spacevim_default_custom_leader*
+Change the default custom leader of SpaceVim. Default is <Space>.
+>
+  let g:spacevim_default_custom_leader = '<Space>'
 <
 
                                                 *g:spacevim_home_files_number*
