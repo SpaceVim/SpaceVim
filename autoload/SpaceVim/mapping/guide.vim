@@ -94,7 +94,7 @@ function! s:start_parser(key, dict) abort " {{{
   if a:key ==# '[KEYs]'
     return
   endif
-  let key = a:key ==? ' ' ? '<Space>' : a:key
+  let key = a:key ==? g:spacevim_default_custom_leader ? ' ' : a:key
 
   0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
 
@@ -712,7 +712,7 @@ else
   call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
-  call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
+  call SpaceVim#plugins#help#regist_root({'[SPC]' : g:_spacevim_mappings_space})
 endif
 if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
   call SpaceVim#mapping#guide#register_prefix_descriptions(
