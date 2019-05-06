@@ -35,6 +35,7 @@ To use this configuration layer, update custom configuration file with:
   values include: `arrow`, `curve`, `slant`, `barce`, `fire`, `nil`.
 - `tmuxline_separators_alt`: default value is same as SpaceVim options `statusline_inactive_separator`
   available values include: `arrow`, `bar`, `nil`.
+- `tmux_navigator_modifier`: option for change tmux navigator, default is `ctrl`
 
 ## Key bindings
 
@@ -44,3 +45,11 @@ To use this configuration layer, update custom configuration file with:
 | `Ctrl-j`     | Switch to vim/tmux pane in down direction  |
 | `Ctrl-k`     | Switch to vim/tmux pane in up direction    |
 | `Ctrl-l`     | Switch to vim/tmux pane in right direction |
+
+To use `alt` as the default navigator modifier:
+
+```toml
+[[layers]]
+  name = "tmux"
+  tmux_navigator_modifier = "alt"
+```

@@ -1,0 +1,7 @@
+Execute ( SpaceVim statusline theme ):
+  let g:_spacevim_built_in_themes  = map(split(globpath('.', 'autoload/SpaceVim/mapping/guide/theme/*.vim'), "\n"), 'fnamemodify(v:val, ":t:r")')
+  for theme in g:_spacevim_built_in_themes
+    Log 'testing theme: ' . theme
+    AssertEqual len(call('SpaceVim#mapping#guide#theme#' . theme . '#palette', [])), 9
+  endfor
+

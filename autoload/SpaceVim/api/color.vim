@@ -69,7 +69,7 @@ endfunction
 
 function! s:self.str2nr(str) abort
   let nr = get(self._deps.swap(self._color_map), a:str, -1)
-  if nr =~ 'fg\|bg\|NONE'
+  if nr =~# 'fg\|bg\|NONE'
     return nr
   else
     return str2nr(nr)

@@ -21,30 +21,58 @@
 function! SpaceVim#layers#lang#lua#plugins() abort
   let plugins = []
   " Improved Lua 5.3 syntax and indentation support for Vim
-  call add(plugins, ['tbastos/vim-lua', {'on_ft' : 'lua'}])
+  call add(plugins, ['wsdjeg/vim-lua', {'on_ft' : 'lua'}])
   call add(plugins, ['WolfgangMehner/lua-support', {'on_ft' : 'lua'}])
-  call add(plugins, ['SpaceVim/vim-luacomplete', {'on_ft' : 'lua', 'if' : has('lua')}])
   return plugins
 endfunction
 
 let s:lua_repl_command = ''
 
 function! SpaceVim#layers#lang#lua#config() abort
-  if has('lua')
-    augroup spacevim_lua
-      autocmd FileType lua setlocal omnifunc=luacomplete#complete
-    augroup END
-  endif
 
+  augroup spacevim_lang_lua
+    autocmd!
+    autocmd FileType lua set comments=f:--
+  augroup END
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('lua', 'lua %s')
+  let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
+  if !empty(luaexe)
+    call SpaceVim#plugins#runner#reg_runner('lua', {
+          \ 'exe' : luaexe[0],
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
+  else
+    call SpaceVim#plugins#runner#reg_runner('lua', {
+          \ 'exe' : 'lua',
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
+  endif
+  let g:neomake_lua_enabled_makers = ['luac']
+  let luacexe = filter(['luac53', 'luac52', 'luac51'], 'executable(v:val)')
+  if !empty(luacexe)
+    let g:neomake_lua_luac_maker = {
+          \ 'exe': luacexe[0],
+          \ 'args': ['-p'],
+          \ 'errorformat': '%*\f: %#%f:%l: %m',
+          \ }
+  else
+    let g:neomake_lua_luac_maker = {
+          \ 'exe': 'luac',
+          \ 'args': ['-p'],
+          \ 'errorformat': '%*\f: %#%f:%l: %m',
+          \ }
+  endif
   if !empty(s:lua_repl_command)
-      call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
+    call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
   else
     if executable('luap')
       call SpaceVim#plugins#repl#reg('lua', 'luap')
+    elseif !empty(luaexe)
+      call SpaceVim#plugins#repl#reg('lua', luaexe + ['-i'])
     else
-      call SpaceVim#plugins#repl#reg('lua', 'lua')
+      call SpaceVim#plugins#repl#reg('lua', ['lua', '-i'])
     endif
   endif
 endfunction
@@ -72,5 +100,3 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
-
-au BufEnter *.lua :LuaOutputMethod buffer

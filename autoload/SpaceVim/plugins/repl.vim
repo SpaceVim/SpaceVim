@@ -36,21 +36,24 @@ endfunction
 " selection: send selection text to REPL process
 
 function! SpaceVim#plugins#repl#send(type) abort
-  if a:type ==# 'line'
-    call s:JOB.send(s:job_id, [getline('.'), ''])
-  elseif a:type ==# 'buffer'
-    call s:JOB.send(s:job_id, getline(1, '$') + [''])
-  elseif a:type ==# 'selection'
-    let begin = getpos("'<")
-    let end = getpos("'>")
-    if begin[1] != 0 && end[1] != 0
-      call s:JOB.send(s:job_id, getline(begin[1], end[1]) + [''])
-    else
-      echohl WarningMsg
-      echo 'no selection text'
-      echohl None
-    endif
+  if !exists('s:job_id')
+    echom('Please start REPL via the key binding "SPC l s i" first.')
   else
+    if a:type ==# 'line'
+      call s:JOB.send(s:job_id, [getline('.'), ''])
+    elseif a:type ==# 'buffer'
+      call s:JOB.send(s:job_id, getline(1, '$') + [''])
+    elseif a:type ==# 'selection'
+      let begin = getpos("'<")
+      let end = getpos("'>")
+      if begin[1] != 0 && end[1] != 0
+        call s:JOB.send(s:job_id, getline(begin[1], end[1]) + [''])
+      else
+        echohl WarningMsg
+        echo 'no selection text'
+        echohl None
+      endif
+    endif
   endif
 endfunction
 
@@ -88,20 +91,28 @@ if has('nvim') && exists('*chanclose')
     let s:_out_data[-1] .= a:data[0]
     call extend(s:_out_data, a:data[1:])
     if s:_out_data[-1] ==# '' && len(s:_out_data) > 1
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
-      let s:lines += len(s:_out_data) - 1
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
+        let s:lines += len(s:_out_data) - 1
+        call s:update_statusline()
+      endif
       let s:_out_data = ['']
     elseif  s:_out_data[-1] !=# '' && len(s:_out_data) > 1
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, s:_out_data[:-2])
-      let s:lines += len(s:_out_data) - 1
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
+        let s:lines += len(s:_out_data) - 1
+        call s:update_statusline()
+      endif
       let s:_out_data = [s:_out_data[-1]]
     endif
   endfunction
 else
   function! s:on_stdout(job_id, data, event) abort
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    let s:lines += len(a:data)
-    call s:update_statusline()
+    if bufexists(s:bufnr)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+      let s:lines += len(a:data)
+      call s:update_statusline()
+    endif
   endfunction
 endif
 
@@ -119,7 +130,6 @@ function! s:on_exit(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   endif
   call s:update_statusline()
-
 endfunction
 
 function! s:update_statusline() abort
@@ -164,7 +174,7 @@ function! s:open_windows() abort
   botright split __REPL__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimREPL
   nnoremap <silent><buffer> q :call <SID>close()<cr>
   let s:bufnr = bufnr('%')

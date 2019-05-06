@@ -60,6 +60,10 @@ func! s:self.open() abort
   let &lazyredraw = save_redraw
 endf
 
+func! s:self._c_r_mode_off(timer) abort
+  let self._c_r_mode = 0
+endf
+
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
   return (type(ret) == type(0) ? nr2char(ret) : ret)
@@ -76,13 +80,26 @@ func! s:self._handle_input(...) abort
     endif
     call self._build_prompt()
   endif
+  let self._c_r_mode = 0
   while self._quit == 0
     let char = self._getchar()
     if has_key(self._function_key, char)
       call call(self._function_key[char], [])
       continue
     endif
-    if char ==# "\<Right>"
+    if self._c_r_mode ==# 1 && char =~# '[a-zA-Z0-9"+:/]'
+      let reg = '@' . char
+      let paste = get(split(eval(reg), "\n"), 0, '')
+      let self._prompt.begin = self._prompt.begin . paste
+      let self._prompt.cursor = matchstr(self._prompt.end, '.$')
+      let self._c_r_mode = 0
+      call self._build_prompt()
+    elseif char ==# "\<C-r>"
+      let self._c_r_mode = 1
+      call timer_start(2000, self._c_r_mode_off)
+      call self._build_prompt()
+      continue
+    elseif char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
       let self._prompt.end = substitute(self._prompt.end, '^.', '', 'g')
@@ -140,8 +157,8 @@ func! s:self._handle_input(...) abort
 endf
 
 func! s:self._build_prompt() abort
-  normal! :
-  let ident = repeat(' ', self.__cmp.win_screenpos(0)[1])
+  let ident = repeat(' ', self.__cmp.win_screenpos(0)[1] - 1)
+  redraw
   echohl Comment | echon ident . self._prompt.mpt
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
@@ -149,6 +166,7 @@ func! s:self._build_prompt() abort
   if empty(self._prompt.cursor) && !has('nvim')
     echohl Comment | echon '_' | echohl None
   endif
+  " FIXME: Macvim need extra redraw, 
 endf
 
 function! s:self._clear_prompt() abort

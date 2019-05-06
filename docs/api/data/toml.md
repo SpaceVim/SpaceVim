@@ -1,6 +1,6 @@
 ---
 title: "data#toml API"
-description: "data#toml API provides some besic functions and values for toml."
+description: "data#toml API provides some basic functions and values for toml."
 ---
 
 # [Available APIs](../../) >> data#toml

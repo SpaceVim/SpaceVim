@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#go 模块"
-description: "这一模块为 go 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -17,7 +17,7 @@ lang: cn
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 golang 开发支持，包括代码补全，格式化，语法检查等特性。同时提供诸多语言专属快捷键。
+该模块为 SpaceVim 提供了 Golang 开发支持，包括代码补全，格式化，语法检查等特性。同时提供诸多语言专属快捷键。
 
 ## 启用模块
 
@@ -37,9 +37,9 @@ lang: cn
 
 ## 快捷键
 
-**语言专属快捷键:**
+**语言专属快捷键：**
 
-| 快捷键    | 描述                      |
+| 快捷键    | 功能描述                  |
 | --------- | ------------------------- |
 | `SPC l a` | go alternate              |
 | `SPC l b` | go build                  |
@@ -63,9 +63,9 @@ lang: cn
 | `SPC l v` | freevars                  |
 | `SPC l x` | go run                    |
 
-**代码格式化:**
+**代码格式化：**
 
-默认的代码格式化快捷键是 `SPC b f`，该快捷键又 `format` 模块定义，同时也可以通过 `g =` 来对其整个文档。
+默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
-为了使得 `format` 模块支持 go 文件，需要确认有可执行命令 [go-fmt](http://golang.org/cmd/gofmt/) 或者 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)，
-通常 `go-fmt` 命令为 go 自带的程序，请确认 go 开发环境是否配置正确。
+为了使得 `format` 模块支持 Go 文件，需要确认有可执行命令 [go-fmt](http://golang.org/cmd/gofmt/) 或者 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)，
+通常 `go-fmt` 命令为 Go 自带的程序，请确认 Go 开发环境是否配置正确。

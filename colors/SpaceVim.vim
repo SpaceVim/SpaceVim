@@ -7,9 +7,9 @@
 "=============================================================================
 
 
-if version > 580
+if v:version > 580
   hi clear
-  if exists("syntax_on")
+  if exists('syntax_on')
     syntax reset
   endif
 endif
@@ -23,7 +23,7 @@ endif
 
 let s:HIAPI = SpaceVim#api#import('vim#highlight')
 let s:COLOR = SpaceVim#api#import('color')
-let s:is_dark=(&background == 'dark')
+let s:is_dark=(&background ==# 'dark')
 
 function! s:hi(items) abort
   for [item, fg, bg, cterm, gui] in a:items

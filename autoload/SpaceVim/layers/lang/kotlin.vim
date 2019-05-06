@@ -12,6 +12,13 @@
 " This layer is for kotlin development. 
 
 
+" Load SpaceVim APIs:
+let s:SYS = SpaceVim#api#import('system')
+
+" Default Options:
+let s:enable_native_support = 0
+
+
 function! SpaceVim#layers#lang#kotlin#plugins() abort
   let plugins = []
   call add(plugins, ['udalov/kotlin-vim', {'merged' : 0}])
@@ -33,6 +40,23 @@ function! SpaceVim#layers#lang#kotlin#config() abort
     let g:neomake_kotlin_enabled_makers = ['kotlinc']
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
+  if s:enable_native_support
+    let runner = {
+          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'targetopt' : '-o',
+          \ 'opt' : [],
+          \ 'usestdin' : 0,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
+  else
+    let runner = {
+          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'opt' : ['-script'],
+          \ 'usestdin' : 0,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('kotlin', runner)
+  endif
+  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : '')])
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -44,6 +68,20 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("kotlin")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 func! s:classpath() abort
 
@@ -53,3 +91,8 @@ func! s:outputdir() abort
 
 endf
 
+function! SpaceVim#layers#lang#kotlin#set_variable(var) abort
+  let s:enable_native_support = get(a:var,
+        \ 'enable-native-support',
+        \ 'nil')
+endfunction

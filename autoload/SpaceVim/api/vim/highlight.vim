@@ -8,6 +8,18 @@
 
 let s:self = {}
 
+
+" the key of a highlight should be:
+" name: the name of the highlight group
+" ctermbg: background color in cterm
+" ctermfg: fround color in cterm
+" bold: if bold?
+" italic: if italic?
+" underline: if underline
+" guibg: gui background color
+" guifg: found color in gui
+" reverse: if reverse
+
 function! s:self.group2dict(name) abort
     let id = index(map(range(1999), "synIDattr(v:val, 'name')"), a:name)
     if id == -1
@@ -17,6 +29,7 @@ function! s:self.group2dict(name) abort
                     \ 'ctermfg' : '',
                     \ 'bold' : '',
                     \ 'italic' : '',
+                    \ 'reverse' : '',
                     \ 'underline' : '',
                     \ 'guibg' : '',
                     \ 'guifg' : '',
@@ -28,6 +41,7 @@ function! s:self.group2dict(name) abort
                 \ 'ctermfg' : synIDattr(id, 'fg', 'cterm'),
                 \ 'bold' : synIDattr(id, 'bold'),
                 \ 'italic' : synIDattr(id, 'italic'),
+                \ 'reverse' : synIDattr(id, 'reverse'),
                 \ 'underline' : synIDattr(id, 'underline'),
                 \ 'guibg' : synIDattr(id, 'bg#'),
                 \ 'guifg' : synIDattr(id, 'fg#'),
@@ -52,6 +66,7 @@ function! s:self.hi(info) abort
     if empty(a:info) || get(a:info, 'name', '') ==# ''
         return
     endif
+    exe 'hi clear ' . a:info.name
     let cmd = 'hi! ' .  a:info.name
     if !empty(a:info.ctermbg)
         let cmd .= ' ctermbg=' . a:info.ctermbg
@@ -66,7 +81,7 @@ function! s:self.hi(info) abort
         let cmd .= ' guifg=' . a:info.guifg
     endif
     let style = []
-    for sty in ['bold', 'italic', 'underline']
+    for sty in ['bold', 'italic', 'underline', 'reverse']
         if get(a:info, sty, '') ==# '1'
             call add(style, sty)
         endif
@@ -75,7 +90,7 @@ function! s:self.hi(info) abort
         let cmd .= ' gui=' . join(style, ',') . ' cterm=' . join(style, ',')
     endif
     try
-        exe cmd
+        silent! exe cmd
     catch
     endtry
 endfunction
@@ -123,6 +138,52 @@ function! s:self.hi_separator(a, b) abort
                 \ }
     call self.hi(hi_a_b)
     call self.hi(hi_b_a)
+endfunction
+
+function! s:self.syntax_at(...) abort
+  syntax sync fromstart
+  if a:0 < 2
+    let l:pos = getpos('.')
+    let l:cur_lnum = pos[1]
+    let l:cur_col = pos[2]
+    if a:0 == 0
+      let l:lnum = l:cur_lnum
+      let l:col = l:cur_col
+    else
+      let l:lnum = l:cur_lnum
+      let l:col = a:1
+    endif
+  else
+    let l:lnum = a:1
+    let l:col = a:2
+  endif
+  call map(synstack(l:lnum, l:col), 'synIDattr(v:val, "name")')
+  return synIDattr(synID(l:lnum, l:col, 1), 'name')
+endfunction
+
+function! s:self.syntax_of(pattern, ...) abort
+  if a:0 < 1
+    let l:nth = 1
+  else
+    let l:nth = a:1
+  endif
+
+  let l:pos_init = getpos('.')
+  call cursor(1, 1)
+  let found = search(a:pattern, 'cW')
+  while found != 0 && nth > 1
+    let found = search(a:pattern, 'W')
+    let nth -= 1
+  endwhile
+
+  if found
+    let l:pos = getpos('.')
+    let l:output = self.syntax_at(l:pos[1], l:pos[2])
+  else
+    let l:output = ''
+  endif
+  call setpos('.', l:pos_init)
+  return l:output
 endfunction
 
 function! SpaceVim#api#vim#highlight#get() abort

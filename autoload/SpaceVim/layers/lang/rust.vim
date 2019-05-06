@@ -10,9 +10,7 @@
 ""
 " @section lang#rust, layer-lang-rust
 " @parentsection layers
-" SpaceVim does not load this layer by default. If you are a rust developer,
-" you should add `call SpaceVim#layers#load('lang#rust')` to your
-" @section(config)
+" This layer is for Rust development. 
 "
 " Requirements:
 "   
@@ -40,10 +38,10 @@
 "   Mode        Key         Function
 "   -----------------------------------------------
 "   normal      gd          rust-definition
-"   normal      gs          rust-definition-split
-"   normal      gx          rust-definition-vertical
 "   normal      SPC l d     rust-doc
 "   normal      SPC l r     execute current file
+"   normal      SPC l s     rust-def-split
+"   normal      SPC l x     rust-def-vertical
 " <
 
 function! SpaceVim#layers#lang#rust#plugins() abort
@@ -54,10 +52,12 @@ function! SpaceVim#layers#lang#rust#plugins() abort
   return plugins
 endfunction
 
+let s:recommended_style = 0
+
 function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
-  let g:racer_cmd = $HOME . '/.cargo/bin/racer'
-
+  let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
+  let g:rust_recommended_style = s:recommended_style
   if SpaceVim#layers#lsp#check_filetype('rust')
     call SpaceVim#mapping#gd#add('rust',
           \ function('SpaceVim#lsp#go_to_def'))
@@ -65,15 +65,30 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
-  call SpaceVim#plugins#runner#reg_runner('rust',
-        \ ['rustc %s -o #TEMP#', '#TEMP#'])
+  let runner = {
+        \ 'exe' : 'rustc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('rust',
         \ function('s:language_specified_mappings'))
 endfunction
 
+function! SpaceVim#layers#lang#rust#set_variable(var) abort
+
+  let s:recommended_style = get(a:var,
+        \ 'recommended-style',
+        \ s:recommended_style)
+
+endfunction
+
 function! s:language_specified_mappings() abort
-  nmap <buffer> gs <Plug>(rust-def-split)
-  nmap <buffer> gx <Plug>(rust-def-vertical)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+        \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+        \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
 
   if SpaceVim#layers#lsp#check_filetype('rust')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
@@ -84,6 +99,7 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'],
           \ 'call SpaceVim#lsp#references()', 'show references', 1)
   else
+    nmap <silent><buffer> K <Plug>(rust-doc)
     call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'],
           \ '<Plug>(rust-doc)', 'show documentation', 1)
   endif

@@ -48,6 +48,8 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'UniteWithCursorWord help', 'get help with the symbol at point', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Unite file_mru', 'open-recent-file', 1)
@@ -192,6 +194,16 @@ function! s:defind_fuzzy_finder() abort
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fp  :<C-u>Unite menu:AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['Unite menu:AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]

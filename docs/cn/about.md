@@ -1,34 +1,28 @@
 ---
-title:  "关于"
-description: "SpaceVim 是一个社区驱动的模块化 vim 配置，以模块的方式组织管理插件和配置"
+title: "关于"
+description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织管理插件和配置。"
 lang: cn
 ---
 
 # 关于我们
 
-## 版本
+[SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
+及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
+语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
+即用的 Vim-IDE。
+这一项目的灵感来自于 spacemacs。
 
-[SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的 vim 配置，支持 vim 和 neovim。SpaceVim 
-使用模块的方式来组织插件，对新手更加友好。
+### 目标
 
-## 目标
+- 提供可跨平台的优雅的用户体验。
+- 让搭建不同语言开发环境变得更便捷
 
-- 提供可跨平台的优雅的用户体验.
-- 为不同语言开发提供完整的解决方案.
+### 鸣谢
 
-## 标准
+感谢所有曾经向 SpaceVim 贡献过代码的用户：
 
-- 兼容 Vim 和 Neovim，尽量确保 Vim下和 Neovim 下有相同的用户体验
-- 兼容 Vim 7.4 或者无 +py/+py3/+lua等特性的Vim
-- 不要从 origin 回归.
-- 通过权衡成本和收益来决定结果.
-- 收益与传统相比较,当收益是压倒性的时候,我们选择收益,而非坚持传统.
-- 给可用性一个机会.
+<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
-## 鸣谢
-
-- 开发者: [Wang Shidong](https://github.com/wsdjeg)
-- [![贡献者](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
-- [vimdoc](https://github.com/google/vimdoc) 自动生成 vim 文档
-- [Rafael Bodill](https://github.com/rafi) 的 vim 配置
-- [Bailey Ling](https://github.com/bling) 的 vim 配置
+- [@Gabirel](https://github.com/Gabirel) 及其 [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
+- [vimdoc](https://github.com/google/vimdoc)：帮助文档自动生成工具
+- SpaceVim 中涉及到的所有插件的作者

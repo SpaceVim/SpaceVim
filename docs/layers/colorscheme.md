@@ -37,16 +37,35 @@ To change the colorscheme:
   colorscheme = "onedark"
 ```
 
-**List colorschemes**
+Colorscheme list
 
-| Name       | dark | light | term | gui | statusline |
-| ---------- | ---- | ----- | ---- | --- | ---------- |
-| gruvbox    | yes  | yes   | yes  | yes | yes        |
-| one        | yes  | yes   | yes  | yes | yes        |
-| molokai    | yes  | no    | yes  | yes | yes        |
-| jellybeans | yes  | no    | yes  | yes | yes        |
-| nord       | yes  | no    | yes  | yes | yes        |
-| onedark    | yes  | no    | yes  | yes | yes        |
+| Name         | dark | light | term | gui | statusline |
+| ------------ | ---- | ----- | ---- | --- | ---------- |
+| molokai      | yes  | no    | yes  | yes | yes        |
+| srcery       | yes  | no    | yes  | yes | yes        |
+| onedark      | yes  | no    | yes  | yes | yes        |
+| jellybeans   | yes  | no    | yes  | yes | yes        |
+| one          | yes  | yes   | yes  | yes | yes        |
+| nord         | yes  | no    | yes  | yes | yes        |
+| gruvbox      | yes  | yes   | yes  | yes | yes        |
+| NeoSolarized | yes  | yes   | yes  | yes | yes        |
+| hybrid       | yes  | yes   | yes  | yes | yes        |
+| material     | yes  | yes   | yes  | yes | yes        |
+| SpaceVim     | yes  | yes   | yes  | yes | yes        |
+
+By default this layer only include above colorschemes. If you want to use other colorschemes which
+are available on Github, use the `custom_plugins` section in configuration file. For example:
+
+```toml
+[options]
+  colorscheme = "OceanicNext"
+  colorscheme_bg = "dark"
+
+# add custom_plugins: https://github.com/mhartington/oceanic-next
+[[custom_plugins]]
+  name = "mhartington/oceanic-next"
+  merged = 0
+```
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
 Vim background color. SpaceVim support to change the background color with
@@ -58,10 +77,20 @@ Vim background color. SpaceVim support to change the background color with
   colorscheme_bg = "dark"
 ```
 
-colorscheme layer support random colorscheme on startup. just load this layer with layer option `random-theme`
+Colorscheme layer support random colorscheme on startup. just load this layer with layer option `random_theme`
 
 ```toml
 [[layers]]
   name = "colorscheme"
-  random-theme = true
+  random_theme = true
+```
+
+The frequency can be changed via `frequency` layer options, the available values are `daily`, `hourly`, `weekly`.
+You can also use `number + unit`, for example: `1h`.
+
+```toml
+[[layers]]
+  name = "colorscheme"
+  random_theme = true
+  frequency = "daily"
 ```

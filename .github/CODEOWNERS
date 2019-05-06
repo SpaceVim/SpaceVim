@@ -2,15 +2,15 @@
 # the repo. Unless a later match takes precedence,
 # @wsdjeg will be requested for review when someone opens a
 # pull request.
-*       @wsdjeg
+# Just watching this repo, disable duplicate message
+# *       @wsdjeg
 
-# 中文文件
-# 中文模块翻译
-docs/layers/*    @SLZhang-CUG
+# lang#julia layer
+autoload/SpaceVim/layers/lang/julia.vim      @jingpengw
+docs/layers/lang/julia.md                    @jingpengw
+docs/cn/layers/lang/julia.md                 @jingpengw
 
 # lang#javascript layer
 autoload/SpaceVim/layers/lang/javascript.vim @zhujinxuan @S1ngS1ng @chemzqm
 docs/layers/lang/javascript.md               @zhujinxuan @S1ngS1ng @chemzqm
 docs/cn/layers/lang/javascript.md            @zhujinxuan @S1ngS1ng @chemzqm
-# layer plugins conf:
-

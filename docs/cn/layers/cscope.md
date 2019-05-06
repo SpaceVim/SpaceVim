@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim cscope 模块"
-description: "cscope 模块为 SpaceVim 他提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令"
+description: "这一模块为 SpaceVim 提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令。"
 lang: cn
 ---
 
@@ -21,12 +21,12 @@ lang: cn
 
 这以模块为 SpaceVim 提供了一个智能的[Cscope](http://cscope.sourceforge.net/) 和 [PyCscope](https://github.com/portante/pycscope) 辅助工具。
 
-如果想要了解更多关于 cscope 和其他类似工具之间的区别，请阅读 [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
+如果想要了解更多关于 cscope 和其它类似工具之间的区别，请阅读 [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
 
 ## 模块特性
 
-- 通过 cscope 为 c 和 c++ 建立索引，并提供查询功能
-- 通过 Pycscope 为 python 建立索引，并提供查询功能
+- 通过 cscope 为 C 和 C++ 建立索引，并提供查询功能
+- 通过 Pycscope 为 Python 建立索引，并提供查询功能
 
 ## 安装依赖及启用模块
 
@@ -49,10 +49,11 @@ sudo pacman -S cscope
 
 ## 快捷键
 
-| 按键        | 描述                            |
+| 快捷键      | 功能描述                        |
 | ----------- | ------------------------------- |
 | `SPC m c =` | Find assignments to this symbol |
-| `SPC m c i` | 建立 cscope 索引                |
+| `SPC m c i` | 建立当前项目 cscope 索引        |
+| `SPC m c u` | 更新所有项目 cscope 索引        |
 | `SPC m c c` | 列出某个方法调用的所有函数      |
 | `SPC m c C` | 列出某个方法被哪些函数调用      |
 | `SPC m c d` | 查询 symbol 的定义处            |

@@ -1,6 +1,6 @@
 ---
 title: "job api"
-description: "job API provides some besic functions for running a job"
+description: "job API provides some basic functions for running a job"
 ---
 
 # [Available APIs](../) >> job
@@ -50,4 +50,4 @@ call s:JOB.start(cmd,
 | `send(id, data)`   | send data to a job                                 |
 | `stop(id)`         | stop a jobe with specific job id                   |
 | `status(id)`       | check the status of a job with the specific job id |
-| `list()`           | list all the jobs                                       |
+| `list()`           | list all the jobs                                  |

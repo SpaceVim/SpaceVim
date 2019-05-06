@@ -13,12 +13,14 @@ scriptencoding utf-8
 " Load SpaceVim API
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:STR = SpaceVim#api#import('data#string')
+let s:KEY = SpaceVim#api#import('vim#key')
 
-function! SpaceVim#mapping#guide#has_configuration() "{{{
+function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
 endfunction "}}}
 
-function! SpaceVim#mapping#guide#register_prefix_descriptions(key, dictname) " {{{
+function! SpaceVim#mapping#guide#register_prefix_descriptions(key, dictname) abort " {{{
   let key = a:key ==? '<Space>' ? ' ' : a:key
   if !exists('s:desc_lookup')
     call s:create_cache()
@@ -31,11 +33,11 @@ function! SpaceVim#mapping#guide#register_prefix_descriptions(key, dictname) " {
     let s:desc_lookup[key] = a:dictname
   endif
 endfunction "}}}
-function! s:create_cache() " {{{
+function! s:create_cache() abort " {{{
   let s:desc_lookup = {}
   let s:cached_dicts = {}
 endfunction " }}}
-function! s:create_target_dict(key) " {{{
+function! s:create_target_dict(key) abort " {{{
   if has_key(s:desc_lookup, 'top')
     let toplevel = deepcopy({s:desc_lookup['top']})
     let tardict = s:toplevel ? toplevel : get(toplevel, a:key, {})
@@ -50,7 +52,7 @@ function! s:create_target_dict(key) " {{{
   endif
   return tardict
 endfunction " }}}
-function! s:merge(dict_t, dict_o) " {{{
+function! s:merge(dict_t, dict_o) abort " {{{
   let target = a:dict_t
   let other = a:dict_o
   for k in keys(target)
@@ -65,43 +67,49 @@ function! s:merge(dict_t, dict_o) " {{{
           let target[k.'m'] = target[k]
         endif
         let target[k] = other[k]
-        if has_key(other, k."m") && type(other[k."m"]) == type({})
-          call s:merge(target[k."m"], other[k."m"])
+        if has_key(other, k.'m') && type(other[k.'m']) == type({})
+          call s:merge(target[k.'m'], other[k.'m'])
         endif
       endif
     endif
   endfor
-  call extend(target, other, "keep")
+  call extend(target, other, 'keep')
 endfunction " }}}
 
 " @vimlint(EVL103, 1, a:dictname)
-function! SpaceVim#mapping#guide#populate_dictionary(key, dictname) " {{{
+function! SpaceVim#mapping#guide#populate_dictionary(key, dictname) abort " {{{
   call s:start_parser(a:key, s:cached_dicts[a:key])
 endfunction " }}}
 " @vimlint(EVL103, 0, a:dictname)
 
-function! SpaceVim#mapping#guide#parse_mappings() " {{{
+function! SpaceVim#mapping#guide#parse_mappings() abort " {{{
   for [k, v] in items(s:cached_dicts)
     call s:start_parser(k, v)
   endfor
 endfunction " }}}
 
 
-function! s:start_parser(key, dict) " {{{
+function! s:start_parser(key, dict) abort " {{{
   if a:key ==# '[KEYs]'
     return
   endif
-  let key = a:key ==? ' ' ? "<Space>" : a:key
-  let readmap = ""
-  redir => readmap
-  silent execute 'map '.key
-  redir END
+  let key = a:key ==? ' ' ? '<Space>' : a:key
+
+  0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
+
   let lines = split(readmap, "\n")
-  let visual = s:vis == "gv" ? 1 : 0
+  let visual = s:vis ==# 'gv' ? 1 : 0
 
   for line in lines
     let mapd = maparg(split(line[3:])[0], line[0], 0, 1)
-    if mapd.lhs =~ '<Plug>.*' || mapd.lhs =~ '<SNR>.*'
+    if mapd.lhs ==# '\\'
+      let mapd.feedkeyargs = ''
+    elseif mapd.noremap == 1
+      let mapd.feedkeyargs = 'nt'
+    else
+      let mapd.feedkeyargs = 'mt'
+    endif
+    if mapd.lhs =~# '<Plug>.*' || mapd.lhs =~# '<SNR>.*'
       continue
     endif
     let mapd.display = s:format_displaystring(mapd.rhs)
@@ -109,17 +117,17 @@ function! s:start_parser(key, dict) " {{{
     let mapd.lhs = substitute(mapd.lhs, '<Space>', ' ', 'g')
     let mapd.lhs = substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
     let mapd.rhs = substitute(mapd.rhs, '<SID>', '<SNR>'.mapd['sid'].'_', 'g')
-    if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
+    if mapd.lhs !=# '' && mapd.display !~# 'LeaderGuide.*'
       let mapd.lhs = s:string_to_keys(mapd.lhs)
-      if (visual && match(mapd.mode, "[vx ]") >= 0) ||
-            \ (!visual && match(mapd.mode, "[vx]") == -1)
+      if (visual && match(mapd.mode, '[vx ]') >= 0) ||
+            \ (!visual && match(mapd.mode, '[vx]') == -1)
         call s:add_map_to_dict(mapd, 0, a:dict)
       endif
     endif
   endfor
 endfunction " }}}
 
-function! s:add_map_to_dict(map, level, dict) " {{{
+function! s:add_map_to_dict(map, level, dict) abort " {{{
   if len(a:map.lhs) > a:level+1
     let curkey = a:map.lhs[a:level]
     let nlevel = a:level+1
@@ -135,7 +143,7 @@ function! s:add_map_to_dict(map, level, dict) " {{{
       endif
     elseif type(a:dict[curkey]) == type([]) && g:leaderGuide_flatten == 0
       let cmd = s:escape_mappings(a:map)
-      let curkey = curkey."m"
+      let curkey = curkey.'m'
       if !has_key(a:dict, curkey)
         let a:dict[curkey] = { 'name' : g:leaderGuide_default_group_name }
       endif
@@ -159,7 +167,7 @@ function! s:add_map_to_dict(map, level, dict) " {{{
   endif
 endfunction " }}}
 " @vimlint(EVL111, 1, Fun)
-function! s:format_displaystring(map) " {{{
+function! s:format_displaystring(map) abort " {{{
   let g:leaderGuide#displayname = a:map
   for Fun in g:leaderGuide_displayfunc
     call Fun()
@@ -169,7 +177,7 @@ function! s:format_displaystring(map) " {{{
   return display
 endfunction " }}}
 " @vimlint(EVL111, 0, Fun)
-function! s:flattenmap(dict, str) " {{{
+function! s:flattenmap(dict, str) abort " {{{
   let ret = {}
   for kv in keys(a:dict)
     if type(a:dict[kv]) == type([])
@@ -184,15 +192,14 @@ function! s:flattenmap(dict, str) " {{{
 endfunction " }}}
 
 
-function! s:escape_mappings(mapping) " {{{
-  let feedkeyargs = a:mapping.noremap ? "nt" : "mt"
+function! s:escape_mappings(mapping) abort " {{{
   let rstring = substitute(a:mapping.rhs, '\', '\\\\', 'g')
   let rstring = substitute(rstring, '<\([^<>]*\)>', '\\<\1>', 'g')
   let rstring = substitute(rstring, '"', '\\"', 'g')
-  let rstring = 'call feedkeys("'.rstring.'", "'.feedkeyargs.'")'
+  let rstring = 'call feedkeys("'.rstring.'", "'.a:mapping.feedkeyargs.'")'
   return rstring
 endfunction " }}}
-function! s:string_to_keys(input) " {{{
+function! s:string_to_keys(input) abort " {{{
   " Avoid special case: <>
   let retlist = []
   if match(a:input, '<.\+>') != -1
@@ -226,13 +233,13 @@ function! s:string_to_keys(input) " {{{
   endif
   return retlist
 endfunction " }}}
-function! s:escape_keys(inp) " {{{
-  let ret = substitute(a:inp, "<", "<lt>", "")
-  return substitute(ret, "|", "<Bar>", "")
+function! s:escape_keys(inp) abort " {{{
+  let ret = substitute(a:inp, '<', '<lt>', '')
+  return substitute(ret, '|', '<Bar>', '')
 endfunction " }}}
 
 
-function! s:calc_layout() " {{{
+function! s:calc_layout() abort " {{{
   let ret = {}
   let smap = filter(copy(s:lmap), 'v:key !=# "name"')
   let ret.n_items = len(smap)
@@ -246,15 +253,36 @@ function! s:calc_layout() " {{{
     let ret.col_width = maxlength
     let ret.win_dim = ret.n_cols * ret.col_width
   else
-    let ret.n_cols = winwidth(0) / maxlength
+    let ret.n_cols = winwidth(0) >= maxlength ? winwidth(0) / maxlength : 1
     let ret.col_width = winwidth(0) / ret.n_cols
     let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
     let ret.win_dim = ret.n_rows
-    "echom string(ret)
   endif
   return ret
 endfunction " }}}
-function! s:create_string(layout) " {{{
+
+" icon -> number -> A-Za-z 
+" 65-90 97-122
+function! s:compare_key(i1, i2) abort
+  let a = char2nr(a:i1 ==# '[SPC]' ? ' ' : a:i1 ==? '<Tab>' ? "\t" : a:i1)
+  let b = char2nr(a:i2 ==# '[SPC]' ? ' ' : a:i2 ==? '<Tab>' ? "\t" : a:i2)
+  if a - b == 32 && a >= 97 && a <= 122
+    return -1
+  elseif b - a == 32 && b >= 97 && b <= 122
+    return 1
+  elseif a >= 97 && a <= 122 && b >= 97 && b <= 122
+    return a == b ? 0 : a > b ? 1 : -1
+  elseif a >= 65 && a <= 90 && b >= 65 && b <= 90
+    return a == b ? 0 : a > b ? 1 : -1
+  elseif a >= 97 && a <= 122 && b >= 65 && b <= 90
+    return s:compare_key(nr2char(a), nr2char(b + 32))
+  elseif a >= 65 && a <= 90 && b >= 97 && b <= 122
+    return s:compare_key(nr2char(a), nr2char(b - 32))
+  endif
+  return a == b ? 0 : a > b ? 1 : -1
+endfunction
+
+function! s:create_string(layout) abort " {{{
   let l = a:layout
   let l.capacity = l.n_rows * l.n_cols
   let overcap = l.capacity - l.n_items
@@ -264,10 +292,10 @@ function! s:create_string(layout) " {{{
   let rows = []
   let row = 0
   let col = 0
-  let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'),'1')
+  let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'), function('s:compare_key'))
   for k in smap
     let desc = type(s:lmap[k]) == type({}) ? s:lmap[k].name : s:lmap[k][1]
-    let displaystring = "[". k ."] ".desc
+    let displaystring = '['. k .'] '.desc
     let crow = get(rows, row, [])
     if empty(crow)
       call add(rows, crow)
@@ -295,7 +323,6 @@ function! s:create_string(layout) " {{{
         let col += 1
       endif
     endif
-    silent execute "cnoremap <nowait> <buffer> ".substitute(k, "|", "<Bar>", ""). " " . s:escape_keys(k) ."<CR>"
   endfor
   let r = []
   let mlen = 0
@@ -322,9 +349,9 @@ function! s:highlight_cursor() abort
         \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
         \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
         \ }
-  hi def link SpaceVimGuideCursor Cursor
+  hi! def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  if s:vis == 'gv'
+  if s:vis ==# 'gv'
     " [bufnum, lnum, col, off]
     let begin = getpos("'<")
     let end = getpos("'>")
@@ -352,7 +379,7 @@ function! s:remove_cursor_highlight() abort
 endfunction
 
 " @vimlint(EVL102, 1, l:string)
-function! s:start_buffer() " {{{
+function! s:start_buffer() abort " {{{
   let s:winv = winsaveview()
   let s:winnr = winnr()
   let s:winres = winrestcmd()
@@ -365,22 +392,38 @@ function! s:start_buffer() " {{{
   endif
 
   setlocal modifiable
-  if g:leaderGuide_vertical
-    noautocmd execute 'vert res '.layout.win_dim
+  if exists('*nvim_open_win')
+    call nvim_win_set_config(win_getid(s:gwin), 
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : layout.win_dim + 2,
+          \ 'row'     : &lines - layout.win_dim - 4,
+          \ 'col'     : 0
+          \ })
+
   else
-    noautocmd execute 'res '.layout.win_dim
+    if g:leaderGuide_vertical
+      noautocmd execute 'vert res '.layout.win_dim
+    else
+      noautocmd execute 'res '.layout.win_dim
+    endif
   endif
-  silent 1put!=string
   normal! gg"_dd
-  setlocal nomodifiable
-  if empty(maparg("<c-c>", "c", 0, 1))
-    execute 'cnoremap <nowait> <silent> <buffer> <c-c> <esc>'
+  if exists('*nvim_open_win')
+    " when using floating windows, and the flaating windows do not support
+    " statusline, add extra black line at top and button of the content.
+    call setline(1, [''] + split(string, "\n") + [''])
+  else
+    call setline(1, split(string, "\n"))
   endif
+  setlocal nomodifiable
+  redraw!
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
 
-function! s:handle_input(input) " {{{
+function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
     let s:lmap = a:input
@@ -397,61 +440,115 @@ function! s:handle_input(input) " {{{
     endtry
   endif
 endfunction " }}}
-function! s:wait_for_input() " {{{
+
+function! s:getchar(...) abort
+  let ret = call('getchar', a:000)
+  return (type(ret) == type(0) ? nr2char(ret) : ret)
+endfunction
+
+
+" wait for in input sub function should be not block vim
+function! s:wait_for_input() abort " {{{
   redraw!
-  let inp = input("")
-  if inp ==? ''
+  let inp = s:getchar()
+  if inp ==# "\<Esc>"
     let s:prefix_key_inp = ''
+    let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
-  elseif match(inp, "^<LGCMD>paging_help") == 0
+  elseif s:guide_help_mode ==# 1
+    call s:submode_mappings(inp)
+    let s:guide_help_mode = 0
+    call s:updateStatusline()
+    redraw!
+  elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
     redraw!
-    call s:submode_mappings()
+    call s:wait_for_input()
   else
-    if inp == ' '
+    if inp ==# ' '
       let inp = '[SPC]'
+    else
+      let inp = s:KEY.nr2name(char2nr(inp))
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
       let s:prefix_key_inp = inp
       call s:handle_input(fsel)
     else
-      let s:prefix_key_inp = ''
       call s:winclose()
       doautocmd WinEnter
+      let keys = get(s:, 'prefix_key_inp', '')
+      let name = SpaceVim#mapping#leader#getName(s:prefix_key)
+      call s:build_mpt(['key bidings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      let s:prefix_key_inp = ''
+      let s:guide_help_mode = 0
     endif
   endif
 endfunction " }}}
-function! s:winopen() " {{{
+
+function! s:build_mpt(mpt) abort
+  normal! :
+  echohl Comment
+  if type(a:mpt) == 1
+    echon a:mpt
+  elseif type(a:mpt) == 3
+    echon join(a:mpt)
+  endif
+  echohl NONE
+endfunction
+
+function! s:winopen() abort " {{{
   if !exists('s:bufnr')
     let s:bufnr = -1
   endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
-  if bufexists(s:bufnr)
-    let qfbuf = &buftype ==# 'quickfix'
-    let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
-    noautocmd execute pos . splitcmd
-    let bnum = bufnr('%')
-    noautocmd execute 'buffer '.s:bufnr
-    cmapclear <buffer>
-    if qfbuf
-      noautocmd execute bnum.'bwipeout!'
+  if exists('*nvim_open_win')
+    if !bufexists(s:bufnr)
+      let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
+    call nvim_open_win(s:bufnr, v:true,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 12,
+          \ 'row'     : &lines - 14,
+          \ 'col'     : 0
+          \ })
   else
-    let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
-    noautocmd execute pos.splitcmd
-    let s:bufnr = bufnr('%')
-    autocmd WinLeave <buffer> call s:winclose()
+    if bufexists(s:bufnr)
+      let qfbuf = &buftype ==# 'quickfix'
+      let splitcmd = g:leaderGuide_vertical ? ' 1vs' : ' 1sp'
+      noautocmd execute pos . splitcmd
+      let bnum = bufnr('%')
+      noautocmd execute 'buffer '.s:bufnr
+      cmapclear <buffer>
+      if qfbuf
+        noautocmd execute bnum.'bwipeout!'
+      endif
+    else
+      let splitcmd = g:leaderGuide_vertical ? ' 1vnew' : ' 1new'
+      noautocmd execute pos.splitcmd
+      let s:bufnr = bufnr('%')
+      augroup guide_autocmd
+        autocmd!
+        autocmd WinLeave <buffer> call s:winclose()
+      augroup END
+    endif
   endif
   let s:gwin = winnr()
+  let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
+  if exists('&winhighlight')
+    set winhighlight=Normal:Pmenu
+  endif
   setlocal nonumber norelativenumber nolist nomodeline nowrap
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
   setlocal winfixwidth winfixheight
+  setlocal listchars=
   call s:updateStatusline()
   call s:toggle_hide_cursor()
 endfunction " }}}
@@ -491,7 +588,7 @@ function! s:toggle_hide_cursor() abort
 endfunction
 
 
-function! s:winclose() " {{{
+function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
   noautocmd execute s:gwin.'wincmd w'
   if s:gwin == winnr()
@@ -504,59 +601,43 @@ function! s:winclose() " {{{
   endif
   call s:remove_cursor_highlight()
 endfunction " }}}
-function! s:page_down() " {{{
-  call feedkeys("\<c-c>", "n")
-  call feedkeys("\<c-f>", "x")
+function! s:page_down() abort " {{{
+  call feedkeys("\<c-c>", 'n')
+  call feedkeys("\<c-f>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
-function! s:page_undo() " {{{
+function! s:page_undo() abort " {{{
   call s:winclose()
   let s:guide_group = {}
   let s:prefix_key_inp = ''
   let s:lmap = s:lmap_undo
   call s:start_buffer()
 endfunction " }}}
-function! s:page_up() " {{{
-  call feedkeys("\<c-c>", "n")
-  call feedkeys("\<c-b>", "x")
+function! s:page_up() abort " {{{
+  call feedkeys("\<c-c>", 'n')
+  call feedkeys("\<c-b>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
 
-function! s:handle_submode_mapping(cmd) " {{{
+function! s:handle_submode_mapping(cmd) abort " {{{
   let s:guide_help_mode = 0
   call s:updateStatusline()
-  if a:cmd ==? '<LGCMD>page_down'
+  if a:cmd ==# 'n'
     call s:page_down()
-  elseif a:cmd ==? '<LGCMD>page_up'
+  elseif a:cmd ==# 'p'
     call s:page_up()
-  elseif a:cmd ==? '<LGCMD>undo'
+  elseif a:cmd ==# 'u'
     call s:page_undo()
-  elseif a:cmd ==? '<LGCMD>win_close'
-    call s:winclose()
   else
-    call feedkeys("\<c-c>", "n")
-    redraw!
-    call s:wait_for_input()
+    call s:winclose()
   endif
 endfunction " }}}
-function! s:submode_mappings() " {{{
-  let maplist = []
-  for key in items(g:leaderGuide_submode_mappings)
-    let map = maparg(key[0], "c", 0, 1)
-    if !empty(map)
-      call add(maplist, map)
-    endif
-    execute 'cnoremap <nowait> <silent> <buffer> '.key[0].' <LGCMD>'.key[1].'<CR>'
-  endfor
-  let inp = input('')
-  for map in maplist
-    call s:mapmaparg(map)
-  endfor
-  silent call s:handle_submode_mapping(inp)
+function! s:submode_mappings(key) abort " {{{
+  silent call s:handle_submode_mapping(a:key)
 endfunction " }}}
-function! s:mapmaparg(maparg) " {{{
+function! s:mapmaparg(maparg) abort " {{{
   let noremap = a:maparg.noremap ? 'noremap' : 'map'
   let buffer = a:maparg.buffer ? '<buffer> ' : ''
   let silent = a:maparg.silent ? '<silent> ' : ''
@@ -566,7 +647,7 @@ function! s:mapmaparg(maparg) " {{{
   execute st
 endfunction " }}}
 
-function! s:get_register() "{{{
+function! s:get_register() abort "{{{
   if match(&clipboard, 'unnamedplus') >= 0
     let clip = '+'
   elseif match(&clipboard, 'unnamed') >= 0
@@ -576,8 +657,8 @@ function! s:get_register() "{{{
   endif
   return clip
 endfunction "}}}
-function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
-  if a:key == ' ' && exists('b:spacevim_lang_specified_mappings')
+function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
+  if a:key ==# ' ' && exists('b:spacevim_lang_specified_mappings')
     let g:_spacevim_mappings_space.l = b:spacevim_lang_specified_mappings
   endif
   let s:guide_help_mode = 0
@@ -606,27 +687,26 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) " {{{
   endif
   let s:lmap = rundict
   let s:lmap_undo = rundict
-
   call s:start_buffer()
 endfunction " }}}
-function! SpaceVim#mapping#guide#start(vis, dict) " {{{
+function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
   let s:vis = a:vis ? 'gv' : 0
   let s:lmap = a:dict
   call s:start_buffer()
 endfunction " }}}
 
-if !exists("g:leaderGuide_displayfunc")
-  function! s:leaderGuide_display()
+if !exists('g:leaderGuide_displayfunc')
+  function! s:leaderGuide_display() abort
     let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
   endfunction
-  let g:leaderGuide_displayfunc = [function("s:leaderGuide_display")]
+  let g:leaderGuide_displayfunc = [function('s:leaderGuide_display')]
 endif
 
-if get(g:, 'mapleader', '\') == ' '
+if get(g:, 'mapleader', '\') ==# ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings')
 else
-  call SpaceVim#mapping#guide#register_prefix_descriptions('\',
+  call SpaceVim#mapping#guide#register_prefix_descriptions(get(g:, 'mapleader', '\'),
         \ 'g:_spacevim_mappings')
   call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
