@@ -38,6 +38,8 @@ remark 可通过 [npm](https://www.npmjs.com/get-npm) 命令来安装：
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
+npm -g install wcwidth
 ```
 
 [Prettier](https://github.com/prettier/prettier) 可通过 [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) 或 [npm](https://www.npmjs.com/get-npm) 命令来安装：

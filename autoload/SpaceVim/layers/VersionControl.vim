@@ -105,7 +105,7 @@ function! s:gtm_statusline() abort
 endfunction
 
 " +0 ~0 -0 
-" if git layser is loaded, use vim-gitgutter instead.
+" if git layer is loaded, use vim-gitgutter instead.
 function! s:hunks() abort
   let hunks = [0,0,0]
   try
