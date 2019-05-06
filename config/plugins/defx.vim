@@ -14,9 +14,6 @@ else
   let s:direction = 'leftabove'
 endif
 
-call SpaceVim#mapping#space#def('nnoremap', ['f', 'p'], 'Defx `expand("%:p:h")` -search=`expand("%:p")`',
-          \ 'open file tree for current file location', 1)
-
 call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
@@ -137,6 +134,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
+
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'p'], 'Defx `expand("%:p:h")` -search=`expand("%:p")`',
+              \ 'open file tree for current file location', 1)
+
 endf
 
 " in this function we should vim-choosewin if possible
