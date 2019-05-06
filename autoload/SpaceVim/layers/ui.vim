@@ -43,7 +43,13 @@ function! SpaceVim#layers#ui#config() abort
         \ ]
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
-  noremap <silent> <F2> :TagbarToggle<CR>
+
+  if s:enable_sidebar
+    noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
+  else
+    noremap <silent> <F2> :TagbarToggle<CR>
+  endif
+
   if !empty(g:spacevim_windows_smartclose)
     call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
           \ 'Smart close windows',
@@ -291,4 +297,14 @@ function! s:toggle_background()
     else
         set background=dark
     endif
+endfunction
+
+let s:enable_sidebar = 0
+
+function! SpaceVim#layers#ui#set_variable(var) abort
+
+  let s:enable_sidebar = get(a:var,
+        \ 'enable_sidebar',
+        \ 0)
+
 endfunction
