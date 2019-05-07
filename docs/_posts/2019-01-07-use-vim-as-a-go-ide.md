@@ -16,7 +16,10 @@ Each of the following sections will be covered:
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [code completion](#code-completion)
+- [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
+- [project building](#project-building)
 - [code format](#code-format)
 
 <!-- vim-markdown-toc -->
@@ -33,6 +36,29 @@ SpaceVim configuration file, and add following configuration:
 
 for more info, you can read the [lang#go](../layers/lang/go/) layer documentation.
 
+### code completion
+
+By default the autocomplete layer has been enabled, so after loading `lang#go` layer, the code completion
+for go language should works well.
+
+
+### alternate file jumping
+
+To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
+project.
+
+for exmaple, add following content into the `.project_alt.json` file:
+
+```json
+{
+  "src/*.go": {"alternate": "test/{}.go"},
+  "test/*.go": {"alternate": "src/{}.go"}
+}
+```
+
+with this configuration, you can jump between the source code and test file via command `:A`
+
+
 ### code running
 
 The default code running key binding is `SPC l r`. It will run `go run current_file` asynchronously.
@@ -40,6 +66,15 @@ And the stdout will be shown on a runner buffer.
 
 ![gorun](https://user-images.githubusercontent.com/13142418/50751761-22300200-1286-11e9-8b4f-76836438d913.png)
 
+
+### project building
+
+Key binding for building current project is `SPC l b`, It will run `go build` asynchronously.
+after building successfully you should see this message on the cmdline:
+
+```txt
+vim-go: [build] SUCCESS
+```
 
 ### code format
 

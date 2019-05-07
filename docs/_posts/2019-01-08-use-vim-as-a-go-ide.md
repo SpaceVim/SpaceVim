@@ -69,6 +69,10 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 
 通过快捷键 `SPC l b` 异步执行 `go build`，并将结果展示在底部窗口。 
 
+```txt
+vim-go: [build] SUCCESS
+```
+
 ### 代码格式化
 
 Go 代码格式化，主要依赖 `format` 模块，该模块默认使用 neoformat 这一插件，对当前文件执行 `gofmt` 命令，
