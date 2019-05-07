@@ -482,7 +482,7 @@ function! s:wait_for_input() abort " {{{
       doautocmd WinEnter
       let keys = get(s:, 'prefix_key_inp', '')
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      call s:build_mpt(['key bidings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      call s:build_mpt(['key bindings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
       let s:prefix_key_inp = ''
       let s:guide_help_mode = 0
     endif
