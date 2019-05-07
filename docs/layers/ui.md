@@ -10,6 +10,7 @@ description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and 
 - [Description](#description)
 - [Install](#install)
 - [Plugins](#plugins)
+- [Tips](#tips)
 
 <!-- vim-markdown-toc -->
 
@@ -42,3 +43,10 @@ SpaceVim provide default statusline and tabline plugin which are provided by `co
   enable = false
 ```
 
+Use sidebar to manager file tree and outline:
+
+```toml
+[[layers]]
+  name = "ui"
+  enable_sidebar = true
+```

@@ -15,6 +15,7 @@ scriptencoding utf-8
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
+let s:FLOATING = SpaceVim#api#import('neovim#floating')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -393,7 +394,7 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
-    call nvim_win_set_config(win_getid(s:gwin), 
+    call s:FLOATING.win_config(win_getid(s:gwin), 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -509,7 +510,7 @@ function! s:winopen() abort " {{{
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
-    call nvim_open_win(s:bufnr, v:true,
+    call s:FLOATING.open_win(s:bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns,
