@@ -106,6 +106,12 @@ npm install vue-language-server -g
 npm install -g vscode-css-languageserver-bin
 ```
 
+**ruby:**
+
+```sh
+gem install solargraph
+```
+
 ## 模块配置
 
 为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
@@ -137,6 +143,7 @@ npm install -g vscode-css-languageserver-bin
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
+| `ruby`       | `['solargraph',  'stdio']`
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
@@ -161,3 +168,14 @@ npm install -g vscode-css-languageserver-bin
 | --------------- | ------------- |
 | `K` / `SPC l d` | 显示文档      |
 | `SPC l e`       | 重命名 symbol |
+
+如果 `checkers` 模块未载入，则以下快捷键将被引入：
+
+| 快捷键    | 功能描述                        |
+| --------- | ------------------------------- |
+| `SPC e c` | 清除错误列表                    |
+| `SPC e n` | 跳至下一个语法错误位置          |
+| `SPC e N` | 跳至上一个语法错误位置          |
+| `SPC e p` | 跳至上一个语法错误位置          |
+| `SPC e l` | 列出错误列表窗口                |
+| `SPC e L` | 列出错误列表窗口并跳至该窗口    |

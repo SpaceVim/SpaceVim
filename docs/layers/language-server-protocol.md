@@ -22,7 +22,7 @@ This layers adds extensive support for [language-server-protocol](https://micros
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
 The upstream is rewritten by rust.
 
-We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is wrote in pure vim script.
+We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
 
 Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
 it will be used as lsp client.
@@ -119,6 +119,12 @@ npm install vue-language-server -g
 npm install -g vscode-css-languageserver-bin
 ```
 
+**ruby:**
+
+```sh
+gem install solargraph
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -150,6 +156,7 @@ default language server commands:
 | `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
+| `ruby`       | `['solargraph', 'stdio']`                                                                                                                                                                        |
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
@@ -174,3 +181,14 @@ To override the server command, you may need to use `override_cmd` option:
 | --------------- | ------------- |
 | `K` / `SPC l d` | show document |
 | `SPC l e`       | rename symbol |
+
+if the checkers layer is not loaded, these key bindings will be added:
+
+| Key       | description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `SPC e c` | clear errors                                                 |
+| `SPC e n` | jump to the position of next error                           |
+| `SPC e N` | jump to the position of previous error                       |
+| `SPC e p` | jump to the position of previous error                       |
+| `SPC e l` | display a list of all the errors                             |
+| `SPC e L` | display a list of all the errors and focus the errors buffer |

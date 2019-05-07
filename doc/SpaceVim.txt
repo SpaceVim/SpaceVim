@@ -21,24 +21,27 @@ CONTENTS                                                   *SpaceVim-contents*
       1. checkinstall..........................|SpaceVim-options-checkinstall|
       2. default_indent......................|SpaceVim-options-default_indent|
       3. enable_ale..............................|SpaceVim-options-enable_ale|
-      4. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      5. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      6. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
-      7. enable_neomake......................|SpaceVim-options-enable_neomake|
-      8. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
-      9. enable_statusline_tag........|SpaceVim-options-enable_statusline_tag|
-      10. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      11. error_symbol.........................|SpaceVim-options-error_symbol|
-      12. guifont...................................|SpaceVim-options-guifont|
-      13. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      14. max_column.............................|SpaceVim-options-max_column|
-      15. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      16. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      17. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      18. relativenumber.....................|SpaceVim-options-relativenumber|
-      19. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      20. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      21. windows_leader.....................|SpaceVim-options-windows_leader|
+      4. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
+      5. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      6. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      7. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      8. enable_neomake......................|SpaceVim-options-enable_neomake|
+      9. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
+      10. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      11. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      12. error_symbol.........................|SpaceVim-options-error_symbol|
+      13. guifont...................................|SpaceVim-options-guifont|
+      14. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      15. max_column.............................|SpaceVim-options-max_column|
+      16. max_column......................|SpaceVim-options-home_files_number|
+      17. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      18. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      19. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      20. relativenumber.....................|SpaceVim-options-relativenumber|
+      21. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      22. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      23. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      24. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -51,22 +54,22 @@ CONTENTS                                                   *SpaceVim-contents*
       6. exprfold....................................|SpaceVim-layer-exprfold|
       7. format........................................|SpaceVim-layer-format|
       8. github........................................|SpaceVim-layer-github|
-      9. github..........................................|SpaceVim-layer-test|
-      10. incsearch.................................|SpaceVim-layer-incsearch|
-      11. indentmove...............................|SpaceVim-layer-indentmove|
-      12. lang#c.......................................|SpaceVim-layer-lang-c|
-      13. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      14. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      16. lang#elm...................................|SpaceVim-layer-lang-elm|
-      17. lang#go.....................................|SpaceVim-layer-lang-go|
-      18. lang#java.................................|SpaceVim-layer-lang-java|
-      19. lang#julia...............................|SpaceVim-layer-lang-julia|
-      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      21. lang#lua...................................|SpaceVim-layer-lang-lua|
-      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      23. lang#php...................................|SpaceVim-layer-lang-php|
-      24. lang#pony.................................|SpaceVim-layer-lang-pony|
+      9. incsearch..................................|SpaceVim-layer-incsearch|
+      10. indentmove...............................|SpaceVim-layer-indentmove|
+      11. lang#c.......................................|SpaceVim-layer-lang-c|
+      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      15. lang#elm...................................|SpaceVim-layer-lang-elm|
+      16. lang#go.....................................|SpaceVim-layer-lang-go|
+      17. lang#java.................................|SpaceVim-layer-lang-java|
+      18. lang#julia...............................|SpaceVim-layer-lang-julia|
+      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      20. lang#lua...................................|SpaceVim-layer-lang-lua|
+      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      22. lang#php...................................|SpaceVim-layer-lang-php|
+      23. lang#pony.................................|SpaceVim-layer-lang-pony|
+      24. lang#processing.....................|SpaceVim-layer-lang-processing|
       25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
       26. lang#python.............................|SpaceVim-layer-lang-python|
       27. lang#rust.................................|SpaceVim-layer-lang-rust|
@@ -74,9 +77,10 @@ CONTENTS                                                   *SpaceVim-contents*
       29. lang#xml...................................|SpaceVim-layer-lang-xml|
       30. operator...................................|SpaceVim-layer-operator|
       31. shell.........................................|SpaceVim-layer-shell|
-      32. tmux...........................................|SpaceVim-layer-tmux|
-      33. tools#dash...............................|SpaceVim-layer-tools-dash|
-      34. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      32. test...........................................|SpaceVim-layer-test|
+      33. tmux...........................................|SpaceVim-layer-tmux|
+      34. tools#dash...............................|SpaceVim-layer-tools-dash|
+      35. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -141,6 +145,14 @@ ENABLE_ALE                                       *SpaceVim-options-enable_ale*
 Use ale for syntax checking, disabled by default.
 >
   enable_ale = true
+<
+
+==============================================================================
+ENABLE_BEPO_LAYOUT                       *SpaceVim-options-enable_bepo_layout*
+
+Enable/Disable bepo layout, by default it is disabled.
+>
+  enable_bepo_layout = true
 <
 
 ==============================================================================
@@ -230,6 +242,14 @@ Change the max number of columns for SpaceVim. Default is 120.
 <
 
 ==============================================================================
+MAX_COLUMN                                *SpaceVim-options-home_files_number*
+
+Change the list number of files for SpaceVim home. Default is 6.
+>
+  home_files_number = 6
+<
+
+==============================================================================
 PLUGIN_BUNDLE_DIR                         *SpaceVim-options-plugin_bundle_dir*
 
 Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
@@ -256,6 +276,15 @@ RELATIVENUMBER                               *SpaceVim-options-relativenumber*
 Enable/Disable relativenumber, by default it is enabled.
 >
   relativenumber = true
+<
+
+==============================================================================
+RETRY_CNT                                         *SpaceVim-options-retry_cnt*
+
+Set the number of retries for SpaceVim Update when failed. Default is 3. Set
+to 0 to disable this feature, or you can set to another number.
+>
+  update_retry_cnt = 3
 <
 
 ==============================================================================
@@ -302,12 +331,21 @@ Change the default indentation of SpaceVim. Default is 2.
 In Insert mode: Use the appropriate number of spaces to insert a <Tab>
 
                                                    *g:spacevim_relativenumber*
-Enable/Disable relativenumber, by default it is enabled.
+Enable/Disable relativenumber in current windows, by default it is enabled.
+
+                                               *g:spacevim_enable_bepo_layout*
+Enable/Disable bepo layout, by default it is disabled.
 
                                                        *g:spacevim_max_column*
 Change the max number of columns for SpaceVim. Default is 120.
 >
   let g:spacevim_max_column = 120
+<
+
+                                                *g:spacevim_home_files_number*
+Change the list number of files for SpaceVim home. Default is 6.
+>
+  let g:spacevim_home_files_number = 6
 <
 
                                                  *g:spacevim_enable_guicolors*
@@ -566,7 +604,14 @@ plugins will be installed.
 <
 
                                                       *g:spacevim_filemanager*
-The default file manager of SpaceVim. Default is 'vimfiler'.
+The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
+nerdtree or defx
+
+                                               *g:spacevim_filetree_direction*
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
+
+NOTE: if it is 'left', the tagbar will be move to right.
 
                                          *g:spacevim_plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
@@ -692,6 +737,13 @@ Config the command line prompt for flygrep and denite etc.
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 >
   let g:spacevim_lint_on_the_fly = 0
+<
+
+                                                 *g:spacevim_update_retry_cnt*
+Set the number of retries for SpaceVim Update when failed. Default is 3. Set
+to 0 to disable this feature, or you can set to another number.
+>
+  let g:spacevim_update_retry_cnt = 3
 <
 
                                           *g:spacevim_enable_vimfiler_welcome*
@@ -927,23 +979,6 @@ MAPPINGS
 <
 
 ==============================================================================
-GITHUB                                                   *SpaceVim-layer-test*
-
-This layer allows to run tests on SpaceVim
-
-MAPPINGS
-
->
-  Mode      Key         Function
-  -------------------------------------------------------------
-  normal    SPC k n     run nearest test
-  normal    SPC k f     run test file
-  normal    SPC k s     run test suite
-  normal    SPC k l     run the latest test
-  normal    SPC k v     visits the last run test file
-<
-
-==============================================================================
 INCSEARCH                                           *SpaceVim-layer-incsearch*
 
 This layer improved incremental searching for neovim/vim
@@ -1162,6 +1197,14 @@ MAPPINGS
   normal    SPC l m R     run one maven goal
   normal    SPC l m t     run maven test
 
+  Gradle key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g b     run gradle clean build
+  normal    SPC l g B     run gradle build
+  normal    SPC l g t     run gradle test
+
   Jump key bindings:
 
   Mode      Key           Function
@@ -1241,6 +1284,29 @@ Requirements:
 LANG#PONY                                           *SpaceVim-layer-lang-pony*
 
 ==============================================================================
+LANG#PROCESSING                               *SpaceVim-layer-lang-processing*
+
+This layer is for Processing development: https://processing.org
+
+This is based on the work from https://github.com/sophacles/vim-processing
+
+Requirements:
+
+  1. You will need a copy of processing-java. The best way to do this is to
+    get a copy of the Processing IDE from https://processing.org/download/
+
+      Once you have it, run it, and then select Tools -> install
+"processing-java"
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      SPC l r     execute current sketch
+<
+
+==============================================================================
 LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
 
 This layer is for Puppet development. It provides syntax highlighting and
@@ -1307,6 +1373,106 @@ MAPPINGS
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
 
+This layer is for Scala development.
+
+MAPPINGS
+
+>
+  Import key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    <F4>          show candidates for importing of cursor symbol
+  insert    <F4>          show candidates for importing of cursor symbol
+  normal    SPC l i c     show candidates for importing of cursor symbol
+  normal    SPC l i q     prompt for a qualified import
+  normal    SPC l i o     organize imports of current file
+  normal    SPC l i s     sort imports of current file
+  insert    <c-j>i        prompt for a qualified import
+  insert    <c-j>o        organize imports of current file
+  insert    <c-j>s        sort imports of current file
+
+  Debug key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l d t     show debug stack trace of current frame
+  normal    SPC l d c     continue the execution
+  normal    SPC l d b     set a breakpoint for the current line
+  normal    SPC l d B     clear all breakpoints
+  normal    SPC l d l     launching debugger
+  normal    SPC l d i     step into next statement
+  normal    SPC l d o     step over next statement
+  normal    SPC l d O     step out of current function
+
+  Sbt key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l b c     sbt clean compile
+  normal    SPC l b r     sbt run
+  normal    SPC l b t     sbt test
+  normal    SPC l b p     sbt package
+  normal    SPC l b d     sbt show project dependencies tree
+  normal    SPC l b l     sbt reload project build definition
+  normal    SPC l b u     sbt update external dependencies
+  normal    SPC l b e     run sbt to generate .ensime config file
+
+  Execute key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r m     run main class
+
+  REPL key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l s i     start a scala inferior REPL process
+  normal    SPC l s b     send buffer and keep code buffer focused
+  normal    SPC l s l     send line and keep code buffer focused
+  normal    SPC l s s     send selection text and keep code buffer focused
+
+  Other key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l Q       bootstrap server when first-time-use
+  normal    SPC l h       show Documentation of cursor symbol
+  normal    SPC l R       inline local refactoring of cursor symbol
+  normal    SPC l e       rename cursor symbol
+  normal    SPC l g       find Definition of cursor symbol
+  normal    SPC l t       show Type of expression of cursor symbol
+  normal    SPC l p       show Hierarchical view of a package
+  normal    SPC l r       find Usages of cursor symbol
+
+<
+CODE FORMATTING
+To make neoformat support scala file, you should install scalariform.
+[`scalariform`](https://github.com/scala-ide/scalariform) and set
+'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+
+ENSIME-VIM SETUP STEPS
+The following is quick install steps, if you want to see complete details,
+please see: [`ensime`](http://ensime.github.io/editors/vim/install/)
+
+  1. Install vim`s plugin and its dependencies as following. `pip install
+    websocket-client sexpdata`, `pip install pynvim` (neovim only).
+  2. Integration ENSIME with your build tools, here we use sbt. > add
+    (sbt-ensime) as global plugin for sbt: Put code `addSbtPlugin("org.ensime"
+    % "sbt-ensime" % "2.6.1")` in file  '~/.sbt/plugins/plugins.sbt' (create
+    if not exists). > Armed with your build tool plugin, generate the
+    `.ensime` config file from your project directory in command line, e.g.
+    for sbt use `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the
+    first time will take several minutes.
+  3. The first time you use ensime-vim (per Scala version), it will
+    `bootstrap` the ENSIME server installation when opening a Scala file you
+    will be prompted to run |:EnInstall|. Do that and give it a minute or two
+    to run. After this, you should see reports in Vim's message area that
+    ENSIME is coming up, and the indexer and analyzer are ready. Going
+    forward, ensime-vim will automatically start the ENSIME server when you
+    edit Scala files in a project with an `.ensime` config present.
+
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
 
@@ -1335,6 +1501,23 @@ KEY BINDINGS
 >
   SPC '   Open or switch to terminal windows
   q       Hide terminal windows in normal mode
+<
+
+==============================================================================
+TEST                                                     *SpaceVim-layer-test*
+
+This layer allows to run tests on SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key         Function
+  -------------------------------------------------------------
+  normal    SPC k n     run nearest test
+  normal    SPC k f     run test file
+  normal    SPC k s     run test suite
+  normal    SPC k l     run the latest test
+  normal    SPC k v     visits the last run test file
 <
 
 ==============================================================================

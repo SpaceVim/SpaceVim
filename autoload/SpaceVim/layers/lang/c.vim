@@ -69,20 +69,25 @@ function! SpaceVim#layers#lang#c#plugins() abort
       call add(plugins, ['Rip-Rip/clang_complete'])
     endif
   endif
-  " chromatica is for neovim with py3
-  " clamp is for neovim rpcstart('python', " [s:script_folder_path.'/../python/engine.py'])]
-  " clighter8 is for vim8
-  " clighter is for old vim
-  if has('nvim')
-    if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
-      call add(plugins, ['arakashic/chromatica.nvim', { 'merged' : 0}])
+
+  if s:enable_clang_syntax
+    " chromatica is for neovim with py3
+    " clamp is for neovim rpcstart('python', " [s:script_folder_path.'/../python/engine.py'])]
+    " clighter8 is for vim8
+    " clighter is for old vim
+    if has('nvim')
+      if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+        call add(plugins, ['arakashic/chromatica.nvim', { 'merged' : 0}])
+      else
+        call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+      endif
+    elseif has('job')
+      call add(plugins, ['bbchung/clighter8', { 'if' : has('python')}])
     else
-      call add(plugins, ['bbchung/Clamp', { 'if' : has('python')}])
+      call add(plugins, ['bbchung/clighter', { 'if' : has('python')}])
     endif
-  elseif has('job')
-    call add(plugins, ['bbchung/clighter8', { 'if' : has('python')}])
   else
-    call add(plugins, ['bbchung/clighter', { 'if' : has('python')}])
+    call add(plugins, ['octol/vim-cpp-enhanced-highlight', { 'merged' : 0}])
   endif
   return plugins
 endfunction
@@ -118,6 +123,8 @@ function! SpaceVim#layers#lang#c#config() abort
   call add(g:spacevim_project_rooter_patterns, '.clang')
 endfunction
 
+let s:enable_clang_syntax = 0
+
 function! SpaceVim#layers#lang#c#set_variable(var) abort
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
@@ -133,6 +140,8 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
     let g:asyncomplete_clang_libclang_path = a:var.libclang_path
     let g:clamp_libclang_file = a:var.libclang_path
   endif
+
+  let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
 endfunction
 
 function! s:language_specified_mappings() abort

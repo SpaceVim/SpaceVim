@@ -6,12 +6,29 @@
 " License: GPLv3
 "=============================================================================
 
+
+" Layer Options:
+" s:git_plugin which plugin is used as the background plugin in git layer
+
+
+if has('patch-8.0.0027') || has('nvim')
+  let s:git_plugin = 'gina'
+else
+  let s:git_plugin = 'gita'
+endif
+
+
+
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
         \ ]
-  if has('patch-8.0.0027') || has('nvim')
+  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
+  call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
+  if s:git_plugin ==# 'gina'
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
+  elseif s:git_plugin ==# 'fugitive'
+    call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
   else
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
   endif
@@ -23,8 +40,9 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
+  let g:signify_vcs_list = ['hg']
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
-  if has('patch-8.0.0027') || has('nvim')
+  if s:git_plugin ==# 'gina'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset -q %', 'unstage current file', 1)
@@ -33,6 +51,15 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gina diff', 'view git diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gina add .', 'stage all files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
+  elseif s:git_plugin ==# 'fugitive'
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gstatus', 'git status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit git commit', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view git diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view git blame', 1)
   else
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gita add %', 'stage current file', 1)
@@ -57,6 +84,18 @@ function! SpaceVim#layers#git#config() abort
         \ 'display the last commit message of the current line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'View git log of current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'View git log of current repo', 1)
+  let g:_spacevim_mappings_space.g.h = {'name' : '+Hunks'}
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'a'], '<Plug>GitGutterStageHunk', 'stage current hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>GitGutterUndoHunk', 'undo cursor hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>GitGutterPreviewHunk', 'preview cursor hunk', 0)
+endfunction
+
+function! SpaceVim#layers#git#set_variable(var) abort
+
+  let s:git_plugin = get(a:var,
+        \ 'git-plugin',
+        \ s:git_plugin)
+
 endfunction
 
 function! s:display_last_commit_of_current_line() abort

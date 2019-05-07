@@ -20,7 +20,15 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, ['itchyny/calendar.vim',             { 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',           { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_map' : '<Plug>Bookmark', 'on_cmd' : 'BookmarkShowAll', 'loadconf_before' : 1}])
+  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_cmd' :
+        \ [
+        \ 'BookmarkShowAll',
+        \ 'BookmarkToggle',
+        \ 'BookmarkAnnotate',
+        \ 'BookmarkNext',
+        \ 'BookmarkPrev',
+        \ ],
+        \ 'loadconf_before' : 1}])
   let s:CMP = SpaceVim#api#import('vim#compatible')
   if s:CMP.has('python')
     call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
@@ -41,11 +49,13 @@ function! SpaceVim#layers#tools#config() abort
         \ 'Goyo', 'centered-buffer-mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'],
         \ 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
-  nmap mm <Plug>BookmarkToggle
-  nmap mi <Plug>BookmarkAnnotate
-  nmap ma <Plug>BookmarkShowAll
-  nmap mn <Plug>BookmarkNext
-  nmap mp <Plug>BookmarkPrev
+
+  " bootmark key binding
+  nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
+  nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
+  nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
+  nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
+  nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
   nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
@@ -63,7 +73,6 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
-  noremap <silent> <F8> :TlistToggle<CR>
 endfunction
 
 " vim:set et sw=2 cc=80:

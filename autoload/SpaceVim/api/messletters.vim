@@ -58,6 +58,8 @@ function! s:circled_num(num, type) abort
     else
       return ''
     endif
+  elseif a:type == 3
+    return a:num
   endif
 endfunction
 

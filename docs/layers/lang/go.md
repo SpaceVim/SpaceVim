@@ -27,6 +27,8 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#go"
 ```
 
+After the installation, run `:GoInstallBinaries` inside vim.
+
 ## Features
 
 - auto-completion
