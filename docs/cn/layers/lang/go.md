@@ -28,6 +28,12 @@ lang: cn
   name = "lang#go"
 ```
 
+默认情况下，tagbar 这一插件无法显示 go 语法树，需要安装一个依赖 [gotags](https://github.com/jstemmer/gotags)：
+
+```sh
+go get -u github.com/jstemmer/gotags
+```
+
 ## 功能特性
 
 - 代码补全

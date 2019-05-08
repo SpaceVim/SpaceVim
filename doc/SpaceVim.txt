@@ -1139,11 +1139,11 @@ MAPPINGS
   normal          SPC l L         list declarations in dir
   normal          SPC l m         format improts
   normal          SPC l M         add import
-  normal          SPC l r         go referrers
+  normal          SPC l x         go referrers
   normal          SPC l s         fill struct
   normal          SPC l t         go test
   normal          SPC l v         freevars
-  normal          SPC l x         go run
+  normal          SPC l r         go run
 <
 
 ==============================================================================
