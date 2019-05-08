@@ -20,6 +20,8 @@ Each of the following sections will be covered:
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
 - [project building](#project-building)
+- [run test](#run-test)
+- [code coverage](#code-coverage)
 - [code format](#code-format)
 
 <!-- vim-markdown-toc -->
@@ -75,6 +77,20 @@ after building successfully you should see this message on the cmdline:
 ```txt
 vim-go: [build] SUCCESS
 ```
+
+### run test
+
+There are two key bindings for running test, `SPC l t` run test for current file,
+`SPC l T` only run test for current function. if the test is passed, you should see
+following message on cmdline:
+
+```txt
+vim-go: [test] SUCCESS 
+```
+
+### code coverage
+
+
 
 ### code format
 

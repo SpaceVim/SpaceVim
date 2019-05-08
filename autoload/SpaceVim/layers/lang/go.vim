@@ -135,8 +135,11 @@ function! s:language_specified_mappings() abort
         \ ':GoFillStruct',
         \ 'fill struct', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
-        \ '<Plug>(go-test)',
-        \ 'go test', 0)
+        \ 'GoTest',
+        \ 'go test', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','T'],
+        \ 'GoTestFunc',
+        \ 'go test function', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
         \ ':GoFreevars',
         \ 'freevars', 1)
