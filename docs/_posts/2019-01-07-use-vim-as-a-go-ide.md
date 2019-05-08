@@ -90,7 +90,9 @@ vim-go: [test] SUCCESS
 
 ### code coverage
 
+Key binding for showing the coverage of your source code is `SPC l c`, it will call `GoCoverageToggle` command from vim-go.
 
+![cov](https://user-images.githubusercontent.com/13142418/57342383-57375d00-7171-11e9-9182-281d7a792c68.gif)
 
 ### code format
 

@@ -84,8 +84,8 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(go-build)',
         \ 'go build', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
-        \ '<Plug>(go-coverage)',
-        \ 'go coverage', 0)
+        \ 'GoCoverageToggle',
+        \ 'go coverage toggle', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','d'],
         \ '<Plug>(go-doc)',
         \ 'go doc', 0)
