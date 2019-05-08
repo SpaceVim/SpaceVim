@@ -91,7 +91,7 @@ lang: cn
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
 - [格式规范](#格式规范)
-- [Vim 服务器](#vim-服务器)
+- [Vim 服务](#vim-服务)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -1844,7 +1844,7 @@ SpaceVim 添加了 [EditorConfig](http://editorconfig.org/) 支持，通过一�
 
 更多配置方式，可以阅读其官方文档：[editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 
-## Vim 服务器
+## Vim 服务
 
 SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。
 
