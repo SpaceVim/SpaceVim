@@ -1062,12 +1062,12 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC b n`       | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
 | `SPC b m`       | 打开消息缓冲区                                                                 |
 | `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | 切换至前一个缓冲区，排除特殊插件的缓冲区                                     |
-| `SPC b P`       | 使用剪切板内容替换当前缓冲区                                                  |
-| `SPC b R`       | 从磁盘重新读取当前缓冲区所对应的文件                                         |
+| `SPC b p`       | 切换至前一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b P`       | 使用系统剪切板内容替换当前缓冲区                                               |
+| `SPC b R`       | 从磁盘重新读取当前缓冲区所对应的文件                                           |
 | `SPC b s`       | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
 | `SPC b w`       | 切换只读权限                                                                   |
-| `SPC b Y`       | 将整个 buffer 复制到剪切板                                                     |
+| `SPC b Y`       | 将整个缓冲区复制到系统剪切板                                                   |
 | `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
 
 ##### 新建空白 buffer
