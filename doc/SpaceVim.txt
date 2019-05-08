@@ -242,7 +242,7 @@ Change the max number of columns for SpaceVim. Default is 120.
 <
 
 ==============================================================================
-MAX_COLUMN                                *SpaceVim-options-home_files_number*
+HOME_FILES_NUMBER                         *SpaceVim-options-home_files_number*
 
 Change the list number of files for SpaceVim home. Default is 6.
 >
