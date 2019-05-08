@@ -1054,9 +1054,10 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
 | `SPC b D`       | 选择一个窗口，并删除其缓冲区                                                   |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | 删除其它 buffers                                                               |
+| `SPC b c`       | 删除其它已保存的缓冲区                                                         |
+| `SPC b C-d`     | 删除其它所有缓冲区                                                             |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | 清除当前 buffer 内容，需要手动确认                                             |
+| `SPC b e`       | 清除当前缓冲区内容，需要手动确认                                             |
 | `SPC b h`       | 打开 _SpaceVim_ 欢迎界面                                                       |
 | `SPC b n`       | 切换至下一个 buffer，排除特殊插件的 buffer                                     |
 | `SPC b m`       | 打开 _Messages_ buffer                                                         |
