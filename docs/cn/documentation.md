@@ -51,8 +51,8 @@ lang: cn
       - [合并，拆分](#合并拆分)
     - [窗口操作](#窗口操作)
       - [窗口操作常用快捷键](#窗口操作常用快捷键)
-    - [文件和 Buffer 操作](#文件和-buffer-操作)
-      - [Buffer 操作相关快捷键](#buffer-操作相关快捷键)
+    - [文件和缓冲区操作](#文件和缓冲区操作)
+      - [缓冲区操作](#缓冲区操作)
       - [新建空白 buffer](#新建空白-buffer)
       - [特殊 buffer](#特殊-buffer)
       - [文件操作相关快捷键](#文件操作相关快捷键)
@@ -1038,20 +1038,21 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC w w`             | 切换至前一窗口                                                                 |
 | `SPC w W`             | 选择一个窗口                                                                   |
 
-#### 文件和 Buffer 操作
+#### 文件和缓冲区操作
 
-##### Buffer 操作相关快捷键
+##### 缓冲区操作
 
-Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
+缓冲区（Buffer）操作相关快捷键都是以 `SPC b` 为前缀的，以下为常用的缓冲区操作快捷键，
+主要包括了缓冲区的切换和删除等操作：
 
 | 快捷键          | 功能描述                                                                       |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC <Tab>`     | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
-| `SPC b .`       | 启用 buffer 临时快捷键                                                         |
-| `SPC b b`       | 切换至某一 buffer，通过 Unite/Denite 进行筛选                                  |
-| `SPC b d`       | 删除当前 buffer，但保留 Vim 窗口                                               |
+| `SPC <Tab>`     | 切换至前一缓冲区，常用于两个缓冲区来回切换                                     |
+| `SPC b .`       | 启用缓冲区临时快捷键                                                           |
+| `SPC b b`       | 通过模糊搜索工具进行缓冲区切换，需要启用一个模糊搜索工具模块                   |
+| `SPC b d`       | 删除当前缓冲区，但保留编辑窗口                                                 |
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | 选择一个窗口，并删除其 buffer                                                  |
+| `SPC b D`       | 选择一个窗口，并删除其缓冲区                                                   |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
 | `SPC b C-d`     | 删除其它 buffers                                                               |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
