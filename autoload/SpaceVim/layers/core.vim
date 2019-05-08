@@ -53,7 +53,7 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
   nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-  "]e or [e move current line ,count can be useed
+  "]e or [e move current line ,count can be used
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
   nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
