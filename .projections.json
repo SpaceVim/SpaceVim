@@ -13,6 +13,8 @@
   "wiki/cn/Following-HEAD.md": {"alternate": "wiki/en/Following-HEAD.md"},
   "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md": {"alternate": "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md"},
   "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md": {"alternate": "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md"},
+  "docs/_posts/2019-01-08-use-vim-as-a-go-ide.md": {"alternate": "docs/_posts/2019-01-07-use-vim-as-a-go-ide.md"},
+  "docs/_posts/2019-01-07-use-vim-as-a-go-ide.md": {"alternate": "docs/_posts/2019-01-08-use-vim-as-a-go-ide.md"},
   "docs/_posts/2019-01-28-use-vim-as-a-coffeescript-ide.md": {"alternate": "docs/_posts/2019-01-29-use-vim-as-a-coffeescript-ide.md"},
   "docs/_posts/2019-01-29-use-vim-as-a-coffeescript-ide.md": {"alternate": "docs/_posts/2019-01-28-use-vim-as-a-coffeescript-ide.md"},
   "docs/_posts/2018-09-27-use-vim-as-a-python-ide.md": {"alternate": "docs/_posts/2018-09-28-use-vim-as-a-python-ide.md"},

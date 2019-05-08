@@ -53,7 +53,7 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
   nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-  "]e or [e move current line ,count can be useed
+  "]e or [e move current line ,count can be used
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
   nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
@@ -437,8 +437,9 @@ endfunction
 function! s:safe_erase_buffer() abort
   if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
     normal! ggdG
+  else
+    echo 'canceled!'
   endif
-  redraw!
 endfunction
 
 function! s:ToggleWinDiskManager() abort
@@ -463,6 +464,8 @@ endfunction
 function! s:safe_revert_buffer() abort
   if s:MESSAGE.confirm('Revert buffer form ' . expand('%:p'))
     edit!
+  else
+    echo 'canceled!'
   endif
   redraw!
 endfunction

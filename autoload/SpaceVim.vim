@@ -234,7 +234,7 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "   endif
   " <
   "
-  " and you can alse set this option to coc, then coc.nvim will be useed.
+  " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
