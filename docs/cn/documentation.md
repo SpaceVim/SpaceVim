@@ -1057,14 +1057,14 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC b c`       | 删除其它已保存的缓冲区                                                         |
 | `SPC b C-d`     | 删除其它所有缓冲区                                                             |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | 清除当前缓冲区内容，需要手动确认                                             |
-| `SPC b h`       | 打开 _SpaceVim_ 欢迎界面                                                       |
-| `SPC b n`       | 切换至下一个 buffer，排除特殊插件的 buffer                                     |
-| `SPC b m`       | 打开 _Messages_ buffer                                                         |
+| `SPC b e`       | 清除当前缓冲区内容，需要手动确认                                               |
+| `SPC b h`       | 打开欢迎界面, 等同于快捷键 `SPC a s`                                           |
+| `SPC b n`       | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b m`       | 打开消息缓冲区                                                                 |
 | `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | 切换至前一个 buffer，排除特殊插件的 buffer                                     |
-| `SPC b P`       | 使用剪切板内容替换当前 buffer                                                  |
-| `SPC b R`       | 从磁盘重新读取当前 buffer 所对应的文件                                         |
+| `SPC b p`       | 切换至前一个缓冲区，排除特殊插件的缓冲区                                     |
+| `SPC b P`       | 使用剪切板内容替换当前缓冲区                                                  |
+| `SPC b R`       | 从磁盘重新读取当前缓冲区所对应的文件                                         |
 | `SPC b s`       | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
 | `SPC b w`       | 切换只读权限                                                                   |
 | `SPC b Y`       | 将整个 buffer 复制到剪切板                                                     |
