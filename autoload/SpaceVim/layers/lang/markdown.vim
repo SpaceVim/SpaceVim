@@ -30,6 +30,9 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
         \ 'depends': 'open-browser.vim',
         \ 'build' : 'cd app & yarn install' }])
   call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+  if !has('nvim')
+    call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : 'yarn install'}])
+  endif
   return plugins
 endfunction
 
