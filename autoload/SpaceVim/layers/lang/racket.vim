@@ -14,6 +14,10 @@ endfunction
 
 
 function! SpaceVim#layers#lang#racket#config() abort
+  augroup spacevim_layer_lang_racket
+    autocmd!
+    au BufRead,BufNewFile *.rkt,*.rktl setf racket
+  augroup END
   call SpaceVim#plugins#runner#reg_runner('racket', 
         \ {
         \ 'exe' : 'racket',
@@ -25,12 +29,12 @@ function! SpaceVim#layers#lang#racket#config() abort
 endfunction
 
 function! s:go_to_def() abort
-  
+
 endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
-    " nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+  " nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 endfunction
