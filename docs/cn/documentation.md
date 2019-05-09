@@ -35,7 +35,7 @@ lang: cn
   - [编辑器界面](#编辑器界面)
   - [原生功能](#原生功能)
   - [标签管理](#标签管理)
-  - [Fuzzy finder](#fuzzy-finder)
+  - [模糊搜索](#模糊搜索)
   - [交互](#交互)
     - [快捷键](#快捷键)
     - [获取帮助信息](#获取帮助信息)
@@ -743,69 +743,75 @@ function! myspacevim#before() abort
 endfunction
 ```
 
-### Fuzzy finder
+### 模糊搜索
 
-SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
-These layers have the same key bindings and features. But they need different dependencies.
+目前一共有五种模糊搜索的模块，分别对应不同的工具：
 
-User only need to load one of these layers, then will be able to get these
-features.
+- denite
+- unite
+- leaderf
+- ctrlp
+- fzf
+
+这些模块都提供了非常类似的快捷键，包括文件搜索、跳转历史搜索等功能，
+具体快捷键列表如下：
 
 **快捷键**
 
-| 快捷键               | 功能描述                      |
-| -------------------- | ----------------------------- |
-| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
-| `<Leader> f e`       | Fuzzy find register           |
-| `<Leader> f h`       | Fuzzy find history/yank       |
-| `<Leader> f j`       | Fuzzy find jump, change       |
-| `<Leader> f l`       | Fuzzy find location list      |
-| `<Leader> f m`       | Fuzzy find output messages    |
-| `<Leader> f o`       | Fuzzy find outline            |
-| `<Leader> f q`       | Fuzzy find quick fix          |
-| `<Leader> f r`       | Resumes Unite window          |
+| 快捷键               | 功能描述                       |
+| -------------------- | ------------------------------ |
+| `<Leader> f <Space>` | 模糊查找快捷键，并执行该快捷键 |
+| `<Leader> f e`       | 模糊搜索寄存器                 |
+| `<Leader> f h`       | 模糊搜索 history/yank          |
+| `<Leader> f j`       | 模糊搜索 jump, change          |
+| `<Leader> f l`       | 模糊搜索 location list         |
+| `<Leader> f m`       | 模糊搜索 output messages       |
+| `<Leader> f o`       | 模糊搜索函数列表               |
+| `<Leader> f q`       | 模糊搜索 quickfix list         |
+| `<Leader> f r`       | 重置上次搜索窗口               |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
+但是由于不同工具的局限性，有些模块还不能完全提供上述功能，目前仅有 denite 和 unite
+模块可以提供完整的功能。
 
-| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
-| ------------------- | ------- | ------- | ------- | ------- | ------- |
-| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
-| register            | **yes** | **yes** | no      | **yes** | **yes** |
-| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
-| yank history        | **yes** | **yes** | no      | no      | **yes** |
-| jump                | **yes** | **yes** | no      | **yes** | **yes** |
-| location list       | **yes** | **yes** | no      | no      | **yes** |
-| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
-| message             | **yes** | **yes** | no      | no      | **yes** |
-| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
-| resume windows      | **yes** | **yes** | no      | no      | no      |
+| 功能特性                       | unite | denite | leaderf | ctrlp | fzf |
+| ------------------------------ | ----- | ------ | ------- | ----- | --- |
+| 模糊查找快捷键，并执行该快捷键 | yes   | yes    | no      | no    | no  |
+| 模块搜索寄存器                 | yes   | yes    | no      | yes   | yes |
+| 模糊搜索文件                   | yes   | yes    | yes     | yes   | yes |
+| 模糊搜索复制历史               | yes   | yes    | no      | no    | yes |
+| 模糊搜索跳转历史               | yes   | yes    | no      | yes   | yes |
+| 模糊搜索位置列表               | yes   | yes    | no      | no    | yes |
+| 模糊搜索语法树                 | yes   | yes    | yes     | yes   | yes |
+| 模糊搜索消息                   | yes   | yes    | no      | no    | yes |
+| 模糊搜索全局位置列表           | yes   | yes    | no      | yes   | yes |
+| 重置上次搜索窗口               | yes   | yes    | no      | no    | no  |
 
-**Key bindings within fuzzy finder buffer**
+**模糊搜索窗口内的快捷键：**
 
-| 快捷键                   | 模式   | 功能描述                                  |
-| ------------------------ | ------ | ----------------------------------------- |
-| `<Tab>` / `Ctrl-j`       | -      | Select next line                          |
-| `Shift-<Tab>` / `Ctrl-k` | -      | Select previous line                      |
-| `jk`                     | Insert | Leave Insert mode (Only for denite/unite) |
-| `Ctrl-w`                 | Insert | Delete backward path                      |
-| `<Enter>`                | -      | Run default action                        |
-| `Ctrl-s`                 | -      | Open in a split                           |
-| `Ctrl-v`                 | -      | Open in a vertical split                  |
-| `Ctrl-t`                 | -      | Open in a new tab                         |
-| `Ctrl-g`                 | -      | Exit unite                                |
+| 快捷键                   | 功能描述                                    |
+| ------------------------ | ------------------------------------------- |
+| `<Tab>` / `Ctrl-j`       | 下一个选项                                  |
+| `Shift-<Tab>` / `Ctrl-k` | 上一个选项                                  |
+| `jk`                     | 离开输入模式（仅支持 denite 和 unite 模块） |
+| `Ctrl-w`                 | 删除光标前词语                              |
+| `<Enter>`                | 执行默认动作                                |
+| `Ctrl-s`                 | 在分割窗口内打开                            |
+| `Ctrl-v`                 | 在垂直分割窗口内打开                        |
+| `Ctrl-t`                 | 在新的标签页里打开                          |
+| `Ctrl-g`                 | 推出模糊搜索插件                            |
 
-**Denite/Unite normal mode key bindings**
+**Denite 或 Unite 模块可视模式下快捷键：**
 
-| 快捷键           | 模式          | 功能描述                             |
-| ---------------- | ------------- | ------------------------------------ |
-| `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl`+`l`       | Normal        | Redraw                               |
-| `<Tab>`          | Normal        | Select actions                       |
-| `Space`          | Normal        | Toggle mark current candidate, up    |
-| `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/Insert | Toggle transpose window              |
+| 快捷键           | 功能描述           |
+| ---------------- | ------------------ |
+| `Ctrl`+`h/k/l/r` | 未定义             |
+| `Ctrl`+`l`       | 刷新窗口           |
+| `<Tab>`          | 选择即将执行的动作 |
+| `Space`          | 切换标记当前选项   |
+| `r`              | 替换或者重命名     |
+| `Ctrl`+`z`       | 切换窗口分割方式   |
 
-The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
+以上这些快捷键仅仅是模糊搜索模块的部分快捷键，其他快捷键信息可查阅对应模块文档。
 
 ### 交互
 
