@@ -64,13 +64,12 @@ It is running asynchronously, and will not block your Vim.
 ### Code formatting
 
 The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install rufo:
+Before using this feature, please install php_beautifier:
 
 ```sh
-gem install rufo
+pear install PHP_Beautifier
 ```
 
-![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### REPL support
 

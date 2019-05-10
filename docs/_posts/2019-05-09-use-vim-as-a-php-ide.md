@@ -22,6 +22,8 @@ SpaceVim 是一个模块化的 Vim IDE，针对 PHP 这一语言的支持主要�
 
 - [安装模块](#安装模块)
 - [代码自动补全](#代码自动补全)
+- [语法检查](#语法检查)
+- [代码格式化](#代码格式化)
 - [快速运行](#快速运行)
 - [交互式编程](#交互式编程)
 
@@ -65,6 +67,37 @@ gem install solargraph
   [layers.override_cmd]
     ruby = ["php-language-server"]
 ```
+
+
+### 语法检查
+
+`checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
+这一异步语法检查工具。对于 Ruby 的支持，是通过异步调用 rubocop 命令来完成的。
+
+使用 gem 安装 rubocop 命令：
+
+```sh
+gem install rubocop
+```
+
+![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
+
+### 代码格式化
+
+PHP 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 php_beautifier，默认快捷键为 `SPC b f` ：
+
+```toml
+[[layers]]
+  name = "format"
+```
+
+使用 pear 安装 PHP_Beautifier：
+
+```sh
+pear install PHP_Beautifier
+```
+
+![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### 快速运行
 
