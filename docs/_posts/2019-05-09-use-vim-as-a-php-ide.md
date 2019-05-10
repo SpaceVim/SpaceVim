@@ -51,13 +51,9 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
   name = "lsp"
 ```
 
-lsp 模块默认使用 `php-language-server` 作为 PHP 的语言服务器后台命令，首先需要安装 php-language-server：
+lsp 模块默认使用 `php-language-server` 作为 PHP 的语言服务器后台命令。
 
-```sh
-gem install solargraph
-```
-
-在配置文件中添加如下内容即可为 ruby 启用语言服务器：
+在配置文件中添加如下内容即可为 PHP 启用语言服务器：
 
 ```toml
 [[layers]]
