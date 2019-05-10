@@ -40,16 +40,19 @@ composer require --dev vimeo/psalm
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project, you can add a `.project_alt.json` to the root of your project with the following content:
+To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
+project.
+
+for exmaple, add following content into the `.project_alt.json` file:
 
 ```json
 {
-  "src/*.rb": {"alternate": "test/{}.rb"},
-  "test/*.rb": {"alternate": "src/{}.rb"}
+  "src/*.php": {"alternate": "test/{}.php"},
+  "test/*.php": {"alternate": "src/{}.php"}
 }
 ```
 
-With this configuration, you can jump between the source code and test file via command `:A`
+with this configuration, you can jump between the source code and test file via command `:A`
 
 ### running code
 
