@@ -58,6 +58,17 @@ function! SpaceVim#layers#lang#php#config() abort
     augroup END
   endif
 
+  " let g:neomake_php_php_maker =  {
+        " \ 'args': ['-l', '-d', 'error_reporting=E_ALL', '-d', 'display_errors=1', '-d', 'log_errors=0'],
+        " \ 'errorformat':
+        " \ '%-GNo syntax errors detected in%.%#,'.
+        " \ '%EParse error: syntax error\, %m in %f on line %l,'.
+        " \ '%EParse error: %m in %f on line %l,'.
+        " \ '%EFatal error: %m in %f on line %l,'.
+        " \ '%-G\s%#,'.
+        " \ '%-GErrors parsing %.%#',
+        " \ 'output_stream': 'stderr',
+        " \ }
 endfunction
 
 function! s:on_ft() abort
