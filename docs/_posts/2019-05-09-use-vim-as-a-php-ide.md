@@ -97,7 +97,6 @@ PHP 代码格式化，主要依赖 `format` 模块，同时需要安装相关的
 pear install PHP_Beautifier
 ```
 
-![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### 快速运行
 
