@@ -20,6 +20,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 PHP 这一语言的支持主要�
 
 - [安装模块](#安装模块)
 - [代码自动补全](#代码自动补全)
+- [快速运行](#快速运行)
 
 <!-- vim-markdown-toc -->
 
@@ -61,3 +62,10 @@ gem install solargraph
   [layers.override_cmd]
     ruby = ["php-language-server"]
 ```
+
+### 快速运行
+
+在编辑 PHP 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
+会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
+
+![phpcoderunner](https://user-images.githubusercontent.com/13142418/57496602-79aeaf00-7306-11e9-8c18-32f00bd28307.gif)

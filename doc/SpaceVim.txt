@@ -1271,15 +1271,6 @@ LANG#PHP                                             *SpaceVim-layer-lang-php*
 This layer is for PHP development. It proides code completion, syntax
 checking, and jump to definition.
 
-Requirements:
->
-  PHP 5.3+
-  PCNTL Extension
-  Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
-  JSON(for Vim 7.4+)Extension
-  Composer Project
-<
-
 ==============================================================================
 LANG#PONY                                           *SpaceVim-layer-lang-pony*
 
