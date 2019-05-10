@@ -62,7 +62,7 @@ lsp 模块默认使用 `php-language-server` 作为 PHP 的语言服务器后台
     "php"
   ]
   [layers.override_cmd]
-    ruby = ["php-language-server"]
+    php = ["php-language-server"]
 ```
 
 ### 语法检查
@@ -75,8 +75,6 @@ lsp 模块默认使用 `php-language-server` 作为 PHP 的语言服务器后台
 ```sh
 composer require --dev vimeo/psalm
 ```
-
-![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
 
 ### 工程文件跳转
 
