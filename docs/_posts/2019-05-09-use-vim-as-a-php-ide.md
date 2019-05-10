@@ -19,9 +19,45 @@ SpaceVim 是一个模块化的 Vim IDE，针对 PHP 这一语言的支持主要�
 <!-- vim-markdown-toc GFM -->
 
 - [安装模块](#安装模块)
+- [代码自动补全](#代码自动补全)
 
 <!-- vim-markdown-toc -->
 
 ### 安装模块
 
+SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启用
+`lang#php` 模块，通过快捷键 `SPC f v d` 打开配置文件，添加如下片断：
 
+```toml
+[[layers]]
+  name = "lang#php"
+```
+
+启用 `lang#php` 模块后，在打开 PHP 文件时，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
+
+### 代码自动补全
+
+`autocomplete` 模块为 SpaceVim 提供了自动补全功能，目前针对 PHP 而言，比较好的补全方案是配合使用 lsp 模块：
+
+```toml
+[[layers]]
+  name = "lsp"
+```
+
+lsp 模块默认使用 `php-language-server` 作为 PHP 的语言服务器后台命令，首先需要安装 php-language-server：
+
+```sh
+gem install solargraph
+```
+
+在配置文件中添加如下内容即可为 ruby 启用语言服务器：
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "php"
+  ]
+  [layers.override_cmd]
+    ruby = ["php-language-server"]
+```
