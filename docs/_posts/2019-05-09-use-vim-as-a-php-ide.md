@@ -84,7 +84,16 @@ composer require --dev vimeo/psalm
 
 ### 工程文件跳转
 
-SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转alternate文件。
+SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 alternate 文件。需要在项目根目录添加工程文件 `.project_alt.json`：
+
+```json
+{
+  "src/*.php": {"alternate": "test/{}.php"},
+  "test/*.php": {"alternate": "src/{}.php"}
+}
+```
+
+通过以上的配置，就可以使用命令 `:A` 在源文件和测试文件之间进行跳转。
 
 
 ### 代码格式化
