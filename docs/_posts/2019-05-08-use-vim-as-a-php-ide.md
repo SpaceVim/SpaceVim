@@ -30,7 +30,7 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run psalm asynchronously.
+It will run [psalm](https://github.com/vimeo/psalm) asynchronously.
 
 To install psalm, you may need to run:
 
