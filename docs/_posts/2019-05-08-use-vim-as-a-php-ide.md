@@ -8,6 +8,23 @@ comments: true
 commentsID: "Use Vim as a PHP IDE"
 ---
 
+# [Blogs](../blog/) >> Use Vim as a PHP IDE
+
+This is a general guide for using SpaceVim as a PHP IDE, including layer configuration and usage. 
+Each of the following sections will be covered:
+
+<!-- vim-markdown-toc GFM -->
+
+- [Enable language layer](#enable-language-layer)
+- [Code completion](#code-completion)
+- [Syntax linting](#syntax-linting)
+- [Jump to test file](#jump-to-test-file)
+- [running code](#running-code)
+- [Code formatting](#code-formatting)
+- [REPL support](#repl-support)
+
+<!-- vim-markdown-toc -->
+
 ### Enable language layer
 
 To add PHP language support in SpaceVim, you need to enable the `lang#php` layer. Press `SPC f v d` to open
@@ -70,7 +87,6 @@ Before using this feature, please install php_beautifier:
 ```sh
 pear install PHP_Beautifier
 ```
-
 
 ### REPL support
 
