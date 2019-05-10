@@ -106,7 +106,7 @@ let g:spacevim_enable_bepo_layout  = 0
 let g:spacevim_max_column              = 120
 
 ""
-" @section max_column, options-home_files_number
+" @section home_files_number, options-home_files_number
 " @parentsection options
 " Change the list number of files for SpaceVim home. Default is 6.
 " >
@@ -234,7 +234,7 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "   endif
   " <
   "
-  " and you can alse set this option to coc, then coc.nvim will be useed.
+  " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
