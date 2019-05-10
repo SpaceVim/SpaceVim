@@ -31,9 +31,9 @@ CONTENTS                                                   *SpaceVim-contents*
       11. enable_ycm.............................|SpaceVim-options-enable_ycm|
       12. error_symbol.........................|SpaceVim-options-error_symbol|
       13. guifont...................................|SpaceVim-options-guifont|
-      14. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      15. max_column.............................|SpaceVim-options-max_column|
-      16. max_column......................|SpaceVim-options-home_files_number|
+      14. home_files_number...............|SpaceVim-options-home_files_number|
+      15. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      16. max_column.............................|SpaceVim-options-max_column|
       17. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
       18. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
       19. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
@@ -226,6 +226,14 @@ Set the guifont of SpaceVim. Default is empty.
 <
 
 ==============================================================================
+HOME_FILES_NUMBER                         *SpaceVim-options-home_files_number*
+
+Change the list number of files for SpaceVim home. Default is 6.
+>
+  home_files_number = 6
+<
+
+==============================================================================
 LINT_ON_THE_FLY                             *SpaceVim-options-lint_on_the_fly*
 
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
@@ -239,14 +247,6 @@ MAX_COLUMN                                       *SpaceVim-options-max_column*
 Change the max number of columns for SpaceVim. Default is 120.
 >
   max_column = 120
-<
-
-==============================================================================
-MAX_COLUMN                                *SpaceVim-options-home_files_number*
-
-Change the list number of files for SpaceVim home. Default is 6.
->
-  home_files_number = 6
 <
 
 ==============================================================================

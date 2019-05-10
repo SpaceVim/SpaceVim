@@ -106,7 +106,7 @@ let g:spacevim_enable_bepo_layout  = 0
 let g:spacevim_max_column              = 120
 
 ""
-" @section max_column, options-home_files_number
+" @section home_files_number, options-home_files_number
 " @parentsection options
 " Change the list number of files for SpaceVim home. Default is 6.
 " >
