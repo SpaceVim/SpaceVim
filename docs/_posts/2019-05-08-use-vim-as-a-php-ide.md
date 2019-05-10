@@ -30,15 +30,13 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run rubocop asynchronously.
+It will run psalm asynchronously.
 
-Install rubocop via gem:
+To install psalm, you may need to run:
 
 ```sh
-gem install rubocop
+composer require --dev vimeo/psalm
 ```
-
-![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
 
 ### Jump to test file
 
