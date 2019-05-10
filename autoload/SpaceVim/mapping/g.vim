@@ -7,8 +7,8 @@
 "=============================================================================
 
 function! SpaceVim#mapping#g#init() abort
-    nnoremap <silent><nowait> [g] :<c-u>LeaderGuide "g"<CR>
-    nmap g [g]
+    nnoremap <silent><nowait> [G] :<c-u>LeaderGuide "g"<CR>
+    nmap g [G]
     let g:_spacevim_mappings_g = {}
     let g:_spacevim_mappings_g['<C-G>'] = ['call feedkeys("g\<c-g>", "n")', 'show cursor info']
     nnoremap g<c-g> g<c-g>
