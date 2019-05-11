@@ -45,6 +45,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 | srcery       | yes      | no       | yes      | yes      | yes        |
 | onedark      | yes      | no       | yes      | yes      | yes        |
 | jellybeans   | yes      | no       | yes      | yes      | yes        |
+| palenight    | yes      | no       | yes      | yes      | yes        |
 | one          | yes      | yes      | yes      | yes      | yes        |
 | nord         | yes      | no       | yes      | yes      | yes        |
 | gruvbox      | yes      | yes      | yes      | yes      | yes        |

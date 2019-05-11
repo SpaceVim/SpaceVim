@@ -38,6 +38,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ['SpaceVim/vim-material', { 'merged' : 0}],
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
+        \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
   "
   " TODO:
