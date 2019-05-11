@@ -9,6 +9,9 @@
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
   call add(plugins,['idanarye/vim-vebugger', {'merged' : 0}])
+  if g:spacevim_filemanager !=# 'vimfiler'
+    call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  endif
   return plugins
 endfunction
 
