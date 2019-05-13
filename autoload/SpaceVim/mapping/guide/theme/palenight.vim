@@ -48,7 +48,8 @@ let s:guiChangedColor   = '#5f5f5f'
 " group_in: windows id in iedit-normal mode
 
 function! SpaceVim#mapping#guide#theme#palenight#palette() abort
-  if get(g:, 'spacevim_statusline_bright', 0)
+  let is_bright = SpaceVim#layers#colorscheme#get_variable()['bright_statusline']
+  if is_bright
     return [
           \ [ s:guiBlack , s:gui08 , s:ctermBlack , s:cterm08 ],
           \ [ s:guiWhite , s:gui02 , s:ctermWhite , s:cterm02 ],
