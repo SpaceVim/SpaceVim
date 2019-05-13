@@ -173,7 +173,7 @@ Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer
 
 **Updating Manually with git**
 
-Yor can close Vim/Neovim and update the git repository to update manually:
+You can close Vim/Neovim and update the git repository to update manually:
 
 `git -C ~/.SpaceVim pull`.
 
