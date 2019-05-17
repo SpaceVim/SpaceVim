@@ -1187,7 +1187,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
-| `N`                   | Create new file under corsor                      |
+| `N`                   | Create new file under cursor                      |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
