@@ -26,6 +26,7 @@ main () {
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect autoload/SpaceVim/api/neovim/floating.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
