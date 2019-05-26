@@ -19,7 +19,7 @@ endif
 
 
 if exists('*nvim_create_namespace')
-  " @vimlint(EVL102, 1, l:col)
+  " @vimlint(EVL103, 1, a:col)
   function! s:self.info(line, col, message)  abort
     call nvim_buf_set_virtual_text(0, self._hi_namespace, a:line - 2, [[a:message, self.hi_info_group],], {})
   endfunction
@@ -29,7 +29,7 @@ if exists('*nvim_create_namespace')
   function! s:self.error(line, col, message)  abort
     call nvim_buf_set_virtual_text(0, self._hi_namespace, a:line - 2, [[a:message, self.hi_error_group],], {})
   endfunction
-  " @vimlint(EVL102, 0, l:col)
+  " @vimlint(EVL103, 0, a:col)
 else
 
   function! s:self.info(line, col, message)  abort
