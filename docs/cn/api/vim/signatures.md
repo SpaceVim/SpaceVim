@@ -1,24 +1,25 @@
 ---
 title: "vim#signatures api"
-description: "vim#signatures API provides some basic functions for showing signatures info."
+description: "vim#signatures API 提供一些设置和获取 Vim 提示消息的函数。"
+lang: cn
 ---
 
-# [Available APIs](../../) >> vim#signatures
+# [可用 APIs](../../) >> vim#signatures
 
 <!-- vim-markdown-toc GFM -->
 
-- [Intro](#intro)
-- [Functions ane varilues](#functions-ane-varilues)
+- [模块简介](#模块简介)
+- [函数及变量](#函数及变量)
 
 <!-- vim-markdown-toc -->
 
-## Intro
+## 模块简介
 
-vim#signatures API provides some basic functions for showing signatures info.
+vim#signatures API 提供一些设置和获取 Vim 提示消息的函数。
 
-## Functions ane varilues
+## 函数及变量
 
-| function name           | description                                           |
+| 函数名称                | 功能描述                                              |
 | ----------------------- | ----------------------------------------------------- |
 | `info(line, col, msg)`  | show info signature message on specific line and col  |
 | `warn(line, col, msg)`  | show warn signature message on specific line and col  |
