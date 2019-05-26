@@ -60,7 +60,6 @@ function! SpaceVim#mapping#guide#theme#palenight#palette() abort
           \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
           \ ['#282828', '#689d6a', 235, 72],
           \ ['#282828', '#8f3f71', 235, 132],
-          \ 'bright'
           \ ]
   else
     return [
@@ -73,7 +72,6 @@ function! SpaceVim#mapping#guide#theme#palenight#palette() abort
           \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
           \ ['#282828', '#689d6a', 235, 72],
           \ ['#282828', '#8f3f71', 235, 132],
-          \ 'dark',
           \ ]
   endif
 endfunction
