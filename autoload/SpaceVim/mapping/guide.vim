@@ -14,6 +14,8 @@ scriptencoding utf-8
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
+let s:KEY = SpaceVim#api#import('vim#key')
+let s:FLOATING = SpaceVim#api#import('neovim#floating')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -392,11 +394,13 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
-    call nvim_win_config(win_getid(s:gwin), &columns, layout.win_dim + 2, 
+    call s:FLOATING.win_config(win_getid(s:gwin), 
           \ {
           \ 'relative': 'editor',
-          \ 'row': &lines - layout.win_dim - 4,
-          \ 'col': 0
+          \ 'width'   : &columns, 
+          \ 'height'  : layout.win_dim + 2,
+          \ 'row'     : &lines - layout.win_dim - 4,
+          \ 'col'     : 0
           \ })
 
   else
@@ -466,6 +470,8 @@ function! s:wait_for_input() abort " {{{
   else
     if inp ==# ' '
       let inp = '[SPC]'
+    else
+      let inp = s:KEY.nr2name(char2nr(inp))
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
@@ -476,7 +482,7 @@ function! s:wait_for_input() abort " {{{
       doautocmd WinEnter
       let keys = get(s:, 'prefix_key_inp', '')
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      call s:build_mpt(['key bidings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      call s:build_mpt(['key bindings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
       let s:prefix_key_inp = ''
       let s:guide_help_mode = 0
     endif
@@ -504,11 +510,13 @@ function! s:winopen() abort " {{{
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
-    call nvim_open_win(s:bufnr, v:true, &columns, 12,
+    call s:FLOATING.open_win(s:bufnr, v:true,
           \ {
           \ 'relative': 'editor',
-          \ 'row': &lines - 14,
-          \ 'col': 0
+          \ 'width'   : &columns,
+          \ 'height'  : 12,
+          \ 'row'     : &lines - 14,
+          \ 'col'     : 0
           \ })
   else
     if bufexists(s:bufnr)

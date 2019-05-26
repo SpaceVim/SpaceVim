@@ -11,7 +11,7 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
+    call add(plugins, ['scrooloose/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
@@ -53,7 +53,7 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
   nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-  "]e or [e move current line ,count can be useed
+  "]e or [e move current line ,count can be used
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
   nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
@@ -100,14 +100,12 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
 
   " file tree key bindings
-  if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'VimFiler -no-split', 'Explore current directory', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'VimFiler', 'Explore current directory (other window)', 1)
-  elseif g:spacevim_filemanager ==# 'nerdtree'
-  elseif g:spacevim_filemanager ==# 'defx'
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'let g:_spacevim_autoclose_defx = 0 | Defx -split=no | let g:_spacevim_autoclose_defx = 1', 'Explore current directory', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'Defx', 'Explore current directory (other window)', 1)
-  endif
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [0])',
+        \ 'Explore current directory', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
+        \ . string(s:_function('s:explore_current_dir')) . ', [1])',
+        \ 'Explore current directory(other windows)', 1)
 
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
@@ -202,7 +200,7 @@ function! SpaceVim#layers#core#config() abort
     " TODO: fix all these command
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
@@ -401,7 +399,7 @@ function! s:split_string(newline) abort
         break
       endif
     endwhile
-    let l:connector = a:newline ? "\n" : ""
+    let l:connector = a:newline ? "\n" : ''
     let l:save_register_m = @m
     let @m = sep . l:connector . sep
     normal! "mp
@@ -439,12 +437,13 @@ endfunction
 function! s:safe_erase_buffer() abort
   if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
     normal! ggdG
+  else
+    echo 'canceled!'
   endif
-  redraw!
 endfunction
 
 function! s:ToggleWinDiskManager() abort
-  if bufexists("__windisk__")
+  if bufexists('__windisk__')
     execute 'bd "__windisk__"'
   else
     call SpaceVim#plugins#windisk#open()
@@ -465,6 +464,8 @@ endfunction
 function! s:safe_revert_buffer() abort
   if s:MESSAGE.confirm('Revert buffer form ' . expand('%:p'))
     edit!
+  else
+    echo 'canceled!'
   endif
   redraw!
 endfunction
@@ -662,4 +663,32 @@ endfunction
 " this func only for neovim-qt in windows
 function! s:restart_neovim_qt() abort
   call system('taskkill /f /t /im nvim.exe')
+endfunction
+
+
+let g:_spacevim_autoclose_filetree = 1
+function! s:explore_current_dir(cur) abort
+  if g:spacevim_filemanager ==# 'vimfiler'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      VimFilerCurrentDir -no-split -no-toggle
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      VimFilerCurrentDir -no-toggle
+    endif
+  elseif g:spacevim_filemanager ==# 'nerdtree'
+    if !a:cur
+      exe 'e ' . getcwd() 
+    else
+      NERDTreeCWD
+    endif
+  elseif g:spacevim_filemanager ==# 'defx'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      Defx -no-toggle -no-resume -split=no `getcwd()`
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      Defx -no-toggle
+    endif
+  endif
 endfunction

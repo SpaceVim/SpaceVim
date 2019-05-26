@@ -173,7 +173,7 @@ Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer
 
 **Updating Manually with git**
 
-Yor can close Vim/Neovim and update the git repository to update manually:
+You can close Vim/Neovim and update the git repository to update manually:
 
 `git -C ~/.SpaceVim pull`.
 
@@ -1126,7 +1126,7 @@ Files manipulation commands (start with f):
 | `SPC f W`    | save a file with elevated privileges (sudo layer)         |
 | `SPC f f`    | open file                                                 |
 | `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree      |
+| `SPC f o`    | Find current file in file tree                            |
 | `SPC f R`    | rename the current file(TODO)                             |
 | `SPC f s`    | save a file                                               |
 | `SPC f S`    | save all files                                            |
@@ -1187,7 +1187,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
-| `N`                   | Create new file under corsor                      |
+| `N`                   | Create new file under cursor                      |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
@@ -1829,7 +1829,16 @@ Custom sign symbol:
 | ------ | ------------ | ---------------- |
 | `✖`    | Error        | `error_symbol`   |
 | `➤`    | warning      | `warning_symbol` |
-| `🛈`    | Info         | `info_symbol`    |
+| `ⓘ`    | Info         | `info_symbol`    |
+
+**quickfix list movement:**
+
+| Mappings       | Descriptions                           |
+| -------------- | -------------------------------------- |
+| `<Leader> q l` | Open quickfix list windows             |
+| `<Leader> q c` | clear quickfix list                    |
+| `<Leader> q n` | jump to next item in quickfix list     |
+| `<Leader> q p` | jump to previous item in quickfix list |
 
 ### Managing projects
 

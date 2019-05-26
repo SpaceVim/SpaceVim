@@ -282,10 +282,18 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
     endtry
   endif
   exe 'hi! SpaceVim_tabline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-  exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+  if name ==# 'palenight'
+    exe 'hi! SpaceVim_tabline_b ctermbg=' . '236'   . ' ctermfg=' . t[1][3] . ' guibg=' .'#44475a'. ' guifg=' . t[1][0]
+  else
+    exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+  endif
   " SpaceVim_tabline_c is for modified buffers
   exe 'hi! SpaceVim_tabline_m ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
-  exe 'hi! SpaceVim_tabline_m_i ctermbg=' . t[1][2] . ' ctermfg=' . t[4][3] . ' guibg=' . t[1][1] . ' guifg=' . t[4][1]
+  if name ==# 'palenight'
+    exe 'hi! SpaceVim_tabline_m_i ctermbg=' . '236' . ' ctermfg=' . t[4][3] . ' guibg=' . '#44475a' . ' guifg=' . t[4][1]
+  else
+    exe 'hi! SpaceVim_tabline_m_i ctermbg=' . t[1][2] . ' ctermfg=' . t[4][3] . ' guibg=' . t[1][1] . ' guifg=' . t[4][1]
+  endif
   call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')

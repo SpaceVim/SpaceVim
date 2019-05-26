@@ -40,8 +40,9 @@ fu! zvim#util#SmartClose() abort
   for i in range(1,win_count)
     if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
       let num = num - 1
-    endif
-    if getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
+    elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
+      let num = num - 1
+    elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
       let num = num - 1
     endif
   endfor

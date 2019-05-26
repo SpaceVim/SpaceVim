@@ -39,4 +39,5 @@ name = "fzf"
 | `<Leader> f m`       | Fuzzy find output messages    |
 | `<Leader> f o`       | Fuzzy find outline            |
 | `<Leader> f q`       | Fuzzy find quick fix          |
+| `<Leader> f t`       | Fuzzy find global tags          |
 | `SPC b b`            | List all buffers              |

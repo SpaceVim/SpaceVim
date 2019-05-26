@@ -73,8 +73,22 @@ let g:spacevim_expand_tab              = 1
 " <
 
 ""
-" Enable/Disable relativenumber, by default it is enabled.
+" Enable/Disable relativenumber in current windows, by default it is enabled.
 let g:spacevim_relativenumber          = 1
+
+
+""
+" @section enable_bepo_layout, options-enable_bepo_layout
+" @parentsection options
+" Enable/Disable bepo layout, by default it is disabled.
+" >
+"   enable_bepo_layout = true
+" <
+
+""
+" Enable/Disable bepo layout, by default it is disabled.
+let g:spacevim_enable_bepo_layout  = 0
+
 
 ""
 " @section max_column, options-max_column
@@ -92,7 +106,7 @@ let g:spacevim_relativenumber          = 1
 let g:spacevim_max_column              = 120
 
 ""
-" @section max_column, options-home_files_number
+" @section home_files_number, options-home_files_number
 " @parentsection options
 " Change the list number of files for SpaceVim home. Default is 6.
 " >
@@ -220,7 +234,7 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "   endif
   " <
   "
-  " and you can alse set this option to coc, then coc.nvim will be useed.
+  " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
@@ -688,6 +702,25 @@ let g:spacevim_commandline_prompt = '➭'
 "   let g:spacevim_lint_on_the_fly = 0
 " <
 let g:spacevim_lint_on_the_fly         = 0
+
+""
+" @section retry_cnt, options-retry_cnt
+" @parentsection options
+" Set the number of retries for SpaceVim Update when failed. Default is 3.
+" Set to 0 to disable this feature, or you can set to another number.
+" >
+"   update_retry_cnt = 3
+" <
+
+
+""
+" Set the number of retries for SpaceVim Update when failed. Default is 3.
+" Set to 0 to disable this feature, or you can set to another number.
+" >
+"   let g:spacevim_update_retry_cnt = 3
+" <
+let g:spacevim_update_retry_cnt          = 3
+
 ""
 " Enable/Disable vimfiler in the welcome windows. Default is 1.
 " This will cause vim to start up slowly if there are too many files in the
@@ -872,12 +905,6 @@ function! SpaceVim#end() abort
 
   if SpaceVim#layers#isLoaded('core#statusline')
     call SpaceVim#layers#core#statusline#init()
-  endif
-
-  if !g:spacevim_relativenumber
-    set norelativenumber
-  else
-    set relativenumber
   endif
 
   " tab options:

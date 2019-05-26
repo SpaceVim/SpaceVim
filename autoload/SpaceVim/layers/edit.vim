@@ -21,6 +21,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['kana/vim-textobj-user'],
         \ ['kana/vim-textobj-indent'],
         \ ['kana/vim-textobj-line'],
+        \ ['dhruvasagar/vim-table-mode'],
         \ ['kana/vim-textobj-entire'],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
@@ -32,6 +33,9 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ]
   if executable('fcitx')
     call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+  endif
+  if g:spacevim_enable_bepo_layout
+    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction

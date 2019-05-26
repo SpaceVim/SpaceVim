@@ -22,6 +22,10 @@ function! SpaceVim#autocmds#init() abort
           \   q | endif
     autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
     autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
+    if g:spacevim_relativenumber
+      autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
+      autocmd BufLeave,WinLeave * if &nu | set nornu | endif
+    endif
     autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
@@ -58,7 +62,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord call s:fix_VertSplit()
+    autocmd ColorScheme gruvbox,jellybeans,nord,srcery call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
@@ -90,7 +94,8 @@ function! s:enable_touchpad() abort
   call system('synclient touchpadoff=0')
 endfunction
 function! s:fixindentline() abort
-  if !exists('s:done')
+  if !exists('s:done') && has('conceal')
+    " The indentLine plugin need conceal feature
     if exists(':IndentLinesToggle') == 2
       IndentLinesToggle
       IndentLinesToggle
@@ -113,7 +118,7 @@ function! s:generate_doc() abort
   endif
 endfunction
 
-function! s:fix_VertSplit() abort
+function! s:fix_colorschem_in_SpaceVim() abort
   if &background ==# 'dark'
     if g:colors_name ==# 'gruvbox'
       hi VertSplit guibg=#282828 guifg=#181A1F
@@ -121,6 +126,10 @@ function! s:fix_VertSplit() abort
       hi VertSplit guibg=#151515 guifg=#080808
     elseif g:colors_name ==# 'nord'
       hi VertSplit guibg=#2E3440 guifg=#262626
+    elseif g:colors_name ==# 'srcery'
+      hi VertSplit guibg=#1C1B19 guifg=#262626
+      hi clear Visual
+      hi Visual guibg=#303030
     endif
   else
     if g:colors_name ==# 'gruvbox'

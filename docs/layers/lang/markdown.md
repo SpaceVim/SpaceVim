@@ -38,6 +38,8 @@ You can install remark via [npm](https://www.npmjs.com/get-npm), the commands ar
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
+npm -g install wcwidth
 ```
 
 You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown as below:

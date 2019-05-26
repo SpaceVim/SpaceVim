@@ -29,19 +29,18 @@ call defx#custom#column('mark', {
       \ 'selected_icon': '',
       \ })
 
-call defx#custom#column('filename', {
+call defx#custom#column('icon', {
       \ 'directory_icon': '',
       \ 'opened_icon': '',
+      \ 'root_icon': ' ',
       \ })
-
-let g:_spacevim_autoclose_defx = 1
 
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
+        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_filetree
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
@@ -146,15 +145,8 @@ function! DefxSmartL(_)
       if exists(':ChooseWin') == 2
         ChooseWin
       else
-        if has('nvim')
-          let input = input({
-                \ 'prompt'      : 'ChooseWin No.: ',
-                \ 'cancelreturn': 0,
-                \ })
-          if input == 0 | return | endif
-        else
-          let input = input('ChooseWin No.: ')
-        endif
+        let input = input('ChooseWin No./Cancel(n): ')
+        if input ==# 'n' | return | endif
         if input == winnr() | return | endif
         exec input . 'wincmd w'
       endif

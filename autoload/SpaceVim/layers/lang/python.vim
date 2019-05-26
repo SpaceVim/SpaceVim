@@ -32,6 +32,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, ['Vimjas/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
+  call add(plugins, ['jeetsukumaran/vim-pythonsense', 
+        \ { 'on_ft' : 'python'}])
   return plugins
 endfunction
 
@@ -48,6 +50,11 @@ function! SpaceVim#layers#lang#python#config() abort
   " mapping in your vimrc, such as if you do:
   let g:pydocstring_enable_mapping = 0
 
+  if g:spacevim_autocomplete_parens
+    augroup python_delimit
+      au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+    augroup end
+  endif
   " }}}
 
   call SpaceVim#plugins#runner#reg_runner('python', 
@@ -120,6 +127,7 @@ function! s:language_specified_mappings() abort
       autocmd BufWritePost *.py Neoformat yapf
     augroup end
   endif
+
 endfunction
 
 func! s:getexe() abort
