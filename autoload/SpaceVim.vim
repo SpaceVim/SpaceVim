@@ -365,6 +365,16 @@ let g:spacevim_sidebar_width           = 30
 " <
 let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
+
+""
+" @section enable_cursorline, options-enable_cursorline
+" @parentsection options
+" Enable/Disable cursorline. Default is true, cursorline will be
+" highlighted in normal mode.To disable this feature:
+" >
+"   enable_cursorline = false
+" <
+
 ""
 " Enable/Disable cursorline. Default is 1, cursorline will be
 " highlighted in normal mode.To disable this feature:
@@ -494,18 +504,53 @@ let g:spacevim_enable_cursorcolumn     = 0
 "   let g:spacevim_error_symbol = '+'
 " <
 let g:spacevim_error_symbol            = '✖'
+
+""
+" @section warning_symbol, options-warning_symbol
+" @parentsection options
+" Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
+" >
+"   warning_symbol = '!'
+" <
+
 ""
 " Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 " >
 "   let g:spacevim_warning_symbol = '!'
 " <
 let g:spacevim_warning_symbol          = '⚠'
+
+""
+" @section info_symbol, options-info_symbol
+" @parentsection options
+" Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+" >
+"   info_symbol = 'i'
+" <
+
 ""
 " Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
 " >
 "   let g:spacevim_info_symbol = 'i'
 " <
 let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
+
+""
+" @section terminal_cursor_shape, options-terminal_cursor_shape
+" @parentsection options
+" Set the SpaceVim cursor shape in the terminal.
+" >
+"   0 : to prevent Nvim from changing the cursor shape.
+"   1 : to enable non-blinking mode-sensitive cursor.
+"   2 : to enable blinking mode-sensitive cursor (default).
+" >
+" Host terminal must support the DECSCUSR CSI escape sequence.
+" Depending on the terminal emulator, using this option with nvim under
+" tmux might require adding the following to ~/.tmux.conf:
+" >
+"   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+" <
+
 ""
 " Set the SpaceVim cursor shape in the terminal.
 " >
