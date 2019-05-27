@@ -18,6 +18,7 @@ main () {
             _checkdir syntax/
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/neovim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
