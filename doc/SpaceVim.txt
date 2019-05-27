@@ -18,30 +18,32 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
-      1. checkinstall..........................|SpaceVim-options-checkinstall|
-      2. default_indent......................|SpaceVim-options-default_indent|
-      3. enable_ale..............................|SpaceVim-options-enable_ale|
-      4. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
-      5. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      6. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      7. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
-      8. enable_neomake......................|SpaceVim-options-enable_neomake|
-      9. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
-      10. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      11. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      12. error_symbol.........................|SpaceVim-options-error_symbol|
-      13. guifont...................................|SpaceVim-options-guifont|
-      14. home_files_number...............|SpaceVim-options-home_files_number|
-      15. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      16. max_column.............................|SpaceVim-options-max_column|
-      17. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      18. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      19. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      20. relativenumber.....................|SpaceVim-options-relativenumber|
-      21. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      22. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      23. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      24. windows_leader.....................|SpaceVim-options-windows_leader|
+      1. autocomplete_method............|SpaceVim-options-autocomplete_method|
+      2. checkinstall..........................|SpaceVim-options-checkinstall|
+      3. default_indent......................|SpaceVim-options-default_indent|
+      4. enable_ale..............................|SpaceVim-options-enable_ale|
+      5. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
+      6. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
+      7. enable_guicolors..................|SpaceVim-options-enable_guicolors|
+      8. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
+      9. enable_key_frequency..........|SpaceVim-options-enable_key_frequency|
+      10. enable_neomake.....................|SpaceVim-options-enable_neomake|
+      11. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      12. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      13. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      14. error_symbol.........................|SpaceVim-options-error_symbol|
+      15. guifont...................................|SpaceVim-options-guifont|
+      16. home_files_number...............|SpaceVim-options-home_files_number|
+      17. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      18. max_column.............................|SpaceVim-options-max_column|
+      19. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      20. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      21. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      22. relativenumber.....................|SpaceVim-options-relativenumber|
+      23. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      24. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      25. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      26. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -124,6 +126,26 @@ here is an example setting SpaceVim options:
 <
 
 ==============================================================================
+AUTOCOMPLETE_METHOD                     *SpaceVim-options-autocomplete_method*
+
+Set the autocomplete engine of spacevim, the default logic is:
+>
+  if has('python3')
+    let g:spacevim_autocomplete_method = 'deoplete'
+  elseif has('lua')
+    let g:spacevim_autocomplete_method = 'neocomplete'
+  elseif has('python')
+    let g:spacevim_autocomplete_method = 'completor'
+  elseif has('timers')
+    let g:spacevim_autocomplete_method = 'asyncomplete'
+  else
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+<
+
+and you can alse set this option to coc, then coc.nvim will be used.
+
+==============================================================================
 CHECKINSTALL                                   *SpaceVim-options-checkinstall*
 
 Enable/Disable checkinstall on SpaceVim startup. Default is true.
@@ -175,6 +197,15 @@ Enable true color support in terminal. Default is true.
 ENABLE_INSERT_LEADER                   *SpaceVim-options-enable_insert_leader*
 
 Enable/Disable spacevim's insert mode leader, default is enable
+
+==============================================================================
+ENABLE_KEY_FREQUENCY                   *SpaceVim-options-enable_key_frequency*
+
+Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+enable it:
+>
+  enable_key_frequency = true
+<
 
 ==============================================================================
 ENABLE_NEOMAKE                               *SpaceVim-options-enable_neomake*

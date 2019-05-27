@@ -209,6 +209,16 @@ let g:spacevim_plugin_bundle_dir
 "   let g:spacevim_realtime_leader_guide = 0
 " <
 let g:spacevim_realtime_leader_guide   = 1
+
+""
+" @section enable_key_frequency, options-enable_key_frequency
+" @parentsection options
+" Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+" enable it:
+" >
+"   enable_key_frequency = true
+" <
+
 ""
 " Enable/Disable key frequency catching of SpaceVim. default value is 0. to
 " enable it:
@@ -218,6 +228,27 @@ let g:spacevim_realtime_leader_guide   = 1
 let g:spacevim_enable_key_frequency = 0
 if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
+
+  ""
+  " @section autocomplete_method, options-autocomplete_method
+  " @parentsection options
+  " Set the autocomplete engine of spacevim, the default logic is:
+  " >
+  "   if has('python3')
+  "     let g:spacevim_autocomplete_method = 'deoplete'
+  "   elseif has('lua')
+  "     let g:spacevim_autocomplete_method = 'neocomplete'
+  "   elseif has('python')
+  "     let g:spacevim_autocomplete_method = 'completor'
+  "   elseif has('timers')
+  "     let g:spacevim_autocomplete_method = 'asyncomplete'
+  "   else
+  "     let g:spacevim_autocomplete_method = 'neocomplcache'
+  "   endif
+  " <
+  "
+  " and you can alse set this option to coc, then coc.nvim will be used.
+
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
