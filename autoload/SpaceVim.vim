@@ -646,11 +646,24 @@ let g:spacevim_terminal_cursor_shape = 2
 " <
 let g:spacevim_vim_help_language       = 'en'
 ""
+" @section language, options-language
+" @parentsection options
+" Set the message language of vim. Default is 'en_US.UTF-8'.
+" >
+"   language = 'en_CA.utf8'
+" <
+
+""
 " Set the message language of vim. Default is 'en_US.UTF-8'.
 " >
 "   let g:spacevim_language = 'en_CA.utf8'
 " <
 let g:spacevim_language                = ''
+""
+" @section keep_server_alive, options-keep_server_alive
+" @parentsection options
+" Option for keep the spacevim server ailive
+
 ""
 " Option for keep the spacevim server ailive
 let g:spacevim_keep_server_alive = 1
@@ -679,6 +692,15 @@ let g:spacevim_colorscheme_bg             = 'dark'
 " <
 let g:spacevim_colorscheme_default     = 'desert'
 ""
+" @section simple_mode, options-simple_mode
+" @parentsection options
+" Enable/disable simple mode of SpaceVim. Default is false.
+" In this mode, only few plugins will be installed.
+" >
+"   simple_mode = true
+" <
+
+""
 " Enable/disable simple mode of SpaceVim. Default is 0.
 " In this mode, only few plugins will be installed.
 " >
@@ -686,9 +708,22 @@ let g:spacevim_colorscheme_default     = 'desert'
 " <
 let g:spacevim_simple_mode             = 0
 ""
+" @section filemanager, options-filemanager
+" @parentsection options
+" The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
+
+""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 " you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
+""
+" @section filetree_direction, options-filetree_direction
+" @parentsection options
+" Config the direction of file tree. Default is 'right'. you can also set to
+" 'left'. 
+"
+" NOTE: if it is 'left', the tagbar will be move to right.
 
 ""
 " Config the direction of file tree. Default is 'right'. you can also set to
@@ -742,6 +777,14 @@ let g:spacevim_checkinstall            = 1
 "   <C-x>   switch buffer
 " <
 let g:spacevim_vimcompatible           = 0
+""
+" @section enable_debug, options-enable_debug
+" @parentsection options
+" Enable/Disable debug mode for SpaceVim. Default is false.
+" >
+"   enable_debug = true
+" <
+
 ""
 " Enable/Disable debug mode for SpaceVim. Default is 0.
 " >

@@ -26,34 +26,40 @@ CONTENTS                                                   *SpaceVim-contents*
       6. enable_ale..............................|SpaceVim-options-enable_ale|
       7. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
       8. enable_cursorline................|SpaceVim-options-enable_cursorline|
-      9. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      10. enable_guicolors.................|SpaceVim-options-enable_guicolors|
-      11. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
-      12. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
-      13. enable_neomake.....................|SpaceVim-options-enable_neomake|
-      14. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
-      15. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
-      16. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      17. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      18. error_symbol.........................|SpaceVim-options-error_symbol|
-      19. guifont...................................|SpaceVim-options-guifont|
-      20. home_files_number...............|SpaceVim-options-home_files_number|
-      21. info_symbol...........................|SpaceVim-options-info_symbol|
-      22. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      23. max_column.............................|SpaceVim-options-max_column|
-      24. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      25. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      26. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      27. relativenumber.....................|SpaceVim-options-relativenumber|
-      28. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      29. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      30. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      31. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      32. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      33. statusline_separator.........|SpaceVim-options-statusline_separator|
-      34. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      35. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      36. windows_leader.....................|SpaceVim-options-windows_leader|
+      9. enable_debug..........................|SpaceVim-options-enable_debug|
+      10. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      11. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      12. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
+      13. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      14. enable_neomake.....................|SpaceVim-options-enable_neomake|
+      15. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      16. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      17. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      18. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      19. error_symbol.........................|SpaceVim-options-error_symbol|
+      20. filemanager...........................|SpaceVim-options-filemanager|
+      21. filetree_direction.............|SpaceVim-options-filetree_direction|
+      22. guifont...................................|SpaceVim-options-guifont|
+      23. home_files_number...............|SpaceVim-options-home_files_number|
+      24. info_symbol...........................|SpaceVim-options-info_symbol|
+      25. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      26. language.................................|SpaceVim-options-language|
+      27. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      28. max_column.............................|SpaceVim-options-max_column|
+      29. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      30. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      31. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      32. relativenumber.....................|SpaceVim-options-relativenumber|
+      33. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      34. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      35. simple_mode...........................|SpaceVim-options-simple_mode|
+      36. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      37. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      38. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      39. statusline_separator.........|SpaceVim-options-statusline_separator|
+      40. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      41. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      42. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -207,6 +213,14 @@ normal mode.To disable this feature:
 <
 
 ==============================================================================
+ENABLE_DEBUG                                   *SpaceVim-options-enable_debug*
+
+Enable/Disable debug mode for SpaceVim. Default is false.
+>
+  enable_debug = true
+<
+
+==============================================================================
 ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
 
 Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -287,6 +301,20 @@ Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 <
 
 ==============================================================================
+FILEMANAGER                                     *SpaceVim-options-filemanager*
+
+The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
+nerdtree or defx
+
+==============================================================================
+FILETREE_DIRECTION                       *SpaceVim-options-filetree_direction*
+
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
+
+NOTE: if it is 'left', the tagbar will be move to right.
+
+==============================================================================
 GUIFONT                                             *SpaceVim-options-guifont*
 
 Set the guifont of SpaceVim. Default is empty.
@@ -308,6 +336,19 @@ INFO_SYMBOL                                     *SpaceVim-options-info_symbol*
 Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
 >
   info_symbol = 'i'
+<
+
+==============================================================================
+KEEP_SERVER_ALIVE                         *SpaceVim-options-keep_server_alive*
+
+Option for keep the spacevim server ailive
+
+==============================================================================
+LANGUAGE                                           *SpaceVim-options-language*
+
+Set the message language of vim. Default is 'en_US.UTF-8'.
+>
+  language = 'en_CA.utf8'
 <
 
 ==============================================================================
@@ -369,6 +410,15 @@ SIDEBAR_WIDTH                                 *SpaceVim-options-sidebar_width*
 
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
+
+==============================================================================
+SIMPLE_MODE                                     *SpaceVim-options-simple_mode*
+
+Enable/disable simple mode of SpaceVim. Default is false. In this mode, only
+few plugins will be installed.
+>
+  simple_mode = true
+<
 
 ==============================================================================
 SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
