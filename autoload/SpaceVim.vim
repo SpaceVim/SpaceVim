@@ -383,6 +383,22 @@ let g:spacevim_enable_neocomplcache    = 0
 " <
 let g:spacevim_enable_cursorline       = 1
 ""
+" @section statusline_separator, options-statusline_separator
+" @parentsection options
+" Set the statusline separators of statusline, default is 'arrow'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
+
+""
 " Set the statusline separators of statusline, default is 'arrow'
 " >
 "   Separators options:
@@ -396,10 +412,54 @@ let g:spacevim_enable_cursorline       = 1
 " See more details in: http://spacevim.org/documentation/#statusline
 "
 let g:spacevim_statusline_separator = 'arrow'
-let g:spacevim_statusline_inactive_separator = 'arrow'
+""
+" @section statusline_iseparator, options-statusline_iseparator
+" @parentsection options
+" Set the statusline separators of statusline in inactive windows, default is
+" 'arrow'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
 
 ""
-" Enable/Disable showing full path of current buffer on statusline
+" Set the statusline separators of statusline in inactive windows, default is
+" 'arrow'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
+let g:spacevim_statusline_iseparator = 'arrow'
+
+""
+" @section enable_statusline_bfpath, options-enable_statusline_bfpath
+" @parentsection options
+" Enable/Disable showing full path of current buffer on statusline, disabled
+" by default, to enable this feature:
+" >
+"   enable_statusline_bfpath = true
+" <
+
+""
+" Enable/Disable showing full path of current buffer on statusline, disabled
+" by default, to enable this feature:
+" >
+"   enable_statusline_bfpath = true
+" <
 let g:spacevim_enable_statusline_bfpath = 0
 
 ""
@@ -413,6 +473,19 @@ let g:spacevim_enable_statusline_bfpath = 0
 ""
 " Enable/Disable showing current tag on statusline
 let g:spacevim_enable_statusline_tag = 1
+""
+" @section statusline_left_sections, options-statusline_left_sections
+" @parentsection options
+" Define the left section of statusline in active windows. By default:
+" >
+"   statusline_left_sections = [
+"     'winnr',
+"     'filename',
+"     'major mode',
+"     'minor mode lighters',
+"     'version control info'
+"     ]
+" <
 
 ""
 " Define the left section of statusline in active windows. By default:
@@ -582,8 +655,18 @@ let g:spacevim_language                = ''
 " Option for keep the spacevim server ailive
 let g:spacevim_keep_server_alive = 1
 ""
+" @section colorscheme, options-colorscheme
+" @parentsection options
+" The colorscheme of SpaceVim. Default is 'gruvbox'.
+
+""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
+""
+" @section colorscheme_bg, options-colorscheme_bg
+" @parentsection options
+" The background of colorscheme. Default is 'dark'.
+
 ""
 " The background of colorscheme. Default is 'dark'.
 let g:spacevim_colorscheme_bg             = 'dark'
