@@ -219,7 +219,7 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:separators['arrow'])
+  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
   set tabline=%!SpaceVim#layers#core#tabline#get()
   augroup SpaceVim_tabline
     autocmd!
