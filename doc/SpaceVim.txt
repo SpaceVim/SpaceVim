@@ -1385,9 +1385,9 @@ MAPPINGS
   normal    SPC l i q     prompt for a qualified import
   normal    SPC l i o     organize imports of current file
   normal    SPC l i s     sort imports of current file
-  insert    <c-j>i        prompt for a qualified import
-  insert    <c-j>o        organize imports of current file
-  insert    <c-j>s        sort imports of current file
+  insert    <c-;>i        prompt for a qualified import
+  insert    <c-;>o        organize imports of current file
+  insert    <c-;>s        sort imports of current file
 
   Debug key bindings:
 
@@ -1419,7 +1419,7 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    SPC l r m     run main class
+  normal    SPC l r       run main class
 
   REPL key bindings:
 
@@ -1436,32 +1436,46 @@ MAPPINGS
   -------------------------------------------------------------
   normal    SPC l Q       bootstrap server when first-time-use
   normal    SPC l h       show Documentation of cursor symbol
-  normal    SPC l R       inline local refactoring of cursor symbol
+  normal    SPC l n       inline local refactoring of cursor symbol
   normal    SPC l e       rename cursor symbol
   normal    SPC l g       find Definition of cursor symbol
   normal    SPC l t       show Type of expression of cursor symbol
   normal    SPC l p       show Hierarchical view of a package
-  normal    SPC l r       find Usages of cursor symbol
+  normal    SPC l u       find Usages of cursor symbol
 
 <
-CODE FORMATTING
-To make neoformat support scala file, you should install scalariform.
-[`scalariform`](https://github.com/scala-ide/scalariform) and set
-'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/) to
+provide code completion, format, sort imports etc, if has python support. Also
+you can enable lsp layer to has a better experience.
+
+
+LANGUAGE SERVER `METALS-VIM`
+
+Right now `metals-vim` works with `coc.nvim` to offer a richer user experience
+than other servers(LanguageClient-neovim or vim-lsp). Please make sure that
+`metals-vim` executable is in your `system $PATH`. Installation guide is here:
+[`metals-vim`](https://scalameta.org/metals/docs/editors/vim.html)
+
 
 ENSIME-VIM SETUP STEPS
-The following is quick install steps, if you want to see complete details,
-please see: [`ensime`](http://ensime.github.io/editors/vim/install/)
 
-  1. Install vim`s plugin and its dependencies as following. `pip install
-    websocket-client sexpdata`, `pip install pynvim` (neovim only).
-  2. Integration ENSIME with your build tools, here we use sbt. > add
+The following is quick install steps, if you want to see complete details,
+please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+
+  1. Install vim`s plugin and its dependencies as following.
+
+     `pip install websocket-client sexpdata`,
+
+     `pip install pynvim` (neovim only).
+
+  2. Integration ENSIME with your build tools, here we use sbt. add
     (sbt-ensime) as global plugin for sbt: Put code `addSbtPlugin("org.ensime"
     % "sbt-ensime" % "2.6.1")` in file  '~/.sbt/plugins/plugins.sbt' (create
-    if not exists). > Armed with your build tool plugin, generate the
-    `.ensime` config file from your project directory in command line, e.g.
-    for sbt use `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the
-    first time will take several minutes.
+    if not exists). Armed with your build tool plugin, generate the `.ensime`
+    config file from your project directory in command line, e.g. for sbt use
+    `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the first time will
+    take several minutes.
+
   3. The first time you use ensime-vim (per Scala version), it will
     `bootstrap` the ENSIME server installation when opening a Scala file you
     will be prompted to run |:EnInstall|. Do that and give it a minute or two
@@ -1469,6 +1483,19 @@ please see: [`ensime`](http://ensime.github.io/editors/vim/install/)
     ENSIME is coming up, and the indexer and analyzer are ready. Going
     forward, ensime-vim will automatically start the ENSIME server when you
     edit Scala files in a project with an `.ensime` config present.
+
+
+CODE FORMATTING
+
+  1. To make neoformat support scala file, you should install scalariform.
+    [`scalariform`](https://github.com/scala-ide/scalariform) and set
+    'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+
+  2. If lsp
+    [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html) is
+    enabled, it will automatically use
+    [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
+    format code.
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
