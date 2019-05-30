@@ -119,7 +119,20 @@ function! SpaceVim#layers#lang#c#config() abort
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
   endif
-  let g:chromatica#enable_at_startup=1
+  let g:chromatica#enable_at_startup = 0
+  let g:clighter_autostart           = 0
+  augroup SpaceVim_lang_c
+    autocmd!
+    if s:enable_clang_syntax
+      if has('nvim') && SpaceVim#util#haspy3lib('clang')
+          auto FileType c,cpp  ChromaticaStart
+        " else Clamp will start when detect c, cpp file
+      elseif !has('job')
+        " Clighter8 will start when detect c, cpp file
+        auto FileType c,cpp  ClighterEnable
+      endif
+    endif
+  augroup END
   call add(g:spacevim_project_rooter_patterns, '.clang')
 endfunction
 
@@ -132,13 +145,26 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
     let s:clang_executable = a:var.clang_executable
-    let g:asyncomplete_clang_executable = a:var.clang_executable
+    if !has('nvim')
+      let g:asyncomplete_clang_executable = a:var.clang_executable
+    endif
   endif
 
   if has_key(a:var, 'libclang_path')
-    let g:chromatica#libclang_path = a:var.libclang_path
-    let g:asyncomplete_clang_libclang_path = a:var.libclang_path
-    let g:clamp_libclang_file = a:var.libclang_path
+    if has('nvim')
+      if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+        let g:chromatica#libclang_path = a:var.libclang_path
+      else
+        let g:clamp_libclang_path = a:var.libclang_path
+      endif
+    else
+      let g:asyncomplete_clang_libclang_path = a:var.libclang_path
+      if has('job')
+        let g:clighter8_libclang_path = a:var.libclang_path
+      else
+        let g:clighter_libclang_file = a:var.libclang_path
+      endif
+    endif
   endif
 
   let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
