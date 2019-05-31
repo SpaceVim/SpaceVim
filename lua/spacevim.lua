@@ -1,9 +1,11 @@
-local option = {}
+local options = require('spacevim.opt')
 
 local spacevim = {}
 
 
 function spacevim.begin()
+
+    options.init()
     
 end
 
