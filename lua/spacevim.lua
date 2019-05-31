@@ -1,17 +1,15 @@
-local options = require('spacevim.opt')
-
 local spacevim = {}
 
 
-function spacevim.begin()
+local options = require('spacevim.opt')
+local layers = require('spacevim.layer')
+
+
+
+function spacevim.bootstrap()
 
     options.init()
-    
-end
-
-
-
-function spacevim.load_layer()
+    layers.init()
     
 end
 
