@@ -6,4 +6,11 @@ function str.trim(str)
 end
 
 
+function str.fill(str, length, ...)
+    if string.len(str) > length then
+    end
+    
+end
+
+
 return str
