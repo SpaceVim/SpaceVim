@@ -35,10 +35,6 @@ The last release is v1.1.0, check out [following-HEAD](https://github.com/SpaceV
 
 If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
 
-Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
 <!-- vim-markdown-toc GFM -->
 
 - [New Features](#new-features)

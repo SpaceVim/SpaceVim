@@ -26,10 +26,6 @@ Github: <https://github.com/SpaceVim/SpaceVim>
 - [用户文档](https://spacevim.org/cn/documentation)
 - [可用模块](https://spacevim.org/cn/layers)
 
-以下是近几周的开发汇总：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
-
 <!-- vim-markdown-toc GFM -->
 
 - [最新特性](#最新特性)

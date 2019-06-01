@@ -33,10 +33,6 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 SpaceVim is an effort of all the volunteers. We encourage you to pitch in. The community makes SpaceVim what it is.
 We have a few guidelines which we need all contributors to follow.
 
-Development happens in the GitHub repository. Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
 You can only consider reading the sections relevant to what you are going to do:
 
 - [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.

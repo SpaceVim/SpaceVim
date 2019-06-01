@@ -33,10 +33,6 @@ lang: cn
 SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，SpaceVim 是由社区驱动的。
 下面是关于每个贡献者都应当遵守的简单规则的引导。
 
-在 GitHub 仓库上进行开发。下面是最近几周的仓库快照：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
 你可以只阅读下面内容中的，你需要用到的部分：
 
 - [Asking for help](#寻求帮助) 建立 issue 的帮助
