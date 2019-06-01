@@ -61,7 +61,7 @@ function! SpaceVim#layers#ui#config() abort
         \ 'highlight-long-lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call call('
         \ . string(s:_function('s:toggle_background')) . ', [])',
-        \ 'toggle conceal', 1)
+        \ 'toggle background', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
         \ . string(s:_function('s:toggle_conceal')) . ', [])',
         \ 'toggle conceal', 1)

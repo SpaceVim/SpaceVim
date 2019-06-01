@@ -120,6 +120,7 @@ let s:lsp_servers = {
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
       \ 'ruby' : ['solargraph.BAT',  'stdio'],

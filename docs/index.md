@@ -30,7 +30,7 @@ appreciation while providing us motivation to continue working on this project.
 - [documentation](documentation/): the primary official document of SpaceVim
 - [available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The last release is v1.0.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v1.1.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 

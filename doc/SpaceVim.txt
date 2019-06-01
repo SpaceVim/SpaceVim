@@ -18,30 +18,48 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
-      1. checkinstall..........................|SpaceVim-options-checkinstall|
-      2. default_indent......................|SpaceVim-options-default_indent|
-      3. enable_ale..............................|SpaceVim-options-enable_ale|
-      4. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
-      5. enable_googlesuggest..........|SpaceVim-options-enable_googlesuggest|
-      6. enable_guicolors..................|SpaceVim-options-enable_guicolors|
-      7. enable_insert_leader..........|SpaceVim-options-enable_insert_leader|
-      8. enable_neomake......................|SpaceVim-options-enable_neomake|
-      9. enable_statusline_mode......|SpaceVim-options-enable_statusline_mode|
-      10. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      11. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      12. error_symbol.........................|SpaceVim-options-error_symbol|
-      13. guifont...................................|SpaceVim-options-guifont|
-      14. home_files_number...............|SpaceVim-options-home_files_number|
-      15. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      16. max_column.............................|SpaceVim-options-max_column|
-      17. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      18. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      19. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      20. relativenumber.....................|SpaceVim-options-relativenumber|
-      21. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      22. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      23. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      24. windows_leader.....................|SpaceVim-options-windows_leader|
+      1. autocomplete_method............|SpaceVim-options-autocomplete_method|
+      2. checkinstall..........................|SpaceVim-options-checkinstall|
+      3. colorscheme............................|SpaceVim-options-colorscheme|
+      4. colorscheme_bg......................|SpaceVim-options-colorscheme_bg|
+      5. default_indent......................|SpaceVim-options-default_indent|
+      6. enable_ale..............................|SpaceVim-options-enable_ale|
+      7. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
+      8. enable_cursorline................|SpaceVim-options-enable_cursorline|
+      9. enable_debug..........................|SpaceVim-options-enable_debug|
+      10. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      11. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      12. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
+      13. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      14. enable_neomake.....................|SpaceVim-options-enable_neomake|
+      15. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      16. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      17. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      18. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      19. error_symbol.........................|SpaceVim-options-error_symbol|
+      20. filemanager...........................|SpaceVim-options-filemanager|
+      21. filetree_direction.............|SpaceVim-options-filetree_direction|
+      22. guifont...................................|SpaceVim-options-guifont|
+      23. home_files_number...............|SpaceVim-options-home_files_number|
+      24. info_symbol...........................|SpaceVim-options-info_symbol|
+      25. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      26. language.................................|SpaceVim-options-language|
+      27. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      28. max_column.............................|SpaceVim-options-max_column|
+      29. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      30. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      31. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      32. relativenumber.....................|SpaceVim-options-relativenumber|
+      33. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      34. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      35. simple_mode...........................|SpaceVim-options-simple_mode|
+      36. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      37. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      38. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      39. statusline_separator.........|SpaceVim-options-statusline_separator|
+      40. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      41. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      42. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -124,12 +142,42 @@ here is an example setting SpaceVim options:
 <
 
 ==============================================================================
+AUTOCOMPLETE_METHOD                     *SpaceVim-options-autocomplete_method*
+
+Set the autocomplete engine of spacevim, the default logic is:
+>
+  if has('python3')
+    let g:spacevim_autocomplete_method = 'deoplete'
+  elseif has('lua')
+    let g:spacevim_autocomplete_method = 'neocomplete'
+  elseif has('python')
+    let g:spacevim_autocomplete_method = 'completor'
+  elseif has('timers')
+    let g:spacevim_autocomplete_method = 'asyncomplete'
+  else
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+<
+
+and you can alse set this option to coc, then coc.nvim will be used.
+
+==============================================================================
 CHECKINSTALL                                   *SpaceVim-options-checkinstall*
 
 Enable/Disable checkinstall on SpaceVim startup. Default is true.
 >
   checkinstall = true
 <
+
+==============================================================================
+COLORSCHEME                                     *SpaceVim-options-colorscheme*
+
+The colorscheme of SpaceVim. Default is 'gruvbox'.
+
+==============================================================================
+COLORSCHEME_BG                               *SpaceVim-options-colorscheme_bg*
+
+The background of colorscheme. Default is 'dark'.
 
 ==============================================================================
 DEFAULT_INDENT                               *SpaceVim-options-default_indent*
@@ -156,6 +204,23 @@ Enable/Disable bepo layout, by default it is disabled.
 <
 
 ==============================================================================
+ENABLE_CURSORLINE                         *SpaceVim-options-enable_cursorline*
+
+Enable/Disable cursorline. Default is true, cursorline will be highlighted in
+normal mode.To disable this feature:
+>
+  enable_cursorline = false
+<
+
+==============================================================================
+ENABLE_DEBUG                                   *SpaceVim-options-enable_debug*
+
+Enable/Disable debug mode for SpaceVim. Default is false.
+>
+  enable_debug = true
+<
+
+==============================================================================
 ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
 
 Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -177,11 +242,29 @@ ENABLE_INSERT_LEADER                   *SpaceVim-options-enable_insert_leader*
 Enable/Disable spacevim's insert mode leader, default is enable
 
 ==============================================================================
+ENABLE_KEY_FREQUENCY                   *SpaceVim-options-enable_key_frequency*
+
+Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+enable it:
+>
+  enable_key_frequency = true
+<
+
+==============================================================================
 ENABLE_NEOMAKE                               *SpaceVim-options-enable_neomake*
 
 SpaceVim default checker is neomake. If you want to use syntastic, use:
 >
   enable_neomake = false
+<
+
+==============================================================================
+ENABLE_STATUSLINE_BFPATH           *SpaceVim-options-enable_statusline_bfpath*
+
+Enable/Disable showing full path of current buffer on statusline, disabled by
+default, to enable this feature:
+>
+  enable_statusline_bfpath = true
 <
 
 ==============================================================================
@@ -218,6 +301,20 @@ Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 <
 
 ==============================================================================
+FILEMANAGER                                     *SpaceVim-options-filemanager*
+
+The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
+nerdtree or defx
+
+==============================================================================
+FILETREE_DIRECTION                       *SpaceVim-options-filetree_direction*
+
+Config the direction of file tree. Default is 'right'. you can also set to
+'left'.
+
+NOTE: if it is 'left', the tagbar will be move to right.
+
+==============================================================================
 GUIFONT                                             *SpaceVim-options-guifont*
 
 Set the guifont of SpaceVim. Default is empty.
@@ -231,6 +328,27 @@ HOME_FILES_NUMBER                         *SpaceVim-options-home_files_number*
 Change the list number of files for SpaceVim home. Default is 6.
 >
   home_files_number = 6
+<
+
+==============================================================================
+INFO_SYMBOL                                     *SpaceVim-options-info_symbol*
+
+Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+>
+  info_symbol = 'i'
+<
+
+==============================================================================
+KEEP_SERVER_ALIVE                         *SpaceVim-options-keep_server_alive*
+
+Option for keep the spacevim server ailive
+
+==============================================================================
+LANGUAGE                                           *SpaceVim-options-language*
+
+Set the message language of vim. Default is 'en_US.UTF-8'.
+>
+  language = 'en_CA.utf8'
 <
 
 ==============================================================================
@@ -294,12 +412,95 @@ Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
 
 ==============================================================================
+SIMPLE_MODE                                     *SpaceVim-options-simple_mode*
+
+Enable/disable simple mode of SpaceVim. Default is false. In this mode, only
+few plugins will be installed.
+>
+  simple_mode = true
+<
+
+==============================================================================
 SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
 
 Set the snippet engine of SpaceVim, default is neosnippet. to enable
 ultisnips:
 >
   snippet_engine = "ultisnips"
+<
+
+==============================================================================
+STATUSLINE_ISEPARATOR                 *SpaceVim-options-statusline_iseparator*
+
+Set the statusline separators of statusline in inactive windows, default is
+'arrow'
+>
+  Separators options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
+
+==============================================================================
+STATUSLINE_LEFT_SECTIONS           *SpaceVim-options-statusline_left_sections*
+
+Define the left section of statusline in active windows. By default:
+>
+  statusline_left_sections = [
+    'winnr',
+    'filename',
+    'major mode',
+    'minor mode lighters',
+    'version control info'
+    ]
+<
+
+==============================================================================
+STATUSLINE_SEPARATOR                   *SpaceVim-options-statusline_separator*
+
+Set the statusline separators of statusline, default is 'arrow'
+>
+  Separators options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
+
+==============================================================================
+TERMINAL_CURSOR_SHAPE                 *SpaceVim-options-terminal_cursor_shape*
+
+Set the SpaceVim cursor shape in the terminal.
+>
+  0 : to prevent Nvim from changing the cursor shape.
+  1 : to enable non-blinking mode-sensitive cursor.
+  2 : to enable blinking mode-sensitive cursor (default).
+<
+
+>
+<
+Host terminal must support the DECSCUSR CSI escape sequence. Depending on the
+terminal emulator, using this option with nvim under tmux might require adding
+the following to ~/.tmux.conf:
+>
+  set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+<
+
+==============================================================================
+WARNING_SYMBOL                               *SpaceVim-options-warning_symbol*
+
+Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
+>
+  warning_symbol = '!'
 <
 
 ==============================================================================
@@ -463,8 +664,27 @@ Set the statusline separators of statusline, default is 'arrow'
 See more details in: http://spacevim.org/documentation/#statusline
 
 
+                                            *g:spacevim_statusline_iseparator*
+Set the statusline separators of statusline in inactive windows, default is
+'arrow'
+>
+  Separators options:
+    1. arrow
+    2. curve
+    3. slant
+    4. nil
+    5. fire
+<
+
+See more details in: http://spacevim.org/documentation/#statusline
+
+
                                          *g:spacevim_enable_statusline_bfpath*
-Enable/Disable showing full path of current buffer on statusline
+Enable/Disable showing full path of current buffer on statusline, disabled by
+default, to enable this feature:
+>
+  enable_statusline_bfpath = true
+<
 
                                             *g:spacevim_enable_statusline_tag*
 Enable/Disable showing current tag on statusline
@@ -1332,18 +1552,24 @@ Requirements:
 >
       rustup component add rust-src
 <
-  2. Install racer:
+  2. Install Rust nightly build
+
 
 >
-      cargo install racer
+      rustup install nightly
 <
-  3. Set the RUST_SRC_PATH variable in your .bashrc:
+  3. Install racer:
+
+>
+      cargo +nightly install racer
+<
+  4. Set the RUST_SRC_PATH variable in your .bashrc:
 
 >
       RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
       export RUST_SRC_PATH
 <
-  4. Add racer to your path, or set the path with:
+  5. Add racer to your path, or set the path with:
 
 >
       let g:racer_cmd = "/path/to/racer/bin"
@@ -1379,9 +1605,9 @@ MAPPINGS
   normal    SPC l i q     prompt for a qualified import
   normal    SPC l i o     organize imports of current file
   normal    SPC l i s     sort imports of current file
-  insert    <c-j>i        prompt for a qualified import
-  insert    <c-j>o        organize imports of current file
-  insert    <c-j>s        sort imports of current file
+  insert    <c-;>i        prompt for a qualified import
+  insert    <c-;>o        organize imports of current file
+  insert    <c-;>s        sort imports of current file
 
   Debug key bindings:
 
@@ -1413,7 +1639,7 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    SPC l r m     run main class
+  normal    SPC l r       run main class
 
   REPL key bindings:
 
@@ -1430,32 +1656,46 @@ MAPPINGS
   -------------------------------------------------------------
   normal    SPC l Q       bootstrap server when first-time-use
   normal    SPC l h       show Documentation of cursor symbol
-  normal    SPC l R       inline local refactoring of cursor symbol
+  normal    SPC l n       inline local refactoring of cursor symbol
   normal    SPC l e       rename cursor symbol
   normal    SPC l g       find Definition of cursor symbol
   normal    SPC l t       show Type of expression of cursor symbol
   normal    SPC l p       show Hierarchical view of a package
-  normal    SPC l r       find Usages of cursor symbol
+  normal    SPC l u       find Usages of cursor symbol
 
 <
-CODE FORMATTING
-To make neoformat support scala file, you should install scalariform.
-[`scalariform`](https://github.com/scala-ide/scalariform) and set
-'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/) to
+provide code completion, format, sort imports etc, if has python support. Also
+you can enable lsp layer to has a better experience.
+
+
+LANGUAGE SERVER `METALS-VIM`
+
+Right now `metals-vim` works with `coc.nvim` to offer a richer user experience
+than other servers(LanguageClient-neovim or vim-lsp). Please make sure that
+`metals-vim` executable is in your `system $PATH`. Installation guide is here:
+[`metals-vim`](https://scalameta.org/metals/docs/editors/vim.html)
+
 
 ENSIME-VIM SETUP STEPS
-The following is quick install steps, if you want to see complete details,
-please see: [`ensime`](http://ensime.github.io/editors/vim/install/)
 
-  1. Install vim`s plugin and its dependencies as following. `pip install
-    websocket-client sexpdata`, `pip install pynvim` (neovim only).
-  2. Integration ENSIME with your build tools, here we use sbt. > add
+The following is quick install steps, if you want to see complete details,
+please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+
+  1. Install vim`s plugin and its dependencies as following.
+
+     `pip install websocket-client sexpdata`,
+
+     `pip install pynvim` (neovim only).
+
+  2. Integration ENSIME with your build tools, here we use sbt. add
     (sbt-ensime) as global plugin for sbt: Put code `addSbtPlugin("org.ensime"
     % "sbt-ensime" % "2.6.1")` in file  '~/.sbt/plugins/plugins.sbt' (create
-    if not exists). > Armed with your build tool plugin, generate the
-    `.ensime` config file from your project directory in command line, e.g.
-    for sbt use `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the
-    first time will take several minutes.
+    if not exists). Armed with your build tool plugin, generate the `.ensime`
+    config file from your project directory in command line, e.g. for sbt use
+    `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the first time will
+    take several minutes.
+
   3. The first time you use ensime-vim (per Scala version), it will
     `bootstrap` the ENSIME server installation when opening a Scala file you
     will be prompted to run |:EnInstall|. Do that and give it a minute or two
@@ -1463,6 +1703,19 @@ please see: [`ensime`](http://ensime.github.io/editors/vim/install/)
     ENSIME is coming up, and the indexer and analyzer are ready. Going
     forward, ensime-vim will automatically start the ENSIME server when you
     edit Scala files in a project with an `.ensime` config present.
+
+
+CODE FORMATTING
+
+  1. To make neoformat support scala file, you should install scalariform.
+    [`scalariform`](https://github.com/scala-ide/scalariform) and set
+    'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+
+  2. If lsp
+    [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html) is
+    enabled, it will automatically use
+    [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
+    format code.
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*

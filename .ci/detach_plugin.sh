@@ -18,6 +18,7 @@ main () {
             _checkdir syntax/
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/neovim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
@@ -26,6 +27,7 @@ main () {
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect autoload/SpaceVim/api/neovim/floating.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim

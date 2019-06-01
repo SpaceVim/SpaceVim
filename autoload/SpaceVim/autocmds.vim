@@ -94,7 +94,8 @@ function! s:enable_touchpad() abort
   call system('synclient touchpadoff=0')
 endfunction
 function! s:fixindentline() abort
-  if !exists('s:done')
+  if !exists('s:done') && has('conceal')
+    " The indentLine plugin need conceal feature
     if exists(':IndentLinesToggle') == 2
       IndentLinesToggle
       IndentLinesToggle
