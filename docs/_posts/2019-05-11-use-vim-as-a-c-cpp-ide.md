@@ -61,7 +61,7 @@ lsp 模块默认使用 `clangd` 作为 C/C++ 的语言服务器后台命令。
     "cpp"
   ]
   [layers.override_cmd]
-    php = ["php-language-server"]
+    c = ["clangd"]
 ```
 
 ### 语法检查
@@ -85,19 +85,12 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ### 代码格式化
 
-PHP 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 php_beautifier，默认快捷键为 `SPC b f` ：
+C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，异步执行 `clang-format` 命令：
 
 ```toml
 [[layers]]
   name = "format"
 ```
-
-使用 pear 安装 PHP_Beautifier：
-
-```sh
-pear install PHP_Beautifier
-```
-
 
 ### 快速运行
 
@@ -113,5 +106,3 @@ pear install PHP_Beautifier
 
 
 ![c_repl](https://user-images.githubusercontent.com/13142418/58744043-28aa5a80-846f-11e9-94c1-e6927696e662.png)
-
-

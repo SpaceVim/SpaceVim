@@ -64,7 +64,7 @@ with this configuration, you can jump between the alternate file via command `:A
 The default code running key binding is `SPC l r`. It will compile and run current file asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![gorun](https://user-images.githubusercontent.com/13142418/50751761-22300200-1286-11e9-8b4f-76836438d913.png)
+![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
 
 ### code format
