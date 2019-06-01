@@ -67,13 +67,7 @@ lsp 模块默认使用 `clangd` 作为 C/C++ 的语言服务器后台命令。
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 PHP 的支持，是通过异步调用 [psalm](https://github.com/vimeo/psalm) 命令来完成的。
-
-使用  composer 安装 paslm 命令：
-
-```sh
-composer require --dev vimeo/psalm
-```
+这一异步语法检查工具。对于 C/C++ 的支持，是通过异步调用 gcc 命令来完成的。
 
 ### 工程文件跳转
 
@@ -81,8 +75,8 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ```json
 {
-  "src/*.php": {"alternate": "test/{}.php"},
-  "test/*.php": {"alternate": "src/{}.php"}
+  "*.c": {"alternate": "{}.h"},
+  "*.h": {"alternate": "{}.c"}
 }
 ```
 
@@ -107,14 +101,14 @@ pear install PHP_Beautifier
 
 ### 快速运行
 
-在编辑 PHP 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
+在编辑 C/C++ 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 
-![phpcoderunner](https://user-images.githubusercontent.com/13142418/57496602-79aeaf00-7306-11e9-8c18-32f00bd28307.gif)
+![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
 ### 交互式编程
 
-在编辑 PHP 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
+在编辑 C/C++ 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 ![phprepl](https://user-images.githubusercontent.com/13142418/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)

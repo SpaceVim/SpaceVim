@@ -113,6 +113,11 @@ function! SpaceVim#layers#lang#c#config() abort
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
+  if !empty(s:c_repl_command)
+    call SpaceVim#plugins#repl#reg('c', s:c_repl_command)
+  else
+    call SpaceVim#plugins#repl#reg('c', 'igcc')
+  endif
   call SpaceVim#mapping#space#regesit_lang_mappings('cpp', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
   if executable('clang')
@@ -125,7 +130,7 @@ function! SpaceVim#layers#lang#c#config() abort
     autocmd!
     if s:enable_clang_syntax
       if has('nvim') && SpaceVim#util#haspy3lib('clang')
-          auto FileType c,cpp  ChromaticaStart
+        auto FileType c,cpp  ChromaticaStart
         " else Clamp will start when detect c, cpp file
       elseif !has('job')
         " Clighter8 will start when detect c, cpp file
@@ -138,6 +143,8 @@ endfunction
 
 let s:enable_clang_syntax = 0
 
+let s:c_repl_command = ''
+
 function! SpaceVim#layers#lang#c#set_variable(var) abort
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
@@ -149,7 +156,7 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
       let g:asyncomplete_clang_executable = a:var.clang_executable
     endif
   endif
-
+  let s:c_repl_command = get(a:var, 'repl_command', '') 
   if has_key(a:var, 'libclang_path')
     if has('nvim')
       if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
@@ -185,6 +192,19 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
           \ 'call SpaceVim#lsp#references()', 'references', 1)
   endif
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("c")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 
