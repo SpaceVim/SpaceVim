@@ -36,6 +36,8 @@ commentsID: "使用 Vim 搭建基本开发环境"
      enable_guicolors = false
 ```
 
+{% include bilibilivedio.html id="aid=51967466&cid=90976280&page=1" %}
+
 ### 基本配置
 
 SpaceVim 的配置文件有两种，一种是全局配置文件，另外一种是项目专属配置文件。我们可以这样理解，在全局配置文件里，主要设置一些常规的选项和模块，
