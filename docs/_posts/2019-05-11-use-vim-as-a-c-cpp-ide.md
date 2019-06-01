@@ -111,5 +111,7 @@ pear install PHP_Beautifier
 在编辑 C/C++ 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![phprepl](https://user-images.githubusercontent.com/13142418/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)
+
+![c_repl](https://user-images.githubusercontent.com/13142418/58744043-28aa5a80-846f-11e9-94c1-e6927696e662.png)
+
 
