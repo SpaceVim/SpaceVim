@@ -20,6 +20,7 @@ Each of the following sections will be covered:
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
 - [code format](#code-format)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
@@ -76,3 +77,10 @@ And the default key binding is `SPC b f`.
   name = "format"
 ```
 
+### REPL support
+
+Start a `igcc` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+send code to inferior process, all key bindings prefix with `SPC l s`, including sending line, sending selection or even
+send whole buffer.
+
+![c_repl](https://user-images.githubusercontent.com/13142418/58744043-28aa5a80-846f-11e9-94c1-e6927696e662.png)
