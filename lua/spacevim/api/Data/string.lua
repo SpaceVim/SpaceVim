@@ -2,7 +2,7 @@ local str = {}
 
 
 function str.trim(str)
-    return string.gsub(str, "^%s*(.-)%s*$", "%")
+    return str:match( "^%s*(.-)%s*$" )
 end
 
 
