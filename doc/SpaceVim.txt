@@ -59,7 +59,8 @@ CONTENTS                                                   *SpaceVim-contents*
       39. statusline_separator.........|SpaceVim-options-statusline_separator|
       40. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
       41. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      42. windows_leader.....................|SpaceVim-options-windows_leader|
+      42. windows_index_type.............|SpaceVim-options-windows_index_type|
+      43. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -501,6 +502,19 @@ WARNING_SYMBOL                               *SpaceVim-options-warning_symbol*
 Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 >
   warning_symbol = '!'
+<
+
+==============================================================================
+WINDOWS_INDEX_TYPE                       *SpaceVim-options-windows_index_type*
+
+Set SpaceVim windows index type, default is 0.
+>
+  # types:
+  # 0: 1 ➛ ➊
+  # 1: 1 ➛ ➀
+  # 2: 1 ➛ ⓵
+  # 3: 1 ➛ 1
+  windows_index_type = 1
 <
 
 ==============================================================================
