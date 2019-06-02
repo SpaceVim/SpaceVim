@@ -385,7 +385,7 @@ let g:spacevim_enable_cursorline       = 1
 ""
 " @section statusline_separator, options-statusline_separator
 " @parentsection options
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -399,7 +399,7 @@ let g:spacevim_enable_cursorline       = 1
 "
 
 ""
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -411,12 +411,12 @@ let g:spacevim_enable_cursorline       = 1
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_separator = 'arrow'
+let g:spacevim_statusline_separator = 'nil'
 ""
 " @section statusline_iseparator, options-statusline_iseparator
 " @parentsection options
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -431,7 +431,7 @@ let g:spacevim_statusline_separator = 'arrow'
 
 ""
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -443,7 +443,7 @@ let g:spacevim_statusline_separator = 'arrow'
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_iseparator = 'arrow'
+let g:spacevim_statusline_iseparator = 'nil'
 
 ""
 " @section enable_statusline_bfpath, options-enable_statusline_bfpath

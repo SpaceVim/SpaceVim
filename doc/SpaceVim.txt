@@ -459,7 +459,7 @@ ultisnips:
 STATUSLINE_ISEPARATOR                 *SpaceVim-options-statusline_iseparator*
 
 Set the statusline separators of statusline in inactive windows, default is
-'arrow'
+'nil'
 >
   Separators options:
     1. arrow
@@ -489,7 +489,7 @@ Define the left section of statusline in active windows. By default:
 ==============================================================================
 STATUSLINE_SEPARATOR                   *SpaceVim-options-statusline_separator*
 
-Set the statusline separators of statusline, default is 'arrow'
+Set the statusline separators of statusline, default is 'nil'
 >
   Separators options:
     1. arrow
@@ -690,7 +690,7 @@ normal mode.To disable this feature:
 <
 
                                              *g:spacevim_statusline_separator*
-Set the statusline separators of statusline, default is 'arrow'
+Set the statusline separators of statusline, default is 'nil'
 >
   Separators options:
     1. arrow
@@ -705,7 +705,7 @@ See more details in: http://spacevim.org/documentation/#statusline
 
                                             *g:spacevim_statusline_iseparator*
 Set the statusline separators of statusline in inactive windows, default is
-'arrow'
+'nil'
 >
   Separators options:
     1. arrow
