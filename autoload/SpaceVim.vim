@@ -802,7 +802,22 @@ let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
-" Set SpaceVim buffer index type, default is 0.
+" @section buffer_index_type, options-buffer_index_type
+" @parentsection options
+" Set SpaceVim buffer index type, default is 4.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ ¹
+"   # 4: 1 ➛ 1
+"   buffer_index_type = 1
+" <
+
+
+""
+" Set SpaceVim buffer index type, default is 4.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -812,7 +827,8 @@ let g:spacevim_gitcommit_issue_icon    = ''
 "   " 4: 1 ➛ 1
 "   let g:spacevim_buffer_index_type = 1
 " <
-let g:spacevim_buffer_index_type = 0
+let g:spacevim_buffer_index_type = 4
+
 ""
 " @section windows_index_type, options-windows_index_type
 " @parentsection options

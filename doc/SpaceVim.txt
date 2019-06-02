@@ -19,49 +19,50 @@ CONTENTS                                                   *SpaceVim-contents*
   1. Introduction.............................................|SpaceVim-intro|
   2. Options................................................|SpaceVim-options|
       1. autocomplete_method............|SpaceVim-options-autocomplete_method|
-      2. checkinstall..........................|SpaceVim-options-checkinstall|
-      3. colorscheme............................|SpaceVim-options-colorscheme|
-      4. colorscheme_bg......................|SpaceVim-options-colorscheme_bg|
-      5. default_indent......................|SpaceVim-options-default_indent|
-      6. enable_ale..............................|SpaceVim-options-enable_ale|
-      7. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
-      8. enable_cursorline................|SpaceVim-options-enable_cursorline|
-      9. enable_debug..........................|SpaceVim-options-enable_debug|
-      10. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
-      11. enable_guicolors.................|SpaceVim-options-enable_guicolors|
-      12. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
-      13. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
-      14. enable_neomake.....................|SpaceVim-options-enable_neomake|
-      15. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
-      16. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
-      17. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      18. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
-      19. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      20. error_symbol.........................|SpaceVim-options-error_symbol|
-      21. filemanager...........................|SpaceVim-options-filemanager|
-      22. filetree_direction.............|SpaceVim-options-filetree_direction|
-      23. guifont...................................|SpaceVim-options-guifont|
-      24. home_files_number...............|SpaceVim-options-home_files_number|
-      25. info_symbol...........................|SpaceVim-options-info_symbol|
-      26. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      27. language.................................|SpaceVim-options-language|
-      28. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      29. max_column.............................|SpaceVim-options-max_column|
-      30. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      31. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      32. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      33. relativenumber.....................|SpaceVim-options-relativenumber|
-      34. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      35. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      36. simple_mode...........................|SpaceVim-options-simple_mode|
-      37. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      38. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      39. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      40. statusline_separator.........|SpaceVim-options-statusline_separator|
-      41. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      42. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      43. windows_index_type.............|SpaceVim-options-windows_index_type|
-      44. windows_leader.....................|SpaceVim-options-windows_leader|
+      2. buffer_index_type................|SpaceVim-options-buffer_index_type|
+      3. checkinstall..........................|SpaceVim-options-checkinstall|
+      4. colorscheme............................|SpaceVim-options-colorscheme|
+      5. colorscheme_bg......................|SpaceVim-options-colorscheme_bg|
+      6. default_indent......................|SpaceVim-options-default_indent|
+      7. enable_ale..............................|SpaceVim-options-enable_ale|
+      8. enable_bepo_layout..............|SpaceVim-options-enable_bepo_layout|
+      9. enable_cursorline................|SpaceVim-options-enable_cursorline|
+      10. enable_debug.........................|SpaceVim-options-enable_debug|
+      11. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      12. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      13. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
+      14. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      15. enable_neomake.....................|SpaceVim-options-enable_neomake|
+      16. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      17. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      18. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      19. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
+      20. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      21. error_symbol.........................|SpaceVim-options-error_symbol|
+      22. filemanager...........................|SpaceVim-options-filemanager|
+      23. filetree_direction.............|SpaceVim-options-filetree_direction|
+      24. guifont...................................|SpaceVim-options-guifont|
+      25. home_files_number...............|SpaceVim-options-home_files_number|
+      26. info_symbol...........................|SpaceVim-options-info_symbol|
+      27. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      28. language.................................|SpaceVim-options-language|
+      29. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      30. max_column.............................|SpaceVim-options-max_column|
+      31. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      32. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      33. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      34. relativenumber.....................|SpaceVim-options-relativenumber|
+      35. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      36. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      37. simple_mode...........................|SpaceVim-options-simple_mode|
+      38. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      39. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      40. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      41. statusline_separator.........|SpaceVim-options-statusline_separator|
+      42. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      43. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      44. windows_index_type.............|SpaceVim-options-windows_index_type|
+      45. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -162,6 +163,20 @@ Set the autocomplete engine of spacevim, the default logic is:
 <
 
 and you can alse set this option to coc, then coc.nvim will be used.
+
+==============================================================================
+BUFFER_INDEX_TYPE                         *SpaceVim-options-buffer_index_type*
+
+Set SpaceVim buffer index type, default is 4.
+>
+  # types:
+  # 0: 1 ➛ ➊
+  # 1: 1 ➛ ➀
+  # 2: 1 ➛ ⓵
+  # 3: 1 ➛ ¹
+  # 4: 1 ➛ 1
+  buffer_index_type = 1
+<
 
 ==============================================================================
 CHECKINSTALL                                   *SpaceVim-options-checkinstall*
@@ -891,7 +906,7 @@ Set the debug level of SpaceVim. Default is 1. see
 |SpaceVim#logger#setLevel()|
 
                                                 *g:spacevim_buffer_index_type*
-Set SpaceVim buffer index type, default is 0.
+Set SpaceVim buffer index type, default is 4.
 >
   " types:
   " 0: 1 ➛ ➊
