@@ -35,32 +35,33 @@ CONTENTS                                                   *SpaceVim-contents*
       15. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
       16. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
       17. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      18. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      19. error_symbol.........................|SpaceVim-options-error_symbol|
-      20. filemanager...........................|SpaceVim-options-filemanager|
-      21. filetree_direction.............|SpaceVim-options-filetree_direction|
-      22. guifont...................................|SpaceVim-options-guifont|
-      23. home_files_number...............|SpaceVim-options-home_files_number|
-      24. info_symbol...........................|SpaceVim-options-info_symbol|
-      25. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      26. language.................................|SpaceVim-options-language|
-      27. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      28. max_column.............................|SpaceVim-options-max_column|
-      29. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      30. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      31. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      32. relativenumber.....................|SpaceVim-options-relativenumber|
-      33. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      34. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      35. simple_mode...........................|SpaceVim-options-simple_mode|
-      36. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      37. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      38. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      39. statusline_separator.........|SpaceVim-options-statusline_separator|
-      40. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      41. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      42. windows_index_type.............|SpaceVim-options-windows_index_type|
-      43. windows_leader.....................|SpaceVim-options-windows_leader|
+      18. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
+      19. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      20. error_symbol.........................|SpaceVim-options-error_symbol|
+      21. filemanager...........................|SpaceVim-options-filemanager|
+      22. filetree_direction.............|SpaceVim-options-filetree_direction|
+      23. guifont...................................|SpaceVim-options-guifont|
+      24. home_files_number...............|SpaceVim-options-home_files_number|
+      25. info_symbol...........................|SpaceVim-options-info_symbol|
+      26. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      27. language.................................|SpaceVim-options-language|
+      28. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      29. max_column.............................|SpaceVim-options-max_column|
+      30. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      31. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      32. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      33. relativenumber.....................|SpaceVim-options-relativenumber|
+      34. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      35. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      36. simple_mode...........................|SpaceVim-options-simple_mode|
+      37. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      38. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      39. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      40. statusline_separator.........|SpaceVim-options-statusline_separator|
+      41. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      42. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      43. windows_index_type.............|SpaceVim-options-windows_index_type|
+      44. windows_leader.....................|SpaceVim-options-windows_leader|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -286,6 +287,15 @@ Enable/Disable showing current tag on statusline
 <
 
 ==============================================================================
+ENABLE_TABLINE_FT_ICON               *SpaceVim-options-enable_tabline_ft_icon*
+
+Enable/Disable tabline filetype icon. default is false. To enable this
+feature:
+>
+  enable_tabline_ft_icon = true
+<
+
+==============================================================================
 ENABLE_YCM                                       *SpaceVim-options-enable_ycm*
 
 Enable/Disable YouCompleteMe. Default is false.
@@ -507,7 +517,7 @@ Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 ==============================================================================
 WINDOWS_INDEX_TYPE                       *SpaceVim-options-windows_index_type*
 
-Set SpaceVim windows index type, default is 0.
+Set SpaceVim windows index type, default is 3.
 >
   # types:
   # 0: 1 ➛ ➊
@@ -893,7 +903,7 @@ Set SpaceVim buffer index type, default is 0.
 <
 
                                                *g:spacevim_windows_index_type*
-Set SpaceVim windows index type, default is 0.
+Set SpaceVim windows index type, default is 3.
 >
   " types:
   " 0: 1 ➛ ➊
@@ -903,7 +913,7 @@ Set SpaceVim windows index type, default is 0.
   let g:spacevim_windows_index_type = 1
 <
 
-                                     *g:spacevim_enable_tabline_filetype_icon*
+                                           *g:spacevim_enable_tabline_ft_icon*
 Enable/Disable tabline filetype icon. default is 0.
 
                                         *g:spacevim_enable_os_fileformat_icon*

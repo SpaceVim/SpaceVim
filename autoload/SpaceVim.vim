@@ -816,7 +816,7 @@ let g:spacevim_buffer_index_type = 0
 ""
 " @section windows_index_type, options-windows_index_type
 " @parentsection options
-" Set SpaceVim windows index type, default is 0.
+" Set SpaceVim windows index type, default is 3.
 " >
 "   # types:
 "   # 0: 1 ➛ ➊
@@ -829,7 +829,7 @@ let g:spacevim_buffer_index_type = 0
 
 
 ""
-" Set SpaceVim windows index type, default is 0.
+" Set SpaceVim windows index type, default is 3.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -838,11 +838,20 @@ let g:spacevim_buffer_index_type = 0
 "   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
-let g:spacevim_windows_index_type = 0
+let g:spacevim_windows_index_type = 3
+""
+" @section enable_tabline_ft_icon, options-enable_tabline_ft_icon
+" @parentsection options
+" Enable/Disable tabline filetype icon. default is false. To enable this
+" feature:
+" >
+"   enable_tabline_ft_icon = true
+" <
+
 
 ""
 " Enable/Disable tabline filetype icon. default is 0.
-let g:spacevim_enable_tabline_filetype_icon = 0
+let g:spacevim_enable_tabline_ft_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0
