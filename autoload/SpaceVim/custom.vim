@@ -83,6 +83,9 @@ function! SpaceVim#custom#SPCGroupName(keys, name) abort
   call add(g:_spacevim_mappings_space_custom_group_name, [a:keys, a:name])
 endfunction
 
+function! SpaceVim#custom#Reg_langSPC(ft, func) abort
+  call SpaceVim#mapping#space#extend_CustomLSPC({a:ft.'custom' : a:func})
+endfunction
 
 function! SpaceVim#custom#apply(config, type) abort
   " the type can be local or global

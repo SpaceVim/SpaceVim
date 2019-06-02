@@ -600,14 +600,24 @@ function! s:windows_layout_toggle() abort
 endfunction
 
 
+function! SpaceVim#mapping#space#extend_CustomLSPC(dict) abort
+  call extend(s:language_specified_mappings, a:dict)
+endfunction
+
+
 let s:language_specified_mappings = {}
 function! SpaceVim#mapping#space#refrashLSPC() abort
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
-    call call(s:language_specified_mappings[&filetype], [])
-    let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
+  if !empty(&filetype)
+    if has_key(s:language_specified_mappings, &filetype)
+      call call(s:language_specified_mappings[&filetype], [])
+      let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
+    endif
+    if has_key(s:language_specified_mappings, &filetype.'custom')
+      call call(s:language_specified_mappings[&filetype.'custom'], [])
+      call extend(b:spacevim_lang_specified_mappings, g:_spacevim_mappings_space.l)
+    endif
   endif
-
 endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
