@@ -191,7 +191,7 @@ endfunction
 let s:plugins_argv = ['-update', '-openurl']
 
 function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
-  call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  call SpaceVim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   if a:CmdLine =~# 'Plugin\s*$' || a:ArgLead =~# '^-[a-zA-Z]*'
     return join(s:plugins_argv, "\n")
   endif
@@ -218,7 +218,7 @@ function! zvim#util#Plugin(...) abort
 endfunction
 
 function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
-  call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  call SpaceVim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   let dir = get(g:,'spacevim_src_root', '~')
   "return globpath(dir, '*')
   let result = split(globpath(dir, '*'), "\n")
