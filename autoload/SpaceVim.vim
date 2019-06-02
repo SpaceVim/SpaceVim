@@ -124,17 +124,17 @@ let g:spacevim_home_files_number        = 6
 ""
 " @section enable_guicolors, options-enable_guicolors
 " @parentsection options
-" Enable true color support in terminal. Default is true.
+" Enable true color support in terminal. Default is false.
 " >
 "   enable_guicolors = true
 " <
 
 ""
-" Enable true color support in terminal. Default is 1.
+" Enable true color support in terminal. Default is 0.
 " >
 "   let g:spacevim_enable_guicolors = 1
 " <
-let g:spacevim_enable_guicolors = 1
+let g:spacevim_enable_guicolors = 0
 
 ""
 " @section enable_googlesuggest, options-enable_googlesuggest
@@ -385,7 +385,7 @@ let g:spacevim_enable_cursorline       = 1
 ""
 " @section statusline_separator, options-statusline_separator
 " @parentsection options
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -399,7 +399,7 @@ let g:spacevim_enable_cursorline       = 1
 "
 
 ""
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -411,12 +411,12 @@ let g:spacevim_enable_cursorline       = 1
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_separator = 'arrow'
+let g:spacevim_statusline_separator = 'nil'
 ""
 " @section statusline_iseparator, options-statusline_iseparator
 " @parentsection options
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -431,7 +431,7 @@ let g:spacevim_statusline_separator = 'arrow'
 
 ""
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -443,7 +443,7 @@ let g:spacevim_statusline_separator = 'arrow'
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_iseparator = 'arrow'
+let g:spacevim_statusline_iseparator = 'nil'
 
 ""
 " @section enable_statusline_bfpath, options-enable_statusline_bfpath
@@ -802,7 +802,22 @@ let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
-" Set SpaceVim buffer index type, default is 0.
+" @section buffer_index_type, options-buffer_index_type
+" @parentsection options
+" Set SpaceVim buffer index type, default is 4.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ ¹
+"   # 4: 1 ➛ 1
+"   buffer_index_type = 1
+" <
+
+
+""
+" Set SpaceVim buffer index type, default is 4.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -812,9 +827,25 @@ let g:spacevim_gitcommit_issue_icon    = ''
 "   " 4: 1 ➛ 1
 "   let g:spacevim_buffer_index_type = 1
 " <
-let g:spacevim_buffer_index_type = 0
+let g:spacevim_buffer_index_type = 4
+
 ""
-" Set SpaceVim windows index type, default is 0.
+" @section windows_index_type, options-windows_index_type
+" @parentsection options
+" Set SpaceVim windows index type, default is 3.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ 1
+"   windows_index_type = 1
+" <
+
+
+
+""
+" Set SpaceVim windows index type, default is 3.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -823,10 +854,20 @@ let g:spacevim_buffer_index_type = 0
 "   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
-let g:spacevim_windows_index_type = 0
+let g:spacevim_windows_index_type = 3
+""
+" @section enable_tabline_ft_icon, options-enable_tabline_ft_icon
+" @parentsection options
+" Enable/Disable tabline filetype icon. default is false. To enable this
+" feature:
+" >
+"   enable_tabline_ft_icon = true
+" <
+
+
 ""
 " Enable/Disable tabline filetype icon. default is 0.
-let g:spacevim_enable_tabline_filetype_icon = 0
+let g:spacevim_enable_tabline_ft_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0

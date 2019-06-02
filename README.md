@@ -71,7 +71,7 @@ Here is an example for using toml as SpaceVim config:
     statusline_inactive_separator = "bar"
     buffer_index_type = 4
     windows_index_type = 3
-    enable_tabline_filetype_icon = false
+    enable_tabline_ft_icon = false
     enable_statusline_mode = false
     statusline_unicode_symbols = false
     # Enable Vim compatible mode, avoid changing origin Vim key bindings

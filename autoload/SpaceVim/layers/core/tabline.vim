@@ -51,7 +51,7 @@ function! s:tabname(id) abort
     let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
   endif
   let fn = fnamemodify(bufname(a:id), ':t')
-  if g:spacevim_enable_tabline_filetype_icon
+  if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
     let icon = s:file.fticon(fn)
     if !empty(icon)
       let fn = fn . ' ' . icon
@@ -116,7 +116,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
         call add(stack, buflist[winnr - 1])
         call s:need_show_bfname(stack, buflist[winnr - 1])
-        if g:spacevim_enable_tabline_filetype_icon
+        if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
           let icon = s:file.fticon(name)
           if !empty(icon)
             let name = name . ' ' . icon
@@ -184,7 +184,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let id = s:messletters.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
       endif
-      if g:spacevim_enable_tabline_filetype_icon
+      if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
         let icon = s:file.fticon(name)
         if !empty(icon)
           let name = name . ' ' . icon
