@@ -29,7 +29,7 @@ function! SpaceVim#layers#core#plugins() abort
   if exists('*matchaddpos')
     call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   endif
-  call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['gruvbox-community/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
         \ 'OpenBrowserSearch'],
