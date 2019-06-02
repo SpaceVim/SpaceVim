@@ -233,7 +233,7 @@ Enable/Disable Google suggestions for neocomplete. Default is false.
 ==============================================================================
 ENABLE_GUICOLORS                           *SpaceVim-options-enable_guicolors*
 
-Enable true color support in terminal. Default is true.
+Enable true color support in terminal. Default is false.
 >
   enable_guicolors = true
 <
@@ -574,7 +574,7 @@ Change the list number of files for SpaceVim home. Default is 6.
 <
 
                                                  *g:spacevim_enable_guicolors*
-Enable true color support in terminal. Default is 1.
+Enable true color support in terminal. Default is 0.
 >
   let g:spacevim_enable_guicolors = 1
 <

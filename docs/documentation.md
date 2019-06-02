@@ -378,9 +378,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
-**NOTE**:
-
-SpaceVim uses true colors by default, so you should make sure your terminal supports true colors.
+SpaceVim supports true colors in terminal, and it is disabled by default, to enable this feature,
+you should make sure your terminal supports true colors.
 For more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728).
 
 If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:

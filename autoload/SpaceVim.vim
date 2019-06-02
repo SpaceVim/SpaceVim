@@ -124,17 +124,17 @@ let g:spacevim_home_files_number        = 6
 ""
 " @section enable_guicolors, options-enable_guicolors
 " @parentsection options
-" Enable true color support in terminal. Default is true.
+" Enable true color support in terminal. Default is false.
 " >
 "   enable_guicolors = true
 " <
 
 ""
-" Enable true color support in terminal. Default is 1.
+" Enable true color support in terminal. Default is 0.
 " >
 "   let g:spacevim_enable_guicolors = 1
 " <
-let g:spacevim_enable_guicolors = 1
+let g:spacevim_enable_guicolors = 0
 
 ""
 " @section enable_googlesuggest, options-enable_googlesuggest
