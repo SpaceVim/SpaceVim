@@ -169,16 +169,6 @@ function! zvim#util#BufferEmpty() abort
   endif
 endfunction
 
-function! zvim#util#loadMusics() abort
-  let musics = SpaceVim#util#globpath('~/Musics', '*.mp3')
-  let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
-  for m in musics
-    call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
-          \ [fnamemodify(m, ':t'),
-          \ "call zvim#mpv#play('" . m . "')"])
-  endfor
-endfunction
-
 function! zvim#util#listDirs(dir) abort
   let dir = fnamemodify(a:dir, ':p')
   if isdirectory(dir)
