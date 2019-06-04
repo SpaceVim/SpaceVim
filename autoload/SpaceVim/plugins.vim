@@ -157,7 +157,7 @@ function! s:install_manager() abort
 endf
 
 if get(g:,'spacevim_enable_plugins', 1)
-  call s:install_manager()
+ " call s:install_manager()
 endif
 
 function! SpaceVim#plugins#begin(path) abort
