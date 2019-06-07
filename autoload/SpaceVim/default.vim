@@ -284,8 +284,8 @@ function! SpaceVim#default#keyBindings() abort
 
   call SpaceVim#mapping#def('nnoremap <silent>','g=',':call zvim#format()<cr>','format current buffer','call zvim#format')
 
-  call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#CopyToClipboard()<cr>',
-        \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call SpaceVim#util#CopyToClipboard()<cr>',
+        \ 'Copy buffer absolute path to X11 clipboard','call SpaceVim#util#CopyToClipboard()')
 endfunction
 
 fu! s:tobur(num) abort
