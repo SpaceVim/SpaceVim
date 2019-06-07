@@ -46,9 +46,7 @@ let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
 lockvar g:_spacevim_root_dir
 if has('nvim')
-  let s:qtdir = fnamemodify(s:resolve(fnamemodify(split(&rtp, ',')[-1],
-        \ ':p:h:h:gs?\\?'.((has('win16') || has('win32')
-        \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
+  let s:qtdir = split(&rtp, ',')[-1]
   let g:rtp = s:qtdir
   if s:qtdir =~# 'nvim-qt'
     let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
