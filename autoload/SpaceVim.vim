@@ -1167,17 +1167,17 @@ function! SpaceVim#end() abort
 
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
-  call zvim#util#source_rc('general.vim')
+  call SpaceVim#util#loadConfig('general.vim')
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
+    call SpaceVim#util#loadConfig('neovim.vim')
   endif
 
-  call zvim#util#source_rc('commands.vim')
+  call SpaceVim#util#loadConfig('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction

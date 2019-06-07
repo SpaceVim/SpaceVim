@@ -205,11 +205,11 @@ endfunction
 
 function! zvim#plug#loadPluginBefore(plugin) abort
   if matchend(a:plugin, "\\.vim") == len(a:plugin)
-    call zvim#util#source_rc('plugins_before/' . a:plugin)
+    call SpaceVim#util#loadConfig('plugins_before/' . a:plugin)
   elseif matchend(a:plugin, "\\.nvim") == len(a:plugin)
-    call zvim#util#source_rc('plugins_before/' . a:plugin[:-6] . '.vim')
+    call SpaceVim#util#loadConfig('plugins_before/' . a:plugin[:-6] . '.vim')
   else
-    call zvim#util#source_rc('plugins_before/' . a:plugin . '.vim')
+    call SpaceVim#util#loadConfig('plugins_before/' . a:plugin . '.vim')
   endif
 endfunction
 
