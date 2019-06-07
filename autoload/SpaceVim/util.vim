@@ -22,6 +22,12 @@ function! SpaceVim#util#findFileInParent(what, where) abort
   return file
 endfunction
 
+fu! SpaceVim#util#loadConfig(file) abort
+  if filereadable(g:_spacevim_root_dir. '/config/' . a:file)
+    execute 'source ' . g:_spacevim_root_dir  . '/config/' . a:file
+  endif
+endf
+
 function! SpaceVim#util#findDirInParent(what, where) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''

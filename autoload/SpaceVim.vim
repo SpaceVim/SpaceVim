@@ -1208,8 +1208,8 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call zvim#util#source_rc('functions.vim')
-  call zvim#util#source_rc('init.vim')
+  call SpaceVim#util#loadConfig('functions.vim')
+  call SpaceVim#util#loadConfig('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
