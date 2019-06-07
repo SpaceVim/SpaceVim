@@ -71,7 +71,7 @@ function! SpaceVim#autocmds#init() abort
 endfunction
 
 function! s:enable_cursorline() abort
-  if g:_spacevim_cursorline_flag == -1
+  if get(g:, '_spacevim_cursorline_flag', -1) == -1
     setl cursorline
   endif
 endfunction

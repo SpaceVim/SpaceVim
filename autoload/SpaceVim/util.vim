@@ -99,7 +99,7 @@ let g:unite_source_menu_menus.MpvPlayer = {'description':
       \ 'Musics list                   <leader>lm'}
 let g:unite_source_menu_menus.MpvPlayer.command_candidates =
       \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
-fu! zvim#util#defineMap(type,key,value,desc,...) abort
+fu! SpaceVim#util#defineMap(type,key,value,desc,...) abort
   exec a:type . ' ' . a:key . ' ' . a:value
   let description = '➤ '
         \. a:desc
@@ -109,13 +109,13 @@ fu! zvim#util#defineMap(type,key,value,desc,...) abort
   call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 
 endf
-fu! zvim#util#source_rc(file) abort
+fu! SpaceVim#util#source_rc(file) abort
   if filereadable(g:_spacevim_root_dir. '/config/' . a:file)
     execute 'source ' . g:_spacevim_root_dir  . '/config/' . a:file
   endif
 endf
 
-fu! zvim#util#SmartClose() abort
+fu! SpaceVim#util#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
   let win_count = winnr('$')
@@ -149,7 +149,7 @@ fu! s:findDirInParent(what, where) abort " {{{2
   let &suffixesadd = old_suffixesadd
   return dir
 endf " }}}2
-fu! zvim#util#CopyToClipboard(...) abort
+fu! SpaceVim#util#CopyToClipboard(...) abort
   if a:0
     echom 1
     if executable('git')
@@ -209,7 +209,7 @@ fu! zvim#util#CopyToClipboard(...) abort
   endif
 endf
 
-fu! zvim#util#check_if_expand_tab() abort
+fu! SpaceVim#util#check_if_expand_tab() abort
   let has_noexpandtab = search('^\t','wn')
   let has_expandtab = search('^    ','wn')
   if has_noexpandtab && has_expandtab
@@ -244,7 +244,7 @@ fu! zvim#util#check_if_expand_tab() abort
   endif
 endf
 
-function! zvim#util#BufferEmpty() abort
+function! SpaceVim#util#BufferEmpty() abort
   let l:current = bufnr('%')
   if ! getbufvar(l:current, '&modified')
     enew
@@ -252,7 +252,7 @@ function! zvim#util#BufferEmpty() abort
   endif
 endfunction
 
-function! zvim#util#listDirs(dir) abort
+function! SpaceVim#util#listDirs(dir) abort
   let dir = fnamemodify(a:dir, ':p')
   if isdirectory(dir)
     let cmd = printf('ls -F %s | grep /$', dir)
@@ -263,7 +263,7 @@ endfunction
 
 let s:plugins_argv = ['-update', '-openurl']
 
-function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
+function! SpaceVim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
   call SpaceVim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   if a:CmdLine =~# 'Plugin\s*$' || a:ArgLead =~# '^-[a-zA-Z]*'
     return join(s:plugins_argv, "\n")
@@ -271,7 +271,7 @@ function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
   return join(plugins#list(), "\n")
 endfunction
 
-function! zvim#util#Plugin(...) abort
+function! SpaceVim#util#Plugin(...) abort
   let adds = []
   let updates = []
   let flag = 0
@@ -290,7 +290,7 @@ function! zvim#util#Plugin(...) abort
   echo string(adds) . "\n" . string(updates)
 endfunction
 
-function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
+function! SpaceVim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
   call SpaceVim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   let dir = get(g:,'spacevim_src_root', '~')
   "return globpath(dir, '*')
@@ -304,12 +304,12 @@ function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
   return join(ps, "\n")
 endfunction
 
-function! zvim#util#OpenProject(p) abort
+function! SpaceVim#util#OpenProject(p) abort
   let dir = get(g:, 'spacevim_src_root', '~') . a:p
   exe 'CtrlP '. dir
 endfunction
 
-function! zvim#util#UpdateHosts(...) abort
+function! SpaceVim#util#UpdateHosts(...) abort
   if len(a:000) == 0
     let url = get(g:,'spacevim_hosts_url', '')
   else
@@ -327,7 +327,7 @@ function! zvim#util#UpdateHosts(...) abort
     echo 'successfully!'
   endif
 endfunction
-fu! zvim#util#Generate_ignore(ignore,tool, ...) abort
+fu! SpaceVim#util#Generate_ignore(ignore,tool, ...) abort
   let ignore = []
   if a:tool ==# 'ag'
     for ig in split(a:ignore,',')

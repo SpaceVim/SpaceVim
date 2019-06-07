@@ -41,6 +41,10 @@
 " Public SpaceVim Options {{{
 scriptencoding utf-8
 
+if exists('g:spacevim_version')
+  finish
+endif
+
 ""
 " Version of SpaceVim , this value can not be changed.
 let g:spacevim_version = '1.2.0-dev'
@@ -1167,17 +1171,17 @@ function! SpaceVim#end() abort
 
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
-  call zvim#util#source_rc('general.vim')
+  call SpaceVim#util#source_rc('general.vim')
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
+    call SpaceVim#util#source_rc('neovim.vim')
   endif
 
-  call zvim#util#source_rc('commands.vim')
+  call SpaceVim#util#source_rc('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction
@@ -1208,8 +1212,8 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call zvim#util#source_rc('functions.vim')
-  call zvim#util#source_rc('init.vim')
+  call SpaceVim#util#source_rc('functions.vim')
+  call SpaceVim#util#source_rc('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
