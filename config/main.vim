@@ -46,7 +46,10 @@ let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
 lockvar g:_spacevim_root_dir
 if has('nvim')
-  let s:qtdir = split(&rtp, ',')[-1]
+  let s:qtdir = fnamemodify(s:resolve(fnamemodify(split(&rtp, ',')[-1],
+        \ ':p:h:h:gs?\\?'.((has('win16') || has('win32')
+        \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
+  let g:rtp = s:qtdir
   if s:qtdir =~# 'nvim-qt'
     let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
   else
@@ -55,13 +58,8 @@ if has('nvim')
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
 endif
-try
-  call SpaceVim#begin()
-catch
-  " Update the rtp only when SpaceVim is not contained in runtimepath.
-  let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h')
-  call SpaceVim#begin()
-endtry
+
+call SpaceVim#begin()
 
 call SpaceVim#custom#load()
 
