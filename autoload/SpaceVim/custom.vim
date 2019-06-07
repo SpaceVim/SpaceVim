@@ -37,8 +37,8 @@ endfunction
 function! SpaceVim#custom#autoconfig(...) abort
   let menu = SpaceVim#api#import('cmdlinemenu')
   let ques = [
-        \ ['dark powered mode', function('s:awesome_mode')],
         \ ['basic mode', function('s:basic_mode')],
+        \ ['dark powered mode', function('s:awesome_mode')],
         \ ]
   call menu.menu(ques)
 endfunction
