@@ -16,6 +16,9 @@ function! SpaceVim#layers#tools#dash#plugins() abort
         \ ['rizzatti/dash.vim', {
         \ 'on_map': { 'n': ['<Plug>DashSearch', '<Plug>DashGlobalSearch'] }
         \ }],
+        \ ['rhysd/devdocs.vim', {
+        \ 'on_map': { 'n': ['<Plug>(devdocs-under-cursor)'] }
+        \ }],
         \ ]
 endfunction
 
@@ -28,6 +31,8 @@ function! SpaceVim#layers#tools#dash#config() abort
   "" }}}
 
   let g:_spacevim_mappings_space.D = { 'name' : '+Dash' }
+  call SpaceVim#mapping#space#def('nmap', ['D', 'b'],
+        \ '<Plug>(devdocs-under-cursor)', 'search word on devdocs.io', 0)
   call SpaceVim#mapping#space#def('nmap', ['D', 'd'],
         \ '<Plug>DashSearch', 'search word under cursor', 0)
   call SpaceVim#mapping#space#def('nmap', ['D', 'D'],
