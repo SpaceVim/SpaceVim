@@ -963,6 +963,15 @@ let g:spacevim_lint_on_the_fly         = 0
 "   let g:spacevim_update_retry_cnt = 3
 " <
 let g:spacevim_update_retry_cnt          = 3
+""
+" @section enable_vimfiler_welcome, options-enable_vimfiler_welcome
+" @parentsection options
+" Enable/Disable vimfiler in the welcome windows. Default is true.
+" This will cause vim to start up slowly if there are too many files in the
+" current directory.
+" >
+"   enable_vimfiler_welcome = false
+" <
 
 ""
 " Enable/Disable vimfiler in the welcome windows. Default is 1.
