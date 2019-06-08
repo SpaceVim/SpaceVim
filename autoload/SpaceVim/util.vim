@@ -28,6 +28,41 @@ fu! SpaceVim#util#loadConfig(file) abort
   endif
 endf
 
+fu! SpaceVim#util#check_if_expand_tab() abort
+  let has_noexpandtab = search('^\t','wn')
+  let has_expandtab = search('^    ','wn')
+  if has_noexpandtab && has_expandtab
+    let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
+          \ '1. expand (tab=space, recommended)',
+          \ '2. noexpand (tab=\t, currently have risk)',
+          \ '3. do nothing (I will handle it by myself)'])
+    let tab_space = printf('%*s',&tabstop,'')
+    if idx == 1
+      let has_noexpandtab = 0
+      let has_expandtab = 1
+      silent exec '%s/\t/' . tab_space . '/g'
+    elseif idx == 2
+      let has_noexpandtab = 1
+      let has_expandtab = 0
+      silent exec '%s/' . tab_space . '/\t/g'
+    else
+      return
+    endif
+  endif
+  if has_noexpandtab == 1 && has_expandtab == 0
+    echomsg 'substitute space to TAB...'
+    set noexpandtab
+    echomsg 'done!'
+  elseif has_noexpandtab == 0 && has_expandtab == 1
+    echomsg 'substitute TAB to space...'
+    set expandtab
+    echomsg 'done!'
+  else
+    " it may be a new file
+    " we use original vim setting
+  endif
+endf
+
 function! SpaceVim#util#findDirInParent(what, where) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
@@ -161,5 +196,44 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
     endtry
   endif
 endf
+
+fu! SpaceVim#util#Generate_ignore(ignore,tool, ...) abort
+  let ignore = []
+  if a:tool ==# 'ag'
+    for ig in split(a:ignore,',')
+      call add(ignore, '--ignore')
+      call add(ignore, "'" . ig . "'")
+    endfor
+  elseif a:tool ==# 'rg'
+    for ig in split(a:ignore,',')
+      call add(ignore, '-g')
+      if get(a:000, 0, 0) == 1
+        call add(ignore, "'!" . ig . "'")
+      else
+        call add(ignore, '!' . ig)
+      endif
+    endfor
+  endif
+  return ignore
+endf
+
+function! SpaceVim#util#UpdateHosts(...) abort
+  if len(a:000) == 0
+    let url = get(g:,'spacevim_hosts_url', '')
+  else
+    let url = a:1
+  endif
+  let hosts = systemlist('curl -s ' . url)
+    if s:SYSTEM.isWindows
+    let local_hosts = $SystemRoot . expand('\System32\drivers\etc\hosts')
+  else
+    let local_hosts = '/etc/hosts'
+  endif
+  if writefile(hosts, local_hosts, 'a') == -1
+    echo 'failed!'
+  else
+    echo 'successfully!'
+  endif
+endfunction
 
 " vim:set et sw=2 cc=80:

@@ -26,83 +26,6 @@ fu! zvim#util#defineMap(type,key,value,desc,...) abort
   call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 
 endf
-fu! zvim#util#source_rc(file) abort
-  if filereadable(g:_spacevim_root_dir. '/config/' . a:file)
-    execute 'source ' . g:_spacevim_root_dir  . '/config/' . a:file
-  endif
-endf
-
-fu! zvim#util#SmartClose() abort
-  let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
-  let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
-  let win_count = winnr('$')
-  let num = win_count
-  for i in range(1,win_count)
-    if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
-      let num = num - 1
-    elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
-      let num = num - 1
-    elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
-      let num = num - 1
-    endif
-  endfor
-  if num == 1
-  else
-    quit
-  endif
-endf
-
-fu! zvim#util#check_if_expand_tab() abort
-  let has_noexpandtab = search('^\t','wn')
-  let has_expandtab = search('^    ','wn')
-  if has_noexpandtab && has_expandtab
-    let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
-          \ '1. expand (tab=space, recommended)',
-          \ '2. noexpand (tab=\t, currently have risk)',
-          \ '3. do nothing (I will handle it by myself)'])
-    let tab_space = printf('%*s',&tabstop,'')
-    if idx == 1
-      let has_noexpandtab = 0
-      let has_expandtab = 1
-      silent exec '%s/\t/' . tab_space . '/g'
-    elseif idx == 2
-      let has_noexpandtab = 1
-      let has_expandtab = 0
-      silent exec '%s/' . tab_space . '/\t/g'
-    else
-      return
-    endif
-  endif
-  if has_noexpandtab == 1 && has_expandtab == 0
-    echomsg 'substitute space to TAB...'
-    set noexpandtab
-    echomsg 'done!'
-  elseif has_noexpandtab == 0 && has_expandtab == 1
-    echomsg 'substitute TAB to space...'
-    set expandtab
-    echomsg 'done!'
-  else
-    " it may be a new file
-    " we use original vim setting
-  endif
-endf
-
-function! zvim#util#BufferEmpty() abort
-  let l:current = bufnr('%')
-  if ! getbufvar(l:current, '&modified')
-    enew
-    silent! execute 'bdelete '.l:current
-  endif
-endfunction
-
-function! zvim#util#listDirs(dir) abort
-  let dir = fnamemodify(a:dir, ':p')
-  if isdirectory(dir)
-    let cmd = printf('ls -F %s | grep /$', dir)
-    return map(systemlist(cmd), 'v:val[:-2]')
-  endif
-  return []
-endfunction
 
 let s:plugins_argv = ['-update', '-openurl']
 
@@ -152,43 +75,6 @@ function! zvim#util#OpenProject(p) abort
   exe 'CtrlP '. dir
 endfunction
 
-function! zvim#util#UpdateHosts(...) abort
-  if len(a:000) == 0
-    let url = get(g:,'spacevim_hosts_url', '')
-  else
-    let url = a:1
-  endif
-  let hosts = systemlist('curl -s ' . url)
-    if s:SYSTEM.isWindows
-    let local_hosts = $SystemRoot . expand('\System32\drivers\etc\hosts')
-  else
-    let local_hosts = '/etc/hosts'
-  endif
-  if writefile(hosts, local_hosts, 'a') == -1
-    echo 'failed!'
-  else
-    echo 'successfully!'
-  endif
-endfunction
-fu! zvim#util#Generate_ignore(ignore,tool, ...) abort
-  let ignore = []
-  if a:tool ==# 'ag'
-    for ig in split(a:ignore,',')
-      call add(ignore, '--ignore')
-      call add(ignore, "'" . ig . "'")
-    endfor
-  elseif a:tool ==# 'rg'
-    for ig in split(a:ignore,',')
-      call add(ignore, '-g')
-      if get(a:000, 0, 0) == 1
-        call add(ignore, "'!" . ig . "'")
-      else
-        call add(ignore, '!' . ig)
-      endif
-    endfor
-  endif
-  return ignore
-endf
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

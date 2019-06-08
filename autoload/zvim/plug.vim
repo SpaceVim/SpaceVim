@@ -130,13 +130,22 @@ function! zvim#plug#defind_hooks(bundle) abort
   if g:spacevim_plugin_manager ==# 'neobundle'
     let s:hooks = neobundle#get_hooks(a:bundle)
     func! s:hooks.on_source(bundle) abort
-      call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
+      call SpaceVim#util#loadConfig('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
     endf
   elseif g:spacevim_plugin_manager ==# 'dein'
     call dein#config(g:dein#name, {
-          \ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
+          \ 'hook_source' : "call SpaceVim#util#loadConfig('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
           \ })
   endif
+endfunction
+
+function! SpaceVim#util#listDirs(dir) abort
+  let dir = fnamemodify(a:dir, ':p')
+  if isdirectory(dir)
+    let cmd = printf('ls -F %s | grep /$', dir)
+    return map(systemlist(cmd), 'v:val[:-2]')
+  endif
+  return []
 endfunction
 
 function! zvim#plug#fetch() abort

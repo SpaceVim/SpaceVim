@@ -48,7 +48,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd Filetype qf setlocal nobuflisted
-    autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
+    autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()

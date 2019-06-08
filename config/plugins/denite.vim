@@ -38,13 +38,13 @@ if !s:sys.isWindows
     " Note: It is slower than ag
     call denite#custom#var('file/rec', 'command',
           \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
-          \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
+          \ + SpaceVim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
           \ )
   elseif executable('ag')
     " Change file/rec command.
     call denite#custom#var('file/rec', 'command',
           \ ['ag' , '--nocolor', '--nogroup', '-g', '']
-          \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
+          \ + SpaceVim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
           \ )
   endif
 else
