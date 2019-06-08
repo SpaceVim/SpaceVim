@@ -139,15 +139,6 @@ function! zvim#plug#defind_hooks(bundle) abort
   endif
 endfunction
 
-function! SpaceVim#util#listDirs(dir) abort
-  let dir = fnamemodify(a:dir, ':p')
-  if isdirectory(dir)
-    let cmd = printf('ls -F %s | grep /$', dir)
-    return map(systemlist(cmd), 'v:val[:-2]')
-  endif
-  return []
-endfunction
-
 function! zvim#plug#fetch() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
     NeoBundleFetch 'Shougo/neobundle.vim'

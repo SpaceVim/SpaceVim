@@ -236,4 +236,13 @@ function! SpaceVim#util#UpdateHosts(...) abort
   endif
 endfunction
 
+function! SpaceVim#util#listDirs(dir) abort
+  let dir = fnamemodify(a:dir, ':p')
+  if isdirectory(dir)
+    let cmd = printf('ls -F %s | grep /$', dir)
+    return map(systemlist(cmd), 'v:val[:-2]')
+  endif
+  return []
+endfunction
+
 " vim:set et sw=2 cc=80:

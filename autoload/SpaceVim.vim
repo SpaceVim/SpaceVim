@@ -1157,6 +1157,20 @@ function! SpaceVim#end() abort
   let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
 
+let g:unite_source_menu_menus =
+      \ get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.CustomKeyMaps = {'description':
+      \ 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
+let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
+      \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
+let g:unite_source_menu_menus.MyStarredrepos = {'description':
+      \ 'All github repos starred by me                   <leader>ls'}
+let g:unite_source_menu_menus.MyStarredrepos.command_candidates =
+      \ get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+let g:unite_source_menu_menus.MpvPlayer = {'description':
+      \ 'Musics list                   <leader>lm'}
+let g:unite_source_menu_menus.MpvPlayer.command_candidates =
+      \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
