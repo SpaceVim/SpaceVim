@@ -65,7 +65,7 @@ endfunction
 let s:plugins_argv = ['-update', '-openurl']
 
 function! SpaceVim#plugins#complete_plugs(ArgLead, CmdLine, CursorPos) abort
-  call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  call SpaceVim#commands#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   if a:CmdLine =~# 'Plugin\s*$' || a:ArgLead =~# '^-[a-zA-Z]*'
     return join(s:plugins_argv, "\n")
   endif

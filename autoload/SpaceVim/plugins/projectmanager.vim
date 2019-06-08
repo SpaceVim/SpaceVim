@@ -192,7 +192,7 @@ function! s:compare(d1, d2) abort
 endfunction
 
 function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
-  call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  call SpaceVim#commands#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   let dir = get(g:,'spacevim_src_root', '~')
   "return globpath(dir, '*')
   let result = split(globpath(dir, '*'), "\n")
