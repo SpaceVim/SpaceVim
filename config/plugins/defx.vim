@@ -99,8 +99,13 @@ function! s:defx_init()
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <2-LeftMouse>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('drop')
+        \ defx#is_directory() ? 
+        \     (
+        \     defx#is_opened_tree() ?
+        \     defx#do_action('close_tree') :
+        \     defx#do_action('open_tree')
+        \     )
+        \ : defx#do_action('drop')
   nnoremap <silent><buffer><expr> sg
         \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv
