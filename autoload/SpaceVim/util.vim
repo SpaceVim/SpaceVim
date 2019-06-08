@@ -6,6 +6,9 @@
 " License: GPLv3
 "=============================================================================
 
+let s:SYSTEM = SpaceVim#api#import('system')
+
+
 function! SpaceVim#util#globpath(path, expr) abort
   if has('patch-7.4.279')
     return globpath(a:path, a:expr, 1, 1)
