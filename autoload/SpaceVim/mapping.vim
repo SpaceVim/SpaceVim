@@ -278,6 +278,34 @@ function! SpaceVim#mapping#format() abort
   call setpos('.', save_cursor)
 endfunction
 
+function! SpaceVim#mapping#BufferEmpty() abort
+  let l:current = bufnr('%')
+  if ! getbufvar(l:current, '&modified')
+    enew
+    silent! execute 'bdelete '.l:current
+  endif
+endfunction
+
+fu! SpaceVim#mapping#SmartClose() abort
+  let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
+  let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
+  let win_count = winnr('$')
+  let num = win_count
+  for i in range(1,win_count)
+    if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
+      let num = num - 1
+    elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
+      let num = num - 1
+    elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
+      let num = num - 1
+    endif
+  endfor
+  if num == 1
+  else
+    quit
+  endif
+endf
+
 function! SpaceVim#mapping#gf() abort
   if &filetype isnot# 'vim'
     return 0

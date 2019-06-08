@@ -1157,6 +1157,20 @@ function! SpaceVim#end() abort
   let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
 
+let g:unite_source_menu_menus =
+      \ get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.CustomKeyMaps = {'description':
+      \ 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
+let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
+      \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
+let g:unite_source_menu_menus.MyStarredrepos = {'description':
+      \ 'All github repos starred by me                   <leader>ls'}
+let g:unite_source_menu_menus.MyStarredrepos.command_candidates =
+      \ get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+let g:unite_source_menu_menus.MpvPlayer = {'description':
+      \ 'Musics list                   <leader>lm'}
+let g:unite_source_menu_menus.MpvPlayer.command_candidates =
+      \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
@@ -1167,17 +1181,17 @@ function! SpaceVim#end() abort
 
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
-  call zvim#util#source_rc('general.vim')
+  call SpaceVim#util#loadConfig('general.vim')
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
+    call SpaceVim#util#loadConfig('neovim.vim')
   endif
 
-  call zvim#util#source_rc('commands.vim')
+  call SpaceVim#util#loadConfig('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction
@@ -1208,8 +1222,8 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call zvim#util#source_rc('functions.vim')
-  call zvim#util#source_rc('init.vim')
+  call SpaceVim#util#loadConfig('functions.vim')
+  call SpaceVim#util#loadConfig('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()

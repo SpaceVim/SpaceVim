@@ -81,9 +81,9 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ ]
           \ ]
     nnoremap <silent> [Window]x
-          \ :<C-u>call zvim#util#BufferEmpty()<CR>
+          \ :<C-u>call SpaceVim#mapping#BufferEmpty()<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.x = ['call zvim#util#BufferEmpty()',
+    let g:_spacevim_mappings_windows.x = ['call SpaceVim#mapping#BufferEmpty()',
           \ 'Empty current buffer',
           \ [
           \ '[WIN x] is to empty current buffer',
