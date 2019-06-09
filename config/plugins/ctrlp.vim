@@ -1,3 +1,12 @@
+"=============================================================================
+" ctrlp.vim --- ctrlp config
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 let s:SYS = SpaceVim#api#import('system')
 
 let g:ctrlp_map = get(g:,'ctrlp_map', '<c-p>')
@@ -33,11 +42,7 @@ endif
 if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 endif
-"nnoremap <Leader>kk :CtrlPMixed<Cr>
-" comment for ctrlp-funky {{{
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
 let g:ctrlp_funky_syntax_highlight = get(g:, 'ctrlp_funky_syntax_highlight', 1)
 " }}}
 "for ctrlp_nerdtree {{{
@@ -46,12 +51,7 @@ let g:ctrlp_nerdtree_show_hidden = get(g:, 'ctrlp_nerdtree_show_hidden', 1)
 "for ctrlp_sessions{{{
 let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
 "}}}
-"for k.vim {{{
-nnoremap <silent> <leader>qe :CtrlPK<CR>
-"}}}
-" for ctrlp-launcher {{{
-nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-"}}}
+
 ""for ctrlp-cmatcher {{{
 "let g:ctrlp_max_files = 0
 "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -60,7 +60,6 @@ nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
 augroup Fix_command_in_help_buffer
   au!
   autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
-  au FileType help exec "nnoremap <silent><buffer> q :q<CR>"
 augroup END
 
 " vim:set et sw=2:
