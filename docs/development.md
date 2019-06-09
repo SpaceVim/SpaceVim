@@ -179,8 +179,8 @@ The file header for Vim script should look like the following template:
 ```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: YOUR NAME <YOUR EMAIL>
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

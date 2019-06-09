@@ -1,7 +1,7 @@
 "=============================================================================
-" julia.vim --- Julia Language configuration for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: Jinxuan Zhu <zhujinxuan@gmail.com>
+" julia.vim --- SpaceVim lang#julia layer
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

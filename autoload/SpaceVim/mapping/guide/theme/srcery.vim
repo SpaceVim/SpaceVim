@@ -1,3 +1,11 @@
+"=============================================================================
+" srcery.vim --- srcery theme for SpaceVim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 " Color Palette {{{
 
 let s:black          = [ '#1c1b19',   0 ]
