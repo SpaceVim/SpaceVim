@@ -81,28 +81,29 @@ CONTENTS                                                   *SpaceVim-contents*
       11. lang#c.......................................|SpaceVim-layer-lang-c|
       12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
       13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      15. lang#elm...................................|SpaceVim-layer-lang-elm|
-      16. lang#go.....................................|SpaceVim-layer-lang-go|
-      17. lang#java.................................|SpaceVim-layer-lang-java|
-      18. lang#julia...............................|SpaceVim-layer-lang-julia|
-      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      20. lang#lua...................................|SpaceVim-layer-lang-lua|
-      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      22. lang#php...................................|SpaceVim-layer-lang-php|
-      23. lang#pony.................................|SpaceVim-layer-lang-pony|
-      24. lang#processing.....................|SpaceVim-layer-lang-processing|
-      25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      26. lang#python.............................|SpaceVim-layer-lang-python|
-      27. lang#rust.................................|SpaceVim-layer-lang-rust|
-      28. lang#scala...............................|SpaceVim-layer-lang-scala|
-      29. lang#xml...................................|SpaceVim-layer-lang-xml|
-      30. operator...................................|SpaceVim-layer-operator|
-      31. shell.........................................|SpaceVim-layer-shell|
-      32. test...........................................|SpaceVim-layer-test|
-      33. tmux...........................................|SpaceVim-layer-tmux|
-      34. tools#dash...............................|SpaceVim-layer-tools-dash|
-      35. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      14. lang#dart.................................|SpaceVim-layer-lang-dart|
+      15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      16. lang#elm...................................|SpaceVim-layer-lang-elm|
+      17. lang#go.....................................|SpaceVim-layer-lang-go|
+      18. lang#java.................................|SpaceVim-layer-lang-java|
+      19. lang#julia...............................|SpaceVim-layer-lang-julia|
+      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      21. lang#lua...................................|SpaceVim-layer-lang-lua|
+      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      23. lang#php...................................|SpaceVim-layer-lang-php|
+      24. lang#pony.................................|SpaceVim-layer-lang-pony|
+      25. lang#processing.....................|SpaceVim-layer-lang-processing|
+      26. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      27. lang#python.............................|SpaceVim-layer-lang-python|
+      28. lang#rust.................................|SpaceVim-layer-lang-rust|
+      29. lang#scala...............................|SpaceVim-layer-lang-scala|
+      30. lang#xml...................................|SpaceVim-layer-lang-xml|
+      31. operator...................................|SpaceVim-layer-operator|
+      32. shell.........................................|SpaceVim-layer-shell|
+      33. test...........................................|SpaceVim-layer-test|
+      34. tmux...........................................|SpaceVim-layer-tmux|
+      35. tools#dash...............................|SpaceVim-layer-tools-dash|
+      36. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1365,6 +1366,14 @@ KEY MAPPINGS
   normal          SPC l s s       start the OmniSharp server
   normal          SPC l s S       stop the OmniSharp server
 <
+
+==============================================================================
+LANG#DART                                           *SpaceVim-layer-lang-dart*
+
+INTRO
+The lang#dart layer provides code completion, documentation lookup, jump to
+definition, dart_repl integration for dart. It uses neomake as default syntax
+checker which is loaded in |SpaceVim-layer-checkers|
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*

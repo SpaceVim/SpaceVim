@@ -6,6 +6,14 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#dart, layer-lang-dart
+" @parentsection layers
+" @subsection Intro
+" The lang#dart layer provides code completion, documentation lookup, jump to
+" definition, dart_repl integration for dart. It uses neomake as default
+" syntax checker which is loaded in @section(layer-checkers)
+
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
   call add(plugins, ['dart-lang/dart-vim-plugin', {'merged' : 0}])
