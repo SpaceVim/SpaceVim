@@ -15,6 +15,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
+let s:JSON = SpaceVim#api#import('data#json')
 " }}}
 
 let s:grepid = 0
@@ -33,7 +34,23 @@ let [
 let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
-let s:grep_history = []
+function! s:read_histroy() abort
+    if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
+      let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
+      if type(_his) ==# type([])
+        return _his
+      else
+        return []
+      endif
+    else
+      return []
+    endif
+endfunction
+function! s:update_history() abort
+  call add(s:grep_history, s:grep_expr)
+  call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
+endfunction
+let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
 " }}}
 
@@ -48,7 +65,7 @@ function! s:grep_timer(timer) abort
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
-  call add(s:grep_history, s:grep_expr)
+  call s:update_history()
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
