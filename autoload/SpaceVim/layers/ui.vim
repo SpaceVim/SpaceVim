@@ -63,8 +63,8 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_background')) . ', [])',
         \ 'toggle background', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
-        \ . string(s:_function('s:toggle_conceal')) . ', [])',
-        \ 'toggle conceal', 1)
+        \ . string(s:_function('s:toggle_conceallevel')) . ', [])',
+        \ 'toggle conceallevel', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'Open tabs manager', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
@@ -281,13 +281,13 @@ function! s:toggle_whitespace() abort
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction
 
-func! s:toggle_conceal()
+function! s:toggle_conceallevel()
     if &conceallevel == 0 
         setlocal conceallevel=2
     else
         setlocal conceallevel=0
     endif
-endf
+endfunction
 
 function! s:toggle_background()
     let s:tbg = &background
