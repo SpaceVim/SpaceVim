@@ -68,7 +68,6 @@ function! s:grep_timer(timer) abort
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
   call SpaceVim#logger#info('grep cmd: ' . string(cmd))
-  call s:update_history()
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -429,6 +428,7 @@ function! s:open_item() abort
     let s:preview_able = 0
     noautocmd q
     exe 'e ' . filename
+    call s:update_history()
     call cursor(linenr, colum)
     noautocmd normal! :
   endif
