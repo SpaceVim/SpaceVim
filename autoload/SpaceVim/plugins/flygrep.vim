@@ -35,18 +35,21 @@ let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
 function! s:read_histroy() abort
-    if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
-      let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
-      if type(_his) ==# type([])
-        return _his
-      else
-        return []
-      endif
+  if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
+    if type(_his) ==# type([])
+      return _his
     else
       return []
     endif
+  else
+    return []
+  endif
 endfunction
 function! s:update_history() abort
+  if index(s:grep_history, s:grep_expr) >= 0
+    call remove(s:grep_history, index(s:grep_history, s:grep_expr))
+  endif
   call add(s:grep_history, s:grep_expr)
   call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
 endfunction
@@ -284,6 +287,7 @@ function! s:close_grep_job() abort
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
   normal! "_ggdG
+  let s:complete_input_history_num = [0,0]
 endfunction
 
 let s:MPT._oninputpro = function('s:close_grep_job')
@@ -539,7 +543,6 @@ function! s:previous_match_history() abort
 endfunction
 
 function! s:next_match_history() abort
-
   if s:complete_input_history_num == [0,0]
     let s:complete_input_history_base = s:MPT._prompt.begin
     let s:MPT._prompt.cursor = ''
@@ -555,14 +558,20 @@ endfunction
 
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
-  if len(results) > 0
-    call add(results, a:str)
+  if a:num[0] - a:num[1] == 0
+    return a:str
+  elseif len(results) > 0
     let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
     return results[index]
   else
     return a:str
   endif
 endfunction
+
+function! Testflygrep(a, b) abort
+  return s:complete_input_history(a:a, a:b)
+endfunction
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
