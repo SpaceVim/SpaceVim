@@ -7,15 +7,21 @@
 "=============================================================================
 
 
-function! SpaceVim#layers#autoload#lang#pascal#plugins() abort
+function! SpaceVim#layers#lang#pascal#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-pascal', {'merged' : 0}])
   return plugins
 endfunction
 
-function! SpaceVim#layers#autoload#lang#pascal#config() abort
+function! SpaceVim#layers#lang#pascal#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('pascal', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('pascal', 'nim c -r --hints:off --verbosity:0 %s')
+  let runner1 = {
+        \ 'exe' : 'fpc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : [],
+        \ 'usestdin' : 0,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('pascal', [runner1, '#TEMP#'])
 endfunction
 
 function! s:language_specified_mappings() abort
