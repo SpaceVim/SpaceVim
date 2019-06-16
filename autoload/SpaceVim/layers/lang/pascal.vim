@@ -9,6 +9,6 @@
 
 function! SpaceVim#layers#autoload#lang#pascal#plugins() abort
   let plugins = []
-  
+  call add(plugins, ['wsdjeg/vim-pascal', {'merged' : 0}])
   return plugins
 endfunction
