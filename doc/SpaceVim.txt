@@ -1137,6 +1137,11 @@ LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
 
+languages:
+
+https://www.scriptol.com/programming/list-programming-languages.php#query-lang
+uage
+
 ==============================================================================
 AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 

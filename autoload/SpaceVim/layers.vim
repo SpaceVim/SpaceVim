@@ -9,6 +9,10 @@
 ""
 " @section Layers, layers
 "   SpaceVim support such layers:
+"
+" languages:
+"   
+" https://www.scriptol.com/programming/list-programming-languages.php#query-language
 
 let s:enabled_layers = []
 let s:layers_vars = {}
