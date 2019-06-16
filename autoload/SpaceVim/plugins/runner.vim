@@ -87,7 +87,7 @@ function! s:async_run(runner) abort
       endif
     else
       let usestdin =  0
-      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+      let compile_cmd = [substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')]
     endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
           \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),

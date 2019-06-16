@@ -15,13 +15,8 @@ endfunction
 
 function! SpaceVim#layers#lang#pascal#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('pascal', function('s:language_specified_mappings'))
-  let runner1 = {
-        \ 'exe' : 'fpc',
-        \ 'targetopt' : '-o',
-        \ 'opt' : [],
-        \ 'usestdin' : 0,
-        \ }
-  call SpaceVim#plugins#runner#reg_runner('pascal', [runner1, '#TEMP#'])
+  let runner = ['fpc %s -o#TEMP#.exe', '#TEMP#.exe']
+  call SpaceVim#plugins#runner#reg_runner('pascal', runner)
 endfunction
 
 function! s:language_specified_mappings() abort
