@@ -97,6 +97,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#extra](lang/extra/)                             | 这一模块为 SpaceVim 提供了一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性。                                              |
 | [lang#fsharp](lang/fsharp/)                           | 这一模块为 SpaceVim 提供了 FSharp 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                            |
 | [lang#go](lang/go/)                                   | 这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                                |
+| [lang#groovy](lang/groovy/)                           | 这一模块为 Groovy 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#haskell](lang/haskell/)                         | 这一模块为 SpaceVim 提供了 Haskell 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                      |
