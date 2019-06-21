@@ -14,10 +14,12 @@ endfunction
 
 function! SpaceVim#layers#lang#groovy#config() abort
   call SpaceVim#plugins#repl#reg('groovy', 'groovysh')
+  call SpaceVim#plugins#runner#reg_runner('groovy', 'groovy %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('groovy', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("groovy")',
@@ -32,3 +34,15 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
+
+
+" C:\Users\Administrator\.SpaceVim>groovy -v
+" WARNING: An illegal reflective access operation has occurred
+" WARNING: Illegal reflective access by org.codehaus.groovy.vmplugin.v7.Java7$1 (file:/D:/scoop/apps/groovy/current/lib/groovy-2.5.7.jar) to constr
+" uctor java.lang.invoke.MethodHandles$Lookup(java.lang.Class,int)
+" WARNING: Please consider reporting this to the maintainers of org.codehaus.groovy.vmplugin.v7.Java7$1
+" WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+" WARNING: All illegal access operations will be denied in a future release
+" Groovy Version: 2.5.7 JVM: 9.0.4 Vendor: Oracle Corporation OS: Windows 7
+" in windows, use scoop to instal jdk 1.8
+" scoop install ojdkbuild8
