@@ -89,21 +89,22 @@ CONTENTS                                                   *SpaceVim-contents*
       19. lang#julia...............................|SpaceVim-layer-lang-julia|
       20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
       21. lang#lua...................................|SpaceVim-layer-lang-lua|
-      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      23. lang#php...................................|SpaceVim-layer-lang-php|
-      24. lang#pony.................................|SpaceVim-layer-lang-pony|
-      25. lang#processing.....................|SpaceVim-layer-lang-processing|
-      26. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      27. lang#python.............................|SpaceVim-layer-lang-python|
-      28. lang#rust.................................|SpaceVim-layer-lang-rust|
-      29. lang#scala...............................|SpaceVim-layer-lang-scala|
-      30. lang#xml...................................|SpaceVim-layer-lang-xml|
-      31. operator...................................|SpaceVim-layer-operator|
-      32. shell.........................................|SpaceVim-layer-shell|
-      33. test...........................................|SpaceVim-layer-test|
-      34. tmux...........................................|SpaceVim-layer-tmux|
-      35. tools#dash...............................|SpaceVim-layer-tools-dash|
-      36. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      22. lang#nim...................................|SpaceVim-layer-lang-nim|
+      23. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      24. lang#php...................................|SpaceVim-layer-lang-php|
+      25. lang#pony.................................|SpaceVim-layer-lang-pony|
+      26. lang#processing.....................|SpaceVim-layer-lang-processing|
+      27. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      28. lang#python.............................|SpaceVim-layer-lang-python|
+      29. lang#rust.................................|SpaceVim-layer-lang-rust|
+      30. lang#scala...............................|SpaceVim-layer-lang-scala|
+      31. lang#xml...................................|SpaceVim-layer-lang-xml|
+      32. operator...................................|SpaceVim-layer-operator|
+      33. shell.........................................|SpaceVim-layer-shell|
+      34. test...........................................|SpaceVim-layer-test|
+      35. tmux...........................................|SpaceVim-layer-tmux|
+      36. tools#dash...............................|SpaceVim-layer-tools-dash|
+      37. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1536,6 +1537,28 @@ MAPPINGS
   Mode            Key             Function
   ---------------------------------------------
   normal          SPC l r         lua run
+<
+
+==============================================================================
+LANG#NIM                                             *SpaceVim-layer-lang-nim*
+
+This layer is for nim development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#nim'
+<
+
+KEY BINDINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run current file
+  normal    SPC l d       show symbol info
+  normal    SPC l e       rename symbol in file
+  normal    SPC l E       rename symbol in project
+  normal    g d           go to definition
 <
 
 ==============================================================================

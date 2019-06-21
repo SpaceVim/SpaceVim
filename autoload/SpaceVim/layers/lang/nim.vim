@@ -7,6 +7,28 @@
 "=============================================================================
 
 
+""
+" @section lang#nim, layer-lang-nim
+" @parentsection layers
+" This layer is for nim development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#nim'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode      Key           Function
+"   -------------------------------------------------------------
+"   normal    SPC l r       run current file
+"   normal    SPC l d       show symbol info
+"   normal    SPC l e       rename symbol in file
+"   normal    SPC l E       rename symbol in project
+"   normal    g d           go to definition
+" <
+
+
 function! SpaceVim#layers#lang#nim#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-nim', {'merged' : 0}])
