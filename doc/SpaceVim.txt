@@ -99,13 +99,14 @@ CONTENTS                                                   *SpaceVim-contents*
       29. lang#python.............................|SpaceVim-layer-lang-python|
       30. lang#rust.................................|SpaceVim-layer-lang-rust|
       31. lang#scala...............................|SpaceVim-layer-lang-scala|
-      32. lang#xml...................................|SpaceVim-layer-lang-xml|
-      33. operator...................................|SpaceVim-layer-operator|
-      34. shell.........................................|SpaceVim-layer-shell|
-      35. test...........................................|SpaceVim-layer-test|
-      36. tmux...........................................|SpaceVim-layer-tmux|
-      37. tools#dash...............................|SpaceVim-layer-tools-dash|
-      38. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      32. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      33. lang#xml...................................|SpaceVim-layer-lang-xml|
+      34. operator...................................|SpaceVim-layer-operator|
+      35. shell.........................................|SpaceVim-layer-shell|
+      36. test...........................................|SpaceVim-layer-test|
+      37. tmux...........................................|SpaceVim-layer-tmux|
+      38. tools#dash...............................|SpaceVim-layer-tools-dash|
+      39. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1849,6 +1850,35 @@ CODE FORMATTING
     enabled, it will automatically use
     [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
     format code.
+
+==============================================================================
+LANG#TCL                                             *SpaceVim-layer-lang-tcl*
+
+This layer is for tcl development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#tcl'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for tcl, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
