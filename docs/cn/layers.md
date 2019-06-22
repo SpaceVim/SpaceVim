@@ -109,11 +109,13 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#lisp](lang/lisp/)                               | 这一模块为 Lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#lua](lang/lua/)                                 | 这一模块为 Lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                             |
 | [lang#markdown](lang/markdown/)                       | 这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                      |
+| [lang#matlab](lang/matlab/)                           | 该模块为 SpaceVim 提供了 matlab 语言开发支持，包括语法高亮。                                                                        |
 | [lang#nim](lang/nim/)                                 | 该模块为 SpaceVim 提供 Nim 开发支持，包括语法高亮、代码补全、编译运行以及交互式编程等功能。                                         |
 | [lang#ocaml](lang/ocaml/)                             | 这一模块为 OCaml 开发提供了支持，包括语法高亮、代码补全、以及定义处跳转等功能。                                                     |
 | [lang#perl](lang/perl/)                               | 这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#php](lang/php/)                                 | 这一模块为 SpaceVim 提供了 PHP 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#plantuml](lang/plantuml/)                       | 这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。                                                      |
+| [lang#prolog](lang/prolog/)                           | 这一模块为 Prolog 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#puppet](lang/puppet/)                           | 这一模块为 SpaceVim 提供了 Puppet 的开发支持，包括语法高亮、语言服务器支持。                                                        |
 | [lang#purescript](lang/purescript/)                   | 这一模块为 SpaceVim 提供了 PureScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
 | [lang#python](lang/python/)                           | 这一模块为 Python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
