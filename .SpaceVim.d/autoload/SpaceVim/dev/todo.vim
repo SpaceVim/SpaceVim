@@ -6,11 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+let s:JOB = SpaceVim#api#import('job')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
 endfunction
-
-let s:JOB = SpaceVim#api#import('job')
 
 let s:bufnr = 0
 
@@ -65,10 +66,8 @@ endfunction
 
 function! s:exit(id, data, event ) abort
   call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
-  let g:lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
-  call setbufvar(s:bufnr, '&modifiable', 1)
-  call setline(1, g:lines)
-  call setbufvar(s:bufnr, '&modifiable', 0)
+  let lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
+  call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
 
 
