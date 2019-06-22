@@ -6,6 +6,35 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#groovy, layer-lang-groovy
+" @parentsection layers
+" This layer is for groovy development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#groovy'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for groovy, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+
 function! SpaceVim#layers#lang#groovy#plugin() abort
   let plugins = []
   call add(plugins, ['wsdjeg/groovy.vim', {'merged' : 0}])

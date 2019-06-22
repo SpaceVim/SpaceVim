@@ -85,26 +85,27 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       16. lang#elm...................................|SpaceVim-layer-lang-elm|
       17. lang#go.....................................|SpaceVim-layer-lang-go|
-      18. lang#java.................................|SpaceVim-layer-lang-java|
-      19. lang#julia...............................|SpaceVim-layer-lang-julia|
-      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      21. lang#lua...................................|SpaceVim-layer-lang-lua|
-      22. lang#nim...................................|SpaceVim-layer-lang-nim|
-      23. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      24. lang#php...................................|SpaceVim-layer-lang-php|
-      25. lang#pony.................................|SpaceVim-layer-lang-pony|
-      26. lang#processing.....................|SpaceVim-layer-lang-processing|
-      27. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      28. lang#python.............................|SpaceVim-layer-lang-python|
-      29. lang#rust.................................|SpaceVim-layer-lang-rust|
-      30. lang#scala...............................|SpaceVim-layer-lang-scala|
-      31. lang#xml...................................|SpaceVim-layer-lang-xml|
-      32. operator...................................|SpaceVim-layer-operator|
-      33. shell.........................................|SpaceVim-layer-shell|
-      34. test...........................................|SpaceVim-layer-test|
-      35. tmux...........................................|SpaceVim-layer-tmux|
-      36. tools#dash...............................|SpaceVim-layer-tools-dash|
-      37. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      18. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      19. lang#java.................................|SpaceVim-layer-lang-java|
+      20. lang#julia...............................|SpaceVim-layer-lang-julia|
+      21. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      22. lang#lua...................................|SpaceVim-layer-lang-lua|
+      23. lang#nim...................................|SpaceVim-layer-lang-nim|
+      24. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      25. lang#php...................................|SpaceVim-layer-lang-php|
+      26. lang#pony.................................|SpaceVim-layer-lang-pony|
+      27. lang#processing.....................|SpaceVim-layer-lang-processing|
+      28. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      29. lang#python.............................|SpaceVim-layer-lang-python|
+      30. lang#rust.................................|SpaceVim-layer-lang-rust|
+      31. lang#scala...............................|SpaceVim-layer-lang-scala|
+      32. lang#xml...................................|SpaceVim-layer-lang-xml|
+      33. operator...................................|SpaceVim-layer-operator|
+      34. shell.........................................|SpaceVim-layer-shell|
+      35. test...........................................|SpaceVim-layer-test|
+      36. tmux...........................................|SpaceVim-layer-tmux|
+      37. tools#dash...............................|SpaceVim-layer-tools-dash|
+      38. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1430,6 +1431,35 @@ MAPPINGS
   normal          SPC l v         freevars
   normal          SPC l r         go run
 <
+
+==============================================================================
+LANG#GROOVY                                       *SpaceVim-layer-lang-groovy*
+
+This layer is for groovy development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#groovy'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for groovy, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
