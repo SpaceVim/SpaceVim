@@ -13,7 +13,7 @@ function! SpaceVim#layers#lang#pact#plugins() abort
   return plugins
 endfunction
 
-function! SpaceVim#layers#lang#prolog#config() abort
+function! SpaceVim#layers#lang#pact#config() abort
   call SpaceVim#plugins#repl#reg('pact', 'pact')
   call SpaceVim#plugins#runner#reg_runner('pact', 'pact %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('pact', function('s:language_specified_mappings'))
