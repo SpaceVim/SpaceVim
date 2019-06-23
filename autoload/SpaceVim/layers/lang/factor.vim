@@ -9,7 +9,7 @@
 
 function! SpaceVim#layers#lang#factor#plugins() abort
   let plugins = []
-  
+  call add(plugins, ['wsdjeg/vim-factor', {'merged' : 0}])
   return plugins
 endfunction
 
