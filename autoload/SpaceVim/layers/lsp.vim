@@ -132,13 +132,21 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
   endif
+  let l:cwd = getcwd()
   for ft in get(a:var, 'filetypes', [])
-    let cmd = get(s:lsp_servers, ft, [''])[0]
-    if empty(cmd)
+    let l:cmds = get(s:lsp_servers, ft, [''])
+    let l:exec = l:cmds[0]
+    if empty(l:exec)
       call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
     else
-      if executable(cmd)
+      if executable(l:exec)
         call add(s:enabled_fts, ft)
+        let l:newcmds = []
+        for l:cmd in l:cmds
+          let l:newcmd = substitute(l:cmd, '#{cwd}', l:cwd, 'g')
+          call add(l:newcmds, l:newcmd)
+        endfor
+        let s:lsp_servers[ft] = l:newcmds
       else
         call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . cmd . ' is not executable!')
       endif
