@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#pact layer"
-description: "This layer is for pact development, provide syntax checking, code runner and repl support for hy file."
+title: "SpaceVim lang#hy layer"
+description: "This layer is for hy development, provide syntax checking, code runner and repl support for hy file."
 ---
 
-# [Available Layers](../../) >> lang#pact
+# [Available Layers](../../) >> lang#hy
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,7 +18,7 @@ description: "This layer is for pact development, provide syntax checking, code 
 
 ## Description
 
-This layer is for pact development.
+This layer is for hy development.
 
 ## Install
 
@@ -26,7 +26,7 @@ To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#pact"
+  name = "lang#hy"
 ```
 ## Features
 
@@ -37,11 +37,11 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a pact file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a hy file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
-Start a `pact` inferior REPL process with `SPC l s i`.
+Start a `hy` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
