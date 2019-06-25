@@ -148,7 +148,7 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
         endfor
         let s:lsp_servers[ft] = l:newcmds
       else
-        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . cmd . ' is not executable!')
+        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . l:exec . ' is not executable!')
       endif
     endif
   endfor
