@@ -108,6 +108,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#kotlin](lang/kotlin/)                           | 该模块为 SpaceVim 提供了 Kotlin 语言开发支持，包括语法高亮、语言服务器支持。                                                        |
 | [lang#latex](lang/latex/)                             | 这一模块为 LaTex 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                           |
 | [lang#lisp](lang/lisp/)                               | 这一模块为 Lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
+| [lang#livescript](lang/livescript/)                   | 这一模块为 livescript 开发提供支持，包括交互式编程、一键运行等特性。                                                                |
 | [lang#lua](lang/lua/)                                 | 这一模块为 Lua 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                             |
 | [lang#markdown](lang/markdown/)                       | 这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。                                                      |
 | [lang#matlab](lang/matlab/)                           | 该模块为 SpaceVim 提供了 matlab 语言开发支持，包括语法高亮。                                                                        |
