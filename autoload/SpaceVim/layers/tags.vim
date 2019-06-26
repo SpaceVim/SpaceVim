@@ -32,7 +32,7 @@ function! SpaceVim#layers#tags#config() abort
 endfunction
 
 function! MyTagfunc() abort
-  exe "Gtags -d " . expand("<cword>")
+  exe 'Gtags -d ' . expand('<cword>')
 endfunction
 
 function! MyTagfuncBack() abort
