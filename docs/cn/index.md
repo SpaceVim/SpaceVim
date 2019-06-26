@@ -53,6 +53,13 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 是的，通过模块的方式，将各种功能封装成相应的模块，对多种语言提供了语言开发模块，目标是尝试模拟简易的集成开发环境。
 
+- SpaceVim 支持多少种编程语言？ 
+
+```sh
+~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
+68
+```
+
 - SpaceVim 支持什么版本的 Vim/Neovim？
 
 建议使用 Vim 7.4 或者 Neovim v0.1.7及其以上版本。

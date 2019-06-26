@@ -66,6 +66,13 @@ for development progress and the [roadmap](roadmap/) for high-level plans.
 
 With layers feature, this version of Vim distribution try to turn Vim/Neovim into an IDE for many languages.
 
+- How many programming languages does SpaceVim support?
+
+```sh
+~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
+68
+```
+
 - Which version of Vim/Neovim is needed?
 
 Vim 7.4/Neovim v0.1.7, and `+lua` or `+python3` is needed.
