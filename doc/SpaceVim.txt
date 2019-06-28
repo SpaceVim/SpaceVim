@@ -89,25 +89,26 @@ CONTENTS                                                   *SpaceVim-contents*
       19. lang#java.................................|SpaceVim-layer-lang-java|
       20. lang#julia...............................|SpaceVim-layer-lang-julia|
       21. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      22. lang#lua...................................|SpaceVim-layer-lang-lua|
-      23. lang#nim...................................|SpaceVim-layer-lang-nim|
-      24. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      25. lang#php...................................|SpaceVim-layer-lang-php|
-      26. lang#pony.................................|SpaceVim-layer-lang-pony|
-      27. lang#processing.....................|SpaceVim-layer-lang-processing|
-      28. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      29. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      30. lang#python.............................|SpaceVim-layer-lang-python|
-      31. lang#rust.................................|SpaceVim-layer-lang-rust|
-      32. lang#scala...............................|SpaceVim-layer-lang-scala|
-      33. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      34. lang#xml...................................|SpaceVim-layer-lang-xml|
-      35. operator...................................|SpaceVim-layer-operator|
-      36. shell.........................................|SpaceVim-layer-shell|
-      37. test...........................................|SpaceVim-layer-test|
-      38. tmux...........................................|SpaceVim-layer-tmux|
-      39. tools#dash...............................|SpaceVim-layer-tools-dash|
-      40. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      22. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      23. lang#lua...................................|SpaceVim-layer-lang-lua|
+      24. lang#nim...................................|SpaceVim-layer-lang-nim|
+      25. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      26. lang#php...................................|SpaceVim-layer-lang-php|
+      27. lang#pony.................................|SpaceVim-layer-lang-pony|
+      28. lang#processing.....................|SpaceVim-layer-lang-processing|
+      29. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      30. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      31. lang#python.............................|SpaceVim-layer-lang-python|
+      32. lang#rust.................................|SpaceVim-layer-lang-rust|
+      33. lang#scala...............................|SpaceVim-layer-lang-scala|
+      34. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      35. lang#xml...................................|SpaceVim-layer-lang-xml|
+      36. operator...................................|SpaceVim-layer-operator|
+      37. shell.........................................|SpaceVim-layer-shell|
+      38. test...........................................|SpaceVim-layer-test|
+      39. tmux...........................................|SpaceVim-layer-tmux|
+      40. tools#dash...............................|SpaceVim-layer-tools-dash|
+      41. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1556,6 +1557,35 @@ to its LaTeXToUnicode feature.
 LANG#KOTLIN                                       *SpaceVim-layer-lang-kotlin*
 
 This layer is for kotlin development.
+
+==============================================================================
+LANG#LIVESCRIPT                               *SpaceVim-layer-lang-livescript*
+
+This layer is for livescript development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#livescript'
+<
+
+KEY BINDINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run current file
+<
+
+This layer also provides REPL support for livescript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#LUA                                             *SpaceVim-layer-lang-lua*
