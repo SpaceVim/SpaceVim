@@ -51,7 +51,7 @@ function! s:language_specified_mappings() abort
         \ 'call nim#features#usages#run(1)', 'rename symbol in project', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
-        \ 'compible and run current file', 1)
+        \ 'compile and run current file', 1)
 
   " REPL key bindings {{{
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}

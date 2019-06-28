@@ -28,5 +28,5 @@ endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
-        \ 'compible and run current file', 1)
+        \ 'compile and run current file', 1)
 endfunction
