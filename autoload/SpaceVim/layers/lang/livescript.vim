@@ -69,11 +69,15 @@ function! s:language_specified_mappings() abort
   " checker layer configuration
   if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
     let g:neomake_livescript_enabled_makers = ['lsc']
+    " Failed at: test.ls
+    " { Error: Parse error on line 1: Unexpected 'NEWLINE'
+    " at test.ls
     let g:neomake_livescript_lsc_maker =  {
           \ 'args': ['-c',],
-          \ 'errorformat': "%EFailed at: %f,%ECan't find: %f,%CSyntaxError: %m on line %l,%CError: Parse error on line %l: %m,%C,%C %.%#",
+          \ 'errorformat': '%EFailed at: %f,%C{\ Error:\ Parse\ error\ on\ line\ %l:\ %m',
           \ 'cwd': '%:p:h',
           \ }
+    let g:neomake_livescript_lsc_remove_invalid_entries = 1
   endif
 endfunction
 
