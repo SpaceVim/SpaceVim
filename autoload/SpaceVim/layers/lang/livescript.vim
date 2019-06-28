@@ -65,4 +65,21 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','e'], 'call call('
         \ . string(function('s:eval')) . ', [])',
         \ 'eval code::String', 1)
+
+  " checker layer configuration
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+    let g:neomake_livescript_enabled_makers = ['lsc']
+    let g:neomake_livescript_lsc_maker =  {
+          \ 'args': ['-c',],
+          \ 'errorformat': "%EFailed at: %f,%ECan't find: %f,%CSyntaxError: %m on line %l,%CError: Parse error on line %l: %m,%C,%C %.%#",
+          \ 'cwd': '%:p:h',
+          \ }
+  endif
+endfunction
+
+
+function! s:eval() abort
+  let input = input('>>')
+  let cmd = ['lsc', '-e', input, expand('%:p')]
+  " @todo fix livescript eval function
 endfunction
