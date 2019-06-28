@@ -77,6 +77,10 @@ function! s:language_specified_mappings() abort
           \ 'errorformat': '%EFailed at: %f,%C{\ Error:\ Parse\ error\ on\ line\ %l:\ %m',
           \ 'cwd': '%:p:h',
           \ }
+    " Failed at: test.ls
+    " SyntaxError: missing `"` on line 5
+    " at test.ls
+    let g:neomake_livescript_lsc_maker.errorformat .= ',%EFailed at: %f,%CSyntaxError:\ %m\ on\ line\ %l'
     let g:neomake_livescript_lsc_remove_invalid_entries = 1
   endif
 endfunction
