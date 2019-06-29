@@ -30,7 +30,7 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
     echo "=================  nvim version ======================"
     nvim --version
     echo "=================  lua version ======================"
-    lua --version
+    lua -v
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi
