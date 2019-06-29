@@ -6,6 +6,35 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#livescript, layer-lang-livescript
+" @parentsection layers
+" This layer is for livescript development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#livescript'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode      Key           Function
+"   -------------------------------------------------------------
+"   normal    SPC l r       run current file
+" <
+"
+" This layer also provides REPL support for livescript, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+
 function! SpaceVim#layers#lang#livescript#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-livescript', { 'merged' : 0}])
@@ -33,4 +62,32 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','e'], 'call call('
+        \ . string(function('s:eval')) . ', [])',
+        \ 'eval code::String', 1)
+
+  " checker layer configuration
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+    let g:neomake_livescript_enabled_makers = ['lsc']
+    " Failed at: test.ls
+    " { Error: Parse error on line 1: Unexpected 'NEWLINE'
+    " at test.ls
+    let g:neomake_livescript_lsc_maker =  {
+          \ 'args': ['-c',],
+          \ 'errorformat': '%EFailed at: %f,%C{\ Error:\ Parse\ error\ on\ line\ %l:\ %m',
+          \ 'cwd': '%:p:h',
+          \ }
+    " Failed at: test.ls
+    " SyntaxError: missing `"` on line 5
+    " at test.ls
+    let g:neomake_livescript_lsc_maker.errorformat .= ',%EFailed at: %f,%CSyntaxError:\ %m\ on\ line\ %l'
+    let g:neomake_livescript_lsc_remove_invalid_entries = 1
+  endif
+endfunction
+
+
+function! s:eval() abort
+  let input = input('>>')
+  let cmd = ['lsc', '-e', input, expand('%:p')]
+  " @todo fix livescript eval function
 endfunction
