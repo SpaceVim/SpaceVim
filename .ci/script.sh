@@ -24,10 +24,10 @@ elif [ "$LINT" = "vint" ]; then
 elif [ "$LINT" = "vint-errors" ]; then
     vint --error .
 elif [ "$LINT" = "vader" ]; then
-    export PATH="${DEPS}/_neovim/bin:${PATH}"
+    export PATH="${DEPS}/_neovim_${NVIM_TAG}/bin:${PATH}"
     echo "\$PATH: \"${PATH}\""
 
-    export VIM="${DEPS}/_neovim/share/nvim/runtime"
+    export VIM="${DEPS}/_neovim_${NVIM_TAG}/share/nvim/runtime"
     echo "\$VIM: \"${VIM}\""
     nvim --version
     pip install covimerage
