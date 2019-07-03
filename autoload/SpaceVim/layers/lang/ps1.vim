@@ -12,3 +12,26 @@ function! SpaceVim#layers#lang#ps1#plugins() abort
   call add(plugins, ['PProvost/vim-ps1'])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#ps1#config() abort
+  call SpaceVim#plugins#repl#reg('ps1', 'powershell')
+  call SpaceVim#plugins#runner#reg_runner('ps1', 'powershell %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('ps1', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("ps1")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
+endfunction
