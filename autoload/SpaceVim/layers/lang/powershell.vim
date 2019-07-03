@@ -7,13 +7,13 @@
 "=============================================================================
 
 
-function! SpaceVim#layers#lang#ps1#plugins() abort
+function! SpaceVim#layers#lang#powershell#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-powershell', {'merged' : 0}])
   return plugins
 endfunction
 
-function! SpaceVim#layers#lang#ps1#config() abort
+function! SpaceVim#layers#lang#powershell#config() abort
   call SpaceVim#plugins#repl#reg('powershell', 'powershell')
   call SpaceVim#plugins#runner#reg_runner('powershell', 'powershell %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('powershell', function('s:language_specified_mappings'))
