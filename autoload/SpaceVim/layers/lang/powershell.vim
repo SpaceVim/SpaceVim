@@ -9,21 +9,21 @@
 
 function! SpaceVim#layers#lang#ps1#plugins() abort
   let plugins = []
-  call add(plugins, ['PProvost/vim-ps1'])
+  call add(plugins, ['wsdjeg/vim-powershell', {'merged' : 0}])
   return plugins
 endfunction
 
 function! SpaceVim#layers#lang#ps1#config() abort
-  call SpaceVim#plugins#repl#reg('ps1', 'powershell')
-  call SpaceVim#plugins#runner#reg_runner('ps1', 'powershell %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('ps1', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#repl#reg('powershell', 'powershell')
+  call SpaceVim#plugins#runner#reg_runner('powershell', 'powershell %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('powershell', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
-        \ 'call SpaceVim#plugins#repl#start("ps1")',
+        \ 'call SpaceVim#plugins#repl#start("powershell")',
         \ 'start REPL process', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
         \ 'call SpaceVim#plugins#repl#send("line")',
