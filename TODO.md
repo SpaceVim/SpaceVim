@@ -5,6 +5,8 @@
 | Java | lang#java layer |
 | C | lang#c layer |
 | Python | lang#python layer |
+| JavaScript | lang#javascript layer |
+| PHP | lang#php layer |
 | (Visual) FoxPro: FoxPro, Fox Pro, VFP | |
 | 4th Dimension/4D: 4D, 4th Dimension | |
 | ABAP | |
@@ -115,7 +117,6 @@
 | J: J (confidence: 50%) | |
 | JADE | |
 | JavaFX Script | |
-| JavaScript: JavaScript, JS, SSJS | |
 | JScript | |
 | JScript.NET | |
 | Julia: Julia, Julialang, julia-lang | |
@@ -176,7 +177,6 @@
 | Paradox | |
 | Pascal: Pascal (confidence: 5%) | |
 | Perl | |
-| PHP | |
 | Pike | |
 | PILOT: PILOT (confidence: 50%, exceptions: -"Palm Pilot programming") | |
 | PL/I: PL/1, PL/I | |
