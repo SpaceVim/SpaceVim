@@ -15,4 +15,10 @@ endfunction
 
 
 function! SpaceVim#layers#lang#d#config() abort
+  call SpaceVim#plugins#runner#reg_runner('d', 'dmd -run %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('d', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
