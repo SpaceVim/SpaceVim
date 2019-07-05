@@ -19,7 +19,7 @@ endfunction
 
 function! SpaceVim#layers#lang#d#config() abort
   call SpaceVim#plugins#runner#reg_runner('d', 'dmd -run %s')
-  call SpaceVim#plugins#repl#reg('d', 'drepl')
+  call SpaceVim#plugins#repl#reg('d', 'dub run drepl')
   call SpaceVim#mapping#space#regesit_lang_mappings('d', function('s:language_specified_mappings'))
 endfunction
 

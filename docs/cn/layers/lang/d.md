@@ -29,6 +29,12 @@ lang: cn
   name = "lang#d"
 ```
 
+安装D语言交互式编程工具：
+
+```sh
+dub fetch drepl
+```
+
 ## 快捷键
 
 ### 运行当前脚本
@@ -37,7 +43,7 @@ lang: cn
 
 ### 交互式编程
 
-启动 `pact` 交互进程，快捷键为： `SPC l s i`。
+启动 `dub run drepl` 交互进程，快捷键为： `SPC l s i`。
 
 将代码传输给 REPL 进程执行：
 

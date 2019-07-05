@@ -28,9 +28,17 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#d"
 ```
+
+Install the REPL tool for D language.
+
+```sh
+dub fetch drepl
+```
+
 ## Features
 
 - code runner
+- repl support
 
 ## Key bindings
 
@@ -40,7 +48,7 @@ To running a d file, you can press `SPC l r` to run current file without loss fo
 
 ### Inferior REPL process
 
-Start a `drepl` inferior REPL process with `SPC l s i`.
+Start a `dub run drepl` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
