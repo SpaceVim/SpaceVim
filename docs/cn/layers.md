@@ -101,7 +101,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#haskell](lang/haskell/)                         | 这一模块为 SpaceVim 提供了 Haskell 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#hy](lang/hy/)                                   | 这一模块为 hy 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
-| [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                      |
+| [lang#ipynb](lang/ipynb/)                             | 该模块为SpaceVim添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                        |
 | [lang#java](lang/java/)                               | 这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#javascript](lang/javascript/)                   | 这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                      |
 | [lang#julia](lang/julia/)                             | 这一模块为 Julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                           |
@@ -118,6 +118,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#perl](lang/perl/)                               | 这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#php](lang/php/)                                 | 这一模块为 SpaceVim 提供了 PHP 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#plantuml](lang/plantuml/)                       | 这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。                                                      |
+| [lang#powershell](lang/powershell/)                   | 这一模块为 powershell 开发提供支持，包括交互式编程、一键运行等特性。                                                                |
 | [lang#prolog](lang/prolog/)                           | 这一模块为 Prolog 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#puppet](lang/puppet/)                           | 这一模块为 SpaceVim 提供了 Puppet 的开发支持，包括语法高亮、语言服务器支持。                                                        |
 | [lang#purescript](lang/purescript/)                   | 这一模块为 SpaceVim 提供了 PureScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
