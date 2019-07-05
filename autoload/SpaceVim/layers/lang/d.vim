@@ -10,6 +10,9 @@
 function! SpaceVim#layers#lang#d#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-dlang', {'merged' : 0}])
+  if g:spacevim_autocomplete_method ==# 'deoplete'
+    call add(plugins, ['landaire/deoplete-d', {'merged' : 0}])
+  endif
   return plugins
 endfunction
 
