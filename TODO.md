@@ -2,6 +2,9 @@
 
 | language | status |
 --- | ---
+| Java | lang#java layer |
+| C | lang#c layer |
+| Python | lang#python layer |
 | (Visual) FoxPro: FoxPro, Fox Pro, VFP | |
 | 4th Dimension/4D: 4D, 4th Dimension | |
 | ABAP | |
@@ -39,7 +42,6 @@
 | C++/CLI | |
 | C++: C++, C++0x, C++11, C++14, C++17 | |
 | C-Omega | |
-| C: C (exceptions: -"Objective-C") | |
 | Caml | |
 | Ceylon | |
 | CFML: CFML, ColdFusion | |
@@ -112,7 +114,6 @@
 | J# | |
 | J: J (confidence: 50%) | |
 | JADE | |
-| Java | |
 | JavaFX Script | |
 | JavaScript: JavaScript, JS, SSJS | |
 | JScript | |
@@ -192,7 +193,6 @@
 | Prolog | |
 | Pure Data: Pure Data, PD | |
 | PureBasic | |
-| Python | |
 | Q | |
 | R: R (confidence: 90%, exceptions: +"statistical") | |
 | Racket | |
