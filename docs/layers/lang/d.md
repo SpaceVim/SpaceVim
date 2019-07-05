@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#d layer"
-description: "This layer is for d development, provide syntax checking, code runner and repl support for d file."
+description: "This layer is for d development, provide syntax checking, code runner support for d file."
 ---
 
 # [Available Layers](../../) >> lang#d
