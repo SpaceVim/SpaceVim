@@ -89,6 +89,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。                                                |
 | [lang#clojure](lang/clojure/)                         | 这一模块为 SpaceVim 提供了 Clojure 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#csharp](lang/csharp/)                           | 这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。                                                      |
+| [lang#d](lang/d/)                                     | 这一模块为 d 开发提供支持，包括语法高亮、自动补全、一键运行等特性。                                                                 |
 | [lang#dart](lang/dart/)                               | 这一模块为 SpaceVim 提供了 Dart 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#dockerfile](lang/dockerfile/)                   | 这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。                                                  |
 | [lang#elixir](lang/elixir/)                           | 这一模块为 SpaceVim 提供了 Elixir 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                            |
@@ -101,7 +102,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#haskell](lang/haskell/)                         | 这一模块为 SpaceVim 提供了 Haskell 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#hy](lang/hy/)                                   | 这一模块为 hy 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
-| [lang#ipynb](lang/ipynb/)                             | 该模块为SpaceVim添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                        |
+| [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                      |
 | [lang#java](lang/java/)                               | 这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#javascript](lang/javascript/)                   | 这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                      |
 | [lang#julia](lang/julia/)                             | 这一模块为 Julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                           |
