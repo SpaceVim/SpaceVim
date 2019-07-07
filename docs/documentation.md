@@ -953,6 +953,8 @@ Similar to easymotion or `f` in vimperator for firefox, this mode allows one to 
 | `] SPC`  | Insert space below                                      |
 | `[ b`    | Go to previous buffer                                   |
 | `] b`    | Go to next buffer                                       |
+| `[ n`    | Go to previous conflict marker                          |
+| `] n`    | Go to next conflict marker                              |
 | `[ f`    | Go to previous file in directory                        |
 | `] f`    | Go to next file in directory                            |
 | `[ l`    | Go to the previous error                                |
