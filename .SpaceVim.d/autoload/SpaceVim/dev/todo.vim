@@ -36,7 +36,7 @@ endfunction
 function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
-  let argv = ['rg', '-A', '4', join(s:labels, '|')]
+  let argv = ['rg', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column', join(s:labels, '|'), '.']
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
@@ -53,13 +53,15 @@ function! s:stdout(id, data, event) abort
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let title = split(data, '@to' . 'do')[1]
+      let lebal = matchstr(data, join(s:labels, '\|'))
+      let title = split(data, lebal)[1]
       call add(s:todos, 
             \ {
             \ 'file' : file,
             \ 'line' : line,
             \ 'column' : column,
             \ 'title' : title,
+            \ 'lebal' : lebal,
             \ }
             \ )
     endif
@@ -72,7 +74,7 @@ endfunction
 
 function! s:exit(id, data, event ) abort
   call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
-  let lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
+  let lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title . '  ' . v:val.lebal")
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
 
