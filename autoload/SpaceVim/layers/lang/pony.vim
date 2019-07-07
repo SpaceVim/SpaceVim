@@ -17,10 +17,10 @@
 "
 
 function! SpaceVim#layers#lang#pony#plugins() abort
-    let plugins = []
-    " .pony file type
-    call add(plugins, ['wsdjeg/vim-pony', { 'on_ft' : 'pony'}])
-    return plugins
+  let plugins = []
+  " .pony file type
+  call add(plugins, ['wsdjeg/vim-pony', { 'on_ft' : 'pony'}])
+  return plugins
 endfunction
 
 function! SpaceVim#layers#lang#pony#config() abort
@@ -36,4 +36,17 @@ function! SpaceVim#layers#lang#pony#config() abort
           \ }
     let g:neomake_livescript_lsc_remove_invalid_entries = 1
   endif
+  let runner = {
+        \ 'exe' : 'ponyc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : [],
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('pony', [runner, '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('pony', function('s:language_specified_mappings'))
+endfunction
+function! s:language_specified_mappings() abort
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'execute current file', 1)
 endfunction
