@@ -10,7 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
-let s:labels = ['@todo', '@fixme']
+let s:labels = map(['todo', 'fixme'], '"@" . v:val')
 
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
@@ -36,7 +36,8 @@ endfunction
 function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
-  let argv = ['rg', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column', join(s:labels, '|'), '.']
+  " @fixme fix the rg command for todo manager
+  let argv = ['rg','--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
