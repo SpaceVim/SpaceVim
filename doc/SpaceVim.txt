@@ -1659,6 +1659,14 @@ checking, and jump to definition.
 ==============================================================================
 LANG#PONY                                           *SpaceVim-layer-lang-pony*
 
+This layer includes utilities and language-specific mappings for pony
+development.
+>
+  [[layers]]
+    name = 'lang#pony'
+<
+
+
 ==============================================================================
 LANG#PROCESSING                               *SpaceVim-layer-lang-processing*
 
