@@ -135,6 +135,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#swift](lang/swift/)                             | 这一模块为 SpaceVim 提供了 Swift 的开发支持，包括语法高亮、语法检查等特性。                                                         |
 | [lang#tcl](lang/tcl/)                                 | 这一模块为 Tcl 开发提供支持，包括交互式编程、一键运行等特性。                                                                       |
 | [lang#typescript](lang/typescript/)                   | 这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
+| [lang#v](lang/v/)                                     | 这一模块为 v 开发提供支持，包括交互式编程、一键运行等特性。                                                                         |
 | [lang#vim](lang/vim/)                                 | 这一模块为 SpaceVim 提供了 Vimscript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                         |
 | [lang#vue](lang/vue/)                                 | 这一模块为 SpaceVim 提供了 Vue 的的开发支持，包括代码补全、语法检查、代码格式化等特性。                                             |
 | [language-server-protocol](language-server-protocol/) | 这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。                                                  |
