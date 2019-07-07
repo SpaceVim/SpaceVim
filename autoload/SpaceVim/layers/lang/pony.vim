@@ -24,5 +24,6 @@ function! SpaceVim#layers#lang#pony#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#pony#config() abort
-  
+  " @todo pony neomake support
+  " in github, there is a plugin https://github.com/killerswan/pony-currycomb.vim which provides syntastic suppotr
 endfunction
