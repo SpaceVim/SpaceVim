@@ -9,6 +9,9 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
+
+let s:labels = ['@todo', '@fixme']
+
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
 endfunction
@@ -32,12 +35,15 @@ endfunction
 " @todo Improve todo manager
 function! s:update_todo_content() abort
   let s:todos = []
-  let argv = ['findstr', '/RSN', '/I', '@t'. 'odo ', '*.*']
-  call s:JOB.start(argv, {
+  let s:todo = {}
+  let argv = ['rg', '-A', '4', join(s:labels, '|')]
+  call SpaceVim#logger#info('todo cmd:' . string(argv))
+  let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
         \ 'on_stderr' : function('s:stderr'),
         \ 'on_exit' : function('s:exit'),
         \ })
+  call SpaceVim#logger#info('todo jobid:' . string(jobid))
 endfunction
 
 function! s:stdout(id, data, event) abort
