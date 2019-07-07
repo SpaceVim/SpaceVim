@@ -410,8 +410,15 @@ function! s:split_string(newline) abort
   endif
 endfunction
 
+
+" @toto add sting highlight for other filetype
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ }
+
 function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
 endfunction
 
 " function() wrapper
