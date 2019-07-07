@@ -9,6 +9,9 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
+
+let s:labels = map(['todo', 'fixme'], '"@" . v:val')
+
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
 endfunction
@@ -32,12 +35,16 @@ endfunction
 " @todo Improve todo manager
 function! s:update_todo_content() abort
   let s:todos = []
-  let argv = ['findstr', '/RSN', '/I', '@t'. 'odo ', '*.*']
-  call s:JOB.start(argv, {
+  let s:todo = {}
+  " @fixme fix the rg command for todo manager
+  let argv = ['rg','--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
+  call SpaceVim#logger#info('todo cmd:' . string(argv))
+  let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
         \ 'on_stderr' : function('s:stderr'),
         \ 'on_exit' : function('s:exit'),
         \ })
+  call SpaceVim#logger#info('todo jobid:' . string(jobid))
 endfunction
 
 function! s:stdout(id, data, event) abort
@@ -47,13 +54,15 @@ function! s:stdout(id, data, event) abort
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let title = split(data, '@to' . 'do')[1]
+      let lebal = matchstr(data, join(s:labels, '\|'))
+      let title = split(data, lebal)[1]
       call add(s:todos, 
             \ {
             \ 'file' : file,
             \ 'line' : line,
             \ 'column' : column,
             \ 'title' : title,
+            \ 'lebal' : lebal,
             \ }
             \ )
     endif
@@ -66,7 +75,12 @@ endfunction
 
 function! s:exit(id, data, event ) abort
   call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
-  let lines = map(deepcopy(s:todos), "v:val.file . '   ' . v:val.title")
+  let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.lebal)'))
+  let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
+  let expr = "v:val.lebal . repeat(' ', label_w - strlen(v:val.lebal)) . ' ' ."
+        \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
+        \ .  "v:val.title"
+  let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
 
