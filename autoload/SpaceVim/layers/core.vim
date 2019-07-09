@@ -110,7 +110,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump to a line', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump to a word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -656,6 +658,18 @@ function! s:comment_to_line(invert) abort
     call feedkeys("\<Plug>NERDCommenterInvert")
   else
     call feedkeys("\<Plug>NERDCommenterComment")
+  endif
+endfunction
+
+function! s:better_easymotion_overwin_line() abort
+  let current_line = line('.')
+  call feedkeys("\<Plug>(easymotion-overwin-line)")
+  let last_line = line('.')
+  exe current_line
+  if last_line > current_line
+    exe 'normal! V' . (last_line - current_line) . 'j'
+  else
+    exe 'normal! V' . (current_line - last_line) . 'k'
   endif
 endfunction
 
