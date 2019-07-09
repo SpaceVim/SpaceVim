@@ -852,7 +852,7 @@ The default keys of these prefixs are:
 | `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
 
 By default the guide buffer will be displayed 1000ms after the keys being pressed.
-You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
 
 For example, after pressing `<Space>` in normal mode, you will see:
 
