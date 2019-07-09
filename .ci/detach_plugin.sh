@@ -29,6 +29,7 @@ main () {
             _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/api/neovim/floating.vim
             _detect autoload/SpaceVim/api/data/list.vim
+            _detect autoload/SpaceVim/api/data/json.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
             _detect autoload/SpaceVim/api/system.vim
@@ -37,6 +38,8 @@ main () {
             _detect syntax/SpaceVimFlyGrep.vim
             _detect LICENSE
             git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
             git commit -m "Auto Update"
             git remote add wsdjeg_flygrep https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/FlyGrep.vim.git
             git push wsdjeg_flygrep master 
@@ -63,6 +66,8 @@ main () {
             _detect syntax/SpaceVimPlugManager.vim
             _detect LICENSE
             git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
             git commit -m "Auto Update"
             git remote add wsdjeg_dein_ui https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/dein-ui.vim.git
             git push wsdjeg_dein_ui master 
