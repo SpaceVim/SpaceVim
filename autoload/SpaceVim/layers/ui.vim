@@ -10,7 +10,7 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ ['Yggdroot/indentLine', {'merged' : 0}],
-        \ ['majutsushi/tagbar', {'loadconf' : 1}],
+        \ ['wsdjeg/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
         \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
