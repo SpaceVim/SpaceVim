@@ -669,6 +669,8 @@ function! s:better_easymotion_overwin_line(is_visual) abort
   let current_line = line('.')
   try
     call EasyMotion#overwin#line()
+    " clear cmd line
+    noautocmd normal! :
     if a:is_visual
       let last_line = line('.')
       exe current_line
@@ -687,6 +689,8 @@ function! s:better_easymotion_overwin_f(is_visual) abort
   let [current_line, current_col] = getpos('.')[1:2]
   try
     call EasyMotion#OverwinF(1)
+    " clear cmd line
+    noautocmd normal! :
     if a:is_visual
       let last_line = line('.')
       let [last_line, last_col] = getpos('.')[1:2]
