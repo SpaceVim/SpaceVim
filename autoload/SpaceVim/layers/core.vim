@@ -107,7 +107,10 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:explore_current_dir')) . ', [1])',
         \ 'Explore current directory(other windows)', 1)
 
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump to a line', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
   " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -662,10 +665,6 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
-function! Test_Line() abort
-  call s:better_easymotion_overwin_line()
-endfunction
-
 function! s:better_easymotion_overwin_line(is_visual) abort
   let current_line = line('.')
   try
@@ -677,6 +676,25 @@ function! s:better_easymotion_overwin_line(is_visual) abort
         exe 'normal! V' . (last_line - current_line) . 'j'
       else
         exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
+endfunction
+
+function! s:better_easymotion_overwin_f(is_visual) abort
+  let [current_line, current_col] = getpos('.')[1:2]
+  try
+    call EasyMotion#OverwinF(1)
+    if a:is_visual
+      let last_line = line('.')
+      let [last_line, last_col] = getpos('.')[1:2]
+      call cursor(current_line, current_col)
+      if last_line > current_line        
+        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
+      else
+        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
       endif
     endif
   catch /^Vim\%((\a\+)\)\=:E117/
