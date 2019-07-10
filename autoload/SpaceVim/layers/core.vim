@@ -112,7 +112,8 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
   " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump to a line', 0, 1)
-  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line()<Cr>
+  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump to a word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -661,16 +662,26 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
-function! s:better_easymotion_overwin_line() abort
+function! Test_Line() abort
+  call s:better_easymotion_overwin_line()
+endfunction
+
+function! s:better_easymotion_overwin_line(is_visual) abort
   let current_line = line('.')
-  call feedkeys("\<Plug>(easymotion-overwin-line)")
-  let last_line = line('.')
-  exe current_line
-  if last_line > current_line
-    exe 'normal! V' . (last_line - current_line) . 'j'
-  else
-    exe 'normal! V' . (current_line - last_line) . 'k'
-  endif
+  try
+    call EasyMotion#overwin#line()
+    if a:is_visual
+      let last_line = line('.')
+      exe current_line
+      if last_line > current_line
+        exe 'normal! V' . (last_line - current_line) . 'j'
+      else
+        exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
 endfunction
 
 function! s:comment_paragraphs(invert) abort
