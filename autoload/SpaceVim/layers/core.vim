@@ -108,13 +108,13 @@ function! SpaceVim#layers#core#config() abort
         \ 'Explore current directory(other windows)', 1)
 
   " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump to a line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump or select to a character', 0, 1)
   nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
   xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
   " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump to a line', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump or select to a line', 0, 1)
   nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
   xnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -668,7 +668,11 @@ endfunction
 function! s:better_easymotion_overwin_line(is_visual) abort
   let current_line = line('.')
   try
-    call EasyMotion#overwin#line()
+    if a:is_visual
+      call EasyMotion#Sol(0, 2)
+    else
+      call EasyMotion#overwin#line()
+    endif
     " clear cmd line
     noautocmd normal! :
     if a:is_visual
