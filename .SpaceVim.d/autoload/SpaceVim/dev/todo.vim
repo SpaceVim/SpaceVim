@@ -86,8 +86,8 @@ function! s:exit(id, data, event ) abort
 endfunction
 
 function! s:compare_todo(a, b) abort
-  let a = index(s:labels, a:a.bebal[1:])
-  let b = index(s:labels, a:b.bebal[1:])
+  let a = index(s:labels, a:a.lebal[1:])
+  let b = index(s:labels, a:b.lebal[1:])
   return a == b ? 0 : a > b ? 1 : -1
 endfunction
 
