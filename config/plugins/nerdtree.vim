@@ -1,5 +1,5 @@
 let s:VCOP = SpaceVim#api#import('vim#compatible')
-if g:spacevim_filetree_direction ==# 'right'
+if get(g:, 'spacevim_filetree_direction', 'right') ==# 'right'
   let g:NERDTreeWinPos = 'rightbelow'
 else
   let g:NERDTreeWinPos = 'left'

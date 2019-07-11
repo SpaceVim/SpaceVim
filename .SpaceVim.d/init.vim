@@ -16,6 +16,11 @@ call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#dev#todo#list()'
 
 let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h') . '/build/vader'
 
+augroup vader_filetype
+  autocmd!
+  autocmd FileType vader-result setlocal nobuflisted
+augroup END
+
 " vader language specific key bindings
 
 function! s:language_specified_mappings() abort
