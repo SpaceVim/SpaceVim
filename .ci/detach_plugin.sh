@@ -82,9 +82,13 @@ main () {
             _detect syntax/SpaceVimTodoManager.vim
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/plugins
-            _detect autoload/SpaceVim/plugins/todo.vim
+            _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/job.vim
+            _detect autoload/SpaceVim/api/file.vim
+            _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect autoload/SpaceVim/plugins/todo.vim
             _detect LICENSE
             git add .
             git config user.email "wsdjeg@qq.com"
