@@ -9,8 +9,8 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
-
-let s:labels = map(['todo', 'fixme', 'idea'], '"@" . v:val')
+" @question any other recommanded tag?
+let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
 
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
@@ -37,7 +37,7 @@ function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
   " @fixme fix the rg command for todo manager
-  let argv = ['rg','--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
+  let argv = ['rg','--hidden', '--no-heading', '-g', '!.git', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
@@ -75,6 +75,7 @@ endfunction
 
 function! s:exit(id, data, event ) abort
   call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
+  let s:todos = sort(s:todos, function('s:compare_todo'))
   let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.lebal)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
   let expr = "v:val.lebal . repeat(' ', label_w - strlen(v:val.lebal)) . ' ' ."
@@ -84,6 +85,11 @@ function! s:exit(id, data, event ) abort
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
 
+function! s:compare_todo(a, b) abort
+  let a = index(s:labels, a:a.bebal[1:])
+  let b = index(s:labels, a:b.bebal[1:])
+  return a == b ? 0 : a > b ? 1 : -1
+endfunction
 
 function! s:open_todo() abort
   let todo = s:todos[line('.') - 1]
