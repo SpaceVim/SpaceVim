@@ -10,7 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
-let s:labels = map(['todo', 'fixme'], '"@" . v:val')
+let s:labels = map(['todo', 'fixme', 'idea'], '"@" . v:val')
 
 function! SpaceVim#dev#todo#list() abort
   call s:open_win()
