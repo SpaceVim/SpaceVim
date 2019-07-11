@@ -191,6 +191,19 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
           \ 'call SpaceVim#lsp#references()', 'references', 1)
+
+    " these work for now with coc.nvim only
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'],
+          \ 'call SpaceVim#lsp#go_to_impl()', 'implementation', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
+          \ 'call SpaceVim#lsp#go_to_typedef()', 'type definition', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
+          \ 'call SpaceVim#lsp#refactor()', 'refactor', 1)
+    " TODO this should be gD
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'],
+          \ 'call SpaceVim#lsp#go_to_declaration()', 'declaration', 1)
+
   endif
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
