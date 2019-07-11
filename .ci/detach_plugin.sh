@@ -75,6 +75,27 @@ main () {
             rm -rf detach/$1
             exit 0
             ;;
+        vim-todo)
+            git clone https://github.com/wsdjeg/vim-todo.vim.git detach/$1
+            cd detach/$1
+            _checkdir syntax/
+            _detect syntax/SpaceVimTodoManager.vim
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/plugins
+            _detect autoload/SpaceVim/plugins/todo.vim
+            _detect autoload/SpaceVim/api/job.vim
+            _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect LICENSE
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update"
+            git remote add wsdjeg_vim_todo https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-todo.vim.git
+            git push wsdjeg_vim_todo master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         spacevim-theme)
             exit 0
     esac

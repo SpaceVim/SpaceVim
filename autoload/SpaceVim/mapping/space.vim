@@ -515,7 +515,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
         \ 'call SpaceVim#plugins#help#describe_key()',
         \ 'describe key bindings', 1)
-
+  call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'Open todo manager', 1)
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
