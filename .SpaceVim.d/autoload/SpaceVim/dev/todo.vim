@@ -56,6 +56,7 @@ function! s:stdout(id, data, event) abort
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
       let lebal = matchstr(data, join(s:labels, '\|'))
       let title = split(data, lebal)[1]
+      " @todo add time tag
       call add(s:todos, 
             \ {
             \ 'file' : file,
