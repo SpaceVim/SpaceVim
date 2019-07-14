@@ -23,7 +23,7 @@
 "   normal          SPC l r         run current file
 " <
 "
-" This layer also provides REPL support for d, the key bindings are:
+" This layer also provides REPL support for hack, the key bindings are:
 " >
 "   Key             Function
 "   ---------------------------------------------
