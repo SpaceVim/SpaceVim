@@ -6,6 +6,34 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#haskell, layer-lang-haskell
+" @parentsection layers
+" This layer is for haskell development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#haskell'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for haskell, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 function! SpaceVim#layers#lang#haskell#plugins() abort
   let plugins = [
         \ ['neovimhaskell/haskell-vim', { 'on_ft': 'haskell' }],
