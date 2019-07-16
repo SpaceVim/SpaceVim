@@ -9,12 +9,19 @@
 ""
 " @section lang#pony, layer-lang-pony
 " @parentsection layers
-" This layer includes utilities and language-specific mappings for pony development.
+" This layer is for pony development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
 " >
 "   [[layers]]
 "     name = 'lang#pony'
 " <
 "
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
 
 function! SpaceVim#layers#lang#pony#plugins() abort
   let plugins = []
