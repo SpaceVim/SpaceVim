@@ -93,6 +93,7 @@ func! SpaceVim#layers#shell#ctrl_r() abort
   if reg == 43
     return @+
   endif
+  return "\<C-r>"
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort
