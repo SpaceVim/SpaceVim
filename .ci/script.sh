@@ -19,6 +19,18 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         cat build_log
         exit 2
     fi
+elif [ "$LINT" = "file-encoding" ]; then
+    if [[ -f encoding_log ]]; then
+        rm encoding_log
+    fi
+    for file in $(git diff --name-only HEAD master | grep .);
+    do
+        file --mime-encoding $file
+    done
+    if [[ -s encoding_log ]]; then
+        cat encoding_log
+        exit 2
+    fi
 elif [ "$LINT" = "vint" ]; then
     vint .
 elif [ "$LINT" = "vint-errors" ]; then
