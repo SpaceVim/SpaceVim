@@ -25,7 +25,10 @@ elif [ "$LINT" = "file-encoding" ]; then
     fi
     for file in $(git diff --name-only HEAD master | grep .);
     do
-        file --mime-encoding $file
+        encoding=`file -bi $file | cut -f 2 -d";" | cut -f 2 -d=`
+        if [ ! $encoding = 'utf-8' ]; then
+            echo $file >> encoding_log
+        fi
     done
     if [[ -s encoding_log ]]; then
         cat encoding_log
