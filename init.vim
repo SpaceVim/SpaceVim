@@ -6,6 +6,6 @@
 " License: GPLv3
 "=============================================================================
 
-" execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
 
 " lua require('spacevim').bootstrap()
