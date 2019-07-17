@@ -1,6 +1,6 @@
 "=============================================================================
 " ui.vim --- SpaceVim ui layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -10,7 +10,7 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ ['Yggdroot/indentLine', {'merged' : 0}],
-        \ ['majutsushi/tagbar', {'loadconf' : 1}],
+        \ ['wsdjeg/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
         \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
@@ -36,7 +36,7 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
-  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
+  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler', 'json']
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
@@ -51,9 +51,9 @@ function! SpaceVim#layers#ui#config() abort
   endif
 
   if !empty(g:spacevim_windows_smartclose)
-    call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
+    call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
           \ 'Smart close windows',
-          \ 'call zvim#util#SmartClose()')
+          \ 'call SpaceVim#mapping#SmartClose()')
   endif
   " Ui toggles
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
@@ -61,10 +61,10 @@ function! SpaceVim#layers#ui#config() abort
         \ 'highlight-long-lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call call('
         \ . string(s:_function('s:toggle_background')) . ', [])',
-        \ 'toggle conceal', 1)
+        \ 'toggle background', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
-        \ . string(s:_function('s:toggle_conceal')) . ', [])',
-        \ 'toggle conceal', 1)
+        \ . string(s:_function('s:toggle_conceallevel')) . ', [])',
+        \ 'toggle conceallevel', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'Open tabs manager', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
@@ -281,13 +281,13 @@ function! s:toggle_whitespace() abort
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction
 
-func! s:toggle_conceal()
+function! s:toggle_conceallevel()
     if &conceallevel == 0 
         setlocal conceallevel=2
     else
         setlocal conceallevel=0
     endif
-endf
+endfunction
 
 function! s:toggle_background()
     let s:tbg = &background

@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- SpaceVim lsp layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -120,6 +120,7 @@ let s:lsp_servers = {
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
       \ 'ruby' : ['solargraph.BAT',  'stdio'],

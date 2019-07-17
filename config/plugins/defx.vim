@@ -1,7 +1,7 @@
 "=============================================================================
-" defx.vim --- defx config
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" defx.vim --- defx configuration
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -59,6 +59,11 @@ function! s:defx_init()
   setl nofoldenable
   setl foldmethod=manual
 
+  " disable this mappings
+  nnoremap <silent><buffer> <3-LeftMouse> <Nop>
+  nnoremap <silent><buffer> <4-LeftMouse> <Nop>
+  nnoremap <silent><buffer> <LeftMouse> <LeftMouse><Home>
+
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
   silent! nunmap <buffer> <C-j>
@@ -99,8 +104,13 @@ function! s:defx_init()
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <2-LeftMouse>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('drop')
+        \ defx#is_directory() ? 
+        \     (
+        \     defx#is_opened_tree() ?
+        \     defx#do_action('close_tree') :
+        \     defx#do_action('open_tree')
+        \     )
+        \ : defx#do_action('drop')
   nnoremap <silent><buffer><expr> sg
         \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv

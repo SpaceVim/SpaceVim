@@ -1,14 +1,18 @@
 "=============================================================================
 " debug.vim --- SpaceVim debug layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
   call add(plugins,['idanarye/vim-vebugger', {'merged' : 0}])
+  if g:spacevim_filemanager !=# 'vimfiler'
+    call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  endif
   return plugins
 endfunction
 
@@ -22,9 +26,9 @@ function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'O'], 'VBGstepOut', 'step out of current function', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'k'], 'VBGkill', 'Terminates the debugger', 1)
   let g:_spacevim_mappings_space.d.e = {'name' : '+Evaluate/Execute'}
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 's'], 'VBGevalSelectedText', 'Evaluate and print the selected text', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['d', 'e', 's'], 'VBGevalSelectedText', 'Evaluate and print the selected text', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'e'], 'VBGevalWordUnderCursor', 'Evaluate the <cword> under the cursor', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'S'], 'VBGexecuteSelectedText', 'Execute the selected text', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['d', 'e', 'S'], 'VBGexecuteSelectedText', 'Execute the selected text', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
         \ . string(s:_function('s:debug_transient_state')) . ', [])',
         \ 'debug transient state', 1)

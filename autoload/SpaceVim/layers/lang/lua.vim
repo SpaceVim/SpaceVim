@@ -1,6 +1,6 @@
 "=============================================================================
 " lua.vim --- SpaceVim lang#lua layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -10,13 +10,29 @@
 " @section lang#lua, layer-lang-lua
 " @parentsection layers
 " This layer includes utilities and language-specific mappings for lua development.
+" >
+"   [[layers]]
+"     name = 'lang#lua'
+" <
 "
-" @subsection Mappings
+" @subsection Key bindings
 " >
 "   Mode            Key             Function
 "   ---------------------------------------------
-"   normal          SPC l r         lua run
+"   normal          SPC l r         run current script
+"   normal          SPC l b         compile current file
 " <
+"
+" This layer also provides REPL support for lua, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#lua#plugins() abort
   let plugins = []

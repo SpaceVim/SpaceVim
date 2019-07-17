@@ -1,10 +1,18 @@
 "=============================================================================
 " dart.vim --- SpaceVim lang#dart layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#dart, layer-lang-dart
+" @parentsection layers
+" @subsection Intro
+" The lang#dart layer provides code completion, documentation lookup, jump to
+" definition, dart_repl integration for dart. It uses neomake as default
+" syntax checker which is loaded in @section(layer-checkers)
 
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []

@@ -1,6 +1,6 @@
 "=============================================================================
 " manager.vim --- plugin manager for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3 license
@@ -454,7 +454,11 @@ function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
   let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
-  let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
+  if get(a:repo, 'rev', '') != ''
+    let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
+  else
+    let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
+  endif
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
           \ 'on_stderr' : function('s:on_install_stdout'),

@@ -173,7 +173,7 @@ Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer
 
 **Updating Manually with git**
 
-Yor can close Vim/Neovim and update the git repository to update manually:
+You can close Vim/Neovim and update the git repository to update manually:
 
 `git -C ~/.SpaceVim pull`.
 
@@ -378,9 +378,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
-**NOTE**:
-
-SpaceVim uses true colors by default, so you should make sure your terminal supports true colors.
+SpaceVim supports true colors in terminal, and it is disabled by default, to enable this feature,
+you should make sure your terminal supports true colors.
 For more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728).
 
 If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:
@@ -853,7 +852,7 @@ The default keys of these prefixs are:
 | `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
 
 By default the guide buffer will be displayed 1000ms after the keys being pressed.
-You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
 
 For example, after pressing `<Space>` in normal mode, you will see:
 
@@ -954,6 +953,8 @@ Similar to easymotion or `f` in vimperator for firefox, this mode allows one to 
 | `] SPC`  | Insert space below                                      |
 | `[ b`    | Go to previous buffer                                   |
 | `] b`    | Go to next buffer                                       |
+| `[ n`    | Go to previous conflict marker                          |
+| `] n`    | Go to next conflict marker                              |
 | `[ f`    | Go to previous file in directory                        |
 | `] f`    | Go to next file in directory                            |
 | `[ l`    | Go to the previous error                                |
@@ -1187,7 +1188,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
-| `N`                   | Create new file under corsor                      |
+| `N`                   | Create new file under cursor                      |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |

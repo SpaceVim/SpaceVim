@@ -35,7 +35,7 @@ lang: cn
   - [编辑器界面](#编辑器界面)
   - [原生功能](#原生功能)
   - [标签管理](#标签管理)
-  - [Fuzzy finder](#fuzzy-finder)
+  - [模糊搜索](#模糊搜索)
   - [交互](#交互)
     - [快捷键](#快捷键)
     - [获取帮助信息](#获取帮助信息)
@@ -51,8 +51,8 @@ lang: cn
       - [合并，拆分](#合并拆分)
     - [窗口操作](#窗口操作)
       - [窗口操作常用快捷键](#窗口操作常用快捷键)
-    - [文件和 Buffer 操作](#文件和-buffer-操作)
-      - [Buffer 操作相关快捷键](#buffer-操作相关快捷键)
+    - [文件和缓冲区操作](#文件和缓冲区操作)
+      - [缓冲区操作](#缓冲区操作)
       - [新建空白 buffer](#新建空白-buffer)
       - [特殊 buffer](#特殊-buffer)
       - [文件操作相关快捷键](#文件操作相关快捷键)
@@ -91,7 +91,7 @@ lang: cn
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
 - [格式规范](#格式规范)
-- [Vim 服务器](#vim-服务器)
+- [Vim 服务](#vim-服务)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -743,69 +743,75 @@ function! myspacevim#before() abort
 endfunction
 ```
 
-### Fuzzy finder
+### 模糊搜索
 
-SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
-These layers have the same key bindings and features. But they need different dependencies.
+目前一共有五种模糊搜索的模块，分别对应不同的工具：
 
-User only need to load one of these layers, then will be able to get these
-features.
+- denite
+- unite
+- leaderf
+- ctrlp
+- fzf
+
+这些模块都提供了非常类似的快捷键，包括文件搜索、跳转历史搜索等功能，
+具体快捷键列表如下：
 
 **快捷键**
 
-| 快捷键               | 功能描述                      |
-| -------------------- | ----------------------------- |
-| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
-| `<Leader> f e`       | Fuzzy find register           |
-| `<Leader> f h`       | Fuzzy find history/yank       |
-| `<Leader> f j`       | Fuzzy find jump, change       |
-| `<Leader> f l`       | Fuzzy find location list      |
-| `<Leader> f m`       | Fuzzy find output messages    |
-| `<Leader> f o`       | Fuzzy find outline            |
-| `<Leader> f q`       | Fuzzy find quick fix          |
-| `<Leader> f r`       | Resumes Unite window          |
+| 快捷键               | 功能描述                       |
+| -------------------- | ------------------------------ |
+| `<Leader> f <Space>` | 模糊查找快捷键，并执行该快捷键 |
+| `<Leader> f e`       | 模糊搜索寄存器                 |
+| `<Leader> f h`       | 模糊搜索 history/yank          |
+| `<Leader> f j`       | 模糊搜索 jump, change          |
+| `<Leader> f l`       | 模糊搜索 location list         |
+| `<Leader> f m`       | 模糊搜索 output messages       |
+| `<Leader> f o`       | 模糊搜索函数列表               |
+| `<Leader> f q`       | 模糊搜索 quickfix list         |
+| `<Leader> f r`       | 重置上次搜索窗口               |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer has not be finished.
+但是由于不同工具的局限性，有些模块还不能完全提供上述功能，目前仅有 denite 和 unite
+模块可以提供完整的功能。
 
-| Feature             | unite   | denite  | leaderf | ctrlp   | fzf     |
-| ------------------- | ------- | ------- | ------- | ------- | ------- |
-| menu: CustomKeyMaps | **yes** | **yes** | no      | no      | no      |
-| register            | **yes** | **yes** | no      | **yes** | **yes** |
-| file                | **yes** | **yes** | **yes** | **yes** | **yes** |
-| yank history        | **yes** | **yes** | no      | no      | **yes** |
-| jump                | **yes** | **yes** | no      | **yes** | **yes** |
-| location list       | **yes** | **yes** | no      | no      | **yes** |
-| outline             | **yes** | **yes** | **yes** | **yes** | **yes** |
-| message             | **yes** | **yes** | no      | no      | **yes** |
-| quickfix list       | **yes** | **yes** | no      | **yes** | **yes** |
-| resume windows      | **yes** | **yes** | no      | no      | no      |
+| 功能特性                       | unite | denite | leaderf | ctrlp | fzf |
+| ------------------------------ | ----- | ------ | ------- | ----- | --- |
+| 模糊查找快捷键，并执行该快捷键 | yes   | yes    | no      | no    | no  |
+| 模块搜索寄存器                 | yes   | yes    | no      | yes   | yes |
+| 模糊搜索文件                   | yes   | yes    | yes     | yes   | yes |
+| 模糊搜索复制历史               | yes   | yes    | no      | no    | yes |
+| 模糊搜索跳转历史               | yes   | yes    | no      | yes   | yes |
+| 模糊搜索位置列表               | yes   | yes    | no      | no    | yes |
+| 模糊搜索语法树                 | yes   | yes    | yes     | yes   | yes |
+| 模糊搜索消息                   | yes   | yes    | no      | no    | yes |
+| 模糊搜索全局位置列表           | yes   | yes    | no      | yes   | yes |
+| 重置上次搜索窗口               | yes   | yes    | no      | no    | no  |
 
-**Key bindings within fuzzy finder buffer**
+**模糊搜索窗口内的快捷键：**
 
-| 快捷键                   | 模式   | 功能描述                                  |
-| ------------------------ | ------ | ----------------------------------------- |
-| `<Tab>` / `Ctrl-j`       | -      | Select next line                          |
-| `Shift-<Tab>` / `Ctrl-k` | -      | Select previous line                      |
-| `jk`                     | Insert | Leave Insert mode (Only for denite/unite) |
-| `Ctrl-w`                 | Insert | Delete backward path                      |
-| `<Enter>`                | -      | Run default action                        |
-| `Ctrl-s`                 | -      | Open in a split                           |
-| `Ctrl-v`                 | -      | Open in a vertical split                  |
-| `Ctrl-t`                 | -      | Open in a new tab                         |
-| `Ctrl-g`                 | -      | Exit unite                                |
+| 快捷键                   | 功能描述                                    |
+| ------------------------ | ------------------------------------------- |
+| `<Tab>` / `Ctrl-j`       | 下一个选项                                  |
+| `Shift-<Tab>` / `Ctrl-k` | 上一个选项                                  |
+| `jk`                     | 离开输入模式（仅支持 denite 和 unite 模块） |
+| `Ctrl-w`                 | 删除光标前词语                              |
+| `<Enter>`                | 执行默认动作                                |
+| `Ctrl-s`                 | 在分割窗口内打开                            |
+| `Ctrl-v`                 | 在垂直分割窗口内打开                        |
+| `Ctrl-t`                 | 在新的标签页里打开                          |
+| `Ctrl-g`                 | 推出模糊搜索插件                            |
 
-**Denite/Unite normal mode key bindings**
+**Denite 或 Unite 模块可视模式下快捷键：**
 
-| 快捷键           | 模式          | 功能描述                             |
-| ---------------- | ------------- | ------------------------------------ |
-| `Ctrl`+`h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl`+`l`       | Normal        | Redraw                               |
-| `<Tab>`          | Normal        | Select actions                       |
-| `Space`          | Normal        | Toggle mark current candidate, up    |
-| `r`              | Normal        | Replace ('search' profile) or rename |
-| `Ctrl`+`z`       | Normal/Insert | Toggle transpose window              |
+| 快捷键           | 功能描述           |
+| ---------------- | ------------------ |
+| `Ctrl`+`h/k/l/r` | 未定义             |
+| `Ctrl`+`l`       | 刷新窗口           |
+| `<Tab>`          | 选择即将执行的动作 |
+| `Space`          | 切换标记当前选项   |
+| `r`              | 替换或者重命名     |
+| `Ctrl`+`z`       | 切换窗口分割方式   |
 
-The above key bindings only are part of fuzzy finder layers, please read the layer's documentation.
+以上这些快捷键仅仅是模糊搜索模块的部分快捷键，其他快捷键信息可查阅对应模块文档。
 
 ### 交互
 
@@ -926,6 +932,8 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `] SPC` | 在当前行或已选区域下方添加空行                 |
 | `[ b`   | 跳至前一 buffer                                |
 | `] b`   | 跳至下一 buffer                                |
+| `[ n`   | 跳至前一冲突位置                               |
+| `] n`   | 跳至下一冲突位置                               |
 | `[ f`   | 跳至文件夹中的前一个文件                       |
 | `] f`   | 跳至文件夹中的下一个文件                       |
 | `[ l`   | 跳至前一个错误处                               |
@@ -1038,34 +1046,36 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC w w`             | 切换至前一窗口                                                                 |
 | `SPC w W`             | 选择一个窗口                                                                   |
 
-#### 文件和 Buffer 操作
+#### 文件和缓冲区操作
 
-##### Buffer 操作相关快捷键
+##### 缓冲区操作
 
-Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
+缓冲区（Buffer）操作相关快捷键都是以 `SPC b` 为前缀的，以下为常用的缓冲区操作快捷键，
+主要包括了缓冲区的切换和删除等操作：
 
 | 快捷键          | 功能描述                                                                       |
 | --------------- | ------------------------------------------------------------------------------ |
-| `SPC <Tab>`     | 切换至前一 buffer，可用于两个 buffer 来回切换                                  |
-| `SPC b .`       | 启用 buffer 临时快捷键                                                         |
-| `SPC b b`       | 切换至某一 buffer，通过 Unite/Denite 进行筛选                                  |
-| `SPC b d`       | 删除当前 buffer，但保留 Vim 窗口                                               |
+| `SPC <Tab>`     | 切换至前一缓冲区，常用于两个缓冲区来回切换                                     |
+| `SPC b .`       | 启用缓冲区临时快捷键                                                           |
+| `SPC b b`       | 通过模糊搜索工具进行缓冲区切换，需要启用一个模糊搜索工具模块                   |
+| `SPC b d`       | 删除当前缓冲区，但保留编辑窗口                                                 |
 | `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | 选择一个窗口，并删除其 buffer                                                  |
+| `SPC b D`       | 选择一个窗口，并删除其缓冲区                                                   |
 | `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b C-d`     | 删除其它 buffers                                                               |
+| `SPC b c`       | 删除其它已保存的缓冲区                                                         |
+| `SPC b C-d`     | 删除其它所有缓冲区                                                             |
 | `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | 清除当前 buffer 内容，需要手动确认                                             |
-| `SPC b h`       | 打开 _SpaceVim_ 欢迎界面                                                       |
-| `SPC b n`       | 切换至下一个 buffer，排除特殊插件的 buffer                                     |
-| `SPC b m`       | 打开 _Messages_ buffer                                                         |
+| `SPC b e`       | 清除当前缓冲区内容，需要手动确认                                               |
+| `SPC b h`       | 打开欢迎界面, 等同于快捷键 `SPC a s`                                           |
+| `SPC b n`       | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b m`       | 打开消息缓冲区                                                                 |
 | `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | 切换至前一个 buffer，排除特殊插件的 buffer                                     |
-| `SPC b P`       | 使用剪切板内容替换当前 buffer                                                  |
-| `SPC b R`       | 从磁盘重新读取当前 buffer 所对应的文件                                         |
+| `SPC b p`       | 切换至前一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b P`       | 使用系统剪切板内容替换当前缓冲区                                               |
+| `SPC b R`       | 从磁盘重新读取当前缓冲区所对应的文件                                           |
 | `SPC b s`       | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
 | `SPC b w`       | 切换只读权限                                                                   |
-| `SPC b Y`       | 将整个 buffer 复制到剪切板                                                     |
+| `SPC b Y`       | 将整个缓冲区复制到系统剪切板                                                   |
 | `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
 
 ##### 新建空白 buffer
@@ -1842,7 +1852,7 @@ SpaceVim 添加了 [EditorConfig](http://editorconfig.org/) 支持，通过一�
 
 更多配置方式，可以阅读其官方文档：[editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 
-## Vim 服务器
+## Vim 服务
 
 SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。
 

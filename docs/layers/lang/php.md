@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#php layer"
-description: "This layer adds PHP language support to SpaceVim"
+description: "PHP language support, including code completion, syntax lint and code runner"
 ---
 
 # [Available Layers](../../) >> lang#php
@@ -10,7 +10,9 @@ description: "This layer adds PHP language support to SpaceVim"
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Requirement](#requirement)
+- [Key bindings](#key-bindings)
+  - [Jump to definition](#jump-to-definition)
+  - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
@@ -35,10 +37,15 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#php"
 ```
 
-### Requirement
+## Key bindings
 
-1.  [PHP 5.3+](http://php.net/)
-2.  [PCNTL](http://php.net/manual/en/book.pcntl.php) Extension
-3.  [Msgpack 0.5.7+(for NeoVim)](https://github.com/msgpack/msgpack-php) Extension or [JSON(for Vim 7.4+)](http://php.net/manual/en/intro.json.php) Extension
-4.  [Composer](https://getcomposer.org/) Project
+### Jump to definition
 
+| Mode   | Key Bindings | Description                                      |
+| ------ | ------------ | ------------------------------------------------ |
+| normal | `g d`        | Jump to the definition position of cursor symbol |
+
+### Running current script
+
+To running a php script, you can press `SPC l r` to run current file without loss focus,
+and the result will be shown in a runner buffer.

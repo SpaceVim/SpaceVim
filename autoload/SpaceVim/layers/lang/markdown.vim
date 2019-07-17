@@ -1,6 +1,6 @@
 "=============================================================================
 " markdown.vim --- lang#markdown layer for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -30,6 +30,9 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
         \ 'depends': 'open-browser.vim',
         \ 'build' : 'cd app & yarn install' }])
   call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+  if !has('nvim')
+    call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : 'yarn install'}])
+  endif
   return plugins
 endfunction
 

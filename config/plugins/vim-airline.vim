@@ -1,16 +1,16 @@
 scriptencoding utf-8
-let g:airline_powerline_fonts = g:spacevim_enable_powerline_fonts
+let g:airline_powerline_fonts = get(g:, 'spacevim_enable_powerline_fonts', 1)
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:Powerline_sybols = 'unicode'
-if g:spacevim_buffer_index_type < 3
+if get(g:, 'spacevim_buffer_index_type', 1) < 3
   let g:airline#extensions#tabline#buffer_idx_mode = 1
   let g:airline#extensions#tabline#buffer_idx_format = {}
   for s:i in range(9)
     call extend(g:airline#extensions#tabline#buffer_idx_format,
           \ {s:i : SpaceVim#api#import('messletters').bubble_num(s:i,
-          \ g:spacevim_buffer_index_type). ' '})
+          \ get(g:, 'spacevim_buffer_index_type', 1)). ' '})
   endfor
   unlet s:i
 elseif g:spacevim_buffer_index_type == 3

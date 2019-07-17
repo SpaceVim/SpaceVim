@@ -1,14 +1,14 @@
 "=============================================================================
 " z.vim --- z key bindings
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 function! SpaceVim#mapping#z#init() abort "{{{
-    nnoremap <silent><nowait> [z] :<c-u>LeaderGuide "z"<CR>
-    nmap z [z]
+    nnoremap <silent><nowait> [Z] :<c-u>LeaderGuide "z"<CR>
+    nmap z [Z]
     let g:_spacevim_mappings_z = {}
     let g:_spacevim_mappings_z['<CR>'] = ['call feedkeys("z\<CR>", "n")', 'cursor line to top']
     nnoremap z<CR> z<CR>

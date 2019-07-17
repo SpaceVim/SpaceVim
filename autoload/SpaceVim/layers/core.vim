@@ -1,6 +1,6 @@
 "=============================================================================
 " core.vim --- SpaceVim core layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -29,7 +29,7 @@ function! SpaceVim#layers#core#plugins() abort
   if exists('*matchaddpos')
     call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   endif
-  call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['gruvbox-community/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
         \ 'OpenBrowserSearch'],
@@ -53,7 +53,7 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
   nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-  "]e or [e move current line ,count can be useed
+  "]e or [e move current line ,count can be used
   nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
   nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
@@ -107,10 +107,16 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:explore_current_dir')) . ', [1])',
         \ 'Explore current directory(other windows)', 1)
 
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump or select to a character', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump or select to a line', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-line) :<C-U>call <SID>better_easymotion_overwin_line(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump to a word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -203,7 +209,7 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   endif
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -410,8 +416,15 @@ function! s:split_string(newline) abort
   endif
 endfunction
 
+
+" @toto add sting highlight for other filetype
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ }
+
 function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
 endfunction
 
 " function() wrapper
@@ -437,8 +450,9 @@ endfunction
 function! s:safe_erase_buffer() abort
   if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
     normal! ggdG
+  else
+    echo 'canceled!'
   endif
-  redraw!
 endfunction
 
 function! s:ToggleWinDiskManager() abort
@@ -463,6 +477,8 @@ endfunction
 function! s:safe_revert_buffer() abort
   if s:MESSAGE.confirm('Revert buffer form ' . expand('%:p'))
     edit!
+  else
+    echo 'canceled!'
   endif
   redraw!
 endfunction
@@ -647,6 +663,51 @@ function! s:comment_to_line(invert) abort
   else
     call feedkeys("\<Plug>NERDCommenterComment")
   endif
+endfunction
+
+function! s:better_easymotion_overwin_line(is_visual) abort
+  let current_line = line('.')
+  try
+    if a:is_visual
+      call EasyMotion#Sol(0, 2)
+    else
+      call EasyMotion#overwin#line()
+    endif
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      exe current_line
+      if last_line > current_line
+        exe 'normal! V' . (last_line - current_line) . 'j'
+      else
+        exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
+endfunction
+
+function! s:better_easymotion_overwin_f(is_visual) abort
+  let [current_line, current_col] = getpos('.')[1:2]
+  try
+    call EasyMotion#OverwinF(1)
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      let [last_line, last_col] = getpos('.')[1:2]
+      call cursor(current_line, current_col)
+      if last_line > current_line        
+        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
+      else
+        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
 endfunction
 
 function! s:comment_paragraphs(invert) abort

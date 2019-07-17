@@ -1,6 +1,6 @@
 "=============================================================================
 " tools.vim --- SpaceVim tools layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -59,7 +59,7 @@ function! SpaceVim#layers#tools#config() abort
   nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
-    autocmd FileType lisp,clojure,scheme,java RainbowParentheses
+    autocmd FileType lisp,clojure,scheme,racket,java RainbowParentheses
     autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <silent> <buffer> <c-d> <c-[>:q<cr>
           \ | nnoremap <silent> <buffer> q :bdelete<cr>
   augroup END

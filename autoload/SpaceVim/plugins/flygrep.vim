@@ -1,6 +1,6 @@
 "=============================================================================
 " flygrep.vim --- Grep on the fly in SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,6 +15,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
+let s:JSON = SpaceVim#api#import('data#json')
 " }}}
 
 let s:grepid = 0
@@ -33,7 +34,26 @@ let [
 let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
-let s:grep_history = []
+function! s:read_histroy() abort
+  if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
+    if type(_his) ==# type([])
+      return _his
+    else
+      return []
+    endif
+  else
+    return []
+  endif
+endfunction
+function! s:update_history() abort
+  if index(s:grep_history, s:grep_expr) >= 0
+    call remove(s:grep_history, index(s:grep_history, s:grep_expr))
+  endif
+  call add(s:grep_history, s:grep_expr)
+  call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
+endfunction
+let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
 " }}}
 
@@ -266,6 +286,7 @@ function! s:close_grep_job() abort
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
   normal! "_ggdG
+  let s:complete_input_history_num = [0,0]
 endfunction
 
 let s:MPT._oninputpro = function('s:close_grep_job')
@@ -390,7 +411,6 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
-  call add(s:grep_history, s:grep_expr)
   let s:MPT._handle_fly = function('s:flygrep')
   if getline('.') !=# ''
     if s:grepid != 0
@@ -408,6 +428,7 @@ function! s:open_item() abort
     let s:preview_able = 0
     noautocmd q
     exe 'e ' . filename
+    call s:update_history()
     call cursor(linenr, colum)
     noautocmd normal! :
   endif
@@ -522,7 +543,6 @@ function! s:previous_match_history() abort
 endfunction
 
 function! s:next_match_history() abort
-
   if s:complete_input_history_num == [0,0]
     let s:complete_input_history_base = s:MPT._prompt.begin
     let s:MPT._prompt.cursor = ''
@@ -538,14 +558,20 @@ endfunction
 
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
-  if len(results) > 0
-    call add(results, a:str)
+  if a:num[0] - a:num[1] == 0
+    return a:str
+  elseif len(results) > 0
     let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
     return results[index]
   else
     return a:str
   endif
 endfunction
+
+function! Testflygrep(a, b) abort
+  return s:complete_input_history(a:a, a:b)
+endfunction
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),

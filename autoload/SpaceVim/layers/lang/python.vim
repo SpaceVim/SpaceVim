@@ -1,6 +1,6 @@
 "=============================================================================
 " python.vim --- SpaceVim lang#python layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -34,6 +34,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['jeetsukumaran/vim-pythonsense', 
         \ { 'on_ft' : 'python'}])
+  call add(plugins, ['alfredodeza/coveragepy.vim', 
+        \ { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -101,6 +103,24 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+
+  let g:_spacevim_mappings_space.l.c = {'name' : '+Coverage'}
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'r'],
+        \ 'Coveragepy report',
+        \ 'coverager eport', 1)
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'],
+        \ 'Coveragepy show',
+        \ 'coverager show', 1)
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'e'],
+        \ 'Coveragepy session',
+        \ 'coverager session', 1)
+
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'f'],
+        \ 'Coveragepy refresh',
+        \ 'coverager refresh', 1)
 
   " +Generate {{{
 
