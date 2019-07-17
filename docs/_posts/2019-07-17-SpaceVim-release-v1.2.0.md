@@ -37,8 +37,20 @@ Since last release, we have added 8 programming language layer:
 
 - [lang#d](../lang/d/)
 - [lang#hack](../lang/hack/)
+- [lang#livescript](../lang/livescript/)
+- [lang#hy](../lang/hy/)
+- [lang#pact](../lang/pact/)
+- [lang#prolog](../lang/prolog/)
+- [lang#v](../lang/v/)
+- [lang#tcl](../lang/tcl/)
+- [lang#matlab](../lang/matlab/)
+- [lang#pascal](../lang/pascal/)
+- [lang#groovy](../lang/groovy/)
+- [lang#sql](../lang/sql/)
 
-### Pull Requests
+
+
+## Release Notes
 
 here is the list of all the pull requests since last release:
 
