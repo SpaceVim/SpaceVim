@@ -14,11 +14,12 @@ comments: true
 <!-- vim-markdown-toc GFM -->
 
 - [What's New](#whats-new)
+  - [async todo manager](#async-todo-manager)
 - [Release Notes](#release-notes)
-  - [New Features](#new-features)
-  - [Feature Changes](#feature-changes)
-  - [Bug Fixs](#bug-fixs)
-  - [Unmarked PRs](#unmarked-prs)
+    - [New Features](#new-features)
+    - [Feature Changes](#feature-changes)
+    - [Bug Fixs](#bug-fixs)
+    - [Unmarked PRs](#unmarked-prs)
 
 <!-- vim-markdown-toc -->
 
@@ -33,22 +34,31 @@ The v1.2.0 has been released. So let's take a look at what happened since last r
 
 ## What's New
 
-Since last release, we have added 8 programming language layer:
+Since last release, we have added 13 programming language layer:
 
 - [lang#d](../lang/d/)
-- [lang#hack](../lang/hack/)
-- [lang#livescript](../lang/livescript/)
-- [lang#hy](../lang/hy/)
-- [lang#pact](../lang/pact/)
-- [lang#prolog](../lang/prolog/)
-- [lang#v](../lang/v/)
-- [lang#tcl](../lang/tcl/)
-- [lang#matlab](../lang/matlab/)
-- [lang#pascal](../lang/pascal/)
 - [lang#groovy](../lang/groovy/)
+- [lang#hack](../lang/hack/)
+- [lang#hy](../lang/hy/)
+- [lang#livescript](../lang/livescript/)
+- [lang#matlab](../lang/matlab/)
+- [lang#pact](../lang/pact/)
+- [lang#pascal](../lang/pascal/)
+- [lang#prolog](../lang/prolog/)
+- [lang#powershell](../lang/powershell/)
 - [lang#sql](../lang/sql/)
+- [lang#tcl](../lang/tcl/)
+- [lang#v](../lang/v/)
 
 
+In addition to the new layers mentioned above, some new features have been added to the latest release:
+
+### async todo manager
+
+In old version of SpaceVim, the todo manager can be used only when develop SpaceVim, now it has beed merged to SpaceVim core repo,
+the default key binding is `SPC a o`, and the default tags is: `'fixme', 'question', 'todo', 'idea'`
+
+- improve the code runner, show terminal colors
 
 ## Release Notes
 
