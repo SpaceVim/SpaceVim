@@ -70,6 +70,7 @@ in percents with the variable `default_height`. Default value is 30.
 | `Ctrl-l`    | Switch to the windows on the right       |
 
 ### Additional key bindings on Windows
+
 | Key Binding | Description                              |
 | ----------- | ---------------------------------------- |
 | `Ctrl-d`    | Sends `exit <CR>` if at a prompt         |
