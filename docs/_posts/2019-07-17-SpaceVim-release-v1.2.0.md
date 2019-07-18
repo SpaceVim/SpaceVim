@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v1.2.0
 categories: [changelog, blog]
-excerpt: "A community-driven modular vim distribution - The ultimate vim configuration"
+excerpt: "SpaceVim release v1.2.0 with 12 new programming language layers and ton of bug fixs and new features."
 type: NewsArticle
 image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
 commentsID: "SpaceVim release v1.2.0"
