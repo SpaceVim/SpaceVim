@@ -18,7 +18,7 @@ Github: <https://github.com/SpaceVim/SpaceVim>
 
 码云：<https://gitee.com/SpaceVim/SpaceVim>
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 推荐阅读：
 
