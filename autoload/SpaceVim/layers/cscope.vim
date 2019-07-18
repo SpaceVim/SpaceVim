@@ -29,7 +29,7 @@ function! SpaceVim#layers#cscope#config() abort
   else
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'c'], 'call cscope#find("d", expand("<cword>"))', 'find functions called by this function', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'C'], 'call cscope#find("c", expand("<cword>"))', 'find functions calling this function', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'C'], 'call cscope#find("g", expand("<cword>"))', 'find global definition of a symbol', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'd'], 'call cscope#find("g", expand("<cword>"))', 'find global definition of a symbol', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'r'], 'call cscope#find("s", expand("<cword>"))', 'find references of a symbol', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'f'], 'call cscope#find("f", expand("<cword>"))', 'find files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'F'], 'call cscope#find("i", expand("<cword>"))', 'find files including this file', 1)
