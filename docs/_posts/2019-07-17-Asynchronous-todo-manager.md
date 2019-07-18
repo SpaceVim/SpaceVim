@@ -11,3 +11,10 @@ comments: true
 
 {{ page.date | date_to_string }}
 
+SpaceVim provides a built-in todo manager, the default key bidning is `SPC a o`, and the default tags is:
+ `'fixme', 'question', 'todo', 'idea'`
+
+![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
+
+This plugin also has been detached into [vim-todo](https://github.com/wsdjeg/vim-todo/), you can use it without SpaceVim.
+

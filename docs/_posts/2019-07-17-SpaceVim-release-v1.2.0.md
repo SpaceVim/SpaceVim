@@ -56,7 +56,7 @@ In addition to the new layers mentioned above, some new features have been added
 
 ### async todo manager
 
-In old version of SpaceVim, the todo manager can be used only when develop SpaceVim, now it has beed merged to SpaceVim core repo,
+In old version of SpaceVim, the todo manager can be used only when develop SpaceVim, now it has been merged into SpaceVim core repo,
 the default key binding is `SPC a o`, and the default tags is: `'fixme', 'question', 'todo', 'idea'`
 
 - improve the code runner, show terminal colors
