@@ -20,6 +20,7 @@ comments: true
     - [Feature Changes](#feature-changes)
     - [Bug Fixs](#bug-fixs)
     - [Unmarked PRs](#unmarked-prs)
+- [call for collaborators](#call-for-collaborators)
 
 <!-- vim-markdown-toc -->
 
@@ -59,6 +60,7 @@ In old version of SpaceVim, the todo manager can be used only when develop Space
 the default key binding is `SPC a o`, and the default tags is: `'fixme', 'question', 'todo', 'idea'`
 
 - improve the code runner, show terminal colors
+
 
 ## Release Notes
 
@@ -130,3 +132,10 @@ here is the list of all the pull requests since last release:
 - Remove zvim [#2867](https://github.com/SpaceVim/SpaceVim/pull/2867)
 - Better deafult [#2865](https://github.com/SpaceVim/SpaceVim/pull/2865)
 - Improve siganture api [#2255](https://github.com/SpaceVim/SpaceVim/pull/2255)
+
+## call for collaborators
+
+At present, SpaceVim contains more than 70 programming language layers.
+We hope that each programming language layer can be maintained by someone who is familiar with the language.
+If you are interested in SpaceVim and want to improve the performance of a language layer,
+you can join us in maintaining this project.
