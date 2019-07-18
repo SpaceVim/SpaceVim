@@ -29,6 +29,7 @@ env:
 jobs:
   include:
     - env: LINT=jekyll
+    - env: LINT=file-encoding
     - env: LINT=vimlint-errors VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
     - env: LINT=vint-errors VIM=nvim VIM_VERSION=v0.2.0

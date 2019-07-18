@@ -8,4 +8,4 @@
 
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
 
-lua require('spacevim').bootstrap()
+" lua require('spacevim').bootstrap()
