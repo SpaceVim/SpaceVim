@@ -37,19 +37,19 @@ The v1.2.0 has been released. So let's take a look at what happened since last r
 
 Since last release, we have added 13 programming language layer:
 
-- [lang#d](../lang/d/)
-- [lang#groovy](../lang/groovy/)
-- [lang#hack](../lang/hack/)
-- [lang#hy](../lang/hy/)
-- [lang#livescript](../lang/livescript/)
-- [lang#matlab](../lang/matlab/)
-- [lang#pact](../lang/pact/)
-- [lang#pascal](../lang/pascal/)
-- [lang#prolog](../lang/prolog/)
-- [lang#powershell](../lang/powershell/)
-- [lang#sql](../lang/sql/)
-- [lang#tcl](../lang/tcl/)
-- [lang#v](../lang/v/)
+- [lang#d](../layers/lang/d/)
+- [lang#groovy](../layers/lang/groovy/)
+- [lang#hack](../layers/lang/hack/)
+- [lang#hy](../layers/lang/hy/)
+- [lang#livescript](../layers/lang/livescript/)
+- [lang#matlab](../layers/lang/matlab/)
+- [lang#pact](../layers/lang/pact/)
+- [lang#pascal](../layers/lang/pascal/)
+- [lang#prolog](../layers/lang/prolog/)
+- [lang#powershell](../layers/lang/powershell/)
+- [lang#sql](../layers/lang/sql/)
+- [lang#tcl](../layers/lang/tcl/)
+- [lang#v](../layers/lang/v/)
 
 
 In addition to the new layers mentioned above, some new features have been added to the latest release:
