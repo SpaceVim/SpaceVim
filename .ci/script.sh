@@ -30,6 +30,9 @@ elif [ "$LINT" = "file-encoding" ]; then
             utf-8)
                 exit 0
                 ;;
+            us-ascii)
+                exit 0
+                ;;
             cp936)
                 echo $file >> encoding_log
                 exit 2
@@ -38,6 +41,8 @@ elif [ "$LINT" = "file-encoding" ]; then
                 echo $file >> encoding_log
                 exit 2
         esac
+        echo $file >> encoding_log
+        exit 2
     done
     if [[ -s encoding_log ]]; then
         cat encoding_log
