@@ -33,8 +33,8 @@ function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
         \ . string(s:_function('s:debug_transient_state')) . ', [])',
         \ 'debug transient state', 1)
-  let g:vebugger_breakpoint_text = '🞊'
-  let g:vebugger_currentline_text = '🠲'
+  let g:vebugger_breakpoint_text = '->'
+  let g:vebugger_currentline_text = '++'
 endfunction
 
 function! SpaceVim#layers#debug#launching(ft) abort
@@ -42,8 +42,8 @@ function! SpaceVim#layers#debug#launching(ft) abort
     exe 'VBGstartPDB ' . bufname('%')
   elseif a:ft ==# 'ruby'
     exe 'VBGstartRDebug ' . bufname('%')
-  elseif a:if ==# 'powershell'
-    exe 'VBGstartPowerShell'
+  elseif a:ft ==# 'powershell'
+    exe 'VBGstartPowerShell ' . bufname('%')
   else
     echohl WarningMsg
     echo 'read :h vebugger-launching'
