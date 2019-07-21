@@ -42,6 +42,8 @@ function! SpaceVim#layers#debug#launching(ft) abort
     exe 'VBGstartPDB ' . bufname('%')
   elseif a:ft ==# 'ruby'
     exe 'VBGstartRDebug ' . bufname('%')
+  elseif a:if ==# 'powershell'
+    exe 'VBGstartPowerShell'
   else
     echohl WarningMsg
     echo 'read :h vebugger-launching'
