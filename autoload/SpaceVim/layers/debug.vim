@@ -9,7 +9,8 @@ scriptencoding utf-8
 
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
-  call add(plugins,['idanarye/vim-vebugger', {'merged' : 0}])
+  " @todo fork verbugger
+  call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
   if g:spacevim_filemanager !=# 'vimfiler'
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
@@ -32,8 +33,8 @@ function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
         \ . string(s:_function('s:debug_transient_state')) . ', [])',
         \ 'debug transient state', 1)
-  let g:vebugger_breakpoint_text = '🞊'
-  let g:vebugger_currentline_text = '🠲'
+  let g:vebugger_breakpoint_text = '->'
+  let g:vebugger_currentline_text = '++'
 endfunction
 
 function! SpaceVim#layers#debug#launching(ft) abort
@@ -41,6 +42,8 @@ function! SpaceVim#layers#debug#launching(ft) abort
     exe 'VBGstartPDB ' . bufname('%')
   elseif a:ft ==# 'ruby'
     exe 'VBGstartRDebug ' . bufname('%')
+  elseif a:ft ==# 'powershell'
+    exe 'VBGstartPowerShell ' . bufname('%')
   else
     echohl WarningMsg
     echo 'read :h vebugger-launching'
