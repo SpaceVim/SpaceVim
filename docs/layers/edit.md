@@ -30,7 +30,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 
 ## Options
 
-- `textobj`: specified a list of text opjects to be enabled, the avaliable list is :`indent`, `line`, `entire`
+- `textobj`: specified a list of text objects to be enabled, the avaliable list is :`indent`, `line`, `entire`
 
 ## Key bindings
 
