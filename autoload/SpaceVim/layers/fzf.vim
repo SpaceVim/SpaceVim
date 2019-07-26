@@ -64,6 +64,17 @@ endfunction
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
+  nnoremap <silent> <Leader>ff
+        \ :<C-u>FzfFiles<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.f = ['FzfFiles',
+        \ 'fuzzy find files',
+        \ [
+        \ '[Leader f f ] is to fuzzy find files in CWD',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
   nnoremap <silent> <Leader>fe
         \ :<C-u>FzfRegister<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
