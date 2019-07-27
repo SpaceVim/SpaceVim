@@ -563,6 +563,12 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
     else
       let g:_spacevim_mappings_space[a:keys[0]] = [lcmd, a:desc[0], a:desc[1]]
     endif
+  elseif len(a:keys) == 4
+    if type(a:desc) == 1
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]][a:keys[3]] = [lcmd, a:desc]
+    else
+      let g:_spacevim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]][a:keys[3]] = [lcmd, a:desc[0], a:desc[1]]
+    endif
   endif
   if type(a:desc) == 1
     call SpaceVim#mapping#menu(a:desc, '[SPC]' . join(a:keys, ''), lcmd)
