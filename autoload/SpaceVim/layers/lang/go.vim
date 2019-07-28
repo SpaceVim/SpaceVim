@@ -41,7 +41,7 @@
 
 
 function! SpaceVim#layers#lang#go#plugins() abort
-  let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
+  let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}],['sebdah/vim-delve', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
   if has('nvim') && g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['zchee/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
   endif
@@ -144,4 +144,11 @@ function! s:language_specified_mappings() abort
         \ ':GoFreevars',
         \ 'freevars', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  
+  " Dlv Debug
+  let g:_spacevim_mappings_space.l.B = {'name' : '+Debug'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','B','b'], ':DlvToggleBreakpoint', 'toogle breakpoint', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','B','t'], ':DlvToggleTracepoint', 'toogle tracepoint', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','B','d'], ':DlvDebug', 'debug (main package)', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','B','D'], ':DlvTest', 'debug (non main package)', 1)
 endfunction
