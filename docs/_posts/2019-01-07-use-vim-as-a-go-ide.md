@@ -41,7 +41,7 @@ for more info, you can read the [lang#go](../layers/lang/go/) layer documentatio
 ### code completion
 
 By default the autocomplete layer has been enabled, so after loading `lang#go` layer, the code completion
-for go language should works well.
+for go language should work well.
 
 
 ### alternate file jumping
