@@ -224,6 +224,12 @@ endif
 
 
 
+" patch 7.4.792 add dict argv (only conceal)
+" patch 7.4.1740  syn-cchar defined with matchadd() does not appear
+" patch 8.1.0218 update dict argv (add window)
+
+
+
 " - A number.  This whole line will be highlighted.  The first
 " line has number 1.
 " - A list with one number, e.g., [23]. The whole line with this
@@ -247,30 +253,34 @@ else
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
     let pos1 = a:pos[0]
     if type(pos1) == 0
-      let id = matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+      let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
     elseif type(pos1) == 3
       if len(pos1) == 1
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
       elseif len(pos1) == 2
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
       elseif len(pos1) == 3
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
       endif
     endif
     if len(a:pos) > 1
       for pos1 in a:pos[1:]
         if type(pos1) == 0
-          call matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+          let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
         elseif type(pos1) == 3
           if len(pos1) == 1
-            call matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
           elseif len(pos1) == 2
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
           elseif len(pos1) == 3
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
           endif
         endif
       endfor
