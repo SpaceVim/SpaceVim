@@ -224,6 +224,12 @@ endif
 
 
 
+" patch 7.4.1740  syn-cchar defined with matchadd() does not appear
+" patch 7.4.792 add dict argv (only conceal)
+" patch 8.1.0218 update dict argv (add window)
+
+
+
 " - A number.  This whole line will be highlighted.  The first
 " line has number 1.
 " - A list with one number, e.g., [23]. The whole line with this
