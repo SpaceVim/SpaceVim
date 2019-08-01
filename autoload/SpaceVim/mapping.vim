@@ -50,7 +50,7 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
     let gexe = substitute(gexe, '<Esc>', "\<Esc>", 'g')
   else
   endif
-  if g:spacevim_enable_key_frequency
+  if get(g:, 'spacevim_enable_key_frequency', 0)
     exec a:type . ' <expr> ' . a:key . " SpaceVim#mapping#frequency#update('" . a:key . "', '" . a:value . "')"
   else
     exec a:type . ' ' . a:key . ' ' . a:value
@@ -87,11 +87,11 @@ function! SpaceVim#mapping#def(type, key, value, ...) abort
   endif
 endfunction
 
-if g:spacevim_snippet_engine ==# 'neosnippet'
+if get(g:, 'spacevim_snippet_engine', 'neosnippet') ==# 'neosnippet'
   function! SpaceVim#mapping#shift_tab() abort
     return pumvisible() ? "\<C-p>" : "\<Plug>delimitMateS-Tab"
   endfunction
-elseif g:spacevim_snippet_engine ==# 'ultisnips'
+elseif get(g:, 'spacevim_snippet_engine', 'neosnippet') ==# 'ultisnips'
   function! SpaceVim#mapping#shift_tab() abort
     return pumvisible() ? "\<C-p>" : "\<C-R>=UltiSnips#JumpForwards()\<CR>\<C-R>=cmp#ultisnips#JumpForward()\<CR>"
   endfunction
