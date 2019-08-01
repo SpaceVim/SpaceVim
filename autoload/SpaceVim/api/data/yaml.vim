@@ -70,7 +70,34 @@ function! s:self._match(input, pattern) abort
 endfunction
 
 function! s:self._parser(input) abort
-  
+  let data = {}
+
+  call self._skip(a:input)
+  while !self._eof(a:input)
+    if self._match(a:input, '[^ [:tab:]#.[\]]')
+      let key = self._key(a:input)
+      call self._equals(a:input)
+      let value = self._value(a:input)
+
+      call self._put_dict(data, key, value)
+
+      unlet value
+    elseif self._match(a:input, '\[\[')
+      let [key, value] = self._array_of_tables(a:input)
+
+      call self._put_array(data, key, value)
+
+      unlet value
+    elseif self._match(a:input, '\[')
+      let [key, value] = self._table(a:input)
+
+      call self._put_dict(data, key, value)
+
+      unlet value
+    else
+      call self._error(a:input)
+    endif
+    call self._skip(a:input)
 endfunction
 
 
