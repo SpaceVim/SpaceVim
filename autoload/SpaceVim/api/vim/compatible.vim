@@ -222,9 +222,9 @@ else
 endif
 
 
+" patch 7.4.330  add function matchaddpos()
 
-
-" patch 7.4.792 add dict argv (only conceal)
+" patch 7.4.792 add dict argv to matchaddpos() (only conceal)
 " patch 7.4.1740  syn-cchar defined with matchadd() does not appear
 " patch 8.1.0218 update dict argv (add window)
 
@@ -246,8 +246,12 @@ if exists('*matchaddpos')
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
-    return matchaddpos(a:group, a:pos, priority, id, dict)
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
+    return call('matchaddpos', [a:group, a:pos] + argv)
   endfunction
 else
   function! s:self.matchaddpos(group, pos, ...) abort
