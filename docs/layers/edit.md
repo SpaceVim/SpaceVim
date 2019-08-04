@@ -26,7 +26,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - align
 - set justification for paragraph
 - highlight whitespaces at the end of a line
-- load ditorconfig config, need `+python` or `+python3`
+- load editorconfig config, need `+python` or `+python3`
 
 ## Options
 
