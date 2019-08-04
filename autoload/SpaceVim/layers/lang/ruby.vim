@@ -15,13 +15,17 @@ endfunction
 let s:ruby_repl_command = ''
 
 function! SpaceVim#layers#lang#ruby#config() abort
-  call SpaceVim#plugins#runner#reg_runner('ruby', 'ruby %s')
+  call SpaceVim#plugins#runner#reg_runner('ruby', {
+        \ 'exe' : 'ruby',
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ })
   call SpaceVim#mapping#gd#add('ruby', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('ruby', function('s:language_specified_mappings'))
   if !empty(s:ruby_repl_command)
-      call SpaceVim#plugins#repl#reg('ruby',s:ruby_repl_command)
+    call SpaceVim#plugins#repl#reg('ruby',s:ruby_repl_command)
   else
-      call SpaceVim#plugins#repl#reg('ruby', 'irb')
+    call SpaceVim#plugins#repl#reg('ruby', 'irb')
   endif
 endfunction
 
