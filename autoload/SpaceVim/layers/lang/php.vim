@@ -23,7 +23,7 @@ function! SpaceVim#layers#lang#php#plugins() abort
   if SpaceVim#layers#lsp#check_filetype('php')
     call add(plugins, ['felixfbecker/php-language-server', {'on_ft' : 'php', 'build' : 'composer install && composer run-script parse-stubs'}])
   else
-    call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
+    call add(plugins, ['lvht/phpcd.vim', { 'on_ft' : 'php', 'build': 'composer install'}])
   endif
   return plugins
 endfunction
