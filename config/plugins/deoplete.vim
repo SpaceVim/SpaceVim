@@ -113,6 +113,9 @@ call deoplete#custom#var('omni', 'input_patterns', {
       \ ],
       \})
 
+" c#
+call deoplete#custom#option('sources', {'cs': ['omnisharp']})
+
 " public settings
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
