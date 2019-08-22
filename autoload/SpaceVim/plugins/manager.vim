@@ -747,7 +747,7 @@ else
     endif
     call setbufvar(a:bufnr,'&ma', 0)
   endfunction
-endi
+endif
 
 " Public API: SpaceVim#plugins#manager#terminal {{{
 function! SpaceVim#plugins#manager#terminal() abort
@@ -758,4 +758,4 @@ function! SpaceVim#plugins#manager#terminal() abort
     call s:JOB.stop(str2nr(id))
   endfor
 endfunction
-" }}}f
+" }}}
