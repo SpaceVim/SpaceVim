@@ -16,6 +16,8 @@ function! SpaceVim#layers#ctrlp#plugins() abort
         \ ['hara/ctrlp-colorscheme', {'on_cmd' : 'CtrlPColorscheme'}],
         \ ]
   call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/ctrlp-yank', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -164,6 +166,11 @@ endfunction
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
+
+
+  "@todo add Leader f r for resume ctrlp
+
+
   nnoremap <silent> <Leader>fe
         \ :<C-u>CtrlPRegister<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
@@ -171,6 +178,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume unite window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fh
+        \ :<C-u>CtrlpNeoyank<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.h = ['CtrlpNeoyank',
+        \ 'fuzzy find yank history',
+        \ [
+        \ '[Leader f h] is to fuzzy find history and yank content',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
@@ -186,6 +204,10 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
+ "@todo add Leader f l for ctrlp location list
+ "@todo add Leader f m for ctrlp message
+
   nnoremap <silent> <Leader>fq
         \ :<C-u>CtrlPQuickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
@@ -208,23 +230,23 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 
-  nnoremap <silent> <Leader>fp  :<C-u>CtrlPMenu AddedPlugins<CR>
-  let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.p = ['CtrlPMenu AddedPlugins',
-        \ 'fuzzy find vim packages',
-        \ [
-        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . lnum,
-        \ ]
-        \ ]
-
   nnoremap <silent> <Leader>f<Space> :CtrlPMenu CustomKeyMaps<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f['[SPC]'] = ['CtrlPMenu CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
+  nnoremap <silent> <Leader>fp  :<C-u>CtrlPMenu AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['CtrlPMenu AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
