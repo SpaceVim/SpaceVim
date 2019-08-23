@@ -20,6 +20,18 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#ctrlp#config() abort
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'CtrlPHelp SpaceVim',
+        \ ['find-SpaceVim-help',
+        \ [
+        \ 'SPC h SPC is to find SpaceVim help',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
         \ . string(s:_function('s:get_help_with_cursor_symbol')) . ', [])',
