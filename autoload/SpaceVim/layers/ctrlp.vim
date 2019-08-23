@@ -22,7 +22,8 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#ctrlp#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'CtrlPHelp SpaceVim',
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call call('
+        \ . string(s:_function('s:get_help')) . ', ["SpaceVim"])',
         \ ['find-SpaceVim-help',
         \ [
         \ 'SPC h SPC is to find SpaceVim help',
@@ -31,6 +32,8 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ]
         \ ],
         \ 1)
+  " @fixme SPC h SPC make vim flick
+  nmap <Space>h<Space> [SPC]h[SPC]
 
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
@@ -69,6 +72,13 @@ endfunction
 function! s:get_help_with_cursor_symbol() abort
   let save_ctrlp_default_input = get(g:, 'ctrlp_default_input', '')
   let g:ctrlp_default_input = expand('<cword>')
+  CtrlPHelp
+  let g:ctrlp_default_input = save_ctrlp_default_input
+endfunction
+
+function! s:get_help(word) abort
+  let save_ctrlp_default_input = get(g:, 'ctrlp_default_input', '')
+  let g:ctrlp_default_input = a:word
   CtrlPHelp
   let g:ctrlp_default_input = save_ctrlp_default_input
 endfunction
