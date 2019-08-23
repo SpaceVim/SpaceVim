@@ -48,13 +48,15 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
+  " @fixme SPC h SPC make vim flick
+  nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
         \ ['buffer-list',
         \ [
-        \ 'SPC b b is to open buffer list via denite',
+        \ 'SPC b b is to open buffer list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
