@@ -183,9 +183,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fh
-        \ :<C-u>CtrlpNeoyank<CR>
+        \ :<C-u>CtrlPNeoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.h = ['CtrlpNeoyank',
+  let g:_spacevim_mappings.f.h = ['CtrlPNeoyank',
         \ 'fuzzy find yank history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
