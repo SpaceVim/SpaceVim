@@ -35,6 +35,17 @@ function! SpaceVim#layers#ctrlp#config() abort
   " @fixme SPC h SPC make vim flick
   nmap <Space>h<Space> [SPC]h[SPC]
 
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'CtrlPBuffer',
+        \ ['buffer-list',
+        \ [
+        \ 'SPC b b is to open buffer list',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU', 'open-recent-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
         \ . string(s:_function('s:get_help_with_cursor_symbol')) . ', [])',

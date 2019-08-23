@@ -54,7 +54,7 @@ function! SpaceVim#layers#denite#config() abort
         \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
         \ ['buffer-list',
         \ [
-        \ 'SPC b b is to open buffer list via denite',
+        \ 'SPC b b is to open buffer list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
