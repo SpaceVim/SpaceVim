@@ -14,6 +14,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
         \ ['DeaR/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],
         \ ['SpaceVim/vim-ctrlp-help', {'on_cmd' : 'CtrlPHelp'}],
         \ ]
+  call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
   return plugins
 endfunction
 
