@@ -13,6 +13,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
         \ ['mattn/ctrlp-register', {'on_cmd' : 'CtrlPRegister'}],
         \ ['DeaR/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],
         \ ['SpaceVim/vim-ctrlp-help', {'on_cmd' : 'CtrlPHelp'}],
+        \ ['hara/ctrlp-colorscheme', {'on_cmd' : 'CtrlPColorscheme'}],
         \ ]
   call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
   return plugins
@@ -86,7 +87,7 @@ function! SpaceVim#layers#ctrlp#config() abort
 
   "@fixme ctrlp colorschemes support
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'CtrlPColors',
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'CtrlPColorscheme',
         \ ['fuzzy find colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
