@@ -23,6 +23,18 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#ctrlp#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
+        \ . string(s:_function('s:get_menu')) . ', ["CustomKeyMaps", "[SPC]"])',
+        \ ['show mappings',
+        \ [
+        \ 'SPC ? is to show mappings',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call call('
         \ . string(s:_function('s:get_help')) . ', ["SpaceVim"])',
         \ ['find-SpaceVim-help',
@@ -95,6 +107,13 @@ function! s:get_help(word) abort
   let g:ctrlp_default_input = save_ctrlp_default_input
 endfunction
 
+function! s:get_menu(menu, input) abort
+  let save_ctrlp_default_input = get(g:, 'ctrlp_default_input', '')
+  let g:ctrlp_default_input = a:input
+  exe 'CtrlPMenu ' . a:menu
+  let g:ctrlp_default_input = save_ctrlp_default_input
+endfunction
+
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
@@ -141,6 +160,29 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
+  nnoremap <silent> <Leader>fp  :<C-u>CtrlPMenu AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['CtrlPMenu AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
+  nnoremap <silent> <Leader>f<Space> :CtrlPMenu CustomKeyMaps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f['[SPC]'] = ['CtrlPMenu CustomKeyMaps',
+        \ 'fuzzy find custom key bindings',
+        \ [
+        \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
 endfunction
 
 
