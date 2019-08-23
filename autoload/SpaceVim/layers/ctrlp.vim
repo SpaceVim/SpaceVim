@@ -59,27 +59,43 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ],
         \ 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU', 'open-recent-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
-        \ . string(s:_function('s:get_help_with_cursor_symbol')) . ', [])',
-        \ 'get help with the symbol at point', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
-        \ 'CtrlP',
-        \ ['find files in current project',
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU',
+        \ ['open-recent-file',
         \ [
-        \ '[SPC p f] is to find files in the root of the current project',
+        \ 'SPC f r is to open recent file list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'CtrlPBufTag',
+        \ ['jump to a definition in buffer',
+        \ [
+        \ 'SPC j i is to jump to a definition in buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
-        \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'jump to a definition in buffer', 1)
-  " This is definded in plugin config
-  " nnoremap <silent> <C-p> :Ctrlp<cr>
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Denite colorscheme', 'fuzzy find colorschemes', 1)
-  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
-  call s:defind_fuzzy_finder()
+        \ ],
+        \ 1)
+
+  "@todo add resume support for ctrlp: SPC r l
+
+
+  "@fixme ctrlp colorschemes support
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'CtrlPColors',
+        \ ['fuzzy find colorschemes',
+        \ [
+        \ 'SPC T s is to fuzzy find colorschemes',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
         \ "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')",
@@ -91,6 +107,36 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ]
         \ ]
         \ , 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ 'CtrlP',
+        \ ['find files in current project',
+        \ [
+        \ '[SPC p f] is to find files in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
+
+  " This is definded in plugin config
+  " nnoremap <silent> <C-p> :Ctrlp<cr>
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
+        \ . string(s:_function('s:get_help_with_cursor_symbol')) . ', [])',
+        \ ['get help with the symbol at point',
+        \ [
+        \ '[SPC h i] is to get help with the symbol at point',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
 endfunction
 
 function! s:get_help_with_cursor_symbol() abort
