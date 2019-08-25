@@ -219,6 +219,19 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
+  nnoremap <silent> <Leader>fq
+        \ :<C-u>CtrlPQuickfix<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.q = ['CtrlPQuickfix',
+        \ 'fuzzy find quickfix list',
+        \ [
+        \ '[Leader f q] is to fuzzy find quickfix list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
   nnoremap <silent> <Leader>fo  :<C-u>CtrlPBufTag<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['CtrlPBufTag',
