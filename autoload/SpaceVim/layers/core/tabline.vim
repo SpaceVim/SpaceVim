@@ -271,10 +271,10 @@ function! SpaceVim#layers#core#tabline#jump(id, ...) abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
+  let name = get(g:, 'colors_name', 'gruvbox')
   if !empty(g:spacevim_custom_color_palette)
     let t = g:spacevim_custom_color_palette
   else
-    let name = get(g:, 'colors_name', 'gruvbox')
     try
       let t = SpaceVim#mapping#guide#theme#{name}#palette()
     catch /^Vim\%((\a\+)\)\=:E117/
