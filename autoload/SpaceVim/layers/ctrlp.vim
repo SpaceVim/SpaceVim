@@ -18,6 +18,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
   call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['wsdjeg/ctrlp-yank', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-ctrlp-message', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -206,7 +207,18 @@ function! s:defind_fuzzy_finder() abort
         \ ]
 
  "@todo add Leader f l for ctrlp location list
- "@todo add Leader f m for ctrlp message
+
+  nnoremap <silent> <Leader>fm
+        \ :<C-u>CtrlPMessage<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.m = ['CtrlPMessage',
+        \ 'fuzzy find and yank message history',
+        \ [
+        \ '[Leader f m] is to fuzzy find and yank message history',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 
   nnoremap <silent> <Leader>fq
         \ :<C-u>CtrlPQuickfix<CR>
@@ -219,6 +231,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
   nnoremap <silent> <Leader>fo  :<C-u>CtrlPBufTag<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['CtrlPBufTag',
