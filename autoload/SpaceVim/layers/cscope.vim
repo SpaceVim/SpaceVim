@@ -26,5 +26,8 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 't'], 'call cscope#find("t", expand("<cword>"))', 'find this text string', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', '='], 'call cscope#find("a", expand("<cword>"))', 'find assignments to this symbol', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'u'], 'call cscope#update_databeses()', 'create cscope index', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'i'], 'call cscope#create_databeses()', 'create cscope DB', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'i'], 'call cscope#create_databeses()', 'create cscope databases', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'l'], 'call cscope#list_databeses()', 'list cscope databases', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#list_databeses()', 'remove current cscope databases', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#list_databeses()', 'remove all cscope databases', 1)
 endfunction
