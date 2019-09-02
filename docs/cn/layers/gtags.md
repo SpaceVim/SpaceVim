@@ -12,12 +12,9 @@ lang: cn
 - [模块简介](#模块简介)
 - [功能特性](#功能特性)
 - [安装及启用模块](#安装及启用模块)
-  - [GNU Global (gtags)](#gnu-global-gtags)
-    - [从源码编译安装](#从源码编译安装)
-      - [安装依赖环境](#安装依赖环境)
-      - [编译安装](#编译安装)
-      - [配置 pygments 和 ctags 环境](#配置-pygments-和-ctags-环境)
+  - [GNU Global](#gnu-global)
   - [启用模块](#启用模块)
+- [模块设置](#模块设置)
 - [使用模块](#使用模块)
   - [语言支持](#语言支持)
     - [内置的语言支持](#内置的语言支持)
@@ -44,7 +41,7 @@ tags 模块提供了项目 tags 管理工具，依赖 SpaceVim 自身的项目�
 
 ## 安装及启用模块
 
-### GNU Global (gtags)
+### GNU Global
 
 首先需要安装 [GNU Global](https://www.gnu.org/software/global/download.html)，可根据当前使用的操作系统，
 使用自带的软件包管理工具安装。
@@ -58,10 +55,6 @@ sudo apt-get install global
 ```sh
 brew install global --with-pygments --with-ctags
 ```
-
-#### 从源码编译安装
-
-##### 安装依赖环境
 
 如果需要启用 global 的所有特性，你需要安装 2 个额外的软件包：pygments 和 ctags。
 这两个可以使用系统自带的包管理器安装：
@@ -78,7 +71,7 @@ sudo apt-get install exuberant-ctags python-pygments
 sudo pacman -S ctags python-pygments
 ```
 
-##### 编译安装
+**编译安装**
 
 下载最新的 tar.gz 文件，执行如下命令：
 
@@ -89,8 +82,6 @@ cd global-6.5.3
 make
 sudo make install
 ```
-
-##### 配置 pygments 和 ctags 环境
 
 To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or
 如果需要启用 pygments 和 ctags，需要复制示例 gtags.conf 至 `/etc/gtags.conf` 或者 `$HOME/.globalrc`。例如：
@@ -114,24 +105,27 @@ echo export GTAGSLABEL=pygments >> .profile
   name = "tags"
 ```
 
+## 模块设置
+
+
+gtags 模块提供了以下模块选项：
+
+- `gtagslabel`: 设置 gtags 命令所使用的后台工具，可以选择 `ctags` 或者 `pygments`，默认是空。
+
+例如，使用 pygments 作为后台：
+
+```toml
+[[layers]]
+  name = "gtags"
+  gtagslabel = "pygments"
+```
+
+
+
 ## 使用模块
 
-在使用 gtags 之前，建议先新建 GTAGS 数据库，可通过如下两种方式新建数据库：
-
-- 在 SpaceVim 内，使用快捷键 `SPC m g c` 来新建 GTAGS 数据库，
-  如果 GUN Global 不能直接支持当前语言，可以选择 ctags 或者 pygments 作为生成数据库的后台工具。
-- 在命令行，可以直接在项目根目录执行 gtags 命令。
-
-```sh
-cd /path/to/project/root
-gtags
-```
-
-对于 gtags 不直接支持的语言，并且未 GTAGSLABEL 环境变量，此时可以使用如下命令以达到同样效果：
-
-```sh
-gtags --gtagslabel=pygments
-```
+在使用 gtags 之前，建议先使用快捷键 `SPC m g c` 新建 GTAGS 数据库，
+这一数据库也会在保存文件时自动更新。
 
 ### 语言支持
 
