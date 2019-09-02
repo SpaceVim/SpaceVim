@@ -22,6 +22,7 @@ function! SpaceVim#layers#gtags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 's'], 'exe "Gtags -s " . expand("<cword>")', 'find cursor symbol', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'g'], 'exe "Gtags -g " . expand("<cword>")', 'find cursor string', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
+  let g:gtags_gtagslabel = s:gtagslabel
   augroup spacevim_layer_tags
     autocmd!
     autocmd BufEnter *
@@ -45,3 +46,19 @@ function! MyTagfuncBack() abort
   endif
 endfunction
 
+
+let s:gtagslabel = ''
+
+function! SpaceVim#layers#gtags#set_variable(var) abort
+
+  let s:gtagslabel = get(a:var,
+        \ 'gtagslabel',
+        \ '')
+endfunction
+
+
+function! SpaceVim#layers#gtags#get_options()
+
+  return ['gtagslabel']
+
+endfunction
