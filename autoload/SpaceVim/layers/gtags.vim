@@ -1,18 +1,18 @@
 "=============================================================================
-" tags.vim --- SpaceVim tags layer
+" tags.vim --- SpaceVim gtags layer
 " Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-function! SpaceVim#layers#tags#plugins() abort
+function! SpaceVim#layers#gtags#plugins() abort
   return [
         \ ['SpaceVim/gtags.vim', {'merged' : 0}],
         \ ]
 endfunction
 
-function! SpaceVim#layers#tags#config() abort
+function! SpaceVim#layers#gtags#config() abort
   let g:_spacevim_mappings_space.m.g = {'name' : '+gtags'}
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'c'], 'GtagsGenerate!', 'create a gtags database', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'u'], 'GtagsGenerate', 'update tag database', 1)
@@ -21,7 +21,7 @@ function! SpaceVim#layers#tags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'r'], 'exe "Gtags -r " . expand("<cword>")', 'find references', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 's'], 'exe "Gtags -s " . expand("<cword>")', 'find cursor symbol', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'g'], 'exe "Gtags -g " . expand("<cword>")', 'find cursor string', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'exe "Gtags -f %', 'list of objects', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   augroup spacevim_layer_tags
     autocmd!
     autocmd BufEnter *
