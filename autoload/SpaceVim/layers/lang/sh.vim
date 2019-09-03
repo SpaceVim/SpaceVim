@@ -9,6 +9,7 @@
 function! SpaceVim#layers#lang#sh#plugins() abort
     let l:plugins = []
     call add(l:plugins, ['chrisbra/vim-zsh', { 'on_ft' : 'zsh' }])
+    call add(l:plugins, ['dag/vim-fish', { 'merged' : 0 }])
     if get(g:, 'spacevim_enable_ycm') == 1
         call add(l:plugins, ['Valodim/vim-zsh-completion', { 'on_ft' : 'zsh' }])
     else
