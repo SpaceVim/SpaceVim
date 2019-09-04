@@ -612,7 +612,9 @@ augroup spacevim_layer_edit
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
-  if has_key(s:ft_head_tp, &ft)
+  if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
+    call SpaceVim#logger#info('adding head for filetype: ' . &ft)
+    call SpaceVim#logger#info('head is: ' . string(s:ft_head_tp[&ft]))
     call setline(1, s:ft_head_tp[&ft])
   endif
 endfunction
