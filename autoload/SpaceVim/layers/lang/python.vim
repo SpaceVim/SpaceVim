@@ -70,7 +70,9 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#layers#edit#add_ft_head_tamplate('python',
         \ ['#!/usr/bin/env python',
         \ '# -*- coding: utf-8 -*-',
-        \ '']
+        \ '',
+        \ ''
+        \ ]
         \ )
   if executable('ipython')
     call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')

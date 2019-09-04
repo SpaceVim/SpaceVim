@@ -608,14 +608,14 @@ endif
 
 augroup spacevim_layer_edit
   au!
-  autocmd BufNewFile * call <SID>add_buffer_head()
+  autocmd FileType * call <SID>add_buffer_head()
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
   if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
-    call SpaceVim#logger#info('adding head for filetype: ' . &ft)
-    call SpaceVim#logger#info('head is: ' . string(s:ft_head_tp[&ft]))
-    call setline(1, s:ft_head_tp[&ft])
+    let head = s:ft_head_tp[&ft]
+    call setline(1, head)
+    call cursor(len(head), 0)
   endif
 endfunction
 

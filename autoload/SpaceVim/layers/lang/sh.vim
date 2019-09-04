@@ -25,14 +25,18 @@ function! SpaceVim#layers#lang#sh#config() abort
 
   call SpaceVim#layers#edit#add_ft_head_tamplate('sh',
         \ ['#!/usr/bin/env bash',
-        \ '']
+        \ '',
+        \ ''
+        \ ]
         \ )
   call SpaceVim#layers#edit#add_ft_head_tamplate('zsh', [
         \ '#!/usr/bin/env zsh',
+        \ '',
         \ ''
         \ ])
   call SpaceVim#layers#edit#add_ft_head_tamplate('fish', [
         \ '#!/usr/bin/env fish',
+        \ '',
         \ ''
         \ ])
   augroup spacevim_layer_lang_sh
