@@ -631,7 +631,7 @@ function! s:parse(line) abort
     else
       call add(line, a:line[i:m])
       try
-        let rst = eval(rst)
+        let rst = eval(rst[1:-2])
       catch
         let rst = ''
       endtry
