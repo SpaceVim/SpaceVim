@@ -614,9 +614,13 @@ let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
   if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
     let head = s:ft_head_tp[&ft]
-    call setline(1, head)
+    call setline(1, map(head, 's:parse(v:val)'))
     call cursor(len(head), 0)
   endif
+endfunction
+
+function! s:parse(line) abort
+  return a:line
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
