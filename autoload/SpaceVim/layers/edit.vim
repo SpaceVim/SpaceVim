@@ -422,35 +422,35 @@ function! s:delete_extra_space() abort
 endfunction
 
 function! s:set_justification_to(align) abort
-    let l:startlinenr = line("'{")
-    let l:endlinenr = line("'}")
-    if getline(l:startlinenr) ==# ''
-        let l:startlinenr += 1
+  let l:startlinenr = line("'{")
+  let l:endlinenr = line("'}")
+  if getline(l:startlinenr) ==# ''
+    let l:startlinenr += 1
+  endif
+  if getline(l:endlinenr) ==# ''
+    let l:endlinenr -= 1
+  endif
+  let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
+  let l:maxlength = 0
+  for l:line in l:lineList
+    let l:length = strdisplaywidth(l:line)
+    if l:length > l:maxlength
+      let l:maxlength = l:length
     endif
-    if getline(l:endlinenr) ==# ''
-        let l:endlinenr -= 1
-    endif
-    let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
-    let l:maxlength = 0
-    for l:line in l:lineList
-        let l:length = strdisplaywidth(l:line)
-        if l:length > l:maxlength
-            let l:maxlength = l:length
-        endif
-    endfor
+  endfor
 
-    if a:align ==# 'left'
-        execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
-    elseif a:align ==# 'center'
-        execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
-    elseif a:align ==# 'right'
-        execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
-    endif
+  if a:align ==# 'left'
+    execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
+  elseif a:align ==# 'center'
+    execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
+  elseif a:align ==# 'right'
+    execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
+  endif
 
-    unlet l:startlinenr
-    unlet l:endlinenr
-    unlet l:lineList
-    unlet l:maxlength
+  unlet l:startlinenr
+  unlet l:endlinenr
+  unlet l:lineList
+  unlet l:maxlength
 endfunction
 
 let s:local_lorem_ipsum = [
@@ -620,7 +620,26 @@ function! s:add_buffer_head() abort
 endfunction
 
 function! s:parse(line) abort
-  return a:line
+  let expr = '`[^`*]`'
+  let i = 0
+  let line = []
+  while i < strlen(a:line) || i != -1
+    let [rst, m, n] = matchstrpos(a:line, expr, i)
+    if m == -1
+      call add(line, a:line[i:-1])
+      break
+    else
+      call add(line, a:line[i:m])
+      try
+        let rst = eval(rst)
+      catch
+        let rst = ''
+      endtry
+      call add(line, rst)
+    endif
+    let i = n
+  endwhile
+  return join(line, '')
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
