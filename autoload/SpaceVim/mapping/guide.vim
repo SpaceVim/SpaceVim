@@ -599,6 +599,9 @@ function! s:winclose() abort " {{{
     let s:gwin = -1
     noautocmd execute s:winnr.'wincmd w'
     call winrestview(s:winv)
+    if exists('*nvim_open_win')
+      doautocmd WinEnter
+    endif
   endif
   call s:remove_cursor_highlight()
 endfunction " }}}
