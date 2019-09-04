@@ -105,6 +105,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#hy](lang/hy/)                                   | 这一模块为 hy 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
 | [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                      |
+| [lang#j](lang/j/)                                     | 这一模块为 j 开发提供支持，包括交互式编程和语法高亮。                                                                               |
 | [lang#java](lang/java/)                               | 这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#javascript](lang/javascript/)                   | 这一模块为 JavaScript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                      |
 | [lang#julia](lang/julia/)                             | 这一模块为 Julia 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                           |
