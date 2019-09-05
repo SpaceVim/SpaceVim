@@ -67,13 +67,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ })
   call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
-  call SpaceVim#layers#edit#add_ft_head_tamplate('python',
-        \ ['#!/usr/bin/env python',
-        \ '# -*- coding: utf-8 -*-',
-        \ '',
-        \ ''
-        \ ]
-        \ )
+  call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
     call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
   elseif executable('python')
@@ -171,9 +165,18 @@ function! s:go_to_def() abort
 endfunction
 
   let s:format_on_save = 0
+  let s:python_file_head = [
+        \ '#!/usr/bin/env python',
+        \ '# -*- coding: utf-8 -*-',
+        \ '',
+        \ ''
+        \ ]
 function! SpaceVim#layers#lang#python#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
         \ 'format-on-save',
         \ 0)
+  let s:python_file_head = get(a:var,
+        \ 'python-file-head',
+        \ s:python_file_head)
 endfunction

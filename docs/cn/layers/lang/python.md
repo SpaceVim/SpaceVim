@@ -13,6 +13,7 @@ lang: cn
 - [依赖安装及启用模块](#依赖安装及启用模块)
   - [启用模块](#启用模块)
   - [语言工具](#语言工具)
+- [模块设置](#模块设置)
 - [快捷键](#快捷键)
   - [跳至定义处](#跳至定义处)
   - [代码生成](#代码生成)
@@ -87,7 +88,21 @@ pip install --user isort
 pip install --user coverage
 ```
 
+## 模块设置
 
+默认情况下，当新建一个空白 python 文件时，会自动添加文件头，如果需要修改默认的文件头样式，
+可以通过设置 `python-file-head` 选项：
+
+```toml
+[[layers]]
+  name = "lang#python"
+  python-file-head = [
+      '#!/usr/bin/env python',
+      '# -*- coding: utf-8 -*-',
+      '',
+      ''
+  ]
+```
 
 ## 快捷键
 
