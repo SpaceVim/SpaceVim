@@ -11,6 +11,7 @@ scriptencoding utf-8
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -422,35 +423,35 @@ function! s:delete_extra_space() abort
 endfunction
 
 function! s:set_justification_to(align) abort
-    let l:startlinenr = line("'{")
-    let l:endlinenr = line("'}")
-    if getline(l:startlinenr) ==# ''
-        let l:startlinenr += 1
+  let l:startlinenr = line("'{")
+  let l:endlinenr = line("'}")
+  if getline(l:startlinenr) ==# ''
+    let l:startlinenr += 1
+  endif
+  if getline(l:endlinenr) ==# ''
+    let l:endlinenr -= 1
+  endif
+  let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
+  let l:maxlength = 0
+  for l:line in l:lineList
+    let l:length = strdisplaywidth(l:line)
+    if l:length > l:maxlength
+      let l:maxlength = l:length
     endif
-    if getline(l:endlinenr) ==# ''
-        let l:endlinenr -= 1
-    endif
-    let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
-    let l:maxlength = 0
-    for l:line in l:lineList
-        let l:length = strdisplaywidth(l:line)
-        if l:length > l:maxlength
-            let l:maxlength = l:length
-        endif
-    endfor
+  endfor
 
-    if a:align ==# 'left'
-        execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
-    elseif a:align ==# 'center'
-        execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
-    elseif a:align ==# 'right'
-        execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
-    endif
+  if a:align ==# 'left'
+    execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
+  elseif a:align ==# 'center'
+    execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
+  elseif a:align ==# 'right'
+    execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
+  endif
 
-    unlet l:startlinenr
-    unlet l:endlinenr
-    unlet l:lineList
-    unlet l:maxlength
+  unlet l:startlinenr
+  unlet l:endlinenr
+  unlet l:lineList
+  unlet l:maxlength
 endfunction
 
 let s:local_lorem_ipsum = [
@@ -614,9 +615,13 @@ let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
   if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
     let head = s:ft_head_tp[&ft]
-    call setline(1, head)
+    call setline(1, map(head, 's:parse(v:val)'))
     call cursor(len(head), 0)
   endif
+endfunction
+
+function! s:parse(line) abort
+  return s:VIM.parse_string(a:line)
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort

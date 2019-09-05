@@ -23,12 +23,7 @@ function! SpaceVim#layers#lang#sh#config() abort
   let g:zsh_fold_enable = 1
   " }}}
 
-  call SpaceVim#layers#edit#add_ft_head_tamplate('sh',
-        \ ['#!/usr/bin/env bash',
-        \ '',
-        \ ''
-        \ ]
-        \ )
+  call SpaceVim#layers#edit#add_ft_head_tamplate('sh', s:bash_file_head)
   call SpaceVim#layers#edit#add_ft_head_tamplate('zsh', [
         \ '#!/usr/bin/env zsh',
         \ '',
@@ -63,4 +58,14 @@ function! s:go_to_def() abort
   if SpaceVim#layers#lsp#check_filetype(&filetype)
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+
+let s:bash_file_head = ['#!/usr/bin/env bash',
+      \ '',
+      \ ''
+      \ ]
+
+function! SpaceVim#layers#lang#sh#set_variable(var) abort
+  let s:bash_file_head = get(a:var, 'bash-file-head', s:bash_file_head)
 endfunction

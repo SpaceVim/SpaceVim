@@ -46,6 +46,29 @@ function! s:self.jumps() abort
   return result
 endfunction
 
+function! s:self.parse_string(line) abort
+  let expr = '`[^`]*`'
+  let i = 0
+  let line = []
+  while i < strlen(a:line) || i != -1
+    let [rst, m, n] = matchstrpos(a:line, expr, i)
+    if m == -1
+      call add(line, a:line[i:-1])
+      break
+    else
+      call add(line, a:line[i:m-1])
+      try
+        let rst = eval(rst[1:-2])
+      catch
+        let rst = ''
+      endtry
+      call add(line, rst)
+    endif
+    let i = n
+  endwhile
+  return join(line, '')
+endfunction
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction
