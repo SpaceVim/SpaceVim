@@ -47,7 +47,7 @@ function! s:self.jumps() abort
 endfunction
 
 function! s:self.parse_string(line) abort
-  let expr = '`[^`*]`'
+  let expr = '`[^`]*`'
   let i = 0
   let line = []
   while i < strlen(a:line) || i != -1
@@ -56,7 +56,7 @@ function! s:self.parse_string(line) abort
       call add(line, a:line[i:-1])
       break
     else
-      call add(line, a:line[i:m])
+      call add(line, a:line[i:m-1])
       try
         let rst = eval(rst[1:-2])
       catch
