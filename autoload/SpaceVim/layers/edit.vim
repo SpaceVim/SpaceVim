@@ -11,6 +11,7 @@ scriptencoding utf-8
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -620,26 +621,7 @@ function! s:add_buffer_head() abort
 endfunction
 
 function! s:parse(line) abort
-  let expr = '`[^`*]`'
-  let i = 0
-  let line = []
-  while i < strlen(a:line) || i != -1
-    let [rst, m, n] = matchstrpos(a:line, expr, i)
-    if m == -1
-      call add(line, a:line[i:-1])
-      break
-    else
-      call add(line, a:line[i:m])
-      try
-        let rst = eval(rst[1:-2])
-      catch
-        let rst = ''
-      endtry
-      call add(line, rst)
-    endif
-    let i = n
-  endwhile
-  return join(line, '')
+  return s:VIM.parse_string(a:line)
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
