@@ -44,7 +44,7 @@ function! SpaceVim#mapping#space#init() abort
   for i in range(1, 9)
     exe "call SpaceVim#mapping#space#def('nnoremap', ["
           \ . i . "], 'call SpaceVim#layers#core#statusline#jump("
-          \ . i . ")', 'window " . i . "', 1)"
+          \ . i . ")', 'window-" . i . "', 1)"
   endfor
   let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
   nnoremap <silent> [SPC]w<tab> :wincmd w<cr>
@@ -208,7 +208,7 @@ function! SpaceVim#mapping#space#init() abort
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext',
-        \ ['other tabs',
+        \ ['other-tabs',
         \ [
         \ '[SPC w o] is to switch to next tabs',
         \ '',
@@ -320,7 +320,7 @@ function! SpaceVim#mapping#space#init() abort
         \ , 1)
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
-  let g:_spacevim_mappings_space.B = {'name' : '+Global-buffers'}
+  let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
   if g:spacevim_relativenumber
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle line number']
