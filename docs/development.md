@@ -249,6 +249,17 @@ function! SpaceVim#layers#foo#config() abort
   let g:foo_option3 = get(g:, 'foo_option3', 3)
   " ...
 endfunction
+
+" add layer options:
+let s:layer_option = 'default var'
+function! SpaceVim#layers#foo#set_variable(var) abort
+  let s:layer_option = get(a:var, 'layer_option', s:layer_option)
+endfunction
+
+" completion function for layer options:
+function! SpaceVim#layers#foo#get_options() abort
+    return ['layer_option']
+endfunction
 ```
 
 4. Add layer document `docs/layers/foo.md` for `foo` layer.
