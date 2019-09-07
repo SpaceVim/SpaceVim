@@ -81,7 +81,7 @@ function! SpaceVim#layers#git#config() abort
   augroup END
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'M'], 'call call('
         \ . string(function('s:display_last_commit_of_current_line')) . ', [])',
-        \ 'display the last commit message of the current line', 1)
+        \ 'commit-message-of-current-line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'View git log of current file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'View git log of current repo', 1)
   let g:_spacevim_mappings_space.g.h = {'name' : '+Hunks'}
