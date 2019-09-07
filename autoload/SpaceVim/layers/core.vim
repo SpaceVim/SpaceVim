@@ -141,7 +141,7 @@ function! SpaceVim#layers#core#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
-        \ ['buffer transient state',
+        \ ['buffer-transient-state',
         \ [
         \ '[SPC b .] is to open the buffer transient state',
         \ '',
@@ -154,11 +154,11 @@ function! SpaceVim#layers#core#config() abort
         \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
         \ 'kill the buffer by selecting', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', '<C-d>'], 'call SpaceVim#mapping#clearBuffers()', 'kill-other-buffers', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'c'], 'call SpaceVim#mapping#clear_saved_buffers()', 'clear all saved buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'c'], 'call SpaceVim#mapping#clear_saved_buffers()', 'clear-all-saved-buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'e'], 'call call('
         \ . string(s:_function('s:safe_erase_buffer')) . ', [])',
         \ 'safe-erase-buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'h'], 'Startify', 'home', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'h'], 'Startify', 'open-welcome-screen', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'm'], 'call call('
         \ . string(s:_function('s:open_message_buffer')) . ', [])',
         \ 'open-message-buffer', 1)
@@ -193,10 +193,10 @@ function! SpaceVim#layers#core#config() abort
 
   " file tree key bindings
   if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'open-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'find-file-in-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'open-filetree-in-buffer-dir', 1)
   elseif g:spacevim_filemanager ==# 'nerdtree'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle_file_tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
