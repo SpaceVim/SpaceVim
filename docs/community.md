@@ -35,7 +35,8 @@ They can send email to the mailing list to participate in the discussion.
 spacevim@googlegroups.com
 ```
 
-To subscribe, send an empty message to:
+Please note that to post on these lists, you must be a member,
+To join this group send an empty message to:
 
 ```
 spacevim+subscribe@googlegroups.com
