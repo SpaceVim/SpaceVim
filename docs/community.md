@@ -38,7 +38,7 @@ spacevim@googlegroups.com
 To subscribe, send an empty message to:
 
 ```
-spacevim+unsubscribe@googlegroups.com
+spacevim+subscribe@googlegroups.com
 ```
 
 To unsubscribe, send an empty message to:

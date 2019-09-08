@@ -42,13 +42,13 @@ spacevim-cn@googlegroups.com
 如果需要订阅该邮件列表，可以发送一条空的邮件至：
 
 ```
-SpaceVim-cn+unsubscribe@googlegroups.com
+spacevim-cn+subscribe@googlegroups.com
 ```
 
 如果需要取消订阅该邮件列表，则可以发送一条空邮件至：
 
 ```
-SpaceVim-cn+unsubscribe@googlegroups.com
+spacevim-cn+unsubscribe@googlegroups.com
 ```
 
 在线浏览所有历史帖子：
