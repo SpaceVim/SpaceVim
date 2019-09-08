@@ -18,30 +18,44 @@ lang: cn
 
 <!-- vim-markdown-toc -->
 
-### 资讯订阅
+## 资讯订阅
 
 关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
 
 - <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
 
-### 问题及需求提交
+## 问题及需求提交
 
 在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
 - [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
 - [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
 
-### 邮件列表
+## 邮件列表
 
-SpaceVim 开通了谷歌中文邮件组，可以发送邮件至邮件列表参与讨论：
-
-- <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim-cn)
+习惯使用邮件的用户，也可以通过中文邮件组进行交流，可以发送邮件至邮件列表参与讨论：
 
 ```
 spacevim-cn@googlegroups.com
 ```
 
-### 聊天
+如果需要订阅该邮件列表，可以发送一条空的邮件至：
+
+```
+spacevim-cn+subscribe@googlegroups.com
+```
+
+如果需要取消订阅该邮件列表，则可以发送一条空邮件至：
+
+```
+spacevim-cn+unsubscribe@googlegroups.com
+```
+
+在线浏览所有历史帖子：
+
+- <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim-cn)
+
+## 聊天
 
 以下几个频道作为 SpaceVim 中文用户交流平台，之间消息实现了互通，请选择任意合适的频道参与交流。
 也可以在网页右下角点击加入聊天，进群后，请不要发布无意义的内容，在你提问前，
@@ -59,6 +73,6 @@ spacevim-cn@googlegroups.com
 
 - <i class="fab fa-qq"></i> [`718087282` SpaceVim 用户](https://jq.qq.com/?_wv=1027&k=5Z6H2so)
 
-### 其他
+## 其他
 
 - <i class="fab fa-zhihu"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
