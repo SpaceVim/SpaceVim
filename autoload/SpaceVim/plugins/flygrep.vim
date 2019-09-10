@@ -51,6 +51,9 @@ function! s:update_history() abort
     call remove(s:grep_history, index(s:grep_history, s:grep_expr))
   endif
   call add(s:grep_history, s:grep_expr)
+  if !isdirectory(expand('~/.cache/SpaceVim'))
+      call mkdir(expand('~/.cache/SpaceVim'))
+  endif
   call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
 endfunction
 let s:grep_history = s:read_histroy()
