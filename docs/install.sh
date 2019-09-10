@@ -337,8 +337,13 @@ welcome () {
 
 # download_font {{{
 download_font () {
-  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
+  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/${1// /%20}"
   path="$HOME/.local/share/fonts/$1"
+  # Clean up after https://github.com/SpaceVim/SpaceVim/issues/2532
+  if [[ -f "$path" && ! -s "$path" ]]
+  then
+    rm "$path"
+  fi
   if [[ -f "$path" ]]
   then
     success "Downloaded $1"
