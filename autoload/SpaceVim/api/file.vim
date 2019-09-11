@@ -246,6 +246,12 @@ endfunction
 
 let s:file['path_to_fname'] = function('s:path_to_fname')
 
+function! s:fname_to_path(fname) abort
+  return s:unify_path(substitute(a:fname, '_', '/', 'g'))
+endfunction
+
+let s:file['fname_to_path'] = function('s:fname_to_path')
+
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)
 endfunction
