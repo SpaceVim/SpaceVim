@@ -85,9 +85,9 @@ function! SpaceVim#layers#git#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'git-log-of-current-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'git-log-of-current-repo', 1)
   let g:_spacevim_mappings_space.g.h = {'name' : '+Hunks'}
-  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'a'], '<Plug>GitGutterStageHunk', 'stage-current-hunk', 0)
-  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>GitGutterUndoHunk', 'undo-cursor-hunk', 0)
-  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>GitGutterPreviewHunk', 'preview-cursor-hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'a'], '<Plug>(GitGutterStageHunk)', 'stage-current-hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>(GitGutterUndoHunk)', 'undo-cursor-hunk', 0)
+  call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>(GitGutterPreviewHunk)', 'preview-cursor-hunk', 0)
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort
