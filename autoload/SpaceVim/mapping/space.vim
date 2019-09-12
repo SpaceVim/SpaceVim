@@ -491,32 +491,27 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
         \ 'Background search cursor words in project with pt', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'G'], 'call SpaceVim#plugins#flygrep#open({})',
-        \ 'grep on the fly', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
-        \ 'grep on the fly', 1)
+        \ 'grep-on-the-fly', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
-        \ 'clear search highlight', 1)
+        \ 'clear-search-highlight', 1)
 
   "Symbol
   nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>
   xnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start(1)<cr>
   call SpaceVim#mapping#space#def('nmap', ['s', 'e'], '<plug>SpaceVim-plugin-iedit',
-        \ 'start iedit mode', 0, 1)
+        \ 'start-iedit-mode', 0, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'H'], 'call SpaceVim#plugins#highlight#start(1)',
-        \ 'highlight all symbols', 1)
+        \ 'highlight-all-symbols', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start(0)',
-        \ 'highlight current symbols', 1)
+        \ 'highlight-current-symbols', 1)
   " Getting help
-  let g:_spacevim_mappings_space.h.d = {'name' : '+help-describe'}
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'b'],
-        \ 'call SpaceVim#plugins#help#describe_bindings()',
-        \ 'describe key bindings', 1)
+  let g:_spacevim_mappings_space.h.d = {'name' : '+help describe'}
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
         \ 'call SpaceVim#plugins#help#describe_key()',
-        \ 'describe key bindings', 1)
-  call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'Open todo manager', 1)
+        \ 'describe-key-bindings', 1)
+  call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
