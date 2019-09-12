@@ -10,6 +10,16 @@ _checkdir () {
     fi
 }
 
+_default_readme () {
+    cat <<EOT > README.md
+# $1
+> $2
+
+This plugin is automatically detach from [SpaceVim](https://github.com/SpaceVim/SpaceVim/). you can use it without SpaceVim.
+EOT
+} 
+
+
 main () {
     case "$1" in
         flygrep)
@@ -86,7 +96,29 @@ main () {
             _detect autoload/SpaceVim/api/vim/highlight.vim
             _detect autoload/SpaceVim/api/data/string.vim
             _detect autoload/SpaceVim/plugins/iedit.vim
+            _checkdir autoload/plugin
+            cat <<EOT > autoload/plugin/iedit.vim
+"=============================================================================
+" iedit.vim --- multiple cursor support for neovim and vim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://github.com/wsdjeg/iedit.vim
+" License: MIT license
+"=============================================================================
+
+""
+" @section Introduction, intro
+" @stylized iedit.vim
+" @library
+" @order intro version dicts functions exceptions layers api faq
+" multiple cursor in vim, written in pure vim script for MacVim, gvim and vim version
+" 8.0+.
+"
+
+command! -nargs=0 Iedit call SpaceVim#plugins#iedit#start()
+EOT
             _detect LICENSE
+            _default_readme "iedit.vim" "multiple cussor support for Vim/Neovim"
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
