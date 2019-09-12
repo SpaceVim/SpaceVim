@@ -75,6 +75,25 @@ main () {
             rm -rf detach/$1
             exit 0
             ;;
+        iedit)
+            git clone https://github.com/wsdjeg/iedit.vim.git detach/$1
+            cd detach/$1
+            _checkdir autoload/SpaceVim/api/data
+            _checkdir autoload/SpaceVim/plugins
+            _detect autoload/SpaceVim/api.vim
+            _detect autoload/SpaceVim/api/data/string.vim
+            _detect autoload/SpaceVim/plugins/iedit.vim
+            _detect LICENSE
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update"
+            git remote add wsdjeg_vim_todo https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/iedit.vim.git
+            git push wsdjeg_vim_todo master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         vim-todo)
             git clone https://github.com/wsdjeg/vim-todo.git detach/$1
             cd detach/$1
