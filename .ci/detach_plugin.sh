@@ -78,9 +78,12 @@ main () {
         iedit)
             git clone https://github.com/wsdjeg/iedit.vim.git detach/$1
             cd detach/$1
+            _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/plugins
             _detect autoload/SpaceVim/api.vim
+            _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect autoload/SpaceVim/api/vim/highlight.vim
             _detect autoload/SpaceVim/api/data/string.vim
             _detect autoload/SpaceVim/plugins/iedit.vim
             _detect LICENSE
