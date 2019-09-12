@@ -221,6 +221,11 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = ''
     endfor
     call s:replace_symbol()
+  elseif a:char == 126 " ~
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
+    endfor
+    call s:replace_symbol()
   elseif a:char == 115 " s
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
