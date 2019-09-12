@@ -52,7 +52,7 @@ function! SpaceVim#layers#ui#config() abort
 
   if !empty(g:spacevim_windows_smartclose)
     call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
-          \ 'Smart close windows',
+          \ 'smart-close-windows',
           \ 'call SpaceVim#mapping#SmartClose()')
   endif
   " Ui toggles
@@ -66,29 +66,29 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_conceallevel')) . ', [])',
         \ 'toggle conceallevel', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
-        \ 'Open tabs manager', 1)
+        \ 'open-tabs-manager', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
         \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
         \ 'fill-column-indicator', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'call call('
         \ . string(s:_function('s:toggle_cursorline')) . ', [])',
-        \ ['toggle highlight of the current line',
+        \ ['toggle-highlight-current-line',
         \ [
         \ 'SPC t h h is to toggle the highlighting of cursorline'
         \ ]
         \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
         \ . string(s:_function('s:toggle_indentline')) . ', [])',
-        \ ['toggle highlight indentation levels',
+        \ ['toggle-highlight-indentation-levels',
         \ [
         \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
         \ ]
         \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'c'], 'set cursorcolumn!',
-        \ 'toggle highlight indentation current column', 1)
+        \ 'toggle-highlight-current-column', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 's'], 'call call('
         \ . string(s:_function('s:toggle_syntax_hi')) . ', [])',
-        \ 'toggle syntax highlighting', 1)
+        \ 'toggle-syntax-highlighting', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
         \ 'fullscreen-frame', 0)
@@ -106,14 +106,14 @@ function! SpaceVim#layers#ui#config() abort
         \ 'display ~ in the fringe on empty lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
         \ . string(s:_function('s:toggle_spell_check')) . ', [])',
-        \ 'toggle spell checker', 1)
+        \ 'toggle-spell-checker', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
-        \ 'toggle hidden listchars', 1)
+        \ 'toggle-hidden-listchars', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
-        \ 'toggle wrap line', 1)
+        \ 'toggle-wrap-line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
-        \ 'toggle highlight tail spaces', 1)
+        \ 'toggle-highlight-tail-spaces', 1)
 
   " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
   " the directory that has gvim.exe

@@ -125,9 +125,9 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ ]
           \ ]
     nnoremap <silent> [Window]c
-          \ :<C-u>call SpaceVim#mapping#clearBuffers()<CR>
+          \ :<C-u>call SpaceVim#mapping#clear_buffers()<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clearBuffers()',
+    let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clear_buffers()',
           \ 'Clear all the buffers',
           \ [
           \ '[WIN c] is to clear all the buffers',

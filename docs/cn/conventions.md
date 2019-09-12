@@ -1,10 +1,10 @@
 ---
-title: "约定"
+title: "基本约定"
 description: "描述贡献代码所需遵循的约定俗成的规范，包括 Vim 脚本的代码规范以及 MarkDown 文件的代码规范。"
 lang: cn
 ---
 
-# Conventions
+# 基本约定
 
 <!-- vim-markdown-toc GFM -->
 
@@ -89,7 +89,7 @@ Vim 具有高度可定制性。用户可以更改很多的默认设置，包括�
 这意味着 `g` 标志取决于上层中 gdefault 的设置。如果你用了 `:substitute` 你必须要保存 gdefault,
 把它设置为 0 或 1，预先生成替换并且在操作完成后还原它。
 
-有很多内置的函数可以代替Vim 命令在影响更小的情况下完成同样的事情。
+有很多内置的函数可以代替 Vim 命令在影响更小的情况下完成同样的事情。
 查看 `:help functions` 查看内置的函数表。
 
 #### 脆弱命令
@@ -268,35 +268,30 @@ autocommand BufEnter <buffer>
 
 #### 命名
 
-- 保持简单易于理解
+在 SpaceVim 中，函数、变量以及各自提示的命名应当保持简单易于理解，应遵循以下基本命名规范：
 
-- 总的来说，使用
-    - 像这样的插件名 `plugin-names-like-this`
-    - 像这样的函数名 `FunctionNamesLikeThis`
-    - 像这样的命令名 `CommandNamesLikeThis`
-    - 像这样的参数组 `augroup_names_like_this`
-    - 像这样的变量名 `variable_names_like_this`
-    - 像这样的提示 `hints-like-this`
-
-- 不要编写(create)全局函数，用自动运行函数(autoloaded functions)来替代全局函数。
+- 像这样的函数名 `FunctionNamesLikeThis`
+- 像这样的命令名 `CommandNamesLikeThis`
+- 像这样的参数组 `augroup_names_like_this`
+- 像这样的变量名 `variable_names_like_this`
+- 像这样的提示 `hints-like-this`
+- 全局及模块选项 `option_name`
+- 不要定义全局函数，而使用自动运行函数来替代全局函数。
 - 通用命令优先于一般的前缀
-- 参数组(augroup)名字像变量一样命名。(Augroup names count as variables for naming purposes.)
-- 所有的变量据需要加上它们的范围前缀。
-    - 全局变量的前缀为`g:`
-    - 本地脚本变量的前缀为`s:`
-    - 函数的参数前缀为`a:`
-    - 本地函数的变量前缀为`l:`
-    - Vim 预定义(Vim-predefinded)变量前缀为`v:`
-    - 本地缓冲区(Buffer-local)变量的前缀为`b:`
-    - `g:`,`s:`,和`a:`前缀必须使用
-    - `b:`当你想要改变本地缓冲区(buffer-local)的变量的语义时前缀为`b:`
-    - `l:`and`v:`should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
-    - 自动运行函数(autoloaded functions)可以没有范围前缀。
+- 自动命令组名像变量一样命名。
+- 全局变量的前缀为`g:`
+- 本地脚本变量的前缀为`s:`
+- 函数的参数前缀为`a:`
+- 本地函数的变量前缀为`l:`
+- Vim 预定义变量前缀为`v:`
+- 本地缓冲区变量的前缀为`b:`
+- `g:`,`s:`,和`a:`前缀必须使用
+- `b:`当你想要改变本地缓冲区的变量的语义时前缀为`b:`
 
 ## 按键表示
 
 - 使用首字母大写的单词和尖括号来表示按键：`<Down>`, `<Up>`。
-- 使用大写字母来表示custom leader：`SPC`, `WIN`, `UNITE`, `DENITE`。
+- 使用大写字母来表示 custom leader：`SPC`, `WIN`, `UNITE`, `DENITE`。
 - 使用空格来分隔按键序列：`SPC t w`, `<Leader> f o`.
 - 使用`/` 来分隔多个可选的按键序列：`<Tab>` / `<C-n>`.
 - 在文档中使用`Ctrl-e`而不是`<C-e>`。
@@ -310,4 +305,3 @@ autocommand BufEnter <buffer>
 ## Markdown 代码规范
 
 - [Google's Markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)
-

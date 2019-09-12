@@ -28,7 +28,7 @@ function! SpaceVim#layers#denite#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
-        \ ['show mappings',
+        \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
         \ '',
