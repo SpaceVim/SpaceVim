@@ -426,6 +426,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b#%{SpaceVim#layers#core#statusline#denite_status("sources")} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
           \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:rsep
           \ . '%#SpaceVim_statusline_c# %{SpaceVim#layers#core#statusline#denite_status("path") . SpaceVim#layers#core#statusline#denite_status("linenr")}'
+  elseif &filetype ==# 'denite-filter'
+    return '%#SpaceVim_statusline_a_bold# Filter %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'unite'
     return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' %{get(unite#get_context(), "buffer_name", "")} '
@@ -746,7 +748,7 @@ function! SpaceVim#layers#core#statusline#denite_mode() abort
   endif
 
   if denite_ver == 3
-    let dmode = split(denite#get_status("mode"), ' ')
+    let dmode = ['Denite']
   else
     let dmode = split(denite#get_status_mode(), ' ')
   endif
