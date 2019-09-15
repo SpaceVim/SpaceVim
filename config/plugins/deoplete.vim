@@ -101,6 +101,9 @@ call deoplete#custom#source('racer', 'mark', '')
 " vim
 call deoplete#custom#option('ignore_sources', {'vim': ['tag']})
 
+" denite
+call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer']})
+
 " clojure
 call deoplete#custom#option('keyword_patterns', {
       \ 'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*',
