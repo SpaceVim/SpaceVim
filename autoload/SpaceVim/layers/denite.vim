@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#denite#plugins() abort
   let plugins = [
-        \ ['Shougo/denite.nvim',{ 'merged' : 0, 'loadconf' : 1}],
+        \ ['SpaceVim/denite.nvim',{ 'merged' : 0, 'loadconf' : 1}],
         \ ['pocari/vim-denite-emoji', {'merged' : 0}],
         \ ]
 

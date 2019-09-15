@@ -70,7 +70,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
-    call add(plugins, ['Shougo/deoplete.nvim', {
+    call add(plugins, ['SpaceVim/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
