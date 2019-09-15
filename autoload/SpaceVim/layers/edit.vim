@@ -134,8 +134,12 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
 
   " word
-  let g:_spacevim_mappings_space.x.w = {'name' : '+word'}
+  let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], "normal! " . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
+  let g:_spacevim_mappings_space.x.s = {'name' : '+String'}
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
+        \ . string(s:_function('s:join_string_with')) . ', [])',
+        \ 'join-string-with', 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -591,6 +595,47 @@ function! s:align_at_regular_expression() abort
     echo 'empty input, canceled!'
   endif
 endfunction
+
+
+function! s:join_string_with() abort
+  if s:is_string(line('.'), col('.'))
+    let c = col('.')
+    let a = 0
+    let b = 0
+    let _c = c
+    while c > 0
+      if s:is_string(line('.'), c)
+        let c -= 1
+      else
+        let a = c
+        break
+      endif
+    endwhile
+    let c = _c
+    while c > 0
+      if s:is_string(line('.'), c)
+        let c += 1
+      else
+        let b = c
+        break
+      endif
+    endwhile
+    let l:save_register_m = @m
+    let line = getline('.')[:a] . join(split(getline('.')[a+1 : b]), '-') .  getline('.')[b :]
+    call setline('.', line)
+    let @m = l:save_register_m
+  endif
+endfunction
+
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ }
+
+function! s:is_string(l, c) abort
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
+endfunction
+
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
