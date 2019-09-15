@@ -130,6 +130,7 @@ function! s:on_exit(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   endif
   call s:update_statusline()
+  let s:job_id = 0
 endfunction
 
 function! s:update_statusline() abort
