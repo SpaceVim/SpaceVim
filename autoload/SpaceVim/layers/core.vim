@@ -256,21 +256,21 @@ function! SpaceVim#layers#core#config() abort
         \ ]
         \ , 1)
   let g:vimproc#download_windows_dll = 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find project root', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill all project buffers', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'List all projects', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill-all-project-buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'list-all-projects', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', '/'], 'Grepper', 'fuzzy search for text in current project', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'q'], 'qa', 'prompt-kill-vim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'Q'], 'qa!', 'kill-vim', 1)
   if has('nvim') && s:SYS.isWindows
     call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], 'call call('
           \ . string(s:_function('s:restart_neovim_qt')) . ', [])',
-          \ 'restrat neovim-qt', 1)
+          \ 'restrat-neovim-qt', 1)
   else
     call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill current tab', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill-current-tab', 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
 
   let g:_spacevim_mappings_space.c = {'name' : '+Comments'}

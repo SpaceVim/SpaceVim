@@ -56,7 +56,7 @@ function! SpaceVim#mapping#space#init() abort
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '.'], 'call call('
         \ . string(s:_function('s:windows_transient_state')) . ', [])',
-        \ ['buffer transient state',
+        \ ['buffer-transient-state',
         \ [
         \ '[SPC w .] is to open the buffer transient state',
         \ '',
@@ -76,7 +76,7 @@ function! SpaceVim#mapping#space#init() abort
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
-        \ ['delete window (other windows)',
+        \ ['delete-window-(other-windows)',
         \ [
         \ '[SPC w D] is to select a windows to close',
         \ '',
@@ -86,7 +86,7 @@ function! SpaceVim#mapping#space#init() abort
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'tabnew',
-        \ ['create new tab',
+        \ ['create-new-tab',
         \ [
         \ '[SPC w f] is to create new tab',
         \ '',
@@ -98,7 +98,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
         \ . string(function('s:create_new_named_tab'))
         \ . ', [])',
-        \ ['create new named tab',
+        \ ['create-new-named-tab',
         \ [
         \ '[SPC w F] is to create new named tab',
         \ '',

@@ -147,60 +147,60 @@ function! SpaceVim#layers#edit#config() abort
   let g:_spacevim_mappings_space.i.U = {'name' : '+UUID'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], 'call call('
         \ . string(s:_function('s:insert_simple_password')) . ', [])',
-        \ 'insert simple password', 1)
+        \ 'insert-simple-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 2], 'call call('
         \ . string(s:_function('s:insert_stronger_password')) . ', [])',
-        \ 'insert stronger password', 1)
+        \ 'insert-stronger-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 3], 'call call('
         \ . string(s:_function('s:insert_paranoid_password')) . ', [])',
-        \ 'insert password for paranoids', 1)
+        \ 'insert-password-for-paranoids', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'p'], 'call call('
         \ . string(s:_function('s:insert_phonetically_password')) . ', [])',
-        \ 'insert a phonetically easy password', 1)
+        \ 'insert-a-phonetically-easy-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
         \ . string(s:_function('s:insert_numerical_password')) . ', [])',
-        \ 'insert a numerical password', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search and insert unicode', 1)
+        \ 'insert-a-numerical-password', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'U', 'U'], 'call call('
         \ . string(s:_function('s:uuidgen_U')) . ', [])',
         \ 'uuidgen-4', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'l'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_list')) . ', [])',
-        \ 'insert lorem-ipsum list', 1)
+        \ 'insert-lorem-ipsum-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'p'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_paragraph')) . ', [])',
-        \ 'insert lorem-ipsum paragraph', 1)
+        \ 'insert-lorem-ipsum-paragraph', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
-        \ 'insert lorem-ipsum sentence', 1)
+        \ 'insert-lorem-ipsum-sentence', 1)
   " move line
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'J'], 'call call('
         \ . string(s:_function('s:move_text_down_transient_state')) . ', [])',
-        \ 'move text down(enter transient state)', 1)
+        \ 'move-text-down(enter-transient-state)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'K'], 'call call('
         \ . string(s:_function('s:move_text_up_transient_state')) . ', [])',
-        \ 'move text up(enter transient state)', 1)
+        \ 'move-text-up(enter-transient-state)', 1)
 
   " transpose
   let g:_spacevim_mappings_space.x.t = {'name' : '+transpose'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
-        \ 'swap current character with previous one', 1)
+        \ 'swap-current-character-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'w'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["word"])',
-        \ 'swap current word with previous one', 1)
+        \ 'swap-current-word-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
-        \ 'swap current line with previous one', 1)
+        \ 'swap-current-line-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["character"])',
-        \ 'swap current character with next one', 1)
+        \ 'swap-current-character-with-next-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["word"])',
-        \ 'swap current word with next one', 1)
+        \ 'swap-current-word-with-next-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
-        \ 'swap current line with next one', 1)
+        \ 'swap-current-line-with-next-one', 1)
 
 endfunction
 
