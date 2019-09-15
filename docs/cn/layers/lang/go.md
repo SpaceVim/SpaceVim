@@ -28,6 +28,12 @@ lang: cn
   name = "lang#go"
 ```
 
+默认情况下，tagbar 这一插件无法显示 go 语法树，需要安装一个依赖 [gotags](https://github.com/jstemmer/gotags)：
+
+```sh
+go get -u github.com/jstemmer/gotags
+```
+
 ## 功能特性
 
 - 代码补全
@@ -57,11 +63,11 @@ lang: cn
 | `SPC l l` | list declarations in file |
 | `SPC l m` | format improts            |
 | `SPC l M` | add import                |
-| `SPC l r` | go referrers              |
+| `SPC l r` | go run              |
 | `SPC l s` | fill struct               |
 | `SPC l t` | go test                   |
 | `SPC l v` | freevars                  |
-| `SPC l x` | go run                    |
+| `SPC l x` | go referrers              |
 
 **代码格式化：**
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " rust.vim --- SpaceVim lang#rust layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -19,16 +19,21 @@
 " >
 "       rustup component add rust-src 
 " <
-"   2. Install racer:
+"   2. Install Rust nightly build
+"       
 " >
-"       cargo install racer
+"       rustup install nightly
 " <
-"   3. Set the RUST_SRC_PATH variable in your .bashrc:
+"   3. Install racer:
+" >
+"       cargo +nightly install racer
+" <
+"   4. Set the RUST_SRC_PATH variable in your .bashrc:
 " >
 "       RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
 "       export RUST_SRC_PATH
 " <
-"   4. Add racer to your path, or set the path with:
+"   5. Add racer to your path, or set the path with:
 " >
 "       let g:racer_cmd = "/path/to/racer/bin"
 " <

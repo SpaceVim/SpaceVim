@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -48,7 +48,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd Filetype qf setlocal nobuflisted
-    autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
+    autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
@@ -94,7 +94,8 @@ function! s:enable_touchpad() abort
   call system('synclient touchpadoff=0')
 endfunction
 function! s:fixindentline() abort
-  if !exists('s:done')
+  if !exists('s:done') && has('conceal')
+    " The indentLine plugin need conceal feature
     if exists(':IndentLinesToggle') == 2
       IndentLinesToggle
       IndentLinesToggle

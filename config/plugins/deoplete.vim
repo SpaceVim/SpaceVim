@@ -1,3 +1,10 @@
+"=============================================================================
+" deoplete.vim --- deoplete default config in spacevim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 let g:deoplete#enable_at_startup = get(g:, 'deoplete#enable_at_startup', 1)
 
 " deoplete options
@@ -9,14 +16,6 @@ call deoplete#custom#option({
       \ 'camel_case'          :  get(g:, 'deoplete#enable_camel_case', 1),
       \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1)
       \ })
-
-" let g:deoplete#max_abbr_width = get(g:, 'deoplete#max_abbr_width', 0)
-" let g:deoplete#max_menu_width = get(g:, 'deoplete#max_menu_width', 0)
-" init deoplet option dict
-let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
-let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
-let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
 
 " java && jsp
 call deoplete#custom#var('omni', 'input_patterns', {
@@ -87,7 +86,9 @@ call deoplete#custom#var('omni', 'input_patterns', {
 call deoplete#custom#option('ignore_sources', {'gitcommit': ['neosnippet']})
 
 " lua
-let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
+call deoplete#custom#var('omni', 'input_patterns', {
+      \ 'lua': '.',
+      \})
 
 " c c++
 call deoplete#custom#source('clang2', 'mark', '')
@@ -100,8 +101,13 @@ call deoplete#custom#source('racer', 'mark', '')
 " vim
 call deoplete#custom#option('ignore_sources', {'vim': ['tag']})
 
+" denite
+call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer', 'around', 'member']})
+
 " clojure
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+call deoplete#custom#option('keyword_patterns', {
+      \ 'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*',
+      \})
 
 " ocaml
 call deoplete#custom#option('ignore_sources', {'ocaml': ['buffer', 'around', 'omni']})
@@ -113,12 +119,15 @@ call deoplete#custom#var('omni', 'input_patterns', {
       \ ],
       \})
 
+" c#
+call deoplete#custom#option('sources', {'cs': ['omnisharp']})
+
 " public settings
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
 
-inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 set isfname-==
 
 " vim:set et sw=2:

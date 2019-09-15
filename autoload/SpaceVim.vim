@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.2.0-dev'
+let g:spacevim_version = '1.3.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -106,7 +106,7 @@ let g:spacevim_enable_bepo_layout  = 0
 let g:spacevim_max_column              = 120
 
 ""
-" @section max_column, options-home_files_number
+" @section home_files_number, options-home_files_number
 " @parentsection options
 " Change the list number of files for SpaceVim home. Default is 6.
 " >
@@ -124,17 +124,17 @@ let g:spacevim_home_files_number        = 6
 ""
 " @section enable_guicolors, options-enable_guicolors
 " @parentsection options
-" Enable true color support in terminal. Default is true.
+" Enable true color support in terminal. Default is false.
 " >
 "   enable_guicolors = true
 " <
 
 ""
-" Enable true color support in terminal. Default is 1.
+" Enable true color support in terminal. Default is 0.
 " >
 "   let g:spacevim_enable_guicolors = 1
 " <
-let g:spacevim_enable_guicolors = 1
+let g:spacevim_enable_guicolors = 0
 
 ""
 " @section enable_googlesuggest, options-enable_googlesuggest
@@ -209,6 +209,16 @@ let g:spacevim_plugin_bundle_dir
 "   let g:spacevim_realtime_leader_guide = 0
 " <
 let g:spacevim_realtime_leader_guide   = 1
+
+""
+" @section enable_key_frequency, options-enable_key_frequency
+" @parentsection options
+" Enable/Disable key frequency catching of SpaceVim. default value is 0. to
+" enable it:
+" >
+"   enable_key_frequency = true
+" <
+
 ""
 " Enable/Disable key frequency catching of SpaceVim. default value is 0. to
 " enable it:
@@ -218,6 +228,27 @@ let g:spacevim_realtime_leader_guide   = 1
 let g:spacevim_enable_key_frequency = 0
 if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
+
+  ""
+  " @section autocomplete_method, options-autocomplete_method
+  " @parentsection options
+  " Set the autocomplete engine of spacevim, the default logic is:
+  " >
+  "   if has('python3')
+  "     let g:spacevim_autocomplete_method = 'deoplete'
+  "   elseif has('lua')
+  "     let g:spacevim_autocomplete_method = 'neocomplete'
+  "   elseif has('python')
+  "     let g:spacevim_autocomplete_method = 'completor'
+  "   elseif has('timers')
+  "     let g:spacevim_autocomplete_method = 'asyncomplete'
+  "   else
+  "     let g:spacevim_autocomplete_method = 'neocomplcache'
+  "   endif
+  " <
+  "
+  " and you can alse set this option to coc, then coc.nvim will be used.
+
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -234,7 +265,7 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "   endif
   " <
   "
-  " and you can alse set this option to coc, then coc.nvim will be useed.
+  " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
 elseif has('lua')
   let g:spacevim_autocomplete_method = 'neocomplete'
@@ -334,6 +365,16 @@ let g:spacevim_sidebar_width           = 30
 " <
 let g:spacevim_snippet_engine = 'neosnippet'
 let g:spacevim_enable_neocomplcache    = 0
+
+""
+" @section enable_cursorline, options-enable_cursorline
+" @parentsection options
+" Enable/Disable cursorline. Default is true, cursorline will be
+" highlighted in normal mode.To disable this feature:
+" >
+"   enable_cursorline = false
+" <
+
 ""
 " Enable/Disable cursorline. Default is 1, cursorline will be
 " highlighted in normal mode.To disable this feature:
@@ -342,7 +383,9 @@ let g:spacevim_enable_neocomplcache    = 0
 " <
 let g:spacevim_enable_cursorline       = 1
 ""
-" Set the statusline separators of statusline, default is 'arrow'
+" @section statusline_separator, options-statusline_separator
+" @parentsection options
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -354,11 +397,69 @@ let g:spacevim_enable_cursorline       = 1
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_separator = 'arrow'
-let g:spacevim_statusline_inactive_separator = 'arrow'
 
 ""
-" Enable/Disable showing full path of current buffer on statusline
+" Set the statusline separators of statusline, default is 'nil'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
+let g:spacevim_statusline_separator = 'nil'
+""
+" @section statusline_iseparator, options-statusline_iseparator
+" @parentsection options
+" Set the statusline separators of statusline in inactive windows, default is
+" 'nil'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
+
+""
+" Set the statusline separators of statusline in inactive windows, default is
+" 'nil'
+" >
+"   Separators options:
+"     1. arrow
+"     2. curve
+"     3. slant
+"     4. nil
+"     5. fire
+" <
+"
+" See more details in: http://spacevim.org/documentation/#statusline
+"
+let g:spacevim_statusline_iseparator = 'nil'
+
+""
+" @section enable_statusline_bfpath, options-enable_statusline_bfpath
+" @parentsection options
+" Enable/Disable showing full path of current buffer on statusline, disabled
+" by default, to enable this feature:
+" >
+"   enable_statusline_bfpath = true
+" <
+
+""
+" Enable/Disable showing full path of current buffer on statusline, disabled
+" by default, to enable this feature:
+" >
+"   enable_statusline_bfpath = true
+" <
 let g:spacevim_enable_statusline_bfpath = 0
 
 ""
@@ -372,6 +473,19 @@ let g:spacevim_enable_statusline_bfpath = 0
 ""
 " Enable/Disable showing current tag on statusline
 let g:spacevim_enable_statusline_tag = 1
+""
+" @section statusline_left_sections, options-statusline_left_sections
+" @parentsection options
+" Define the left section of statusline in active windows. By default:
+" >
+"   statusline_left_sections = [
+"     'winnr',
+"     'filename',
+"     'major mode',
+"     'minor mode lighters',
+"     'version control info'
+"     ]
+" <
 
 ""
 " Define the left section of statusline in active windows. By default:
@@ -463,18 +577,53 @@ let g:spacevim_enable_cursorcolumn     = 0
 "   let g:spacevim_error_symbol = '+'
 " <
 let g:spacevim_error_symbol            = '✖'
+
+""
+" @section warning_symbol, options-warning_symbol
+" @parentsection options
+" Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
+" >
+"   warning_symbol = '!'
+" <
+
 ""
 " Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 " >
 "   let g:spacevim_warning_symbol = '!'
 " <
 let g:spacevim_warning_symbol          = '⚠'
+
+""
+" @section info_symbol, options-info_symbol
+" @parentsection options
+" Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+" >
+"   info_symbol = 'i'
+" <
+
 ""
 " Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
 " >
 "   let g:spacevim_info_symbol = 'i'
 " <
 let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circled_letter('i')
+
+""
+" @section terminal_cursor_shape, options-terminal_cursor_shape
+" @parentsection options
+" Set the SpaceVim cursor shape in the terminal.
+" >
+"   0 : to prevent Nvim from changing the cursor shape.
+"   1 : to enable non-blinking mode-sensitive cursor.
+"   2 : to enable blinking mode-sensitive cursor (default).
+" >
+" Host terminal must support the DECSCUSR CSI escape sequence.
+" Depending on the terminal emulator, using this option with nvim under
+" tmux might require adding the following to ~/.tmux.conf:
+" >
+"   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+" <
+
 ""
 " Set the SpaceVim cursor shape in the terminal.
 " >
@@ -497,17 +646,40 @@ let g:spacevim_terminal_cursor_shape = 2
 " <
 let g:spacevim_vim_help_language       = 'en'
 ""
+" @section language, options-language
+" @parentsection options
+" Set the message language of vim. Default is 'en_US.UTF-8'.
+" >
+"   language = 'en_CA.utf8'
+" <
+
+""
 " Set the message language of vim. Default is 'en_US.UTF-8'.
 " >
 "   let g:spacevim_language = 'en_CA.utf8'
 " <
 let g:spacevim_language                = ''
 ""
+" @section keep_server_alive, options-keep_server_alive
+" @parentsection options
+" Option for keep the spacevim server ailive
+
+""
 " Option for keep the spacevim server ailive
 let g:spacevim_keep_server_alive = 1
 ""
+" @section colorscheme, options-colorscheme
+" @parentsection options
+" The colorscheme of SpaceVim. Default is 'gruvbox'.
+
+""
 " The colorscheme of SpaceVim. Default is 'gruvbox'.
 let g:spacevim_colorscheme             = 'gruvbox'
+""
+" @section colorscheme_bg, options-colorscheme_bg
+" @parentsection options
+" The background of colorscheme. Default is 'dark'.
+
 ""
 " The background of colorscheme. Default is 'dark'.
 let g:spacevim_colorscheme_bg             = 'dark'
@@ -520,6 +692,15 @@ let g:spacevim_colorscheme_bg             = 'dark'
 " <
 let g:spacevim_colorscheme_default     = 'desert'
 ""
+" @section simple_mode, options-simple_mode
+" @parentsection options
+" Enable/disable simple mode of SpaceVim. Default is false.
+" In this mode, only few plugins will be installed.
+" >
+"   simple_mode = true
+" <
+
+""
 " Enable/disable simple mode of SpaceVim. Default is 0.
 " In this mode, only few plugins will be installed.
 " >
@@ -527,9 +708,22 @@ let g:spacevim_colorscheme_default     = 'desert'
 " <
 let g:spacevim_simple_mode             = 0
 ""
+" @section filemanager, options-filemanager
+" @parentsection options
+" The default file manager of SpaceVim. Default is 'vimfiler'.
+" you can also use nerdtree or defx
+
+""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
 " you can also use nerdtree or defx
 let g:spacevim_filemanager             = 'vimfiler'
+""
+" @section filetree_direction, options-filetree_direction
+" @parentsection options
+" Config the direction of file tree. Default is 'right'. you can also set to
+" 'left'. 
+"
+" NOTE: if it is 'left', the tagbar will be move to right.
 
 ""
 " Config the direction of file tree. Default is 'right'. you can also set to
@@ -584,6 +778,14 @@ let g:spacevim_checkinstall            = 1
 " <
 let g:spacevim_vimcompatible           = 0
 ""
+" @section enable_debug, options-enable_debug
+" @parentsection options
+" Enable/Disable debug mode for SpaceVim. Default is false.
+" >
+"   enable_debug = true
+" <
+
+""
 " Enable/Disable debug mode for SpaceVim. Default is 0.
 " >
 "   let g:spacevim_enable_debug = 1
@@ -600,7 +802,22 @@ let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
-" Set SpaceVim buffer index type, default is 0.
+" @section buffer_index_type, options-buffer_index_type
+" @parentsection options
+" Set SpaceVim buffer index type, default is 4.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ ¹
+"   # 4: 1 ➛ 1
+"   buffer_index_type = 1
+" <
+
+
+""
+" Set SpaceVim buffer index type, default is 4.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -610,9 +827,25 @@ let g:spacevim_gitcommit_issue_icon    = ''
 "   " 4: 1 ➛ 1
 "   let g:spacevim_buffer_index_type = 1
 " <
-let g:spacevim_buffer_index_type = 0
+let g:spacevim_buffer_index_type = 4
+
 ""
-" Set SpaceVim windows index type, default is 0.
+" @section windows_index_type, options-windows_index_type
+" @parentsection options
+" Set SpaceVim windows index type, default is 3.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ 1
+"   windows_index_type = 1
+" <
+
+
+
+""
+" Set SpaceVim windows index type, default is 3.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -621,10 +854,20 @@ let g:spacevim_buffer_index_type = 0
 "   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
-let g:spacevim_windows_index_type = 0
+let g:spacevim_windows_index_type = 3
+""
+" @section enable_tabline_ft_icon, options-enable_tabline_ft_icon
+" @parentsection options
+" Enable/Disable tabline filetype icon. default is false. To enable this
+" feature:
+" >
+"   enable_tabline_ft_icon = true
+" <
+
+
 ""
 " Enable/Disable tabline filetype icon. default is 0.
-let g:spacevim_enable_tabline_filetype_icon = 0
+let g:spacevim_enable_tabline_ft_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0
@@ -720,6 +963,15 @@ let g:spacevim_lint_on_the_fly         = 0
 "   let g:spacevim_update_retry_cnt = 3
 " <
 let g:spacevim_update_retry_cnt          = 3
+""
+" @section enable_vimfiler_welcome, options-enable_vimfiler_welcome
+" @parentsection options
+" Enable/Disable vimfiler in the welcome windows. Default is true.
+" This will cause vim to start up slowly if there are too many files in the
+" current directory.
+" >
+"   enable_vimfiler_welcome = false
+" <
 
 ""
 " Enable/Disable vimfiler in the welcome windows. Default is 1.
@@ -914,6 +1166,20 @@ function! SpaceVim#end() abort
   let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
 
+  let g:unite_source_menu_menus =
+        \ get(g:,'unite_source_menu_menus',{})
+  let g:unite_source_menu_menus.CustomKeyMaps = {'description':
+        \ 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
+  let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
+        \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
+  let g:unite_source_menu_menus.MyStarredrepos = {'description':
+        \ 'All github repos starred by me                   <leader>ls'}
+  let g:unite_source_menu_menus.MyStarredrepos.command_candidates =
+        \ get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+  let g:unite_source_menu_menus.MpvPlayer = {'description':
+        \ 'Musics list                   <leader>lm'}
+  let g:unite_source_menu_menus.MpvPlayer.command_candidates =
+        \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
@@ -924,17 +1190,17 @@ function! SpaceVim#end() abort
 
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
-  call zvim#util#source_rc('general.vim')
+  call SpaceVim#util#loadConfig('general.vim')
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
+    call SpaceVim#util#loadConfig('neovim.vim')
   endif
 
-  call zvim#util#source_rc('commands.vim')
+  call SpaceVim#util#loadConfig('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction
@@ -965,8 +1231,8 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call zvim#util#source_rc('functions.vim')
-  call zvim#util#source_rc('init.vim')
+  call SpaceVim#util#loadConfig('functions.vim')
+  call SpaceVim#util#loadConfig('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
@@ -1072,12 +1338,57 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v0.7.0
+" Following HEAD: changes in master branch since last release v1.1.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
-" 2018-03-19: v0.7.0
+" 2019-04-08: v1.1.0
+"
+" https://spacevim.org/SpaceVim-release-v1.1.0/
+"
+" 2018-12-25: v1.0.0
+"
+" https://spacevim.org/SpaceVim-release-v1.0.0/
+"
+" 2018-09-26: v0.9.0
+"
+" https://spacevim.org/SpaceVim-release-v0.9.0/
+"
+" 2018-06-18: v0.8.0
+"
+" https://spacevim.org/SpaceVim-release-v0.8.0/
+"
+" 2018-03-18: v0.7.0
 "
 " https://spacevim.org/SpaceVim-release-v0.7.0/
+"
+" 2017-12-30: v0.6.0
+"
+" https://spacevim.org/SpaceVim-release-v0.6.0/
+"
+" 2017-11-06: v0.5.0
+"
+" https://spacevim.org/SpaceVim-release-v0.5.0/
+"
+" 2017-08-05: v0.4.0
+"
+" https://spacevim.org/SpaceVim-release-v0.4.0/
+"
+" 2017-06-27: v0.3.1
+"
+" https://spacevim.org/SpaceVim-release-v0.3.1/
+"
+" 2017-05-31: v0.3.0
+"
+" https://spacevim.org/SpaceVim-release-v0.3.0/
+"
+" 2017-03-30: v0.2.0
+"
+" https://spacevim.org/SpaceVim-release-v0.2.0/
+"
+" 2017-01-26: v0.1.0
+"
+" https://spacevim.org/SpaceVim-release-v0.1.0/
+"
 
 " vim:set et sw=2 cc=80:

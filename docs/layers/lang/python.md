@@ -10,13 +10,13 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Layer](#layer)
-  - [Syntax Checking](#syntax-checking)
-  - [Buffer formatting](#buffer-formatting)
-  - [Format imports](#format-imports)
+  - [enable layer](#enable-layer)
+  - [language tools](#language-tools)
+- [Configuration](#configuration)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
+  - [Code Coverage](#code-coverage)
   - [Text objects and motions](#text-objects-and-motions)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -36,7 +36,7 @@ This layer is for Python development.
 
 ## Install
 
-### Layer
+### enable layer
 
 To use this configuration layer, add following snippet to your custom configuration file.
 
@@ -45,7 +45,10 @@ To use this configuration layer, add following snippet to your custom configurat
   name = "lang#python"
 ```
 
-### Syntax Checking
+### language tools
+
+
+**syntax checking:**
 
 `checker` layer provide syntax checking feature, and for Python it uses `flake8` package:
 
@@ -53,7 +56,7 @@ To use this configuration layer, add following snippet to your custom configurat
 pip install --user flake8
 ```
 
-### Buffer formatting
+**code formatting:**
 
 The default key binding for formatting buffer is `SPC b f`, and you need to install `yapf`. To enable automatic buffer formatting on save, load this layer with setting `format-on-save` to `1`.
 
@@ -67,7 +70,7 @@ The default key binding for formatting buffer is `SPC b f`, and you need to inst
 pip install --user yapf
 ```
 
-### Format imports
+**format imports:**
 
 To be able to suppress unused imports easily, install [autoflake](https://github.com/myint/autoflake):
 
@@ -79,6 +82,30 @@ To be able to sort your imports, install [isort](https://github.com/timothycrosl
 
 ```sh
 pip install --user isort
+```
+
+**code coverage:**
+
+To be able to show code coverage, install coverage.py
+
+```sh
+pip install --user coverage
+```
+
+## Configuration
+
+By default, when create a new python file, SpaceVim will insert file head automatically.
+to change the file head, use `python-file-head` option:
+
+```toml
+[[layers]]
+  name = "lang#python"
+  python-file-head = [
+      '#!/usr/bin/env python',
+      '# -*- coding: utf-8 -*-',
+      '',
+      ''
+  ]
 ```
 
 ## Key bindings
@@ -94,6 +121,15 @@ pip install --user isort
 | Mode   | Key Binding | Description        |
 | ------ | ----------- | ------------------ |
 | normal | `SPC l g d` | Generate docstring |
+
+### Code Coverage
+
+| Mode   | Key Binding | Description       |
+| ------ | ----------- | ----------------- |
+| normal | `SPC l c r` | coverager report  |
+| normal | `SPC l c s` | coverager show    |
+| normal | `SPC l c e` | coverager session |
+| normal | `SPC l c f` | coverager refresh |
 
 ### Text objects and motions
 

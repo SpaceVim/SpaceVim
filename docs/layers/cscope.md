@@ -35,6 +35,12 @@ For more info about the differences between Cscope and other similar tools, plea
 sudo pacman -S cscope
 ```
 
+In windows, you can use scoop to install cscope:
+
+```
+scoop install cscope
+```
+
 ### layer
 
 To use this configuration layer, add it to your configuration file.

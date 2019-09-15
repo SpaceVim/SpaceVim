@@ -1,6 +1,6 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -38,7 +38,7 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ["'"], 'call call('
         \ . string(function('s:open_default_shell')) . ', [0])',
-        \ ['open shell',
+        \ ['open-shell',
         \ [
         \ "[SPC '] is to open or jump to default shell window",
         \ '',
@@ -47,7 +47,7 @@ function! SpaceVim#layers#shell#config() abort
         \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
-        \ ["open shell in current file's path",
+        \ ["open-shell-in-buffer-dir",
         \ [
         \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
         \ '',
@@ -93,6 +93,7 @@ func! SpaceVim#layers#shell#ctrl_r() abort
   if reg == 43
     return @+
   endif
+  return "\<C-r>"
 endfunction
 
 func! SpaceVim#layers#shell#ctrl_w() abort

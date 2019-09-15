@@ -28,6 +28,28 @@ Visit these resources for help or general questions.
 
 ### Mail list
 
+Users who are accustomed to using email can also communicate with each other through the mail group.
+They can send email to the mailing list to participate in the discussion.
+
+```
+spacevim@googlegroups.com
+```
+
+Please note that to post on these lists, you must be a member,
+To join this group send an empty message to:
+
+```
+spacevim+subscribe@googlegroups.com
+```
+
+To unsubscribe, send an empty message to:
+
+```
+spacevim+unsubscribe@googlegroups.com
+```
+
+You can also view all the mail list history via google forum:
+
 - <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim)
 
 ### Chat

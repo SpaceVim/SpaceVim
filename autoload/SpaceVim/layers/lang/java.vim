@@ -1,6 +1,6 @@
 "=============================================================================
 " java.vim --- SpaceVim lang#java layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -109,7 +109,7 @@ function! SpaceVim#layers#lang#java#config() abort
       autocmd FileType java setlocal omnifunc=javacomplete#Complete
       call SpaceVim#mapping#gd#add('java', function('s:go_to_def'))
     endif
-    autocmd FileType jsp call JspFileTypeInit()
+    autocmd FileType jsp call <SID>JspFileTypeInit()
   augroup END
   let g:neoformat_enabled_java = ['googlefmt']
   let g:neoformat_java_googlefmt = {
@@ -121,6 +121,14 @@ function! SpaceVim#layers#lang#java#config() abort
     let g:neoformat_enabled_java += neoformat#formatters#java#enabled()
   catch
   endtry
+endfunction
+
+function! s:JspFileTypeInit()
+    set tags+=~/others/openjdk-8-src/tags
+    set omnifunc=javacomplete#Complete
+    inoremap . <c-r>=OnmiConfigForJsp()<cr>
+    nnoremap <F4> :JCimportAdd<cr>
+    inoremap <F4> <esc>:JCimportAddI<cr>
 endfunction
 
 function! s:language_specified_mappings() abort

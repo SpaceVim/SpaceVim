@@ -55,13 +55,8 @@ if has('nvim')
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
 endif
-try
-  call SpaceVim#begin()
-catch
-  " Update the rtp only when SpaceVim is not contained in runtimepath.
-  let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h')
-  call SpaceVim#begin()
-endtry
+
+call SpaceVim#begin()
 
 call SpaceVim#custom#load()
 

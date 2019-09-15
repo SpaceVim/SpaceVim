@@ -1,6 +1,6 @@
 "=============================================================================
 " autocomplete.vim --- SpaceVim autocomplete layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -32,7 +32,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
         \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
-        \ ['ujihisa/neco-look',           { 'on_event' : 'InsertEnter'}],
+        \ ['ujihisa/neco-look',           { 'if' : executable('look')}],
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],

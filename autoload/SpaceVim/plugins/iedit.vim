@@ -1,6 +1,6 @@
 "=============================================================================
 " iedit.vim --- iedit mode for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -219,6 +219,11 @@ function! s:handle_normal(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
+    endfor
+    call s:replace_symbol()
+  elseif a:char == 126 " ~
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
     endfor
     call s:replace_symbol()
   elseif a:char == 115 " s

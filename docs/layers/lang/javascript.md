@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#javascript layer"
-description: "This layer is for JaveScript development"
+description: "This layer provides JavaScript development support for SpaceVim, including code completion, syntax highlighting and syntax checking"
 ---
 
 # [Available Layers](../../) >> lang#javascript

@@ -38,13 +38,13 @@ if !s:sys.isWindows
     " Note: It is slower than ag
     call denite#custom#var('file/rec', 'command',
           \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
-          \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
+          \ + SpaceVim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
           \ )
   elseif executable('ag')
     " Change file/rec command.
     call denite#custom#var('file/rec', 'command',
           \ ['ag' , '--nocolor', '--nogroup', '-g', '']
-          \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
+          \ + SpaceVim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
           \ )
   endif
 else
@@ -137,6 +137,7 @@ let s:normal_mode_mappings = [
       \ ['r', '<denite:redraw>', 'noremap'],
       \ ]
 
+" this is for old version of denite
 for s:m in s:insert_mode_mappings
   call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
 endfor
@@ -145,6 +146,35 @@ for s:m in s:normal_mode_mappings
 endfor
 
 unlet s:m s:insert_mode_mappings s:normal_mode_mappings
+
+
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> i
+        \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> '
+        \ denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr> q
+        \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <C-t>
+        \ denite#do_map('do_action', 'tabopen')
+  nnoremap <silent><buffer><expr> <C-v>
+        \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> <C-s>
+        \ denite#do_map('do_action', 'split')
+  nnoremap <silent><buffer><expr> <CR>
+        \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> p
+        \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><Tab> j
+  nnoremap <silent><buffer><S-Tab> k
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+endfunction
 
 
 " vim:set et sw=2 cc=80:

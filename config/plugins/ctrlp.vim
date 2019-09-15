@@ -1,3 +1,12 @@
+"=============================================================================
+" ctrlp.vim --- ctrlp config
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 let s:SYS = SpaceVim#api#import('system')
 
 let g:ctrlp_map = get(g:,'ctrlp_map', '<c-p>')
@@ -20,9 +29,9 @@ let g:ctrlp_custom_ignore = get(g:, 'ctrlp_custom_ignore', {
       \ })
 if executable('rg') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
-        \ . join(zvim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', SpaceVim#api#import('system').isWindows ? 0 : 1))
+        \ . join(SpaceVim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', SpaceVim#api#import('system').isWindows ? 0 : 1))
 elseif executable('ag') && !exists('g:ctrlp_user_command')
-  let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(zvim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'
+  let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(SpaceVim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'
 elseif s:SYS.isWindows
   let g:ctrlp_user_command =
     \ 'dir %s /-n /b /s /a-d | findstr /v /l ".jpg \\tmp\\"' " Windows
@@ -33,11 +42,7 @@ endif
 if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 endif
-"nnoremap <Leader>kk :CtrlPMixed<Cr>
-" comment for ctrlp-funky {{{
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
 let g:ctrlp_funky_syntax_highlight = get(g:, 'ctrlp_funky_syntax_highlight', 1)
 " }}}
 "for ctrlp_nerdtree {{{
@@ -46,12 +51,7 @@ let g:ctrlp_nerdtree_show_hidden = get(g:, 'ctrlp_nerdtree_show_hidden', 1)
 "for ctrlp_sessions{{{
 let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
 "}}}
-"for k.vim {{{
-nnoremap <silent> <leader>qe :CtrlPK<CR>
-"}}}
-" for ctrlp-launcher {{{
-nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-"}}}
+
 ""for ctrlp-cmatcher {{{
 "let g:ctrlp_max_files = 0
 "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -60,7 +60,6 @@ nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
 augroup Fix_command_in_help_buffer
   au!
   autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
-  au FileType help exec "nnoremap <silent><buffer> q :q<CR>"
 augroup END
 
 " vim:set et sw=2:
