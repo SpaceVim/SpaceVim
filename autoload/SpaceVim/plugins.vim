@@ -39,6 +39,12 @@ function! s:load_plugins() abort
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
       call SpaceVim#plugins#add(plugin[0], plugin[1])
+      if SpaceVim#plugins#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
+        call SpaceVim#plugins#defind_hooks(split(plugin[0], '/')[-1])
+      endif
+      if SpaceVim#plugins#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf_before', 0 )
+        call SpaceVim#plugins#loadPluginBefore(split(plugin[0], '/')[-1])
+      endif
     else
       call SpaceVim#plugins#add(plugin[0])
     endif
