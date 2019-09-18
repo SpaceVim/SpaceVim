@@ -750,12 +750,7 @@ function! SpaceVim#layers#core#statusline#denite_mode() abort
   if denite_ver == 3
     let dmode = ['Denite']
   else
-    let dmode = split(denite#get_status_mode(), ' ')
-  endif
-  if empty(dmode)
-    let dmode = ''
-  else
-    let dmode = dmode[0]
+    let dmode = split(denite#get_status_mode())[1]
   endif
   if get(w:, 'spacevim_statusline_mode', '') != dmode
     if dmode ==# 'NORMAL'
