@@ -13,10 +13,13 @@ function! SpaceVim#plugins#load() abort
     call SpaceVim#plugins#fetch()
     call s:load_plugins()
     call s:disable_plugins(g:spacevim_disabled_plugins)
+    call s:load_custom_plugins()
     call SpaceVim#plugins#end()
   endif
 
 endfunction
+
+" load the default plugins definded in layers
 function! s:load_plugins() abort
   for group in SpaceVim#layers#get()
     let g:_spacevim_plugin_layer = group
@@ -36,6 +39,9 @@ function! s:load_plugins() abort
     call s:loadLayerConfig(group)
   endfor
   unlet g:_spacevim_plugin_layer
+endfunction
+
+function! s:load_custom_plugins() abort
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
       call SpaceVim#plugins#add(plugin[0], plugin[1])
