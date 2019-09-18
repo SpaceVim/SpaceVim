@@ -1,6 +1,6 @@
 "=============================================================================
 " layers.vim --- layers public API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,10 @@
 ""
 " @section Layers, layers
 "   SpaceVim support such layers:
+"
+" languages:
+"   
+" https://www.scriptol.com/programming/list-programming-languages.php#query-language
 
 let s:enabled_layers = []
 let s:layers_vars = {}

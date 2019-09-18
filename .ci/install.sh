@@ -16,18 +16,21 @@ elif [ "${LINT#vint}" != "$LINT" ]; then
     pip install vim-vint pathlib enum34 typing
 elif [ "${LINT#vader}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
-    if [[ ! -d "${DEPS}/_neovim" ]]; then
-        mkdir -p "${DEPS}/_neovim"
-        wget -q -O - https://github.com/neovim/neovim/releases/download/nightly/nvim-${TRAVIS_OS_NAME}64.tar.gz \
-            | tar xzf - --strip-components=1 -C "${DEPS}/_neovim"
+    if [[ ! -d "${DEPS}/_neovim_${NVIM_TAG}" ]]; then
+        mkdir -p "${DEPS}/_neovim_${NVIM_TAG}"
+        wget -q -O - https://github.com/neovim/neovim/releases/download/${NVIM_TAG}/nvim-${TRAVIS_OS_NAME}64.tar.gz \
+            | tar xzf - --strip-components=1 -C "${DEPS}/_neovim_${NVIM_TAG}"
 
     fi
-    export PATH="${DEPS}/_neovim/bin:${PATH}"
+    export PATH="${DEPS}/_neovim_${NVIM_TAG}/bin:${PATH}"
     echo "\$PATH: \"${PATH}\""
 
-    export VIM="${DEPS}/_neovim/share/nvim/runtime"
+    export VIM="${DEPS}/_neovim_${NVIM_TAG}/share/nvim/runtime"
     echo "\$VIM: \"${VIM}\""
+    echo "=================  nvim version ======================"
     nvim --version
+    echo "=================  lua version ======================"
+    lua -v
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi

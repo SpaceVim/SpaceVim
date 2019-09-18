@@ -1,6 +1,6 @@
 "=============================================================================
 " markdown.vim --- lang#markdown layer for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -56,6 +56,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \}
   let remarkrc = s:generate_remarkrc()
   if s:SYS.isWindows
+    " @fixme prettier do not support kramdown
     let g:neoformat_enabled_markdown = ['prettier']
   else
     let g:neoformat_enabled_markdown = ['remark']

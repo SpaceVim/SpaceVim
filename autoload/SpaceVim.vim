@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.2.0-dev'
+let g:spacevim_version = '1.3.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -124,17 +124,17 @@ let g:spacevim_home_files_number        = 6
 ""
 " @section enable_guicolors, options-enable_guicolors
 " @parentsection options
-" Enable true color support in terminal. Default is true.
+" Enable true color support in terminal. Default is false.
 " >
 "   enable_guicolors = true
 " <
 
 ""
-" Enable true color support in terminal. Default is 1.
+" Enable true color support in terminal. Default is 0.
 " >
 "   let g:spacevim_enable_guicolors = 1
 " <
-let g:spacevim_enable_guicolors = 1
+let g:spacevim_enable_guicolors = 0
 
 ""
 " @section enable_googlesuggest, options-enable_googlesuggest
@@ -385,7 +385,7 @@ let g:spacevim_enable_cursorline       = 1
 ""
 " @section statusline_separator, options-statusline_separator
 " @parentsection options
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -399,7 +399,7 @@ let g:spacevim_enable_cursorline       = 1
 "
 
 ""
-" Set the statusline separators of statusline, default is 'arrow'
+" Set the statusline separators of statusline, default is 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -411,12 +411,12 @@ let g:spacevim_enable_cursorline       = 1
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_separator = 'arrow'
+let g:spacevim_statusline_separator = 'nil'
 ""
 " @section statusline_iseparator, options-statusline_iseparator
 " @parentsection options
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -431,7 +431,7 @@ let g:spacevim_statusline_separator = 'arrow'
 
 ""
 " Set the statusline separators of statusline in inactive windows, default is
-" 'arrow'
+" 'nil'
 " >
 "   Separators options:
 "     1. arrow
@@ -443,7 +443,7 @@ let g:spacevim_statusline_separator = 'arrow'
 "
 " See more details in: http://spacevim.org/documentation/#statusline
 "
-let g:spacevim_statusline_iseparator = 'arrow'
+let g:spacevim_statusline_iseparator = 'nil'
 
 ""
 " @section enable_statusline_bfpath, options-enable_statusline_bfpath
@@ -802,7 +802,22 @@ let g:spacevim_hiddenfileinfo          = 1
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
-" Set SpaceVim buffer index type, default is 0.
+" @section buffer_index_type, options-buffer_index_type
+" @parentsection options
+" Set SpaceVim buffer index type, default is 4.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ ¹
+"   # 4: 1 ➛ 1
+"   buffer_index_type = 1
+" <
+
+
+""
+" Set SpaceVim buffer index type, default is 4.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -812,9 +827,25 @@ let g:spacevim_gitcommit_issue_icon    = ''
 "   " 4: 1 ➛ 1
 "   let g:spacevim_buffer_index_type = 1
 " <
-let g:spacevim_buffer_index_type = 0
+let g:spacevim_buffer_index_type = 4
+
 ""
-" Set SpaceVim windows index type, default is 0.
+" @section windows_index_type, options-windows_index_type
+" @parentsection options
+" Set SpaceVim windows index type, default is 3.
+" >
+"   # types:
+"   # 0: 1 ➛ ➊
+"   # 1: 1 ➛ ➀
+"   # 2: 1 ➛ ⓵
+"   # 3: 1 ➛ 1
+"   windows_index_type = 1
+" <
+
+
+
+""
+" Set SpaceVim windows index type, default is 3.
 " >
 "   " types:
 "   " 0: 1 ➛ ➊
@@ -823,10 +854,20 @@ let g:spacevim_buffer_index_type = 0
 "   " 3: 1 ➛ 1
 "   let g:spacevim_windows_index_type = 1
 " <
-let g:spacevim_windows_index_type = 0
+let g:spacevim_windows_index_type = 3
+""
+" @section enable_tabline_ft_icon, options-enable_tabline_ft_icon
+" @parentsection options
+" Enable/Disable tabline filetype icon. default is false. To enable this
+" feature:
+" >
+"   enable_tabline_ft_icon = true
+" <
+
+
 ""
 " Enable/Disable tabline filetype icon. default is 0.
-let g:spacevim_enable_tabline_filetype_icon = 0
+let g:spacevim_enable_tabline_ft_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0
@@ -922,6 +963,15 @@ let g:spacevim_lint_on_the_fly         = 0
 "   let g:spacevim_update_retry_cnt = 3
 " <
 let g:spacevim_update_retry_cnt          = 3
+""
+" @section enable_vimfiler_welcome, options-enable_vimfiler_welcome
+" @parentsection options
+" Enable/Disable vimfiler in the welcome windows. Default is true.
+" This will cause vim to start up slowly if there are too many files in the
+" current directory.
+" >
+"   enable_vimfiler_welcome = false
+" <
 
 ""
 " Enable/Disable vimfiler in the welcome windows. Default is 1.
@@ -1116,6 +1166,20 @@ function! SpaceVim#end() abort
   let &softtabstop = g:spacevim_default_indent
   let &shiftwidth = g:spacevim_default_indent
 
+  let g:unite_source_menu_menus =
+        \ get(g:,'unite_source_menu_menus',{})
+  let g:unite_source_menu_menus.CustomKeyMaps = {'description':
+        \ 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
+  let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
+        \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
+  let g:unite_source_menu_menus.MyStarredrepos = {'description':
+        \ 'All github repos starred by me                   <leader>ls'}
+  let g:unite_source_menu_menus.MyStarredrepos.command_candidates =
+        \ get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+  let g:unite_source_menu_menus.MpvPlayer = {'description':
+        \ 'Musics list                   <leader>lm'}
+  let g:unite_source_menu_menus.MpvPlayer.command_candidates =
+        \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>
@@ -1126,17 +1190,17 @@ function! SpaceVim#end() abort
 
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
-  call zvim#util#source_rc('general.vim')
+  call SpaceVim#util#loadConfig('general.vim')
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call zvim#util#source_rc('neovim.vim')
+    call SpaceVim#util#loadConfig('neovim.vim')
   endif
 
-  call zvim#util#source_rc('commands.vim')
+  call SpaceVim#util#loadConfig('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction
@@ -1167,8 +1231,8 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call zvim#util#source_rc('functions.vim')
-  call zvim#util#source_rc('init.vim')
+  call SpaceVim#util#loadConfig('functions.vim')
+  call SpaceVim#util#loadConfig('init.vim')
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
@@ -1274,12 +1338,57 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v0.7.0
+" Following HEAD: changes in master branch since last release v1.1.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
-" 2018-03-19: v0.7.0
+" 2019-04-08: v1.1.0
+"
+" https://spacevim.org/SpaceVim-release-v1.1.0/
+"
+" 2018-12-25: v1.0.0
+"
+" https://spacevim.org/SpaceVim-release-v1.0.0/
+"
+" 2018-09-26: v0.9.0
+"
+" https://spacevim.org/SpaceVim-release-v0.9.0/
+"
+" 2018-06-18: v0.8.0
+"
+" https://spacevim.org/SpaceVim-release-v0.8.0/
+"
+" 2018-03-18: v0.7.0
 "
 " https://spacevim.org/SpaceVim-release-v0.7.0/
+"
+" 2017-12-30: v0.6.0
+"
+" https://spacevim.org/SpaceVim-release-v0.6.0/
+"
+" 2017-11-06: v0.5.0
+"
+" https://spacevim.org/SpaceVim-release-v0.5.0/
+"
+" 2017-08-05: v0.4.0
+"
+" https://spacevim.org/SpaceVim-release-v0.4.0/
+"
+" 2017-06-27: v0.3.1
+"
+" https://spacevim.org/SpaceVim-release-v0.3.1/
+"
+" 2017-05-31: v0.3.0
+"
+" https://spacevim.org/SpaceVim-release-v0.3.0/
+"
+" 2017-03-30: v0.2.0
+"
+" https://spacevim.org/SpaceVim-release-v0.2.0/
+"
+" 2017-01-26: v0.1.0
+"
+" https://spacevim.org/SpaceVim-release-v0.1.0/
+"
 
 " vim:set et sw=2 cc=80:

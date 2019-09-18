@@ -1,6 +1,6 @@
 "=============================================================================
 " ginit.vim --- Entry file for neovim-qt
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3

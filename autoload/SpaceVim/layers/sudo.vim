@@ -1,8 +1,6 @@
 "=============================================================================
 " sudo.vim --- SpaceVim sudo layer
-" This plugin provides sudo write based on the logic of suda.vim (https://github.com/lambdalisue/suda.vim)
-" Thanks to lambdalisue for providing suda.vim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3

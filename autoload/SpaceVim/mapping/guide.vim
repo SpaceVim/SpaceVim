@@ -1,6 +1,6 @@
 "=============================================================================
 " guide.vim --- key binding guide for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -599,6 +599,9 @@ function! s:winclose() abort " {{{
     let s:gwin = -1
     noautocmd execute s:winnr.'wincmd w'
     call winrestview(s:winv)
+    if exists('*nvim_open_win')
+      doautocmd WinEnter
+    endif
   endif
   call s:remove_cursor_highlight()
 endfunction " }}}

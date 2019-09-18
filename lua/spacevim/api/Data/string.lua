@@ -1,3 +1,4 @@
+
 local str = {}
 
 
@@ -14,3 +15,6 @@ end
 
 
 return str
+
+-- @todo add lua string api
+

@@ -37,11 +37,9 @@ ctrlp 模块默认并未启用，如果需要启用该模块，需要在配置�
 | 快捷键               | 功能描述                       |
 | -------------------- | ------------------------------ |
 | `<Leader> f <Space>` | 模糊查找快捷键，并执行该快捷键 |
+| `<Leader> f p`       | 模糊查找已安装插件  |
 | `<Leader> f e`       | 模糊搜索寄存器                 |
 | `<Leader> f h`       | 模糊搜索 history/yank          |
 | `<Leader> f j`       | 模糊搜索 jump, change          |
-| `<Leader> f l`       | 模糊搜索 location list         |
-| `<Leader> f m`       | 模糊搜索 output messages       |
 | `<Leader> f o`       | 模糊搜索函数列表               |
 | `<Leader> f q`       | 模糊搜索 quickfix list         |
-| `<Leader> f r`       | 重置上次搜索窗口               |
