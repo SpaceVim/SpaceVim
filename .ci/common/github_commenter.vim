@@ -25,7 +25,7 @@ function! s:update_log(log, summary, new_log) abort
 
 endfunction
 if !empty(s:log)
-  if $LINT == 'vader'
+  if $LINT ==# 'vader'
     let s:summary = $VIM . ' ' . $LINT . ' build log'
   else
     let s:summary = $LINT . ' build log'
@@ -50,7 +50,7 @@ if !empty(s:log)
     endif
   endif
 else
-  if $LINT == 'vader'
+  if $LINT ==# 'vader'
     let s:summary = $VIM . ' ' . $LINT . ' build log'
   else
     let s:summary = $LINT . ' build log'

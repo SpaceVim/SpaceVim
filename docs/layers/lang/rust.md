@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rust layer"
-description: "This layer is for rust development, provide autocompletion, syntax checking, code format for rust file."
+description: "This layer is for Rust development, provide autocompletion, syntax checking, code format for Rust file."
 ---
 
 # [Available Layers](../../) >> lang#rust
@@ -11,6 +11,7 @@ description: "This layer is for rust development, provide autocompletion, syntax
 - [Features](#features)
 - [Install](#install)
   - [Layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Code runner](#code-runner)
 
@@ -18,7 +19,7 @@ description: "This layer is for rust development, provide autocompletion, syntax
 
 ## Description
 
-This layer is for rust development.
+This layer is for Rust development.
 
 ## Features
 
@@ -29,8 +30,8 @@ This layer is for rust development.
 - Jump to the definition.
 - Find references
 
-SpaceVim also provides code runner and Language Server protocol support for rust. to enable language server protocol
-for rust, you need to load `lsp` layer for rust.
+SpaceVim also provides code runner and Language Server protocol support for Rust. To enable language server protocol
+for Rust, you need to load `lsp` layer for Rust.
 
 ## Install
 
@@ -43,9 +44,13 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#rust"
 ```
 
+## Layer options
+
+- `recommended-style`: Enable/Disable recommended code style for rust. This option is disabled by default.
+
 ## Key bindings
 
-| Key binding     | Description                      |
+| Key bindings    | Descriptions                     |
 | --------------- | -------------------------------- |
 | `SPC l d` / `K` | Show doc of cursor symbol        |
 | `SPC l e`       | Rename symbol (need `lsp` layer) |

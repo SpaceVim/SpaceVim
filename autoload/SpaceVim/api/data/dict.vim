@@ -1,10 +1,31 @@
 "=============================================================================
 " dict.vim --- SpaceVim dict API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section data#dict, api-data-dict
+" @parentsection api
+" provides some functions to manipulate a dict.
+"
+" make({keys}, {values}[, {fill}])
+" 
+"   make a dictionary from two list, the {keys} and {values}.
+"
+" swap({dict})
+"
+"   swap the keys and values in a dictionary.
+"
+" make_index
+"
+"   make a dictionary from a list, use 
+
+
+
+
 
 function! SpaceVim#api#data#dict#get() abort
   return map({

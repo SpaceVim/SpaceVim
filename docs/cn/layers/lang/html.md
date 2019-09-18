@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#html 模块"
-description: "这一模块为 html 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
 lang: cn
 ---
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块描述
 
-这一模块为 html、css 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
+这一模块为 HTML、CSS 开发提供支持，包括代码补全、语法检查、代码格式化等特性。
 
 ## 启用模块
 
@@ -47,6 +47,6 @@ npm install --global vscode-html-languageserver-bin
 
 ## 快捷键
 
-| 快捷键  | 描述         |
-| ------- | ------------ |
-| `<C-e>` | emmet 前缀键 |
+| 快捷键   | 功能描述     |
+| -------  | ------------ |
+| `Ctrl-e` | emmet 前缀键 |

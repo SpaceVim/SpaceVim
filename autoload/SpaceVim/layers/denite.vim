@@ -1,6 +1,6 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -13,10 +13,10 @@ function! SpaceVim#layers#denite#plugins() abort
         \ ]
 
   " neoyark source <Leader>fh
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['chemzqm/unite-location', {'merged' : 0}])
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   return plugins
 endfunction
@@ -28,7 +28,7 @@ function! SpaceVim#layers#denite#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
-        \ ['show mappings',
+        \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
         \ '',
@@ -48,13 +48,15 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
+  " @fixme SPC h SPC make vim flick
+  nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
         \ ['buffer-list',
         \ [
-        \ 'SPC b b is to open buffer list via denite',
+        \ 'SPC b b is to open buffer list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
@@ -111,7 +113,7 @@ function! SpaceVim#layers#denite#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file_rec"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file/rec"])',
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
@@ -123,7 +125,7 @@ function! SpaceVim#layers#denite#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite file_rec"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite file/rec"])',
         \ ['find files in current project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
@@ -132,7 +134,7 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
-  nnoremap <silent> <C-p> :call <SID>warp_denite('Denite file_rec')<cr>
+  nnoremap <silent> <C-p> :call <SID>warp_denite('Denite file/rec')<cr>
 
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -242,10 +244,20 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
-  let g:_spacevim_mappings.f['<Space>'] = ['Denite menu:CustomKeyMaps',
+  let g:_spacevim_mappings.f['[SPC]'] = ['Denite menu:CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fp  :<C-u>Denite menu:AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['Denite menu:AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]

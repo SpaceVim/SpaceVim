@@ -12,18 +12,19 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![Docker Build Status](https://img.shields.io/docker/build/spacevim/spacevim.svg)](https://hub.docker.com/r/spacevim/spacevim/)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-1.0.0--dev-8700FF.svg)
-[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
+![Version](https://img.shields.io/badge/version-1.3.0--dev-8700FF.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
+[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
 ## About SpaceVim
-SpaceVim is a community-driven modular vim distribution. It manages collections
-of plugins in layers, which help collect related packages together to provide IDE-like features.
+
+SpaceVim is a community-driven modular Vim distribution. It manages collections
+of plugins in layers, which help to collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/46148881-a17f6400-c29b-11e8-9981-4915b4e3e733.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
-The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## Instructions
 
@@ -34,10 +35,6 @@ The last release is v0.9.0, check out [following-HEAD](https://github.com/SpaceV
 - [Available Layers](https://spacevim.org/layers/)
 
 If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
-
-Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -54,16 +51,16 @@ This is a list of latest features implemented in SpaceVim:
 
 **Use toml as default configuration**
 
-here is an example for using toml as SpaceVim config:
+Here is an example for using toml as SpaceVim config:
 
 ```toml
-# This is basic configuration example for SpaceVim
+# This is basic configuration example for SpaceVim.
 
-# All SpaceVim option below [option] section
+# All SpaceVim options below [options] snippet.
 [options]
-    # set spacevim theme. by default colorscheme layer is not loaded,
-    # if you want to use more colorscheme, please load the colorscheme
-    # layer
+    # Set SpaceVim theme. By default colorscheme layer is not loaded.
+    # If you want to use more colorschemes, please load the colorscheme
+    # layer.
     colorscheme = "gruvbox"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
@@ -75,27 +72,27 @@ here is an example for using toml as SpaceVim config:
     statusline_inactive_separator = "bar"
     buffer_index_type = 4
     windows_index_type = 3
-    enable_tabline_filetype_icon = false
+    enable_tabline_ft_icon = false
     enable_statusline_mode = false
     statusline_unicode_symbols = false
-    # Enable vim compatible mode, avoid changing origin vim key bindings
+    # Enable Vim compatible mode, avoid changing origin Vim key bindings
     vimcompatible = true
 
 # Enable autocomplete layer
 [[layers]]
-name = 'autocomplete'
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+    name = 'autocomplete'
+    auto-completion-return-key-behavior = "complete"
+    auto-completion-tab-key-behavior = "cycle"
 
 [[layers]]
-name = 'shell'
-default_position = 'top'
-default_height = 30
+    name = 'shell'
+    default_position = 'top'
+    default_height = 30
 ```
 
 **Iedit mode**
 
-SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol or selection. Two new modes:`iedit-Normal`/`iedit-Insert`
+SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection. Two new modes:`iedit-Normal`/`iedit-Insert`.
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
@@ -110,7 +107,7 @@ a transient state to easily navigate and rename this symbol.
 
 [**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
 
-With this feature, vim will display the searching result as you type. Of course, it is running
+With this feature, Vim will display the searching result as you type. Of course, it is running
 asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
 through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 
@@ -125,13 +122,13 @@ The mapping guide is also available for `g`, `z`, and `s`.
 
 [**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
 
-use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
+Use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
 [**Asynchronous plugin manager**](https://spacevim.org/Asynchronous-plugin-manager/)
 
-create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
+Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
 
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
@@ -157,13 +154,12 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 
 ### Support SpaceVim
 
-The best way to support SpaceVim is to contribute to it either by reporting bugs,
-helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
+The best way to support SpaceVim is to contribute to it either by reporting bugs.
+Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
 
-For more info please check our [development guidelines](https://spacevim.org/development/).
+For more information please check our [development guidelines](https://spacevim.org/development/).
 
-If you want to show your support financially you can buy a drink for the maintainer by
-clicking following icon.
+If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
 
 <a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
@@ -175,7 +171,8 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ### Credits & Thanks
 
-This project exists thanks to all the people who have [contributed](CONTRIBUTING.md):
+This project exists to thank all the people who have [contributed](CONTRIBUTING.md):
+
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
@@ -183,6 +180,6 @@ This project exists thanks to all the people who have [contributed](CONTRIBUTING
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
 - [Rafael Bodill](https://github.com/rafi) and his vim-config
 - [Bailey Ling](https://github.com/bling) and his dotvim
-- authors of all the plugins used in SpaceVim.
+- Authors of all the plugins used in SpaceVim.
 
 <!-- vim:set nowrap: -->

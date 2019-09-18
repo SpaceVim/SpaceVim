@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#agda 模块"
-description: "这一模块为 SpaceVim 提供了 agda 语言开发的支持，主要包括语法高亮及一键运行。"
+description: "这一模块为 SpaceVim 提供了 Agda 的开发支持，主要包括语法高亮及一键运行。"
 lang: cn
 ---
 
@@ -17,7 +17,7 @@ lang: cn
 
 ## 模块简介
 
-Agda是一种依赖类型的函数式编程语言。这一模块为 SpaceVim 提供了 [agda](https://github.com/agda/agda) 开发支持。
+Agda 是一种依赖类型的函数式编程语言。这一模块为 SpaceVim 提供了 [agda](https://github.com/agda/agda) 开发支持。
 
 ## 功能特性
 
@@ -34,7 +34,7 @@ Agda是一种依赖类型的函数式编程语言。这一模块为 SpaceVim 提
 
 ## 快捷键
 
-| 按键      | 功能描述                 |
+| 快捷键    | 功能描述                 |
 | --------- | ------------------------ |
 | `SPC l r` | execute current file     |
 | `SPC l l` | reload                   |

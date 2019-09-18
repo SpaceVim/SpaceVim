@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#perl layer"
-description: "This layer is for perl development, provide autocompletion, syntax checking, code format for perl file."
+description: "This layer is for Perl development, provide autocompletion, syntax checking, code format for Perl file."
 ---
 
 # [Available Layers](../../) >> lang#perl
@@ -10,8 +10,8 @@ description: "This layer is for perl development, provide autocompletion, syntax
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Layer](#layer)
 - [Key bindings](#key-bindings)
+  - [Find documentation](#find-documentation)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
 
@@ -19,7 +19,7 @@ description: "This layer is for perl development, provide autocompletion, syntax
 
 ## Description
 
-This layer is for perl development.
+This layer is for Perl development.
 
 ## Features
 
@@ -27,11 +27,9 @@ This layer is for perl development.
 - Documentation lookup for Modules and functions.
 - Jump to the definition.
 
-SpaceVim also provides REPL/Debug support for perl.
+SpaceVim also provides REPL/Debug support for Perl.
 
 ## Install
-
-### Layer
 
 To use this configuration layer, update custom configuration file with:
 
@@ -40,19 +38,35 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#perl"
 ```
 
+To enable REPL support for perl, you may also need to install `perli`.
+
+```sh
+npm install -g perli
+```
+
 ## Key bindings
+
+### Find documentation
+
+| Key Bindings | Descriptions                 |
+| -----------  | ---------------------------- |
+| `K`          | open Perldoc on the keywords |
+
+within Perl doc windows, you can use `s` to toggle source code and the documentation.
 
 ### Inferior REPL process
 
-Start a `perl` inferior REPL process with `SPC l s i`. 
+Start a `perli` or `perl -del` inferior REPL process with `SPC l s i`.
+If `perli` is available in system executable search paths, it will be used to launch perl shell.
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
+
 
 ### Running current script
 

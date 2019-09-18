@@ -1,6 +1,6 @@
 "=============================================================================
 " format.vim --- format Layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
+" Copyright (c) 2012-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -22,7 +22,7 @@
 
 function! SpaceVim#layers#format#plugins() abort
     return [
-                \ ['sbdchd/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
+                \ ['neoformat/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
                 \ ]
 endfunction
 

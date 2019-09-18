@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core#banner 模块"
-description: "This layer provides many default banner on welcome page."
+description: "这一模块为 SpaceVim 提供了许多显示在启动界面的 Logo。"
 lang: cn
 ---
 
@@ -15,11 +15,11 @@ lang: cn
 
 ## 模块简介
 
-这一模块主要是为 SpaceVim 设置一些默认的启动界面的 logo。
+这一模块主要是为 SpaceVim 设置一些默认的启动界面的 Logo。
 
 ## 模块选项
  
-- frequece for change the banner: daily, weekly, or other.
+- 修改 banner 切换的频率：daily, weekly, or other.
  
 
 

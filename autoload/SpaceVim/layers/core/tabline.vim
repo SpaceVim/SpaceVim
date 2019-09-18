@@ -1,6 +1,6 @@
 "=============================================================================
 " tabline.vim --- SpaceVim tabline
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -71,8 +71,8 @@ function! s:tabname(id) abort
     let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
   endif
   let fn = fnamemodify(bufname(a:id), ':t')
-  if g:spacevim_enable_tabline_filetype_icon
-    let icon = s:FILE.fticon(fn)
+  if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
+    let icon = s:file.fticon(fn)
     if !empty(icon)
       let fn = fn . ' ' . icon
     endif
@@ -309,8 +309,8 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
         call add(stack, buflist[winnr - 1])
         call s:need_show_bfname(stack, buflist[winnr - 1])
-        if g:spacevim_enable_tabline_filetype_icon
-          let icon = s:FILE.fticon(name)
+        if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
+          let icon = s:file.fticon(name)
           if !empty(icon)
             let name = name . ' ' . icon
           endif
@@ -377,8 +377,8 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let id = s:MESSLETTERS.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
       endif
-      if g:spacevim_enable_tabline_filetype_icon
-        let icon = s:FILE.fticon(name)
+      if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
+        let icon = s:file.fticon(name)
         if !empty(icon)
           let name = name . ' ' . icon
         endif
@@ -413,7 +413,7 @@ endfunction
 
 function! SpaceVim#layers#core#tabline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:separators['arrow'])
+  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
   set tabline=%!SpaceVim#layers#core#tabline#get()
   augroup SpaceVim_tabline
     autocmd!
@@ -472,10 +472,10 @@ function! SpaceVim#layers#core#tabline#jump(id, ...) abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
+  let name = get(g:, 'colors_name', 'gruvbox')
   if !empty(g:spacevim_custom_color_palette)
     let t = g:spacevim_custom_color_palette
   else
-    let name = get(g:, 'colors_name', 'gruvbox')
     try
       let t = SpaceVim#mapping#guide#theme#{name}#palette()
     catch /^Vim\%((\a\+)\)\=:E117/
@@ -483,10 +483,18 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
     endtry
   endif
   exe 'hi! SpaceVim_tabline_a ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-  exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+  if name ==# 'palenight'
+    exe 'hi! SpaceVim_tabline_b ctermbg=' . '236'   . ' ctermfg=' . t[1][3] . ' guibg=' .'#44475a'. ' guifg=' . t[1][0]
+  else
+    exe 'hi! SpaceVim_tabline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
+  endif
   " SpaceVim_tabline_c is for modified buffers
   exe 'hi! SpaceVim_tabline_m ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
-  exe 'hi! SpaceVim_tabline_m_i ctermbg=' . t[1][2] . ' ctermfg=' . t[4][3] . ' guibg=' . t[1][1] . ' guifg=' . t[4][1]
+  if name ==# 'palenight'
+    exe 'hi! SpaceVim_tabline_m_i ctermbg=' . '236' . ' ctermfg=' . t[4][3] . ' guibg=' . '#44475a' . ' guifg=' . t[4][1]
+  else
+    exe 'hi! SpaceVim_tabline_m_i ctermbg=' . t[1][2] . ' ctermfg=' . t[4][3] . ' guibg=' . t[1][1] . ' guifg=' . t[4][1]
+  endif
   call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')

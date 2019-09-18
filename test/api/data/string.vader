@@ -1,12 +1,45 @@
 Execute ( SpaceVim api: data#string ):
   let str = SpaceVim#api#import('data#string')
+  Log 'test trim()'
   AssertEqual str.trim(' s b '), 's b'
-  AssertEqual str.trim_start(' s b '), 's b '
-  AssertEqual str.trim_end(' s b '), ' s b'
+  Log 'test fill()'
   AssertEqual str.fill('s b', 10), 's b       '
-  AssertEqual str.fill_middle('s b', 10), '   s b    '
+  Log 'test fill() len < strlen'
+  AssertEqual str.fill('s b', 2), 's '
+  Log 'test fill() with char'
+  AssertEqual str.fill('s b', 10, '*'), 's b*******'
+  Log 'test fill_left()'
+  AssertEqual str.fill_left('s b', 10, '*'), '*******s b'
+  Log 'test fill_left() len = strlen'
+  AssertEqual str.fill_left('s b', 3, '*'), 's b'
+  Log 'test fill_left() len < strlen'
+  AssertEqual str.fill_left('s b', 2, '*'), ' b'
+  Log 'test fill_middle()'
+  AssertEqual str.fill_middle('s b', 9, '*'), '***s b***'
+  Log 'test fill_middle() fill number % 2  = 1'
+  AssertEqual str.fill_middle('s b', 10, '*'), '***s b****'
+  Log 'test fill_middle() len = strlen'
+  AssertEqual str.fill_middle('s b', 3, '*'), 's b'
+  Log 'test fill_middle() len < strlen'
+  AssertEqual str.fill_middle('s b', 2, '*'), ' b'
+  AssertEqual str.fill_middle('s b', 1, '*'), ' '
+  Log 'test split()'
+  AssertEqual str.split('   20   281   23 -invalid-', '', 0, 4)[2], '23'
+  Log 'test trim_start()'
+  AssertEqual str.trim_start(' s b '), 's b '
+  Log 'test string2chars()'
   AssertEqual str.string2chars(' a b '), [' ', 'a', ' ', 'b', ' ']
+  AssertEqual str.string2chars('你好'), ['你', '好']
+  Log 'test strQ2B()'
+  AssertEqual str.strQ2B('％'), '%'
+  Log 'test strB2Q()'
+  AssertEqual str.strB2Q('%'), '％'
+  AssertEqual str.trim_end(' s b '), ' s b'
+  AssertEqual str.fill_middle('s b', 10), '   s b    '
   AssertEqual str.strAllIndex('hello spacevim hello', 'hello', 0), [[0, 5], [15, 20]]
   AssertEqual str.strAllIndex('hello spacevim hello', 'he.*', 1), [[0, 20]]
   AssertEqual str.strAllIndex('hello spacevim hello', 'he[^ ]*', 1), [[0, 5], [15, 20]]
   AssertEqual str.strAllIndex('let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end', 's.cursor[^_]*', 1), [[4, 12], [28, 36], [55, 63]]
+  Log 'test toggle_case()'
+  AssertEqual str.toggle_case(' A b 123'), ' a B 123'
+  unlet str

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#elm layer"
-description: "This layer is for elm development, provide autocompletion, syntax checking, code format for elm file."
+description: "This layer is for Elm development, provide autocompletion, syntax checking, code format for Elm file."
 image: https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png
 ---
 
@@ -21,7 +21,7 @@ image: https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931
 
 ## Description
 
-This layer is for elm development.
+This layer is for Elm development.
 
 ## Features
 
@@ -31,7 +31,7 @@ This layer is for elm development.
 - Syntax checking
 - Find symbol doc
 
-SpaceVim also provides REPL support for elm.
+SpaceVim also provides REPL support for Elm.
 
 ## Install
 
@@ -74,7 +74,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Language specific key bindings
 
-| Key binding     | Description                |
+| key bindings    | Descriptions               |
 | --------------- | -------------------------- |
 | `SPC l d` / `K` | Show doc of cursor symbol  |
 | `SPC l m`       | Compile the current buffer |
@@ -84,14 +84,14 @@ To use this configuration layer, update custom configuration file with:
 
 ### Inferior REPL process
 
-Start a `elm repl` inferior REPL process with `SPC l s i`. 
+Start a `elm repl` inferior REPL process with `SPC l s i`.
 
 ![elm repl](https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png)
 
 Send code to inferior process commands:
 
-| Key Binding | Description                                      |
-| ----------- | ------------------------------------------------ |
-| `SPC l s b` | send buffer and keep code buffer focused         |
-| `SPC l s l` | send line and keep code buffer focused           |
-| `SPC l s s` | send selection text and keep code buffer focused |
+| key bindings | Descriptions                                     |
+| -----------  | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |

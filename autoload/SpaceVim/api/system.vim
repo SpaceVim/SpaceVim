@@ -1,10 +1,19 @@
 "=============================================================================
 " system.vim --- SpaceVim system API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section system, api-system
+" @parentsection api
+" name()
+" 
+" Return the name of current os, availibel value is: linux, cygwin, windows
+" and mac.
+
 scriptencoding utf-8
 let s:system = {}
 

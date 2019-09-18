@@ -1,6 +1,6 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -66,7 +66,7 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
       let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:lsep . '%='
     endif
   endif
-  if self.check_width(len, a:tag, a:winwidth)
+  if self.check_width(len, a:tag, a:winwidth) && g:spacevim_enable_statusline_tag
     let l .= '%#' . a:hi_z . '#' . a:tag
   endif
   let l .= '%#' . a:hi_b . '_' . a:hi_z . '#' . a:rsep

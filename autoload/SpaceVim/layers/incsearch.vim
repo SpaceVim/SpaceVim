@@ -1,6 +1,6 @@
 "=============================================================================
 " incsearch.vim --- SpaceVim incsearch layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -48,6 +48,7 @@ function! SpaceVim#layers#incsearch#config() abort
   map ?  <Plug>(incsearch-backward)
   map g/ <Plug>(incsearch-stay)
   set hlsearch
+  let g:incsearch#no_inc_hlsearch = 1
   let g:incsearch#auto_nohlsearch = get(g:, 'incsearch#auto_nohlsearch', 1)
   nnoremap <silent> n  :call <SID>update_search_index('d')<cr>
   nnoremap <silent> N  :call <SID>update_search_index('r')<cr>

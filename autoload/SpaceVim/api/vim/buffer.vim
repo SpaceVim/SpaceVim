@@ -1,10 +1,33 @@
 "=============================================================================
 " buffer.vim --- SpaceVim buffer API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section vim#buffer, api-vim-buffer
+" @parentsection api
+" @subsection Functions
+"
+" is_cmdwin()
+" 
+" Check if current windows is command line windows.
+" 
+" open(opt)
+"
+" Open a new buffer with specifice options, return the buffer number, the {opt} 
+" is a dict with following keys:
+" 
+"     bufname : the buffer name of the new buffer
+"
+"     mode: how to open the new buffer, default is vertical topleft split
+"
+"     initfunc: the function which will be call after creating buffer
+"
+"     cmd: the ex command which will be run after the new buffer is created
+
 
 let s:self = {}
 

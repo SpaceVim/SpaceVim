@@ -1,6 +1,6 @@
 "=============================================================================
 " complete.vim --- SpaceVim complete API for bash
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,14 +8,17 @@
 
 let s:self = {}
 
-let s:completer = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/autoload/SpaceVim/bin/get_complete'
+let s:completer = g:_spacevim_root_dir . '/autoload/SpaceVim/bin/get_complete'
 
 let s:COP = SpaceVim#api#import('vim#compatible')
 
 " this is for vim command completion 
 
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
 function! s:self.complete(ArgLead, CmdLine, CursorPos) abort
-  if a:CmdLine =~ '^\s\{0,\}\w\+$'
+  if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
   endif
   let result = s:COP.systemlist([s:completer, a:CmdLine])
@@ -26,11 +29,11 @@ endfunction
 " this is for vim input()
 
 function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
-  if a:CmdLine =~ '^\s\{0,\}\w\+$'
+  if a:CmdLine =~? '^\s\{0,\}\w\+$'
     return s:COP.systemlist('compgen -c ' . a:CmdLine)
   endif
   let result = s:COP.systemlist([s:completer, a:CmdLine])
-  if a:ArgLead == ''
+  if a:ArgLead ==# ''
     let result = map(result, 'a:CmdLine . v:val')
   else
     let leader = substitute(a:CmdLine, '[^ ]*$', '', 'g')
@@ -39,9 +42,12 @@ function! s:self.complete_input(ArgLead, CmdLine, CursorPos) abort
   return result
 
 endfunction
+" @vimlint(EVL103, 0, a:ArgLead)
+" @vimlint(EVL103, 0, a:CmdLine)
+" @vimlint(EVL103, 0, a:CursorPos)
 
 
-function! SpaceVim#api#bash#complete#get()
+function! SpaceVim#api#bash#complete#get() abort
 
   return deepcopy(s:self)
 

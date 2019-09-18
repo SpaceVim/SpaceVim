@@ -1,18 +1,19 @@
 "=============================================================================
 " help.vim --- help plugin for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 let s:KEY = SpaceVim#api#import('vim#key')
+let s:TABs = SpaceVim#api#import('vim#tab')
 let s:key_describ = {}
 
-function! SpaceVim#plugins#help#describe_bindings()
+function! SpaceVim#plugins#help#describe_bindings() abort
 endfunction
 
-function! SpaceVim#plugins#help#regist_root(dict)
+function! SpaceVim#plugins#help#regist_root(dict) abort
   let keys = keys(a:dict)
   if type(a:dict) == 4 && len(keys) == 1
     call extend(s:key_describ, a:dict)
@@ -20,7 +21,7 @@ function! SpaceVim#plugins#help#regist_root(dict)
 endfunction
 
 
-function! SpaceVim#plugins#help#describe_key()
+function! SpaceVim#plugins#help#describe_key() abort
   let defined = 1
   let root = s:key_describ
   let prompt = 'Describe key:'
@@ -38,7 +39,7 @@ function! SpaceVim#plugins#help#describe_key()
     let root = root[name]
     if type(root) == 3
       if len(root) == 3
-        redraw!
+        normal! :
         call s:open_describe_buffer(root[-1])
       else
         call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
@@ -48,9 +49,9 @@ function! SpaceVim#plugins#help#describe_key()
       call s:build_mpt([prompt, join(keys + [''], ' - ')])
     endif
   else
-    redraw!
+    normal! :
     echohl Comment
-    echo   join(keys, ' - ') . ' is undefined'
+    echon   join(keys, ' - ') . ' is undefined'
     echohl NONE
     let defined = 0
   endif
@@ -62,7 +63,7 @@ function! SpaceVim#plugins#help#describe_key()
       let root = root[name]
       if type(root) == 3
         if len(root) == 3
-          redraw!
+          normal! :
           call s:open_describe_buffer(root[-1])
         else
           call s:build_mpt(['can not find describe for ', join(keys, ' - ')])
@@ -72,9 +73,9 @@ function! SpaceVim#plugins#help#describe_key()
         call s:build_mpt([prompt, join(keys + [''], ' - ')])
       endif
     else
-      redraw!
+      normal! :
       echohl Comment
-      echo   join(keys, ' - ') . ' is undefined'
+      echon   join(keys, ' - ') . ' is undefined'
       echohl NONE
       let defined = 0
     endif
@@ -82,27 +83,50 @@ function! SpaceVim#plugins#help#describe_key()
 endfunction
 
 function! s:build_mpt(mpt) abort
-  redraw!
+  normal! :
   echohl Comment
   if type(a:mpt) == 1
-    echo a:mpt
+    echon a:mpt
   elseif type(a:mpt) == 3
-    echo join(a:mpt)
+    echon join(a:mpt)
   endif
   echohl NONE
 endfunction
 
-
 function! s:open_describe_buffer(desc) abort
-  noautocmd botright split __help_describe__
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
-  set filetype=HelpDescribe
-  call setline(1, a:desc)
-  let b:defind_file_name = split(a:desc[-1][12:], ':')
-  let lines = &lines * 30 / 100
-  if lines < winheight(0)
-    exe 'resize ' . lines
+  " FIXME: check if the help windows exist in current tab
+  " if the windows exit switch to that windows, clear content, update desc and
+  " key binding
+  let tabtree = s:TABs.get_tree()
+  if index(map(tabtree[tabpagenr()], 'bufname(v:val)'), '__help_describe__') == -1
+    noautocmd botright split __help_describe__
+    let s:helpbufnr = bufnr('%')
+    setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber nocursorline
+    set filetype=HelpDescribe
+    setlocal modifiable
+    silent normal! "_ggdG
+    silent call setline(1, a:desc)
+    setlocal nomodifiable
+    let b:defind_file_name = split(a:desc[-1][12:], ':')
+    let lines = &lines * 30 / 100
+    if lines < winheight(0)
+      exe 'resize ' . lines
+    endif
+    setlocal nofoldenable nomodifiable
+    nnoremap <buffer><silent> q :bd<cr>
+  else
+    let winnr = bufwinnr(s:helpbufnr)
+    exe winnr .  'wincmd w'
+    setlocal modifiable
+    silent normal! "_ggdG
+    silent call setline(1, a:desc)
+    setlocal nomodifiable
+    let b:defind_file_name = split(a:desc[-1][12:], ':')
+    let lines = &lines * 30 / 100
+    if lines < winheight(0)
+      exe 'resize ' . lines
+    endif
+    setlocal nofoldenable nomodifiable
+    nnoremap <buffer><silent> q :bd<cr>
   endif
-  setlocal nofoldenable
-  nnoremap <buffer><silent> q :bd<cr>
 endfunction

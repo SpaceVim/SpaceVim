@@ -1,6 +1,6 @@
 "=============================================================================
 " mkdir.vim --- auto mkdir when saving file
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -17,7 +17,11 @@ endfunction
 
 fun! s:Mkdirp(dir) abort
   if exists('*mkdir')
-    call mkdir(a:dir, 'p')
+    try
+      call mkdir(a:dir, 'p')
+    catch      
+      call SpaceVim#logger#error('failed to create dir:' . a:dir)
+    endtry
   else
     " @todo mkdir only exist in *nix os
     call system('mkdir -p '.shellescape(a:dir))

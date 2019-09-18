@@ -1,14 +1,14 @@
 "=============================================================================
 " z.vim --- z key bindings
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 function! SpaceVim#mapping#z#init() abort "{{{
-    nnoremap <silent><nowait> [z] :<c-u>LeaderGuide "z"<CR>
-    nmap z [z]
+    nnoremap <silent><nowait> [Z] :<c-u>LeaderGuide "z"<CR>
+    nmap z [Z]
     let g:_spacevim_mappings_z = {}
     let g:_spacevim_mappings_z['<CR>'] = ['call feedkeys("z\<CR>", "n")', 'cursor line to top']
     nnoremap z<CR> z<CR>
@@ -32,7 +32,7 @@ function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap zE zE
     let g:_spacevim_mappings_z['F'] = ['call feedkeys("zF", "n")', 'create a fold for N lines']
     nnoremap zF zF
-    let g:_spacevim_mappings_z['G'] = ['call feedkeys("zG", "n")', 'mark good spelled(update internal-wordlist)']
+    let g:_spacevim_mappings_z['G'] = ['call feedkeys("zG", "n")', 'mark good spelled (update internal wordlist)']
     nnoremap zG zG
     let g:_spacevim_mappings_z['H'] = ['call feedkeys("zH", "n")', 'scroll half a screenwidth to the right']
     nnoremap zH zH
@@ -46,7 +46,7 @@ function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap zO zO
     let g:_spacevim_mappings_z['R'] = ['call feedkeys("zR", "n")', 'set `foldlevel` to deepest fold']
     nnoremap zR zR
-    let g:_spacevim_mappings_z['W'] = ['call feedkeys("zW", "n")', 'mark wrong spelled']
+    let g:_spacevim_mappings_z['W'] = ['call feedkeys("zW", "n")', 'mark wrong spelled (update internal wordlist)']
     nnoremap zW zW
     let g:_spacevim_mappings_z['X'] = ['call feedkeys("zX", "n")', 're-apply `foldleve`']
     nnoremap zX zX
@@ -70,10 +70,14 @@ function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap z<Left> zh
     let g:_spacevim_mappings_z['i'] = ['call feedkeys("zi", "n")', 'toggle foldenable']
     nnoremap zi zi
-    let g:_spacevim_mappings_z['j'] = ['call feedkeys("zj", "n")', 'mode to start of next fold']
+    let g:_spacevim_mappings_z['j'] = ['call feedkeys("zj", "n")', 'move to start of next fold']
     nnoremap zj zj
-    let g:_spacevim_mappings_z['k'] = ['call feedkeys("zk", "n")', 'mode to end of previous fold']
+    let g:_spacevim_mappings_z['J'] = ['call feedkeys("zjzx", "n")', 'move to and open next fold']
+    nnoremap zJ zjzx
+    let g:_spacevim_mappings_z['k'] = ['call feedkeys("zk", "n")', 'move to end of previous fold']
     nnoremap zk zk
+    let g:_spacevim_mappings_z['K'] = ['call feedkeys("zkzx", "n")', 'move to and open previous fold']
+    nnoremap zK zkzx
     let g:_spacevim_mappings_z['l'] = ['call feedkeys("zl", "n")', 'scroll screen N characters to left']
     nnoremap zl zl
     let g:_spacevim_mappings_z['<Right>'] = ['call feedkeys("zl", "n")', 'scroll screen N characters to left']
@@ -92,6 +96,8 @@ function! SpaceVim#mapping#z#init() abort "{{{
     nnoremap zt zt
     let g:_spacevim_mappings_z['v'] = ['call feedkeys("zv", "n")', 'open enough folds to view cursor line']
     nnoremap zv zv
+    let g:_spacevim_mappings_z['w'] = ['call feedkeys("zw", "n")', 'mark wrong spelled']
+    nnoremap zw zw
     let g:_spacevim_mappings_z['x'] = ['call feedkeys("zx", "n")', 're-apply foldlevel and do "zV"']
     nnoremap zx zx
     " smart scroll

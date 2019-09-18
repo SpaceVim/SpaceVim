@@ -1,7 +1,7 @@
 "=============================================================================
-" github.vim --- github layer file for SpaceVim
-" Copyright (c) 2018 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" github.vim --- SpaceVim github layer
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -47,7 +47,8 @@ function! SpaceVim#layers#github#config() abort
   let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
 
   " @todo remove the username
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'l'], 'Gista list -u wsdjeg',
+  " autoload to set default username
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'l'], 'Gista list',
         \ 'list gist', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'g', 'p'], 'Gista post',
         \ 'post selection or current file', 1, 1)

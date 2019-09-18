@@ -3,8 +3,9 @@ let g:ale_sign_error = get(g:, 'spacevim_error_symbol', '✖')
 let g:ale_sign_warning = get(g:,'spacevim_warning_symbol', '➤')
 let g:ale_sign_info = get(g:,'spacevim_info_symbol', '🛈')
 let g:ale_echo_msg_format = get(g:, 'ale_echo_msg_format', '%severity%: %linter%: %s')
+let g:ale_lint_on_save = get(g:, 'spacevim_lint_on_save', 1)
 
-if g:spacevim_colorscheme == 'gruvbox'
+if g:spacevim_colorscheme ==# 'gruvbox'
   highlight link ALEErrorSign GruvboxRedSign
   highlight link ALEWarningSign GruvboxYellowSign
 endif

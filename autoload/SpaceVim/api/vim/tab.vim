@@ -1,6 +1,6 @@
 "=============================================================================
 " tab.vim --- SpaceVim tab API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -30,7 +30,7 @@ function! s:self.get_tree() abort
 endfunction
 
 function! s:self.realTabBuffers(id) abort
-  return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") == ""')
+  return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") ==# ""')
 endfunction
 
 function! SpaceVim#api#vim#tab#get() abort

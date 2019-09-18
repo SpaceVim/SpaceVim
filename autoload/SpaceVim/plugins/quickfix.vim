@@ -1,10 +1,17 @@
 "=============================================================================
 " quickfix.vim --- quickfix for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+" this is a build-in quickfix list and location list plugin for SpaceVim, and
+" it should works well for both quickfix list and location list. The public
+" key bindings is:
+" 1. jump to next position in qflist
+" 2. jump to previous position in qflist
+" 3. open qflist if it is available
 
 let s:qflist = []
 
@@ -19,7 +26,7 @@ let s:qf_bufnr = -1
 " like setqflist()
 
 
-function! SpaceVim#plugins#quickfix#setqflist(list, ...)
+function! SpaceVim#plugins#quickfix#setqflist(list, ...) abort
   let action = get(a:000, 0, ' ')
   if action ==# 'a'
     call extend(s:qflist, a:list)
@@ -39,14 +46,14 @@ function! SpaceVim#plugins#quickfix#setqflist(list, ...)
 endfunction
 
 
-function! SpaceVim#plugins#quickfix#getqflist()
+function! SpaceVim#plugins#quickfix#getqflist() abort
 
   return s:qflist
 
 endfunction
 
 
-function! SpaceVim#plugins#quickfix#next()
+function! SpaceVim#plugins#quickfix#next() abort
 
   let s:qf_index += 1
   let file = get(s:filestack, s:qf_index, {})
@@ -59,7 +66,7 @@ function! SpaceVim#plugins#quickfix#next()
 endfunction
 
 
-function! SpaceVim#plugins#quickfix#pre()
+function! SpaceVim#plugins#quickfix#pre() abort
 
   let s:qf_index -= 1
   let file = get(s:filestack, s:qf_index, {})
@@ -72,7 +79,7 @@ function! SpaceVim#plugins#quickfix#pre()
 endfunction
 
 
-function! SpaceVim#plugins#quickfix#enter()
+function! SpaceVim#plugins#quickfix#enter() abort
   let s:qf_index = line('.') - 1
   let file = get(s:filestack, s:qf_index, {})
   if !empty(file)
@@ -83,7 +90,7 @@ function! SpaceVim#plugins#quickfix#enter()
 endfunction
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-function! SpaceVim#plugins#quickfix#openwin()
+function! SpaceVim#plugins#quickfix#openwin() abort
   call s:BUFFER.open({
         \ 'bufname' : '__quickfix__',
         \ 'cmd' : 'setl buftype=nofile bufhidden=wipe filetype=SpaceVimQuickFix nomodifiable nowrap nobuflisted',

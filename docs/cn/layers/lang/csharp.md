@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#csharp 模块"
-description: "该模块为 SpaceVim 提供 csharp 开发支持，包括代码高亮、对齐、补全等特性。"
+description: "这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。"
 lang: cn
 ---
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-该模块为 SpaceVim 提供 csharp 开发支持，包括代码高亮、对齐、补全等特性。
+这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。
 
 ## 依赖安装及模块启用
 
@@ -50,7 +50,7 @@ lang: cn
 
 ## 快捷键
 
-| 按键        | 功能描述                           |
+| 快捷键      | 功能描述                           |
 | ----------- | ---------------------------------- |
 | `SPC l b`   | compile the project                |
 | `SPC l f`   | format current file                |

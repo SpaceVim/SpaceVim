@@ -216,7 +216,7 @@ body { padding: 0px 0 20px 0px; margin: 0px; font: 14px/1.5 "OpenSansRegular", "
 
 h1, h2, h3, h4, h5, h6 { color: #e8e8e8; margin: 0 0 10px; font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; }
 
-p, ul, ol, table, pre, dl { margin: 0 0 20px; }
+p, ul, ol, table, pre, dl { margin: 0 0 5px; }
 
 h1, h2, h3 { line-height: 1.1; }
 
@@ -247,7 +247,7 @@ section img { max-width: 100%; }
 
 blockquote { border-left: 3px solid #ffcc00; margin: 0; padding: 0 0 0 20px; font-style: italic; }
 
-code { font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, monospace; color: #efefef; font-size: 13px; margin: 0 4px; padding: 4px 6px; border-radius: 2px; }
+code { font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, monospace; color: $code-default-color; font-size: 13px; border-radius: 2px; }
 
 pre { padding: 8px 15px; background: #191919; border-radius: 2px; border: 1px solid #121212; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); overflow: auto; overflow-y: hidden; }
 pre code { color: #efefef; text-shadow: 0px 1px 0px #000; margin: 0; padding: 0; }

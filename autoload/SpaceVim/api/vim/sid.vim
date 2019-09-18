@@ -1,6 +1,6 @@
 "=============================================================================
 " sid.vim --- SpaceVim SID API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,6 +12,8 @@
 "" Capture command
 
 let s:self = {}
+
+let s:DICT = SpaceVim#api#import('data#dict')
 
 let s:self._cache = {}
 
@@ -44,6 +46,17 @@ function! s:self.scriptnames() abort
   endfor
   return sdict
 endfunction
+
+function! s:self.get_sid_from_path(path) abort
+  let path = self._unify_path(a:path)
+  let scriptnames = s:DICT.swap(self.scriptnames())
+  if has_key(scriptnames, path)
+    return scriptnames[path]
+  else
+    return -1
+  endif
+endfunction
+
 function! SpaceVim#api#vim#sid#get() abort
     return deepcopy(s:self)
 endfunction

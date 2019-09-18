@@ -1,6 +1,6 @@
 "=============================================================================
 " rust.vim --- SpaceVim lang#rust layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -19,16 +19,21 @@
 " >
 "       rustup component add rust-src 
 " <
-"   2. Install racer:
+"   2. Install Rust nightly build
+"       
 " >
-"       cargo install racer
+"       rustup install nightly
 " <
-"   3. Set the RUST_SRC_PATH variable in your .bashrc:
+"   3. Install racer:
+" >
+"       cargo +nightly install racer
+" <
+"   4. Set the RUST_SRC_PATH variable in your .bashrc:
 " >
 "       RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
 "       export RUST_SRC_PATH
 " <
-"   4. Add racer to your path, or set the path with:
+"   5. Add racer to your path, or set the path with:
 " >
 "       let g:racer_cmd = "/path/to/racer/bin"
 " <
@@ -52,10 +57,12 @@ function! SpaceVim#layers#lang#rust#plugins() abort
   return plugins
 endfunction
 
+let s:recommended_style = 0
+
 function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
   let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
-
+  let g:rust_recommended_style = s:recommended_style
   if SpaceVim#layers#lsp#check_filetype('rust')
     call SpaceVim#mapping#gd#add('rust',
           \ function('SpaceVim#lsp#go_to_def'))
@@ -63,10 +70,23 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
-  call SpaceVim#plugins#runner#reg_runner('rust',
-        \ ['rustc %s -o #TEMP#', '#TEMP#'])
+  let runner = {
+        \ 'exe' : 'rustc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('rust',
         \ function('s:language_specified_mappings'))
+endfunction
+
+function! SpaceVim#layers#lang#rust#set_variable(var) abort
+
+  let s:recommended_style = get(a:var,
+        \ 'recommended-style',
+        \ s:recommended_style)
+
 endfunction
 
 function! s:language_specified_mappings() abort

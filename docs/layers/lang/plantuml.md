@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#plantuml layer"
-description: "This layer is for plantuml development, syntax highlighting for plantuml file."
+description: "This layer is for PlantUML development, syntax highlighting for PlantUML file."
 ---
 
 # [Available Layers](../../) >> lang#plantuml
@@ -16,7 +16,7 @@ description: "This layer is for plantuml development, syntax highlighting for pl
 
 ## Description
 
-This layer is for plantuml development.
+This layer is for PlantUML development.
 
 ## Features
 

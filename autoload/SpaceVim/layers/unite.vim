@@ -1,6 +1,6 @@
 "=============================================================================
 " unite.vim --- SpaceVim unite layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -194,6 +194,16 @@ function! s:defind_fuzzy_finder() abort
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fp  :<C-u>Unite menu:AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['Unite menu:AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]

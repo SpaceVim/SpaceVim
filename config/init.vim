@@ -13,12 +13,12 @@ try
   if s:SYSTEM.isWindows
     silent exec 'lan mes en_US.UTF-8'
   elseif s:SYSTEM.isOSX
-    silent exec 'language en_US'
+    silent exec 'language en_US.UTF-8'
   else
     let s:uname = system('uname -s')
     if s:uname ==# "Darwin\n"
       " in mac-terminal
-      silent exec 'language en_US'
+      silent exec 'language en_US.UTF-8'
     elseif s:uname ==# "SunOS\n"
       " in Sun-OS terminal
       silent exec 'lan en_US.UTF-8'
@@ -47,7 +47,7 @@ if s:SYSTEM.isWindows
     " fallback into cp1252 instead of eg. iso-8859-15.
     " Newer Windows files might contain utf-8 or utf-16 LE so we might
     " want to try them first.
-    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15
+    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15,cp936
   endif
 
 else

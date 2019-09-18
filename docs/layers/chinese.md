@@ -15,11 +15,11 @@ description: "Layer for chinese users, include chinese docs and runtime messages
 
 ## Description
 
-This layer is for chinese users, and provide chinese docs and runtime messages.
+This layer is for Chinese users, and provide Chinese documentations and runtime messages.
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+Add following snippet to your custom configuration file to use this configuration layer.
 
 ```toml
 [[layers]]
@@ -28,7 +28,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Configuration
 
-if you want to enable this feature, add following snippet to your custom config file.
+Add the following snippet to your custom config file to enable this feature.
 
 ```toml
 [options]
