@@ -38,6 +38,8 @@ endfunction
 function! SpaceVim#plugins#repl#send(type) abort
   if !exists('s:job_id')
     echom('Please start REPL via the key binding "SPC l s i" first.')
+  elseif s:job_id == 0
+    echom('please retart the REPL')
   else
     if a:type ==# 'line'
       call s:JOB.send(s:job_id, [getline('.'), ''])
@@ -130,6 +132,7 @@ function! s:on_exit(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   endif
   call s:update_statusline()
+  let s:job_id = 0
 endfunction
 
 function! s:update_statusline() abort
