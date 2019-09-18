@@ -741,7 +741,7 @@ endfunction
 
 function! SpaceVim#layers#core#statusline#denite_mode() abort
   let t = s:colors_template
-  if exists('*get_status_mode')
+  if exists('*denite#get_status_mode')
     let denite_ver = 2
   else
     let denite_ver = 3
