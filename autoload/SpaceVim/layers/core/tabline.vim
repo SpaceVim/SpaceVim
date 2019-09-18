@@ -182,100 +182,15 @@ function! s:is_modified(nr) abort
   return getbufvar(a:nr, '&modified', 0)
 endfunction
 
-function! Test() abort
-  return s:
-endfunction
-
-
-func! TablineGet() abort
-  let nr = tabpagenr('$')
-  let t = ''
-  " the stack should be the bufnr stack of tabline
-  let stack = []
-  if len(s:tabline_items) == 0
-    return ''
-  endif
-  let ct = bufnr('%')
-  let ct_idex = index(s:tabline_items, 'v:val.bufnr ==# ct')
-  let pt = ct_idex > 0 ? s:tabline_items[ct_idex - 1] : -1
-  if ct == get(s:tabline_items, 0, {'bufnr' : -1})['bufnr']
-    if getbufvar(ct, '&modified', 0)
-      let t = '%#SpaceVim_tabline_m# '
-    else
-      let t = '%#SpaceVim_tabline_a# '
-    endif
-  else
-    let t = '%#SpaceVim_tabline_b# '
-  endif
-  let index = 1
-  for i in map(deepcopy(s:tabline_items), 'v:val.bufnr')
-    if getbufvar(i, '&modified', 0) && i != ct
-      let t .= '%#SpaceVim_tabline_m_i#'
-    elseif i == ct
-      if s:is_modified(i)
-        let t .= '%#SpaceVim_tabline_m#'
-      else
-        let t .= '%#SpaceVim_tabline_a#'
-      endif
-    else
-      let t .= '%#SpaceVim_tabline_b#'
-    endif
-    let name = fnamemodify(bufname(i), ':t')
-    if empty(name)
-      let name = 'No Name'
-    endif
-    call add(stack, i)
-    call s:need_show_bfname(stack, i)
-    " here is the begin of a tab name
-    if has('tablineat')
-      let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
-    endif
-    if g:spacevim_buffer_index_type == 3
-      let id = s:MESSLETTERS.index_num(index)
-    elseif g:spacevim_buffer_index_type == 4
-      let id = index
-    else
-      let id = s:MESSLETTERS.circled_num(index, g:spacevim_buffer_index_type)
-    endif
-    if g:spacevim_enable_tabline_filetype_icon
-      let icon = s:FILE.fticon(name)
-      if !empty(icon)
-        let name = name . ' ' . icon
-      endif
-    endif
-    let t .= id . ' ' . name
-    " here is the end of a tabname
-    if has('tablineat')
-      let t .= '%X'
-    endif
-    if i == ct
-      if s:is_modified(i)
-        let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . ' '
-      else
-        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
-      endif
-    elseif i == pt
-      if getbufvar(ct, '&modified', 0)
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . ' '
-      else
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
-      endif
-    else
-      let t .= ' %#SpaceVim_tabline_b#' . s:ilsep . ' '
-    endif
-    let index += 1
-  endfor
-  let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-  let t .= '%#SpaceVim_tabline_a# Buffers '
-  return t
-endf
-
 function! SpaceVim#layers#core#tabline#get() abort
-  let nr = tabpagenr('$')
+  let right_hidden_tabs = []
+  let shown_tabs = []
+  let left_hidden_tabs = []
+  let tabpage_counts = tabpagenr('$')
   let t = ''
   " the stack should be the bufnr stack of tabline
   let stack = []
-  if nr > 1
+  if tabpage_counts > 1
     let ct = tabpagenr()
     if ct == 1
       let t = '%#SpaceVim_tabline_a#  '
@@ -283,7 +198,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t = '%#SpaceVim_tabline_b#  '
     endif
     let index = 1
-    for i in range(1, nr)
+    for i in range(1, tabpage_counts)
       if i == ct
         let t .= '%#SpaceVim_tabline_a#'
       endif
