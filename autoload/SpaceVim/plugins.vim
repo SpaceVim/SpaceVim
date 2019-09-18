@@ -9,12 +9,12 @@
 scriptencoding utf-8
 function! SpaceVim#plugins#load() abort
   if SpaceVim#plugins#enable_plug()
-    call SpaceVim#plugins#begin(g:spacevim_plugin_bundle_dir)
-    call SpaceVim#plugins#fetch()
+    call s:begin(g:spacevim_plugin_bundle_dir)
+    call s:fetch_plugin_manager()
     call s:load_plugins()
     call s:disable_plugins(g:spacevim_disabled_plugins)
     call s:load_custom_plugins()
-    call SpaceVim#plugins#end()
+    call s:end()
   endif
 
 endfunction
@@ -36,7 +36,7 @@ function! s:load_plugins() abort
         call SpaceVim#plugins#add(plugin[0])
       endif
     endfor
-    call s:loadLayerConfig(group)
+    call s:load_layer_onfig(group)
   endfor
   unlet g:_spacevim_plugin_layer
 endfunction
@@ -66,7 +66,7 @@ function! s:getLayerPlugins(layer) abort
   return p
 endfunction
 
-function! s:loadLayerConfig(layer) abort
+function! s:load_layer_onfig(layer) abort
   try
     call SpaceVim#layers#{a:layer}#config()
   catch /^Vim\%((\a\+)\)\=:E117/
@@ -200,7 +200,7 @@ if get(g:,'spacevim_enable_plugins', 1)
   call s:install_manager()
 endif
 
-function! SpaceVim#plugins#begin(path) abort
+function! s:begin(path) abort
   let g:unite_source_menu_menus.AddedPlugins =
         \ {'description':
         \ 'All the Added plugins'
@@ -215,7 +215,7 @@ function! SpaceVim#plugins#begin(path) abort
   endif
 endfunction
 
-function! SpaceVim#plugins#end() abort
+function! s:end() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
     call neobundle#end()
     if g:spacevim_checkinstall == 1
@@ -257,7 +257,7 @@ function! SpaceVim#plugins#defind_hooks(bundle) abort
   endif
 endfunction
 
-function! SpaceVim#plugins#fetch() abort
+function! s:fetch_plugin_manager() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
     NeoBundleFetch 'Shougo/neobundle.vim'
   elseif g:spacevim_plugin_manager ==# 'dein'
