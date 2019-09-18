@@ -71,7 +71,7 @@ function! SpaceVim#layers#lang#lua#config() abort
   elseif executable('luap')
     let lua_repl = 'luap'
   elseif !empty(luaexe)
-    let lua_repl = luaexe + ['-i'])
+    let lua_repl = luaexe[0] + ['-i'])
   else
     let lua_repl = ['lua', '-i']
   endif
