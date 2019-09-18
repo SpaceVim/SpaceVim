@@ -727,7 +727,7 @@ endfunction
 
 
 function! SpaceVim#layers#core#statusline#denite_status(argv) abort
-  if exists('*get_status_mode')
+  if exists('*denite#get_status_mode')
     let denite_ver = 2
   else
     let denite_ver = 3
@@ -748,18 +748,19 @@ function! SpaceVim#layers#core#statusline#denite_mode() abort
   endif
 
   if denite_ver == 3
-    let dmode = ['Denite']
+    let dmode = 'Denite'
   else
+    " this can not be changed, as it works in old denite
     let dmode = split(denite#get_status_mode())[1]
-  endif
-  if get(w:, 'spacevim_statusline_mode', '') != dmode
-    if dmode ==# 'NORMAL'
-      exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-    elseif dmode ==# 'INSERT'
-      exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+    if get(w:, 'spacevim_statusline_mode', '') != dmode
+      if dmode ==# 'NORMAL'
+        exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+      elseif dmode ==# 'INSERT'
+        exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+      endif
+      call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
+      let w:spacevim_statusline_mode = dmode
     endif
-    call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
-    let w:spacevim_statusline_mode = dmode
   endif
   return dmode
 endfunction
