@@ -67,14 +67,15 @@ function! SpaceVim#layers#lang#lua#config() abort
         \ 'errorformat': '%*\f: %#%f:%l: %m',
         \ }
   if !empty(s:lua_repl_command)
-    call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
+    let lua_repl = s:lua_repl_command
   elseif executable('luap')
-    call SpaceVim#plugins#repl#reg('lua', 'luap')
+    let lua_repl = 'luap'
   elseif !empty(luaexe)
-    call SpaceVim#plugins#repl#reg('lua', luaexe + ['-i'])
+    let lua_repl = luaexe + ['-i'])
   else
-    call SpaceVim#plugins#repl#reg('lua', ['lua', '-i'])
+    let lua_repl = ['lua', '-i']
   endif
+  call SpaceVim#plugins#repl#reg('lua', lua_repl)
 endfunction
 
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort
