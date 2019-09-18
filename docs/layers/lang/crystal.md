@@ -28,6 +28,9 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#crystal"
 ```
+
+To use REPL for crystal, you need to install [icr](https://github.com/crystal-community/icr).
+
 ## Features
 
 - repl support
@@ -41,7 +44,7 @@ To running a crystal file, you can press `SPC l r` to run current file without l
 
 ### Inferior REPL process
 
-Start a `crystal` inferior REPL process with `SPC l s i`.
+Start a `icr` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
