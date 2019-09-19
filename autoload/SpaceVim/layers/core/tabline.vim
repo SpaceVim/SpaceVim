@@ -187,6 +187,30 @@ function! SpaceVim#layers#core#tabline#get() abort
   let shown_tabs = []
   let left_hidden_tabs = []
   let tabpage_counts = tabpagenr('$')
+  " {
+  "   name:
+  "   len:
+  " }
+  " &culumns
+  if tabpage_counts > 1
+    let ct = tabpagenr()
+    for i in range(1, tabpage_counts)
+      let buflist = tabpagebuflist(i)
+      let winnr = tabpagewinnr(i)
+      let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+      let tab = {
+            \ 'name' : name,
+            \ 'len' : strlen(name)
+            \ }
+      if empty(shown_tabs)
+        call add(shown_tabs, name)
+      else
+      endif
+    endfor
+  else
+  endif
+
+" ======================================
   let t = ''
   " the stack should be the bufnr stack of tabline
   let stack = []
