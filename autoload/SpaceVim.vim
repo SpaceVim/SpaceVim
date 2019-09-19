@@ -500,6 +500,7 @@ let g:spacevim_enable_statusline_tag = 1
 "     \ ]
 " <
 let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
+      \ 'search count',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
 ""
