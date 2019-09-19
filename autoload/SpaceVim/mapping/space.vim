@@ -494,8 +494,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep-on-the-fly', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
-        \ 'clear-search-highlight', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'call SpaceVim#plugins#searcher#clear()',
+        \ 'clear-search-results', 1)
 
   "Symbol
   nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>

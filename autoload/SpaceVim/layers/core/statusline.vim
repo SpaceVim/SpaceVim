@@ -269,6 +269,10 @@ function! s:search_status() abort
 endfunction
 
 
+function! s:search_count() abort
+  return SpaceVim#plugins#searcher#count()
+endfunction
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'syntax checking' : function('s:syntax_checking'),
@@ -284,6 +288,7 @@ let s:registed_sections = {
       \ 'battery status' : function('s:battery_status'),
       \ 'input method' : function('s:input_method'),
       \ 'search status' : function('s:search_status'),
+      \ 'search count' : function('s:search_count'),
       \ }
 
 
