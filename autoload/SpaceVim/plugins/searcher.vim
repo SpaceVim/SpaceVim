@@ -89,5 +89,6 @@ function! SpaceVim#plugins#searcher#clear()
   call setqflist([])
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   cclose
+  normal! :
 endfunction
 
