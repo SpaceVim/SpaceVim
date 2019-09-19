@@ -13,6 +13,7 @@ let s:rst = []
 function! SpaceVim#plugins#searcher#find(expr, exe) abort
   if empty(a:expr)
     let expr = input('search expr: ')
+    normal! :
   else
     let expr = a:expr
   endif
@@ -72,7 +73,7 @@ endfunction
 
 function! SpaceVim#plugins#searcher#list() abort
   call setqflist(s:rst)
-  copen
+  botright copen
 endfunction
 
 function! SpaceVim#plugins#searcher#count() abort
@@ -83,4 +84,10 @@ function! SpaceVim#plugins#searcher#count() abort
   endif
 endfunction
 
+function! SpaceVim#plugins#searcher#clear()
+  let s:rst = []
+  call setqflist([])
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  cclose
+endfunction
 
