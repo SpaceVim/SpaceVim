@@ -46,6 +46,10 @@ function! SpaceVim#layers#core#plugins() abort
         \}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
+
+  " adding vim-ctrlspace to try out
+  call add(plugins, ['vim-ctrlspace/vim-ctrlspace', { 'merged' : 0, 'loadconf' : 1} ])
+
   return plugins
 endfunction
 
