@@ -17,6 +17,7 @@ function! SpaceVim#plugins#searcher#find(expr, exe) abort
   else
     let expr = a:expr
   endif
+  let s:rst = []
   let id =  s:JOB.start(s:get_search_cmd(a:exe, expr), {
         \ 'on_stdout' : function('s:search_stdout'),
         \ 'on_stderr' : function('s:search_stderr'),
