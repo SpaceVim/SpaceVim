@@ -25,20 +25,18 @@ let s:HIAPI = SpaceVim#api#import('vim#highlight')
 let s:COLOR = SpaceVim#api#import('color')
 let s:is_dark=(&background ==# 'dark')
 
-function! s:hi(items) abort
-  for [item, fg, bg, cterm, gui] in a:items
-    call s:HIAPI.hi(
-          \ {
-          \ 'name' : item,
-          \ 'ctermbg' : bg,
-          \ 'ctermfg' : fg,
-          \ 'guifg' : s:COLOR.nr2str(fg),
-          \ 'guibg' : s:COLOR.nr2str(bg),
-          \ 'cterm' : cterm,
-          \ 'gui' : gui,
-          \ }
-          \ )
-  endfor
+function! s:hi(item, fg, bg, cterm, gui) abort
+  call s:HIAPI.hi(
+        \ {
+        \ 'name' : a:item,
+        \ 'ctermbg' : a:bg,
+        \ 'ctermfg' : a:fg,
+        \ 'guifg' : s:COLOR.nr2str(a:fg),
+        \ 'guibg' : s:COLOR.nr2str(a:bg),
+        \ 'cterm' : a:cterm,
+        \ 'gui' : a:gui,
+        \ }
+        \ )
 endfunction
 
 " color palette
@@ -62,12 +60,12 @@ let s:palette = {
       \ ['LineNr'           , 238 , 235 , 'None'      , 'None']      ,
       \ ['Boolean'          , 178 , ''  , 'None'      , 'None']      ,
       \ ['Character'        , 75  , ''  , 'None'      , 'None']      ,
-      \ ['ColorColumn'      , ''  , 236 , 'None'      , 'None']      ,
+      \ ['ColorColumn'      , ''  , s:bg0 , 'None'      , 'None']      ,
       \ ['Comment'          , 30  , ''  , 'None'      , 'italic']    ,
       \ ['Conditional'      , 68  , ''  , 'bold'      , 'bold']      ,
       \ ['Constant'         , 218 , ''  , 'None'      , 'None']      ,
       \ ['Cursor'           , 235 , 178 , 'bold'      , 'bold']      ,
-      \ ['CursorColumn'     , ''  , 236 , 'None'      , 'None']      ,
+      \ ['CursorColumn'     , ''  , s:bg0 , 'None'      , 'None']      ,
       \ ['CursorLine'       , ''  , s:bg0 , 'None'      , 'None']      ,
       \ ['CursorLineNr'     , 170 , s:bg0 , 'None'      , 'None']      ,
       \ ['Debug'            , 225 , ''  , 'None'      , 'None']      ,
@@ -96,9 +94,9 @@ let s:palette = {
       \ ['NonText'          , 241 , ''  , 'None'      , 'None']      ,
       \ ['Number'           , 176 , ''  , 'None'      , 'None']      ,
       \ ['Operator'         , 111 , ''  , 'None'      , 'None']      ,
-      \ ['Pmenu'            , 141 , 236 , 'None'      , 'None']      ,
-      \ ['PmenuSbar'        , 28  , 233 , 'None'      , 'None']      ,
+      \ ['Pmenu'            , 141 , s:bg1 , 'None'      , 'None']      ,
       \ ['PmenuSel'         , 251 , 97  , 'None'      , 'None']      ,
+      \ ['PmenuSbar'        , 28  , 233 , 'None'      , 'None']      ,
       \ ['PmenuThumb'       , 160 , 97  , 'None'      , 'None']      ,
       \ ['PreCondit'        , 139 , ''  , 'None'      , 'None']      ,
       \ ['PreProc'          , 176 , ''  , 'None'      , 'None']      ,
@@ -131,8 +129,8 @@ let s:palette = {
       \ ['Type'             , 68  , ''  , 'None'      , 'None']      ,
       \ ['Typedef'          , 68  , ''  , 'None'      , 'None']      ,
       \ ['VertSplit'        , 234 , ''  , 'None'      , 'None']      ,
-      \ ['Visual'           , ''  , 238 , 'None'      , 'None']      ,
-      \ ['VisualNOS'        , ''  , 238 , 'None'      , 'None']      ,
+      \ ['Visual'           , ''  , s:bg3 , 'None'      , 'None']      ,
+      \ ['VisualNOS'        , ''  , s:bg3 , 'None'      , 'None']      ,
       \ ['Warning'          , 136 , ''  , 'bold'      , 'bold']      ,
       \ ['WarningMsg'       , 136 , ''  , 'bold'      , 'bold']      ,
       \ ['WildMenu'         , 214 , 239 , 'None'      , 'None']      ,
@@ -142,8 +140,16 @@ let s:palette = {
       \ ],
       \ }
 
-call s:hi(s:palette[s:is_dark ? 'dark' : 'light'])
+let item = []
+for item in s:palette[s:is_dark ? 'dark' : 'light'] 
+  call call('s:hi', item)
+endfor
+unlet item
 
+" vim-startify
+hi link StartifyFile Normal
+call s:hi('StartifyHeader'  , 177 , '' , 'none' , 'none')
+call s:hi('startifySection' , 68  , '' , 'bold' , 'bold')
 
 if s:is_dark
   set background=dark
