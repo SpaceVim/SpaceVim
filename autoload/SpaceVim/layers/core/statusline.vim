@@ -578,6 +578,10 @@ function! SpaceVim#layers#core#statusline#register_mode(mode) abort
   endif
 endfunction
 
+function! FuckTest(str) abort
+  exe a:str
+endfunction
+
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
