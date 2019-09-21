@@ -573,6 +573,7 @@ endfunction
 function! SpaceVim#layers#core#statusline#register_mode(mode) abort
   if has_key(s:modes, a:mode.key)
     let s:modes[a:mode.key]['func'] = a:mode.func
+    call SpaceVim#logger#info('the func has been added to mode:' . a:mode.key)
   else
     let s:modes[a:mode.key] = a:mode
   endif
@@ -589,8 +590,11 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     call add(s:loaded_modes, a:name)
   endif
   let mode = s:modes[a:name]
+  call SpaceVim#logger#info('try to call func of mode:' . a:name)
   if has_key(mode, 'func')
     call call(mode.func, [])
+  else
+    call SpaceVim#logger#info('no func found for mode:' . a:name)
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   call s:update_conf()
