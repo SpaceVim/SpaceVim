@@ -27,6 +27,7 @@ let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:ICON = SpaceVim#api#import('unicode#icon')
+let s:JSON = SpaceVim#api#import('data#json')
 
 " init
 let s:separators = {
@@ -564,6 +565,7 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     call add(s:loaded_modes, a:name)
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  call s:update_conf()
 endfunction
 
 let s:section_old_pos = {
@@ -626,6 +628,17 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
+  if filereadable(expand('~/.cache/SpaceVim/major_mode.json'))
+    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
+  endif
+endfunction
+
+function! s:update_conf() abort
+  let conf = {}
+  for key in keys(s:modes)
+    call extend(conf, {key : (index(s:loaded_modes, key) > -1 ? 1 : 0)})
+  endfor
+  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/major_mode.json'))
 endfunction
 
 " Arguments:
