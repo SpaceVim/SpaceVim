@@ -565,11 +565,11 @@ endfunction
 "  func : a function to called
 " }
 "
-      " \ 'center-cursor': {
-      " \ 'icon' : '⊝',
-      " \ 'icon_asc' : '-',
-      " \ 'desc' : 'centered-cursor mode',
-      " \ },
+" \ 'center-cursor': {
+" \ 'icon' : '⊝',
+" \ 'icon_asc' : '-',
+" \ 'desc' : 'centered-cursor mode',
+" \ },
 function! SpaceVim#layers#core#statusline#register_mode(mode) abort
   if has_key(s:modes, a:mode.key)
     let s:modes[a:mode.key]['func'] = a:mode.func
