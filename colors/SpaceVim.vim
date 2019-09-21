@@ -43,8 +43,23 @@ endfunction
 
 " color palette
 
+
+let s:fg = 249
+let s:bg = 235
+let s:bg = max([s:bg, 233])
+
+let s:bias = s:bg - 235
+let s:bg0 = s:bg - 1
+let s:bg1 = s:bg + 1
+let s:bg2 = s:bg + 2
+let s:bg3 = s:bg + 3
+let s:bg4 = s:bg + 4
+
+
 let s:palette = {
       \ 'dark' : [
+      \ ['Normal'           , 249 , s:bg , 'None'      , 'None']      ,
+      \ ['LineNr'           , 238 , 235 , 'None'      , 'None']      ,
       \ ['Boolean'          , 178 , ''  , 'None'      , 'None']      ,
       \ ['Character'        , 75  , ''  , 'None'      , 'None']      ,
       \ ['ColorColumn'      , ''  , 236 , 'None'      , 'None']      ,
@@ -53,8 +68,8 @@ let s:palette = {
       \ ['Constant'         , 218 , ''  , 'None'      , 'None']      ,
       \ ['Cursor'           , 235 , 178 , 'bold'      , 'bold']      ,
       \ ['CursorColumn'     , ''  , 236 , 'None'      , 'None']      ,
-      \ ['CursorLine'       , ''  , 236 , 'None'      , 'None']      ,
-      \ ['CursorLineNr'     , 134 , 236 , 'None'      , 'None']      ,
+      \ ['CursorLine'       , ''  , s:bg0 , 'None'      , 'None']      ,
+      \ ['CursorLineNr'     , 170 , s:bg0 , 'None'      , 'None']      ,
       \ ['Debug'            , 225 , ''  , 'None'      , 'None']      ,
       \ ['Define'           , 177 , ''  , 'None'      , 'None']      ,
       \ ['Delimiter'        , 151 , ''  , 'None'      , 'None']      ,
@@ -75,12 +90,10 @@ let s:palette = {
       \ ['IncSearch'        , 16  , 76  , 'bold'      , 'bold']      ,
       \ ['Keyword'          , 68  , ''  , 'bold'      , 'bold']      ,
       \ ['Label'            , 104 , ''  , 'None'      , 'None']      ,
-      \ ['LineNr'           , 238 , 235 , 'None'      , 'None']      ,
       \ ['Macro'            , 140 , ''  , 'None'      , 'None']      ,
       \ ['MatchParen'       , 40  , 234 , 'bold       , underline'   , 'bold , underline'] ,
       \ ['ModeMsg'          , 229 , ''  , 'None'      , 'None']      ,
       \ ['NonText'          , 241 , ''  , 'None'      , 'None']      ,
-      \ ['Normal'           , 249 , 235 , 'None'      , 'None']      ,
       \ ['Number'           , 176 , ''  , 'None'      , 'None']      ,
       \ ['Operator'         , 111 , ''  , 'None'      , 'None']      ,
       \ ['Pmenu'            , 141 , 236 , 'None'      , 'None']      ,
