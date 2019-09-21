@@ -558,11 +558,35 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   call s:HI.hi_separator('SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
+
+" the mode should be a dict
+" {
+"  name : key
+"  func : a function to called
+" }
+"
+      " \ 'center-cursor': {
+      " \ 'icon' : '⊝',
+      " \ 'icon_asc' : '-',
+      " \ 'desc' : 'centered-cursor mode',
+      " \ },
+function! SpaceVim#layers#core#statusline#register_mode(mode) abort
+  if has_key(s:modes, a:mode.key)
+    let s:modes[a:mode.key]['func'] = a:mode.func
+  else
+    let s:modes[a:mode.key] = a:mode
+  endif
+endfunction
+
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
   else
     call add(s:loaded_modes, a:name)
+  endif
+  let mode = s:modes[a:name]
+  if has_key(mode, 'func')
+    call call(mode.func, [])
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   call s:update_conf()
@@ -630,6 +654,11 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ }
   if filereadable(expand('~/.cache/SpaceVim/major_mode.json'))
     let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
+    for key in keys(conf)
+      if conf[key]
+        call SpaceVim#layers#core#statusline#toggle_mode(key)
+      endif
+    endfor
   endif
 endfunction
 
