@@ -90,9 +90,14 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
-        \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call SpaceVim#layers#core#statusline#toggle_mode("syntax-checking")',
         \ 'toggle-syntax-checker', 1)
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+        \ 'key' : 'syntax-checking',
+        \ 'func' : string(s:_function('s:toggle_syntax_checker')),
+        \ }
+        \ )
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
         \ . string(s:_function('s:explain_the_error')) . ', [])',
         \ 'explain-the-error', 1)
@@ -222,7 +227,6 @@ endfunction
 
 function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-  call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
   verbose NeomakeToggle
 endfunction
 
