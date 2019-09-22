@@ -263,3 +263,54 @@
 | Yorick | |
 | Z shell: Z shell, zsh | |
 
+
+
+- golang/go
+- apple/swift
+- Microsoft/TypeScript
+- rust-lang/rust
+- JetBrains/kotlin
+- python/cpython
+- php/php-src
+- JuliaLang/julia
+- ruby/ruby
+- jashkenas/coffeescript
+- elixir-lang/elixir
+- crystal-lang/crystal
+- PowerShell/PowerShell
+- scala/scala
+- dotnet/roslyn
+- clojure/clojure
+- micropython/micropython
+- erlang/otp
+- nim-lang/Nim
+- AssemblyScript/assemblyscript
+- purescript/purescript
+- elm/compiler
+- dotnet/csharplang
+- red/red
+- ponylang/ponyc
+- Frege/frege
+- goby-lang/goby
+- racket/racket
+- idris-lang/Idris-dev
+- ocaml/ocaml
+- typelead/eta
+- programming-nu/nu
+- gkz/LiveScript
+- IoLanguage/io
+- dlang/dmd
+- zdevito/terra
+- dotnet/fsharp
+- skiplang/skip
+- FascinatedBox/lily
+- rakudo/rakudo
+- chapel-lang/chapel
+- lucee/Lucee
+- eclipse/golo-lang
+- gosu-lang/gosu-lang
+- ziglang/zig
+- HaxeFoundation/haxe
+- livecode/livecode
+
+
