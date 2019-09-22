@@ -2,12 +2,17 @@
 
 | language                                           | status                                                    |
 | -------------------------------------------------- | --------------------------------------------------------- |
-| Java                                               | lang#java layer                                           |
-| C                                                  | lang#c layer                                              |
+| C                                                  | lang#c                                                    |
+| CoffeeScript                                       | lang#coffeescript                                         |
+| Crystal                                            | lang#crystal                                              |
+| Dart                                               | lang#dart                                                 |
+| Hack                                               | lang#hack                                                 |
+| Haskell                                            | lang#haskell                                              |
+| Java                                               | lang#java                                                 |
+| JavaScript                                         | lang#javascript                                           |
+| PHP                                                | lang#php                                                  |
+| Python                                             | lang#python                                               |
 | clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
-| Python                                             | lang#python layer                                         |
-| JavaScript                                         | lang#javascript layer                                     |
-| PHP                                                | lang#php layer                                            |
 | (Visual) FoxPro: FoxPro, Fox Pro, VFP              |                                                           |
 | 4th Dimension/4D: 4D, 4th Dimension                |                                                           |
 | ABAP                                               |                                                           |
@@ -60,14 +65,11 @@
 | CLU                                                |                                                           |
 | COBOL                                              |                                                           |
 | Cobra                                              |                                                           |
-| CoffeeScript                                       |                                                           |
 | COMAL                                              |                                                           |
 | Common Lisp                                        |                                                           |
-| Crystal                                            |                                                           |
 | cT                                                 |                                                           |
 | Curl                                               |                                                           |
 | D                                                  |                                                           |
-| Dart                                               |                                                           |
 | DCL                                                |                                                           |
 | Delphi                                             |                                                           |
 | DiBOL: DBL, Synergy/DE, DIBOL                      |                                                           |
@@ -99,8 +101,6 @@
 | Go                                                 |                                                           |
 | Gosu                                               |                                                           |
 | Groovy                                             |                                                           |
-| Hack                                               |                                                           |
-| Haskell                                            |                                                           |
 | Haxe                                               |                                                           |
 | Heron                                              |                                                           |
 | HPL                                                |                                                           |
