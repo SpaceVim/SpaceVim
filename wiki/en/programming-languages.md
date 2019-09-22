@@ -4,12 +4,21 @@
 | -------------------------------------------------- | --------------------------------------------------------- |
 | C                                                  | lang#c                                                    |
 | CoffeeScript                                       | lang#coffeescript                                         |
+| Rust                                               | lang#rust                                                 |
+| Scala                                              | lang#scala                                                |
+| Scheme                                             | lang#scheme                                               |
 | Crystal                                            | lang#crystal                                              |
 | Dart                                               | lang#dart                                                 |
+| Elixir                                             | lang#elixir                                               |
+| Elm                                                | lang#elm                                                  |
+| F#                                                 | lang#fsharp                                               |
 | Hack                                               | lang#hack                                                 |
 | Haskell                                            | lang#haskell                                              |
+| J                                                  | lang#j                                                    |
 | Java                                               | lang#java                                                 |
 | JavaScript                                         | lang#javascript                                           |
+| Kotlin                                             | lang#kotlin                                               |
+| Lua                                                | lang#lua                                                  |
 | PHP                                                | lang#php                                                  |
 | Python                                             | lang#python                                               |
 | clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
@@ -46,7 +55,7 @@
 | Boo                                                |                                                           |
 | Bourne shell: Bourne shell, sh                     |                                                           |
 | C shell: Csh, C shell (confidence: 90%)            |                                                           |
-| C#                                                 |                                                           |
+| C#                                                 | lang#csharp                                               |
 | C++/CLI                                            |                                                           |
 | C++: C++, C++0x, C++11, C++14, C++17               |                                                           |
 | C-Omega                                            |                                                           |
@@ -69,7 +78,7 @@
 | Common Lisp                                        |                                                           |
 | cT                                                 |                                                           |
 | Curl                                               |                                                           |
-| D                                                  |                                                           |
+| D                                                  | lang#d                                                           |
 | DCL                                                |                                                           |
 | Delphi                                             |                                                           |
 | DiBOL: DBL, Synergy/DE, DIBOL                      |                                                           |
@@ -78,14 +87,11 @@
 | ECMAScript                                         |                                                           |
 | EGL                                                |                                                           |
 | Eiffel                                             |                                                           |
-| Elixir                                             |                                                           |
-| Elm                                                |                                                           |
 | Emacs Lisp                                         |                                                           |
 | Erlang                                             |                                                           |
 | Etoys                                              |                                                           |
 | Euphoria                                           |                                                           |
 | EXEC                                               |                                                           |
-| F#                                                 |                                                           |
 | Factor                                             |                                                           |
 | Falcon                                             |                                                           |
 | Fantom                                             |                                                           |
@@ -98,7 +104,7 @@
 | GLSL                                               |                                                           |
 | GML: GML, GameMaker Language                       |                                                           |
 | GNU Octave                                         |                                                           |
-| Go                                                 |                                                           |
+| Go                                                 | lang#go                                                   |
 | Gosu                                               |                                                           |
 | Groovy                                             |                                                           |
 | Haxe                                               |                                                           |
@@ -114,14 +120,12 @@
 | Io                                                 |                                                           |
 | Ioke                                               |                                                           |
 | J#                                                 |                                                           |
-| J: J (confidence: 50%)                             |                                                           |
 | JADE                                               |                                                           |
 | JavaFX Script                                      |                                                           |
 | JScript                                            |                                                           |
 | JScript.NET                                        |                                                           |
 | Julia: Julia, Julialang, julia-lang                |                                                           |
 | Korn shell: Korn shell, ksh                        |                                                           |
-| Kotlin                                             |                                                           |
 | LabVIEW                                            |                                                           |
 | Ladder Logic                                       |                                                           |
 | Lasso                                              |                                                           |
@@ -132,7 +136,6 @@
 | Logo                                               |                                                           |
 | LotusScript                                        |                                                           |
 | LPC                                                |                                                           |
-| Lua: Lua, LuaJIT                                   |                                                           |
 | Lustre                                             |                                                           |
 | M4                                                 |                                                           |
 | MAD: MAD (confidence: 50%)                         |                                                           |
@@ -160,7 +163,7 @@
 | NATURAL                                            |                                                           |
 | Nemerle                                            |                                                           |
 | NetLogo                                            |                                                           |
-| Nim: Nim, Nimrod                                   |                                                           |
+| Nim                                                | lang#nim                                                  |
 | NQC                                                |                                                           |
 | NSIS                                               |                                                           |
 | NXT-G                                              |                                                           |
@@ -176,13 +179,15 @@
 | Oz                                                 |                                                           |
 | Paradox                                            |                                                           |
 | Pascal: Pascal (confidence: 5%)                    |                                                           |
-| Perl                                               |                                                           |
+| Perl                                               | lang#perl                                                 |
+| Pony                                               | lang#pony                                                 |
+| R                                                  | lang#r                                                    |
+| Racket                                             | lang#racket                                               |
 | Pike                                               |                                                           |
 | PILOT                                              |                                                           |
 | PL/I: PL/1, PL/I                                   |                                                           |
 | PL/SQL                                             |                                                           |
 | Pliant                                             |                                                           |
-| Pony                                               |                                                           |
 | PostScript: PostScript, PS                         |                                                           |
 | POV-Ray                                            |                                                           |
 | PowerBasic                                         |                                                           |
@@ -194,21 +199,16 @@
 | Pure Data: Pure Data, PD                           |                                                           |
 | PureBasic                                          |                                                           |
 | Q                                                  |                                                           |
-| R: R (confidence: 90%, exceptions: +"statistical") |                                                           |
-| Racket                                             |                                                           |
 | REBOL                                              |                                                           |
 | Red: Red (confidence: 20%)                         |                                                           |
 | REXX                                               |                                                           |
 | Ring                                               |                                                           |
 | RPG                                                |                                                           |
-| Ruby                                               |                                                           |
-| Rust: Rust, Rustlang                               |                                                           |
+| Ruby                                               | lang#ruby                                                 |
 | S-PLUS: S-PLUS (exceptions: +statistical)          |                                                           |
 | S: S (exceptions: +statistical)                    |                                                           |
 | SAS                                                |                                                           |
 | Sather                                             |                                                           |
-| Scala                                              |                                                           |
-| Scheme: Scheme (exceptions: -tv -channel)          |                                                           |
 | Scratch                                            |                                                           |
 | sed                                                |                                                           |
 | Seed7                                              |                                                           |
@@ -231,7 +231,7 @@
 | Stata                                              |                                                           |
 | Suneido                                            |                                                           |
 | SuperCollider: SuperCollider (confidence: 80%)     |                                                           |
-| Swift                                              |                                                           |
+| Swift                                              | lang#swift                                                |
 | TACL                                               |                                                           |
 | Tcl: Tcl/Tk, Tcl                                   |                                                           |
 | tcsh                                               |                                                           |
@@ -239,7 +239,7 @@
 | thinBasic                                          |                                                           |
 | TOM: TOM (confidence: 50%)                         |                                                           |
 | Transact-SQL: T-SQL, Transact-SQL, TSQL            |                                                           |
-| TypeScript: TypeScript, TS                         |                                                           |
+| TypeScript                                         | lang#typescript                                           |
 | Vala/Genie: Vala, Genie                            |                                                           |
 | VBScript                                           |                                                           |
 | Verilog                                            |                                                           |
@@ -262,44 +262,25 @@
 | yacc                                               |                                                           |
 | Yorick                                             |                                                           |
 | Z shell: Z shell, zsh                              |                                                           |
+| Goby                                               | lang#goby                                                 |
+| LiveScript                                         | lang#livescript                                           |
 
-- golang/go
-- apple/swift
-- Microsoft/TypeScript
-- rust-lang/rust
-- JetBrains/kotlin
-- python/cpython
-- php/php-src
 - JuliaLang/julia
-- ruby/ruby
-- jashkenas/coffeescript
-- elixir-lang/elixir
-- crystal-lang/crystal
 - PowerShell/PowerShell
-- scala/scala
 - dotnet/roslyn
-- clojure/clojure
 - micropython/micropython
 - erlang/otp
-- nim-lang/Nim
 - AssemblyScript/assemblyscript
 - purescript/purescript
-- elm/compiler
-- dotnet/csharplang
 - red/red
 - ponylang/ponyc
 - Frege/frege
-- goby-lang/goby
-- racket/racket
 - idris-lang/Idris-dev
 - ocaml/ocaml
 - typelead/eta
 - programming-nu/nu
-- gkz/LiveScript
 - IoLanguage/io
-- dlang/dmd
 - zdevito/terra
-- dotnet/fsharp
 - skiplang/skip
 - FascinatedBox/lily
 - rakudo/rakudo
