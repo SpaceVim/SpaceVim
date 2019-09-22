@@ -136,7 +136,7 @@
 | JavaFX Script                                      |                                                           |
 | JScript                                            |                                                           |
 | JScript.NET                                        |                                                           |
-| Julia: Julia, Julialang, julia-lang                |                                                           |
+| Julia                                              | lang#julia                                                |
 | Korn shell: Korn shell, ksh                        |                                                           |
 | LabVIEW                                            |                                                           |
 | Ladder Logic                                       |                                                           |
@@ -198,7 +198,7 @@
 | POV-Ray                                            |                                                           |
 | PowerBasic                                         |                                                           |
 | PowerScript                                        |                                                           |
-| PowerShell                                         |                                                           |
+| PowerShell                                         | lang#powershell                                                          |
 | Processing: Processing (exceptions: +"sketchbook") |                                                           |
 | PWCT                                               |                                                           |
 | Prolog                                             |                                                           |
@@ -265,15 +265,12 @@
 | Yorick                                             |                                                           |
 | Z shell: Z shell, zsh                              |                                                           |
 
-- JuliaLang/julia
-- PowerShell/PowerShell
 - dotnet/roslyn
 - micropython/micropython
 - erlang/otp
 - AssemblyScript/assemblyscript
 - Frege/frege
 - idris-lang/Idris-dev
-- ocaml/ocaml
 - typelead/eta
 - programming-nu/nu
 - IoLanguage/io
