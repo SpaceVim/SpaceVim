@@ -33,13 +33,27 @@ lang: cn
 
 ### 邮件列表
 
-SpaceVim 开通了谷歌中文邮件组，可以发送邮件至邮件列表参与讨论：
-
-- <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim-cn)
+习惯使用邮件的用户，也可以通过中文邮件组进行交流，可以发送邮件至邮件列表参与讨论：
 
 ```
 spacevim-cn@googlegroups.com
 ```
+
+在使用该邮件列表发帖之前，需要加入邮件组，可以通过发送一条空的邮件至：
+
+```
+spacevim-cn+subscribe@googlegroups.com
+```
+
+如果需要取消订阅该邮件列表，则可以发送一条空邮件至：
+
+```
+spacevim-cn+unsubscribe@googlegroups.com
+```
+
+在线浏览所有历史帖子：
+
+- <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim-cn)
 
 ### 聊天
 
@@ -62,3 +76,5 @@ spacevim-cn@googlegroups.com
 ### 其他
 
 - <i class="fab fa-zhihu"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
+- <i class="fab fa-zhihu"></i> [知乎 SpaceVim 话题](https://www.zhihu.com/topic/20168681/newest)
+- <i class="fab fa-zhihu"></i> [思否 SpaceVim 标签](https://segmentfault.com/t/spacevim)

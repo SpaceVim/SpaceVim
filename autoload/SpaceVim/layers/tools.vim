@@ -41,14 +41,14 @@ endfunction
 
 function! SpaceVim#layers#tools#config() abort
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown', 'leaderGuide']
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'l'], 'Calendar', 'vim calendar', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'l'], 'Calendar', 'vim-calendar', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
-        \ 'Auto detect the file encoding', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calc', 'vim calculator', 1)
+        \ 'auto-detect-file-encoding', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calc', 'vim-calculator', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'],
         \ 'Goyo', 'centered-buffer-mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'],
-        \ 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
+        \ 'ChooseWin | Goyo', 'choose-window-centered-buffer-mode', 1)
 
   " bootmark key binding
   nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>

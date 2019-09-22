@@ -94,6 +94,10 @@ function! SpaceVim#custom#apply(config, type) abort
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
+      if name ==# 'project_rooter_patterns'
+        " clear rooter cache
+        call SpaceVim#plugins#projectmanager#current_root()
+      endif
       unlet value
     endfor
     if g:spacevim_debug_level !=# 1

@@ -77,7 +77,10 @@ function! s:enable_cursorline() abort
 endfunction
 
 function! s:disable_cursorline() abort
-  setl nocursorline
+  if &filetype ==# 'denite'
+  else
+    setl nocursorline
+  endif
 endfunction
 
 function! s:reload_touchpad_status() abort

@@ -142,11 +142,10 @@ fu! s:findDirInParent(what, where) abort " {{{2
 endf " }}}2
 fu! SpaceVim#util#CopyToClipboard(...) abort
   if a:0
-    echom 1
     if executable('git')
       let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
       if repo_home !=# '' || !isdirectory(repo_home)
-        let branch = split(systemlist('git -C '. repo_home. ' branch -a |grep "*"')[0],' ')[1]
+        let branch = split(systemlist('git -C '. repo_home. ' branch -a |grep "^*"')[0],' ')[1]
         let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^origin') >= 0 && match(v:val,'fetch') > 0")
         if len(remotes) > 0
           let remote = remotes[0]
@@ -169,7 +168,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
           endif
           try
             let @+=f_url
-            echo 'Copied to clipboard'
+            echo 'Copied to clipboard: ' . @+
           catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
               echohl WarningMsg | echom 'Cannot find clipboard, for more info see :h clipboard' | echohl None

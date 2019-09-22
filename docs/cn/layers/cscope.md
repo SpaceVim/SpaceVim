@@ -38,6 +38,12 @@ ArchLinux 下安装 cscope 非常简单，可执行以下命令进行安装
 sudo pacman -S cscope
 ```
 
+Windows 系统下，推荐使用 scoop 来安装 cscope：
+
+```
+scoop install cscope
+```
+
 ### 启用模块
 
 该模块默认未启用，如果需要启用，可以在配置文件中加入如下内容：

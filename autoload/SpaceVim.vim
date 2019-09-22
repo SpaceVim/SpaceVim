@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.2.0-dev'
+let g:spacevim_version = '1.3.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -500,6 +500,7 @@ let g:spacevim_enable_statusline_tag = 1
 "     \ ]
 " <
 let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
+      \ 'search count',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
 ""

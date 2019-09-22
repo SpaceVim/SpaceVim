@@ -12,6 +12,7 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Install](#install)
   - [enable layer](#enable-layer)
   - [language tools](#language-tools)
+- [Configuration](#configuration)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
@@ -89,6 +90,22 @@ To be able to show code coverage, install coverage.py
 
 ```sh
 pip install --user coverage
+```
+
+## Configuration
+
+By default, when create a new python file, SpaceVim will insert file head automatically.
+to change the file head, use `python-file-head` option:
+
+```toml
+[[layers]]
+  name = "lang#python"
+  python-file-head = [
+      '#!/usr/bin/env python',
+      '# -*- coding: utf-8 -*-',
+      '',
+      ''
+  ]
 ```
 
 ## Key bindings

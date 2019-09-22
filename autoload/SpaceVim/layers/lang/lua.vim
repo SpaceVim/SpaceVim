@@ -52,45 +52,30 @@ function! SpaceVim#layers#lang#lua#config() abort
   augroup END
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
   let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
-  if !empty(luaexe)
-    call SpaceVim#plugins#runner#reg_runner('lua', {
-          \ 'exe' : luaexe[0],
-          \ 'opt' : ['-'],
-          \ 'usestdin' : 1,
-          \ })
-  else
-    call SpaceVim#plugins#runner#reg_runner('lua', {
-          \ 'exe' : 'lua',
-          \ 'opt' : ['-'],
-          \ 'usestdin' : 1,
-          \ })
-  endif
+  let exe_lua = empty(luaexe) ? 'lua' : luaexe[0]
+  call SpaceVim#plugins#runner#reg_runner('lua', {
+        \ 'exe' : exe_lua,
+        \ 'opt' : ['-'],
+        \ 'usestdin' : 1,
+        \ })
   let g:neomake_lua_enabled_makers = ['luac']
   let luacexe = filter(['luac53', 'luac52', 'luac51'], 'executable(v:val)')
-  if !empty(luacexe)
-    let g:neomake_lua_luac_maker = {
-          \ 'exe': luacexe[0],
-          \ 'args': ['-p'],
-          \ 'errorformat': '%*\f: %#%f:%l: %m',
-          \ }
-  else
-    let g:neomake_lua_luac_maker = {
-          \ 'exe': 'luac',
-          \ 'args': ['-p'],
-          \ 'errorformat': '%*\f: %#%f:%l: %m',
-          \ }
-  endif
+  let exe_luac = empty(luacexe) ? 'luac' : luacexe[0]
+  let g:neomake_lua_luac_maker = {
+        \ 'exe': exe_luac,
+        \ 'args': ['-p'],
+        \ 'errorformat': '%*\f: %#%f:%l: %m',
+        \ }
   if !empty(s:lua_repl_command)
-    call SpaceVim#plugins#repl#reg('lua',s:lua_repl_command)
+    let lua_repl = s:lua_repl_command
+  elseif executable('luap')
+    let lua_repl = 'luap'
+  elseif !empty(luaexe)
+    let lua_repl = luaexe[0] + ['-i'])
   else
-    if executable('luap')
-      call SpaceVim#plugins#repl#reg('lua', 'luap')
-    elseif !empty(luaexe)
-      call SpaceVim#plugins#repl#reg('lua', luaexe + ['-i'])
-    else
-      call SpaceVim#plugins#repl#reg('lua', ['lua', '-i'])
-    endif
+    let lua_repl = ['lua', '-i']
   endif
+  call SpaceVim#plugins#repl#reg('lua', lua_repl)
 endfunction
 
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort

@@ -56,6 +56,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \}
   let remarkrc = s:generate_remarkrc()
   if s:SYS.isWindows
+    " @fixme prettier do not support kramdown
     let g:neoformat_enabled_markdown = ['prettier']
   else
     let g:neoformat_enabled_markdown = ['remark']

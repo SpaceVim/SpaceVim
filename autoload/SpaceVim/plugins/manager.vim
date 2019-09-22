@@ -156,7 +156,7 @@ function! SpaceVim#plugins#manager#install(...) abort
   if has('nvim')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  elseif has('python')
+  elseif s:VIM_CO.has('python')
     call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:append_buf_line(s:plugin_manager_buffer, 3, '')
   else
@@ -747,7 +747,7 @@ else
     endif
     call setbufvar(a:bufnr,'&ma', 0)
   endfunction
-endi
+endif
 
 " Public API: SpaceVim#plugins#manager#terminal {{{
 function! SpaceVim#plugins#manager#terminal() abort
@@ -758,4 +758,4 @@ function! SpaceVim#plugins#manager#terminal() abort
     call s:JOB.stop(str2nr(id))
   endfor
 endfunction
-" }}}f
+" }}}

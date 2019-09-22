@@ -30,5 +30,7 @@ else
     git push gitee master 
     .ci/detach_plugin.sh flygrep
     .ci/detach_plugin.sh dein-ui
+    .ci/detach_plugin.sh vim-todo
+    .ci/detach_plugin.sh iedit
   fi
 fi

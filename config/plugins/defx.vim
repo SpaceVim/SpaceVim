@@ -197,7 +197,7 @@ endfunction
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
-  echo 'yarked: ' . @+
+  echo 'yanked: ' . @+
 endfunction
 
 function! s:trim_right(str, trim)

@@ -269,6 +269,10 @@ function! s:search_status() abort
 endfunction
 
 
+function! s:search_count() abort
+  return SpaceVim#plugins#searcher#count()
+endfunction
+
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
       \ 'syntax checking' : function('s:syntax_checking'),
@@ -284,6 +288,7 @@ let s:registed_sections = {
       \ 'battery status' : function('s:battery_status'),
       \ 'input method' : function('s:input_method'),
       \ 'search status' : function('s:search_status'),
+      \ 'search count' : function('s:search_count'),
       \ }
 
 
@@ -423,9 +428,11 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'denite'
     return '%#SpaceVim_statusline_a_bold# %{SpaceVim#layers#core#statusline#denite_mode()} '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' '
-          \ . '%#SpaceVim_statusline_b#%{denite#get_status_sources()} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
+          \ . '%#SpaceVim_statusline_b#%{SpaceVim#layers#core#statusline#denite_status("sources")} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
           \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:rsep
-          \ . '%#SpaceVim_statusline_c# %{denite#get_status_path() . denite#get_status_linenr()}'
+          \ . '%#SpaceVim_statusline_c# %{SpaceVim#layers#core#statusline#denite_status("path") . SpaceVim#layers#core#statusline#denite_status("linenr")}'
+  elseif &filetype ==# 'denite-filter'
+    return '%#SpaceVim_statusline_a_bold# Filter %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'unite'
     return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' %{get(unite#get_context(), "buffer_name", "")} '
@@ -723,17 +730,42 @@ function! SpaceVim#layers#core#statusline#mode_text(mode) abort
   return ' '
 endfunction
 
+
+function! SpaceVim#layers#core#statusline#denite_status(argv) abort
+  if exists('*denite#get_status_mode')
+    let denite_ver = 2
+  else
+    let denite_ver = 3
+  endif
+  if denite_ver == 3
+    return denite#get_status(a:argv)
+  else
+    return denite#get_status_{a:argv}()
+  endif
+endfunction
+
 function! SpaceVim#layers#core#statusline#denite_mode() abort
   let t = s:colors_template
-  let dmode = split(denite#get_status_mode())[1]
-  if get(w:, 'spacevim_statusline_mode', '') != dmode
-    if dmode ==# 'NORMAL'
-      exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
-    elseif dmode ==# 'INSERT'
-      exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+  if exists('*denite#get_status_mode')
+    let denite_ver = 2
+  else
+    let denite_ver = 3
+  endif
+
+  if denite_ver == 3
+    let dmode = 'Denite'
+  else
+    " this can not be changed, as it works in old denite
+    let dmode = split(denite#get_status_mode())[1]
+    if get(w:, 'spacevim_statusline_mode', '') != dmode
+      if dmode ==# 'NORMAL'
+        exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[0][2] . ' ctermfg=' . t[0][3] . ' guibg=' . t[0][1] . ' guifg=' . t[0][0]
+      elseif dmode ==# 'INSERT'
+        exe 'hi! SpaceVim_statusline_a_bold cterm=bold gui=bold ctermbg=' . t[4][3] . ' ctermfg=' . t[4][2] . ' guibg=' . t[4][1] . ' guifg=' . t[4][0]
+      endif
+      call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
+      let w:spacevim_statusline_mode = dmode
     endif
-    call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
-    let w:spacevim_statusline_mode = dmode
   endif
   return dmode
 endfunction

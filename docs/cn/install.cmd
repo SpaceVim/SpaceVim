@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                    °æ±¾ : 1.2.0-dev  ÖĞÎÄ¹ÙÍø : https://spacevim.org/cn/     "
+echo "                      ç‰ˆæœ¬ : 1.2.0    ä¸­æ–‡å®˜ç½‘ : https://spacevim.org/cn/     "
 
 Push-Location ~
 
@@ -20,7 +20,7 @@ $repo_url    = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
-Function Pause ($Message = "Çë°´ÈÎÒâ°´¼ü¼ÌĞø . . . ") {
+Function Pause ($Message = "è¯·æŒ‰ä»»æ„æŒ‰é”®ç»§ç»­ . . . ") {
   if ((Test-Path variable:psISE) -and $psISE) {
     $Shell = New-Object -ComObject "WScript.Shell"
       $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
@@ -31,48 +31,48 @@ Function Pause ($Message = "Çë°´ÈÎÒâ°´¼ü¼ÌĞø . . . ") {
   }
 }
 
-echo "==> ¿ªÊ¼¼ì²â»·¾³ÒÀÀµ..."
+echo "==> å¼€å§‹æ£€æµ‹ç¯å¢ƒä¾èµ–..."
 echo ""
 sleep 1
 
 
-echo "==> ²âÊÔ git ÃüÁî"
+echo "==> æµ‹è¯• git å‘½ä»¤"
 if (Get-Command "git" -ErrorAction SilentlyContinue) {
   git version
-  echo "[OK] ²âÊÔ³É¹¦. ¿ªÊ¼ÏÂÒ»¸ö²âÊÔ..."
+  echo "[OK] æµ‹è¯•æˆåŠŸ. å¼€å§‹ä¸‹ä¸€ä¸ªæµ‹è¯•..."
   sleep 1
 } else {
   echo ""
-  echo "[ERROR] ÎŞ·¨ÔÚÄãµÄ PATH ÖĞ·¢ÏÖ 'git.exe' ÃüÁî"
-  echo ">>> ×¼±¸ÍË³ö......"
+  echo "[ERROR] æ— æ³•åœ¨ä½ çš„ PATH ä¸­å‘ç° 'git.exe' å‘½ä»¤"
+  echo ">>> å‡†å¤‡é€€å‡º......"
   Pause
   exit
 }
 
 echo ""
 
-echo "==> ²âÊÔ gvim ÃüÁî"
+echo "==> æµ‹è¯• gvim å‘½ä»¤"
 if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
   echo ($(vim --version) -split '\n')[0]
-  echo "[OK] ²âÊÔ³É¹¦. ¿ªÊ¼ÏÂÒ»¸ö²âÊÔ..."
+  echo "[OK] æµ‹è¯•æˆåŠŸ. å¼€å§‹ä¸‹ä¸€ä¸ªæµ‹è¯•..."
   sleep 1
 } else {
-  echo "[WARNING] ÎŞ·¨ÔÚÄãµÄ PATH ÖĞ·¢ÏÖ 'gvim.exe' ÃüÁî. µ«ÈÔ¿É¼ÌĞø°²×°..."
+  echo "[WARNING] æ— æ³•åœ¨ä½ çš„ PATH ä¸­å‘ç° 'gvim.exe' å‘½ä»¤. ä½†ä»å¯ç»§ç»­å®‰è£…..."
   echo ""
-  echo "[WARNING] ÇëºóĞø°²×° gvim »òÕßÕıÈ·ÉèÖÃÄãµÄ PATH! "
+  echo "[WARNING] è¯·åç»­å®‰è£… gvim æˆ–è€…æ­£ç¡®è®¾ç½®ä½ çš„ PATH! "
   Pause
 }
 
-echo "<== »·¾³ÒÀÀµ¼ì²âÒÑÍê³É. ¼ÌĞøÏÂÒ»²½..."
+echo "<== ç¯å¢ƒä¾èµ–æ£€æµ‹å·²å®Œæˆ. ç»§ç»­ä¸‹ä¸€æ­¥..."
 sleep 1
 echo ""
 echo ""
 
 if (!(Test-Path "$HOME\.SpaceVim")) {
-  echo "==> ÕıÔÚ°²×° $app_name"
+  echo "==> æ­£åœ¨å®‰è£… $app_name"
   git clone $repo_url $repo_path
 } else {
-  echo "==> ÕıÔÚ¸üĞÂ $app_name"
+  echo "==> æ­£åœ¨æ›´æ–° $app_name"
   Push-Location $repo_path
   git pull origin master
 }
@@ -80,32 +80,32 @@ if (!(Test-Path "$HOME\.SpaceVim")) {
 echo ""
 if (!(Test-Path "$HOME\vimfiles")) {
   cmd /c mklink $HOME\vimfiles $repo_path
-  echo "[OK] ÒÑÎª vim °²×° SpaceVim"
+  echo "[OK] å·²ä¸º vim å®‰è£… SpaceVim"
   sleep 1
 } else {
-  echo "[OK] $HOME\vimfiles ÒÑ´æÔÚ"
+  echo "[OK] $HOME\vimfiles å·²å­˜åœ¨"
   sleep 1
 }
 
 echo ""
 if (!(Test-Path "$HOME\AppData\Local\nvim")) {
   cmd /c mklink "$HOME\AppData\Local\nvim" $repo_path
-  echo "[OK] ÒÑÎª neovim °²×° SpaceVim"
+  echo "[OK] å·²ä¸º neovim å®‰è£… SpaceVim"
   sleep 1
 } else {
-  echo "[OK] $HOME\AppData\Local\nvim ÒÑ´æÔÚ"
+  echo "[OK] $HOME\AppData\Local\nvim å·²å­˜åœ¨"
   sleep 1
 }
 
 echo ""
-echo "°²×°ÒÑÍê³É!"
+echo "å®‰è£…å·²å®Œæˆ!"
 echo "=============================================================================="
-echo "==               ´ò¿ª Vim »ò Neovim£¬ËùÓĞ²å¼ş½«»á×Ô¶¯°²×°                   =="
+echo "==               æ‰“å¼€ Vim æˆ– Neovimï¼Œæ‰€æœ‰æ’ä»¶å°†ä¼šè‡ªåŠ¨å®‰è£…                   =="
 echo "=============================================================================="
 echo ""
-echo "¸ĞĞ»Ö§³Ö SpaceVim£¬»¶Ó­·´À¡£¡"
+echo "æ„Ÿè°¢æ”¯æŒ SpaceVimï¼Œæ¬¢è¿åé¦ˆï¼"
 echo ""
 
 Pause
 
-# vim:set ft=ps1 nowrap: 
+# vim:set ft=powershell nowrap: 

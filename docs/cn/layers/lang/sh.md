@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 Shell Script 开发支持。Shell Script 是指 Bash script 和 Zsh script。
+这一模块为 SpaceVim 提供了 Shell Script 开发支持。Shell Script 是指 bash script、zsh script 和 fish script。
 
 ## 功能特性
 
