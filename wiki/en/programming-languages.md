@@ -3,41 +3,45 @@
 | language                                           | status                                                    |
 | -------------------------------------------------- | --------------------------------------------------------- |
 | C                                                  | lang#c                                                    |
+| C#                                                 | lang#csharp                                               |
 | CoffeeScript                                       | lang#coffeescript                                         |
-| Rust                                               | lang#rust                                                 |
-| Scala                                              | lang#scala                                                |
-| Scheme                                             | lang#scheme                                               |
 | Crystal                                            | lang#crystal                                              |
+| D                                                  | lang#d                                                    |
 | Dart                                               | lang#dart                                                 |
 | Elixir                                             | lang#elixir                                               |
 | Elm                                                | lang#elm                                                  |
 | F#                                                 | lang#fsharp                                               |
+| Go                                                 | lang#go                                                   |
+| Goby                                               | lang#goby                                                 |
 | Hack                                               | lang#hack                                                 |
 | Haskell                                            | lang#haskell                                              |
+| Io                                                 | lang#io                                                   |
 | J                                                  | lang#j                                                    |
 | Java                                               | lang#java                                                 |
 | JavaScript                                         | lang#javascript                                           |
+| Julia                                              | lang#julia                                                |
 | Kotlin                                             | lang#kotlin                                               |
+| LiveScript                                         | lang#livescript                                           |
 | Lua                                                | lang#lua                                                  |
-| PHP                                                | lang#php                                                  |
-| Python                                             | lang#python                                               |
-| clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
-| C#                                                 | lang#csharp                                               |
-| D                                                  | lang#d                                                    |
-| Go                                                 | lang#go                                                   |
 | Nim                                                | lang#nim                                                  |
 | OCaml                                              | lang#ocaml                                                |
+| PHP                                                | lang#php                                                  |
 | Perl                                               | lang#perl                                                 |
 | Pony                                               | lang#pony                                                 |
+| PowerShell                                         | lang#powershell                                           |
+| PureScript                                         | lang#purescript                                           |
+| Python                                             | lang#python                                               |
 | R                                                  | lang#r                                                    |
 | Racket                                             | lang#racket                                               |
 | Red                                                | lang#red                                                  |
 | Ruby                                               | lang#ruby                                                 |
+| Rust                                               | lang#rust                                                 |
+| Scala                                              | lang#scala                                                |
+| Scheme                                             | lang#scheme                                               |
 | Swift                                              | lang#swift                                                |
-| Goby                                               | lang#goby                                                 |
-| LiveScript                                         | lang#livescript                                           |
-| PureScript                                         | lang#purescript                                           |
 | TypeScript                                         | lang#typescript                                           |
+| clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
+| erlang                                             | lang#erlang                                               |
 | (Visual) FoxPro: FoxPro, Fox Pro, VFP              |                                                           |
 | 4th Dimension/4D: 4D, 4th Dimension                |                                                           |
 | ABAP                                               |                                                           |
@@ -129,14 +133,12 @@
 | Inform                                             |                                                           |
 | Informix-4GL                                       |                                                           |
 | INTERCAL                                           |                                                           |
-| Io                                                 |                                                           |
 | Ioke                                               |                                                           |
 | J#                                                 |                                                           |
 | JADE                                               |                                                           |
 | JavaFX Script                                      |                                                           |
 | JScript                                            |                                                           |
 | JScript.NET                                        |                                                           |
-| Julia                                              | lang#julia                                                |
 | Korn shell: Korn shell, ksh                        |                                                           |
 | LabVIEW                                            |                                                           |
 | Ladder Logic                                       |                                                           |
@@ -198,7 +200,6 @@
 | POV-Ray                                            |                                                           |
 | PowerBasic                                         |                                                           |
 | PowerScript                                        |                                                           |
-| PowerShell                                         | lang#powershell                                                          |
 | Processing: Processing (exceptions: +"sketchbook") |                                                           |
 | PWCT                                               |                                                           |
 | Prolog                                             |                                                           |
@@ -267,13 +268,11 @@
 
 - dotnet/roslyn
 - micropython/micropython
-- erlang/otp
 - AssemblyScript/assemblyscript
 - Frege/frege
 - idris-lang/Idris-dev
 - typelead/eta
 - programming-nu/nu
-- IoLanguage/io
 - zdevito/terra
 - skiplang/skip
 - FascinatedBox/lily

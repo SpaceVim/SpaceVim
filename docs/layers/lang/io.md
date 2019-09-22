@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#io layer"
-description: "This layer is for io development, provide syntax checking, code runner and repl support for io file."
+description: "This layer is for io development, provide code runner and repl support for io file."
 ---
 
 # [Available Layers](../../) >> lang#io
