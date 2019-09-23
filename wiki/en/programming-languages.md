@@ -10,6 +10,7 @@
 | Dart                                               | lang#dart                                                 |
 | Elixir                                             | lang#elixir                                               |
 | Elm                                                | lang#elm                                                  |
+| DOS batch                                          | lang#batch                                                |
 | F#                                                 | lang#fsharp                                               |
 | Go                                                 | lang#go                                                   |
 | Goby                                               | lang#goby                                                 |
@@ -172,7 +173,6 @@
 | MOO                                                |                                                           |
 | Moto                                               |                                                           |
 | MQL4: MQL4, MQL5                                   |                                                           |
-| MS-DOS batch                                       |                                                           |
 | MUMPS                                              |                                                           |
 | NATURAL                                            |                                                           |
 | Nemerle                                            |                                                           |
