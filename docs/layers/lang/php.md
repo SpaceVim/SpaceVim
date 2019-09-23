@@ -25,7 +25,7 @@ This layer adds PHP language support to SpaceVim.
 - auto-completion
 - syntax checking
 - goto definition
-- refernce finder
+- reference finder
 - lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
 
 ## Install
