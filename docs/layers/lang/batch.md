@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#batch layer"
-description: "This layer is for batch development, provide syntax checking, code runner and repl support for batch file."
+description: "This layer is for DOS batch file development, provide syntax highlighting, code runner and repl support for batch file."
 ---
 
 # [Available Layers](../../) >> lang#batch
@@ -18,7 +18,7 @@ description: "This layer is for batch development, provide syntax checking, code
 
 ## Description
 
-This layer is for batch development.
+This layer is for DOS batch file development, which provides syntax highlighting, code runner and repl support for batch file.
 
 ## Install
 
