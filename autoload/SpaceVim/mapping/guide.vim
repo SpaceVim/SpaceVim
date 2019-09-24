@@ -410,8 +410,7 @@ function! s:start_buffer() abort " {{{
           \ 'col' : 1,
           \ 'minwidth' : &columns,
           \ 'minheight' : layout.win_dim + 2,
-          \ }))
-          \ )
+          \ })
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
