@@ -41,18 +41,15 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a'], 'call idris#reload(0)', 'reload-file', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'], 'call idris#caseSplit()', 'case-split', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','f'], 'call idris#refine()', 'refine-item', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','l'], 'call idris#makeLemma()', 'make lemma', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','h'], 'call idris#showDoc()', 'show doc', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','e'], 'call idris#eval()', 'idris eval', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i'], 'call idris#responseWin()', 'open-response-win', 1)
   let g:_spacevim_mappings_space.l.d = {'name' : '+Add clause'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'f'], '0:call search(":")<ENTER>b:call idris#addClause(0)<ENTER>w', 'add-clause-for-type-declaration', 1, 0)
 
   " nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>m :call IdrisAddMissing()<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
-  " nnoremap <buffer> <silent> <LocalLeader>o :call IdrisProofSearch(0)<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>p :call IdrisProofSearch(1)<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>l :call IdrisMakeLemma()<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>e :call IdrisEval()<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>w 0:call IdrisMakeWith()<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>i 0:call IdrisResponseWin()<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>h :call IdrisShowDoc()<ENTER>
 endfunction
