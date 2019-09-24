@@ -72,6 +72,10 @@ function! s:async_run(runner) abort
     " the runner is a list
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
+    let dir = fnamemodify(s:target, ':h')
+    if isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
     if type(a:runner[0]) == type({})
       if type(a:runner[0].exe) == 2
         let exe = call(a:runner[0].exe, [])
