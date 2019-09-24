@@ -403,6 +403,7 @@ function! s:start_buffer() abort " {{{
           \ 'col'     : 0
           \ })
 
+  elseif exists('*popup_create')
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -518,6 +519,14 @@ function! s:winopen() abort " {{{
           \ 'row'     : &lines - 14,
           \ 'col'     : 0
           \ })
+  elseif exists('*popup_create')
+    if !bufexists(s:bufnr)
+      let s:bufnr = bufadd('')
+    endif
+    call popup_create(s:bufnr,{
+          \ 'line' : 10,
+          \ 'col' : 1,
+          \ })
   else
     if bufexists(s:bufnr)
       let qfbuf = &buftype ==# 'quickfix'
@@ -592,16 +601,20 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  noautocmd execute s:gwin.'wincmd w'
-  if s:gwin == winnr()
-    noautocmd close
-    redraw!
-    exe s:winres
-    let s:gwin = -1
-    noautocmd execute s:winnr.'wincmd w'
-    call winrestview(s:winv)
-    if exists('*nvim_open_win')
-      doautocmd WinEnter
+  if exists('*popup_create')
+    " call popup_hide()
+  else
+    noautocmd execute s:gwin.'wincmd w'
+    if s:gwin == winnr()
+      noautocmd close
+      redraw!
+      exe s:winres
+      let s:gwin = -1
+      noautocmd execute s:winnr.'wincmd w'
+      call winrestview(s:winv)
+      if exists('*nvim_open_win')
+        doautocmd WinEnter
+      endif
     endif
   endif
   call s:remove_cursor_highlight()
