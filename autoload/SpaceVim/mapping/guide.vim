@@ -17,6 +17,7 @@ let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:VIM = SpaceVim#api#import('vim')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -393,7 +394,6 @@ function! s:start_buffer() abort " {{{
     let layout.win_dim = min([g:leaderGuide_max_size, layout.win_dim])
   endif
 
-  setlocal modifiable
   if exists('*nvim_open_win')
     call s:FLOATING.win_config(win_getid(s:gwin), 
           \ {
@@ -412,15 +412,13 @@ function! s:start_buffer() abort " {{{
       noautocmd execute 'res '.layout.win_dim
     endif
   endif
-  normal! gg"_dd
   if exists('*nvim_open_win')
     " when using floating windows, and the flaating windows do not support
     " statusline, add extra black line at top and button of the content.
-    call setline(1, [''] + split(string, "\n") + [''])
+    call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, [''] + split(string, "\n") + [''])
   else
-    call setline(1, split(string, "\n"))
+    call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, split(string, "\n"))
   endif
-  setlocal nomodifiable
   redraw!
   call s:wait_for_input()
 endfunction " }}}
@@ -526,8 +524,10 @@ function! s:winopen() abort " {{{
       let s:bufnr = bufadd('')
     endif
     call popup_create(s:bufnr,{
-          \ 'line' : 10,
+          \ 'line' : &lines - 11,
           \ 'col' : 1,
+          \ 'minwidth' : &columns,
+          \ 'minheight' : &lines,
           \ })
   else
     if bufexists(s:bufnr)
@@ -618,7 +618,7 @@ endfunction
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
   if exists('*popup_create')
-    " call popup_hide()
+    call popup_clear()
   else
     noautocmd execute s:gwin.'wincmd w'
     if s:gwin == winnr()
