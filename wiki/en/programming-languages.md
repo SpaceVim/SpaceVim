@@ -39,6 +39,7 @@
 | Rust                                               | lang#rust                                                 |
 | Scala                                              | lang#scala                                                |
 | Scheme                                             | lang#scheme                                               |
+| idris                                              | lang#idris                                                |
 | Swift                                              | lang#swift                                                |
 | TypeScript                                         | lang#typescript                                           |
 | clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
@@ -270,7 +271,6 @@
 - micropython/micropython
 - AssemblyScript/assemblyscript
 - Frege/frege
-- idris-lang/Idris-dev
 - typelead/eta
 - programming-nu/nu
 - zdevito/terra
