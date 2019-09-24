@@ -405,6 +405,13 @@ function! s:start_buffer() abort " {{{
           \ })
 
   elseif exists('*popup_create')
+    call popup_setoptions(win_getid(s:gwin), {
+          \ 'line' : &lines - layout.win_dim - 4,
+          \ 'col' : 1,
+          \ 'minwidth' : &columns,
+          \ 'minheight' : layout.win_dim + 2,
+          \ }))
+          \ )
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -417,6 +424,9 @@ function! s:start_buffer() abort " {{{
     " statusline, add extra black line at top and button of the content.
     call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, [''] + split(string, "\n") + [''])
   else
+    if !exists('g:wsdjeg')
+      let g:wsdjeg = split(string, "\n")
+    endif
     call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, split(string, "\n"))
   endif
   redraw!
@@ -523,12 +533,12 @@ function! s:winopen() abort " {{{
     if !bufexists(s:bufnr)
       let s:bufnr = bufadd('')
     endif
-    call popup_create(s:bufnr,{
-          \ 'line' : &lines - 11,
+    let s:gwin = win_id2win(popup_create(s:bufnr,{
+          \ 'line' : &lines - 13,
           \ 'col' : 1,
           \ 'minwidth' : &columns,
-          \ 'minheight' : &lines,
-          \ })
+          \ 'minheight' : 11,
+          \ }))
   else
     if bufexists(s:bufnr)
       let qfbuf = &buftype ==# 'quickfix'
