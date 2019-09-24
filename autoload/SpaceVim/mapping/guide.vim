@@ -573,7 +573,6 @@ function! s:winopen() abort " {{{
         \ '&colorcolumn' : '',
         \ '&winfixwidth' : 1,
         \ '&winfixheight' : 1,
-        \ '&winhighlight' : 'Normal:Pmenu',
         \ })
   " @fixme not sure if the listchars should be changed!
   " setlocal listchars=
