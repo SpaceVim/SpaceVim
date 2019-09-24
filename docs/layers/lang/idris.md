@@ -48,6 +48,7 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l c`    | case split           |
 | `SPC l f`    | refine item          |
 | `SPC l l`    | make lemma           |
+| `SPC l m`    | add missing          |
 | `SPC l h`    | show doc             |
 | `SPC l e`    | idris eval           |
 | `SPC l i`    | open response win    |

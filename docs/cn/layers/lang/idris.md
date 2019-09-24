@@ -41,6 +41,7 @@ lang: cn
 | `SPC l c` | case split           |
 | `SPC l f` | refine item          |
 | `SPC l l` | make lemma           |
+| `SPC l m` | add missing          |
 | `SPC l h` | 显示光标函数文档     |
 | `SPC l e` | idris 求值           |
 | `SPC l i` | 打开应答窗口         |
