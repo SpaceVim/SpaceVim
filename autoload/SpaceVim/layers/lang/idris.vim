@@ -34,14 +34,15 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','w'], 'call idris#makeWith()', 'add with clause', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','w'], 'call idris#makeWith()', 'add-with-clause', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','t'], 'call idris#showType()', 'show-type', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'], 'call idris#proofSearch(1)', 'proof-search', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','o'], 'call idris#proofSearch(1)', 'obvious-proof-search', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a'], 'call idris#reload(0)', 'reload-file', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'], 'call idris#caseSplit()', 'case-split', 1)
+  let g:_spacevim_mappings_space.l.d = {'name' : '+Add clause'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'f'], 'call idris#addClause(0)', 'case-split', 1)
 
-  " nnoremap <buffer> <silent> <LocalLeader>t :call IdrisShowType()<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>r :call IdrisReload(0)<ENTER>
-  " nnoremap <buffer> <silent> <LocalLeader>c :call IdrisCaseSplit()<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>d 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
   " nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>m :call IdrisAddMissing()<ENTER>
