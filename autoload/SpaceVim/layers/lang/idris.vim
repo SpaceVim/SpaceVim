@@ -35,4 +35,5 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','w'], 'call idris#makeWith()', 'add with clause', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','t'], 'call idris#showType()', 'add with clause', 1)
 endfunction
