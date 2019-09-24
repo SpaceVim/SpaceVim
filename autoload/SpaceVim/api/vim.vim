@@ -69,6 +69,12 @@ function! s:self.parse_string(line) abort
   return join(line, '')
 endfunction
 
+function! s:self.setbufvar(buf, dict) abort
+  for key in keys(a:dict)
+    call setbufvar(a:buf, key, a:dict[key])
+  endfor
+endfunction
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction

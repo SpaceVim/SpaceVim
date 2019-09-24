@@ -16,6 +16,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -519,6 +520,7 @@ function! s:winopen() abort " {{{
           \ 'row'     : &lines - 14,
           \ 'col'     : 0
           \ })
+    let s:gwin = winnr()
   elseif exists('*popup_create')
     if !bufexists(s:bufnr)
       let s:bufnr = bufadd('')
@@ -547,17 +549,32 @@ function! s:winopen() abort " {{{
         autocmd WinLeave <buffer> call s:winclose()
       augroup END
     endif
+    let s:gwin = winnr()
   endif
-  let s:gwin = winnr()
   let s:guide_help_mode = 0
-  setlocal filetype=leaderGuide
   if exists('&winhighlight')
-    set winhighlight=Normal:Pmenu
+    call s:VIM.setbufvar(s:bufnr, {
+          \ '&winhighlight' : 'Normal:Pmenu',
+          \ })
   endif
-  setlocal nonumber norelativenumber nolist nomodeline nowrap
-  setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
-  setlocal nocursorline nocursorcolumn colorcolumn=
-  setlocal winfixwidth winfixheight
+  call s:VIM.setbufvar(s:bufnr, {
+        \ '&filetype' : 'leaderGuide',
+        \ '&number' : 0,
+        \ '&relativenumber' : 0,
+        \ '&list' : 0,
+        \ '&modeline' : 0,
+        \ '&wrap' : 0,
+        \ '&buflisted' : 0,
+        \ '&buftype' : 'nofile',
+        \ '&bufhidden' : 'unload',
+        \ '&swapfile' : 0,
+        \ '&cursorline' : 0,
+        \ '&cursorcolumn' : 0,
+        \ '&colorcolumn' : '',
+        \ '&winfixwidth' : 1,
+        \ '&winfixheight' : 1,
+        \ '&winhighlight' : 'Normal:Pmenu',
+        \ })
   " @fixme not sure if the listchars should be changed!
   " setlocal listchars=
   call s:updateStatusline()
