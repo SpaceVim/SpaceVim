@@ -1,6 +1,7 @@
 ---
 title: "SpaceVim lang#idris layer"
 description: "This layer is for idris development, provide syntax checking, code runner and repl support for idris file."
+image: https://user-images.githubusercontent.com/13142418/65492491-9dece000-dee3-11e9-8eda-7d41a6c1ee79.png
 ---
 
 # [Available Layers](../../) >> lang#idris
