@@ -35,5 +35,24 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','w'], 'call idris#makeWith()', 'add with clause', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','t'], 'call idris#showType()', 'add with clause', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','t'], 'call idris#showType()', 'show-type', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'], 'call idris#proofSearch(1)', 'proof-search', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','o'], 'call idris#proofSearch(1)', 'obvious-proof-search', 1)
+
+  " nnoremap <buffer> <silent> <LocalLeader>t :call IdrisShowType()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>r :call IdrisReload(0)<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>c :call IdrisCaseSplit()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>d 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
+  " nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>m :call IdrisAddMissing()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
+  " nnoremap <buffer> <silent> <LocalLeader>f :call IdrisRefine()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>o :call IdrisProofSearch(0)<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>p :call IdrisProofSearch(1)<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>l :call IdrisMakeLemma()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>e :call IdrisEval()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>w 0:call IdrisMakeWith()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>i 0:call IdrisResponseWin()<ENTER>
+  " nnoremap <buffer> <silent> <LocalLeader>h :call IdrisShowDoc()<ENTER>
 endfunction
