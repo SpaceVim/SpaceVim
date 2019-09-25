@@ -15,6 +15,27 @@ function! SpaceVim#dev#pull#create(branch)
     echon 'Pull request #' . respons.number . ' has been created!'
   elseif !empty(respons)
     let msg = get(respons, 'message', '')
-    echon 'Failed to update issue ' . issue.number . ':' . msg
+    echon 'Failed to create pull request ' . respons.number . ':' . msg
+  endif
+endfunction
+
+
+function! SpaceVim#dev#pull#merge(id) abort
+  let commit_title = input('commit title:')
+  call inputsave()
+  let username = input('github username:')
+  let password = input('github password:')
+  call inputrestore()
+  let commit = {
+        \ 'commit_title' : commit_title,
+        \ 'merge_method' : 'squash'
+        \ }
+  let respons = github#api#pulls#Merge('SpaceVim', 'SpaceVim', a:id, commit, username, password)
+  normal! :
+  if !empty(respons) && has_key(respons, 'sha')
+    echon 'Pull request #' . a:id . ' has been merged!'
+  elseif !empty(respons)
+    let msg = get(respons, 'message', '')
+    echon 'Failed to merge pull request ' . a:id . ':' . msg
   endif
 endfunction
