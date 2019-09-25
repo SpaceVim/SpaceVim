@@ -358,7 +358,7 @@ function! s:handle_insert(char) abort
     silent! call s:highlight_cursor()
     redraw!
     redrawstatus!
-    return
+    return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
   elseif a:char ==# 23
     " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
