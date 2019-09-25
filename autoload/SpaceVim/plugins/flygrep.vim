@@ -52,7 +52,7 @@ function! s:update_history() abort
   endif
   call add(s:grep_history, s:grep_expr)
   if !isdirectory(expand('~/.cache/SpaceVim'))
-      call mkdir(expand('~/.cache/SpaceVim'))
+    call mkdir(expand('~/.cache/SpaceVim'))
   endif
   call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
 endfunction
@@ -245,12 +245,29 @@ function! s:start_replace() abort
   endtr
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
-    call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+    let replace_text = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
   redrawstatus
+  let g:files = s:flygrep_result_to_files()
 endfunction
 " }}}
+
+function! s:flygrep_result_to_files() abort
+  let files = []
+  for line in nvim_buf_get_lines(s:flygrep_buffer_id, 0, -1, 1)
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
+    call add(files, [filename, linenr, str])
+  endfor
+  return files
+endfunction
+
+function! s:update_files(files) abort
+
+endfunction
+
 
 " API: MPT._prompt {{{
 let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
