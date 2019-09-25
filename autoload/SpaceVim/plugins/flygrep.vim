@@ -52,7 +52,7 @@ function! s:update_history() abort
   endif
   call add(s:grep_history, s:grep_expr)
   if !isdirectory(expand('~/.cache/SpaceVim'))
-      call mkdir(expand('~/.cache/SpaceVim'))
+    call mkdir(expand('~/.cache/SpaceVim'))
   endif
   call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
 endfunction
@@ -243,14 +243,61 @@ function! s:start_replace() abort
     call matchdelete(s:hi_id)
   catch
   endtr
+  if s:grepid != 0
+    call s:JOB.stop(s:grepid)
+  endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
-    call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+    let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
+  if rst !=# replace_text
+    call s:update_files(s:flygrep_result_to_files())
+    checktime
+  endif
 endfunction
 " }}}
+
+function! s:flygrep_result_to_files() abort
+  let files = []
+  for line in getbufline(s:flygrep_buffer_id, 1, '$')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
+    call add(files, [filename, linenr, str])
+  endfor
+  return files
+endfunction
+
+function! s:update_files(files) abort
+  let fname = ''
+  let lines = {}
+  for file in a:files
+    if file[0] == fname
+      call extend(lines, {file[1] : file[2]})
+    else
+      if !empty(fname)
+        call s:update_file(fname, lines)
+      endif
+      let fname = file[0]
+      let lines = {}
+      call extend(lines, {file[1] : file[2]})
+    endif
+  endfor
+  if !empty(fname)
+    call s:update_file(fname, lines)
+  endif
+endfunction
+
+function! s:update_file(fname, lines) abort
+  let contents = readfile(a:fname, '')
+  for linenr in keys(a:lines)
+    let contents[linenr - 1] = a:lines[ linenr ]
+  endfor
+  call writefile(contents, a:fname, '')
+endfunction
+
 
 " API: MPT._prompt {{{
 let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
