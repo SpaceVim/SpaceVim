@@ -63,7 +63,6 @@ pip install --user flake8
 默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。
 若需要在保存文件时自动格式化该 Python 文件，需要设置 `format_on_save` 为 `true`。
 
-
 ```toml
 [[layers]]
   name = "lang#python"
@@ -112,6 +111,14 @@ pip install --user coverage
   ]
 ```
 
+默认自动补全是不显示类型信息，因为这会让补全变得比较慢，如果需要显示，可以启用 `enable_typeinfo` 选项：
+
+```toml
+[[layers]]
+  name = "lang#python"
+  enable_typeinfo = true
+```
+
 ## 快捷键
 
 ### 跳至定义处
@@ -128,13 +135,12 @@ pip install --user coverage
 
 ### 测试覆盖
 
-| 模式   | 快捷键      | 功能描述       |
+| 模式   | 快捷键      | 功能描述          |
 | ------ | ----------- | ----------------- |
 | normal | `SPC l c r` | coverager report  |
 | normal | `SPC l c s` | coverager show    |
 | normal | `SPC l c e` | coverager session |
 | normal | `SPC l c f` | coverager refresh |
-
 
 ### 交互式编程
 

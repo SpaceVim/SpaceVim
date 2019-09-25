@@ -47,7 +47,6 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ### language tools
 
-
 **syntax checking:**
 
 `checker` layer provide syntax checking feature, and for Python it uses `flake8` package:
@@ -109,6 +108,15 @@ to change the file head, use `python_file_head` option:
       '',
       ''
   ]
+```
+
+When enable autocomplete layer, the symbol will be complete automatically. By default the type info
+is disabled, because it is too slow. To enable type info:
+
+```toml
+[[layers]]
+  name = "lang#python"
+  enable_typeinfo = true
 ```
 
 ## Key bindings
