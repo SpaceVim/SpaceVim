@@ -60,7 +60,15 @@ pip install --user flake8
 
 **代码格式化：**
 
-默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。若需要在保存文件时自动格式化该 Python 文件，需要设置 `format-on-save` 为 `true`。
+默认的代码格式化快捷键为 `SPC b f`， 需要安装 `yapf`。
+若需要在保存文件时自动格式化该 Python 文件，需要设置 `format_on_save` 为 `true`。
+
+
+```toml
+[[layers]]
+  name = "lang#python"
+  format_on_save = 1
+```
 
 ```sh
 pip install --user yapf
@@ -91,12 +99,12 @@ pip install --user coverage
 ## 模块设置
 
 默认情况下，当新建一个空白 python 文件时，会自动添加文件头，如果需要修改默认的文件头样式，
-可以通过设置 `python-file-head` 选项：
+可以通过设置 `python_file_head` 选项：
 
 ```toml
 [[layers]]
   name = "lang#python"
-  python-file-head = [
+  python_file_head = [
       '#!/usr/bin/env python',
       '# -*- coding: utf-8 -*-',
       '',

@@ -58,12 +58,15 @@ pip install --user flake8
 
 **code formatting:**
 
-The default key binding for formatting buffer is `SPC b f`, and you need to install `yapf`. To enable automatic buffer formatting on save, load this layer with setting `format-on-save` to `1`.
+The default key binding for formatting buffer is `SPC b f`,
+and you need to install `yapf`.
+To enable automatic buffer formatting on save,
+load this layer with setting `format_on_save` to `1`.
 
-```
+```toml
 [[layers]]
   name = "lang#python"
-  format-on-save = 1
+  format_on_save = 1
 ```
 
 ```sh
@@ -95,12 +98,12 @@ pip install --user coverage
 ## Configuration
 
 By default, when create a new python file, SpaceVim will insert file head automatically.
-to change the file head, use `python-file-head` option:
+to change the file head, use `python_file_head` option:
 
 ```toml
 [[layers]]
   name = "lang#python"
-  python-file-head = [
+  python_file_head = [
       '#!/usr/bin/env python',
       '# -*- coding: utf-8 -*-',
       '',

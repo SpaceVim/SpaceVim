@@ -58,7 +58,7 @@ function! SpaceVim#layers#lang#python#config() abort
     augroup end
   endif
   " }}}
-
+ let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
@@ -164,19 +164,28 @@ function! s:go_to_def() abort
   endif
 endfunction
 
-  let s:format_on_save = 0
-  let s:python_file_head = [
-        \ '#!/usr/bin/env python',
-        \ '# -*- coding: utf-8 -*-',
-        \ '',
-        \ ''
-        \ ]
+let s:format_on_save = 0
+let s:python_file_head = [
+      \ '#!/usr/bin/env python',
+      \ '# -*- coding: utf-8 -*-',
+      \ '',
+      \ ''
+      \ ]
+let s:enable_typeinfo = 0
 function! SpaceVim#layers#lang#python#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ get(a:var,
         \ 'format-on-save',
-        \ 0)
+        \ s:format_on_save))
   let s:python_file_head = get(a:var,
+        \ 'python_file_head',
+        \ get(a:var,
         \ 'python-file-head',
-        \ s:python_file_head)
+        \ s:python_file_head))
+  let s:enable_typeinfo = get(a:var,
+        \ 'enable_typeinfo',
+        \ s:enable_typeinfo
+        \ )
 endfunction
