@@ -142,8 +142,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
-  nnoremap <silent><buffer><expr> > defx#do_action('resize', winwidth(0) + 10)
-  nnoremap <silent><buffer><expr> < defx#do_action('resize', winwidth(0) - 10)
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
