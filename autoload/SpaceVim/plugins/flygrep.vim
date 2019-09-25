@@ -274,7 +274,7 @@ endfunction
 
 function! s:update_files(files) abort
   let fname = ''
-  let lines = []
+  let lines = {}
   for file in a:files
     if file[0] == fname
       call extend(lines, {file[1] : file[2]})
@@ -283,7 +283,7 @@ function! s:update_files(files) abort
         call s:update_file(fname, lines)
       endif
       let fname = file[0]
-      let lines = []
+      let lines = {}
       call extend(lines, {file[1] : file[2]})
     endif
   endfor
