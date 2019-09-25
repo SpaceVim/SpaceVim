@@ -84,9 +84,9 @@ function! SpaceVim#plugins#searcher#count() abort
     return ' ' . len(s:rst) . ' items '
   endif
 endfunction
-
+nnoremap <silent> <Plug>(nohlsearch) :nohlsearch<Cr>
 function! SpaceVim#plugins#searcher#clear()
-  call feedkeys(":nohlsearch\<cr>")
+  call feedkeys("\<Plug>(nohlsearch)")
   let s:rst = []
   call setqflist([])
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
