@@ -18,23 +18,3 @@ function! SpaceVim#dev#pull#create(branch)
     echon 'Failed to update issue ' . issue.number . ':' . msg
   endif
 endfunction
-" @public
-" Create a pull request
-"
-" Input: >
-"    {
-"      "title": "Amazing new feature",
-"      "body": "Please pull this in!",
-"      "head": "octocat:new-feature",
-"      "base": "master"
-"    }
-" <
-" or: >
-"    {
-"      "issue": 5,
-"      "head": "octocat:new-feature",
-"      "base": "master"
-"    }
-" <
-" Github API : POST /repos/:owner/:repo/pulls
-" function! github#api#pulls#create(owner,repo,user,password,pull) abort
