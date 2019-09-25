@@ -263,7 +263,7 @@ endfunction
 
 function! s:flygrep_result_to_files() abort
   let files = []
-  for line in nvim_buf_get_lines(s:flygrep_buffer_id, 0, -1, 1)
+  for line in getbufline(s:flygrep_buffer_id, 1, '$')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
