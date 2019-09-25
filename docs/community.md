@@ -61,7 +61,6 @@ messages is:
 - <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
-- <i class="fab fa-whatsapp"></i> [`SpaceVim` on WhatsApp](https://chat.whatsapp.com/E3HvOvKmFfHDDIq82Rfflx)
 
 
 ### Others

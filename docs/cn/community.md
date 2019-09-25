@@ -11,7 +11,6 @@ lang: cn
 <!-- vim-markdown-toc GFM -->
 
 - [资讯订阅](#资讯订阅)
-- [问题及需求提交](#问题及需求提交)
 - [邮件列表](#邮件列表)
 - [聊天](#聊天)
 - [其他](#其他)
@@ -24,16 +23,9 @@ lang: cn
 
 - <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
 
-### 问题及需求提交
-
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
-
-- [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
-- [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
-
 ### 邮件列表
 
-习惯使用邮件的用户，也可以通过中文邮件组进行交流，可以发送邮件至邮件列表参与讨论：
+提交 Bug 或者新特性需求，请使用邮件列表：
 
 ```
 spacevim-cn@googlegroups.com
@@ -67,7 +59,6 @@ spacevim-cn+unsubscribe@googlegroups.com
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://riot.im/app/#/room/%23spacevim-cn:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
-- <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
 
 以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
 
@@ -76,5 +67,3 @@ spacevim-cn+unsubscribe@googlegroups.com
 ### 其他
 
 - <i class="fab fa-zhihu"></i> [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
-- <i class="fab fa-zhihu"></i> [知乎 SpaceVim 话题](https://www.zhihu.com/topic/20168681/newest)
-- <i class="fab fa-zhihu"></i> [思否 SpaceVim 标签](https://segmentfault.com/t/spacevim)
