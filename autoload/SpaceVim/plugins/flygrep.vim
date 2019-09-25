@@ -275,7 +275,7 @@ endfunction
 function! s:update_files(files) abort
   let fname = ''
   let lines = []
-  for file in files
+  for file in a:files
     if file[0] == fname
       call extend(lines, {file[1] : file[2]})
     else
