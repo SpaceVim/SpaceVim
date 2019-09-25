@@ -256,6 +256,7 @@ function! s:start_replace() abort
   redrawstatus
   if rst !=# replace_text
     call s:update_files(s:flygrep_result_to_files())
+    checktime
   endif
 endfunction
 " }}}
