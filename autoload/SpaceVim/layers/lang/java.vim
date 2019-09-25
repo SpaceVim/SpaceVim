@@ -220,6 +220,15 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["mvn test"])',
         \ 'Run maven test', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'c'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn compile"])',
+        \ 'Run maven compile', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn run"])',
+        \ 'Run maven run', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'p'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn package"])',
+        \ 'Run maven package', 1)
 
   " Gradle
   let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
