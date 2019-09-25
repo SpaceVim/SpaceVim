@@ -243,13 +243,18 @@ function! s:start_replace() abort
     call matchdelete(s:hi_id)
   catch
   endtr
+  if s:grepid != 0
+    call s:JOB.stop(s:grepid)
+  endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
-    let replace_text = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+    let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
-  let g:files = s:flygrep_result_to_files()
+  if rst !=# replace_text
+    call s:update_files(s:flygrep_result_to_files())
+  endif
 endfunction
 " }}}
 
@@ -265,7 +270,31 @@ function! s:flygrep_result_to_files() abort
 endfunction
 
 function! s:update_files(files) abort
+  let fname = ''
+  let lines = []
+  for file in files
+    if file[0] == fname
+      call extend(lines, {file[1] : file[2]})
+    else
+      if !empty(fname)
+        call s:update_file(fname, lines)
+      endif
+      let fname = file[0]
+      let lines = []
+      call extend(lines, {file[1] : file[2]})
+    endif
+  endfor
+  if !empty(fname)
+    call s:update_file(fname, lines)
+  endif
+endfunction
 
+function! s:update_file(fname, lines) abort
+  let contents = readfile(a:fname, '')
+  for linenr in keys(a:lines)
+    let contents[linenr - 1] = a:lines[ linenr ]
+  endfor
+  call writefile(a:fname, contents, '')
 endfunction
 
 
