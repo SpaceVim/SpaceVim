@@ -35,6 +35,10 @@ call defx#custom#column('icon', {
       \ 'root_icon': ' ',
       \ })
 
+	call defx#custom#column('filename', {
+	      \ 'max_width': -90,
+	      \ })
+
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
