@@ -1201,6 +1201,8 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `>`                   | iecrease filetree screenwidth                     |
+| `<`                   | dncrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
 | `Ctrl-Home`           | Switch to project root directory                  |
@@ -1274,52 +1276,52 @@ which will tell you the functional of all mappings starting with `g`.
 After pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `z`.
 
-| Key Bindings | Descriptions                                 |
-| ------------ | -------------------------------------------- |
-| `z <Right>`  | scroll screen N characters to left           |
-| `z +`        | cursor to screen top line N                  |
-| `z -`        | cursor to screen bottom line N               |
-| `z .`        | cursor line to center                        |
-| `z <Enter>`  | cursor line to top                           |
-| `z =`        | spelling suggestions                         |
-| `z A`        | toggle folds recursively                     |
-| `z C`        | close folds recursively                      |
-| `z D`        | delete folds recursively                     |
-| `z E`        | eliminate all folds                          |
-| `z F`        | create a fold for N lines                    |
-| `z G`        | mark good spelled (update internal wordlist) |
-| `z H`        | scroll half a screenwidth to the right       |
-| `z L`        | scroll half a screenwidth to the left        |
-| `z M`        | set `foldlevel` to zero                      |
-| `z N`        | set `foldenable`                             |
-| `z O`        | open folds recursively                       |
-| `z R`        | set `foldlevel` to deepest fold              |
-| `z W`        | mark wrong spelled (update internal wordlist)|
-| `z X`        | re-apply `foldlevel`                         |
-| `z ^`        | cursor to screen bottom line N               |
-| `z a`        | toggle a fold                                |
-| `z b`        | redraw, cursor line at bottom                |
-| `z c`        | close a fold                                 |
-| `z d`        | delete a fold                                |
-| `z e`        | right scroll horizontally to cursor position |
-| `z f`        | create a fold for motion                     |
-| `z g`        | mark good spelled                            |
-| `z h`        | scroll screen N characters to right          |
-| `z i`        | toggle foldenable                            |
-| `z j`        | mode to start of next fold                   |
-| `z k`        | mode to end of previous fold                 |
-| `z l`        | scroll screen N characters to left           |
-| `z m`        | subtract one from `foldlevel`                |
-| `z n`        | reset `foldenable`                           |
-| `z o`        | open fold                                    |
-| `z r`        | add one to `foldlevel`                       |
-| `z s`        | left scroll horizontally to cursor position  |
-| `z t`        | cursor line at top of window                 |
-| `z v`        | open enough folds to view cursor line        |
-| `z w`        | mark wrong spelled                           |
-| `z x`        | re-apply foldlevel and do "zV"               |
-| `z z`        | smart scroll                                 |
-| `z <Left>`   | scroll screen N characters to right          |
+| Key Bindings | Descriptions                                  |
+| ------------ | --------------------------------------------- |
+| `z <Right>`  | scroll screen N characters to left            |
+| `z +`        | cursor to screen top line N                   |
+| `z -`        | cursor to screen bottom line N                |
+| `z .`        | cursor line to center                         |
+| `z <Enter>`  | cursor line to top                            |
+| `z =`        | spelling suggestions                          |
+| `z A`        | toggle folds recursively                      |
+| `z C`        | close folds recursively                       |
+| `z D`        | delete folds recursively                      |
+| `z E`        | eliminate all folds                           |
+| `z F`        | create a fold for N lines                     |
+| `z G`        | mark good spelled (update internal wordlist)  |
+| `z H`        | scroll half a screenwidth to the right        |
+| `z L`        | scroll half a screenwidth to the left         |
+| `z M`        | set `foldlevel` to zero                       |
+| `z N`        | set `foldenable`                              |
+| `z O`        | open folds recursively                        |
+| `z R`        | set `foldlevel` to deepest fold               |
+| `z W`        | mark wrong spelled (update internal wordlist) |
+| `z X`        | re-apply `foldlevel`                          |
+| `z ^`        | cursor to screen bottom line N                |
+| `z a`        | toggle a fold                                 |
+| `z b`        | redraw, cursor line at bottom                 |
+| `z c`        | close a fold                                  |
+| `z d`        | delete a fold                                 |
+| `z e`        | right scroll horizontally to cursor position  |
+| `z f`        | create a fold for motion                      |
+| `z g`        | mark good spelled                             |
+| `z h`        | scroll screen N characters to right           |
+| `z i`        | toggle foldenable                             |
+| `z j`        | mode to start of next fold                    |
+| `z k`        | mode to end of previous fold                  |
+| `z l`        | scroll screen N characters to left            |
+| `z m`        | subtract one from `foldlevel`                 |
+| `z n`        | reset `foldenable`                            |
+| `z o`        | open fold                                     |
+| `z r`        | add one to `foldlevel`                        |
+| `z s`        | left scroll horizontally to cursor position   |
+| `z t`        | cursor line at top of window                  |
+| `z v`        | open enough folds to view cursor line         |
+| `z w`        | mark wrong spelled                            |
+| `z x`        | re-apply foldlevel and do "zV"                |
+| `z z`        | smart scroll                                  |
+| `z <Left>`   | scroll screen N characters to right           |
 
 ### Searching
 
