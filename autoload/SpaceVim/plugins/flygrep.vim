@@ -248,9 +248,7 @@ function! s:start_replace() abort
   endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
-    call SpaceVim#logger#info('replace_text: ' . replace_text)
     let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
-    call SpaceVim#logger#info('replace_result: ' . rst)
   endif
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
@@ -269,7 +267,6 @@ function! s:flygrep_result_to_files() abort
     let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
     call add(files, [filename, linenr, str])
   endfor
-  call SpaceVim#logger#info('files:' . string(files))
   return files
 endfunction
 
@@ -295,11 +292,9 @@ endfunction
 
 function! s:update_file(fname, lines) abort
   let contents = readfile(a:fname, '')
-  call SpaceVim#logger#info('contents:' . string(contents))
   for linenr in keys(a:lines)
     let contents[linenr - 1] = a:lines[ linenr ]
   endfor
-  call SpaceVim#logger#info('contents:' . string(contents))
   call writefile(contents, a:fname, '')
 endfunction
 
