@@ -294,9 +294,11 @@ endfunction
 
 function! s:update_file(fname, lines) abort
   let contents = readfile(a:fname, '')
+  call SpaceVim#logger#info('contents:' . string(contents))
   for linenr in keys(a:lines)
     let contents[linenr - 1] = a:lines[ linenr ]
   endfor
+  call SpaceVim#logger#info('contents:' . string(contents))
   call writefile(a:fname, contents, '')
 endfunction
 
