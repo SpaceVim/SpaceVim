@@ -99,6 +99,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#elm](lang/elm/)                                 | 这一模块为 SpaceVim 提供了 Elm 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#erlang](lang/erlang/)                           | 这一模块为 Erlang 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                          |
 | [lang#extra](lang/extra/)                             | 这一模块为 SpaceVim 提供了一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性。                                              |
+| [lang#foxpro](lang/foxpro/)                           | 这一模块为 Visual FoxPro 开发提供支持，提供 foxpro 语法高亮。                                                                       |
 | [lang#fsharp](lang/fsharp/)                           | 这一模块为 SpaceVim 提供了 FSharp 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                            |
 | [lang#go](lang/go/)                                   | 这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                                |
 | [lang#goby](lang/goby/)                               | 这一模块为 goby 开发提供支持，包括交互式编程、一键运行等特性。                                                                      |

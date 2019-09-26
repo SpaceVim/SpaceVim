@@ -15,7 +15,7 @@ function! SpaceVim#dev#pull#create(branch)
     echon 'Pull request #' . respons.number . ' has been created!'
   elseif !empty(respons)
     let msg = get(respons, 'message', '')
-    echon 'Failed to create pull request ' . respons.number . ':' . msg
+    echon 'Failed to create pull request:' . msg
   endif
 endfunction
 
