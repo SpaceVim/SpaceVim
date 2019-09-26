@@ -44,7 +44,7 @@
 | TypeScript                                         | lang#typescript                                           |
 | clojure                                            | [lang#clojure](https://spacevim.org/layers/lang/clojure/) |
 | erlang                                             | lang#erlang                                               |
-| (Visual) FoxPro: FoxPro, Fox Pro, VFP              |                                                           |
+| FoxPro                                             | lang#foxpro                                               |
 | 4th Dimension/4D: 4D, 4th Dimension                |                                                           |
 | ABAP                                               |                                                           |
 | ABC: ABC (exceptions: -tv -channel)                |                                                           |
