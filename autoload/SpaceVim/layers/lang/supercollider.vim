@@ -33,4 +33,28 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+
+" key bindings
+"
+" au Filetype supercollider nnoremap <buffer> <F5> :call SClang_block()<CR>
+" au Filetype supercollider inoremap <buffer> <F5> :call SClang_block()<CR>a
+" au Filetype supercollider vnoremap <buffer> <F5> :call SClang_send()<CR>
+"
+" au Filetype supercollider vnoremap <buffer> <F6> :call SClang_line()<CR>
+" au Filetype supercollider nnoremap <buffer> <F6> :call SClang_line()<CR>
+" au Filetype supercollider inoremap <buffer> <F6> :call SClang_line()<CR>a
+"
+" au Filetype supercollider nnoremap <buffer> <F12> :call SClangHardstop()<CR>
+"
+" au Filetype supercollider nnoremap <leader>sk :SClangRecompile<CR>
+" au Filetype supercollider nnoremap <buffer>K :call SChelp(expand('<cword>'))<CR>
+" au Filetype supercollider inoremap <C-Tab> :call SCfindArgs()<CR>a
+" au Filetype supercollider nnoremap <C-Tab> :call SCfindArgs()<CR>
+" au Filetype supercollider vnoremap <C-Tab> :call SCfindArgsFromSelection()<CR>
+"
+" DEPRECATED
+" au Filetype supercollider nnoremap <leader>sd yiw :call SChelp(""")<CR>
+" au Filetype supercollider nnoremap <leader>sj yiw :call SCdef(""")<CR>
+" au Filetype supercollider nnoremap <leader>si yiw :call SCimplementation(""")<CR>
+" au Filetype supercollider nnoremap <leader>sr yiw :call SCreference(""")<CR>
 endfunction
