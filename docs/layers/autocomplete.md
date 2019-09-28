@@ -16,7 +16,7 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
   - [Snippets directories](#snippets-directories)
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
 - [Key bindings](#key-bindings)
-  - [auto-complete](#auto-complete)
+  - [Completion](#completion)
   - [Neosnippet](#neosnippet)
 
 <!-- vim-markdown-toc -->
@@ -80,24 +80,28 @@ By default, the parens will be completed automatically, to disabled this feature
 
 ### Layer options
 
-You can customize the user experience of auto-completion with the following layer variables:
+You can customize the user experience of autocompletion with the following layer variables:
 
-1. `auto-completion-return-key-behavior` set the action to perform
+1. `auto_completion_return_key_behavior` set the action to perform
    when the `Return`/`Enter` key is pressed, the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
      By default it is `complete`.
-2. `auto-completion-tab-key-behavior` set the action to
+2. `auto_completion_tab_key_behavior` set the action to
    perform when the `TAB` key is pressed, the possible values are:
    - `smart` cycle candidates, expand snippets, jump parameters
    - `complete` completes with the current selection
    - `cycle` completes the common prefix and cycle between candidates
    - `nil` insert a carriage return
      By default it is `complete`.
-3. `auto-completion-delay` is a number to delay the completion after input in milliseconds, by default it is 50 ms.
-4. `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
-5. `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
+3. `auto_completion_delay` is a number to delay the completion after input in milliseconds,
+   by default it is 50 ms.
+4. `auto_completion_complete_with_key_sequence` is a string of two characters denoting
+   a key sequence that will perform a `complete` action if the sequence as been entered
+   quickly enough. If its value is `nil` then the feature is disabled.
+5. `auto_completion_complete_with_key_sequence_delay` is the number of seconds to wait for
+the autocompletion key sequence to be entered. The default value is 0.1 seconds.
 
 The default configuration of the layer is:
 
@@ -111,7 +115,7 @@ The default configuration of the layer is:
   auto_completion_complete_with_key_sequence_delay = 0.1
 ```
 
-`jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.
+`jk` is a good candidate for `auto_completion_complete_with_key_sequence` if you don’t use it already.
 
 ### Snippets directories
 
@@ -130,25 +134,25 @@ in case of a single path or a list of paths.
 ### Show snippets in auto-completion popup
 
 By default, snippets are shown in the auto-completion popup.
-To disable this feature, set the variable `auto-completion-enable-snippets-in-popup` to false.
+To disable this feature, set the variable `auto_completion_enable_snippets_in_popup` to false.
 
 ```toml
 [[layers]]
   name = "autocomplete"
-  auto-completion-enable-snippets-in-popup = false
+  auto_completion_enable_snippets_in_popup = false
 ```
 
 ## Key bindings
 
-### auto-complete
+### Completion
 
 | Key bindings | Description                                   |
 | ------------ | --------------------------------------------- |
 | `Ctrl-n`     | select next candidate                         |
 | `Ctrl-p`     | select previous candidate                     |
-| `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
+| `<Tab>`      | base on `auto_completion_tab_key_behavior`    |
 | `Shift-Tab`  | select previous candidate                     |
-| `<Return>`   | base on `auto-completion-return-key-behavior` |
+| `<Return>`   | base on `auto_completion_return_key_behavior` |
 
 ### Neosnippet
 
