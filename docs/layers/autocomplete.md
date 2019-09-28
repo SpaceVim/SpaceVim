@@ -104,11 +104,11 @@ The default configuration of the layer is:
 ```toml
 [[layers]]
   name = "autocomplete"
-  auto-completion-return-key-behavior = "nil"
-  auto-completion-tab-key-behavior = "smart"
-  auto-completion-delay = 200
-  auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1
+  auto_completion_return_key_behavior = "nil"
+  auto_completion_tab_key_behavior = "smart"
+  auto_completion_delay = 200
+  auto_completion_complete_with_key_sequence = "nil"
+  auto_completion_complete_with_key_sequence_delay = 0.1
 ```
 
 `jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.
@@ -123,16 +123,19 @@ The following snippets or directories are added by default:
 - `~/.SpaceVim.d/snippets/` : custom global snippets.
 - `./.SpaceVim.d/snippets/` : custom local snippets (project's snippets)
 
-You can provide additional directories by setting the variable `g:neosnippet#snippets_directory` which can take a string in case of a single path or a list of paths.
+You can provide additional directories by setting the
+variable `g:neosnippet#snippets_directory` which can take a string
+in case of a single path or a list of paths.
 
 ### Show snippets in auto-completion popup
 
-By default, snippets are shown in the auto-completion popup. To disable this feature, set the variable `auto-completion-enable-snippets-in-popup` to 0.
+By default, snippets are shown in the auto-completion popup.
+To disable this feature, set the variable `auto-completion-enable-snippets-in-popup` to false.
 
-```vim
-call SpaceVim#layers#load('autocomplete', {
-        \ 'auto-completion-enable-snippets-in-popup' : 0
-        \ })
+```toml
+[[layers]]
+  name = "autocomplete"
+  auto-completion-enable-snippets-in-popup = false
 ```
 
 ## Key bindings
