@@ -64,7 +64,9 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 function! s:search_exit(id, data, event) abort
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-  call setqflist(s:rst)
+  call setqflist([], 'r', {'title': ' ' . len(s:rst) . ' items',
+        \ 'items' : s:rst
+        \ })
   botright copen
 endfunction
 
@@ -73,7 +75,9 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! SpaceVim#plugins#searcher#list() abort
-  call setqflist(s:rst)
+  call setqflist([], 'r', {'title': ' ' . len(s:rst) . ' items',
+        \ 'items' : s:rst
+        \ })
   botright copen
 endfunction
 
