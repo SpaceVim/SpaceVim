@@ -10,12 +10,12 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
 - [Description](#description)
 - [Install](#install)
 - [Configuration](#configuration)
-  - [Choose which completion engine to be used](#choose-which-completion-engine-to-be-used)
-  - [Key bindings](#key-bindings)
+  - [Completion engine](#completion-engine)
+  - [Complete parens](#complete-parens)
+  - [Layer options](#layer-options)
   - [Snippets directories](#snippets-directories)
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
-- [LSP supported](#lsp-supported)
-- [Key bindings](#key-bindings-1)
+- [Key bindings](#key-bindings)
   - [auto-complete](#auto-complete)
   - [Neosnippet](#neosnippet)
 
@@ -48,37 +48,53 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Configuration
 
-### Choose which completion engine to be used
+### Completion engine
 
-You can choose the completion engine (among the supported ones) to be used
+By default, SpaceVim will choose the completion engine automatically base on your vim version.
+But you can choose the completion engine to be used
 with the following variable:
 
-- `g:spacevim_autocomplete_method`: the possible values are:
-    - `ycm`: for YouCompleteMe
-    - `neocomplcache`
-    - `coc`: **Note** that coc.nvim is also a language server protocol client. 
-See [lsp layer](language-server-protocol.md) for more information.
-    - `deoplete`
-    - `asyncomplete`
-    - `completor`
+- `autocomplete_method`: the possible values are:
+  - `ycm`: for YouCompleteMe
+  - `neocomplcache`
+  - `coc`: coc.nvim which also provides language server protocol feature
+  - `deoplete`
+  - `asyncomplete`
+  - `completor`
 
-### Key bindings
+here is an example:
+
+```toml
+[options]
+    autocomplete_method = "deoplete"
+```
+
+### Complete parens
+
+By default, the parens will be completed automatically, to disabled this feature:
+
+```toml
+[options]
+    autocomplete_parens = false
+```
+
+### Layer options
 
 You can customize the user experience of auto-completion with the following layer variables:
 
 1. `auto-completion-return-key-behavior` set the action to perform
-when the `Return`/`Enter` key is pressed, the possible values are:
+   when the `Return`/`Enter` key is pressed, the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
-By default it is `complete`.
+     By default it is `complete`.
 2. `auto-completion-tab-key-behavior` set the action to
-perform when the `TAB` key is pressed, the possible values are:
+   perform when the `TAB` key is pressed, the possible values are:
    - `smart` cycle candidates, expand snippets, jump parameters
    - `complete` completes with the current selection
    - `cycle` completes the common prefix and cycle between candidates
    - `nil` insert a carriage return
-By default it is `complete`.
+     By default it is `complete`.
 3. `auto-completion-delay` is a number to delay the completion after input in milliseconds, by default it is 50 ms.
 4. `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
 5. `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
@@ -119,18 +135,16 @@ call SpaceVim#layers#load('autocomplete', {
         \ })
 ```
 
-## LSP supported
-
 ## Key bindings
 
 ### auto-complete
 
 | Key bindings | Description                                   |
 | ------------ | --------------------------------------------- |
-| `Ctrl-n`      | select next candidate                         |
-| `Ctrl-p`      | select previous candidate                     |
+| `Ctrl-n`     | select next candidate                         |
+| `Ctrl-p`     | select previous candidate                     |
 | `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
-| `Shift-Tab`    | select previous candidate                     |
+| `Shift-Tab`  | select previous candidate                     |
 | `<Return>`   | base on `auto-completion-return-key-behavior` |
 
 ### Neosnippet
