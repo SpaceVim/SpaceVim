@@ -6,6 +6,7 @@ else
 endif
 let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
+let g:NERDTreeShowHidden = g:_spacevim_filetree_show_hidden_files
 augroup nerdtree_zvim
   autocmd!
   autocmd bufenter *
