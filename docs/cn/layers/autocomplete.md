@@ -13,6 +13,7 @@ lang: cn
 - [模块配置](#模块配置)
   - [快捷键设置](#快捷键设置)
   - [代码块的设置](#代码块的设置)
+  - [自动补全括号](#自动补全括号)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -98,6 +99,15 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 [[layers]]
   name = "autocomplete"
   auto_completion_enable_snippets_in_popup = false
+```
+
+### 自动补全括号
+
+默认情况下，会自动补全成对的括号，如果需要禁用该功能，可以添加如下配置：
+
+```toml
+[options]
+    autocomplete_parens = false
 ```
 
 ## 快捷键
