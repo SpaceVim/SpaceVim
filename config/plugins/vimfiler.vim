@@ -58,7 +58,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'status' : 1,
       \ 'safe' : 0,
       \ 'split' : 1,
-      \ 'hidden': 1,
+      \ 'hidden': g:_spacevim_filetree_show_hidden_files,
       \ 'no_quit' : 1,
       \ 'force_hide' : 0,
       \ })

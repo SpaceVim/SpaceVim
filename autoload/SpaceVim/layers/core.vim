@@ -759,3 +759,14 @@ function! s:explore_current_dir(cur) abort
     endif
   endif
 endfunction
+
+
+let g:_spacevim_filetree_show_hidden_files = 0
+
+function! SpaceVim#layers#core#set_variable(var) abort
+
+  let g:_spacevim_filetree_show_hidden_files = get(a:var,
+        \ 'filetree_show_hidden',
+        \ g:_spacevim_filetree_show_hidden_files)
+
+endfunction
