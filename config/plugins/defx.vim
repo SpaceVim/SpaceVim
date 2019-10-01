@@ -18,7 +18,7 @@ call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
-      \ 'show_ignored_files': 0,
+      \ 'show_ignored_files': g:_spacevim_filetree_show_hidden_files,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1
