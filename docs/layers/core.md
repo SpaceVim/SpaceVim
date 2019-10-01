@@ -9,13 +9,17 @@ description: "SpaceVim core layer provides many default key bindings and feature
 
 - [Intro](#intro)
 - [Features](#features)
-- [Configuration](#configuration)
+  - [FileTree](#filetree)
 
 <!-- vim-markdown-toc -->
 
 ## Intro
 
+This is core layer of SpaceVim, and it is loaded by default.
+
 ## Features
 
-## Configuration
+### FileTree
+
+
 
