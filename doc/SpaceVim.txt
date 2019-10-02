@@ -1708,7 +1708,7 @@ KEY BINDINGS
   normal          SPC l r         run current file
 <
 
-This layer also provides REPL support for hy, the key bindings are:
+This layer also provides REPL support for lisp, the key bindings are:
 >
   Key             Function
   ---------------------------------------------

@@ -23,7 +23,7 @@
 "   normal          SPC l r         run current file
 " <
 "
-" This layer also provides REPL support for hy, the key bindings are:
+" This layer also provides REPL support for lisp, the key bindings are:
 " >
 "   Key             Function
 "   ---------------------------------------------
@@ -36,7 +36,7 @@
 
 function! SpaceVim#layers#lang#lisp#plugins() abort
     let plugins = []
-    call add(plugins,['l04m33/vlime', {'on_ft' : 'lisp', 'rtp': 'vim'}])
+    call add(plugins,['wsdjeg/vim-lisp', {'merged' : 0}])
     return plugins
 endfunction
 
