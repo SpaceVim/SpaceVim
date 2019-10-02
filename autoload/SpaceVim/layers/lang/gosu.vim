@@ -15,6 +15,9 @@ endfunction
 function! SpaceVim#layers#lang#gosu#config() abort
   call SpaceVim#plugins#runner#reg_runner('gosu', 'gosu %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('gosu', function('s:language_specified_mappings'))
+  " @todo add repl support for gosu
+  " gosu language do not support repl as I know, here is issue link:
+  " https://github.com/gosu-lang/gosu-lang/issues/155
 endfunction
 
 function! s:language_specified_mappings() abort
