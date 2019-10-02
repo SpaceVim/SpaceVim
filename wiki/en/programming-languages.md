@@ -6,6 +6,8 @@
 | Assembly          | lang#assemble                                             |
 | AutoHotkey        | lang#autohotkey                                           |
 | Bash, Fish, zsh   | lang#sh                                                   |
+| Gosu              | lang#gosu                                                 |
+| Idris             | lang#idris                                                |
 | C#                | lang#csharp                                               |
 | C/C++             | lang#c                                                    |
 | CoffeeScript      | lang#coffeescript                                         |
@@ -129,14 +131,12 @@
 | GLSL              |                                                           |
 | GML               |                                                           |
 | GNU Octave        |                                                           |
-| Gosu              |                                                           |
 | Haxe              |                                                           |
 | Heron             |                                                           |
 | HPL               |                                                           |
 | HyperTalk         |                                                           |
 | Icon              |                                                           |
 | IDL               |                                                           |
-| Idris             | lang#idris                                                |
 | Inform            |                                                           |
 | Informix-4GL      |                                                           |
 | INTERCAL          |                                                           |
@@ -277,7 +277,6 @@
 - chapel-lang/chapel
 - lucee/Lucee
 - eclipse/golo-lang
-- gosu-lang/gosu-lang
 - ziglang/zig
 - HaxeFoundation/haxe
 - livecode/livecode
