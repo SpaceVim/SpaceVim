@@ -1591,6 +1591,8 @@ Text related commands (start with `x`):
 
 | Key Bindings  | Descriptions                                                       |
 | ------------- | ------------------------------------------------------------------ |
+| `SPC x a #`   | align region at #                                                  |
+| `SPC x a %`   | align region at %                                                  |
 | `SPC x a &`   | align region at &                                                  |
 | `SPC x a (`   | align region at (                                                  |
 | `SPC x a )`   | align region at )                                                  |

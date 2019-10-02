@@ -73,6 +73,8 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
   xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '#'], 'Tabularize /#', 'align-region-at-#', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '%'], 'Tabularize /%', 'align-region-at-%', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align-region-at-&', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align-region-at-(', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align-region-at-)', 1, 1)
