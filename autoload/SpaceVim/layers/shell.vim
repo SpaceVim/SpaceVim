@@ -235,8 +235,8 @@ function! s:open_default_shell(open_with_file_cwd) abort
 
       " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
-      if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
-        nnoremap <buffer><silent> q :hide<CR>
+      if !empty(g:spacevim_windows_smartclose)  && !g:spacevim_vimcompatible
+        exe 'nnoremap <buffer><silent> ' . g:spacevim_windows_smartclose . ' :hide<CR>'
       endif
       startinsert
     else
