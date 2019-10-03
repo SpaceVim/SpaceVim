@@ -556,6 +556,16 @@ let g:spacevim_enable_statusline_mode     = 0
 " <
 "
 let g:spacevim_custom_color_palette = []
+
+""
+" @section enable_cursorcolumn, options-enable_cursorcolumn
+" @parentsection options
+" Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
+" highlighted in normal mode. To enable this feature:
+" >
+"   enable_cursorcolumn = true
+" <
+
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
