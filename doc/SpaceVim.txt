@@ -57,12 +57,12 @@ CONTENTS                                                   *SpaceVim-contents*
       37. relativenumber.....................|SpaceVim-options-relativenumber|
       38. retry_cnt...............................|SpaceVim-options-retry_cnt|
       39. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      40. simple_mode...........................|SpaceVim-options-simple_mode|
-      41. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      42. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      43. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      44. statusline_separator.........|SpaceVim-options-statusline_separator|
-      45. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      40. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      41. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      42. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      43. statusline_separator.........|SpaceVim-options-statusline_separator|
+      44. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      45. vim_help_language...............|SpaceVim-options-vim_help_language|
       46. vimcompatible.......................|SpaceVim-options-vimcompatible|
       47. warning_symbol.....................|SpaceVim-options-warning_symbol|
       48. windows_index_type.............|SpaceVim-options-windows_index_type|
@@ -482,15 +482,6 @@ Set the width of the SpaceVim sidebar. Default is 30. This value will be used
 by tagbar and vimfiler.
 
 ==============================================================================
-SIMPLE_MODE                                     *SpaceVim-options-simple_mode*
-
-Enable/disable simple mode of SpaceVim. Default is false. In this mode, only
-few plugins will be installed.
->
-  simple_mode = true
-<
-
-==============================================================================
 SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
 
 Set the snippet engine of SpaceVim, default is neosnippet. to enable
@@ -563,6 +554,14 @@ terminal emulator, using this option with nvim under tmux might require adding
 the following to ~/.tmux.conf:
 >
   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+<
+
+==============================================================================
+VIM_HELP_LANGUAGE                         *SpaceVim-options-vim_help_language*
+
+Set the help language of vim. Default is 'en'. You can change it to Chinese.
+>
+  vim_help_language = "cn"
 <
 
 ==============================================================================
@@ -923,13 +922,6 @@ will be used if the colorscheme set by `g:spacevim_colorscheme` is not
 installed.
 >
   let g:spacevim_colorscheme_default = 'other_color'
-<
-
-                                                      *g:spacevim_simple_mode*
-Enable/disable simple mode of SpaceVim. Default is 0. In this mode, only few
-plugins will be installed.
->
-  let g:spacevim_simple_mode = 1
 <
 
                                                       *g:spacevim_filemanager*

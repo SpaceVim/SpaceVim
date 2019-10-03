@@ -650,6 +650,15 @@ let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circ
 " <
 let g:spacevim_terminal_cursor_shape = 2
 ""
+" @section vim_help_language, options-vim_help_language
+" @parentsection options
+" Set the help language of vim. Default is 'en'.
+" You can change it to Chinese.
+" >
+"   vim_help_language = "cn"
+" <
+
+""
 " Set the help language of vim. Default is 'en'.
 " You can change it to Chinese.
 " >
@@ -702,22 +711,6 @@ let g:spacevim_colorscheme_bg             = 'dark'
 "   let g:spacevim_colorscheme_default = 'other_color'
 " <
 let g:spacevim_colorscheme_default     = 'desert'
-""
-" @section simple_mode, options-simple_mode
-" @parentsection options
-" Enable/disable simple mode of SpaceVim. Default is false.
-" In this mode, only few plugins will be installed.
-" >
-"   simple_mode = true
-" <
-
-""
-" Enable/disable simple mode of SpaceVim. Default is 0.
-" In this mode, only few plugins will be installed.
-" >
-"   let g:spacevim_simple_mode = 1
-" <
-let g:spacevim_simple_mode             = 0
 ""
 " @section filemanager, options-filemanager
 " @parentsection options
