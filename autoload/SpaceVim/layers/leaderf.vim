@@ -81,8 +81,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite outline"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Leaderf function',
         \ ['jump to a definition in buffer',
         \ [
         \ 'SPC j i is to jump to a definition in buffer',
@@ -105,8 +104,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite colorscheme"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Leaderf colorscheme',
         \ ['fuzzy find colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
@@ -142,8 +140,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["DeniteCursorWord help"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'LeaderfHelpCword',
         \ ['get help with the symbol at point',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
