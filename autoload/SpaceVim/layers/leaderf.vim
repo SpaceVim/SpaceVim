@@ -15,6 +15,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
         \ 'loadconf' : 1,
         \ 'merged' : 0,
         \ }])
+  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -49,8 +50,7 @@ function! SpaceVim#layers#leaderf#config() abort
   nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Leaderf buffer',
         \ ['buffer-list',
         \ [
         \ 'SPC b b is to open buffer list',
@@ -61,8 +61,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite file_mru"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Leaderf mru',
         \ ['open-recent-file',
         \ [
         \ 'SPC f r is to open recent file list',
