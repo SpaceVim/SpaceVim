@@ -100,11 +100,21 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-04-09   | ¥ 10     | 东海               |
 | 2019-03-17   | ¥ 1000   | falls              |
 | 2019-01-24   | ¥ 10     | 重剑               |
+| 2019-04-08   | \$9      | Mateusz Grzeliński |
+| 2019-04-24   | \$180    | LLIP               |
+| 2019-04-24   | \$3      | Isaac              |
+| 2019-05-02   | \$3      | Peter Kuchar       |
+| 2019-05-03   | \$3      | Ozon-Web82         |
+| 2019-06-18   | \$9      | Stefan Lendl       |
+| 2019-06-24   | \$6      | Colin Barnabas     |
+| 2019-07-06   | \$3      | Alejandro Vega     |
+| 2019-07-27   | \$3      | Pranav Sahani      |
 
 ## Historical Spending
 
-| Date       | Amount  | Description |
-| ---------- | ------- | ----------- |
-| 2019-04-11 | - ¥ 525 | Domain      |
-| 2017-06-10 | - \$ 5  | Host        |
-| 2017-01-03 | - ¥ 225 | Domain      |
+| Date       | Amount    | Description |
+| ---------- | --------- | ----------- |
+| 2019-09-29 | - ¥ 18.74 | Host        |
+| 2019-04-11 | - ¥ 525   | Domain      |
+| 2017-06-10 | - \$ 5    | Host        |
+| 2017-01-03 | - ¥ 225   | Domain      |
