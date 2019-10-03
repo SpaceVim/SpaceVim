@@ -100,16 +100,16 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-04-09   | ¥ 10     | 东海               |
 | 2019-03-17   | ¥ 1000   | falls              |
 | 2019-01-24   | ¥ 10     | 重剑               |
-| 2019-04-24   | \$171.78    | LLIP               |
-| 2019-04-24   | \$2.57      | Isaac              |
-| 2019-05-02   | \$2.57      | Peter Kuchar       |
-| 2019-05-03   | \$2.57      | Ozon-Web82         |
-| 2019-06-18   | \$8.30      | Stefan Lendl       |
-| 2019-06-24   | \$5.44      | Colin Barnabas     |
-| 2019-07-06   | \$2.57      | Alejandro Vega     |
-| 2019-07-27   | \$2.57      | Sahani Pranav      |
-| 2019-10-01   | \$2.57      | Angers Martin      |
-| 2019-10-03   | \$5.44      | Thorne Ross    |
+| 2019-04-24   | \$171.78 | LLIP               |
+| 2019-04-24   | \$2.57   | Isaac              |
+| 2019-05-02   | \$2.57   | Peter Kuchar       |
+| 2019-05-03   | \$2.57   | Ozon-Web82         |
+| 2019-06-18   | \$8.30   | Stefan Lendl       |
+| 2019-06-24   | \$5.44   | Colin Barnabas     |
+| 2019-07-06   | \$2.57   | Alejandro Vega     |
+| 2019-07-27   | \$2.57   | Sahani Pranav      |
+| 2019-10-01   | \$2.57   | Angers Martin      |
+| 2019-10-03   | \$5.44   | Thorne Ross        |
 
 ## Historical Spending
 
