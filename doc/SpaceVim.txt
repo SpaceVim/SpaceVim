@@ -65,6 +65,7 @@ CONTENTS                                                   *SpaceVim-contents*
       45. warning_symbol.....................|SpaceVim-options-warning_symbol|
       46. windows_index_type.............|SpaceVim-options-windows_index_type|
       47. windows_leader.....................|SpaceVim-options-windows_leader|
+      48. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -581,6 +582,15 @@ Window functions leader for SpaceVim. Default is `s`. Set to empty to disable
 this feature, or you can set to another char.
 >
   windows_leader = ""
+<
+
+==============================================================================
+WINDOWS_SMARTCLOSE                       *SpaceVim-options-windows_smartclose*
+
+Set the default key for smart close windows, default is `q`. to disable this
+feature, just set it to empty string:
+>
+  windows_smartclose = ""
 <
 
 ==============================================================================

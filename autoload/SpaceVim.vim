@@ -877,6 +877,15 @@ let g:spacevim_enable_os_fileformat_icon = 0
 " fuzzy find the repo you want.
 let g:spacevim_github_username         = ''
 ""
+" @section windows_smartclose, options-windows_smartclose
+" @parentsection options
+" Set the default key for smart close windows, default is `q`.
+" to disable this feature, just set it to empty string:
+" >
+"   windows_smartclose = ""
+" <
+
+""
 " Set the default key for smart close windows, default is `q`.
 let g:spacevim_windows_smartclose      = 'q'
 ""
