@@ -62,10 +62,11 @@ CONTENTS                                                   *SpaceVim-contents*
       42. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
       43. statusline_separator.........|SpaceVim-options-statusline_separator|
       44. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      45. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      46. windows_index_type.............|SpaceVim-options-windows_index_type|
-      47. windows_leader.....................|SpaceVim-options-windows_leader|
-      48. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      45. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      46. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      47. windows_index_type.............|SpaceVim-options-windows_index_type|
+      48. windows_leader.....................|SpaceVim-options-windows_leader|
+      49. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -555,6 +556,23 @@ the following to ~/.tmux.conf:
 <
 
 ==============================================================================
+VIMCOMPATIBLE                                 *SpaceVim-options-vimcompatible*
+
+Enable/Disable vimcompatible mode, by default it is false.  to enable
+vimcompatible mode, just add:
+>
+  vimcompatible = true
+<
+In vimcompatible mode all vim origin key bindings will not be changed.
+
+Includes:
+>
+  q       smart quit windows
+  s       windows key bindings leader
+  <C-x>   switch buffer
+<
+
+==============================================================================
 WARNING_SYMBOL                               *SpaceVim-options-warning_symbol*
 
 Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
@@ -924,8 +942,12 @@ Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 <
 
                                                     *g:spacevim_vimcompatible*
-Enable/Disable vimcompatible mode, by default it is disabled. In vimcompatible
-mode all vim origin key bindings will not be changed.
+Enable/Disable vimcompatible mode, by default it is false.  to enable
+vimcompatible mode, just add:
+>
+  let g:spacevim_vimcompatible = 1
+<
+In vimcompatible mode all vim origin key bindings will not be changed.
 
 Includes:
 >

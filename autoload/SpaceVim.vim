@@ -768,8 +768,29 @@ let g:spacevim_plugin_manager_processes = 16
 " <
 let g:spacevim_checkinstall            = 1
 ""
-" Enable/Disable vimcompatible mode, by default it is disabled. In
-" vimcompatible mode all vim origin key bindings will not be changed.
+" @section vimcompatible, options-vimcompatible
+" @parentsection options
+" Enable/Disable vimcompatible mode, by default it is false. 
+" to enable vimcompatible mode, just add:
+" >
+"   vimcompatible = true
+" <
+" In vimcompatible mode all vim origin key bindings will not be changed.
+"
+" Includes:
+" >
+"   q       smart quit windows
+"   s       windows key bindings leader
+"   <C-x>   switch buffer
+" <
+
+""
+" Enable/Disable vimcompatible mode, by default it is false. 
+" to enable vimcompatible mode, just add:
+" >
+"   let g:spacevim_vimcompatible = 1
+" <
+" In vimcompatible mode all vim origin key bindings will not be changed.
 "
 " Includes:
 " >
@@ -1111,7 +1132,7 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if g:spacevim_vimcompatible != 1
+  if !g:spacevim_vimcompatible
     call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
     call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
   endif
