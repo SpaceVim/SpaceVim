@@ -1106,9 +1106,9 @@ function! SpaceVim#end() abort
     call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
     call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
   endif
-  if g:spacevim_vimcompatible == 1
+  if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
-    let g:spacevim_windows_smartclose = 0
+    let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible
