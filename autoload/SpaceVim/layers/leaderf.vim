@@ -36,8 +36,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite help -input=SpaceVim"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Leaderf help --input=SpaceVim',
         \ ['find-SpaceVim-help',
         \ [
         \ 'SPC h SPC is to find SpaceVim help',
