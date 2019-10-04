@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim chat 模块"
 description: "这一模块为 SpaceVim 提供了一个聊天框架，目前支持微信聊天和 QQ 聊天，同时支持自定义聊天服务器。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> chat

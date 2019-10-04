@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lsp 模块"
 description: "这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> lsp

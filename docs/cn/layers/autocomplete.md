@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim autocomplete 模块"
 description: "这一模块为 SpaceVim 提供了自动补全的框架，包括语法补全等多种补全来源，同时提供了代码块自动完成等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> autocomplete
