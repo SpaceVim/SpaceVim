@@ -14,5 +14,10 @@ function! SpaceVim#layers#lang#chapel#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#chapel#config() abort
-  
+  call SpaceVim#plugins#runner#reg_runner('chapel', ['chpl -o #TEMP# %s', '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('chapel', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
