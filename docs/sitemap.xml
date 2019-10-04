@@ -9,16 +9,17 @@
         <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
         {% endif %}
         <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
+        <priority>0.5</priority>
     </url>
     {% endfor %}
     {% for page in site.pages %}
-        {% if page.lang != "zn" %}
+        {% if page.lang != "zh" %}
+            <loc>{{ page.url }}</loc>
+            <lastmod>{{ page.sitemap.lastmod | date_to_xmlschema }}</lastmod>
             {% if page.sitemap != null and page.sitemap != empty %}
+            <changefreq>weekly</changefreq>
             <url>
-                <loc>{{ page.url }}</loc>
-                <lastmod>{{ page.sitemap.lastmod | date_to_xmlschema }}</lastmod>
-                <changefreq>{{ page.sitemap.changefreq }}</changefreq>
+                <!-- <changefreq>{{ page.sitemap.changefreq }}</changefreq> -->
                 <priority>{{ page.sitemap.priority }}</priority>
             </url>
             {% endif %}
