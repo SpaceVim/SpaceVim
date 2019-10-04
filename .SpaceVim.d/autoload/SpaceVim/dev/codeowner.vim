@@ -1,3 +1,5 @@
+let s:FILE = SpaceVim#api#import('file')
+
 func! s:paser(file)
   let config = readfile(a:file, '')
   let rst = {}
@@ -12,14 +14,15 @@ func! s:paser(file)
 endf
 
 let s:owners = s:paser('.github/CODEOWNERS')
+let g:owners = s:owners
 
 
 
 func! SpaceVim#dev#codeowner#open_profile()
   let url = 'https://github.com/'
-  let owners = get(s:owners, expand('%'), [])
+  let owners = get(s:owners, s:FILE.unify_path(expand('%'), ':.'), [])
   if !empty(owners)
-     let url = url . owner[0]
+     let url = url . owners[0][1:]
      exe 'OpenBrowser ' . url
   else
      echohl WarnMsg
