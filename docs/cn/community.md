@@ -1,7 +1,7 @@
 ---
 title: "中文社区"
 description: "SpaceVim 中文社区，包括中文技术问答、资讯订阅、Bug 提交以及需求提交，让沟通更加便利。"
-lang: cn
+lang: zh
 ---
 
 # SpaceVim 中文社区

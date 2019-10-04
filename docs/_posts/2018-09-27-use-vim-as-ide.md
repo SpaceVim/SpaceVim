@@ -3,7 +3,7 @@ title: "使用 Vim 搭建基本开发环境"
 categories: [blog_cn]
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建基本的的开发环境，简介 SpaceVim 基本的使用技巧"
 permalink: /cn/:title/
-lang: cn
+lang: zh
 type: BlogPosting
 comments: true
 commentsID: "使用 Vim 搭建基本开发环境"

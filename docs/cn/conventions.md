@@ -1,7 +1,7 @@
 ---
 title: "基本约定"
 description: "描述贡献代码所需遵循的约定俗成的规范，包括 Vim 脚本的代码规范以及 MarkDown 文件的代码规范。"
-lang: cn
+lang: zh
 ---
 
 # 基本约定

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#html 模块"
 description: "这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#html

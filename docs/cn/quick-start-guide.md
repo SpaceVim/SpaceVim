@@ -1,7 +1,7 @@
 ---
 title: "入门指南"
 description: "SpaceVim 入门教程，包括安装、初始化配置等内容"
-lang: cn
+lang: zh
 ---
 
 
