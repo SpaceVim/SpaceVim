@@ -1,7 +1,7 @@
 ---
 title: "常见问题"
 description: "在使用 SpaceVim 过程中比较常见的一些问题，包括并不限于安装、配置及使用。"
-lang: cn
+lang: zh
 ---
 
 # SpaceVim 常见问题解答

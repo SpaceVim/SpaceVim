@@ -1,7 +1,7 @@
 ---
 title: "赞助"
 description: "SpaceVim 赞助方式，以及历史赞助，如果你想赞助 SpaceVim，或者希望 SpaceVim 开发的更快一点，可以选择以下某种方式进行赞助。"
-lang: cn
+lang: zh
 ---
 
 # 赞助

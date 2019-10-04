@@ -1,7 +1,7 @@
 ---
 title: "关于"
 description: "创建SpaceVim这一项目的目的在于提供一个开箱即用的 Vim 开发环境"
-lang: cn
+lang: zh
 ---
 
 # 关于我们

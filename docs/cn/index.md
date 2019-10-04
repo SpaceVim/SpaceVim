@@ -1,7 +1,7 @@
 ---
 title: "主页"
 description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织和管理插件，提高 Vim 环境配置效率。"
-lang: cn
+lang: zh
 ---
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)

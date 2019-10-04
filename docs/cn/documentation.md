@@ -2,7 +2,7 @@
 title: "使用文档"
 description: "SpaceVim 是一个社区驱动的模块化 Vim 配置，以模块的方式组织和管理插件，为不同语言开发定制特定的模块，提供语法检查、自动补全、格式化、一键编译运行以及 REPL 和 DEBUG 支持。"
 redirect_from: "/README_zh_cn/"
-lang: cn
+lang: zh
 ---
 
 # 使用文档
