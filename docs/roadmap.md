@@ -10,7 +10,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 <!-- vim-markdown-toc GFM -->
 
 - [Next](#next)
-  - [v1.1.0](#v110)
+  - [v1.3.0](#v130)
 - [Meta](#meta)
 - [Completed](#completed)
   - [v0.1.0](#v010)
@@ -24,13 +24,13 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
   - [v0.8.0](#v080)
   - [v0.9.0](#v090)
   - [v1.0.0](#v100)
-  - [v1.1.0](#v110-1)
+  - [v1.1.0](#v110)
 
 <!-- vim-markdown-toc -->
 
 ## Next
 
-### [v1.1.0](https://github.com/SpaceVim/SpaceVim/milestone/14)
+### [v1.3.0](https://github.com/SpaceVim/SpaceVim/milestone/16)
 
 ## Meta
 

@@ -6,7 +6,7 @@ image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010
 commentsID: "Vim 异步实时代码检索"
 comments: true
 permalink: /cn/:title/
-lang: cn
+lang: zh
 ---
 
 # [Blogs](../blog/) >> Vim 异步实时代码检索

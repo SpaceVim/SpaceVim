@@ -1,6 +1,6 @@
 "=============================================================================
 " pmd.vim --- Integrates PMD using Vim quickfix mode
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3

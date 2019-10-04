@@ -1,6 +1,6 @@
 "=============================================================================
 " go.vim --- SpaceVim lang#go layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -32,11 +32,11 @@
 "   normal          SPC l L         list declarations in dir
 "   normal          SPC l m         format improts
 "   normal          SPC l M         add import
-"   normal          SPC l r         go referrers
+"   normal          SPC l x         go referrers
 "   normal          SPC l s         fill struct
 "   normal          SPC l t         go test
 "   normal          SPC l v         freevars
-"   normal          SPC l x         go run
+"   normal          SPC l r         go run
 " <
 
 
@@ -84,8 +84,8 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(go-build)',
         \ 'go build', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
-        \ '<Plug>(go-coverage)',
-        \ 'go coverage', 0)
+        \ 'GoCoverageToggle',
+        \ 'go coverage toggle', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','d'],
         \ '<Plug>(go-doc)',
         \ 'go doc', 0)
@@ -128,17 +128,20 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
         \ ':GoImport ',
         \ 'add import', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'],
         \ ':GoReferrers',
         \ 'go referrers', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
         \ ':GoFillStruct',
         \ 'fill struct', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
-        \ '<Plug>(go-test)',
-        \ 'go test', 0)
+        \ 'GoTest',
+        \ 'go test', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','T'],
+        \ 'GoTestFunc',
+        \ 'go test function', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
         \ ':GoFreevars',
         \ 'freevars', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','x'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction

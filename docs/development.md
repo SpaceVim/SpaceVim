@@ -33,10 +33,6 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 SpaceVim is an effort of all the volunteers. We encourage you to pitch in. The community makes SpaceVim what it is.
 We have a few guidelines which we need all contributors to follow.
 
-Development happens in the GitHub repository. Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
-
 You can only consider reading the sections relevant to what you are going to do:
 
 - [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
@@ -183,8 +179,8 @@ The file header for Vim script should look like the following template:
 ```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: YOUR NAME <YOUR EMAIL>
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -252,6 +248,17 @@ function! SpaceVim#layers#foo#config() abort
   let g:foo_option2 = get(g:, 'foo_option2', 2)
   let g:foo_option3 = get(g:, 'foo_option3', 3)
   " ...
+endfunction
+
+" add layer options:
+let s:layer_option = 'default var'
+function! SpaceVim#layers#foo#set_variable(var) abort
+  let s:layer_option = get(a:var, 'layer_option', s:layer_option)
+endfunction
+
+" completion function for layer options:
+function! SpaceVim#layers#foo#get_options() abort
+    return ['layer_option']
 endfunction
 ```
 

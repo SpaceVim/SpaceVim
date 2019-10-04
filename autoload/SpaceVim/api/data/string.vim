@@ -1,7 +1,6 @@
 "=============================================================================
 " string.vim --- SpaceVim string API
-" init.vim --- Entry file for neovim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -48,6 +47,20 @@ function! s:self.fill(str, length, ...) abort
   endif
   let l:spaces = repeat(char, a:length - strwidth(l:string))
   return l:string . l:spaces
+endfunction
+
+function! s:self.toggle_case(str) abort
+  let chars = []
+  for char in self.string2chars(a:str)
+    if char2nr(char) >= 97 && char2nr(char) <= 122
+      call add(chars, nr2char(char2nr(char) - 32))
+    elseif char2nr(char) >= 65 && char2nr(char) <= 90
+      call add(chars, nr2char(char2nr(char) + 32))
+    else
+      call add(chars, char)
+    endif
+  endfor
+  return join(chars, '')
 endfunction
 
 function! s:self.fill_left(str, length, ...) abort

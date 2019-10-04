@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim checkers 模块"
 description: "这一模块为 SpaceVim 提供了代码语法检查的特性，同时提供代码实时检查，并列出语法错误的位置。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> checkers

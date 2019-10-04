@@ -1,6 +1,6 @@
 "=============================================================================
 " colorscheme.vim --- SpaceVim colorscheme layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -38,6 +38,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ['SpaceVim/vim-material', { 'merged' : 0}],
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
+        \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
   "
   " TODO:
@@ -78,6 +79,7 @@ unlet s:n
 
 let s:random_colorscheme = 0
 let s:random_frequency = ''
+let s:bright_statusline = 0
 
 function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme
@@ -126,6 +128,11 @@ endfunction
 function! SpaceVim#layers#colorscheme#set_variable(var) abort
   let s:random_colorscheme = get(a:var, 'random_theme', get(a:var, 'random-theme', 0))
   let s:random_frequency = get(a:var, 'frequency', 'hourly')
+  let s:bright_statusline = get(a:var, 'bright_statusline', 0)
+endfunction
+
+function! SpaceVim#layers#colorscheme#get_variable() abort
+  return s:
 endfunction
 
 function! SpaceVim#layers#colorscheme#get_options() abort

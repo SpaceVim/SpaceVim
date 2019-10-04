@@ -1,35 +1,40 @@
 "=============================================================================
 " debug.vim --- SpaceVim debug layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
-  call add(plugins,['idanarye/vim-vebugger', {'merged' : 0}])
+  " @todo fork verbugger
+  call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
+  if g:spacevim_filemanager !=# 'vimfiler'
+    call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  endif
   return plugins
 endfunction
 
 function! SpaceVim#layers#debug#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'l'], 'call SpaceVim#layers#debug#launching(&ft)', 'launching debugger', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'b'], 'VBGtoggleBreakpointThisLine', 'Toggle a breakpoint for the current line', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'B'], 'VBGclearBreakpoints', 'Clear all breakpoints', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'c'], 'VBGcontinue', 'Continue the execution', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'o'], 'VBGstepOver', 'step over', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'i'], 'VBGstepIn', 'step into functions', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'O'], 'VBGstepOut', 'step out of current function', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'k'], 'VBGkill', 'Terminates the debugger', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'l'], 'call SpaceVim#layers#debug#launching(&ft)', 'launching-debugger', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'b'], 'VBGtoggleBreakpointThisLine', 'toggle-line-breakpoint', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'B'], 'VBGclearBreakpoints', 'clear-all-breakpoints', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'c'], 'VBGcontinue', 'continue-the-execution', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'o'], 'VBGstepOver', 'step-over', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'i'], 'VBGstepIn', 'step-into-functions', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'O'], 'VBGstepOut', 'step-out-of-current-function', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'k'], 'VBGkill', 'terminates-the-debugger', 1)
   let g:_spacevim_mappings_space.d.e = {'name' : '+Evaluate/Execute'}
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 's'], 'VBGevalSelectedText', 'Evaluate and print the selected text', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'e'], 'VBGevalWordUnderCursor', 'Evaluate the <cword> under the cursor', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'S'], 'VBGexecuteSelectedText', 'Execute the selected text', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['d', 'e', 's'], 'VBGevalSelectedText', 'evaluate-selected-text', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['d', 'e', 'e'], 'VBGevalWordUnderCursor', 'evaluate-cursor-symbol', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['d', 'e', 'S'], 'VBGexecuteSelectedText', 'execute-selected-text', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', '.'], 'call call('
         \ . string(s:_function('s:debug_transient_state')) . ', [])',
-        \ 'debug transient state', 1)
-  let g:vebugger_breakpoint_text = '🞊'
-  let g:vebugger_currentline_text = '🠲'
+        \ 'debug-transient-state', 1)
+  let g:vebugger_breakpoint_text = '->'
+  let g:vebugger_currentline_text = '++'
 endfunction
 
 function! SpaceVim#layers#debug#launching(ft) abort
@@ -37,6 +42,8 @@ function! SpaceVim#layers#debug#launching(ft) abort
     exe 'VBGstartPDB ' . bufname('%')
   elseif a:ft ==# 'ruby'
     exe 'VBGstartRDebug ' . bufname('%')
+  elseif a:ft ==# 'powershell'
+    exe 'VBGstartPowerShell ' . bufname('%')
   else
     echohl WarningMsg
     echo 'read :h vebugger-launching'

@@ -1,6 +1,6 @@
 "=============================================================================
 " runner.vim --- code runner for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -72,6 +72,10 @@ function! s:async_run(runner) abort
     " the runner is a list
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
+    let dir = fnamemodify(s:target, ':h')
+    if isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
     if type(a:runner[0]) == type({})
       if type(a:runner[0].exe) == 2
         let exe = call(a:runner[0].exe, [])
@@ -87,7 +91,7 @@ function! s:async_run(runner) abort
       endif
     else
       let usestdin =  0
-      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+      let compile_cmd = [substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')]
     endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
           \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),

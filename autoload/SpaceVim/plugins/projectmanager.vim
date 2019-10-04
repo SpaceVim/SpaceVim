@@ -1,6 +1,6 @@
 "=============================================================================
 " projectmanager.vim --- project manager for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -189,6 +189,25 @@ endfunction
 
 function! s:compare(d1, d2) abort
   return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+endfunction
+
+function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
+  call SpaceVim#commands#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  let dir = get(g:,'spacevim_src_root', '~')
+  "return globpath(dir, '*')
+  let result = split(globpath(dir, '*'), "\n")
+  let ps = []
+  for p in result
+    if isdirectory(p) && isdirectory(p. '\' . '.git')
+      call add(ps, fnamemodify(p, ':t'))
+    endif
+  endfor
+  return join(ps, "\n")
+endfunction
+
+function! SpaceVim#plugins#projectmanager#OpenProject(p) abort
+  let dir = get(g:, 'spacevim_src_root', '~') . a:p
+  exe 'CtrlP '. dir
 endfunction
 
 

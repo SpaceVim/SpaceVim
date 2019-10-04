@@ -1,6 +1,6 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -11,6 +11,7 @@ scriptencoding utf-8
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -21,6 +22,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['kana/vim-textobj-user'],
         \ ['kana/vim-textobj-indent'],
         \ ['kana/vim-textobj-line'],
+        \ ['dhruvasagar/vim-table-mode'],
         \ ['kana/vim-textobj-entire'],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
@@ -71,6 +73,8 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
   xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '#'], 'Tabularize /#', 'align-region-at-#', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '%'], 'Tabularize /%', 'align-region-at-%', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align-region-at-&', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align-region-at-(', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align-region-at-)', 1, 1)
@@ -132,8 +136,12 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
 
   " word
-  let g:_spacevim_mappings_space.x.w = {'name' : '+word'}
+  let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], "normal! " . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
+  let g:_spacevim_mappings_space.x.s = {'name' : '+String'}
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
+        \ . string(s:_function('s:join_string_with')) . ', [])',
+        \ 'join-string-with', 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -141,60 +149,60 @@ function! SpaceVim#layers#edit#config() abort
   let g:_spacevim_mappings_space.i.U = {'name' : '+UUID'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], 'call call('
         \ . string(s:_function('s:insert_simple_password')) . ', [])',
-        \ 'insert simple password', 1)
+        \ 'insert-simple-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 2], 'call call('
         \ . string(s:_function('s:insert_stronger_password')) . ', [])',
-        \ 'insert stronger password', 1)
+        \ 'insert-stronger-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 3], 'call call('
         \ . string(s:_function('s:insert_paranoid_password')) . ', [])',
-        \ 'insert password for paranoids', 1)
+        \ 'insert-password-for-paranoids', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'p'], 'call call('
         \ . string(s:_function('s:insert_phonetically_password')) . ', [])',
-        \ 'insert a phonetically easy password', 1)
+        \ 'insert-a-phonetically-easy-password', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
         \ . string(s:_function('s:insert_numerical_password')) . ', [])',
-        \ 'insert a numerical password', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search and insert unicode', 1)
+        \ 'insert-a-numerical-password', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'U', 'U'], 'call call('
         \ . string(s:_function('s:uuidgen_U')) . ', [])',
         \ 'uuidgen-4', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'l'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_list')) . ', [])',
-        \ 'insert lorem-ipsum list', 1)
+        \ 'insert-lorem-ipsum-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 'p'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_paragraph')) . ', [])',
-        \ 'insert lorem-ipsum paragraph', 1)
+        \ 'insert-lorem-ipsum-paragraph', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'l', 's'], 'call call('
         \ . string(s:_function('s:insert_lorem_ipsum_sentence')) . ', [])',
-        \ 'insert lorem-ipsum sentence', 1)
+        \ 'insert-lorem-ipsum-sentence', 1)
   " move line
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'J'], 'call call('
         \ . string(s:_function('s:move_text_down_transient_state')) . ', [])',
-        \ 'move text down(enter transient state)', 1)
+        \ 'move-text-down(enter-transient-state)', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'K'], 'call call('
         \ . string(s:_function('s:move_text_up_transient_state')) . ', [])',
-        \ 'move text up(enter transient state)', 1)
+        \ 'move-text-up(enter-transient-state)', 1)
 
   " transpose
   let g:_spacevim_mappings_space.x.t = {'name' : '+transpose'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
-        \ 'swap current character with previous one', 1)
+        \ 'swap-current-character-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'w'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["word"])',
-        \ 'swap current word with previous one', 1)
+        \ 'swap-current-word-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
-        \ 'swap current line with previous one', 1)
+        \ 'swap-current-line-with-previous-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["character"])',
-        \ 'swap current character with next one', 1)
+        \ 'swap-current-character-with-next-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["word"])',
-        \ 'swap current word with next one', 1)
+        \ 'swap-current-word-with-next-one', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
         \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
-        \ 'swap current line with next one', 1)
+        \ 'swap-current-line-with-next-one', 1)
 
 endfunction
 
@@ -421,35 +429,35 @@ function! s:delete_extra_space() abort
 endfunction
 
 function! s:set_justification_to(align) abort
-    let l:startlinenr = line("'{")
-    let l:endlinenr = line("'}")
-    if getline(l:startlinenr) ==# ''
-        let l:startlinenr += 1
+  let l:startlinenr = line("'{")
+  let l:endlinenr = line("'}")
+  if getline(l:startlinenr) ==# ''
+    let l:startlinenr += 1
+  endif
+  if getline(l:endlinenr) ==# ''
+    let l:endlinenr -= 1
+  endif
+  let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
+  let l:maxlength = 0
+  for l:line in l:lineList
+    let l:length = strdisplaywidth(l:line)
+    if l:length > l:maxlength
+      let l:maxlength = l:length
     endif
-    if getline(l:endlinenr) ==# ''
-        let l:endlinenr -= 1
-    endif
-    let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
-    let l:maxlength = 0
-    for l:line in l:lineList
-        let l:length = strdisplaywidth(l:line)
-        if l:length > l:maxlength
-            let l:maxlength = l:length
-        endif
-    endfor
+  endfor
 
-    if a:align ==# 'left'
-        execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
-    elseif a:align ==# 'center'
-        execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
-    elseif a:align ==# 'right'
-        execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
-    endif
+  if a:align ==# 'left'
+    execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
+  elseif a:align ==# 'center'
+    execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
+  elseif a:align ==# 'right'
+    execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
+  endif
 
-    unlet l:startlinenr
-    unlet l:endlinenr
-    unlet l:lineList
-    unlet l:maxlength
+  unlet l:startlinenr
+  unlet l:endlinenr
+  unlet l:lineList
+  unlet l:maxlength
 endfunction
 
 let s:local_lorem_ipsum = [
@@ -590,6 +598,47 @@ function! s:align_at_regular_expression() abort
   endif
 endfunction
 
+
+function! s:join_string_with() abort
+  if s:is_string(line('.'), col('.'))
+    let c = col('.')
+    let a = 0
+    let b = 0
+    let _c = c
+    while c > 0
+      if s:is_string(line('.'), c)
+        let c -= 1
+      else
+        let a = c
+        break
+      endif
+    endwhile
+    let c = _c
+    while c > 0
+      if s:is_string(line('.'), c)
+        let c += 1
+      else
+        let b = c
+        break
+      endif
+    endwhile
+    let l:save_register_m = @m
+    let line = getline('.')[:a] . join(split(getline('.')[a+1 : b]), '-') .  getline('.')[b :]
+    call setline('.', line)
+    let @m = l:save_register_m
+  endif
+endfunction
+
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ }
+
+function! s:is_string(l, c) abort
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
+endfunction
+
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
@@ -607,13 +656,19 @@ endif
 
 augroup spacevim_layer_edit
   au!
-  autocmd BufNewFile * call <SID>add_buffer_head()
+  autocmd FileType * call <SID>add_buffer_head()
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
-  if has_key(s:ft_head_tp, &ft)
-    call setline(1, s:ft_head_tp[&ft])
+  if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
+    let head = s:ft_head_tp[&ft]
+    call setline(1, map(head, 's:parse(v:val)'))
+    call cursor(len(head), 0)
   endif
+endfunction
+
+function! s:parse(line) abort
+  return s:VIM.parse_string(a:line)
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort

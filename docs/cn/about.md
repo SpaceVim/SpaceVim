@@ -1,7 +1,7 @@
 ---
 title: "关于"
-description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织管理插件和配置。"
-lang: cn
+description: "创建SpaceVim这一项目的目的在于提供一个开箱即用的 Vim 开发环境"
+lang: zh
 ---
 
 # 关于我们

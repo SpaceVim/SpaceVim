@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim github 模块"
 description: "这一模块为 SpaceVim 提供了 Github 数据管理功能，包括问题列表、动态等管理。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> github

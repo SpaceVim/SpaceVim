@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#ocaml 模块"
 description: "这一模块为 OCaml 开发提供了支持，包括语法高亮、代码补全、以及定义处跳转等功能。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#ocaml

@@ -1,7 +1,7 @@
 ---
 title: "设计蓝图"
 description: "SpaceVim 设计蓝图和里程碑，这决定了 SpaceVim 的开发方向和特性实现的优先顺序。"
-lang: cn
+lang: zh
 ---
 
 # 设计蓝图

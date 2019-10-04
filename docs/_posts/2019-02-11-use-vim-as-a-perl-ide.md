@@ -4,7 +4,7 @@ categories: [tutorials_cn, blog_cn]
 image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Perl 的开发环境，简介 lang#perl 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
-lang: cn
+lang: zh
 type: BlogPosting
 comments: true
 commentsID: "使用 Vim 搭建 Perl 开发环境"

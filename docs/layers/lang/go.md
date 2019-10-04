@@ -29,6 +29,12 @@ To use this configuration layer, update custom configuration file with:
 
 After the installation, run `:GoInstallBinaries` inside vim.
 
+To enable tagbar support, you need to install [gotags](https://github.com/jstemmer/gotags):
+
+```sh
+go get -u github.com/jstemmer/gotags
+```
+
 ## Features
 
 - auto-completion
@@ -58,11 +64,11 @@ After the installation, run `:GoInstallBinaries` inside vim.
 | `SPC l l`    | list declarations in file |
 | `SPC l m`    | format improts            |
 | `SPC l M`    | add import                |
-| `SPC l r`    | go referrers              |
+| `SPC l r`    | go run                    |
 | `SPC l s`    | fill struct               |
 | `SPC l t`    | go test                   |
 | `SPC l v`    | freevars                  |
-| `SPC l x`    | go run                    |
+| `SPC l x`    | go referrers              |
 
 **Code formatting:**
 
