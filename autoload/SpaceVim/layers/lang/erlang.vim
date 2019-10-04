@@ -39,7 +39,7 @@ function! SpaceVim#layers#lang#erlang#plugins() abort
   " call add(plugins, ['vim-erlang/vim-erlang-compiler', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-omnicomplete', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-runtime', {'on_ft' : 'erlang'}])
-  call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
+  " call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
   return plugins
 endfunction
 
