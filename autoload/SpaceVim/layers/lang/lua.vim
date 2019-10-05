@@ -43,6 +43,7 @@ function! SpaceVim#layers#lang#lua#plugins() abort
 endfunction
 
 let s:lua_repl_command = ''
+let s:lua_foldmethod = 'manual'
 
 function! SpaceVim#layers#lang#lua#config() abort
 
@@ -81,7 +82,7 @@ endfunction
 
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort
   let s:lua_repl_command = get(a:opt, 'repl_command', '') 
-  let s:lua_foldmethod = get(a:opt, 'lua_foldmethod', 'manual')
+  let s:lua_foldmethod = get(a:opt, 'foldmethod', 'manual')
 endfunction
 
 " Add language specific mappings
