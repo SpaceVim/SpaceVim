@@ -19,7 +19,9 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱即用的 Vim IDE。
 
-请查阅[《入门指南》](quick-start-guide/)、[《用户文档》](documentation/)和[《可用模块》](layers/)以获取更多信息。
+- [入门指南](quick-start-guide/)
+- [用户文档](documentation/)
+- [可用模块](layers/)
 
 ## 最新特性
 
@@ -34,7 +36,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
     {% endfor %}
 </ul>
 
-更多精彩博客请订阅 [SpaceVim 中文博客](blog/) 或关注微博 [@SpaceVim](https://weibo.com/SpaceVim)。
+更多精彩博客请订阅 SpaceVim [博客](blog/) 或关注微博 [@SpaceVim](https://weibo.com/SpaceVim)。
 
 ## 参与
 
@@ -64,6 +66,6 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 建议使用 Vim 7.4 或者 Neovim v0.1.7及其以上版本。
 
-更多常见问题请阅读 [《SpaceVim FAQ》](faq/)
+更多常见问题请阅读[常见问题解答](faq/)
 
 <!-- vim:set nowrap: -->
