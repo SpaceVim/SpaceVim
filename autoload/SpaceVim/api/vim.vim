@@ -69,6 +69,27 @@ function! s:self.parse_string(line) abort
   return join(line, '')
 endfunction
 
+
+if exists('*nvim_win_set_cursor')
+  function! s:self.win_set_cursor(win, pos) abort
+    call nvim_win_set_cursor(a:win, a:pos)
+  endfunction
+else
+  function! s:self.win_set_cursor(win, pos) abort
+
+  endfunction
+endif
+
+if exists('*nvim_buf_line_count')
+  function! s:self.buf_line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+else
+  function! s:self.buf_line_count(buf) abort
+
+  endfunction
+endif
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction

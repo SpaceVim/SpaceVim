@@ -10,11 +10,13 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:FILE = SpaceVim#api#import('file')
+let s:VIM = SpaceVim#api#import('vim')
 
 
 let s:runners = {}
 
 let s:bufnr = 0
+let s:winid = -1
 
 function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
@@ -36,6 +38,7 @@ function! s:open_win() abort
   nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
   let s:bufnr = bufnr('%')
+  let s:winid = win_getid(winnr())
   wincmd p
 endfunction
 
@@ -239,6 +242,7 @@ if has('nvim') && exists('*chanclose')
     if !empty(lines)
       let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
     let s:_out_data = ['']
@@ -257,6 +261,7 @@ if has('nvim') && exists('*chanclose')
     endif
     if !empty(lines)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
     let s:_out_data = ['']
@@ -266,6 +271,7 @@ else
   function! s:on_stdout(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 
@@ -273,6 +279,7 @@ else
     let s:status.has_errors = 1
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 endif
