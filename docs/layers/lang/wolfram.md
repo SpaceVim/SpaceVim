@@ -18,7 +18,9 @@ description: "This layer is for walfram development, provide syntax checking, co
 
 ## Description
 
-This layer is for walfram development.
+The [Wolfram](https://www.wolfram.com/language/) Language is a general multi-paradigm computational language
+and this layer provides wolfram language syntax highlighting, code completion
+and code runner etc.
 
 ## Install
 
