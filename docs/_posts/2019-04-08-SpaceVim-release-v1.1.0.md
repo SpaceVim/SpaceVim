@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v1.1.0
 categories: [changelog, blog]
-excerpt: "A community-driven modular vim distribution - The ultimate vim configuration"
+excerpt: "SpaceVim v1.1.0 introduced new floating window mapping guide, and a disk management for Windows, as well as improved the fzf layer."
 type: NewsArticle
 image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
 commentsID: "SpaceVim release v1.1.0"
