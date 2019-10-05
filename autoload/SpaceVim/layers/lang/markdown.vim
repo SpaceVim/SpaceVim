@@ -124,7 +124,7 @@ function! s:markdown_insert_link(isVisual, isPicture) abort
     if !a:isVisual
       execute "normal! viw\<esc>"
     endif
-    let l:paste = (col("'>") == col("$") - 1 ? 'p' : 'P')
+    let l:paste = (col("'>") == col('$') - 1 ? 'p' : 'P')
     normal! gvx
     let @" = '[' . @" . '](' . @+ . ')'
     if a:isPicture
