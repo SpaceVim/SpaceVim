@@ -80,6 +80,16 @@ else
   endfunction
 endif
 
+if exists('*nvim_buf_line_count')
+  function! s:self.buf_line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+else
+  function! s:self.buf_line_count(buf) abort
+
+  endfunction
+endif
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction

@@ -97,7 +97,7 @@ if has('nvim') && exists('*chanclose')
       if bufexists(s:bufnr)
         call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
-        call s:VIM.win_set_cursor(s:winid, [nvim_buf_line_count(s:bufnr), 1])
+        call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
         call s:update_statusline()
       endif
       let s:_out_data = ['']
@@ -105,7 +105,7 @@ if has('nvim') && exists('*chanclose')
       if bufexists(s:bufnr)
         call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
-        call s:VIM.win_set_cursor(s:winid, [nvim_buf_line_count(s:bufnr), 1])
+        call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
         call s:update_statusline()
       endif
       let s:_out_data = [s:_out_data[-1]]
@@ -116,7 +116,7 @@ else
     if bufexists(s:bufnr)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
       let s:lines += len(a:data)
-      call s:VIM.win_set_cursor(s:winid, [nvim_buf_line_count(s:bufnr), 1])
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
       call s:update_statusline()
     endif
   endfunction
