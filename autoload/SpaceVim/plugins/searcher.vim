@@ -89,7 +89,8 @@ function! SpaceVim#plugins#searcher#count() abort
   endif
 endfunction
 nnoremap <silent> <Plug>(nohlsearch) :nohlsearch<Cr>
-function! SpaceVim#plugins#searcher#clear()
+
+function! SpaceVim#plugins#searcher#clear() abort
   call feedkeys("\<Plug>(nohlsearch)")
   let s:rst = []
   call setqflist([])

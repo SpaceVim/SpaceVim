@@ -53,10 +53,10 @@ function! s:self.parse_string(line) abort
   while i < strlen(a:line) || i != -1
     let [rst, m, n] = matchstrpos(a:line, expr, i)
     if m == -1
-      call add(line, a:line[i:-1])
+      call add(line, a:line[ i : -1 ])
       break
     else
-      call add(line, a:line[i:m-1])
+      call add(line, a:line[ i : m-1])
       try
         let rst = eval(rst[1:-2])
       catch

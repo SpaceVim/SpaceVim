@@ -454,7 +454,7 @@ function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
   let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
-  if get(a:repo, 'rev', '') != ''
+  if get(a:repo, 'rev', '') !=# ''
     let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   else
     let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
