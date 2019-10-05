@@ -76,7 +76,10 @@ if exists('*nvim_win_set_cursor')
     endfunction
 elseif has('lua')
     function! s:self.win_set_cursor(win, pos) abort
-        call nvim_win_set_cursor(a:win, a:pos)
+        lua local winindex = vim.eval("win_id2win(a:win) - 1")
+        lua local w = vim.window(winindex)
+        lua w.line = vim.eval("a:pos[0]")
+        lua w.col = vim.eval("a:pos[1]")
     endfunction
 else
     function! s:self.win_set_cursor(win, pos) abort
@@ -90,7 +93,8 @@ if exists('*nvim_buf_line_count')
     endfunction
 elseif has('lua')
     function! s:self.buf_line_count(buf) abort
-        return nvim_buf_line_count(a:buf)
+        lua local b = vim.buffer(vim.eval("a:buf"))
+        lua return #b
     endfunction
 else
     function! s:self.buf_line_count(buf) abort
