@@ -76,7 +76,13 @@ if exists('*nvim_win_set_cursor')
     endfunction
 elseif exists('*win_execute')
     function! s:self.win_set_cursor(win, pos) abort
-        call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+        " @fixme use g` to move to cursor line
+        " this seem to be a bug of vim
+        " https://github.com/vim/vim/issues/5022
+        " call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+        call win_execute(a:win, ':' . a:pos[0])
+        echomsg a:pos[0]
+        call win_execute(a:win, ':normal! g"')
     endfunction
 elseif has('lua')
     function! s:self.win_set_cursor(win, pos) abort
@@ -97,8 +103,7 @@ if exists('*nvim_buf_line_count')
     endfunction
 elseif has('lua')
     function! s:self.buf_line_count(buf) abort
-        lua local b = vim.buffer(vim.eval("a:buf"))
-        lua return #b
+        lua return #vim.buffer(vim.eval("a:buf"))
     endfunction
 else
     function! s:self.buf_line_count(buf) abort
