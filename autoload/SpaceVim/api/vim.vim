@@ -74,6 +74,10 @@ if exists('*nvim_win_set_cursor')
     function! s:self.win_set_cursor(win, pos) abort
         call nvim_win_set_cursor(a:win, a:pos)
     endfunction
+elseif exists('*win_execute')
+    function! s:self.win_set_cursor(win, pos) abort
+        call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+    endfunction
 elseif has('lua')
     function! s:self.win_set_cursor(win, pos) abort
         lua local winindex = vim.eval("win_id2win(a:win) - 1")
