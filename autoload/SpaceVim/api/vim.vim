@@ -107,7 +107,7 @@ elseif has('lua')
     endfunction
 else
     function! s:self.buf_line_count(buf) abort
-
+      return len(getbufline(a:buf, 1, '$'))
     endfunction
 endif
 
