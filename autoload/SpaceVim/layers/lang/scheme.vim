@@ -10,10 +10,12 @@ function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_dialect ==# 'mit-scheme'
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
   elseif s:scheme_dialect ==# 'guile'
-    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile %s && echo')
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile -q %s && echo')
   else
-    echomsg "executing " . s:scheme_dialect . " files in the editor is currently unsupported"
-    echomsg "please use 'mit-scheme', 'guile' or add support for " . s:scheme_dialect
+		try 
+			call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . s:scheme_dialect . ' %s && echo')
+		catch /^Vim\%((\a\+)\)\=:E117/
+		endtry
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('scheme', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scheme', ['scheme', '--silent'])
