@@ -7,9 +7,20 @@
 "=============================================================================
 
 function! SpaceVim#layers#lang#scheme#config() abort
-  call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+  if s:scheme_dialect ==# 'mit-scheme'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+  elseif s:scheme_dialect ==# 'guile'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile %s && echo')
+  else
+    echomsg "executing " . s:scheme_dialect . " files in the editor is currently unsupported"
+    echomsg "please use 'mit-scheme', 'guile' or add support for " . s:scheme_dialect
+  endif
   call SpaceVim#mapping#space#regesit_lang_mappings('scheme', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scheme', ['scheme', '--silent'])
+endfunction
+
+function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
+  let s:scheme_dialect = get(a:opt, 'dialect', 'mit-scheme') 
 endfunction
 
 function! s:language_specified_mappings() abort
