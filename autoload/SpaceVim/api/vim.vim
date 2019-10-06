@@ -79,9 +79,8 @@ elseif exists('*win_execute')
         " @fixme use g` to move to cursor line
         " this seem to be a bug of vim
         " https://github.com/vim/vim/issues/5022
-        " call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
-        call win_execute(a:win, ':' . a:pos[0])
-        echomsg a:pos[0]
+        call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+        " call win_execute(a:win, ':' . a:pos[0])
         call win_execute(a:win, ':normal! g"')
     endfunction
 elseif has('lua')
@@ -103,7 +102,8 @@ if exists('*nvim_buf_line_count')
     endfunction
 elseif has('lua')
     function! s:self.buf_line_count(buf) abort
-        lua return #vim.buffer(vim.eval("a:buf"))
+        " lua numbers are floats, so use float2nr
+        return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
     endfunction
 else
     function! s:self.buf_line_count(buf) abort
