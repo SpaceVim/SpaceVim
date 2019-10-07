@@ -14,7 +14,8 @@ if exists('*nvim_win_get_cursor')
   endfunction
 elseif has('lua')
   function! s:self.get_cursor(winid) abort
-        return luaeval('require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))')
+        return [float2nr(luaeval('require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))[1]')),
+                    \ float2nr(luaeval('require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))[2]'))]
   endfunction
 else
   function! s:self.get_cursor(winid) abort
