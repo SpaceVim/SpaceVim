@@ -54,6 +54,10 @@ if has('nvim')
   endif
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
+
+  if has('lua')
+    lua package.path=package.path..vim.eval("g:_spacevim_root_dir . 'lua/'")
+  endif
 endif
 
 call SpaceVim#begin()
