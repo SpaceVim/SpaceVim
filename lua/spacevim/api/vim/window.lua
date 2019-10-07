@@ -1,7 +1,7 @@
 local window = {}
 
 
-function window.pop(l)
+function window.get_cursor(window_id)
     
 end
 
