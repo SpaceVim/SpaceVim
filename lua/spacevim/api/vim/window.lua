@@ -10,6 +10,11 @@ function window.get_cursor(window_id)
     end
 end
 
+function window.set_cursor(window_id, pos)
+    local winindex = vim.eval("win_id2win(" .. window_id .. ")")
+    local w = vim.window(winindex)
+end
+
 
 return window
 
