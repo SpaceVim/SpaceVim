@@ -53,11 +53,15 @@ elif [ "$LINT" = "vint" ]; then
 elif [ "$LINT" = "vint-errors" ]; then
     vint --error .
 elif [ "$LINT" = "vader" ]; then
-    export PATH="${DEPS}/_neovim_${NVIM_TAG}/bin:${PATH}"
-    echo "\$PATH: \"${PATH}\""
 
-    export VIM="${DEPS}/_neovim_${NVIM_TAG}/share/nvim/runtime"
-    echo "\$VIM: \"${VIM}\""
+    if [ "$VIM" = "vim" ]; then
+        export PATH="${DEPS}/_${VIM}/_${VIM_TAG}/bin:${PATH}"
+        echo "\$PATH: \"${PATH}\""
+
+        export VIM="${DEPS}/_${VIM}/_${VIM_TAG}/share/nvim/runtime"
+        echo "\$VIM: \"${VIM}\""
+    else
+    fi
     nvim --version
     pip install covimerage
     make test_coverage
