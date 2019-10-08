@@ -22,6 +22,14 @@ else
   endfunction
 endif
 
+if exists('*nvim_win_set_cursor')
+  function! s:self.set_cursor(winid, pos) abort
+    return nvim_win_set_cursor(a:winid, a:pos)
+  endfunction
+elseif has('lua')
+else
+endif
+
 
 function! SpaceVim#api#vim#window#get() abort
   return deepcopy(s:self)

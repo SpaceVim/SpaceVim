@@ -15,6 +15,10 @@ function window.set_cursor(window_id, pos)
     local w = vim.window(winindex)
 end
 
+function window.close(window_id)
+    
+end
+
 
 return window
 
