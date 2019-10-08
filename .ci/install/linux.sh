@@ -53,3 +53,5 @@ install() {
     install_vim $tag
   fi
 }
+
+install $@
