@@ -6,6 +6,21 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section vim#buffer, api-vim-window
+" @parentsection api
+" @subsection Intro
+"
+" vim#window API provides some basic functions for setting and getting config
+" of vim window.
+"
+" @subsection Functions
+"
+" get_cursor({winid})
+" 
+" Gets the cursor position in the window {winid}, to get the ID of a window,
+" checkout |window-ID|.
+
 let s:self = {}
 
 if exists('*nvim_win_get_cursor')

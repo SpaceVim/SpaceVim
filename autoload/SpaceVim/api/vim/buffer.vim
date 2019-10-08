@@ -9,6 +9,11 @@
 ""
 " @section vim#buffer, api-vim-buffer
 " @parentsection api
+" @subsection Intro
+"
+" vim#buffer API provides some basic functions for setting and getting config
+" of vim buffer.
+"
 " @subsection Functions
 "
 " is_cmdwin()

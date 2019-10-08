@@ -25,7 +25,6 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 here is a list of functions implement in this api. When Vim has python or lua support,
 some of these functions are better experienced
 
-| function name            | description                             |
-| ------------------------ | --------------------------------------- |
-| `filter_do(cmd)`      | Gets the cursor position in the window. |
-
+| function name    | description                |
+| ---------------- | -------------------------- |
+| `filter_do(cmd)` | filter buffers and run cmd |

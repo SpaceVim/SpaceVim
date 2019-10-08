@@ -133,9 +133,10 @@ CONTENTS                                                   *SpaceVim-contents*
       9. sid............................................|SpaceVim-api-vim-sid|
       10. system.........................................|SpaceVim-api-system|
       11. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      12. vim#command...............................|SpaceVim-api-vim-command|
-      13. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      14. vim#message...............................|SpaceVim-api-vim-message|
+      12. vim#buffer.................................|SpaceVim-api-vim-window|
+      13. vim#command...............................|SpaceVim-api-vim-command|
+      14. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      15. vim#message...............................|SpaceVim-api-vim-message|
   8. FAQ........................................................|SpaceVim-faq|
   9. Changelog............................................|SpaceVim-changelog|
 
@@ -2467,6 +2468,11 @@ mac.
 ==============================================================================
 VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
 
+INTRO
+
+vim#buffer API provides some basic functions for setting and getting config of
+vim buffer.
+
 FUNCTIONS
 
 is_cmdwin()
@@ -2485,6 +2491,21 @@ is a dict with following keys:
     initfunc: the function which will be call after creating buffer
 
     cmd: the ex command which will be run after the new buffer is created
+
+==============================================================================
+VIM#BUFFER                                           *SpaceVim-api-vim-window*
+
+INTRO
+
+vim#window API provides some basic functions for setting and getting config of
+vim window.
+
+FUNCTIONS
+
+get_cursor({winid})
+
+Gets the cursor position in the window {winid}, to get the ID of a window,
+checkout |window-ID|.
 
 ==============================================================================
 VIM#COMMAND                                         *SpaceVim-api-vim-command*
