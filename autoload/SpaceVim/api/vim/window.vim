@@ -27,7 +27,7 @@ if exists('*nvim_win_get_cursor')
   function! s:self.get_cursor(winid) abort
     return nvim_win_get_cursor(a:winid)
   endfunction
-elseif has('lua')
+elseif g:_spacevim_if_lua
   function! s:self.get_cursor(winid) abort
         lua require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))
   endfunction
@@ -41,7 +41,10 @@ if exists('*nvim_win_set_cursor')
   function! s:self.set_cursor(winid, pos) abort
     return nvim_win_set_cursor(a:winid, a:pos)
   endfunction
-elseif has('lua')
+elseif g:_spacevim_if_lua
+  function! s:self.set_cursor(winid, pos) abort
+        lua require("spacevim.api.vim.window").set_cursor(vim.eval("a:winid"), vim.eval("a:pos"))
+  endfunction
 else
 endif
 
