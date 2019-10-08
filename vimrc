@@ -8,10 +8,16 @@
 
 " Note: Skip initialization for vim-tiny or vim-small.
 if 1
+    let g:_spacevim_if_lua = 0
     if has('lua')
-        let s:plugin_dir = fnamemodify(expand('<sfile>'), ':h').'\lua'
-        let s:str = s:plugin_dir . '\?.lua;' . s:plugin_dir . '\?\init.lua;'
-        lua package.path=vim.eval("s:str") .. package.path
+        try
+            let s:plugin_dir = fnamemodify(expand('<sfile>'), ':h').'\lua'
+            let s:str = s:plugin_dir . '\?.lua;' . s:plugin_dir . '\?\init.lua;'
+            lua package.path=vim.eval("s:str") .. package.path
+            let g:_spacevim_if_lua = 1
+        catch
+            let g:_spacevim_if_lua = 0
+        endtry
     endif
     execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
 endif
