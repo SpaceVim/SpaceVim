@@ -88,6 +88,21 @@ function! s:self.filter_do(expr) abort
   endfor
 endfunction
 
+if exists('*nvim_buf_line_count')
+  function! s:self.line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+elseif has('lua')
+  function! s:self.line_count(buf) abort
+    " lua numbers are floats, so use float2nr
+    return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
+  endfunction
+else
+  function! s:self.line_count(buf) abort
+    return len(getbufline(a:buf, 1, '$'))
+  endfunction
+endif
+
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
