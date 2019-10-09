@@ -14,7 +14,7 @@ if [ "${LINT#vimlint}" != "$LINT" ]; then
 elif [ "${LINT#vint}" != "$LINT" ]; then
     pip install vim-vint pathlib enum34 typing
 elif [ "${LINT#vader}" != "$LINT" ]; then
-    if [[ ! -d ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim ]]; then
+    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
         git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
     fi
     .ci/install.sh $VIM_BIN $VIM_TAG
