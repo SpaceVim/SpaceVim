@@ -36,7 +36,6 @@
 
 let s:self = {}
 
-
 if exists('*getcmdwintype')
   function! s:self.is_cmdwin() abort
     return getcmdwintype() !=# ''
@@ -130,6 +129,8 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py3 lines = vim.eval("a:replacement")
       py3 vim.buffers[bufnr][start_line:end_line] = lines
     endif
+  elseif has('lua')
+
   elseif exists('*setbufline')
     let line = a:start
     for i in range(len(a:replacement))
