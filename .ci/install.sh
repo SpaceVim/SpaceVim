@@ -17,7 +17,7 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
     if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
         git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
     fi
-    .ci/install.sh $VIM_BIN $VIM_TAG
+    .ci/install/linux.sh $VIM_BIN $VIM_TAG
     if [ "$VIM_BIN" = "nvim" ]; then
         export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
         export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
