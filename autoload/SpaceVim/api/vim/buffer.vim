@@ -129,7 +129,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
             py3 lines = vim.eval("a:replacement")
             py3 vim.buffers[bufnr][start_line:end_line] = lines
         endif
-    elseif has('lua')
+    elseif has('lua') && 0
         lua require("spacevim.api.vim.buffer").buf_set_lines(
                     \ vim.eval("a:winid"),
                     \ vim.eval("a:start"),
