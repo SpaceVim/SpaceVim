@@ -18,19 +18,17 @@ elif [ "${LINT#vader}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
     .ci/install.sh $VIM_BIN $VIM_TAG
     if [ "$VIM_BIN" = "nvim" ]; then
-        export PATH="${DEPS}/_neovim_${VIM_TAG}/bin:${PATH}"
-        export VIM="${DEPS}/_neovim_${VIM_TAG}/share/nvim/runtime"
+        export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
     else
-        export PATH="${DEPS}/_vim_${VIM_TAG}/bin:${PATH}"
-        export VIM="${DEPS}/_vim_${VIM_TAG}/share/nvim/runtime"
+        export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
     fi
 
     echo "\$PATH: \"${PATH}\""
     echo "\$VIM: \"${VIM}\""
     echo "=================  nvim version ======================"
     $VIM_BIN --version
-    echo "=================  lua version ======================"
-    lua -v
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi

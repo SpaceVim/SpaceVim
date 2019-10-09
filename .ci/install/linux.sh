@@ -3,7 +3,7 @@ install_vim() {
   local tag=$1
   local ext=$([[ $tag == "HEAD" ]] && echo "" || echo "-b $tag")
   local tmp="$(mktemp -d)"
-  local out="$HOME/cache/vim-$tag"
+  local out="${DEPS}/_vim/$tag"
   local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
   git clone --depth 1 --single-branch $ext $URL $tmp
   cd $tmp
@@ -15,7 +15,6 @@ install_vim() {
       --enable-luainterp
   make -j$ncpu
   make install
-  ln -s $out $HOME/vim
 }
 
 install_nvim() {
@@ -23,7 +22,7 @@ install_nvim() {
   local tag=$1
   local ext=$([[ $tag == "HEAD" ]] && echo "" || echo "-b $tag")
   local tmp="$(mktemp -d)"
-  local out="$HOME/cache/nvim-$tag"
+  local out="${DEPS}/_neovim/$tag"
   local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
   git clone --depth 1 --single-branch $ext $URL $tmp
   cd $tmp
@@ -34,17 +33,15 @@ install_nvim() {
   make install
   python -m pip install --user neovim
   python3 -m pip install --user neovim
-  ln -sf $out $HOME/vim
 }
 
 install() {
   local vim=$1
   local tag=$2
 
-  [[ -d $HOME/vim ]] && rm -f $HOME/vim
-  if [[ $tag != "HEAD" ]] && [[ -d "$HOME/cache/$vim-$tag" ]]; then
-    echo "Use a cached version '$HOME/cache/$vim-$tag'."
-    ln -sf $HOME/cache/$vim-$tag $HOME/vim
+  if [[ -d "${DEPS}/_$vim/$tag" ]]; then
+    echo "Use a cached version '$HOME/_$vim/$tag'."
+    tree "${DEPS}/_$vim/$tag"
     return
   fi
   if [[ $vim == "nvim" ]]; then
