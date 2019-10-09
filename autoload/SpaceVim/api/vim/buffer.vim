@@ -138,8 +138,8 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           \ )
   elseif exists('*setbufline')
     let line = a:start
-    for i in range(len(a:replacement))
-      call setbufline(a:buffer, line + i, a:replacement[i])
+    for i in range(1, len(a:replacement))
+      call setbufline(a:buffer, line + i, a:replacement[i - 1])
     endfor
   else
     exe 'b' . a:buffer
