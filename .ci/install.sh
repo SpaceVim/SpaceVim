@@ -15,7 +15,9 @@ if [ "${LINT#vimlint}" != "$LINT" ]; then
 elif [ "${LINT#vint}" != "$LINT" ]; then
     pip install vim-vint pathlib enum34 typing
 elif [ "${LINT#vader}" != "$LINT" ]; then
-    git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+    if [[ ! -d ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim ]]; then
+        git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+    fi
     .ci/install.sh $VIM_BIN $VIM_TAG
     if [ "$VIM_BIN" = "nvim" ]; then
         export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
