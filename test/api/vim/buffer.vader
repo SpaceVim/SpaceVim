@@ -1,5 +1,4 @@
 Execute ( SpaceVim api: vim#buffer open ):
-  new
   let buffer = SpaceVim#api#import('vim#buffer')
   call buffer.open({'bufname':'foo', 'cmd' : 'setl buftype=nofile bufhidden=wipe'})
   AssertEqual bufname('%'), 'foo'
@@ -7,12 +6,14 @@ Execute ( SpaceVim api: vim#buffer open ):
 
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
   let buffer = SpaceVim#api#import('vim#buffer')
-  let os = SpaceVim#api#import('system')
-  if os.isWindows
-    finish
-  endif
-  new
-  let nr = bufnr('%')
-  new
-  call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3'])
-  AssertEqual getbufline(nr, 1, '$'), ['line 1', 'line 2', 'line 3']
+  let nr = bufadd('')
+  call setbufvar(nr, '&buftype', 'nofile')
+  call setbufvar(nr, '&buflisted', 0)
+  call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
+  AssertEqual getbufline(nr, 1, '$'), ['line 1', 'line 2', 'line 3', 'line 4']
+  call buffer.buf_set_lines(nr, 1, 3, 0, ['replace 1', 'replace 2', 'replace 3'])
+  AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 3', 'line 4']
+  call buffer.buf_set_lines(nr, -3, -1, 0, ['replace 1', 'replace 2', 'replace 3'])
+  AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 1', 'replace 2', 'replace 3']
+  call buffer.buf_set_lines(nr, 2, -2, 0, ['replace 1', 'replace 2', 'replace 3'])
+  AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 1', 'replace 2', 'replace 3', 'replace 3']
