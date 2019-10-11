@@ -160,6 +160,10 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           call setbufline(a:buffer, i + 1, replacement[i - a:start])
         endfor
       endif
+    elseif a:start >=0 && a:end < 0 && lct + a:end > a:start
+      call self.buf_set_lines(a:buffer, a:start, lct + a:end, a:replacement)
+    elseif a:start < = && a:end > a:start && a:end < 0 && lct + a:start >= 0
+      call self.buf_set_lines(a:buffer, lct + a:start, lct + a:end, a:replacement)
     endif
   else
     exe 'b' . a:buffer
