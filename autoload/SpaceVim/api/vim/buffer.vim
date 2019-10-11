@@ -140,15 +140,10 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     let lct = self.line_count(a:buffer)
     if a:start > lct
       return
-    elseif a:start > 0 && a:end > a:start && a:end < lct
+    elseif a:start >= 0 && a:end > a:start
       " 0 start end $
-      for i in range(a:start, a:end)
-        call setbufline(a:buffer, i, a:replacement[i - 1])
-      endfor
-    else
-      let line = a:start
-      for i in range(1, len(a:replacement))
-        call setbufline(a:buffer, line + i, a:replacement[i - 1])
+      for i in range(a:start, len(a:replacement) + a:start)
+        call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
       endfor
     endif
   else
