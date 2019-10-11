@@ -121,9 +121,9 @@ else
     if bufexists(s:bufnr)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
       let s:lines += len(a:data)
-        if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(s:_out_data) + 1
-          call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
-        endi
+      if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(a:data)
+        call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
+      endi
       call s:update_statusline()
     endif
   endfunction
