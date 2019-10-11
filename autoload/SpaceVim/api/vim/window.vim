@@ -41,11 +41,22 @@ if exists('*nvim_win_set_cursor')
   function! s:self.set_cursor(winid, pos) abort
     return nvim_win_set_cursor(a:winid, a:pos)
   endfunction
+elseif exists('*win_execute')
+    function! s:self.set_cursor(win, pos) abort
+        " @fixme use g` to move to cursor line
+        " this seem to be a bug of vim
+        " https://github.com/vim/vim/issues/5022
+        call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+        " call win_execute(a:win, ':' . a:pos[0])
+        call win_execute(a:win, ':normal! g"')
+    endfunction
 elseif g:_spacevim_if_lua
   function! s:self.set_cursor(winid, pos) abort
         lua require("spacevim.api.vim.window").set_cursor(vim.eval("a:winid"), vim.eval("a:pos"))
   endfunction
 else
+  function! s:self.set_cursor(winid, pos) abort
+  endfunction
 endif
 
 
