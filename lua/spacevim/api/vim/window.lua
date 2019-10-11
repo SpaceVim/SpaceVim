@@ -13,8 +13,8 @@ end
 function window.set_cursor(window_id, pos)
     local winindex = vim.eval("win_id2win(" .. window_id .. ")")
     local w = vim.window(winindex)
-    w.line = pos[1]
-    w.col = pos[2]
+    w.line = pos[0]
+    w.col = pos[1]
 end
 
 function window.close(window_id)
