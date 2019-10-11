@@ -137,10 +137,20 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           \ vim.eval("a:replacement")
           \ )
   elseif exists('*setbufline')
-    let line = a:start
-    for i in range(1, len(a:replacement))
-      call setbufline(a:buffer, line + i, a:replacement[i - 1])
-    endfor
+    let lct = self.line_count(a:buffer)
+    if a:start > lct
+      return
+    elseif a:start > 0 && a:end > a:start && a:end < lct
+      " 0 start end $
+      for i in range(a:start, a:end)
+        call setbufline(a:buffer, i, a:replacement[i - 1])
+      endfor
+    else
+      let line = a:start
+      for i in range(1, len(a:replacement))
+        call setbufline(a:buffer, line + i, a:replacement[i - 1])
+      endfor
+    endif
   else
     exe 'b' . a:buffer
     call setline(a:start - 1, a:replacement)
