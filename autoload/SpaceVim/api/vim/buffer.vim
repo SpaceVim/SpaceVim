@@ -145,13 +145,21 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       " but in neovim, nvim_buf_set_lines will do it.
       " @fixme vim issue #5044
       " https://github.com/vim/vim/issues/5044
+      let endtext = a:end > lct ? [] : getbufline(a:buffer, a:end + 1, '$')
       if !buflisted(a:buffer)
         call bufload(a:buffer)
       endif
       " 0 start end $
-      for i in range(a:start, len(a:replacement) + a:start - 1)
-        call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
-      endfor
+      if len(a:replacement) == a:end - a:start
+        for i in range(a:start, len(a:replacement) + a:start - 1)
+          call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
+        endfor
+      else
+        let replacement = a:replacement + endtext
+        for i in range(a:start, len(replacement) + a:start - 1)
+          call setbufline(a:buffer, i + 1, replacement[i - a:start])
+        endfor
+      endif
     endif
   else
     exe 'b' . a:buffer
