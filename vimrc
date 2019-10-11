@@ -15,8 +15,6 @@ if 1
         silent! lua package.path=vim.eval("s:str") .. package.path
         if empty(v:errmsg)
             let g:_spacevim_if_lua = 1
-        else
-            call SpaceVim#logger#warn('failed to enable +lua support: ' . v:errmsg)
         endif
     endif
     execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
