@@ -151,7 +151,6 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       " 0 start end $
       for i in range(a:start, len(a:replacement) + a:start - 1)
         call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
-        echom a:replacement[i - a:start]
       endfor
     endif
   else
