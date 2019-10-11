@@ -142,7 +142,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       return
     elseif a:start >= 0 && a:end > a:start
       " 0 start end $
-      for i in range(a:start, len(a:replacement) + a:start)
+      for i in range(a:start, len(a:replacement) + a:start - 1)
         call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
       endfor
     endif
