@@ -74,7 +74,7 @@ function! s:start(exe) abort
   let s:start_time = reltime()
   call s:open_windows()
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
-  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 0])
   let s:lines += 3
   let s:_out_data = ['']
   let s:_current_line = ''
@@ -100,7 +100,7 @@ if has('nvim') && exists('*chanclose')
         call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
         if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(s:_out_data) + 1
-          call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+          call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 0])
         endi
         call s:update_statusline()
       endif
@@ -110,7 +110,7 @@ if has('nvim') && exists('*chanclose')
         call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
         if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(s:_out_data) + 1
-          call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+          call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 0])
         endi
         call s:update_statusline()
       endif
@@ -123,7 +123,7 @@ else
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
       let s:lines += len(a:data)
       if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(a:data) + 1
-        call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+        call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 0])
       endi
       call s:update_statusline()
     endif
