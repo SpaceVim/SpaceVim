@@ -1162,7 +1162,7 @@ To change the filemanager plugin:
     filemanager = "defx"
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default.
+VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
 To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
 Here is a picture for this feature:
 
