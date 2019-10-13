@@ -7,6 +7,7 @@ set -ue -o pipefail
 export LC_ALL=C
 
 git fetch origin master:master
+sudo apt-get install -y tree
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then
     git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
