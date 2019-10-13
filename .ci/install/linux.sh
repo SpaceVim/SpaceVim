@@ -24,6 +24,7 @@ install_nvim() {
     local ext=$([[ $tag == "HEAD" ]] && echo "" || echo "-b $tag")
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
+    mkdir -p $out
     local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
@@ -49,7 +50,6 @@ install() {
     else
         install_vim $tag
     fi
-    tree "${DEPS}/_$vim/$tag"
 }
 
 install $@
