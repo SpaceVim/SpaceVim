@@ -14,7 +14,6 @@ lang: en
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag
-  - jekyll-feed
 
 github: [metadata]
 
