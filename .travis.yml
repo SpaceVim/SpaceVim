@@ -48,6 +48,7 @@ addons:
     - lua5.1
     - liblua5.1-dev
     - libperl-dev
+    - ninja-build
 
 jobs:
   include:
