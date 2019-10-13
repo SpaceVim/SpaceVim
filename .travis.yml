@@ -30,7 +30,8 @@ env:
 addons:
   apt:
     packages:
-    - tree
+    - python3-pip
+    - python-pip
     - libncurses5-dev
     - libgnome2-dev
     - libgnomeui-dev
