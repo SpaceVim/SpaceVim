@@ -20,6 +20,10 @@ layout: null
 				<title>{{ post.title | xml_escape }}</title>
 				{% if post.author.name %}
 					<dc:creator>{{ post.author.name | xml_escape }}</dc:creator>
+				{% else %}
+					<dc:creator>{{ site.author.name | xml_escape }}</dc:creator>
+				{% else %}
+					<dc:creator>{{ site.author.name | xml_escape }}</dc:creator>
 				{% endif %}
 				{% if post.excerpt %}
 					<description>{{ post.excerpt | xml_escape }}</description>
