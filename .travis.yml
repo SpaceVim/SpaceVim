@@ -40,9 +40,13 @@ jobs:
     - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.7
       addons: { apt: { packages: [python2.7-dev, lua5.2] } }
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.052    #ubuntu 14.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.1689   #ubuntu 16.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v8.0.1453   #ubuntu 18.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v8.1.0320   #ubuntu 19.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
   allow_failures:
     - env: LINT=vimlint        VIM_BIN=nvim VIM_TAG=v0.2.0
     - env: LINT=vint           VIM_BIN=nvim VIM_TAG=v0.2.0
