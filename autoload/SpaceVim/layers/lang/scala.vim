@@ -279,30 +279,30 @@ function! s:language_specified_mappings() abort
   if exists(':EnTypeCheck')
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'e'], 'call call('
           \ . string(function('s:execCMD')) . ', ["sbt ensimeConfig"])',
-          \ 'Run sbt to generate .ensime file', 1)
+          \ 'generate-.ensime-file', 1)
   endif
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'c'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt ~compile"])',
-        \ 'Run sbt continuous compile', 1)
+        \ 'continuous-compile', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'C'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt clean compile"])',
-        \ 'Run sbt clean compile', 1)
+        \ 'clean-compile', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt test"])',
-        \ 'Run sbt test', 1)
+        \ 'sbt-test', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'p'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt package"])',
-        \ 'Run sbt to package jar', 1)
+        \ 'sbt-package-jar', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'd'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt inspect tree compile:sources"])',
-        \ 'Run sbt to show project dependencies tree', 1)
+        \ 'show-dependencies-tree', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'l'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt reload"])',
-        \ 'Run sbt to reload build definition', 1)
+        \ 'reload-build-definition', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'u'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt update"])',
-        \ 'Run sbt to update external dependencies', 1)
+        \ 'update-external-dependencies', 1)
 
   " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
