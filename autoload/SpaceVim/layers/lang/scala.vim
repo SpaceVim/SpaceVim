@@ -253,6 +253,7 @@ function! s:language_specified_mappings() abort
   endif
 
   " import `vim-scala`
+  let g:_spacevim_mappings_space.l.i = {'name' : '+Import'}
   inoremap <silent><buffer> <C-;>s   <Esc>:SortScalaImports<CR>
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i','s'],
         \ 'SortScalaImports', 'sort imports', 1)
