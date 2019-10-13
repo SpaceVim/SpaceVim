@@ -5,5 +5,6 @@ Execute ( SpaceVim api: SpaceVim main code ):
   else
     source vimrc
   endif
+  let g:spacevim_update_retry_cnt = 0
   SPInstall
   AssertEqual fnamemodify(g:_spacevim_root_dir, ':.'), ''
