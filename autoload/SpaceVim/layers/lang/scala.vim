@@ -155,11 +155,8 @@ function! SpaceVim#layers#lang#scala#config() abort
   call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
   augroup SpaceVim_lang_scala
-    auto!
+    au!
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    if exists(':EnTypeCheck')
-      autocmd BufWritePost *.scala silent :EnTypeCheck
-    endif
   augroup END
 
   let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
