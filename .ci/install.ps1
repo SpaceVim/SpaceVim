@@ -66,6 +66,14 @@ function install_nvim($name)
   {
     $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_64'
   }
+  elseif ($ver -eq "0.3.7-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.7-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win64.zip'
+  }
   elseif ($ver -eq "0.2.0-32")
   {
     $url = 'https://github.com/neovim/neovim/releases/download/v0.2.0/nvim-win32.zip'
