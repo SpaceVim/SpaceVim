@@ -152,6 +152,7 @@ function! SpaceVim#layers#lang#scala#config() abort
   let g:scala_use_default_keymappings = 0
   call SpaceVim#mapping#space#regesit_lang_mappings('scala', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scala', 'scala')
+  call SpaceVim#plugins#runner#reg_runner('scala', 'sbt run')
   call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
   augroup SpaceVim_lang_scala
@@ -267,12 +268,9 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'find References', 1)
   endif
 
-  " Execute
-  let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r', 'm'], 'call call('
-        \ . string(function('s:execCMD')) . ', ["sbt run"])',
-        \ 'Run main class', 1)
-  nnoremap <buffer><F10>  :call <sid>execCMD('sbt run')<CR>
+  " code runner
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 
   " Sbt
   let g:_spacevim_mappings_space.l.b = {'name' : '+Sbt'}
@@ -303,6 +301,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'u'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt update"])',
         \ 'update-external-dependencies', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["sbt run"])',
+        \ 'sbt-run', 1)
 
   " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
