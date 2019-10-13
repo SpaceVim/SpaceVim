@@ -60,11 +60,11 @@ function install_nvim($name)
   $ver = $name -replace "^Neovim\s*", ""
   if ($ver -eq "latest-32")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_32'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win32.zip'
   }
   elseif ($ver -eq "latest-64")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_64'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip'
   }
   elseif ($ver -eq "0.3.7-32")
   {
