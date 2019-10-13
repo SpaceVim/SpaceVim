@@ -333,11 +333,7 @@ function! s:go_to_def() abort
 endfunction
 
 function! s:execCMD(cmd) abort
-  try
-    call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
-  catch
-    exec '!'.a:cmd
-  endtry
+  call SpaceVim#plugins#runner#open(a:cmd)
 endfunction
 
 " vim:set et sw=2 cc=80:
