@@ -4,7 +4,7 @@ description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，�
 lang: zh
 ---
 
-# 公共 API
+# [主页](../) >> 公共 API
 
 <!-- vim-markdown-toc GFM -->
 

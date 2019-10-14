@@ -4,7 +4,7 @@ description: "SpaceVim 赞助方式，以及历史赞助，如果你想赞助 Sp
 lang: zh
 ---
 
-# 赞助
+# [主页](../) >> 赞助
 
 如果你想赞助 SpaceVim，或者希望 SpaceVim 开发得更快一点，可以选择以下某种方式进行赞助：
 

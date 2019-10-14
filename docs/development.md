@@ -3,7 +3,7 @@ title:  "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# Development guidelines
+# [Home](../) >> Development
 
 <!-- vim-markdown-toc GFM -->
 

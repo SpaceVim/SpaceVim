@@ -4,7 +4,7 @@ description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提�
 lang: zh
 ---
 
-# SpaceVim 开发者文档
+# [主页](../) >> 开发者文档
 
 <!-- vim-markdown-toc GFM -->
 
