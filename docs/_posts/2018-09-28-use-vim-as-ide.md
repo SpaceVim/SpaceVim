@@ -13,7 +13,7 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 
 <!-- vim-markdown-toc GFM -->
 
-- [Installation](#installation)
+- [Installation](#installation)h
 - [Default UI](#default-ui)
 - [Fuzzy finder](#fuzzy-finder)
 - [Files and Windows](#files-and-windows)
@@ -51,4 +51,4 @@ be shown on the tabline. To jump to specific tab, you can use `Leader + number` 
 
 ### Language support
 
-By default, SpaceVim do not load any lanaguge layer, please checkout the [available layers](../layers/) page.
+By default, SpaceVim do not load any language layer, please checkout the [available layers](../layers/) page.
