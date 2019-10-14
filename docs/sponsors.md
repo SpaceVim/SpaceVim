@@ -3,7 +3,7 @@ title: "Sponsors"
 description: "The companies or individuals contributing a monthly amount to help sustain SpaceVim's development."
 ---
 
-# Sponsors
+# [Home](../) >> Sponsors
 
 SpaceVim is an open source project. Please consider supporting SpaceVim by:
 
