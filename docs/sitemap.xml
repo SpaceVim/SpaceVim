@@ -16,7 +16,7 @@ layout: null
     </url>
     {% endfor %}
     {% for page in site.pages %}
-        {% if page.lang != "zh" %}
+        {% if page.lang != "zh" and page.title != null %}
         <url>
             <loc>{{ site.url }}{{ page.url }}</loc>
             <changefreq>weekly</changefreq>
