@@ -4,7 +4,7 @@ description: "创建SpaceVim这一项目的目的在于提供一个开箱即用�
 lang: zh
 ---
 
-# 关于我们
+# [主页](../) >> 关于我们
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
