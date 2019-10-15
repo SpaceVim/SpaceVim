@@ -13,7 +13,7 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 
 <!-- vim-markdown-toc GFM -->
 
-- [Installation](#installation)h
+- [Installation](#installation)
 - [Default UI](#default-ui)
 - [Fuzzy finder](#fuzzy-finder)
 - [Files and Windows](#files-and-windows)
