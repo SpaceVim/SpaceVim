@@ -27,7 +27,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["Leaderf menu --name CustomKeyMaps -input [SPC]"])',
         \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
@@ -274,8 +274,8 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>f<Space> :Denite menu:CustomKeyMaps<CR>
-  let g:_spacevim_mappings.f['[SPC]'] = ['Denite menu:CustomKeyMaps',
+  nnoremap <silent> <Leader>f<Space> :<C-u>Leaderf menu --name CustomKeyMaps<CR>
+  let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
