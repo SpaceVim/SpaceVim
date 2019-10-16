@@ -25,6 +25,15 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#leaderf#config() abort
 
+  let g:Lf_Extensions.menu =
+        \ {
+        \       "source": s:_function('s:menu', 1),
+        \       "arguments": [
+        \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
+        \       ],
+        \       "accept": s:_function('s:accept', 1),
+        \ }
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Leaderf menu --name CustomKeyMaps --input [SPC]"])',
@@ -155,7 +164,7 @@ function! SpaceVim#layers#leaderf#config() abort
   call s:defind_fuzzy_finder()
 endfunction
 
-function! SpaceVim#layers#leaderf#menu(name)
+function! s:menu(name)
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
   if has_key(menu, 'command_candidates')
@@ -170,19 +179,10 @@ function! SpaceVim#layers#leaderf#menu(name)
   endif
 endfunction
 
-function! SpaceVim#layers#leaderf#accept(line, args)
+function! s:accept(line, args)
   let action = get(s:menu_action, a:line, '')
   exe action
 endfunction
-
-let g:Lf_Extensions.menu =
-      \ {
-      \       "source": "SpaceVim#layers#leaderf#menu",
-      \       "arguments": [
-      \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
-      \       ],
-      \       "accept": "SpaceVim#layers#leaderf#accept",
-      \ }
 
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
@@ -306,8 +306,16 @@ endfunction
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
-  function! s:_function(fstr) abort
-    return function(a:fstr)
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr, ...) abort
+    if a:0 > 1
+      return function(substitute(a:fstr, 's:', s:_s, 'g'))
+    else
+      return function(a:fstr)
+    endif
   endfunction
 else
   function! s:_SID() abort
