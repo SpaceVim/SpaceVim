@@ -64,13 +64,13 @@ function! SpaceVim#layers#leaderf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   " let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   " let g:Lf_Extensions = {
-        " \ "neomru": {
-        " \       "source": function("neomru#_gather_file_candidates()"),
-        " \       "accept": function("s:accept_mru"),
-        " \       "supports_name_only": 1,
-        " \       "supports_multi": 0,
-        " \ },
-        " \}
+  " \ "neomru": {
+  " \       "source": function("neomru#_gather_file_candidates()"),
+  " \       "accept": function("s:accept_mru"),
+  " \       "supports_name_only": 1,
+  " \       "supports_multi": 0,
+  " \ },
+  " \}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Leaderf neomru',
         \ ['open-recent-file',
         \ [
@@ -153,6 +153,21 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
+endfunction
+
+function! SpaceVim#layers#leaderf#menu(name)
+  let s:menu_action = {}
+  let menu = get(g:unite_source_menu_menus, a:name, {})
+  if has_key(menu, 'command_candidates')
+    let rt = []
+    for item in menu.command_candidates
+      call add(rt, item[0])
+      call extend(s:menu_action, {item[0] : item[1]}, 'force')
+    endfor
+    return rt
+  else
+    return []
+  endif
 endfunction
 
 function! Grep(args)
