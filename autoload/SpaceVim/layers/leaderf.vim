@@ -157,7 +157,7 @@ endfunction
 
 function! SpaceVim#layers#leaderf#menu(name)
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name, {})
+  let menu = get(g:unite_source_menu_menus, a:name['--name'], {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -189,34 +189,9 @@ function! FormatLine(line, args)
   let line = substitute(line, '|\d\+\zs:', '|\t', '')
   return line
 endfunction
-
-function! Accept(line, args)
-  let items = split(a:line, '\t')
-  let file = items[0]
-  let line = items[1][1:-2]
-  exec "edit +".line." ".file
-  norm! zz
-  setlocal cursorline!
-  redraw
-  sleep 100m
-  setlocal cursorline!
-endfunction
-
-function! Preview(orig_buf_nr, orig_cursor, ...)
-  " currently, we are in the LeaderF window
-  let line = getline('.')
-  " jump to the original window
-  exe bufwinnr(a:orig_buf_nr). "wincmd w"
-
-  let items = split(line, '\t')
-  let file = items[0]
-  let line = items[1][1:-2]
-  exec "edit +".line." ".file
-  norm! zz
-  setlocal cursorline!
-  redraw
-  sleep 100m
-  setlocal cursorline!
+function! SpaceVim#layers#leaderf#accept(line, args)
+  let action = get(s:menu_action, a:line, '')
+  exe action
 endfunction
 
 function! Highlight(args)
@@ -255,24 +230,23 @@ endfunction
 function! Do_nothing(orig_buf_nr, orig_cursor, args)
 endfunction
 
-let g:Lf_Extensions.pluginlist =
+let g:Lf_Extensions.menu =
       \ {
-      \       "source": {"list": function("Grep")},
-      \       "format_line": "FormatLine",
-      \       "accept": "Accept",
-      \       "preview": "Preview",
+      \       "source": function("SpaceVim#layers#leaderf#menu"),
+      \       "arguments": [
+      \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
+      \       ],
+      \       "format_line": "",
+      \       "accept": "SpaceVim#layers#leaderf#accept",
+      \       "preview": "",
       \       "supports_name_only": 1,
-      \       "get_digest": "Get_digest",
+      \       "get_digest": "",
       \       "highlights_def": {
-      \               "Lf_hl_grep_file": '^.\{-}\ze\t',
-      \               "Lf_hl_grep_line": '\t|\zs\d\+\ze|\t',
       \       },
       \       "highlights_cmd": [
-      \               "hi Lf_hl_grep_file guifg=red ctermfg=196",
-      \               "hi Lf_hl_grep_line guifg=green ctermfg=120",
       \       ],
-      \       "highlight": "Highlight",
-      \       "bang_enter": "Do_nothing",
+      \       "highlight": "",
+      \       "bang_enter": "",
       \       "after_enter": "",
       \       "before_exit": "",
       \       "supports_multi": 0,
