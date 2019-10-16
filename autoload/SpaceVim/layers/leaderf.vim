@@ -156,6 +156,7 @@ function! SpaceVim#layers#leaderf#config() abort
 endfunction
 
 function! SpaceVim#layers#leaderf#menu(name)
+  return 'fuck'
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, a:name['--name'], {})
   if has_key(menu, 'command_candidates')
@@ -236,20 +237,7 @@ let g:Lf_Extensions.menu =
       \       "arguments": [
       \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
       \       ],
-      \       "format_line": "",
       \       "accept": "SpaceVim#layers#leaderf#accept",
-      \       "preview": "",
-      \       "supports_name_only": 1,
-      \       "get_digest": "",
-      \       "highlights_def": {
-      \       },
-      \       "highlights_cmd": [
-      \       ],
-      \       "highlight": "",
-      \       "bang_enter": "",
-      \       "after_enter": "",
-      \       "before_exit": "",
-      \       "supports_multi": 0,
       \ }
 
 let s:file = expand('<sfile>:~')
