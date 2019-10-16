@@ -156,10 +156,8 @@ function! SpaceVim#layers#leaderf#config() abort
 endfunction
 
 function! SpaceVim#layers#leaderf#menu(name)
-  return ['sss']
-  return 'fuck'
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name['--name'], {})
+  let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -172,73 +170,18 @@ function! SpaceVim#layers#leaderf#menu(name)
   endif
 endfunction
 
-function! Grep(args)
-  let ignorecase = ""
-  if has_key(a:args, "--ignore-case")
-    let ignorecase = "-i"
-  endif
-
-  let whole_word = ""
-  if has_key(a:args, "-w")
-    let whole_word = "-w"
-  endif
-
-  return printf("grep -n -I -r %s %s '%s' .", ignorecase, whole_word, get(a:args, "pattern", [""])[0])
-endfunction
-
-function! FormatLine(line, args)
-  let line = substitute(a:line, '^[^:]*\zs:', '\t|', '')
-  let line = substitute(line, '|\d\+\zs:', '|\t', '')
-  return line
-endfunction
 function! SpaceVim#layers#leaderf#accept(line, args)
   let action = get(s:menu_action, a:line, '')
   exe action
 endfunction
 
-function! Highlight(args)
-  highlight Grep_Pattern guifg=Black guibg=lightgreen ctermfg=16 ctermbg=120
-
-  " suppose that pattern is not a regex
-  if has_key(a:args, "-w")
-    let pattern = '\<' . get(a:args, "pattern", [""])[0] . '\>'
-  else
-    let pattern = get(a:args, "pattern", [""])[0]
-  endif
-
-  if has_key(a:args, "--ignore-case")
-    let pattern = '\c' . pattern
-  endif
-
-  let ids = []
-  call add(ids, matchadd("Grep_Pattern", pattern, 20))
-  return ids
-endfunction
-
-function! Get_digest(line, mode)
-  " full path, i.e, the whole line
-  if a:mode == 0
-    return [a:line, 0]
-    " name only, i.e, the part of file name
-  elseif a:mode == 1
-    return [split(a:line)[0], 0]
-    " directory, i.e, the part of greped line
-  else
-    let items = split(a:line, '\t')
-    return [items[2], len(a:line) - len(items[2])]
-  endif
-endfunction
-
-function! Do_nothing(orig_buf_nr, orig_cursor, args)
-endfunction
-
 let g:Lf_Extensions.menu =
       \ {
-      \       "source": function("SpaceVim#layers#leaderf#menu"),
+      \       "source": "SpaceVim#layers#leaderf#menu",
       \       "arguments": [
       \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
       \       ],
-      \       "accept": function("SpaceVim#layers#leaderf#accept"),
+      \       "accept": "SpaceVim#layers#leaderf#accept",
       \ }
 
 let s:file = expand('<sfile>:~')
@@ -340,9 +283,9 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fp  :<C-u>Denite menu:AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>Leaderf menu --name AddedPlugins<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.p = ['Denite menu:AddedPlugins',
+  let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
         \ 'fuzzy find vim packages',
         \ [
         \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
