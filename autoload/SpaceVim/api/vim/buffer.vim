@@ -9,6 +9,11 @@
 ""
 " @section vim#buffer, api-vim-buffer
 " @parentsection api
+" @subsection Intro
+"
+" vim#buffer API provides some basic functions for setting and getting config
+" of vim buffer.
+"
 " @subsection Functions
 "
 " is_cmdwin()
@@ -30,7 +35,6 @@
 
 
 let s:self = {}
-
 
 if exists('*getcmdwintype')
   function! s:self.is_cmdwin() abort
@@ -83,6 +87,21 @@ function! s:self.filter_do(expr) abort
   endfor
 endfunction
 
+if exists('*nvim_buf_line_count')
+  function! s:self.line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+elseif has('lua')
+  function! s:self.line_count(buf) abort
+    " lua numbers are floats, so use float2nr
+    return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
+  endfunction
+else
+  function! s:self.line_count(buf) abort
+    return len(getbufline(a:buf, 1, '$'))
+  endfunction
+endif
+
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
@@ -110,11 +129,42 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py3 lines = vim.eval("a:replacement")
       py3 vim.buffers[bufnr][start_line:end_line] = lines
     endif
+  elseif has('lua') && 0
+    lua require("spacevim.api.vim.buffer").buf_set_lines(
+          \ vim.eval("a:winid"),
+          \ vim.eval("a:start"),
+          \ vim.eval("a:end"),
+          \ vim.eval("a:replacement")
+          \ )
   elseif exists('*setbufline')
-    let line = a:start
-    for i in range(len(a:replacement))
-      call setbufline(bufname(a:buffer), line + i, a:replacement[i])
-    endfor
+    let lct = self.line_count(a:buffer)
+    if a:start > lct
+      return
+    elseif a:start >= 0 && a:end > a:start
+      " in vim, setbufline will not load buffer automatically
+      " but in neovim, nvim_buf_set_lines will do it.
+      " @fixme vim issue #5044
+      " https://github.com/vim/vim/issues/5044
+      let endtext = a:end > lct ? [] : getbufline(a:buffer, a:end + 1, '$')
+      if !buflisted(a:buffer)
+        call bufload(a:buffer)
+      endif
+      " 0 start end $
+      if len(a:replacement) == a:end - a:start
+        for i in range(a:start, len(a:replacement) + a:start - 1)
+          call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
+        endfor
+      else
+        let replacement = a:replacement + endtext
+        for i in range(a:start, len(replacement) + a:start - 1)
+          call setbufline(a:buffer, i + 1, replacement[i - a:start])
+        endfor
+      endif
+    elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
+      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
+    elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
+      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+    endif
   else
     exe 'b' . a:buffer
     call setline(a:start - 1, a:replacement)

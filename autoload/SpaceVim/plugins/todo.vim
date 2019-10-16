@@ -81,7 +81,7 @@ function! s:exit(id, data, event ) abort
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
   let expr = "v:val.lebal . repeat(' ', label_w - strlen(v:val.lebal)) . ' ' ."
         \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
-        \ .  "v:val.title"
+        \ .  'v:val.title'
   let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction

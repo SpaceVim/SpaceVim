@@ -191,6 +191,8 @@ function! s:compare(d1, d2) abort
   return len(split(a:d2, '/')) - len(split(a:d1, '/'))
 endfunction
 
+let s:FILE = SpaceVim#api#import('file')
+
 function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
   call SpaceVim#commands#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
   let dir = get(g:,'spacevim_src_root', '~')
@@ -198,7 +200,7 @@ function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, Cur
   let result = split(globpath(dir, '*'), "\n")
   let ps = []
   for p in result
-    if isdirectory(p) && isdirectory(p. '\' . '.git')
+    if isdirectory(p) && isdirectory(p . s:FILE.separator . '.git')
       call add(ps, fnamemodify(p, ':t'))
     endif
   endfor

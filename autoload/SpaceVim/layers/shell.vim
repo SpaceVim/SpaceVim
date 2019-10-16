@@ -47,7 +47,7 @@ function! SpaceVim#layers#shell#config() abort
         \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
-        \ ["open-shell-in-buffer-dir",
+        \ ['open-shell-in-buffer-dir',
         \ [
         \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
         \ '',
@@ -235,8 +235,8 @@ function! s:open_default_shell(open_with_file_cwd) abort
 
       " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
-      if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
-        nnoremap <buffer><silent> q :hide<CR>
+      if !empty(g:spacevim_windows_smartclose)  && !g:spacevim_vimcompatible
+        exe 'nnoremap <buffer><silent> ' . g:spacevim_windows_smartclose . ' :hide<CR>'
       endif
       startinsert
     else

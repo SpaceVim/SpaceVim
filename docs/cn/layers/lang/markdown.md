@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#markdown 模块"
 description: "这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#markdown

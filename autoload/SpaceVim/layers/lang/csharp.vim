@@ -46,7 +46,10 @@ function! SpaceVim#layers#lang#csharp#config() abort
   " Get Code Issues and syntax errors
   let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 
-  autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+  augroup spacevim_lang_csharp
+    autocmd!
+    autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+  augroup END
 
   call SpaceVim#mapping#space#regesit_lang_mappings('cs', function('s:language_specified_mappings'))
 endfunction

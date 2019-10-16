@@ -3,7 +3,7 @@ title: "Roadmap"
 description: "The roadmap and milestones define the project direction and priorities."
 ---
 
-# Roadmap
+# [Home](../) >> Roadmap
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 

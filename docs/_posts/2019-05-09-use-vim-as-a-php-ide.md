@@ -4,7 +4,7 @@ categories: [tutorials_cn, blog_cn]
 image: https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 PHP 的开发环境，简介 lang#php 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
-lang: cn
+lang: zh
 type: BlogPosting
 comments: true
 commentsID: "使用 Vim 搭建 PHP 开发环境"

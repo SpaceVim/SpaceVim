@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#asciidoc layer"
 description: "这一模块为 SpaceVim 提供了 AsciiDoc 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。"
-lang: cn
+lang: zh
 ---
 
 # [Available Layers](../../) >> lang#asciidoc

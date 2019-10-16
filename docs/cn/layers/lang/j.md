@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#j 模块"
 description: "这一模块为 j 开发提供支持，包括交互式编程和语法高亮。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#j

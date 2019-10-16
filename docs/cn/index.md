@@ -1,7 +1,7 @@
 ---
 title: "主页"
 description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织和管理插件，提高 Vim 环境配置效率。"
-lang: cn
+lang: zh
 ---
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)
@@ -19,7 +19,11 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱即用的 Vim IDE。
 
-请查阅[《入门指南》](quick-start-guide/)、[《用户文档》](documentation/)和[《可用模块》](layers/)以获取更多信息。
+如果你喜欢SpaceVim，可以在 [gitee](https://gitee.com/spacevim/SpaceVim) 上给 SpaceVim 加星，这是一个很好的方式来表达你的感激之情，同时也给了我们继续做这个项目的动力。
+
+- [入门指南](quick-start-guide/): 包括最基本的安装以及配置教程，同时包括了针对不同语言的配置技巧
+- [使用文档](documentation/): 完整的用户使用文档，详细介绍了每一个快捷键以及配置的功能
+- [可用模块](layers/): 罗列了目前已经支持的所有模块，包括功能模块和不同的语言模块
 
 ## 最新特性
 
@@ -34,7 +38,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
     {% endfor %}
 </ul>
 
-更多精彩博客请订阅 [SpaceVim 中文博客](blog/) 或关注微博 [@SpaceVim](https://weibo.com/SpaceVim)。
+更多精彩博客请订阅 SpaceVim [博客](blog/) 或关注微博 [@SpaceVim](https://weibo.com/SpaceVim)。
 
 ## 参与
 
@@ -46,7 +50,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 - 目前 SpaceVim 的开发状态如何？
 
-当前最新发布的稳定版本是 v1.0.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
+当前最新发布的稳定版本是 v1.2.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
 或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗？
@@ -57,13 +61,13 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 ```sh
 ~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
-68
+78
 ```
 
 - SpaceVim 支持什么版本的 Vim/Neovim？
 
 建议使用 Vim 7.4 或者 Neovim v0.1.7及其以上版本。
 
-更多常见问题请阅读 [《SpaceVim FAQ》](faq/)
+更多常见问题请阅读[常见问题解答](faq/)
 
 <!-- vim:set nowrap: -->

@@ -3,7 +3,7 @@ title: Available layers
 description: "A guide for managing SpaceVim with layers, tell you how to enable and disable a layer, also list all available layers in SpaceVim"
 ---
 
-# Available layers
+# [Home](../) >> Layers
 
 <!-- vim-markdown-toc GFM -->
 

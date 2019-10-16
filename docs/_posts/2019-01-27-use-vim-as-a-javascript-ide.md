@@ -4,7 +4,7 @@ categories: [tutorials_cn, blog_cn]
 image: https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 JavaScript 的开发环境，简介 lang#javascript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
-lang: cn
+lang: zh
 type: BlogPosting
 comments: true
 commentsID: "使用 Vim 搭建 JavaScript 开发环境"

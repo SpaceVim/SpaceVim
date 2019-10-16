@@ -60,11 +60,83 @@ function install_nvim($name)
   $ver = $name -replace "^Neovim\s*", ""
   if ($ver -eq "latest-32")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_32'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win32.zip'
   }
   elseif ($ver -eq "latest-64")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_64'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.8-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.8/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.8-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.8/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.7-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.7-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.5-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.5/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.5-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.5/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.4-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.4-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.3-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.3/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.3-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.3/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.2/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.1-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.1/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.1-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.1/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.0-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.0-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.2.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.2.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.2.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.2.2/nvim-win64.zip'
   }
   elseif ($ver -eq "0.2.0-32")
   {

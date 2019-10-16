@@ -516,7 +516,7 @@ function! s:menu(name) abort
 endfunction
 
 
-function! s:tags_sink(line)
+function! s:tags_sink(line) abort
   let parts = split(a:line, '\t\zs')
   let excmd = matchstr(parts[2:], '^.*\ze;"\t')
   execute 'silent e' parts[1][:-2]
@@ -525,7 +525,7 @@ function! s:tags_sink(line)
   let &magic = magic
 endfunction
 
-function! s:tags()
+function! s:tags() abort
   if empty(tagfiles())
     echohl WarningMsg
     echom 'Preparing tags'

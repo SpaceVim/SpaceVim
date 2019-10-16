@@ -123,7 +123,7 @@ function! SpaceVim#layers#lang#java#config() abort
   endtry
 endfunction
 
-function! s:JspFileTypeInit()
+function! s:JspFileTypeInit() abort
   setlocal omnifunc=javacomplete#Complete
   inoremap . <c-r>=OnmiConfigForJsp()<cr>
   nnoremap <F4> :JCimportAdd<cr>

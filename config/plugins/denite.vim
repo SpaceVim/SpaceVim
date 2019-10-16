@@ -150,7 +150,12 @@ unlet s:m s:insert_mode_mappings s:normal_mode_mappings
 
 
 " Define mappings
-autocmd FileType denite call s:denite_my_settings()
+augroup spacevim_layer_denite
+  autocmd!
+  autocmd FileType denite call s:denite_my_settings()
+  autocmd FileType denite-filter call s:denite_filter_my_settings()
+augroup END
+
 function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> i
         \ denite#do_map('open_filter_buffer')
@@ -172,7 +177,6 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><S-Tab> k
 endfunction
 
-autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
   inoremap <silent><buffer> <Tab>

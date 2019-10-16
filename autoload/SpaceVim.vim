@@ -556,6 +556,16 @@ let g:spacevim_enable_statusline_mode     = 0
 " <
 "
 let g:spacevim_custom_color_palette = []
+
+""
+" @section enable_cursorcolumn, options-enable_cursorcolumn
+" @parentsection options
+" Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
+" highlighted in normal mode. To enable this feature:
+" >
+"   enable_cursorcolumn = true
+" <
+
 ""
 " Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be
 " highlighted in normal mode. To enable this feature:
@@ -640,6 +650,15 @@ let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circ
 " <
 let g:spacevim_terminal_cursor_shape = 2
 ""
+" @section vim_help_language, options-vim_help_language
+" @parentsection options
+" Set the help language of vim. Default is 'en'.
+" You can change it to Chinese.
+" >
+"   vim_help_language = "cn"
+" <
+
+""
 " Set the help language of vim. Default is 'en'.
 " You can change it to Chinese.
 " >
@@ -692,22 +711,6 @@ let g:spacevim_colorscheme_bg             = 'dark'
 "   let g:spacevim_colorscheme_default = 'other_color'
 " <
 let g:spacevim_colorscheme_default     = 'desert'
-""
-" @section simple_mode, options-simple_mode
-" @parentsection options
-" Enable/disable simple mode of SpaceVim. Default is false.
-" In this mode, only few plugins will be installed.
-" >
-"   simple_mode = true
-" <
-
-""
-" Enable/disable simple mode of SpaceVim. Default is 0.
-" In this mode, only few plugins will be installed.
-" >
-"   let g:spacevim_simple_mode = 1
-" <
-let g:spacevim_simple_mode             = 0
 ""
 " @section filemanager, options-filemanager
 " @parentsection options
@@ -768,8 +771,29 @@ let g:spacevim_plugin_manager_processes = 16
 " <
 let g:spacevim_checkinstall            = 1
 ""
-" Enable/Disable vimcompatible mode, by default it is disabled. In
-" vimcompatible mode all vim origin key bindings will not be changed.
+" @section vimcompatible, options-vimcompatible
+" @parentsection options
+" Enable/Disable vimcompatible mode, by default it is false. 
+" to enable vimcompatible mode, just add:
+" >
+"   vimcompatible = true
+" <
+" In vimcompatible mode all vim origin key bindings will not be changed.
+"
+" Includes:
+" >
+"   q       smart quit windows
+"   s       windows key bindings leader
+"   <C-x>   switch buffer
+" <
+
+""
+" Enable/Disable vimcompatible mode, by default it is false. 
+" to enable vimcompatible mode, just add:
+" >
+"   let g:spacevim_vimcompatible = 1
+" <
+" In vimcompatible mode all vim origin key bindings will not be changed.
 "
 " Includes:
 " >
@@ -876,6 +900,15 @@ let g:spacevim_enable_os_fileformat_icon = 0
 " Set the github username, It will be used for getting your starred repos, and
 " fuzzy find the repo you want.
 let g:spacevim_github_username         = ''
+""
+" @section windows_smartclose, options-windows_smartclose
+" @parentsection options
+" Set the default key for smart close windows, default is `q`.
+" to disable this feature, just set it to empty string:
+" >
+"   windows_smartclose = ""
+" <
+
 ""
 " Set the default key for smart close windows, default is `q`.
 let g:spacevim_windows_smartclose      = 'q'
@@ -1102,13 +1135,13 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if g:spacevim_vimcompatible != 1
+  if !g:spacevim_vimcompatible
     call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
     call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
   endif
-  if g:spacevim_vimcompatible == 1
+  if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
-    let g:spacevim_windows_smartclose = 0
+    let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible

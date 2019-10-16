@@ -2,10 +2,10 @@
 title: 可用模块
 description: "简述什么是模块，如何启用和禁用 SpaceVim 模块，以及如何设置模块选项，并罗列出 SpaceVim 中所有内置的模块。"
 keywords: layer, layers
-lang: cn
+lang: zh
 ---
 
-# 可用模块
+# [主页](../) >> 可用模块
 
 <!-- vim-markdown-toc GFM -->
 

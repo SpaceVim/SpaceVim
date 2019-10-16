@@ -27,8 +27,8 @@ appreciation while providing us motivation to continue working on this project.
 
 
 - [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
-- [documentation](documentation/): the primary official document of SpaceVim
-- [available layers](layers/): a list of available layers which can be used in SpaceVim
+- [Documentation](documentation/): the primary official document of SpaceVim
+- [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
 The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
@@ -45,9 +45,9 @@ The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceV
     {% endfor %}
 </ul>
 
-More posts are in the [SpaceVim's Blog](blog/)
+More posts are available on the [blog](blog/) of SpaceVim.
 
-[Follow @SpaceVim](https://twitter.com/SpaceVim)
+Follow our twitter: [@SpaceVim](https://twitter.com/SpaceVim)
 
 ## Participating
 
@@ -59,8 +59,8 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-The current stable version is v1.1.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
-for development progress and the [roadmap](roadmap/) for high-level plans.
+The current stable version is v1.2.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
 
@@ -70,13 +70,13 @@ With layers feature, this version of Vim distribution try to turn Vim/Neovim int
 
 ```sh
 ~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
-68
+78
 ```
 
 - Which version of Vim/Neovim is needed?
 
 Vim 7.4/Neovim v0.1.7, and `+lua` or `+python3` is needed.
 
-For more general questions, please read [SpaceVim FAQ](faq/).
+For more general questions, please read SpaceVim [FAQ](faq/).
 
 <!-- vim:set nowrap: -->

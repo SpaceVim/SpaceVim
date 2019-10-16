@@ -137,7 +137,7 @@ function! SpaceVim#layers#edit#config() abort
 
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], "normal! " . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], 'normal! ' . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
   let g:_spacevim_mappings_space.x.s = {'name' : '+String'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
         \ . string(s:_function('s:join_string_with')) . ', [])',
@@ -660,7 +660,7 @@ augroup spacevim_layer_edit
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
-  if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
+  if has_key(s:ft_head_tp, &ft) && getline(1) ==# '' && line('$')  == 1
     let head = s:ft_head_tp[&ft]
     call setline(1, map(head, 's:parse(v:val)'))
     call cursor(len(head), 0)

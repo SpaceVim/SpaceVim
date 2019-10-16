@@ -1,10 +1,12 @@
 <!doctype html>
-<html>
+<html lang="{{ page.lang | site.lang }}">
 
     <head>
+        <title>{{ page.title }} | SpaceVim</title>
         <meta name="baidu-site-verification" content="AN14j6xQVd" />
-        {% seo %}
-        {% if page.lang == "cn" %}
+        <meta name="yandex-verification" content="8de09d07572b8dcc" />
+        {% seo title=false %}
+        {% if page.lang == "zh" %}
         <script type="text/javascript" src="https://tajs.qq.com/stats?sId=60680063" charset="UTF-8"></script>
         {% endif %}
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
@@ -26,7 +28,7 @@
 })();
         </script>
 
-        {% if page.lang == "cn" %}
+        {% if page.lang == "zh" %}
         <script>
             ((window.gitter = {}).chat = {}).options = {
                 room: 'SpaceVim/cn'
@@ -44,7 +46,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-        {% if page.lang == "cn" %}
+        {% if page.lang == "zh" %}
         <script src="https://cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
         {% else %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -74,7 +76,7 @@
                 <div id="titlex">
                     <p align="center">{{ site.title | default: site.github.repository_name }}</p>
                 </div>
-                {% if page.lang == "cn" %}
+                {% if page.lang == "zh" %}
                 <div id="title">
                     <p>{{ site.description | default: site.github.project_tagline }}
                     </p>
@@ -146,7 +148,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58a01d3aac22bd89"></script>
     </body>
     <root>
-    {% if page.lang == "cn" %}
+    {% if page.lang == "zh" %}
     <p align="center">
     <span class="credits right">网站源码位于 Github, <a href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}">帮助改进本页面</a> &mdash; 网站主题: <a href="https://twitter.com/michigangraham">mattgraham</a>,
     </span>

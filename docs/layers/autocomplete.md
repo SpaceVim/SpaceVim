@@ -3,7 +3,7 @@ title: "SpaceVim autocomplete layer"
 description: "Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically"
 ---
 
-# [Available Layers](../) >> autocomplete
+# [Home](../../) >> [Layers](../) >> autocomplete
 
 <!-- vim-markdown-toc GFM -->
 

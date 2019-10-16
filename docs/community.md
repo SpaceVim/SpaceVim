@@ -3,7 +3,7 @@ title:  "Community"
 description: "A list of public channels SpaceVim, All messages are bridged between IRC, gitter, telegram, matrix and slack"
 ---
 
-# Community
+# [Home](../) >> Community
 
 Visit these resources for help or general questions.
 

@@ -281,7 +281,7 @@ function! s:toggle_whitespace() abort
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
 endfunction
 
-function! s:toggle_conceallevel()
+function! s:toggle_conceallevel() abort
     if &conceallevel == 0 
         setlocal conceallevel=2
     else
@@ -289,7 +289,7 @@ function! s:toggle_conceallevel()
     endif
 endfunction
 
-function! s:toggle_background()
+function! s:toggle_background() abort
     let s:tbg = &background
     " Inversion
     if s:tbg ==# 'dark'

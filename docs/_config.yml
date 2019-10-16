@@ -9,12 +9,11 @@ project_repo_url: https://github.com/SpaceVim/SpaceVim
 url: https://spacevim.org
 logo: https://spacevim.org/SpaceVim.png
 permalink: /:title/
+lang: en
 
 plugins:
   - jekyll-redirect-from
-  - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-feed
 
 github: [metadata]
 
@@ -37,6 +36,7 @@ social:
       - https://twitter.com/SpaceVim
       - https://github.com/SpaceVim/SpaceVim
       - https://www.reddit.com/r/SpaceVim/
+      - https://www.facebook.com/SpaceVim
 
 defaults:
   - scope:

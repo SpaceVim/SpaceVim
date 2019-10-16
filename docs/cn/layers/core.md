@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim core 模块"
 description: "这一模块为 SpaceVim 提供了启动及基本操作所必须的插件及配置。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> core

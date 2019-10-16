@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v0.4.0
 categories: [changelog, blog]
-excerpt: "Here you can check what has been done so far."
+excerpt: "New release v0.4.0 provides a new UI for plugin manager and built-in flygrep plugin"
 type: NewsArticle
 commentsID: "SpaceVim release v0.4.0"
 comments: true
