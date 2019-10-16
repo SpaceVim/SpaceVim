@@ -20,6 +20,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
 endfunction
 
 
+let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#leaderf#config() abort
@@ -239,15 +240,9 @@ endfunction
 function! Do_nothing(orig_buf_nr, orig_cursor, args)
 endfunction
 
-let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
-let g:Lf_Extensions.grep =
+let g:Lf_Extensions.pluginlist =
       \ {
-      \       "source": {"command": function("Grep")},
-      \       "arguments": [
-      \           { "name": ["pattern"], "nargs": 1 },
-      \           { "name": ["--ignore-case", "-i"], "nargs": 0 },
-      \           { "name": ["-w"], "nargs": 0, "help": "Select  only  those lines containing matches that form whole words." },
-      \       ],
+      \       "source": {"list": function("Grep")},
       \       "format_line": "FormatLine",
       \       "accept": "Accept",
       \       "preview": "Preview",
