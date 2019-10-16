@@ -61,15 +61,15 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
-  let g:Lf_Extensions = {
-        \ "neomru": {
-        \       "source": function("neomru#_gather_file_candidates()"),
-        \       "accept": function("s:accept_mru"),
-        \       "supports_name_only": 1,
-        \       "supports_multi": 0,
-        \ },
-        \}
+  " let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
+  " let g:Lf_Extensions = {
+        " \ "neomru": {
+        " \       "source": function("neomru#_gather_file_candidates()"),
+        " \       "accept": function("s:accept_mru"),
+        " \       "supports_name_only": 1,
+        " \       "supports_multi": 0,
+        " \ },
+        " \}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Leaderf neomru',
         \ ['open-recent-file',
         \ [
@@ -153,6 +153,120 @@ function! SpaceVim#layers#leaderf#config() abort
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
 endfunction
+
+function! Grep(args)
+  let ignorecase = ""
+  if has_key(a:args, "--ignore-case")
+    let ignorecase = "-i"
+  endif
+
+  let whole_word = ""
+  if has_key(a:args, "-w")
+    let whole_word = "-w"
+  endif
+
+  return printf("grep -n -I -r %s %s '%s' .", ignorecase, whole_word, get(a:args, "pattern", [""])[0])
+endfunction
+
+function! FormatLine(line, args)
+  let line = substitute(a:line, '^[^:]*\zs:', '\t|', '')
+  let line = substitute(line, '|\d\+\zs:', '|\t', '')
+  return line
+endfunction
+
+function! Accept(line, args)
+  let items = split(a:line, '\t')
+  let file = items[0]
+  let line = items[1][1:-2]
+  exec "edit +".line." ".file
+  norm! zz
+  setlocal cursorline!
+  redraw
+  sleep 100m
+  setlocal cursorline!
+endfunction
+
+function! Preview(orig_buf_nr, orig_cursor, ...)
+  " currently, we are in the LeaderF window
+  let line = getline('.')
+  " jump to the original window
+  exe bufwinnr(a:orig_buf_nr). "wincmd w"
+
+  let items = split(line, '\t')
+  let file = items[0]
+  let line = items[1][1:-2]
+  exec "edit +".line." ".file
+  norm! zz
+  setlocal cursorline!
+  redraw
+  sleep 100m
+  setlocal cursorline!
+endfunction
+
+function! Highlight(args)
+  highlight Grep_Pattern guifg=Black guibg=lightgreen ctermfg=16 ctermbg=120
+
+  " suppose that pattern is not a regex
+  if has_key(a:args, "-w")
+    let pattern = '\<' . get(a:args, "pattern", [""])[0] . '\>'
+  else
+    let pattern = get(a:args, "pattern", [""])[0]
+  endif
+
+  if has_key(a:args, "--ignore-case")
+    let pattern = '\c' . pattern
+  endif
+
+  let ids = []
+  call add(ids, matchadd("Grep_Pattern", pattern, 20))
+  return ids
+endfunction
+
+function! Get_digest(line, mode)
+  " full path, i.e, the whole line
+  if a:mode == 0
+    return [a:line, 0]
+    " name only, i.e, the part of file name
+  elseif a:mode == 1
+    return [split(a:line)[0], 0]
+    " directory, i.e, the part of greped line
+  else
+    let items = split(a:line, '\t')
+    return [items[2], len(a:line) - len(items[2])]
+  endif
+endfunction
+
+function! Do_nothing(orig_buf_nr, orig_cursor, args)
+endfunction
+
+let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
+let g:Lf_Extensions.grep =
+      \ {
+      \       "source": {"command": function("Grep")},
+      \       "arguments": [
+      \           { "name": ["pattern"], "nargs": 1 },
+      \           { "name": ["--ignore-case", "-i"], "nargs": 0 },
+      \           { "name": ["-w"], "nargs": 0, "help": "Select  only  those lines containing matches that form whole words." },
+      \       ],
+      \       "format_line": "FormatLine",
+      \       "accept": "Accept",
+      \       "preview": "Preview",
+      \       "supports_name_only": 1,
+      \       "get_digest": "Get_digest",
+      \       "highlights_def": {
+      \               "Lf_hl_grep_file": '^.\{-}\ze\t',
+      \               "Lf_hl_grep_line": '\t|\zs\d\+\ze|\t',
+      \       },
+      \       "highlights_cmd": [
+      \               "hi Lf_hl_grep_file guifg=red ctermfg=196",
+      \               "hi Lf_hl_grep_line guifg=green ctermfg=120",
+      \       ],
+      \       "highlight": "Highlight",
+      \       "bang_enter": "Do_nothing",
+      \       "after_enter": "",
+      \       "before_exit": "",
+      \       "supports_multi": 0,
+      \ }
 
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
@@ -266,7 +380,7 @@ function! s:defind_fuzzy_finder() abort
 endfunction
 
 function! s:accept_mru(line) abort
-    exe 'e ' . line
+  exe 'e ' . line
 endfunction
 
 function! s:warp_denite(cmd) abort
