@@ -27,7 +27,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Leaderf menu --name CustomKeyMaps -input [SPC]"])',
+        \ . string(s:_function('s:warp_denite')) . ', ["Leaderf menu --name CustomKeyMaps --input [SPC]"])',
         \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
