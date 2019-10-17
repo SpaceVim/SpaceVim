@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
@@ -32,6 +33,12 @@ function! SpaceVim#layers#leaderf#config() abort
         \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
         \       ],
         \       "accept": 'SpaceVim#layers#leaderf#accept',
+        \ }
+
+  let g:Lf_Extensions.register =
+        \ {
+        \       "source": 'SpaceVim#layers#leaderf#register',
+        \       "accept": 'SpaceVim#layers#leaderf#register_acp',
         \ }
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -165,6 +172,18 @@ function! SpaceVim#layers#leaderf#config() abort
 endfunction
 
 
+function! SpaceVim#layers#leaderf#register(...)
+    return split(s:CMP.execute('registers'), '\n')[1:]
+endfunction
+
+function! SpaceVim#layers#leaderf#register_acp(line, args)
+  let @" = a:line
+  redraw!
+  echohl ModeMsg
+  echon 'Yanked!'
+  echohl None
+endfunction
+
 function! SpaceVim#layers#leaderf#menu(name)
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
@@ -200,9 +219,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fe
-        \ :<C-u>Denite register<CR>
+        \ :<C-u>Leaderf register<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.e = ['Denite register',
+  let g:_spacevim_mappings.f.e = ['Leaderf register',
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume unite window',
