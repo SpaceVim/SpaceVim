@@ -39,6 +39,15 @@ function! SpaceVim#layers#leaderf#config() abort
         \ {
         \       "source": 'SpaceVim#layers#leaderf#register',
         \       "accept": 'SpaceVim#layers#leaderf#register_acp',
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : 'SpaceVim#layers#leaderf#init_leaderf_win'
         \ }
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -171,9 +180,19 @@ function! SpaceVim#layers#leaderf#config() abort
   call s:defind_fuzzy_finder()
 endfunction
 
+function! SpaceVim#layers#leaderf#init_leaderf_win(...)
+  setlocal nonumber
+  setlocal nowrap
+endfunction
+
+function! SpaceVim#layers#leaderf#hi_register(...)
+
+
+
+endfunction
 
 function! SpaceVim#layers#leaderf#register(...)
-    return split(s:CMP.execute('registers'), '\n')[1:]
+  return split(s:CMP.execute('registers'), '\n')[1:]
 endfunction
 
 function! SpaceVim#layers#leaderf#register_acp(line, args)
