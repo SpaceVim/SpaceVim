@@ -17,6 +17,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
         \ 'merged' : 0,
         \ }])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -39,6 +40,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \ {
         \       "source": string(s:_function('s:register', 1))[10:-3],
         \       "accept": string(s:_function('s:register_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
+  let g:Lf_Extensions.neoyank =
+        \ {
+        \       "source": string(s:_function('s:neoyank', 1))[10:-3],
+        \       "accept": string(s:_function('s:neoyank_acp', 1))[10:-3],
         \       "highlights_def": {
         \               "Lf_register_name": '^".',
         \               "Lf_register_content": '\s\+.*',
@@ -194,6 +210,18 @@ function! s:register_acp(line, args)
   echohl ModeMsg
   echon 'Yanked!'
   echohl None
+endfunction
+
+func! s:neoyank(...)
+  let yank = []
+  for text in neoyank#_get_yank_histories()['"']
+    call add(yank, join(split(text[0], "\n"), '\n'))
+  endfor
+  return yank
+endfunction
+
+function! s:neoyank_acp(line, args) abort
+  
 endfunction
 
 function! s:menu(name)
