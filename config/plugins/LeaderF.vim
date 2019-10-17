@@ -17,3 +17,5 @@ let g:Lf_PreviewResult = {
       \ 'Line': 0,
       \ 'Colorscheme': 0
       \}
+
+let g:Lf_CommandMap = {'<C-J>': ['<Tab>'], '<C-K>': ['<S-Tab>']}

@@ -135,10 +135,10 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["Denite -resume"])',
-        \ ['resume denite buffer',
+        \ . string(s:_function('s:warp_denite')) . ', ["Leaderf --recall"])',
+        \ ['resume fuzzy finder windows',
         \ [
-        \ 'SPC r l is to resume denite buffer',
+        \ 'SPC r l is to resume fuzzy finder windows',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
@@ -252,9 +252,9 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf --recall<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.r = ['Leaderf --recall',
-        \ 'resume unite window',
+        \ 'resume fuzzy finder window',
         \ [
-        \ '[Leader f r ] is to resume unite window',
+        \ '[Leader f r ] is to resume fuzzy finder window',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
@@ -265,7 +265,7 @@ function! s:defind_fuzzy_finder() abort
   let g:_spacevim_mappings.f.e = ['Leaderf register',
         \ 'fuzzy find registers',
         \ [
-        \ '[Leader f r ] is to resume unite window',
+        \ '[Leader f r ] is to fuzzy find registers',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
