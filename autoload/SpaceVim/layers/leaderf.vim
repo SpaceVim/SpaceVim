@@ -51,6 +51,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
+  let g:Lf_Extensions.jumplist =
+        \ {
+        \       "source": string(s:_function('s:jumplist', 1))[10:-3],
+        \       "accept": string(s:_function('s:jumplist_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
   let g:Lf_Extensions.neoyank =
         \ {
         \       "source": string(s:_function('s:neoyank', 1))[10:-3],
@@ -212,6 +227,35 @@ function! s:register_acp(line, args)
   echohl None
 endfunction
 
+function! s:jumplist(...) abort
+  return split(s:CMP.execute('jumps'), '\n')[1:]
+endfunction
+
+function! s:jumplist_acp(line, args) abort
+  let list = split(a:line)
+  if len(list) < 4
+    return
+  endif
+
+  let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
+  let lines = getbufline(file_text, linenr)
+  let path = file_text
+  if empty(lines)
+    if stridx(join(split(getline(linenr))), file_text) == 0
+      let lines = [file_text]
+      let path = bufname('%')
+    elseif filereadable(path)
+      let lines = ['buffer unloaded']
+    else
+      " Skip.
+      return
+    endif
+  endif
+
+  exe 'e '  . path
+  call cursor(linenr, col)
+endfunction
+
 func! s:neoyank(...)
   let yank = []
   for text in neoyank#_get_yank_histories()['"']
@@ -282,9 +326,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fj
-        \ :<C-u>Denite jump<CR>
+        \ :<C-u>Leaderf jumplist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.j = ['Denite jump',
+  let g:_spacevim_mappings.f.j = ['Leaderf jumplist',
         \ 'fuzzy find jump list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',

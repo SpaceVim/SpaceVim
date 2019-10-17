@@ -28,3 +28,4 @@ let g:Lf_CommandMap = {
       \ '<C-F>' : ['<C-D>'],
       \ '<Tab>' : ['<Esc>'],
       \ }
+let g:Lf_HideHelp = 1
