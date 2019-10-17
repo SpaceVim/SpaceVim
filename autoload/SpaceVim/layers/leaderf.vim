@@ -215,13 +215,14 @@ endfunction
 func! s:neoyank(...)
   let yank = []
   for text in neoyank#_get_yank_histories()['"']
-    call add(yank, join(split(text[0], "\n"), '\n'))
+    call add(yank, '": ' . join(split(text[0], "\n"), '\n'))
   endfor
   return yank
 endfunction
 
 function! s:neoyank_acp(line, args) abort
-  
+  let line = a:line[3:]
+  call append(0, split(line, '\\n'))
 endfunction
 
 function! s:menu(name)
@@ -248,9 +249,9 @@ let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fr
-        \ :<C-u>Denite -resume<CR>
+        \ :<C-u>Leaderf --recall<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.r = ['Denite -resume',
+  let g:_spacevim_mappings.f.r = ['Leaderf --recall',
         \ 'resume unite window',
         \ [
         \ '[Leader f r ] is to resume unite window',
@@ -270,9 +271,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fh
-        \ :<C-u>Denite neoyank<CR>
+        \ :<C-u>Leaderf neoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.h = ['Denite neoyank',
+  let g:_spacevim_mappings.f.h = ['Leaderf neoyank',
         \ 'fuzzy find yank history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
