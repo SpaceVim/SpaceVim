@@ -5,6 +5,7 @@ let g:Lf_StlColorscheme = g:spacevim_colorscheme
 "
 augroup LeaderF_Mru
   autocmd!
+  autocmd FileType leaderf setlocal nonumber
 augroup END
 
 let g:Lf_PreviewResult = {
