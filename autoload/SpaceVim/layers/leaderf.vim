@@ -402,9 +402,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fl
-        \ :<C-u>Denite location_list<CR>
+        \ :<C-u>Leaderf locationlist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.l = ['Denite location_list',
+  let g:_spacevim_mappings.f.l = ['Leaderf locationlist',
         \ 'fuzzy find location list',
         \ [
         \ '[Leader f l] is to fuzzy find location list',
@@ -424,9 +424,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fq
-        \ :<C-u>Denite quickfix<CR>
+        \ :<C-u>Leaderf quickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.q = ['Denite quickfix',
+  let g:_spacevim_mappings.f.q = ['Leaderf quickfix',
         \ 'fuzzy find quickfix list',
         \ [
         \ '[Leader f q] is to fuzzy find quickfix list',
