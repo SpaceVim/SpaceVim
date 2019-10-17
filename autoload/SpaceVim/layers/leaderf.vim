@@ -81,6 +81,36 @@ function! SpaceVim#layers#leaderf#config() abort
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
+  let g:Lf_Extensions.quickfix =
+        \ {
+        \       "source": string(s:_function('s:quickfix', 1))[10:-3],
+        \       "accept": string(s:_function('s:quickfix_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
+  let g:Lf_Extensions.locationlist =
+        \ {
+        \       "source": string(s:_function('s:locationlist', 1))[10:-3],
+        \       "accept": string(s:_function('s:locationlist_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Leaderf menu --name CustomKeyMaps --input [SPC]"])',
@@ -287,6 +317,41 @@ endfunction
 function! s:accept(line, args)
   let action = get(s:menu_action, a:line, '')
   exe action
+endfunction
+
+
+function! s:quickfix_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+function! s:quickfix(...) abort
+    return map(getqflist(), 's:quickfix_to_grep(v:val)')
+endfunction
+
+function! s:quickfix_acp(line, args) abort
+  let line = a:line
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
+endfunction
+
+
+function! s:location_list_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+
+function! s:locationlist(...) abort
+    return map(getloclist(0), 's:location_list_to_grep(v:val)')
+endfunction
+
+function! s:locationlist_acp(line, args) abort
+  let line = a:line
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
 endfunction
 
 let s:file = expand('<sfile>:~')
