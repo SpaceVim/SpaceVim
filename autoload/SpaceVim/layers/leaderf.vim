@@ -178,7 +178,6 @@ endfunction
 
 function! SpaceVim#layers#leaderf#register_acp(line, args)
   let @" = a:line
-  redraw!
   echohl ModeMsg
   echon 'Yanked!'
   echohl None
