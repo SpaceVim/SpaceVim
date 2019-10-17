@@ -27,11 +27,11 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions.menu =
         \ {
-        \       "source": s:_function('s:menu', 1),
+        \       "source": 'SpaceVim#layers#leaderf#menu',
         \       "arguments": [
         \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
         \       ],
-        \       "accept": s:_function('s:accept', 1),
+        \       "accept": 'SpaceVim#layers#leaderf#accept',
         \ }
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -164,7 +164,8 @@ function! SpaceVim#layers#leaderf#config() abort
   call s:defind_fuzzy_finder()
 endfunction
 
-function! s:menu(name)
+
+function! SpaceVim#layers#leaderf#menu(name)
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
   if has_key(menu, 'command_candidates')
@@ -179,7 +180,7 @@ function! s:menu(name)
   endif
 endfunction
 
-function! s:accept(line, args)
+function! SpaceVim#layers#leaderf#accept(line, args)
   let action = get(s:menu_action, a:line, '')
   exe action
 endfunction
