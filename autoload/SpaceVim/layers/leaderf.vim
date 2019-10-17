@@ -66,6 +66,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
+  let g:Lf_Extensions.message =
+        \ {
+        \       "source": string(s:_function('s:message', 1))[10:-3],
+        \       "accept": string(s:_function('s:message_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
   let g:Lf_Extensions.neoyank =
         \ {
         \       "source": string(s:_function('s:neoyank', 1))[10:-3],
@@ -286,6 +301,17 @@ function! s:jumplist_acp(line, args) abort
   call cursor(linenr, col)
 endfunction
 
+function! s:message(...) abort
+  return split(s:CMP.execute('message'), '\n')
+endfunction
+
+function! s:message_acp(line, args) abort
+  let @" = a:line
+  echohl ModeMsg
+  echo 'Yanked'
+  echohl None
+endfunction
+
 func! s:neoyank(...)
   let yank = []
   for text in neoyank#_get_yank_histories()['"']
@@ -413,9 +439,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fm
-        \ :<C-u>Denite output:message<CR>
+        \ :<C-u>Leaderf message<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.m = ['Denite output:message',
+  let g:_spacevim_mappings.f.m = ['Leaderf message',
         \ 'fuzzy find message',
         \ [
         \ '[Leader f m] is to fuzzy find message',
