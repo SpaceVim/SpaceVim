@@ -18,4 +18,8 @@ let g:Lf_PreviewResult = {
       \ 'Colorscheme': 0
       \}
 
-let g:Lf_CommandMap = {'<C-J>': ['<Tab>'], '<C-K>': ['<S-Tab>']}
+let g:Lf_CommandMap = {
+      \ '<C-J>' : ['<Tab>'],
+      \ '<C-K>' : ['<S-Tab>'],
+      \ '<C-R>' : ['<C-E>'],
+      \ }
