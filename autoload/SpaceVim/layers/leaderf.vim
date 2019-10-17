@@ -28,17 +28,17 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions.menu =
         \ {
-        \       "source": 'SpaceVim#layers#leaderf#menu',
+        \       "source": string(s:_function('s:menu', 1))[10:-3],
         \       "arguments": [
         \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
         \       ],
-        \       "accept": 'SpaceVim#layers#leaderf#accept',
+        \       "accept": string(s:_function('s:accept', 1))[10:-3],
         \ }
 
   let g:Lf_Extensions.register =
         \ {
-        \       "source": 'SpaceVim#layers#leaderf#register',
-        \       "accept": 'SpaceVim#layers#leaderf#register_acp',
+        \       "source": string(s:_function('s:register', 1))[10:-3],
+        \       "accept": string(s:_function('s:register_acp', 1))[10:-3],
         \       "highlights_def": {
         \               "Lf_register_name": '^".',
         \               "Lf_register_content": '\s\+.*',
@@ -47,7 +47,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \               "hi def link Lf_register_name ModeMsg",
         \               "hi def link Lf_register_content Normal",
         \       ],
-        \  'after_enter' : 'SpaceVim#layers#leaderf#init_leaderf_win'
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -180,29 +180,23 @@ function! SpaceVim#layers#leaderf#config() abort
   call s:defind_fuzzy_finder()
 endfunction
 
-function! SpaceVim#layers#leaderf#init_leaderf_win(...)
+function! s:init_leaderf_win(...)
   setlocal nonumber
   setlocal nowrap
 endfunction
 
-function! SpaceVim#layers#leaderf#hi_register(...)
-
-
-
-endfunction
-
-function! SpaceVim#layers#leaderf#register(...)
+function! s:register(...)
   return split(s:CMP.execute('registers'), '\n')[1:]
 endfunction
 
-function! SpaceVim#layers#leaderf#register_acp(line, args)
+function! s:register_acp(line, args)
   let @" = a:line
   echohl ModeMsg
   echon 'Yanked!'
   echohl None
 endfunction
 
-function! SpaceVim#layers#leaderf#menu(name)
+function! s:menu(name)
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
   if has_key(menu, 'command_candidates')
@@ -217,7 +211,7 @@ function! SpaceVim#layers#leaderf#menu(name)
   endif
 endfunction
 
-function! SpaceVim#layers#leaderf#accept(line, args)
+function! s:accept(line, args)
   let action = get(s:menu_action, a:line, '')
   exe action
 endfunction
