@@ -217,8 +217,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'call call('
-        \ . string(s:_function('s:warp_denite')) . ', ["DeniteBufferDir file/rec"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'exe "Leaderf file " . expand("%:p:h")',
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
@@ -229,7 +228,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'Leaderf file',
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'Leaderf file .',
         \ ['find files in current project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
@@ -238,7 +237,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  nnoremap <silent> <C-p> :<C-u>Leaderf file<cr>
+  nnoremap <silent> <C-p> :<C-u>Leaderf file .<cr>
 
 
   let lnum = expand('<slnum>') + s:lnum - 1
