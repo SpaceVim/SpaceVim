@@ -279,7 +279,7 @@ function! s:java_mappings() abort
 endfunction
 
 function! s:go_to_def() abort
-    
+  exe 'normal! gd'
 endfunction
 
 function! s:execCMD(cmd) abort
