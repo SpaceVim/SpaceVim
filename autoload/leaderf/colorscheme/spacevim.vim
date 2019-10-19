@@ -99,4 +99,4 @@ let s:palette = {
             \   }
             \ }
 
-let g:leaderf#colorscheme#spacevim#palette = leaderf#colorscheme#mergePalette(s:palette)
+let g:leaderf#colorscheme#SpaceVim#palette = leaderf#colorscheme#mergePalette(s:palette)

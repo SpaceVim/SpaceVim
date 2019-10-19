@@ -2,10 +2,18 @@ scriptencoding utf-8
 let g:Lf_StlSeparator = get(g:, 'Lf_StlSeparator', { 'left': '', 'right': '' })
 let g:Lf_StlColorscheme = g:spacevim_colorscheme
 " disable default mru
-"
+
+" disable default mru, and use neomru by default
 augroup LeaderF_Mru
   autocmd!
   autocmd FileType leaderf setlocal nonumber
+augroup END
+
+" change the leaderf Colorscheme automatically
+
+augroup leaderf_layer_config
+  autocmd!
+  autocmd ColorScheme * let g:Lf_StlColorscheme = g:colors_name
 augroup END
 
 let g:Lf_PreviewResult = {
