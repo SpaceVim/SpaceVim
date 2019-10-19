@@ -106,7 +106,7 @@ function! s:self.start(argv, ...) abort
       let job = jobstart(a:argv, a:1)
     else
       let job = jobstart(a:argv)
-    endi
+    endif
     catch /^Vim\%((\a\+)\)\=:E903/
       return -1
     endtry
