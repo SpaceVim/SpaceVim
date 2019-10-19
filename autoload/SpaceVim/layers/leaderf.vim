@@ -228,7 +228,9 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'], 'Leaderf file .',
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
+        \ 'Leaderf file --fullPath '
+        \ . SpaceVim#plugins#projectmanager#current_root(),
         \ ['find files in current project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
@@ -237,7 +239,8 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  nnoremap <silent> <C-p> :<C-u>Leaderf file .<cr>
+  nnoremap <silent> <C-p> :<C-u>exe 'Leaderf file --fullPath '
+        \ . SpaceVim#plugins#projectmanager#current_root()<cr>
 
 
   let lnum = expand('<slnum>') + s:lnum - 1
