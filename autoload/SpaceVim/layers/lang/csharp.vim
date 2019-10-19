@@ -1,6 +1,6 @@
 "=============================================================================
 " csharp.vim --- SpaceVim lang#csharp layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: VyronLee < lwz_jz # hotmail.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -32,34 +32,23 @@
 
 function! SpaceVim#layers#lang#csharp#plugins() abort
   let plugins = []
-  call add(plugins, ['OmniSharp/omnisharp-vim', {'on_ft' : 'cs'}])
-
-  if has('nvim')
-    call add(plugins, ['autozimu/deoplete-omnisharp', {'on_ft' : 'cs'}])
-  else
-    call add(plugins, ['tpope/vim-dispatch', {'on_ft' : 'cs'}])
-  endif
-
+  call add(plugins, ['OmniSharp/omnisharp-vim', { 'on_ft' : 'cs' } ])
   return plugins
+endfunction
+
+function! SpaceVim#layers#lang#csharp#set_variable(var) abort
+  if has_key(a:var, 'highlight_types')
+    let g:OmniSharp_highlight_types = a:var.highlight_types
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#csharp#config() abort
   " Get Code Issues and syntax errors
   let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 
-  augroup spacevim_csharp
+  augroup spacevim_lang_csharp
     autocmd!
-
-    if !has('nvim')
-      " Set autocomplete function to OmniSharp by default
-      autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-    endif
-
-    " Automatically add new cs files to the nearest project on save
-    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
-
-    " Show type information automatically when the cursor stops moving
-    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+    autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
   augroup END
 
   call SpaceVim#mapping#space#regesit_lang_mappings('cs', function('s:language_specified_mappings'))
@@ -101,6 +90,18 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g', 'm'],
         \ 'OmniSharpFindMembers',
         \ 'find members in the current buffer', 1)
+
+  " Code action
+  let g:_spacevim_mappings_space.l.c = {'name' : '+Code action'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'c', 'f'],
+        \ 'OmniSharpFixUsings',
+        \ 'Fix using', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'c', 'a'],
+        \ 'OmniSharpGetCodeActions',
+        \ 'Contextual code actions', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'c', 'c'],
+        \ 'OmniSharpGlobalCodeCheck',
+        \ 'Find all code errors/warnings for the current solution', 1)
 
   " Server interaction
   let g:_spacevim_mappings_space.l.s = {'name' : '+Server interaction'}

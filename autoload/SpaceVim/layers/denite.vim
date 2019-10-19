@@ -1,6 +1,6 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -28,7 +28,7 @@ function! SpaceVim#layers#denite#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
-        \ ['show mappings',
+        \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
         \ '',
@@ -48,13 +48,15 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
+  " @fixme SPC h SPC make vim flick
+  nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
         \ ['buffer-list',
         \ [
-        \ 'SPC b b is to open buffer list via denite',
+        \ 'SPC b b is to open buffer list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

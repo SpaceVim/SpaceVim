@@ -1,6 +1,6 @@
 "=============================================================================
 " vim.vim --- SpaceVim vim layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -54,9 +54,8 @@ endfunction
 function! s:eval_cursor() abort
   let is_keyword = &iskeyword
   set iskeyword+=:
-  set iskeyword+=(
   let cword = expand('<cword>')
-  if cword =~# '^g:'
+  if exists(cword)
     echo  cword . ' is ' eval(cword)
     " if is script function
   elseif cword =~# '^s:' && cword =~# '('

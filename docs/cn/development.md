@@ -1,10 +1,10 @@
 ---
 title: "开发者文档"
 description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提交问题 2. 如何贡献代码 3. 代码格式规则 4. 版本迭代信息"
-lang: cn
+lang: zh
 ---
 
-# SpaceVim 开发者文档
+# [主页](../) >> 开发者文档
 
 <!-- vim-markdown-toc GFM -->
 
@@ -32,10 +32,6 @@ lang: cn
 
 SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，SpaceVim 是由社区驱动的。
 下面是关于每个贡献者都应当遵守的简单规则的引导。
-
-在 GitHub 仓库上进行开发。下面是最近几周的仓库快照：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 你可以只阅读下面内容中的，你需要用到的部分：
 

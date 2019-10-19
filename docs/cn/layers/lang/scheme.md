@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#scheme 模块"
 description: "这一模块为 SpaceVim 提供了 Scheme 语言开发支持，包括语法高亮、语言服务器支持。"
-lang: cn
+lang: zh
 image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6-11e8-9366-6772d129a13b.png
 ---
 

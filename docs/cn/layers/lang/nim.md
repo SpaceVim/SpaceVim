@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#nim 模块"
 description: "该模块为 SpaceVim 提供 Nim 开发支持，包括语法高亮、代码补全、编译运行以及交互式编程等功能。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#nim

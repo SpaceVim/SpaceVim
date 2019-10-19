@@ -3,7 +3,7 @@ title: "Documentation"
 description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
-# Documentation
+# [Home](../) >> Documentation
 
 <!-- vim-markdown-toc GFM -->
 
@@ -378,9 +378,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
-**NOTE**:
-
-SpaceVim uses true colors by default, so you should make sure your terminal supports true colors.
+SpaceVim supports true colors in terminal, and it is disabled by default, to enable this feature,
+you should make sure your terminal supports true colors.
 For more information see: [Colours in terminal](https://gist.github.com/XVilka/8346728).
 
 If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:
@@ -853,7 +852,7 @@ The default keys of these prefixs are:
 | `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
 
 By default the guide buffer will be displayed 1000ms after the keys being pressed.
-You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
+You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
 
 For example, after pressing `<Space>` in normal mode, you will see:
 
@@ -954,6 +953,8 @@ Similar to easymotion or `f` in vimperator for firefox, this mode allows one to 
 | `] SPC`  | Insert space below                                      |
 | `[ b`    | Go to previous buffer                                   |
 | `] b`    | Go to next buffer                                       |
+| `[ n`    | Go to previous conflict marker                          |
+| `] n`    | Go to next conflict marker                              |
 | `[ f`    | Go to previous file in directory                        |
 | `] f`    | Go to next file in directory                            |
 | `[ l`    | Go to the previous error                                |
@@ -1161,7 +1162,7 @@ To change the filemanager plugin:
     filemanager = "defx"
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default.
+VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
 To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
 Here is a picture for this feature:
 
@@ -1187,7 +1188,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
-| `N`                   | Create new file under corsor                      |
+| `N`                   | Create new file under cursor                      |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
@@ -1200,6 +1201,8 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `>`                   | iecrease filetree screenwidth                     |
+| `<`                   | dncrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
 | `Ctrl-Home`           | Switch to project root directory                  |
@@ -1273,51 +1276,52 @@ which will tell you the functional of all mappings starting with `g`.
 After pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `z`.
 
-| Key Bindings | Descriptions                                 |
-| ------------ | -------------------------------------------- |
-| `z <Right>`  | scroll screen N characters to left           |
-| `z +`        | cursor to screen top line N                  |
-| `z -`        | cursor to screen bottom line N               |
-| `z .`        | cursor line to center                        |
-| `z <Enter>`  | cursor line to top                           |
-| `z =`        | spelling suggestions                         |
-| `z A`        | toggle folds recursively                     |
-| `z C`        | close folds recursively                      |
-| `z D`        | delete folds recursively                     |
-| `z E`        | eliminate all folds                          |
-| `z F`        | create a fold for N lines                    |
-| `z G`        | mark good spelled(update internal-wordlist)  |
-| `z H`        | scroll half a screenwidth to the right       |
-| `z L`        | scroll half a screenwidth to the left        |
-| `z M`        | set `foldlevel` to zero                      |
-| `z N`        | set `foldenable`                             |
-| `z O`        | open folds recursively                       |
-| `z R`        | set `foldlevel` to deepest fold              |
-| `z W`        | mark wrong spelled                           |
-| `z X`        | re-apply `foldlevel`                         |
-| `z ^`        | cursor to screen bottom line N               |
-| `z a`        | toggle a fold                                |
-| `z b`        | redraw, cursor line at bottom                |
-| `z c`        | close a fold                                 |
-| `z d`        | delete a fold                                |
-| `z e`        | right scroll horizontally to cursor position |
-| `z f`        | create a fold for motion                     |
-| `z g`        | mark good spelled                            |
-| `z h`        | scroll screen N characters to right          |
-| `z i`        | toggle foldenable                            |
-| `z j`        | mode to start of next fold                   |
-| `z k`        | mode to end of previous fold                 |
-| `z l`        | scroll screen N characters to left           |
-| `z m`        | subtract one from `foldlevel`                |
-| `z n`        | reset `foldenable`                           |
-| `z o`        | open fold                                    |
-| `z r`        | add one to `foldlevel`                       |
-| `z s`        | left scroll horizontally to cursor position  |
-| `z t`        | cursor line at top of window                 |
-| `z v`        | open enough folds to view cursor line        |
-| `z x`        | re-apply foldlevel and do "zV"               |
-| `z z`        | smart scroll                                 |
-| `z <Left>`   | scroll screen N characters to right          |
+| Key Bindings | Descriptions                                  |
+| ------------ | --------------------------------------------- |
+| `z <Right>`  | scroll screen N characters to left            |
+| `z +`        | cursor to screen top line N                   |
+| `z -`        | cursor to screen bottom line N                |
+| `z .`        | cursor line to center                         |
+| `z <Enter>`  | cursor line to top                            |
+| `z =`        | spelling suggestions                          |
+| `z A`        | toggle folds recursively                      |
+| `z C`        | close folds recursively                       |
+| `z D`        | delete folds recursively                      |
+| `z E`        | eliminate all folds                           |
+| `z F`        | create a fold for N lines                     |
+| `z G`        | mark good spelled (update internal wordlist)  |
+| `z H`        | scroll half a screenwidth to the right        |
+| `z L`        | scroll half a screenwidth to the left         |
+| `z M`        | set `foldlevel` to zero                       |
+| `z N`        | set `foldenable`                              |
+| `z O`        | open folds recursively                        |
+| `z R`        | set `foldlevel` to deepest fold               |
+| `z W`        | mark wrong spelled (update internal wordlist) |
+| `z X`        | re-apply `foldlevel`                          |
+| `z ^`        | cursor to screen bottom line N                |
+| `z a`        | toggle a fold                                 |
+| `z b`        | redraw, cursor line at bottom                 |
+| `z c`        | close a fold                                  |
+| `z d`        | delete a fold                                 |
+| `z e`        | right scroll horizontally to cursor position  |
+| `z f`        | create a fold for motion                      |
+| `z g`        | mark good spelled                             |
+| `z h`        | scroll screen N characters to right           |
+| `z i`        | toggle foldenable                             |
+| `z j`        | mode to start of next fold                    |
+| `z k`        | mode to end of previous fold                  |
+| `z l`        | scroll screen N characters to left            |
+| `z m`        | subtract one from `foldlevel`                 |
+| `z n`        | reset `foldenable`                            |
+| `z o`        | open fold                                     |
+| `z r`        | add one to `foldlevel`                        |
+| `z s`        | left scroll horizontally to cursor position   |
+| `z t`        | cursor line at top of window                  |
+| `z v`        | open enough folds to view cursor line         |
+| `z w`        | mark wrong spelled                            |
+| `z x`        | re-apply foldlevel and do "zV"                |
+| `z z`        | smart scroll                                  |
+| `z <Left>`   | scroll screen N characters to right           |
 
 ### Searching
 
@@ -1587,6 +1591,8 @@ Text related commands (start with `x`):
 
 | Key Bindings  | Descriptions                                                       |
 | ------------- | ------------------------------------------------------------------ |
+| `SPC x a #`   | align region at #                                                  |
+| `SPC x a %`   | align region at %                                                  |
 | `SPC x a &`   | align region at &                                                  |
 | `SPC x a (`   | align region at (                                                  |
 | `SPC x a )`   | align region at )                                                  |

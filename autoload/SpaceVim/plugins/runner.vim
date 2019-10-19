@@ -1,6 +1,6 @@
 "=============================================================================
 " runner.vim --- code runner for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -10,11 +10,13 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:FILE = SpaceVim#api#import('file')
+let s:VIM = SpaceVim#api#import('vim')
 
 
 let s:runners = {}
 
 let s:bufnr = 0
+let s:winid = -1
 
 function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
@@ -36,6 +38,7 @@ function! s:open_win() abort
   nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
   let s:bufnr = bufnr('%')
+  let s:winid = win_getid(winnr())
   wincmd p
 endfunction
 
@@ -72,6 +75,10 @@ function! s:async_run(runner) abort
     " the runner is a list
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
+    let dir = fnamemodify(s:target, ':h')
+    if isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
     if type(a:runner[0]) == type({})
       if type(a:runner[0].exe) == 2
         let exe = call(a:runner[0].exe, [])
@@ -87,7 +94,7 @@ function! s:async_run(runner) abort
       endif
     else
       let usestdin =  0
-      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
+      let compile_cmd = [substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')]
     endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
           \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
@@ -235,6 +242,7 @@ if has('nvim') && exists('*chanclose')
     if !empty(lines)
       let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
     let s:_out_data = ['']
@@ -253,6 +261,7 @@ if has('nvim') && exists('*chanclose')
     endif
     if !empty(lines)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
     let s:_out_data = ['']
@@ -262,6 +271,7 @@ else
   function! s:on_stdout(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 
@@ -269,6 +279,7 @@ else
     let s:status.has_errors = 1
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
+      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 endif

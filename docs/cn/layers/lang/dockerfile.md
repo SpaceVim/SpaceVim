@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#dockerfile 模块"
 description: "这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。"
-lang: cn
+lang: zh
 ---
 
 # [Available Layers](../../) >> lang#dockerfile

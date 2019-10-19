@@ -1,7 +1,7 @@
 "=============================================================================
-" defx.vim --- defx config
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" defx.vim --- defx configuration
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -18,7 +18,7 @@ call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
-      \ 'show_ignored_files': 0,
+      \ 'show_ignored_files': g:_spacevim_filetree_show_hidden_files,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1
@@ -34,6 +34,10 @@ call defx#custom#column('icon', {
       \ 'opened_icon': '',
       \ 'root_icon': ' ',
       \ })
+
+	call defx#custom#column('filename', {
+	      \ 'max_width': -90,
+	      \ })
 
 augroup vfinit
   au!
@@ -58,6 +62,11 @@ function! s:defx_init()
   setl listchars=
   setl nofoldenable
   setl foldmethod=manual
+
+  " disable this mappings
+  nnoremap <silent><buffer> <3-LeftMouse> <Nop>
+  nnoremap <silent><buffer> <4-LeftMouse> <Nop>
+  nnoremap <silent><buffer> <LeftMouse> <LeftMouse><Home>
 
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <C-l>
@@ -99,8 +108,13 @@ function! s:defx_init()
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
   nnoremap <silent><buffer><expr> <2-LeftMouse>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('drop')
+        \ defx#is_directory() ? 
+        \     (
+        \     defx#is_opened_tree() ?
+        \     defx#do_action('close_tree') :
+        \     defx#do_action('open_tree')
+        \     )
+        \ : defx#do_action('drop')
   nnoremap <silent><buffer><expr> sg
         \ defx#do_action('drop', 'vsplit')
   nnoremap <silent><buffer><expr> sv
@@ -132,6 +146,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
@@ -187,7 +205,7 @@ endfunction
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
-  echo 'yarked: ' . @+
+  echo 'yanked: ' . @+
 endfunction
 
 function! s:trim_right(str, trim)

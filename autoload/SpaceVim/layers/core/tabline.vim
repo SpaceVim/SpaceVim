@@ -1,6 +1,6 @@
 "=============================================================================
 " tabline.vim --- SpaceVim tabline
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -22,6 +22,7 @@ let s:messletters = SpaceVim#api#import('messletters')
 let s:file = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
+let s:SYS = SpaceVim#api#import('system')
 
 let g:_spacevim_tabline_loaded = 1
 let s:buffers = s:BUFFER.listed_buffers()
@@ -51,7 +52,7 @@ function! s:tabname(id) abort
     let id = s:messletters.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
   endif
   let fn = fnamemodify(bufname(a:id), ':t')
-  if g:spacevim_enable_tabline_filetype_icon
+  if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
     let icon = s:file.fticon(fn)
     if !empty(icon)
       let fn = fn . ' ' . icon
@@ -96,7 +97,12 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let buflist = tabpagebuflist(i)
       let winnr = tabpagewinnr(i)
-      let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+      let bufname = bufname(buflist[winnr - 1])
+      if s:SYS.isWindows
+        let bufname = substitute(bufname, '\\[', '[', 'g')
+        let bufname = substitute(bufname, '\\]', ']', 'g')
+      endif
+      let name = fnamemodify(bufname, ':t')
       let tabname = gettabvar(i, '_spacevim_tab_name', '')
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
@@ -116,7 +122,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
         call add(stack, buflist[winnr - 1])
         call s:need_show_bfname(stack, buflist[winnr - 1])
-        if g:spacevim_enable_tabline_filetype_icon
+        if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
           let icon = s:file.fticon(name)
           if !empty(icon)
             let name = name . ' ' . icon
@@ -184,7 +190,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       else
         let id = s:messletters.circled_num(index(s:buffers, i) + 1, g:spacevim_buffer_index_type)
       endif
-      if g:spacevim_enable_tabline_filetype_icon
+      if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
         let icon = s:file.fticon(name)
         if !empty(icon)
           let name = name . ' ' . icon
@@ -219,7 +225,7 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 function! SpaceVim#layers#core#tabline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:separators['arrow'])
+  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
   set tabline=%!SpaceVim#layers#core#tabline#get()
   augroup SpaceVim_tabline
     autocmd!
@@ -271,10 +277,10 @@ function! SpaceVim#layers#core#tabline#jump(id, ...) abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
+  let name = get(g:, 'colors_name', 'gruvbox')
   if !empty(g:spacevim_custom_color_palette)
     let t = g:spacevim_custom_color_palette
   else
-    let name = get(g:, 'colors_name', 'gruvbox')
     try
       let t = SpaceVim#mapping#guide#theme#{name}#palette()
     catch /^Vim\%((\a\+)\)\=:E117/

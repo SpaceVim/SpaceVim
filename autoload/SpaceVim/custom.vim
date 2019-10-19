@@ -1,6 +1,6 @@
 "=============================================================================
 " custom.vim --- custom API in SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -37,8 +37,8 @@ endfunction
 function! SpaceVim#custom#autoconfig(...) abort
   let menu = SpaceVim#api#import('cmdlinemenu')
   let ques = [
-        \ ['dark powered mode', function('s:awesome_mode')],
         \ ['basic mode', function('s:basic_mode')],
+        \ ['dark powered mode', function('s:awesome_mode')],
         \ ]
   call menu.menu(ques)
 endfunction
@@ -94,6 +94,10 @@ function! SpaceVim#custom#apply(config, type) abort
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
+      if name ==# 'project_rooter_patterns'
+        " clear rooter cache
+        call SpaceVim#plugins#projectmanager#current_root()
+      endif
       unlet value
     endfor
     if g:spacevim_debug_level !=# 1

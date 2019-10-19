@@ -60,7 +60,7 @@ npm install -g eslint-cli
 
 ### Jump to test file
 
-SpaceVim use built-in plugin to manager the files in a project,
+SpaceVim use built-in plugin to manage the files in a project,
 you can add a `.project_alt.json` to the root of your project with following content:
 
 ```json
@@ -74,8 +74,8 @@ with this configuration, you can jump between the source code and test file via 
 
 ### running code
 
-To run code in current buffer, you can press `SPC l r`, and a split windows
-will be openen, the output will be shown in this windows.
+To run code in current buffer, you can press `SPC l r`, and a split window
+will be opened, the output will be shown in this window.
 It is running asynchronously, and will not block your vim.
 
 ![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
@@ -91,8 +91,8 @@ npm install -g js-beautify
 
 ### REPL support
 
-Start a `node -i` inferior REPL process with `SPC l s i`. After the REPL process has been started. you can 
-send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
+Start a `node -i` inferior REPL process with `SPC l s i`. After the REPL process has been started, you can 
+send code to inferior process, all key bindings begins with `SPC l s` prefix, including sending line, sending selection or even
 send whole buffer.
 
 ![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim default 模块"
 description: "这一模块未为 SpaceVim 提供任何插件，但提供了一些更好的默认设置。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> default

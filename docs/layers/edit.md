@@ -26,11 +26,11 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 - align
 - set justification for paragraph
 - highlight whitespaces at the end of a line
-- load ditorconfig config, need `+python` or `+python3`
+- load editorconfig config, need `+python` or `+python3`
 
 ## Options
 
-- `textobj`: specified a list of text opjects to be enabled, the avaliable list is :`indent`, `line`, `entire`
+- `textobj`: specified a list of text objects to be enabled, the avaliable list is :`indent`, `line`, `entire`
 
 ## Key bindings
 

@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        api.vim
-" Description: SpaceVim api core file
-" Author:      Shidong Wang <wsdjeg@outlook.com>
-" Website:     https://spacevim.org
-" License:     GPLv3
-" ============================================================================
+"=============================================================================
+" api.vim --- SpaceVim api
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 ""
 " @section API, api

@@ -1,11 +1,12 @@
 let s:VCOP = SpaceVim#api#import('vim#compatible')
-if g:spacevim_filetree_direction ==# 'right'
+if get(g:, 'spacevim_filetree_direction', 'right') ==# 'right'
   let g:NERDTreeWinPos = 'rightbelow'
 else
   let g:NERDTreeWinPos = 'left'
 endif
 let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
+let g:NERDTreeShowHidden = get(g:, '_spacevim_filetree_show_hidden_files', 0)
 augroup nerdtree_zvim
   autocmd!
   autocmd bufenter *

@@ -1,7 +1,7 @@
 "=============================================================================
-" zeal.vim --- tools#zeal layer file for SpaceVim
-" Copyright (c) 2018 Shidong Wang & Contributors
-" Author: Chen Lijun < chenlijun1999 at gmail.com >
+" zeal.vim --- SpaceVim tools#zeal layer
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

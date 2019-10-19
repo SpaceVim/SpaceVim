@@ -1,5 +1,10 @@
 Execute ( SpaceVim api: SpaceVim main code ):
   unlock g:_spacevim_root_dir
-  source init.vim
+  if has('nvim')
+    source init.vim
+  else
+    source vimrc
+  endif
+  let g:spacevim_update_retry_cnt = 0
   SPInstall
   AssertEqual fnamemodify(g:_spacevim_root_dir, ':.'), ''

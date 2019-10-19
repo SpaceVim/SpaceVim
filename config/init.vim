@@ -47,7 +47,7 @@ if s:SYSTEM.isWindows
     " fallback into cp1252 instead of eg. iso-8859-15.
     " Newer Windows files might contain utf-8 or utf-16 LE so we might
     " want to try them first.
-    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15
+    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15,cp936
   endif
 
 else

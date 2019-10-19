@@ -1,6 +1,6 @@
 "=============================================================================
 " compatible.vim --- SpaceVim compatible API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -222,6 +222,12 @@ else
 endif
 
 
+" patch 7.4.330  add function matchaddpos()
+
+" patch 7.4.792 add dict argv to matchaddpos() (only conceal)
+" patch 7.4.1740  syn-cchar defined with matchadd() does not appear
+" patch 8.1.0218 update dict argv (add window)
+
 
 
 " - A number.  This whole line will be highlighted.  The first
@@ -240,37 +246,45 @@ if exists('*matchaddpos')
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
-    return matchaddpos(a:group, a:pos, priority, id, dict)
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
+    return call('matchaddpos', [a:group, a:pos] + argv)
   endfunction
 else
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
     let pos1 = a:pos[0]
     if type(pos1) == 0
-      let id = matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+      let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
     elseif type(pos1) == 3
       if len(pos1) == 1
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
       elseif len(pos1) == 2
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
       elseif len(pos1) == 3
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
       endif
     endif
     if len(a:pos) > 1
       for pos1 in a:pos[1:]
         if type(pos1) == 0
-          call matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+          let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
         elseif type(pos1) == 3
           if len(pos1) == 1
-            call matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
           elseif len(pos1) == 2
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
           elseif len(pos1) == 3
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
           endif
         endif
       endfor

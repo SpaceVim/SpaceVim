@@ -1,6 +1,6 @@
 "=============================================================================
 " iedit.vim --- iedit mode for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -118,7 +118,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
     if s:mode ==# 'n' && char == 27
       let s:mode = ''
     else
-      call s:handle(s:mode, char)
+      let symbol = s:handle(s:mode, char)
     endif
   endwhile
   let s:stack = []
@@ -135,14 +135,15 @@ function! SpaceVim#plugins#iedit#start(...) abort
   endtry
   let s:hi_id = ''
   let &l:cursorline = save_cl
+  return symbol
 endfunction
 
 
 function! s:handle(mode, char) abort
   if a:mode ==# 'n'
-    call s:handle_normal(a:char)
+    return s:handle_normal(a:char)
   elseif a:mode ==# 'i'
-    call s:handle_insert(a:char)
+    return s:handle_insert(a:char)
   endif
 endfunction
 
@@ -219,6 +220,11 @@ function! s:handle_normal(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
+    endfor
+    call s:replace_symbol()
+  elseif a:char == 126 " ~
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
     endfor
     call s:replace_symbol()
   elseif a:char == 115 " s
@@ -324,6 +330,7 @@ function! s:handle_normal(char) abort
     call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
   endif
   silent! call s:highlight_cursor()
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
 endfunction
 
 if exists('*timer_start')
@@ -351,7 +358,7 @@ function! s:handle_insert(char) abort
     silent! call s:highlight_cursor()
     redraw!
     redrawstatus!
-    return
+    return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
   elseif a:char ==# 23
     " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
@@ -442,6 +449,7 @@ function! s:handle_insert(char) abort
     call s:replace_symbol()
   endif
   silent! call s:highlight_cursor()
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
 endfunction
 function! s:parse_symbol(begin, end, symbol, ...) abort
   let use_expr = get(a:000, 0, 0)

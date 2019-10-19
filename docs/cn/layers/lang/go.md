@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#go 模块"
 description: "这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#go
@@ -63,11 +63,11 @@ go get -u github.com/jstemmer/gotags
 | `SPC l l` | list declarations in file |
 | `SPC l m` | format improts            |
 | `SPC l M` | add import                |
-| `SPC l r` | go referrers              |
+| `SPC l r` | go run              |
 | `SPC l s` | fill struct               |
 | `SPC l t` | go test                   |
 | `SPC l v` | freevars                  |
-| `SPC l x` | go run                    |
+| `SPC l x` | go referrers              |
 
 **代码格式化：**
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " fzf.vim --- fzf layer for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -516,7 +516,7 @@ function! s:menu(name) abort
 endfunction
 
 
-function! s:tags_sink(line)
+function! s:tags_sink(line) abort
   let parts = split(a:line, '\t\zs')
   let excmd = matchstr(parts[2:], '^.*\ze;"\t')
   execute 'silent e' parts[1][:-2]
@@ -525,7 +525,7 @@ function! s:tags_sink(line)
   let &magic = magic
 endfunction
 
-function! s:tags()
+function! s:tags() abort
   if empty(tagfiles())
     echohl WarningMsg
     echom 'Preparing tags'

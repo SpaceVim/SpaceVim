@@ -1,3 +1,12 @@
+"=============================================================================
+" palenight.vim --- palenight theme
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 " Color Palette {{{
 let s:gui01   = '#44475a'
 let s:gui02   = '#5f6a8e'
@@ -60,7 +69,6 @@ function! SpaceVim#mapping#guide#theme#palenight#palette() abort
           \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
           \ ['#282828', '#689d6a', 235, 72],
           \ ['#282828', '#8f3f71', 235, 132],
-          \ 'bright'
           \ ]
   else
     return [
@@ -73,7 +81,6 @@ function! SpaceVim#mapping#guide#theme#palenight#palette() abort
           \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
           \ ['#282828', '#689d6a', 235, 72],
           \ ['#282828', '#8f3f71', 235, 132],
-          \ 'dark',
           \ ]
   endif
 endfunction

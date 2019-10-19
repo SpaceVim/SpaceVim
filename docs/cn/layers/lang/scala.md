@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#scala 模块"
 description: "这一模块为 Scala 开发提供支持，包括语法高亮，函数列表等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#scala

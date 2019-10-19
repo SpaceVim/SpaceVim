@@ -1,6 +1,6 @@
 "=============================================================================
 " VersionControl.vim --- SpaceVim version control layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -41,6 +41,12 @@ function! SpaceVim#layers#VersionControl#config() abort
       autocmd BufReadPost,BufWritePost,CursorMoved,CursorMovedI * silent call s:record()
     augroup END
   endif
+  nnoremap <silent> [n :call <SID>Context(1)<CR>
+  nnoremap <silent> ]n :call <SID>Context(0)<CR>
+endfunction
+
+function! s:Context(reverse) abort
+  call search('^\(@@ .* @@\|[<=>|]\{7}[<=>|]\@!\)', a:reverse ? 'bW' : 'W')
 endfunction
 
 function! SpaceVim#layers#VersionControl#set_variable(var) abort

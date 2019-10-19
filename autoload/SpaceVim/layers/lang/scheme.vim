@@ -1,15 +1,28 @@
 "=============================================================================
 " scheme.vim --- lang#scheme layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 function! SpaceVim#layers#lang#scheme#config() abort
-  call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+  if s:scheme_dialect ==# 'mit-scheme'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+  elseif s:scheme_dialect ==# 'guile'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile -q %s && echo')
+  else
+		try 
+			call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . s:scheme_dialect . ' %s && echo')
+		catch /^Vim\%((\a\+)\)\=:E117/
+		endtry
+  endif
   call SpaceVim#mapping#space#regesit_lang_mappings('scheme', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scheme', ['scheme', '--silent'])
+endfunction
+
+function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
+  let s:scheme_dialect = get(a:opt, 'dialect', 'mit-scheme') 
 endfunction
 
 function! s:language_specified_mappings() abort

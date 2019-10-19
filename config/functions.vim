@@ -1,3 +1,12 @@
+"=============================================================================
+" functions.vim --- public function for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 function! OnmiConfigForJsp()
     let pos1 = search('</script>','nb',line('w0'))
     let pos2 = search('<script','nb',line('w0'))
@@ -11,84 +20,6 @@ function! OnmiConfigForJsp()
         return "\<esc>a."
     endif
 endf
-function! BracketsFunc()
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] ==# ']'
-        return "{}\<esc>i"
-    else
-        return "{\<cr>}\<esc>O"
-    endif
-endf
-function! XmlFileTypeInit()
-    set omnifunc=xmlcomplete#CompleteTags
-    if filereadable('AndroidManifest.xml')
-        set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
-    endif
-endf
-function! WSDAutoComplete(char)
-    if(getline('.')=~?'^\s*.*\/\/')==0
-        let line = getline('.')
-        let col = col('.')
-        if a:char ==# '.'
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 2] ==# ' ' ||line[col -2] ==# '(' ||line[col - 2] ==# ','
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 3] ==# ' ' && line[col - 2] ==# '@'
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        else
-            return a:char
-        endif
-    else
-        "bug exists
-        normal! ma
-        let commentcol = searchpos('//','b',line('.'))[1]
-        normal! `a
-        if commentcol == 0
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        else
-            return "\<Right>".a:char
-        endif
-    endif
-endf
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
-
-function! CloseBracket()
-    if match(getline(line('.') + 1), '\s*}') < 0
-        return "\<CR>}"
-    else
-        return "\<Esc>j0f}a"
-    endif
-endf
-
-function! QuoteDelim(char)
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] ==# "\\"
-        "Inserting a quoted quotation mark into the string
-        return a:char
-    elseif line[col - 1] == a:char
-        "Escaping out of the string
-        return "\<Right>"
-    else
-        "Starting a string
-        return a:char.a:char."\<Esc>i"
-    endif
-endf
-function! JspFileTypeInit()
-    set tags+=~/others/openjdk-8-src/tags
-    set omnifunc=javacomplete#Complete
-    inoremap . <c-r>=OnmiConfigForJsp()<cr>
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
-endfunction
-
 function! MyLeaderTabfunc() abort
     if g:spacevim_autocomplete_method ==# 'deoplete'
         if g:spacevim_enable_javacomplete2_py

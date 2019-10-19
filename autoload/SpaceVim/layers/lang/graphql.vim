@@ -1,7 +1,7 @@
 "=============================================================================
-" graphqlfile.vim --- layer for editing graphql files
-" Copyright (c) 2018 Pieter Joost van de Sande & Contributors
-" Author: Pieter Joost van de Sande < pj at born2code.net >
+" graphql.vim --- graphql layer for SpaceVim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

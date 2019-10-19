@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- language server protocol wallpaper
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Seong Yong-ju < @sei40kr >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -63,7 +63,23 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
-    call CocActionAsync('jumpDefinition')
+    call CocAction('jumpDefinition')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call CocAction('jumpDeclaration')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call CocAction('jumpTypeDefinition')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call CocAction('jumpImplementation')
+  endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    call CocActionAsync('refactor')
   endfunction
 
   function! SpaceVim#lsp#rename() abort
@@ -71,7 +87,7 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   endfunction
 
   function! SpaceVim#lsp#references() abort
-    call CocActionAsync('jumpReferences')
+    call CocAction('jumpReferences')
   endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
