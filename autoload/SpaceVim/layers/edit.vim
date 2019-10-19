@@ -162,7 +162,6 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
         \ . string(s:_function('s:insert_numerical_password')) . ', [])',
         \ 'insert-a-numerical-password', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'U', 'U'], 'call call('
         \ . string(s:_function('s:uuidgen_U')) . ', [])',
         \ 'uuidgen-4', 1)
