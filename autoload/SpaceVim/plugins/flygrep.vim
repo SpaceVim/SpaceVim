@@ -704,6 +704,8 @@ if has('nvim')
         \ }
         \ )
 endif
+
+let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " }}}
 
 " Public API: SpaceVim#plugins#flygrep#open(argv) {{{
