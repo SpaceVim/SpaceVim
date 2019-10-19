@@ -18,6 +18,9 @@ function! SpaceVim#layers#leaderf#plugins() abort
         \ }])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+
+  " use this repo unicode data
+  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -115,6 +118,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \ {
         \       "source": string(s:_function('s:locationlist', 1))[10:-3],
         \       "accept": string(s:_function('s:locationlist_acp', 1))[10:-3],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
+  let g:Lf_Extensions.unicode =
+        \ {
+        \       "source": string(s:_function('s:unicode', 1))[10:-3],
+        \       "accept": string(s:_function('s:unicode_acp', 1))[10:-3],
         \       "highlights_def": {
         \               "Lf_register_name": '^".',
         \               "Lf_register_content": '\s\+.*',
@@ -381,6 +399,15 @@ function! s:locationlist_acp(line, args) abort
   exe 'e ' . filename
   call cursor(linenr, colum)
 endfunction
+
+function! s:unicode(...) abort
+  
+endfunction
+
+function! s:unicode_acp(line, args) abort
+  
+endfunction
+
 
 let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
