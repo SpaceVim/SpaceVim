@@ -36,6 +36,16 @@ function! SpaceVim#layers#leaderf#config() abort
   let g:Lf_ShortcutF = ''
   let g:Lf_ShortcutB = ''
 
+  let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
+  let g:Lf_Extensions = {
+  \ "neomru": {
+  \       "source": string(s:_function('s:neomru', 1))[10:-3],
+  \       "accept": string(s:_function('s:neomru_acp', 1))[10:-3],
+  \       "supports_name_only": 1,
+  \       "supports_multi": 0,
+  \ },
+  \}
+
   let g:Lf_Extensions.menu =
         \ {
         \       "source": string(s:_function('s:menu', 1))[10:-3],
@@ -193,15 +203,6 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  " let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
-  " let g:Lf_Extensions = {
-  " \ "neomru": {
-  " \       "source": function("neomru#_gather_file_candidates()"),
-  " \       "accept": function("s:accept_mru"),
-  " \       "supports_name_only": 1,
-  " \       "supports_multi": 0,
-  " \ },
-  " \}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Leaderf neomru',
         \ ['open-recent-file',
         \ [
@@ -302,6 +303,14 @@ function! s:register_acp(line, args)
   echohl ModeMsg
   echon 'Yanked!'
   echohl None
+endfunction
+
+function! s:neomru(...) abort
+    return neomru#_gather_file_candidates()
+endfunction
+
+function! s:neomru_acp(line, args) abort
+  exe 'e' a:line
 endfunction
 
 function! s:jumplist(...) abort
