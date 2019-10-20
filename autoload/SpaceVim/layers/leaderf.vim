@@ -30,6 +30,12 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#leaderf#config() abort
 
+  " disable default key binding Leader f and Leader b
+  " use ctrl-p or SPC p f to search files in project
+  " use SPC b b to list buffers
+  let g:Lf_ShortcutF = ''
+  let g:Lf_ShortcutB = ''
+
   let g:Lf_Extensions.menu =
         \ {
         \       "source": string(s:_function('s:menu', 1))[10:-3],
