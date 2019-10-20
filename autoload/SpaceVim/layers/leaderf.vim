@@ -18,6 +18,9 @@ function! SpaceVim#layers#leaderf#plugins() abort
         \ }])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+
+  " use this repo unicode data
+  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -125,6 +128,27 @@ function! SpaceVim#layers#leaderf#config() abort
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
+
+  let g:Lf_Extensions.unicode =
+        \ {
+        \       "source": string(s:_function('s:unicode', 1))[10:-3],
+        \       "accept": string(s:_function('s:unicode_acp', 1))[10:-3],
+        \       "arguments": [
+        \           { "name": ["--name"], "nargs": '*', "help": "Use leaderf show unite menu"},
+        \       ],
+        \       "highlights_def": {
+        \               "Lf_register_name": '^".',
+        \               "Lf_register_content": '\s\+.*',
+        \       },
+        \       "highlights_cmd": [
+        \               "hi def link Lf_register_name ModeMsg",
+        \               "hi def link Lf_register_content Normal",
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Leaderf unicode', 'search-and-insert-unicode', 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
@@ -352,7 +376,7 @@ function! s:quickfix_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
 endfunction
 function! s:quickfix(...) abort
-    return map(getqflist(), 's:quickfix_to_grep(v:val)')
+  return map(getqflist(), 's:quickfix_to_grep(v:val)')
 endfunction
 
 function! s:quickfix_acp(line, args) abort
@@ -370,7 +394,7 @@ function! s:location_list_to_grep(v) abort
 endfunction
 
 function! s:locationlist(...) abort
-    return map(getloclist(0), 's:location_list_to_grep(v:val)')
+  return map(getloclist(0), 's:location_list_to_grep(v:val)')
 endfunction
 
 function! s:locationlist_acp(line, args) abort
@@ -380,6 +404,31 @@ function! s:locationlist_acp(line, args) abort
   let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
   exe 'e ' . filename
   call cursor(linenr, colum)
+endfunction
+
+function! s:unicode(unicode_groups) abort
+  let unicode_group = get(a:unicode_groups, '--name', [])
+  if empty(unicode_group)
+    let filelist = map(split(globpath(g:unite_unicode_data_path, '*.txt'), '\n'),
+          \ '[fnamemodify(v:val, ":t:r"), fnamemodify(v:val, ":p")]')
+    return map(filelist, 'v:val[0]')
+  else
+    let unicode = []
+    call map(unicode_group, 'extend(unicode, readfile(g:unite_unicode_data_path . v:val . ".txt"))')
+    return unicode
+  endif
+endfunction
+
+function! s:unicode_acp(line, args) abort
+  if stridx(a:line, ';') > -1
+    let glyph = matchstr(a:line, ';\x\{4,5}')
+    let writable = nr2char(str2nr(glyph[1:], 16))
+
+    exe "norm! a" . eval("\"" . writable . "\"")
+    " echo printf("%s%s", writable, glyph)
+  else
+    exe 'Leaderf unicode --name ' . a:line
+  endif
 endfunction
 
 let s:file = expand('<sfile>:~')

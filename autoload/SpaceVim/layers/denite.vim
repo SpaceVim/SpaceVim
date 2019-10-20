@@ -19,12 +19,17 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
+
   return plugins
 endfunction
 
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
+
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Denite unicode', 'search-and-insert-unicode', 1)
+
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
