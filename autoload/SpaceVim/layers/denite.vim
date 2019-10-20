@@ -18,8 +18,8 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
-  " use this repo unicode data
-  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
+
   return plugins
 endfunction
 
@@ -149,6 +149,19 @@ function! SpaceVim#layers#denite#config() abort
         \ ['get help with the symbol at point',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite unicode"])',
+        \ ['search-and-insert-unicode',
+        \ [
+        \ '[SPC i u] is to search and insert Unicode charater',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
