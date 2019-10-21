@@ -33,9 +33,11 @@ lang: zh
 
 ### 经验分享
 
-- [知乎专栏](https://zhuanlan.zhihu.com/SpaceVim)
-- [知乎 SpaceVim 话题](https://www.zhihu.com/topic/20168681/newest)
-- [思否 SpaceVim 标签](https://segmentfault.com/t/spacevim)
+之所以没有新建一个论坛，是因为每个用户都有自己喜欢和习惯了的社区，我们以 SpaceVim 标签汇总如下社区：
+
+- [知乎](https://www.zhihu.com/topic/20168681/newest)
+- [思否](https://segmentfault.com/t/spacevim)
+- [黑客派](https://hacpai.com/tag/spacevim)
 
 ### 邮件列表
 
