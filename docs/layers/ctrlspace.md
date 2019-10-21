@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim CtrlSpace layer"
-description: "This layers provide a customized CtrlSpace centric work-flow"
+description: "This layer provides a customized CtrlSpace centric work-flow"
 ---
 
 # [Available Layers](../) >> ctrlspace
@@ -17,20 +17,20 @@ description: "This layers provide a customized CtrlSpace centric work-flow"
 ## Description
 
 This layer is a customized wrapper for
-[CtrlSpace](https://github.com/vim-ctrlspace/vim-ctrlspace), which is
-a workflow manager rather than a traditional fuzzy finder. CtrlSpace
-strictly manages only 5 types of sources:
+[CtrlSpace](https://github.com/vim-ctrlspace/vim-ctrlspace), which
+is more of a workflow manager instead of a traditional fuzzy finder.
+CtrlSpace strictly manages 5 source lists only:
 
 * Buffers
 * Files
 * Tabs
-* Workspaces
-* Bookmarks (Projects)
+* Workspaces (vim session for current project)
+* Bookmarks (projects)
 
 
 ## Install
 
-To use this configuration layer, add it to your configuration file.
+To use the CtrlSpace layer, add the following to your configuration file.
 
 ```toml
 [[layers]]
@@ -39,8 +39,8 @@ name = "ctrlspace"
 
 ## Layer Options
 
-* `mapping_key` (default: `<C-Space>`) - the keybinding for invoking
-CtrlSpace's main menu
+* `mapping_key` (default: `<C-Space>`) - keybinding to invoke CtrlSpace,
+i.e. the entry point to its main menu
 
 * `autosave_ws` (default: enabled) - enable to autosave current
 workspace on WS switches and SpaceVim exits
@@ -54,19 +54,19 @@ page](https://github.com/vim-ctrlspace/vim-ctrlspace).
 
 ## Key bindings
 
-| Key bindings           | Discription                   |
-| -----------------------| ----------------------------- |
-| `<C-SPC>`              | List all buffers              |
-| `<C-SPC> /`            | Search all buffers            |
-| `<C-SPC> o`            | List all files in project     |
-| `<C-SPC> O`            | Search all files in project   |
-| `<C-SPC> l`            | List all tabs                 |
-| `<C-SPC> L`            | Search all tabs               |
-| `<C-SPC> w`            | List all workspaces           |
-| `<C-SPC> W`            | Search all workspacs          |
-| `<C-SPC> b`            | List all project bookmarks    |
-| `<C-SPC> B`            | Search all project bookmarks  |
-| `<C-SPC> [oOlLwWbB] ?` | Display help for current mode |
+| Key bindings                 | Discription               |
+| -----------------------------| ------------------------- |
+| `<mapping_key>`              | List buffers              |
+| `<mapping_key> /`            | Search buffers            |
+| `<mapping_key> o`            | List files in project     |
+| `<mapping_key> O`            | Search files in project   |
+| `<mapping_key> l`            | List tabs                 |
+| `<mapping_key> L`            | Search tabs               |
+| `<mapping_key> w`            | List workspaces           |
+| `<mapping_key> W`            | Search workspacs          |
+| `<mapping_key> b`            | List project bookmarks    |
+| `<mapping_key> B`            | Search project bookmarks  |
+| `<mapping_key> [oOlLwWbB] ?` | Help for current mode     |
             | `SPC b b`              | List/Search all buffers              |
             | `SPC p f`              | List/Search all files in project     |
 

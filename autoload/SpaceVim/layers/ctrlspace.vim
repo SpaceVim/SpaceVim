@@ -8,7 +8,7 @@
 
 
 " Layer Options:
-" mapping_key - the main keybinding to invoke CtrlSpace's main menu
+" mapping_key - main keybinding for invoking CtrlSpace
 " autosave_ws - autosave current workspace on exit & switch
 " autoload_ws - autoload last workspace on start
 
@@ -24,6 +24,7 @@ else
 endif
 s:autosave_ws = 1
 s:autoload_ws = 0
+" TODO: confirm true/false in TOML are mapped correctly to 1/0
 
 
 
@@ -44,13 +45,13 @@ endfunction
 
 
 function! SpaceVim#layers#ctrlspace#config() abort
-  " configure some default settings
+  " configure the plugin's main options
   let g:CtrlSpaceDefaultMappingKey = s:mapping_key
-  let g:CtrlSpaceLoadLastWorkspaceOnStart = s:autoload_ws
-  let g:CtrlSpaceSaveWorkspaceOnSwitch = s:autosave_ws
   let g:CtrlSpaceSaveWorkspaceOnExit = s:autosave_ws
+  let g:CtrlSpaceSaveWorkspaceOnSwitch = s:autosave_ws
+  let g:CtrlSpaceLoadLastWorkspaceOnStart = s:autoload_ws
 
-  "TODO: configure glob command based on g:spacevim_search_tools
+  " TODO: configure glob command based on g:spacevim_search_tools
   if executable("rg")
     let g:CtrlSpaceGlobCommand = 'rg --color=never --files'
   elseif executable("ag")
@@ -60,4 +61,6 @@ function! SpaceVim#layers#ctrlspace#config() abort
     let l:warn_msg = "no suitable grepping tool found, using Vim globpath() to collect files; please install rg or ag"
     call SpaceVim#logger#warn(l:warn_msg)
   endif
+
+  " TODO: implement [SPC] keybinds
 endfunction
