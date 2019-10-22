@@ -55,7 +55,7 @@ home menu, which displays the buffers list
 workspace on switching WS and exiting SpaceVim
 * `autoload-workspaces` (default: `false`) - enable to autoload last workspace
 on starting SpaceVim
-* For more granular CtrlSpace options, [refer to the plugin's GitHub
+* For more granular CtrlSpace options, refer to the [plugin's GitHub
 page](https://github.com/vim-ctrlspace/vim-ctrlspace).
 
 * `enable-spacevim-styled-keys` (default: `false`) - enable to make
@@ -94,7 +94,7 @@ anytime.
 
 For more comprehensive documentation of CtrlSpace's
 keys, features and functionalities, [refer to
-this](https://atlas-vim.readthedocs.io/vim/plugged/vim-ctrlspace/README/
+this guide](https://atlas-vim.readthedocs.io/vim/plugged/vim-ctrlspace/README/
 ).
 
 
