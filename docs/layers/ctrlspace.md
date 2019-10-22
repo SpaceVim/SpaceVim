@@ -51,20 +51,17 @@ name = "ctrlspace"
 
 * `home-mapping-key` (default: `<C-Space>`) - keybinding to enter CtrlSpace's
 home menu, which displays the buffers list
-
 * `autosave-workspaces` (default: `true`) - enable to autosave current
 workspace on switching WS and exiting SpaceVim
-
 * `autoload-workspaces` (default: `false`) - enable to autoload last workspace
 on starting SpaceVim
-
-Note: for more granular CtrlSpace options, [refer to the plugin's GitHub
+* For more granular CtrlSpace options, [refer to the plugin's GitHub
 page](https://github.com/vim-ctrlspace/vim-ctrlspace).
 
 * `enable-spacevim-styled-keys` (default: `false`) - enable to make
 available [SpaceVim styled keybindings](#keybindings-spacevim-styled).
 
-Note: when disabled, another traditional fuzzy finder layer (such
+**Note**: when disabled, another traditional fuzzy finder layer (such
 as Denite or FZF) may still be used without concerns of keybinding
 conflicts.
 
@@ -75,7 +72,7 @@ conflicts.
 From Vim's Normal mode, `<home-mapping-key>` enters CtrlSpace in its home
 (buffers) list. Then using the following key shortcuts, all 5 lists can
 be accessed via any of the other 4. Press `?` to show key reference for
-the current list and mode (ex. search mode of Files list).
+the current list and mode (ex. search mode of files list).
 
 | Keybindings                   | Descriptions                             |
 | ----------------------------- | ---------------------------------------- |
@@ -125,6 +122,6 @@ enabled with `enable-spacevim-styled-keys = true`.
 | `SPC p B`                     | list project bookmarks                |
 | `SPC p b`                     | search project bookmarks              |
 
-NOTE: to be consistent with other fuzzy finder layers in SpaceVim,
+**Note**: to be consistent with other fuzzy finder layers in SpaceVim,
 uppercased final keys will list the source, while lowercased ones will
 search. This is opposite to CtrlSpace's default shortcuts.
