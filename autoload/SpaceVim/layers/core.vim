@@ -46,7 +46,6 @@ function! SpaceVim#layers#core#plugins() abort
         \}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
-
   return plugins
 endfunction
 
