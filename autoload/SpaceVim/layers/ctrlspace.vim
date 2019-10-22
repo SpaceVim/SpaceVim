@@ -19,7 +19,7 @@
 if has('nvim') 
   " Neovim requires adding trailing space to the mapping key;
   " see plugin GitHub page for explanation
-  let s:home_mapping_key = '<C-Space >'
+  let s:home_mapping_key = '<C-Space> '
 else
   let s:home_mapping_key = '<C-Space>'
 endif
