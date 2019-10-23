@@ -265,6 +265,7 @@ if has('nvim') && exists('*chanclose')
       let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
     endif
     if !empty(lines)
+      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
       call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
