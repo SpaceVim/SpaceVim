@@ -28,6 +28,27 @@ func! SpaceVim#plugins#windisk#open() abort
   endif
 endf
 
+function! Disk() abort
+  let dickinfo = systemlist('wmic LOGICALDISK LIST BRIEF')[1:]
+  let rst = []
+  for line in dickinfo
+    let info = split(line)
+    if len(info) >= 5
+      let dickid = info[0]
+      let freespace = info[2]
+      let size = info[3]
+      let name = get(info, 4, '')
+      call add(rst, {
+            \ 'dick' : dickid,
+            \ 'free' : freespace,
+            \ 'size' : size,
+            \ 'name' : name,
+            \ })
+    endif
+  endfor
+  return rst
+endfunction
+
 func! s:get_disks() abort
   return map(filter(range(65, 97), "isdirectory(nr2char(v:val) . ':/')"), 'nr2char(v:val) . ":/"')
 endf
