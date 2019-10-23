@@ -8,9 +8,20 @@
 
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:SYS = SpaceVim#api#import('system')
 
 " @question any other recommanded tag?
 let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+
+let [
+      \ s:grep_default_exe,
+      \ s:grep_default_opt,
+      \ s:grep_default_ropt,
+      \ s:grep_default_expr_opt,
+      \ s:grep_default_fix_string_opt,
+      \ s:grep_default_ignore_case,
+      \ s:grep_default_smart_case
+      \ ] = SpaceVim#mapping#search#default_tool()
 
 function! SpaceVim#plugins#todo#list() abort
   call s:open_win()
@@ -36,8 +47,27 @@ endfunction
 function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
-  " @fixme fix the rg command for todo manager
-  let argv = ['rg','--hidden', '--no-heading', '-g', '!.git', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
+  let argv = [s:grep_default_exe] + 
+        \ s:grep_default_opt +
+        \ s:grep_default_expr_opt
+  " @fixme expr for defferent tools
+  " when using rg, [join(s:labels, '|')]
+  " when using grep, [join(s:labels, '\|')]
+  if s:grep_default_exe == 'rg'
+    let argv += [join(s:labels, '|')]
+  elseif s:grep_default_exe == 'grep'
+    let argv += [join(s:labels, '\|')]
+  elseif s:grep_default_exe == 'findstr'
+    let argv += [join(s:labels, ' ')]
+  else
+    let argv += [join(s:labels, '|')]
+  endif
+  if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
+    let argv += ['.']
+  elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
+    let argv += ['*.*']
+  endif
+  let argv += s:grep_default_ropt
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
