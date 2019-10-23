@@ -47,8 +47,6 @@ endfunction
 function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
-  " @fixme fix the rg command for todo manager
-  let argv = ['rg','--hidden', '--no-heading', '-g', '!.git', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
   let argv = [s:grep_default_exe] + 
         \ s:grep_default_opt +
         \ s:grep_default_ignore_case +
