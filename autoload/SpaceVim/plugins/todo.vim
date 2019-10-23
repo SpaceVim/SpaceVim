@@ -49,16 +49,15 @@ function! s:update_todo_content() abort
   let s:todo = {}
   " @fixme fix the rg command for todo manager
   let argv = ['rg','--hidden', '--no-heading', '-g', '!.git', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
-  let argv = [s:grep_default_exe,
-        \ s:grep_default_opt,
-        \ s:grep_default_ignore_case,
-        \ s:grep_default_expr_opt,
-        \ join(s:labels, '|')
-        \ ]
+  let argv = [s:grep_default_exe] + 
+        \ s:grep_default_opt +
+        \ s:grep_default_ignore_case +
+        \ s:grep_default_expr_opt +
+        \ [join(s:labels, '|')]
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   endif
-  let argv += [s:grep_default_ropt]
+  let argv += s:grep_default_ropt
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
