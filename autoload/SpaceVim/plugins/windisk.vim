@@ -35,7 +35,7 @@ function! s:diskinfo() abort
   let rst = []
   for line in dickinfo
     let info = split(s:ICONV.iconv(line, 'cp936', &enc))
-    if len(info) >= 5
+    if len(info) >= 4
       let diskid = info[0]
       let freespace = info[2]
       let size = info[3]
@@ -60,17 +60,18 @@ func! s:get_disks() abort
 endf
 
 function! s:diskToLine(disk) abort
-  return a:disk.disk . '/' . ' ' . a:disk.name
+  return a:disk.disk . '/' . ' ' . (empty(a:disk.name) ? '本地磁盘' : a:disk.name)
 endfunction
 
 
 function! s:open_disk(d) abort
+  let disk = split(a:d)[0]
   call s:close_disk_buffer()
   if g:spacevim_filemanager ==# 'vimfiler'
-    exe 'VimFiler -no-toggle ' . a:d
+    exe 'VimFiler -no-toggle ' . disk
   elseif g:spacevim_filemanager ==# 'nerdtree'
   elseif g:spacevim_filemanager ==# 'defx'
-    exe 'Defx -no-toggle -no-resume ' . a:d
+    exe 'Defx -no-toggle -no-resume ' . disk
   endif
   doautocmd WinEnter
 endfunction
