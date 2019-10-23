@@ -49,9 +49,17 @@ function! s:update_todo_content() abort
   let s:todo = {}
   let argv = [s:grep_default_exe] + 
         \ s:grep_default_opt +
-        \ s:grep_default_ignore_case +
-        \ s:grep_default_expr_opt +
-        \ [join(s:labels, '|')]
+        \ s:grep_default_expr_opt
+  " @fixme expr for defferent tools
+  " when using rg, [join(s:labels, '|')]
+  " when using grep, [join(s:labels, '\|')]
+  if s:grep_default_exe == 'rg'
+    let argv += [join(s:labels, '|')]
+  elseif s:grep_default_exe == 'grep'
+    let argv += [join(s:labels, '\|')]
+  else
+    let argv += [join(s:labels, '|')]
+  endif
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   endif
