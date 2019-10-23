@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+let s:ICONV = SpaceVim#api#import('iconv')
+
 func! SpaceVim#plugins#windisk#open() abort
   let disks = s:get_disks()
   if !empty(disks)
@@ -28,18 +30,18 @@ func! SpaceVim#plugins#windisk#open() abort
   endif
 endf
 
-function! Disk() abort
+function! s:diskinfo() abort
   let dickinfo = systemlist('wmic LOGICALDISK LIST BRIEF')[1:]
   let rst = []
   for line in dickinfo
-    let info = split(line)
+    let info = split(s:ICONV.iconv(line, 'cp936', &enc))
     if len(info) >= 5
-      let dickid = info[0]
+      let diskid = info[0]
       let freespace = info[2]
       let size = info[3]
       let name = get(info, 4, '')
       call add(rst, {
-            \ 'dick' : dickid,
+            \ 'disk' : diskid,
             \ 'free' : freespace,
             \ 'size' : size,
             \ 'name' : name,
@@ -50,8 +52,16 @@ function! Disk() abort
 endfunction
 
 func! s:get_disks() abort
-  return map(filter(range(65, 97), "isdirectory(nr2char(v:val) . ':/')"), 'nr2char(v:val) . ":/"')
+  " use wmic command is better
+  " return map(filter(range(65, 97), "isdirectory(nr2char(v:val) . ':/')"), 'nr2char(v:val) . ":/"')
+  let diskinfo = s:diskinfo()
+  let line = map(diskinfo, 's:diskToLine(v:val)')
+  return line
 endf
+
+function! s:diskToLine(disk) abort
+  return a:disk.disk . '/' . ' ' . a:disk.name
+endfunction
 
 
 function! s:open_disk(d) abort
