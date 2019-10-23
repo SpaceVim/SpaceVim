@@ -57,11 +57,15 @@ function! s:update_todo_content() abort
     let argv += [join(s:labels, '|')]
   elseif s:grep_default_exe == 'grep'
     let argv += [join(s:labels, '\|')]
+  elseif s:grep_default_exe == 'findstr'
+    let argv += [join(s:labels, ' ')]
   else
     let argv += [join(s:labels, '|')]
   endif
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
+  elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
+    let argv += ['*.*']
   endif
   let argv += s:grep_default_ropt
   call SpaceVim#logger#info('todo cmd:' . string(argv))
