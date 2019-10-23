@@ -11,6 +11,8 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:FILE = SpaceVim#api#import('file')
 let s:VIM = SpaceVim#api#import('vim')
+let s:SYS = SpaceVim#api#import('system')
+let s:ICONV = SpaceVim#api#import('iconv')
 
 
 let s:runners = {}
@@ -258,6 +260,9 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     else
       let lines = s:_out_data
+    endif
+    if s:SYS.isWindows
+      let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
     endif
     if !empty(lines)
       call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
