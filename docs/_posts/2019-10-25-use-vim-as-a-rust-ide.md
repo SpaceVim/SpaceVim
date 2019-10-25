@@ -65,8 +65,8 @@ you can add a `.project_alt.json` to the root of your project with the following
 
 ```json
 {
-  "src/*.rs": {"alternate": "test/{}.pl"},
-  "test/*.rs": {"alternate": "src/{}.pl"}
+  "src/*.rs": {"alternate": "test/test_{}.rs"},
+  "test/test_*.rs": {"alternate": "src/{}.rs"}
 }
 ```
 
