@@ -403,9 +403,10 @@ function! s:previous_window() abort
 endfunction
 
 let s:string_info = {
-      \ 'viml' :
+      \ 'viml' : {
           \ 'connect' : '.',
           \ 'line_prefix' : '\',
+	  \ }
       \ }
 
 function! s:split_string(newline) abort
