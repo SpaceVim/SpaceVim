@@ -40,6 +40,7 @@ function! s:paser(conf, root) abort
     let searchpath = key
     if match(key, '/*')
         let searchpath = substitute(key, '*', '**/*', 'g')
+    endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       if has_key(a:conf, file)
