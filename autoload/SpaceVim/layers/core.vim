@@ -402,6 +402,12 @@ function! s:previous_window() abort
   endtry
 endfunction
 
+let s:string_info = {
+      \ 'viml' :
+          \ 'connect' : '.',
+          \ 'line_prefix' : '\',
+      \ }
+
 function! s:split_string(newline) abort
   if s:is_string(line('.'), col('.'))
     let c = col('.')
@@ -414,11 +420,20 @@ function! s:split_string(newline) abort
         break
       endif
     endwhile
-    let l:connector = a:newline ? "\n" : ''
-    let l:save_register_m = @m
-    let @m = sep . l:connector . sep
+    let addedtext = a:newline ? "\n" . get(get(s:string_info, '&filetype', {}), 'line_prefix', '') : ''
+    let connect = get(get(s:string_info, '&filetype', {}), 'connect', '')
+    if !empty(connect)
+      let connect = ' ' . connect . ' '
+    endif
+    if a:newline
+      let addedtext = addedtext . connect
+    else
+      let addedtext = connect
+    endif
+    let save_register_m = @m
+    let @m = sep . addedtext . sep
     normal! "mp
-    let @m = l:save_register_m
+    let @m = save_register_m
     if a:newline
       normal! j==k$
     endif
