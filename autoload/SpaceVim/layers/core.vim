@@ -404,9 +404,9 @@ endfunction
 
 let s:string_info = {
       \ 'viml' : {
-          \ 'connect' : '.',
-          \ 'line_prefix' : '\',
-	  \ }
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ }
       \ }
 
 function! s:split_string(newline) abort
