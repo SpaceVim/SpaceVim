@@ -37,9 +37,10 @@ endfunction
 
 function! s:paser(conf, root) abort
   for key in keys(a:conf)
-    let with_sub = s:CMP.globpath('.', substitute(key, '*', '**/*', 'g'))
-    let no_sub = s:CMP.globpath('.', key)
-    for file in with_sub + no_sub
+    let searchpath = key
+    if match(key, '/*')
+        let searchpath = substitute(key, '*', '**/*', 'g')
+    for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       if has_key(a:conf, file)
         if has_key(a:conf[file], 'alternate')
