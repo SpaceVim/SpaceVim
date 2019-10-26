@@ -411,7 +411,7 @@ let g:string_info = {
 
 function! s:split_string(newline) abort
   if s:is_string(line('.'), col('.'))
-    let cursor = getcurpos()
+    let save_cursor = getcurpos()
     let c = col('.')
     let sep = ''
     while c > 0
