@@ -76,14 +76,14 @@ endfunction
 
 " FIXME: 
 func! SpaceVim#layers#shell#terminal() abort
-  let line = getline('$')
+  let line = getline('.')
   if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
-  return "\<C-d>"
+  return ""
 endf
 func! SpaceVim#layers#shell#ctrl_u() abort
-  let line = getline('$')
+  let line = getline('.')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
 endfunction
