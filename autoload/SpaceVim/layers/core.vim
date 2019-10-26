@@ -402,26 +402,61 @@ function! s:previous_window() abort
   endtry
 endfunction
 
+let g:string_info = {
+      \ 'vim' : {
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ },
+      \ 'java' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '',
+      \ },
+      \ 'perl' : {
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ },
+      \ 'python' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '\',
+      \ 'quotes_hi' : ['pythonQuotes']
+      \ },
+      \ }
+
 function! s:split_string(newline) abort
   if s:is_string(line('.'), col('.'))
+    let save_cursor = getcurpos()
     let c = col('.')
     let sep = ''
     while c > 0
       if s:is_string(line('.'), c)
         let c -= 1
       else
-        let sep = getline('.')[c]
+        if !empty(get(get(g:string_info, &filetype, {}), 'quotes_hi', []))
+          let sep = getline('.')[c - 1]
+        else
+          let sep = getline('.')[c]
+        endif
         break
       endif
     endwhile
-    let l:connector = a:newline ? "\n" : ''
-    let l:save_register_m = @m
-    let @m = sep . l:connector . sep
-    normal! "mp
-    let @m = l:save_register_m
-    if a:newline
-      normal! j==k$
+    let addedtext = a:newline ? "\n" . get(get(g:string_info, &filetype, {}), 'line_prefix', '') : ''
+    let connect = get(get(g:string_info, &filetype, {}), 'connect', '')
+    if !empty(connect)
+      let connect = ' ' . connect . ' '
     endif
+    if a:newline
+      let addedtext = addedtext . connect
+    else
+      let addedtext = connect
+    endif
+    let save_register_m = @m
+    let @m = sep . addedtext . sep
+    normal! "mp
+    let @m = save_register_m
+    if a:newline
+      normal! j==
+    endif
+    call setpos('.', save_cursor)
   endif
 endfunction
 
@@ -430,6 +465,7 @@ endfunction
 let s:string_hi = {
       \ 'c' : 'cCppString',
       \ 'cpp' : 'cCppString',
+      \ 'python' : 'pythonString',
       \ }
 
 function! s:is_string(l, c) abort
