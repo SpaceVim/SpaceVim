@@ -406,7 +406,11 @@ let g:string_info = {
       \ 'vim' : {
       \ 'connect' : '.',
       \ 'line_prefix' : '\',
-      \ }
+      \ },
+      \ 'python' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '\',
+      \ },
       \ }
 
 function! s:split_string(newline) abort
