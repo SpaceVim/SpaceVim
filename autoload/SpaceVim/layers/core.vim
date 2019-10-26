@@ -407,6 +407,14 @@ let g:string_info = {
       \ 'connect' : '.',
       \ 'line_prefix' : '\',
       \ },
+      \ 'java' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '',
+      \ },
+      \ 'perl' : {
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ },
       \ 'python' : {
       \ 'connect' : '+',
       \ 'line_prefix' : '\',
