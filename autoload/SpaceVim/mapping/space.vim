@@ -198,7 +198,7 @@ function! SpaceVim#mapping#space#init() abort
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 
-        \ "execute {-> winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'}()",
+        \ "execute eval(\"winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'\")",
         \ ['swap window',
         \ [
         \ '[SPC w M] is to swap window',
