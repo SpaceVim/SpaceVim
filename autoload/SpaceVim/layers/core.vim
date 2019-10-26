@@ -410,6 +410,7 @@ let g:string_info = {
       \ 'python' : {
       \ 'connect' : '+',
       \ 'line_prefix' : '\',
+      \ 'quotes_hi' : ['pythonQuotes']
       \ },
       \ }
 
@@ -422,7 +423,11 @@ function! s:split_string(newline) abort
       if s:is_string(line('.'), c)
         let c -= 1
       else
-        let sep = getline('.')[c]
+        if !empty(get(get(g:string_info, &filetype, {}), 'quotes_hi', []))
+          let sep = getline('.')[c - 1]
+        else
+          let sep = getline('.')[c]
+        endif
         break
       endif
     endwhile
@@ -438,7 +443,6 @@ function! s:split_string(newline) abort
     endif
     let save_register_m = @m
     let @m = sep . addedtext . sep
-    echom @m
     normal! "mp
     let @m = save_register_m
     if a:newline
