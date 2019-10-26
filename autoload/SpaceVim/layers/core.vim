@@ -438,6 +438,7 @@ function! s:split_string(newline) abort
     endif
     let save_register_m = @m
     let @m = sep . addedtext . sep
+    echom @m
     normal! "mp
     let @m = save_register_m
     if a:newline
@@ -452,6 +453,7 @@ endfunction
 let s:string_hi = {
       \ 'c' : 'cCppString',
       \ 'cpp' : 'cCppString',
+      \ 'python' : 'pythonString',
       \ }
 
 function! s:is_string(l, c) abort
