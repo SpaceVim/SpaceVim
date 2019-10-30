@@ -45,6 +45,7 @@ endfunction
 
 
 function! SpaceVim#layers#lang#elixir#config() abort
+  call SpaceVim#plugins#runner#reg_runner('elixir', 'elixir %s')
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
   call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
   call SpaceVim#mapping#gd#add('elixir', function('s:go_to_def'))
@@ -66,6 +67,8 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
           \ 'call alchemist#jump_tag_stack()', 'jump to tag stack', 1)
   endif
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("elixir")',
@@ -88,3 +91,6 @@ function! s:go_to_def() abort
     ExDef
   endif
 endfunction
+
+
+" vim:set et sw=2 cc=80:
