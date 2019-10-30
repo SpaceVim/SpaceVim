@@ -179,6 +179,7 @@ endfunction
 
 function! s:denite_filter_my_settings() abort
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+  imap <silent><buffer> <C-c> <Plug>(denite_filter_quit):q<Cr>
   inoremap <silent><buffer> <Tab>
         \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
   inoremap <silent><buffer> <S-Tab>
