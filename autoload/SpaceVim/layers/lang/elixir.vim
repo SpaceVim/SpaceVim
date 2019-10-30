@@ -20,6 +20,7 @@
 " >
 "   Mode            Key             Function
 "   ---------------------------------------------
+"   normal          SPC l r         run current file
 "   normal          g d             jump to definition
 " <
 "
