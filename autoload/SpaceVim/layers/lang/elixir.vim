@@ -9,11 +9,30 @@
 ""
 " @section lang#elixir, layer-lang-elixir
 " @parentsection layers
-" @subsection Intro
-" The lang#elixir layer provides code completion, documentation lookup, jump to
-" definition, mix integration, and iex integration for Elixir. SpaceVim
-" uses neomake as default syntax checker which is loaded in
-" @section(layer-checkers)
+" This layer is for elixir development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#elixir'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          g d             jump to definition
+" <
+"
+" This layer also provides REPL support for d, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#elixir#plugins() abort
   let plugins = []
