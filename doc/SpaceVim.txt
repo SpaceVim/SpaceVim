@@ -91,36 +91,37 @@ CONTENTS                                                   *SpaceVim-contents*
       17. lang#elm...................................|SpaceVim-layer-lang-elm|
       18. lang#erlang.............................|SpaceVim-layer-lang-erlang|
       19. lang#go.....................................|SpaceVim-layer-lang-go|
-      20. lang#groovy.............................|SpaceVim-layer-lang-groovy|
-      21. lang#hack.................................|SpaceVim-layer-lang-hack|
-      22. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      23. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      24. lang#java.................................|SpaceVim-layer-lang-java|
-      25. lang#julia...............................|SpaceVim-layer-lang-julia|
-      26. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      27. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      28. lang#lua...................................|SpaceVim-layer-lang-lua|
-      29. lang#nim...................................|SpaceVim-layer-lang-nim|
-      30. lang#nix...................................|SpaceVim-layer-lang-nix|
-      31. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      32. lang#pact.................................|SpaceVim-layer-lang-pact|
-      33. lang#php...................................|SpaceVim-layer-lang-php|
-      34. lang#pony.................................|SpaceVim-layer-lang-pony|
-      35. lang#processing.....................|SpaceVim-layer-lang-processing|
-      36. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      37. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      38. lang#python.............................|SpaceVim-layer-lang-python|
-      39. lang#racket.............................|SpaceVim-layer-lang-racket|
-      40. lang#rust.................................|SpaceVim-layer-lang-rust|
-      41. lang#scala...............................|SpaceVim-layer-lang-scala|
-      42. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      43. lang#xml...................................|SpaceVim-layer-lang-xml|
-      44. operator...................................|SpaceVim-layer-operator|
-      45. shell.........................................|SpaceVim-layer-shell|
-      46. test...........................................|SpaceVim-layer-test|
-      47. tmux...........................................|SpaceVim-layer-tmux|
-      48. tools#dash...............................|SpaceVim-layer-tools-dash|
-      49. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      20. lang#gosu.................................|SpaceVim-layer-lang-gosu|
+      21. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      22. lang#hack.................................|SpaceVim-layer-lang-hack|
+      23. lang#haskell...........................|SpaceVim-layer-lang-haskell|
+      24. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      25. lang#java.................................|SpaceVim-layer-lang-java|
+      26. lang#julia...............................|SpaceVim-layer-lang-julia|
+      27. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      28. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      29. lang#lua...................................|SpaceVim-layer-lang-lua|
+      30. lang#nim...................................|SpaceVim-layer-lang-nim|
+      31. lang#nix...................................|SpaceVim-layer-lang-nix|
+      32. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      33. lang#pact.................................|SpaceVim-layer-lang-pact|
+      34. lang#php...................................|SpaceVim-layer-lang-php|
+      35. lang#pony.................................|SpaceVim-layer-lang-pony|
+      36. lang#processing.....................|SpaceVim-layer-lang-processing|
+      37. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      38. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      39. lang#python.............................|SpaceVim-layer-lang-python|
+      40. lang#racket.............................|SpaceVim-layer-lang-racket|
+      41. lang#rust.................................|SpaceVim-layer-lang-rust|
+      42. lang#scala...............................|SpaceVim-layer-lang-scala|
+      43. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      44. lang#xml...................................|SpaceVim-layer-lang-xml|
+      45. operator...................................|SpaceVim-layer-operator|
+      46. shell.........................................|SpaceVim-layer-shell|
+      47. test...........................................|SpaceVim-layer-test|
+      48. tmux...........................................|SpaceVim-layer-tmux|
+      49. tools#dash...............................|SpaceVim-layer-tools-dash|
+      50. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1543,6 +1544,24 @@ MAPPINGS
   normal          SPC l t         go test
   normal          SPC l v         freevars
   normal          SPC l r         go run
+<
+
+==============================================================================
+LANG#GOSU                                           *SpaceVim-layer-lang-gosu*
+
+This layer is for gosu development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#gosu'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
 <
 
 ==============================================================================
