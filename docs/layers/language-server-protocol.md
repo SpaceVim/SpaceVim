@@ -125,6 +125,13 @@ npm install -g vscode-css-languageserver-bin
 gem install solargraph
 ```
 
+**Elm:**
+
+```sh
+npm install -g @elm-tooling/elm-language-server
+npm install -g elm elm-test elm-format
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
@@ -147,6 +154,7 @@ default language server commands:
 | `crystal`    | `['scry']`                                                                                                                                                                                       |
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
+| `elm`        | `['elm-language-server']`                                                                                                                                                                        |
 | `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
