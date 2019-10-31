@@ -38,6 +38,7 @@ lang: zh
 - [知乎](https://www.zhihu.com/topic/20168681/newest)
 - [思否](https://segmentfault.com/t/spacevim)
 - [黑客派](https://hacpai.com/tag/spacevim)
+- [贴吧](https://tieba.baidu.com/spacevim)
 
 ### 邮件列表
 
