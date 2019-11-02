@@ -26,7 +26,8 @@ let s:unmerged_prs_since_last_release = [2014, 2218, 2232, 2242, 2307,
       \ 2732, 2950, 2971]
 " these options can be changed when going to release new tag
 let s:last_release_number = 2974
-let s:current_release_number = -1
+" 当要新建一个 release 时，修改为该release 的ID，通常为 -1。
+let s:current_release_number = 3213
 " this is a list of pull request number which > last_release_number and <
 " current_release_number
 " next time when I release v1.1.0, only need to update following option
@@ -37,7 +38,7 @@ let s:unmerged_prs_since_current_release = []
 " exclude prs in unmerged_prs_since_current_release
 
 function! SpaceVim#dev#releases#get_unmerged_prs() abort
-  return copy(s:unmerged_prs_since_last_release)
+  return deepcopy(s:unmerged_prs_since_last_release)
 endfunction
 
 function! SpaceVim#dev#releases#last_release_number() abort
