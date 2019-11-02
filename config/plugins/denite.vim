@@ -178,7 +178,12 @@ function! s:denite_my_settings() abort
 endfunction
 
 function! s:denite_filter_my_settings() abort
+  call s:clear_imap('<C-g>g')
+  call s:clear_imap('<C-g>S')
+  call s:clear_imap('<C-g>s')
+  call s:clear_imap('<C-g>%')
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+  imap <silent><buffer> <C-g> <Plug>(denite_filter_quit):q<Cr>
   inoremap <silent><buffer> <Tab>
         \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
   inoremap <silent><buffer> <S-Tab>
@@ -186,5 +191,11 @@ function! s:denite_filter_my_settings() abort
   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
 endfunction
 
+
+function! s:clear_imap(map) abort
+  if maparg(a:map, 'i')
+    exe 'iunmap <buffer> ' . a:map
+  endif
+endfunction
 
 " vim:set et sw=2 cc=80:
