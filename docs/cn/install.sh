@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.2.0'
+Version='1.3.0'
 #System name
 System="$(uname -s)"
 
@@ -453,4 +453,4 @@ main () {
 
 main $@
 
-# vim:set foldenable foldmethod=marker:
+# vim:set nofoldenable foldmethod=marker:
