@@ -14,11 +14,10 @@ comments: true
 
 - [What's New](#whats-new)
 - [Release Notes](#release-notes)
-  - [SpaceVim release 1.3.0](#spacevim-release-130)
-    - [New Features](#new-features)
-    - [Feature Changes](#feature-changes)
-    - [Bug Fixs](#bug-fixs)
-    - [Unmarked PRs](#unmarked-prs)
+  - [New Features](#new-features)
+  - [Feature Changes](#feature-changes)
+  - [Bug Fixs](#bug-fixs)
+  - [Unmarked PRs](#unmarked-prs)
 
 <!-- vim-markdown-toc -->
 
@@ -40,9 +39,7 @@ Since last release, we have added 13 programming language layer:
 
 here is the list of all the pull requests since last release:
 
-### SpaceVim release 1.3.0
-
-#### New Features
+### New Features
 
 - Add key binding to close denite in filter buffer [#3206](https://github.com/SpaceVim/SpaceVim/pull/3206)
 - Add CtrlSpace to layers.md [#3182](https://github.com/SpaceVim/SpaceVim/pull/3182)
@@ -78,7 +75,7 @@ here is the list of all the pull requests since last release:
 - Add Leader f f to fzf layer [#2971](https://github.com/SpaceVim/SpaceVim/pull/2971)
 
 
-#### Feature Changes
+### Feature Changes
 
 - change lang#plantuml add a plugin to preivew uml in brower and save pics in disk [#3180](https://github.com/SpaceVim/SpaceVim/pull/3180)
 - Change rust.vim [#3173](https://github.com/SpaceVim/SpaceVim/pull/3173)
@@ -89,7 +86,7 @@ here is the list of all the pull requests since last release:
 - Change plugin list plugin [#2446](https://github.com/SpaceVim/SpaceVim/pull/2446)
 
 
-#### Bug Fixs
+### Bug Fixs
 
 - Fix split string function [#3201](https://github.com/SpaceVim/SpaceVim/pull/3201)
 - fix [SPC]xa[SPC] aligns the entire paragraph instead of selection [#3191](https://github.com/SpaceVim/SpaceVim/pull/3191)
@@ -134,7 +131,7 @@ here is the list of all the pull requests since last release:
 - Fix typo in edit.md [#2970](https://github.com/SpaceVim/SpaceVim/pull/2970)
 
 
-#### Unmarked PRs
+### Unmarked PRs
 
 - 'enable' of layer configuration supports expression [#3211](https://github.com/SpaceVim/SpaceVim/pull/3211)
 - Update language server docs for elm [#3209](https://github.com/SpaceVim/SpaceVim/pull/3209)
