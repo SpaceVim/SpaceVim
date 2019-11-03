@@ -226,7 +226,7 @@ here is the list of all the pull requests since last release:
 - Comment code block in markdown [#2988](https://github.com/SpaceVim/SpaceVim/pull/2988)
 - Make ruby runner support stdin [#2986](https://github.com/SpaceVim/SpaceVim/pull/2986)
 - close #2367 [#2978](https://github.com/SpaceVim/SpaceVim/pull/2978)
-- Update 2019-01-07-use-vim-as-a-go-ide.md [#2975](https://github.com/SpaceVim/SpaceVim/pull/2975)
+- Type: change works to work [#2975](https://github.com/SpaceVim/SpaceVim/pull/2975)
 - Update erlang layer code owner [#2218](https://github.com/SpaceVim/SpaceVim/pull/2218)
 - Introduce lang#nix layer [#2541](https://github.com/SpaceVim/SpaceVim/pull/2541)
 - Version [#2956](https://github.com/SpaceVim/SpaceVim/pull/2956)
