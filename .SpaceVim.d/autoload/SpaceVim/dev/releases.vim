@@ -83,7 +83,7 @@ endfunction
 
 function! s:get_list_of_PRs() abort
   let prs = []
-  for i in range(1, 10)
+  for i in range(1, 20)
     let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
     call extend(prs,
           \ filter(issues,
