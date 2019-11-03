@@ -91,9 +91,11 @@ function! s:get_list_of_PRs() abort
           \ . s:last_release_number
           \ . " && v:val['number'] < "
           \ . s:current_release_number
-          \ . ' && !empty(get(v:val, "merged_at", ""))'
-          \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
+          \ . ' && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
           \ ))
+    " remove
+    " !empty(get(v:val, 'merged_at', ''))
+    " @ todo add a way to check if the pr is merged
   endfor
   for i in s:unmerged_prs_since_last_release
     let pr = github#api#issues#Get_issue('SpaceVim', 'SpaceVim', i)
