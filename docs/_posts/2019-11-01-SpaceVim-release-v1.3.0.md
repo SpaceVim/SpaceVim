@@ -13,8 +13,11 @@ comments: true
 <!-- vim-markdown-toc GFM -->
 
 - [What's New](#whats-new)
-- [Release Notes](#release-notes)
-  - [New Features](#new-features)
+  - [New layers](#new-layers)
+  - [New features](#new-features)
+  - [Improvements](#improvements)
+- [Pull requests](#pull-requests)
+  - [New Features](#new-features-1)
   - [Feature Changes](#feature-changes)
   - [Bug Fixs](#bug-fixs)
   - [Unmarked PRs](#unmarked-prs)
@@ -33,9 +36,47 @@ The v1.3.0 has been released. So let's take a look at what happened since last r
 
 ## What's New
 
-Since last release, we have added 13 programming language layer:
+### New layers
 
-## Release Notes
+Since last release, we have added 10 programming language layer:
+
+- [lang#gosu](../layers/lang/gosu/)
+- [lang#wolfram](../layers/lang/wolfram/)
+- [lang#chapel](../layers/lang/chapel/)
+- [lang#foxpro](../layers/lang/foxpro/)
+- [lang#idris](../layers/lang/idris/)
+- [lang#batch](../layers/lang/batch/)
+- [lang#io](../layers/lang/io/)
+- [lang#j](../layers/lang/j/)
+- [lang#goby](../layers/lang/goby/)
+- [lang#assembly](../layers/lang/assembly/)
+
+we also add some function layers:
+
+- [CtrlSpace](../layers/ctrlspace/)
+
+
+### New features
+
+The following layers have been improved:
+
+- [leaderf](../layers/leaderf/)
+
+### Improvements
+
+- improve the `enable` option when load layer.
+
+```toml
+[[layers]]
+    name = "denite"
+    enable = "has('python3')"
+```
+
+- autoscroll the buffer in REPL window.
+
+the REPL buffer will be scrolled automatically.
+
+## Pull requests
 
 here is the list of all the pull requests since last release:
 
@@ -69,7 +110,6 @@ here is the list of all the pull requests since last release:
 - Add: add new layer lang#j [#3032](https://github.com/SpaceVim/SpaceVim/pull/3032)
 - Add vertical split support [#2999](https://github.com/SpaceVim/SpaceVim/pull/2999)
 - Add lang#assembly layer [#2979](https://github.com/SpaceVim/SpaceVim/pull/2979)
-- Add: go debug: vim-delve support [#2976](https://github.com/SpaceVim/SpaceVim/pull/2976)
 - Add debug support for powershell [#2961](https://github.com/SpaceVim/SpaceVim/pull/2961)
 - Add additional bindings from coc.nvim for c layer [#2967](https://github.com/SpaceVim/SpaceVim/pull/2967)
 - Add Leader f f to fzf layer [#2971](https://github.com/SpaceVim/SpaceVim/pull/2971)
