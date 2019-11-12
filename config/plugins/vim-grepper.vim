@@ -7,3 +7,6 @@ endif
 if !has_key(g:grepper, 'tools')
   let g:grepper = {'tools': g:spacevim_search_tools}
 endif
+
+" invoke Grepper using visually selected pattern
+xmap gp <plug>(GrepperOperator)
