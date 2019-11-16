@@ -75,6 +75,14 @@ let s:options.find = {
       \ '-xdev' : '将范围局限在先行的文件系统中',
       \ '-xtype' : '此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查'
       \ }
+let s:options.fd = {
+      \ '-H' : 'Search hidden files and directories',
+      \ '-I' : 'Do not respect .(git|fd)ignore files',
+      \ '-s' : 'Case-sensitive serch',
+      \ '-i' : 'Case-insensitive serch',
+      \ '-g' : 'Glob-based search',
+      \ '-F' : 'Treat the pattern as a literal string',
+      \ }
 
 let s:second_option.find = {
       \ '-type' :
@@ -91,7 +99,11 @@ let s:second_option.find = {
 
 let s:finded_files = []
 function! s:start_find() abort
-  let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+  if s:current_tool ==# 'find'
+    let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+  elseif s:current_tool ==# 'fd'
+    let cmd = 'fd ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+  endif
   call s:MPT._clear_prompt()
   let s:MPT._quit = 1
   let line = getline('.')
