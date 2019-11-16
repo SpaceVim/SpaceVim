@@ -82,7 +82,11 @@ let s:options.fd = {
       \ '-i' : 'Case-insensitive serch',
       \ '-t' : 'Filter by type: file (f), directory (d), symlink (l), executable (x), empty (e)',
       \ '-g' : 'Glob-based search',
+      \ '-d' : 'Set maximum search depth (default: none)',
+      \ '-L' : 'Follow symbolic links',
+      \ '-0' : 'Separate results by the null character',
       \ '-F' : 'Treat the pattern as a literal string',
+      \ '-e' : 'Filter by file extension',
       \ }
 
 let s:second_option.find = {
