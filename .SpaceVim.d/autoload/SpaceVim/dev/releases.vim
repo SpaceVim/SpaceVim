@@ -20,13 +20,13 @@ scriptencoding utf-8
 
 " 这是所有 ID 小于上一次 release ID，并且还未被合并的 ID，在新的release
 " 之后，需要把已经合并了的删除！
-let s:unmerged_prs_since_last_release = [2014, 2218, 2232, 2242, 2307,
-      \ 2390, 2396, 2407, 2446, 2447, 2541, 2627, 2655, 2664,
-      \ 2732,]
+let s:unmerged_prs_since_last_release = [2014, 2232, 2242, 2307,
+      \ 2390, 2396, 2407, 2447, 2627, 2655, 2664,
+      \ ]
 " these options can be changed when going to release new tag
-let s:last_release_number = 2947
+let s:last_release_number = 3213
 " 当要新建一个 release 时，修改为该release 的ID，通常为 -1。
-let s:current_release_number = 3213
+let s:current_release_number = -1
 " this is a list of pull request number which > last_release_number and <
 " current_release_number
 " next time when I release v1.1.0, only need to update following option
