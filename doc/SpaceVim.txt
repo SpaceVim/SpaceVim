@@ -82,48 +82,49 @@ CONTENTS                                                   *SpaceVim-contents*
       8. github........................................|SpaceVim-layer-github|
       9. incsearch..................................|SpaceVim-layer-incsearch|
       10. indentmove...............................|SpaceVim-layer-indentmove|
-      11. lang#c.......................................|SpaceVim-layer-lang-c|
-      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      13. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      14. lang#d.......................................|SpaceVim-layer-lang-d|
-      15. lang#dart.................................|SpaceVim-layer-lang-dart|
-      16. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      17. lang#elm...................................|SpaceVim-layer-lang-elm|
-      18. lang#erlang.............................|SpaceVim-layer-lang-erlang|
-      19. lang#fsharp.............................|SpaceVim-layer-lang-fsharp|
-      20. lang#go.....................................|SpaceVim-layer-lang-go|
-      21. lang#goby.................................|SpaceVim-layer-lang-goby|
-      22. lang#gosu.................................|SpaceVim-layer-lang-gosu|
-      23. lang#groovy.............................|SpaceVim-layer-lang-groovy|
-      24. lang#hack.................................|SpaceVim-layer-lang-hack|
-      25. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      26. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      27. lang#java.................................|SpaceVim-layer-lang-java|
-      28. lang#julia...............................|SpaceVim-layer-lang-julia|
-      29. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      30. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      31. lang#lua...................................|SpaceVim-layer-lang-lua|
-      32. lang#nim...................................|SpaceVim-layer-lang-nim|
-      33. lang#nix...................................|SpaceVim-layer-lang-nix|
-      34. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      35. lang#pact.................................|SpaceVim-layer-lang-pact|
-      36. lang#php...................................|SpaceVim-layer-lang-php|
-      37. lang#pony.................................|SpaceVim-layer-lang-pony|
-      38. lang#processing.....................|SpaceVim-layer-lang-processing|
-      39. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      40. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      41. lang#python.............................|SpaceVim-layer-lang-python|
-      42. lang#racket.............................|SpaceVim-layer-lang-racket|
-      43. lang#rust.................................|SpaceVim-layer-lang-rust|
-      44. lang#scala...............................|SpaceVim-layer-lang-scala|
-      45. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      46. lang#xml...................................|SpaceVim-layer-lang-xml|
-      47. operator...................................|SpaceVim-layer-operator|
-      48. shell.........................................|SpaceVim-layer-shell|
-      49. test...........................................|SpaceVim-layer-test|
-      50. tmux...........................................|SpaceVim-layer-tmux|
-      51. tools#dash...............................|SpaceVim-layer-tools-dash|
-      52. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      11. lang#batch...............................|SpaceVim-layer-lang-batch|
+      12. lang#c.......................................|SpaceVim-layer-lang-c|
+      13. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      14. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      15. lang#d.......................................|SpaceVim-layer-lang-d|
+      16. lang#dart.................................|SpaceVim-layer-lang-dart|
+      17. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      18. lang#elm...................................|SpaceVim-layer-lang-elm|
+      19. lang#erlang.............................|SpaceVim-layer-lang-erlang|
+      20. lang#fsharp.............................|SpaceVim-layer-lang-fsharp|
+      21. lang#go.....................................|SpaceVim-layer-lang-go|
+      22. lang#goby.................................|SpaceVim-layer-lang-goby|
+      23. lang#gosu.................................|SpaceVim-layer-lang-gosu|
+      24. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      25. lang#hack.................................|SpaceVim-layer-lang-hack|
+      26. lang#haskell...........................|SpaceVim-layer-lang-haskell|
+      27. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      28. lang#java.................................|SpaceVim-layer-lang-java|
+      29. lang#julia...............................|SpaceVim-layer-lang-julia|
+      30. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      31. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      32. lang#lua...................................|SpaceVim-layer-lang-lua|
+      33. lang#nim...................................|SpaceVim-layer-lang-nim|
+      34. lang#nix...................................|SpaceVim-layer-lang-nix|
+      35. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      36. lang#pact.................................|SpaceVim-layer-lang-pact|
+      37. lang#php...................................|SpaceVim-layer-lang-php|
+      38. lang#pony.................................|SpaceVim-layer-lang-pony|
+      39. lang#processing.....................|SpaceVim-layer-lang-processing|
+      40. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      41. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      42. lang#python.............................|SpaceVim-layer-lang-python|
+      43. lang#racket.............................|SpaceVim-layer-lang-racket|
+      44. lang#rust.................................|SpaceVim-layer-lang-rust|
+      45. lang#scala...............................|SpaceVim-layer-lang-scala|
+      46. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      47. lang#xml...................................|SpaceVim-layer-lang-xml|
+      48. operator...................................|SpaceVim-layer-operator|
+      49. shell.........................................|SpaceVim-layer-shell|
+      50. test...........................................|SpaceVim-layer-test|
+      51. tmux...........................................|SpaceVim-layer-tmux|
+      52. tools#dash...............................|SpaceVim-layer-tools-dash|
+      53. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1358,6 +1359,35 @@ MAPPINGS
   EI          normal/visual   move down to nearest child indent
 <
 
+
+
+==============================================================================
+LANG#BATCH                                         *SpaceVim-layer-lang-batch*
+
+This layer is for batch development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#batch'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for batch, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
 
 
 ==============================================================================
