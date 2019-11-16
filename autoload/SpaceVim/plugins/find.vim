@@ -80,6 +80,7 @@ let s:options.fd = {
       \ '-I' : 'Do not respect .(git|fd)ignore files',
       \ '-s' : 'Case-sensitive serch',
       \ '-i' : 'Case-insensitive serch',
+      \ '-t' : 'Filter by type: file (f), directory (d), symlink (l), executable (x), empty (e)',
       \ '-g' : 'Glob-based search',
       \ '-F' : 'Treat the pattern as a literal string',
       \ }
@@ -94,6 +95,17 @@ let s:second_option.find = {
       \     'b' : 'block (buffered) special',
       \     's' : 'socket',
       \     'p' : 'named pipe (FIFO)',
+      \   },
+      \ }
+
+let s:second_option.fd = {
+      \ '-t' :
+      \   {
+      \     'f' : 'regular file',
+      \     'l' : 'symbolic link',
+      \     'd' : 'directory',
+      \     'x' : 'executable',
+      \     'e' : 'empty',
       \   },
       \ }
 
