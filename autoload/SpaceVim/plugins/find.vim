@@ -217,9 +217,9 @@ function! s:handle_command_line(cmd) abort
     return
   endif
   let argv = split(s:MPT._prompt.begin)[-1]
-  if s:MPT._prompt.begin[-1:] ==# ' ' && argv ==# '-type'
+  if s:MPT._prompt.begin[-1:] ==# ' ' && has_key(s:second_option[s:current_tool], argv)
     let line = []
-    for item in items(s:second_option[s:current_tool]['-type'])
+    for item in items(s:second_option[s:current_tool][argv])
       call add(line, '  ' . item[0] . repeat(' ', 8 - len(item[0])) . item[1])
     endfor
     call setline(1, line)
