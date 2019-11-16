@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.3.0'
+let g:spacevim_version = '1.4.0-dev'
 lockvar g:spacevim_version
 
 ""
