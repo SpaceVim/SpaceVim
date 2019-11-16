@@ -195,8 +195,8 @@ function! s:next_item() abort
   else
     normal! j
   endif
-  let argv = matchstr(getline('.'), '^-[a-zA-Z0-9]')
-  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '-[a-zA-Z]*$', argv, 'g')
+  let argv = matchstr(getline('.'), '[-a-zA-Z0-9]*')
+  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '[-a-zA-Z0-9]*$', argv, 'g')
   redraw
   call s:MPT._build_prompt()
 endfunction
@@ -207,8 +207,8 @@ function! s:previous_item() abort
   else
     normal! k
   endif
-  let argv = matchstr(getline('.'), '^-[a-zA-Z0-9]')
-  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '-[a-zA-Z]*$', argv, 'g')
+  let argv = matchstr(getline('.'), '[-a-zA-Z0-9]*')
+  let s:MPT._prompt.begin = substitute(s:MPT._prompt.begin, '[-a-zA-Z0-9]*$', argv, 'g')
   redraw
   call s:MPT._build_prompt()
 endfunction
@@ -221,6 +221,7 @@ function! SpaceVim#plugins#find#open() abort
         \ "\<C-j>" : function('s:next_item'),
         \ "\<S-tab>" : function('s:previous_item'),
         \ "\<C-k>" : function('s:previous_item'),
+        \ "\<C-e>" : function('s:switch_tool'),
         \ }
   noautocmd rightbelow split __spacevim_find_argv__
   let s:find_argvs_buffer_id = bufnr('%')
@@ -229,15 +230,23 @@ function! SpaceVim#plugins#find#open() abort
   call s:MPT.open()
 endfunction
 
+function! s:switch_tool() abort
+
+endfunction
+
+function! s:enter() abort
+
+endfunction
+
 function! s:handle_command_line(cmd) abort
   normal! "_dG
-  if empty(a:cmd)
+  if empty(s:MPT._prompt.begin)
     redraw
     call s:MPT._build_prompt()
     return
   endif
-  let argv = split(a:cmd)[-1]
-  if a:cmd[-1:] ==# ' ' && argv ==# '-type'
+  let argv = split(s:MPT._prompt.begin)[-1]
+  if s:MPT._prompt.begin[-1:] ==# ' ' && argv ==# '-type'
     let line = []
     for item in items(s:second_option_en['-type'])
       call add(line, '  ' . item[0] . repeat(' ', 8 - len(item[0])) . item[1])
