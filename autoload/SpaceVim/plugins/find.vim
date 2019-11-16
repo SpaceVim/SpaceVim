@@ -97,7 +97,6 @@ let s:second_option.find = {
       \   },
       \ }
 
-let s:finded_files = []
 function! s:start_find() abort
   if s:current_tool ==# 'find'
     let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
@@ -109,6 +108,7 @@ function! s:start_find() abort
   let line = getline('.')
   noautocmd q
   redraw!
+  let s:finded_files = []
   call s:JOB.start(cmd,
         \ {
         \ 'on_stdout' : function('s:find_on_stdout'),
@@ -122,7 +122,7 @@ function! s:find_on_stdout(id, data, event) abort
 endfunction
 
 function! s:find_on_exit(id, data, event) abort
-  let files = map(filter(s:finded_files, '!empty(v:val)'), "{'filename' : v:val}")
+  let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val}")
   if !empty(files)
     call setqflist(files)
     copen
