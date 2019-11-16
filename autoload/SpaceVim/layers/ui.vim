@@ -191,7 +191,11 @@ let s:fcflag = 0
 " use &textwidth option instead of 80
 function! s:toggle_fill_column() abort
   if !s:fcflag
-    let &colorcolumn=join(range(&textwidth + 1,999),',')
+    if !&textwidth
+      let &colorcolumn=join(range(81,999),',')
+    else
+      let &colorcolumn=join(range(&textwidth + 1,999),',')
+    endif
     let s:fcflag = 1
   else
     set cc=
