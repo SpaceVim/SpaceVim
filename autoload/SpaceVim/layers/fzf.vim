@@ -31,7 +31,7 @@ function! SpaceVim#layers#fzf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'FzfHelpTags SpaceVim', 'find-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'exe "FzfHelpTags " . expand("<cword>")', 'get help with the symbol at point', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'FzfBuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
         \ ['find files in current project',
@@ -395,7 +395,7 @@ function! s:register() abort
         \ }))
 endfunction
 
-command! Fzfbuffers call <SID>buffers()
+command! FzfBuffers call <SID>buffers()
 function! s:open_buffer(e) abort
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
