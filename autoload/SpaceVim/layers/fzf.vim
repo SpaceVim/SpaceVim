@@ -175,6 +175,24 @@ function! s:defind_fuzzy_finder() abort
         \ ]
 endfunction
 
+" Function below is largely lifted directly out of project junegunn/fzf.vim from
+" file autoload/fzf/vim.vim ; w/ minor mods to better integrate into SpaceVim
+function! s:wrap(name, opts)
+  " fzf#wrap does not append --expect if 'sink' is found
+  let opts = copy(a:opts)
+  let options = ''
+  if has_key(opts, 'options')
+    let options = type(opts.options) == v:t_list ? join(opts.options) : opts.options
+  endif
+  if options !~ '--expect' && has_key(opts, 'sink')
+    call remove(opts, 'sink')
+    let wrapped = fzf#wrap(a:name, opts)
+  else
+    let wrapped = fzf#wrap(a:name, opts)
+  endif
+  return wrapped
+endfunction
+
 command! FzfColors call <SID>colors()
 function! s:colors() abort
   let s:source = 'colorscheme'
@@ -186,7 +204,7 @@ endfunction
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run(fzf#wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
+  call fzf#run(s:wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
 endfunction
 
 let s:source = ''
@@ -263,7 +281,7 @@ function! s:file_mru() abort
   function! s:mru_files() abort
     return neomru#_gather_file_candidates()
   endfunction
-  call fzf#run(fzf#wrap('mru', {
+  call fzf#run(s:wrap('mru', {
         \ 'source':  reverse(<sid>mru_files()),
         \ 'sink':    function('s:open_file'),
         \ 'options': '--reverse',
