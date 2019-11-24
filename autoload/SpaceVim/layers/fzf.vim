@@ -31,7 +31,7 @@ function! SpaceVim#layers#fzf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'FzfHelpTags SpaceVim', 'find-SpaceVim-help', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'exe "FzfHelpTags " . expand("<cword>")', 'get help with the symbol at point', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Fzfbuffers', 'List all buffers', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'FzfBuffers', 'List all buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'FzfFiles',
         \ ['find files in current project',
@@ -175,6 +175,24 @@ function! s:defind_fuzzy_finder() abort
         \ ]
 endfunction
 
+" Function below is largely lifted directly out of project junegunn/fzf.vim from
+" file autoload/fzf/vim.vim ; w/ minor mods to better integrate into SpaceVim
+function! s:wrap(name, opts)
+  " fzf#wrap does not append --expect if 'sink' is found
+  let opts = copy(a:opts)
+  let options = ''
+  if has_key(opts, 'options')
+    let options = type(opts.options) == v:t_list ? join(opts.options) : opts.options
+  endif
+  if options !~ '--expect' && has_key(opts, 'sink')
+    call remove(opts, 'sink')
+    let wrapped = fzf#wrap(a:name, opts)
+  else
+    let wrapped = fzf#wrap(a:name, opts)
+  endif
+  return wrapped
+endfunction
+
 command! FzfColors call <SID>colors()
 function! s:colors() abort
   let s:source = 'colorscheme'
@@ -186,7 +204,7 @@ endfunction
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run(fzf#wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
+  call fzf#run(s:wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
 endfunction
 
 let s:source = ''
@@ -263,7 +281,7 @@ function! s:file_mru() abort
   function! s:mru_files() abort
     return neomru#_gather_file_candidates()
   endfunction
-  call fzf#run(fzf#wrap('mru', {
+  call fzf#run(s:wrap('mru', {
         \ 'source':  reverse(<sid>mru_files()),
         \ 'sink':    function('s:open_file'),
         \ 'options': '--reverse',
@@ -395,7 +413,7 @@ function! s:register() abort
         \ }))
 endfunction
 
-command! Fzfbuffers call <SID>buffers()
+command! FzfBuffers call <SID>buffers()
 function! s:open_buffer(e) abort
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
