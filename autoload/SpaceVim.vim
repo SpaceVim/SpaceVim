@@ -1380,9 +1380,17 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.1.0
+" Following HEAD: changes in master branch since last release v1.3.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2019-11-04: v1.3.0
+"
+" https://spacevim.org/SpaceVim-release-v1.3.0/
+"
+" 2019-07-17: v1.2.0
+"
+" https://spacevim.org/SpaceVim-release-v1.2.0/
 "
 " 2019-04-08: v1.1.0
 "
