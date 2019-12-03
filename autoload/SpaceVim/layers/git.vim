@@ -19,11 +19,11 @@ function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
         \ ]
-  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
   call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
   if s:git_plugin ==# 'gina'
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
   elseif s:git_plugin ==# 'fugitive'
+    call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
     call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
   elseif s:git_plugin ==# 'gita'
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
@@ -73,10 +73,10 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git-push', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view-git-diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Git push', 'git-push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Git diff', 'view-git-diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gblame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
   endif
   augroup spacevim_layer_git
     autocmd!
