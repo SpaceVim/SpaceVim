@@ -71,7 +71,7 @@ function! SpaceVim#layers#git#config() abort
   else
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git status', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset %', 'unstage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Git push', 'git-push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Git diff', 'view-git-diff', 1)
