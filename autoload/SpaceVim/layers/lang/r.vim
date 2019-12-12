@@ -18,7 +18,7 @@ function! SpaceVim#layers#lang#r#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#lang#r#config() abort
-  call SpaceVim#plugins#runner#reg_runner('r', 'r %s')
+  call SpaceVim#plugins#runner#reg_runner('r', 'R --vanilla <%s')
   call SpaceVim#mapping#space#regesit_lang_mappings('r', function('s:language_specified_mappings'))
   if !empty(s:r_repl_command)
       call SpaceVim#plugins#repl#reg('r',s:r_repl_command)
