@@ -49,7 +49,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
   nnoremap <silent> [SPC]w<tab> :wincmd w<cr>
   call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '+'], 
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '+'],
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
@@ -197,7 +197,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
         \ "execute eval(\"winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'\")",
         \ ['swap window',
         \ [
@@ -521,8 +521,8 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   endif
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
-    let cmd = ':<C-u>' . a:cmd . '<CR>' 
-    let xcmd = ':' . a:cmd . '<CR>' 
+    let cmd = ':<C-u>' . a:cmd . '<CR>'
+    let xcmd = ':' . a:cmd . '<CR>'
     let lcmd = a:cmd
   else
     let cmd = a:cmd
@@ -578,7 +578,7 @@ function! s:windows_layout_toggle() abort
     echohl WarningMsg
     echom "Can't toggle window layout when the number of windows isn't two."
     echohl None
-  else 
+  else
     if winnr() == 1
       let b = winbufnr(2)
     else
@@ -599,12 +599,29 @@ endfunction
 
 let s:language_specified_mappings = {}
 function! SpaceVim#mapping#space#refrashLSPC() abort
+  " Predefined mappings
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
     call call(s:language_specified_mappings[&filetype], [])
     let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
   endif
 
+  " Customized mappings
+  if has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, &filetype)
+    for argv in g:_spacevim_mappings_language_specified_space_custom_group_name[&filetype]
+      " Only support one layer of groups
+      if !has_key(g:_spacevim_mappings_space.l, argv[0][0])
+        let g:_spacevim_mappings_space.l[argv[0][0]] = {'name' : argv[1]}
+      endif
+    endfor
+  endif
+  if has_key(g:_spacevim_mappings_language_specified_space_custom, &filetype)
+    for argv in g:_spacevim_mappings_language_specified_space_custom[&filetype]
+      let argv = deepcopy(argv)
+      let argv[1] = ['l'] + argv[1]
+      call call('SpaceVim#mapping#space#langSPC', argv)
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
@@ -617,7 +634,7 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort
   endif
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
-    let cmd = ':<C-u>' . a:cmd . '<CR>' 
+    let cmd = ':<C-u>' . a:cmd . '<CR>'
     let lcmd = a:cmd
   else
     let cmd = a:cmd
@@ -661,7 +678,7 @@ endfunction
 
 function! s:windows_transient_state() abort
 
-  let state = SpaceVim#api#import('transient_state') 
+  let state = SpaceVim#api#import('transient_state')
   call state.set_title('Buffer Selection Transient State')
   call state.defind_keys(
         \ {

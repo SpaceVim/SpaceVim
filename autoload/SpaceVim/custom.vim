@@ -83,6 +83,19 @@ function! SpaceVim#custom#SPCGroupName(keys, name) abort
   call add(g:_spacevim_mappings_space_custom_group_name, [a:keys, a:name])
 endfunction
 
+function! SpaceVim#custom#LangSPC(ft, m, keys, cmd, desc, is_cmd) abort
+  if !has_key(g:_spacevim_mappings_language_specified_space_custom, a:ft)
+    let g:_spacevim_mappings_language_specified_space_custom[a:ft] = []
+  endif
+  call add(g:_spacevim_mappings_language_specified_space_custom[a:ft], [a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+endfunction
+
+function! SpaceVim#custom#LangSPCGroupName(ft, keys, name) abort
+  if !has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, a:ft)
+    let g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft] = []
+  endif
+  call add(g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft], [a:keys, a:name])
+endfunction
 
 function! SpaceVim#custom#apply(config, type) abort
   " the type can be local or global
