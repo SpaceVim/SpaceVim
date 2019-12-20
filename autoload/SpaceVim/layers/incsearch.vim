@@ -39,6 +39,7 @@ function! SpaceVim#layers#incsearch#plugins() abort
   call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
+  call add(plugins, ['nelstrom/vim-visual-star-search', {'merged' : 0}])
   return plugins
 endfunction
 
