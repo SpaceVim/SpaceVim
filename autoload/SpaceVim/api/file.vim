@@ -141,6 +141,9 @@ let s:file_node_pattern_matches = {
 
 
 function! s:filetypeIcon(path) abort
+  if exists('*WebDevIconsGetFileTypeSymbol')  " support for vim-devicons
+    return WebDevIconsGetFileTypeSymbol(a:path)
+  endif
   let file = fnamemodify(a:path, ':t')
   if has_key(s:file_node_exact_matches, file)
     return s:file_node_exact_matches[file]
@@ -157,7 +160,6 @@ function! s:filetypeIcon(path) abort
     return s:file_node_extensions[ext]
   endif
   return ''
-
 endfunction
 
 let s:file['fticon'] = function('s:filetypeIcon')
