@@ -33,7 +33,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_ft'))
-  call SpaceVim#plugins#repl#reg('typescript', ['ts-node'])
+  call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
 endfunction
 
 function! SpaceVim#layers#lang#typescript#set_variable(var) abort
