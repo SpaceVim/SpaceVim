@@ -255,6 +255,7 @@ else
 endif
 
 function! s:search_status() abort
+  let save_cursor = getpos('.')
   let ct = 0
   let tt = 0
   let ctl = split(s:VIMCOMP.execute('keeppatterns .,$s/' . @/ . '//gn', 'silent!'), "\n")
@@ -265,6 +266,7 @@ function! s:search_status() abort
   if !empty(ctl)
     let tt = split(ttl[0])[0]
   endif
+  keepjumps call setpos('.', save_cursor)
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
