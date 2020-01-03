@@ -391,7 +391,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'F'], 'call SpaceVim#mapping#search#grep("a", "F")',
         \ 'search cursor word in arbitrary directory with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'j'], 'call SpaceVim#plugins#searcher#find("", "ag")',
-        \ 'Background search cursor words in project with ag', 1)
+        \ 'Background search in project with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ag")',
         \ 'Background search cursor words in project with ag', 1)
   " grep
