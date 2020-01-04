@@ -764,7 +764,8 @@ endfunction
 
 ### Fuzzy finder
 
-SpaceVim provides five fuzzy find tools, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer
+(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
@@ -791,7 +792,24 @@ for example, load the denite layer:
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
+**Key bindings within fuzzy finder buffer**
+
+| Key Bindings             | Descriptions                    |
+| ------------------------ | ------------------------------- |
+| `<Tab>` / `Ctrl-j`       | Select next line                |
+| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                  | Leave Insert mode               |
+| `Ctrl-w`                 | Delete backward path            |
+| `Ctrl-u`                 | Delete whole line before cursor |
+| `<Enter>`                | Run default action              |
+| `Ctrl-s`                 | Open in a split                 |
+| `Ctrl-v`                 | Open in a vertical split        |
+| `Ctrl-t`                 | Open in a new tab               |
+| `Ctrl-g`                 | Close fuzzy finder              |
+
 **Differences between these layers**
+
+The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
@@ -806,33 +824,6 @@ for example, load the denite layer:
 | message            |  yes   |  yes  |   no    |  no   | yes |
 | quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
 | resume windows     |  yes   |  yes  |   no    |  no   | no  |
-
-**Key bindings within fuzzy finder buffer**
-
-| Key Bindings             | Descriptions                              |
-| ------------------------ | ----------------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                          |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line                      |
-| `j k`                    | Leave Insert mode (Only for denite/unite) |
-| `Ctrl-w`                 | Delete backward path                      |
-| `<Enter>`                | Run default action                        |
-| `Ctrl-s`                 | Open in a split                           |
-| `Ctrl-v`                 | Open in a vertical split                  |
-| `Ctrl-t`                 | Open in a new tab                         |
-| `Ctrl-g`                 | Exit unite                                |
-
-**Denite/Unite normal mode key bindings**
-
-| Key Bindings   | Mode          | Descriptions                         |
-| -------------- | ------------- | ------------------------------------ |
-| `Ctrl-h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl-l`       | Normal        | Redraw                               |
-| `<Tab>`        | Normal        | Select actions                       |
-| `<Space>`      | Normal        | Toggle mark current candidate, up    |
-| `r`            | Normal        | Replace ('search' profile) or rename |
-| `Ctrl-z`       | Normal/insert | Toggle transpose window              |
-
-The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
 
 ### Discovering
 

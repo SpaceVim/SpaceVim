@@ -178,13 +178,36 @@ function! s:denite_my_settings() abort
 endfunction
 
 function! s:denite_filter_my_settings() abort
+  call s:clear_imap('<C-g>g')
+  call s:clear_imap('<C-g>S')
+  call s:clear_imap('<C-g>s')
+  call s:clear_imap('<C-g>%')
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+  imap <silent><buffer> <C-g> <Plug>(denite_filter_quit):q<Cr>
   inoremap <silent><buffer> <Tab>
         \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
   inoremap <silent><buffer> <S-Tab>
         \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  " @fixme use this key binding only for sources which has delete action
+  inoremap <silent><buffer><expr> <C-d>
+        \ <SID>delete_action()
 endfunction
 
+
+function! s:delete_action() abort
+  if SpaceVim#layers#core#statusline#denite_status("sources") =~# '^buffer'
+    return denite#do_map('do_action', 'delete')
+  else
+    return ''
+  endif
+endfunction
+
+
+function! s:clear_imap(map) abort
+  if maparg(a:map, 'i')
+    exe 'iunmap <buffer> ' . a:map
+  endif
+endfunction
 
 " vim:set et sw=2 cc=80:

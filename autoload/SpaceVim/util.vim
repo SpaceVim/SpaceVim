@@ -193,7 +193,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
       if has('nvim')
         echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
       else
-        echohl WarningMsg | echom 'You need to compile you vim with +clipboard feature' | echohl None
+        echohl WarningMsg | echom 'You need to compile your vim with +clipboard feature' | echohl None
       endif
     endtry
   endif

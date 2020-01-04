@@ -105,7 +105,8 @@ function! SpaceVim#custom#apply(config, type) abort
     endif
     let layers = get(a:config, 'layers', [])
     for layer in layers
-      if !get(layer, 'enable', 1)
+      let enable = get(layer, 'enable', 1)
+      if (type(enable) == type('') && !eval(enable)) || (type(enable) != type('') && !enable)
         call SpaceVim#layers#disable(layer.name)
       else
         call SpaceVim#layers#load(layer.name, layer)

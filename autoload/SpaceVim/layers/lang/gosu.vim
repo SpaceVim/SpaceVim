@@ -6,6 +6,24 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#gosu, layer-lang-gosu
+" @parentsection layers
+" This layer is for gosu development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#gosu'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+
+
 function! SpaceVim#layers#lang#gosu#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-gosu', { 'merged' : 0}])

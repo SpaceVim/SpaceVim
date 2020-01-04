@@ -6,6 +6,33 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#batch, layer-lang-batch
+" @parentsection layers
+" This layer is for batch development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#batch'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for batch, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#batch#plugins() abort
   let plugins = []
