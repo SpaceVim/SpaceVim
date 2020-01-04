@@ -73,7 +73,7 @@ function! s:git_branch() abort
     endtry
   elseif exists('g:loaded_git')
     try
-      let head = git#branch#current()
+      let head = '%{git#branch#current()}'
       if g:spacevim_statusline_unicode_symbols == 1
         return empty(l:head) ? '' : '  ' . head . s:gtm_status()
       else
