@@ -20,18 +20,24 @@ let s:conf = '.project_alt.json'
 
 let s:project_config = {}
 
+
+" when this function is called, the project_config file name is changed, and
+" the project_config info is cleared.
 function! SpaceVim#plugins#a#set_config_name(name) abort
-
   let s:conf = a:name
-
+  let s:project_config = {}
 endfunction
 
 function! SpaceVim#plugins#a#alt() abort
-  let conf_file = s:FILE.unify_path(s:conf, ':p')
-  let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
-  if !empty(alt)
-    exe 'e ' . alt
+  let project_config_conf = get(b:, 'project_alt_json', {})
+  if empty(project_config_conf)
+    let conf_file = s:FILE.unify_path(s:conf, ':p')
+    let file = s:FILE.unify_path(bufname('%'), ':.')
+    let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
+    if !empty(alt)
+      exe 'e ' . alt
+    endif
+  else
   endif
 endfunction
 
@@ -39,7 +45,7 @@ function! s:paser(conf, root) abort
   for key in keys(a:conf)
     let searchpath = key
     if match(key, '/*')
-        let searchpath = substitute(key, '*', '**/*', 'g')
+      let searchpath = substitute(key, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
@@ -68,10 +74,6 @@ function! s:add_alternate_file(a, f, b) abort
   "end_len = 3
   "docs/index.md
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
-endfunction
-
-function! Log() abort
-  return s:project_config
 endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, root) abort
