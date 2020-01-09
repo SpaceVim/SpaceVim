@@ -18,7 +18,11 @@ let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:conf = '.project_alt.json'
 
+
+" this is for saving the project configuration information. Use the path of
+" the project_alt.json file as the key.
 let s:project_config = {}
+
 
 
 " when this function is called, the project_config file name is changed, and
@@ -26,6 +30,15 @@ let s:project_config = {}
 function! SpaceVim#plugins#a#set_config_name(name) abort
   let s:conf = a:name
   let s:project_config = {}
+endfunction
+
+function! s:get_project_config() abort
+  let project_config_conf = get(b:, 'project_alt_json', {})
+  if !empty(project_config_conf)
+    return project_config_conf
+  endif
+  let conf_file = s:FILE.unify_path(s:conf, ':p')
+  return s:JSON.json_decode(join(readfile(conf_file), "\n"))
 endfunction
 
 function! SpaceVim#plugins#a#alt() abort
