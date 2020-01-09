@@ -18,18 +18,32 @@ let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:conf = '.project_alt.json'
 
+
+" this is for saving the project configuration information. Use the path of
+" the project_alt.json file as the key.
 let s:project_config = {}
 
+
+
+" when this function is called, the project_config file name is changed, and
+" the project_config info is cleared.
 function! SpaceVim#plugins#a#set_config_name(name) abort
-
   let s:conf = a:name
+  let s:project_config = {}
+endfunction
 
+function! s:get_project_config(conf_file) abort
+  let project_config_conf = get(b:, 'project_alt_json', {})
+  if !empty(project_config_conf)
+    return project_config_conf
+  endif
+  return s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
 endfunction
 
 function! SpaceVim#plugins#a#alt() abort
-  let conf_file = s:FILE.unify_path(s:conf, ':p')
+  let conf_file_path = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path)
   if !empty(alt)
     exe 'e ' . alt
   endif
@@ -39,7 +53,7 @@ function! s:paser(conf, root) abort
   for key in keys(a:conf)
     let searchpath = key
     if match(key, '/*')
-        let searchpath = substitute(key, '*', '**/*', 'g')
+      let searchpath = substitute(key, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
@@ -70,18 +84,14 @@ function! s:add_alternate_file(a, f, b) abort
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
-function! Log() abort
-  return s:project_config
-endfunction
-
-function! SpaceVim#plugins#a#get_alt(file, root) abort
-  if !has_key(s:project_config, a:root)
-    let altconfa = s:JSON.json_decode(join(readfile(a:root), "\n"))
-    let s:project_config[a:root] = {}
-    call s:paser(altconfa, a:root)
+function! SpaceVim#plugins#a#get_alt(file, conf_path) abort
+  if !has_key(s:project_config, a:conf_path)
+    let altconfa = s:get_project_config(a:conf_path)
+    let s:project_config[a:conf_path] = {}
+    call s:paser(altconfa, a:conf_path)
   endif
   try
-    return s:project_config[a:root][a:file]['alternate']
+    return s:project_config[a:conf_path][a:file]['alternate']
   catch
     return ''
   endtry
