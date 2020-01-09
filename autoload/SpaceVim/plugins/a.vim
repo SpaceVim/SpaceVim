@@ -32,25 +32,20 @@ function! SpaceVim#plugins#a#set_config_name(name) abort
   let s:project_config = {}
 endfunction
 
-function! s:get_project_config() abort
+function! s:get_project_config(conf_file) abort
   let project_config_conf = get(b:, 'project_alt_json', {})
   if !empty(project_config_conf)
     return project_config_conf
   endif
-  let conf_file = s:FILE.unify_path(s:conf, ':p')
-  return s:JSON.json_decode(join(readfile(conf_file), "\n"))
+  return s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
 endfunction
 
 function! SpaceVim#plugins#a#alt() abort
-  let project_config_conf = get(b:, 'project_alt_json', {})
-  if empty(project_config_conf)
-    let conf_file = s:FILE.unify_path(s:conf, ':p')
-    let file = s:FILE.unify_path(bufname('%'), ':.')
-    let alt = SpaceVim#plugins#a#get_alt(file, conf_file)
-    if !empty(alt)
-      exe 'e ' . alt
-    endif
-  else
+  let conf_file_path = s:FILE.unify_path(s:conf, ':p')
+  let file = s:FILE.unify_path(bufname('%'), ':.')
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path)
+  if !empty(alt)
+    exe 'e ' . alt
   endif
 endfunction
 
@@ -89,14 +84,14 @@ function! s:add_alternate_file(a, f, b) abort
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file, root) abort
-  if !has_key(s:project_config, a:root)
-    let altconfa = s:JSON.json_decode(join(readfile(a:root), "\n"))
-    let s:project_config[a:root] = {}
-    call s:paser(altconfa, a:root)
+function! SpaceVim#plugins#a#get_alt(file, conf_path) abort
+  if !has_key(s:project_config, a:conf_path)
+    let altconfa = s:get_project_config(a:conf_path)
+    let s:project_config[a:conf_path] = {}
+    call s:paser(altconfa, a:conf_path)
   endif
   try
-    return s:project_config[a:root][a:file]['alternate']
+    return s:project_config[a:conf_path][a:file]['alternate']
   catch
     return ''
   endtry
