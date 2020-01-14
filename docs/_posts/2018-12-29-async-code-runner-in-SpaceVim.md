@@ -9,7 +9,7 @@ comments: true
 commentsID: "VIM 异步代码执行"
 ---
 
-# [博客](../cn/blogs/) > SpaceVim 中一键异步运行
+# [Blogs](../blog/) >> SpaceVim 中一键异步运行
 
 
 当编辑代码时，通常有这样的需求，即为快速运行当前文件。而 Vim 自带的 `:!` 命令可以用来执行外部命令。
