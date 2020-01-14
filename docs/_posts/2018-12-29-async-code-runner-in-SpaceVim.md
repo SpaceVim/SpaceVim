@@ -2,9 +2,11 @@
 title: "SpaceVim 中一键异步运行"
 categories: [blog_cn, feature_cn]
 excerpt: "异步执行当前文件，并将结果展示在下方窗口"
+permalink: /cn/:title/
+lang: zh
+type: BlogPosting
 comments: true
 commentsID: "VIM 异步代码执行"
-lang: cn
 ---
 
 # [博客](../cn/blogs/) > SpaceVim 中一键异步运行
