@@ -1,5 +1,5 @@
 ---
-title:  "Conventions"
+title: "Conventions"
 description: "conventions of contributing to SpaceVim, including the coding style guides about vim script and markdown"
 ---
 
@@ -33,15 +33,16 @@ description: "conventions of contributing to SpaceVim, including the coding styl
     - [Line Continuations](#line-continuations)
     - [Naming](#naming)
 - [Key notations](#key-notations)
-- [Thanks:](#thanks)
+- [Vimscript Style](#vimscript-style)
+- [Markdown Style](#markdown-style)
 
 <!-- vim-markdown-toc -->
 
 ## Commit emoji convention
 
-- `:memo:` Add comment or doc
+- `:memo:` Add comment or doc.
 - `:gift:` New feature.
-- `:bug:` Bug fix
+- `:bug:` Bug fix.
 - `:bomb:` Breaking compatibility.
 - `:white_check_mark:` Write test.
 - `:fire:` Remove something.
@@ -83,7 +84,7 @@ Avoid using :s[ubstitute] as it moves the cursor and prints error messages. Pref
 
 The meaning of the g flag depends upon the gdefault setting. If you do use :substitute you must save gdefault, set it to 0 or 1, perform the substitution, and then restore it.
 
-For many vim commands, functions exist that do the same thing with fewer side effects. See :help functions() for a list of built-in functions.
+For many Vim commands, functions exist that do the same thing with fewer side effects. See `:help functions` for a list of built-in functions.
 
 #### Fragile commands
 
@@ -132,15 +133,15 @@ Use python only when it provides critical functionality, for example when writin
 
 #### Other Languages
 
-**Use vimscript instead.**
+**Use Vimscript instead.**
 
-Avoid using other scripting languages such as ruby and lua. We can not guarantee that the end user's vim has been compiled with support for non-vimscript languages.
+Avoid using other scripting languages such as ruby and lua. We cannot guarantee that the end user's Vim has been compiled with support for non-vimscript languages.
 
 #### Plugin layout
 
 **Organize functionality into modular plugins**
 
-Group your functionality as a plugin, unified in one directory (or code repository) which shares your plugin's name (with a "vim-" prefix or ".vim" suffix if desired). It should be split into plugin/, autoload/, etc. subdirectories as necessary, and it should declare metadata in the addon-info.json format (see the VAM documentation for details).
+Group your functionality as a plugin, unified in one directory (or code repository) which shares your plugin's name (with a "vim-" prefix or ".vim" suffix if desired). It should be split into plugin/, autoload/, etc. subdirectories as necessary, and it should declare metadata in the addon-info.json format (see the Vim documentation for details).
 
 #### Functions
 
@@ -188,7 +189,7 @@ Your plugins generally shouldn't introduce mappings, but if they do, the map com
 
 #### Errors
 
-When using catch, match the error code rather than the error text.
+When using catch, match the error codes rather than the error text.
 
 #### Settings
 
@@ -198,8 +199,7 @@ Use :setlocal and &l: instead of :set and & unless you have explicit reason to d
 
 ### Style
 
-Follow google style conventions. When in doubt, treat vimscript style like
-python style.
+Follow google style conventions. When in doubt, treat vimscript style like python style.
 
 #### Whitespace
 
@@ -222,7 +222,7 @@ Trailing whitespace is allowed in mappings which prep commands for user input,
 such as "noremap <leader>gf :grep -f ".
 
 - Restrict lines to 80 columns wide
-- Indent continued lines by four spaces
+- Indent continued lines by two spaces
 - Do not align arguments of commands
 
 ```diff
@@ -247,7 +247,7 @@ such as "noremap <leader>gf :grep -f ".
 
 When continuing a multi-line command a pipe can be substituted for this space as necessary, as follows:
 
-```viml
+```vim
 autocommand BufEnter <buffer>
     \ if !empty(s:var)
     \|  call some#function()
@@ -260,43 +260,44 @@ autocommand BufEnter <buffer>
 
 #### Naming
 
-In general, use `plugin-names-like-this`, `FunctionNamesLikeThis`,
-`CommandNamesLikeThis`, `augroup_names_like_this`, `variable_names_like_this`.
+- Keep them short and sweet.
+- In general, use
+    - `plugin-names-like-this`
+    - `FunctionNamesLikeThis`
+    - `CommandNamesLikeThis`
+    - `augroup_names_like_this`
+    - `variable_names_like_this`
 
-Always prefix variables with their scope.
-
-- plugin-names-like-this
-    Keep them short and sweet.
-- FunctionNamesLikeThis
-  - Prefix script-local functions with s:
-  - Autoloaded functions may not have a scope prefix.
-  - Do not create global functions. Use autoloaded functions instead.
-- CommandNamesLikeThis
-    Prefer succinct command names over common command prefixes.
-- variable_names_like_this
-    Augroup names count as variables for naming purposes.
+- Do not create global functions. Use autoloaded functions instead.
+- Prefer succinct command names over common command prefixes.
+- Augroup names count as variables for naming purposes.
 - Prefix all variables with their scope.
-  - Global variables with g:
-  - Script-local variables with s:
-  - Function arguments with a:
-  - Function-local variables with l:
-  - Vim-predefined variables with v:
-  - Buffer-local variables with b:
-  - g:, s:, and a: must always be used.
-  - b: changes the variable semantics; use it when you want buffer-local semantics.
-  - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
+    - Global variables with g:
+    - Script-local variables with s:
+    - Function arguments with a:
+    - Function-local variables with l:
+    - Vim-predefined variables with v:
+    - Buffer-local variables with b:
+    - g:, s:, and a: must always be used.
+    - b: changes the variable semantics; use it when you want buffer-local semantics.
+    - l: and v: should be used for consistency, future proofing, and to avoid subtle bugs. They are not strictly required. Add them in new code but don’t go out of your way to add them elsewhere.
+    - Autoloaded functions may not have a scope prefix.
 
 ## Key notations
 
-- use capital case and angle brackets for keyboard button: `<Down>`, `<Up>`
-- use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`
-- use space as delimiter for key sequences: `SPC t w`, `<Leader> f f`
-- use `/` for alternative sequences: `<Tab>` / `<C-n>`
-- Use `Ctrl-e` instead of `<C-e>` in documentation
+- Use capital case and angle brackets for keyboard buttons: `<Down>`, `<Up>`.
+- Use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`.
+- Use space as delimiter for key sequences: `SPC t w`, `<Leader> f o`.
+- Use `/` for alternative sequences: `<Tab>` / `Ctrl-n`.
+- Use `Ctrl-e` rather than `<C-e>` in documentation.
 
-## Thanks:
+## Vimscript Style
 
-- link : <https://google.github.io/styleguide/vimscriptguide.xml>
-- link : <https://google.github.io/styleguide/vimscriptfull.xml>
-- link : <https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt>
-- [google's markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)
+- [Google Vimscript Style Guide](https://google.github.io/styleguide/vimscriptguide.xml)
+- [Google Vimscript Guide](https://google.github.io/styleguide/vimscriptfull.xml)
+- [Vim Scripting Style Guide](https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt)
+
+## Markdown Style
+
+- [Google's Markdown style guide](https://github.com/google/styleguide/blob/3591b2e540cbcb07423e02d20eee482165776603/docguide/style.md)
+

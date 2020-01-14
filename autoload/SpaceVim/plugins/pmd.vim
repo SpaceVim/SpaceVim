@@ -1,6 +1,6 @@
 "=============================================================================
 " pmd.vim --- Integrates PMD using Vim quickfix mode
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -32,7 +32,7 @@ if !exists('Pmd_Cmd')
 endif
 
 if !exists('Pmd_Rulesets')
-  let g:Pmd_Rulesets = ["-R", "java-basic,java-design", "-property", "xsltFilename=my-own.xs"]
+  let g:Pmd_Rulesets = ['-R', 'java-basic,java-design', '-property', 'xsltFilename=my-own.xs']
 endif
 
 if !exists('Pmd_silent_stderr')
@@ -91,7 +91,7 @@ endfunction
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
 
-function! SpaceVim#plugins#pmd#run(...)
+function! SpaceVim#plugins#pmd#run(...) abort
   let argv = g:Pmd_Cmd + a:000
   if index(a:000, '-R') == -1
     let argv += g:Pmd_Rulesets
@@ -112,13 +112,13 @@ function! SpaceVim#plugins#pmd#run(...)
         \ )
 endfunction
 
-function! SpaceVim#plugins#pmd#debug()
+function! SpaceVim#plugins#pmd#debug() abort
   call s:CMD.debug()
   call s:JOB.debug()
 endfunction
 
 
-function! SpaceVim#plugins#pmd#complete(ArgLead, CmdLine, CursorPos)
+function! SpaceVim#plugins#pmd#complete(ArgLead, CmdLine, CursorPos) abort
   return s:CMD.complete(a:ArgLead, a:CmdLine, a:CursorPos)
 endfunction
 

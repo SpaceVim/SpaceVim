@@ -4,5 +4,5 @@ endif
 let b:current_syntax = 'SpaceVimFlyGrep'
 syntax case ignore
 
-syn match FileName /[^:]*:\d\+:\(\d\+:\)\?/
+syn match FileName /\([A-Z]:\)\?[^:]*:\d\+:\(\d\+:\)\?/
 hi def link FileName Comment

@@ -1,6 +1,6 @@
 "=============================================================================
 " custom.vim --- custom API in SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,7 @@
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#custom#profile(dict) abort
   for key in keys(a:dict)
@@ -36,8 +37,8 @@ endfunction
 function! SpaceVim#custom#autoconfig(...) abort
   let menu = SpaceVim#api#import('cmdlinemenu')
   let ques = [
-        \ ['dark powered mode', function('s:awesome_mode')],
         \ ['basic mode', function('s:basic_mode')],
+        \ ['dark powered mode', function('s:awesome_mode')],
         \ ]
   call menu.menu(ques)
 endfunction
@@ -46,14 +47,14 @@ endfunction
 
 function! s:awesome_mode() abort
   let sep = s:FILE.separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'dark_powered.toml'], sep)
+  let f = g:_spacevim_root_dir . join(['', 'mode', 'dark_powered.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
 
 function! s:basic_mode() abort
   let sep = s:FILE.separator
-  let f = fnamemodify(g:_spacevim_root_dir, ':h') . join(['', 'mode', 'basic.toml'], sep)
+  let f = g:_spacevim_root_dir . join(['', 'mode', 'basic.toml'], sep)
   let config = readfile(f, '')
   call s:write_to_config(config)
 endfunction
@@ -64,12 +65,12 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn("Failed to generate config file, It is not readable: " . cf)
+    call SpaceVim#logger#warn('Failed to generate config file, It is not readable: ' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
   if !isdirectory(dir)
-    call mkdir(dir), 'p')
+    call mkdir(dir, 'p')
   endif
   call writefile(a:config, cf, '')
 endfunction
@@ -84,17 +85,28 @@ endfunction
 
 
 function! SpaceVim#custom#apply(config, type) abort
+  " the type can be local or global
+  " local config can override global config
   if type(a:config) != type({})
     call SpaceVim#logger#info('config type is wrong!')
   else
+    call SpaceVim#logger#info('start to apply config [' . a:type . ']')
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
+      if name ==# 'project_rooter_patterns'
+        " clear rooter cache
+        call SpaceVim#plugins#projectmanager#current_root()
+      endif
       unlet value
     endfor
+    if g:spacevim_debug_level !=# 1
+      call SpaceVim#logger#setLevel(g:spacevim_debug_level)
+    endif
     let layers = get(a:config, 'layers', [])
     for layer in layers
-      if !get(layer, 'enable', 1)
+      let enable = get(layer, 'enable', 1)
+      if (type(enable) == type('') && !eval(enable)) || (type(enable) != type('') && !enable)
         call SpaceVim#layers#disable(layer.name)
       else
         call SpaceVim#layers#load(layer.name, layer)
@@ -119,7 +131,8 @@ function! SpaceVim#custom#apply(config, type) abort
 endfunction
 
 function! SpaceVim#custom#write(force) abort
-
+  if a:force
+  endif
 endfunction
 
 function! s:path_to_fname(path) abort
@@ -127,10 +140,10 @@ function! s:path_to_fname(path) abort
 endfunction
 
 function! SpaceVim#custom#load() abort
-  " if file .SpaceVim.d/init.toml exist 
+  " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
-    let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.toml', ':p')
-    let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
+    let g:_spacevim_config_path = s:CMP.resolve(fnamemodify('.SpaceVim.d/init.toml', ':p'))
+    let &rtp =  s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d', ':p:h'))) . ',' . &rtp
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
@@ -150,7 +163,7 @@ function! SpaceVim#custom#load() abort
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
     let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.vim', ':p')
-    let &rtp =  fnamemodify('.SpaceVim.d', ':p:h') . ',' . &rtp
+    let &rtp =  s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d', ':p:h'))) . ',' . &rtp
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     exe 'source .SpaceVim.d/init.vim'
@@ -172,11 +185,11 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d') : $SPACEVIMDIR
-  if filereadable(global_dir . '/init.toml')
-    let g:_spacevim_global_config_path = global_dir . '/init.toml'
-    let local_conf = global_dir . '/init.toml'
-    let local_conf_cache = expand('~/.cache/SpaceVim/conf/init.json')
+  let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/'))) : $SPACEVIMDIR
+  if filereadable(global_dir . 'init.toml')
+    let g:_spacevim_global_config_path = global_dir . 'init.toml'
+    let local_conf = global_dir . 'init.toml'
+    let local_conf_cache = s:FILE.unify_path(expand('~/.cache/SpaceVim/conf/init.json'))
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
@@ -186,9 +199,9 @@ function! s:load_glob_conf() abort
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf, 'glob')
     endif
-  elseif filereadable(global_dir . '/init.vim')
-    let g:_spacevim_global_config_path = global_dir . '/init.vim'
-    let custom_glob_conf = global_dir . '/init.vim'
+  elseif filereadable(global_dir . 'init.vim')
+    let g:_spacevim_global_config_path = global_dir . 'init.vim'
+    let custom_glob_conf = global_dir . 'init.vim'
     let &rtp = global_dir . ',' . &rtp
     exe 'source ' . custom_glob_conf
   else
@@ -206,7 +219,10 @@ endfunction
 
 " FIXME: the type should match the toml's type
 function! s:opt_type(opt) abort
-  let var = get(g:, 'spacevim_' . a:opt, '')
+  " autoload/SpaceVim/custom.vim:221:31:Error: EVL103: unused argument `a:opt`
+  " @bugupstream viml-parser seem do not think this is used argument
+  let opt = a:opt
+  let var = get(g:, 'spacevim_' . opt, '')
   if type(var) == type('')
     return '[string]'
   elseif type(var) == 5
@@ -219,7 +235,9 @@ function! s:opt_type(opt) abort
 endfunction
 
 function! s:short_desc_of_opt(opt) abort
-  " TODO: add short desc for each options
+  if a:opt =~# '^enable_'
+  else
+  endif
   return ''
 endfunction
 

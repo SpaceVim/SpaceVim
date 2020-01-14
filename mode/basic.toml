@@ -12,7 +12,7 @@
     # if you want to use more colorscheme, please load the colorscheme
     # layer
     colorscheme = "gruvbox"
-    background = "dark"
+    colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     enable_guicolors = false
@@ -23,7 +23,7 @@
     buffer_index_type = 4
     windows_index_type = 3
     enable_tabline_filetype_icon = false
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
     statusline_unicode_symbols = false
     # Enable vim compatible mode, avoid changing origin vim key bindings
     vimcompatible = true

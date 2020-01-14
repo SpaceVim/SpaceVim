@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#WebAssembly 模块"
-description: "这一模块为 WebAssembly 开发提供支持。"
-lang: cn
+description: "这一模块为 SpaceVim 提供了 WebAssembly 的开发支持。"
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#lua
@@ -15,7 +15,7 @@ lang: cn
 
 ## 模块简介
 
-`lang#WebAssembly` 模块提供了 WebAssembly 语法高亮，采用 [vim-wasm](https://github.com/rhysd/vim-wasm) 这一插件。
+这一模块为 SpaceVim 提供了 WebAssembly 的开发支持。采用 [vim-wasm](https://github.com/rhysd/vim-wasm) 这一插件。
 
 ## 启用模块
 

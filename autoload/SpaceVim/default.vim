@@ -1,6 +1,6 @@
 "=============================================================================
 " default.vim --- default options in SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -189,6 +189,10 @@ function! SpaceVim#default#keyBindings() abort
         \ 'Toggle recording',
         \ '',
         \ 'Toggle recording mode')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<Leader>qc', ':call setqflist([])<CR>',
+        \ 'Clear quickfix list',
+        \ '',
+        \ 'Clear quickfix')
 
   " Use Ctrl+* to jump between windows
   nnoremap <silent><C-Right> :<C-u>wincmd l<CR>
@@ -278,17 +282,10 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><M-Right> :<C-U>call <SID>tobur("next")<CR>
   nnoremap <silent><M-Left> :<C-U>call <SID>tobur("prev")<CR>
 
-  call SpaceVim#mapping#def('nnoremap <silent>','<M-x>',':call chat#qq#OpenMsgWin()<cr>',
-        \ 'Open qq chatting room','call chat#chatting#OpenMsgWin()')
-  call SpaceVim#mapping#def('nnoremap <silent>','<M-w>',':call chat#weixin#OpenMsgWin()<cr>',
-        \ 'Open weixin chatting room','call chat#chatting#OpenMsgWin()')
-  call SpaceVim#mapping#def('nnoremap <silent>','<M-c>',':call chat#chatting#OpenMsgWin()<cr>',
-        \ 'Open chatting room','call chat#chatting#OpenMsgWin()')
+  call SpaceVim#mapping#def('nnoremap <silent>','g=',':call SpaceVim#mapping#format()<cr>','format current buffer','call SpaceVim#mapping#format()')
 
-  call SpaceVim#mapping#def('nnoremap <silent>','g=',':call zvim#format()<cr>','format current buffer','call zvim#format')
-
-  call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#CopyToClipboard()<cr>',
-        \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
+  call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call SpaceVim#util#CopyToClipboard()<cr>',
+        \ 'Copy buffer absolute path to X11 clipboard','call SpaceVim#util#CopyToClipboard()')
 endfunction
 
 fu! s:tobur(num) abort

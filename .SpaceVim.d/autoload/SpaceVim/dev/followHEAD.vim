@@ -58,5 +58,5 @@ function! s:follow_head_content() abort
     let s:prs =s:get_list_of_PRs() 
   endif
   let md = md + SpaceVim#dev#releases#parser_prs(s:prs, s:lang)
-  return join(md, "\n")
+  return md
 endfunction

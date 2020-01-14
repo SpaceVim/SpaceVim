@@ -1,7 +1,7 @@
-if exists("b:current_syntax")
+if exists('b:current_syntax')
     finish
 endif
-let b:current_syntax = "HelpDescribe"
+let b:current_syntax = 'HelpDescribe'
 syntax case ignore
 syn match FileName /\(Definition:\ \)\@<=.*/
 syn match KeyBindings /\[.*\]/

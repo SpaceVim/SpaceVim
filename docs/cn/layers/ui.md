@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim ui 模块"
-description: "SpaceVim ui 模块提供了一个 IDE-like 的界面，包括状态栏、文件树、语法数等等特性。"
-lang: cn
+description: "这一模块为 SpaceVim 提供了 IDE-like 的界面，包括状态栏、文件树、语法树等等特性。"
+lang: zh
 ---
 
 # [可用模块](../) >> ui

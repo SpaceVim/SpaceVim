@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#typescript 模块"
-description: "这一模块为 typescript 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+description: "这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。"
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#typescript
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 typescript 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查代码格式化等特性。
 
 ## 启用模块
 
@@ -43,7 +43,7 @@ npm install -g typescript
 - 类型图标标记
 - 跳至定义处
 - 查询函数引用
-- lsp 支持
+- LSP 支持
 
 ## 模块配置
 
@@ -51,7 +51,7 @@ npm install -g typescript
 
 ## 快捷键
 
-| 快捷键 | 功能描述        |
+| 快捷键      | 功能描述           |
 | ----------- | ------------------ |
 | `SPC l c`   | type definition    |
 | `SPC l d`   | show documentation |
@@ -62,4 +62,5 @@ npm install -g typescript
 | `SPC l r`   | references         |
 | `SPC l s`   | search             |
 | `SPC l t`   | type               |
-| `g d`   | defintion preview  |
+| `SPC l g d` | generate doc       |
+| `g d`       | defintion preview  |

@@ -1,6 +1,6 @@
 "=============================================================================
 " color.vim --- SpaceVim color API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -69,7 +69,7 @@ endfunction
 
 function! s:self.str2nr(str) abort
   let nr = get(self._deps.swap(self._color_map), a:str, -1)
-  if nr =~ 'fg\|bg\|NONE'
+  if nr =~# 'fg\|bg\|NONE'
     return nr
   else
     return str2nr(nr)

@@ -18,7 +18,7 @@ description: "Shell script development layer, provides autocompletion, syntax ch
 
 ## Description
 
-This layer is for shell script development. Shell script includes bash script and zsh script.
+This layer is for shell script development. Shell script includes bash, zsh and fish script.
 
 ## Features
 
@@ -28,7 +28,7 @@ This layer is for shell script development. Shell script includes bash script an
 - Code formatting
 - Jump to declaration
 
-SpaceVim also provides language server protocol support for bash script. to enable language server protocol
+SpaceVim also provides language server protocol support for bash script. To enable language server protocol
 for bash script, you need to load `lsp` layer for bash.
 
 ## Install
@@ -46,7 +46,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Language specific key bindings
 
-| Key binding     | Description                      |
+| Key Bindings    | Descriptions                     |
 | --------------- | -------------------------------- |
 | `SPC l d` / `K` | Show doc of cursor symbol        |
 | `g d`           | Jump to definition               |

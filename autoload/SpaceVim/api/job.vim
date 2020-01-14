@@ -1,6 +1,6 @@
 "=============================================================================
 " job.vim --- job api
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -46,7 +46,7 @@ if !s:self.nvim_job && !s:self.vim_job
     au! User SpaceVim_job_stdout nested call call(s:self.opts.on_stdout, s:self.job_argv)
     au! User SpaceVim_job_stderr nested call call(s:self.opts.on_stderr, s:self.job_argv)
     au! User SpaceVim_job_exit nested call call(s:self.opts.on_exit, s:self.job_argv)
-  augroup ENd
+  augroup END
 endif
 
 function! s:self.warn(...) abort
@@ -106,7 +106,7 @@ function! s:self.start(argv, ...) abort
       let job = jobstart(a:argv, a:1)
     else
       let job = jobstart(a:argv)
-    endi
+    endif
     catch /^Vim\%((\a\+)\)\=:E903/
       return -1
     endtry
@@ -197,7 +197,7 @@ function! s:self.stop(id) abort
       call jobstop(a:id)
       call remove(self.jobs, a:id)
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to stop job :' . a:id)
     endif
   elseif self.vim_job
     if has_key(self.jobs, a:id)
@@ -218,7 +218,7 @@ function! s:self.send(id, data) abort
         call jobsend(a:id, a:data)
       endif
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to send data to job: ' . a:id)
     endif
   elseif self.vim_job
     if has_key(self.jobs, a:id)
@@ -230,7 +230,7 @@ function! s:self.send(id, data) abort
         call ch_sendraw(chanel, join(a:data, "\n"))
       endif
     else
-      call self.warn('No job with such id')
+      call self.warn('[job API] Failed to send data to job: ' . a:id)
     endif
   else
     call self.warn()
@@ -247,7 +247,7 @@ function! s:self.status(id) abort
       return job_status(get(self.jobs, a:id))
     endif
   else
-    call self.warn('No job with such id!')
+      call self.warn('[job API] Failed to get job status: ' . a:id)
   endif
 endfunction
 
@@ -265,12 +265,23 @@ function! s:self.info(id) abort
     if has_key(self.jobs, a:id)
       return job_info(get(self.jobs, a:id))
     else
-      call self.warn('No job with such id!')
+      call self.warn('[job API] Failed to get job info: ' . a:id)
     endif
   else
     call self.warn()
   endif
 endfunction
+
+function! s:self.chanclose(id, type) abort
+  if self.nvim_job
+      call chanclose(a:id, a:type)
+  elseif self.vim_job
+    if has_key(self.jobs, a:id) && a:type ==# 'stdin'
+      call ch_close_in(get(self.jobs, a:id))
+    endif
+  endif
+endfunction
+
 
 function! s:self.debug() abort
   echo join(self._message, "\n")

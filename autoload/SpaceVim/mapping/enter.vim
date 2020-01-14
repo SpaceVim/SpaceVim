@@ -1,6 +1,6 @@
 "=============================================================================
 " enter.vim --- Enter key bindings
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,6 +14,8 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
         return "\<c-y>"
       endif
     elseif getline('.')[col('.') - 2]==#'{'&&getline('.')[col('.')-1]==#'}'
+      return "\<Enter>\<esc>ko"
+    elseif getline('.')[col('.') - 2]==#'('&&getline('.')[col('.')-1]==#')'
       return "\<Enter>\<esc>ko"
     else
       return "\<Enter>"

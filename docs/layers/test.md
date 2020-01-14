@@ -26,6 +26,27 @@ To use this configuration layer, add following snippet to your custom configurat
   name = "test"
 ```
 
+## Configuration
+
+To set or override any configuration ([see supported settings here](https://github.com/janko/vim-test)) you may use the `override_config`:
+
+```toml
+[[layers]]
+  name = "test"
+  [layers.override_config]
+    java_runner = "gradletest"
+    java_gradletest_executable = "./gradlew test"
+```
+
+In the example above is equivalent to adding the following in viml:
+
+```viml
+let test#java#runner = "gradletest"
+let test#java#gradletest#executable = "./gradlew test"
+```
+
+In essence, it replaces `_` with `#` and prepends `test#` to the keys inside `override_config`.
+
 ## Key bindings
 
 | Key Binding | Description                                                                                                                                                                                                                                                                             |

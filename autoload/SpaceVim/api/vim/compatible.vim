@@ -1,10 +1,16 @@
 "=============================================================================
 " compatible.vim --- SpaceVim compatible API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+scriptencoding utf-8
+
+let s:has_cache = {}
+
+let s:SYS = SpaceVim#api#import('system')
 
 ""
 " @section vim#compatible, api-vim-compatible
@@ -40,25 +46,35 @@ let s:STRING = SpaceVim#api#import('data#string')
 let s:self = {}
 
 function! s:self.has(feature) abort
+  if has_key(s:has_cache, a:feature)
+    return s:has_cache[a:feature]
+  endif
+
   if a:feature ==# 'python'
     try
       py import vim
+      let s:has_cache['python'] = 1
       return 1
     catch
+      let s:has_cache['python'] = 0
       return 0
     endtry
   elseif a:feature ==# 'python3'
     try
       py3 import vim
+      let s:has_cache['python3'] = 1
       return 1
     catch
+      let s:has_cache['python3'] = 0
       return 0
     endtry
   elseif a:feature ==# 'pythonx'
     try
       pyx import vim
+      let s:has_cache['pythonx'] = 1
       return 1
     catch
+      let s:has_cache['pythonx'] = 0
       return 0
     endtry
   else
@@ -70,8 +86,10 @@ if has('patch-8.0.1364')
   function! s:self.win_screenpos(nr) abort
     return win_screenpos(a:nr)
   endfunction
+
 elseif s:self.has('python')
   function! s:self.win_screenpos(nr) abort
+
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
     elseif a:nr == 0
@@ -81,8 +99,10 @@ elseif s:self.has('python')
     return [pyeval('vim.windows[' . a:nr . '].row'),
           \ pyeval('vim.windows[' . a:nr . '].col')]
   endfunction
+
 elseif s:self.has('python3')
   function! s:self.win_screenpos(nr) abort
+
     if winnr('$') < a:nr || a:nr < 0
       return [0, 0]
     elseif a:nr == 0
@@ -93,9 +113,11 @@ elseif s:self.has('python3')
           \ py3eval('vim.windows[' . a:nr . '].col')]
   endfunction
 else
+  " @vimlint(EVL103, 1, a:nr)
   function! s:self.win_screenpos(nr) abort
     return [0, 0]
   endfunction
+  " @vimlint(EVL103, 0, a:nr)
 endif
 
 if exists('*execute')
@@ -200,6 +222,12 @@ else
 endif
 
 
+" patch 7.4.330  add function matchaddpos()
+
+" patch 7.4.792 add dict argv to matchaddpos() (only conceal)
+" patch 7.4.1740  syn-cchar defined with matchadd() does not appear
+" patch 8.1.0218 update dict argv (add window)
+
 
 
 " - A number.  This whole line will be highlighted.  The first
@@ -218,37 +246,45 @@ if exists('*matchaddpos')
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
-    return matchaddpos(a:group, a:pos, priority, id, dict)
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
+    return call('matchaddpos', [a:group, a:pos] + argv)
   endfunction
 else
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
     let pos1 = a:pos[0]
     if type(pos1) == 0
-      let id = matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+      let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
     elseif type(pos1) == 3
       if len(pos1) == 1
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
       elseif len(pos1) == 2
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
       elseif len(pos1) == 3
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
       endif
     endif
     if len(a:pos) > 1
       for pos1 in a:pos[1:]
         if type(pos1) == 0
-          call matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+          let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
         elseif type(pos1) == 3
           if len(pos1) == 1
-            call matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
           elseif len(pos1) == 2
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
           elseif len(pos1) == 3
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
           endif
         endif
       endfor
@@ -271,7 +307,7 @@ else
     let result = []
     "   20   281   23 -invalid-
     for info in jumpinfo
-      let [jump, line, col, file_text] = s:STRING.split(info, '', 0, 4)
+      let [jump, line, col] = s:STRING.split(info, '', 0, 4)[0:2]
       call add(result, {
             \ 'bufnr' : jump,
             \ 'lnum' : line,
@@ -281,6 +317,25 @@ else
     return result
   endfunction
 endif
+
+if s:SYS.isWindows
+  function! s:self.resolve(path) abort
+    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
+    " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
+    silent let rst = system(cmd)
+    if !v:shell_error
+      let dir = split(rst)[-1][1:-2]
+      return dir
+    endif
+    return a:path
+  endfunction
+else
+  function! s:self.resolve(path) abort
+    return resolve(a:path)
+  endfunction
+endif
+
 
 
 function! SpaceVim#api#vim#compatible#get() abort

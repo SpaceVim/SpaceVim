@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        api.vim
-" Description: SpaceVim api core file
-" Author:      Shidong Wang <wsdjeg@outlook.com>
-" Website:     https://spacevim.org
-" License:     GPLv3
-" ============================================================================
+"=============================================================================
+" api.vim --- SpaceVim api
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 ""
 " @section API, api
@@ -27,6 +27,9 @@
 
 let s:apis = {}
 
+" the api itself is a dict, and it will be changed when user use the api. so
+" every time when request a api, we should provide an clean api.
+
 
 ""
 "@public
@@ -39,7 +42,7 @@ function! SpaceVim#api#import(name) abort
   let p = {}
   try
     let p = SpaceVim#api#{a:name}#get()
-    let s:apis[a:name] = p
+    let s:apis[a:name] = deepcopy(p)
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
   return p

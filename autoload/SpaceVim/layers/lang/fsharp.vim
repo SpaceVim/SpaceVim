@@ -1,11 +1,31 @@
 "=============================================================================
 " fsharp.vim --- lang#fsharp layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#fsharp, layer-lang-fsharp
+" @parentsection layers
+" This layer is for fsharp development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#fsharp'
+" <
+"
+" This layer also provides REPL support for goby, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#fsharp#plugins() abort
   let plugins = []
@@ -15,8 +35,9 @@ function! SpaceVim#layers#lang#fsharp#plugins() abort
 endfunction
 
 
-function! SpaceVim#layers#lang#fsharp#config()
-    call SpaceVim#plugins#repl#reg('fsharp', ['fsharpi', '--readline-'])
+function! SpaceVim#layers#lang#fsharp#config() abort
+  " @todo add code runner support for fsharp
+  call SpaceVim#plugins#repl#reg('fsharp', ['fsharpi', '--readline-'])
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort

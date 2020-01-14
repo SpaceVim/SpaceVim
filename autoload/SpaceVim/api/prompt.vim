@@ -1,6 +1,6 @@
 "=============================================================================
 " prompt.vim --- SpaceVim prompt API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -28,8 +28,6 @@ let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 let s:self._keys = {
       \ 'close' : "\<Esc>",
-      \ 'cursor_back' : '<Left>',
-      \ 'cursor_forword' : '<Right>',
       \ }
 let s:self._prompt = {
       \ 'mpt' : '==>',
@@ -60,6 +58,10 @@ func! s:self.open() abort
   let &lazyredraw = save_redraw
 endf
 
+func! s:self._c_r_mode_off(timer) abort
+  let self._c_r_mode = 0
+endf
+
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
   return (type(ret) == type(0) ? nr2char(ret) : ret)
@@ -76,13 +78,26 @@ func! s:self._handle_input(...) abort
     endif
     call self._build_prompt()
   endif
+  let self._c_r_mode = 0
   while self._quit == 0
     let char = self._getchar()
     if has_key(self._function_key, char)
       call call(self._function_key[char], [])
       continue
     endif
-    if char ==# "\<Right>"
+    if self._c_r_mode ==# 1 && char =~# '[a-zA-Z0-9"+:/]'
+      let reg = '@' . char
+      let paste = get(split(eval(reg), "\n"), 0, '')
+      let self._prompt.begin = self._prompt.begin . paste
+      let self._prompt.cursor = matchstr(self._prompt.end, '.$')
+      let self._c_r_mode = 0
+      call self._build_prompt()
+    elseif char ==# "\<C-r>"
+      let self._c_r_mode = 1
+      call timer_start(2000, self._c_r_mode_off)
+      call self._build_prompt()
+      continue
+    elseif char ==# "\<Right>"
       let self._prompt.begin = self._prompt.begin . self._prompt.cursor
       let self._prompt.cursor = matchstr(self._prompt.end, '^.')
       let self._prompt.end = substitute(self._prompt.end, '^.', '', 'g')
@@ -121,7 +136,8 @@ func! s:self._handle_input(...) abort
     elseif char ==# "\<bs>"
       let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
       call self._build_prompt()
-    elseif char == self._keys.close
+    elseif (type(self._keys.close) == 1 && char == self._keys.close)
+          \ || (type(self._keys.close) == 3 && index(self._keys.close, char) > -1 )
       call self.close()
       break
     elseif char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128

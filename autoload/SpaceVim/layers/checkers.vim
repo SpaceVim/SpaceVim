@@ -1,6 +1,6 @@
 "=============================================================================
 " checkers.vim --- SpaceVim checkers layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -58,24 +58,26 @@ function! SpaceVim#layers#checkers#config() abort
   let g:neomake_cursormoved_delay = get(g:, 'neomake_cursormoved_delay', 300)
   "" }}}
 
+  let g:neomake_virtualtext_current_error = get(g:, 'neomake_virtualtext_current_error', !s:show_cursor_error)
+
   "" w0rp/ale {{{
   let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
   "" }}}
 
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
         \ . string(s:_function('s:clear_errors')) . ', [])',
-        \ 'clear all errors', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe a syntax checker', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify syntax checker setup', 1)
+        \ 'clear-all-errors', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe-a-syntax-checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify-syntax-checker-setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
         \ . string(s:_function('s:jump_to_next_error')) . ', [])',
         \ 'next-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [0])',
-        \ 'toggle showing the error list', 1)
+        \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [1])',
-        \ 'toggle showing the error list', 1)
+        \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
         \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
         \ 'previous-error', 1)
@@ -84,13 +86,16 @@ function! SpaceVim#layers#checkers#config() abort
         \ 'previous-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
         \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
-        \ 'verify syntax setup', 1)
+        \ 'verify-syntax-setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
         \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
-        \ 'toggle syntax checker', 1)
+        \ 'toggle-syntax-checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
+        \ . string(s:_function('s:explain_the_error')) . ', [])',
+        \ 'explain-the-error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
@@ -219,6 +224,28 @@ function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
   call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
   verbose NeomakeToggle
+endfunction
+
+
+function! s:explain_the_error() abort
+  if g:spacevim_enable_neomake
+    try
+      let message = neomake#GetCurrentErrorMsg()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let message = ''
+    endtry
+  elseif g:spacevim_enable_ale
+    try
+      let message = neomake#GetCurrentErrorMsg()
+    catch /^Vim\%((\a\+)\)\=:E117/
+      let message = ''
+    endtry
+  endif
+  if !empty(message)
+    echo message
+  else
+    echo 'no error message at this point!'
+  endif
 endfunction
 
 function! s:error_transient_state() abort

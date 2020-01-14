@@ -1,6 +1,6 @@
 "=============================================================================
 " tools.vim --- SpaceVim tools layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -20,7 +20,15 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, ['itchyny/calendar.vim',             { 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',           { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_map' : '<Plug>Bookmark', 'on_cmd' : 'BookmarkShowAll', 'loadconf_before' : 1}])
+  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_cmd' :
+        \ [
+        \ 'BookmarkShowAll',
+        \ 'BookmarkToggle',
+        \ 'BookmarkAnnotate',
+        \ 'BookmarkNext',
+        \ 'BookmarkPrev',
+        \ ],
+        \ 'loadconf_before' : 1}])
   let s:CMP = SpaceVim#api#import('vim#compatible')
   if s:CMP.has('python')
     call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
@@ -33,23 +41,25 @@ endfunction
 
 function! SpaceVim#layers#tools#config() abort
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown', 'leaderGuide']
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'l'], 'Calendar', 'vim calendar', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'l'], 'Calendar', 'vim-calendar', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
-        \ 'Auto detect the file encoding', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calc', 'vim calculator', 1)
+        \ 'auto-detect-file-encoding', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calc', 'vim-calculator', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'c'],
         \ 'Goyo', 'centered-buffer-mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'C'],
-        \ 'ChooseWin | Goyo', 'centered-buffer-mode(other windows)', 1)
-  nmap mm <Plug>BookmarkToggle
-  nmap mi <Plug>BookmarkAnnotate
-  nmap ma <Plug>BookmarkShowAll
-  nmap mn <Plug>BookmarkNext
-  nmap mp <Plug>BookmarkPrev
+        \ 'ChooseWin | Goyo', 'choose-window-centered-buffer-mode', 1)
+
+  " bootmark key binding
+  nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
+  nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
+  nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
+  nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
+  nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
   nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
-    autocmd FileType lisp,clojure,scheme,java RainbowParentheses
+    autocmd FileType lisp,clojure,scheme,racket,java RainbowParentheses
     autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <silent> <buffer> <c-d> <c-[>:q<cr>
           \ | nnoremap <silent> <buffer> q :bdelete<cr>
   augroup END
@@ -63,7 +73,6 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
-  noremap <silent> <F8> :TlistToggle<CR>
 endfunction
 
 " vim:set et sw=2 cc=80:

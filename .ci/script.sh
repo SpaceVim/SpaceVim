@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -ex
+export TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
 if [ "$LINT" = "vimlint" ]; then
     for file in $(git diff --name-only HEAD dev | grep .vim$);
     do
@@ -18,17 +19,52 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         cat build_log
         exit 2
     fi
+elif [ "$LINT" = "file-encoding" ]; then
+    if [[ -f encoding_log ]]; then
+        rm encoding_log
+    fi
+    for file in $(git diff --name-only HEAD master | grep .);
+    do
+        encoding=`file -bi $file | cut -f 2 -d";" | cut -f 2 -d=`
+        case $encoding in
+            utf-8)
+                exit 0
+                ;;
+            us-ascii)
+                exit 0
+                ;;
+            cp936)
+                echo $file >> encoding_log
+                exit 2
+                ;;
+            cp835)
+                echo $file >> encoding_log
+                exit 2
+        esac
+        echo $file >> encoding_log
+        exit 2
+    done
+    if [[ -s encoding_log ]]; then
+        cat encoding_log
+        exit 2
+    fi
 elif [ "$LINT" = "vint" ]; then
     vint .
 elif [ "$LINT" = "vint-errors" ]; then
     vint --error .
 elif [ "$LINT" = "vader" ]; then
-    export PATH="${DEPS}/_neovim/bin:${PATH}"
-    echo "\$PATH: \"${PATH}\""
+    if [ "$VIM_BIN" = "nvim" ]; then
+        export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
+    else
+        export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
+    fi
 
-    export VIM="${DEPS}/_neovim/share/nvim/runtime"
+    echo "\$PATH: \"${PATH}\""
     echo "\$VIM: \"${VIM}\""
-    nvim --version
+    echo "=================  ${VIM_BIN} version ======================"
+    $VIM_BIN --version
     pip install covimerage
     make test_coverage
     covimerage -vv xml --omit 'build/*'

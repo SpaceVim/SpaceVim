@@ -10,6 +10,7 @@ description: "This layers provides general version control feature for vim. It s
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -32,6 +33,11 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "VersionControl"
 ```
+
+## Layer options
+
+`enable-gtm-status`: Enable diplaying time spent within SpaceVim's statusline. This feature need [gtm](https://github.com/git-time-metric/gtm) command to be installed.
+
 
 ## Key bindings
 

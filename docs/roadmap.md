@@ -3,14 +3,14 @@ title: "Roadmap"
 description: "The roadmap and milestones define the project direction and priorities."
 ---
 
-# Roadmap
+# [Home](../) >> Roadmap
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
 <!-- vim-markdown-toc GFM -->
 
 - [Next](#next)
-  - [v1.1.0](#v110)
+  - [v1.3.0](#v130)
 - [Meta](#meta)
 - [Completed](#completed)
   - [v0.1.0](#v010)
@@ -24,12 +24,13 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
   - [v0.8.0](#v080)
   - [v0.9.0](#v090)
   - [v1.0.0](#v100)
+  - [v1.1.0](#v110)
 
 <!-- vim-markdown-toc -->
 
 ## Next
 
-### [v1.1.0](https://github.com/SpaceVim/SpaceVim/milestone/14)
+### [v1.3.0](https://github.com/SpaceVim/SpaceVim/milestone/16)
 
 ## Meta
 
@@ -128,5 +129,11 @@ release note: [v0.9.0](http://spacevim.org/SpaceVim-release-v0.9.0/)
 First stable release of SpaceVim
 
 release note: [v1.0.0](http://spacevim.org/SpaceVim-release-v1.0.0/)
+
+### [v1.1.0](https://github.com/SpaceVim/SpaceVim/milestone/14)
+
+First stable release of SpaceVim
+
+release note: [v1.1.0](http://spacevim.org/SpaceVim-release-v1.1.0/)
 
 <!-- SpaceVim roadmap completed items end -->

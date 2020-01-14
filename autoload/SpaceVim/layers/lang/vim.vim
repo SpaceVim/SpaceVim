@@ -1,6 +1,6 @@
 "=============================================================================
 " vim.vim --- SpaceVim vim layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -17,15 +17,19 @@ function! SpaceVim#layers#lang#vim#plugins() abort
         \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
         \ ]
   call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
-  call add(plugins,['mhinz/vim-lookup', {'merged' : 0}])
+  call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
   call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
-  if g:spacevim_autocomplete_method == 'asyncomplete'
+  if g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
           \ 'loadconf' : 1,
           \ 'merged' : 0,
           \ }])
-  elseif g:spacevim_autocomplete_method == 'coc'
+  elseif g:spacevim_autocomplete_method ==# 'coc'
     call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
+  elseif g:spacevim_autocomplete_method ==# 'completor'
+    " call add(plugins, ['kyouryuukunn/completor-necovim', {'merged' : 0}])
+    " This plugin has bug in neovim-qt win 7
+    " https://github.com/maralla/completor.vim/issues/250
   endif
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
   return plugins
@@ -34,7 +38,7 @@ endfunction
 function! SpaceVim#layers#lang#vim#config() abort
   call SpaceVim#mapping#gd#add('vim','lookup#lookup')
   call SpaceVim#mapping#space#regesit_lang_mappings('vim', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#highlight#reg_expr('vim', '^\s*\(func\|fu\|function\)!\?\s\+', '^\s*\(endfunc\|endf\|endfunction\)')
+  call SpaceVim#plugins#highlight#reg_expr('vim', '\s*\<fu\%[nction]\>!\?\s*', '\s*\<endf\%[unction]\>\s*')
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -50,9 +54,8 @@ endfunction
 function! s:eval_cursor() abort
   let is_keyword = &iskeyword
   set iskeyword+=:
-  set iskeyword+=(
   let cword = expand('<cword>')
-  if cword =~# '^g:'
+  if exists(cword)
     echo  cword . ' is ' eval(cword)
     " if is script function
   elseif cword =~# '^s:' && cword =~# '('

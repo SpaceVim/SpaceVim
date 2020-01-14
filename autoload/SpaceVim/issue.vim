@@ -1,6 +1,6 @@
 "=============================================================================
 " issue.vim --- issue reporter for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -24,7 +24,7 @@ endfunction
 function! s:spacevim_status() abort
   let pwd = getcwd()
   try
-    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h:h')
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
     let status = s:CMP.systemlist('git status')
   catch
     exe 'cd ~/.SpaceVim'
@@ -90,7 +90,7 @@ function! SpaceVim#issue#new() abort
 endfunction
 
 
-function! SpaceVim#issue#reopen(id)
+function! SpaceVim#issue#reopen(id) abort
   let issue = {
         \ 'state' : 'open'
         \ }
