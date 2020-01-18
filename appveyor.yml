@@ -5,7 +5,6 @@ skip_tags: true
 clone_depth: 1
 environment:
   matrix:
-    fast_finish: true
     - CONDITION: Neovim latest-32
     - CONDITION: Neovim 0.3.8-32
     - CONDITION: Neovim 0.3.7-32
@@ -19,6 +18,7 @@ environment:
         - CONDITION: Neovim 0.2.2-32
         - CONDITION: Neovim 0.2.0-32
         - CONDITION: Official latest-32
+    fast_finish: true
 install:
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
