@@ -73,8 +73,8 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-  elseif type(a:runner) == type([])
-    " the runner is a list
+  elseif type(a:runner) ==# type([]) && len(a:runner) ==# 2
+    " the runner is a list with two items
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
     let dir = fnamemodify(s:target, ':h')
@@ -94,7 +94,7 @@ function! s:async_run(runner) abort
       else
         let compile_cmd = compile_cmd + a:runner[0].opt + [get(s:, 'selected_file', bufname('%'))]
       endif
-    else
+    elseif type(a:runner[0]) ==# type('')
       let usestdin =  0
       let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     endif
@@ -110,11 +110,6 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
-    if s:job_id <= 0
-      " failed to run compile_cmd
-      let done = ['', '[Done] failed to run compile command:' . compile_cmd]
-      " call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
-    endif
     if usestdin && s:job_id > 0
       let range = get(a:runner[0], 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
@@ -149,7 +144,7 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-    if usestdin
+    if usestdin && s:job_id > 0
       let range = get(a:runner, 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
