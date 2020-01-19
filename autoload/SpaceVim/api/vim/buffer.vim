@@ -136,7 +136,11 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           \ vim.eval("a:end"),
           \ vim.eval("a:replacement")
           \ )
-  elseif exists('*setbufline')
+  elseif exists('*setbufline') && exists('*bufload')
+    " patch-8.1.0039 deletebufline()
+    " patch-8.1.0037 appendbufline()
+    " patch-8.0.1039 setbufline()
+    " patch-8.1.1610 bufadd() bufload()
     let lct = self.line_count(a:buffer)
     if a:start > lct
       return
