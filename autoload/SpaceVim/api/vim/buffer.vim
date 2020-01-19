@@ -46,6 +46,19 @@ else
   endfunction
 endif
 
+" bufnr needs atleast one argv before patch-8.1.1924 has('patch-8.1.1924')
+function! s:self.bufnr(...) abort
+  if has('patch-8.1.1924')
+    return call('bufnr', a:000)
+  else
+    if a:0 ==# 0
+      return bufnr('%')
+    else
+      return call('bufnr', a:000)
+    endif
+  endif
+endfunction
+
 
 function! s:self.bufadd(name) abort
   if exists('*bufadd')
@@ -53,7 +66,8 @@ function! s:self.bufadd(name) abort
   elseif empty(a:name)
     " create an no-named buffer
     noautocmd 1new
-    let nr = bufnr()
+    " bufnr needs atleast one argv before patch-8.1.1924 has('patch-8.1.1924')
+    let nr = self.bufnr()
     setl nobuflisted
     noautocmd q
     return nr
@@ -61,7 +75,7 @@ function! s:self.bufadd(name) abort
     return bufnr(a:name)
   else
     exe 'noautocmd 1split ' . a:name
-    let nr = bufnr()
+    let nr = self.bufnr()
     setl nobuflisted
     noautocmd q
     return nr
