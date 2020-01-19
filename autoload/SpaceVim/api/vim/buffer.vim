@@ -46,6 +46,28 @@ else
   endfunction
 endif
 
+
+function! s:self.bufadd(name) abort
+  if exists('*bufadd')
+    return bufadd(a:name)
+  elseif empty(a:name)
+    " create an no-named buffer
+    noautocmd 1new
+    let nr = bufnr()
+    setl nobuflisted
+    noautocmd q
+    return nr
+  elseif bufexists(a:name)
+    return bufnr(a:name)
+  else
+    exe 'noautocmd 1split ' . a:name
+    let nr = bufnr()
+    setl nobuflisted
+    noautocmd q
+    return nr
+  endif
+endfunction
+
 function! s:self.open(opts) abort
   let buf = get(a:opts, 'bufname', '')
   let mode = get(a:opts, 'mode', 'vertical topleft split')
