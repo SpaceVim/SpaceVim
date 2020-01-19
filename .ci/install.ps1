@@ -1,23 +1,20 @@
 function install_vim($name)
 {
-  $ver = $name -replace "^Official\s*", ""
+  $ver = $name -replace "^Vim\s*", ""
   if ($ver -eq "latest-32")
   {
-    $url1 = 'ftp://ftp.vim.org/pub/vim/pc/vim80w32.zip'
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.0129/gvim_8.2.0129_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim82\vim.exe'
   }
-  elseif ($ver -eq "8.0.0069-32")
+  elseif ($ver -eq "8.0.0069")
   {
-    $url1 = 'ftp://ftp.vim.org/pub/vim/pc/vim80-069w32.zip'
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.0.0069/gvim_8.0.0069_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
   }
-  $url2 = 'ftp://ftp.vim.org/pub/vim/pc/vim80rt.zip'
   $zip1 = $Env:APPVEYOR_BUILD_FOLDER + '\vim.zip'
-  $zip2 = $Env:APPVEYOR_BUILD_FOLDER + '\vim-rt.zip'
   (New-Object Net.WebClient).DownloadFile($url1, $zip1)
-  (New-Object Net.WebClient).DownloadFile($url2, $zip2)
   [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
   [System.IO.Compression.ZipFile]::ExtractToDirectory($zip1, $Env:APPVEYOR_BUILD_FOLDER)
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip2, $Env:APPVEYOR_BUILD_FOLDER)
-  $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
 }
 
 function install_kaoriya_vim($name)
@@ -158,7 +155,7 @@ if ($Env:CONDITION.StartsWith("Neovim"))
 {
   install_nvim $Env:CONDITION
 }
-elseif ($Env:CONDITION.StartsWith("Official"))
+elseif ($Env:CONDITION.StartsWith("Vim"))
 {
   install_vim $Env:CONDITION
 }
