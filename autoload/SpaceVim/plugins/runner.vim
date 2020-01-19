@@ -73,8 +73,8 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-  elseif type(a:runner) == type([])
-    " the runner is a list
+  elseif type(a:runner) ==# type([]) && len(a:runner) ==# 2
+    " the runner is a list with two items
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
     let dir = fnamemodify(s:target, ':h')
@@ -94,12 +94,12 @@ function! s:async_run(runner) abort
       else
         let compile_cmd = compile_cmd + a:runner[0].opt + [get(s:, 'selected_file', bufname('%'))]
       endif
-    else
+    elseif type(a:runner[0]) ==# type('')
       let usestdin =  0
-      let compile_cmd = [substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')]
+      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
-          \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
+          \ '[Compile] ' . compile_cmd . (usestdin ? ' STDIN' : ''),
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
@@ -110,7 +110,7 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
-    if usestdin
+    if usestdin && s:job_id > 0
       let range = get(a:runner[0], 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
@@ -144,7 +144,7 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-    if usestdin
+    if usestdin && s:job_id > 0
       let range = get(a:runner, 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
@@ -277,7 +277,7 @@ else
   function! s:on_stdout(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 
@@ -285,7 +285,7 @@ else
     let s:status.has_errors = 1
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 endif
