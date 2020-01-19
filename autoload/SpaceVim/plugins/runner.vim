@@ -96,10 +96,10 @@ function! s:async_run(runner) abort
       endif
     else
       let usestdin =  0
-      let compile_cmd = [substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')]
+      let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
-          \ '[Compile] ' . join(compile_cmd) . (usestdin ? ' STDIN' : ''),
+          \ '[Compile] ' . compile_cmd . (usestdin ? ' STDIN' : ''),
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
@@ -110,7 +110,12 @@ function! s:async_run(runner) abort
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
-    if usestdin
+    if s:job_id <= 0
+      " failed to run compile_cmd
+      let done = ['', '[Done] failed to run compile command:' . compile_cmd]
+      " call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+    endif
+    if usestdin && s:job_id > 0
       let range = get(a:runner[0], 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
@@ -277,7 +282,7 @@ else
   function! s:on_stdout(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 
@@ -285,7 +290,7 @@ else
     let s:status.has_errors = 1
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
     let s:lines += len(a:data)
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
   endfunction
 endif

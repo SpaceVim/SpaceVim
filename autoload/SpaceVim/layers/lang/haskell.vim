@@ -51,7 +51,7 @@ function! SpaceVim#layers#lang#haskell#config() abort
   let g:haskellmode_completion_ghc = 0
 
   call SpaceVim#plugins#runner#reg_runner('haskell', [
-        \ 'ghc -v0 --make %s -o #TEMP#',
+        \ 'ghc.exe -v0 --make %s -o #TEMP#',
         \ '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('haskell',
         \ function('s:on_ft'))
