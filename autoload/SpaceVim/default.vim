@@ -333,7 +333,7 @@ function! SpaceVim#default#Customfoldtext() abort
   endif
 
   let foldsymbol='+'
-  let repeatsymbol=''
+  let repeatsymbol='-'
   let prefix = foldsymbol . ' '
 
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
