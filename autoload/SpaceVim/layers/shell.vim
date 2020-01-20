@@ -97,11 +97,9 @@ func! SpaceVim#layers#shell#ctrl_r() abort
 endfunction
 
 
-" @todo term_getcursor in not supported in neovim v0.4.0
-
 func! SpaceVim#layers#shell#ctrl_w() abort
-  let cursorpos = term_getcursor(s:term_buf_nr)
-  let line = getline(cursorpos[0])[:cursorpos[1]-1]
+  let cursorpos = getcurpos()
+  let line = getline(cursorpos[1])[:cursorpos[2]-1]
   let str = matchstr(line, '[^ ]*\s*$')
   return repeat("\<BS>", len(str))
 endfunction
