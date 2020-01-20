@@ -96,6 +96,9 @@ func! SpaceVim#layers#shell#ctrl_r() abort
   return "\<C-r>"
 endfunction
 
+
+" @todo term_getcursor in not supported in neovim v0.4.0
+
 func! SpaceVim#layers#shell#ctrl_w() abort
   let cursorpos = term_getcursor(s:term_buf_nr)
   let line = getline(cursorpos[0])[:cursorpos[1]-1]
