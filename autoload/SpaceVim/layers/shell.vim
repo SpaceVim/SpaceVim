@@ -96,9 +96,10 @@ func! SpaceVim#layers#shell#ctrl_r() abort
   return "\<C-r>"
 endfunction
 
+
 func! SpaceVim#layers#shell#ctrl_w() abort
-  let cursorpos = term_getcursor(s:term_buf_nr)
-  let line = getline(cursorpos[0])[:cursorpos[1]-1]
+  let cursorpos = getcurpos()
+  let line = getline(cursorpos[1])[:cursorpos[2]-1]
   let str = matchstr(line, '[^ ]*\s*$')
   return repeat("\<BS>", len(str))
 endfunction
