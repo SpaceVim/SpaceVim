@@ -8,19 +8,19 @@
 
 function! SpaceVim#layers#tools#plugins() abort
   let plugins = []
-  call add(plugins, ['tpope/vim-scriptease',             { 'merged' : 0}])
-  call add(plugins, ['lymslive/vimloo',                  { 'merged' : 0}])
-  call add(plugins, ['lymslive/vnote',                   { 'depends' : 'vimloo', 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}])
-  call add(plugins, ['junegunn/rainbow_parentheses.vim', { 'on_cmd' : 'RainbowParentheses'}])
-  call add(plugins, ['mbbill/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
-  call add(plugins, ['simnalamburt/vim-mundo',           { 'on_cmd' : 'MundoToggle'}])
+  call add(plugins, ['wsdjeg/vim-scriptease',             { 'merged' : 0}])
+  call add(plugins, ['wsdjeg/vimloo',                  { 'merged' : 0}])
+  call add(plugins, ['wsdjeg/vnote',                   { 'depends' : 'vimloo', 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}])
+  call add(plugins, ['wsdjeg/rainbow_parentheses.vim', { 'on_cmd' : 'RainbowParentheses'}])
+  call add(plugins, ['wsdjeg/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
+  call add(plugins, ['wsdjeg/vim-mundo',           { 'on_cmd' : 'MundoToggle'}])
   call add(plugins, ['wsdjeg/vim-cheat',                 { 'on_cmd' : 'Cheat'}])
   call add(plugins, ['wsdjeg/Mysql.vim',                 { 'on_cmd' : 'SQLGetConnection'}])
   call add(plugins, ['wsdjeg/SourceCounter.vim',         { 'on_cmd' : 'SourceCounter'}])
-  call add(plugins, ['itchyny/calendar.vim',             { 'on_cmd' : 'Calendar'}])
-  call add(plugins, ['junegunn/limelight.vim',           { 'on_cmd' : 'Limelight'}])
-  call add(plugins, ['junegunn/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_cmd' :
+  call add(plugins, ['wsdjeg/calendar.vim',             { 'on_cmd' : 'Calendar'}])
+  call add(plugins, ['wsdjeg/limelight.vim',           { 'on_cmd' : 'Limelight'}])
+  call add(plugins, ['wsdjeg/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
+  call add(plugins, ['wsdjeg/vim-bookmarks',      { 'on_cmd' :
         \ [
         \ 'BookmarkShowAll',
         \ 'BookmarkToggle',
@@ -31,9 +31,9 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'loadconf_before' : 1}])
   let s:CMP = SpaceVim#api#import('vim#compatible')
   if s:CMP.has('python')
-    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
+    call add(plugins, ['wsdjeg/VimCalc', {'on_cmd' : 'Calc'}])
   elseif s:CMP.has('python3')
-    call add(plugins, ['fedorenchik/VimCalc3', {'on_cmd' : 'Calc'}])
+    call add(plugins, ['SpaceVim/VimCalc3', {'on_cmd' : 'Calc'}])
   endif
 
   return plugins
