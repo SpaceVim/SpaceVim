@@ -30,8 +30,8 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#column('icon', {
-      \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'directory_icon': '▶',
+      \ 'opened_icon': '▼',
       \ 'root_icon': ' ',
       \ })
 
