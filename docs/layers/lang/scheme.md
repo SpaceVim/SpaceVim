@@ -11,6 +11,7 @@ image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Options](#options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -34,6 +35,18 @@ To use this configuration layer, update custom configuration file with:
 ```toml
 [[layers]]
   name = "lang#scheme"
+```
+
+## Options
+
+- scheme_interpreter: option for setting scheme interperter.
+
+for example:
+
+```toml
+[[layers]]
+    name = 'lang#scheme'
+    scheme_interpreter = 'C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe'
 ```
 
 ## Key bindings
