@@ -1731,7 +1731,7 @@ SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这�
 
 #### 注释 (Commentings)
 
-注释 (comment) 通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
+注释 (comment) 通过工具 [nerdcommenter](https://github.com/wsdjeg/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
 | 快捷键    | 功能描述                      |
 | --------- | ----------------------------- |

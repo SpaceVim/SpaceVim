@@ -11,7 +11,7 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['scrooloose/nerdtree', { 'merged' : 0,
+    call add(plugins, ['wsdjeg/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{
@@ -32,7 +32,7 @@ function! SpaceVim#layers#core#plugins() abort
   if !g:spacevim_vimcompatible
     call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
   endif
-  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['wsdjeg/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
   if exists('*matchaddpos')
     call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])

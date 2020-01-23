@@ -1740,7 +1740,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 #### Commenting
 
-Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
+Comments are handled by [nerdcommenter](https://github.com/wsdjeg/nerdcommenter), it’s bound to the following keys.
 
 | Key Bindings | Descriptions                                            |
 | ------------ | ------------------------------------------------------- |
