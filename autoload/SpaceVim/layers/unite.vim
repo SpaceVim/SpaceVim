@@ -14,10 +14,10 @@ function! SpaceVim#layers#unite#plugins() abort
   " messages: <Leader>fm
   let plugins = [
         \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
-        \ ['thinca/vim-unite-history', {'merged' : 0}],
+        \ ['wsdjeg/vim-unite-history', {'merged' : 0}],
         \ ['Shougo/unite-help', {'merged' : 0}],
         \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
-        \ ['hewes/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
+        \ ['wsdjeg/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
         \ ]
 
   " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
@@ -27,7 +27,7 @@ function! SpaceVim#layers#unite#plugins() abort
   " history/yank source <Leader>fh
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   " quickfix source <Leader>fq
-  call add(plugins, ['osyo-manga/unite-quickfix', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/unite-quickfix', {'merged' : 0}])
   " outline source <Leader>fo
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
