@@ -15,28 +15,28 @@ let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
-        \ ['kana/vim-textobj-user'],
-        \ ['kana/vim-textobj-indent'],
-        \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
-        \ ['kana/vim-textobj-entire'],
-        \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ ['easymotion/vim-easymotion'],
-        \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ ['godlygeek/tabular',           { 'merged' : 0}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ ['wsdjeg/vim-surround'],
+        \ ['wsdjeg/vim-repeat'],
+        \ ['wsdjeg/vim-emoji'],
+        \ ['wsdjeg/vim-expand-region', { 'loadconf' : 1}],
+        \ ['wsdjeg/vim-textobj-user'],
+        \ ['wsdjeg/vim-textobj-indent'],
+        \ ['wsdjeg/vim-textobj-line'],
+        \ ['wsdjeg/vim-table-mode'],
+        \ ['wsdjeg/vim-textobj-entire'],
+        \ ['wsdjeg/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
+        \ ['wsdjeg/vim-easymotion'],
+        \ ['wsdjeg/vim-easyoperator-line'],
+        \ ['wsdjeg/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
+        \ ['wsdjeg/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ ['wsdjeg/tabular',           { 'merged' : 0}],
+        \ ['wsdjeg/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if executable('fcitx')
-    call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+    call add(plugins,['wsdjeg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
   if g:spacevim_enable_bepo_layout
-    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
+    call add(plugins,['wsdjeg/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction
