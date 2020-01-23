@@ -20,8 +20,12 @@ function! SpaceVim#layers#lang#scheme#config() abort
   call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--silent'])
 endfunction
 
+function! TestScheme() abort
+  return s:scheme_interpreter
+endfunction
+
 function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
-  let s:scheme_interpreter = get(a:opt, 'scheme_interpreter', 'mit-scheme') 
+  let s:scheme_interpreter = get(a:opt, 'scheme_interpreter', s:scheme_interpreter) 
 endfunction
 
 function! s:language_specified_mappings() abort
