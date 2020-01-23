@@ -22,6 +22,8 @@ function! SpaceVim#layers#lang#scheme#config() abort
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
   elseif s:scheme_interpreter ==# 'guile'
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile -q %s && echo')
+  elseif s:scheme_interpreter =~# 'Chez Scheme'
+    call SpaceVim#plugins#runner#reg_runner('scheme', shellescape(s:scheme_interpreter) . ' --script %s')
   else
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . s:scheme_interpreter . ' %s && echo')
   endif
