@@ -6,7 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
-let s:scheme_interpreter = 'scheme'
+if exists('s:scheme_interpreter')
+  " @bug s:scheme_interpreter always return 'scheme'
+  "
+  " because this script will be loaded twice. This is the feature of vim,
+  " when call an autoload func, vim will try to load the script again
+  finish
+else
+  let s:scheme_interpreter = 'scheme'
+endif
+
 
 function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_interpreter ==# 'mit-scheme'
@@ -20,9 +29,6 @@ function! SpaceVim#layers#lang#scheme#config() abort
   call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--silent'])
 endfunction
 
-function! TestScheme() abort
-  return s:scheme_interpreter
-endfunction
 
 function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
   let s:scheme_interpreter = get(a:opt, 'scheme_interpreter', s:scheme_interpreter) 
