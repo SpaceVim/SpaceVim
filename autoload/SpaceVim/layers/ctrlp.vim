@@ -9,11 +9,11 @@
 function! SpaceVim#layers#ctrlp#plugins() abort
   let plugins = [
         \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1, 'merged' : 0}],
-        \ ['FelikZ/ctrlp-py-matcher', {'merged' : 0}],
-        \ ['mattn/ctrlp-register', {'on_cmd' : 'CtrlPRegister'}],
-        \ ['DeaR/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],
+        \ ['wsdjeg/ctrlp-py-matcher', {'merged' : 0}],
+        \ ['wsdjeg/ctrlp-register', {'on_cmd' : 'CtrlPRegister'}],
+        \ ['wsdjeg/ctrlp-jumps', {'on_cmd' : 'CtrlPJump'}],
         \ ['SpaceVim/vim-ctrlp-help', {'on_cmd' : 'CtrlPHelp'}],
-        \ ['hara/ctrlp-colorscheme', {'on_cmd' : 'CtrlPColorscheme'}],
+        \ ['wsdjeg/ctrlp-colorscheme', {'on_cmd' : 'CtrlPColorscheme'}],
         \ ]
   call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
