@@ -23,7 +23,7 @@
 
 function! SpaceVim#layers#exprfold#plugins() abort
     return [
-                \ ['ZSaberLv0/ZFVimFoldBlock', {'merged' : 0}],
+                \ ['wsdjeg/ZFVimFoldBlock', {'merged' : 0}],
                 \ ]
 endfunction
 
