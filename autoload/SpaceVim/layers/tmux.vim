@@ -29,12 +29,12 @@
 
 function! SpaceVim#layers#tmux#plugins() abort
   let plugins = [
-        \ ['christoomey/vim-tmux-navigator', { 'on_cmd': [
+        \ ['wsdjeg/vim-tmux-navigator', { 'on_cmd': [
         \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
         \ 'TmuxNavigateRight'] }],
         \ ]
-  call add(plugins, ['tmux-plugins/vim-tmux', {'on_ft' : 'tmux'}])
-  call add(plugins, ['edkolev/tmuxline.vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-tmux', {'on_ft' : 'tmux'}])
+  call add(plugins, ['wsdjeg/tmuxline.vim', {'merged' : 0}])
   return plugins
 endfunction
 
