@@ -9,7 +9,7 @@
 function! SpaceVim#layers#sudo#plugins() abort
   let l:plugins = []
   if has('nvim') 
-    call add(l:plugins, ['lambdalisue/suda.vim'])
+    call add(l:plugins, ['wsdjeg/suda.vim'])
   endif
   return l:plugins
 endfunction
