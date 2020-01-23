@@ -30,14 +30,14 @@ function! SpaceVim#layers#core#plugins() abort
   endif
 
   if !g:spacevim_vimcompatible
-    call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+    call add(plugins, ['wsdjeg/clever-f.vim', {'merged' : 0}])
   endif
   call add(plugins, ['wsdjeg/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
   if exists('*matchaddpos')
-    call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
+    call add(plugins, ['wsdjeg/vim-matchup', {'merged' : 0}])
   endif
-  call add(plugins, ['gruvbox-community/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['wsdjeg/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
         \ 'OpenBrowserSearch'],
