@@ -9,16 +9,26 @@
 function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_dialect ==# 'mit-scheme'
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+    call SpaceVim#plugins#repl#reg('scheme', ['scheme', '--quiet'])
   elseif s:scheme_dialect ==# 'guile'
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile -q %s && echo')
+    call SpaceVim#plugins#repl#reg('scheme', ['guile', '-q'])
+  elseif s:scheme_dialect ==# 'chez'
+    if executable('chez')
+      call SpaceVim#plugins#runner#reg_runner('scheme', 'chez --script %s')
+      call SpaceVim#plugins#repl#reg('scheme', ['chez', '-q'])
+    else
+      call SpaceVim#plugins#runner#reg_runner('scheme', 'scheme --script %s')
+      call SpaceVim#plugins#repl#reg('scheme', ['scheme', '-q'])
+    endif
   else
 		try 
 			call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . s:scheme_dialect . ' %s && echo')
+      call SpaceVim#plugins#repl#reg('scheme', [s:scheme_dialect])
 		catch /^Vim\%((\a\+)\)\=:E117/
 		endtry
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('scheme', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#repl#reg('scheme', ['scheme', '--silent'])
 endfunction
 
 function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
