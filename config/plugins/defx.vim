@@ -15,6 +15,7 @@ else
 endif
 
 call defx#custom#option('_', {
+      \ 'columns': 'indent:git:icons:filename',
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
