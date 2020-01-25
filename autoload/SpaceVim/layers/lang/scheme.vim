@@ -29,7 +29,7 @@ function! SpaceVim#layers#lang#scheme#config() abort
     " in Windows it is: C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe
     " In Homebrew it is: /usr/local/bin/chez
     call SpaceVim#plugins#runner#reg_runner('scheme', shellescape(s:scheme_interpreter) . ' --script %s')
-    call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--quit'])
+    call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--quiet'])
   else
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . s:scheme_interpreter . ' %s && echo')
     call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--silent'])
