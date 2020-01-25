@@ -13,18 +13,19 @@ if exists('s:scheme_interpreter')
   " when call an autoload func, vim will try to load the script again
   finish
 else
-  let s:scheme_interpreter = 'scheme'
+  let s:scheme_interpreter = ''
+  let s:scheme_dialect = ''
 endif
 
 
 function! SpaceVim#layers#lang#scheme#config() abort
-  if s:scheme_interpreter ==# 'mit-scheme'
-    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | mit-scheme --quiet --load %s && echo')
+  if s:scheme_dialect ==# 'mit-scheme'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' --quiet --load %s && echo')
     call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '-q'])
-  elseif s:scheme_interpreter ==# 'guile'
-    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | guile -q %s && echo')
+  elseif s:scheme_dialect ==# 'guile'
+    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' -q %s && echo')
     call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '-q'])
-  elseif s:scheme_interpreter =~? 'chez'
+  elseif s:scheme_dialect ==# 'chez'
     " @fixme chez scheme path expr
     " in Windows it is: C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe
     " In Homebrew it is: /usr/local/bin/chez
@@ -40,6 +41,7 @@ endfunction
 
 function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
   let s:scheme_interpreter = get(a:opt, 'scheme_interpreter', s:scheme_interpreter) 
+  let s:scheme_dialect = get(a:opt, 'scheme_dialect', s:scheme_dialect) 
 endfunction
 
 function! s:language_specified_mappings() abort
