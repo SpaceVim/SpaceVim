@@ -44,6 +44,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Options
 
+- scheme_dialect: specific which scheme dialect is used.
 - scheme_interpreter: option for setting scheme interperter.
 
 for example:
@@ -51,7 +52,8 @@ for example:
 ```toml
 [[layers]]
     name = 'lang#scheme'
-    scheme_interpreter = 'C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe'
+    scheme_dialect = 'mit-scheme'
+    scheme_interpreter = 'C:\Program Files (x86)\MIT-GNU Scheme\bin\mit-scheme.exe'
 ```
 
 ## Key bindings

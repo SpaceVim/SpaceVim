@@ -46,6 +46,7 @@ image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6
 
 ## 模块选项
 
+- scheme_dialect: 指定所使用的 Scheme 方言.
 - scheme_interpreter: 用于设置 Scheme 可执行文件路径.
 
 例如:
@@ -53,7 +54,8 @@ image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6
 ```toml
 [[layers]]
     name = 'lang#scheme'
-    scheme_interpreter = 'C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe'
+    scheme_dialect = 'mit-scheme'
+    scheme_interpreter = 'C:\Program Files (x86)\MIT-GNU Scheme\bin\mit-scheme.exe'
 ```
 
 ## 快捷键

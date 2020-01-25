@@ -20,8 +20,14 @@ endif
 
 function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_dialect ==# 'mit-scheme'
-    call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' --quiet --load %s && echo')
-    call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '-q'])
+    if has('win32')
+      let mit_scheme_lib = fnamemodify(s:scheme_interpreter, ':h:h') . '\lib'
+      call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' --heap 512 --library ' . shellescape(mit_scheme_lib) . ' --quiet --load %s && echo')
+      call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '--heap', 512, '--library', mit_scheme_lib, '--quiet'])
+    else
+      call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' --heap 512 --library "C:\Program Files (x86)\MIT-GNU Scheme\lib" --quiet --load %s && echo')
+      call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '-q'])
+    endif
   elseif s:scheme_dialect ==# 'guile'
     call SpaceVim#plugins#runner#reg_runner('scheme', 'echo | ' . shellescape(s:scheme_interpreter) . ' -q %s && echo')
     call SpaceVim#plugins#repl#reg('scheme', [s:scheme_interpreter, '-q'])
