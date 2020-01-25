@@ -66,3 +66,8 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
+
+
+function! SpaceVim#layers#lang#scheme#get_options() abort
+  return ['scheme_dialect', 'scheme_interpreter']
+endfunction
