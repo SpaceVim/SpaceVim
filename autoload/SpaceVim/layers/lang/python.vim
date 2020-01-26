@@ -146,12 +146,21 @@ function! s:language_specified_mappings() abort
 
 endfunction
 
+
+function! s:Shebang_to_cmd(line) abort
+  let executable = matchstr(a:line, '\(#!\s*\)\@<=[^ ]*')
+  let argvs = split(matchstr(a:line, ''))
+  return [executable] + argvs
+endfunction
+
+function! SpaceVim#layers#lang#python#debug()
+  return s:Shebang_to_cmd('#! /usr/bin/env python')
+endfunction
+
 func! s:getexe() abort
   let line = getline(1)
   if line =~# '^#!'
-    let exe = split(line)
-    let exe[0] = exe[0][2:]
-    return exe
+    return s:Shebang_to_cmd(line)
   endif
   return ['python']
 endf
