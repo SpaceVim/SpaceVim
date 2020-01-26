@@ -148,13 +148,9 @@ endfunction
 
 
 function! s:Shebang_to_cmd(line) abort
-  let executable = matchstr(a:line, '\(#!\s*\)\@<=[^ ]*')
-  let argvs = split(matchstr(a:line, ''))
+  let executable = matchstr(a:line, '#!\s*\zs[^ ]*')
+  let argvs = split(matchstr(a:line, '#!\s*[^ ]\+\s*\zs.*'))
   return [executable] + argvs
-endfunction
-
-function! SpaceVim#layers#lang#python#debug()
-  return s:Shebang_to_cmd('#! /usr/bin/env python')
 endfunction
 
 func! s:getexe() abort
