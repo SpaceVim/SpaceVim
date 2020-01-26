@@ -241,9 +241,14 @@ if has('nvim') && exists('*chanclose')
     else
       let lines = s:_out_data
     endif
+    " if s:SYS.isWindows
+      " let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
+    " endif
     if !empty(lines)
       let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      endif
       call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
@@ -266,7 +271,9 @@ if has('nvim') && exists('*chanclose')
     endif
     if !empty(lines)
       let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      if bufexists(s:bufnr)
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
+      endif
       call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     endif
     let s:lines += len(lines)
@@ -275,7 +282,9 @@ if has('nvim') && exists('*chanclose')
   endfunction
 else
   function! s:on_stdout(job_id, data, event) abort
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    if bufexists(s:bufnr)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    endif
     let s:lines += len(a:data)
     call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
@@ -283,7 +292,9 @@ else
 
   function! s:on_stderr(job_id, data, event) abort
     let s:status.has_errors = 1
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    if bufexists(s:bufnr)
+      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+    endif
     let s:lines += len(a:data)
     call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
     call s:update_statusline()
@@ -295,7 +306,9 @@ function! s:on_exit(job_id, data, event) abort
   let s:status.is_exit = 1
   let s:status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
-  call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+  endif
   call s:update_statusline()
 
 endfunction
