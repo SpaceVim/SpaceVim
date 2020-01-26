@@ -153,8 +153,11 @@ endfunction
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
 
+
+
 function! s:close() abort
-  if exists('s:job_id') && s:job_id != 0
+  " stop the job if it is running.
+  if exists('s:job_id') && s:job_id > 0
     call s:JOB.stop(s:job_id)
     let s:job_id = 0
   endif
