@@ -103,6 +103,16 @@ function! SpaceVim#plugins#a#get_root() abort
   return s:FILE.unify_path(s:conf, ':p')
 endfunction
 
+function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
+  let file = s:FILE.unify_path(bufname('%'), ':.')
+  try
+    let a = s:project_config[s:FILE.unify_path(s:conf, ':p')][file]
+  catch
+    let a = {}
+  endtry
+  return join(keys(a), "\n")
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
