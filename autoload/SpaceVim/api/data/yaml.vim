@@ -337,7 +337,7 @@ function! s:self._put_array(dict, key, value) abort
 endfunction
 
 
-function! SpaceVim#api#data#toml#get() abort
+function! SpaceVim#api#data#yaml#get() abort
   return deepcopy(s:self)
 endfunction
 
