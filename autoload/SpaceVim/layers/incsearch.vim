@@ -39,6 +39,7 @@ function! SpaceVim#layers#incsearch#plugins() abort
   call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
+  call add(plugins, ['nelstrom/vim-visual-star-search', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -100,10 +101,10 @@ function! s:update_search_index(key) abort
       normal! N
     endif
   endif
-  normal! ml
+  let save_cursor = getpos('.')
   if !SpaceVim#layers#core#statusline#check_section('search status')
     call SpaceVim#layers#core#statusline#toggle_section('search status')
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-  normal! `l
+  keepjumps call setpos('.', save_cursor)
 endfunction

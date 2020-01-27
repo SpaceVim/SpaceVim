@@ -3,7 +3,7 @@ title:  "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# Development guidelines
+# [Home](../) >> Development
 
 <!-- vim-markdown-toc GFM -->
 
@@ -248,6 +248,17 @@ function! SpaceVim#layers#foo#config() abort
   let g:foo_option2 = get(g:, 'foo_option2', 2)
   let g:foo_option3 = get(g:, 'foo_option3', 3)
   " ...
+endfunction
+
+" add layer options:
+let s:layer_option = 'default var'
+function! SpaceVim#layers#foo#set_variable(var) abort
+  let s:layer_option = get(a:var, 'layer_option', s:layer_option)
+endfunction
+
+" completion function for layer options:
+function! SpaceVim#layers#foo#get_options() abort
+    return ['layer_option']
 endfunction
 ```
 

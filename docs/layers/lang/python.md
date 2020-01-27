@@ -12,6 +12,7 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Install](#install)
   - [enable layer](#enable-layer)
   - [language tools](#language-tools)
+- [Configuration](#configuration)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
@@ -46,7 +47,6 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ### language tools
 
-
 **syntax checking:**
 
 `checker` layer provide syntax checking feature, and for Python it uses `flake8` package:
@@ -57,12 +57,15 @@ pip install --user flake8
 
 **code formatting:**
 
-The default key binding for formatting buffer is `SPC b f`, and you need to install `yapf`. To enable automatic buffer formatting on save, load this layer with setting `format-on-save` to `1`.
+The default key binding for formatting buffer is `SPC b f`,
+and you need to install `yapf`.
+To enable automatic buffer formatting on save,
+load this layer with setting `format_on_save` to `1`.
 
-```
+```toml
 [[layers]]
   name = "lang#python"
-  format-on-save = 1
+  format_on_save = 1
 ```
 
 ```sh
@@ -89,6 +92,31 @@ To be able to show code coverage, install coverage.py
 
 ```sh
 pip install --user coverage
+```
+
+## Configuration
+
+By default, when create a new python file, SpaceVim will insert file head automatically.
+to change the file head, use `python_file_head` option:
+
+```toml
+[[layers]]
+  name = "lang#python"
+  python_file_head = [
+      '#!/usr/bin/env python',
+      '# -*- coding: utf-8 -*-',
+      '',
+      ''
+  ]
+```
+
+When enable autocomplete layer, the symbol will be complete automatically. By default the type info
+is disabled, because it is too slow. To enable type info:
+
+```toml
+[[layers]]
+  name = "lang#python"
+  enable_typeinfo = true
 ```
 
 ## Key bindings

@@ -3,7 +3,7 @@ title: Available layers
 description: "A guide for managing SpaceVim with layers, tell you how to enable and disable a layer, also list all available layers in SpaceVim"
 ---
 
-# Available layers
+# [Home](../) >> Layers
 
 <!-- vim-markdown-toc GFM -->
 
@@ -76,11 +76,12 @@ Some layers are enabled by default. The following example shows how to disable `
 | [core#tabline](core/tabline/)                         | SpaceVim core#tabline layer provides a better tabline for SpaceVim                                                                                                  |
 | [core](core/)                                         | SpaceVim core layer provides many default key bindings and features.                                                                                                |
 | [cscope](cscope/)                                     | cscope layer provides a smart cscope and pycscope helper for SpaceVim, help users win at cscope                                                                     |
+| [ctrlspace](ctrlspace/)                               | This layer provides a customized CtrlSpace centric workflow                                                                                                         |
 | [ctrlp](ctrlp/)                                       | This layers provide a heavily customized ctrlp centric work-flow                                                                                                    |
 | [debug](debug/)                                       | This layer provide debug workflow support in SpaceVim                                                                                                               |
 | [default](default/)                                   | SpaceVim default layer contains no plugins, but It provides some better default config for SpaceVim.                                                                |
 | [denite](denite/)                                     | This layers provide a heavily customized Denite centric work-flow                                                                                                   |
-| [edit](edit/)                                         | Improve code edit expr in SpaceVim, provide more text opjects.                                                                                                      |
+| [edit](edit/)                                         | Improve code edit expr in SpaceVim, provide more text objects.                                                                                                      |
 | [floobits](floobits/)                                 | This layer adds support for the peer programming tool floobits to SpaceVim.                                                                                         |
 | [format](format/)                                     | Code formatting support for SpaceVim                                                                                                                                |
 | [fzf](fzf/)                                           | This layers provide a heavily customized fzf centric work-flow                                                                                                      |
@@ -93,9 +94,11 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#asciidoc](lang/asciidoc/)                       | Edit AsciiDoc within vim, autopreview AsciiDoc in the default browser, with this layer you can also format AsciiDoc file.                                           |
 | [lang#assembly](lang/assembly/)                       | This layer adds Assembly language support to SpaceVim, including syntax highlighting.                                                                               |
 | [lang#autohotkey](lang/autohotkey/)                   | This layer adds AutohotKey language support to SpaceVim.                                                                                                            |
+| [lang#batch](lang/batch/)                             | This layer is for DOS batch file development, provide syntax highlighting, code runner and repl support for batch file.                                             |
 | [lang#c](lang/c/)                                     | C/C++/Object-C language support for SpaceVim, include code completion, jump to definition, quick runner.                                                            |
 | [lang#clojure](lang/clojure/)                         | This layer is for Clojure development, provide autocompletion, syntax checking, code format for Clojure file.                                                       |
 | [lang#coffeescript](lang/coffeescript/)               | This layer is for CoffeeScript development, provide autocompletion, syntax checking, code format for CoffeeScript file.                                             |
+| [lang#crystal](lang/crystal/)                         | This layer is for crystal development, provide syntax checking, code runner and repl support for crystal file.                                                      |
 | [lang#csharp](lang/csharp/)                           | This layer is for csharp development                                                                                                                                |
 | [lang#d](lang/d/)                                     | This layer is for d development, provide syntax checking, code runner support for d file.                                                                           |
 | [lang#dart](lang/dart/)                               | This layer is for Dart development, provide autocompletion, syntax checking, code format for Dart file.                                                             |
@@ -104,15 +107,21 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#elm](lang/elm/)                                 | This layer is for Elm development, provide autocompletion, syntax checking, code format for Elm file.                                                               |
 | [lang#erlang](lang/erlang/)                           | This layer is for Erlang development, provide autocompletion, syntax checking, code format for Erlang file.                                                         |
 | [lang#extra](lang/extra/)                             | This layer adds extra language support to SpaceVim                                                                                                                  |
+| [lang#foxpro](lang/foxpro/)                           | This layer is for Visual FoxPro development, provide syntax highlighting for foxpro file.                                                                           |
 | [lang#fsharp](lang/fsharp/)                           | This layer adds FSharp language support to SpaceVim                                                                                                                 |
 | [lang#go](lang/go/)                                   | This layer is for golang development. It also provides additional language-specific key mappings.                                                                   |
+| [lang#goby](lang/goby/)                               | This layer is for goby development, provide syntax checking, code runner and repl support for goby file.                                                            |
+| [lang#gosu](lang/gosu/)                               | This layer is for gosu development, provide syntax checking, code runner and repl support for gosu file.                                                            |
 | [lang#graphql](lang/graphql/)                         | This layer adds GraphQL file support to SpaceVim                                                                                                                    |
 | [lang#groovy](lang/groovy/)                           | This layer is for Groovy development, provide syntax checking, code runner and repl support for groovy file.                                                        |
 | [lang#hack](lang/hack/)                               | This layer is for hack development, provide syntax checking, code runner and repl support for hack file.                                                            |
 | [lang#haskell](lang/haskell/)                         | Haskell language support for SpaceVim, includes code completion, syntax checking, jumping to definition, also provides language server protocol support for Haskell |
 | [lang#html](lang/html/)                               | Edit html in SpaceVim, with this layer, this layer provides code completion, syntax checking and code formatting for html.                                          |
 | [lang#hy](lang/hy/)                                   | This layer is for hy development, provide syntax checking, code runner and repl support for hy file.                                                                |
+| [lang#idris](lang/idris/)                             | This layer is for idris development, provide syntax checking, code runner and repl support for idris file.                                                          |
+| [lang#io](lang/io/)                                   | This layer is for io development, provide code runner and repl support for io file.                                                                                 |
 | [lang#ipynb](lang/ipynb/)                             | This layer adds Jupyter Notebook support to SpaceVim                                                                                                                |
+| [lang#j](lang/j/)                                     | This layer is for j development, provide syntax checking and repl support for j file.                                                                               |
 | [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer.               |
 | [lang#javascript](lang/javascript/)                   | This layer provides JavaScript development support for SpaceVim, including code completion, syntax highlighting and syntax checking                                 |
 | [lang#julia](lang/julia/)                             | This layer is for Julia development, provide autocompletion, syntax checking and code formatting                                                                    |

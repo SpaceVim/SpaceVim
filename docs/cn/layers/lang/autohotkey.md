@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#autohotkey 模块"
 description: "这一模块为 SpaceVim 提供了 Autohotkey 的开发支持，包括语法高亮和自动补全等功能。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#autohotkey

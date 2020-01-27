@@ -51,4 +51,4 @@ be shown on the tabline. To jump to specific tab, you can use `Leader + number` 
 
 ### Language support
 
-By default, SpaceVim do not load any lanaguge layer, please checkout the [available layers](../layers/) page.
+By default, SpaceVim do not load any language layer, please checkout the [available layers](../layers/) page.

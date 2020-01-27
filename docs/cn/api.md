@@ -1,10 +1,10 @@
 ---
 title: "公共 API"
 description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，以及 Neovim 和 Vim 的兼容组件。"
-lang: cn
+lang: zh
 ---
 
-# 公共 API
+# [主页](../) >> 公共 API
 
 <!-- vim-markdown-toc GFM -->
 

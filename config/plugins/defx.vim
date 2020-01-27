@@ -18,7 +18,7 @@ call defx#custom#option('_', {
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
-      \ 'show_ignored_files': 0,
+      \ 'show_ignored_files': g:_spacevim_filetree_show_hidden_files,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1
@@ -30,10 +30,14 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#column('icon', {
-      \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'directory_icon': '▶',
+      \ 'opened_icon': '▼',
       \ 'root_icon': ' ',
       \ })
+
+	call defx#custom#column('filename', {
+	      \ 'max_width': -90,
+	      \ })
 
 augroup vfinit
   au!
@@ -142,6 +146,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
@@ -197,7 +205,7 @@ endfunction
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
-  echo 'yarked: ' . @+
+  echo 'yanked: ' . @+
 endfunction
 
 function! s:trim_right(str, trim)

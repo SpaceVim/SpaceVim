@@ -3,7 +3,7 @@ title: Available APIs
 description: "A list of available APIs in SpaceVim, provide compatible functions for vim and neovim."
 ---
 
-# Available APIs
+# [Home](../) >> APIs
 
 <!-- vim-markdown-toc GFM -->
 

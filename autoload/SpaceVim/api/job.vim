@@ -46,7 +46,7 @@ if !s:self.nvim_job && !s:self.vim_job
     au! User SpaceVim_job_stdout nested call call(s:self.opts.on_stdout, s:self.job_argv)
     au! User SpaceVim_job_stderr nested call call(s:self.opts.on_stderr, s:self.job_argv)
     au! User SpaceVim_job_exit nested call call(s:self.opts.on_exit, s:self.job_argv)
-  augroup ENd
+  augroup END
 endif
 
 function! s:self.warn(...) abort
@@ -106,7 +106,7 @@ function! s:self.start(argv, ...) abort
       let job = jobstart(a:argv, a:1)
     else
       let job = jobstart(a:argv)
-    endi
+    endif
     catch /^Vim\%((\a\+)\)\=:E903/
       return -1
     endtry

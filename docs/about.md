@@ -1,9 +1,9 @@
 ---
 title:  "About"
-description: "SpaceVim is a community-driven vim distribution with layer feature, all contributors make SpaceVim what it is."
+description: "The project SpaceVim was created to provide an out-of-the-box Vim development environment."
 ---
 
-# About
+# [Home](../) >> About
 
 [SpaceVim](https://github.com/SpaceVim/SpaceVim) is a community-driven Vim distribution with layer feature.
 SpaceVim manages collections of plugins in layers. Layers make it easy for you, the user, to enable a new

@@ -42,6 +42,8 @@ For more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
+If you got a vimproc error like `[vimproc] vimproc's DLL: "~/.cache/vimfiles/vimproc.vim/lib/vimproc_linux64.so" is not found.  Please read :help vimproc and make it`, you may need to install make (from `build-essential)` and a C compilator (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
+
 ### Windows
 
 The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.

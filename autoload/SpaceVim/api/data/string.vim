@@ -49,6 +49,20 @@ function! s:self.fill(str, length, ...) abort
   return l:string . l:spaces
 endfunction
 
+function! s:self.toggle_case(str) abort
+  let chars = []
+  for char in self.string2chars(a:str)
+    if char2nr(char) >= 97 && char2nr(char) <= 122
+      call add(chars, nr2char(char2nr(char) - 32))
+    elseif char2nr(char) >= 65 && char2nr(char) <= 90
+      call add(chars, nr2char(char2nr(char) + 32))
+    else
+      call add(chars, char)
+    endif
+  endfor
+  return join(chars, '')
+endfunction
+
 function! s:self.fill_left(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str

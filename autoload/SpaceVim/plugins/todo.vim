@@ -8,9 +8,20 @@
 
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:SYS = SpaceVim#api#import('system')
 
 " @question any other recommanded tag?
 let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+
+let [
+      \ s:grep_default_exe,
+      \ s:grep_default_opt,
+      \ s:grep_default_ropt,
+      \ s:grep_default_expr_opt,
+      \ s:grep_default_fix_string_opt,
+      \ s:grep_default_ignore_case,
+      \ s:grep_default_smart_case
+      \ ] = SpaceVim#mapping#search#default_tool()
 
 function! SpaceVim#plugins#todo#list() abort
   call s:open_win()
@@ -23,21 +34,51 @@ function! s:open_win() abort
     exe 'bd ' . s:bufnr
   endif
   botright split __todo_manager__
+  " @todo add win_getid api
+  let s:winid = win_getid(winnr('#'))
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimTodoManager
   let s:bufnr = bufnr('%')
   call s:update_todo_content()
+  augroup spacevim_plugin_todo
+    autocmd! * <buffer>
+    autocmd WinEnter <buffer> call s:WinEnter()
+  augroup END
   nnoremap <buffer><silent> <Enter> :call <SID>open_todo()<cr>
+endfunction
+
+function! s:WinEnter() abort
+  " @todo add win_getid api
+  let s:winid = win_getid(winnr('#'))
 endfunction
 
 " @todo Improve todo manager
 function! s:update_todo_content() abort
   let s:todos = []
   let s:todo = {}
-  " @fixme fix the rg command for todo manager
-  let argv = ['rg','--hidden', '--no-heading', '-g', '!.git', '--color=never', '--with-filename', '--line-number', '--column', '-e', join(s:labels, '|'), '.']
+  let argv = [s:grep_default_exe] + 
+        \ s:grep_default_opt +
+        \ s:grep_default_expr_opt
+  " @fixme expr for defferent tools
+  " when using rg, [join(s:labels, '|')]
+  " when using grep, [join(s:labels, '\|')]
+  if s:grep_default_exe == 'rg'
+    let argv += [join(s:labels, '|')]
+  elseif s:grep_default_exe == 'grep'
+    let argv += [join(s:labels, '\|')]
+  elseif s:grep_default_exe == 'findstr'
+    let argv += [join(s:labels, ' ')]
+  else
+    let argv += [join(s:labels, '|')]
+  endif
+  if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
+    let argv += ['.']
+  elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
+    let argv += ['*.*']
+  endif
+  let argv += s:grep_default_ropt
   call SpaceVim#logger#info('todo cmd:' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
@@ -81,7 +122,7 @@ function! s:exit(id, data, event ) abort
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
   let expr = "v:val.lebal . repeat(' ', label_w - strlen(v:val.lebal)) . ' ' ."
         \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
-        \ .  "v:val.title"
+        \ .  'v:val.title'
   let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
@@ -98,6 +139,8 @@ function! s:open_todo() abort
     close
   catch
   endtry
+  " @todo add win_gotoid api
+  call win_gotoid(s:winid)
   exe 'e ' . todo.file
   call cursor(todo.line, todo.column)
   noautocmd normal! :

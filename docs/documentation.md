@@ -3,7 +3,7 @@ title: "Documentation"
 description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
-# Documentation
+# [Home](../) >> Documentation
 
 <!-- vim-markdown-toc GFM -->
 
@@ -764,7 +764,8 @@ endfunction
 
 ### Fuzzy finder
 
-SpaceVim provides five fuzzy find tools, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer
+(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
@@ -791,7 +792,24 @@ for example, load the denite layer:
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
+**Key bindings within fuzzy finder buffer**
+
+| Key Bindings             | Descriptions                    |
+| ------------------------ | ------------------------------- |
+| `<Tab>` / `Ctrl-j`       | Select next line                |
+| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                  | Leave Insert mode               |
+| `Ctrl-w`                 | Delete backward path            |
+| `Ctrl-u`                 | Delete whole line before cursor |
+| `<Enter>`                | Run default action              |
+| `Ctrl-s`                 | Open in a split                 |
+| `Ctrl-v`                 | Open in a vertical split        |
+| `Ctrl-t`                 | Open in a new tab               |
+| `Ctrl-g`                 | Close fuzzy finder              |
+
 **Differences between these layers**
+
+The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
@@ -806,33 +824,6 @@ for example, load the denite layer:
 | message            |  yes   |  yes  |   no    |  no   | yes |
 | quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
 | resume windows     |  yes   |  yes  |   no    |  no   | no  |
-
-**Key bindings within fuzzy finder buffer**
-
-| Key Bindings             | Descriptions                              |
-| ------------------------ | ----------------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                          |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line                      |
-| `j k`                    | Leave Insert mode (Only for denite/unite) |
-| `Ctrl-w`                 | Delete backward path                      |
-| `<Enter>`                | Run default action                        |
-| `Ctrl-s`                 | Open in a split                           |
-| `Ctrl-v`                 | Open in a vertical split                  |
-| `Ctrl-t`                 | Open in a new tab                         |
-| `Ctrl-g`                 | Exit unite                                |
-
-**Denite/Unite normal mode key bindings**
-
-| Key Bindings   | Mode          | Descriptions                         |
-| -------------- | ------------- | ------------------------------------ |
-| `Ctrl-h/k/l/r` | Normal        | Un-map                               |
-| `Ctrl-l`       | Normal        | Redraw                               |
-| `<Tab>`        | Normal        | Select actions                       |
-| `<Space>`      | Normal        | Toggle mark current candidate, up    |
-| `r`            | Normal        | Replace ('search' profile) or rename |
-| `Ctrl-z`       | Normal/insert | Toggle transpose window              |
-
-The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
 
 ### Discovering
 
@@ -1162,7 +1153,7 @@ To change the filemanager plugin:
     filemanager = "defx"
 ```
 
-VCS integration is supported, there will be a column status, this feature maybe make vimfiler slow, so it is not enabled by default.
+VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
 To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
 Here is a picture for this feature:
 
@@ -1201,6 +1192,8 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `>`                   | iecrease filetree screenwidth                     |
+| `<`                   | dncrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
 | `Ctrl-Home`           | Switch to project root directory                  |
@@ -1274,51 +1267,52 @@ which will tell you the functional of all mappings starting with `g`.
 After pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `z`.
 
-| Key Bindings | Descriptions                                 |
-| ------------ | -------------------------------------------- |
-| `z <Right>`  | scroll screen N characters to left           |
-| `z +`        | cursor to screen top line N                  |
-| `z -`        | cursor to screen bottom line N               |
-| `z .`        | cursor line to center                        |
-| `z <Enter>`  | cursor line to top                           |
-| `z =`        | spelling suggestions                         |
-| `z A`        | toggle folds recursively                     |
-| `z C`        | close folds recursively                      |
-| `z D`        | delete folds recursively                     |
-| `z E`        | eliminate all folds                          |
-| `z F`        | create a fold for N lines                    |
-| `z G`        | mark good spelled(update internal-wordlist)  |
-| `z H`        | scroll half a screenwidth to the right       |
-| `z L`        | scroll half a screenwidth to the left        |
-| `z M`        | set `foldlevel` to zero                      |
-| `z N`        | set `foldenable`                             |
-| `z O`        | open folds recursively                       |
-| `z R`        | set `foldlevel` to deepest fold              |
-| `z W`        | mark wrong spelled                           |
-| `z X`        | re-apply `foldlevel`                         |
-| `z ^`        | cursor to screen bottom line N               |
-| `z a`        | toggle a fold                                |
-| `z b`        | redraw, cursor line at bottom                |
-| `z c`        | close a fold                                 |
-| `z d`        | delete a fold                                |
-| `z e`        | right scroll horizontally to cursor position |
-| `z f`        | create a fold for motion                     |
-| `z g`        | mark good spelled                            |
-| `z h`        | scroll screen N characters to right          |
-| `z i`        | toggle foldenable                            |
-| `z j`        | mode to start of next fold                   |
-| `z k`        | mode to end of previous fold                 |
-| `z l`        | scroll screen N characters to left           |
-| `z m`        | subtract one from `foldlevel`                |
-| `z n`        | reset `foldenable`                           |
-| `z o`        | open fold                                    |
-| `z r`        | add one to `foldlevel`                       |
-| `z s`        | left scroll horizontally to cursor position  |
-| `z t`        | cursor line at top of window                 |
-| `z v`        | open enough folds to view cursor line        |
-| `z x`        | re-apply foldlevel and do "zV"               |
-| `z z`        | smart scroll                                 |
-| `z <Left>`   | scroll screen N characters to right          |
+| Key Bindings | Descriptions                                  |
+| ------------ | --------------------------------------------- |
+| `z <Right>`  | scroll screen N characters to left            |
+| `z +`        | cursor to screen top line N                   |
+| `z -`        | cursor to screen bottom line N                |
+| `z .`        | cursor line to center                         |
+| `z <Enter>`  | cursor line to top                            |
+| `z =`        | spelling suggestions                          |
+| `z A`        | toggle folds recursively                      |
+| `z C`        | close folds recursively                       |
+| `z D`        | delete folds recursively                      |
+| `z E`        | eliminate all folds                           |
+| `z F`        | create a fold for N lines                     |
+| `z G`        | mark good spelled (update internal wordlist)  |
+| `z H`        | scroll half a screenwidth to the right        |
+| `z L`        | scroll half a screenwidth to the left         |
+| `z M`        | set `foldlevel` to zero                       |
+| `z N`        | set `foldenable`                              |
+| `z O`        | open folds recursively                        |
+| `z R`        | set `foldlevel` to deepest fold               |
+| `z W`        | mark wrong spelled (update internal wordlist) |
+| `z X`        | re-apply `foldlevel`                          |
+| `z ^`        | cursor to screen bottom line N                |
+| `z a`        | toggle a fold                                 |
+| `z b`        | redraw, cursor line at bottom                 |
+| `z c`        | close a fold                                  |
+| `z d`        | delete a fold                                 |
+| `z e`        | right scroll horizontally to cursor position  |
+| `z f`        | create a fold for motion                      |
+| `z g`        | mark good spelled                             |
+| `z h`        | scroll screen N characters to right           |
+| `z i`        | toggle foldenable                             |
+| `z j`        | mode to start of next fold                    |
+| `z k`        | mode to end of previous fold                  |
+| `z l`        | scroll screen N characters to left            |
+| `z m`        | subtract one from `foldlevel`                 |
+| `z n`        | reset `foldenable`                            |
+| `z o`        | open fold                                     |
+| `z r`        | add one to `foldlevel`                        |
+| `z s`        | left scroll horizontally to cursor position   |
+| `z t`        | cursor line at top of window                  |
+| `z v`        | open enough folds to view cursor line         |
+| `z w`        | mark wrong spelled                            |
+| `z x`        | re-apply foldlevel and do "zV"                |
+| `z z`        | smart scroll                                  |
+| `z <Left>`   | scroll screen N characters to right           |
 
 ### Searching
 
@@ -1588,6 +1582,8 @@ Text related commands (start with `x`):
 
 | Key Bindings  | Descriptions                                                       |
 | ------------- | ------------------------------------------------------------------ |
+| `SPC x a #`   | align region at #                                                  |
+| `SPC x a %`   | align region at %                                                  |
 | `SPC x a &`   | align region at &                                                  |
 | `SPC x a (`   | align region at (                                                  |
 | `SPC x a )`   | align region at )                                                  |

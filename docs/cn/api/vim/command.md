@@ -1,7 +1,7 @@
 ---
 title: "vim#command api"
 description: "vim#command API 提供一些设置和获取 Vim 命令的基础函数。"
-lang: cn
+lang: zh
 ---
 
 # [可用 APIs](../../) >> vim#command

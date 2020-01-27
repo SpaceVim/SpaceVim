@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      版本 : 1.2.0    中文官网 : https://spacevim.org/cn/     "
+echo "                      版本 : 1.3.0    中文官网 : https://spacevim.org/cn/     "
 
 Push-Location ~
 

@@ -49,7 +49,7 @@ function! SpaceVim#layers#lang#racket#config() abort
   call SpaceVim#plugins#runner#reg_runner('racket', 
         \ {
         \ 'exe' : 'racket',
-        \ 'opt' : ['-f'],
+        \ 'opt' : ['-t'],
         \ 'usestdin' : 0,
         \ })
   call SpaceVim#mapping#gd#add('racket', function('s:go_to_def'))

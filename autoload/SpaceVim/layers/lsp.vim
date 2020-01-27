@@ -119,6 +119,7 @@ let s:lsp_servers = {
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
+      \ 'crystal' : ['scry'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],

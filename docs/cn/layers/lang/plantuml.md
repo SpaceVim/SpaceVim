@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#plantuml 模块"
 description: "这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#plantuml

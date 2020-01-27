@@ -9,6 +9,7 @@ description: "This layers adds extensive support for git"
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -25,6 +26,10 @@ To use this configuration layer, add following snippet to your custom configurat
 [[layers]]
   name = "git"
 ```
+
+## Layer options
+
+- `git-plugin`: default value is `gina` (or `gita` on older vim versions), available values include: `gina`, `fugitive`, `gita`
 
 ## Key bindings
 

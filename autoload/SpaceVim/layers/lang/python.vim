@@ -58,7 +58,7 @@ function! SpaceVim#layers#lang#python#config() abort
     augroup end
   endif
   " }}}
-
+ let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
@@ -67,11 +67,7 @@ function! SpaceVim#layers#lang#python#config() abort
         \ })
   call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
-  call SpaceVim#layers#edit#add_ft_head_tamplate('python',
-        \ ['#!/usr/bin/env python',
-        \ '# -*- coding: utf-8 -*-',
-        \ '']
-        \ )
+  call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
     call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
   elseif executable('python')
@@ -150,12 +146,17 @@ function! s:language_specified_mappings() abort
 
 endfunction
 
+
+function! s:Shebang_to_cmd(line) abort
+  let executable = matchstr(a:line, '#!\s*\zs[^ ]*')
+  let argvs = split(matchstr(a:line, '#!\s*[^ ]\+\s*\zs.*'))
+  return [executable] + argvs
+endfunction
+
 func! s:getexe() abort
   let line = getline(1)
   if line =~# '^#!'
-    let exe = split(line)
-    let exe[0] = exe[0][2:]
-    return exe
+    return s:Shebang_to_cmd(line)
   endif
   return ['python']
 endf
@@ -168,10 +169,28 @@ function! s:go_to_def() abort
   endif
 endfunction
 
-  let s:format_on_save = 0
+let s:format_on_save = 0
+let s:python_file_head = [
+      \ '#!/usr/bin/env python',
+      \ '# -*- coding: utf-8 -*-',
+      \ '',
+      \ ''
+      \ ]
+let s:enable_typeinfo = 0
 function! SpaceVim#layers#lang#python#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ get(a:var,
         \ 'format-on-save',
-        \ 0)
+        \ s:format_on_save))
+  let s:python_file_head = get(a:var,
+        \ 'python_file_head',
+        \ get(a:var,
+        \ 'python-file-head',
+        \ s:python_file_head))
+  let s:enable_typeinfo = get(a:var,
+        \ 'enable_typeinfo',
+        \ s:enable_typeinfo
+        \ )
 endfunction

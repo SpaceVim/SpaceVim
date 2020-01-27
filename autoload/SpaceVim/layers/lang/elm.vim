@@ -9,11 +9,31 @@
 ""
 " @section lang#elm, layer-lang-elm
 " @parentsection layers
-" @subsection Intro
-" The lang#elm layer provides code completion, documentation lookup, jump to
-" definition, mix integration, and iex integration for elm. SpaceVim
-" uses neomake as default syntax checker which is loaded in
-" @section(layer-checkers)
+" This layer is for elm development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#elm'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for elm, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 
 function! SpaceVim#layers#lang#elm#plugins() abort
   let plugins = []
@@ -24,10 +44,12 @@ endfunction
 
 function! SpaceVim#layers#lang#elm#config() abort
   call SpaceVim#plugins#repl#reg('elm', 'elm repl')
+  call SpaceVim#plugins#runner#reg_runner('elm', 'elm %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('elm', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("elm")',

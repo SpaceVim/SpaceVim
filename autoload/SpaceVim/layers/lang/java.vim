@@ -102,12 +102,17 @@ function! SpaceVim#layers#lang#java#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('java', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('java', 'jshell')
   call add(g:spacevim_project_rooter_patterns, 'pom.xml')
+
+  if SpaceVim#layers#lsp#check_filetype('java')
+    call SpaceVim#mapping#gd#add('java', function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('java', function('s:go_to_def'))
+  endif
   augroup SpaceVim_lang_java
     au!
     if !SpaceVim#layers#lsp#check_filetype('java')
       " omnifunc will be used only when no java lsp support
       autocmd FileType java setlocal omnifunc=javacomplete#Complete
-      call SpaceVim#mapping#gd#add('java', function('s:go_to_def'))
     endif
     autocmd FileType jsp call <SID>JspFileTypeInit()
   augroup END
@@ -123,12 +128,11 @@ function! SpaceVim#layers#lang#java#config() abort
   endtry
 endfunction
 
-function! s:JspFileTypeInit()
-    set tags+=~/others/openjdk-8-src/tags
-    set omnifunc=javacomplete#Complete
-    inoremap . <c-r>=OnmiConfigForJsp()<cr>
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
+function! s:JspFileTypeInit() abort
+  setlocal omnifunc=javacomplete#Complete
+  inoremap . <c-r>=OnmiConfigForJsp()<cr>
+  nnoremap <F4> :JCimportAdd<cr>
+  inoremap <F4> <esc>:JCimportAddI<cr>
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -190,6 +194,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 't'],
         \ '<Plug>(JavaComplete-Generate-ToString)',
         \ 'Generate toString function', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'n'],
+        \ '<Plug>(JavaComplete-Generate-NewClass)',
+        \ 'Generate NewClass in current Package', 0)
 
   " Jump
   let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
@@ -220,6 +227,15 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["mvn test"])',
         \ 'Run maven test', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'c'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn compile"])',
+        \ 'Run maven compile', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn run"])',
+        \ 'Run maven run', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'p'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["mvn package"])',
+        \ 'Run maven package', 1)
 
   " Gradle
   let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
@@ -232,6 +248,8 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
+  
+  " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("java")',
@@ -261,11 +279,11 @@ function! s:java_mappings() abort
 endfunction
 
 function! s:go_to_def() abort
-    call SpaceVim#lsp#go_to_def()
+  exe 'normal! gd'
 endfunction
 
 function! s:execCMD(cmd) abort
-  call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
+  call javaunit#util#ExecCMD(a:cmd)
 endfunction
 
 function! s:jump_to_alternate() abort

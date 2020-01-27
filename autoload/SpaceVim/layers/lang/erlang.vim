@@ -6,12 +6,40 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#erlang, layer-lang-erlang
+" @parentsection layers
+" This layer is for erlang development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#erlang'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for erlang, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 function! SpaceVim#layers#lang#erlang#plugins() abort
   let plugins = []
-  call add(plugins, ['vim-erlang/vim-erlang-compiler', {'on_ft' : 'erlang'}])
+  " call add(plugins, ['vim-erlang/vim-erlang-compiler', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-omnicomplete', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-runtime', {'on_ft' : 'erlang'}])
-  call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
+  " call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
   return plugins
 endfunction
 

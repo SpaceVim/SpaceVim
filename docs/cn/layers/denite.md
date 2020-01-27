@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim denite 模块"
 description: "这一模块为 SpaceVim 提供了以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> denite
@@ -34,6 +34,7 @@ denite 模块默认并未启用，如果需要启用该模块，需要在配置�
 | 快捷键               | 功能描述                       |
 | -------------------- | ------------------------------ |
 | `<Leader> f <Space>` | 模糊查找快捷键，并执行该快捷键 |
+| `<Leader> f p`       | 模糊查找已安装插件  |
 | `<Leader> f e`       | 模糊搜索寄存器                 |
 | `<Leader> f h`       | 模糊搜索 history/yank          |
 | `<Leader> f j`       | 模糊搜索 jump, change          |

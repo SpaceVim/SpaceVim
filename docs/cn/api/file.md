@@ -1,7 +1,7 @@
 ---
 title: "文件函数"
 description: "文件函数提供了基础的文件读写相关函数，兼容不同系统平台。"
-lang: cn
+lang: zh
 ---
 
 # [公共 API](../) >> file
