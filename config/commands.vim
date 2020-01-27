@@ -9,4 +9,4 @@ command! -nargs=+ -complete=custom,SpaceVim#plugins#projectmanager#complete_proj
 
 command! -nargs=* -complete=custom,SpaceVim#plugins#pmd#complete PMD :call SpaceVim#plugins#pmd#run(<f-args>)
 
-command! -nargs=0 A :call SpaceVim#plugins#a#alt(<f-args>)
+command! -nargs=? A :call SpaceVim#plugins#a#alt(<f-args>)
