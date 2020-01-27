@@ -59,18 +59,18 @@ function! s:paser(conf, root) abort
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       if has_key(a:conf, file)
-        if has_key(a:conf[file], 'alternate')
-          let s:project_config[a:root][file] = {'alternate' : a:conf[file]['alternate']}
-          continue
-        endif
+        for type in keys(a:conf[file])
+          let s:project_config[a:root][file] = {type : a:conf[file][type]}
+        endfor
+        continue
       endif
       let conf = a:conf[key]
-      if has_key(conf, 'alternate')
+      for type in keys(a:conf[file])
         let begin_end = split(key, '*')
         if len(begin_end) == 2
-          let s:project_config[a:root][file] = {'alternate' : s:add_alternate_file(begin_end, file, a:conf[key]['alternate'])}
+          let s:project_config[a:root][file][type] = s:add_alternate_file(begin_end, file, a:conf[key][type])
         endif
-      endif
+      endfor
     endfor
   endfor
 endfunction
