@@ -17,11 +17,19 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:conf = '.project_alt.json'
+let s:cache_path = '~/.cache/SpaceVim/a.json'
 
 
 " this is for saving the project configuration information. Use the path of
 " the project_alt.json file as the key.
 let s:project_config = {}
+
+
+" saving cache
+
+function! s:cache() abort
+  call writefile([s:JSON.json_encode(s:project_config)], s:cache_path)
+endfunction
 
 
 
