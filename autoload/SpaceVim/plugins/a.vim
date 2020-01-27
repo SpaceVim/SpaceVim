@@ -31,6 +31,10 @@ function! s:cache() abort
   call writefile([s:JSON.json_encode(s:project_config)], s:cache_path)
 endfunction
 
+function! s:load_cache() abort
+  let s:project_config = s:JSON.json_decode(join(readfile(s:cache_path, ''), ''))
+endfunction
+
 
 
 " when this function is called, the project_config file name is changed, and
@@ -94,6 +98,8 @@ function! s:add_alternate_file(a, f, b) abort
 endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, conf_path, ...) abort
+  if getftime(a:conf_path) < getftime(s:cache_path)
+  endif
   if !has_key(s:project_config, a:conf_path)
     let altconfa = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
