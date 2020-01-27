@@ -44,7 +44,7 @@ function! SpaceVim#plugins#a#alt(...) abort
   let type = get(a:000, 0, 'alternate')
   let conf_file_path = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path)
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, type)
   if !empty(alt)
     exe 'e ' . alt
   endif
@@ -85,14 +85,14 @@ function! s:add_alternate_file(a, f, b) abort
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file, conf_path) abort
+function! SpaceVim#plugins#a#get_alt(file, conf_path, ...) abort
   if !has_key(s:project_config, a:conf_path)
     let altconfa = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
     call s:paser(altconfa, a:conf_path)
   endif
   try
-    return s:project_config[a:conf_path][a:file]['alternate']
+    return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
   catch
     return ''
   endtry
