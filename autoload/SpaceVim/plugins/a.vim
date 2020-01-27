@@ -40,7 +40,8 @@ function! s:get_project_config(conf_file) abort
   return s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
 endfunction
 
-function! SpaceVim#plugins#a#alt() abort
+function! SpaceVim#plugins#a#alt(...) abort
+  let type = get(a:000, 0, 'alternate')
   let conf_file_path = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path)
