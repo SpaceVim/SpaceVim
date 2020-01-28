@@ -28,7 +28,7 @@ let s:project_config = {}
 " saving cache
 
 function! s:cache() abort
-  call writefile([s:JSON.json_encode(s:project_config)], s:cache_path)
+  call writefile([s:JSON.json_encode(s:project_config)], s:FILE.unify_path(s:cache_path, ':p'))
 endfunction
 
 function! s:load_cache() abort
@@ -87,6 +87,7 @@ function! s:paser(conf, root) abort
       endif
     endfor
   endfor
+  call s:cache()
 endfunction
 
 function! s:get_type_path(a, f, b) abort
