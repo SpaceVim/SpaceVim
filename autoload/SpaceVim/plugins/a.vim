@@ -70,24 +70,26 @@ function! s:paser(conf, root) abort
     endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
+      let s:project_config[a:root][file] = {}
       if has_key(a:conf, file)
         for type in keys(a:conf[file])
-          let s:project_config[a:root][file] = {type : a:conf[file][type]}
+          if len(begin_end) == 2
+            let s:project_config[a:root][file][type] = a:conf[key][type]
+          endif
         endfor
-        continue
+      else
+        for type in keys(a:conf[key])
+          let begin_end = split(key, '*')
+          if len(begin_end) == 2
+            let s:project_config[a:root][file][type] = s:get_type_path(begin_end, file, a:conf[key][type])
+          endif
+        endfor
       endif
-      let conf = a:conf[key]
-      for type in keys(a:conf[file])
-        let begin_end = split(key, '*')
-        if len(begin_end) == 2
-          let s:project_config[a:root][file][type] = s:add_alternate_file(begin_end, file, a:conf[key][type])
-        endif
-      endfor
     endfor
   endfor
 endfunction
 
-function! s:add_alternate_file(a, f, b) abort
+function! s:get_type_path(a, f, b) abort
   let begin_len = strlen(a:a[0])
   let end_len = strlen(a:a[1])
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
