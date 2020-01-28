@@ -1,5 +1,6 @@
 {
   "autoload/SpaceVim/api/*.vim": {"alternate": "test/api/{}.vader"},
+  "autoload/SpaceVim/layers/lang/*.vim": {"doc": "docs/layers/lang/{}.md"},
   "test/api/*.vader": {"alternate": "autoload/SpaceVim/api/{}.vim"},
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
   "docs/cn/*.md": {"alternate": "docs/{}.md"},
@@ -30,5 +31,9 @@
   "docs/_posts/2018-09-27-use-vim-as-ide.md": {"alternate": "docs/_posts/2018-09-28-use-vim-as-ide.md"},
   "docs/_posts/2018-01-23-grep-on-the-fly-in-spacevim.md": {"alternate": "docs/_posts/2018-01-31-grep-on-the-fly-in-spacevim.md"},
   "docs/_posts/2018-01-31-grep-on-the-fly-in-spacevim.md": {"alternate": "docs/_posts/2018-01-23-grep-on-the-fly-in-spacevim.md"},
-  "docs/_posts/2018-09-28-use-vim-as-ide.md": {"alternate": "docs/_posts/2018-09-27-use-vim-as-ide.md"}
+  "docs/_posts/2018-09-28-use-vim-as-ide.md": {"alternate": "docs/_posts/2018-09-27-use-vim-as-ide.md"},
+  "docs/_posts/2020-01-27-manage-project-alternate-files.md": {"alternate": "docs/_posts/2020-01-28-manage-project-alternate-files.md"},
+  "docs/_posts/2020-01-28-manage-project-alternate-files.md": {"alternate": "docs/_posts/2020-01-27-manage-project-alternate-files.md"},
+  "docs/_posts/2019-07-17-Asynchronous-todo-manager.md": {"alternate": "docs/_posts/2019-07-16-Asynchronous-todo-manager.md"},
+  "docs/_posts/2019-07-16-Asynchronous-todo-manager.md": {"alternate": "docs/_posts/2019-07-17-Asynchronous-todo-manager.md"}
 }
