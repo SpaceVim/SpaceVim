@@ -65,7 +65,7 @@ endfunction
 function! s:paser(conf, root) abort
   for key in keys(a:conf)
     let searchpath = key
-    if match(key, '/*')
+    if match(key, '/\*')
       let searchpath = substitute(key, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
