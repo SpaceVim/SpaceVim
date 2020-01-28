@@ -121,6 +121,13 @@ endfunction
 
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
+  let conf = s:FILE.unify_path(s:conf, ':p')
+
+  if !has_key(s:project_config, conf )
+    let altconfa = s:get_project_config(conf)
+    let s:project_config[conf] = {}
+    call s:paser(altconfa, conf)
+  endif
   try
     let a = s:project_config[s:FILE.unify_path(s:conf, ':p')][file]
   catch
