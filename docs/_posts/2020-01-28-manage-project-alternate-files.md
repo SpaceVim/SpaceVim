@@ -11,6 +11,21 @@ comments: true
 
 {{ page.date | date_to_string }}
 
+
+<!-- vim-markdown-toc GFM -->
+
+- [Causes and purposes](#causes-and-purposes)
+- [Basic usage](#basic-usage)
+
+<!-- vim-markdown-toc -->
+
+## Causes and purposes
+
+
+
+
+## Basic usage
+
 SpaceVim provides a built-in alternate file manager, the command is `:A`.
 
 ![a](https://user-images.githubusercontent.com/13142418/73239989-98c4d800-41d8-11ea-8c5b-383076cfcd6c.png)
