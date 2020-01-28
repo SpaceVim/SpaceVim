@@ -21,7 +21,20 @@ comments: true
 
 ## Causes and purposes
 
+At first, when managing the SpaceVim project,
+every time you edited a module source file,
+you always need to pay attention to the following things:
 
+1. Whether the relevant documents exist, whether they need to be modified, whether there are Chinese and English versions of documents in the project, and whether the contents are consistent.
+2. Test whether the file exists and whether it needs to be modified.
+
+In view of the above two points, the following requirements are derived:
+
+1. When editing a source file, quickly jump to the source file where the document is located;
+2. When editing Chinese documents, quickly jump to English documents and vice versa;
+3. When editing the source file, quickly jump to the test file and vice versa;
+
+At present, this plugin built into SpaceVim basically implements the above functions, in order to quickly jump between related files.
 
 
 ## Basic usage
