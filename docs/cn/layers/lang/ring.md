@@ -10,6 +10,7 @@ lang: zh
 
 - [模块简介](#模块简介)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
   - [交互式编程](#交互式编程)
   - [运行当前脚本](#运行当前脚本)
@@ -27,6 +28,20 @@ lang: zh
 ```toml
 [[layers]]
   name = "lang#ring"
+```
+
+## 模块选项
+
+该模块提供如下模块选项：
+
+- `ring_repl`: 指定文件 `ringrepl.ring` 的具体位置。
+
+例如：
+
+```toml
+[[layers]]
+    name = 'lang#ring'
+    ring_repl = 'D:\ringrepl\repl.ring'
 ```
 
 ## 快捷键

@@ -9,6 +9,7 @@ description: "This layer is for ring development, provide syntax checking, code 
 
 - [Description](#description)
 - [Install](#install)
+- [Options](#options)
 - [Features](#features)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
@@ -28,6 +29,21 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#ring"
 ```
+
+## Options
+
+This layer provides following layer options:
+
+- `ring_repl`: specific the the of `ringrepl.ring` file.
+
+for example:
+
+```toml
+[[layers]]
+    name = 'lang#ring'
+    ring_repl = 'D:\ringrepl\repl.ring'
+```
+
 ## Features
 
 - repl support
