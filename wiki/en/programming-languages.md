@@ -3,29 +3,31 @@
 | language          | layer doc                                                           |
 | ----------------- | ------------------------------------------------------------------- |
 | Agda              | [lang#agda](https://spacevim.org/layers/lang/agda/)                 |
-| Assembly          | [lang#assemble](https://spacevim.org/layers/lang/assemble/)         |
+| Assembly          | lang#assemble                                                       |
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |
 | Bash, Fish, zsh   | [lang#sh](https://spacevim.org/layers/lang/sh/)                     |
-| Gosu              | [lang#gosu](https://spacevim.org/layers/lang/gosu/)                 |
-| Idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | C#                | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |
 | C/C++             | [lang#c](https://spacevim.org/layers/lang/c/)                       |
+| Clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |
 | D                 | [lang#d](https://spacevim.org/layers/lang/d/)                       |
-| DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |
+| DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |
 | Elixir            | [lang#elixir](https://spacevim.org/layers/lang/elixir/)             |
 | Elm               | [lang#elm](https://spacevim.org/layers/lang/elm/)                   |
+| erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |
 | FoxPro            | [lang#foxpro](https://spacevim.org/layers/lang/foxpro/)             |
 | Go                | [lang#go](https://spacevim.org/layers/lang/go/)                     |
 | Goby              | [lang#goby](https://spacevim.org/layers/lang/goby/)                 |
+| Gosu              | [lang#gosu](https://spacevim.org/layers/lang/gosu/)                 |
 | Groovy            | [lang#groovy](https://spacevim.org/layers/lang/groovy/)             |
 | Hack              | [lang#hack](https://spacevim.org/layers/lang/hack/)                 |
 | Haskell           | [lang#haskell](https://spacevim.org/layers/lang/haskell/)           |
+| Idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | Io                | [lang#io](https://spacevim.org/layers/lang/io/)                     |
-| J                 | [lang#j](https://spacevim.org/layers/lang/io/)                      |
+| J                 | [lang#j](https://spacevim.org/layers/lang/j/)                       |
 | Java              | [lang#java](https://spacevim.org/layers/lang/java/)                 |
 | JavaScript        | [lang#javascript](https://spacevim.org/layers/lang/javascript/)     |
 | Julia             | [lang#julia](https://spacevim.org/layers/lang/julia/)               |
@@ -35,9 +37,9 @@
 | MATLAB            | [lang#matlab](https://spacevim.org/layers/lang/matlab/)             |
 | Nim               | [lang#nim](https://spacevim.org/layers/lang/nim/)                   |
 | OCaml             | [lang#ocaml](https://spacevim.org/layers/lang/ocaml/)               |
-| PHP               | [lang#php](https://spacevim.org/layers/lang/php/)                   |
 | Pascal            | [lang#pascal](https://spacevim.org/layers/lang/pascal/)             |
 | Perl              | [lang#perl](https://spacevim.org/layers/lang/perl/)                 |
+| PHP               | [lang#php](https://spacevim.org/layers/lang/php/)                   |
 | Pony              | [lang#pony](https://spacevim.org/layers/lang/pony/)                 |
 | PowerShell        | [lang#powershell](https://spacevim.org/layers/lang/powershell/)     |
 | Processing        | [lang#processing](https://spacevim.org/layers/lang/processing/)     |
@@ -49,16 +51,13 @@
 | Red               | [lang#red](https://spacevim.org/layers/lang/red/)                   |
 | Ruby              | [lang#ruby](https://spacevim.org/layers/lang/ruby/)                 |
 | Rust              | [lang#rust](https://spacevim.org/layers/lang/rust/)                 |
-| SQL               | [lang#sql](https://spacevim.org/layers/lang/sql/)                   |
 | Scala             | [lang#scala](https://spacevim.org/layers/lang/scala/)               |
 | Scheme            | [lang#scheme](https://spacevim.org/layers/lang/scheme/)             |
-| Solidity          | [lang#solidity](https://spacevim.org/layers/lang/solidity/)         |
+| Solidity          | lang#solidity                                                       |
+| SQL               | lang#sql                                                            |
 | Swift             | [lang#swift](https://spacevim.org/layers/lang/swift/)               |
 | Tcl               | [lang#tcl](https://spacevim.org/layers/lang/tcl/)                   |
 | TypeScript        | [lang#typescript](https://spacevim.org/layers/lang/typescript/)     |
-| clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |
-| erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |
-| idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | 4th Dimension     |                                                                     |
 | ABAP              |                                                                     |
 | ABC               |                                                                     |
