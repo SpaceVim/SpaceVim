@@ -49,6 +49,7 @@
 | R                 | [lang#r](https://spacevim.org/layers/lang/r/)                       |
 | Racket            | [lang#racket](https://spacevim.org/layers/lang/racket/)             |
 | Red               | [lang#red](https://spacevim.org/layers/lang/red/)                   |
+| Ring              | [lang#ring](https://spacevim.org/layers/lang/ring)                  |
 | Ruby              | [lang#ruby](https://spacevim.org/layers/lang/ruby/)                 |
 | Rust              | [lang#rust](https://spacevim.org/layers/lang/rust/)                 |
 | Scala             | [lang#scala](https://spacevim.org/layers/lang/scala/)               |
@@ -209,7 +210,6 @@
 | Q                 |                                                                     |
 | REBOL             |                                                                     |
 | REXX              |                                                                     |
-| Ring              |                                                                     |
 | RPG               |                                                                     |
 | S-PLUS            |                                                                     |
 | S                 |                                                                     |
