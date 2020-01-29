@@ -192,6 +192,9 @@ function! s:denite_filter_my_settings() abort
   " @fixme use this key binding only for sources which has delete action
   inoremap <silent><buffer><expr> <C-d>
         \ <SID>delete_action()
+  if exists('*deoplete#custom#buffer_option')
+    call deoplete#custom#buffer_option('auto_complete', v:false)
+  endif
 endfunction
 
 
