@@ -3,7 +3,7 @@ title: "Blog"
 description: "A list of latest blog about the feature of SpaceVim and tutorials of using vim."
 ---
 
-# Blog
+# [Home](../) >> Blog
 
 Here you can learn more about SpaceVim with our tutorials and find out what's
 going on. Feel free to [feed this blog via RSS](../../feed.xml)：

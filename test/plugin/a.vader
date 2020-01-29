@@ -8,5 +8,8 @@ Execute ( SpaceVim plugin: a.vim ):
   AssertEqual SpaceVim#plugins#a#get_alt('wiki/en/Project-layout.md', root), 'wiki/cn/Project-layout.md'
   AssertEqual SpaceVim#plugins#a#get_alt('wiki/cn/Project-layout.md', root), 'wiki/en/Project-layout.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-28-use-vim-as-ide.md', root), 'docs/_posts/2018-09-27-use-vim-as-ide.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-27-use-vim-as-ide.md', root), 'docs/_posts/2018-09-28-use-vim-as-ide.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2020-01-28-manage-project-alternate-files.md', root), 'docs/_posts/2020-01-27-manage-project-alternate-files.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2020-01-27-manage-project-alternate-files.md', root), 'docs/_posts/2020-01-28-manage-project-alternate-files.md'
   unlet root
 

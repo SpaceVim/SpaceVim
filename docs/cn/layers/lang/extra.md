@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#extra 模块"
 description: "这一模块为 SpaceVim 提供了一些不常见的语言添加语法支持，主要包括语法高亮、对齐等特性。"
-lang: cn
+lang: zh
 ---
 
 # [Available Layers](../../) >> lang#extra

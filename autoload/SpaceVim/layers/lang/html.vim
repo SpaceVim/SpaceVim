@@ -1,6 +1,6 @@
 "=============================================================================
 " html.vim --- SpaceVim lang#html layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -23,7 +23,7 @@ function! SpaceVim#layers#lang#html#config() abort
   let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
   augroup spacevim_lang_html
     autocmd!
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex call s:install_emmet()
+    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php call s:install_emmet()
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   augroup END

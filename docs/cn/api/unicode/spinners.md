@@ -1,7 +1,7 @@
 ---
 title: "unicode#spinners api"
 description: "unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号"
-lang: cn
+lang: zh
 ---
 
 # [公共 API](../../) >> unicode#spinners

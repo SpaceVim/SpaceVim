@@ -1,7 +1,7 @@
 "=============================================================================
-" test.vim --- test layer file for SpaceVim
-" Copyright (c) 2018 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" test.vim --- SpaceVim test layer
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

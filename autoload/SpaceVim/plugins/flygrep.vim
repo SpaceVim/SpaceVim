@@ -1,6 +1,6 @@
 "=============================================================================
 " flygrep.vim --- Grep on the fly in SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,6 +15,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
+let s:JSON = SpaceVim#api#import('data#json')
 " }}}
 
 let s:grepid = 0
@@ -33,7 +34,29 @@ let [
 let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
-let s:grep_history = []
+function! s:read_histroy() abort
+  if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
+    if type(_his) ==# type([])
+      return _his
+    else
+      return []
+    endif
+  else
+    return []
+  endif
+endfunction
+function! s:update_history() abort
+  if index(s:grep_history, s:grep_expr) >= 0
+    call remove(s:grep_history, index(s:grep_history, s:grep_expr))
+  endif
+  call add(s:grep_history, s:grep_expr)
+  if !isdirectory(expand('~/.cache/SpaceVim'))
+    call mkdir(expand('~/.cache/SpaceVim'))
+  endif
+  call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
+endfunction
+let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
 " }}}
 
@@ -220,14 +243,61 @@ function! s:start_replace() abort
     call matchdelete(s:hi_id)
   catch
   endtr
+  if s:grepid != 0
+    call s:JOB.stop(s:grepid)
+  endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
-    call SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+    let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
   endif
-  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(replace_text), 2)
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
+  if rst !=# replace_text
+    call s:update_files(s:flygrep_result_to_files())
+    checktime
+  endif
 endfunction
 " }}}
+
+function! s:flygrep_result_to_files() abort
+  let files = []
+  for line in getbufline(s:flygrep_buffer_id, 1, '$')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
+    call add(files, [filename, linenr, str])
+  endfor
+  return files
+endfunction
+
+function! s:update_files(files) abort
+  let fname = ''
+  let lines = {}
+  for file in a:files
+    if file[0] == fname
+      call extend(lines, {file[1] : file[2]})
+    else
+      if !empty(fname)
+        call s:update_file(fname, lines)
+      endif
+      let fname = file[0]
+      let lines = {}
+      call extend(lines, {file[1] : file[2]})
+    endif
+  endfor
+  if !empty(fname)
+    call s:update_file(fname, lines)
+  endif
+endfunction
+
+function! s:update_file(fname, lines) abort
+  let contents = readfile(a:fname, '')
+  for linenr in keys(a:lines)
+    let contents[linenr - 1] = a:lines[ linenr ]
+  endfor
+  call writefile(contents, a:fname, '')
+endfunction
+
 
 " API: MPT._prompt {{{
 let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
@@ -266,6 +336,7 @@ function! s:close_grep_job() abort
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
   normal! "_ggdG
+  let s:complete_input_history_num = [0,0]
 endfunction
 
 let s:MPT._oninputpro = function('s:close_grep_job')
@@ -390,7 +461,6 @@ function! s:previous_item() abort
 endfunction
 
 function! s:open_item() abort
-  call add(s:grep_history, s:grep_expr)
   let s:MPT._handle_fly = function('s:flygrep')
   if getline('.') !=# ''
     if s:grepid != 0
@@ -407,7 +477,56 @@ function! s:open_item() abort
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'e ' . filename
+    exe 'silent e ' . filename
+    call s:update_history()
+    call cursor(linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_vertically() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      pclose
+    endif
+    let s:preview_able = 0
+    noautocmd q
+    exe 'silent vsplit ' . filename
+    call s:update_history()
+    call cursor(linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_horizontally() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      pclose
+    endif
+    let s:preview_able = 0
+    noautocmd q
+    exe 'silent split ' . filename
+    call s:update_history()
     call cursor(linenr, colum)
     noautocmd normal! :
   endif
@@ -522,7 +641,6 @@ function! s:previous_match_history() abort
 endfunction
 
 function! s:next_match_history() abort
-
   if s:complete_input_history_num == [0,0]
     let s:complete_input_history_base = s:MPT._prompt.begin
     let s:MPT._prompt.cursor = ''
@@ -538,14 +656,16 @@ endfunction
 
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
-  if len(results) > 0
-    call add(results, a:str)
+  if a:num[0] - a:num[1] == 0
+    return a:str
+  elseif len(results) > 0
     let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
     return results[index]
   else
     return a:str
   endif
 endfunction
+
 let s:MPT._function_key = {
       \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
@@ -557,6 +677,8 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
+      \ "\<C-v>" : function('s:open_item_vertically'),
+      \ "\<C-s>" : function('s:open_item_horizontally'),
       \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
@@ -582,6 +704,8 @@ if has('nvim')
         \ }
         \ )
 endif
+
+let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " }}}
 
 " Public API: SpaceVim#plugins#flygrep#open(argv) {{{

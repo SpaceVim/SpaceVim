@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -48,7 +48,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd Filetype qf setlocal nobuflisted
-    autocmd FileType python,coffee call zvim#util#check_if_expand_tab()
+    autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     autocmd InsertEnter * call s:fixindentline()
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
@@ -62,7 +62,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord,srcery call s:fix_colorschem_in_SpaceVim()
+    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
@@ -77,7 +77,10 @@ function! s:enable_cursorline() abort
 endfunction
 
 function! s:disable_cursorline() abort
-  setl nocursorline
+  if &filetype ==# 'denite'
+  else
+    setl nocursorline
+  endif
 endfunction
 
 function! s:reload_touchpad_status() abort
@@ -94,7 +97,8 @@ function! s:enable_touchpad() abort
   call system('synclient touchpadoff=0')
 endfunction
 function! s:fixindentline() abort
-  if !exists('s:done')
+  if !exists('s:done') && has('conceal')
+    " The indentLine plugin need conceal feature
     if exists(':IndentLinesToggle') == 2
       IndentLinesToggle
       IndentLinesToggle
@@ -129,6 +133,10 @@ function! s:fix_colorschem_in_SpaceVim() abort
       hi VertSplit guibg=#1C1B19 guifg=#262626
       hi clear Visual
       hi Visual guibg=#303030
+    elseif g:colors_name ==# 'NeoSolarized'
+      hi VertSplit guibg=#002b36 guifg=#181a1f
+      hi clear Pmenu
+      hi Pmenu guifg=#839496 guibg=#073642
     endif
   else
     if g:colors_name ==# 'gruvbox'
