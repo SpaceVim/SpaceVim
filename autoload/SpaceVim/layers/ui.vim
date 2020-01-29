@@ -62,6 +62,9 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call call('
         \ . string(s:_function('s:toggle_background')) . ', [])',
         \ 'toggle background', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '.'], 'call call('
+        \ . string(s:_function('s:win_resize_transient_state')) . ', [])',
+        \ 'windows-transient-state', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'c'], 'call call('
         \ . string(s:_function('s:toggle_conceallevel')) . ', [])',
         \ 'toggle conceallevel', 1)
@@ -303,6 +306,79 @@ function! s:toggle_background() abort
         set background=dark
     endif
 endfunction
+
+
+function! s:win_resize_transient_state() abort
+  let state = SpaceVim#api#import('transient_state') 
+  call state.set_title('Windows Resize Transient State')
+  call state.defind_keys(
+        \ {
+        \ 'layout' : 'vertical split',
+        \ 'left' : [
+        \ {
+        \ 'key' : 'H',
+        \ 'desc' : 'left',
+        \ 'func' : '',
+        \ 'cmd' : 'wincmd h',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'J',
+        \ 'desc' : 'below',
+        \ 'func' : '',
+        \ 'cmd' : 'wincmd j',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'K',
+        \ 'desc' : 'up',
+        \ 'func' : '',
+        \ 'cmd' : 'wincmd k',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'L',
+        \ 'desc' : 'right',
+        \ 'func' : '',
+        \ 'cmd' : 'wincmd l',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : 'h',
+        \ 'desc' : 'decrease width',
+        \ 'func' : '',
+        \ 'cmd' : 'vertical resize -1',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'l',
+        \ 'desc' : 'increase width',
+        \ 'func' : '',
+        \ 'cmd' : 'vertical resize +1',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'j',
+        \ 'desc' : 'decrease height',
+        \ 'func' : '',
+        \ 'cmd' : 'resize -1',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'k',
+        \ 'desc' : 'increase height',
+        \ 'func' : '',
+        \ 'cmd' : 'resize +1',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ }
+        \ )
+  call state.open()
+endfunction
+
 
 let s:enable_sidebar = 0
 
