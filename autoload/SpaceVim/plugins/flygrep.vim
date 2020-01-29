@@ -335,7 +335,7 @@ function! s:close_grep_job() abort
   endif
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
-  normal! "_ggdG
+  noautocmd normal! "_ggdG
   let s:complete_input_history_num = [0,0]
 endfunction
 
