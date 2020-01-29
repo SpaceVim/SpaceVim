@@ -1022,6 +1022,7 @@ Windows manipulation commands (start with `w`):
 
 | Key Bindings          | Descriptions                                                                                                  |
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `SPC w .`             | windows transient state                                                                             |
 | `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`             | balance split windows                                                                                         |
 | `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
