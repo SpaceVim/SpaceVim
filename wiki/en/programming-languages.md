@@ -9,10 +9,10 @@
 | Gosu              | [lang#gosu](https://spacevim.org/layers/lang/gosu/)                 |
 | Idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | C#                | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |
-| C/C++             | lang#c                                                              |
+| C/C++             | [lang#c](https://spacevim.org/layers/lang/c/)                       |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |
-| D                 | [lang#d](https://spacevim.org/layers/lang/agda/)                    |
+| D                 | [lang#d](https://spacevim.org/layers/lang/d/)                       |
 | DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |
 | Elixir            | [lang#elixir](https://spacevim.org/layers/lang/elixir/)             |
@@ -25,7 +25,7 @@
 | Hack              | [lang#hack](https://spacevim.org/layers/lang/hack/)                 |
 | Haskell           | [lang#haskell](https://spacevim.org/layers/lang/haskell/)           |
 | Io                | [lang#io](https://spacevim.org/layers/lang/io/)                     |
-| J                 | [lang#j](https://spacevim.org/layers/lang/agda/)                    |
+| J                 | [lang#j](https://spacevim.org/layers/lang/io/)                      |
 | Java              | [lang#java](https://spacevim.org/layers/lang/java/)                 |
 | JavaScript        | [lang#javascript](https://spacevim.org/layers/lang/javascript/)     |
 | Julia             | [lang#julia](https://spacevim.org/layers/lang/julia/)               |
@@ -44,7 +44,7 @@
 | Prolog            | [lang#prolog](https://spacevim.org/layers/lang/prolog/)             |
 | PureScript        | [lang#purescript](https://spacevim.org/layers/lang/purescript/)     |
 | Python            | [lang#python](https://spacevim.org/layers/lang/python/)             |
-| R                 | [lang#r](https://spacevim.org/layers/lang/agda/)                    |
+| R                 | [lang#r](https://spacevim.org/layers/lang/r/)                       |
 | Racket            | [lang#racket](https://spacevim.org/layers/lang/racket/)             |
 | Red               | [lang#red](https://spacevim.org/layers/lang/red/)                   |
 | Ruby              | [lang#ruby](https://spacevim.org/layers/lang/ruby/)                 |
