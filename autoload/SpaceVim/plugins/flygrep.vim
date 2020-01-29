@@ -244,7 +244,7 @@ function! s:start_replace() abort
   catch
   endtr
   if s:grepid != 0
-    call s:JOB.stop(s:grepid)
+      call s:JOB.stop(s:grepid)
   endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
@@ -307,7 +307,7 @@ let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 function! s:close_buffer() abort
   " NOTE: the jobid maybe -1, that is means the cmd is not executable.
   if s:grepid > 0
-    call s:JOB.stop(s:grepid)
+      call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
@@ -330,12 +330,15 @@ let s:MPT._onclose = function('s:close_buffer')
 function! s:close_grep_job() abort
   " NOTE: the jobid maybe -1, that is means the cmd is not executable.
   if s:grepid > 0
-    call s:JOB.stop(s:grepid)
+    try
+      call s:JOB.stop(s:grepid)
+    catch
+    endtry
     let s:std_line = 0
   endif
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
-  normal! "_ggdG
+  noautocmd normal! "_ggdG
   let s:complete_input_history_num = [0,0]
 endfunction
 
@@ -394,9 +397,9 @@ endfunction
 " FlyGrep Key prompt key bindings: {{{
 function! s:next_item() abort
   if line('.') == line('$')
-    normal! gg
+    noautocmd normal! gg
   else
-    normal! j
+    noautocmd normal! j
   endif
   if s:preview_able == 1
     call s:preview()
@@ -407,7 +410,7 @@ function! s:next_item() abort
 endfunction
 
 function! s:page_up() abort
-  exe "normal! \<PageUp>"
+  exe "noautocmd normal! \<PageUp>"
   if s:preview_able == 1
     call s:preview()
   endif
@@ -417,7 +420,7 @@ function! s:page_up() abort
 endfunction
 
 function! s:page_down() abort
-  exe "normal! \<PageDown>"
+  exe "noautocmd normal! \<PageDown>"
   if s:preview_able == 1
     call s:preview()
   endif
@@ -427,7 +430,7 @@ function! s:page_down() abort
 endfunction
 
 function! s:page_home() abort
-  normal! gg
+  noautocmd normal! gg
   if s:preview_able == 1
     call s:preview()
   endif
@@ -437,7 +440,7 @@ function! s:page_home() abort
 endfunction
 
 function! s:page_end() abort
-  normal! G
+  noautocmd normal! G
   if s:preview_able == 1
     call s:preview()
   endif
@@ -448,9 +451,9 @@ endfunction
 
 function! s:previous_item() abort
   if line('.') == 1
-    normal! G
+    noautocmd normal! G
   else
-    normal! k
+    noautocmd normal! k
   endif
   if s:preview_able == 1
     call s:preview()
@@ -636,7 +639,7 @@ function! s:previous_match_history() abort
   endif
   let s:complete_input_history_num[0] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
-  normal! "_ggdG
+  noautocmd normal! "_ggdG
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
@@ -650,7 +653,7 @@ function! s:next_match_history() abort
   endif
   let s:complete_input_history_num[1] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
-  normal! "_ggdG
+  noautocmd normal! "_ggdG
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
