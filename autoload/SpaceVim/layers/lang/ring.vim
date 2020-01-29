@@ -22,7 +22,7 @@ function! SpaceVim#layers#lang#ring#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('ring', function('s:language_specified_mappings'))
 endfunction
 
-function! SpaceVim#layers#lang#scheme#set_variable(opt) abort
+function! SpaceVim#layers#lang#ring#set_variable(opt) abort
   let s:ring_repl = get(a:opt, 'ring_repl', s:ring_repl) 
 endfunction
 
@@ -41,4 +41,8 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#ring#get_options() abort
+  return ['ring_repl']
 endfunction
