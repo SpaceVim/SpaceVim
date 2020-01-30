@@ -4,6 +4,7 @@
 | ----------------- | ------------------------------------------------------------------- |
 | Agda              | [lang#agda](https://spacevim.org/layers/lang/agda/)                 |
 | Assembly          | lang#assemble                                                       |
+| AspectJ           | [lang#asepctj](https://spacevim.org/layers/lang/aspectj/)           |
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |
 | Bash, Fish, zsh   | [lang#sh](https://spacevim.org/layers/lang/sh/)                     |
 | C#                | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |
@@ -72,7 +73,6 @@
 | APL               |                                                                     |
 | Applescript       |                                                                     |
 | Arc               |                                                                     |
-| AspectJ           |                                                                     |
 | ATLAS             |                                                                     |
 | AutoIt            |                                                                     |
 | AutoLISP          |                                                                     |
