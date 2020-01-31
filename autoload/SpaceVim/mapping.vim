@@ -210,7 +210,9 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
   if get(w:, 'shell_layer_win', 0) == 1
-    exe 'bd!' . abuf
+    if bufexists(abuf)
+      exe 'bd!' . abuf
+    endif
     " fuck the terminal windows
     if get(w:, 'shell_layer_win', 0) == 1
       close
