@@ -95,7 +95,11 @@ function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
-  " @todo skip nofile 
+  " @todo skip some plugin buffer
+  if bufname('%') =~# '\[denite\]-'
+        \ || bufname('%') ==# 'denite-filter'
+    return
+  endif
   " if rooter patterns changed, clear cache.
   " https://github.com/SpaceVim/SpaceVim/issues/2367
   if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
@@ -118,8 +122,8 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
 endfunction
 
 function! s:change_dir(dir) abort
-  call SpaceVim#logger#info('buffer name:' . bufname('%'))
-  call SpaceVim#logger#info('change to root:' . a:dir)
+  call SpaceVim#logger#info('buffer name: ' . bufname('%'))
+  call SpaceVim#logger#info('change to root: ' . a:dir)
   exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
 
   try
@@ -166,6 +170,11 @@ function! s:find_root_directory() abort
     let ftype = getftype(dir)
     if ftype ==# 'dir' || ftype ==# 'file'
       let dir = s:FILE.unify_path(fnamemodify(dir, ':p'))
+      if ftype ==# 'dir'
+        let dir = fnamemodify(dir, ':h:h')
+      else
+        let dir = fnamemodify(dir, ':h')
+      endif
       call SpaceVim#logger#info('        (' . pattern . '):' . dir)
       call add(dirs, dir)
     endif
@@ -180,17 +189,12 @@ function! s:sort_dirs(dirs) abort
   if bufdir ==# dir
     return ''
   else
-    if isdirectory(dir)
-      let dir = fnamemodify(dir, ':p:h:h')
-    else
-      let dir = fnamemodify(dir, ':p:h')
-    endif
     return dir
   endif
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  return len(split(a:d1, '/')) - len(split(a:d2, '/'))
 endfunction
 
 let s:FILE = SpaceVim#api#import('file')
