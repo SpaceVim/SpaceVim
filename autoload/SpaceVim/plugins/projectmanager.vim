@@ -168,7 +168,9 @@ function! s:find_root_directory() abort
       let dir = SpaceVim#util#findFileInParent(pattern, fd)
     endif
     let ftype = getftype(dir)
-    if ( ftype ==# 'dir' || ftype ==# 'file' ) && dir !=# expand('~/.SpaceVim.d/')
+    if ( ftype ==# 'dir' || ftype ==# 'file' ) 
+          \ && dir !=# expand('~/.SpaceVim.d/')
+          \ && dir !=# expand('~/.Rprofile')
       let dir = s:FILE.unify_path(fnamemodify(dir, ':p'))
       if ftype ==# 'dir'
         let dir = fnamemodify(dir, ':h:h')
