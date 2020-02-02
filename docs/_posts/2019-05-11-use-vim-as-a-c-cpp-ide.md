@@ -42,7 +42,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 ### 代码自动补全
 
-`autocomplete` 模块为 SpaceVim 提供了自动补全功能，目前针对 PHP 而言，比较好的补全方案是配合使用 lsp 模块：
+`autocomplete` 模块为 SpaceVim 提供了自动补全功能，目前针对 C/C++ 而言，比较好的补全方案是配合使用 lsp 模块：
 
 ```toml
 [[layers]]
