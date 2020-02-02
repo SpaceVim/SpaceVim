@@ -34,7 +34,7 @@ To use this configuration layer, update custom configuration file with:
 
 This layer provides following layer options:
 
-- `ring_repl`: specific the the of `ringrepl.ring` file.
+- `ring_repl`: specific of the `ringrepl.ring` file.
 
 for example:
 
