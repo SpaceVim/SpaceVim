@@ -13,7 +13,7 @@ function! SpaceVim#layers#lang#janet#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#janet#config() abort
-  call SpaceVim#plugins#repl#reg('janet', 'janet')
+  call SpaceVim#plugins#repl#reg('janet', 'janet -s')
   call SpaceVim#plugins#runner#reg_runner('janet', 'janet %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('janet', function('s:language_specified_mappings'))
 endfunction
