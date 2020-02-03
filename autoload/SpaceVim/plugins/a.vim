@@ -52,11 +52,11 @@ function! s:get_project_config(conf_file) abort
   return s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
 endfunction
 
-function! SpaceVim#plugins#a#alt(...) abort
+function! SpaceVim#plugins#a#alt(request_paser,...) abort
   let type = get(a:000, 0, 'alternate')
   let conf_file_path = s:FILE.unify_path(s:conf, ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, type)
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
   if !empty(alt)
     exe 'e ' . alt
   endif
@@ -100,10 +100,10 @@ function! s:get_type_path(a, f, b) abort
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file, conf_path, ...) abort
+function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   if getftime(a:conf_path) < getftime(s:cache_path)
   endif
-  if !has_key(s:project_config, a:conf_path)
+  if a:request_paser || !has_key(s:project_config, a:conf_path)
     let altconfa = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
     call s:paser(altconfa, a:conf_path)

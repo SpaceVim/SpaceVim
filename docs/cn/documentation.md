@@ -90,6 +90,7 @@ lang: zh
   - [错误处理](#错误处理)
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
+    - [自定义跳转文件](#自定义跳转文件)
 - [格式规范](#格式规范)
 - [Vim 服务](#vim-服务)
 - [Achievements](#achievements)
@@ -1832,7 +1833,7 @@ SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文�
 ### 工程管理
 
 SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
-在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录。
+在文件树中发现 `.project_alt.json` 文件后 vim-rooter 会自动找到项目的根目录。
 
 工程管理的命令以 `p` 开头：
 
@@ -1849,6 +1850,25 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p t` | 自动查找工程根目录       |
 | `SPC p p` | 显示所有工程             |
+
+
+#### 自定义跳转文件
+
+若要实现自定义文件跳转功能，需要在项目根目录新建一个 `.project_alt.json` 文件，
+并在此文件内指定文件跳转的规则。此后可以使用名`:A`跳转到相关文件，
+同时可以加上参数指定跳转类型，比如 `:A doc`。与此同时，可以在命令后加入感叹号 `:A!`，
+强制根据配置文件重新分析项目跳转文件结构。若未指定跳转类型，默认的类型为 `alternate`。
+
+配置文件示例：
+
+```json
+{
+  "autoload/SpaceVim/layers/lang/*.vim": {
+    "doc": "docs/layers/lang/{}.md",
+    "test": "test/layer/lang/{}.vader"
+  }
+}
+```
 
 ## 格式规范
 
