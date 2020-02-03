@@ -1864,13 +1864,17 @@ Project manager commands start with `p`:
 To manager the alternate file of the project, you need to create a `.project_alt.json` file
 in the root of your project. Then you can use command `:A` to jump to the alternate file of
 current file. You can also specific the type of alternate file, for example `:A doc`.
-With a bang `:A!`, SpaceVim will paser the configuration file additionally.
+With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
+the default type `alternate` will be used.
 
 here is an example of `.project_alt.json`:
 
 ```json
 {
-  "autoload/SpaceVim/layers/lang/*.vim": {"doc": "docs/layers/lang/{}.md"},
+  "autoload/SpaceVim/layers/lang/*.vim": {
+    "doc": "docs/layers/lang/{}.md",
+    "test": "test/layer/lang/{}.vader"
+  }
 }
 ```
 
