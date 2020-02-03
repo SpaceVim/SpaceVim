@@ -84,9 +84,9 @@ function! SpaceVim#layers#lang#rust#set_variable(var) abort
 endfunction
 
 function! s:language_specified_mappings() abort
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 's'],
         \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'x'],
         \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
 
 
@@ -131,11 +131,11 @@ function! s:language_specified_mappings() abort
 endfunction
 
 function! s:gotodef() abort
-  if exists('*racer#GoToDefinition')
+  try
     call racer#GoToDefinition()
-  else
+  catch
     exec 'normal! gd'
-  endif
+  endtry
 endfunction
 
 function! s:execCMD(cmd) abort
