@@ -1833,7 +1833,7 @@ SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文�
 ### 工程管理
 
 SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
-在文件树中发现 `.projections.json` 文件后 vim-rooter 会自动找到项目的根目录。
+在文件树中发现 `.project_alt.json` 文件后 vim-rooter 会自动找到项目的根目录。
 
 工程管理的命令以 `p` 开头：
 
