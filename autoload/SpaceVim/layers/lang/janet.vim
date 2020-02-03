@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#lang#janet#plugins() abort
   let plugins = []
-  
+  call add(plugins, ['janet-lang/janet.vim', { 'merged' : 0}])
   return plugins
 endfunction
 
