@@ -98,8 +98,13 @@ function! s:async_run(runner) abort
       let usestdin =  0
       let compile_cmd = substitute(printf(a:runner[0], bufname('%')), '#TEMP#', s:target, 'g')
     endif
+    if type(compile_cmd) == type([])
+      let compile_cmd_info = string(compile_cmd + (usestdin ? ['STDIN'] : []))
+    else
+      let compile_cmd_info = compile_cmd . (usestdin ? ' STDIN' : '') 
+    endif
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
-          \ '[Compile] ' . compile_cmd . (usestdin ? ' STDIN' : ''),
+          \ '[Compile] ' . compile_cmd_info,
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
