@@ -62,7 +62,11 @@ function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_cmd = s:racer_cmd ==# ''
           \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
           \ : s:racer_cmd
+  let g:rustfmt_cmd = s:rustfmt_cmd ==# ''
+          \ ? get(g:, 'rustfmt_cmd', $HOME . '/.cargo/bin/rustfmt')
+          \ : s:rustfmt_cmd
   let g:rust_recommended_style = s:recommended_style
+  let g:rustfmt_autosave = s:format_autosave
 
   call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
   call add(g:spacevim_project_rooter_patterns, 'Cargo.toml')
@@ -72,15 +76,17 @@ function! SpaceVim#layers#lang#rust#config() abort
   else
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
-
 endfunction
 
 let s:recommended_style = 0
+let s:format_autosave = 0
 let s:racer_cmd = ''
+let s:rustfmt_cmd = ''
 function! SpaceVim#layers#lang#rust#set_variable(var) abort
-
   let s:recommended_style = get(a:var, 'recommended-style', s:recommended_style)
-  let s:racer_cmd = get(a:var, 'racer_cmd', s:racer_cmd)
+  let s:format_autosave = get(a:var, 'format-autosave', s:format_autosave)
+  let s:racer_cmd = get(a:var, 'racer-cmd', s:racer_cmd)
+  let s:rustfmt_cmd = get(a:var, 'rustfmt-cmd', s:rustfmt_cmd)
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -88,7 +94,6 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'x'],
         \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
-
 
   let g:_spacevim_mappings_space.l.c = {'name' : '+Cargo'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'r'], 'call call('
@@ -112,7 +117,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'D'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo doc"])',
         \ 'build-docs', 1)
-
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'f'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo fmt"])',
+        \ 'format project files', 1)
 
   if SpaceVim#layers#lsp#check_filetype('rust')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
@@ -128,6 +135,8 @@ function! s:language_specified_mappings() abort
           \ '<Plug>(rust-doc)', 'show documentation', 1)
   endif
 
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
+        \ 'call rustfmt#Format()' ,'format file', 1)
 endfunction
 
 function! s:gotodef() abort
