@@ -28,6 +28,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Statusline](#statusline)
   - [Tabline](#tabline)
 - [General Key bindings](#general-key-bindings)
+  - [Visual mode key bindings](#visual-mode-key-bindings)
+  - [Command line mode key bidnings](#command-line-mode-key-bidnings)
   - [Window manager](#window-manager)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
@@ -208,9 +210,9 @@ If you want to add plugins from github, just add the repo name to the `custom_pl
 
 ```toml
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
-    on_cmd = ["ColorHighlight", "ColorToggle"]
-    merged = false
+name = "lilydjwg/colorizer"
+on_cmd = ["ColorHighlight", "ColorToggle"]
+merged = false
 ```
 
 `on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
@@ -221,8 +223,8 @@ If you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 
 ```toml
 [options]
-    # NOTE: the value should be a list, and each item is the name of the plugin.
-    disabled_plugins = ["clighter", "clighter8"]
+# NOTE: the value should be a list, and each item is the name of the plugin.
+disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### Bootstrap Functions
@@ -233,12 +235,12 @@ The bootstrap functions should be placed to the `autoload` directory in `runtime
 
 ```vim
 function! myspacevim#before() abort
-    let g:neomake_enabled_c_makers = ['clang']
-    nnoremap jk <Esc>
+let g:neomake_enabled_c_makers = ['clang']
+nnoremap jk <Esc>
 endfunction
 
 function! myspacevim#after() abort
-    iunmap jk
+iunmap jk
 endfunction
 ```
 
@@ -249,8 +251,8 @@ If you want to add custom `SPC` prefix key bindings, you can add them to bootstr
 
 ```vim
 function! myspacevim#before() abort
-    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
 
@@ -282,7 +284,7 @@ For example, in order to disable language specific leader, you may add the follo
 
 ```toml
 [options]
-    enable_language_specific_leader = false
+enable_language_specific_leader = false
 ```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
@@ -312,7 +314,7 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [options]
-    disabled_plugins = ["neomake.vim"]
+disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
@@ -320,16 +322,16 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [[custom_plugins]]
-   name = "wsdjeg/neomake.vim"
-   # note: you need to disable merged feature
-   merged = false
+name = "wsdjeg/neomake.vim"
+# note: you need to disable merged feature
+merged = false
 ```
 
 Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
-    set rtp+=~/path/to/your/localplugin
+set rtp+=~/path/to/your/localplugin
 endfunction
 ```
 
@@ -366,8 +368,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
 [options]
-    colorscheme = "desert"
-    colorscheme_bg = "dark"
+colorscheme = "desert"
+colorscheme_bg = "dark"
 ```
 
 | Mappings  | Descriptions                                                   |
@@ -384,7 +386,7 @@ For more information see: [Colours in terminal](https://gist.github.com/XVilka/8
 If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:
 
 ```toml
-    enable_guicolors = false
+enable_guicolors = false
 ```
 
 ### Font
@@ -395,7 +397,7 @@ It is recommended to install it on your system if you wish to use it.
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = "SauceCodePro Nerd Font Mono:h11"
+guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
@@ -501,7 +503,7 @@ All the colors are based on the current colorscheme.
 It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```toml
-  statusline_separator = 'arrow'
+statusline_separator = 'arrow'
 ```
 
 Here is an exhaustive set of screenshots for all the available separator:
@@ -558,17 +560,17 @@ If you want to contribute theme please check the template of a statusline theme.
 " group_ii: window id in iedit-insert mode
 " group_in: windows id in iedit-normal mode
 function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
-    return [
-                \ ['#282828', '#a89984', 246, 235],
-                \ ['#a89984', '#504945', 239, 246],
-                \ ['#a89984', '#3c3836', 237, 246],
-                \ ['#665c54', 241],
-                \ ['#282828', '#83a598', 235, 109],
-                \ ['#282828', '#fe8019', 235, 208],
-                \ ['#282828', '#8ec07c', 235, 108],
-                \ ['#282828', '#689d6a', 235, 72],
-                \ ['#282828', '#8f3f71', 235, 132],
-                \ ]
+return [
+\ ['#282828', '#a89984', 246, 235],
+\ ['#a89984', '#504945', 239, 246],
+\ ['#a89984', '#3c3836', 237, 246],
+\ ['#665c54', 241],
+\ ['#282828', '#83a598', 235, 109],
+\ ['#282828', '#fe8019', 235, 208],
+\ ['#282828', '#8ec07c', 235, 108],
+\ ['#282828', '#689d6a', 235, 72],
+\ ['#282828', '#8f3f71', 235, 132],
+\ ]
 endfunction
 ```
 
@@ -578,16 +580,16 @@ switching between different colorschemes, you may need to set
 
 ```toml
 custom_color_palette = [
-    ["#282828", "#a89984", 246, 235],
-    ["#a89984", "#504945", 239, 246],
-    ["#a89984", "#3c3836", 237, 246],
-    ["#665c54", 241],
-    ["#282828", "#83a598", 235, 109],
-    ["#282828", "#fe8019", 235, 208],
-    ["#282828", "#8ec07c", 235, 108],
-    ["#282828", "#689d6a", 235, 72],
-    ["#282828", "#8f3f71", 235, 132],
-    ]
+["#282828", "#a89984", 246, 235],
+["#a89984", "#504945", 239, 246],
+["#a89984", "#3c3836", 237, 246],
+["#665c54", 241],
+["#282828", "#83a598", 235, 109],
+["#282828", "#fe8019", 235, 208],
+["#282828", "#8ec07c", 235, 108],
+["#282828", "#689d6a", 235, 72],
+["#282828", "#8f3f71", 235, 132],
+]
 ```
 
 ### Tabline
@@ -639,39 +641,49 @@ Key bindings within tab manager windows:
 
 The following key bindings are the general key bindings for moving cursor.
 
-| Key Bindings | Descriptions                             |
-| ------------ | ---------------------------------------- |
-| `h`          | move cursor left                         |
-| `j`          | move cursor down                         |
-| `k`          | move cursor up                           |
-| `l`          | move cursor right                        |
-| `H`          | move cursor to the top of the screen     |
-| `L`          | move cursor to the bottom of the screen  |
-| `Ctrl-f`     | Smart page forward (`Ctrl-f` / `Ctrl-d`) |
-| `Ctrl-b`     | Smart page backwards (`C-b` / `C-u`)     |
-| `Ctrl-e`     | Smart scroll down (`3 Ctrl-e/j`)         |
-| `Ctrl-y`     | Smart scroll up (`3Ctrl-y/k`)            |
+| Key Bindings     | Descriptions                                      |
+| ---------------- | ------------------------------------------------- |
+| `h`              | move cursor left                                  |
+| `j`              | move cursor down                                  |
+| `k`              | move cursor up                                    |
+| `l`              | move cursor right                                 |
+| `<Up>`, `<Down>` | Smart up and down                                 |
+| `H`              | move cursor to the top of the screen              |
+| `L`              | move cursor to the bottom of the screen           |
+| `<`              | Indent to left and re-select                      |
+| `>`              | Indent to right and re-select                     |
+| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
+| `Ctrl-b`         | Smart page backwards (`C-b` / `C-u`)              |
+| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
+| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
+| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
 
-| Key               | Mode          | Action                                                                         |
-| ----------------- | ------------- | ------------------------------------------------------------------------------ |
-| `<Leader> y`      | visual        | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`          | Normal        | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-q`          | Normal        | `Ctrl-w`                                                                       |
-| `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
-| `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
-| `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
-| `<`               | Visual/Normal | Indent to left and re-select                                                   |
-| `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`           | Visual        | Indent to right and re-select                                                  |
-| `Shift-<Tab>`     | Visual        | Indent to left and re-select                                                   |
-| `g p`             | Normal        | Select last paste                                                              |
-| `Q` / `g Q`       | Normal        | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl-a`          | Command       | Navigation in command line                                                     |
-| `Ctrl-b`          | Command       | Move cursor backward in command line                                           |
-| `Ctrl-f`          | Command       | Move cursor forward in command line                                            |
+### Visual mode key bindings
+
+| Key           | Mode          | Action                                                 |
+| ------------- | ------------- | ------------------------------------------------------ |
+| `<Leader> y`  | visual        | Copy selection to X11 clipboard ("+y)                  |
+| `<`           | Visual/Normal | Indent to left and re-select                           |
+| `>`           | Visual/Normal | Indent to right and re-select                          |
+| `<Tab>`       | Visual        | Indent to right and re-select                          |
+| `Shift-<Tab>` | Visual        | Indent to left and re-select                           |
+| `<Leader> p`  | Normal/visual | Paste selection from X11 clipboard ("+p)               |
+| `Ctrl-q`      | Normal        | `Ctrl-w`                                               |
+| `Ctrl-x`      | Normal        | Switch buffer and placement                            |
+| `}`           | Normal        | After paragraph motion go to first non-blank char (}^) |
+| `g p`         | Normal        | Select last paste                                      |
+| `Q` / `g Q`   | Normal        | Disable EX-mode (<Nop>)                                |
+| `Ctrl-a`      | Command       | Navigation in command line                             |
+| `Ctrl-b`      | Command       | Move cursor backward in command line                   |
+| `Ctrl-f`      | Command       | Move cursor forward in command line                    |
+
+### Command line mode key bidnings
+
+| Key      | Action                               |
+| -------- | ------------------------------------ |
+| `Ctrl-a` | Navigation in command line           |
+| `Ctrl-b` | Move cursor backward in command line |
+| `Ctrl-f` | Move cursor forward in command line  |
 
 ### Window manager
 
@@ -680,7 +692,7 @@ can change it via `windows_leader` option:
 
 ```toml
 [options]
-    windows_leader = "s"
+windows_leader = "s"
 ```
 
 | Key Bindings | Descriptions                          |
@@ -751,7 +763,7 @@ Bookmarks manager is included in `tools` layer, to use following key bindings, y
 
 ```toml
 [[layers]]
-    name = "tools"
+name = "tools"
 ```
 
 | Key Bindings | Descriptions                    |
@@ -768,7 +780,7 @@ then you can use `a` registers via `<Leader> m a`.
 
 ```viml
 function! myspacevim#before() abort
-    nnoremap <silent><Leader>m m
+nnoremap <silent><Leader>m m
 endfunction
 ```
 
@@ -784,7 +796,7 @@ for example, load the denite layer:
 
 ```toml
 [[layers]]
-    name = "denite"
+name = "denite"
 ```
 
 **Key bindings**
@@ -1139,11 +1151,11 @@ To change the filemanager plugin:
 
 ```toml
 [options]
-    # file manager plugins supported in SpaceVim:
-    # - vimfiler (default)
-    # - nerdtree
-    # - defx
-    filemanager = "defx"
+# file manager plugins supported in SpaceVim:
+# - vimfiler (default)
+# - nerdtree
+# - defx
+filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
@@ -1157,7 +1169,7 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-    filetree_direction = "left"
+filetree_direction = "left"
 ```
 
 ##### File tree navigation
@@ -1360,9 +1372,9 @@ The following example shows how to change the default option of searching tool `
 
 ```vim
 function! myspacevim#before() abort
-    let profile = SpaceVim#mapping#search#getprofile('rg')
-    let default_opt = profile.default_opts + ['--no-ignore-vcs']
-    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+let profile = SpaceVim#mapping#search#getprofile('rg')
+let default_opt = profile.default_opts + ['--no-ignore-vcs']
+call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
 endfunction
 ```
 
