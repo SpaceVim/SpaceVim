@@ -682,13 +682,15 @@ The following key bindings are the general key bindings for moving cursor.
 After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
 can be used in command line mode:
 
-| Key bindings | Descriptions                         |
-| ------------ | ------------------------------------ |
-| `Ctrl-a`     | Navigation in command line           |
-| `Ctrl-b`     | Move cursor backward in command line |
-| `Ctrl-f`     | Move cursor forward in command line  |
-| `Ctrl-w`     | delete a whole word                  |
-| `Ctrl-u`     | remove all text                      |
+| Key bindings   | Descriptions                         |
+| -------------- | ------------------------------------ |
+| `Ctrl-a`       | Navigation in command line           |
+| `Ctrl-b`       | Move cursor backward in command line |
+| `Ctrl-f`       | Move cursor forward in command line  |
+| `Ctrl-w`       | delete a whole word                  |
+| `Ctrl-u`       | remove all text before cursor        |
+| `Ctrl-k`       | remove all text after cursor         |
+| `Ctrl-c`/`Esc` | cancel command line mode             |
 
 ### Window manager
 
