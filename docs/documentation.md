@@ -611,7 +611,8 @@ tabs will be listed on the tabline. Each item can be quickly accessed by using
 | `<Leader> 8` | Jump to index 8 on tabline |
 | `<Leader> 9` | Jump to index 9 on tabline |
 
-SpaceVim tabline also supports mouse click, left mouse button will switch to buffer, while middle button will delete the buffer.
+SpaceVim tabline also supports mouse click, left mouse button will switch to buffer,
+while middle button will delete the buffer.
 
 **NOTE:** This feature is only supported in Neovim with `has('tablineat')`.
 
@@ -652,30 +653,28 @@ The following key bindings are the general key bindings for moving cursor.
 | `L`              | move cursor to the bottom of the screen           |
 | `<`              | Indent to left and re-select                      |
 | `>`              | Indent to right and re-select                     |
+| `}`              | paragraphs forward                                |
+| `{`              | paragraphs backward                               |
 | `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
-| `Ctrl-b`         | Smart page backwards (`C-b` / `C-u`)              |
+| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
 | `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
 | `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
 | `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
 
 ### Visual mode key bindings
 
-| Key           | Mode          | Action                                                 |
-| ------------- | ------------- | ------------------------------------------------------ |
-| `<Leader> y`  | visual        | Copy selection to X11 clipboard ("+y)                  |
-| `<`           | Visual/Normal | Indent to left and re-select                           |
-| `>`           | Visual/Normal | Indent to right and re-select                          |
-| `<Tab>`       | Visual        | Indent to right and re-select                          |
-| `Shift-<Tab>` | Visual        | Indent to left and re-select                           |
-| `<Leader> p`  | Normal/visual | Paste selection from X11 clipboard ("+p)               |
-| `Ctrl-q`      | Normal        | `Ctrl-w`                                               |
-| `Ctrl-x`      | Normal        | Switch buffer and placement                            |
-| `}`           | Normal        | After paragraph motion go to first non-blank char (}^) |
-| `g p`         | Normal        | Select last paste                                      |
-| `Q` / `g Q`   | Normal        | Disable EX-mode (<Nop>)                                |
-| `Ctrl-a`      | Command       | Navigation in command line                             |
-| `Ctrl-b`      | Command       | Move cursor backward in command line                   |
-| `Ctrl-f`      | Command       | Move cursor forward in command line                    |
+| Key               | Action                                   |
+| ----------------- | ---------------------------------------- |
+| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
+| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
+| `<`               | Indent to left and re-select             |
+| `>`               | Indent to right and re-select            |
+| `<Tab>`           | Indent to right and re-select            |
+| `Shift-<Tab>`     | Indent to left and re-select             |
+| `Ctrl-q`          | `Ctrl-w`                                 |
+| `Ctrl-x`          | Switch buffer and placement              |
+| `Ctrl-Shift-Up`   | move lines up                            |
+| `Ctrl-Shift-Down` | move lines down                          |
 
 ### Command line mode key bidnings
 
@@ -684,13 +683,15 @@ can be used in command line mode:
 
 | Key bindings   | Descriptions                         |
 | -------------- | ------------------------------------ |
-| `Ctrl-a`       | Navigation in command line           |
+| `Ctrl-a`       | move cursor to beginning             |
 | `Ctrl-b`       | Move cursor backward in command line |
 | `Ctrl-f`       | Move cursor forward in command line  |
 | `Ctrl-w`       | delete a whole word                  |
 | `Ctrl-u`       | remove all text before cursor        |
 | `Ctrl-k`       | remove all text after cursor         |
 | `Ctrl-c`/`Esc` | cancel command line mode             |
+| `Tab`          | next item in popup menu              |
+| `Shift-Tab`    | previous item in popup menu          |
 
 ### Window manager
 
@@ -1267,6 +1268,7 @@ which will tell you the functional of all mappings starting with `g`.
 | `g m`        | go to middle of screenline                      |
 | `g n`        | visually select next match                      |
 | `g o`        | goto byte N in the buffer                       |
+| `g p`        | Select last paste                               |
 | `g s`        | sleep N seconds                                 |
 | `g t`        | next tag page                                   |
 | `g u`        | make motion text lowercase                      |
