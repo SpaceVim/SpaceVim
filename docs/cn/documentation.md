@@ -30,6 +30,8 @@ lang: zh
   - [状态栏](#状态栏)
   - [标签栏](#标签栏)
 - [基本操作](#基本操作)
+  - [可视模式快捷键](#可视模式快捷键)
+  - [命令行模式快捷键](#命令行模式快捷键)
   - [窗口管理器](#窗口管理器)
   - [文件操作](#文件操作)
   - [编辑器界面](#编辑器界面)
@@ -41,8 +43,6 @@ lang: zh
     - [获取帮助信息](#获取帮助信息)
     - [可用模块](#可用模块)
     - [界面元素显示切换](#界面元素显示切换)
-  - [常规操作](#常规操作)
-    - [光标移动](#光标移动)
     - [使用 vim-easymotion 快速跳转](#使用-vim-easymotion-快速跳转)
         - [快速跳到网址 (TODO)](#快速跳到网址-todo)
     - [常用的成对快捷键](#常用的成对快捷键)
@@ -621,6 +621,60 @@ endfunction
 
 ## 基本操作
 
+The following key bindings are the general key bindings for moving cursor.
+
+| Key Bindings     | Descriptions                                      |
+| ---------------- | ------------------------------------------------- |
+| `h`              | move cursor left                                  |
+| `j`              | move cursor down                                  |
+| `k`              | move cursor up                                    |
+| `l`              | move cursor right                                 |
+| `<Up>`, `<Down>` | Smart up and down                                 |
+| `H`              | move cursor to the top of the screen              |
+| `L`              | move cursor to the bottom of the screen           |
+| `<`              | Indent to left and re-select                      |
+| `>`              | Indent to right and re-select                     |
+| `}`              | paragraphs forward                                |
+| `{`              | paragraphs backward                               |
+| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
+| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
+| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
+| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
+| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
+
+### 可视模式快捷键
+
+| 快捷键            | 功能描述                                 |
+| ----------------- | ---------------------------------------- |
+| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
+| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
+| `<`               | Indent to left and re-select             |
+| `>`               | Indent to right and re-select            |
+| `<Tab>`           | Indent to right and re-select            |
+| `Shift-<Tab>`     | Indent to left and re-select             |
+| `Ctrl-q`          | `Ctrl-w`                                 |
+| `Ctrl-x`          | Switch buffer and placement              |
+| `Ctrl-Shift-Up`   | move lines up                            |
+| `Ctrl-Shift-Down` | move lines down                          |
+
+
+### 命令行模式快捷键
+
+After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+can be used in command line mode:
+
+| Key bindings   | Descriptions                         |
+| -------------- | ------------------------------------ |
+| `Ctrl-a`       | move cursor to beginning             |
+| `Ctrl-b`       | Move cursor backward in command line |
+| `Ctrl-f`       | Move cursor forward in command line  |
+| `Ctrl-w`       | delete a whole word                  |
+| `Ctrl-u`       | remove all text before cursor        |
+| `Ctrl-k`       | remove all text after cursor         |
+| `Ctrl-c`/`Esc` | cancel command line mode             |
+| `Tab`          | next item in popup menu              |
+| `Shift-Tab`    | previous item in popup menu          |
+
 ### 窗口管理器
 
 窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀（`WIN`）按键为 `s`，可以在配置文件中通过修改
@@ -899,24 +953,6 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 所有的界面元素切换快捷键都以 `[SPC] t` 或 `[SPC] T` 开头，你可以在快捷键导航中查阅所有快捷键。
 
-### 常规操作
-
-#### 光标移动
-
-光标的移动默认采用 Vi 的默认形式：`hjkl`。
-
-| 快捷键    | 功能描述                                   |
-| --------- | ------------------------------------------ |
-| `h`       | 向左移动光标（Vim 原生功能，无映射）       |
-| `j`       | 向下移动光标（Vim 原生功能，无映射）       |
-| `k`       | 向上移动光标（Vim 原生功能，无映射）       |
-| `l`       | 向右移动光标（Vim 原生功能，无映射）       |
-| `H`       | 光标移至屏幕最上方（Vim 原生功能，无映射） |
-| `L`       | 光标移至屏幕最下方（Vim 原生功能，无映射） |
-| `SPC j 0` | 跳至行首（并且标记原始位置）               |
-| `SPC j $` | 跳至行尾（并且标记原始位置）               |
-| `SPC t -` | 锁定光标在屏幕中间（TODO）                 |
-
 #### 使用 vim-easymotion 快速跳转
 
 ###### 快速跳到网址 (TODO)
@@ -1013,7 +1049,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 | 快捷键                | 功能描述                                                                       |
 | --------------------- | ------------------------------------------------------------------------------ |
-| `SPC w .`             | 启用窗口临时快捷键                                                                 |
+| `SPC w .`             | 启用窗口临时快捷键                                                             |
 | `SPC w <Tab>`         | 在同一标签内进行窗口切换                                                       |
 | `SPC w =`             | 对齐分离的窗口                                                                 |
 | `SPC w b`             | force the focus back to the minibuffer (TODO)                                  |
@@ -1856,7 +1892,6 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p t` | 自动查找工程根目录       |
 | `SPC p p` | 显示所有工程             |
-
 
 #### 自定义跳转文件
 
