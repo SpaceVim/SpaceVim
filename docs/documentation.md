@@ -679,11 +679,16 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Command line mode key bidnings
 
-| Key      | Action                               |
-| -------- | ------------------------------------ |
-| `Ctrl-a` | Navigation in command line           |
-| `Ctrl-b` | Move cursor backward in command line |
-| `Ctrl-f` | Move cursor forward in command line  |
+After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+can be used in command line mode:
+
+| Key bindings | Descriptions                         |
+| ------------ | ------------------------------------ |
+| `Ctrl-a`     | Navigation in command line           |
+| `Ctrl-b`     | Move cursor backward in command line |
+| `Ctrl-f`     | Move cursor forward in command line  |
+| `Ctrl-w`     | delete a whole word                  |
+| `Ctrl-u`     | remove all text                      |
 
 ### Window manager
 
