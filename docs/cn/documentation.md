@@ -621,26 +621,27 @@ endfunction
 
 ## 基本操作
 
-The following key bindings are the general key bindings for moving cursor.
+以下列出了最常用的移动光标以及滚屏的快捷键：
 
-| Key Bindings     | Descriptions                                      |
-| ---------------- | ------------------------------------------------- |
-| `h`              | move cursor left                                  |
-| `j`              | move cursor down                                  |
-| `k`              | move cursor up                                    |
-| `l`              | move cursor right                                 |
-| `<Up>`, `<Down>` | Smart up and down                                 |
-| `H`              | move cursor to the top of the screen              |
-| `L`              | move cursor to the bottom of the screen           |
-| `<`              | Indent to left and re-select                      |
-| `>`              | Indent to right and re-select                     |
-| `}`              | paragraphs forward                                |
-| `{`              | paragraphs backward                               |
-| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
-| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
-| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
-| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
-| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
+| 快捷键   | 功能描述                                          |
+| -------- | ------------------------------------------------- |
+| `h`      | 向左移动光标                                      |
+| `j`      | 向下移动光标                                      |
+| `k`      | 向上移动光标                                      |
+| `l`      | 向右移动光标                                      |
+| `<Up>`   | 向上移动光标，不跳过折行                          |
+| `<Down>` | 向下移动光标，不跳过折行                          |
+| `H`      | 移动光标至屏幕顶部                                |
+| `L`      | 移动光标至屏幕底部                                |
+| `<`      | Indent to left and re-select                      |
+| `>`      | Indent to right and re-select                     |
+| `}`      | paragraphs forward                                |
+| `{`      | paragraphs backward                               |
+| `Ctrl-f` | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
+| `Ctrl-b` | Smart page backward (`C-b` / `C-u`)               |
+| `Ctrl-e` | Smart scroll down (`3 Ctrl-e/j`)                  |
+| `Ctrl-y` | Smart scroll up (`3Ctrl-y/k`)                     |
+| `Ctrl-c` | Copy full path of current buffer to X11 clipboard |
 
 ### 可视模式快捷键
 
@@ -656,7 +657,6 @@ The following key bindings are the general key bindings for moving cursor.
 | `Ctrl-x`          | Switch buffer and placement              |
 | `Ctrl-Shift-Up`   | move lines up                            |
 | `Ctrl-Shift-Down` | move lines down                          |
-
 
 ### 命令行模式快捷键
 
