@@ -39,8 +39,6 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Getting help](#getting-help)
     - [Available layers](#available-layers)
     - [Toggles](#toggles)
-  - [Navigating](#navigating)
-    - [Point/Cursor](#pointcursor)
     - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
       - [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
     - [Unimpaired bindings](#unimpaired-bindings)
@@ -639,6 +637,42 @@ Key bindings within tab manager windows:
 
 ## General Key bindings
 
+The following key bindings are the general key bindings for moving cursor.
+
+| Key Bindings | Descriptions                             |
+| ------------ | ---------------------------------------- |
+| `h`          | move cursor left                         |
+| `j`          | move cursor down                         |
+| `k`          | move cursor up                           |
+| `l`          | move cursor right                        |
+| `H`          | move cursor to the top of the screen     |
+| `L`          | move cursor to the bottom of the screen  |
+| `Ctrl-f`     | Smart page forward (`Ctrl-f` / `Ctrl-d`) |
+| `Ctrl-b`     | Smart page backwards (`C-b` / `C-u`)     |
+| `Ctrl-e`     | Smart scroll down (`3 Ctrl-e/j`)         |
+| `Ctrl-y`     | Smart scroll up (`3Ctrl-y/k`)            |
+
+| Key               | Mode          | Action                                                                         |
+| ----------------- | ------------- | ------------------------------------------------------------------------------ |
+| `<Leader> y`      | visual        | Copy selection to X11 clipboard ("+y)                                          |
+| `Ctrl-c`          | Normal        | Copy full path of current buffer to X11 clipboard                              |
+| `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
+| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
+| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
+| `Ctrl-q`          | Normal        | `Ctrl-w`                                                                       |
+| `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
+| `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
+| `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
+| `<`               | Visual/Normal | Indent to left and re-select                                                   |
+| `>`               | Visual/Normal | Indent to right and re-select                                                  |
+| `<Tab>`           | Visual        | Indent to right and re-select                                                  |
+| `Shift-<Tab>`     | Visual        | Indent to left and re-select                                                   |
+| `g p`             | Normal        | Select last paste                                                              |
+| `Q` / `g Q`       | Normal        | Disable EX-mode (<Nop>)                                                        |
+| `Ctrl-a`          | Command       | Navigation in command line                                                     |
+| `Ctrl-b`          | Command       | Move cursor backward in command line                                           |
+| `Ctrl-f`          | Command       | Move cursor forward in command line                                            |
+
 ### Window manager
 
 Window manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
@@ -666,31 +700,6 @@ can change it via `windows_leader` option:
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
-
-| Key               | Mode          | Action                                                                         |
-| ----------------- | ------------- | ------------------------------------------------------------------------------ |
-| `<Leader> y`      | visual        | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`          | Normal        | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`          | Normal        | Smart page forward (`Ctrl-f` / `Ctrl-d`)                                       |
-| `Ctrl-b`          | Normal        | Smart page backwards (`C-b` / `C-u`)                                           |
-| `Ctrl-e`          | Normal        | Smart scroll down (`3 Ctrl-e/j`)                                               |
-| `Ctrl-y`          | Normal        | Smart scroll up (`3Ctrl-y/k`)                                                  |
-| `Ctrl-q`          | Normal        | `Ctrl-w`                                                                       |
-| `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
-| `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
-| `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
-| `<`               | Visual/Normal | Indent to left and re-select                                                   |
-| `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`           | Visual        | Indent to right and re-select                                                  |
-| `Shift-<Tab>`     | Visual        | Indent to left and re-select                                                   |
-| `g p`             | Normal        | Select last paste                                                              |
-| `Q` / `g Q`       | Normal        | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl-a`          | Command       | Navigation in command line                                                     |
-| `Ctrl-b`          | Command       | Move cursor backward in command line                                           |
-| `Ctrl-f`          | Command       | Move cursor forward in command line                                            |
 
 ### File Operations
 
@@ -907,24 +916,6 @@ All plugins can be easily discovered via `<leader> l p`.
 
 Both the toggles mappings start with `[SPC] t` or `[SPC] T`. You can find them in the mapping guide.
 
-### Navigating
-
-#### Point/Cursor
-
-Navigation is performed using the Vi key bindings `hjkl`.
-
-| Key Bindings | Descriptions                                                                      |
-| ------------ | --------------------------------------------------------------------------------- |
-| `h`          | move cursor left (origin Vim key, no mappings)                                    |
-| `j`          | move cursor down (origin Vim key, no mappings)                                    |
-| `k`          | move cursor up (origin Vim key, no mappings)                                      |
-| `l`          | move cursor right (origin Vim key, no mappings)                                   |
-| `H`          | move cursor to the top of the screen (origin Vim key, no mappings)                |
-| `L`          | move cursor to the bottom of the screen (origin Vim key, no mappings)             |
-| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
-| `SPC j $`    | go to the end of line (and set a mark at the previous location in the line)       |
-| `SPC t -`    | lock the cursor at the center of the screen                                       |
-
 #### Vim motions with vim-easymotion
 
 ##### quick-jump-link mode (TODO)
@@ -1023,7 +1014,7 @@ Windows manipulation commands (start with `w`):
 
 | Key Bindings          | Descriptions                                                                                                  |
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w .`             | windows transient state                                                                             |
+| `SPC w .`             | windows transient state                                                                                       |
 | `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`             | balance split windows                                                                                         |
 | `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
