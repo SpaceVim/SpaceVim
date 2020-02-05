@@ -44,9 +44,19 @@
 "   -----------------------------------------------
 "   normal      gd          rust-definition
 "   normal      SPC l d     rust-doc
-"   normal      SPC l r     execute current file
 "   normal      SPC l s     rust-def-split
 "   normal      SPC l x     rust-def-vertical
+"   normal      SPC l f     rustfmt-format
+"   normal      SPC l e     rls-rename-symbol
+"   normal      SPC l u     rls-show-references
+"   normal      SPC l c b   cargo-build
+"   normal      SPC l c c   cargo-clean
+"   normal      SPC l c f   cargo-fmt
+"   normal      SPC l c t   cargo-test
+"   normal      SPC l c u   cargo-update
+"   normal      SPC l c B   cargo-bench
+"   normal      SPC l c D   cargo-docs
+"   normal      SPC l c r   cargo-run
 " <
 
 function! SpaceVim#layers#lang#rust#plugins() abort
