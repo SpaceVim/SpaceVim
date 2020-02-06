@@ -672,17 +672,17 @@ endfunction
 常规模式下按下 `:` 键后，可进入命令行模式，再次可以是下可以编辑 Vim 的命令并执行，
 以下列出了命令行模式下一些常用的移动光标、删减字符的快捷键：
 
-| 快捷键         | 功能描述                             |
-| -------------- | ------------------------------------ |
-| `Ctrl-a`       | 移动光标至行首                       |
-| `Ctrl-b`       | Move cursor backward in command line |
-| `Ctrl-f`       | Move cursor forward in command line  |
-| `Ctrl-w`       | delete a whole word                  |
-| `Ctrl-u`       | remove all text before cursor        |
-| `Ctrl-k`       | remove all text after cursor         |
-| `Ctrl-c`/`Esc` | cancel command line mode             |
-| `Tab`          | next item in popup menu              |
-| `Shift-Tab`    | previous item in popup menu          |
+| 快捷键         | 功能描述           |
+| -------------- | ------------------ |
+| `Ctrl-a`       | 移动光标至行首     |
+| `Ctrl-b`       | 向左移动光标       |
+| `Ctrl-f`       | 向右移动光标       |
+| `Ctrl-w`       | 删除光标前词       |
+| `Ctrl-u`       | 移除光标前所有字符 |
+| `Ctrl-k`       | 移除光标后所有字符 |
+| `Ctrl-c`/`Esc` | 离开命令行模式     |
+| `Tab`          | 选择下一个匹配     |
+| `Shift-Tab`    | 选择上一个匹配     |
 
 ### 快捷键导航
 
