@@ -623,40 +623,42 @@ endfunction
 
 以下列出了最常用的移动光标以及滚屏的快捷键：
 
-| 快捷键   | 功能描述                                          |
-| -------- | ------------------------------------------------- |
-| `h`      | 向左移动光标                                      |
-| `j`      | 向下移动光标                                      |
-| `k`      | 向上移动光标                                      |
-| `l`      | 向右移动光标                                      |
-| `<Up>`   | 向上移动光标，不跳过折行                          |
-| `<Down>` | 向下移动光标，不跳过折行                          |
-| `H`      | 移动光标至屏幕顶部                                |
-| `L`      | 移动光标至屏幕底部                                |
-| `<`      | Indent to left and re-select                      |
-| `>`      | Indent to right and re-select                     |
-| `}`      | paragraphs forward                                |
-| `{`      | paragraphs backward                               |
-| `Ctrl-f` | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
-| `Ctrl-b` | Smart page backward (`C-b` / `C-u`)               |
-| `Ctrl-e` | Smart scroll down (`3 Ctrl-e/j`)                  |
-| `Ctrl-y` | Smart scroll up (`3Ctrl-y/k`)                     |
-| `Ctrl-c` | Copy full path of current buffer to X11 clipboard |
+| 快捷键            | 功能描述                       |
+| ----------------- | ------------------------------ |
+| `h`               | 向左移动光标                   |
+| `j`               | 向下移动光标                   |
+| `k`               | 向上移动光标                   |
+| `l`               | 向右移动光标                   |
+| `<Up>`            | 向上移动光标，不跳过折行       |
+| `<Down>`          | 向下移动光标，不跳过折行       |
+| `H`               | 移动光标至屏幕顶部             |
+| `L`               | 移动光标至屏幕底部             |
+| `<`               | 向左移动文本                   |
+| `>`               | 向右移动文本                   |
+| `}`               | 向前移动一个段落               |
+| `{`               | 向后移动一个段落               |
+| `Ctrl-f`          | 向下翻页 (`Ctrl-f` / `Ctrl-d`) |
+| `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
+| `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
+| `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
+| `Ctrl-c`          | 复制当前文件绝对路径           |
+| `Ctrl-x`          | 切换窗口文件                   |
+| `Ctrl-Shift-Up`   | 向上移动当前行                 |
+| `Ctrl-Shift-Down` | 向下移动当前行                 |
 
 ### 可视模式快捷键
 
-| 快捷键            | 功能描述                                 |
-| ----------------- | ---------------------------------------- |
-| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
-| `<`               | Indent to left and re-select             |
-| `>`               | Indent to right and re-select            |
-| `<Tab>`           | Indent to right and re-select            |
-| `Shift-<Tab>`     | Indent to left and re-select             |
-| `Ctrl-q`          | `Ctrl-w`                                 |
-| `Ctrl-x`          | Switch buffer and placement              |
-| `Ctrl-Shift-Up`   | move lines up                            |
-| `Ctrl-Shift-Down` | move lines down                          |
+| 快捷键            | 功能描述                     |
+| ----------------- | ---------------------------- |
+| `<Leader> y`      | 复制选中文本至系统剪切板     |
+| `<Leader> p`      | 粘贴系统剪切板内容至当前位置 |
+| `<`               | 向左移动文本                 |
+| `>`               | 向右移动文本                 |
+| `<Tab>`           | 向左移动文本                 |
+| `Shift-<Tab>`     | 向右移动文本                 |
+| `Ctrl-Shift-Up`   | 向上移动选中行               |
+| `Ctrl-Shift-Down` | 向下移动选中行               |
+| `Ctrl-q`          | `Ctrl-w`                     |
 
 ### 命令行模式快捷键
 
