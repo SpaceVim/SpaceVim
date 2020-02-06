@@ -751,31 +751,6 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leader> q r` 来代替。
 
-| 快捷键              | 模式          | 功能描述                                                                       |
-| ------------------- | ------------- | ------------------------------------------------------------------------------ |
-| `<leader>`+`y`      | Visual        | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`            | Normal        | Copy full path of current buffer to X11 clipboard                              |
-| `<leader>`+`Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<leader>`+`Ctrl-l` | Normal/Visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<leader>`+`p`      | Normal/Visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`            | Normal        | Smart page forward (C-f/C-d)                                                   |
-| `Ctrl-b`            | Normal        | Smart page backwards (C-b/C-u)                                                 |
-| `Ctrl-e`            | Normal        | Smart scroll down (3C-e/j)                                                     |
-| `Ctrl-y`            | Normal        | Smart scroll up (3C-y/k)                                                       |
-| `Ctrl-q`            | Normal        | `Ctrl-w`                                                                       |
-| `Ctrl-x`            | Normal        | Switch buffer and placement                                                    |
-| `<Up>` / `<Down>`   | Normal        | Smart up and down                                                              |
-| `}`                 | Normal        | After paragraph motion go to first non-blank char (}^)                         |
-| `<`                 | Visual/Normal | Indent to left and re-select                                                   |
-| `>`                 | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`             | Visual        | Indent to right and re-select                                                  |
-| `Shift-<Tab>`       | Visual        | Indent to left and re-select                                                   |
-| `gp`                | Normal        | Select last paste                                                              |
-| `Q` / `g Q`         | Normal        | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl-a`            | Command       | Navigation in command line                                                     |
-| `Ctrl-b`            | Command       | Move cursor backward in command line                                           |
-| `Ctrl-f`            | Command       | Move cursor forward in command line                                            |
-
 ### 编辑器界面
 
 | 按键            | 功能描述               |
