@@ -778,33 +778,30 @@ Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能�
 
 ### 编辑器界面
 
-| 按键                | 功能描述                                                         |
-| ------------------- | ---------------------------------------------------------------- |
-| `<F2>`              | Toggle tagbar                                                    |
-| `<F3>`              | Toggle Vimfiler                                                  |
-| `<Leader>` + num    | Jump to the buffer with the num index                            |
-| `<Alt>` + num       | Jump to the buffer with the num index, this only works in Neovim |
-| `Alt-h` / `<Left>`  | Jump to left buffer in the tabline, this only works in Neovim    |
-| `Alt-l` / `<Right>` | Jump to Right buffer in the tabline, this only works in Neovim   |
-| `<Leader> t s`      | Toggle spell-checker (:setlocal spell!)                          |
-| `<Leader> t n`      | Toggle line numbers (:setlocal nonumber!)                        |
-| `<Leader> t l`      | Toggle hidden characters (:setlocal nolist!)                     |
-| `<Leader> t h`      | Toggle highlighted search (:set hlsearch!)                       |
-| `<Leader> t w`      | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g 0`               | Go to first tab (:tabfirst)                                      |
-| `g $`               | Go to last tab (:tablast)                                        |
-| `g r`               | Go to previous tab (:tabprevious)                                |
-| `Ctrl-<Down>`       | Move to split below (Ctrl-w j)                                   |
-| `Ctrl-<Up>`         | Move to upper split (Ctrl-w k)                                   |
-| `Ctrl-<Left>`       | Move to left split (Ctrl-w h)                                    |
-| `Ctrl-<Right>`      | Move to right split (Ctrl-w l)                                   |
-| `*`                 | Search selection forwards                                        |
-| `#`                 | Search selection backwards                                       |
-| `, <Space>`         | Remove all spaces at EOL                                         |
-| `Ctrl-r`            | Replace selection                                                |
-| `<Leader> l j`      | Next on location list                                            |
-| `<Leader> l k`      | Previous on location list                                        |
-| `<Leader> S`        | Source selection                                                 |
+| 按键            | 功能描述               |
+| --------------- | ---------------------- |
+| `<F2>`          | 打开、关闭语法树       |
+| `<F3>`          | 打开、关闭文件树       |
+| `<Leader> 1-9`  | 切换至顶部指定数字标签 |
+| `<Alt> 1-9`     | 切换至顶部指定数字标签 |
+| `Alt-h/<Left>`  | 跳至左边标签页         |
+| `Alt-l/<Right>` | 跳至右侧标签页         |
+| `SPC t S`       | 切换拼写检查           |
+| `SPC t n`       | 切换显示行号           |
+| `SPC t l`       | 切换显示隐藏字符       |
+| `SPC t h`       | 切换搜索高亮           |
+| `SPC t W`       | 切换折行               |
+| `g 0`           | 切换至第一个标签       |
+| `g $`           | 切换至最后一个标签     |
+| `g r`           | 切换至前一个标签       |
+| `Ctrl-<Down>`   | 切换至下方窗口         |
+| `Ctrl-<Up>`     | 切换至上方窗口         |
+| `Ctrl-<Left>`   | 切换至左边窗口         |
+| `Ctrl-<Right>`  | 切换至右边窗口         |
+| `*`             | 向后搜索当前词         |
+| `#`             | 向前搜索当前词         |
+| `, <Space>`     | 移除行尾留白           |
+| `Ctrl-r`        | 全文替换选中内容       |
 
 ### 模糊搜索
 
