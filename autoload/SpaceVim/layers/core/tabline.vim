@@ -98,6 +98,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       let buflist = tabpagebuflist(i)
       let winnr = tabpagewinnr(i)
       let bufname = bufname(buflist[winnr - 1])
+      " let bufname = bufname(tabpagebuflist(i)[tabpagewinnr(i) - 1])
       if s:SYS.isWindows
         let bufname = substitute(bufname, '\\[', '[', 'g')
         let bufname = substitute(bufname, '\\]', ']', 'g')

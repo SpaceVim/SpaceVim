@@ -79,7 +79,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
             \ )
       let winid = 1
       for _buf in tree[page]
@@ -94,7 +94,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▷ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
             \ )
     endif
   endfor
