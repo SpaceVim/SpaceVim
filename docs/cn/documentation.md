@@ -37,6 +37,18 @@ lang: zh
   - [窗口管理器](#窗口管理器)
   - [编辑器界面](#编辑器界面)
   - [模糊搜索](#模糊搜索)
+    - [配置搜索工具](#配置搜索工具)
+    - [常用按键绑定](#常用按键绑定)
+    - [在当前文件中进行搜索](#在当前文件中进行搜索)
+    - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
+    - [在所有打开的缓冲区中进行搜索](#在所有打开的缓冲区中进行搜索)
+    - [在任意目录中进行搜索](#在任意目录中进行搜索)
+    - [在工程中进行搜索](#在工程中进行搜索)
+    - [后台进行工程搜索](#后台进行工程搜索)
+    - [在网上进行搜索](#在网上进行搜索)
+    - [实时代码检索](#实时代码检索)
+    - [保持高亮](#保持高亮)
+    - [高亮光标下变量](#高亮光标下变量)
     - [获取帮助信息](#获取帮助信息)
     - [可用模块](#可用模块)
     - [界面元素显示切换](#界面元素显示切换)
@@ -61,19 +73,6 @@ lang: zh
     - [以 `g` 为前缀的快捷键](#以-g-为前缀的快捷键)
     - [以 `z` 开头的命令](#以-z-开头的命令)
   - [搜索](#搜索)
-    - [使用额外工具](#使用额外工具)
-      - [配置搜索工具](#配置搜索工具)
-      - [常用按键绑定](#常用按键绑定)
-      - [在当前文件中进行搜索](#在当前文件中进行搜索)
-      - [搜索当前文件所在的文件夹](#搜索当前文件所在的文件夹)
-      - [在所有打开的缓冲区中进行搜索](#在所有打开的缓冲区中进行搜索)
-      - [在任意目录中进行搜索](#在任意目录中进行搜索)
-      - [在工程中进行搜索](#在工程中进行搜索)
-      - [后台进行工程搜索](#后台进行工程搜索)
-      - [在网上进行搜索](#在网上进行搜索)
-    - [实时代码检索](#实时代码检索)
-    - [保持高亮](#保持高亮)
-    - [高亮光标下变量](#高亮光标下变量)
   - [编辑](#编辑)
     - [粘贴文本](#粘贴文本)
       - [粘贴文本自动缩进](#粘贴文本自动缩进)
@@ -848,6 +847,268 @@ Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能�
 
 以上这些快捷键仅仅是模糊搜索模块的部分快捷键，其他快捷键信息可查阅对应模块文档。
 
+#### 配置搜索工具
+
+SpaceVim 像下面那样调用不同搜索工具的搜索接口：
+
+- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+- [ack](https://beyondgrep.com/)
+- grep
+
+SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工具，后一个键是范围。
+例如 `SPC s a b` 将使用 `ag` 在当前所有已经打开的缓冲区中进行搜索。
+
+如果最后一个键（决定范围）是大写字母，那么就会对当前光标下的单词进行搜索。
+举个例子 `SPC s a B` 将会搜索当前光标下的单词。
+
+如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `search_tools`
+列表中的第一个工具。列表中的工具默认的顺序为：`rg`, `ag`, `pt`, `ack`, `grep`。
+举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
+
+下表是全部的工具键：
+
+| 工具 | 键  |
+| ---- | --- |
+| ag   | a   |
+| grep | g   |
+| ack  | k   |
+| rg   | r   |
+| pt   | t   |
+
+应当避免的范围和对应按键为：
+
+| 范围           | 键  |
+| -------------- | --- |
+| 打开的缓冲区   | b   |
+| 给定目录的文件 | f   |
+| 当前工程       | p   |
+
+可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子：`SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
+
+注意：
+
+- 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉，但是他们可以在任意目录中正常运行。
+- 也可以通过将它们标记在联合缓冲区来一次搜索多个目录。
+  **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html)
+  同时也需要安装一个名叫 `pt` 的命令行工具。
+
+若需要修改默认搜索工具的选项，可以使用启动函数，在启动函数中配置各种搜索工具的默认选项。
+下面是一个修改 `rg` 默认搜索选项的配置示例：
+
+```vim
+function! myspacevim#before() abort
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+搜索工具配置结构为：
+
+```vim
+" { 'ag' : {
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
+#### 常用按键绑定
+
+| 快捷键          | 功能描述                                  |
+| --------------- | ----------------------------------------- |
+| `SPC r l`       | resume the last completion buffer         |
+| `` SPC s ` ``   | go back to the previous place before jump |
+| Prefix argument | will ask for file extensions              |
+
+#### 在当前文件中进行搜索
+
+| 快捷键      | 功能描述                                            |
+| ----------- | --------------------------------------------------- |
+| `SPC s s`   | search with the first found tool                    |
+| `SPC s S`   | search with the first found tool with default input |
+| `SPC s a a` | ag                                                  |
+| `SPC s a A` | ag with default input                               |
+| `SPC s g g` | grep                                                |
+| `SPC s g G` | grep with default input                             |
+| `SPC s r r` | rg                                                  |
+| `SPC s r R` | rg with default input                               |
+
+#### 搜索当前文件所在的文件夹
+
+| 快捷键      | 功能描述                                                    |
+| ----------- | ----------------------------------------------------------- |
+| `SPC s d`   | searching in buffer directory with default tool             |
+| `SPC s D`   | searching in buffer directory cursor word with default tool |
+| `SPC s a d` | searching in buffer directory with ag                       |
+| `SPC s a D` | searching in buffer directory cursor word with ag           |
+| `SPC s g d` | searching in buffer directory with grep                     |
+| `SPC s g D` | searching in buffer directory cursor word with grep         |
+| `SPC s k d` | searching in buffer directory with ack                      |
+| `SPC s k D` | searching in buffer directory cursor word with ack          |
+| `SPC s r d` | searching in buffer directory with rg                       |
+| `SPC s r D` | searching in buffer directory cursor word with rg           |
+| `SPC s t d` | searching in buffer directory with pt                       |
+| `SPC s t D` | searching in buffer directory cursor word with pt           |
+
+#### 在所有打开的缓冲区中进行搜索
+
+| 快捷键      | 功能描述                                            |
+| ----------- | --------------------------------------------------- |
+| `SPC s b`   | search with the first found tool                    |
+| `SPC s B`   | search with the first found tool with default input |
+| `SPC s a b` | ag                                                  |
+| `SPC s a B` | ag with default input                               |
+| `SPC s g b` | grep                                                |
+| `SPC s g B` | grep with default input                             |
+| `SPC s k b` | ack                                                 |
+| `SPC s k B` | ack with default input                              |
+| `SPC s r b` | rg                                                  |
+| `SPC s r B` | rg with default input                               |
+| `SPC s t b` | pt                                                  |
+| `SPC s t B` | pt with default input                               |
+
+#### 在任意目录中进行搜索
+
+| 快捷键      | 功能描述                                            |
+| ----------- | --------------------------------------------------- |
+| `SPC s f`   | search with the first found tool                    |
+| `SPC s F`   | search with the first found tool with default input |
+| `SPC s a f` | ag                                                  |
+| `SPC s a F` | ag with default text                                |
+| `SPC s g f` | grep                                                |
+| `SPC s g F` | grep with default text                              |
+| `SPC s k f` | ack                                                 |
+| `SPC s k F` | ack with default text                               |
+| `SPC s r f` | rg                                                  |
+| `SPC s r F` | rg with default text                                |
+| `SPC s t f` | pt                                                  |
+| `SPC s t F` | pt with default text                                |
+
+#### 在工程中进行搜索
+
+| 快捷键              | 功能描述                                            |
+| ------------------- | --------------------------------------------------- |
+| `SPC /` / `SPC s p` | search with the first found tool                    |
+| `SPC *` / `SPC s P` | search with the first found tool with default input |
+| `SPC s a p`         | ag                                                  |
+| `SPC s a P`         | ag with default text                                |
+| `SPC s g p`         | grep                                                |
+| `SPC s g p`         | grep with default text                              |
+| `SPC s k p`         | ack                                                 |
+| `SPC s k P`         | ack with default text                               |
+| `SPC s t p`         | pt                                                  |
+| `SPC s t P`         | pt with default text                                |
+| `SPC s r p`         | rg                                                  |
+| `SPC s r P`         | rg with default text                                |
+
+**提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
+
+#### 后台进行工程搜索
+
+在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
+
+| 快捷键      | 功能描述                                                   |
+| ----------- | ---------------------------------------------------------- |
+| `SPC s j`   | searching input expr background with the first found tool  |
+| `SPC s J`   | searching cursor word background with the first found tool |
+| `SPC s l`   | List all searching result in quickfix buffer               |
+| `SPC s a j` | ag                                                         |
+| `SPC s a J` | ag with default text                                       |
+| `SPC s g j` | grep                                                       |
+| `SPC s g J` | grep with default text                                     |
+| `SPC s k j` | ack                                                        |
+| `SPC s k J` | ack with default text                                      |
+| `SPC s t j` | pt                                                         |
+| `SPC s t J` | pt with default text                                       |
+| `SPC s r j` | rg                                                         |
+| `SPC s r J` | rg with default text                                       |
+
+#### 在网上进行搜索
+
+| 快捷键      | 功能描述                                                                 |
+| ----------- | ------------------------------------------------------------------------ |
+| `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
+| `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
+
+**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中加入如下配置：
+
+```toml
+[options]
+    enable_googlesuggest = true
+```
+
+#### 实时代码检索
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
+
+FlyGrep 缓冲区的按键绑定：
+
+| 快捷键              | 功能描述                          |
+| ------------------- | --------------------------------- |
+| `<Esc>`             | close FlyGrep buffer              |
+| `<Enter>`           | open file at the cursor line      |
+| `<Tab>`             | move cursor line down             |
+| `Shift-<Tab>`       | move cursor line up               |
+| `<Backspace>`       | remove last character             |
+| `Ctrl-w`            | remove the Word before the cursor |
+| `Ctrl-u`            | remove the Line before the cursor |
+| `Ctrl-k`            | remove the Line after the cursor  |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
+| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+
+#### 保持高亮
+
+SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
+同样可以通过 `SPC s c` 或者运行 命令 `:nohlsearch` 来取消搜索结果的高亮表示。
+
+#### 高亮光标下变量
+
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
+
+It is also possible to change the range of the navigation on the fly to:
+
+- buffer
+- function
+- visible area
+
+使用快捷键 `SPC s h` 来高亮光标下的符号。
+
+Navigation between the highlighted symbols can be done with the commands:
+
+| 快捷键    | 功能描述                                                                     |
+| --------- | ---------------------------------------------------------------------------- |
+| `*`       | initiate navigation transient state on current symbol and jump forwards      |
+| `#`       | initiate navigation transient state on current symbol and jump backwards     |
+| `SPC s e` | edit all occurrences of the current symbol                                   |
+| `SPC s h` | highlight the current symbol and all its occurrence within the current range |
+| `SPC s H` | go to the last searched occurrence of the last highlighted symbol            |
+
+In highlight symbol transient state:
+
+| 快捷键        | 功能描述                                                      |
+| ------------- | ------------------------------------------------------------- |
+| `e`           | edit occurrences (`*`)                                        |
+| `n`           | go to next occurrence                                         |
+| `N` / `p`     | go to previous occurrence                                     |
+| `b`           | search occurrence in all buffers                              |
+| `/`           | search occurrence in whole project                            |
+| `<Tab>`       | toggle highlight current occurrence                           |
+| `r`           | change range (function, display area, whole buffer)           |
+| `R`           | go to home occurrence (reset position to starting occurrence) |
+| Any other key | leave the navigation transient state                          |
+
+
 #### 获取帮助信息
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
@@ -1273,269 +1534,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `z <Left>`  | scroll screen N characters to right          |
 
 ### 搜索
-
-#### 使用额外工具
-
-SpaceVim 像下面那样调用不同搜索工具的搜索接口：
-
-- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
-- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
-- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
-- [ack](https://beyondgrep.com/)
-- grep
-
-SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工具，后一个键是范围。
-例如 `SPC s a b` 将使用 `ag` 在当前所有已经打开的缓冲区中进行搜索。
-
-如果最后一个键（决定范围）是大写字母，那么就会对当前光标下的单词进行搜索。
-举个例子 `SPC s a B` 将会搜索当前光标下的单词。
-
-如果工具键被省略了，那么会用默认的搜索工具进行搜索。默认的搜索工具对应在 `search_tools`
-列表中的第一个工具。列表中的工具默认的顺序为：`rg`, `ag`, `pt`, `ack`, `grep`。
-举个例子：如果 `rg` 和 `ag` 没有在系统中找到，那么 `SPC s b` 会使用 `pt` 进行搜索。
-
-下表是全部的工具键：
-
-| 工具 | 键  |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
-
-应当避免的范围和对应按键为：
-
-| 范围           | 键  |
-| -------------- | --- |
-| 打开的缓冲区   | b   |
-| 给定目录的文件 | f   |
-| 当前工程       | p   |
-
-可以双击按键序列中的第二个键来在当前文件中进行搜索。举个例子：`SPC s a a` 会使用 `ag` 在当前文件中进行搜索。
-
-注意：
-
-- 如果使用源代码管理的话 `rg`, `ag` 和 `pt` 都会被忽略掉，但是他们可以在任意目录中正常运行。
-- 也可以通过将它们标记在联合缓冲区来一次搜索多个目录。
-  **注意** 如果你使用 `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html)
-  同时也需要安装一个名叫 `pt` 的命令行工具。
-
-##### 配置搜索工具
-
-若需要修改默认搜索工具的选项，可以使用启动函数，在启动函数中配置各种搜索工具的默认选项。
-下面是一个修改 `rg` 默认搜索选项的配置示例：
-
-```vim
-function! myspacevim#before() abort
-    let profile = SpaceVim#mapping#search#getprofile('rg')
-    let default_opt = profile.default_opts + ['--no-ignore-vcs']
-    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
-endfunction
-```
-
-搜索工具配置结构为：
-
-```vim
-" { 'ag' : {
-"   'namespace' : '',         " a single char a-z
-"   'command' : '',           " executable
-"   'default_opts' : [],      " default options
-"   'recursive_opt' : [],     " default recursive options
-"   'expr_opt' : '',          " option for enable expr mode
-"   'fixed_string_opt' : '',  " option for enable fixed string mode
-"   'ignore_case' : '',       " option for enable ignore case mode
-"   'smart_case' : '',        " option for enable smart case mode
-"   }
-"  }
-```
-
-##### 常用按键绑定
-
-| 快捷键          | 功能描述                                  |
-| --------------- | ----------------------------------------- |
-| `SPC r l`       | resume the last completion buffer         |
-| `` SPC s ` ``   | go back to the previous place before jump |
-| Prefix argument | will ask for file extensions              |
-
-##### 在当前文件中进行搜索
-
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s s`   | search with the first found tool                    |
-| `SPC s S`   | search with the first found tool with default input |
-| `SPC s a a` | ag                                                  |
-| `SPC s a A` | ag with default input                               |
-| `SPC s g g` | grep                                                |
-| `SPC s g G` | grep with default input                             |
-| `SPC s r r` | rg                                                  |
-| `SPC s r R` | rg with default input                               |
-
-##### 搜索当前文件所在的文件夹
-
-| 快捷键      | 功能描述                                                    |
-| ----------- | ----------------------------------------------------------- |
-| `SPC s d`   | searching in buffer directory with default tool             |
-| `SPC s D`   | searching in buffer directory cursor word with default tool |
-| `SPC s a d` | searching in buffer directory with ag                       |
-| `SPC s a D` | searching in buffer directory cursor word with ag           |
-| `SPC s g d` | searching in buffer directory with grep                     |
-| `SPC s g D` | searching in buffer directory cursor word with grep         |
-| `SPC s k d` | searching in buffer directory with ack                      |
-| `SPC s k D` | searching in buffer directory cursor word with ack          |
-| `SPC s r d` | searching in buffer directory with rg                       |
-| `SPC s r D` | searching in buffer directory cursor word with rg           |
-| `SPC s t d` | searching in buffer directory with pt                       |
-| `SPC s t D` | searching in buffer directory cursor word with pt           |
-
-##### 在所有打开的缓冲区中进行搜索
-
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s b`   | search with the first found tool                    |
-| `SPC s B`   | search with the first found tool with default input |
-| `SPC s a b` | ag                                                  |
-| `SPC s a B` | ag with default input                               |
-| `SPC s g b` | grep                                                |
-| `SPC s g B` | grep with default input                             |
-| `SPC s k b` | ack                                                 |
-| `SPC s k B` | ack with default input                              |
-| `SPC s r b` | rg                                                  |
-| `SPC s r B` | rg with default input                               |
-| `SPC s t b` | pt                                                  |
-| `SPC s t B` | pt with default input                               |
-
-##### 在任意目录中进行搜索
-
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s f`   | search with the first found tool                    |
-| `SPC s F`   | search with the first found tool with default input |
-| `SPC s a f` | ag                                                  |
-| `SPC s a F` | ag with default text                                |
-| `SPC s g f` | grep                                                |
-| `SPC s g F` | grep with default text                              |
-| `SPC s k f` | ack                                                 |
-| `SPC s k F` | ack with default text                               |
-| `SPC s r f` | rg                                                  |
-| `SPC s r F` | rg with default text                                |
-| `SPC s t f` | pt                                                  |
-| `SPC s t F` | pt with default text                                |
-
-##### 在工程中进行搜索
-
-| 快捷键              | 功能描述                                            |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
-
-**提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
-
-##### 后台进行工程搜索
-
-在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
-
-| 快捷键      | 功能描述                                                   |
-| ----------- | ---------------------------------------------------------- |
-| `SPC s j`   | searching input expr background with the first found tool  |
-| `SPC s J`   | searching cursor word background with the first found tool |
-| `SPC s l`   | List all searching result in quickfix buffer               |
-| `SPC s a j` | ag                                                         |
-| `SPC s a J` | ag with default text                                       |
-| `SPC s g j` | grep                                                       |
-| `SPC s g J` | grep with default text                                     |
-| `SPC s k j` | ack                                                        |
-| `SPC s k J` | ack with default text                                      |
-| `SPC s t j` | pt                                                         |
-| `SPC s t J` | pt with default text                                       |
-| `SPC s r j` | rg                                                         |
-| `SPC s r J` | rg with default text                                       |
-
-##### 在网上进行搜索
-
-| 快捷键      | 功能描述                                                                 |
-| ----------- | ------------------------------------------------------------------------ |
-| `SPC s w g` | Get Google suggestions in Vim. Opens Google results in Browser.          |
-| `SPC s w w` | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
-
-**注意**: 为了在 Vim 中使用谷歌 suggestions，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中加入如下配置：
-
-```toml
-[options]
-    enable_googlesuggest = true
-```
-
-#### 实时代码检索
-
-| 快捷键      | 功能描述                         |
-| ----------- | -------------------------------- |
-| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
-
-FlyGrep 缓冲区的按键绑定：
-
-| 快捷键              | 功能描述                          |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<Backspace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
-
-#### 保持高亮
-
-SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
-同样可以通过 `SPC s c` 或者运行 命令 `:nohlsearch` 来取消搜索结果的高亮表示。
-
-#### 高亮光标下变量
-
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
-
-It is also possible to change the range of the navigation on the fly to:
-
-- buffer
-- function
-- visible area
-
-使用快捷键 `SPC s h` 来高亮光标下的符号。
-
-Navigation between the highlighted symbols can be done with the commands:
-
-| 快捷键    | 功能描述                                                                     |
-| --------- | ---------------------------------------------------------------------------- |
-| `*`       | initiate navigation transient state on current symbol and jump forwards      |
-| `#`       | initiate navigation transient state on current symbol and jump backwards     |
-| `SPC s e` | edit all occurrences of the current symbol                                   |
-| `SPC s h` | highlight the current symbol and all its occurrence within the current range |
-| `SPC s H` | go to the last searched occurrence of the last highlighted symbol            |
-
-In highlight symbol transient state:
-
-| 快捷键        | 功能描述                                                      |
-| ------------- | ------------------------------------------------------------- |
-| `e`           | edit occurrences (`*`)                                        |
-| `n`           | go to next occurrence                                         |
-| `N` / `p`     | go to previous occurrence                                     |
-| `b`           | search occurrence in all buffers                              |
-| `/`           | search occurrence in whole project                            |
-| `<Tab>`       | toggle highlight current occurrence                           |
-| `r`           | change range (function, display area, whole buffer)           |
-| `R`           | go to home occurrence (reset position to starting occurrence) |
-| Any other key | leave the navigation transient state                          |
 
 ### 编辑
 
