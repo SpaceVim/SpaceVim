@@ -118,18 +118,18 @@ lang: zh
 
 - **详细的文档：** 在 SpaceVim 中通过 `:h SpaceVim` 来访问 SpaceVim 帮助文档。
 - **优雅简洁的界面：** 你将会喜欢这样的优雅而实用的界面。
-- **确保手指不离开主键盘区域：** 使用 Space 作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
-- **快捷键辅助系统：** SpaceVim 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
-- **更快的启动时间：** 得益于 dein.vim, SpaceVim 中 90% 的插件都是按需载入的。
+- **确保手指不离开主键盘区域：** 使用空格键（`SPC`）作为前缀键，合理组织快捷键，确保手指不离开主键盘区域。
+- **快捷键辅助系统：** 所有快捷键无需记忆，当输入出现停顿，会实时提示可用按键及其功能。
+- **更快的启动时间：** 得益于 dein.vim, 90% 的插件都是按需载入的。
 - **更少的肌肉损伤：** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
 - **更易扩展：** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持 Neovim:** 依赖于 Neovim 的 romote 插件以及异步 API，SpaceVim 运行在 Neovim 下将有更加完美的体验。
+- **完美支持 Neovim:** 得益于 Neovim 的 romote 插件以及异步 API，运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
 **欢迎页面**
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
 
 **工作界面**
 
@@ -155,23 +155,37 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 
 ## 适用人群
 
-- **初级** Vim 用户
-- 追求优雅界面的 Vim 用户
-- 追求更少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)的 Vim 用户
-- 想要学习一种不一样的编辑文件方式的 Vim 用户
+之所以开发 SpaceVim 这一项目，目的在于维护一个模块化、开箱即用、稳定的 Vim 开发环境，
+尽最大可能地处理好各种插件以及工具之间的依赖关系，为 SpaceVim 用户节省搜索、配置、
+学习插件的时间。
+
+因此，SpaceVim 适合于：
+
+- 初级 Vim 用户
+- 追求优雅界面
+- 尽可能减少[肌肉损伤](http://en.wikipedia.org/wiki/Repetitive_strain_injury)
 - 追求简单但是可高度配置系统的 Vim 用户
+- 追求统一的编程环境
 
 ## 更新回滚
 
 ### 自身更新
 
-可通过很多种方式来更新 SpaceVim 的核心文件。建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
+可通过很多种方式来更新 SpaceVim 的核心文件。
+建议在更新 SpaceVim 之前，更新一下所有的插件。具体内容如下：
 
 **自动更新**
 
-注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：`automatic_update = true`。
+注意：默认，这一特性是禁用的，因为自动更新将会增加 SpaceVim 的启动时间，
+影响用户体验。如果你需要这一特性，可以将如下加入到用户配置文件中：
 
-启用这一特性后，SpaceVim 将会在每次启动时候检测是否有新版本。更新后需重启 SpaceVim。
+```toml
+[options]
+    automatic_update = true
+```
+
+启用这一特性后，SpaceVim 将会在每次启动时候检测是否有新版本。
+更新后需重启 SpaceVim。
 
 **通过插件管理器更新**
 
