@@ -34,7 +34,7 @@ lang: zh
   - [可视模式快捷键](#可视模式快捷键)
   - [命令行模式快捷键](#命令行模式快捷键)
   - [快捷键导航](#快捷键导航)
-  - [窗口管理器](#窗口管理器)
+  - [窗口管理](#窗口管理)
     - [窗口操作常用快捷键](#窗口操作常用快捷键)
   - [编辑器界面](#编辑器界面)
   - [模糊搜索](#模糊搜索)
@@ -69,26 +69,23 @@ lang: zh
   - [其他快捷键](#其他快捷键)
     - [以 `g` 为前缀的快捷键](#以-g-为前缀的快捷键)
     - [以 `z` 开头的命令](#以-z-开头的命令)
-  - [搜索](#搜索)
-  - [编辑](#编辑)
-    - [粘贴文本](#粘贴文本)
-      - [粘贴文本自动缩进](#粘贴文本自动缩进)
+  - [基本编辑操作](#基本编辑操作)
     - [文本操作命令](#文本操作命令)
     - [文本插入命令](#文本插入命令)
     - [增加或减小数字](#增加或减小数字)
-    - [Iedit 多光标编辑](#iedit-多光标编辑)
-      - [Iedit 快捷键](#iedit-快捷键)
-    - [注释 (Commentings)](#注释-commentings)
-    - [多方式编码](#多方式编码)
-  - [异步运行器和交互式编程](#异步运行器和交互式编程)
-  - [错误处理](#错误处理)
+    - [注释](#注释)
+    - [文本编码格式](#文本编码格式)
 - [进阶使用](#进阶使用)
   - [工程管理](#工程管理)
     - [在工程中搜索文件](#在工程中搜索文件)
     - [自定义跳转文件](#自定义跳转文件)
   - [标签管理](#标签管理)
-- [格式规范](#格式规范)
-- [Vim 服务](#vim-服务)
+  - [Iedit 多光标编辑](#iedit-多光标编辑)
+    - [Iedit 快捷键](#iedit-快捷键)
+  - [异步运行器和交互式编程](#异步运行器和交互式编程)
+  - [错误处理](#错误处理)
+  - [格式规范](#格式规范)
+  - [后台服务](#后台服务)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -720,9 +717,9 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 使用 `<Tab>` 键或者上下方向键选择你需要的快捷键，回车将执行这一快捷键。
 
-### 窗口管理器
+### 窗口管理
 
-窗口管理器快捷键只可以在 Normal 模式下使用，默认的前缀（`WIN`）按键为 `s`，可以在配置文件中通过修改
+常用的窗口管理快捷键有一个统一的前缀，默认的前缀 `[Window]` 是按键 `s`，可以在配置文件中通过修改
 SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 ```toml
@@ -733,19 +730,19 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | 快捷键        | 功能描述                             |
 | ------------- | ------------------------------------ |
 | `q`           | 智能关闭当前窗口                     |
-| `WIN v`       | 水平分屏                             |
-| `WIN V`       | 水平分屏，并编辑上一个文件           |
-| `WIN g`       | 垂直分屏                             |
-| `WIN G`       | 垂直分屏，并编辑上一个文件           |
-| `WIN t`       | 新建新的标签页                       |
-| `WIN o`       | 关闭其他窗口                         |
-| `WIN x`       | 关闭当前缓冲区，并保留新的空白缓冲区 |
-| `WIN q`       | 关闭当前缓冲区                       |
-| `WIN Q`       | 关闭当前窗口                         |
+| `[Window] v`  | 水平分屏                             |
+| `[Window] V`  | 水平分屏，并编辑上一个文件           |
+| `[Window] g`  | 垂直分屏                             |
+| `[Window] G`  | 垂直分屏，并编辑上一个文件           |
+| `[Window] t`  | 新建新的标签页                       |
+| `[Window] o`  | 关闭其他窗口                         |
+| `[Window] x`  | 关闭当前缓冲区，并保留新的空白缓冲区 |
+| `[Window] q`  | 关闭当前缓冲区                       |
+| `[Window] Q`  | 关闭当前窗口                         |
 | `<Tab>`       | 跳至下一个窗口                       |
 | `Shift-<Tab>` | 跳至上一个窗口                       |
 
-Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leader> q r` 来代替。
+常规模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leader> q r` 来代替。
 
 #### 窗口操作常用快捷键
 
@@ -765,44 +762,44 @@ Normal 模式下的按键 `q` 被用来快速关闭窗口，其原生的功能�
 
 窗口操作相关快捷键（以 `SPC w` 为前缀)：
 
-| 快捷键                | 功能描述                                                                       |
-| --------------------- | ------------------------------------------------------------------------------ |
-| `SPC w .`             | 启用窗口临时快捷键                                                             |
-| `SPC w <Tab>`         | 在同一标签内进行窗口切换                                                       |
-| `SPC w =`             | 对齐分离的窗口                                                                 |
-| `SPC w b`             | force the focus back to the minibuffer (TODO)                                  |
-| `SPC w c`             | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                   |
-| `SPC w C`             | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                             |
-| `SPC w d`             | 删除一个窗口                                                                   |
-| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)       |
-| `SPC w D`             | 选择一个窗口并关闭                                                             |
-| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)        |
-| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)  |
-| `SPC w f`             | toggle follow mode (TODO)                                                      |
-| `SPC w F`             | 新建一个新的标签页                                                             |
-| `SPC w h`             | 移至左边窗口                                                                   |
-| `SPC w H`             | 将窗口向左移动                                                                 |
-| `SPC w j`             | 移至下方窗口                                                                   |
-| `SPC w J`             | 将窗口向下移动                                                                 |
-| `SPC w k`             | 移至上方窗口                                                                   |
-| `SPC w K`             | 将窗口向上移动                                                                 |
-| `SPC w l`             | 移至右方窗口                                                                   |
-| `SPC w L`             | 将窗口向右移动                                                                 |
-| `SPC w m`             | 最大化/最小化窗口（最大化相当于关闭其它窗口）(TODO, now only support maximize) |
-| `SPC w M`             | 选择窗口进行替换                                                               |
-| `SPC w o`             | 按序切换标签页                                                                 |
-| `SPC w p m`           | open messages buffer in a popup window (TODO)                                  |
-| `SPC w p p`           | close the current sticky popup window (TODO)                                   |
-| `SPC w r`             | 顺序切换窗口                                                                   |
-| `SPC w R`             | 逆序切换窗口                                                                   |
-| `SPC w s` / `SPC w -` | 水平分割窗口                                                                   |
-| `SPC w S`             | 水平分割窗口，并切换至新窗口                                                   |
-| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)           |
-| `SPC w U`             | redo window layout (TODO)                                                      |
-| `SPC w v` / `SPC w /` | 垂直分离窗口                                                                   |
-| `SPC w V`             | 垂直分离窗口，并切换至新窗口                                                   |
-| `SPC w w`             | 切换至前一窗口                                                                 |
-| `SPC w W`             | 选择一个窗口                                                                   |
+| 快捷键                | 功能描述                                                                      |
+| --------------------- | ----------------------------------------------------------------------------- |
+| `SPC w .`             | 启用窗口临时快捷键                                                            |
+| `SPC w <Tab>`         | 在同一标签内进行窗口切换                                                      |
+| `SPC w =`             | 对齐分离的窗口                                                                |
+| `SPC w b`             | force the focus back to the minibuffer (TODO)                                 |
+| `SPC w c`             | 进入阅读模式，浏览当前窗口 (需要 tools 模块)                                  |
+| `SPC w C`             | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块)                            |
+| `SPC w d`             | 删除一个窗口                                                                  |
+| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)      |
+| `SPC w D`             | 选择一个窗口并关闭                                                            |
+| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)       |
+| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO) |
+| `SPC w f`             | toggle follow mode (TODO)                                                     |
+| `SPC w F`             | 新建一个新的标签页                                                            |
+| `SPC w h`             | 移至左边窗口                                                                  |
+| `SPC w H`             | 将窗口向左移动                                                                |
+| `SPC w j`             | 移至下方窗口                                                                  |
+| `SPC w J`             | 将窗口向下移动                                                                |
+| `SPC w k`             | 移至上方窗口                                                                  |
+| `SPC w K`             | 将窗口向上移动                                                                |
+| `SPC w l`             | 移至右方窗口                                                                  |
+| `SPC w L`             | 将窗口向右移动                                                                |
+| `SPC w m`             | 最大化/最小化窗口（最大化相当于关闭其它窗口）                                 |
+| `SPC w M`             | 选择窗口进行替换                                                              |
+| `SPC w o`             | 按序切换标签页                                                                |
+| `SPC w p m`           | open messages buffer in a popup window (TODO)                                 |
+| `SPC w p p`           | close the current sticky popup window (TODO)                                  |
+| `SPC w r`             | 顺序切换窗口                                                                  |
+| `SPC w R`             | 逆序切换窗口                                                                  |
+| `SPC w s` / `SPC w -` | 水平分割窗口                                                                  |
+| `SPC w S`             | 水平分割窗口，并切换至新窗口                                                  |
+| `SPC w u`             | 恢复窗口布局                                                                  |
+| `SPC w U`             | redo window layout (TODO)                                                     |
+| `SPC w v` / `SPC w /` | 垂直分离窗口                                                                  |
+| `SPC w V`             | 垂直分离窗口，并切换至新窗口                                                  |
+| `SPC w w`             | 切换至前一窗口                                                                |
+| `SPC w W`             | 选择一个窗口                                                                  |
 
 ### 编辑器界面
 
@@ -1162,7 +1159,6 @@ In highlight symbol transient state:
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
 
-
 #### 获取帮助信息
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
@@ -1518,13 +1514,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `z z`       | smart scroll                                 |
 | `z <Left>`  | scroll screen N characters to right          |
 
-### 搜索
-
-### 编辑
-
-#### 粘贴文本
-
-##### 粘贴文本自动缩进
+### 基本编辑操作
 
 #### 文本操作命令
 
@@ -1629,67 +1619,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 **提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为光标下的数字加 `10`。
 
-#### Iedit 多光标编辑
-
-SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这一功能引入了两个新的模式：`iedit-Normal` 模式和 `iedit-Insert`。
-
-`iedit` 模式默认的颜色是 `red`/`green`，但它也基于当前的主题。
-
-##### Iedit 快捷键
-
-**模式转换:**
-
-前面提到 Iedit 引入了两个新的模式，在这两个新的模式以及 Vim 自身模式之间转换的快捷键如下：
-
-| 快捷键    | From          | to           |
-| --------- | ------------- | ------------ |
-| `SPC s e` | Normal/Visual | iedit-Normal |
-| `<Esc>`   | iedit-Normal  | Normal       |
-
-**在 iedit-Normal 模式中：**
-
-`iedit-Normal` 模式继承自 Vim 的 Normal 模式, 下面所列举的是 `iedit-Normal` 模式专属的快捷键。
-
-| 快捷键          | 功能描述                                                                               |
-| --------------- | -------------------------------------------------------------------------------------- |
-| `<Esc>`         | 切换回 Normal 模式                                                                     |
-| `i`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `i`                                     |
-| `a`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `a`                                     |
-| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `I`                 |
-| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `A`                 |
-| `<Left>` / `h`  | 左移光标，类似于一般模式下的 `h`                                                       |
-| `<Right>` / `l` | 右移光标，类似于一般模式下的 `l`                                                       |
-| `0` / `<Home>`  | 跳至当前 occurrence 的开头，类似于一般模式下的 `0`                                     |
-| `$` / `<End>`   | 跳至当前 occurrence 的结尾，类似于一般模式下的 `$`                                     |
-| `C`             | 删除所有 occurrences 中从光标位置开始到 occurrences 结尾的字符，类似于一般模式下的 `C` |
-| `D`             | 删除所有 occurrences 类似于一般模式下的 `D`                                            |
-| `s`             | 删除所有 occurrences 中光标下的字符并进入 `iedit-Insert` 模式，类似于一般模式下的 `s`  |
-| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式，类似于一般模式下的 `S`                |
-| `x`             | 删除所有 occurrences 中光标下的字符，类似于一般模式下的 `x`                            |
-| `X`             | 删除所有 occurrences 中光标前的字符，类似于一般模式下的 `X`                            |
-| `gg`            | 跳至第一个 occurrence，类似于一般模式下的 `gg`                                         |
-| `G`             | 跳至最后一个 occurrence，类似于一般模式下的 `G`                                        |
-| `n`             | 跳至下一个 occurrence                                                                  |
-| `N`             | 跳至上一个 occurrence                                                                  |
-| `p`             | 替换所有 occurrences 为最后复制的文本                                                  |
-| `<Tab>`         | toggle current occurrence                                                              |
-
-**In iedit-Insert mode:**
-
-| 快捷键                   | 功能描述                   |
-| ------------------------ | -------------------------- |
-| `Ctrl-g` / `<Esc>`       | 回到 `iedit-Normal` 模式   |
-| `Ctrl-b` / `<Left>`      | 左移光标                   |
-| `Ctrl-f` / `<Right>`     | 右移光标                   |
-| `Ctrl-a` / `<Home>`      | 跳至当前 occurrence 的开头 |
-| `Ctrl-e` / `<End>`       | 跳至当前 occurrence 的结尾 |
-| `Ctrl-w`                 | 删除光标前的词             |
-| `Ctrl-k`                 | 删除光标后的词             |
-| `Ctrl-u`                 | 删除光标前所有字符         |
-| `Ctrl-h` / `<BackSpace>` | 删除光标前字符             |
-| `<Delete>`               | 删除光标后字符             |
-
-#### 注释 (Commentings)
+#### 注释
 
 注释 (comment) 通过工具 [nerdcommenter](https://github.com/scrooloose/nerdcommenter) 来处理，它用下面的按键来界定范围。
 
@@ -1714,7 +1644,7 @@ SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这�
 用 `SPC ;` 可以启动一个 comment operator 模式，在该模式下，可以使用移动命令确认注释的范围，
 比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
 
-#### 多方式编码
+#### 文本编码格式
 
 SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四个设置：
 
@@ -1729,64 +1659,6 @@ SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四�
 set enc=utf-8
 write
 ```
-
-### 异步运行器和交互式编程
-
-SpaceVim 提供了一个异步执行命令和交互式编程的插件，
-在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为 `SPC l r`。
-如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。
-
-```vim
-nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
-```
-
-目前，SpaceVim 支持如下特性：
-
-- 使用默认命令一键运行当前文件
-- 使用系统文件管理器选择文件并执行
-- 根据文件顶部标识，选择合适解析器
-- 中断代码运行
-- 底部窗口异步展示运行结果
-- 设置默认的运行语言
-- 选择指定语言来运行
-- 支持交互式编程
-- 运行选择的代码片段
-
-### 错误处理
-
-SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文件语法检查，默认在保存文件时进行错误检查。
-
-错误管理导航键 (以 `e` 开头)：
-
-| 快捷键    | 功能描述                                                                    |
-| --------- | --------------------------------------------------------------------------- |
-| `SPC t s` | 切换语法检查器                                                              |
-| `SPC e c` | 清除所有错误                                                                |
-| `SPC e h` | describe a syntax checker                                                   |
-| `SPC e l` | 切换显示错误/警告列表                                                       |
-| `SPC e n` | 跳至下一错误                                                                |
-| `SPC e p` | 跳至上一个错误                                                              |
-| `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
-| `SPC e .` | 错误暂态（error transient state)                                            |
-
-下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误，
-甚至可检查 Vim 位置列表的所有错误。这包括下面的例子：在已被保存的位置列表缓冲区进行搜索。
-默认提示符：
-
-| 提示符 | 描述    | 自定义选项       |
-| ------ | ------- | ---------------- |
-| `✖`    | Error   | `error_symbol`   |
-| `➤`    | warning | `warning_symbol` |
-| `ⓘ`    | Info    | `info_symbol`    |
-
-**quickfix 列表移动：**
-
-| 快捷键         | 功能描述                       |
-| -------------- | ------------------------------ |
-| `<Leader> q l` | 打开 quickfix 列表窗口         |
-| `<Leader> q c` | 清除 quickfix 列表             |
-| `<Leader> q n` | 跳到 quickfix 列表中下一个位置 |
-| `<Leader> q p` | 跳到 quickfix 列表中上一个位置 |
 
 ## 进阶使用
 
@@ -1856,16 +1728,134 @@ function! myspacevim#before() abort
 endfunction
 ```
 
-## 格式规范
+### Iedit 多光标编辑
+
+SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这一功能引入了两个新的模式：`iedit-Normal` 模式和 `iedit-Insert`。
+
+`iedit` 模式默认的颜色是 `red`/`green`，但它也基于当前的主题。
+
+#### Iedit 快捷键
+
+**模式转换:**
+
+前面提到 Iedit 引入了两个新的模式，在这两个新的模式以及 Vim 自身模式之间转换的快捷键如下：
+
+| 快捷键    | From          | to           |
+| --------- | ------------- | ------------ |
+| `SPC s e` | Normal/Visual | iedit-Normal |
+| `<Esc>`   | iedit-Normal  | Normal       |
+
+**在 iedit-Normal 模式中：**
+
+`iedit-Normal` 模式继承自 Vim 的 Normal 模式, 下面所列举的是 `iedit-Normal` 模式专属的快捷键。
+
+| 快捷键          | 功能描述                                                                               |
+| --------------- | -------------------------------------------------------------------------------------- |
+| `<Esc>`         | 切换回 Normal 模式                                                                     |
+| `i`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `i`                                     |
+| `a`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `a`                                     |
+| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `I`                 |
+| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `A`                 |
+| `<Left>` / `h`  | 左移光标，类似于一般模式下的 `h`                                                       |
+| `<Right>` / `l` | 右移光标，类似于一般模式下的 `l`                                                       |
+| `0` / `<Home>`  | 跳至当前 occurrence 的开头，类似于一般模式下的 `0`                                     |
+| `$` / `<End>`   | 跳至当前 occurrence 的结尾，类似于一般模式下的 `$`                                     |
+| `C`             | 删除所有 occurrences 中从光标位置开始到 occurrences 结尾的字符，类似于一般模式下的 `C` |
+| `D`             | 删除所有 occurrences 类似于一般模式下的 `D`                                            |
+| `s`             | 删除所有 occurrences 中光标下的字符并进入 `iedit-Insert` 模式，类似于一般模式下的 `s`  |
+| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式，类似于一般模式下的 `S`                |
+| `x`             | 删除所有 occurrences 中光标下的字符，类似于一般模式下的 `x`                            |
+| `X`             | 删除所有 occurrences 中光标前的字符，类似于一般模式下的 `X`                            |
+| `gg`            | 跳至第一个 occurrence，类似于一般模式下的 `gg`                                         |
+| `G`             | 跳至最后一个 occurrence，类似于一般模式下的 `G`                                        |
+| `n`             | 跳至下一个 occurrence                                                                  |
+| `N`             | 跳至上一个 occurrence                                                                  |
+| `p`             | 替换所有 occurrences 为最后复制的文本                                                  |
+| `<Tab>`         | toggle current occurrence                                                              |
+
+**In iedit-Insert mode:**
+
+| 快捷键                   | 功能描述                   |
+| ------------------------ | -------------------------- |
+| `Ctrl-g` / `<Esc>`       | 回到 `iedit-Normal` 模式   |
+| `Ctrl-b` / `<Left>`      | 左移光标                   |
+| `Ctrl-f` / `<Right>`     | 右移光标                   |
+| `Ctrl-a` / `<Home>`      | 跳至当前 occurrence 的开头 |
+| `Ctrl-e` / `<End>`       | 跳至当前 occurrence 的结尾 |
+| `Ctrl-w`                 | 删除光标前的词             |
+| `Ctrl-k`                 | 删除光标后的词             |
+| `Ctrl-u`                 | 删除光标前所有字符         |
+| `Ctrl-h` / `<BackSpace>` | 删除光标前字符             |
+| `<Delete>`               | 删除光标后字符             |
+
+### 异步运行器和交互式编程
+
+SpaceVim 提供了一个异步执行命令和交互式编程的插件，
+在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为 `SPC l r`。
+如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。
+
+```vim
+nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
+```
+
+目前，SpaceVim 支持如下特性：
+
+- 使用默认命令一键运行当前文件
+- 使用系统文件管理器选择文件并执行
+- 根据文件顶部标识，选择合适解析器
+- 中断代码运行
+- 底部窗口异步展示运行结果
+- 设置默认的运行语言
+- 选择指定语言来运行
+- 支持交互式编程
+- 运行选择的代码片段
+
+### 错误处理
+
+SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文件语法检查，默认在保存文件时进行错误检查。
+
+错误管理导航键 (以 `e` 开头)：
+
+| 快捷键    | 功能描述                                                                    |
+| --------- | --------------------------------------------------------------------------- |
+| `SPC t s` | 切换语法检查器                                                              |
+| `SPC e c` | 清除所有错误                                                                |
+| `SPC e h` | describe a syntax checker                                                   |
+| `SPC e l` | 切换显示错误/警告列表                                                       |
+| `SPC e n` | 跳至下一错误                                                                |
+| `SPC e p` | 跳至上一个错误                                                              |
+| `SPC e v` | verify syntax checker setup (useful to debug 3rd party tools configuration) |
+| `SPC e .` | 错误暂态（error transient state)                                            |
+
+下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误，
+甚至可检查 Vim 位置列表的所有错误。这包括下面的例子：在已被保存的位置列表缓冲区进行搜索。
+默认提示符：
+
+| 提示符 | 描述    | 自定义选项       |
+| ------ | ------- | ---------------- |
+| `✖`    | Error   | `error_symbol`   |
+| `➤`    | warning | `warning_symbol` |
+| `ⓘ`    | Info    | `info_symbol`    |
+
+**quickfix 列表移动：**
+
+| 快捷键         | 功能描述                       |
+| -------------- | ------------------------------ |
+| `<Leader> q l` | 打开 quickfix 列表窗口         |
+| `<Leader> q c` | 清除 quickfix 列表             |
+| `<Leader> q n` | 跳到 quickfix 列表中下一个位置 |
+| `<Leader> q p` | 跳到 quickfix 列表中上一个位置 |
+
+### 格式规范
 
 SpaceVim 添加了 [EditorConfig](http://editorconfig.org/) 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范，
 这一工具兼容多种文本编辑器和集成开发环境。
 
 更多配置方式，可以阅读其官方文档：[editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 
-## Vim 服务
+### 后台服务
 
-SpaceVim 在启动时启动了一个服务器。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。
+SpaceVim 在启动时启动了一个后台服务。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。
 
 **连接到 Vim 服务器**
 
