@@ -259,7 +259,7 @@ function! SpaceVim#default#keyBindings() abort
   " Tabs
   nnoremap <silent>g0 :<C-u>tabfirst<CR>
   nnoremap <silent>g$ :<C-u>tablast<CR>
-  nnoremap <silent>gr :<C-u>tabprevious<CR>
+  nnoremap <silent><expr> gr tabpagenr('#') > 0 ? ':exe "tabnext " . tabpagenr("#")<cr>' : ''
 
   " Remove spaces at the end of lines
   nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
