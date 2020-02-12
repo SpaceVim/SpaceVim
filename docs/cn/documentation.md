@@ -65,7 +65,6 @@ lang: zh
     - [在网上进行搜索](#在网上进行搜索)
     - [实时代码检索](#实时代码检索)
     - [保持高亮](#保持高亮)
-    - [高亮光标下变量](#高亮光标下变量)
     - [获取帮助信息](#获取帮助信息)
   - [常用的成对快捷键](#常用的成对快捷键)
   - [跳转，合并，拆分](#跳转合并拆分)
@@ -85,6 +84,7 @@ lang: zh
   - [错误处理](#错误处理)
   - [格式规范](#格式规范)
   - [后台服务](#后台服务)
+- [高亮光标下变量](#高亮光标下变量)
 
 <!-- vim-markdown-toc -->
 
@@ -1433,42 +1433,6 @@ FlyGrep 缓冲区的按键绑定：
 SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状态到下一次搜索。
 同样可以通过 `SPC s c` 或者运行 命令 `:nohlsearch` 来取消搜索结果的高亮表示。
 
-#### 高亮光标下变量
-
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbol.
-
-It is also possible to change the range of the navigation on the fly to:
-
-- buffer
-- function
-- visible area
-
-使用快捷键 `SPC s h` 来高亮光标下的符号。
-
-Navigation between the highlighted symbols can be done with the commands:
-
-| 快捷键    | 功能描述                                                                     |
-| --------- | ---------------------------------------------------------------------------- |
-| `*`       | initiate navigation transient state on current symbol and jump forwards      |
-| `#`       | initiate navigation transient state on current symbol and jump backwards     |
-| `SPC s e` | edit all occurrences of the current symbol                                   |
-| `SPC s h` | highlight the current symbol and all its occurrence within the current range |
-| `SPC s H` | go to the last searched occurrence of the last highlighted symbol            |
-
-In highlight symbol transient state:
-
-| 快捷键        | 功能描述                                                      |
-| ------------- | ------------------------------------------------------------- |
-| `e`           | edit occurrences (`*`)                                        |
-| `n`           | go to next occurrence                                         |
-| `N` / `p`     | go to previous occurrence                                     |
-| `b`           | search occurrence in all buffers                              |
-| `/`           | search occurrence in whole project                            |
-| `<Tab>`       | toggle highlight current occurrence                           |
-| `r`           | change range (function, display area, whole buffer)           |
-| `R`           | go to home occurrence (reset position to starting occurrence) |
-| Any other key | leave the navigation transient state                          |
-
 #### 获取帮助信息
 
 Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
@@ -1862,5 +1826,42 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 使用命令 `svc` 在一个已存在的 Vim 服务器上打开文件，使用命令 `nsvc` 在一个已存在的 Neovim 服务器上打开文件。
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
+
+## 高亮光标下变量
+
+SpaceVim 支持高亮当前光标下的变量，并且启动一个临时快捷键窗口，
+提示可以通过快捷键进行修改高亮范围，以及下一步的操作。
+
+目前支持的高亮范围包括：
+
+- 整个缓冲区（buffer）
+- 当前函数内（function）
+- 可见区域（visible area）
+
+使用快捷键 `SPC s h` 来高亮光标下的符号。
+
+可使用如下快捷键在已高亮的变量间跳转：
+
+| 快捷键    | 功能描述                         |
+| --------- | -------------------------------- |
+| `*`       | 在当前缓冲区正向搜索光标下变量   |
+| `#`       | 在当前缓冲区逆向搜索光标下变量   |
+| `SPC s e` | 启动 iedit 模式，编辑光标下变量  |
+| `SPC s h` | 使用默认的的范围高亮光标下的变量 |
+| `SPC s H` | 高亮当前缓冲区下所有的光标下变量 |
+
+在高亮临时快捷键模式下可使用如下快捷键:
+
+| 快捷键        | 功能描述                 |
+| ------------- | ------------------------ |
+| `e`           | 启动 iedit 模式          |
+| `n`           | 跳至下一个匹配处         |
+| `N` / `p`     | 跳至上一个匹配处         |
+| `b`           | 在整个缓冲区内高亮该匹配 |
+| `/`           | 在整个工程内检索当前匹配 |
+| `<Tab>`       | 切换当前匹配高亮状态     |
+| `r`           | 切换匹配的范围           |
+| `R`           | 重置匹配的范围           |
+| Any other key | 退出该临时快捷键模式     |
 
 <!-- vim:set nowrap cole=0: -->
