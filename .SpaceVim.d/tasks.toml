@@ -1,0 +1,6 @@
+[file-build]
+    command = 'gcc $(VIM_FILE) -o $(TARGET_DIR)/$(VIM_FILE_NOEXT)'
+[file-run]
+    command = "python $(VIM_FILE)"
+    output = true
+
