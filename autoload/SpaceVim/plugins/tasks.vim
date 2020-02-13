@@ -52,10 +52,12 @@ function! s:init_variables() abort
 endfunction
 
 function! s:pick() abort
-  return {}
+  return s:conf
 endfunction
 
 function! SpaceVim#plugins#tasks#get()
+  call s:load()
+  call s:init_variables()
   let task = s:pick()
   if has_key(task, 'windows') && s:SYS.isWindows
     let task = task.windows
@@ -64,7 +66,7 @@ function! SpaceVim#plugins#tasks#get()
   elseif has_key(task, 'linux') && s:SYS.isLinux
     let task = task.linux
   endif
-
+  return task
 endfunction
 
 
@@ -73,7 +75,8 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! SpaceVim#plugins#tasks#list()
-
+  call s:load()
+  call s:init_variables()
   call s:open_tasks_list_win()
 
 
