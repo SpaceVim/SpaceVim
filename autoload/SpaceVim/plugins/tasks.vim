@@ -10,6 +10,7 @@ let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:SYS = SpaceVim#api#import('system')
 
 " task object
 
@@ -23,11 +24,18 @@ function! s:load() abort
 endfunction
 
 function! s:pick() abort
-  
+  return {}
 endfunction
 
 function! SpaceVim#plugins#tasks#get()
-  return s:pick()
+  let task = s:pick()
+  if has_key(task, 'windows') && s:SYS.isWindows
+    let task = task.windows
+  elseif has_key(task, 'osx') && s:SYS.isOSX
+    let task = task.osx
+  elseif has_key(task, 'linux') && s:SYS.isLinux
+    let task = task.linux
+  endif
 endfunction
 
 
