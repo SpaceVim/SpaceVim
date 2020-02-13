@@ -28,3 +28,21 @@ endfunction
 function! SpaceVim#plugins#tasks#get()
   return s:pick()
 endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" list all the tasks
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! SpaceVim#plugins#tasks#list()
+
+  
+
+endfunction
+
+
+function! SpaceVim#plugins#tasks#complete(...)
+
+  
+
+endfunction
