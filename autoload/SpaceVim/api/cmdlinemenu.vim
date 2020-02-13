@@ -90,7 +90,8 @@ function! s:menu(items) abort
       let Value =  items[selected][1]
       redraw
       if type(Value) == 2
-        call call(Value, [])
+        let args = get(items[selected], 2, [])
+        call call(Value, args)
       elseif type(Value) == type('') && !empty(Value)
         execute Value
       endif

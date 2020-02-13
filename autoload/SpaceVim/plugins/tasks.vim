@@ -11,10 +11,12 @@ let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:SYS = SpaceVim#api#import('system')
+let s:MENU = SpaceVim#api#import('cmdlinemenu')
 
 " task object
 
 let s:self = {}
+let s:select_task = {}
 let s:conf = []
 let s:bufnr = -1
 let s:variables = {}
@@ -51,8 +53,22 @@ function! s:init_variables() abort
   let s:variables.execPath = ''
 endfunction
 
+function! s:select_task(taskName) abort
+  let s:select_task = s:conf[a:taskName]
+endfunction
+
 function! s:pick() abort
   return s:conf
+  let ques = []
+  for key in keys(s:conf)
+    call add(ques, [key, function('s:select_task'), key])
+  endfor
+  call s:MENU.menu(ques)
+  return s:select_task
+endfunction
+
+function! s:replace_variables(str) abort
+  call map(keys(s:variables), 'substitute(a:str, "$(" . v:val . ")", s:variables[v:val], "g")')
 endfunction
 
 function! SpaceVim#plugins#tasks#get()
@@ -66,6 +82,7 @@ function! SpaceVim#plugins#tasks#get()
   elseif has_key(task, 'linux') && s:SYS.isLinux
     let task = task.linux
   endif
+  let task.command = s:replace_variables(task.command)
   return task
 endfunction
 
