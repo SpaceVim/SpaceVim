@@ -39,7 +39,7 @@ function! s:parseItems(items) abort
   let items = {}
   for item in a:items
     let id = index(a:items, item) + 1
-    let items[id] = ['(' . id . ')' . item[0], item[1]]
+    let items[id] = ['(' . id . ')' . item[0]] + item[1:]
   endfor
   return items
 endfunction

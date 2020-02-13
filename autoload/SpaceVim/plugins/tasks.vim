@@ -58,17 +58,20 @@ function! s:select_task(taskName) abort
 endfunction
 
 function! s:pick() abort
-  return s:conf
   let ques = []
   for key in keys(s:conf)
-    call add(ques, [key, function('s:select_task'), key])
+    call add(ques, [key, function('s:select_task'), [key]])
   endfor
   call s:MENU.menu(ques)
   return s:select_task
 endfunction
 
 function! s:replace_variables(str) abort
-  call map(keys(s:variables), 'substitute(a:str, "$(" . v:val . ")", s:variables[v:val], "g")')
+  let str = a:str
+  for key in keys(s:variables)
+    let str = substitute(str, '$(' . key . ')', s:variables[key], 'g')
+  endfor
+  return str
 endfunction
 
 function! SpaceVim#plugins#tasks#get()
