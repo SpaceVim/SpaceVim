@@ -10,6 +10,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Core Pillars](#core-pillars)
 - [Highlighted features](#highlighted-features)
 - [Screenshots](#screenshots)
+- [Concepts](#concepts)
 - [Who can benefit from this?](#who-can-benefit-from-this)
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
@@ -20,7 +21,6 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Vim compatible mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
   - [Debug upstream plugins](#debug-upstream-plugins)
-- [Concepts](#concepts)
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
@@ -105,19 +105,27 @@ If any of these core pillars is violated open an issue and we’ll try our best 
 
 **Mnemonic**
 
-Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
+Key bindings are organized using mnemonic prefixes,
+like b for buffer, p for project, s for search, h for help,
+etc…
 
 **Discoverable**
 
-Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
+Innovative real-time display of available key bindings.
+Simple query system to quickly find available layers,
+packages, and more.
 
 **Consistent**
 
-Similar functionalities have the same key bindings everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
+Similar functionalities have the same key bindings
+everywhere thanks to a clearly defined set of conventions.
+Documentation is mandatory for any layer that ships with
+SpaceVim.
 
 **Crowd-Configured**
 
-Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
+Community-driven configuration provides curated
+packages tuned by power users and bugs are fixed quickly.
 
 ## Highlighted features
 
@@ -134,11 +142,11 @@ Community-driven configuration provides curated packages tuned by power users an
 
 **welcome page**
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
 
 **working flow**
 
-![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
 Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
 
@@ -147,6 +155,22 @@ Depicts a common frontend development scenario with JavaScript (jQuery), SASS, a
 Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
 
 To get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+
+## Concepts
+
+**Transient-states**
+
+SpaceVim defines a wide variety of transient states (temporary overlay maps)
+where it makes sense. This prevents one from doing repetitive and tedious
+presses on the SPC key.
+
+When a transient state is active, a documentation is displayed in the
+transient state buffer. Additional information may as well be displayed in it.
+
+Move Text Transient State:
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
 
 ## Who can benefit from this?
 
@@ -164,9 +188,18 @@ There are several methods of updating the core files of SpaceVim. It is recommen
 
 **Automatic Updates**
 
-NOTE: By default, this feature is disabled. It would slow down the startup of Vim/Neovim. If you like this feature, add `automatic_update = 1` to your custom configuration file.
+By default, this feature is disabled.
+It would slow down the startup of Vim/Neovim.
+If you like this feature,
+add following to your custom configuration file.
 
-SpaceVim will automatically check for a new version every startup. You have restart Vim after updating.
+```toml
+[options]
+    automatic_update = true
+```
+
+SpaceVim will automatically check for a new version
+every startup. You have restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
@@ -180,11 +213,16 @@ You can close Vim/Neovim and update the git repository to update manually:
 
 ### Update plugins
 
-Use `:SPUpdate` command to update all the plugins and SpaceVim itself. After `:SPUpdate`, you can assign plugins need to be updated. Use `Tab` to complete plugin names after `:SPUpdate`.
+Use `:SPUpdate` command to update all the plugins and
+SpaceVim itself. After `:SPUpdate`, you can assign
+plugins need to be updated. Use `Tab` to complete
+plugin names after `:SPUpdate`.
 
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command to display the log of SpaceVim. You also can use `SPC h I` to open a buffer with the issue template.
+Use `:SPDebugInfo!` command to display the log of SpaceVim.
+You also can use `SPC h I` to open a buffer with the
+issue template.
 
 ## Custom Configuration
 
@@ -229,7 +267,10 @@ disabled_plugins = ["clighter", "clighter8"]
 
 ### Bootstrap Functions
 
-SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
+SpaceVim provides two kinds of bootstrap functions
+for custom configurations and key bindings,
+namely `bootstrap_before` and `bootstrap_after`.
+To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
 The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
 
@@ -334,21 +375,6 @@ function! myspacevim#before() abort
 set rtp+=~/path/to/your/localplugin
 endfunction
 ```
-
-## Concepts
-
-**Transient-states**
-
-SpaceVim defines a wide variety of transient states (temporary overlay maps)
-where it makes sense. This prevents one from doing repetitive and tedious
-presses on the SPC key.
-
-When a transient state is active, a documentation is displayed in the
-transient state buffer. Additional information may as well be displayed in it.
-
-Move Text Transient State:
-
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
 ## Interface elements
 
