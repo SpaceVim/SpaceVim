@@ -17,10 +17,38 @@ let s:SYS = SpaceVim#api#import('system')
 let s:self = {}
 let s:conf = []
 let s:bufnr = -1
+let s:variables = {}
 
 
 function! s:load() abort
-      let s:conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+  let s:conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+endfunction
+
+function! s:init_variables() abort
+  " ${workspaceFolder} - /home/your-username/your-project
+  let s:variables.workspaceFolder = SpaceVim#plugins#projectmanager#current_root()
+  " ${workspaceFolderBasename} - your-project
+  let s:variables.workspaceFolderBasename = fnamemodify(s:variables.workspaceFolder, ':t')
+  " ${file} - /home/your-username/your-project/folder/file.ext
+  let s:variables.file = expand('%:p')
+  " ${relativeFile} - folder/file.ext
+  let s:variables.relativeFile = expand('%')
+  " ${relativeFileDirname} - folder
+  let s:variables.relativeFileDirname = expand('%:h')
+  " ${fileBasename} - file.ext
+  let s:variables.fileBasename = expand('%:t')
+  " ${fileBasenameNoExtension} - file
+  let s:variables.fileBasenameNoExtension = expand('%:t:r')
+  " ${fileDirname} - /home/your-username/your-project/folder
+  let s:variables.fileDirname = expand('%:p:h')
+  " ${fileExtname} - .ext
+  let s:variables.fileExtname = expand('%:e')
+  " ${lineNumber} - line number of the cursor
+  let s:variables.lineNumber = line('.')
+  " ${selectedText} - text selected in your code editor
+  let s:variables.selectedText = ''
+  " ${execPath} - location of Code.exe
+  let s:variables.execPath = ''
 endfunction
 
 function! s:pick() abort
@@ -36,6 +64,7 @@ function! SpaceVim#plugins#tasks#get()
   elseif has_key(task, 'linux') && s:SYS.isLinux
     let task = task.linux
   endif
+
 endfunction
 
 
@@ -46,14 +75,14 @@ endfunction
 function! SpaceVim#plugins#tasks#list()
 
   call s:open_tasks_list_win()
-  
+
 
 endfunction
 
 
 function! SpaceVim#plugins#tasks#complete(...)
 
-  
+
 
 endfunction
 
