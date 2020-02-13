@@ -113,12 +113,16 @@ let s:separators = {
 
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
+      \ 'curve' : ["\ue0b4", "\ue0b6"],
+      \ 'slant' : ["\ue0b8", "\ue0ba"],
+      \ 'brace' : ["\ue0d2", "\ue0d4"],
+      \ 'fire' : ["\ue0c0", "\ue0c2"],
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
 
 let s:tmuxline_separators = g:spacevim_statusline_separator
-let s:tmuxline_separators_alt = g:spacevim_statusline_inactive_separator
+let s:tmuxline_separators_alt = g:spacevim_statusline_iseparator
 let s:tmux_navigator_modifier = 'ctrl'
 
 function! SpaceVim#layers#tmux#set_variable(var) abort
@@ -129,7 +133,7 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
 
   let s:tmuxline_separators_alt = get(a:var,
         \ 'tmuxline_separators_alt',
-        \ g:spacevim_statusline_inactive_separator)
+        \ g:spacevim_statusline_iseparator)
 
   let s:tmux_navigator_modifier = get(a:var,
         \ 'tmux_navigator_modifier',
