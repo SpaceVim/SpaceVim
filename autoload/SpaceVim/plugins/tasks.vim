@@ -6,6 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
+" this plugin is based on vscode task Scheme
+" https://code.visualstudio.com/docs/editor/tasks-appendix
+
+
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
