@@ -78,7 +78,7 @@ function! s:menu(items) abort
         let menu .= indent . ' ' . items[id][0] . "\n"
       endif
     endfor
-    echo repeat("\n", len(items))
+    redraw!
     echo menu[:-2]
     let nr = getchar()
     if s:parseInput(nr) ==# '' || nr == 3
@@ -97,10 +97,10 @@ function! s:menu(items) abort
         execute Value
       endif
       let exit = 1
-    elseif nr2char(nr) ==# 'j'
+    elseif nr2char(nr) ==# 'j' || nr ==# 9
       let selected = s:nextItem(keys(items), selected)
       normal! :
-    elseif nr2char(nr) ==# 'k'
+    elseif nr2char(nr) ==# 'k' || nr ==# 126
       let selected = s:previousItem(keys(items), selected)
       normal! :
     endif
