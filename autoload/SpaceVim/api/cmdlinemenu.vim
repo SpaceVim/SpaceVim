@@ -56,6 +56,7 @@ endfunction
 " should be a funcrc.
 
 function! s:menu(items) abort
+  let cancelled = 0
   let saved_more = &more
   let save_cmdheight = &cmdheight
   set nomore
@@ -83,6 +84,7 @@ function! s:menu(items) abort
     let nr = getchar()
     if s:parseInput(nr) ==# '' || nr == 3
       let exit = 1
+      let cancelled = 1
       normal! :
     elseif index(keys(items), nr2char(nr)) != -1  || nr == 13
       if nr != 13
@@ -103,11 +105,16 @@ function! s:menu(items) abort
     elseif nr2char(nr) ==# 'k' || nr ==# "\<S-Tab>"
       let selected = s:previousItem(keys(items), selected)
       normal! :
+    else
+      normal! :
     endif
   endwhile
   let &more = saved_more
   let &cmdheight = save_cmdheight
   redraw!
+  if cancelled
+    echo 'cancelled!'
+  endif
 endfunction
 
 let s:api['menu'] = function('s:menu')
