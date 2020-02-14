@@ -129,3 +129,11 @@ function! s:open_tasks_list_win() abort
   set filetype=SpaceVimTasksInfo
   let s:bufnr = bufnr('%')
 endfunction
+
+function! SpaceVim#plugins#tasks#edit(...)
+  if get(a:000, 0, 0)
+    exe 'e ~/.SpaceVim.d/tasks.toml'
+  else
+    exe 'e .SpaceVim.d/tasks.toml'
+  endif
+endfunction
