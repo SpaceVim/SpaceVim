@@ -10,6 +10,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Core Pillars](#core-pillars)
 - [Highlighted features](#highlighted-features)
 - [Screenshots](#screenshots)
+- [Concepts](#concepts)
 - [Who can benefit from this?](#who-can-benefit-from-this)
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
@@ -20,7 +21,6 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Vim compatible mode](#vim-compatible-mode)
   - [Private Layers](#private-layers)
   - [Debug upstream plugins](#debug-upstream-plugins)
-- [Concepts](#concepts)
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
@@ -28,6 +28,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Statusline](#statusline)
   - [Tabline](#tabline)
 - [General Key bindings](#general-key-bindings)
+  - [Visual mode key bindings](#visual-mode-key-bindings)
+  - [Command line mode key bidnings](#command-line-mode-key-bidnings)
   - [Window manager](#window-manager)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
@@ -39,8 +41,6 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Getting help](#getting-help)
     - [Available layers](#available-layers)
     - [Toggles](#toggles)
-  - [Navigating](#navigating)
-    - [Point/Cursor](#pointcursor)
     - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
       - [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
     - [Unimpaired bindings](#unimpaired-bindings)
@@ -105,19 +105,27 @@ If any of these core pillars is violated open an issue and we’ll try our best 
 
 **Mnemonic**
 
-Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…
+Key bindings are organized using mnemonic prefixes,
+like b for buffer, p for project, s for search, h for help,
+etc…
 
 **Discoverable**
 
-Innovative real-time display of available key bindings. Simple query system to quickly find available layers, packages, and more.
+Innovative real-time display of available key bindings.
+Simple query system to quickly find available layers,
+packages, and more.
 
 **Consistent**
 
-Similar functionalities have the same key bindings everywhere thanks to a clearly defined set of conventions. Documentation is mandatory for any layer that ships with SpaceVim.
+Similar functionalities have the same key bindings
+everywhere thanks to a clearly defined set of conventions.
+Documentation is mandatory for any layer that ships with
+SpaceVim.
 
 **Crowd-Configured**
 
-Community-driven configuration provides curated packages tuned by power users and bugs are fixed quickly.
+Community-driven configuration provides curated
+packages tuned by power users and bugs are fixed quickly.
 
 ## Highlighted features
 
@@ -134,11 +142,11 @@ Community-driven configuration provides curated packages tuned by power users an
 
 **welcome page**
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/45254913-e1e17580-b3b2-11e8-8983-43d6c358a474.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
 
 **working flow**
 
-![screen shot 2017-04-26 at 4 28 07 pm](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
 Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
 
@@ -147,6 +155,22 @@ Depicts a common frontend development scenario with JavaScript (jQuery), SASS, a
 Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
 
 To get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+
+## Concepts
+
+**Transient-states**
+
+SpaceVim defines a wide variety of transient states (temporary overlay maps)
+where it makes sense. This prevents one from doing repetitive and tedious
+presses on the SPC key.
+
+When a transient state is active, a documentation is displayed in the
+transient state buffer. Additional information may as well be displayed in it.
+
+Move Text Transient State:
+
+![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+
 
 ## Who can benefit from this?
 
@@ -164,9 +188,18 @@ There are several methods of updating the core files of SpaceVim. It is recommen
 
 **Automatic Updates**
 
-NOTE: By default, this feature is disabled. It would slow down the startup of Vim/Neovim. If you like this feature, add `automatic_update = 1` to your custom configuration file.
+By default, this feature is disabled.
+It would slow down the startup of Vim/Neovim.
+If you like this feature,
+add following to your custom configuration file.
 
-SpaceVim will automatically check for a new version every startup. You have restart Vim after updating.
+```toml
+[options]
+    automatic_update = true
+```
+
+SpaceVim will automatically check for a new version
+every startup. You have restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
@@ -180,11 +213,16 @@ You can close Vim/Neovim and update the git repository to update manually:
 
 ### Update plugins
 
-Use `:SPUpdate` command to update all the plugins and SpaceVim itself. After `:SPUpdate`, you can assign plugins need to be updated. Use `Tab` to complete plugin names after `:SPUpdate`.
+Use `:SPUpdate` command to update all the plugins and
+SpaceVim itself. After `:SPUpdate`, you can assign
+plugins need to be updated. Use `Tab` to complete
+plugin names after `:SPUpdate`.
 
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command to display the log of SpaceVim. You also can use `SPC h I` to open a buffer with the issue template.
+Use `:SPDebugInfo!` command to display the log of SpaceVim.
+You also can use `SPC h I` to open a buffer with the
+issue template.
 
 ## Custom Configuration
 
@@ -210,9 +248,9 @@ If you want to add plugins from github, just add the repo name to the `custom_pl
 
 ```toml
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
-    on_cmd = ["ColorHighlight", "ColorToggle"]
-    merged = false
+name = "lilydjwg/colorizer"
+on_cmd = ["ColorHighlight", "ColorToggle"]
+merged = false
 ```
 
 `on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
@@ -223,24 +261,27 @@ If you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 
 ```toml
 [options]
-    # NOTE: the value should be a list, and each item is the name of the plugin.
-    disabled_plugins = ["clighter", "clighter8"]
+# NOTE: the value should be a list, and each item is the name of the plugin.
+disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### Bootstrap Functions
 
-SpaceVim provides two kinds of bootstrap functions for custom configurations and key bindings, namely `bootstrap_before` and `bootstrap_after`. To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
+SpaceVim provides two kinds of bootstrap functions
+for custom configurations and key bindings,
+namely `bootstrap_before` and `bootstrap_after`.
+To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
 The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
 
 ```vim
 function! myspacevim#before() abort
-    let g:neomake_enabled_c_makers = ['clang']
-    nnoremap jk <Esc>
+let g:neomake_enabled_c_makers = ['clang']
+nnoremap jk <Esc>
 endfunction
 
 function! myspacevim#after() abort
-    iunmap jk
+iunmap jk
 endfunction
 ```
 
@@ -251,8 +292,8 @@ If you want to add custom `SPC` prefix key bindings, you can add them to bootstr
 
 ```vim
 function! myspacevim#before() abort
-    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
 
@@ -284,7 +325,7 @@ For example, in order to disable language specific leader, you may add the follo
 
 ```toml
 [options]
-    enable_language_specific_leader = false
+enable_language_specific_leader = false
 ```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
@@ -314,7 +355,7 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [options]
-    disabled_plugins = ["neomake.vim"]
+disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
@@ -322,33 +363,18 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [[custom_plugins]]
-   name = "wsdjeg/neomake.vim"
-   # note: you need to disable merged feature
-   merged = false
+name = "wsdjeg/neomake.vim"
+# note: you need to disable merged feature
+merged = false
 ```
 
 Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
-    set rtp+=~/path/to/your/localplugin
+set rtp+=~/path/to/your/localplugin
 endfunction
 ```
-
-## Concepts
-
-**Transient-states**
-
-SpaceVim defines a wide variety of transient states (temporary overlay maps)
-where it makes sense. This prevents one from doing repetitive and tedious
-presses on the SPC key.
-
-When a transient state is active, a documentation is displayed in the
-transient state buffer. Additional information may as well be displayed in it.
-
-Move Text Transient State:
-
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
 ## Interface elements
 
@@ -368,8 +394,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
 [options]
-    colorscheme = "desert"
-    colorscheme_bg = "dark"
+colorscheme = "desert"
+colorscheme_bg = "dark"
 ```
 
 | Mappings  | Descriptions                                                   |
@@ -386,7 +412,7 @@ For more information see: [Colours in terminal](https://gist.github.com/XVilka/8
 If your terminal does not support true colors, you can disable SpaceVim true colors feature in `[options]` section:
 
 ```toml
-    enable_guicolors = false
+enable_guicolors = false
 ```
 
 ### Font
@@ -397,7 +423,7 @@ It is recommended to install it on your system if you wish to use it.
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-    guifont = "SauceCodePro Nerd Font Mono:h11"
+guifont = "SauceCodePro Nerd Font Mono:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
@@ -503,7 +529,7 @@ All the colors are based on the current colorscheme.
 It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```toml
-  statusline_separator = 'arrow'
+statusline_separator = 'arrow'
 ```
 
 Here is an exhaustive set of screenshots for all the available separator:
@@ -560,17 +586,17 @@ If you want to contribute theme please check the template of a statusline theme.
 " group_ii: window id in iedit-insert mode
 " group_in: windows id in iedit-normal mode
 function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
-    return [
-                \ ['#282828', '#a89984', 246, 235],
-                \ ['#a89984', '#504945', 239, 246],
-                \ ['#a89984', '#3c3836', 237, 246],
-                \ ['#665c54', 241],
-                \ ['#282828', '#83a598', 235, 109],
-                \ ['#282828', '#fe8019', 235, 208],
-                \ ['#282828', '#8ec07c', 235, 108],
-                \ ['#282828', '#689d6a', 235, 72],
-                \ ['#282828', '#8f3f71', 235, 132],
-                \ ]
+return [
+\ ['#282828', '#a89984', 246, 235],
+\ ['#a89984', '#504945', 239, 246],
+\ ['#a89984', '#3c3836', 237, 246],
+\ ['#665c54', 241],
+\ ['#282828', '#83a598', 235, 109],
+\ ['#282828', '#fe8019', 235, 208],
+\ ['#282828', '#8ec07c', 235, 108],
+\ ['#282828', '#689d6a', 235, 72],
+\ ['#282828', '#8f3f71', 235, 132],
+\ ]
 endfunction
 ```
 
@@ -580,16 +606,16 @@ switching between different colorschemes, you may need to set
 
 ```toml
 custom_color_palette = [
-    ["#282828", "#a89984", 246, 235],
-    ["#a89984", "#504945", 239, 246],
-    ["#a89984", "#3c3836", 237, 246],
-    ["#665c54", 241],
-    ["#282828", "#83a598", 235, 109],
-    ["#282828", "#fe8019", 235, 208],
-    ["#282828", "#8ec07c", 235, 108],
-    ["#282828", "#689d6a", 235, 72],
-    ["#282828", "#8f3f71", 235, 132],
-    ]
+["#282828", "#a89984", 246, 235],
+["#a89984", "#504945", 239, 246],
+["#a89984", "#3c3836", 237, 246],
+["#665c54", 241],
+["#282828", "#83a598", 235, 109],
+["#282828", "#fe8019", 235, 208],
+["#282828", "#8ec07c", 235, 108],
+["#282828", "#689d6a", 235, 72],
+["#282828", "#8f3f71", 235, 132],
+]
 ```
 
 ### Tabline
@@ -611,7 +637,8 @@ tabs will be listed on the tabline. Each item can be quickly accessed by using
 | `<Leader> 8` | Jump to index 8 on tabline |
 | `<Leader> 9` | Jump to index 9 on tabline |
 
-SpaceVim tabline also supports mouse click, left mouse button will switch to buffer, while middle button will delete the buffer.
+SpaceVim tabline also supports mouse click, left mouse button will switch to buffer,
+while middle button will delete the buffer.
 
 **NOTE:** This feature is only supported in Neovim with `has('tablineat')`.
 
@@ -639,6 +666,59 @@ Key bindings within tab manager windows:
 
 ## General Key bindings
 
+The following key bindings are the general key bindings for moving cursor.
+
+| Key Bindings     | Descriptions                                      |
+| ---------------- | ------------------------------------------------- |
+| `h`              | move cursor left                                  |
+| `j`              | move cursor down                                  |
+| `k`              | move cursor up                                    |
+| `l`              | move cursor right                                 |
+| `<Up>`, `<Down>` | Smart up and down                                 |
+| `H`              | move cursor to the top of the screen              |
+| `L`              | move cursor to the bottom of the screen           |
+| `<`              | Indent to left and re-select                      |
+| `>`              | Indent to right and re-select                     |
+| `}`              | paragraphs forward                                |
+| `{`              | paragraphs backward                               |
+| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
+| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
+| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
+| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
+| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
+
+### Visual mode key bindings
+
+| Key               | Action                                   |
+| ----------------- | ---------------------------------------- |
+| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
+| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
+| `<`               | Indent to left and re-select             |
+| `>`               | Indent to right and re-select            |
+| `<Tab>`           | Indent to right and re-select            |
+| `Shift-<Tab>`     | Indent to left and re-select             |
+| `Ctrl-q`          | `Ctrl-w`                                 |
+| `Ctrl-x`          | Switch buffer and placement              |
+| `Ctrl-Shift-Up`   | move lines up                            |
+| `Ctrl-Shift-Down` | move lines down                          |
+
+### Command line mode key bidnings
+
+After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+can be used in command line mode:
+
+| Key bindings   | Descriptions                         |
+| -------------- | ------------------------------------ |
+| `Ctrl-a`       | move cursor to beginning             |
+| `Ctrl-b`       | Move cursor backward in command line |
+| `Ctrl-f`       | Move cursor forward in command line  |
+| `Ctrl-w`       | delete a whole word                  |
+| `Ctrl-u`       | remove all text before cursor        |
+| `Ctrl-k`       | remove all text after cursor         |
+| `Ctrl-c`/`Esc` | cancel command line mode             |
+| `Tab`          | next item in popup menu              |
+| `Shift-Tab`    | previous item in popup menu          |
+
 ### Window manager
 
 Window manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
@@ -646,7 +726,7 @@ can change it via `windows_leader` option:
 
 ```toml
 [options]
-    windows_leader = "s"
+windows_leader = "s"
 ```
 
 | Key Bindings | Descriptions                          |
@@ -666,31 +746,6 @@ can change it via `windows_leader` option:
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
-
-| Key               | Mode          | Action                                                                         |
-| ----------------- | ------------- | ------------------------------------------------------------------------------ |
-| `<Leader> y`      | visual        | Copy selection to X11 clipboard ("+y)                                          |
-| `Ctrl-c`          | Normal        | Copy full path of current buffer to X11 clipboard                              |
-| `<Leader> Ctrl-c` | Normal        | Copy github.com url of current buffer to X11 clipboard(if it is a github repo) |
-| `<Leader> Ctrl-l` | Normal/visual | Copy github.com url of current lines to X11 clipboard(if it is a github repo)  |
-| `<Leader> p`      | Normal/visual | Paste selection from X11 clipboard ("+p)                                       |
-| `Ctrl-f`          | Normal        | Smart page forward (`Ctrl-f` / `Ctrl-d`)                                       |
-| `Ctrl-b`          | Normal        | Smart page backwards (`C-b` / `C-u`)                                           |
-| `Ctrl-e`          | Normal        | Smart scroll down (`3 Ctrl-e/j`)                                               |
-| `Ctrl-y`          | Normal        | Smart scroll up (`3Ctrl-y/k`)                                                  |
-| `Ctrl-q`          | Normal        | `Ctrl-w`                                                                       |
-| `Ctrl-x`          | Normal        | Switch buffer and placement                                                    |
-| `<Up>`, `<Down>`  | Normal        | Smart up and down                                                              |
-| `}`               | Normal        | After paragraph motion go to first non-blank char (}^)                         |
-| `<`               | Visual/Normal | Indent to left and re-select                                                   |
-| `>`               | Visual/Normal | Indent to right and re-select                                                  |
-| `<Tab>`           | Visual        | Indent to right and re-select                                                  |
-| `Shift-<Tab>`     | Visual        | Indent to left and re-select                                                   |
-| `g p`             | Normal        | Select last paste                                                              |
-| `Q` / `g Q`       | Normal        | Disable EX-mode (<Nop>)                                                        |
-| `Ctrl-a`          | Command       | Navigation in command line                                                     |
-| `Ctrl-b`          | Command       | Move cursor backward in command line                                           |
-| `Ctrl-f`          | Command       | Move cursor forward in command line                                            |
 
 ### File Operations
 
@@ -742,7 +797,7 @@ Bookmarks manager is included in `tools` layer, to use following key bindings, y
 
 ```toml
 [[layers]]
-    name = "tools"
+name = "tools"
 ```
 
 | Key Bindings | Descriptions                    |
@@ -759,7 +814,7 @@ then you can use `a` registers via `<Leader> m a`.
 
 ```viml
 function! myspacevim#before() abort
-    nnoremap <silent><Leader>m m
+nnoremap <silent><Leader>m m
 endfunction
 ```
 
@@ -775,7 +830,7 @@ for example, load the denite layer:
 
 ```toml
 [[layers]]
-    name = "denite"
+name = "denite"
 ```
 
 **Key bindings**
@@ -907,24 +962,6 @@ All plugins can be easily discovered via `<leader> l p`.
 
 Both the toggles mappings start with `[SPC] t` or `[SPC] T`. You can find them in the mapping guide.
 
-### Navigating
-
-#### Point/Cursor
-
-Navigation is performed using the Vi key bindings `hjkl`.
-
-| Key Bindings | Descriptions                                                                      |
-| ------------ | --------------------------------------------------------------------------------- |
-| `h`          | move cursor left (origin Vim key, no mappings)                                    |
-| `j`          | move cursor down (origin Vim key, no mappings)                                    |
-| `k`          | move cursor up (origin Vim key, no mappings)                                      |
-| `l`          | move cursor right (origin Vim key, no mappings)                                   |
-| `H`          | move cursor to the top of the screen (origin Vim key, no mappings)                |
-| `L`          | move cursor to the bottom of the screen (origin Vim key, no mappings)             |
-| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
-| `SPC j $`    | go to the end of line (and set a mark at the previous location in the line)       |
-| `SPC t -`    | lock the cursor at the center of the screen                                       |
-
 #### Vim motions with vim-easymotion
 
 ##### quick-jump-link mode (TODO)
@@ -1023,7 +1060,7 @@ Windows manipulation commands (start with `w`):
 
 | Key Bindings          | Descriptions                                                                                                  |
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w .`             | windows transient state                                                                             |
+| `SPC w .`             | windows transient state                                                                                       |
 | `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`             | balance split windows                                                                                         |
 | `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
@@ -1148,11 +1185,11 @@ To change the filemanager plugin:
 
 ```toml
 [options]
-    # file manager plugins supported in SpaceVim:
-    # - vimfiler (default)
-    # - nerdtree
-    # - defx
-    filemanager = "defx"
+# file manager plugins supported in SpaceVim:
+# - vimfiler (default)
+# - nerdtree
+# - defx
+filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
@@ -1166,7 +1203,7 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-    filetree_direction = "left"
+filetree_direction = "left"
 ```
 
 ##### File tree navigation
@@ -1257,6 +1294,7 @@ which will tell you the functional of all mappings starting with `g`.
 | `g m`        | go to middle of screenline                      |
 | `g n`        | visually select next match                      |
 | `g o`        | goto byte N in the buffer                       |
+| `g p`        | Select last paste                               |
 | `g s`        | sleep N seconds                                 |
 | `g t`        | next tag page                                   |
 | `g u`        | make motion text lowercase                      |
@@ -1369,9 +1407,9 @@ The following example shows how to change the default option of searching tool `
 
 ```vim
 function! myspacevim#before() abort
-    let profile = SpaceVim#mapping#search#getprofile('rg')
-    let default_opt = profile.default_opts + ['--no-ignore-vcs']
-    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+let profile = SpaceVim#mapping#search#getprofile('rg')
+let default_opt = profile.default_opts + ['--no-ignore-vcs']
+call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
 endfunction
 ```
 

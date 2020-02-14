@@ -1150,6 +1150,8 @@ function! SpaceVim#end() abort
     " Navigation in command line
     cnoremap <C-a> <Home>
     cnoremap <C-b> <Left>
+    " @bug_vim with <silent> command line can not be cleared
+    cnoremap <expr> <C-k> repeat('<Delete>', strchars(getcmdline()) - getcmdpos() + 1)
   endif
   call SpaceVim#server#connect()
 
