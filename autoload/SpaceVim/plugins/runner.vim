@@ -383,3 +383,16 @@ function! SpaceVim#plugins#runner#set_language(lang) abort
   " the all language is keys(s:runners)
   let s:selected_language = a:lang
 endfunction
+
+
+function! SpaceVim#plugins#runner#run_task(task)
+  let isBackground = get(a:task, 'isBackground', 0)
+  if !isBackground && !empty(a:task)
+    let cmd = get(a:task, 'command', '') 
+    let args = get(a:task, 'args', [])
+    if !empty(args) && !empty(cmd)
+      let cmd = cmd . ' ' . join(args, ' ')
+    endif
+    call SpaceVim#plugins#runner#open(cmd) 
+  endif
+endfunction
