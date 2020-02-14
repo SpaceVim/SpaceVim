@@ -99,7 +99,7 @@ function! s:menu(items) abort
         execute Value
       endif
       let exit = 1
-    elseif nr2char(nr) ==# 'j' || nr ==# "\<Tab>"
+    elseif nr2char(nr) ==# 'j' || nr ==# 9
       let selected = s:nextItem(keys(items), selected)
       normal! :
     elseif nr2char(nr) ==# 'k' || nr ==# "\<S-Tab>"
