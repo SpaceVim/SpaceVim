@@ -62,6 +62,7 @@ function! s:select_task(taskName) abort
 endfunction
 
 function! s:pick() abort
+  let s:select_task = {}
   let ques = []
   for key in keys(s:conf)
     call add(ques, [key, function('s:select_task'), [key]])
