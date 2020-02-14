@@ -85,7 +85,9 @@ function! SpaceVim#plugins#tasks#get()
   elseif has_key(task, 'linux') && s:SYS.isLinux
     let task = task.linux
   endif
-  let task.command = s:replace_variables(task.command)
+  if has_key(task, 'command') && type(task.command) ==# 1
+    let task.command = s:replace_variables(task.command)
+  endif
   return task
 endfunction
 

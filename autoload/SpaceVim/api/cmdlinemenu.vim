@@ -90,11 +90,17 @@ function! s:menu(items) abort
       endif
       let Value =  items[selected][1]
       normal! :
+      if type(Value) == 2
+        let args = get(items[selected], 2, [])
+        call call(Value, args)
+      elseif type(Value) == type('') && !empty(Value)
+        execute Value
+      endif
       let exit = 1
-    elseif nr2char(nr) ==# 'j' || nr ==# 9
+    elseif nr2char(nr) ==# 'j' || nr ==# "\<Tab>"
       let selected = s:nextItem(keys(items), selected)
       normal! :
-    elseif nr2char(nr) ==# 'k' || nr ==# 126
+    elseif nr2char(nr) ==# 'k' || nr ==# "\<S-Tab>"
       let selected = s:previousItem(keys(items), selected)
       normal! :
     endif
@@ -102,12 +108,6 @@ function! s:menu(items) abort
   let &more = saved_more
   let &cmdheight = save_cmdheight
   redraw!
-  if type(Value) == 2
-    let args = get(items[selected], 2, [])
-    call call(Value, args)
-  elseif type(Value) == type('') && !empty(Value)
-    execute Value
-  endif
 endfunction
 
 let s:api['menu'] = function('s:menu')

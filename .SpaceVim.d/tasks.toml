@@ -4,6 +4,7 @@
 [file-build.options]
     cmd = '$(workspace)'
 [file-run]
-    command = "python $(VIM_FILE)"
-    output = true
+    command = "echo"
+    args = ['hello']
+    isBackground = false
 
