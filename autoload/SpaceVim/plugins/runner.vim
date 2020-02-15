@@ -247,7 +247,7 @@ if has('nvim') && exists('*chanclose')
       let lines = s:_out_data
     endif
     " if s:SYS.isWindows
-      " let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
+    " let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
     " endif
     if !empty(lines)
       let lines = map(lines, "substitute(v:val, '$', '', 'g')")
@@ -393,6 +393,24 @@ function! SpaceVim#plugins#runner#run_task(task)
     if !empty(args) && !empty(cmd)
       let cmd = cmd . ' ' . join(args, ' ')
     endif
-    call SpaceVim#plugins#runner#open(cmd) 
+    if isBackground
+      call s:run_backgroud(cmd)
+    else
+      call SpaceVim#plugins#runner#open(cmd) 
+    endif
   endif
+endfunction
+
+function! s:on_backgroud_exit(job_id, data, event) abort
+  let s:end_time = reltime(s:start_time)
+  let exit_code = a:data
+  echo 'task finished with code =' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
+endfunction
+
+function! s:run_backgroud(cmd) abort
+  echo "task running"
+  let s:start_time = reltime()
+  call s:JOB.start(a:cmd,{
+        \ 'on_exit' : function('s:on_backgroud_exit'),
+        \ })
 endfunction
