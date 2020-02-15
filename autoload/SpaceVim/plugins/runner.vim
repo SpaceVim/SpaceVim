@@ -387,7 +387,7 @@ endfunction
 
 function! SpaceVim#plugins#runner#run_task(task)
   let isBackground = get(a:task, 'isBackground', 0)
-  if !isBackground && !empty(a:task)
+  if isBackground && !empty(a:task)
     let cmd = get(a:task, 'command', '') 
     let args = get(a:task, 'args', [])
     if !empty(args) && !empty(cmd)
@@ -404,7 +404,7 @@ endfunction
 function! s:on_backgroud_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
   let exit_code = a:data
-  echo 'task finished with code =' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
+  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
 endfunction
 
 function! s:run_backgroud(cmd) abort
