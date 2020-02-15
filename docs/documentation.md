@@ -1953,6 +1953,37 @@ The task's properties have the following semantic:
 - **args**: the arguments passed to the command. can be omitted.
 - **options**: override the defaults for `cwd`,`env` or `shell`.
 
+SpaceVim supports variable substitution in task, The following predefined variables are supported:
+
+- **${workspaceFolder}**: - the project root directory
+- **${workspaceFolderBasename}**: - the parent directory name of current project root 
+- **${file}**: - the path of current file
+- **${relativeFile}**: - the current file relative to project root
+- **${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
+- **${fileBasename}**: - the current file's basename
+- **${fileBasenameNoExtension}**: - the current file's basename without file extension
+- **${fileDirname}**: - the current file's dirname
+- **${fileExtname}**: - the current file's extension
+- **${cwd}**: - the task runner's current working directory on startup
+- **${lineNumber}**: - the current selected line number in the active file
+
+
+for example: Supposing that you have the following requirements:
+
+A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
+The directory `/home/your-username/your-project` opened as your root workspace.
+So you will have the following values for each variable:
+
+- **${workspaceFolder}**: - `/home/your-username/your-project`
+- **${workspaceFolderBasename}**: - `your-project`
+- **${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **${relativeFile}**: - `folder/file.ext`
+- **${relativeFileDirname}**: - `folder`
+- **${fileBasename}**: - `file.ext`
+- **${fileBasenameNoExtension}**: - `file`
+- **${fileDirname}**: - `/home/your-username/your-project/folder`
+- **${fileExtname}**: - `.ext`
+- **${lineNumber}**: - line number of the cursor
 
 ## EditorConfig
 
