@@ -89,6 +89,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
     - [Custom alternate file](#custom-alternate-file)
+  - [Tasks manager](#tasks-manager)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
 - [Achievements](#achievements)
@@ -170,7 +171,6 @@ transient state buffer. Additional information may as well be displayed in it.
 Move Text Transient State:
 
 ![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
-
 
 ## Who can benefit from this?
 
@@ -1915,6 +1915,17 @@ here is an example of `.project_alt.json`:
   }
 }
 ```
+
+### Tasks manager
+
+To integrate with external tools, SpaceVim introduce a task manager system,
+which is similar to vscode tasks-manager. There are two kinds of task configuration
+file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configuration(`.SpaceVim.d/tasks.toml`).
+
+| Key Bindings | Descriptions                  |
+| ------------ | ----------------------------- |
+| `SPC p t e`  | edit tasks configuration file |
+| `SPC p t r`  | select task to run            |
 
 ## EditorConfig
 
