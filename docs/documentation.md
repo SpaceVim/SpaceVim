@@ -1947,6 +1947,13 @@ To run task in the background, you need to set `isBackground` to `true`:
     isBackground = true
 ```
 
+The task's properties have the following semantic:
+
+- **command**: the actual command to execute.
+- **args**:
+- **options**: override the defaults for `cwd`,`env` or `shell`.
+
+
 ## EditorConfig
 
 SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
