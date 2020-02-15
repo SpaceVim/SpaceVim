@@ -89,7 +89,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
     - [Custom alternate file](#custom-alternate-file)
-  - [Tasks manager](#tasks-manager)
+- [Tasks](#tasks)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
 - [Achievements](#achievements)
@@ -1916,7 +1916,7 @@ here is an example of `.project_alt.json`:
 }
 ```
 
-### Tasks manager
+## Tasks
 
 To integrate with external tools, SpaceVim introduce a task manager system,
 which is similar to vscode tasks-manager. There are two kinds of task configuration
