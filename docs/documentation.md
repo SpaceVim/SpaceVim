@@ -1927,6 +1927,26 @@ file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configura
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
 
+
+this is basic task configuration for running `echo hello world`, and print results to runner windows.
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+To run task in the background, you need to set `isBackground` to `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
 ## EditorConfig
 
 SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
