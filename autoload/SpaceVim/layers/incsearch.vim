@@ -39,12 +39,12 @@ function! SpaceVim#layers#incsearch#plugins() abort
   call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
-  call add(plugins, ['nelstrom/vim-visual-star-search', {'merged' : 0}])
   return plugins
 endfunction
 
 let s:lnum = expand('<slnum>') + 3
 function! SpaceVim#layers#incsearch#config() abort
+  " makes * and # work on visual mode too.
   map /  <Plug>(incsearch-forward)
   map ?  <Plug>(incsearch-backward)
   map g/ <Plug>(incsearch-stay)
@@ -57,6 +57,8 @@ function! SpaceVim#layers#incsearch#config() abort
   map #  <Plug>(incsearch-nohl-#)
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
+  xnoremap <silent> * :<C-u>call <SID>visual_star_saerch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap <silent> # :<C-u>call <SID>visual_star_saerch('?')<CR>?<C-R>=@/<CR><CR>
   function! s:config_fuzzyall(...) abort
     return extend(copy({
           \   'converters': [
@@ -108,3 +110,11 @@ function! s:update_search_index(key) abort
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   keepjumps call setpos('.', save_cursor)
 endfunction
+
+function! s:visual_star_saerch(cmdtype)
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
