@@ -644,9 +644,6 @@ function! s:open_plugin_dir() abort
   let line = line('.') - 3
   let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
   if !empty(plugin)
-    exe 'topleft split'
-    enew
-    exe 'resize ' . &lines * 30 / 100
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
     let path = ''
     if g:spacevim_plugin_manager ==# 'dein'
@@ -655,12 +652,25 @@ function! s:open_plugin_dir() abort
       let path = neobundle#get(keys(plugin)[0]).path
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
     endif
-    if has('nvim') && exists('*termopen')
-      call termopen(shell, {'cwd' : path})
-    elseif exists('*term_start')
-      call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : path})
+    if isdirectory(path)
+      topleft new
+      exe 'resize ' . &lines * 30 / 100
+      if has('nvim') && exists('*termopen')
+        call termopen(shell, {'cwd' : path})
+      elseif exists('*term_start')
+        call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : path})
+      elseif exists(':VimShell')
+        exe 'VimShell ' .  path
+      else
+        close
+        echohl WarningMsg
+        echo 'Do not support terminal!'
+        echohl None
+      endif
     else
-      exe 'VimShell ' .  path
+      echohl WarningMsg
+      echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
+      echohl None
     endif
   endif
 endfunction
