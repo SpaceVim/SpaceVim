@@ -387,7 +387,7 @@ endfunction
 
 function! SpaceVim#plugins#runner#run_task(task)
   let isBackground = get(a:task, 'isBackground', 0)
-  if isBackground && !empty(a:task)
+  if !empty(a:task)
     let cmd = get(a:task, 'command', '') 
     let args = get(a:task, 'args', [])
     if !empty(args) && !empty(cmd)
