@@ -44,6 +44,12 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Window manager](#window-manager)
     - [General Editor windows](#general-editor-windows)
     - [Window manipulation key bindings](#window-manipulation-key-bindings)
+  - [Buffers and Files](#buffers-and-files)
+    - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+    - [Create a new empty buffer](#create-a-new-empty-buffer)
+    - [Special Buffers](#special-buffers)
+    - [Files manipulations key bindings](#files-manipulations-key-bindings)
+    - [Vim and SpaceVim files](#vim-and-spacevim-files)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Bookmarks management](#bookmarks-management)
@@ -59,12 +65,6 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
       - [Jumping](#jumping)
       - [Joining and splitting](#joining-and-splitting)
-    - [Buffers and Files](#buffers-and-files)
-      - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
-      - [Create a new empty buffer](#create-a-new-empty-buffer)
-      - [Special Buffers](#special-buffers)
-      - [Files manipulations key bindings](#files-manipulations-key-bindings)
-      - [Vim and SpaceVim files](#vim-and-spacevim-files)
   - [Commands starting with `g`](#commands-starting-with-g)
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Searching](#searching)
@@ -1085,6 +1085,85 @@ Windows manipulation commands (start with `w`):
 | `SPC w w`             | cycle and focus between windows                                                                               |
 | `SPC w W`             | select window using vim-choosewin                                                                             |
 
+### Buffers and Files
+
+#### Buffers manipulation key bindings
+
+Buffer manipulation commands (start with `b`):
+
+| Key Bindings    | Descriptions                                                                   |
+| --------------- | ------------------------------------------------------------------------------ |
+| `SPC <Tab>`     | switch to alternate buffer in the current window (switch back and forth)       |
+| `SPC b .`       | buffer transient state                                                         |
+| `SPC b b`       | switch to a buffer (via denite/unite)                                          |
+| `SPC b d`       | kill the current buffer (does not delete the visited file)                     |
+| `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
+| `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
+| `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
+| `SPC b Ctrl-d`  | kill other buffers                                                             |
+| `SPC b Ctrl-D`  | kill buffers using a regular expression(TODO)                                  |
+| `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
+| `SPC b h`       | open _SpaceVim_ home buffer                                                    |
+| `SPC b n`       | switch to next buffer avoiding special buffers                                 |
+| `SPC b m`       | open _Messages_ buffer                                                         |
+| `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
+| `SPC b p`       | switch to previous buffer avoiding special buffers                             |
+| `SPC b P`       | copy clipboard and replace buffer (useful when pasting from a browser)         |
+| `SPC b R`       | revert the current buffer (reload from disk)                                   |
+| `SPC b s`       | switch to the _scratch_ buffer (create it if needed)                           |
+| `SPC b w`       | toggle read-only (writable state)                                              |
+| `SPC b Y`       | copy whole buffer to clipboard (useful when copying to a browser)              |
+| `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
+
+#### Create a new empty buffer
+
+| Key Bindings | Descriptions                                          |
+| ------------ | ----------------------------------------------------- |
+| `SPC b N h`  | create new empty buffer in a new window on the left   |
+| `SPC b N j`  | create new empty buffer in a new window at the bottom |
+| `SPC b N k`  | create new empty buffer in a new window above         |
+| `SPC b N l`  | create new empty buffer in a new window below         |
+| `SPC b N n`  | create new empty buffer in current window             |
+
+#### Special Buffers
+
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
+
+#### Files manipulations key bindings
+
+Files manipulation commands (start with f):
+
+| Key Bindings | Descriptions                                              |
+| ------------ | --------------------------------------------------------- |
+| `SPC f /`    | Find files with `find` command                            |
+| `SPC f b`    | go to file bookmarks                                      |
+| `SPC f c`    | copy current file to a different location(TODO)           |
+| `SPC f C d`  | convert file from unix to dos encoding                    |
+| `SPC f C u`  | convert file from dos to unix encoding                    |
+| `SPC f D`    | delete a file and the associated buffer with confirmation |
+| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
+| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
+| `SPC f f`    | open file                                                 |
+| `SPC f F`    | try to open the file under point                          |
+| `SPC f o`    | Find current file in file tree                            |
+| `SPC f R`    | rename the current file(TODO)                             |
+| `SPC f s`    | save a file                                               |
+| `SPC f S`    | save all files                                            |
+| `SPC f r`    | open a recent file                                        |
+| `SPC f t`    | toggle file tree side bar                                 |
+| `SPC f T`    | show file tree side bar                                   |
+| `SPC f d`    | toggle disk manager in Windows OS                         |
+| `SPC f y`    | show and copy current file absolute path in the cmdline   |
+
+#### Vim and SpaceVim files
+
+Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
+
+| Key Bindings | Descriptions                            |
+| ------------ | --------------------------------------- |
+| `SPC f v v`  | display and copy SpaceVim version       |
+| `SPC f v d`  | open SpaceVim custom configuration file |
+
 ### File Operations
 
 | Key Bindings | Descriptions                    |
@@ -1323,84 +1402,6 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | `SPC j S`    | split a quoted string or s-expression with `\n`, and auto-indent the new line |
 
 
-#### Buffers and Files
-
-##### Buffers manipulation key bindings
-
-Buffer manipulation commands (start with `b`):
-
-| Key Bindings    | Descriptions                                                                   |
-| --------------- | ------------------------------------------------------------------------------ |
-| `SPC <Tab>`     | switch to alternate buffer in the current window (switch back and forth)       |
-| `SPC b .`       | buffer transient state                                                         |
-| `SPC b b`       | switch to a buffer (via denite/unite)                                          |
-| `SPC b d`       | kill the current buffer (does not delete the visited file)                     |
-| `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | kill a visible buffer using vim-choosewin                                      |
-| `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b Ctrl-d`  | kill other buffers                                                             |
-| `SPC b Ctrl-D`  | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | erase the content of the buffer (ask for confirmation)                         |
-| `SPC b h`       | open _SpaceVim_ home buffer                                                    |
-| `SPC b n`       | switch to next buffer avoiding special buffers                                 |
-| `SPC b m`       | open _Messages_ buffer                                                         |
-| `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | switch to previous buffer avoiding special buffers                             |
-| `SPC b P`       | copy clipboard and replace buffer (useful when pasting from a browser)         |
-| `SPC b R`       | revert the current buffer (reload from disk)                                   |
-| `SPC b s`       | switch to the _scratch_ buffer (create it if needed)                           |
-| `SPC b w`       | toggle read-only (writable state)                                              |
-| `SPC b Y`       | copy whole buffer to clipboard (useful when copying to a browser)              |
-| `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
-
-##### Create a new empty buffer
-
-| Key Bindings | Descriptions                                          |
-| ------------ | ----------------------------------------------------- |
-| `SPC b N h`  | create new empty buffer in a new window on the left   |
-| `SPC b N j`  | create new empty buffer in a new window at the bottom |
-| `SPC b N k`  | create new empty buffer in a new window above         |
-| `SPC b N l`  | create new empty buffer in a new window below         |
-| `SPC b N n`  | create new empty buffer in current window             |
-
-##### Special Buffers
-
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
-
-##### Files manipulations key bindings
-
-Files manipulation commands (start with f):
-
-| Key Bindings | Descriptions                                              |
-| ------------ | --------------------------------------------------------- |
-| `SPC f /`    | Find files with `find` command                            |
-| `SPC f b`    | go to file bookmarks                                      |
-| `SPC f c`    | copy current file to a different location(TODO)           |
-| `SPC f C d`  | convert file from unix to dos encoding                    |
-| `SPC f C u`  | convert file from dos to unix encoding                    |
-| `SPC f D`    | delete a file and the associated buffer with confirmation |
-| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
-| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
-| `SPC f f`    | open file                                                 |
-| `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree                            |
-| `SPC f R`    | rename the current file(TODO)                             |
-| `SPC f s`    | save a file                                               |
-| `SPC f S`    | save all files                                            |
-| `SPC f r`    | open a recent file                                        |
-| `SPC f t`    | toggle file tree side bar                                 |
-| `SPC f T`    | show file tree side bar                                   |
-| `SPC f d`    | toggle disk manager in Windows OS                         |
-| `SPC f y`    | show and copy current file absolute path in the cmdline   |
-
-##### Vim and SpaceVim files
-
-Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
-
-| Key Bindings | Descriptions                            |
-| ------------ | --------------------------------------- |
-| `SPC f v v`  | display and copy SpaceVim version       |
-| `SPC f v d`  | open SpaceVim custom configuration file |
 
 
 ### Commands starting with `g`
