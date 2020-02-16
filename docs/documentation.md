@@ -65,10 +65,10 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Searching on the fly](#searching-on-the-fly)
     - [Persistent highlighting](#persistent-highlighting)
     - [Getting help](#getting-help)
-    - [Unimpaired bindings](#unimpaired-bindings)
-    - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
-      - [Jumping](#jumping)
-      - [Joining and splitting](#joining-and-splitting)
+  - [Unimpaired bindings](#unimpaired-bindings)
+  - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
+    - [Jumping](#jumping)
+    - [Joining and splitting](#joining-and-splitting)
   - [Other key bindings](#other-key-bindings)
     - [Commands starting with `g`](#commands-starting-with-g)
     - [Commands starting with `z`](#commands-starting-with-z)
@@ -1467,7 +1467,7 @@ Reporting an issue:
 | ------------ | ----------------------------------------------------------- |
 | `SPC h I`    | Open SpaceVim GitHub issue page with pre-filled information |
 
-#### Unimpaired bindings
+### Unimpaired bindings
 
 | Mappings | Descriptions                                            |
 | -------- | ------------------------------------------------------- |
@@ -1495,11 +1495,11 @@ Reporting an issue:
 | `] p`    | Paste below current line                                |
 | `g p`    | Select pasted text                                      |
 
-#### Jumping, Joining and Splitting
+### Jumping, Joining and Splitting
 
 The `SPC j` prefix is for jumping, joining and splitting.
 
-##### Jumping
+#### Jumping
 
 | Key Bindings | Descriptions                                                                      |
 | ------------ | --------------------------------------------------------------------------------- |
@@ -1520,7 +1520,7 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | `SPC j v`    | jump to the definition/declaration of an Emacs Lisp variable (TODO)               |
 | `SPC j w`    | jump to a word in the current buffer (easymotion)                                 |
 
-##### Joining and splitting
+#### Joining and splitting
 
 | Key Bindings | Descriptions                                                                  |
 | ------------ | ----------------------------------------------------------------------------- |
