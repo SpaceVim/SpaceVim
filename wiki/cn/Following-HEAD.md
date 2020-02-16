@@ -46,7 +46,7 @@
 - Rust layer enhancement [#3336](https://github.com/SpaceVim/SpaceVim/pull/3336)
 - Improve general doc [#3333](https://github.com/SpaceVim/SpaceVim/pull/3333)
 - Update ring.md [#3328](https://github.com/SpaceVim/SpaceVim/pull/3328)
-- 修正描述错误，其中 C/C++写成了 php [#3325](https://github.com/SpaceVim/SpaceVim/pull/3325)
+- Type: change php to C/C++ [#3325](https://github.com/SpaceVim/SpaceVim/pull/3325)
 - Improve lang#r layer [#3322](https://github.com/SpaceVim/SpaceVim/pull/3322)
 - Skip home directory [#3321](https://github.com/SpaceVim/SpaceVim/pull/3321)
 - feat: Add icons and git status to defx. [#3320](https://github.com/SpaceVim/SpaceVim/pull/3320)
