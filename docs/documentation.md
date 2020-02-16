@@ -64,32 +64,27 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Searching the web](#searching-the-web)
     - [Searching on the fly](#searching-on-the-fly)
     - [Persistent highlighting](#persistent-highlighting)
-  - [File Operations](#file-operations)
-  - [Editor UI](#editor-ui)
-  - [Bookmarks management](#bookmarks-management)
-  - [Discovering](#discovering)
-    - [Mappings](#mappings)
     - [Getting help](#getting-help)
-    - [Toggles](#toggles)
-    - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
-      - [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
     - [Unimpaired bindings](#unimpaired-bindings)
     - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
       - [Jumping](#jumping)
       - [Joining and splitting](#joining-and-splitting)
-  - [Commands starting with `g`](#commands-starting-with-g)
-  - [Commands starting with `z`](#commands-starting-with-z)
-    - [Highlight current symbol](#highlight-current-symbol)
-    - [Replace text with iedit](#replace-text-with-iedit)
-      - [iedit states key bindings](#iedit-states-key-bindings)
-  - [Code runner and REPL](#code-runner-and-repl)
-  - [Errors handling](#errors-handling)
+  - [Other key bindings](#other-key-bindings)
+    - [Commands starting with `g`](#commands-starting-with-g)
+    - [Commands starting with `z`](#commands-starting-with-z)
+- [Advanced usage](#advanced-usage)
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
     - [Custom alternate file](#custom-alternate-file)
-- [Tasks](#tasks)
-- [EditorConfig](#editorconfig)
-- [Vim Server](#vim-server)
+  - [Bookmarks management](#bookmarks-management)
+  - [Tasks](#tasks)
+  - [Replace text with iedit](#replace-text-with-iedit)
+    - [iedit states key bindings](#iedit-states-key-bindings)
+  - [Code runner and REPL](#code-runner-and-repl)
+  - [Highlight current symbol](#highlight-current-symbol)
+  - [Errors handling](#errors-handling)
+  - [EditorConfig](#editorconfig)
+  - [Vim Server](#vim-server)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -634,6 +629,7 @@ tabs will be listed on the tabline. Each item can be quickly accessed by using
 | `<Leader> 7` | Jump to index 7 on tabline |
 | `<Leader> 8` | Jump to index 8 on tabline |
 | `<Leader> 9` | Jump to index 9 on tabline |
+| `g r`        | Go to previous tab         |
 
 SpaceVim tabline also supports mouse click, left mouse button will switch to buffer,
 while middle button will delete the buffer.
@@ -1018,14 +1014,14 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 
 #### General Editor windows
 
-| Key Bindings          | Descriptions                                                     |
-| --------------------- | ---------------------------------------------------------------- |
-| `<F2>`                | Toggle tagbar                                                    |
-| `<F3>`                | Toggle Vimfiler                                                  |
-| `Ctrl-Down`           | Move to split below (`Ctrl-w j`)                                 |
-| `Ctrl-Up`             | Move to upper split (`Ctrl-w k`)                                 |
-| `Ctrl-Left`           | Move to left split (`Ctrl-w h`)                                  |
-| `Ctrl-Right`          | Move to right split (`Ctrl-w l`)                                 |
+| Key Bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `<F2>`       | Toggle tagbar                    |
+| `<F3>`       | Toggle Vimfiler                  |
+| `Ctrl-Down`  | Move to split below (`Ctrl-w j`) |
+| `Ctrl-Up`    | Move to upper split (`Ctrl-w k`) |
+| `Ctrl-Left`  | Move to left split (`Ctrl-w h`)  |
+| `Ctrl-Right` | Move to right split (`Ctrl-w l`) |
 
 #### Window manipulation key bindings
 
@@ -1452,74 +1448,6 @@ Key bindings in FlyGrep buffer:
 
 SpaceVim uses `search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
-### File Operations
-
-| Key Bindings | Descriptions                    |
-| ------------ | ------------------------------- |
-| `SPC f s`    | Write (:w)                      |
-| `Ctrl-s`     | Write (:w)                      |
-| `SPC f W`    | Write as root (need sudo layer) |
-
-### Editor UI
-
-| Key Bindings          | Descriptions                                                     |
-| --------------------- | ---------------------------------------------------------------- |
-| `<F2>`                | Toggle tagbar                                                    |
-| `<F3>`                | Toggle Vimfiler                                                  |
-| `<Leader> [1-9]`      | Jump to the buffer with the num index                            |
-| `Alt-[1-9]`           | Jump to the buffer with the num index, this only works in Neovim |
-| `Alt-h` / `Alt-Left`  | Jump to left buffer in the tabline, this only works in Neovim    |
-| `Alt-l` / `Alt-Right` | Jump to Right buffer in the tabline, this only works in Neovim   |
-| `SPC t S`             | Toggle spell checker                                             |
-| `SPC t n`             | Toggle line number and relativenumber                            |
-| `SPC t l`             | Toggle hidden characters (:setlocal nolist!)                     |
-| `SPC t W`             | Toggle wrap (:setlocal wrap! breakindent!)                       |
-| `g 0`                 | Go to first tab (:tabfirst)                                      |
-| `g $`                 | Go to last tab (:tablast)                                        |
-| `g r`                 | Go to previous tab (:tabprevious)                                |
-| `Ctrl-Down`           | Move to split below (`Ctrl-w j`)                                 |
-| `Ctrl-Up`             | Move to upper split (`Ctrl-w k`)                                 |
-| `Ctrl-Left`           | Move to left split (`Ctrl-w h`)                                  |
-| `Ctrl-Right`          | Move to right split (`Ctrl-w l`)                                 |
-| `*`                   | Search selection forwards                                        |
-| `#`                   | Search selection backwards                                       |
-| `, <Space>`           | Remove all spaces at EOL                                         |
-| `Ctrl-r`              | Replace selection in visual mode                                 |
-
-### Bookmarks management
-
-Bookmarks manager is included in `tools` layer, to use following key bindings, you need to enable
-`tools` layer:
-
-```toml
-[[layers]]
-name = "tools"
-```
-
-| Key Bindings | Descriptions                    |
-| ------------ | ------------------------------- |
-| `m a`        | Show list of all bookmarks      |
-| `m m`        | Toggle bookmark in current line |
-| `m n`        | Jump to next bookmark           |
-| `m p`        | Jump to previous bookmark       |
-| `m i`        | Annotate bookmark               |
-
-As SpaceVim use above bookmarks mappings, so you cannot use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
-If you really need to use these registers, you can map `<Leader> m` to `m` in your bootstrap function,
-then you can use `a` registers via `<Leader> m a`.
-
-```viml
-function! myspacevim#before() abort
-nnoremap <silent><Leader>m m
-endfunction
-```
-
-
-### Discovering
-
-#### Mappings
-
-
 #### Getting help
 
 Fuzzy finder layer is powerful tool to unite all interfaces. It is meant to be
@@ -1538,23 +1466,6 @@ Reporting an issue:
 | Key Bindings | Descriptions                                                |
 | ------------ | ----------------------------------------------------------- |
 | `SPC h I`    | Open SpaceVim GitHub issue page with pre-filled information |
-
-
-#### Toggles
-
-Both the toggles mappings start with `[SPC] t` or `[SPC] T`. You can find them in the mapping guide.
-
-#### Vim motions with vim-easymotion
-
-##### quick-jump-link mode (TODO)
-
-<https://github.com/easymotion/vim-easymotion/issues/315>
-
-Similar to easymotion or `f` in vimperator for firefox, this mode allows one to jump to any link in help file with two key strokes.
-
-| Mappings | Descriptions                                 |
-| -------- | -------------------------------------------- |
-| `o`      | initiate quick jump link mode in help buffer |
 
 #### Unimpaired bindings
 
@@ -1620,10 +1531,9 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | `SPC j s`    | split a quoted string or s-expression in place                                |
 | `SPC j S`    | split a quoted string or s-expression with `\n`, and auto-indent the new line |
 
+### Other key bindings
 
-
-
-### Commands starting with `g`
+#### Commands starting with `g`
 
 After pressing prefix `g` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `g`.
@@ -1677,7 +1587,7 @@ which will tell you the functional of all mappings starting with `g`.
 | `g <End>`    | go to rightmost character                       |
 | `g Ctrl-g`   | show cursor info                                |
 
-### Commands starting with `z`
+#### Commands starting with `z`
 
 After pressing prefix `z` in normal mode, if you do not remember the mappings, you will see the guide
 which will tell you the functional of all mappings starting with `z`.
@@ -1729,45 +1639,142 @@ which will tell you the functional of all mappings starting with `z`.
 | `z z`        | smart scroll                                  |
 | `z <Left>`   | scroll screen N characters to right           |
 
+## Advanced usage
 
-#### Highlight current symbol
+### Managing projects
 
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
+SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
 
-It is also possible to change the range of the navigation on the fly to:
+Project manager commands start with `p`:
 
-- buffer
-- function
-- visible area
+| Key Bindings | Descriptions                                          |
+| ------------ | ----------------------------------------------------- |
+| `SPC p '`    | open a shell in project’s root (need the shell layer) |
 
-To Highlight the current symbol under point press `SPC s h`.
+#### Searching files in project
 
-Navigation between the highlighted symbols can be done with the commands:
+| Key Bindings | Descriptions                             |
+| ------------ | ---------------------------------------- |
+| `SPC p f`    | find files in current project            |
+| `SPC p /`    | fuzzy search for text in current project |
+| `SPC p k`    | kill all buffers of current project      |
+| `SPC p t`    | find project root                        |
+| `SPC p p`    | list all projects                        |
 
-| Key Bindings | Descriptions                                                                 |
-| ------------ | ---------------------------------------------------------------------------- |
-| `*`          | initiate navigation transient state on current symbol and jump forwards      |
-| `#`          | initiate navigation transient state on current symbol and jump backwards     |
-| `SPC s e`    | edit all occurrences of the current symbol                                   |
-| `SPC s h`    | highlight the current symbol and all its occurrence within the current range |
-| `SPC s H`    | go to the last searched occurrence of the last highlighted symbol            |
+#### Custom alternate file
 
-In highlight symbol transient state:
+To manager the alternate file of the project, you need to create a `.project_alt.json` file
+in the root of your project. Then you can use command `:A` to jump to the alternate file of
+current file. You can also specific the type of alternate file, for example `:A doc`.
+With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
+the default type `alternate` will be used.
 
-| Key Bindings  | Descriptions                                                  |
-| ------------- | ------------------------------------------------------------- |
-| `e`           | edit occurrences (`*`)                                        |
-| `n`           | go to next occurrence                                         |
-| `N` / `p`     | go to previous occurrence                                     |
-| `b`           | search occurrence in all buffers                              |
-| `/`           | search occurrence in whole project                            |
-| `<Tab>`       | toggle highlight current occurrence                           |
-| `r`           | change range (function, display area, whole buffer)           |
-| `R`           | go to home occurrence (reset position to starting occurrence) |
-| Any other key | leave the navigation transient state                          |
+here is an example of `.project_alt.json`:
 
+```json
+{
+  "autoload/SpaceVim/layers/lang/*.vim": {
+    "doc": "docs/layers/lang/{}.md",
+    "test": "test/layer/lang/{}.vader"
+  }
+}
+```
+### Bookmarks management
 
-#### Replace text with iedit
+Bookmarks manager is included in `tools` layer, to use following key bindings, you need to enable
+`tools` layer:
+
+```toml
+[[layers]]
+name = "tools"
+```
+
+| Key Bindings | Descriptions                    |
+| ------------ | ------------------------------- |
+| `m a`        | Show list of all bookmarks      |
+| `m m`        | Toggle bookmark in current line |
+| `m n`        | Jump to next bookmark           |
+| `m p`        | Jump to previous bookmark       |
+| `m i`        | Annotate bookmark               |
+
+As SpaceVim use above bookmarks mappings, so you cannot use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
+If you really need to use these registers, you can map `<Leader> m` to `m` in your bootstrap function,
+then you can use `a` registers via `<Leader> m a`.
+
+```viml
+function! myspacevim#before() abort
+nnoremap <silent><Leader>m m
+endfunction
+```
+
+### Tasks
+
+To integrate with external tools, SpaceVim introduce a task manager system,
+which is similar to vscode tasks-manager. There are two kinds of task configuration
+file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configuration(`.SpaceVim.d/tasks.toml`).
+
+| Key Bindings | Descriptions                  |
+| ------------ | ----------------------------- |
+| `SPC p t e`  | edit tasks configuration file |
+| `SPC p t r`  | select task to run            |
+
+this is basic task configuration for running `echo hello world`, and print results to runner windows.
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+To run task in the background, you need to set `isBackground` to `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+The task's properties have the following semantic:
+
+- **command**: the actual command to execute.
+- **args**: the arguments passed to the command. can be omitted.
+- **options**: override the defaults for `cwd`,`env` or `shell`.
+
+SpaceVim supports variable substitution in task, The following predefined variables are supported:
+
+- **\${workspaceFolder}**: - the project root directory
+- **\${workspaceFolderBasename}**: - the parent directory name of current project root
+- **\${file}**: - the path of current file
+- **\${relativeFile}**: - the current file relative to project root
+- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
+- **\${fileBasename}**: - the current file's basename
+- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
+- **\${fileDirname}**: - the current file's dirname
+- **\${fileExtname}**: - the current file's extension
+- **\${cwd}**: - the task runner's current working directory on startup
+- **\${lineNumber}**: - the current selected line number in the active file
+
+for example: Supposing that you have the following requirements:
+
+A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
+The directory `/home/your-username/your-project` opened as your root workspace.
+So you will have the following values for each variable:
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - line number of the cursor
+
+### Replace text with iedit
 
 SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
 
@@ -1775,7 +1782,7 @@ SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symb
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
-##### iedit states key bindings
+#### iedit states key bindings
 
 **State transitions:**
 
@@ -1849,6 +1856,42 @@ These following features have been added to runner and repl plugin:
 - REPL support
 - Run selected code snippet
 
+### Highlight current symbol
+
+SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
+
+It is also possible to change the range of the navigation on the fly to:
+
+- buffer
+- function
+- visible area
+
+To Highlight the current symbol under point press `SPC s h`.
+
+Navigation between the highlighted symbols can be done with the commands:
+
+| Key Bindings | Descriptions                                                                 |
+| ------------ | ---------------------------------------------------------------------------- |
+| `*`          | initiate navigation transient state on current symbol and jump forwards      |
+| `#`          | initiate navigation transient state on current symbol and jump backwards     |
+| `SPC s e`    | edit all occurrences of the current symbol                                   |
+| `SPC s h`    | highlight the current symbol and all its occurrence within the current range |
+| `SPC s H`    | go to the last searched occurrence of the last highlighted symbol            |
+
+In highlight symbol transient state:
+
+| Key Bindings  | Descriptions                                                  |
+| ------------- | ------------------------------------------------------------- |
+| `e`           | edit occurrences (`*`)                                        |
+| `n`           | go to next occurrence                                         |
+| `N` / `p`     | go to previous occurrence                                     |
+| `b`           | search occurrence in all buffers                              |
+| `/`           | search occurrence in whole project                            |
+| `<Tab>`       | toggle highlight current occurrence                           |
+| `r`           | change range (function, display area, whole buffer)           |
+| `R`           | go to home occurrence (reset position to starting occurrence) |
+| Any other key | leave the navigation transient state                          |
+
 ### Errors handling
 
 SpaceVim uses [neomake](https://github.com/neomake/neomake) to give error feedback on the fly.
@@ -1886,121 +1929,14 @@ Custom sign symbol:
 | `<Leader> q n` | jump to next item in quickfix list     |
 | `<Leader> q p` | jump to previous item in quickfix list |
 
-### Managing projects
 
-SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
-
-Project manager commands start with `p`:
-
-| Key Bindings | Descriptions                                          |
-| ------------ | ----------------------------------------------------- |
-| `SPC p '`    | open a shell in project’s root (need the shell layer) |
-
-#### Searching files in project
-
-| Key Bindings | Descriptions                             |
-| ------------ | ---------------------------------------- |
-| `SPC p f`    | find files in current project            |
-| `SPC p /`    | fuzzy search for text in current project |
-| `SPC p k`    | kill all buffers of current project      |
-| `SPC p t`    | find project root                        |
-| `SPC p p`    | list all projects                        |
-
-#### Custom alternate file
-
-To manager the alternate file of the project, you need to create a `.project_alt.json` file
-in the root of your project. Then you can use command `:A` to jump to the alternate file of
-current file. You can also specific the type of alternate file, for example `:A doc`.
-With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
-the default type `alternate` will be used.
-
-here is an example of `.project_alt.json`:
-
-```json
-{
-  "autoload/SpaceVim/layers/lang/*.vim": {
-    "doc": "docs/layers/lang/{}.md",
-    "test": "test/layer/lang/{}.vader"
-  }
-}
-```
-
-## Tasks
-
-To integrate with external tools, SpaceVim introduce a task manager system,
-which is similar to vscode tasks-manager. There are two kinds of task configuration
-file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configuration(`.SpaceVim.d/tasks.toml`).
-
-| Key Bindings | Descriptions                  |
-| ------------ | ----------------------------- |
-| `SPC p t e`  | edit tasks configuration file |
-| `SPC p t r`  | select task to run            |
-
-
-this is basic task configuration for running `echo hello world`, and print results to runner windows.
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-```
-
-![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
-
-To run task in the background, you need to set `isBackground` to `true`:
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-    isBackground = true
-```
-
-The task's properties have the following semantic:
-
-- **command**: the actual command to execute.
-- **args**: the arguments passed to the command. can be omitted.
-- **options**: override the defaults for `cwd`,`env` or `shell`.
-
-SpaceVim supports variable substitution in task, The following predefined variables are supported:
-
-- **${workspaceFolder}**: - the project root directory
-- **${workspaceFolderBasename}**: - the parent directory name of current project root 
-- **${file}**: - the path of current file
-- **${relativeFile}**: - the current file relative to project root
-- **${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
-- **${fileBasename}**: - the current file's basename
-- **${fileBasenameNoExtension}**: - the current file's basename without file extension
-- **${fileDirname}**: - the current file's dirname
-- **${fileExtname}**: - the current file's extension
-- **${cwd}**: - the task runner's current working directory on startup
-- **${lineNumber}**: - the current selected line number in the active file
-
-
-for example: Supposing that you have the following requirements:
-
-A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
-The directory `/home/your-username/your-project` opened as your root workspace.
-So you will have the following values for each variable:
-
-- **${workspaceFolder}**: - `/home/your-username/your-project`
-- **${workspaceFolderBasename}**: - `your-project`
-- **${file}**: - `/home/your-username/your-project/folder/file.ext`
-- **${relativeFile}**: - `folder/file.ext`
-- **${relativeFileDirname}**: - `folder`
-- **${fileBasename}**: - `file.ext`
-- **${fileBasenameNoExtension}**: - `file`
-- **${fileDirname}**: - `/home/your-username/your-project/folder`
-- **${fileExtname}**: - `.ext`
-- **${lineNumber}**: - line number of the cursor
-
-## EditorConfig
+### EditorConfig
 
 SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 
-## Vim Server
+### Vim Server
 
 SpaceVim starts a server at launch. This server is killed whenever you close your Vim windows.
 
@@ -2015,6 +1951,8 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a file in the existing Neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
+
+
 
 <!-- SpaceVim Achievements start -->
 
