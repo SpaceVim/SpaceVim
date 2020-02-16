@@ -50,14 +50,26 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Special Buffers](#special-buffers)
     - [Files manipulations key bindings](#files-manipulations-key-bindings)
     - [Vim and SpaceVim files](#vim-and-spacevim-files)
+  - [Available layers](#available-layers)
+  - [Fuzzy finder](#fuzzy-finder)
+    - [With an external tool](#with-an-external-tool)
+    - [Custom searching tool](#custom-searching-tool)
+    - [Useful key bindings](#useful-key-bindings)
+    - [Searching in current file](#searching-in-current-file)
+    - [Searching in buffer directory](#searching-in-buffer-directory)
+    - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
+    - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
+    - [Searching in a project](#searching-in-a-project)
+    - [Background searching in a project](#background-searching-in-a-project)
+    - [Searching the web](#searching-the-web)
+    - [Searching on the fly](#searching-on-the-fly)
+    - [Persistent highlighting](#persistent-highlighting)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Bookmarks management](#bookmarks-management)
-  - [Fuzzy finder](#fuzzy-finder)
   - [Discovering](#discovering)
     - [Mappings](#mappings)
     - [Getting help](#getting-help)
-    - [Available layers](#available-layers)
     - [Toggles](#toggles)
     - [Vim motions with vim-easymotion](#vim-motions-with-vim-easymotion)
       - [quick-jump-link mode (TODO)](#quick-jump-link-mode-todo)
@@ -67,19 +79,6 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Joining and splitting](#joining-and-splitting)
   - [Commands starting with `g`](#commands-starting-with-g)
   - [Commands starting with `z`](#commands-starting-with-z)
-  - [Searching](#searching)
-    - [With an external tool](#with-an-external-tool)
-      - [Custom searching tool](#custom-searching-tool)
-      - [Useful key bindings](#useful-key-bindings)
-      - [Searching in current file](#searching-in-current-file)
-      - [Searching in buffer directory](#searching-in-buffer-directory)
-      - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
-      - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
-      - [Searching in a project](#searching-in-a-project)
-      - [Background searching in a project](#background-searching-in-a-project)
-      - [Searching the web](#searching-the-web)
-    - [Searching on the fly](#searching-on-the-fly)
-    - [Persistent highlighting](#persistent-highlighting)
     - [Highlight current symbol](#highlight-current-symbol)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
@@ -1164,6 +1163,295 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 | `SPC f v v`  | display and copy SpaceVim version       |
 | `SPC f v d`  | open SpaceVim custom configuration file |
 
+### Available layers
+
+All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
+
+**Available plugins in SpaceVim**
+
+All plugins can be easily discovered via `<leader> l p`.
+
+### Fuzzy finder
+
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer
+(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+These layers have the same key bindings and features. But they need different dependencies.
+
+Users only need to load one of these layers, they will be able to get these features.
+
+for example, load the denite layer:
+
+```toml
+[[layers]]
+name = "denite"
+```
+
+**Key bindings**
+
+| Key bindings         | Discription                   |
+| -------------------- | ----------------------------- |
+| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
+| `<Leader> f e`       | Fuzzy find register           |
+| `<Leader> f h`       | Fuzzy find history/yank       |
+| `<Leader> f j`       | Fuzzy find jump, change       |
+| `<Leader> f l`       | Fuzzy find location list      |
+| `<Leader> f m`       | Fuzzy find output messages    |
+| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f q`       | Fuzzy find quick fix          |
+| `<Leader> f r`       | Resumes Unite window          |
+
+**Differences between these layers**
+
+The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
+
+| Feature            | denite | unite | leaderf | ctrlp | fzf |
+| ------------------ | :----: | :---: | :-----: | :---: | --- |
+| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
+| register           |  yes   |  yes  |   no    |  yes  | yes |
+| file               |  yes   |  yes  |   yes   |  yes  | yes |
+| yank history       |  yes   |  yes  |   no    |  no   | yes |
+| jump               |  yes   |  yes  |   no    |  yes  | yes |
+| location list      |  yes   |  yes  |   no    |  no   | yes |
+| outline            |  yes   |  yes  |   yes   |  yes  | yes |
+| message            |  yes   |  yes  |   no    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   no    |  no   | no  |
+
+**Key bindings within fuzzy finder buffer**
+
+| Key Bindings             | Descriptions                    |
+| ------------------------ | ------------------------------- |
+| `<Tab>` / `Ctrl-j`       | Select next line                |
+| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                  | Leave Insert mode               |
+| `Ctrl-w`                 | Delete backward path            |
+| `Ctrl-u`                 | Delete whole line before cursor |
+| `<Enter>`                | Run default action              |
+| `Ctrl-s`                 | Open in a split                 |
+| `Ctrl-v`                 | Open in a vertical split        |
+| `Ctrl-t`                 | Open in a new tab               |
+| `Ctrl-g`                 | Close fuzzy finder              |
+
+#### With an external tool
+
+SpaceVim can be interfaced with different searching tools like:
+
+- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
+- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
+- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
+- [ack](https://beyondgrep.com/)
+- grep
+
+The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
+
+If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
+
+If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+
+The tool keys are:
+
+| Tool | Key |
+| ---- | --- |
+| ag   | a   |
+| grep | g   |
+| ack  | k   |
+| rg   | r   |
+| pt   | t   |
+
+The available scopes and corresponding keys are:
+
+| Scope                      | Key |
+| -------------------------- | --- |
+| opened buffers             | b   |
+| buffer directory           | d   |
+| files in a given directory | f   |
+| current project            | p   |
+
+It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
+
+Notes:
+
+- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
+- It is also possible to search in several directories at once by marking them in the unite buffer.
+
+**Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
+
+#### Custom searching tool
+
+To change the options of a search tool, you need to use the bootstrap function.
+The following example shows how to change the default option of searching tool `rg`.
+
+```vim
+function! myspacevim#before() abort
+let profile = SpaceVim#mapping#search#getprofile('rg')
+let default_opt = profile.default_opts + ['--no-ignore-vcs']
+call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+endfunction
+```
+
+The structure of searching tool profile is:
+
+```vim
+" { 'ag' : {
+"   'namespace' : '',         " a single char a-z
+"   'command' : '',           " executable
+"   'default_opts' : [],      " default options
+"   'recursive_opt' : [],     " default recursive options
+"   'expr_opt' : '',          " option for enable expr mode
+"   'fixed_string_opt' : '',  " option for enable fixed string mode
+"   'ignore_case' : '',       " option for enable ignore case mode
+"   'smart_case' : '',        " option for enable smart case mode
+"   }
+"  }
+```
+
+#### Useful key bindings
+
+| Key Bindings    | Descriptions                              |
+| --------------- | ----------------------------------------- |
+| `SPC r l`       | resume the last completion buffer         |
+| `` SPC s ` ``   | go back to the previous place before jump |
+| Prefix argument | will ask for file extensions              |
+
+#### Searching in current file
+
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s s`    | search with the first found tool                    |
+| `SPC s S`    | search with the first found tool with default input |
+| `SPC s a a`  | ag                                                  |
+| `SPC s a A`  | ag with default input                               |
+| `SPC s g g`  | grep                                                |
+| `SPC s g G`  | grep with default input                             |
+| `SPC s r r`  | rg                                                  |
+| `SPC s r R`  | rg with default input                               |
+
+#### Searching in buffer directory
+
+| Key Bindings | Descriptions                                                |
+| ------------ | ----------------------------------------------------------- |
+| `SPC s d`    | searching in buffer directory with default tool             |
+| `SPC s D`    | searching in buffer directory cursor word with default tool |
+| `SPC s a d`  | searching in buffer directory with ag                       |
+| `SPC s a D`  | searching in buffer directory cursor word with ag           |
+| `SPC s g d`  | searching in buffer directory with grep                     |
+| `SPC s g D`  | searching in buffer directory cursor word with grep         |
+| `SPC s k d`  | searching in buffer directory with ack                      |
+| `SPC s k D`  | searching in buffer directory cursor word with ack          |
+| `SPC s r d`  | searching in buffer directory with rg                       |
+| `SPC s r D`  | searching in buffer directory cursor word with rg           |
+| `SPC s t d`  | searching in buffer directory with pt                       |
+| `SPC s t D`  | searching in buffer directory cursor word with pt           |
+
+#### Searching in all loaded buffers
+
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s b`    | search with the first found tool                    |
+| `SPC s B`    | search with the first found tool with default input |
+| `SPC s a b`  | ag                                                  |
+| `SPC s a B`  | ag with default input                               |
+| `SPC s g b`  | grep                                                |
+| `SPC s g B`  | grep with default input                             |
+| `SPC s k b`  | ack                                                 |
+| `SPC s k B`  | ack with default input                              |
+| `SPC s r b`  | rg                                                  |
+| `SPC s r B`  | rg with default input                               |
+| `SPC s t b`  | pt                                                  |
+| `SPC s t B`  | pt with default input                               |
+
+#### Searching in an arbitrary directory
+
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s f`    | search with the first found tool                    |
+| `SPC s F`    | search with the first found tool with default input |
+| `SPC s a f`  | ag                                                  |
+| `SPC s a F`  | ag with default text                                |
+| `SPC s g f`  | grep                                                |
+| `SPC s g F`  | grep with default text                              |
+| `SPC s k f`  | ack                                                 |
+| `SPC s k F`  | ack with default text                               |
+| `SPC s r f`  | rg                                                  |
+| `SPC s r F`  | rg with default text                                |
+| `SPC s t f`  | pt                                                  |
+| `SPC s t F`  | pt with default text                                |
+
+#### Searching in a project
+
+| Key Bindings        | Descriptions                                        |
+| ------------------- | --------------------------------------------------- |
+| `SPC /` / `SPC s p` | search with the first found tool                    |
+| `SPC *` / `SPC s P` | search with the first found tool with default input |
+| `SPC s a p`         | ag                                                  |
+| `SPC s a P`         | ag with default text                                |
+| `SPC s g p`         | grep                                                |
+| `SPC s g p`         | grep with default text                              |
+| `SPC s k p`         | ack                                                 |
+| `SPC s k P`         | ack with default text                               |
+| `SPC s t p`         | pt                                                  |
+| `SPC s t P`         | pt with default text                                |
+| `SPC s r p`         | rg                                                  |
+| `SPC s r P`         | rg with default text                                |
+
+**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+
+#### Background searching in a project
+
+Background search keyword in a project, when searching done, the count will be shown on the statusline.
+
+| Key Bindings | Descriptions                                               |
+| ------------ | ---------------------------------------------------------- |
+| `SPC s j`    | searching input expr background with the first found tool  |
+| `SPC s J`    | searching cursor word background with the first found tool |
+| `SPC s l`    | List all searching result in quickfix buffer               |
+| `SPC s a j`  | ag                                                         |
+| `SPC s a J`  | ag with default text                                       |
+| `SPC s g j`  | grep                                                       |
+| `SPC s g J`  | grep with default text                                     |
+| `SPC s k j`  | ack                                                        |
+| `SPC s k J`  | ack with default text                                      |
+| `SPC s t j`  | pt                                                         |
+| `SPC s t J`  | pt with default text                                       |
+| `SPC s r j`  | rg                                                         |
+| `SPC s r J`  | rg with default text                                       |
+
+#### Searching the web
+
+| Key Bindings | Descriptions                                                             |
+| ------------ | ------------------------------------------------------------------------ |
+| `SPC s w g`  | Get Google suggestions in Vim. Opens Google results in Browser.          |
+| `SPC s w w`  | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
+
+**Note**: to enable google suggestions in Vim, you need to add `enable_googlesuggest = 1` to your custom Configuration file.
+
+#### Searching on the fly
+
+| Key Bindings | Descriptions                                       |
+| ------------ | -------------------------------------------------- |
+| `SPC s g G`  | Searching in project on the fly with default tools |
+
+Key bindings in FlyGrep buffer:
+
+| Key Bindings        | Descriptions                      |
+| ------------------- | --------------------------------- |
+| `<Esc>`             | close FlyGrep buffer              |
+| `<Enter>`           | open file at the cursor line      |
+| `<Tab>`             | move cursor line down             |
+| `Shift-<Tab>`       | move cursor line up               |
+| `<BackSpace>`       | remove last character             |
+| `Ctrl-w`            | remove the Word before the cursor |
+| `Ctrl-u`            | remove the Line before the cursor |
+| `Ctrl-k`            | remove the Line after the cursor  |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
+| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+
+#### Persistent highlighting
+
+SpaceVim uses `search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
+
 ### File Operations
 
 | Key Bindings | Descriptions                    |
@@ -1226,68 +1514,6 @@ nnoremap <silent><Leader>m m
 endfunction
 ```
 
-### Fuzzy finder
-
-SpaceVim provides five fuzzy find tools, each of them is configured in a layer
-(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
-These layers have the same key bindings and features. But they need different dependencies.
-
-Users only need to load one of these layers, they will be able to get these features.
-
-for example, load the denite layer:
-
-```toml
-[[layers]]
-name = "denite"
-```
-
-**Key bindings**
-
-| Key bindings         | Discription                   |
-| -------------------- | ----------------------------- |
-| `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
-| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
-| `<Leader> f e`       | Fuzzy find register           |
-| `<Leader> f h`       | Fuzzy find history/yank       |
-| `<Leader> f j`       | Fuzzy find jump, change       |
-| `<Leader> f l`       | Fuzzy find location list      |
-| `<Leader> f m`       | Fuzzy find output messages    |
-| `<Leader> f o`       | Fuzzy find outline            |
-| `<Leader> f q`       | Fuzzy find quick fix          |
-| `<Leader> f r`       | Resumes Unite window          |
-
-**Key bindings within fuzzy finder buffer**
-
-| Key Bindings             | Descriptions                    |
-| ------------------------ | ------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
-| `<Esc>`                  | Leave Insert mode               |
-| `Ctrl-w`                 | Delete backward path            |
-| `Ctrl-u`                 | Delete whole line before cursor |
-| `<Enter>`                | Run default action              |
-| `Ctrl-s`                 | Open in a split                 |
-| `Ctrl-v`                 | Open in a vertical split        |
-| `Ctrl-t`                 | Open in a new tab               |
-| `Ctrl-g`                 | Close fuzzy finder              |
-
-**Differences between these layers**
-
-The above key bindings are only part of fuzzy finder layers, please read the layers's documentations.
-
-| Feature            | denite | unite | leaderf | ctrlp | fzf |
-| ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
-| register           |  yes   |  yes  |   no    |  yes  | yes |
-| file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   no    |  no   | yes |
-| jump               |  yes   |  yes  |   no    |  yes  | yes |
-| location list      |  yes   |  yes  |   no    |  no   | yes |
-| outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   no    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   no    |  no   | no  |
 
 ### Discovering
 
@@ -1313,13 +1539,6 @@ Reporting an issue:
 | ------------ | ----------------------------------------------------------- |
 | `SPC h I`    | Open SpaceVim GitHub issue page with pre-filled information |
 
-#### Available layers
-
-All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
-
-**Available plugins in SpaceVim**
-
-All plugins can be easily discovered via `<leader> l p`.
 
 #### Toggles
 
@@ -1510,225 +1729,6 @@ which will tell you the functional of all mappings starting with `z`.
 | `z z`        | smart scroll                                  |
 | `z <Left>`   | scroll screen N characters to right           |
 
-### Searching
-
-#### With an external tool
-
-SpaceVim can be interfaced with different searching tools like:
-
-- [rg - ripgrep](https://github.com/BurntSushi/ripgrep)
-- [ag - the silver searcher](https://github.com/ggreer/the_silver_searcher)
-- [pt - the platinum searcher](https://github.com/monochromegane/the_platinum_searcher)
-- [ack](https://beyondgrep.com/)
-- grep
-
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
-
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
-
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
-
-The tool keys are:
-
-| Tool | Key |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
-
-The available scopes and corresponding keys are:
-
-| Scope                      | Key |
-| -------------------------- | --- |
-| opened buffers             | b   |
-| buffer directory           | d   |
-| files in a given directory | f   |
-| current project            | p   |
-
-It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
-
-Notes:
-
-- `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
-- It is also possible to search in several directories at once by marking them in the unite buffer.
-
-**Beware** if you use `pt`, [TCL parser tools](https://core.tcl.tk/tcllib/doc/trunk/embedded/www/tcllib/files/apps/pt.html) also install a command line tool called `pt`.
-
-##### Custom searching tool
-
-To change the options of a search tool, you need to use the bootstrap function.
-The following example shows how to change the default option of searching tool `rg`.
-
-```vim
-function! myspacevim#before() abort
-let profile = SpaceVim#mapping#search#getprofile('rg')
-let default_opt = profile.default_opts + ['--no-ignore-vcs']
-call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
-endfunction
-```
-
-The structure of searching tool profile is:
-
-```vim
-" { 'ag' : {
-"   'namespace' : '',         " a single char a-z
-"   'command' : '',           " executable
-"   'default_opts' : [],      " default options
-"   'recursive_opt' : [],     " default recursive options
-"   'expr_opt' : '',          " option for enable expr mode
-"   'fixed_string_opt' : '',  " option for enable fixed string mode
-"   'ignore_case' : '',       " option for enable ignore case mode
-"   'smart_case' : '',        " option for enable smart case mode
-"   }
-"  }
-```
-
-##### Useful key bindings
-
-| Key Bindings    | Descriptions                              |
-| --------------- | ----------------------------------------- |
-| `SPC r l`       | resume the last completion buffer         |
-| `` SPC s ` ``   | go back to the previous place before jump |
-| Prefix argument | will ask for file extensions              |
-
-##### Searching in current file
-
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s s`    | search with the first found tool                    |
-| `SPC s S`    | search with the first found tool with default input |
-| `SPC s a a`  | ag                                                  |
-| `SPC s a A`  | ag with default input                               |
-| `SPC s g g`  | grep                                                |
-| `SPC s g G`  | grep with default input                             |
-| `SPC s r r`  | rg                                                  |
-| `SPC s r R`  | rg with default input                               |
-
-##### Searching in buffer directory
-
-| Key Bindings | Descriptions                                                |
-| ------------ | ----------------------------------------------------------- |
-| `SPC s d`    | searching in buffer directory with default tool             |
-| `SPC s D`    | searching in buffer directory cursor word with default tool |
-| `SPC s a d`  | searching in buffer directory with ag                       |
-| `SPC s a D`  | searching in buffer directory cursor word with ag           |
-| `SPC s g d`  | searching in buffer directory with grep                     |
-| `SPC s g D`  | searching in buffer directory cursor word with grep         |
-| `SPC s k d`  | searching in buffer directory with ack                      |
-| `SPC s k D`  | searching in buffer directory cursor word with ack          |
-| `SPC s r d`  | searching in buffer directory with rg                       |
-| `SPC s r D`  | searching in buffer directory cursor word with rg           |
-| `SPC s t d`  | searching in buffer directory with pt                       |
-| `SPC s t D`  | searching in buffer directory cursor word with pt           |
-
-##### Searching in all loaded buffers
-
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s b`    | search with the first found tool                    |
-| `SPC s B`    | search with the first found tool with default input |
-| `SPC s a b`  | ag                                                  |
-| `SPC s a B`  | ag with default input                               |
-| `SPC s g b`  | grep                                                |
-| `SPC s g B`  | grep with default input                             |
-| `SPC s k b`  | ack                                                 |
-| `SPC s k B`  | ack with default input                              |
-| `SPC s r b`  | rg                                                  |
-| `SPC s r B`  | rg with default input                               |
-| `SPC s t b`  | pt                                                  |
-| `SPC s t B`  | pt with default input                               |
-
-##### Searching in an arbitrary directory
-
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s f`    | search with the first found tool                    |
-| `SPC s F`    | search with the first found tool with default input |
-| `SPC s a f`  | ag                                                  |
-| `SPC s a F`  | ag with default text                                |
-| `SPC s g f`  | grep                                                |
-| `SPC s g F`  | grep with default text                              |
-| `SPC s k f`  | ack                                                 |
-| `SPC s k F`  | ack with default text                               |
-| `SPC s r f`  | rg                                                  |
-| `SPC s r F`  | rg with default text                                |
-| `SPC s t f`  | pt                                                  |
-| `SPC s t F`  | pt with default text                                |
-
-##### Searching in a project
-
-| Key Bindings        | Descriptions                                        |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
-
-**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
-
-##### Background searching in a project
-
-Background search keyword in a project, when searching done, the count will be shown on the statusline.
-
-| Key Bindings | Descriptions                                               |
-| ------------ | ---------------------------------------------------------- |
-| `SPC s j`    | searching input expr background with the first found tool  |
-| `SPC s J`    | searching cursor word background with the first found tool |
-| `SPC s l`    | List all searching result in quickfix buffer               |
-| `SPC s a j`  | ag                                                         |
-| `SPC s a J`  | ag with default text                                       |
-| `SPC s g j`  | grep                                                       |
-| `SPC s g J`  | grep with default text                                     |
-| `SPC s k j`  | ack                                                        |
-| `SPC s k J`  | ack with default text                                      |
-| `SPC s t j`  | pt                                                         |
-| `SPC s t J`  | pt with default text                                       |
-| `SPC s r j`  | rg                                                         |
-| `SPC s r J`  | rg with default text                                       |
-
-##### Searching the web
-
-| Key Bindings | Descriptions                                                             |
-| ------------ | ------------------------------------------------------------------------ |
-| `SPC s w g`  | Get Google suggestions in Vim. Opens Google results in Browser.          |
-| `SPC s w w`  | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
-
-**Note**: to enable google suggestions in Vim, you need to add `enable_googlesuggest = 1` to your custom Configuration file.
-
-#### Searching on the fly
-
-| Key Bindings | Descriptions                                       |
-| ------------ | -------------------------------------------------- |
-| `SPC s g G`  | Searching in project on the fly with default tools |
-
-Key bindings in FlyGrep buffer:
-
-| Key Bindings        | Descriptions                      |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<BackSpace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
-
-#### Persistent highlighting
-
-SpaceVim uses `search_highlight_persist` to keep the searched expression highlighted until the next search. It is also possible to clear the highlighting by pressing `SPC s c` or executing the ex command `:noh`.
 
 #### Highlight current symbol
 

@@ -1134,16 +1134,6 @@ SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 Sp
 
 可通过快捷键 `<leader> l p` 列出所有已安装的插件，支持模糊搜索，回车将使用浏览器打开该插件的官网。
 
-**添加用户自定义插件**
-
-如果添加来自于 github.com 的插件，可以 `用户名/仓库名` 这一格式，将该插件添加到 `[[ustom_plugins]]`，示例如下：
-
-```toml
-[[custom_plugins]]
-    name = 'lilydjwg/colorizer'
-    merged = false
-```
-
 ### 模糊搜索
 
 目前一共有五种模糊搜索的模块，分别对应不同的工具：
