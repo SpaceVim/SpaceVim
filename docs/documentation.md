@@ -34,7 +34,16 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Native functions](#native-functions)
   - [Visual mode key bindings](#visual-mode-key-bindings)
   - [Command line mode key bidnings](#command-line-mode-key-bidnings)
+  - [Mappings guide](#mappings-guide)
+  - [Editing](#editing)
+    - [Text manipulation commands](#text-manipulation-commands)
+    - [Text insertion commands](#text-insertion-commands)
+    - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [Commenting](#commenting)
+    - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
+    - [General Editor windows](#general-editor-windows)
+    - [Window manipulation key bindings](#window-manipulation-key-bindings)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Bookmarks management](#bookmarks-management)
@@ -50,8 +59,6 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Jumping, Joining and Splitting](#jumping-joining-and-splitting)
       - [Jumping](#jumping)
       - [Joining and splitting](#joining-and-splitting)
-    - [Window manipulation](#window-manipulation)
-      - [Window manipulation key bindings](#window-manipulation-key-bindings)
     - [Buffers and Files](#buffers-and-files)
       - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
       - [Create a new empty buffer](#create-a-new-empty-buffer)
@@ -74,16 +81,8 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Searching on the fly](#searching-on-the-fly)
     - [Persistent highlighting](#persistent-highlighting)
     - [Highlight current symbol](#highlight-current-symbol)
-  - [Editing](#editing)
-    - [Paste text](#paste-text)
-      - [Auto-indent pasted text](#auto-indent-pasted-text)
-    - [Text manipulation commands](#text-manipulation-commands)
-    - [Text insertion commands](#text-insertion-commands)
-    - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Replace text with iedit](#replace-text-with-iedit)
       - [iedit states key bindings](#iedit-states-key-bindings)
-    - [Commenting](#commenting)
-    - [Multi-Encodings](#multi-encodings)
   - [Code runner and REPL](#code-runner-and-repl)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
@@ -800,6 +799,196 @@ can be used in command line mode:
 | `Tab`          | next item in popup menu              |
 | `Shift-Tab`    | previous item in popup menu          |
 
+### Mappings guide
+
+A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short descriptions.
+The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
+
+The default keys of these prefixs are:
+
+| Prefix name | Custom options and default values | Descriptions                        |
+| ----------- | --------------------------------- | ----------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
+| `[WIN]`     | `windows_leader` / `s`            | window mapping prefix of SpaceVim   |
+| `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
+
+By default the guide buffer will be displayed 1000ms after the keys being pressed.
+You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
+
+For example, after pressing `<Space>` in normal mode, you will see:
+
+![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+
+This guide shows you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
+
+After pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
+
+| Keys | Descriptions                  |
+| ---- | ----------------------------- |
+| `u`  | undo pressing                 |
+| `n`  | next page of guide buffer     |
+| `p`  | previous page of guide buffer |
+
+Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For instance:
+
+```vim
+call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
+```
+
+**Fuzzy find key bidnings**
+
+It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
+
+To narrow the list, just insert the mapping keys or descriptions of what mappings you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
+
+![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+
+Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
+
+### Editing
+
+#### Text manipulation commands
+
+Text related commands (start with `x`):
+
+| Key Bindings  | Descriptions                                                       |
+| ------------- | ------------------------------------------------------------------ |
+| `SPC x a #`   | align region at #                                                  |
+| `SPC x a %`   | align region at %                                                  |
+| `SPC x a &`   | align region at &                                                  |
+| `SPC x a (`   | align region at (                                                  |
+| `SPC x a )`   | align region at )                                                  |
+| `SPC x a [`   | align region at [                                                  |
+| `SPC x a ]`   | align region at ]                                                  |
+| `SPC x a {`   | align region at {                                                  |
+| `SPC x a }`   | align region at }                                                  |
+| `SPC x a ,`   | align region at ,                                                  |
+| `SPC x a .`   | align region at . (for numeric tables)                             |
+| `SPC x a :`   | align region at :                                                  |
+| `SPC x a ;`   | align region at ;                                                  |
+| `SPC x a =`   | align region at =                                                  |
+| `SPC x a ¦`   | align region at ¦                                                  |
+| `SPC x a |`   | align region at \|                                                 |
+| `SPC x a SPC` | align region at [SPC]                                              |
+| `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
+| `SPC x a c`   | align current indentation region using default rules (TODO)        |
+| `SPC x a l`   | left-align with evil-lion (TODO)                                   |
+| `SPC x a L`   | right-align with evil-lion (TODO)                                  |
+| `SPC x a r`   | align region at user-specified regexp                              |
+| `SPC x a o`   | align region at operators `+-*/` etc                               |
+| `SPC x c`     | count the number of chars/words/lines in the selection region      |
+| `SPC x d w`   | delete trailing whitespaces                                        |
+| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
+| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
+| `SPC x g t`   | translate current word using Google Translate                      |
+| `SPC x g T`   | reverse source and target languages (TODO)                         |
+| `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
+| `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
+| `SPC x i -`   | change symbol style to `kebab-case`                                |
+| `SPC x i k`   | change symbol style to `kebab-case`                                |
+| `SPC x i _`   | change symbol style to `under_score`                               |
+| `SPC x i u`   | change symbol style to `under_score`                               |
+| `SPC x i U`   | change symbol style to `UP_CASE`                                   |
+| `SPC x j c`   | set the justification to center                                    |
+| `SPC x j f`   | set the justification to full (TODO)                               |
+| `SPC x j l`   | set the justification to left                                      |
+| `SPC x j n`   | set the justification to none (TODO)                               |
+| `SPC x j r`   | set the justification to right                                     |
+| `SPC x J`     | move down a line of text (enter transient state)                   |
+| `SPC x K`     | move up a line of text (enter transient state)                     |
+| `SPC x l d`   | duplicate line or region (TODO)                                    |
+| `SPC x l s`   | sort lines (TODO)                                                  |
+| `SPC x l u`   | uniquify lines (TODO)                                              |
+| `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
+| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
+| `SPC x t c`   | swap (transpose) the current character with the previous one       |
+| `SPC x t C`   | swap (transpose) the current character with the next one           |
+| `SPC x t w`   | swap (transpose) the current word with the previous one            |
+| `SPC x t W`   | swap (transpose) the current word with the next one                |
+| `SPC x t l`   | swap (transpose) the current line with the previous one            |
+| `SPC x t L`   | swap (transpose) the current line with the next one                |
+| `SPC x u`     | set the selected text to lower case                                |
+| `SPC x U`     | set the selected text to upper case                                |
+| `SPC x w c`   | count the words in the select region                               |
+| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
+| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
+
+#### Text insertion commands
+
+Text insertion commands (start with `i`):
+
+| Key bindings | Descriptions                                                          |
+| ------------ | --------------------------------------------------------------------- |
+| `SPC i l l`  | insert lorem-ipsum list                                               |
+| `SPC i l p`  | insert lorem-ipsum paragraph                                          |
+| `SPC i l s`  | insert lorem-ipsum sentence                                           |
+| `SPC i p 1`  | insert simple password                                                |
+| `SPC i p 2`  | insert stronger password                                              |
+| `SPC i p 3`  | insert password for paranoids                                         |
+| `SPC i p p`  | insert a phonetically easy password                                   |
+| `SPC i p n`  | insert a numerical password                                           |
+| `SPC i u`    | Search for Unicode characters and insert them into the active buffer. |
+| `SPC i U 1`  | insert UUIDv1 (use universal argument to insert with CID format)      |
+| `SPC i U 4`  | insert UUIDv4 (use universal argument to insert with CID format)      |
+| `SPC i U U`  | insert UUIDv4 (use universal argument to insert with CID format)      |
+
+#### Increase/Decrease numbers
+
+| Key Bindings | Descriptions                                                        |
+| ------------ | ------------------------------------------------------------------- |
+| `SPC n +`    | increase the number under point by one and initiate transient state |
+| `SPC n -`    | decrease the number under point by one and initiate transient state |
+
+In transient state:
+
+| Key Bindings  | Descriptions                           |
+| ------------- | -------------------------------------- |
+| `+`           | increase the number under point by one |
+| `-`           | decrease the number under point by one |
+| Any other key | leave the transient state              |
+
+**Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
+
+#### Commenting
+
+Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
+
+| Key Bindings | Descriptions                                            |
+| ------------ | ------------------------------------------------------- |
+| `SPC ;`      | comment operator                                        |
+| `SPC c h`    | hide/show comments                                      |
+| `SPC c l`    | toggle comment lines                                    |
+| `SPC c L`    | comment lines                                           |
+| `SPC c u`    | uncomment lines                                         |
+| `SPC c p`    | toggle comment paragraphs                               |
+| `SPC c P`    | comment paragraphs                                      |
+| `SPC c s`    | comment with pretty layout                              |
+| `SPC c t`    | toggle comment to line                                  |
+| `SPC c T`    | comment to line                                         |
+| `SPC c y`    | toggle comment and yank(TODO)                           |
+| `SPC c Y`    | yank and comment                                        |
+| `SPC c $`    | comment current line from cursor to the end of the line |
+
+**Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
+For example, `SPC ; 4 j` will comment current line and the following 4 lines.
+
+#### Multi-Encodings
+
+SpaceVim uses utf-8 as default encoding. There are four options for these case:
+
+- fileencodings (fencs): ucs-bom,utf-8,default,latin1
+- fileencoding (fenc): utf-8
+- encoding (enc): utf-8
+- termencoding (tenc): utf-8 (only supported in Vim)
+
+To fix messy display: `SPC e a` is the mapping for auto detect the file encoding. After detecting file encoding, you can run the command below to fix the encoding:
+
+```vim
+set enc=utf-8
+write
+```
+
 ### Window manager
 
 Window manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
@@ -827,6 +1016,74 @@ windows_leader = "s"
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
+
+#### General Editor windows
+
+| Key Bindings          | Descriptions                                                     |
+| --------------------- | ---------------------------------------------------------------- |
+| `<F2>`                | Toggle tagbar                                                    |
+| `<F3>`                | Toggle Vimfiler                                                  |
+| `Ctrl-Down`           | Move to split below (`Ctrl-w j`)                                 |
+| `Ctrl-Up`             | Move to upper split (`Ctrl-w k`)                                 |
+| `Ctrl-Left`           | Move to left split (`Ctrl-w h`)                                  |
+| `Ctrl-Right`          | Move to right split (`Ctrl-w l`)                                 |
+
+#### Window manipulation key bindings
+
+Every window has a number displayed at the start of the statusline and can be quickly accessed using `SPC number`.
+
+| Key Bindings | Descriptions          |
+| ------------ | --------------------- |
+| `SPC 1`      | go to window number 1 |
+| `SPC 2`      | go to window number 2 |
+| `SPC 3`      | go to window number 3 |
+| `SPC 4`      | go to window number 4 |
+| `SPC 5`      | go to window number 5 |
+| `SPC 6`      | go to window number 6 |
+| `SPC 7`      | go to window number 7 |
+| `SPC 8`      | go to window number 8 |
+| `SPC 9`      | go to window number 9 |
+
+Windows manipulation commands (start with `w`):
+
+| Key Bindings          | Descriptions                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `SPC w .`             | windows transient state                                                                                       |
+| `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
+| `SPC w =`             | balance split windows                                                                                         |
+| `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
+| `SPC w c`             | Distraction-free reading current window (tools layer)                                                         |
+| `SPC w C`             | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
+| `SPC w d`             | delete a window                                                                                               |
+| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)                                      |
+| `SPC w D`             | delete another window using vim-choosewin                                                                     |
+| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)                                       |
+| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
+| `SPC w f`             | toggle follow mode (TODO)                                                                                     |
+| `SPC w F`             | create new tab(frame)                                                                                         |
+| `SPC w h`             | move to window on the left                                                                                    |
+| `SPC w H`             | move window to the left                                                                                       |
+| `SPC w j`             | move to window below                                                                                          |
+| `SPC w J`             | move window to the bottom                                                                                     |
+| `SPC w k`             | move to window above                                                                                          |
+| `SPC w K`             | move window to the top                                                                                        |
+| `SPC w l`             | move to window on the right                                                                                   |
+| `SPC w L`             | move window to the right                                                                                      |
+| `SPC w m`             | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
+| `SPC w M`             | swap windows using vim-choosewin                                                                              |
+| `SPC w o`             | cycle and focus between tabs                                                                                  |
+| `SPC w p m`           | open messages buffer in a popup window (TODO)                                                                 |
+| `SPC w p p`           | close the current sticky popup window (TODO)                                                                  |
+| `SPC w r`             | rotate windows forward                                                                                        |
+| `SPC w R`             | rotate windows backward                                                                                       |
+| `SPC w s` / `SPC w -` | horizontal split                                                                                              |
+| `SPC w S`             | horizontal split and focus new window                                                                         |
+| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)                                          |
+| `SPC w U`             | redo window layout (TODO)                                                                                     |
+| `SPC w v` / `SPC w /` | vertical split                                                                                                |
+| `SPC w V`             | vertical split and focus new window                                                                           |
+| `SPC w w`             | cycle and focus between windows                                                                               |
+| `SPC w W`             | select window using vim-choosewin                                                                             |
 
 ### File Operations
 
@@ -957,51 +1214,6 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 #### Mappings
 
-**Mappings guide**
-
-A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short descriptions.
-The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
-
-The default keys of these prefixs are:
-
-| Prefix name | Custom options and default values | Descriptions                        |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[WIN]`     | `windows_leader` / `s`            | window mapping prefix of SpaceVim   |
-| `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
-
-By default the guide buffer will be displayed 1000ms after the keys being pressed.
-You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
-
-For example, after pressing `<Space>` in normal mode, you will see:
-
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
-
-This guide shows you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
-
-After pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
-
-| Keys | Descriptions                  |
-| ---- | ----------------------------- |
-| `u`  | undo pressing                 |
-| `n`  | next page of guide buffer     |
-| `p`  | previous page of guide buffer |
-
-Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For instance:
-
-```vim
-call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
-```
-
-**Unite/Denite describe key bindings**
-
-It is possible to search for specific key bindings by pressing `?` in the root of guide buffer.
-
-To narrow the list, just insert the mapping keys or descriptions of what mappings you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
-
-![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
-
-Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 
 #### Getting help
 
@@ -1110,64 +1322,6 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | `SPC j s`    | split a quoted string or s-expression in place                                |
 | `SPC j S`    | split a quoted string or s-expression with `\n`, and auto-indent the new line |
 
-#### Window manipulation
-
-##### Window manipulation key bindings
-
-Every window has a number displayed at the start of the statusline and can be quickly accessed using `SPC number`.
-
-| Key Bindings | Descriptions          |
-| ------------ | --------------------- |
-| `SPC 1`      | go to window number 1 |
-| `SPC 2`      | go to window number 2 |
-| `SPC 3`      | go to window number 3 |
-| `SPC 4`      | go to window number 4 |
-| `SPC 5`      | go to window number 5 |
-| `SPC 6`      | go to window number 6 |
-| `SPC 7`      | go to window number 7 |
-| `SPC 8`      | go to window number 8 |
-| `SPC 9`      | go to window number 9 |
-
-Windows manipulation commands (start with `w`):
-
-| Key Bindings          | Descriptions                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w .`             | windows transient state                                                                                       |
-| `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
-| `SPC w =`             | balance split windows                                                                                         |
-| `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`             | Distraction-free reading current window (tools layer)                                                         |
-| `SPC w C`             | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
-| `SPC w d`             | delete a window                                                                                               |
-| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)                                      |
-| `SPC w D`             | delete another window using vim-choosewin                                                                     |
-| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)                                       |
-| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`             | toggle follow mode (TODO)                                                                                     |
-| `SPC w F`             | create new tab(frame)                                                                                         |
-| `SPC w h`             | move to window on the left                                                                                    |
-| `SPC w H`             | move window to the left                                                                                       |
-| `SPC w j`             | move to window below                                                                                          |
-| `SPC w J`             | move window to the bottom                                                                                     |
-| `SPC w k`             | move to window above                                                                                          |
-| `SPC w K`             | move window to the top                                                                                        |
-| `SPC w l`             | move to window on the right                                                                                   |
-| `SPC w L`             | move window to the right                                                                                      |
-| `SPC w m`             | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
-| `SPC w M`             | swap windows using vim-choosewin                                                                              |
-| `SPC w o`             | cycle and focus between tabs                                                                                  |
-| `SPC w p m`           | open messages buffer in a popup window (TODO)                                                                 |
-| `SPC w p p`           | close the current sticky popup window (TODO)                                                                  |
-| `SPC w r`             | rotate windows forward                                                                                        |
-| `SPC w R`             | rotate windows backward                                                                                       |
-| `SPC w s` / `SPC w -` | horizontal split                                                                                              |
-| `SPC w S`             | horizontal split and focus new window                                                                         |
-| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)                                          |
-| `SPC w U`             | redo window layout (TODO)                                                                                     |
-| `SPC w v` / `SPC w /` | vertical split                                                                                                |
-| `SPC w V`             | vertical split and focus new window                                                                           |
-| `SPC w w`             | cycle and focus between windows                                                                               |
-| `SPC w W`             | select window using vim-choosewin                                                                             |
 
 #### Buffers and Files
 
@@ -1611,114 +1765,6 @@ In highlight symbol transient state:
 | `R`           | go to home occurrence (reset position to starting occurrence) |
 | Any other key | leave the navigation transient state                          |
 
-### Editing
-
-#### Paste text
-
-##### Auto-indent pasted text
-
-#### Text manipulation commands
-
-Text related commands (start with `x`):
-
-| Key Bindings  | Descriptions                                                       |
-| ------------- | ------------------------------------------------------------------ |
-| `SPC x a #`   | align region at #                                                  |
-| `SPC x a %`   | align region at %                                                  |
-| `SPC x a &`   | align region at &                                                  |
-| `SPC x a (`   | align region at (                                                  |
-| `SPC x a )`   | align region at )                                                  |
-| `SPC x a [`   | align region at [                                                  |
-| `SPC x a ]`   | align region at ]                                                  |
-| `SPC x a {`   | align region at {                                                  |
-| `SPC x a }`   | align region at }                                                  |
-| `SPC x a ,`   | align region at ,                                                  |
-| `SPC x a .`   | align region at . (for numeric tables)                             |
-| `SPC x a :`   | align region at :                                                  |
-| `SPC x a ;`   | align region at ;                                                  |
-| `SPC x a =`   | align region at =                                                  |
-| `SPC x a ¦`   | align region at ¦                                                  |
-| `SPC x a |`   | align region at \|                                                 |
-| `SPC x a SPC` | align region at [SPC]                                              |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
-| `SPC x a c`   | align current indentation region using default rules (TODO)        |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                   |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                  |
-| `SPC x a r`   | align region at user-specified regexp                              |
-| `SPC x a o`   | align region at operators `+-*/` etc                               |
-| `SPC x c`     | count the number of chars/words/lines in the selection region      |
-| `SPC x d w`   | delete trailing whitespaces                                        |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
-| `SPC x g t`   | translate current word using Google Translate                      |
-| `SPC x g T`   | reverse source and target languages (TODO)                         |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
-| `SPC x i -`   | change symbol style to `kebab-case`                                |
-| `SPC x i k`   | change symbol style to `kebab-case`                                |
-| `SPC x i _`   | change symbol style to `under_score`                               |
-| `SPC x i u`   | change symbol style to `under_score`                               |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                   |
-| `SPC x j c`   | set the justification to center                                    |
-| `SPC x j f`   | set the justification to full (TODO)                               |
-| `SPC x j l`   | set the justification to left                                      |
-| `SPC x j n`   | set the justification to none (TODO)                               |
-| `SPC x j r`   | set the justification to right                                     |
-| `SPC x J`     | move down a line of text (enter transient state)                   |
-| `SPC x K`     | move up a line of text (enter transient state)                     |
-| `SPC x l d`   | duplicate line or region (TODO)                                    |
-| `SPC x l s`   | sort lines (TODO)                                                  |
-| `SPC x l u`   | uniquify lines (TODO)                                              |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
-| `SPC x t c`   | swap (transpose) the current character with the previous one       |
-| `SPC x t C`   | swap (transpose) the current character with the next one           |
-| `SPC x t w`   | swap (transpose) the current word with the previous one            |
-| `SPC x t W`   | swap (transpose) the current word with the next one                |
-| `SPC x t l`   | swap (transpose) the current line with the previous one            |
-| `SPC x t L`   | swap (transpose) the current line with the next one                |
-| `SPC x u`     | set the selected text to lower case                                |
-| `SPC x U`     | set the selected text to upper case                                |
-| `SPC x w c`   | count the words in the select region                               |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
-| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
-
-#### Text insertion commands
-
-Text insertion commands (start with `i`):
-
-| Key bindings | Descriptions                                                          |
-| ------------ | --------------------------------------------------------------------- |
-| `SPC i l l`  | insert lorem-ipsum list                                               |
-| `SPC i l p`  | insert lorem-ipsum paragraph                                          |
-| `SPC i l s`  | insert lorem-ipsum sentence                                           |
-| `SPC i p 1`  | insert simple password                                                |
-| `SPC i p 2`  | insert stronger password                                              |
-| `SPC i p 3`  | insert password for paranoids                                         |
-| `SPC i p p`  | insert a phonetically easy password                                   |
-| `SPC i p n`  | insert a numerical password                                           |
-| `SPC i u`    | Search for Unicode characters and insert them into the active buffer. |
-| `SPC i U 1`  | insert UUIDv1 (use universal argument to insert with CID format)      |
-| `SPC i U 4`  | insert UUIDv4 (use universal argument to insert with CID format)      |
-| `SPC i U U`  | insert UUIDv4 (use universal argument to insert with CID format)      |
-
-#### Increase/Decrease numbers
-
-| Key Bindings | Descriptions                                                        |
-| ------------ | ------------------------------------------------------------------- |
-| `SPC n +`    | increase the number under point by one and initiate transient state |
-| `SPC n -`    | decrease the number under point by one and initiate transient state |
-
-In transient state:
-
-| Key Bindings  | Descriptions                           |
-| ------------- | -------------------------------------- |
-| `+`           | increase the number under point by one |
-| `-`           | decrease the number under point by one |
-| Any other key | leave the transient state              |
-
-**Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
 
 #### Replace text with iedit
 
@@ -1778,45 +1824,6 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `Ctrl-u`                 | delete all characters before cursor                         |
 | `Ctrl-h` / `<Backspace>` | delete character before cursor                              |
 | `<Delete>`               | delete character after cursor                               |
-
-#### Commenting
-
-Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
-
-| Key Bindings | Descriptions                                            |
-| ------------ | ------------------------------------------------------- |
-| `SPC ;`      | comment operator                                        |
-| `SPC c h`    | hide/show comments                                      |
-| `SPC c l`    | toggle comment lines                                    |
-| `SPC c L`    | comment lines                                           |
-| `SPC c u`    | uncomment lines                                         |
-| `SPC c p`    | toggle comment paragraphs                               |
-| `SPC c P`    | comment paragraphs                                      |
-| `SPC c s`    | comment with pretty layout                              |
-| `SPC c t`    | toggle comment to line                                  |
-| `SPC c T`    | comment to line                                         |
-| `SPC c y`    | toggle comment and yank(TODO)                           |
-| `SPC c Y`    | yank and comment                                        |
-| `SPC c $`    | comment current line from cursor to the end of the line |
-
-**Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
-For example, `SPC ; 4 j` will comment current line and the following 4 lines.
-
-#### Multi-Encodings
-
-SpaceVim uses utf-8 as default encoding. There are four options for these case:
-
-- fileencodings (fencs): ucs-bom,utf-8,default,latin1
-- fileencoding (fenc): utf-8
-- encoding (enc): utf-8
-- termencoding (tenc): utf-8 (only supported in Vim)
-
-To fix messy display: `SPC e a` is the mapping for auto detect the file encoding. After detecting file encoding, you can run the command below to fix the encoding:
-
-```vim
-set enc=utf-8
-write
-```
 
 ### Code runner and REPL
 
