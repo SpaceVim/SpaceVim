@@ -27,13 +27,16 @@ description: "General documentation about how to using SpaceVim, including the q
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [Tabline](#tabline)
-- [General Key bindings](#general-key-bindings)
+  - [File tree](#file-tree)
+    - [File tree navigation](#file-tree-navigation)
+    - [Open file with file tree.](#open-file-with-file-tree)
+- [General usage](#general-usage)
+  - [Native functions](#native-functions)
   - [Visual mode key bindings](#visual-mode-key-bindings)
   - [Command line mode key bidnings](#command-line-mode-key-bidnings)
   - [Window manager](#window-manager)
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
-  - [Native functions](#native-functions)
   - [Bookmarks management](#bookmarks-management)
   - [Fuzzy finder](#fuzzy-finder)
   - [Discovering](#discovering)
@@ -55,9 +58,6 @@ description: "General documentation about how to using SpaceVim, including the q
       - [Special Buffers](#special-buffers)
       - [Files manipulations key bindings](#files-manipulations-key-bindings)
       - [Vim and SpaceVim files](#vim-and-spacevim-files)
-    - [File tree](#file-tree)
-      - [File tree navigation](#file-tree-navigation)
-      - [Open file with file tree.](#open-file-with-file-tree)
   - [Commands starting with `g`](#commands-starting-with-g)
   - [Commands starting with `z`](#commands-starting-with-z)
   - [Searching](#searching)
@@ -664,7 +664,79 @@ Key bindings within tab manager windows:
 | `Ctrl-Shift-Down` | Move tab forward                          |
 | `<Enter>`         | Jump to windows under the cursor.         |
 
-## General Key bindings
+### File tree
+
+SpaceVim uses vimfiler as the default file tree, and the default key binding is `<F3>`.
+And SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
+
+To change the filemanager plugin:
+
+```toml
+[options]
+# file manager plugins supported in SpaceVim:
+# - vimfiler (default)
+# - nerdtree
+# - defx
+filemanager = "defx"
+```
+
+VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
+To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
+Here is a picture for this feature:
+
+![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+
+There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
+you can use `filetree_direction` option:
+
+```toml
+[options]
+filetree_direction = "left"
+```
+
+#### File tree navigation
+
+Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
+
+| Key Bindings          | Descriptions                                      |
+| --------------------- | ------------------------------------------------- |
+| `<F3>` / `SPC f t`    | Toggle file explorer                              |
+| **with in file tree** |                                                   |
+| `<Left>` / `h`        | go to parent node and collapse expanded directory |
+| `<Down>` / `j`        | select next file or directory                     |
+| `<Up>` / `k`          | select previous file or directory                 |
+| `<Right>` / `l`       | open selected file or expand directory            |
+| `N`                   | Create new file under cursor                      |
+| `y y`                 | Copy file full path to system clipboard           |
+| `y Y`                 | Copy file to system clipboard                     |
+| `P`                   | Paste file to the position under the cursor       |
+| `.`                   | toggle visible ignored files                      |
+| `s v`                 | Split edit                                        |
+| `s g`                 | Vertical split edit                               |
+| `p`                   | Preview                                           |
+| `i`                   | Switch to directory history                       |
+| `v`                   | Quick look                                        |
+| `g x`                 | Execute with vimfiler associated                  |
+| `'`                   | Toggle mark current line                          |
+| `V`                   | Clear all marks                                   |
+| `>`                   | iecrease filetree screenwidth                     |
+| `<`                   | dncrease filetree screenwidth                     |
+| `<Home>`              | Jump to first line                                |
+| `<End>`               | Jump to last line                                 |
+| `Ctrl-Home`           | Switch to project root directory                  |
+| `Ctrl-r`              | Redraw                                            |
+
+#### Open file with file tree.
+
+If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
+
+| Key Bindings    | Descriptions                              |
+| --------------- | ----------------------------------------- |
+| `l` / `<Enter>` | open file in one window                   |
+| `sg`            | open file in an vertically split window   |
+| `sv`            | open file in an horizontally split window |
+
+## General usage
 
 The following key bindings are the general key bindings for moving cursor.
 
@@ -686,6 +758,15 @@ The following key bindings are the general key bindings for moving cursor.
 | `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
 | `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
 | `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
+
+### Native functions
+
+| Key bindings     | Mode   | Action                            |
+| ---------------- | ------ | --------------------------------- |
+| `<Leader> q r`   | Normal | Same as native `q`                |
+| `<Leader> q r /` | Normal | Same as native `q /`, open cmdwin |
+| `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
+| `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
 ### Visual mode key bindings
 
@@ -780,15 +861,6 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | `#`                   | Search selection backwards                                       |
 | `, <Space>`           | Remove all spaces at EOL                                         |
 | `Ctrl-r`              | Replace selection in visual mode                                 |
-
-### Native functions
-
-| Key bindings     | Mode   | Action                            |
-| ---------------- | ------ | --------------------------------- |
-| `<Leader> q r`   | Normal | Same as native `q`                |
-| `<Leader> q r /` | Normal | Same as native `q /`, open cmdwin |
-| `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
-| `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
 ### Bookmarks management
 
@@ -1176,77 +1248,6 @@ Convenient key bindings are located under the prefix `SPC f v` to quickly naviga
 | `SPC f v v`  | display and copy SpaceVim version       |
 | `SPC f v d`  | open SpaceVim custom configuration file |
 
-#### File tree
-
-SpaceVim uses vimfiler as the default file tree, and the default key binding is `<F3>`.
-And SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
-
-To change the filemanager plugin:
-
-```toml
-[options]
-# file manager plugins supported in SpaceVim:
-# - vimfiler (default)
-# - nerdtree
-# - defx
-filemanager = "defx"
-```
-
-VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
-To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
-Here is a picture for this feature:
-
-![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
-
-There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
-you can use `filetree_direction` option:
-
-```toml
-[options]
-filetree_direction = "left"
-```
-
-##### File tree navigation
-
-Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
-
-| Key Bindings          | Descriptions                                      |
-| --------------------- | ------------------------------------------------- |
-| `<F3>` / `SPC f t`    | Toggle file explorer                              |
-| **with in file tree** |                                                   |
-| `<Left>` / `h`        | go to parent node and collapse expanded directory |
-| `<Down>` / `j`        | select next file or directory                     |
-| `<Up>` / `k`          | select previous file or directory                 |
-| `<Right>` / `l`       | open selected file or expand directory            |
-| `N`                   | Create new file under cursor                      |
-| `y y`                 | Copy file full path to system clipboard           |
-| `y Y`                 | Copy file to system clipboard                     |
-| `P`                   | Paste file to the position under the cursor       |
-| `.`                   | toggle visible ignored files                      |
-| `s v`                 | Split edit                                        |
-| `s g`                 | Vertical split edit                               |
-| `p`                   | Preview                                           |
-| `i`                   | Switch to directory history                       |
-| `v`                   | Quick look                                        |
-| `g x`                 | Execute with vimfiler associated                  |
-| `'`                   | Toggle mark current line                          |
-| `V`                   | Clear all marks                                   |
-| `>`                   | iecrease filetree screenwidth                     |
-| `<`                   | dncrease filetree screenwidth                     |
-| `<Home>`              | Jump to first line                                |
-| `<End>`               | Jump to last line                                 |
-| `Ctrl-Home`           | Switch to project root directory                  |
-| `Ctrl-r`              | Redraw                                            |
-
-##### Open file with file tree.
-
-If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
-
-| Key Bindings    | Descriptions                              |
-| --------------- | ----------------------------------------- |
-| `l` / `<Enter>` | open file in one window                   |
-| `sg`            | open file in an vertically split window   |
-| `sv`            | open file in an horizontally split window |
 
 ### Commands starting with `g`
 
