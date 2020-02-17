@@ -13,7 +13,7 @@ SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/mile
 - [下一个版本](#下一个版本)
   - [v1.4.0](#v140)
 - [版本说明](#版本说明)
-- [Completed](#completed)
+- [已完成](#已完成)
   - [v0.1.0](#v010)
   - [v0.2.0](#v020)
   - [v0.3.0](#v030)
@@ -49,7 +49,7 @@ There are release milestones and meta milestones ("buckets").
 
 <!-- SpaceVim roadmap completed items start -->
 
-## Completed
+## 已完成
 
 ### [v0.1.0](https://github.com/SpaceVim/SpaceVim/milestone/1)
 
