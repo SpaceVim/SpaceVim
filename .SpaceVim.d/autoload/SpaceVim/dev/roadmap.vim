@@ -71,8 +71,8 @@ function! SpaceVim#dev#roadmap#updateCompletedItems(lang) abort
   if a:lang == 'cn'
     let s:AUTODOC.content_func = function('s:generate_content_cn')
   else
-    let s:autodoc.content_func = function('s:generate_content')
+    let s:AUTODOC.content_func = function('s:generate_content')
   endif
-  let s:autodoc.autoformat = 1
-  call s:autodoc.update()
+  let s:AUTODOC.autoformat = 1
+  call s:AUTODOC.update()
 endfunction
