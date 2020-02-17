@@ -9,7 +9,6 @@ description: "This layer is for zig development, provide code runner support for
 
 - [Description](#description)
 - [Install](#install)
-- [Features](#features)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
 
@@ -17,7 +16,7 @@ description: "This layer is for zig development, provide code runner support for
 
 ## Description
 
-This layer is for zig development.
+This layer is for [zig](https://ziglang.org/) development.
 
 ## Install
 
@@ -27,10 +26,6 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#zig"
 ```
-## Features
-
-- repl support
-- code runner
 
 ## Key bindings
 

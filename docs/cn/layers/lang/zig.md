@@ -17,7 +17,7 @@ lang: zh
 
 ## 模块简介
 
-这一模块为在 SpaceVim 中进行 zig 开发提供了支持。
+这一模块为在 SpaceVim 中进行 [zig](https://ziglang.org/) 开发提供了支持。
 
 ## 启用模块
 
