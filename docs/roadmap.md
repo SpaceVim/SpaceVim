@@ -44,7 +44,7 @@ There are release milestones and meta milestones ("buckets").
 - [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
-<!-- call SpaceVim#dev#roadmap#updateCompletedItems() -->
+<!-- call SpaceVim#dev#roadmap#updateCompletedItems('en') -->
 
 <!-- SpaceVim roadmap completed items start -->
 
