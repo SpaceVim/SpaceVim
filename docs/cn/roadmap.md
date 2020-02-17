@@ -13,7 +13,7 @@ SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/mile
 - [下一个版本](#下一个版本)
   - [v1.4.0](#v140)
 - [版本说明](#版本说明)
-- [Completed](#completed)
+- [已完成](#已完成)
   - [v0.1.0](#v010)
   - [v0.2.0](#v020)
   - [v0.3.0](#v030)
@@ -45,11 +45,11 @@ There are release milestones and meta milestones ("buckets").
 - [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
-<!-- call SpaceVim#dev#roadmap#updateCompletedItems() -->
+<!-- call SpaceVim#dev#roadmap#updateCompletedItems('cn') -->
 
 <!-- SpaceVim roadmap completed items start -->
 
-## Completed
+## 已完成
 
 ### [v0.1.0](https://github.com/SpaceVim/SpaceVim/milestone/1)
 

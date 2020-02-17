@@ -59,7 +59,7 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-The current stable version is v1.2.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+The current stable version is v1.3.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
 for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
@@ -70,7 +70,7 @@ With layers feature, this version of Vim distribution try to turn Vim/Neovim int
 
 ```sh
 ~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
-78
+87
 ```
 
 - Which version of Vim/Neovim is needed?
