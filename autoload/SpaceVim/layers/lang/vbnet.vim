@@ -14,8 +14,12 @@ endfunction
 
 
 function! SpaceVim#layers#lang#vbnet#config() abort
-  call SpaceVim#plugins#runner#reg_runner('vb', ['vbc /utf8output /nologo /out:#TEMP# %s', '#TEMP#'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('vb', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#runner#reg_runner('vbnet', ['vbc /utf8output /nologo /out:#TEMP# %s', '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('vbnet', function('s:language_specified_mappings'))
+  augroup SpaceVim_lang_vbnet
+    au!
+    au! BufRead,BufNewFile *.vb setfiletype vbnet
+  augroup END
 endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
