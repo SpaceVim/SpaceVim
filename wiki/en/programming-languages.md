@@ -60,6 +60,7 @@
 | Swift             | [lang#swift](https://spacevim.org/layers/lang/swift/)               |
 | Tcl               | [lang#tcl](https://spacevim.org/layers/lang/tcl/)                   |
 | TypeScript        | [lang#typescript](https://spacevim.org/layers/lang/typescript/)     |
+| Visual Basic .NET | [lang#vbnet](https://spacevim.org/layers/lang/vbnet/)               |
 | zig               | [lang#zig](https://spacevim.org/layers/lang/zig/)                   |
 | 4th Dimension     |                                                                     |
 | ABAP              |                                                                     |
@@ -246,7 +247,6 @@
 | VBScript          |                                                                     |
 | Verilog           |                                                                     |
 | VHDL              |                                                                     |
-| Visual Basic .NET |                                                                     |
 | Visual Basic      |                                                                     |
 | WebAssembly       |                                                                     |
 | WebDNA            |                                                                     |
