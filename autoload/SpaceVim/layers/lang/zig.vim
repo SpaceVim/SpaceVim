@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:ztagsbin')
+  finish
+endif
+let s:ztagsbin = 'ztags'
+
 function! SpaceVim#layers#lang#zig#plugins() abort
   let plugins = []
   call add(plugins, ['ziglang/zig.vim', { 'merged' : 0}])
@@ -19,4 +24,8 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+endfunction
+
+function! SpaceVim#layers#lang#zig#set_variable(opt) abort
+  let s:ztagsbin = get(a:opt, 'ztagsbin', s:ztagsbin) 
 endfunction
