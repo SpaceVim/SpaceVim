@@ -9,6 +9,7 @@ description: "This layer is for zig development, provide code runner support for
 
 - [Description](#description)
 - [Install](#install)
+- [Options](#options)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
 
@@ -26,6 +27,10 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#zig"
 ```
+
+## Options
+
+- `ztagsbin`: specific the path of ztags.
 
 ## Key bindings
 
