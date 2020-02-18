@@ -81,7 +81,9 @@ function! SpaceVim#layers#git#config() abort
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :call SpaceVim#mapping#close_current_buffer()<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
-    autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    if SpaceVim#layers#isLoaded('core#statusline')
+        autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+    endif
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
