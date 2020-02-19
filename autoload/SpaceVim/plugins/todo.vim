@@ -10,8 +10,6 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
 
-" @question any other recommanded tag?
-let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
 
 let [
       \ s:grep_default_exe,
@@ -56,6 +54,13 @@ endfunction
 
 " @todo Improve todo manager
 function! s:update_todo_content() abort
+  if exists('g:spacevim_todo_labels')
+        \ && type(g:spacevim_todo_labels) == type([])
+        \ && !empty(g:spacevim_todo_labels)
+    let s:labels = g:spacevim_todo_labels
+  else
+    let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+  endif
   let s:todos = []
   let s:todo = {}
   let argv = [s:grep_default_exe] + 

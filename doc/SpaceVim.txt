@@ -1068,6 +1068,9 @@ Enable/Disable changing directory automatically. Enabled by default.
                                                *g:spacevim_commandline_prompt*
 Config the command line prompt for flygrep and denite etc.
 
+                                                      *g:spacevim_todo_labels*
+Option for setting todo labels in current project.
+
                                                   *g:spacevim_lint_on_the_fly*
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
 >
