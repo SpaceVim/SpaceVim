@@ -1,5 +1,7 @@
 {
   "autoload/SpaceVim/api/*.vim": {"alternate": "test/api/{}.vader"},
+  "autoload/SpaceVim/plugins/a.vim": {"alternate": "test/plugin/a.vader"},
+  "test/plugin/a.vader": {"alternate": "autoload/SpaceVim/plugins/a.vim"},
   "autoload/SpaceVim/layers/lang/*.vim": {"doc": "docs/layers/lang/{}.md"},
   "test/api/*.vader": {"alternate": "autoload/SpaceVim/api/{}.vim"},
   "docs/*.md": {"alternate": "docs/cn/{}.md"},
