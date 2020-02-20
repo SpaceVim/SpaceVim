@@ -1,10 +1,11 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
+[Quick start guide](https://spacevim.org/quick-start-guide/) \|
 [Documentation](https://spacevim.org/documentation/) \|
-[Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
 [Sponsors](https://spacevim.org/sponsors/) \|
+[Twitter](https://twitter.com/SpaceVim) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文官网](https://spacevim.org/cn/)
 

@@ -3,7 +3,7 @@ title:  "Quick start guide"
 description: "A quick start guide which will tell you how to install and config SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
-# Quick start guide
+# [Home](../) >> Quick start guide
 
 If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
 It will give you a good idea of what SpaceVim is like,
