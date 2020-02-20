@@ -40,7 +40,7 @@ function! s:init_variables() abort
   " ${relativeFile} - folder/file.ext
   let s:variables.relativeFile = s:FILE.unify_path(expand('%'))
   " ${relativeFileDirname} - folder
-  let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%:h'))
+  let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%'), ':h')
   " ${fileBasename} - file.ext
   let s:variables.fileBasename = expand('%:t')
   " ${fileBasenameNoExtension} - file
