@@ -1733,14 +1733,14 @@ endfunction
 例如：假定目前正在编辑文件 `/home/your-username/your-project/folder/file.ext` ，光标位于第十行；
 该文件所在的项目根目录为 `/home/your-username/your-project`，那么任务系统的预设定变量的值为：
 
-- **\${workspaceFolder}**: - `/home/your-username/your-project`
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
 - **\${workspaceFolderBasename}**: - `your-project`
 - **\${file}**: - `/home/your-username/your-project/folder/file.ext`
 - **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder`
+- **\${relativeFileDirname}**: - `folder/`
 - **\${fileBasename}**: - `file.ext`
 - **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - `10`
 
