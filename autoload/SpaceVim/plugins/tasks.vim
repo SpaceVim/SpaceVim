@@ -74,7 +74,7 @@ endfunction
 function! s:replace_variables(str) abort
   let str = a:str
   for key in keys(s:variables)
-    let str = substitute(str, '$(' . key . ')', s:variables[key], 'g')
+    let str = substitute(str, '${' . key . '}', s:variables[key], 'g')
   endfor
   return str
 endfunction
