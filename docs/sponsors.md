@@ -7,11 +7,12 @@ description: "The companies or individuals contributing a monthly amount to help
 
 <!-- vim-markdown-toc GFM -->
 
-- [current backers](#current-backers)
-- [Current Sponsors](#current-sponsors)
+- [Backers](#backers)
+- [Donation](#donation)
 - [Historical Spending](#historical-spending)
 
 <!-- vim-markdown-toc -->
+
 SpaceVim is an open source project. Please consider supporting SpaceVim by:
 
 - [Become a backer on BountySource](https://www.bountysource.com/teams/spacevim)
@@ -27,13 +28,13 @@ Also, you can buy us a coffee:
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-## current backers
+## Backers
 
-| Name  | Description                 |
-| ----- | --------------------------- |
-| songz | \$20/month since 2019-08-09 |
+| Name       | Description                 |
+| ---------- | --------------------------- |
+| Song Zheng | \$20/month since 2019-08-09 |
 
-## Current Sponsors
+## Donation
 
 These are the companies or individuals contributing a monthly amount to help sustain SpaceVim's development.
 See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for more details.
