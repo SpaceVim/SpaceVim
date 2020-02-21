@@ -110,6 +110,10 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-07-27   | \$2.57   | Sahani Pranav      |
 | 2019-10-01   | \$2.57   | Angers Martin      |
 | 2019-10-03   | \$5.44   | Thorne Ross        |
+| 2019-11-06   | ¥ 10     | zju\*\*\*          |
+| 2019-11-25   | ¥ 20     | \*哥               |
+| 2019-11-22   | ¥ 50     | \*好               |
+| 2020-02-21   | ¥ 50     | \*尚               |
 
 ## Historical Spending
 
