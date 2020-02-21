@@ -5,6 +5,13 @@ description: "The companies or individuals contributing a monthly amount to help
 
 # [Home](../) >> Sponsors
 
+<!-- vim-markdown-toc GFM -->
+
+- [current backers](#current-backers)
+- [Current Sponsors](#current-sponsors)
+- [Historical Spending](#historical-spending)
+
+<!-- vim-markdown-toc -->
 SpaceVim is an open source project. Please consider supporting SpaceVim by:
 
 - [Become a backer on BountySource](https://www.bountysource.com/teams/spacevim)
@@ -20,7 +27,13 @@ Also, you can buy us a coffee:
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-# Current Sponsors
+## current backers
+
+| Name  | Description                 |
+| ----- | --------------------------- |
+| songz | \$20/month since 2019-08-09 |
+
+## Current Sponsors
 
 These are the companies or individuals contributing a monthly amount to help sustain SpaceVim's development.
 See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for more details.
@@ -116,7 +129,7 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-11-25   | ¥ 20     | \*哥               |
 | 2019-11-22   | ¥ 50     | \*好               |
 | 2020-01-05   | \$30     | Michael Jackson    |
-| 2020-01-21   | \$50     | Sava Kahn    |
+| 2020-01-21   | \$50     | Sava Kahn          |
 | 2020-02-21   | ¥ 50     | \*尚               |
 
 ## Historical Spending
