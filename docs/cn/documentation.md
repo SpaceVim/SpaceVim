@@ -1684,13 +1684,65 @@ endfunction
 
 ### 任务管理
 
-构建、打包、测试等任务会涉及到多种外部命令，包括`make`、`mvn`等。
-可以通过任务集成外部工具这些外部命令。
+通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统，
+支持项目局部配置文件(`.SpaceVim.d/tasks.toml`)和全局配置文件(`~/.SpaceVim.d/tasks.toml`)，项目局部配置文件具有更高的优先权：
 
-| 快捷键      | 功能描述         |
-| ----------- | ---------------- |
-| `SPC p t e` | 编辑任务配置文件 |
-| `SPC p t r` | 选择任务并执行   |
+| 快捷键 | 功能描述             |
+| ------------ | ----------------------------- |
+| `SPC p t e`  | 编辑任务配置文件 |
+| `SPC p t r`  | 选定任务并执行            |
+
+以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+对于不需要打印输出结果，后台运行的任务，可以设置 `isBackground` 为 `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+任务的配置，可以设置如下关键字：
+
+- **command**: 需要运行的命令。
+- **args**: 传递给命令的参数，可以省略。
+- **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
+
+在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
+
+- **\${workspaceFolder}**: - 当前项目的根目录；
+- **\${workspaceFolderBasename}**: - 当前项目根目录所在父目录的文件夹名称；
+- **\${file}**: - 当前文件的绝对路径；
+- **\${relativeFile}**: - 当前文件相对项目根目录的相对路径；
+- **\${relativeFileDirname}**: - 当前文件所在的文件夹相对项目根目录的相对路径；
+- **\${fileBasename}**: - 当前文件的文件名
+- **\${fileBasenameNoExtension}**: - 当前文件的文件名，不包括后缀名
+- **\${fileDirname}**: - 当前文件所在的目录的绝对路径
+- **\${fileExtname}**: - 当前文件的后缀名
+- **\${lineNumber}**: - 光标所在行号
+
+例如：假定目前正在编辑文件 `/home/your-username/your-project/folder/file.ext` ，光标位于第十行；
+该文件所在的项目根目录为 `/home/your-username/your-project`，那么任务系统的预设定变量的值为：
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - `10`
 
 ### Iedit 多光标编辑
 
