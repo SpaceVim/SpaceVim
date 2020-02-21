@@ -9,6 +9,10 @@
 " this plugin is based on vscode task Scheme
 " https://code.visualstudio.com/docs/editor/tasks-appendix
 
+""
+" @section tasks, usage-tasks
+" @parentsection usage
+" general guide for tasks manager in SpaceVim.
 
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')

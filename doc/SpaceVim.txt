@@ -128,7 +128,9 @@ CONTENTS                                                   *SpaceVim-contents*
       54. tmux...........................................|SpaceVim-layer-tmux|
       55. tools#dash...............................|SpaceVim-layer-tools-dash|
       56. tools#zeal...............................|SpaceVim-layer-tools-zeal|
-  7. API........................................................|SpaceVim-api|
+  7. Usage....................................................|SpaceVim-usage|
+      1. tasks..........................................|SpaceVim-usage-tasks|
+  8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
@@ -144,8 +146,8 @@ CONTENTS                                                   *SpaceVim-contents*
       13. vim#command...............................|SpaceVim-api-vim-command|
       14. vim#compatible.........................|SpaceVim-api-vim-compatible|
       15. vim#message...............................|SpaceVim-api-vim-message|
-  8. FAQ........................................................|SpaceVim-faq|
-  9. Changelog............................................|SpaceVim-changelog|
+  9. FAQ........................................................|SpaceVim-faq|
+  10. Changelog...........................................|SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -2524,6 +2526,16 @@ This layer provides Dash integration for SpaceVim
 TOOLS#ZEAL                                         *SpaceVim-layer-tools-zeal*
 
 This layer provides Zeal integration for SpaceVim
+
+==============================================================================
+USAGE                                                         *SpaceVim-usage*
+
+  the usage guide for SpaceVim
+
+==============================================================================
+TASKS                                                   *SpaceVim-usage-tasks*
+
+general guide for tasks manager in SpaceVim.
 
 ==============================================================================
 API                                                             *SpaceVim-api*
