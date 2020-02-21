@@ -27,7 +27,14 @@ let s:variables = {}
 
 
 function! s:load() abort
-  let s:conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+  let [global_conf, local_conf] = [{}, {}]
+  if filereadable(expand('~/.SpaceVim.d/tasks.toml'))
+    let global_conf = s:TOML.parse_file(expand('~/.SpaceVim.d/tasks.toml'))
+  endif
+  if filereadable('.SpaceVim.d/tasks.toml')
+    let local_conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+  endif
+  let s:conf = extend(global_conf, local_conf)
 endfunction
 
 function! s:init_variables() abort
