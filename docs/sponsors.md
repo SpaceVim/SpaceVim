@@ -116,6 +116,7 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-11-25   | ¥ 20     | \*哥               |
 | 2019-11-22   | ¥ 50     | \*好               |
 | 2020-01-05   | \$30     | Michael Jackson    |
+| 2020-01-21   | \$50     | Sava Kahn    |
 | 2020-02-21   | ¥ 50     | \*尚               |
 
 ## Historical Spending
