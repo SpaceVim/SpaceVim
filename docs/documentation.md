@@ -1763,14 +1763,14 @@ A file located at `/home/your-username/your-project/folder/file.ext` opened in y
 The directory `/home/your-username/your-project` opened as your root workspace.
 So you will have the following values for each variable:
 
-- **\${workspaceFolder}**: - `/home/your-username/your-project`
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
 - **\${workspaceFolderBasename}**: - `your-project`
 - **\${file}**: - `/home/your-username/your-project/folder/file.ext`
 - **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder`
+- **\${relativeFileDirname}**: - `folder/`
 - **\${fileBasename}**: - `file.ext`
 - **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - line number of the cursor
 

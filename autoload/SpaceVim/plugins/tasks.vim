@@ -38,29 +38,17 @@ function! s:load() abort
 endfunction
 
 function! s:init_variables() abort
-  " ${workspaceFolder} - /home/your-username/your-project
-  let s:variables.workspaceFolder = SpaceVim#plugins#projectmanager#current_root()
-  " ${workspaceFolderBasename} - your-project
+  let s:variables.workspaceFolder = s:FILE.unify_path(SpaceVim#plugins#projectmanager#current_root())
   let s:variables.workspaceFolderBasename = fnamemodify(s:variables.workspaceFolder, ':t')
-  " ${file} - /home/your-username/your-project/folder/file.ext
   let s:variables.file = s:FILE.unify_path(expand('%:p'))
-  " ${relativeFile} - folder/file.ext
   let s:variables.relativeFile = s:FILE.unify_path(expand('%'), ':.')
-  " ${relativeFileDirname} - folder
   let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%'), ':h')
-  " ${fileBasename} - file.ext
   let s:variables.fileBasename = expand('%:t')
-  " ${fileBasenameNoExtension} - file
   let s:variables.fileBasenameNoExtension = expand('%:t:r')
-  " ${fileDirname} - /home/your-username/your-project/folder
   let s:variables.fileDirname = s:FILE.unify_path(expand('%:p:h'))
-  " ${fileExtname} - .ext
   let s:variables.fileExtname = expand('%:e')
-  " ${lineNumber} - line number of the cursor
   let s:variables.lineNumber = line('.')
-  " ${selectedText} - text selected in your code editor
   let s:variables.selectedText = ''
-  " ${execPath} - location of Code.exe
   let s:variables.execPath = ''
 endfunction
 
