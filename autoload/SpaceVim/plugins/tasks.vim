@@ -38,7 +38,7 @@ function! s:init_variables() abort
   " ${file} - /home/your-username/your-project/folder/file.ext
   let s:variables.file = s:FILE.unify_path(expand('%:p'))
   " ${relativeFile} - folder/file.ext
-  let s:variables.relativeFile = s:FILE.unify_path(expand('%'))
+  let s:variables.relativeFile = s:FILE.unify_path(expand('%'), ':.')
   " ${relativeFileDirname} - folder
   let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%'), ':h')
   " ${fileBasename} - file.ext

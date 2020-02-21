@@ -1,8 +1,8 @@
 [file-build]
-    command = 'gcc $(VIM_FILE) -o $(TARGET_DIR)/$(VIM_FILE_NOEXT)'
+    command = 'echo ${relativeFile}'
     isBackground = false
 [file-build.options]
-    cmd = '$(workspace)'
+    cmd = '${workspaceFolder}'
 [file-run]
     command = "echo"
     args = ['hello']
