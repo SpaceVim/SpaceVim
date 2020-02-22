@@ -152,6 +152,7 @@ function! SpaceVim#plugins#tasks#edit(...)
 endfunction
 
 function! s:detect_npm_tasks() abort
+  let conf = {}
   if filereadable('package.json')
       let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
