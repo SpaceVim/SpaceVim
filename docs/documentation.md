@@ -78,6 +78,8 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Custom alternate file](#custom-alternate-file)
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
+    - [Task auto-detection](#task-auto-detection)
+    - [Custom tasks](#custom-tasks)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -1717,6 +1719,17 @@ file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configura
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
+
+#### Task auto-detection
+
+SpaceVim currently auto-detects tasks for npm.
+the tasks manager will paser the `package.json` file for npm systems.
+If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
+then pressing `SPC p t r` shows the following list:
+
+![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+#### Custom tasks
 
 this is basic task configuration for running `echo hello world`, and print results to runner windows.
 
