@@ -63,7 +63,13 @@ function! s:pick() abort
   let s:select_task = {}
   let ques = []
   for key in keys(s:conf)
-    let task_name = get(s:conf[key], 'isGlobal', 0) ? key : key . '(global)'
+    if has_key(s:conf[key], 'isGlobal') && s:conf[key].isGlobal
+      let task_name = key . '(global)'
+    elseif has_key(s:conf[key], 'isDetected') && s:conf[key].isDetected
+      let task_name = key . '(detected)'
+    else
+      let task_name = key
+    endif
     call add(ques, [task_name, function('s:select_task'), [key]])
   endfor
   call s:MENU.menu(ques)
@@ -80,6 +86,7 @@ endfunction
 
 function! SpaceVim#plugins#tasks#get()
   call s:load()
+  call s:detect_npm_tasks()
   call s:init_variables()
   let task = s:pick()
   if has_key(task, 'windows') && s:SYS.isWindows
@@ -149,5 +156,10 @@ function! s:detect_npm_tasks() abort
       let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
   if has_key(conf, 'scripts')
+    for task_name in keys(conf.scripts)
+      call extend(s:conf, {
+            \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1}
+            \ })
+    endfor
   endif
 endfunction
