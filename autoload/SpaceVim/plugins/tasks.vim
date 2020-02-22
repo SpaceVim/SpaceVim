@@ -30,6 +30,9 @@ function! s:load() abort
   let [global_conf, local_conf] = [{}, {}]
   if filereadable(expand('~/.SpaceVim.d/tasks.toml'))
     let global_conf = s:TOML.parse_file(expand('~/.SpaceVim.d/tasks.toml'))
+    for task_key in keys(global_conf)
+      let global_conf[task_key]['isGlobal'] = 1
+    endfor
   endif
   if filereadable('.SpaceVim.d/tasks.toml')
     let local_conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
@@ -60,7 +63,8 @@ function! s:pick() abort
   let s:select_task = {}
   let ques = []
   for key in keys(s:conf)
-    call add(ques, [key, function('s:select_task'), [key]])
+    let task_name = get(s:conf[key], 'isGlobal', 0) ? key : key . '(global)'
+    call add(ques, [task_name, function('s:select_task'), [key]])
   endfor
   call s:MENU.menu(ques)
   return s:select_task
@@ -144,5 +148,6 @@ function! s:detect_npm_tasks() abort
   if filereadable('package.json')
       let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
-  
+  if has_key(conf, 'scripts')
+  endif
 endfunction
