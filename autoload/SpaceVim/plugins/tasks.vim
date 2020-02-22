@@ -66,7 +66,7 @@ function! s:pick() abort
     if has_key(s:conf[key], 'isGlobal') && s:conf[key].isGlobal
       let task_name = key . '(global)'
     elseif has_key(s:conf[key], 'isDetected') && s:conf[key].isDetected
-      let task_name = key . '(detected)'
+      let task_name = s:conf[key].detectedName . key . '(detected)'
     else
       let task_name = key
     endif
@@ -158,7 +158,7 @@ function! s:detect_npm_tasks() abort
   if has_key(conf, 'scripts')
     for task_name in keys(conf.scripts)
       call extend(s:conf, {
-            \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1}
+            \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1, 'detectedName' : 'npm:'}
             \ })
     endfor
   endif
