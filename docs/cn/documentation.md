@@ -79,6 +79,8 @@ lang: zh
     - [自定义跳转文件](#自定义跳转文件)
   - [标签管理](#标签管理)
   - [任务管理](#任务管理)
+    - [任务自动识别](#任务自动识别)
+    - [自定义任务](#自定义任务)
   - [Iedit 多光标编辑](#iedit-多光标编辑)
     - [Iedit 快捷键](#iedit-快捷键)
   - [高亮光标下变量](#高亮光标下变量)
@@ -1691,6 +1693,19 @@ endfunction
 | ------------ | ----------------------------- |
 | `SPC p t e`  | 编辑任务配置文件 |
 | `SPC p t r`  | 选定任务并执行            |
+
+
+#### 任务自动识别
+
+SpaceVim 目前支持自动识别以下构建系统的任务：npm。
+任务管理插件将自动读取并分析 npm 系统的文件`package.json`。
+比如，克隆示例项目 [eslint-starter](https://github.com/spicydonuts/eslint-starter)，
+编辑其中的任意文件，然后按下快捷键`SPC p t r`，将会显示如下任务列表：
+
+![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+
+#### 自定义任务
 
 以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。
 
