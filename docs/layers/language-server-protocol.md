@@ -134,7 +134,7 @@ npm install -g elm elm-test elm-format
 
 ## Configuration
 
-To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
+To enable lsp support for a specified filetype, you may need to load this layer with `filetypes` option, for example:
 
 ```toml
 [[layers]]
