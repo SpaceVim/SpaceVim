@@ -139,3 +139,10 @@ function! SpaceVim#plugins#tasks#edit(...)
     exe 'e .SpaceVim.d/tasks.toml'
   endif
 endfunction
+
+function! s:detect_npm_tasks() abort
+  if filereadable('package.json')
+      let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
+  endif
+  
+endfunction
