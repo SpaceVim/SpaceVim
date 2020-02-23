@@ -87,8 +87,8 @@ endfunction
 
 function! SpaceVim#plugins#tasks#get()
   call s:load()
-  for provider in s:providers
-    call call(provider, [])
+  for Provider in s:providers
+    call call(Provider, [])
   endfor
   call s:init_variables()
   let task = s:pick()
