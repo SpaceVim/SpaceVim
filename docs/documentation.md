@@ -1745,18 +1745,34 @@ here is an example for building task provider.
 ```vim
 function! s:make_tasks() abort
     if filereadable('Makefile')
-        return {
-             \ 'make:build' {
-                         \ 'command': 'make',
-                         \ 'args' : ['build']
-                         \ }
-             \ }
+        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        if !empty(subcmd)
+            let commands = split(subcmd[0])[1:]
+            let conf = {}
+            for cmd in commands
+                call extend(conf, {
+                            \ cmd : {
+                            \ 'command': 'make',
+                            \ 'args' : [cmd],
+                            \ 'isDetected' : 1,
+                            \ 'detectedName' : 'make:'
+                            \ }
+                            \ })
+            endfor
+            return conf
+        else
+            return {}
+        endif
     else
         return {}
     endif
 endfunction
 call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
 ```
+
+with above configuration, you will see following tasks in SpaceVim repo:
+
+![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
 
 #### Custom tasks
 
