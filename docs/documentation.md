@@ -79,6 +79,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
     - [Task auto-detection](#task-auto-detection)
+    - [Task provider](#task-provider)
     - [Custom tasks](#custom-tasks)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
@@ -1728,6 +1729,34 @@ If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-st
 then pressing `SPC p t r` shows the following list:
 
 ![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+
+#### Task provider
+
+Some tasks can be automatically detected by task provider. For example,
+a Task Provider could check if there is a specific build file, such as `package.json`,
+and create npm tasks. 
+
+To build a task provider, you need to use Bootstrap function. The task provider should be a vim function.
+and return a task object. 
+
+here is an example for building task provider.
+
+```vim
+function! s:make_tasks() abort
+    if filereadable('Makefile')
+        return {
+             \ 'make:build' {
+                         \ 'command': 'make',
+                         \ 'args' : ['build']
+                         \ }
+             \ }
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+```
 
 #### Custom tasks
 
