@@ -1,10 +1,1 @@
-[file-build]
-    command = 'echo ${relativeFile}'
-    isBackground = false
-[file-build.options]
-    cmd = '${workspaceFolder}'
-[file-run]
-    command = "echo"
-    args = ['hello']
-    isBackground = false
 

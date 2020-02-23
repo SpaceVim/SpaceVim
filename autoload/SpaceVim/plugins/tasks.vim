@@ -24,6 +24,7 @@ let s:select_task = {}
 let s:conf = []
 let s:bufnr = -1
 let s:variables = {}
+let s:providers = []
 
 
 function! s:load() abort
@@ -86,7 +87,9 @@ endfunction
 
 function! SpaceVim#plugins#tasks#get()
   call s:load()
-  call s:detect_npm_tasks()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
   call s:init_variables()
   let task = s:pick()
   if has_key(task, 'windows') && s:SYS.isWindows
@@ -152,15 +155,23 @@ function! SpaceVim#plugins#tasks#edit(...)
 endfunction
 
 function! s:detect_npm_tasks() abort
+  let detect_task = {}
   let conf = {}
   if filereadable('package.json')
       let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
   if has_key(conf, 'scripts')
     for task_name in keys(conf.scripts)
-      call extend(s:conf, {
+      call extend(detect_task, {
             \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1, 'detectedName' : 'npm:'}
             \ })
     endfor
   endif
+  return detect_task
 endfunction
+
+function! SpaceVim#plugins#tasks#reg_provider(provider)
+  call add(s:providers, a:provider)
+endfunction
+
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))
