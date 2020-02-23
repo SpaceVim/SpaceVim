@@ -88,7 +88,7 @@ endfunction
 function! SpaceVim#plugins#tasks#get()
   call s:load()
   for Provider in s:providers
-    call call(Provider, [])
+    call extend(s:conf, call(Provider, []))
   endfor
   call s:init_variables()
   let task = s:pick()
@@ -155,17 +155,19 @@ function! SpaceVim#plugins#tasks#edit(...)
 endfunction
 
 function! s:detect_npm_tasks() abort
+  let detect_task = {}
   let conf = {}
   if filereadable('package.json')
       let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
   if has_key(conf, 'scripts')
     for task_name in keys(conf.scripts)
-      call extend(s:conf, {
+      call extend(detect_task, {
             \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1, 'detectedName' : 'npm:'}
             \ })
     endfor
   endif
+  return detect_task
 endfunction
 
 function! SpaceVim#plugins#tasks#reg_provider(provider)
