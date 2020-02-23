@@ -24,6 +24,7 @@ let s:select_task = {}
 let s:conf = []
 let s:bufnr = -1
 let s:variables = {}
+let s:providers = []
 
 
 function! s:load() abort
@@ -86,7 +87,9 @@ endfunction
 
 function! SpaceVim#plugins#tasks#get()
   call s:load()
-  call s:detect_npm_tasks()
+  for provider in s:providers
+    call call(provider, [])
+  endfor
   call s:init_variables()
   let task = s:pick()
   if has_key(task, 'windows') && s:SYS.isWindows
@@ -164,3 +167,9 @@ function! s:detect_npm_tasks() abort
     endfor
   endif
 endfunction
+
+function! SpaceVim#plugins#tasks#reg_provider(provider)
+  call add(s:providers, a:provider)
+endfunction
+
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))
