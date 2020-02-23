@@ -80,6 +80,7 @@ lang: zh
   - [标签管理](#标签管理)
   - [任务管理](#任务管理)
     - [任务自动识别](#任务自动识别)
+    - [任务提供源](#任务提供源)
     - [自定义任务](#自定义任务)
   - [Iedit 多光标编辑](#iedit-多光标编辑)
     - [Iedit 快捷键](#iedit-快捷键)
@@ -1703,6 +1704,49 @@ SpaceVim 目前支持自动识别以下构建系统的任务：npm。
 编辑其中的任意文件，然后按下快捷键`SPC p t r`，将会显示如下任务列表：
 
 ![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+#### 任务提供源
+
+任务提供源可以自动检测并新建任务。例如，一个任务提供源可以自动检测是否存在项目构建文件，比如：`package.json`，
+如果存在则根据其内容创建 npm 的构建任务。
+
+
+在 SpaceVim 里，如果需要新建任务提供源，需要使用启动函数，任务提供源是一个 Vim 函数，该函数返回一系列任务对象。
+
+以下为一个简单的示例：
+
+
+```vim
+function! s:make_tasks() abort
+    if filereadable('Makefile')
+        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        if !empty(subcmd)
+            let commands = split(subcmd[0])[1:]
+            let conf = {}
+            for cmd in commands
+                call extend(conf, {
+                            \ cmd : {
+                            \ 'command': 'make',
+                            \ 'args' : [cmd],
+                            \ 'isDetected' : 1,
+                            \ 'detectedName' : 'make:'
+                            \ }
+                            \ })
+            endfor
+            return conf
+        else
+            return {}
+        endif
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+```
+
+将以上内容加入启动函数，在 SpceVim 仓库内按下 `SPC p t r` 快捷键，将会展示如下任务：
+
+![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
 
 
 #### 自定义任务
