@@ -171,13 +171,13 @@ function! s:open_default_shell(open_with_file_cwd) abort
         \ s:default_position ==# 'right' ?
         \ 'rightbelow vsplit' : 'leftabove vsplit'
   if s:default_position == 'float'
-    let s:term_win_id =  s:FLOAT.open_win(bufnr(0), v:true,
+    let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
           \ 'height'  : &lines * s:default_height / 100,
-          \ 'row': &lines - (&lines * s:default_height / 100) - 2,
-          \ 'col': 0
+          \ 'row': 0,
+          \ 'col': &lines - (&lines * s:default_height / 100) - 2
           \ })
 
     exe win_id2win(s:term_win_id) .  'wincmd w'
