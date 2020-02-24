@@ -183,12 +183,12 @@ function! s:open_default_shell(open_with_file_cwd) abort
     exe win_id2win(s:term_win_id) .  'wincmd w'
   else
     exe cmd
-    let w:shell_layer_win = 1
     let lines = &lines * s:default_height / 100
     if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
       exe 'resize ' . lines
     endif
   endif
+  let w:shell_layer_win = 1
   for open_terminal in s:open_terminals_buffers
     if bufexists(open_terminal)
       if getbufvar(open_terminal, '_spacevim_shell_cwd') ==# l:path

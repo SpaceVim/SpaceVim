@@ -13,6 +13,7 @@ description: "This layer provide shell support in SpaceVim"
   - [Default shell](#default-shell)
   - [Default shell position and height](#default-shell-position-and-height)
 - [Key bindings](#key-bindings)
+  - [Additional key bindings on Windows](#additional-key-bindings-on-windows)
 
 <!-- vim-markdown-toc -->
 
@@ -45,8 +46,8 @@ The default shell is quickly accessible via a the default shortcut key `SPC '`.
 ### Default shell position and height
 
 It is possible to choose where the shell should pop up by setting the
-variable `default_position` to either `top`, `bottom`, `left`, `right`, or
-`full`. Default value is `top`. It is also possible to set the default height
+variable `default_position` to either `top`, `bottom`, `left`, `right`, `float`
+or `full`. Default value is `top`. It is also possible to set the default height
 in percents with the variable `default_height`. Default value is 30.
 
 ```toml
