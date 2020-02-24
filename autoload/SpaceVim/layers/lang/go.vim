@@ -72,7 +72,7 @@ function! SpaceVim#layers#lang#go#config() abort
 endfunction
 
 function! s:go_to_def() abort
-  call go#def#Jump('')
+  call go#def#Jump('', 0)
 endfunction
 
 function! s:language_specified_mappings() abort
