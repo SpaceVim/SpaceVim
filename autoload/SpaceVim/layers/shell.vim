@@ -23,6 +23,7 @@
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:FLOAT = SpaceVim#api#import('neovim#floating')
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
@@ -122,7 +123,7 @@ endfunction
 
 function! SpaceVim#layers#shell#get_options() abort
 
-  return ['default_shell', 'default_position', 'default_height']
+  return ['default_shell', 'default_position', 'default_height',]
 
 endfunction
 
@@ -169,12 +170,25 @@ function! s:open_default_shell(open_with_file_cwd) abort
         \ 'botright split' :
         \ s:default_position ==# 'right' ?
         \ 'rightbelow vsplit' : 'leftabove vsplit'
-  exe cmd
-  let w:shell_layer_win = 1
-  let lines = &lines * s:default_height / 100
-  if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
-    exe 'resize ' . lines
+  if s:default_position == 'float'
+    let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : &lines * s:default_height / 100,
+          \ 'row': 0,
+          \ 'col': &lines - (&lines * s:default_height / 100) - 2
+          \ })
+
+    exe win_id2win(s:term_win_id) .  'wincmd w'
+  else
+    exe cmd
+    let lines = &lines * s:default_height / 100
+    if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
+      exe 'resize ' . lines
+    endif
   endif
+  let w:shell_layer_win = 1
   for open_terminal in s:open_terminals_buffers
     if bufexists(open_terminal)
       if getbufvar(open_terminal, '_spacevim_shell_cwd') ==# l:path
