@@ -28,7 +28,7 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add Rust language support in SpaceVim, you need to enable the `lang#rust` layer. Press `SPC f v d` to open
+To add rust language support in SpaceVim, you need to enable the `lang#rust` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add the following snippet:
 
 ```toml
@@ -49,12 +49,6 @@ The completion menu will be opened as you type.
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
 It will run rustc asynchronously.
-
-Install perlcritic via cpan:
-
-```sh
-cpanm Perl::Critic
-```
 
 ![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
 
@@ -83,10 +77,10 @@ It is running asynchronously, and will not block your Vim.
 ### Code formatting
 
 The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install perltidy:
+Before using this feature, please install rustfmt:
 
 ```sh
-cpanm Perl::Tidy
+rustup component add rustfmt
 ```
 
 ### REPL support
