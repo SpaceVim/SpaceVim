@@ -51,7 +51,11 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
   name = "lsp"
 ```
 
-lsp 模块默认使用 `php-language-server` 作为 Rust 的语言服务器后台命令。
+lsp 模块默认使用 [rls](https://github.com/rust-lang/rls) 作为 Rust 的语言服务器后台命令，使用如下命令安装rls：
+
+```sh
+rustup component add rls rust-analysis rust-src
+```
 
 在配置文件中添加如下内容即可为 Rust 启用语言服务器：
 
@@ -59,22 +63,16 @@ lsp 模块默认使用 `php-language-server` 作为 Rust 的语言服务器后�
 [[layers]]
   name = "lsp"
   filetypes = [
-    "php"
+    "rust"
   ]
   [layers.override_cmd]
-    php = ["php-language-server"]
+    php = ["rls"]
 ```
 
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 Rust 的支持，是通过异步调用 [psalm](https://github.com/vimeo/psalm) 命令来完成的。
-
-使用  composer 安装 paslm 命令：
-
-```sh
-composer require --dev vimeo/psalm
-```
+这一异步语法检查工具。对于 Rust 的支持，是通过异步调用 rustc。
 
 ### 工程文件跳转
 
@@ -82,8 +80,8 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ```json
 {
-  "src/*.php": {"alternate": "test/{}.php"},
-  "test/*.php": {"alternate": "src/{}.php"}
+  "src/*.rs": {"alternate": "test/{}.rs"},
+  "test/*.rs": {"alternate": "src/{}.rs"}
 }
 ```
 
@@ -92,17 +90,18 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ### 代码格式化
 
-Rust 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 php_beautifier，默认快捷键为 `SPC b f` ：
+Rust 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 [rustfmt](https://github.com/rust-lang/rustfmt)，
+默认快捷键为 `SPC b f` ：
 
 ```toml
 [[layers]]
   name = "format"
 ```
 
-使用 pear 安装 PHP_Beautifier：
+使用 rustup 安装 rustfmt：
 
 ```sh
-pear install PHP_Beautifier
+rustup component add rustfmt
 ```
 
 
