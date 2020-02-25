@@ -95,6 +95,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','e'],
         \ '<Plug>(go-rename)',
         \ 'go rename', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','f'],
+        \ ':GoFmt',
+        \ 'format current file', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g'],
         \ '<Plug>(go-def)',
         \ 'go def', 0)

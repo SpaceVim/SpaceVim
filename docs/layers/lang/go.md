@@ -54,6 +54,7 @@ go get -u github.com/jstemmer/gotags
 | `SPC l d`    | go doc                    |
 | `SPC l D`    | go doc vertical           |
 | `SPC l e`    | go rename                 |
+| `SPC l f`    | go format current file    |
 | `SPC l g`    | go definition             |
 | `SPC l G`    | go generate               |
 | `SPC l h`    | go info                   |
