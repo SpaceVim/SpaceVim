@@ -33,6 +33,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_ft'))
+  call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
 endfunction
 
 function! SpaceVim#layers#lang#typescript#set_variable(var) abort
@@ -73,8 +74,6 @@ function! s:on_ft() abort
             \ 'preview definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'TSRefs',
             \ 'references', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'], 'TSSearch <C-R><C-W> *<CR>',
-            \ 'search', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
     else
@@ -96,6 +95,20 @@ function! s:on_ft() abort
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
         \ 'generate JSDoc', 1)
+
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("typescript")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 
 endfunction
 

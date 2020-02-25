@@ -10,8 +10,6 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
 
-" @question any other recommanded tag?
-let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
 
 let [
       \ s:grep_default_exe,
@@ -34,17 +32,35 @@ function! s:open_win() abort
     exe 'bd ' . s:bufnr
   endif
   botright split __todo_manager__
+  " @todo add win_getid api
+  let s:winid = win_getid(winnr('#'))
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimTodoManager
   let s:bufnr = bufnr('%')
   call s:update_todo_content()
+  augroup spacevim_plugin_todo
+    autocmd! * <buffer>
+    autocmd WinEnter <buffer> call s:WinEnter()
+  augroup END
   nnoremap <buffer><silent> <Enter> :call <SID>open_todo()<cr>
+endfunction
+
+function! s:WinEnter() abort
+  " @todo add win_getid api
+  let s:winid = win_getid(winnr('#'))
 endfunction
 
 " @todo Improve todo manager
 function! s:update_todo_content() abort
+  if exists('g:spacevim_todo_labels')
+        \ && type(g:spacevim_todo_labels) == type([])
+        \ && !empty(g:spacevim_todo_labels)
+    let s:labels = g:spacevim_todo_labels
+  else
+    let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+  endif
   let s:todos = []
   let s:todo = {}
   let argv = [s:grep_default_exe] + 
@@ -128,6 +144,8 @@ function! s:open_todo() abort
     close
   catch
   endtry
+  " @todo add win_gotoid api
+  call win_gotoid(s:winid)
   exe 'e ' . todo.file
   call cursor(todo.line, todo.column)
   noautocmd normal! :

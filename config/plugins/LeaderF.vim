@@ -1,6 +1,6 @@
 scriptencoding utf-8
 let g:Lf_StlSeparator = get(g:, 'Lf_StlSeparator', { 'left': '', 'right': '' })
-let g:Lf_StlColorscheme = g:spacevim_colorscheme
+let g:Lf_StlColorscheme = get(g:, 'spacevim_colorscheme', 'default')
 " disable default mru
 
 " disable default mru, and use neomru by default

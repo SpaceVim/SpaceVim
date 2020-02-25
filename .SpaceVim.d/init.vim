@@ -32,4 +32,5 @@ call SpaceVim#plugins#a#set_config_name('.projections.json')
 command! -nargs=1 IssueEdit call SpaceVim#dev#issuemanager#edit(<f-args>)
 command! -nargs=1 PullCreate call SpaceVim#dev#pull#create(<f-args>)
 command! -nargs=1 PullMerge call SpaceVim#dev#pull#merge(<f-args>)
+command! ReleaseSpaceVim call SpaceVim#dev#releases#open()
 

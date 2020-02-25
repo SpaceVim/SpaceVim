@@ -27,6 +27,8 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   elseif g:spacevim_filemanager ==# 'defx'
     call add(plugins, ['Shougo/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(plugins, ['kristijanhusak/defx-git',{'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, ['kristijanhusak/defx-icons',{'merged' : 0}])
   endif
 
   if !g:spacevim_vimcompatible
@@ -219,6 +221,7 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'Y'], 'call SpaceVim#util#CopyToClipboard(1)', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -256,7 +259,11 @@ function! SpaceVim#layers#core#config() abort
         \ ]
         \ , 1)
   let g:vimproc#download_windows_dll = 1
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
+  let g:_spacevim_mappings_space.p.t = {'name' : '+Tasks'}
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'e'], 'call SpaceVim#plugins#tasks#edit()', 'edit-project-task', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'r'],
+        \ 'call SpaceVim#plugins#runner#run_task(SpaceVim#plugins#tasks#get())', 'pick-task-to-run', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill-all-project-buffers', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'p'], 'call SpaceVim#plugins#projectmanager#list()', 'list-all-projects', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', '/'], 'Grepper', 'fuzzy search for text in current project', 1)
@@ -279,18 +286,19 @@ function! SpaceVim#layers#core#config() abort
   "
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
+  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
+  nnoremap <silent> <Plug>CommenterInvertYank :call <SID>comment_invert_yank()<Cr>
+  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
+  nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
+  nnoremap <silent> <Plug>CommentParagraphsInvert :call <SID>comment_paragraphs(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['c', 'l'], '<Plug>NERDCommenterInvert', 'toggle-comment-lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'L'], '<Plug>NERDCommenterComment', 'comment-lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'u'], '<Plug>NERDCommenterUncomment', 'uncomment-lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'v'], '<Plug>NERDCommenterInvertgv', 'toggle-visual-comment-lines', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 's'], '<Plug>NERDCommenterSexy', 'comment-with-sexy-layout', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['c', 'y'], '<Plug>CommenterInvertYank', 'yank-and-toggle-comment', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'Y'], '<Plug>NERDCommenterYank', 'yank-and-comment', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', '$'], '<Plug>NERDCommenterToEOL', 'comment-from-cursor-to-end-of-line', 0, 1)
-
-  nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
-  nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-  nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
-  nnoremap <silent> <Plug>CommentParagraphsInvert :call <SID>comment_paragraphs(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['c', 't'], '<Plug>CommentToLineInvert', 'toggle-comment-until-line', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'T'], '<Plug>CommentToLine', 'comment-until-the-line', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['c', 'p'], '<Plug>CommentParagraphsInvert', 'toggle-comment-paragraphs', 0, 1)
@@ -402,26 +410,61 @@ function! s:previous_window() abort
   endtry
 endfunction
 
+let g:string_info = {
+      \ 'vim' : {
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ },
+      \ 'java' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '',
+      \ },
+      \ 'perl' : {
+      \ 'connect' : '.',
+      \ 'line_prefix' : '\',
+      \ },
+      \ 'python' : {
+      \ 'connect' : '+',
+      \ 'line_prefix' : '\',
+      \ 'quotes_hi' : ['pythonQuotes']
+      \ },
+      \ }
+
 function! s:split_string(newline) abort
   if s:is_string(line('.'), col('.'))
+    let save_cursor = getcurpos()
     let c = col('.')
     let sep = ''
     while c > 0
       if s:is_string(line('.'), c)
         let c -= 1
       else
-        let sep = getline('.')[c]
+        if !empty(get(get(g:string_info, &filetype, {}), 'quotes_hi', []))
+          let sep = getline('.')[c - 1]
+        else
+          let sep = getline('.')[c]
+        endif
         break
       endif
     endwhile
-    let l:connector = a:newline ? "\n" : ''
-    let l:save_register_m = @m
-    let @m = sep . l:connector . sep
-    normal! "mp
-    let @m = l:save_register_m
-    if a:newline
-      normal! j==k$
+    let addedtext = a:newline ? "\n" . get(get(g:string_info, &filetype, {}), 'line_prefix', '') : ''
+    let connect = get(get(g:string_info, &filetype, {}), 'connect', '')
+    if !empty(connect)
+      let connect = ' ' . connect . ' '
     endif
+    if a:newline
+      let addedtext = addedtext . connect
+    else
+      let addedtext = connect
+    endif
+    let save_register_m = @m
+    let @m = sep . addedtext . sep
+    normal! "mp
+    let @m = save_register_m
+    if a:newline
+      normal! j==
+    endif
+    call setpos('.', save_cursor)
   endif
 endfunction
 
@@ -430,6 +473,7 @@ endfunction
 let s:string_hi = {
       \ 'c' : 'cCppString',
       \ 'cpp' : 'cCppString',
+      \ 'python' : 'pythonString',
       \ }
 
 function! s:is_string(l, c) abort
@@ -672,6 +716,15 @@ function! s:comment_to_line(invert) abort
   else
     call feedkeys("\<Plug>NERDCommenterComment")
   endif
+endfunction
+
+function! s:comment_invert_yank() abort
+  if mode() ==# 'n'
+    normal! yy
+  elseif mode() ==? 'v'
+    normal! y
+  endif
+  call feedkeys("\<Plug>NERDCommenterInvert")
 endfunction
 
 function! s:better_easymotion_overwin_line(is_visual) abort

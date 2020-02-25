@@ -39,7 +39,7 @@ function! s:parseItems(items) abort
   let items = {}
   for item in a:items
     let id = index(a:items, item) + 1
-    let items[id] = ['(' . id . ')' . item[0], item[1]]
+    let items[id] = ['(' . id . ')' . item[0]] + item[1:]
   endfor
   return items
 endfunction
@@ -56,6 +56,7 @@ endfunction
 " should be a funcrc.
 
 function! s:menu(items) abort
+  let cancelled = 0
   let saved_more = &more
   let save_cmdheight = &cmdheight
   set nomore
@@ -78,34 +79,42 @@ function! s:menu(items) abort
         let menu .= indent . ' ' . items[id][0] . "\n"
       endif
     endfor
+    redraw!
     echo menu[:-2]
     let nr = getchar()
     if s:parseInput(nr) ==# '' || nr == 3
       let exit = 1
-      redraw
+      let cancelled = 1
+      normal! :
     elseif index(keys(items), nr2char(nr)) != -1  || nr == 13
       if nr != 13
         let selected = nr2char(nr)
       endif
       let Value =  items[selected][1]
-      redraw
+      normal! :
       if type(Value) == 2
-        call call(Value, [])
+        let args = get(items[selected], 2, [])
+        call call(Value, args)
       elseif type(Value) == type('') && !empty(Value)
         execute Value
       endif
       let exit = 1
-    elseif nr2char(nr) ==# 'j'
+    elseif nr2char(nr) ==# 'j' || nr ==# 9
       let selected = s:nextItem(keys(items), selected)
-      redraw
-    elseif nr2char(nr) ==# 'k'
+      normal! :
+    elseif nr2char(nr) ==# 'k' || nr ==# "\<S-Tab>"
       let selected = s:previousItem(keys(items), selected)
-      redraw
+      normal! :
+    else
+      normal! :
     endif
   endwhile
   let &more = saved_more
   let &cmdheight = save_cmdheight
   redraw!
+  if cancelled
+    echo 'cancelled!'
+  endif
 endfunction
 
 let s:api['menu'] = function('s:menu')

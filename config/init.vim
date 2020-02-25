@@ -41,7 +41,9 @@ if s:SYSTEM.isWindows
   if has('multi_byte')
     " Windows cmd.exe still uses cp850. If Windows ever moved to
     " Powershell as the primary terminal, this would be utf-8
-    set termencoding=cp850
+    if exists('&termencoding') && !has('nvim')
+      set termencoding=cp850
+    endif
     setglobal fileencoding=utf-8
     " Windows has traditionally used cp1252, so it's probably wise to
     " fallback into cp1252 instead of eg. iso-8859-15.
@@ -51,7 +53,9 @@ if s:SYSTEM.isWindows
   endif
 
 else
-  set termencoding=utf-8
+  if exists('&termencoding') && !has('nvim')
+    set termencoding=utf-8
+  endif
   set fileencoding=utf-8
   set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 endif

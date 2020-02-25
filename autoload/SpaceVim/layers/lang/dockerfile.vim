@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#lang#dockerfile#plugins() abort
   let plugins = []
-  call add(plugins, ['ekalinin/Dockerfile.vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-dockerfile', {'merged' : 0}])
   return plugins
 endfunction
 

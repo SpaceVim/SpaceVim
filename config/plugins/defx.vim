@@ -14,7 +14,20 @@ else
   let s:direction = 'leftabove'
 endif
 
+function! s:setcolum() abort
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:icons:filename:type'
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:icons:filename:type'
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:git:icons:filename:type'
+  else
+    return 'mark:indent:icon:filename:type'
+  endif
+endfunction
+
 call defx#custom#option('_', {
+      \ 'columns': s:setcolum(),
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
@@ -30,8 +43,8 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#column('icon', {
-      \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'directory_icon': '▶',
+      \ 'opened_icon': '▼',
       \ 'root_icon': ' ',
       \ })
 

@@ -9,11 +9,31 @@
 ""
 " @section lang#elixir, layer-lang-elixir
 " @parentsection layers
-" @subsection Intro
-" The lang#elixir layer provides code completion, documentation lookup, jump to
-" definition, mix integration, and iex integration for Elixir. SpaceVim
-" uses neomake as default syntax checker which is loaded in
-" @section(layer-checkers)
+" This layer is for elixir development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#elixir'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+"   normal          g d             jump to definition
+" <
+"
+" This layer also provides REPL support for d, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#elixir#plugins() abort
   let plugins = []
@@ -26,6 +46,7 @@ endfunction
 
 
 function! SpaceVim#layers#lang#elixir#config() abort
+  call SpaceVim#plugins#runner#reg_runner('elixir', 'elixir %s')
   call SpaceVim#plugins#repl#reg('elixir', 'iex')
   call SpaceVim#mapping#space#regesit_lang_mappings('elixir', function('s:language_specified_mappings'))
   call SpaceVim#mapping#gd#add('elixir', function('s:go_to_def'))
@@ -47,6 +68,8 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
           \ 'call alchemist#jump_tag_stack()', 'jump to tag stack', 1)
   endif
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("elixir")',
@@ -69,3 +92,6 @@ function! s:go_to_def() abort
     ExDef
   endif
 endfunction
+
+
+" vim:set et sw=2 cc=80:

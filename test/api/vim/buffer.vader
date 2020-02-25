@@ -6,7 +6,7 @@ Execute ( SpaceVim api: vim#buffer open ):
 
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
   let buffer = SpaceVim#api#import('vim#buffer')
-  let nr = bufadd('')
+  let nr = buffer.bufadd('')
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
@@ -17,3 +17,6 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 1', 'replace 2', 'replace 3']
   call buffer.buf_set_lines(nr, 2, -2, 0, ['replace 1', 'replace 2', 'replace 3'])
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 1', 'replace 2', 'replace 3', 'replace 3']
+  exe 'bd!' nr
+  unlet nr
+  unlet buffer

@@ -10,7 +10,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
 <!-- vim-markdown-toc GFM -->
 
 - [Next](#next)
-  - [v1.3.0](#v130)
+  - [v1.4.0](#v140)
 - [Meta](#meta)
 - [Completed](#completed)
   - [v0.1.0](#v010)
@@ -25,12 +25,14 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
   - [v0.9.0](#v090)
   - [v1.0.0](#v100)
   - [v1.1.0](#v110)
+  - [v1.2.0](#v120)
+  - [v1.3.0](#v130)
 
 <!-- vim-markdown-toc -->
 
 ## Next
 
-### [v1.3.0](https://github.com/SpaceVim/SpaceVim/milestone/16)
+### [v1.4.0](https://github.com/SpaceVim/SpaceVim/milestone/17)
 
 ## Meta
 
@@ -42,7 +44,7 @@ There are release milestones and meta milestones ("buckets").
 - [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
-<!-- call SpaceVim#dev#roadmap#updateCompletedItems() -->
+<!-- call SpaceVim#dev#roadmap#updateCompletedItems('en') -->
 
 <!-- SpaceVim roadmap completed items start -->
 
@@ -132,8 +134,14 @@ release note: [v1.0.0](http://spacevim.org/SpaceVim-release-v1.0.0/)
 
 ### [v1.1.0](https://github.com/SpaceVim/SpaceVim/milestone/14)
 
-First stable release of SpaceVim
-
 release note: [v1.1.0](http://spacevim.org/SpaceVim-release-v1.1.0/)
+
+### [v1.2.0](https://github.com/SpaceVim/SpaceVim/milestone/15)
+
+release note: [v1.2.0](http://spacevim.org/SpaceVim-release-v1.2.0/)
+
+### [v1.3.0](https://github.com/SpaceVim/SpaceVim/milestone/16)
+
+release note: [v1.3.0](http://spacevim.org/SpaceVim-release-v1.3.0/)
 
 <!-- SpaceVim roadmap completed items end -->
