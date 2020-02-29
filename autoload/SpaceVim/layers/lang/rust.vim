@@ -68,6 +68,9 @@ function! SpaceVim#layers#lang#rust#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#rust#config() abort
+  call SpaceVim#plugins#runner#reg_runner('rust', [
+        \ 'rustc %s -o #TEMP#',
+        \ '#TEMP#'])
   let g:racer_experimental_completer = 1
   let g:racer_cmd = s:racer_cmd ==# ''
           \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
@@ -100,6 +103,7 @@ function! SpaceVim#layers#lang#rust#set_variable(var) abort
 endfunction
 
 function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 's'],
         \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'x'],
@@ -161,4 +165,13 @@ function! s:execCMD(cmd) abort
   call SpaceVim#plugins#runner#open(a:cmd)
 endfunction
 
-" vim:set et sw=2 cc=80:
+"
+"#用于更新 toolchain
+"
+" set RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+"
+" #用于更新 rustup
+"
+" set RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+"
+" vim:set et sw=2 cc=80
