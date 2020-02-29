@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Rust 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png
+image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
 excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Rust 的开发环境，简介 lang#rust 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -11,8 +11,6 @@ commentsID: "使用 Vim 搭建 Rust 开发环境"
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Rust 开发环境
-
-![phpide](https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png)
 
 SpaceVim 是一个模块化的 Vim IDE，针对 Rust 这一语言的支持主要依靠 `lang#rust` 模块以及与之相关的其它模块。
 的这篇文章主要介绍如何使用 SpaceVim 搭建 Rust 的开发环境，侧重介绍跟 Rust 开发相关使用技巧。
@@ -110,12 +108,9 @@ rustup component add rustfmt
 在编辑 Rust 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 
-![phpcoderunner](https://user-images.githubusercontent.com/13142418/57496602-79aeaf00-7306-11e9-8c18-32f00bd28307.gif)
+![rustide](https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
 
 ### 交互式编程
 
-在编辑 Rust 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
+在编辑 Rust 文件时，可通过快捷键 `SPC l s i` 启动 `rusti` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
-
-![phprepl](https://user-images.githubusercontent.com/13142418/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)
-

@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Rust IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
+image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
 excerpt: "A general guide for using SpaceVim as Rust IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
@@ -43,14 +43,10 @@ For more info, you can read the [lang#rust](../layers/lang/rust/) layer document
 `lang#rust` layer will load the rust plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![perlcomplete](https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
-
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
 It will run rustc asynchronously.
-
-![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
 
 ### Jump to test file
 
@@ -88,7 +84,4 @@ rustup component add rustfmt
 Start a `rusti` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
-
-![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
-
 

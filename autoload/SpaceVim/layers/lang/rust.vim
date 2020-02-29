@@ -71,13 +71,14 @@ function! SpaceVim#layers#lang#rust#config() abort
   call SpaceVim#plugins#runner#reg_runner('rust', [
         \ 'rustc %s -o #TEMP#',
         \ '#TEMP#'])
+  call SpaceVim#plugins#repl#reg('rust', 'rustup run nightly-2016-08-01 ~/.cargo/bin/rusti')
   let g:racer_experimental_completer = 1
   let g:racer_cmd = s:racer_cmd ==# ''
-          \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
-          \ : s:racer_cmd
+        \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
+        \ : s:racer_cmd
   let g:rustfmt_cmd = s:rustfmt_cmd ==# ''
-          \ ? get(g:, 'rustfmt_cmd', $HOME . '/.cargo/bin/rustfmt')
-          \ : s:rustfmt_cmd
+        \ ? get(g:, 'rustfmt_cmd', $HOME . '/.cargo/bin/rustfmt')
+        \ : s:rustfmt_cmd
   let g:rust_recommended_style = s:recommended_style
   let g:rustfmt_autosave = s:format_autosave
 
@@ -148,9 +149,19 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'],
           \ '<Plug>(rust-doc)', 'show documentation', 1)
   endif
-
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
-        \ 'call rustfmt#Format()' ,'format file', 1)
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("rust")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 function! s:gotodef() abort
