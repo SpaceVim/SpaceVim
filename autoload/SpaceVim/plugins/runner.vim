@@ -56,7 +56,7 @@ endfunction
 
 let s:target = ''
 
-function! s:async_run(runner) abort
+function! s:async_run(runner, ...) abort
   if type(a:runner) == type('')
     " the runner is a string, the %s will be replaced as a file name.
     try
@@ -68,11 +68,12 @@ function! s:async_run(runner) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
-    let s:job_id =  s:JOB.start(cmd,{
+    let opts = get(a:000, 0, {})
+    let s:job_id =  s:JOB.start(cmd,extend({
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
-          \ })
+          \ }, opts))
   elseif type(a:runner) ==# type([]) && len(a:runner) ==# 2
     " the runner is a list with two items
     " the first item is compile cmd, and the second one is running cmd.
@@ -222,9 +223,10 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'exit_code' : 0
         \ }
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  let opts = get(a:000, 1, {})
   if !empty(runner)
     call s:open_win()
-    call s:async_run(runner)
+    call s:async_run(runner, opts)
     call s:update_statusline()
   else
     let s:selected_language = get(s:, 'selected_language', '')
@@ -390,13 +392,17 @@ function! SpaceVim#plugins#runner#run_task(task)
   if !empty(a:task)
     let cmd = get(a:task, 'command', '') 
     let args = get(a:task, 'args', [])
+    let opts = get(a:task, 'options', {})
     if !empty(args) && !empty(cmd)
       let cmd = cmd . ' ' . join(args, ' ')
     endif
+    if !empty(opts) && has_key(opts, 'cwd') && !empty(opts.cwd)
+      let opts = {'cwd' : opts.cwd}
+    endif
     if isBackground
-      call s:run_backgroud(cmd)
+      call s:run_backgroud(cmd, opts)
     else
-      call SpaceVim#plugins#runner#open(cmd) 
+      call SpaceVim#plugins#runner#open(cmd, opts) 
     endif
   endif
 endfunction
@@ -407,10 +413,11 @@ function! s:on_backgroud_exit(job_id, data, event) abort
   echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
 endfunction
 
-function! s:run_backgroud(cmd) abort
+function! s:run_backgroud(cmd, ...) abort
   echo "task running"
+  let opts = get(a:000, 0, {})
   let s:start_time = reltime()
-  call s:JOB.start(a:cmd,{
+  call s:JOB.start(a:cmd,extend({
         \ 'on_exit' : function('s:on_backgroud_exit'),
-        \ })
+        \ }, opts))
 endfunction
