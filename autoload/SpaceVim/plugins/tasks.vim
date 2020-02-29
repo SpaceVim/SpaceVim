@@ -102,6 +102,11 @@ function! SpaceVim#plugins#tasks#get()
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
   endif
+  if has_key(task, 'options') && type(task.options) ==# 1
+    if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
+      let task.options.cwd = s:replace_variables(task.options.cwd)
+    endif
+  endif
   return task
 endfunction
 
@@ -158,7 +163,7 @@ function! s:detect_npm_tasks() abort
   let detect_task = {}
   let conf = {}
   if filereadable('package.json')
-      let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
+    let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
   if has_key(conf, 'scripts')
     for task_name in keys(conf.scripts)
