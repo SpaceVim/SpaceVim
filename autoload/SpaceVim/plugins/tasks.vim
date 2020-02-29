@@ -102,7 +102,7 @@ function! SpaceVim#plugins#tasks#get()
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
   endif
-  if has_key(task, 'options') && type(task.options) ==# 1
+  if has_key(task, 'options') && type(task.options) ==# 4
     if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
       let task.options.cwd = s:replace_variables(task.options.cwd)
     endif

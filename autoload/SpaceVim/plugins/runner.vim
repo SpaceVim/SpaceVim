@@ -73,7 +73,7 @@ function! s:async_run(runner, ...) abort
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
-          \ }), opts)
+          \ }, opts))
   elseif type(a:runner) ==# type([]) && len(a:runner) ==# 2
     " the runner is a list with two items
     " the first item is compile cmd, and the second one is running cmd.
@@ -419,5 +419,5 @@ function! s:run_backgroud(cmd, ...) abort
   let s:start_time = reltime()
   call s:JOB.start(a:cmd,extend({
         \ 'on_exit' : function('s:on_backgroud_exit'),
-        \ }), opts)
+        \ }, opts))
 endfunction
