@@ -450,10 +450,19 @@ function! s:pull(repo) abort
   endif
 endfunction
 
+function! s:get_uri(repo) abort
+  if a:repo.repo =~# '^[^/]\+/[^/]\+$'
+    let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
+    return url
+  else
+    return a:repo.repo
+  endif
+endfunction
+
 function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
+  let url = s:get_uri(a:repo)
   if get(a:repo, 'rev', '') !=# ''
     let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
   else
