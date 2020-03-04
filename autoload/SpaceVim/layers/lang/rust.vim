@@ -71,7 +71,7 @@ function! SpaceVim#layers#lang#rust#config() abort
   call SpaceVim#plugins#runner#reg_runner('rust', [
         \ 'rustc %s -o #TEMP#',
         \ '#TEMP#'])
-  call SpaceVim#plugins#repl#reg('rust', 'rustup run nightly-2016-08-01 ~/.cargo/bin/rusti')
+  call SpaceVim#plugins#repl#reg('rust', 'evcxr')
   let g:racer_experimental_completer = 1
   let g:racer_cmd = s:racer_cmd ==# ''
         \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')

@@ -81,7 +81,7 @@ rustup component add rustfmt
 
 ### REPL support
 
-Start a `rusti` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+Start a `evcxr` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
