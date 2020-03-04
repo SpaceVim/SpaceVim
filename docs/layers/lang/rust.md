@@ -11,6 +11,7 @@ description: "This layer is for Rust development, provide autocompletion, syntax
 - [Features](#features)
 - [Install](#install)
   - [Layer](#layer)
+  - [language tools](#language-tools)
 - [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
@@ -45,6 +46,10 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#rust"
 ```
+
+### language tools
+
+- [evcxr](https://github.com/google/evcxr): A REPL (Read-Eval-Print loop) for Rust.
 
 ## Layer options
 
