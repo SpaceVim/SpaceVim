@@ -112,5 +112,7 @@ rustup component add rustfmt
 
 ### 交互式编程
 
-在编辑 Rust 文件时，可通过快捷键 `SPC l s i` 启动 `rusti` 交互窗口，
+在编辑 Rust 文件时，可通过快捷键 `SPC l s i` 启动 `evcxr` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
+
+![rustrepl](https://user-images.githubusercontent.com/13142418/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
