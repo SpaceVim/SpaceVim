@@ -782,7 +782,7 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Command line mode key bidnings
 
-After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+After pressing `:`, you can switch to command line mode, here is a list of key bindings
 can be used in command line mode:
 
 | Key bindings   | Descriptions                         |
