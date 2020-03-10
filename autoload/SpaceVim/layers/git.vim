@@ -66,7 +66,7 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gita push', 'git-push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gita diff', 'view-git-diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gita blame', 'view-git-blame', 1)
   else
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git status', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
