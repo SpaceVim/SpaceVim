@@ -26,7 +26,7 @@ let s:file_node_extensions = {
       \  'erb'      : '',
       \  'slim'     : '',
       \  'ejs'      : '',
-      \  'wxml'      : '',
+      \  'wxml'     : '',
       \  'css'      : '',
       \  'less'     : '',
       \  'wxss'     : '',
@@ -102,8 +102,12 @@ let s:file_node_extensions = {
       \  'psd'      : '',
       \  'psb'      : '',
       \  'ts'       : '',
-      \  'tsx'       : '',
-      \  'jl'       : ''
+      \  'tsx'      : '',
+      \  'jl'       : '',
+      \  'ex'       : '',
+      \  'exs'      : '',
+      \  'eex'      : '',
+      \  'leex'     : '',
       \}
 
 let s:file_node_exact_matches = {
@@ -127,6 +131,7 @@ let s:file_node_exact_matches = {
       \  'react.jsx'                        : '',
       \  'Procfile'                         : '',
       \  '.vimrc'                           : '',
+      \  'mix.lock'                         : '',
       \}
 
 let s:file_node_pattern_matches = {
