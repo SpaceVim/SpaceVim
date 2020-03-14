@@ -65,7 +65,7 @@ rustup component add rls rust-analysis rust-src
     "rust"
   ]
   [layers.override_cmd]
-    php = ["rls"]
+    rust = ["rls"]
 ```
 
 ### 语法检查
