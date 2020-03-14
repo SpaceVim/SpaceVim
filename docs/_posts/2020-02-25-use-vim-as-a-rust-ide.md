@@ -23,6 +23,7 @@ Each of the following sections will be covered:
 - [Code formatting](#code-formatting)
 - [running code](#running-code)
 - [REPL support](#repl-support)
+- [Tasks manager](#tasks-manager)
 
 <!-- vim-markdown-toc -->
 
@@ -86,3 +87,39 @@ send code to inferior process. All key bindings prefix with `SPC l s`, including
 send whole buffer.
 
 ![rustrepl](https://user-images.githubusercontent.com/13142418/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
+
+### Tasks manager
+
+The tasks manager provides a function to register task provider. Adding following vim script
+into bootstrap function, then SpaceVim can detect the cargo tasks.
+
+```viml
+function! s:cargo_task() abort
+    if filereadable('Cargo.toml')
+        let commands = ['build', 'run', 'test']
+        let conf = {}
+        for cmd in commands
+            call extend(conf, {
+                        \ cmd : {
+                        \ 'command': 'cargo',
+                        \ 'args' : [cmd],
+                        \ 'isDetected' : 1,
+                        \ 'detectedName' : 'cargo:'
+                        \ }
+                        \ })
+        endfor
+        return conf
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:cargo_task'))
+```
+
+Open SpaceVim with a rust file, after pressing `SPC p t r`, you will see the following tasks menu.
+
+![image](https://user-images.githubusercontent.com/13142418/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
+
+The task will run asynchronously, and the results will be shown in the runner buffer.
+
+![image](https://user-images.githubusercontent.com/13142418/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)

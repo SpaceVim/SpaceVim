@@ -25,6 +25,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 Rust 这一语言的支持主要
 - [代码格式化](#代码格式化)
 - [快速运行](#快速运行)
 - [交互式编程](#交互式编程)
+- [任务管理](#任务管理)
 
 <!-- vim-markdown-toc -->
 
@@ -116,3 +117,39 @@ rustup component add rustfmt
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 ![rustrepl](https://user-images.githubusercontent.com/13142418/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
+
+### 任务管理
+
+任务管理器提供了相应的接口，可以根据实际情况自动添加 cargo 任务。比如，
+在启动函数内添加：
+
+```viml
+function! s:cargo_task() abort
+    if filereadable('Cargo.toml')
+        let commands = ['build', 'run', 'test']
+        let conf = {}
+        for cmd in commands
+            call extend(conf, {
+                        \ cmd : {
+                        \ 'command': 'cargo',
+                        \ 'args' : [cmd],
+                        \ 'isDetected' : 1,
+                        \ 'detectedName' : 'cargo:'
+                        \ }
+                        \ })
+        endfor
+        return conf
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:cargo_task'))
+```
+
+打开 rust 项目，按下快捷键`SPC p t r`即可看到如下任务列表。
+
+![image](https://user-images.githubusercontent.com/13142418/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
+
+执行效果如下：
+
+![image](https://user-images.githubusercontent.com/13142418/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)
