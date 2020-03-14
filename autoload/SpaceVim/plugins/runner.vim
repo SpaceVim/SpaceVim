@@ -316,6 +316,7 @@ function! s:on_exit(job_id, data, event) abort
   if bufexists(s:bufnr)
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
   endif
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
   call s:update_statusline()
 
 endfunction
