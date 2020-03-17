@@ -179,20 +179,41 @@ let g:spacevim_windows_leader          = 's'
 let g:spacevim_enable_insert_leader    = 1
 
 ""
+" @section data_dir, options-data_dir
+" @parentsection options
+" Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
+" or if not set `~/.cache¸.
+" >
+"   data_dir = "~/.cache"
+" <
+
+""
+" Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
+" or if not set `~/.cache¸.
+" >
+"   let g:spacevim_data_dir = '~/.cache'
+" <
+let g:spacevim_data_dir
+      \ = $XDG_CACHE_HOME != ''
+      \   ? $XDG_CACHE_HOME . SpaceVim#api#import('file').separator
+      \   : expand($HOME. join(['', '.cache', ''],
+      \     SpaceVim#api#import('file').separator))
+
+""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
 " @parentsection options
-" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+" Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
 "   plugin_bundle_dir = "~/.cache/vimplugs"
 " <
 
 ""
-" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+" Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
-"   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
+"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'/vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir
-      \ = $HOME. join(['', '.cache', 'vimfiles', ''],
+      \ = g:spacevim_data_dir . join(['vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
 
 ""

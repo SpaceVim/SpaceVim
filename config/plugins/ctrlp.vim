@@ -18,7 +18,7 @@ let g:ctrlp_show_hidden = get(g:, 'ctrlp_show_hidden', 1)
 "for caching
 let g:ctrlp_use_caching = get(g:, 'ctrlp_use_caching', 500)
 let g:ctrlp_clear_cache_on_exit = get(g:, 'ctrlp_clear_cache_on_exit', 1)
-let g:ctrlp_cache_dir = get(g:, 'ctrlp_cache_dir', $HOME.'/.cache/ctrlp')
+let g:ctrlp_cache_dir = get(g:, 'ctrlp_cache_dir', g:spacevim_data_dir.'/ctrlp')
 "let g:ctrlp_map = ',,'
 "let g:ctrlp_open_multiple_files = 'v'
 "if you have install ag, the g:ctrlp_custom_ignore will not work

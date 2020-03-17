@@ -81,7 +81,7 @@ function! s:install_manager() abort
           \ 'dein.vim'], s:Fsep)
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if s:need_cmd('curl')
@@ -89,14 +89,14 @@ function! s:install_manager() abort
         call s:VIM_CO.system([
               \ 'curl',
               \ '-fLo',
-              \ expand('~/.cache/vim-plug/autoload/plug.vim'),
+              \ expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'),
               \ '--create-dirs',
               \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
               \ ])
         let g:_spacevim_vim_plug_installed = 1
       endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
+    exec 'set runtimepath+='.g:spacevim_data_dir.'/vim-plug/'
   endif
 endf
 

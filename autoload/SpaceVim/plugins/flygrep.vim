@@ -35,8 +35,8 @@ let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
 function! s:read_histroy() abort
-  if filereadable(expand('~/.cache/SpaceVim/flygrep_history'))
-    let _his = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/flygrep_history'), ''), ''))
+  if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'), ''), ''))
     if type(_his) ==# type([])
       return _his
     else
@@ -51,10 +51,10 @@ function! s:update_history() abort
     call remove(s:grep_history, index(s:grep_history, s:grep_expr))
   endif
   call add(s:grep_history, s:grep_expr)
-  if !isdirectory(expand('~/.cache/SpaceVim'))
-    call mkdir(expand('~/.cache/SpaceVim'))
+  if !isdirectory(expand(g:spacevim_data_dir.'/SpaceVim'))
+    call mkdir(expand(g:spacevim_data_dir.'/SpaceVim'))
   endif
-  call writefile([s:JSON.json_encode(s:grep_history)], expand('~/.cache/SpaceVim/flygrep_history'))
+  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
 endfunction
 let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
