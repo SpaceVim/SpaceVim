@@ -956,6 +956,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | Key Bindings | Descriptions                                            |
 | ------------ | ------------------------------------------------------- |
 | `SPC ;`      | comment operator                                        |
+| `SPC c a`    | switch to the alternative set of delimiters             |
 | `SPC c h`    | hide/show comments                                      |
 | `SPC c l`    | toggle comment lines                                    |
 | `SPC c L`    | comment lines                                           |
