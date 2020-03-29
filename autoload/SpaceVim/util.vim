@@ -150,13 +150,15 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
         if len(remotes) > 0
           let remote = remotes[0]
           if stridx(remote, '@') > -1
-            let repo_url = 'https://github.com/'. split(split(remote,' ')[0],':')[1]
+            let repo_url = split(split(remote, '@')[1], ':')[0]
+            let repo_url = 'https://'. repo_url. '/'. split(split(remote,' ')[0],':')[1]
             let repo_url = strpart(repo_url, 0, len(repo_url) - 4)
           else
             let repo_url = split(remote,' ')[0]
             let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
           endif
-          let f_url =repo_url. '/blob/'. branch[:-2] . '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
+          let head_sha = systemlist('git rev-parse HEAD')[0] 
+          let f_url =repo_url. '/blob/'. head_sha. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
           if s:SYSTEM.isWindows
             let f_url = substitute(f_url, '\', '/', 'g')
           endif
