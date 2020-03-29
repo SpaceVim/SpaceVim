@@ -17,7 +17,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:conf = '.project_alt.json'
-let s:cache_path = '~/.cache/SpaceVim/a.json'
+let s:cache_path = g:spacevim_data_dir.'/SpaceVim/a.json'
 
 
 " this is for saving the project configuration information. Use the path of

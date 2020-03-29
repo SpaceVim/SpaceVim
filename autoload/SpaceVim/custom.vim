@@ -136,7 +136,7 @@ function! SpaceVim#custom#write(force) abort
 endfunction
 
 function! s:path_to_fname(path) abort
-  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
+  return expand(g:spacevim_data_dir.'/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
 endfunction
 
 function! SpaceVim#custom#load() abort
@@ -189,7 +189,7 @@ function! s:load_glob_conf() abort
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand('~/.cache/SpaceVim/conf/init.json'))
+    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/init.json'))
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
