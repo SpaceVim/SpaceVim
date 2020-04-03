@@ -61,9 +61,11 @@
 
 function! SpaceVim#layers#lang#rust#plugins() abort
   let plugins = [
-        \ ['racer-rust/vim-racer', { 'on_ft' : 'rust' }],
-        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 1 }],
+        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 0 }],
         \ ]
+  if !SpaceVim#layers#lsp#check_filetype('rust')
+    call add(plugins, ['racer-rust/vim-racer', {'merged' : 0}])
+  endif
   return plugins
 endfunction
 
@@ -72,7 +74,7 @@ function! SpaceVim#layers#lang#rust#config() abort
         \ 'rustc %s -o #TEMP#',
         \ '#TEMP#'])
   call SpaceVim#plugins#repl#reg('rust', 'evcxr')
-  let g:racer_experimental_completer = 1
+  " let g:racer_experimental_completer = 1
   let g:racer_cmd = s:racer_cmd ==# ''
         \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
         \ : s:racer_cmd
