@@ -61,10 +61,10 @@
 
 function! SpaceVim#layers#lang#rust#plugins() abort
   let plugins = [
-        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 1 }],
+        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 0 }],
         \ ]
   if !SpaceVim#layers#lsp#check_filetype('rust')
-    call add(plugins, ['racer-rust/vim-racer', {'option' : 'value'}])
+    call add(plugins, ['racer-rust/vim-racer', {'merged' : 0}])
   endif
   return plugins
 endfunction
