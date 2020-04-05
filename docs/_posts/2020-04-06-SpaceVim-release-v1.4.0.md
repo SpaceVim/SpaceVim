@@ -33,17 +33,18 @@ The v1.4.0 has been released. So let's take a look at what happened since last r
 
 ## What's New
 
-
 ### New language layers
 
-- Add `lang#vbnet` layer [#3359](https://github.com/SpaceVim/SpaceVim/pull/3359)
-- Add `lang#zig` layer [#3355](https://github.com/SpaceVim/SpaceVim/pull/3355)
+Eight programming language layers have been added since the last release:
+
+- Add [`lang#vbnet`](../layers/lang/vbnet/) layer [#3359](https://github.com/SpaceVim/SpaceVim/pull/3359)
+- Add [`lang#zig`](../layers/lang/zig/) layer [#3355](https://github.com/SpaceVim/SpaceVim/pull/3355)
 - Add `lang#wdl` layer [#3307](https://github.com/SpaceVim/SpaceVim/pull/3307)
-- Add `lang#ring` layer [#3311](https://github.com/SpaceVim/SpaceVim/pull/3311)
-- Add `lang#asepctj` layer [#3313](https://github.com/SpaceVim/SpaceVim/pull/3313)
-- Add `lang#lasso` layer [#3314](https://github.com/SpaceVim/SpaceVim/pull/3314)
+- Add [`lang#ring`](../layers/lang/ring/) layer [#3311](https://github.com/SpaceVim/SpaceVim/pull/3311)
+- Add [`lang#asepctj`](../layers/lang/asepctj/) layer [#3313](https://github.com/SpaceVim/SpaceVim/pull/3313)
+- Add [`lang#lasso`](../layers/lang/lasso/) layer [#3314](https://github.com/SpaceVim/SpaceVim/pull/3314)
 - Add `lang#xquery` layer [#3327](https://github.com/SpaceVim/SpaceVim/pull/3327)
-- Add `lang#janet` layer [#3330](https://github.com/SpaceVim/SpaceVim/pull/3330)
+- Add [`lang#janet`](../layers/lang/janet/) layer [#3330](https://github.com/SpaceVim/SpaceVim/pull/3330)
 
 ### New features
 
