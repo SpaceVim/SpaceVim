@@ -48,7 +48,9 @@ Eight programming language layers have been added since the last release:
 
 ### New features
 
-The major feature in this release is asynchronously task system, which has been added in following PR:
+**Asynchronously task:**
+
+The major feature in this release is asynchronously task system, which is implemented in following PR:
 
 - Add tasks support [#3346](https://github.com/SpaceVim/SpaceVim/pull/3346)
 - Add backgroud task support [#3351](https://github.com/SpaceVim/SpaceVim/pull/3351)
@@ -60,7 +62,9 @@ The major feature in this release is asynchronously task system, which has been 
 
 for more information about the tasks system, please checkout the [task documentation](../documentation/#tasks)
 
-Floating terminal windows support also has been added in this release, to use this feature,
+**Floating terminal:**
+
+Floating terminal windows support also has been added into [shell](../layers/shell/) layer, to use this feature,
 adding following snippet into your SpaceVim configuration file:
 
 ```toml
@@ -73,11 +77,15 @@ adding following snippet into your SpaceVim configuration file:
 - Add float terminal windows support [#3377](https://github.com/SpaceVim/SpaceVim/pull/3377)
 - Fix shell config path [#3344](https://github.com/SpaceVim/SpaceVim/pull/3344)
 
+**Alternate git plugin:**
+
 Instead of using gina or fugitive, the `git.vim` will be used as default plugin in git layer:
 
 - Add git plugin [#3244](https://github.com/SpaceVim/SpaceVim/pull/3244)
 - Improve git support [#3247](https://github.com/SpaceVim/SpaceVim/pull/3247)
 - Update branch info via job [#3280](https://github.com/SpaceVim/SpaceVim/pull/3280)
+
+**Alternate file manager:**
 
 The new release also add support for config alt file in the project:
 
@@ -85,7 +93,7 @@ The new release also add support for config alt file in the project:
 - Add type support for alt file [#3308](https://github.com/SpaceVim/SpaceVim/pull/3308)
 - Add bang support for `:A` command [#3331](https://github.com/SpaceVim/SpaceVim/pull/3331)
 
-Other new key bindings or features will be list following.
+Other new key bindings or features are listed below:
 
 - Add file copy key binding `SPC f Y` [#3348](https://github.com/SpaceVim/SpaceVim/pull/3348)
 - Improve `lang#r` layer [#3322](https://github.com/SpaceVim/SpaceVim/pull/3322)
