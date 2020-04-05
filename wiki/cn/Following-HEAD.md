@@ -12,6 +12,6 @@
 
 ## 上一个版本
 
-SpaceVim 于 2020-04-04 发布 v1.4.0 版本，可查阅版本发布文章：
+SpaceVim 于 2020-04-05 发布 v1.4.0 版本，可查阅版本发布文章：
 
 - [SpaceVim 发布 v1.4.0 版本](https://spacevim.org/SpaceVim-release-v1.4.0/)
