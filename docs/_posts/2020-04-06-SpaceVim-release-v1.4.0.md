@@ -36,8 +36,14 @@ The v1.4.0 has been released. So let's take a look at what happened since last r
 
 ### New language layers
 
-- Add lang#vbnet layer [#3359](https://github.com/SpaceVim/SpaceVim/pull/3359)
-- Add lang#zig layer [#3355](https://github.com/SpaceVim/SpaceVim/pull/3355)
+- Add `lang#vbnet` layer [#3359](https://github.com/SpaceVim/SpaceVim/pull/3359)
+- Add `lang#zig` layer [#3355](https://github.com/SpaceVim/SpaceVim/pull/3355)
+- Add `lang#wdl` layer [#3307](https://github.com/SpaceVim/SpaceVim/pull/3307)
+- Add `lang#ring` layer [#3311](https://github.com/SpaceVim/SpaceVim/pull/3311)
+- Add `lang#asepctj` layer [#3313](https://github.com/SpaceVim/SpaceVim/pull/3313)
+- Add `lang#lasso` layer [#3314](https://github.com/SpaceVim/SpaceVim/pull/3314)
+- Add `lang#xquery` layer [#3327](https://github.com/SpaceVim/SpaceVim/pull/3327)
+- Add `lang#janet` layer [#3330](https://github.com/SpaceVim/SpaceVim/pull/3330)
 
 ### New features
 
@@ -64,16 +70,30 @@ adding following snippet into your SpaceVim configuration file:
 ```
 
 - Add float terminal windows support [#3377](https://github.com/SpaceVim/SpaceVim/pull/3377)
+- Fix shell config path [#3344](https://github.com/SpaceVim/SpaceVim/pull/3344)
+
+Instead of using gina or fugitive, the `git.vim` will be used as default plugin in git layer:
+
+- Add git plugin [#3244](https://github.com/SpaceVim/SpaceVim/pull/3244)
+- Improve git support [#3247](https://github.com/SpaceVim/SpaceVim/pull/3247)
+- Update branch info via job [#3280](https://github.com/SpaceVim/SpaceVim/pull/3280)
+
+The new release also add support for config alt file in the project:
+
+- Add support to config alt file [#3283](https://github.com/SpaceVim/SpaceVim/pull/3283)
+- Add type support for alt file [#3308](https://github.com/SpaceVim/SpaceVim/pull/3308)
+- Add bang support for `:A` command [#3331](https://github.com/SpaceVim/SpaceVim/pull/3331)
 
 Other new key bindings or features will be list following.
 
+- Add file copy key binding `SPC f Y` [#3348](https://github.com/SpaceVim/SpaceVim/pull/3348)
+- Improve `lang#r` layer [#3322](https://github.com/SpaceVim/SpaceVim/pull/3322)
 - Respect `$XDG_CACHE_HOME` for the cache dir [#3411](https://github.com/SpaceVim/SpaceVim/pull/3411)
 - Add shortcut to use NERDCommenterAltDelims [#3417](https://github.com/SpaceVim/SpaceVim/pull/3417)
 - add K key binding to documentation [#3415](https://github.com/SpaceVim/SpaceVim/pull/3415)
 - Added elixir icons [#3402](https://github.com/SpaceVim/SpaceVim/pull/3402)
 - add K binding to Defx [#3401](https://github.com/SpaceVim/SpaceVim/pull/3401)
 - Add push script [#3391](https://github.com/SpaceVim/SpaceVim/pull/3391)
-- Add `GoFmt` shortcut [#3381](https://github.com/SpaceVim/SpaceVim/pull/3381)
 - Add alt file config for plugin a.vim [#3365](https://github.com/SpaceVim/SpaceVim/pull/3365)
 - Add option for setting todo labels [#3362](https://github.com/SpaceVim/SpaceVim/pull/3362)
 - Add tags support for zig lang [#3357](https://github.com/SpaceVim/SpaceVim/pull/3357)
@@ -81,28 +101,68 @@ Other new key bindings or features will be list following.
 - Extend permalink clipboard copy support [#3422](https://github.com/SpaceVim/SpaceVim/pull/3422)
 - use gopls in rename command for go [#3412](https://github.com/SpaceVim/SpaceVim/pull/3412)
 - Improve rust repl support [#3395](https://github.com/SpaceVim/SpaceVim/pull/3395)
+- Improve rust layer [#3336](https://github.com/SpaceVim/SpaceVim/pull/3336)
 - Update Sponsors [#3372](https://github.com/SpaceVim/SpaceVim/pull/3372)
+- Add more key bindings for `lang#ocaml` layer [#3223](https://github.com/SpaceVim/SpaceVim/pull/3223)
+- Improve find plugin [#3227](https://github.com/SpaceVim/SpaceVim/pull/3227)
+- Highlight long lines [#3228](https://github.com/SpaceVim/SpaceVim/pull/3228)
+- Add fzf action key bindings [#3234](https://github.com/SpaceVim/SpaceVim/pull/3234)
+- Add repo mirror [#3235](https://github.com/SpaceVim/SpaceVim/pull/3235)
+- Add plugin for search in visual mode [#3262](https://github.com/SpaceVim/SpaceVim/pull/3262)
+- Add REPL support for typescript [#3274](https://github.com/SpaceVim/SpaceVim/pull/3274)
+- Add delete action in denite [#3274](https://github.com/SpaceVim/SpaceVim/pull/3275)
+- Improve todo plugin [#3276](https://github.com/SpaceVim/SpaceVim/pull/3276)
+- Improve lint [#3291](https://github.com/SpaceVim/SpaceVim/pull/3291)
+- Improve `lang#scheme` layer [#3299](https://github.com/SpaceVim/SpaceVim/pull/3299)
+- Improve python code runner [#3304](https://github.com/SpaceVim/SpaceVim/pull/3304)
+- Improve repl and runner [#3305](https://github.com/SpaceVim/SpaceVim/pull/3305)
+- Improve flygrep [#3312](https://github.com/SpaceVim/SpaceVim/pull/3312)
+- Improve project manager [#3316](https://github.com/SpaceVim/SpaceVim/pull/3316)
+- Add icon to defx [#3320](https://github.com/SpaceVim/SpaceVim/pull/3320)
+- Fix run compile command [#3329](https://github.com/SpaceVim/SpaceVim/pull/3329)
 
 ## Feature Changes
 
 - Change max-width [#3361](https://github.com/SpaceVim/SpaceVim/pull/3361)
 - Remove plugins [#3352](https://github.com/SpaceVim/SpaceVim/pull/3352)
+- Use textwidth instead of 80 [#3226](https://github.com/SpaceVim/SpaceVim/pull/3226)
 
 ## Bug Fixs
 
+- Fix lsp support [#3338](https://github.com/SpaceVim/SpaceVim/pull/3338)
+- Fix git status info on statusline [#3341](https://github.com/SpaceVim/SpaceVim/pull/3341)
+- Fix tmux layer [#3342](https://github.com/SpaceVim/SpaceVim/pull/3342)
 - Fix git log commands based on git plugin [#3400](https://github.com/SpaceVim/SpaceVim/pull/3400)
 - Fix dein support [#3393](https://github.com/SpaceVim/SpaceVim/pull/3393)
 - fix some issues on windows [#3387](https://github.com/SpaceVim/SpaceVim/pull/3387)
 - Fix layer/lang/go jump to definition issue [#3378](https://github.com/SpaceVim/SpaceVim/pull/3378)
 - Fix lint [#3363](https://github.com/SpaceVim/SpaceVim/pull/3363)
 - Fix version [#3354](https://github.com/SpaceVim/SpaceVim/pull/3354)
+- Silence FlyGrep to avoid hit-enter-prompt [#3215](https://github.com/SpaceVim/SpaceVim/pull/3215)
+- Fix vimproc dll pointer [#3238](https://github.com/SpaceVim/SpaceVim/pull/3238)
+- Fix R REPL support [#3253](https://github.com/SpaceVim/SpaceVim/pull/3253)
+- Fix cursor pos [#3279](https://github.com/SpaceVim/SpaceVim/pull/3279)
+- Fix `SPC s a j` [#3281](https://github.com/SpaceVim/SpaceVim/pull/3281)
+- Fix code runner [#3292](https://github.com/SpaceVim/SpaceVim/pull/3292)
+- Fix shell key bindings [#3293](https://github.com/SpaceVim/SpaceVim/pull/3293)
+- Fix lua runtimepath [#3317](https://github.com/SpaceVim/SpaceVim/pull/3317)
+- Skip home directory [#3321](https://github.com/SpaceVim/SpaceVim/pull/3321)
+- Fix ale repo path [#3345](https://github.com/SpaceVim/SpaceVim/pull/3345)
 
 
 ## Website && Doc
 
 - Add blog about code runner and REPL [#2390](https://github.com/SpaceVim/SpaceVim/pull/2390)
+- Add help for `lang#batch` layer [#3230](https://github.com/SpaceVim/SpaceVim/pull/3230)
 - Type in 2018-09-28-use-vim-as-ide.md [#3399](https://github.com/SpaceVim/SpaceVim/pull/3399)
 - Typo in documentation [#3396](https://github.com/SpaceVim/SpaceVim/pull/3396)
 - Update doc and wiki [#3353](https://github.com/SpaceVim/SpaceVim/pull/3353)
-- typo fix [#3373](https://github.com/SpaceVim/SpaceVim/pull/3373)
-
+- Typo: [#3373](https://github.com/SpaceVim/SpaceVim/pull/3373), [#3225](https://github.com/SpaceVim/SpaceVim/pull/3225)
+- Type in go layer [#3272](https://github.com/SpaceVim/SpaceVim/pull/3272)
+- Type vim-gik [#3277](https://github.com/SpaceVim/SpaceVim/pull/3277)
+- Type [#3284](https://github.com/SpaceVim/SpaceVim/pull/3284)
+- Update doc [#3306](https://github.com/SpaceVim/SpaceVim/pull/3306)
+- Update wiki [#3310](https://github.com/SpaceVim/SpaceVim/pull/3310)
+- Type [#3325](https://github.com/SpaceVim/SpaceVim/pull/3325)
+- Update ring doc [#3328](https://github.com/SpaceVim/SpaceVim/pull/3328)
+- Improve general doc [#3333](https://github.com/SpaceVim/SpaceVim/pull/3333)
