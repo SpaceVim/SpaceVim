@@ -401,13 +401,13 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 ### 字体
 
-在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
+在 SpaceVim 中默认的字体是 [SourceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
 如果需要修改 SpaceVim 的字体，可以在 `~/.SpaceVim.d/init.toml` 的 `[options]`片段中修改选项 `guifont`，默认值为：
 
 ```toml
 [options]
-    guifont = "SauceCodePro Nerd Font Mono:h11"
+    guifont = "SourceCodePro Nerd Font Mono:h11"
 ```
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
