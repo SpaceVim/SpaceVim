@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.3.0'
+Version='1.5.0-dev'
 #System name
 System="$(uname -s)"
 
