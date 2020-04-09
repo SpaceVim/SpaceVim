@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
@@ -23,19 +23,19 @@ let s:options = {}
 let s:second_option = {}
 let s:options.find = {
       \ '-amin' : 'File was last accessed n minutes ago.',
-      \ '-anewer' : 'File  was  last  accessed  more recently than file was modified.',
+      \ '-anewer' : 'File was  last  accessed more recently than file was modified.',
       \ '-atime' : 'File was last accessed n*24 hours ago.',
       \ '-cmin' : "File's status was last changed n minutes ago.",
-      \ '-cnewer' : "File's  status  was last changed more recently than file was modified.",
+      \ '-cnewer' : "File's status was last changed more recently than file was modified.",
       \ '-ctime' : "File's status was last changed n*24 hours ago.",
       \ '-daystart' : 'Measure times from the beginning of today rather than from 24 hours ago.',
       \ '-depth' : "Process each directory's contents before the directory itself.",
       \ '-exec' : 'Execute command',
-      \ '-false' : 'make find command return false',
+      \ '-false' : 'Make find command return false',
       \ '-fls' : 'True; like -ls but write to file like -fprint.',
-      \ '-follow' : 'a diagnostic message is issued when find encounters a loop of symbolic links.',
+      \ '-follow' : 'A diagnostic message is issued when find encounters a loop of symbolic links.',
       \ '-fprint' : 'True; print the full file name into file file.',
-      \ '-fprintf' : 'True;  like  -printf but write to file like -fprint.',
+      \ '-fprintf' : 'True; like -printf but write to file like -fprint.',
       \ '-fstype' : 'Only list files or directorys with specific filesysten type',
       \ '-gid' : 'Only list files with specific group ID.',
       \ '-group' : 'Only list files with specific group name.',
@@ -60,9 +60,9 @@ let s:options.find = {
       \ '-ok' : '此参数的效果和指定“-exec”类似，但在执行指令之前会先询问用户，若回答“y”或“Y”，则放弃执行命令',
       \ '-path' : '指定字符串作为寻找目录的范本样式',
       \ '-perm' : '查找符合指定的权限数值的文件或目录',
-      \ '-print' : '假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为每列一个名称，每个名称前皆有“./”字符串',
-      \ '-print0' : '假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为全部的名称皆在同一行',
-      \ '-printf' : '假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式可以自行指定',
+      \ '-print' : '假设find指令的回传值为True，就将文件或目录名称列出到标准输出。格式为每列一个名称，每个名称前皆有“./”字符串',
+      \ '-print0' : '假设find指令的回传值为True，就将文件或目录名称列出到标准输出。格式为全部的名称皆在同一行',
+      \ '-printf' : '假设find指令的回传值为True，就将文件或目录名称列出到标准输出。格式可以自行指定',
       \ '-prune' : '不寻找字符串作为寻找文件或目录的范本样式',
       \ '-regex' : '指定字符串作为寻找文件或目录的范本样式',
       \ '-size' : '查找符合指定的文件大小的文件',
@@ -78,8 +78,8 @@ let s:options.find = {
 let s:options.fd = {
       \ '-H' : 'Search hidden files and directories',
       \ '-I' : 'Do not respect .(git|fd)ignore files',
-      \ '-s' : 'Case-sensitive serch',
-      \ '-i' : 'Case-insensitive serch',
+      \ '-s' : 'Case-sensitive search',
+      \ '-i' : 'Case-insensitive search',
       \ '-t' : 'Filter by type: file (f), directory (d), symlink (l), executable (x), empty (e)',
       \ '-g' : 'Glob-based search',
       \ '-d' : 'Set maximum search depth (default: none)',
