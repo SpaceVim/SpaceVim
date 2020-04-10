@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
