@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
@@ -716,7 +716,7 @@ let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " keys:
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
-function! SpaceVim#plugins#flygrep#open(agrv) abort
+function! SpaceVim#plugins#flygrep#open(argv) abort
   if empty(s:grep_default_exe)
     call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
     return
@@ -754,8 +754,8 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
-  let s:MPT._prompt.begin = get(a:agrv, 'input', '')
-  let fs = get(a:agrv, 'files', '')
+  let s:MPT._prompt.begin = get(a:argv, 'input', '')
+  let fs = get(a:argv, 'files', '')
   if fs ==# '@buffers'
     let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
   elseif !empty(fs)
@@ -763,23 +763,23 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
   else
     let s:grep_files = ''
   endif
-  let dir = expand(get(a:agrv, 'dir', ''))
+  let dir = expand(get(a:argv, 'dir', ''))
   if !empty(dir) && isdirectory(dir)
     let s:grep_dir = dir
   else
     let s:grep_dir = ''
   endif
-  let s:grep_exe = get(a:agrv, 'cmd', s:grep_default_exe)
+  let s:grep_exe = get(a:argv, 'cmd', s:grep_default_exe)
   if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe ==# 'findstr'
     let s:grep_files = '*.*'
   elseif s:grep_exe ==# 'findstr' && !empty(s:grep_dir)
     let s:grep_dir = '/D:' . s:grep_dir
   endif
-  let s:grep_opt = get(a:agrv, 'opt', s:grep_default_opt)
-  let s:grep_ropt = get(a:agrv, 'ropt', s:grep_default_ropt)
-  let s:grep_ignore_case = get(a:agrv, 'ignore_case', s:grep_default_ignore_case)
-  let s:grep_smart_case  = get(a:agrv, 'smart_case', s:grep_default_smart_case)
-  let s:grep_expr_opt  = get(a:agrv, 'expr_opt', s:grep_default_expr_opt)
+  let s:grep_opt = get(a:argv, 'opt', s:grep_default_opt)
+  let s:grep_ropt = get(a:argv, 'ropt', s:grep_default_ropt)
+  let s:grep_ignore_case = get(a:argv, 'ignore_case', s:grep_default_ignore_case)
+  let s:grep_smart_case  = get(a:argv, 'smart_case', s:grep_default_smart_case)
+  let s:grep_expr_opt  = get(a:argv, 'expr_opt', s:grep_default_expr_opt)
   call SpaceVim#logger#info('FlyGrep startting ===========================')
   call SpaceVim#logger#info('   executable    : ' . s:grep_exe)
   call SpaceVim#logger#info('   option        : ' . string(s:grep_opt))

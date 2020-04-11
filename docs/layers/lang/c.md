@@ -21,7 +21,7 @@ description: "C/C++/Object-C language support for SpaceVim, include code complet
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update the custom configuration file with:
 
 ```toml
 [[layers]]
@@ -63,7 +63,7 @@ A dict containing the standards you want to use. The default is:
 
 - `clang_flag`
 
-Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
+Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loading this layer.
 
 Here is an example how to use above options:
 
