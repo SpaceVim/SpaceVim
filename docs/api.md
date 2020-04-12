@@ -51,7 +51,7 @@ Here is the list of all available APIs, and welcome to contribute to SpaceVim.
 | [messletters](messletters/)           | messletters API provides some basic functions for generating messletters                           |
 | [password](password/)                 | password API provides some basic functions for generating password                                 |
 | [system](system/)                     | system API provides some basic functions and values for current os.                                |
-| [transient-state](transient-state/)   | transient state API provides some besic functions and values for current os.                       |
+| [transient-state](transient-state/)   | transient state API provides some basic functions and values for current os.                       |
 | [unicode#spinners](unicode/spinners/) | unicode#spinners API provides some basic functions for starting spinners timer                     |
 | [vim#command](vim/command/)           | vim#command API provides some basic functions and values for creatting vim custom command.         |
 | [vim#highlight](vim/highlight/)       | vim#highlight API provides some basic functions and values for getting and setting highlight info. |

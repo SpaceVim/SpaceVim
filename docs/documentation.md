@@ -33,7 +33,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
   - [Visual mode key bindings](#visual-mode-key-bindings)
-  - [Command line mode key bidnings](#command-line-mode-key-bidnings)
+  - [Command line mode key bindings](#command-line-mode-key-bidnings)
   - [Mappings guide](#mappings-guide)
   - [Editing](#editing)
     - [Text manipulation commands](#text-manipulation-commands)
@@ -781,7 +781,7 @@ The following key bindings are the general key bindings for moving cursor.
 | `Ctrl-Shift-Up`   | move lines up                            |
 | `Ctrl-Shift-Down` | move lines down                          |
 
-### Command line mode key bidnings
+### Command line mode key bindings
 
 After pressing `:`, you can switch to command line mode, here is a list of key bindings
 can be used in command line mode:
@@ -1671,7 +1671,7 @@ Project manager commands start with `p`:
 To manager the alternate file of the project, you need to create a `.project_alt.json` file
 in the root of your project. Then you can use command `:A` to jump to the alternate file of
 current file. You can also specific the type of alternate file, for example `:A doc`.
-With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
+With a bang `:A!`, SpaceVim will parse the configuration file additionally. If no type specified,
 the default type `alternate` will be used.
 
 here is an example of `.project_alt.json`:
@@ -1896,7 +1896,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 ### Code runner and REPL
 
 SpaceVim provides an asynchronously code runner plugin. In most language layer,
-we have defined a key bidning `SPC l r` for running current buffer.
+we have defined a key binding `SPC l r` for running current buffer.
 If you need to add new commands, you can use the bootstrap function. For example:
 Use `F5` to build project asynchronously.
 
