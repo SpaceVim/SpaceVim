@@ -41,7 +41,9 @@
 
 
 function! SpaceVim#layers#lang#go#plugins() abort
-  let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
+  let plugins = [
+        \['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}],
+        \['kien/ctrlp.vim']]
   if has('nvim') && g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['zchee/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
   endif
