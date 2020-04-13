@@ -43,20 +43,18 @@ for more info, you can read the [lang#typescript](../layers/lang/typescript/) la
 `lang#typescript` layer will load the typescript plugins automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![jside](https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
+![ts](https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png)
 
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run [eslint](https://eslint.org/) asynchronously.
+It will run [tslint](https://www.npmjs.com/package/tslint) asynchronously.
 
 To install eslint, just run following command in terminal.
 
 ```sh
-npm install -g eslint-cli
+npm install -g tslint
 ```
-
-![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
 
 ### Jump to test file
 

@@ -34,6 +34,11 @@ function! SpaceVim#layers#lang#typescript#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_ft'))
   call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
+  call SpaceVim#plugins#runner#reg_runner('typescript', {
+        \ 'exe' : 'ts-node',
+        \ 'usestdin' : 1,
+        \ 'opt': ['-'],
+        \ })
 endfunction
 
 function! SpaceVim#layers#lang#typescript#set_variable(var) abort
@@ -72,8 +77,6 @@ function! s:on_ft() abort
             \ 'import', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'p'], 'TSDefPreview',
             \ 'preview definition', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'TSRefs',
-            \ 'references', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
     else
@@ -87,10 +90,10 @@ function! s:on_ft() abort
             \ 'import', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'm'], 'TsuImplementation',
             \ 'interface implementations', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'TsuquyomiReferences',
-            \ 'references', 1)
     endif
   endif
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
