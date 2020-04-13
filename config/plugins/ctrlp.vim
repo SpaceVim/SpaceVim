@@ -28,7 +28,7 @@ let g:ctrlp_custom_ignore = get(g:, 'ctrlp_custom_ignore', {
       \ 'link': 'some_bad_symbolic_links',
       \ })
 if executable('rg') && !exists('g:ctrlp_user_command')
-  let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
+  let g:ctrlp_user_command = 'rg %s --hidden --files -g "" '
         \ . join(SpaceVim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', SpaceVim#api#import('system').isWindows ? 0 : 1))
 elseif executable('ag') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(SpaceVim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'
