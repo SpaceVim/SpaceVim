@@ -15,7 +15,7 @@ function! SpaceVim#layers#lang#typescript#plugins() abort
     if has('nvim')
       call add(plugins, ['mhartington/nvim-typescript', {'build': './install.sh'}])
     else
-      call add(plugins, ['Quramy/tsuquyomi'])
+      call add(plugins, ['Quramy/tsuquyomi', {'merged' : 0}])
     endif
   endif
   return plugins
@@ -60,17 +60,18 @@ function! s:on_ft() abort
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
   else
     if has('nvim')
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'], 'TSTypeDef',
             \ 'type definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TSDoc',
-            \ 'show document', 1)
+            \ 'show-document', 1)
+      nnoremap <silent><buffer> K :<C-u>TSDoc<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TSRename',
-            \ 'rename symbol', 1)
+            \ 'rename-symbol', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'], 'TSGetCodeFix',
             \ 'code fix', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TSImport',
@@ -92,13 +93,17 @@ function! s:on_ft() abort
             \ 'interface implementations', 1)
     endif
   endif
+
+  " code runner
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
 
+  " generate groups
+  let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
         \ 'generate JSDoc', 1)
 
+  " REPL support
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("typescript")',

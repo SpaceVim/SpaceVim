@@ -52,17 +52,17 @@ npm install -g typescript
 
 ## Key bindings
 
-| Key Bindings | Descriptions       |
-| ------------ | ------------------ |
-| `SPC l c`    | type definition    |
-| `SPC l d`    | show documentation |
-| `SPC l e`    | rename symbol      |
-| `SPC l f`    | code fix           |
-| `SPC l g`    | definition         |
-| `SPC l i`    | import             |
-| `SPC l t`    | type               |
-| `SPC l g d`  | generate doc       |
-| `g d`        | defintion preview  |
+| Key Bindings    | Descriptions       |
+| --------------- | ------------------ |
+| `SPC l c`       | type definition    |
+| `SPC l d` / `K` | show documentation |
+| `SPC l e`       | rename symbol      |
+| `SPC l f`       | code fix           |
+| `SPC l g`       | definition         |
+| `SPC l i`       | import             |
+| `SPC l t`       | type               |
+| `SPC l g d`     | generate doc       |
+| `g d`           | defintion preview  |
 
 ### Code runner
 
@@ -80,4 +80,3 @@ Send code to inferior process commands:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
-
