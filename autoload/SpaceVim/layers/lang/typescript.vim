@@ -6,6 +6,22 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#typescript, layer-lang-typescript
+" @parentsection layers
+" This layer provides typescript development support for SpaceVim.
+" To enable this layer, add following sinippet into SpaceVim configuration
+" file.
+" >
+"   [layers]
+"       name = "lang#typescript"
+" <
+" @subsection mappings
+" >
+"   Ket binding          Description
+"   ----------------------------------------
+"   g d                  defintion preview
+" <
 
 function! SpaceVim#layers#lang#typescript#plugins() abort
   let plugins = []
