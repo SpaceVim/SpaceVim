@@ -48,12 +48,15 @@ lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]
   if s:qtdir =~# 'nvim-qt'
-    let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
+    " Use &rtp instead of $VIMRUNTIME will work better. Because the former
+    " will loads the configuration in /usr/share, and there may be some
+    " important configurations on some Linux distributions
+    let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . &rtp
   else
-    let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
+    let &rtp = g:_spacevim_root_dir . ',' . &rtp
   endif
 else
-  let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
+  let &rtp = g:_spacevim_root_dir . ',' . &rtp
 endif
 
 call SpaceVim#begin()

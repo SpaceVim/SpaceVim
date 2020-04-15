@@ -13,6 +13,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
   call add(plugins, 
         \ ['Yggdroot/LeaderF',
         \ {
+        \ 'on_cmd' : ['LeaderfHelpCword', 'LeaderfCommand', 'Leaderf','LeaderfFile'],
         \ 'loadconf' : 1,
         \ 'merged' : 0,
         \ }])

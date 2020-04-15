@@ -32,9 +32,9 @@ function! SpaceVim#layers#core#plugins() abort
   endif
 
   if !g:spacevim_vimcompatible
-    call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+    call add(plugins, ['rhysd/clever-f.vim', {'on_map': '<Plug>(clever-f-', 'merged' : 0}])
   endif
-  call add(plugins, ['scrooloose/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['scrooloose/nerdcommenter', { 'on_map': ['<Plug>Comment', '<Plug>NERDCommenter',], 'loadconf' : 1, 'merged' : 0}])
 
   if exists('*matchaddpos')
     call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
