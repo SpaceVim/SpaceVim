@@ -9,7 +9,6 @@ lang: zh
 如果你想赞助 SpaceVim，或者希望 SpaceVim 开发得更快一点，可以选择以下某种方式进行赞助：
 
 - [通过 BountySource](https://www.bountysource.com/teams/spacevim)
-- [通过 Open Collective](https://opencollective.com/spacevim)
 
 或者，也许你可以给我买杯咖啡：
 
