@@ -899,6 +899,8 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
+**提示：** 您可以使用前缀参数指定密码字符的数量，（例如，`10 SPC i p 1` 将生成 `10` 个简单密码字符）
+
 #### 增加或减小数字
 
 | 快捷键    | 功能描述                                 |

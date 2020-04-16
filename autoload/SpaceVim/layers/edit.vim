@@ -552,31 +552,31 @@ endfunction
 
 function! s:insert_simple_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_simple(8)
+  let @k = s:PASSWORD.generate_simple(v:count ? v:count : 8)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_stronger_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_strong(12)
+  let @k = s:PASSWORD.generate_strong(v:count ? v:count : 12)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_paranoid_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_paranoid(20)
+  let @k = s:PASSWORD.generate_paranoid(v:count ? v:count : 20)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_numerical_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_numeric(4)
+  let @k = s:PASSWORD.generate_numeric(v:count ? v:count : 4)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_phonetically_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_phonetic(8)
+  let @k = s:PASSWORD.generate_phonetic(v:count ? v:count : 8)
   normal! "kPl
   let @k = save_register
 endfunction

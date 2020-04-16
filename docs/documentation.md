@@ -33,7 +33,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
   - [Visual mode key bindings](#visual-mode-key-bindings)
-  - [Command line mode key bindings](#command-line-mode-key-bidnings)
+  - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
   - [Editing](#editing)
     - [Text manipulation commands](#text-manipulation-commands)
@@ -931,6 +931,8 @@ Text insertion commands (start with `i`):
 | `SPC i U 1`  | insert UUIDv1 (use universal argument to insert with CID format)      |
 | `SPC i U 4`  | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U`  | insert UUIDv4 (use universal argument to insert with CID format)      |
+
+**Tips:** You can specify number of password characters using prefix argument, (i.e. `10 SPC i p 1` will generate 10 characters of simple password)
 
 #### Increase/Decrease numbers
 
