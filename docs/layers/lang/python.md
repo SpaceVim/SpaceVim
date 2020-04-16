@@ -72,6 +72,18 @@ load this layer with setting `format_on_save` to `1`.
 pip install --user yapf
 ```
 
+To use other tool as the format command, for example `black`, change the neoformat option in bootstrap
+function.
+
+```viml
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['-q', '-'],
+    \ }
+let g:neoformat_enabled_python = ['black']
+```
+
 **format imports:**
 
 To be able to suppress unused imports easily, install [autoflake](https://github.com/myint/autoflake):

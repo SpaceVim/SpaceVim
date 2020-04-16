@@ -140,7 +140,7 @@ function! s:language_specified_mappings() abort
   if s:format_on_save
     augroup SpaceVim_layer_lang_python
       autocmd!
-      autocmd BufWritePost *.py Neoformat yapf
+      autocmd BufWritePre *.py undojoin | Neoformat
     augroup end
   endif
 
