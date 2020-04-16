@@ -73,6 +73,17 @@ pip install --user flake8
 pip install --user yapf
 ```
 
+如果需要使用其他命令作为格式化工具，比如`black`命令，可以在启动函数中进行配置：
+
+```viml
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['-q', '-'],
+    \ }
+let g:neoformat_enabled_python = ['black']
+```
+
 **格式化导包：**
 
 若需要更便捷地删除未使用的 imports，需要安装 [autoflake](https://github.com/myint/autoflake)：
