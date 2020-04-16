@@ -298,10 +298,9 @@ endfunction
 The different key bindings between SpaceVim and origin vim are shown as below.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key
-  bindings specific leader key in **Normal** mode.
-  If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
-
-  The option is `windows_leader`, default value is `s`.
+  bindings specific leader in **Normal** mode. This leader change be changed via
+  `windows_leader` option which default variable is `s`, If you still prefer the origin function of `s`,
+  you can use an empty string to disable this feature.
 
   ```toml
   [options]
