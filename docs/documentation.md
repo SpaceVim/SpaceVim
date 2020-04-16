@@ -304,7 +304,7 @@ The different key bindings between SpaceVim and origin vim are shown as below.
 
   ```toml
   [options]
-    windows_leader = ''
+      windows_leader = ''
   ```
 
 - The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
@@ -312,7 +312,7 @@ The different key bindings between SpaceVim and origin vim are shown as below.
 
   ```toml
   [options]
-    enable_language_specific_leader = false
+      enable_language_specific_leader = false
   ```
 
 - The `q` key does recording, but in SpaceVim it is used to close current window.
@@ -322,7 +322,7 @@ The different key bindings between SpaceVim and origin vim are shown as below.
 
   ```toml
   [options]
-    windows_smartclose = ''
+      windows_smartclose = ''
   ```
 
 - The `Ctrl-a` binding on the command line can auto-complete variable names, but in SpaceVim it moves to the cursor to the beginning of the command line.
@@ -337,7 +337,7 @@ For example, in order to disable language specific leader, you may add the follo
 
 ```toml
 [options]
-enable_language_specific_leader = false
+    enable_language_specific_leader = false
 ```
 
 [Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
