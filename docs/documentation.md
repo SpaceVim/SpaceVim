@@ -299,21 +299,31 @@ The different key bindings between SpaceVim and origin vim are shown as below.
 
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key
   bindings specific leader in **Normal** mode. This leader change be changed via
-  `windows_leader` option which default variable is `s`, If you still prefer the origin function of `s`,
+  `windows_leader` option which use `s` as default variable. If you still prefer the origin function of `s`,
   you can use an empty string to disable this feature.
+
+  ```toml
+  [options]
+    windows_leader = ''
+  ```
+
+- The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
+  To disable this feature, set the option `enable_language_specific_leader` to `false`.
+
+  ```toml
+  [options]
+    enable_language_specific_leader = false
+  ```
+
+- The `q` key does recording, but in SpaceVim it is used to close current window.
+  The option for setting key binding to close current window is `windows_smartclose`,
+  and the default valuable is `q`.
+  If you prefer to use the origin function of `q`, you can use an empty string to disable this feature.
 
   ```toml
   [options]
     windows_smartclose = ''
   ```
-
-- The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
-
-  The option is `enable_language_specific_leader`, default value is `1`.
-
-- The `q` key does recording, but in SpaceVim it is used for closing window smart. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
-
-  The option is `windows_smartclose`, default value is `q`.
 
 - The `Ctrl-a` binding on the command line can auto-complete variable names, but in SpaceVim it moves to the cursor to the beginning of the command line.
 - The `Ctrl-b` binding on the command line is mapped to `<Left>`, which will move cursor to the left.
