@@ -805,6 +805,10 @@ let g:spacevim_checkinstall            = 1
 " >
 "   q       smart quit windows
 "   s       windows key bindings leader
+"   ,       language specific leader
+"   <C-a>   move cursor to beginning in command line mode
+"   <C-b>   move cursor to left in command line mode
+"   <C-f>   move cursor to right in command line mode
 "   <C-x>   switch buffer
 " <
 
@@ -820,6 +824,10 @@ let g:spacevim_checkinstall            = 1
 " >
 "   q       smart quit windows
 "   s       windows key bindings leader
+"   ,       language specific leader
+"   <C-a>   move cursor to beginning in command line mode
+"   <C-b>   move cursor to left in command line mode
+"   <C-f>   move cursor to right in command line mode
 "   <C-x>   switch buffer
 " <
 let g:spacevim_vimcompatible           = 0

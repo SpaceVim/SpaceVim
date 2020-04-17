@@ -295,13 +295,31 @@ endfunction
 
 以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
-- Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是窗口相关快捷键的前缀（可以在配置文件中设置成其它按键）。
-  如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
-- Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
+- 按键 `s` 是删除光标下的字符，但是在 SpaceVim 中，
+  它是**Normal**模式窗口快捷键的前缀，这一功能可以使用选项 `windows_leader` 来修改，默认是 `s`。
+  如果需要使用按键 `s` 的原生功能，可以将该选项设置为空。
+
+  ```toml
+  [options]
+      windows_leader = ''
+  ```
+
+- 按键 `,` 是重复上一次的搜索 `f`、`F`、`t` 和 `T` ，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
-- Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
-  即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其它按键。
+
+  ```toml
+  [options]
+      enable_language_specific_leader = false
+  ```
+
+- 按键 `q` 是录制宏，但是在 SpaceVim 中被设置为了智能关闭窗口，设置该功能的选项是 `windows_smartclose`，默认值是 `q`，
+  可以通过将该选项设置成空字符串来禁用该功能，同时也可以设置成其他按键。
+
+  ```toml
+  [options]
+      windows_smartclose = ''
+  ```
+
 - 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
 - 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
 - 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
