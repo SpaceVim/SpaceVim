@@ -89,9 +89,9 @@ npm install -g typescript-formatter
 
 ### REPL support
 
-Start a `node -i` inferior REPL process with `SPC l s i`. After the REPL process has been started, you can 
+Start a `ts-node -i` inferior REPL process with `SPC l s i`. After the REPL process has been started, you can 
 send code to inferior process, all key bindings begins with `SPC l s` prefix, including sending line, sending selection or even
 send whole buffer.
 
-![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
+NOTE: repl support for typescript has not be implemented, because the `ts-node -i` do not fflush stdout, see [ts-node #1013](https://github.com/TypeStrong/ts-node/issues/1013).
 

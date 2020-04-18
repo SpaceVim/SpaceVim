@@ -99,8 +99,7 @@ npm install -g typescript-formatter
 
 ### 交互式编程
 
-在编辑 TypeScript 文件时，可通过快捷键 `SPC l s i` 启动 `node -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
+在编辑 TypeScript 文件时，可通过快捷键 `SPC l s i` 启动 `ts-node -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
-
+目前 TypeScript 交互式编程还未完全实现，主要是因为 `ts-node -i` 执行是并不刷新buffer，可查看[ts-node #1013](https://github.com/TypeStrong/ts-node/issues/1013)。
 
