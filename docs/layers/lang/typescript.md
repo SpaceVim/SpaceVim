@@ -54,7 +54,6 @@ npm install -g typescript
 
 | Key Bindings    | Descriptions       |
 | --------------- | ------------------ |
-| `SPC l c`       | type definition    |
 | `SPC l d` / `K` | show documentation |
 | `SPC l e`       | rename symbol      |
 | `SPC l f`       | code fix           |
@@ -63,6 +62,7 @@ npm install -g typescript
 | `SPC l t`       | type               |
 | `SPC l g d`     | generate doc       |
 | `g d`           | defintion preview  |
+| `g D`           | type definition    |
 
 ### Code runner
 
