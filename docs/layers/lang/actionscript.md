@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#actionscript layer"
-description: "This layer is for actionscript development, provide syntax checking, code runner and repl support for actionscript file."
+description: "This layer is for actionscript syntax highlighting"
 ---
 
 # [Available Layers](../../) >> lang#actionscript
