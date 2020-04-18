@@ -80,7 +80,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前缓存器调用相对应的 `node` 命令，无需保存文件。
 
-![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
+![tsrunner](https://user-images.githubusercontent.com/13142418/79641052-b4cc8a00-81c7-11ea-8e95-35bc816b17d9.png)
 
 ### 代码格式化
 

@@ -53,7 +53,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
   call SpaceVim#plugins#runner#reg_runner('typescript', {
         \ 'exe' : 'ts-node',
         \ 'usestdin' : 1,
-        \ 'opt': ['-'],
+        \ 'opt': [],
         \ })
 endfunction
 

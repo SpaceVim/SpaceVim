@@ -76,7 +76,7 @@ To run code in current buffer, you can press `SPC l r`, and a split window
 will be opened, the output will be shown in this window.
 It is running asynchronously, and will not block your vim.
 
-![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
+![tsrunner](https://user-images.githubusercontent.com/13142418/79641052-b4cc8a00-81c7-11ea-8e95-35bc816b17d9.png)
 
 ### Code formatting
 
