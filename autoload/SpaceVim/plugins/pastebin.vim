@@ -10,9 +10,9 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:job_id = -1
 
-function! SpaceVim#plugins#pastebin#paste()
+function! SpaceVim#plugins#pastebin#paste(context)
   let s:url = ''
-  let context = 'hello'
+  let context = a:context
   " let ft = &filetype
   let cmd = 'curl -s -F "content=<-" http://dpaste.com/api/v2/'
   let s:job_id =  s:JOB.start(cmd,{
