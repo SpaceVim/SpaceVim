@@ -707,7 +707,7 @@ function! s:fix_install() abort
       endif
     else
       echohl WarningMsg
-      echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
+      echo 'Plugin(' . plugin . ') has not been installed!'
       echohl None
     endif
   endif
