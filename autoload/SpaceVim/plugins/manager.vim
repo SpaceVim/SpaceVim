@@ -644,21 +644,21 @@ function! s:new_window() abort
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> gf :call <SID>open_plugin_dir()<cr>
+    nnoremap <silent> <buffer> gr :call <SID>fix_install()<cr>
     " process has finished or does not start.
     return 2
   endif
 endfunction
 
 function! s:open_plugin_dir() abort
-  let line = line('.') - 3
-  let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
   if !empty(plugin)
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
     let path = ''
     if g:spacevim_plugin_manager ==# 'dein'
-      let path = dein#get(keys(plugin)[0]).path
+      let path = dein#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'neobundle'
-      let path = neobundle#get(keys(plugin)[0]).path
+      let path = neobundle#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
     endif
     if isdirectory(path)
@@ -676,6 +676,24 @@ function! s:open_plugin_dir() abort
         echo 'Do not support terminal!'
         echohl None
       endif
+    else
+      echohl WarningMsg
+      echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
+      echohl None
+    endif
+  endif
+endfunction
+
+function! s:fix_install() abort
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
+  if !empty(plugin)
+    let path = ''
+    if g:spacevim_plugin_manager ==# 'dein'
+      let path = dein#get(plugin).path
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      let path = neobundle#get(plugin).path
+    endif
+    if isdirectory(path)
     else
       echohl WarningMsg
       echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
