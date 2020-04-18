@@ -47,20 +47,18 @@ SpaceVim 初次安装时默认并未启用 TypeScript 相关语言模块。首�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![jside](https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
+![ts](https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png)
 
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 TypeScript 的支持是通过异步调用 [eslint](https://eslint.org/) 命令来完成的。
+这一异步语法检查工具。对于 TypeScript 的支持是通过异步调用 [tslint](https://www.npmjs.com/package/tslint)  命令来完成的。
 
 可通过以下命令安装：
 
 ```sh
-npm install -g eslint-cli
+npm install -g tslint
 ```
-
-![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
 
 ### 工程文件跳转
 
