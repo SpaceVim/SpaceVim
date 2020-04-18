@@ -152,7 +152,6 @@ function! SpaceVim#default#keyBindings() abort
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y
-    xnoremap <Leader>d "+d
     nnoremap <Leader>p "+p
     let g:_spacevim_mappings.p = ['normal! "+p', 'paste after here']
     nnoremap <Leader>P "+P
@@ -161,7 +160,6 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "+P
   else
     xnoremap <Leader>y "*y
-    xnoremap <Leader>d "*d
     nnoremap <Leader>p "*p
     let g:_spacevim_mappings.p = ['normal! "*p', 'paste after here']
     nnoremap <Leader>P "*P
@@ -170,6 +168,8 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
+  xnoremap <silent><Leader>Y :call SpaceVim#plugins#pastebin#paste()<CR>
+  " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
 
   " quickfix list movement
   let g:_spacevim_mappings.q = {'name' : '+Quickfix movement'}

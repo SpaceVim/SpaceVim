@@ -702,10 +702,18 @@ endfunction " }}}
 
 if !exists('g:leaderGuide_displayfunc')
   function! s:leaderGuide_display() abort
+    if has_key(s:registered_name, g:leaderGuide#displayname)
+      return s:registered_name[g:leaderGuide#displayname]
+    endif
     let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
   endfunction
   let g:leaderGuide_displayfunc = [function('s:leaderGuide_display')]
 endif
+
+let s:registered_name = {}
+function! SpaceVim#mapping#guide#register_displayname(lhs, name)
+  call extend(s:registered_name, {a:lhs : a:name})
+endfunction
 
 if get(g:, 'mapleader', '\') ==# ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
