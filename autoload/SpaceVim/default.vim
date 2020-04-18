@@ -170,6 +170,8 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
+  xnoremap <Leader>Y :call SpaceVim#plugins#pastebin#paste()<cr>
+  let g:_spacevim_mappings.Y = ['call SpaceVim#plugins#pastebin#paste()', 'paste into pastebin']
 
   " quickfix list movement
   let g:_spacevim_mappings.q = {'name' : '+Quickfix movement'}
