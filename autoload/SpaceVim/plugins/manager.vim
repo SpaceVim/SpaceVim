@@ -695,6 +695,9 @@ function! s:fix_install() abort
       let repo = {}
     endif
     if has_key(repo, 'path') && isdirectory(repo.path)
+      if index(s:failed_plugins, plugin) > 0
+        call remove(s:failed_plugins, plugin)
+      endif
       let argv = 'git checkout . && git pull --progress'
       let jobid = s:JOB.start(argv,{
             \ 'on_stderr' : function('s:on_install_stdout'),
