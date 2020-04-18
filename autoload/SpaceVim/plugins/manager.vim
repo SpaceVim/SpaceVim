@@ -687,13 +687,24 @@ endfunction
 function! s:fix_install() abort
   let plugin = get(split(getline('.')), 1, ':')[:-2]
   if !empty(plugin)
-    let path = ''
     if g:spacevim_plugin_manager ==# 'dein'
-      let path = dein#get(plugin).path
+      let repo = dein#get(plugin)
     elseif g:spacevim_plugin_manager ==# 'neobundle'
-      let path = neobundle#get(plugin).path
+      let repo = neobundle#get(plugin)
+    else
+      let repo = {}
     endif
-    if isdirectory(path)
+    if has_key(repo, 'path') && isdirectory(repo.path)
+      let argv = 'git checkout . && git pull --progress'
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'cwd' : repo.path,
+            \ 'on_exit' : function('s:on_pull_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = repo
+        call s:msg_on_start(repo.name)
+      endif
     else
       echohl WarningMsg
       echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
