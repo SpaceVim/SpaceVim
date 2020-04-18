@@ -37,7 +37,7 @@ endfunction
 function! s:on_exit(job_id, data, event) abort
   if a:data ==# 0 && !empty(s:url)
     let @+ = s:url . '.txt'
-    echom 'Pastbin: ' . s:url . '.txt'
+    echo 'Pastbin: ' . s:url . '.txt'
   endif
 endfunction
 
