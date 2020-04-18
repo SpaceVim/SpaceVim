@@ -84,17 +84,17 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 
 ### 代码格式化
 
-TypeScript 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 `ts-beautify`：
+TypeScript 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 `tsfmt`：
 
 ```toml
 [[layers]]
   name = "format"
 ```
 
-安装 `ts-beautify`：
+安装 `tsfmt` 命令：
 
 ```sh
-npm install -g ts-beautify
+npm install -g typescript-formatter
 ```
 
 ### 交互式编程
