@@ -81,10 +81,10 @@ It is running asynchronously, and will not block your vim.
 ### Code formatting
 
 The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install ts-beautify.
+Before using this feature, please install the command line tool [`tsfmt`](https://www.npmjs.com/package/typescript-formatter).
 
 ```sh
-npm install -g ts-beautify
+npm install -g typescript-formatter
 ```
 
 ### REPL support
