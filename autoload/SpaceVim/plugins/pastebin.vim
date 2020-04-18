@@ -11,9 +11,10 @@ let s:JOB = SpaceVim#api#import('job')
 let s:job_id = -1
 
 function! SpaceVim#plugins#pastebin#paste()
-  let content = []
-  let ft = &filetype
-  let cmd = 'curl -s -F "syntax=' . ft . '" -F "content=<-" http://dpaste.com/api/v2/'
+  let s:url = ''
+  let context = 'hello'
+  " let ft = &filetype
+  let cmd = 'curl -s -F "content=<-" http://dpaste.com/api/v2/'
   let s:job_id =  s:JOB.start(cmd,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
@@ -23,13 +24,19 @@ function! SpaceVim#plugins#pastebin#paste()
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
 function! s:on_stdout(job_id, data, event) abort
-  echom 'stdout:' . string(a:data)
+  " echom 'stdout:' . string(a:data)
+  for url in filter(a:data, '!empty(v:val)')
+    let s:url = url
+  endfor
 endfunction
 
 function! s:on_stderr(job_id, data, event) abort
-  echom 'stderr:' . string(a:data)
+  " echom 'stderr:' . string(a:data)
 endfunction
 
 function! s:on_exit(job_id, data, event) abort
-  echom string(a:data)
+  if a:data ==# 0 && !empty(s:url)
+    let @+ = s:url
+    echo 'Pastbin: ' . s:url
+  endif
 endfunction
