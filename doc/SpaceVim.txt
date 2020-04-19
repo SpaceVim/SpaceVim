@@ -122,13 +122,14 @@ CONTENTS                                                   *SpaceVim-contents*
       47. lang#rust.................................|SpaceVim-layer-lang-rust|
       48. lang#scala...............................|SpaceVim-layer-lang-scala|
       49. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      50. lang#xml...................................|SpaceVim-layer-lang-xml|
-      51. operator...................................|SpaceVim-layer-operator|
-      52. shell.........................................|SpaceVim-layer-shell|
-      53. test...........................................|SpaceVim-layer-test|
-      54. tmux...........................................|SpaceVim-layer-tmux|
-      55. tools#dash...............................|SpaceVim-layer-tools-dash|
-      56. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      50. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      51. lang#xml...................................|SpaceVim-layer-lang-xml|
+      52. operator...................................|SpaceVim-layer-operator|
+      53. shell.........................................|SpaceVim-layer-shell|
+      54. test...........................................|SpaceVim-layer-test|
+      55. tmux...........................................|SpaceVim-layer-tmux|
+      56. tools#dash...............................|SpaceVim-layer-tools-dash|
+      57. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2471,6 +2472,23 @@ This layer also provides REPL support for tcl, the key bindings are:
   SPC l s s       send selection text
 <
 
+
+==============================================================================
+LANG#TYPESCRIPT                               *SpaceVim-layer-lang-typescript*
+
+This layer provides typescript development support for SpaceVim. To enable
+this layer, add following sinippet into SpaceVim configuration file.
+>
+  [layers]
+      name = "lang#typescript"
+<
+MAPPINGS
+
+>
+  Ket binding          Description
+  ----------------------------------------
+  g d                  defintion preview
+<
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
