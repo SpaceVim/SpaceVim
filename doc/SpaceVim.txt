@@ -129,12 +129,13 @@ CONTENTS                                                   *SpaceVim-contents*
       54. lang#tcl...................................|SpaceVim-layer-lang-tcl|
       55. lang#typescript.....................|SpaceVim-layer-lang-typescript|
       56. lang#xml...................................|SpaceVim-layer-lang-xml|
-      57. operator...................................|SpaceVim-layer-operator|
-      58. shell.........................................|SpaceVim-layer-shell|
-      59. test...........................................|SpaceVim-layer-test|
-      60. tmux...........................................|SpaceVim-layer-tmux|
-      61. tools#dash...............................|SpaceVim-layer-tools-dash|
-      62. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      57. language server protocol........................|SpaceVim-layer-lsp|
+      58. operator...................................|SpaceVim-layer-operator|
+      59. shell.........................................|SpaceVim-layer-shell|
+      60. test...........................................|SpaceVim-layer-test|
+      61. tmux...........................................|SpaceVim-layer-tmux|
+      62. tools#dash...............................|SpaceVim-layer-tools-dash|
+      63. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1655,9 +1656,37 @@ This layer also provides REPL support for d, the key bindings are:
 LANG#DART                                           *SpaceVim-layer-lang-dart*
 
 INTRO
+
 The lang#dart layer provides code completion, documentation lookup, jump to
 definition, dart_repl integration for dart. It uses neomake as default syntax
-checker which is loaded in |SpaceVim-layer-checkers|
+checker which is loaded in |SpaceVim-layer-checkers|. To enable this layer:
+>
+  [layers]
+    name = "lang#dart"
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for hack, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+This layer use deoplete-dart as default completion plugin for dart. If the
+|SpaceVim-layer-lsp| is enabled for dart, This plugin will not be loaded.
+
+
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
@@ -2578,6 +2607,11 @@ LANG#XML                                             *SpaceVim-layer-lang-xml*
 When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
 read the documentation in autoload/xmlcomplete.vim in the vim or neovim
 runtime directory.
+
+==============================================================================
+LANGUAGE SERVER PROTOCOL                                  *SpaceVim-layer-lsp*
+
+This layer provides language client support for SpaceVim.
 
 ==============================================================================
 OPERATOR                                             *SpaceVim-layer-operator*
