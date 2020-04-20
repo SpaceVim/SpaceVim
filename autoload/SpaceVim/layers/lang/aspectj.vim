@@ -6,6 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#asepctj, layer-lang-asepctj
+" @parentsection layers
+" This layer provides syntax highlighting for asepctj. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#asepctj"
+" <
 
 function! SpaceVim#layers#lang#asepctj#plugins() abort
   let plugins = []

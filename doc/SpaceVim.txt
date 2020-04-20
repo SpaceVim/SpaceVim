@@ -83,53 +83,58 @@ CONTENTS                                                   *SpaceVim-contents*
       8. github........................................|SpaceVim-layer-github|
       9. incsearch..................................|SpaceVim-layer-incsearch|
       10. indentmove...............................|SpaceVim-layer-indentmove|
-      11. lang#batch...............................|SpaceVim-layer-lang-batch|
-      12. lang#c.......................................|SpaceVim-layer-lang-c|
-      13. lang#chapel.............................|SpaceVim-layer-lang-chapel|
-      14. lang#coffeescript.................|SpaceVim-layer-lang-coffeescript|
-      15. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      16. lang#csharp.............................|SpaceVim-layer-lang-csharp|
-      17. lang#d.......................................|SpaceVim-layer-lang-d|
-      18. lang#dart.................................|SpaceVim-layer-lang-dart|
-      19. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      20. lang#elm...................................|SpaceVim-layer-lang-elm|
-      21. lang#erlang.............................|SpaceVim-layer-lang-erlang|
-      22. lang#fsharp.............................|SpaceVim-layer-lang-fsharp|
-      23. lang#go.....................................|SpaceVim-layer-lang-go|
-      24. lang#goby.................................|SpaceVim-layer-lang-goby|
-      25. lang#gosu.................................|SpaceVim-layer-lang-gosu|
-      26. lang#groovy.............................|SpaceVim-layer-lang-groovy|
-      27. lang#hack.................................|SpaceVim-layer-lang-hack|
-      28. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      29. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      30. lang#j.......................................|SpaceVim-layer-lang-j|
-      31. lang#java.................................|SpaceVim-layer-lang-java|
-      32. lang#julia...............................|SpaceVim-layer-lang-julia|
-      33. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      34. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      35. lang#lua...................................|SpaceVim-layer-lang-lua|
-      36. lang#nim...................................|SpaceVim-layer-lang-nim|
-      37. lang#nix...................................|SpaceVim-layer-lang-nix|
-      38. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      39. lang#pact.................................|SpaceVim-layer-lang-pact|
-      40. lang#php...................................|SpaceVim-layer-lang-php|
-      41. lang#pony.................................|SpaceVim-layer-lang-pony|
-      42. lang#processing.....................|SpaceVim-layer-lang-processing|
-      43. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      44. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      45. lang#python.............................|SpaceVim-layer-lang-python|
-      46. lang#racket.............................|SpaceVim-layer-lang-racket|
-      47. lang#rust.................................|SpaceVim-layer-lang-rust|
-      48. lang#scala...............................|SpaceVim-layer-lang-scala|
-      49. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      50. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      51. lang#xml...................................|SpaceVim-layer-lang-xml|
-      52. operator...................................|SpaceVim-layer-operator|
-      53. shell.........................................|SpaceVim-layer-shell|
-      54. test...........................................|SpaceVim-layer-test|
-      55. tmux...........................................|SpaceVim-layer-tmux|
-      56. tools#dash...............................|SpaceVim-layer-tools-dash|
-      57. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      11. lang#actionscript.................|SpaceVim-layer-lang-actionscript|
+      12. lang#agda.................................|SpaceVim-layer-lang-agda|
+      13. lang#asciidoc.........................|SpaceVim-layer-lang-asciidoc|
+      14. lang#asepctj...........................|SpaceVim-layer-lang-asepctj|
+      15. lang#batch...............................|SpaceVim-layer-lang-batch|
+      16. lang#c.......................................|SpaceVim-layer-lang-c|
+      17. lang#chapel.............................|SpaceVim-layer-lang-chapel|
+      18. lang#clojure...........................|SpaceVim-layer-lang-clojure|
+      19. lang#coffeescript.................|SpaceVim-layer-lang-coffeescript|
+      20. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      21. lang#csharp.............................|SpaceVim-layer-lang-csharp|
+      22. lang#d.......................................|SpaceVim-layer-lang-d|
+      23. lang#dart.................................|SpaceVim-layer-lang-dart|
+      24. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      25. lang#elm...................................|SpaceVim-layer-lang-elm|
+      26. lang#erlang.............................|SpaceVim-layer-lang-erlang|
+      27. lang#fsharp.............................|SpaceVim-layer-lang-fsharp|
+      28. lang#go.....................................|SpaceVim-layer-lang-go|
+      29. lang#goby.................................|SpaceVim-layer-lang-goby|
+      30. lang#gosu.................................|SpaceVim-layer-lang-gosu|
+      31. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      32. lang#hack.................................|SpaceVim-layer-lang-hack|
+      33. lang#haskell...........................|SpaceVim-layer-lang-haskell|
+      34. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      35. lang#j.......................................|SpaceVim-layer-lang-j|
+      36. lang#java.................................|SpaceVim-layer-lang-java|
+      37. lang#julia...............................|SpaceVim-layer-lang-julia|
+      38. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      39. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      40. lang#lua...................................|SpaceVim-layer-lang-lua|
+      41. lang#nim...................................|SpaceVim-layer-lang-nim|
+      42. lang#nix...................................|SpaceVim-layer-lang-nix|
+      43. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      44. lang#pact.................................|SpaceVim-layer-lang-pact|
+      45. lang#php...................................|SpaceVim-layer-lang-php|
+      46. lang#pony.................................|SpaceVim-layer-lang-pony|
+      47. lang#processing.....................|SpaceVim-layer-lang-processing|
+      48. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      49. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      50. lang#python.............................|SpaceVim-layer-lang-python|
+      51. lang#racket.............................|SpaceVim-layer-lang-racket|
+      52. lang#rust.................................|SpaceVim-layer-lang-rust|
+      53. lang#scala...............................|SpaceVim-layer-lang-scala|
+      54. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      55. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      56. lang#xml...................................|SpaceVim-layer-lang-xml|
+      57. operator...................................|SpaceVim-layer-operator|
+      58. shell.........................................|SpaceVim-layer-shell|
+      59. test...........................................|SpaceVim-layer-test|
+      60. tmux...........................................|SpaceVim-layer-tmux|
+      61. tools#dash...............................|SpaceVim-layer-tools-dash|
+      62. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1394,6 +1399,43 @@ MAPPINGS
 
 
 ==============================================================================
+LANG#ACTIONSCRIPT                           *SpaceVim-layer-lang-actionscript*
+
+This layer provides syntax highlighting for actionscript. To enable this
+layer:
+>
+  [layers]
+    name = "lang#actionscript"
+<
+
+==============================================================================
+LANG#AGDA                                           *SpaceVim-layer-lang-agda*
+
+This layer provides syntax highlighting for agda. To enable this layer:
+>
+  [layers]
+    name = "lang#agda"
+<
+
+==============================================================================
+LANG#ASCIIDOC                                   *SpaceVim-layer-lang-asciidoc*
+
+This layer provides syntax highlighting for asciidoc. To enable this layer:
+>
+  [layers]
+    name = "lang#asciidoc"
+<
+
+==============================================================================
+LANG#ASEPCTJ                                     *SpaceVim-layer-lang-asepctj*
+
+This layer provides syntax highlighting for asepctj. To enable this layer:
+>
+  [layers]
+    name = "lang#asepctj"
+<
+
+==============================================================================
 LANG#BATCH                                         *SpaceVim-layer-lang-batch*
 
 This layer is for batch development, disabled by default, to enable this
@@ -1479,6 +1521,15 @@ KEY BINDINGS
   normal          SPC l r         compile and run current file
 <
 
+
+==============================================================================
+LANG#CLOJURE                                     *SpaceVim-layer-lang-clojure*
+
+This layer provides syntax highlighting for clojure. To enable this layer:
+>
+  [layers]
+    name = "lang#clojure"
+<
 
 ==============================================================================
 LANG#COFFEESCRIPT                           *SpaceVim-layer-lang-coffeescript*
