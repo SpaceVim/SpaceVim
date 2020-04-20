@@ -17,6 +17,14 @@
 " 1. pug 
 "     
 "     digitaltoad/vim-pug syntax highlighting and indent
+"
+" 2. i3config
+"
+"     PotatoesMaster/i3-vim-syntax syntax highlighting for i3 config
+"
+" 3. irssi config
+"     
+"     isundil/vim-irssi-syntax syntax highlighting for irssi config
 
 function! SpaceVim#layers#lang#extra#plugins() abort
   let plugins = [
