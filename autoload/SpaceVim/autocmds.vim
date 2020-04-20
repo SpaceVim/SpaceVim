@@ -67,9 +67,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
-    " helpHeadline do not include # which is used in 
-    " SpaceVim layer name
-    autocmd FileType help syn match helpHeadline "^[-A-Z .][-A-Z0-9 .()_#]*\ze\(\s\+\*\|$\)"
   augroup END
 endfunction
 

@@ -217,6 +217,8 @@ function! SpaceVim#plugins#end() abort
     endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     call dein#end()
+    " dein do not include the after dir of SpaceVim by default
+    let &rtp .= ',' . g:_spacevim_root_dir . 'after'
     if g:spacevim_checkinstall == 1
       silent! let g:_spacevim_checking_flag = dein#check_install()
       if g:_spacevim_checking_flag
