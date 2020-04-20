@@ -106,39 +106,40 @@ CONTENTS                                                   *SpaceVim-contents*
       31. lang#go.....................................|SpaceVim-layer-lang-go|
       32. lang#goby.................................|SpaceVim-layer-lang-goby|
       33. lang#gosu.................................|SpaceVim-layer-lang-gosu|
-      34. lang#groovy.............................|SpaceVim-layer-lang-groovy|
-      35. lang#hack.................................|SpaceVim-layer-lang-hack|
-      36. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      37. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      38. lang#j.......................................|SpaceVim-layer-lang-j|
-      39. lang#java.................................|SpaceVim-layer-lang-java|
-      40. lang#julia...............................|SpaceVim-layer-lang-julia|
-      41. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      42. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      43. lang#lua...................................|SpaceVim-layer-lang-lua|
-      44. lang#nim...................................|SpaceVim-layer-lang-nim|
-      45. lang#nix...................................|SpaceVim-layer-lang-nix|
-      46. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      47. lang#pact.................................|SpaceVim-layer-lang-pact|
-      48. lang#php...................................|SpaceVim-layer-lang-php|
-      49. lang#pony.................................|SpaceVim-layer-lang-pony|
-      50. lang#processing.....................|SpaceVim-layer-lang-processing|
-      51. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      52. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      53. lang#python.............................|SpaceVim-layer-lang-python|
-      54. lang#racket.............................|SpaceVim-layer-lang-racket|
-      55. lang#rust.................................|SpaceVim-layer-lang-rust|
-      56. lang#scala...............................|SpaceVim-layer-lang-scala|
-      57. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      58. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      59. lang#xml...................................|SpaceVim-layer-lang-xml|
-      60. language server protocol........................|SpaceVim-layer-lsp|
-      61. operator...................................|SpaceVim-layer-operator|
-      62. shell.........................................|SpaceVim-layer-shell|
-      63. test...........................................|SpaceVim-layer-test|
-      64. tmux...........................................|SpaceVim-layer-tmux|
-      65. tools#dash...............................|SpaceVim-layer-tools-dash|
-      66. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      34. lang#graphql...........................|SpaceVim-layer-lang-graphql|
+      35. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      36. lang#hack.................................|SpaceVim-layer-lang-hack|
+      37. lang#haskell...........................|SpaceVim-layer-lang-haskell|
+      38. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      39. lang#j.......................................|SpaceVim-layer-lang-j|
+      40. lang#java.................................|SpaceVim-layer-lang-java|
+      41. lang#julia...............................|SpaceVim-layer-lang-julia|
+      42. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      43. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      44. lang#lua...................................|SpaceVim-layer-lang-lua|
+      45. lang#nim...................................|SpaceVim-layer-lang-nim|
+      46. lang#nix...................................|SpaceVim-layer-lang-nix|
+      47. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      48. lang#pact.................................|SpaceVim-layer-lang-pact|
+      49. lang#php...................................|SpaceVim-layer-lang-php|
+      50. lang#pony.................................|SpaceVim-layer-lang-pony|
+      51. lang#processing.....................|SpaceVim-layer-lang-processing|
+      52. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      53. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      54. lang#python.............................|SpaceVim-layer-lang-python|
+      55. lang#racket.............................|SpaceVim-layer-lang-racket|
+      56. lang#rust.................................|SpaceVim-layer-lang-rust|
+      57. lang#scala...............................|SpaceVim-layer-lang-scala|
+      58. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      59. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      60. lang#xml...................................|SpaceVim-layer-lang-xml|
+      61. language server protocol........................|SpaceVim-layer-lsp|
+      62. operator...................................|SpaceVim-layer-operator|
+      63. shell.........................................|SpaceVim-layer-shell|
+      64. test...........................................|SpaceVim-layer-test|
+      65. tmux...........................................|SpaceVim-layer-tmux|
+      66. tools#dash...............................|SpaceVim-layer-tools-dash|
+      67. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1913,6 +1914,28 @@ KEY BINDINGS
   Mode            Key             Function
   ---------------------------------------------
   normal          SPC l r         run current file
+<
+
+==============================================================================
+LANG#GRAPHQL                                     *SpaceVim-layer-lang-graphql*
+
+INTRO
+
+The lang#graphql layer provides syntax highlighting indent for graphql. To
+enable this layer:
+>
+  [layers]
+    name = "lang#graphql"
+<
+
+This filetype is automatically selected for filenames ending in .graphql,
+.graphqls, and .gql. If you would like to enable automatic syntax support for
+more file extensions (e.g., *.prisma), add following into bootstrap function.
+>
+    augroup mybootstrap
+      au!
+      au BufNewFile,BufRead *.prisma setfiletype graphql
+    augroup END
 <
 
 ==============================================================================
