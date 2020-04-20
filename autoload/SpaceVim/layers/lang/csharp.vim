@@ -9,7 +9,14 @@
 ""
 " @section lang#csharp, layer-lang-csharp
 " @parentsection layers
+" @subsection Intro
+"
 " This layer includes utilities and language-specific mappings for csharp development.
+" By default it is disabled, to enable this layer:
+" >
+"   [layers]
+"     name = "lang#csharp"
+" <
 "
 " @subsection Key Mappings
 " >

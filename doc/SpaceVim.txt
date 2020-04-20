@@ -1564,14 +1564,43 @@ This layer also provides REPL support for coffeescript, the key bindings are:
 LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
 
 INTRO
+
 The lang#crystal layer provides crystal filetype detection and syntax
-highlight, crystal tool and crystal spec integration.
+highlight, crystal tool and crystal spec integration. To enable this layer:
+>
+  [layers]
+    name = "lang#crystal"
+<
+
+MAPPING
+
+>
+  Key binding       description
+  SPC l r           run current code
+
+<
+This layer also provides REPL support for crystal, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#CSHARP                                       *SpaceVim-layer-lang-csharp*
 
+INTRO
+
 This layer includes utilities and language-specific mappings for csharp
-development.
+development. By default it is disabled, to enable this layer:
+>
+  [layers]
+    name = "lang#csharp"
+<
 
 KEY MAPPINGS
 
@@ -1851,6 +1880,8 @@ This layer also provides REPL support for groovy, the key bindings are:
 
 ==============================================================================
 LANG#HACK                                           *SpaceVim-layer-lang-hack*
+
+INTRO
 
 This layer is for hack development, disabled by default, to enable this layer,
 add following snippet to your SpaceVim configuration file.

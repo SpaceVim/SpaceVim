@@ -10,8 +10,29 @@
 " @section lang#crystal, layer-lang-crystal
 " @parentsection layers
 " @subsection Intro
+"
 " The lang#crystal layer provides crystal filetype detection and syntax highlight,
-" crystal tool and crystal spec integration.
+" crystal tool and crystal spec integration. To enable this layer:
+" >
+"   [layers]
+"     name = "lang#crystal"
+" <
+"
+" @subsection mapping
+" >
+"   Key binding       description
+"   SPC l r           run current code
+"
+" This layer also provides REPL support for crystal, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#crystal#plugins() abort
   return [
