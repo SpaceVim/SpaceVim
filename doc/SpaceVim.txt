@@ -110,36 +110,37 @@ CONTENTS                                                   *SpaceVim-contents*
       35. lang#groovy.............................|SpaceVim-layer-lang-groovy|
       36. lang#hack.................................|SpaceVim-layer-lang-hack|
       37. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      38. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      39. lang#j.......................................|SpaceVim-layer-lang-j|
-      40. lang#java.................................|SpaceVim-layer-lang-java|
-      41. lang#julia...............................|SpaceVim-layer-lang-julia|
-      42. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      43. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      44. lang#lua...................................|SpaceVim-layer-lang-lua|
-      45. lang#nim...................................|SpaceVim-layer-lang-nim|
-      46. lang#nix...................................|SpaceVim-layer-lang-nix|
-      47. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      48. lang#pact.................................|SpaceVim-layer-lang-pact|
-      49. lang#php...................................|SpaceVim-layer-lang-php|
-      50. lang#pony.................................|SpaceVim-layer-lang-pony|
-      51. lang#processing.....................|SpaceVim-layer-lang-processing|
-      52. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      53. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      54. lang#python.............................|SpaceVim-layer-lang-python|
-      55. lang#racket.............................|SpaceVim-layer-lang-racket|
-      56. lang#rust.................................|SpaceVim-layer-lang-rust|
-      57. lang#scala...............................|SpaceVim-layer-lang-scala|
-      58. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      59. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      60. lang#xml...................................|SpaceVim-layer-lang-xml|
-      61. language server protocol........................|SpaceVim-layer-lsp|
-      62. operator...................................|SpaceVim-layer-operator|
-      63. shell.........................................|SpaceVim-layer-shell|
-      64. test...........................................|SpaceVim-layer-test|
-      65. tmux...........................................|SpaceVim-layer-tmux|
-      66. tools#dash...............................|SpaceVim-layer-tools-dash|
-      67. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      38. lang#html.................................|SpaceVim-layer-lang-html|
+      39. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      40. lang#j.......................................|SpaceVim-layer-lang-j|
+      41. lang#java.................................|SpaceVim-layer-lang-java|
+      42. lang#julia...............................|SpaceVim-layer-lang-julia|
+      43. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      44. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      45. lang#lua...................................|SpaceVim-layer-lang-lua|
+      46. lang#nim...................................|SpaceVim-layer-lang-nim|
+      47. lang#nix...................................|SpaceVim-layer-lang-nix|
+      48. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      49. lang#pact.................................|SpaceVim-layer-lang-pact|
+      50. lang#php...................................|SpaceVim-layer-lang-php|
+      51. lang#pony.................................|SpaceVim-layer-lang-pony|
+      52. lang#processing.....................|SpaceVim-layer-lang-processing|
+      53. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      54. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      55. lang#python.............................|SpaceVim-layer-lang-python|
+      56. lang#racket.............................|SpaceVim-layer-lang-racket|
+      57. lang#rust.................................|SpaceVim-layer-lang-rust|
+      58. lang#scala...............................|SpaceVim-layer-lang-scala|
+      59. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      60. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      61. lang#xml...................................|SpaceVim-layer-lang-xml|
+      62. language server protocol........................|SpaceVim-layer-lsp|
+      63. operator...................................|SpaceVim-layer-operator|
+      64. shell.........................................|SpaceVim-layer-shell|
+      65. test...........................................|SpaceVim-layer-test|
+      66. tmux...........................................|SpaceVim-layer-tmux|
+      67. tools#dash...............................|SpaceVim-layer-tools-dash|
+      68. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2024,6 +2025,36 @@ This layer also provides REPL support for haskell, the key bindings are:
   SPC l s b       send whole buffer
   SPC l s l       send current line
   SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#HTML                                           *SpaceVim-layer-lang-html*
+
+This layer is for html development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [layers]
+    name = "lang#html"
+<
+
+OPTIONS
+
+user_emmet_leader_key: change the default leader key for emmet
+
+
+>
+  [layers]
+    name = "lang#html"
+    user_emmet_leader_key = "<C-e>"
+<
+
+KEY BINDINGS
+
+
+>
+    Key Binding       description
+    <C-e>             emmet leader key
 <
 
 
