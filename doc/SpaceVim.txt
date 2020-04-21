@@ -142,14 +142,15 @@ CONTENTS                                                   *SpaceVim-contents*
       67. lang#swig.................................|SpaceVim-layer-lang-swig|
       68. lang#tcl...................................|SpaceVim-layer-lang-tcl|
       69. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      70. lang#xml...................................|SpaceVim-layer-lang-xml|
-      71. language server protocol........................|SpaceVim-layer-lsp|
-      72. operator...................................|SpaceVim-layer-operator|
-      73. shell.........................................|SpaceVim-layer-shell|
-      74. test...........................................|SpaceVim-layer-test|
-      75. tmux...........................................|SpaceVim-layer-tmux|
-      76. tools#dash...............................|SpaceVim-layer-tools-dash|
-      77. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      70. lang#v.......................................|SpaceVim-layer-lang-v|
+      71. lang#xml...................................|SpaceVim-layer-lang-xml|
+      72. language server protocol........................|SpaceVim-layer-lsp|
+      73. operator...................................|SpaceVim-layer-operator|
+      74. shell.........................................|SpaceVim-layer-shell|
+      75. test...........................................|SpaceVim-layer-test|
+      76. tmux...........................................|SpaceVim-layer-tmux|
+      77. tools#dash...............................|SpaceVim-layer-tools-dash|
+      78. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2946,6 +2947,35 @@ MAPPINGS
   ----------------------------------------
   g d                  defintion preview
 <
+
+==============================================================================
+LANG#V                                                 *SpaceVim-layer-lang-v*
+
+This layer is for v development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#v'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for v, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
