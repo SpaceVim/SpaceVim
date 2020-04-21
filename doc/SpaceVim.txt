@@ -141,16 +141,17 @@ CONTENTS                                                   *SpaceVim-contents*
       66. lang#sh.....................................|SpaceVim-layer-lang-sh|
       67. lang#swig.................................|SpaceVim-layer-lang-swig|
       68. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      69. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      70. lang#v.......................................|SpaceVim-layer-lang-v|
-      71. lang#xml...................................|SpaceVim-layer-lang-xml|
-      72. language server protocol........................|SpaceVim-layer-lsp|
-      73. operator...................................|SpaceVim-layer-operator|
-      74. shell.........................................|SpaceVim-layer-shell|
-      75. test...........................................|SpaceVim-layer-test|
-      76. tmux...........................................|SpaceVim-layer-tmux|
-      77. tools#dash...............................|SpaceVim-layer-tools-dash|
-      78. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      69. lang#toml.................................|SpaceVim-layer-lang-toml|
+      70. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      71. lang#v.......................................|SpaceVim-layer-lang-v|
+      72. lang#xml...................................|SpaceVim-layer-lang-xml|
+      73. language server protocol........................|SpaceVim-layer-lsp|
+      74. operator...................................|SpaceVim-layer-operator|
+      75. shell.........................................|SpaceVim-layer-shell|
+      76. test...........................................|SpaceVim-layer-test|
+      77. tmux...........................................|SpaceVim-layer-tmux|
+      78. tools#dash...............................|SpaceVim-layer-tools-dash|
+      79. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2930,6 +2931,15 @@ This layer also provides REPL support for tcl, the key bindings are:
   SPC l s s       send selection text
 <
 
+
+==============================================================================
+LANG#TOML                                           *SpaceVim-layer-lang-toml*
+
+This layer provides basic syntax highlighting for toml. To enable it:
+>
+  [layers]
+    name = "lang#toml"
+<
 
 ==============================================================================
 LANG#TYPESCRIPT                               *SpaceVim-layer-lang-typescript*
