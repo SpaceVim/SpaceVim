@@ -77,7 +77,7 @@ function! SpaceVim#layers#lsp#config() abort
   endif
 
 
-  if !SpaceVim#layers#isLoaded('lsp')
+  if !SpaceVim#layers#isLoaded('checkers')
     call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
           \ . string(s:_function('s:clear_errors')) . ', [])',
           \ 'clear all errors', 1)
