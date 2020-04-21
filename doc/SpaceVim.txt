@@ -137,16 +137,17 @@ CONTENTS                                                   *SpaceVim-contents*
       62. lang#ruby.................................|SpaceVim-layer-lang-ruby|
       63. lang#rust.................................|SpaceVim-layer-lang-rust|
       64. lang#scala...............................|SpaceVim-layer-lang-scala|
-      65. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      66. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      67. lang#xml...................................|SpaceVim-layer-lang-xml|
-      68. language server protocol........................|SpaceVim-layer-lsp|
-      69. operator...................................|SpaceVim-layer-operator|
-      70. shell.........................................|SpaceVim-layer-shell|
-      71. test...........................................|SpaceVim-layer-test|
-      72. tmux...........................................|SpaceVim-layer-tmux|
-      73. tools#dash...............................|SpaceVim-layer-tools-dash|
-      74. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      65. lang#scheme.............................|SpaceVim-layer-lang-scheme|
+      66. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      67. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      68. lang#xml...................................|SpaceVim-layer-lang-xml|
+      69. language server protocol........................|SpaceVim-layer-lsp|
+      70. operator...................................|SpaceVim-layer-operator|
+      71. shell.........................................|SpaceVim-layer-shell|
+      72. test...........................................|SpaceVim-layer-test|
+      73. tmux...........................................|SpaceVim-layer-tmux|
+      74. tools#dash...............................|SpaceVim-layer-tools-dash|
+      75. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2857,6 +2858,23 @@ CODE FORMATTING
     enabled, it will automatically use
     [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
     format code.
+
+==============================================================================
+LANG#SCHEME                                       *SpaceVim-layer-lang-scheme*
+
+This layer is for scheme development, disabled by default, to enable this
+layer, add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#scheme'
+<
+
+OPTIONS
+
+  1. scheme_dialect: Set the dialect of scheme.
+
+  2. scheme_interpreter: Set the path or interpreter of scheme.
+
 
 ==============================================================================
 LANG#TCL                                             *SpaceVim-layer-lang-tcl*
