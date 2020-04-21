@@ -139,16 +139,17 @@ CONTENTS                                                   *SpaceVim-contents*
       64. lang#scala...............................|SpaceVim-layer-lang-scala|
       65. lang#scheme.............................|SpaceVim-layer-lang-scheme|
       66. lang#sh.....................................|SpaceVim-layer-lang-sh|
-      67. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      68. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      69. lang#xml...................................|SpaceVim-layer-lang-xml|
-      70. language server protocol........................|SpaceVim-layer-lsp|
-      71. operator...................................|SpaceVim-layer-operator|
-      72. shell.........................................|SpaceVim-layer-shell|
-      73. test...........................................|SpaceVim-layer-test|
-      74. tmux...........................................|SpaceVim-layer-tmux|
-      75. tools#dash...............................|SpaceVim-layer-tools-dash|
-      76. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      67. lang#swig.................................|SpaceVim-layer-lang-swig|
+      68. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      69. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      70. lang#xml...................................|SpaceVim-layer-lang-xml|
+      71. language server protocol........................|SpaceVim-layer-lsp|
+      72. operator...................................|SpaceVim-layer-operator|
+      73. shell.........................................|SpaceVim-layer-shell|
+      74. test...........................................|SpaceVim-layer-test|
+      75. tmux...........................................|SpaceVim-layer-tmux|
+      76. tools#dash...............................|SpaceVim-layer-tools-dash|
+      77. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2889,6 +2890,16 @@ disabled by default, to enable this layer, add following snippet to your
     name = 'lang#sh'
 <
 
+
+==============================================================================
+LANG#SWIG                                           *SpaceVim-layer-lang-swig*
+
+This layer is for swig development, including syntax highlighting and indent.
+To enable it:
+>
+  [layers]
+    name = "lang#swig"
+<
 
 ==============================================================================
 LANG#TCL                                             *SpaceVim-layer-lang-tcl*

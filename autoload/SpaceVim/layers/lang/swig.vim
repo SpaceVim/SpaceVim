@@ -6,6 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#swig, layer-lang-swig
+" @parentsection layers
+" This layer is for swig development, including syntax highlighting and
+" indent. To enable it:
+" >
+"   [layers]
+"     name = "lang#swig"
+" <
 
 function! SpaceVim#layers#lang#swig#plugins() abort
     let plugins = []
