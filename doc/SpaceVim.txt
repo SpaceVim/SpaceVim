@@ -134,18 +134,19 @@ CONTENTS                                                   *SpaceVim-contents*
       59. lang#python.............................|SpaceVim-layer-lang-python|
       60. lang#racket.............................|SpaceVim-layer-lang-racket|
       61. lang#ring.................................|SpaceVim-layer-lang-ring|
-      62. lang#rust.................................|SpaceVim-layer-lang-rust|
-      63. lang#scala...............................|SpaceVim-layer-lang-scala|
-      64. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      65. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      66. lang#xml...................................|SpaceVim-layer-lang-xml|
-      67. language server protocol........................|SpaceVim-layer-lsp|
-      68. operator...................................|SpaceVim-layer-operator|
-      69. shell.........................................|SpaceVim-layer-shell|
-      70. test...........................................|SpaceVim-layer-test|
-      71. tmux...........................................|SpaceVim-layer-tmux|
-      72. tools#dash...............................|SpaceVim-layer-tools-dash|
-      73. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      62. lang#ruby.................................|SpaceVim-layer-lang-ruby|
+      63. lang#rust.................................|SpaceVim-layer-lang-rust|
+      64. lang#scala...............................|SpaceVim-layer-lang-scala|
+      65. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      66. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      67. lang#xml...................................|SpaceVim-layer-lang-xml|
+      68. language server protocol........................|SpaceVim-layer-lsp|
+      69. operator...................................|SpaceVim-layer-operator|
+      70. shell.........................................|SpaceVim-layer-shell|
+      71. test...........................................|SpaceVim-layer-test|
+      72. tmux...........................................|SpaceVim-layer-tmux|
+      73. tools#dash...............................|SpaceVim-layer-tools-dash|
+      74. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2616,6 +2617,49 @@ ring file.
 <
 
 This layer also provides REPL support for ring, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#RUBY                                           *SpaceVim-layer-lang-ruby*
+
+This layer is for ruby development, disabled by default, to enable this layer,
+add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#ruby'
+<
+
+OPTIONS
+
+  1. ruby_file_head: the default file head for ruby source code.
+
+>
+  [layers]
+    name = "lang#ruby"
+    ruby_file_head = [
+      '#!/usr/bin/ruby -w',
+      '# -*- coding : utf-8 -*-'
+      ''
+    ]
+<
+KEY BINDINGS
+
+
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+This layer also provides REPL support for ruby, the key bindings are:
 >
   Key             Function
   ---------------------------------------------

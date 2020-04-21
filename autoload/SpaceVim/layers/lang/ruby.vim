@@ -6,6 +6,47 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#ruby, layer-lang-ruby
+" @parentsection layers
+" This layer is for ruby development, disabled by default, to enable this
+" layer, add following snippet to your @section(options) file.
+" >
+"   [[layers]]
+"     name = 'lang#ruby'
+" <
+"
+" @subsection Options
+"
+" 1. ruby_file_head: the default file head for ruby source code.
+" >
+"   [layers]
+"     name = "lang#ruby"
+"     ruby_file_head = [      
+"       '#!/usr/bin/ruby -w',
+"       '# -*- coding : utf-8 -*-'
+"       ''
+"     ]
+" <
+" @subsection Key bindings
+"
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for ruby, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 function! SpaceVim#layers#lang#ruby#plugins() abort
   return [
         \ ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby' }]
