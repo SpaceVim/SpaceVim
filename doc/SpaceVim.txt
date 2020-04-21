@@ -116,33 +116,34 @@ CONTENTS                                                   *SpaceVim-contents*
       41. lang#j.......................................|SpaceVim-layer-lang-j|
       42. lang#janet...............................|SpaceVim-layer-lang-janet|
       43. lang#java.................................|SpaceVim-layer-lang-java|
-      44. lang#julia...............................|SpaceVim-layer-lang-julia|
-      45. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      46. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      47. lang#lua...................................|SpaceVim-layer-lang-lua|
-      48. lang#nim...................................|SpaceVim-layer-lang-nim|
-      49. lang#nix...................................|SpaceVim-layer-lang-nix|
-      50. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      51. lang#pact.................................|SpaceVim-layer-lang-pact|
-      52. lang#php...................................|SpaceVim-layer-lang-php|
-      53. lang#pony.................................|SpaceVim-layer-lang-pony|
-      54. lang#processing.....................|SpaceVim-layer-lang-processing|
-      55. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      56. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      57. lang#python.............................|SpaceVim-layer-lang-python|
-      58. lang#racket.............................|SpaceVim-layer-lang-racket|
-      59. lang#rust.................................|SpaceVim-layer-lang-rust|
-      60. lang#scala...............................|SpaceVim-layer-lang-scala|
-      61. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      62. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      63. lang#xml...................................|SpaceVim-layer-lang-xml|
-      64. language server protocol........................|SpaceVim-layer-lsp|
-      65. operator...................................|SpaceVim-layer-operator|
-      66. shell.........................................|SpaceVim-layer-shell|
-      67. test...........................................|SpaceVim-layer-test|
-      68. tmux...........................................|SpaceVim-layer-tmux|
-      69. tools#dash...............................|SpaceVim-layer-tools-dash|
-      70. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      44. lang#javascript.....................|SpaceVim-layer-lang-javascript|
+      45. lang#julia...............................|SpaceVim-layer-lang-julia|
+      46. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      47. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      48. lang#lua...................................|SpaceVim-layer-lang-lua|
+      49. lang#nim...................................|SpaceVim-layer-lang-nim|
+      50. lang#nix...................................|SpaceVim-layer-lang-nix|
+      51. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      52. lang#pact.................................|SpaceVim-layer-lang-pact|
+      53. lang#php...................................|SpaceVim-layer-lang-php|
+      54. lang#pony.................................|SpaceVim-layer-lang-pony|
+      55. lang#processing.....................|SpaceVim-layer-lang-processing|
+      56. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      57. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      58. lang#python.............................|SpaceVim-layer-lang-python|
+      59. lang#racket.............................|SpaceVim-layer-lang-racket|
+      60. lang#rust.................................|SpaceVim-layer-lang-rust|
+      61. lang#scala...............................|SpaceVim-layer-lang-scala|
+      62. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      63. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      64. lang#xml...................................|SpaceVim-layer-lang-xml|
+      65. language server protocol........................|SpaceVim-layer-lsp|
+      66. operator...................................|SpaceVim-layer-operator|
+      67. shell.........................................|SpaceVim-layer-shell|
+      68. test...........................................|SpaceVim-layer-test|
+      69. tmux...........................................|SpaceVim-layer-tmux|
+      70. tools#dash...............................|SpaceVim-layer-tools-dash|
+      71. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2256,6 +2257,48 @@ download google's formater jar from:
 https://github.com/google/google-java-format
 
 and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+
+==============================================================================
+LANG#JAVASCRIPT                               *SpaceVim-layer-lang-javascript*
+
+This layer is for JavaScript development, includes syntax lint, code
+completion etc. To enable this layer:
+>
+  [layers]
+    name = "lang#javascript"
+<
+The code linter is eslint, install eslint via:
+>
+  npm install -g eslint-cli
+<
+LAYER OPTION
+
+  1. auto_fix: If this option is true, --fix will be added to neomake eslint
+maker.
+>
+  [layers]
+    name = "lang#javascript"
+    auto_fix = true
+<
+KEY BINDINGS
+
+>
+  Key             Function
+  -----------------------------
+  SPC l r         run current file
+  SPC b f         format current buffer
+<
+
+This layer also provides REPL support for javascript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#JULIA                                         *SpaceVim-layer-lang-julia*
