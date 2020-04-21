@@ -112,35 +112,36 @@ CONTENTS                                                   *SpaceVim-contents*
       37. lang#haskell...........................|SpaceVim-layer-lang-haskell|
       38. lang#html.................................|SpaceVim-layer-lang-html|
       39. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      40. lang#j.......................................|SpaceVim-layer-lang-j|
-      41. lang#java.................................|SpaceVim-layer-lang-java|
-      42. lang#julia...............................|SpaceVim-layer-lang-julia|
-      43. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      44. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      45. lang#lua...................................|SpaceVim-layer-lang-lua|
-      46. lang#nim...................................|SpaceVim-layer-lang-nim|
-      47. lang#nix...................................|SpaceVim-layer-lang-nix|
-      48. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      49. lang#pact.................................|SpaceVim-layer-lang-pact|
-      50. lang#php...................................|SpaceVim-layer-lang-php|
-      51. lang#pony.................................|SpaceVim-layer-lang-pony|
-      52. lang#processing.....................|SpaceVim-layer-lang-processing|
-      53. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      54. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      55. lang#python.............................|SpaceVim-layer-lang-python|
-      56. lang#racket.............................|SpaceVim-layer-lang-racket|
-      57. lang#rust.................................|SpaceVim-layer-lang-rust|
-      58. lang#scala...............................|SpaceVim-layer-lang-scala|
-      59. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      60. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      61. lang#xml...................................|SpaceVim-layer-lang-xml|
-      62. language server protocol........................|SpaceVim-layer-lsp|
-      63. operator...................................|SpaceVim-layer-operator|
-      64. shell.........................................|SpaceVim-layer-shell|
-      65. test...........................................|SpaceVim-layer-test|
-      66. tmux...........................................|SpaceVim-layer-tmux|
-      67. tools#dash...............................|SpaceVim-layer-tools-dash|
-      68. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      40. lang#idris...............................|SpaceVim-layer-lang-idris|
+      41. lang#j.......................................|SpaceVim-layer-lang-j|
+      42. lang#java.................................|SpaceVim-layer-lang-java|
+      43. lang#julia...............................|SpaceVim-layer-lang-julia|
+      44. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      45. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      46. lang#lua...................................|SpaceVim-layer-lang-lua|
+      47. lang#nim...................................|SpaceVim-layer-lang-nim|
+      48. lang#nix...................................|SpaceVim-layer-lang-nix|
+      49. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      50. lang#pact.................................|SpaceVim-layer-lang-pact|
+      51. lang#php...................................|SpaceVim-layer-lang-php|
+      52. lang#pony.................................|SpaceVim-layer-lang-pony|
+      53. lang#processing.....................|SpaceVim-layer-lang-processing|
+      54. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      55. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      56. lang#python.............................|SpaceVim-layer-lang-python|
+      57. lang#racket.............................|SpaceVim-layer-lang-racket|
+      58. lang#rust.................................|SpaceVim-layer-lang-rust|
+      59. lang#scala...............................|SpaceVim-layer-lang-scala|
+      60. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      61. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      62. lang#xml...................................|SpaceVim-layer-lang-xml|
+      63. language server protocol........................|SpaceVim-layer-lsp|
+      64. operator...................................|SpaceVim-layer-operator|
+      65. shell.........................................|SpaceVim-layer-shell|
+      66. test...........................................|SpaceVim-layer-test|
+      67. tmux...........................................|SpaceVim-layer-tmux|
+      68. tools#dash...............................|SpaceVim-layer-tools-dash|
+      69. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2077,6 +2078,35 @@ KEY BINDINGS
 <
 
 This layer also provides REPL support for hy, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#IDRIS                                         *SpaceVim-layer-lang-idris*
+
+This layer is for idris development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#idris'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for idris, the key bindings are:
 >
   Key             Function
   ---------------------------------------------
