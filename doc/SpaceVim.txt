@@ -138,16 +138,17 @@ CONTENTS                                                   *SpaceVim-contents*
       63. lang#rust.................................|SpaceVim-layer-lang-rust|
       64. lang#scala...............................|SpaceVim-layer-lang-scala|
       65. lang#scheme.............................|SpaceVim-layer-lang-scheme|
-      66. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      67. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      68. lang#xml...................................|SpaceVim-layer-lang-xml|
-      69. language server protocol........................|SpaceVim-layer-lsp|
-      70. operator...................................|SpaceVim-layer-operator|
-      71. shell.........................................|SpaceVim-layer-shell|
-      72. test...........................................|SpaceVim-layer-test|
-      73. tmux...........................................|SpaceVim-layer-tmux|
-      74. tools#dash...............................|SpaceVim-layer-tools-dash|
-      75. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      66. lang#sh.....................................|SpaceVim-layer-lang-sh|
+      67. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      68. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      69. lang#xml...................................|SpaceVim-layer-lang-xml|
+      70. language server protocol........................|SpaceVim-layer-lsp|
+      71. operator...................................|SpaceVim-layer-operator|
+      72. shell.........................................|SpaceVim-layer-shell|
+      73. test...........................................|SpaceVim-layer-test|
+      74. tmux...........................................|SpaceVim-layer-tmux|
+      75. tools#dash...............................|SpaceVim-layer-tools-dash|
+      76. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2874,6 +2875,19 @@ OPTIONS
   1. scheme_dialect: Set the dialect of scheme.
 
   2. scheme_interpreter: Set the path or interpreter of scheme.
+
+
+==============================================================================
+LANG#SH                                               *SpaceVim-layer-lang-sh*
+
+This layer is for shell script development, including bash, zsh and fish. This
+layer provides basic syntax highlighting and code completion , and it is
+disabled by default, to enable this layer, add following snippet to your
+|SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#sh'
+<
 
 
 ==============================================================================
