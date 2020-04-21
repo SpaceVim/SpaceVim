@@ -520,12 +520,20 @@ endfunction
 function! s:open_message_buffer() abort
   vertical topleft edit __Message_Buffer__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
-  setf message
+  setf SpaceVimMessageBuffer
   normal! ggdG
-  silent put =s:CMP.execute(':message')
+  silent put=s:CMP.execute(':message')
   normal! G
   setlocal nomodifiable
-  nnoremap <silent> <buffer> q :silent bd<CR>
+  nnoremap <buffer><silent> q :call <SID>close_message_buffer()<CR>
+endfunction
+
+function! s:close_message_buffer() abort
+  try
+    bp
+  catch /^Vim\%((\a\+)\)\=:E85/
+    bd
+  endtry
 endfunction
 
 function! s:safe_revert_buffer() abort
