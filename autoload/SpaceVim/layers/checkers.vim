@@ -141,7 +141,12 @@ function! s:toggle_show_error(...) abort
         echon 'There is no errors!'
         echohl None
       else
-        botright copen
+        " @todo which vim patch add this feature?
+        if getqflist({'winid' : 1}).winid > 0
+          cclose
+        else
+          copen
+        endif
       endif
     catch
     endtry
