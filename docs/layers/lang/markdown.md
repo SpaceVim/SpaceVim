@@ -28,6 +28,9 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#markdown"
 ```
 
+The tagbar support is provided via lvht/tagbar-markdown which needs php has been installed. You can also use [mdctags](https://github.com/wsdjeg/mdctags.rs)
+which is written in rust.
+
 ## Formatting
 
 SpaceVim uses remark to format Markdown file by default, but we suggest using [Prettier](https://github.com/prettier/prettier) on Windows.

@@ -29,6 +29,8 @@ lang: zh
   name = "lang#markdown"
 ```
 
+语法树的支持由插件`lvht/tagbar-markdown`提供，但是该插件依赖 php，如果不希望安装 php，可以直接下载 [mdctags](https://github.com/wsdjeg/mdctags.rs) 命令。
+
 ## 代码格式化
 
 SpaceVim 默认使用 remark 来格式化 Markdown 文件，Windows 下建议使用 [Prettier](https://github.com/prettier/prettier) 来格式化 Markdown 文件。

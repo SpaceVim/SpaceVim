@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section language server protocol, layer-lsp
+" @parentsection layers
+" This layer provides language client support for SpaceVim.
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 

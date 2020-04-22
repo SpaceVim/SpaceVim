@@ -17,6 +17,22 @@ else
   let s:scheme_dialect = ''
 endif
 
+""
+" @section lang#scheme, layer-lang-scheme
+" @parentsection layers
+" This layer is for scheme development, disabled by default, to enable this
+" layer, add following snippet to your @section(options) file.
+" >
+"   [[layers]]
+"     name = 'lang#scheme'
+" <
+"
+" @subsection Options
+"
+" 1. scheme_dialect: Set the dialect of scheme.
+"
+" 2. scheme_interpreter: Set the path or interpreter of scheme.
+"
 
 function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_dialect ==# 'mit-scheme'

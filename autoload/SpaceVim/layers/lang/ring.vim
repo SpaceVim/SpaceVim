@@ -6,6 +6,44 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#ring, layer-lang-ring
+" @parentsection layers
+" This layer is for ring development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#ring'
+" <
+"
+" @subsection Options
+"
+" 1. ring_repl: Set the path of ring repl.
+" >
+"   [layers]
+"     name = "lang#ring"
+"     ring_repl = "/path/to/repl.ring"
+" <
+" @subsection Key bindings
+"
+" The code runner for ring is "ring %" % will be replaced to the path of
+" current ring file.
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for ring, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#ring#plugins() abort
   let plugins = []
