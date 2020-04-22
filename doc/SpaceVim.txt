@@ -146,13 +146,14 @@ CONTENTS                                                   *SpaceVim-contents*
       71. lang#v.......................................|SpaceVim-layer-lang-v|
       72. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
       73. lang#xml...................................|SpaceVim-layer-lang-xml|
-      74. language server protocol........................|SpaceVim-layer-lsp|
-      75. operator...................................|SpaceVim-layer-operator|
-      76. shell.........................................|SpaceVim-layer-shell|
-      77. test...........................................|SpaceVim-layer-test|
-      78. tmux...........................................|SpaceVim-layer-tmux|
-      79. tools#dash...............................|SpaceVim-layer-tools-dash|
-      80. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      74. lang#xquery.............................|SpaceVim-layer-lang-xquery|
+      75. language server protocol........................|SpaceVim-layer-lsp|
+      76. operator...................................|SpaceVim-layer-operator|
+      77. shell.........................................|SpaceVim-layer-shell|
+      78. test...........................................|SpaceVim-layer-test|
+      79. tmux...........................................|SpaceVim-layer-tmux|
+      80. tools#dash...............................|SpaceVim-layer-tools-dash|
+      81. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -3013,6 +3014,17 @@ LANG#XML                                             *SpaceVim-layer-lang-xml*
 When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
 read the documentation in autoload/xmlcomplete.vim in the vim or neovim
 runtime directory.
+
+==============================================================================
+LANG#XQUERY                                       *SpaceVim-layer-lang-xquery*
+
+This layer provides basic syntax highlighting and indent file for xquery,
+disabled by default, to enable this layer, add following snippet to  your
+|SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#xquery'
+<
 
 ==============================================================================
 LANGUAGE SERVER PROTOCOL                                  *SpaceVim-layer-lsp*
