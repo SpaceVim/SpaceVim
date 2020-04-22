@@ -132,20 +132,23 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 function! s:toggle_show_error(...) abort
-  try
+  let llist = getloclist(0, {'size' : 1, 'winid' : 1})
+  let qlist = getqflist({'size' : 1, 'winid' : 1})
+  if llist.size == 0 && qlist.size == 0
+    echohl WarningMsg
+    echon 'There is no errors!'
+    echohl None
+    return
+  endif
+  if llist.winid > 0
+    lclose
+  elseif qlist.winid > 0
+    cclose
+  elseif llist.size > 0
     botright lopen
-  catch
-    try
-      if len(getqflist()) == 0
-        echohl WarningMsg
-        echon 'There is no errors!'
-        echohl None
-      else
-        botright copen
-      endif
-    catch
-    endtry
-  endtry
+  elseif qlist.size > 0
+    botright copen
+  endif
   if a:1 == 1
     wincmd w
   endif
