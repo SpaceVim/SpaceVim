@@ -145,7 +145,7 @@ function! s:toggle_show_error(...) abort
         if getqflist({'winid' : 1}).winid > 0
           cclose
         else
-          copen
+          botright copen
         endif
       endif
     catch
