@@ -144,14 +144,15 @@ CONTENTS                                                   *SpaceVim-contents*
       69. lang#toml.................................|SpaceVim-layer-lang-toml|
       70. lang#typescript.....................|SpaceVim-layer-lang-typescript|
       71. lang#v.......................................|SpaceVim-layer-lang-v|
-      72. lang#xml...................................|SpaceVim-layer-lang-xml|
-      73. language server protocol........................|SpaceVim-layer-lsp|
-      74. operator...................................|SpaceVim-layer-operator|
-      75. shell.........................................|SpaceVim-layer-shell|
-      76. test...........................................|SpaceVim-layer-test|
-      77. tmux...........................................|SpaceVim-layer-tmux|
-      78. tools#dash...............................|SpaceVim-layer-tools-dash|
-      79. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      72. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
+      73. lang#xml...................................|SpaceVim-layer-lang-xml|
+      74. language server protocol........................|SpaceVim-layer-lsp|
+      75. operator...................................|SpaceVim-layer-operator|
+      76. shell.........................................|SpaceVim-layer-shell|
+      77. test...........................................|SpaceVim-layer-test|
+      78. tmux...........................................|SpaceVim-layer-tmux|
+      79. tools#dash...............................|SpaceVim-layer-tools-dash|
+      80. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -2984,6 +2985,25 @@ This layer also provides REPL support for v, the key bindings are:
   SPC l s b       send whole buffer
   SPC l s l       send current line
   SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#VBNET                                         *SpaceVim-layer-lang-vbnet*
+
+This layer is for vbnet development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vbnet'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
 <
 
 

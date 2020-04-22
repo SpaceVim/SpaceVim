@@ -6,6 +6,24 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#vbnet, layer-lang-vbnet
+" @parentsection layers
+" This layer is for vbnet development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#vbnet'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+
 function! SpaceVim#layers#lang#vbnet#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-vbnet', { 'merged' : 0}])
