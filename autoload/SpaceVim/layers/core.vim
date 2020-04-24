@@ -41,9 +41,7 @@ function! SpaceVim#layers#core#plugins() abort
   endif
   call add(plugins, ['gruvbox-community/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
-        \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
-        \ 'OpenBrowserSearch'],
-        \'on_map' : '<Plug>(openbrowser-',
+        \ 'merged' : 0,
         \ 'loadconf' : 1,
         \}])
   call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
