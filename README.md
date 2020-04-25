@@ -41,6 +41,7 @@ If you have any questions about SpaceVim, please follow the [Getting Help Guide]
 - [New Features](#new-features)
 - [Project layout](#project-layout)
 - [Support SpaceVim](#support-spacevim)
+- [Backers](#backers)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
@@ -159,9 +160,19 @@ Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) 
 
 For more information please check our [development guidelines](https://spacevim.org/development/).
 
-If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
 
-<a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+### Backers
+
+If you want to show your support financially, consider supporting SpaceVim by:
+
+- [Become a backer on BountySource](https://salt.bountysource.com/teams/spacevim)
+- [Become a backer or sponsor on Open Collective](https://opencollective.com/spacevim)
+
+<a href='https://github.com/songz' target='_blank'><img height='45' style='border:0px;height:70px;' src='https://avatars0.githubusercontent.com/u/686933?s=400&v=4' border='0' alt='$20/month since 2019-08-09 by Song Zheng' /></a>
+
+Also, you can buy us a coffee:
+
+<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | wechat                                                                                                     | alipay                                                                                                       |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
