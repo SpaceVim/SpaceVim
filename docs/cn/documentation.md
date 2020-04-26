@@ -509,6 +509,13 @@ SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
+搜索结果展示由`incsearch`模块提供，可以再配置中启用该模块：
+
+```toml
+[layers]
+    name = "incsearch"
+```
+
 **电池状态信息：**
 
 _acpi_ 可展示电池电量剩余百分比。
