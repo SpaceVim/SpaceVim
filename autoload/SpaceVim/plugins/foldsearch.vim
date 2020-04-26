@@ -23,4 +23,15 @@ endfunction
 
 function! s:exit(id, data, event) abort
   echom string(s:matched_lines)
+  let start_line = 1
+  let end_line = 1
+  for nr in s:matched_lines
+    if nr == end_line && end_line > 1
+      " fold start_line to end_line -1
+      exe start_line . ',' . end_line . ':fold'
+      let start_line = nr
+    else
+      let end_line = nr
+    endif
+  endfor
 endfunction
