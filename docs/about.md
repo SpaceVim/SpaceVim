@@ -1,6 +1,6 @@
 ---
 title:  "About"
-description: "The project SpaceVim was created to provide an out-of-the-box Vim development environment."
+description: "The goals, credits and contact information about SpaceVim."
 ---
 
 # [Home](../) >> About
