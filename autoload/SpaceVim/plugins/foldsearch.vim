@@ -37,7 +37,6 @@ function! s:std_out(id, data, event) abort
 endfunction
 
 function! s:exit(id, data, event) abort
-  echom string(s:matched_lines)
   let preview = 0
   for nr in s:matched_lines
     if nr - preview >= 3 " first matched line is 3
