@@ -522,6 +522,13 @@ Search index shows the number of occurrence when performing a search via `/` or 
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
+Search index is provided by `incsearch` layer, to enable this layer:
+
+```toml
+[layers]
+    name = "incsearch"
+```
+
 **Battery status integration:**
 
 _acpi_ displays the percentage of total charge of the battery as well as the time remaining to charge or discharge completely the battery.
