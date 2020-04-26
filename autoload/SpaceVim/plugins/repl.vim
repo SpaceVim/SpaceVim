@@ -10,6 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
+let s:SPI = SpaceVim#api#import('unicode#spinners') 
 
 augroup spacevim_repl
   autocmd!
@@ -84,6 +85,7 @@ function! s:start(exe) abort
         \ 'on_stderr' : function('s:on_stderr'),
         \ 'on_exit' : function('s:on_exit'),
         \ })
+  call s:SPI.apply('dot1',  'g:_spacevim_repl_spinners')
 endfunction
 
 " @vimlint(EVL103, 1, a:job_id)
@@ -173,10 +175,10 @@ function! SpaceVim#plugins#repl#reg(ft, execute) abort
   call extend(s:exes, {a:ft : a:execute}) 
 
 endfunction
-
+let g:_spacevim_repl_spinners = ''
 function! SpaceVim#plugins#repl#status() abort
   if s:status.is_running == 1
-    return 'running'
+    return 'running' . g:_spacevim_repl_spinners
   elseif s:status.is_exit == 1
     return 'exit code : ' . s:status.exit_code 
           \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
