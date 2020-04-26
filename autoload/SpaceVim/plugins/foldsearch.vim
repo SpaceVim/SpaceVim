@@ -38,16 +38,14 @@ endfunction
 
 function! s:exit(id, data, event) abort
   echom string(s:matched_lines)
-  let start_line = 1
-  let end_line = get(s:matched_lines, 0, 1)
+  let preview = 0
   for nr in s:matched_lines
-    if nr == end_line && end_line > 1
-      " fold start_line to end_line -1
-      exe start_line . ',' . (end_line - 1) . ':fold'
-      let start_line = nr
-    else
-      let end_line = nr
+    if nr - preview >= 3 " first matched line is 3
+      exe (preview + 1) . ',' . (nr - 1) . ':fold'
     endif
+    let preview = nr
   endfor
-  exe end_line . ',' . (line('$') - 1) . ':fold'
+  if line('$') - preview >=3
+      exe (preview + 1) . ',' . line('$') . ':fold'
+  endif
 endfunction
