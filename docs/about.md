@@ -19,8 +19,10 @@ Email: [support@spacevim.org](mailto:support@spacevim.org)
 
 ## Goals
 
+- Mnemonic key bindings navigation
 - More IDE-like features in Vim and Neovim
 - Better default different languages
+- Cross platform experience
 
 ## Credits & Thanks
 
