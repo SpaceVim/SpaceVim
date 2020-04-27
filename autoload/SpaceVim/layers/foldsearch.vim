@@ -45,7 +45,7 @@ function! SpaceVim#layers#foldsearch#config()
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['F', 'e'], 'call call('
         \ . string(s:_function('s:foldsearch_expr')) . ', [])',
-        \ ['foldsearch-regular-expression',
+        \ ['foldsearch-regexp',
         \ [
         \ 'SPC F e is to foldsearch regular expression',
         \ '',

@@ -27,8 +27,12 @@ lang: zh
   name = "foldsearch"
 ```
 
+该模块依赖于命令：[ripgrep](https://github.com/BurntSushi/ripgrep)。
+
 ## 快捷键
 
-| 快捷键    | 功能描述        |
-| --------- | --------------- |
-| `SPC F w` | Foldsearch word |
+| 快捷键    | 功能描述                      |
+| --------- | ----------------------------- |
+| `SPC F w` | foldsearch input word         |
+| `SPC F W` | foldsearch cursor word        |
+| `SPC F e` | foldsearch regular expression |
