@@ -83,7 +83,7 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align-region-at-{', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align-region-at-}', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align-region-at-,', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /\.', 'align-region-at-.(Dot)', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /\.', 'align-region-at-dot', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align-region-at-:', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align-region-at-;', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1, 1)
