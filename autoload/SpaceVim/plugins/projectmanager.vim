@@ -169,8 +169,8 @@ function! s:find_root_directory() abort
     endif
     let ftype = getftype(dir)
     if ( ftype ==# 'dir' || ftype ==# 'file' ) 
-          \ && expand(dir) !=# expand('~/.SpaceVim.d/')
-          \ && expand(dir) !=# expand('~/.Rprofile')
+          \ && fnamemodify(dir, ':p') !=# fnamemodify('~/.SpaceVim.d/', ':p')
+          \ && fnamemodify(dir, ':p') !=# fnamemodify('~/.Rprofile', ':p')
       let dir = s:FILE.unify_path(fnamemodify(dir, ':p'))
       if ftype ==# 'dir'
         let dir = fnamemodify(dir, ':h:h')
