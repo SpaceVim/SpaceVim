@@ -126,6 +126,11 @@ function! SpaceVim#default#options() abort
   set shortmess+=s
   " Do not wrap lone lines
   set nowrap
+  
+  " set shellslash for filename comparisons
+  if exists('+shellslash')
+    set shellslash
+  endif
 
   set foldtext=SpaceVim#default#Customfoldtext()
 
