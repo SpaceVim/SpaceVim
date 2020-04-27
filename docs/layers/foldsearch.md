@@ -24,7 +24,7 @@ To use this layer, add it to your configuration file.
 
 ```toml
 [layers]
-name = "foldsearch"
+    name = "foldsearch"
 ```
 
 This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
