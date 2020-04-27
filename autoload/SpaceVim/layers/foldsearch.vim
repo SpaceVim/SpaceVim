@@ -31,12 +31,48 @@ function! SpaceVim#layers#foldsearch#config()
         \ ]
         \ ],
         \ 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'W'], 'call call('
+        \ . string(s:_function('s:foldsearch_cursor')) . ', [])',
+        \ ['foldsearch-cword',
+        \ [
+        \ 'SPC F W is to foldsearch cursor word',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'e'], 'call call('
+        \ . string(s:_function('s:foldsearch_expr')) . ', [])',
+        \ ['foldsearch-regexp',
+        \ [
+        \ 'SPC F e is to foldsearch regular expression',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
 endfunction
 
 function! s:foldsearch_word() abort
   let word = input('foldsearch word >')
   if !empty(word)
     call SpaceVim#plugins#foldsearch#word(word)
+  endif
+endfunction
+
+function! s:foldsearch_cursor() abort
+  let word = expand('<cword>')
+  if !empty(word)
+    call SpaceVim#plugins#foldsearch#word(word)
+  endif
+endfunction
+
+function! s:foldsearch_expr() abort
+  let word = input('foldsearch expr >')
+  if !empty(word)
+    call SpaceVim#plugins#foldsearch#expr(word)
   endif
 endfunction
 
