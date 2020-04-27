@@ -204,7 +204,7 @@ endfunction
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run(s:wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
+  call fzf#run(s:wrap('files', {'sink': 'e', 'options': '--reverse' . ' ' . get(g:, 'fzf_files_options', ''), 'down' : '40%'}))
 endfunction
 
 let s:source = ''
