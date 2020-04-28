@@ -3,7 +3,7 @@ title:  "Community"
 description: "A list of public channels SpaceVim, All messages are bridged between IRC, gitter, telegram, matrix and slack"
 ---
 
-# Community
+# [Home](../) >> Community
 
 Visit these resources for help or general questions.
 
@@ -11,7 +11,7 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Bug repport and feature request](#bug-repport-and-feature-request)
+- [Bug report and feature request](#bug-repport-and-feature-request)
 - [Mail list](#mail-list)
 - [Chat](#chat)
 - [Others](#others)

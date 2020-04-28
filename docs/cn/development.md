@@ -1,10 +1,10 @@
 ---
 title: "开发者文档"
 description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提交问题 2. 如何贡献代码 3. 代码格式规则 4. 版本迭代信息"
-lang: cn
+lang: zh
 ---
 
-# SpaceVim 开发者文档
+# [主页](../) >> 开发者文档
 
 <!-- vim-markdown-toc GFM -->
 

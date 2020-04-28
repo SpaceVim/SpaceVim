@@ -549,7 +549,8 @@ function! s:winopen() abort " {{{
   setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
   setlocal nocursorline nocursorcolumn colorcolumn=
   setlocal winfixwidth winfixheight
-  setlocal listchars=
+  " @fixme not sure if the listchars should be changed!
+  " setlocal listchars=
   call s:updateStatusline()
   call s:toggle_hide_cursor()
 endfunction " }}}
@@ -701,10 +702,18 @@ endfunction " }}}
 
 if !exists('g:leaderGuide_displayfunc')
   function! s:leaderGuide_display() abort
+    if has_key(s:registered_name, g:leaderGuide#displayname)
+      return s:registered_name[g:leaderGuide#displayname]
+    endif
     let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
   endfunction
   let g:leaderGuide_displayfunc = [function('s:leaderGuide_display')]
 endif
+
+let s:registered_name = {}
+function! SpaceVim#mapping#guide#register_displayname(lhs, name)
+  call extend(s:registered_name, {a:lhs : a:name})
+endfunction
 
 if get(g:, 'mapleader', '\') ==# ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',

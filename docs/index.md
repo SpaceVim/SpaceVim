@@ -4,13 +4,13 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 ---
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
-[![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
+[![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
+[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-1.2.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.5.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/78467954-f4fe2800-7744-11ea-8b47-0614ddc5d51b.png)
 
 # SpaceVim - Modern Vim distribution
 
@@ -27,8 +27,8 @@ appreciation while providing us motivation to continue working on this project.
 
 
 - [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
-- [documentation](documentation/): the primary official document of SpaceVim
-- [available layers](layers/): a list of available layers which can be used in SpaceVim
+- [Documentation](documentation/): the primary official document of SpaceVim
+- [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
 The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
@@ -45,9 +45,9 @@ The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceV
     {% endfor %}
 </ul>
 
-More posts are in the [SpaceVim's Blog](blog/)
+More posts are available on the [blog](blog/) of SpaceVim.
 
-[Follow @SpaceVim](https://twitter.com/SpaceVim)
+Follow our twitter: [@SpaceVim](https://twitter.com/SpaceVim)
 
 ## Participating
 
@@ -59,8 +59,8 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-The current stable version is v1.1.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
-for development progress and the [roadmap](roadmap/) for high-level plans.
+The current stable version is v1.4.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
 
@@ -70,13 +70,13 @@ With layers feature, this version of Vim distribution try to turn Vim/Neovim int
 
 ```sh
 ~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
-68
+87
 ```
 
 - Which version of Vim/Neovim is needed?
 
 Vim 7.4/Neovim v0.1.7, and `+lua` or `+python3` is needed.
 
-For more general questions, please read [SpaceVim FAQ](faq/).
+For more general questions, please read SpaceVim [FAQ](faq/).
 
 <!-- vim:set nowrap: -->

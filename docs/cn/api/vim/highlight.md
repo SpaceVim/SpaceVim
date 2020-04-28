@@ -1,7 +1,7 @@
 ---
 title: "vim#highlight api"
 description: "vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。"
-lang: cn
+lang: zh
 ---
 
 # [可用 APIs](../../) >> vim#highlight

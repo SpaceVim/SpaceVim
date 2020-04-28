@@ -43,12 +43,14 @@ function! SpaceVim#layers#lang#lua#plugins() abort
 endfunction
 
 let s:lua_repl_command = ''
+let s:lua_foldmethod = 'manual'
 
 function! SpaceVim#layers#lang#lua#config() abort
 
   augroup spacevim_lang_lua
     autocmd!
     autocmd FileType lua set comments=f:--
+    autocmd FileType lua let &l:foldmethod=s:lua_foldmethod
   augroup END
   call SpaceVim#mapping#space#regesit_lang_mappings('lua', function('s:language_specified_mappings'))
   let luaexe = filter(['lua53', 'lua52', 'lua51'], 'executable(v:val)')
@@ -71,7 +73,7 @@ function! SpaceVim#layers#lang#lua#config() abort
   elseif executable('luap')
     let lua_repl = 'luap'
   elseif !empty(luaexe)
-    let lua_repl = luaexe[0] + ['-i'])
+    let lua_repl = luaexe + ['-i']
   else
     let lua_repl = ['lua', '-i']
   endif
@@ -80,6 +82,7 @@ endfunction
 
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort
   let s:lua_repl_command = get(a:opt, 'repl_command', '') 
+  let s:lua_foldmethod = get(a:opt, 'foldmethod', 'manual')
 endfunction
 
 " Add language specific mappings

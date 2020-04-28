@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim shell 模块"
 description: "这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> shell
@@ -44,7 +44,7 @@ The default shell is quickly accessible via a the default shortcut key `SPC '`.
 ### 设置终端打开位置及高度
 
 在启用该模块时，可以通过 `default_position` 这一模块选项来指定终端打开的位置，
-目前可以选的值为：`top`, `bottom`, `left`, `right`, or `full`，默认的值为 `top`。
+目前可以选的值为：`top`, `bottom`, `left`, `right`, `float` or `full`，默认的值为 `top`。
 
 同时，可以通过 `default_height` 这一模块选项指定终端打开的高度，默认值为 30。
 

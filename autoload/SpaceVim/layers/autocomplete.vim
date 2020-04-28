@@ -32,12 +32,12 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
         \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
-        \ ['ujihisa/neco-look',           { 'if' : executable('look')}],
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],
         \ ['Shougo/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
         \ ]
+  call add(plugins, ['deoplete-plugins/deoplete-dictionary',        { 'merged' : 0}])
   if g:spacevim_autocomplete_parens
     call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
   endif
@@ -191,19 +191,29 @@ let g:_spacevim_autocomplete_delay = 50
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
   let s:return_key_behavior = get(a:var,
+        \ 'auto_completion_return_key_behavior',
+        \ get(a:var,
         \ 'auto-completion-return-key-behavior',
-        \ 'nil')
+        \ s:return_key_behavior))
   let s:tab_key_behavior = get(a:var,
+        \ 'auto_completion_tab_key_behavior',
+        \ get(a:var,
         \ 'auto-completion-tab-key-behavior',
-        \ 'smart')
+        \ s:tab_key_behavior))
   let s:key_sequence = get(a:var,
+        \ 'auto_completion_complete_with_key_sequence',
+        \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence',
-        \ 'nil')
+        \ s:key_sequence))
   let s:key_sequence_delay = get(a:var,
+        \ 'auto_completion_complete_with_key_sequence_delay',
+        \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
-        \ 0.1)
-  let g:_spacevim_autocomplete_delay = get(a:var, 'auto-completion-delay', 
-        \ g:_spacevim_autocomplete_delay)
+        \ s:key_sequence_delay))
+  let g:_spacevim_autocomplete_delay = get(a:var,
+        \ 'auto_completion_delay', 
+        \ get(a:var, 'auto-completion-delay', 
+        \ g:_spacevim_autocomplete_delay))
 
 endfunction
 
@@ -211,8 +221,8 @@ function! SpaceVim#layers#autocomplete#get_options() abort
 
   return ['return_key_behavior',
         \ 'tab_key_behavior',
-        \ 'auto-completion-complete-with-key-sequence',
-        \ 'auto-completion-complete-with-key-sequence-delay']
+        \ 'auto_completion_complete_with_key_sequence',
+        \ 'auto_completion_complete_with_key_sequence_delay']
 
 endfunction
 

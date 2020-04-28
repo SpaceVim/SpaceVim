@@ -6,6 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#agda, layer-lang-agda
+" @parentsection layers
+" This layer provides syntax highlighting for agda. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#agda"
+" <
 
 function! SpaceVim#layers#lang#agda#plugins() abort
   let plugins = []

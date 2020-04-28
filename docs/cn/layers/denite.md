@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim denite 模块"
 description: "这一模块为 SpaceVim 提供了以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> denite

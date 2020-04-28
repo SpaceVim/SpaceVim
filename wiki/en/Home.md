@@ -20,6 +20,7 @@ welcome to <img src="https://spacevim.org/SpaceVim.png" height="17" width="17"> 
 This wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory
 automatically, if you want to contribute to the wiki, please send pull request to SpaceVim repo.
 
+- [programming languages](programming-languages): a list of programming languages
 - [Development guidelines](https://spacevim.org/development/)
 - [CONTRIBUTING](https://github.com/SpaceVim/SpaceVim/blob/master/CONTRIBUTING.md)
 - [Support SpaceVim](support-spacevim)

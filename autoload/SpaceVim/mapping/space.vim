@@ -197,7 +197,8 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 'ChooseWinSwap',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 
+        \ "execute eval(\"winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'\")",
         \ ['swap window',
         \ [
         \ '[SPC w M] is to swap window',
@@ -386,11 +387,11 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'P'], 'call SpaceVim#mapping#search#grep("a", "P")',
         \ 'search cursor word in project with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'f'], 'call SpaceVim#mapping#search#grep("a", "f")',
-        \ 'search in arbitrary directory  with ag', 1)
+        \ 'search in arbitrary directory with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'F'], 'call SpaceVim#mapping#search#grep("a", "F")',
-        \ 'search cursor word in arbitrary directory  with ag', 1)
+        \ 'search cursor word in arbitrary directory with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'j'], 'call SpaceVim#plugins#searcher#find("", "ag")',
-        \ 'Background search cursor words in project with ag', 1)
+        \ 'Background search in project with ag', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'a', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "ag")',
         \ 'Background search cursor words in project with ag', 1)
   " grep
@@ -494,8 +495,8 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
         \ 'grep-on-the-fly', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'noh',
-        \ 'clear-search-highlight', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'call SpaceVim#plugins#searcher#clear()',
+        \ 'clear-search-results', 1)
 
   "Symbol
   nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>

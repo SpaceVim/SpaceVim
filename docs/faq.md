@@ -3,7 +3,7 @@ title: "FAQ"
 description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community"
 ---
 
-# SpaceVim FAQ
+# [Home](../) >> FAQ
 
 This is a list of the frequently asked questions about SpaceVim.
 

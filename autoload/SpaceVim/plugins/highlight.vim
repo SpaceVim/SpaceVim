@@ -13,7 +13,7 @@
 " s: swoop
 " }}}
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')

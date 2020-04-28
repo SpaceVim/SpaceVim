@@ -164,12 +164,12 @@ function! s:install_manager() abort
           \ 'dein.vim'], s:Fsep)
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if executable('curl')
         exec '!curl -fLo '
-              \ . '~/.cache/vim-plug/autoload/plug.vim'
+              \ . g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'
               \ . ' --create-dirs '
               \ . 'https://raw.githubusercontent.com/'
               \ . 'junegunn/vim-plug/master/plug.vim'
@@ -180,7 +180,7 @@ function! s:install_manager() abort
         echohl None
       endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
+    exec 'set runtimepath+='g:spacevim_data_dir.'/vim-plug/'
   endif
 endf
 
@@ -217,6 +217,8 @@ function! SpaceVim#plugins#end() abort
     endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     call dein#end()
+    " dein do not include the after dir of SpaceVim by default
+    let &rtp .= ',' . g:_spacevim_root_dir . 'after'
     if g:spacevim_checkinstall == 1
       silent! let g:_spacevim_checking_flag = dein#check_install()
       if g:_spacevim_checking_flag

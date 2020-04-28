@@ -152,14 +152,12 @@ function! SpaceVim#layers#lang#scala#config() abort
   let g:scala_use_default_keymappings = 0
   call SpaceVim#mapping#space#regesit_lang_mappings('scala', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scala', 'scala')
+  call SpaceVim#plugins#runner#reg_runner('scala', 'sbt run')
   call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
   augroup SpaceVim_lang_scala
-    auto!
+    au!
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    if exists(':EnTypeCheck')
-      autocmd BufWritePost *.scala silent :EnTypeCheck
-    endif
   augroup END
 
   let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
@@ -253,6 +251,7 @@ function! s:language_specified_mappings() abort
   endif
 
   " import `vim-scala`
+  let g:_spacevim_mappings_space.l.i = {'name' : '+Import'}
   inoremap <silent><buffer> <C-;>s   <Esc>:SortScalaImports<CR>
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i','s'],
         \ 'SortScalaImports', 'sort imports', 1)
@@ -269,42 +268,42 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'find References', 1)
   endif
 
-  " Execute
-  let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r', 'm'], 'call call('
-        \ . string(function('s:execCMD')) . ', ["sbt run"])',
-        \ 'Run main class', 1)
-  nnoremap <buffer><F10>  :call <sid>execCMD('sbt run')<CR>
+  " code runner
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 
   " Sbt
   let g:_spacevim_mappings_space.l.b = {'name' : '+Sbt'}
   if exists(':EnTypeCheck')
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'e'], 'call call('
           \ . string(function('s:execCMD')) . ', ["sbt ensimeConfig"])',
-          \ 'Run sbt to generate .ensime file', 1)
+          \ 'generate-.ensime-file', 1)
   endif
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'c'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt ~compile"])',
-        \ 'Run sbt continuous compile', 1)
+        \ 'continuous-compile', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'C'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt clean compile"])',
-        \ 'Run sbt clean compile', 1)
+        \ 'clean-compile', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt test"])',
-        \ 'Run sbt test', 1)
+        \ 'sbt-test', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'p'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt package"])',
-        \ 'Run sbt to package jar', 1)
+        \ 'sbt-package-jar', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'd'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt inspect tree compile:sources"])',
-        \ 'Run sbt to show project dependencies tree', 1)
+        \ 'show-dependencies-tree', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'l'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt reload"])',
-        \ 'Run sbt to reload build definition', 1)
+        \ 'reload-build-definition', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'u'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt update"])',
-        \ 'Run sbt to update external dependencies', 1)
+        \ 'update-external-dependencies', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["sbt run"])',
+        \ 'sbt-run', 1)
 
   " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
@@ -332,11 +331,7 @@ function! s:go_to_def() abort
 endfunction
 
 function! s:execCMD(cmd) abort
-  try
-    call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
-  catch
-    exec '!'.a:cmd
-  endtry
+  call SpaceVim#plugins#runner#open(a:cmd)
 endfunction
 
 " vim:set et sw=2 cc=80:
