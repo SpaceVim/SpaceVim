@@ -1710,6 +1710,9 @@ here is an example of `.project_alt.json`:
 }
 ```
 
+instead of using `.project_alt.json`, `b:alternate_file` or `g:alternate_{&filetype}_file`
+can be used in bootstrap function.
+
 ### Bookmarks management
 
 Bookmarks manager is included in `tools` layer, to use following key bindings, you need to enable
