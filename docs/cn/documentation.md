@@ -1685,6 +1685,23 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 }
 ```
 
+除了使用 `.project_alt.json` 文件以外，还可以在启动函数中设置 `b:alternate_file_config`，
+例如：
+
+```vim
+autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+    \ "src/*.c" : {
+        \ "doc" : "docs/{}.md",
+        \ "alternate" : "include/{}.h",
+        \ }
+    \ }
+autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+    \ "include/*.h" : {
+        \ "alternate" : "scr/{}.c",
+        \ }
+    \ }
+```
+
 ### 标签管理
 
 在浏览代码时，通常需要给指定位置添加标签，方便快速跳转，在 SpaceVim
