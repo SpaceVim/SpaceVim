@@ -129,7 +129,7 @@ let s:lsp_servers = {
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph.BAT',  'stdio'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 
