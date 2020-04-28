@@ -35,4 +35,5 @@ lang: zh
 | --------- | ----------------------------- |
 | `SPC F w` | foldsearch input word         |
 | `SPC F W` | foldsearch cursor word        |
-| `SPC F e` | foldsearch regular expression |
+| `SPC F p` | foldsearch regular expression |
+| `SPC F e` | end foldsearch                |
