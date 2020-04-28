@@ -1710,8 +1710,17 @@ here is an example of `.project_alt.json`:
 }
 ```
 
-instead of using `.project_alt.json`, `b:alternate_file` or `g:alternate_{&filetype}_file`
-can be used in bootstrap function.
+instead of using `.project_alt.json`, `b:alternate_file_config`
+can be used in bootstrap function, for example:
+
+```vim
+autocmd FileType c let b:alternate_file_config = {
+    \ "src/*.c" : {
+        \ "doc" : "docs/{}.md",
+        \ "alternate" : "include/{}.h",
+        \ }
+    \ }
+```
 
 ### Bookmarks management
 
