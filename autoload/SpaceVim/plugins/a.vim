@@ -35,15 +35,6 @@ function! s:load_cache() abort
   let s:project_config = s:JSON.json_decode(join(readfile(s:cache_path, ''), ''))
 endfunction
 
-
-
-" when this function is called, the project_config file name is changed, and
-" the project_config info is cleared.
-function! SpaceVim#plugins#a#set_config_name(name) abort
-  let s:conf = a:name
-  let s:project_config = {}
-endfunction
-
 function! s:get_project_config(conf_file) abort
   let project_config_conf = get(b:, 'project_alt_json', {})
   if !empty(project_config_conf)
