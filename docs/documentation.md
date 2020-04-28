@@ -1714,10 +1714,15 @@ instead of using `.project_alt.json`, `b:alternate_file_config`
 can be used in bootstrap function, for example:
 
 ```vim
-autocmd FileType c let b:alternate_file_config = {
+autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
     \ "src/*.c" : {
         \ "doc" : "docs/{}.md",
         \ "alternate" : "include/{}.h",
+        \ }
+    \ }
+autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+    \ "include/*.h" : {
+        \ "alternate" : "scr/{}.c",
         \ }
     \ }
 ```
