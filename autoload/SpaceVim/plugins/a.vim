@@ -59,7 +59,11 @@ function! SpaceVim#plugins#a#alt(request_paser,...) abort
   let alternate_conf = get(b:, 'alternate_file_config', {})
   if !empty(alternate_conf)
     call s:paser(alternate_conf, conf_file_path)
-    let alt = s:project_config[conf_file_path][file][get(a:000, 0, 'alternate')]
+    try
+      let alt = s:project_config[conf_file_path][file][get(a:000, 0, 'alternate')]
+    catch
+      let alt = ''
+    endtry
   else
     let type = get(a:000, 0, 'alternate')
     let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
