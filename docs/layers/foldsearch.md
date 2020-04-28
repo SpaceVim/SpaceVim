@@ -9,6 +9,7 @@ description: "This layer provides functions that fold away lines that don't matc
 
 - [Intro](#intro)
 - [Install](#install)
+- [Options](#options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -28,6 +29,17 @@ To use this layer, add it to your configuration file.
 ```
 
 This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
+
+## Options
+
+- foldsearch_highlight: a boolean option for enable/disabled highlight. Enabled by default. To disable
+the highlight:
+
+```toml
+[layers]
+    name = "foldsearch"
+    foldsearch_highlight = false
+```
 
 ## Key bindings
 
