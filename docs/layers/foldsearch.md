@@ -33,7 +33,7 @@ This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
 ## Options
 
 - foldsearch_highlight: a boolean option for enable/disabled highlight. Enabled by default. To disable
-the highlight:
+  the highlight:
 
 ```toml
 [layers]
@@ -47,4 +47,5 @@ the highlight:
 | ------------ | ----------------------------- |
 | `SPC F w`    | foldsearch input word         |
 | `SPC F W`    | foldsearch cursor word        |
-| `SPC F e`    | end foldsearch |
+| `SPC F p`    | foldsearch regular expression |
+| `SPC F e`    | end foldsearch                |

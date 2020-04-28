@@ -43,6 +43,17 @@ function! SpaceVim#layers#foldsearch#config()
         \ ],
         \ 1)
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'p'], 'call call('
+        \ . string(s:_function('s:foldsearch_expr')) . ', [])',
+        \ ['foldsearch-regexp',
+        \ [
+        \ 'SPC F p is to foldsearch regexp',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['F', 'e'],
         \ 'call SpaceVim#plugins#foldsearch#end()',
         \ ['end foldsearch',
