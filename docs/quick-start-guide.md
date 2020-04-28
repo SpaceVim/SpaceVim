@@ -5,10 +5,6 @@ description: "A quick start guide which will tell you how to install and config 
 
 # [Home](../) >> Quick start guide
 
-If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
-It will give you a good idea of what SpaceVim is like,
-show you how to install it, how to config it, and explain its features.
-
 <!-- vim-markdown-toc GFM -->
 
 - [Install](#install)
@@ -20,6 +16,12 @@ show you how to install it, how to config it, and explain its features.
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
+
+This is a quick start guide for SpaceVim, which will tell you how to install and config SpaceVim.
+And also provides a list of resources for learning SpaceVim.
+
+If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
+It will give you a good idea of what SpaceVim is like,
 
 ## Install
 
