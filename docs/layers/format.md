@@ -24,7 +24,7 @@ This layer is enabled by default. If you want to disable this layer, add followi
 
 ```toml
 [[layers]]
-  name = "tools"
+  name = "format"
   enable = false
 ```
 
