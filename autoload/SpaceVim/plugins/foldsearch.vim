@@ -8,14 +8,25 @@
 
 let s:JOB = SpaceVim#api#import('job')
 let s:matched_lines = []
+let s:foldsearch_highlight_id = -1
 
 function! SpaceVim#plugins#foldsearch#word(word)
   let argv = ['rg', '--line-number', '--fixed-strings', a:word]
+  try
+    matchdelete(s:foldsearch_highlight_id)
+  catch
+  endtry
+  let s:foldsearch_highlight_id = matchadd('Search', '\<' . a:word . '\>', 10)
   call s:foldsearch(argv)
 endfunction
 
 function! SpaceVim#plugins#foldsearch#expr(expr)
   let argv = ['rg', '--line-number', a:expr]
+  try
+    matchdelete(s:foldsearch_highlight_id)
+  catch
+  endtry
+  let s:foldsearch_highlight_id = matchadd('Search', a:expr, 10)
   call s:foldsearch(argv)
 endfunction
 
