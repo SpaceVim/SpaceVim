@@ -14,7 +14,7 @@ let s:foldsearch_highlight_id = -1
 function! SpaceVim#plugins#foldsearch#end()
   normal! zE
   try
-    matchdelete(s:foldsearch_highlight_id)
+    call matchdelete(s:foldsearch_highlight_id)
   catch
   endtry
 endfunction
@@ -22,7 +22,7 @@ endfunction
 function! SpaceVim#plugins#foldsearch#word(word)
   let argv = ['rg', '--line-number', '--fixed-strings', a:word]
   try
-    matchdelete(s:foldsearch_highlight_id)
+    call matchdelete(s:foldsearch_highlight_id)
   catch
   endtry
   let s:foldsearch_highlight_id = matchadd('Search', '\<' . a:word . '\>', 10)
@@ -32,7 +32,7 @@ endfunction
 function! SpaceVim#plugins#foldsearch#expr(expr)
   let argv = ['rg', '--line-number', a:expr]
   try
-    matchdelete(s:foldsearch_highlight_id)
+    call matchdelete(s:foldsearch_highlight_id)
   catch
   endtry
   let s:foldsearch_highlight_id = matchadd('Search', a:expr, 10)
