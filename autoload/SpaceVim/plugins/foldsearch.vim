@@ -64,7 +64,7 @@ function! s:exit(id, data, event) abort
     endif
     let preview = nr
   endfor
-  if line('$') - preview >=3
+  if line('$') - preview >=2
       exe (preview + 1) . ',' . line('$') . ':fold'
   endif
 endfunction
