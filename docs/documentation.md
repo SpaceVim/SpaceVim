@@ -704,7 +704,7 @@ VCS integration is supported, there will be a column status, this feature may ma
 To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
 Here is a picture for this feature:
 
-![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
 There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
 you can use `filetree_direction` option:
