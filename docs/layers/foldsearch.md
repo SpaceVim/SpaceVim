@@ -24,7 +24,7 @@ The search pattern can be a word or a regular expression.
 To use this layer, add it to your configuration file.
 
 ```toml
-[layers]
+[[layers]]
     name = "foldsearch"
 ```
 
@@ -36,7 +36,7 @@ This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
   the highlight:
 
 ```toml
-[layers]
+[[layers]]
     name = "foldsearch"
     foldsearch_highlight = false
 ```
