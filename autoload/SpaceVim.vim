@@ -1409,15 +1409,20 @@ endfunction
 " <
 "
 " 4. How to use `<Space>` as `<Leader>`?
-" >
-"   Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
-" <
+" 
+"
+" Add `let g:mapleader = "\<Space>"` to bootstrap function.
+" 
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.3.0
+" Following HEAD: changes in master branch since last release v1.4.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2020-04-05: v1.4.0
+"
+" https://spacevim.org/SpaceVim-release-v1.4.0/
 "
 " 2019-11-04: v1.3.0
 "
