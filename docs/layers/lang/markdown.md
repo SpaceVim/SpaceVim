@@ -89,5 +89,5 @@ If you don't want to install php, you can use [mdctags](https://github.com/wsdje
 | ------------ | ------------- | ------------------------------------------------------ |
 | `SPC b f`    | Normal        | Format current buffer                                  |
 | `SPC l k`    | Normal/Visual | Add URL link for word under cursor or slected word     |
-| `SPC l k`    | Normal/Visual | Add picture link for word under cursor or slected word |
+| `SPC l K`    | Normal/Visual | Add picture link for word under cursor or slected word |
 | `SPC l p`    | Normal        | Real-time markdown preview                             |
