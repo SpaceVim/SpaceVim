@@ -1386,18 +1386,17 @@ endfunction
 " 
 "
 " 2. How to add custom snippet?
-" >
-"   SpaceVim uses neosnippet as the default snippet engine. If you want to add
-"   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-"   command. A buffer will be opened and you can add your custom snippet.
-"   By default this buffer will be save in `~/.SpaceVim/snippets`.
-"   If you want to use another directory:
+" 
+"  SpaceVim uses neosnippet as the default snippet engine. This can be changed
+" by @section(options-snippet_engine) option.
 "
-"   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+"  If you want to add a snippet for a current filetype, run |:NeoSnippetEdit|
+" command. A buffer will be opened and you can add your custom snippet.
+" By default this buffer will be save in `~/.SpaceVim.d/snippets`.
 "
-"   For more info about how to write snippet, please
-"   read |neosnippet-snippet-syntax|.
-" <
+"  For more info about how to write snippet, please
+" read |neosnippet-snippet-syntax|.
+"
 "
 " 3. Where is `<c-f>` in cmdline-mode?
 " >
