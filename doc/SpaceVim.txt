@@ -3410,17 +3410,38 @@ default this buffer will be save in `~/.SpaceVim.d/snippets`.
 
   3. Where is `<c-f>` in cmdline-mode?
 
->
   `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
-  binding as `<Right>`, so maybe you can change the `cedit` option or use
-  `<leader>+<c-f>`.
-<
+binding as `<Right>`, so maybe you can change the `cedit` option or use
+`<leader>+<c-f>`.
 
   4. How to use `<Space>` as `<Leader>`?
 
+  Add `let g:mapleader = "\<Space>"` to bootstrap function.
 
-Add `let g:mapleader = "\<Space>"` to bootstrap function.
+  5. Why does Vim freeze after pressing Ctrl-s?
 
+  This is a feature of terminal emulators. You can use `Ctrl-q` to unfreeze
+Vim. To disable this feature you need the following in either
+`~/.bash_profile` or `~/.bashrc`:
+>
+  stty -ixon
+<
+
+  6. How to enable `+py` and `+py3` in Neovim?
+
+  In Neovim we can use `g:python_host_prog` and `g:python3_host_prog`   to
+config python prog. But in SpaceVim the custom configuration file is   loaded
+after SpaceVim core code. So in SpaceVim itself, if we using `:py`   command,
+it may cause errors.
+
+  So we introduce two new environment variables: `PYTHON_HOST_PROG` and
+`PYTHON3_HOST_PROG`.
+
+  For example:
+>
+  export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+  export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
+<
 
 ==============================================================================
 CHANGELOG                                                 *SpaceVim-changelog*
