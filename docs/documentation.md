@@ -429,7 +429,7 @@ enable_guicolors = false
 
 ### Font
 
-The default font used by SpaceVim is [SourceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip).
+The default font used by SpaceVim is [SourceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip).
 It is recommended to install it on your system if you wish to use it.
 
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
