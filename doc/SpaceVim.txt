@@ -154,7 +154,10 @@ CONTENTS                                                   *SpaceVim-contents*
       79. tmux...........................................|SpaceVim-layer-tmux|
       80. tools#dash...............................|SpaceVim-layer-tools-dash|
       81. tools#zeal...............................|SpaceVim-layer-tools-zeal|
-  7. API........................................................|SpaceVim-api|
+  7. Usage....................................................|SpaceVim-usage|
+      1. custom_plugins........................|SpaceVim-usage-custom_plugins|
+      2. tasks..........................................|SpaceVim-usage-tasks|
+  8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
@@ -170,8 +173,8 @@ CONTENTS                                                   *SpaceVim-contents*
       13. vim#command...............................|SpaceVim-api-vim-command|
       14. vim#compatible.........................|SpaceVim-api-vim-compatible|
       15. vim#message...............................|SpaceVim-api-vim-message|
-  8. FAQ........................................................|SpaceVim-faq|
-  9. Changelog............................................|SpaceVim-changelog|
+  9. FAQ........................................................|SpaceVim-faq|
+  10. Changelog...........................................|SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -3103,6 +3106,26 @@ TOOLS#ZEAL                                         *SpaceVim-layer-tools-zeal*
 This layer provides Zeal integration for SpaceVim
 
 ==============================================================================
+USAGE                                                         *SpaceVim-usage*
+
+  the usage guide for SpaceVim
+
+==============================================================================
+CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
+
+Add custom plugins.
+>
+  [[custom_plugins]]
+    name = 'vimwiki/vimwiki'
+    merged = false
+<
+
+==============================================================================
+TASKS                                                   *SpaceVim-usage-tasks*
+
+general guide for tasks manager in SpaceVim.
+
+==============================================================================
 API                                                             *SpaceVim-api*
 
 SpaceVim contains a variety of public apis. To using the api, you need to make
@@ -3378,62 +3401,81 @@ VIM#MESSAGE                                         *SpaceVim-api-vim-message*
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
 
+This is a list of the frequently asked questions about SpaceVim.
+
   1. How do I enable YouCompleteMe?
 
->
-  I do not recommend using YouCompleteMe.
-  It is too big as a vim plugin. Also, I do not like using submodules in a vim
-  plugin. It is hard to manage with a plugin manager.
-
-  Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
-  it should be `~/.SpaceVim.d/init.vim`.
+  Step 1: Add `enable_ycm = true` to custom_config. By default it should be
+`~/.SpaceVim.d/init.toml`.
 
   Step 2: Get into the directory of YouCompleteMe's author. By default it
-  should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
-  directory `YouCompleteMe` in it, go into it. Otherwise clone
-  YouCompleteMe repo by
-  `git clone https://github.com/Valloric/YouCompleteMe.git`. After cloning,
-  get into it and run `git submodule update --init --recursive`.
+should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
+directory `YouCompleteMe` in it, go into it. Otherwise clone   YouCompleteMe
+repo by   `git clone https://github.com/Valloric/YouCompleteMe.git`. After
+cloning,   get into it and run `git submodule update --init --recursive`.
 
   Step 3: Compile YouCompleteMe with the features you want. If you just want
-  C family support, run `./install.py --clang-completer`.
-<
+C family support, run `./install.py --clang-completer`.
+
 
   2. How to add custom snippet?
 
->
-  SpaceVim uses neosnippet as the default snippet engine. If you want to add
-  a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-  command. A buffer will be opened and you can add your custom snippet.
-  By default this buffer will be save in `~/.SpaceVim/snippets`.
-  If you want to use another directory:
+ SpaceVim uses neosnippet as the default snippet engine. This can be changed
+by |SpaceVim-options-snippet_engine| option.
 
-  let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+ If you want to add a snippet for a current filetype, run |:NeoSnippetEdit|
+command. A buffer will be opened and you can add your custom snippet. By
+default this buffer will be save in `~/.SpaceVim.d/snippets`.
 
-  For more info about how to write snippet, please
-  read |neosnippet-snippet-syntax|.
-<
+ For more info about how to write snippet, please read
+|neosnippet-snippet-syntax|.
+
 
   3. Where is `<c-f>` in cmdline-mode?
 
->
   `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
-  binding as `<Right>`, so maybe you can change the `cedit` option or use
-  `<leader>+<c-f>`.
-<
+binding as `<Right>`, so maybe you can change the `cedit` option or use
+`<leader>+<c-f>`.
 
   4. How to use `<Space>` as `<Leader>`?
 
+  Add `let g:mapleader = "\<Space>"` to bootstrap function.
+
+  5. Why does Vim freeze after pressing Ctrl-s?
+
+  This is a feature of terminal emulators. You can use `Ctrl-q` to unfreeze
+Vim. To disable this feature you need the following in either
+`~/.bash_profile` or `~/.bashrc`:
 >
-  Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
+  stty -ixon
+<
+
+  6. How to enable `+py` and `+py3` in Neovim?
+
+  In Neovim we can use `g:python_host_prog` and `g:python3_host_prog`   to
+config python prog. But in SpaceVim the custom configuration file is   loaded
+after SpaceVim core code. So in SpaceVim itself, if we using `:py`   command,
+it may cause errors.
+
+  So we introduce two new environment variables: `PYTHON_HOST_PROG` and
+`PYTHON3_HOST_PROG`.
+
+  For example:
+>
+  export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+  export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 <
 
 ==============================================================================
 CHANGELOG                                                 *SpaceVim-changelog*
 
-Following HEAD: changes in master branch since last release v1.3.0
+Following HEAD: changes in master branch since last release v1.4.0
 
 https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+
+2020-04-05: v1.4.0
+
+https://spacevim.org/SpaceVim-release-v1.4.0/
 
 2019-11-04: v1.3.0
 

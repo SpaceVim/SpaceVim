@@ -10,7 +10,7 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers api faq changelog
+" @order intro options config layers usage api faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -948,6 +948,16 @@ let g:spacevim_windows_smartclose      = 'q'
 " <
 let g:spacevim_disabled_plugins        = []
 ""
+" @section custom_plugins, usage-custom_plugins
+" @parentsection usage
+" Add custom plugins.
+" >
+"   [[custom_plugins]]
+"     name = 'vimwiki/vimwiki'
+"     merged = false
+" <
+
+""
 " Add custom plugins.
 " >
 "   let g:spacevim_custom_plugins = [
@@ -1366,15 +1376,17 @@ function! SpaceVim#welcome() abort
 endfunction
 
 ""
+" @section Usage, usage
+"   the usage guide for SpaceVim
+
+""
 " @section FAQ, faq
-"1. How do I enable YouCompleteMe?
-" >
-"   I do not recommend using YouCompleteMe.
-"   It is too big as a vim plugin. Also, I do not like using submodules in a vim
-"   plugin. It is hard to manage with a plugin manager.
+" This is a list of the frequently asked questions about SpaceVim.
 "
-"   Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
-"   it should be `~/.SpaceVim.d/init.vim`.
+" 1. How do I enable YouCompleteMe?
+"
+"   Step 1: Add `enable_ycm = true` to custom_config. By default it should be
+"   `~/.SpaceVim.d/init.toml`.
 "
 "   Step 2: Get into the directory of YouCompleteMe's author. By default it
 "   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
@@ -1385,39 +1397,64 @@ endfunction
 "
 "   Step 3: Compile YouCompleteMe with the features you want. If you just want
 "   C family support, run `./install.py --clang-completer`.
-" <
+" 
 "
 " 2. How to add custom snippet?
-" >
-"   SpaceVim uses neosnippet as the default snippet engine. If you want to add
-"   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-"   command. A buffer will be opened and you can add your custom snippet.
-"   By default this buffer will be save in `~/.SpaceVim/snippets`.
-"   If you want to use another directory:
+" 
+"  SpaceVim uses neosnippet as the default snippet engine. This can be changed
+" by @section(options-snippet_engine) option.
 "
-"   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+"  If you want to add a snippet for a current filetype, run |:NeoSnippetEdit|
+" command. A buffer will be opened and you can add your custom snippet.
+" By default this buffer will be save in `~/.SpaceVim.d/snippets`.
 "
-"   For more info about how to write snippet, please
-"   read |neosnippet-snippet-syntax|.
-" <
+"  For more info about how to write snippet, please
+" read |neosnippet-snippet-syntax|.
+"
 "
 " 3. Where is `<c-f>` in cmdline-mode?
-" >
+" 
 "   `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
-"   binding as `<Right>`, so maybe you can change the `cedit` option or use
+" binding as `<Right>`, so maybe you can change the `cedit` option or use
 "   `<leader>+<c-f>`.
-" <
 "
 " 4. How to use `<Space>` as `<Leader>`?
+" 
+"   Add `let g:mapleader = "\<Space>"` to bootstrap function.
+" 
+" 5. Why does Vim freeze after pressing Ctrl-s?
+"
+"   This is a feature of terminal emulators. You can use `Ctrl-q` to unfreeze Vim. To disable
+" this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
+">
+"   stty -ixon
+"<
+"
+" 6. How to enable `+py` and `+py3` in Neovim?
+"
+"   In Neovim we can use `g:python_host_prog` and `g:python3_host_prog`
+"   to config python prog. But in SpaceVim the custom configuration file is
+"   loaded after SpaceVim core code. So in SpaceVim itself, if we using `:py`
+"   command, it may cause errors.
+"   
+"   So we introduce two new environment variables: `PYTHON_HOST_PROG` and
+"   `PYTHON3_HOST_PROG`.
+"
+"   For example:
 " >
-"   Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
+"   export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+"   export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 " <
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.3.0
+" Following HEAD: changes in master branch since last release v1.4.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2020-04-05: v1.4.0
+"
+" https://spacevim.org/SpaceVim-release-v1.4.0/
 "
 " 2019-11-04: v1.3.0
 "
