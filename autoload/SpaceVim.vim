@@ -10,7 +10,7 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers api faq changelog
+" @order intro options config layers usage api faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -1374,6 +1374,10 @@ function! SpaceVim#welcome() abort
     endif
   endif
 endfunction
+
+""
+" @section Usage, usage
+"   the usage guide for SpaceVim
 
 ""
 " @section FAQ, faq
