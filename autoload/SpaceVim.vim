@@ -948,6 +948,16 @@ let g:spacevim_windows_smartclose      = 'q'
 " <
 let g:spacevim_disabled_plugins        = []
 ""
+" @section custom_plugins, usage-custom_plugins
+" @parentsection usage
+" Add custom plugins.
+" >
+"   [[custom_plugins]]
+"     name = 'vimwiki/vimwiki'
+"     merged = false
+" <
+
+""
 " Add custom plugins.
 " >
 "   let g:spacevim_custom_plugins = [
