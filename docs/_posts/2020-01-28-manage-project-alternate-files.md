@@ -1,7 +1,7 @@
 ---
 title: "Manage project alternate files"
 categories: [feature, blog]
-excerpt: "Manage the alternate file of current project within SpaceVim."
+description: "Manage the alternate file of current project within SpaceVim."
 image: https://user-images.githubusercontent.com/13142418/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png
 commentsID: "Manage project alternate files"
 comments: true

@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Python IDE"
 categories: [tutorials, blog]
-excerpt: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
+description: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
 commentsID: "Use Vim as a Python IDE"

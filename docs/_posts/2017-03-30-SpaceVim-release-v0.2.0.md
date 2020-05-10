@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v0.2.0
 categories: [changelog, blog]
-excerpt: "Mnemonic key bindings in SpaceVim"
+description: "Mnemonic key bindings in SpaceVim"
 type: NewsArticle
 commentsID: "SpaceVim release v0.2.0"
 comments: true
