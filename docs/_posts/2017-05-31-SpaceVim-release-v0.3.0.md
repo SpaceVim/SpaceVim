@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v0.3.0
 categories: [changelog, blog]
-excerpt: "The major change happend in v0.3.0 is new mapping guide and custom mapping prefix SPC."
+description: "The major change happend in v0.3.0 is new mapping guide and custom mapping prefix SPC."
 type: NewsArticle
 commentsID: "SpaceVim release v0.3.0"
 comments: true

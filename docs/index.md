@@ -39,7 +39,7 @@ The last release is v1.4.0, check out [following-HEAD](https://github.com/SpaceV
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
                <br>
                <img alt="{{ post.title }}" src="{{ post.image }}">
     {% endfor %}

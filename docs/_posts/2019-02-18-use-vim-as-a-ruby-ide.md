@@ -2,7 +2,7 @@
 title: "Use Vim as a Ruby IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png
-excerpt: "A general guide for using SpaceVim as Ruby IDE, including layer configuration, requiems installation and usage."
+description: "A general guide for using SpaceVim as Ruby IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
 commentsID: "Use Vim as a Ruby IDE"

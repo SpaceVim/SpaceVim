@@ -33,7 +33,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
                <br>
                <img alt="{{ post.title }}" src="{{ post.image }}">
     {% endfor %}

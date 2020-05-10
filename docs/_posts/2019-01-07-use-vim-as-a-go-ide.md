@@ -2,7 +2,7 @@
 title: "Use Vim as a Go IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
-excerpt: "A general guide for using SpaceVim as Go IDE, including layer configuration, requiems installation and usage."
+description: "A general guide for using SpaceVim as Go IDE, including layer configuration, requiems installation and usage."
 type: BlogPosting
 comments: true
 commentsID: "Use Vim as a Go IDE"

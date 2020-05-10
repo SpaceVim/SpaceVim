@@ -1,7 +1,7 @@
 ---
 title: "自定义工程文件跳转"
 categories: [feature_cn, blog_cn]
-excerpt: "通过配置文件，自定义工程文件跳转路径，包括跳转至测试源文件、文档源文件等。"
+description: "通过配置文件，自定义工程文件跳转路径，包括跳转至测试源文件、文档源文件等。"
 image: https://user-images.githubusercontent.com/13142418/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png
 permalink: /cn/:title/
 lang: zh

@@ -13,7 +13,6 @@ lang: en
 
 plugins:
   - jekyll-redirect-from
-  - jekyll-seo-tag
 
 github: [metadata]
 
@@ -23,12 +22,6 @@ webmaster_verifications:
 sass:
  sass_dir: _sass
  style: compressed
-
-author:
-      name: Shidong Wang
-      twitter: SpaceVim
-twitter:
-    username: "@SpaceVim"
 
 social:
   name: SpaceVim
