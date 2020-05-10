@@ -64,11 +64,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
-    if s:SYS.isWindows
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.cmd'}])
-    else
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
-    endif
+    call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
