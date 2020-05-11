@@ -12,8 +12,8 @@ assignees: ''
 
 **Which platform does the language support?**
 
-- [ ] windows
-- [ ] Mac os
+- [ ] Linux
+- [ ] MacOS
 - [ ] Windows
 
 **Any suggest vim plugins for this language?**
