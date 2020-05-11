@@ -49,7 +49,7 @@ for go language should work well.
 To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
 project.
 
-for exmaple, add following content into the `.project_alt.json` file:
+for example, add following content into the `.project_alt.json` file:
 
 ```json
 {
