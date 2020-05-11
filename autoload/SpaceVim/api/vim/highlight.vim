@@ -21,8 +21,8 @@ let s:self = {}
 " reverse: if reverse
 
 function! s:self.group2dict(name) abort
-    let id = index(map(range(1999), "synIDattr(v:val, 'name')"), a:name)
-    if id == -1
+    let id = hlID(a:name)
+    if id == 0
         return {
                     \ 'name' : '',
                     \ 'ctermbg' : '',
