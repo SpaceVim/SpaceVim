@@ -452,6 +452,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'nerdtree'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Nerdtree %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'coc-explorer'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Coc-Explorer %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'Mundo'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Mundo %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '

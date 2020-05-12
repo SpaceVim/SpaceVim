@@ -70,6 +70,8 @@ function! s:open_disk(d) abort
   if g:spacevim_filemanager ==# 'vimfiler'
     exe 'VimFiler -no-toggle ' . disk
   elseif g:spacevim_filemanager ==# 'nerdtree'
+  elseif g:spacevim_filemanager ==# 'coc-explorer'
+    exe 'CocCommand explorer ' . disk
   elseif g:spacevim_filemanager ==# 'defx'
     exe 'Defx -no-toggle -no-resume ' . disk
   endif

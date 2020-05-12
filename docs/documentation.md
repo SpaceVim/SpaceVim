@@ -769,6 +769,7 @@ To change the filemanager plugin:
     # - vimfiler (default)
     # - nerdtree
     # - defx
+    # - coc-explorer
     filemanager = "defx"
 ```
 
@@ -1177,7 +1178,7 @@ can be get by `<Leader> q r`, if you want to disable this feature, you can use `
 | Key Bindings | Descriptions                     |
 | ------------ | -------------------------------- |
 | `<F2>`       | Toggle tagbar                    |
-| `<F3>`       | Toggle Vimfiler                  |
+| `<F3>`       | Toggle Vimfiler/ coc-explorer    |
 | `Ctrl-Down`  | Move to split below (`Ctrl-w j`) |
 | `Ctrl-Up`    | Move to upper split (`Ctrl-w k`) |
 | `Ctrl-Left`  | Move to left split (`Ctrl-w h`)  |

@@ -772,11 +772,11 @@ let g:spacevim_colorscheme_default     = 'desert'
 " @section filemanager, options-filemanager
 " @parentsection options
 " The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
+" you can also use nerdtree, defx or coc-explorer
 
 ""
 " The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
+" you can also use nerdtree, defx or coc-explorer
 let g:spacevim_filemanager             = 'vimfiler'
 ""
 " @section filetree_direction, options-filetree_direction

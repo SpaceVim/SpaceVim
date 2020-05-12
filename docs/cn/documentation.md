@@ -720,6 +720,7 @@ SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 
     # 文件树插件可选值包括：
     # - vimfiler （默认）
     # - nerdtree
+    # - coc-explorer
     # - defx
     filemanager = "defx"
 ```

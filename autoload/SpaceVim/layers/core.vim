@@ -221,6 +221,13 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
+  elseif g:spacevim_filemanager ==# 'coc-explorer'
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'CocCommand explorer --toggle', 'toggle-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'CocCommand explorer --no-toggle', 'show-file-tree', 1)
+    " TODO what is the difference betwee `leader b t` and `leader f o`
+    " TODO check is eplorer --reavel success, then if not open new tree
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'exe "CocCommand explorer --no-toggle " . fnameescape(expand("%:p:h"))', 'open-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "CocCommand explorer --no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'Y'], 'call SpaceVim#util#CopyToClipboard(1)', 'show-and-copy-buffer-filename', 1)
@@ -874,6 +881,14 @@ function! s:explore_current_dir(cur) abort
       exe 'e ' . getcwd() 
     else
       NERDTreeCWD
+    endif
+  elseif g:spacevim_filemanager ==# 'coc-explorer'
+    if !a:cur
+      let g:_spacevim_autoclose_filetree = 0
+      CocCommand explorer -no-toggle `getcwd()`
+      let g:_spacevim_autoclose_filetree = 1
+    else
+      CocCommand explorer -no-toggle
     endif
   elseif g:spacevim_filemanager ==# 'defx'
     if !a:cur

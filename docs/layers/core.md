@@ -24,10 +24,11 @@ This is core layer of SpaceVim, and it is loaded by default.
 
 
 The filetree plugin is included in core layer, by default `vimfiler` is used as filetree manager.
-To use nerdtree or defx, please add following snippet into your configuration file.
+To use nerdtree, defx or coc-explorer, please add following snippet into your configuration file.
 
 ```toml
 [options]
+  # filemanager = "coc-explorer"
   filemanager = "nerdtree"
 ```
 
