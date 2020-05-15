@@ -8,7 +8,8 @@ description: "This layer provides mpv integration for SpaceVim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Layer Installation](#layer-installation)
+- [Install](#install)
+- [Options](#options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -17,7 +18,7 @@ description: "This layer provides mpv integration for SpaceVim"
 
 This layer provides mpv integration for SpaceVim.
 
-## Layer Installation
+## Install
 
 To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 
@@ -25,6 +26,10 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 [[layers]]
   name = "tools#mpv"
 ```
+
+## Options
+
+- `musics_directory`: the directory of musics
 
 ## Key bindings
 
