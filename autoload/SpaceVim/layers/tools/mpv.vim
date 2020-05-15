@@ -14,6 +14,25 @@ function! SpaceVim#layers#tools#mpv#config() abort
 
 endfunction
 
+let s:musics_directory = '~/Musics',
+
+function! SpaceVim#layers#tools#mpvset_variable(var) abort
+  let s:musics_directory = get(a:var, 'musics_directory', 1)
+endfunction
+
+function! SpaceVim#layers#tools#mpv#play(fpath)
+  if s:playId != 0
+    call s:JOB.stop(s:playId)
+    let s:playId = 0
+  endif
+  let s:playId =  s:JOB.start(['mpv','--vid=no',a:file],{
+        \ 'on_stdout': function('s:handler'),
+        \ 'on_stderr': function('s:handler'),
+        \ 'on_exit': function('s:handler'),
+        \ })
+  command! MStop call zvim#mpv#stop()
+endfunction
+
 function! SpaceVim#layers#tools#mpv#loadMusics() abort
   let musics = SpaceVim#util#globpath('~/Musics', '*.mp3')
   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
@@ -38,16 +57,4 @@ function! s:stop() abort
     let s:playId = 0
   endif
   delcommand MStop
-endfunction
-function! s:play(file,...) abort
-  if s:playId != 0
-    call s:JOB.stop(s:playId)
-    let s:playId = 0
-  endif
-  let s:playId =  s:JOB.start(['mpv','--vid=no',a:file],{
-        \ 'on_stdout': function('s:handler'),
-        \ 'on_stderr': function('s:handler'),
-        \ 'on_exit': function('s:handler'),
-        \ })
-  command! MStop call zvim#mpv#stop()
 endfunction
