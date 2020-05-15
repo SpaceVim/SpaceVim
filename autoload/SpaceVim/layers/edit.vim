@@ -114,7 +114,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to under_score', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'U'], 'silent call call('
         \ . string(s:_function('s:up_case')) . ', [])',
-        \ 'change symbol style to UP_CACE', 1)
+        \ 'change symbol style to UP_CASE', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'k'], 'silent call call('
         \ . string(s:_function('s:kebab_case')) . ', [])',
         \ 'change symbol style to kebab-case', 1)
@@ -307,6 +307,9 @@ endfunction
 
 function! s:lowerCamelCase() abort
   " fooFzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = [cword[0]]
@@ -324,6 +327,9 @@ endfunction
 
 function! s:UpperCamelCase() abort
   " FooFzz
+  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = map(cword, "substitute(v:val, '^.', '\\u&', 'g')")
@@ -338,6 +344,9 @@ endfunction
 
 function! s:kebab_case() abort
   " foo-fzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let save_register = @k
@@ -364,6 +373,9 @@ endfunction
 
 function! s:up_case() abort
   " FOO_FZZ
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
   if !empty(cword)
     let save_register = @k
