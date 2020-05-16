@@ -15,10 +15,11 @@ else
 endif
 
 let s:JOB = SpaceVim#api#import('job')
+let s:NUM = SpaceVim#api#import('data#number')
 
 
 function! SpaceVim#layers#tools#mpv#config() abort
-
+  call s:load_musics()
 endfunction
 
 function! SpaceVim#layers#tools#mpv#set_variable(var) abort
@@ -36,10 +37,10 @@ function! SpaceVim#layers#tools#mpv#play(fpath)
         \ 'on_stderr': function('s:handler'),
         \ 'on_exit': function('s:handler'),
         \ })
-  command! MStop call zvim#mpv#stop()
+  command! MStop call s:stop()
 endfunction
 
-function! SpaceVim#layers#tools#mpv#loadMusics() abort
+function! s:load_musics() abort
   let musics = SpaceVim#util#globpath(s:musics_directory, '*.mp3')
   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
   for m in musics
@@ -53,13 +54,18 @@ endfunction
 let s:playId = 0
 fu! s:handler(id, data, event) abort
   if a:event ==# 'exit'
-    echom 'job ' . a:id . ' exit with code:' . string(a:data)
-    let s:playId = 0
+    if s:loop_mode ==# 'random'
+      let next = s:NUM.random(0, len(g:unite_source_menu_menus.MpvPlayer.command_candidates))
+      echohl TODO
+      echo 'playing:' . g:unite_source_menu_menus.MpvPlayer.command_candidates[next][0]
+      echohl NONE
+      exe g:unite_source_menu_menus.MpvPlayer.command_candidates[next][1]
+    endif
   endif
 endf
 function! s:stop() abort
   if s:playId != 0
-    call jobstop(s:playId)
+    call s:JOB.stop(s:playId)
     let s:playId = 0
   endif
   delcommand MStop
