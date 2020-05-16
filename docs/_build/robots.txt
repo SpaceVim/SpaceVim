@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: 
-Sitemap: https://spacevim.org/sitemap.xml
-Sitemap: https://spacevim.org/cn/sitemap.xml
-
