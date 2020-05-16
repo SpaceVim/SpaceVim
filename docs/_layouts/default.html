@@ -6,9 +6,12 @@
     <meta name="yandex-verification" content="8de09d07572b8dcc" />
     <meta name="author" content="Shidong Wang" />
     <meta name="description" content="{{ page.description }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@SpaceVim" />
+    <meta name="twitter:creator" content="@wsdtty" />
     <meta name="og:title" content="{{ page.title }} | SpaceVim" />
     <meta name="og:description" content="{{ page.description }}" />
-    <meta name="og:url" content="{{ page.url }}" />
+    <meta name="og:url" content="{{ site.url }}{{ page.url }}" />
     <meta name="og:image" content="{{ page.image | default: site.image }}" />
     {% if page.lang == "zh" %}
     <script
