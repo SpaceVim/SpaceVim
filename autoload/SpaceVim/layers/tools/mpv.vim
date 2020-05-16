@@ -12,6 +12,7 @@ else
   let s:musics_directory = '~/Musics'
   let s:mpv_interpreter = 'mpv'
   let s:loop_mode = 'random'
+  let s:stop_mpv = 0
 endif
 
 let s:JOB = SpaceVim#api#import('job')
@@ -28,6 +29,7 @@ function! SpaceVim#layers#tools#mpv#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#tools#mpv#play(fpath)
+  let s:stop_mpv = 0
   if s:playId != 0
     call s:JOB.stop(s:playId)
     let s:playId = 0
@@ -54,7 +56,7 @@ endfunction
 let s:playId = 0
 fu! s:handler(id, data, event) abort
   if a:event ==# 'exit'
-    if s:loop_mode ==# 'random'
+    if s:loop_mode ==# 'random' && !s:stop_mpv
       let next = s:NUM.random(0, len(g:unite_source_menu_menus.MpvPlayer.command_candidates))
       echohl TODO
       echo 'playing:' . g:unite_source_menu_menus.MpvPlayer.command_candidates[next][0]
@@ -69,4 +71,5 @@ function! s:stop() abort
     let s:playId = 0
   endif
   delcommand MStop
+  let s:stop_mpv = 1
 endfunction
