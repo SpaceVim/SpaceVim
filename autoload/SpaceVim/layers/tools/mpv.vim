@@ -21,6 +21,15 @@ let s:NUM = SpaceVim#api#import('data#number')
 
 function! SpaceVim#layers#tools#mpv#config() abort
   call s:load_musics()
+  let g:_spacevim_mappings_space.m.m = {'name' : '+mpv'}
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'm', 'l'], 'Leaderf menu --name MpvPlayer', 'fuzzy-find-musics', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'm', 'l'], 'Leaderf menu --name MpvPlayer', 'fuzzy-find-musics', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'm', 'n'], 'call call('
+        \ . string(s:_function('s:next')) . ', [])',
+        \ 'next-music', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'm', 's'], 'call call('
+        \ . string(s:_function('s:stop')) . ', [])',
+        \ 'stop-mpv', 1)
 endfunction
 
 function! SpaceVim#layers#tools#mpv#set_variable(var) abort
@@ -73,3 +82,26 @@ function! s:stop() abort
   delcommand MStop
   let s:stop_mpv = 1
 endfunction
+
+function! s:next() abort
+  if s:playId != 0
+    call s:JOB.stop(s:playId)
+    let s:playId = 0
+  endif
+endfunction
+
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
