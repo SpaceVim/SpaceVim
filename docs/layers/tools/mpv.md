@@ -44,6 +44,8 @@ example:
 
 ## Key bindings
 
-| Key Binding  | Description       |
-| ------------ | ----------------- |
-| `Leader f M` | fuzzy find musics |
+| Key Binding | Description       |
+| ----------- | ----------------- |
+| `SPC m m l` | fuzzy find musics |
+| `SPC m m n` | next musics       |
+| `SPC m m s` | stop mpv          |
