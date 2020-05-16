@@ -30,6 +30,17 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 ## Options
 
 - `musics_directory`: the directory of musics
+- `mpv_interpreter`: mpv executable path
+- `loop_mode`: loop mode, default is `random`
+
+example:
+
+```toml
+[[layers]]
+    name = 'tools#mpv'
+    mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
+    musics_directory = 'F:\other\musics'
+```
 
 ## Key bindings
 
