@@ -76,6 +76,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [denite](denite/)                                     | 这一模块为 SpaceVim 提供了以 denite 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。                              |
 | [edit](edit/)                                         | 这一模块为 SpaceVim 提供了更好的文本编辑体验，提供更多种文本对象。                                                                  |
 | [floobits](floobits/)                                 | 这一模块为 SpaceVim 提供了 floobits 协作工具的支持，实现多人协作编辑等功能。                                                        |
+| [foldsearch](foldsearch/)                             | 这一模块为 SpaceVim 提供了 foldsearch 支持，实现的异步搜索折叠的功能。                                                              |
 | [format](format/)                                     | 这一模块为 SpaceVim 提供了代码异步格式化功能，支持高度自定义配置和多种语言。                                                        |
 | [fzf](fzf/)                                           | 这一模块为 SpaceVim 提供了以 fzf 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。                                 |
 | [git](git/)                                           | 这一模块为 SpaceVim 提供了 Git 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 Git 插件。                           |
@@ -83,6 +84,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [gtags](gtags/)                                       | 这一模块为 SpaceVim 提供了全局的 gtags 索引管理，提供快速检索定义和引用的功能。                                                     |
 | [japanese](japanese/)                                 | 这一模块为 SpaceVim 的日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。                                           |
 | [lang#WebAssembly](lang/WebAssembly/)                 | 这一模块为 SpaceVim 提供了 WebAssembly 的开发支持。                                                                                 |
+| [lang#actionscript](lang/actionscript/)               | 这一模块为 actionscript 提供语法高亮                                                                                                |
 | [lang#agda](lang/agda/)                               | 这一模块为 SpaceVim 提供了 Agda 的开发支持，主要包括语法高亮及一键运行。                                                            |
 | [lang#asciidoc](lang/asciidoc/)                       | 这一模块为 SpaceVim 提供了 AsciiDoc 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。                                        |
 | [lang#aspectj](lang/aspectj/)                         | 这一模块为 SpaceVim 提供了 AsepctJ 的编辑支持，包括代码高亮。                                                                       |
@@ -92,6 +94,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。                                                |
 | [lang#chapel](lang/chapel/)                           | 这一模块为 chapel 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#clojure](lang/clojure/)                         | 这一模块为 SpaceVim 提供了 Clojure 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
+| [lang#coffeescript](lang/coffeescript/)               | 这一模块为 CoffeeScript 开发提供支持，包括交互式编程、一键运行等特性。                                                              |
 | [lang#crystal](lang/crystal/)                         | 这一模块为 crystal 开发提供支持，包括交互式编程、一键运行等特性。                                                                   |
 | [lang#csharp](lang/csharp/)                           | 这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。                                                      |
 | [lang#d](lang/d/)                                     | 这一模块为 d 开发提供支持，包括语法高亮、自动补全、一键运行等特性。                                                                 |
@@ -166,6 +169,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [test](test/)                                         | 这一模块为 SpaceVim 提供了一个测试框架，支持快速运行多种语言的单元测试。                                                            |
 | [tmux](tmux/)                                         | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。                                         |
 | [tools#dash](tools/dash/)                             | 这一模块为 SpaceVim 提供了 Dash 支持，可快速查找光标位置的单词。                                                                    |
+| [tools#mpv](tools/mpv/)                               | 这一模块为 SpaceVim 提供了 mpv 支持，可快速查找光标位置的单词。                                                                     |
 | [tools](tools/)                                       | 这一模块为 SpaceVim 提供了多种常用工具，包括日历、计算器等多种工具类插件，并针对 Vim8 以及 Neovim 提供了更好的插件选择。            |
 | [ui](ui/)                                             | 这一模块为 SpaceVim 提供了 IDE-like 的界面，包括状态栏、文件树、语法树等等特性。                                                    |
 | [unite](unite/)                                       | 这一模块为 SpaceVim 提供以 Unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                     |
