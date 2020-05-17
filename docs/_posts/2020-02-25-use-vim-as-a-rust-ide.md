@@ -3,7 +3,7 @@ title: "Use Vim as a Rust IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
 description: "A general guide for using SpaceVim as Rust IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+type: article
 comments: true
 commentsID: "Use Vim as a Rust IDE"
 ---

@@ -5,7 +5,7 @@ description: "通过异步检索展示整个项目中所有的待办事项，显
 image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "异步待办事项管理器"
 ---

@@ -3,7 +3,7 @@ title: "Use Vim as a Java IDE"
 categories: [tutorials, blog]
 description: "A general guide for using SpaceVim as Java IDE, including layer configuration and requiems installation."
 redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
-type: BlogPosting
+type: article
 comments: true
 commentsID: "Use Vim as a Java IDE"
 ---

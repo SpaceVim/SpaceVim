@@ -11,7 +11,11 @@
     <meta name="yandex-verification" content="8de09d07572b8dcc" />
     <meta name="author" content="Shidong Wang" />
     <meta name="description" content="{{ page.description }}" />
-    <meta property="og:type" content="website" />
+    {% if page.type %}
+    <meta property="og:type" content="{{ page.type }}" />
+    {% else %}
+    <meta property="og:type" content="webpage" />
+    {% endif %}
     <meta property="og:title" content="{{ page.title }} | SpaceVim" />
     <meta property="og:description" content="{{ page.description }}" />
     <meta property="og:url" content="{{ site.url }}{{ page.url }}" />

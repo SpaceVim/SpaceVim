@@ -5,7 +5,7 @@ image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Rust 的开发环境，简介 lang#rust 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "使用 Vim 搭建 Rust 开发环境"
 ---

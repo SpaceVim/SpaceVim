@@ -5,7 +5,7 @@ image: https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 TypeScript 的开发环境，简介 lang#typescript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "使用 Vim 搭建 TypeScript 开发环境"
 ---

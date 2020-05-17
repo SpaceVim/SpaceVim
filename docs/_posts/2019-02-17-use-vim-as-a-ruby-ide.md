@@ -5,7 +5,7 @@ image: https://user-images.githubusercontent.com/13142418/53355518-20202080-3964
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Ruby 的开发环境，简介 lang#ruby 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "使用 Vim 搭建 Ruby 开发环境"
 ---
