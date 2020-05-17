@@ -2,7 +2,7 @@
 title: SpaceVim release v0.3.1
 categories: [changelog, blog]
 description: "New release v0.3.1 provides better key binding guide for buffer and file, including z and g prefix guide."
-type: NewsArticle
+type: article
 commentsID: "SpaceVim release v0.3.1"
 comments: true
 ---

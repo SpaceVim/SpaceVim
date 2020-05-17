@@ -2,7 +2,7 @@
 title: SpaceVim release v1.3.0
 categories: [changelog, blog]
 description: "SpaceVim release v1.3.0"
-type: NewsArticle
+type: article
 image: https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png
 commentsID: "SpaceVim release v1.3.0"
 comments: true

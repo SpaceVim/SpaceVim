@@ -2,7 +2,7 @@
 title: SpaceVim release v0.8.0
 categories: [changelog, blog]
 description: "Use toml as default configuration file for SpaceVim"
-type: NewsArticle
+type: article
 image: https://user-images.githubusercontent.com/13142418/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png
 commentsID: "SpaceVim release v0.8.0"
 comments: true

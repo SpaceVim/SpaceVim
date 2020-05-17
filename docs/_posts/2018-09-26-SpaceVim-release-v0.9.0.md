@@ -2,7 +2,7 @@
 title: SpaceVim release v0.9.0
 categories: [changelog, blog]
 description: "15+ new language layer support in SpaceVim"
-type: NewsArticle
+type: article
 image: https://user-images.githubusercontent.com/13142418/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png
 commentsID: "SpaceVim release v0.9.0"
 comments: true

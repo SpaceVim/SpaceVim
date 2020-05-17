@@ -2,7 +2,7 @@
 title: SpaceVim release v0.4.0
 categories: [changelog, blog]
 description: "New release v0.4.0 provides a new UI for plugin manager and built-in flygrep plugin"
-type: NewsArticle
+type: article
 commentsID: "SpaceVim release v0.4.0"
 comments: true
 ---
