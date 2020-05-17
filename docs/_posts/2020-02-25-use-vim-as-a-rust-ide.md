@@ -13,7 +13,6 @@ commentsID: "Use Vim as a Rust IDE"
 This is a general guide for using SpaceVim as a Rust IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
-
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
@@ -69,8 +68,13 @@ Add following snippet to SpaceVim config file:
 
 ### Syntax linting
 
-The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run rustc asynchronously.
+The `checkers` layer is enabled by default. This layer provides asynchronous syntax linting via
+[neomake](https://github.com/neomake/neomake). The default lint is cargo. To use rustc as default
+lint, add following config to bootstrap function:
+
+```viml
+let g:neomake_rust_enabled_makers = ['rustc']
+```
 
 ### Jump to test file
 
@@ -79,8 +83,8 @@ you can add a `.project_alt.json` to the root of your project with the following
 
 ```json
 {
-  "src/*.rs": {"alternate": "test/test_{}.rs"},
-  "test/test_*.rs": {"alternate": "src/{}.rs"}
+  "src/*.rs": { "alternate": "test/test_{}.rs" },
+  "test/test_*.rs": { "alternate": "src/{}.rs" }
 }
 ```
 
@@ -94,6 +98,7 @@ Before using this feature, please install rustfmt:
 ```sh
 rustup component add rustfmt
 ```
+
 ### running code
 
 To run current script, you can press `SPC l r`, and a split window
@@ -101,7 +106,6 @@ will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
 ![rustide](https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
-
 
 ### REPL support
 
