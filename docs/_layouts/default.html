@@ -15,10 +15,19 @@
     <meta property="og:title" content="{{ page.title }} | SpaceVim" />
     <meta property="og:description" content="{{ page.description }}" />
     <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
-    <meta property="og:image" content="{{ page.image | default: site.image }}" />
+    <meta
+      property="og:image"
+      content="{{ page.image | default: site.image }}"
+    />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:site" content="@SpaceVim" />
     <meta property="twitter:creator" content="@wsdtty" />
+    <meta
+      name="twitter:image:src"
+      content="{{ page.image | default: site.image }}"
+    />
+    <meta name="twitter:title" content="{{ page.title }} | SpaceVim" />
+    <meta name="twitter:description" content="{{ page.description }}" />
     {% if page.lang == "zh" %}
     <script
       type="text/javascript"
