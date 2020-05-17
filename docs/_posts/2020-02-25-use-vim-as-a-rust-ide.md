@@ -41,8 +41,31 @@ For more info, you can read the [lang#rust](../layers/lang/rust/) layer document
 
 ### Code completion
 
-`lang#rust` layer will load the rust plugin automatically, unless it's overriden in your `init.toml`.
-The completion menu will be opened as you type.
+Code completion is provided by `autocomplete` layer, the rust language completion is provided by `lang#rust` layer.
+We also recommended to use `lsp` layer for rust.
+
+```toml
+[[layers]]
+  name = "lsp"
+```
+
+The lsp layer uses [rls](https://github.com/rust-lang/rls) as the language server for rust, to install rls:
+
+```sh
+rustup component add rls rust-analysis rust-src
+```
+
+Add following snippet to SpaceVim config file:
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust"
+  ]
+  [layers.override_cmd]
+    rust = ["rls"]
+```
 
 ### Syntax linting
 
