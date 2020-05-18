@@ -355,6 +355,7 @@ endfunction
 
 func! s:neoyank(...)
   let yank = []
+  call neoyank#update()
   for text in neoyank#_get_yank_histories()['"']
     call add(yank, '": ' . join(split(text[0], "\n"), '\n'))
   endfor

@@ -568,6 +568,7 @@ function! SpaceVim#layers#core#statusline#init() abort
   augroup END
 endfunction
 
+nnoremap <silent><c-l> <c-l>:let &l:statusline = SpaceVim#layers#core#statusline#get(1)<cr>
 let s:colors_template = SpaceVim#mapping#guide#theme#gruvbox#palette()
 
 function! SpaceVim#layers#core#statusline#def_colors() abort
