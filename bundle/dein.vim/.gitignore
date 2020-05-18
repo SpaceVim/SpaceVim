@@ -1,0 +1,4 @@
+doc/tags
+.cache
+*.py[cod]
+vim-themis/
