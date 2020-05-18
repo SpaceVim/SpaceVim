@@ -1,0 +1,140 @@
+*context_filetype.txt*	Context filetype library for Vim script
+
+Version: 1.0
+Author : Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS					*context_filetype-contents*
+
+Introduction		|context_filetype-introduction|
+Interface		|context_filetype-interface|
+  Variables		  |context_filetype-variables|
+  Functions		  |context_filetype-functions|
+Changelog		|context_filetype-changelog|
+
+==============================================================================
+INTRODUCTION					*context_filetype-introduction*
+
+*context_filetype* provides functions to find fenced code blocks and their
+filetype.
+For example Javascript blocks inside of HTML.
+The fenced code is detected by predefined regular expressions.
+
+==============================================================================
+INTERFACE					*context_filetype-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*context_filetype-variables*
+
+g:context_filetype#filetypes			*g:context_filetype#filetypes*
+		It is a dictionary to define context filetypes.
+		The item is a list of dictionaries.
+
+		The keys and values are below.
+		"filetype" : includes filetype name.
+		"start" : filetype start pattern.
+		"end" : filetype end pattern.
+
+		The patterns in "start" and "end" are always interpreted as if
+		'magic' is set, ignoring the actual value of the 'magic'
+		option.
+		You can use "\0" through "\9" to refer to "start"'s match and
+		sub-matches in "end" and "filetype".
+>
+		" Examples:
+		if !exists('g:context_filetype#filetypes')
+		  let g:context_filetype#filetypes = {}
+		endif
+		let g:context_filetype#filetypes.perl6 =
+		\ [{'filetype' : 'pir', 'start' : 'Q:PIR\s*{', 'end' : '}'}]
+		let g:context_filetype#filetypes.vim =
+		\ [{'filetype' : 'python',
+		\   'start' : '^\s*python <<\s*\(\h\w*\)', 'end' : '^\1'}]
+<
+		Because it is complicated, refer to s:initialize() in
+		autoload/context_filetype.vim for the initial value.
+
+b:context_filetype_filetypes			*b:context_filetype_filetypes*
+		It is the buffer variable version of
+		|g:context_filetype#filetypes|.
+		If you set it, |g:context_filetype#filetypes| is ignored.
+
+					*g:context_filetype#same_filetypes*
+g:context_filetype#same_filetypes
+		It is a dictionary to connect file type mutually.  It is
+		effective at time to let you refer to "c" and "cpp" mutually.
+		The value are comma-separated filetypes.
+		If the value contains "_", context_filetype completes from all
+		buffers.  If the key is "_", the value will be used for
+		default same filetypes.
+>
+		if !exists('g:context_filetype#same_filetypes')
+		  let g:context_filetype#same_filetypes = {}
+		endif
+		" In c buffers, completes from cpp and d buffers.
+		let g:context_filetype#same_filetypes.c = 'cpp,d'
+		" In cpp buffers, completes from c buffers.
+		let g:context_filetype#same_filetypes.cpp = 'c'
+		" In gitconfig buffers, completes from all buffers.
+		let g:context_filetype#same_filetypes.gitconfig = '_'
+		" In default, completes from all buffers.
+		let g:context_filetype#same_filetypes._ = '_'
+<
+		Because it is complicated, refer to s:initialize() in
+		autoload/context_filetype.vim for the initial value.
+
+				*g:context_filetype#ignore_composite_filetypes*
+g:context_filetype#ignore_composite_filetypes
+		It is a dictionary to ignore composite file type.
+		The dictionary's key is composite filetype and value is
+		filetype.
+>
+		" Examples:
+		let g:context_filetype#ignore_composite_filetypes = {
+			\ 'ruby.spec' : 'ruby'
+			\ }
+<
+		If you open filetype like "ruby.spec", completion is
+		intended for "ruby" and "spec".
+		But if you only want to complete "ruby" filetype,
+		you can set this variable to ignore "spec".
+
+		Default value is {}.
+
+					*g:context_filetype#search_offset*
+g:context_filetype#search_offset
+		It is the pattern search offset from current line.
+
+		Default value is 200.
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*context_filetype-functions*
+
+context_filetype#version()			*context_filetype#version()*
+		Get version of context filetype library.
+		Note: It is useful for library installation check.
+
+context_filetype#get([{filetype}])		*context_filetype#get()*
+		Get completion filetype from {filetype}.
+		If you omit {filetype}, 'filetype' will be used.
+
+					*context_filetype#get_filetypes()*
+context_filetype#get_filetypes([{filetype}])
+		Get completion filetypes from {filetype}.
+		They contains same filetypes and composite filetypes.
+		If you omit {filetype}, 'filetype' will be used.
+
+					*context_filetype#default_filetypes()*
+context_filetype#default_filetypes()
+		Get the dictionary of all default filetypes.
+
+					*context_filetype#filetypes()*
+context_filetype#filetypes()
+		Get the dictionary of all filetypes with
+		* |b:context_filetype_filetypes| (if defined)
+		* Or merged dictionary
+		  * |context_filetype#default_filetypes()|
+		  * |g:context_filetype#filetypes|
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
