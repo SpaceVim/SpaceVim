@@ -1,0 +1,483 @@
+# Structure
+snippet namespace
+alias   name
+abbr    namespace {}
+options head
+    namespace ${1:#:Name} {
+        ${0:TARGET}
+    }
+
+snippet class
+abbr    class {}
+    class ${1:#:Name} ${2::} ${3:Parent}${4:,} ${5:Interface} {
+        ${0:TARGET}
+    }
+
+snippet struct
+abbr    struct {}
+    struct ${1:#:Name} ${2::} ${3:Interface} {
+        ${0:TARGET}
+    }
+
+snippet interface
+abbr    interface {}
+    interface ${1:#:IName} ${2::} ${3:Parent} {
+        ${0:TARGET}
+    }
+
+snippet method
+    ${1:void} ${2:#:Method}(${3:#:arguments}) {
+        ${0:TARGET}
+    }
+
+snippet enum
+abbr    enum {}
+    enum ${1:#:Name} {
+        ${0:TARGET}
+    }
+
+
+# Declare
+snippet delegate
+    delegate ${1:void} ${2:#:Delegate}(${3:#:arguments});${0}
+
+snippet property
+alias   prop
+    ${1:int} ${2:#:Name} { get${3:;} ${4:#:private }set${5:;} }${0}
+
+snippet get
+abbr    get {}
+    get {${1:TARGET}}${0}
+
+snippet set
+abbr    set {}
+    set {${1:TARGET}}${0}
+
+
+# PreProcess Syntax
+snippet define
+alias   def
+options head
+    #define ${0:#:SYMBOL}
+
+snippet undef
+alias   und
+options head
+    #undef ${0:#:SYMBOL}
+
+snippet ifdef
+options head
+    #if ${1:SYMBOL}
+        ${0:TARGET}
+    #endif
+
+snippet warning
+alias   warn
+options head
+    #warning ${0:#:message}
+
+snippet error
+alias   err
+options head
+    #error ${0:#:message}
+
+snippet line
+options head
+    #line ${0:#:number}
+
+snippet region
+alias   reg
+options head
+    #region ${1:#:name}
+        ${0:TARGET}
+    #endregion
+
+snippet pragma_warning
+alias   pragma pragma_warn
+options head
+    #pragma warning ${2:disable} ${3:#:errno}
+
+
+# Syntax
+snippet if
+abbr    if () {}
+    if (${1:#:condition}) {
+        ${0:TARGET}
+    }
+
+snippet elseif
+alias   elif
+abbr    else if () {}
+    else if (${1:#:condition}) {
+        ${0:TARGET}
+    }
+
+snippet ifelse
+alias   ifel
+abbr    if () {} else {}
+    if (${1:#:condition}) {
+        ${2:TARGET}
+    } else {
+        ${3:TARGET}
+    }
+
+snippet while
+abbr    while () {}
+    while (${1:#:condition}) {
+        ${0:TARGET}
+    }
+
+snippet do_while
+alias   dowhile
+abbr    do {} while() {}
+    do {
+        ${0:TARGET}
+    } while (${1:#:condition});
+
+snippet for
+abbr    for () {}
+    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
+        ${0:TARGET}
+    }
+
+snippet foreach
+alias   fore
+abbr    foreach () {}
+    foreach (${1:#:var} in ${2:#:iter}) {
+        ${0:TARGET}
+    }
+
+snippet switch
+abbr    switch () {}
+    switch (${1:#:var}) {
+    case ${2:#:val}:
+        ${0:TARGET}
+        break;
+    }
+
+snippet case
+options head
+    case ${1:#:val}:
+        ${0:TARGET}
+        break;
+
+snippet break
+options head
+    break;
+
+snippet goto
+options head
+    goto case ${1:#:Val};${0}
+
+snippet default
+options head
+    default:
+        ${0:TARGET}
+        break;
+
+snippet try_without_catch_nor_finally
+alias   try_n
+options head
+    try {
+        ${0:TARGET}
+    }
+
+snippet try_catch
+alias   try
+abbr    try {} catch () {}
+options head
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:Console.WriteLine(e.Message);}
+    }
+
+snippet try_catch_n
+alias   try_cn
+abbr    try {} catch {}
+options head
+    try {
+        ${0:TARGET}
+    } catch {
+        ${1}
+    }
+
+snippet try_catch_finally
+alias   try_cf
+abbr    try {} catch () {} finally {}
+options head
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:Console.WriteLine(e.Message);}
+    } finally {
+        ${4}
+    }
+
+snippet try_finally
+alias   try_f
+abbr    try {} finally {}
+options head
+    try {
+        ${0:TARGET}
+    } finally {
+        ${1}
+    }
+
+snippet try_catch_n_finally
+alias   try_cnf
+abbr    try {} catch {} finally {}
+options head
+    try {
+        ${0:TARGET}
+    } catch {
+        ${1}
+    } finally {
+        ${2}
+    }
+
+snippet catch
+abbr    catch () {}
+    catch (${1:Exception} ${2:e}) {
+        ${0:Console.WriteLine(e.Message);}
+    }
+
+snippet catch_n
+abbr    catch {}
+    catch {
+        ${0}
+    }
+
+snippet finally
+alias   fin
+abbr    finally {}
+    finally {
+        ${0:TARGET}
+    }
+
+snippet throw
+options head
+    throw ${0:#:exception}
+
+snippet lock
+abbr    lock () {}
+options head
+    lock (${1:#:resource}) {
+        ${0:TARGET}
+    }
+
+snippet using_resource
+alias   using resource
+abbr    using () {}
+options head
+    using (${1:#:resource}) {
+        ${0:TARGET}
+    }
+
+snippet checked
+abbr    checked () {}
+options head
+    checked (${1:#:var}) {
+        ${0:TARGET}
+    }
+
+snippet unchecked
+abbr    unchecked () {}
+options head
+    unchecked (${1:#:var}) {
+        ${0:TARGET}
+    }
+
+snippet unsafe
+abbr    unsafe {}
+options head
+    unsafe {
+        ${0:TARGET}
+    }
+
+snippet fixed
+abbr    fixed () {}
+options head
+    fixed (${1:#:type}* ${2:#:var} = ${3:#:adress}) {
+        ${0:TARGET}
+    }
+
+snippet using_import
+alias   import
+options head
+    using ${1:#:path};${0}
+
+snippet using_typedef
+alias   typedef
+options head
+    using ${1:Name} = ${2:Type};${0}
+
+
+# Import Path
+snippet s.l
+    System.Linq
+
+snippet s.c.g
+    System.Collections.Generic
+
+snippet s.t
+    System.Text
+
+snippet s.i
+    System.IO
+
+snippet s.d
+    System.Diagnostics
+
+snippet s.r.c
+    System.Runtie.CompilerServices
+
+snippet s.w.f
+    System.Windows.Forms
+
+
+# Attribute
+snippet serializable
+alias   serial
+options head
+    [SerializableAttribute]
+
+snippet conditional
+alias   cond
+options head
+    [Conditional("${1:#:SYMBOL}")]${0}
+
+snippet obsolete
+alias   obs dep deprecated
+options head
+    [Obsolete("${1:#:description}")]${0}
+
+snippet asm_internals_visible_to
+alias   internals asmInternalsVisibleTo friend_attr
+options head
+    [assembly: InternalsVisibleTo("${1:#:FriendName}")]${0}
+
+
+#XML Document
+snippet c
+abbr    <c></c>
+    <c>${1:#:text}</c>
+
+snippet code
+abbr    <code></code>
+    <code>${0:#:content}</code>
+
+snippet example
+abbr    <example></example>
+    <example>${0:#:description}</example>
+
+snippet exception
+abbr    <exception cref=""></exception>
+    <exception cref="${1:#:class}">${2:#:description}</exception>
+
+snippet include
+abbr    <include file='' path=''/>
+    <include file='${1:#:filename}' path='${2:#:tabpath}[@${3:#:name}="${4:#:id}"]'/>
+
+snippet param
+abbr    <param name=""></param>
+    <param name="${1:#:name}">${0:#:description}</param>
+
+snippet paramref
+abbr    <paramref name=""/>
+    <paramref name="${1:#:name}"/>
+
+snippet returns
+abbr    <returns></returns>
+    <returns>${0:#:description}</returns>
+
+snippet remarks
+abbr    <remarks></remarks>
+    <remarks>${0:#:description}</remarks>
+
+snippet see
+abbr    <see cref=""/>
+    <see cref="${1:#:member}"/>
+
+snippet seealso
+abbr    <seealso cref=""/>
+    <seealso cref="${1:#:member}"/>}
+
+snippet summary
+abbr    <summary></summary>
+    <summary>${0:#:description}</summary>
+
+snippet typeparam
+abbr    <typeparam name=""></typeparam>
+    <typeparam name="${1:#:name}">${0:#:description}</typeparam>
+
+snippet typeparamref
+abbr    <typeparamref name=""/>
+    <typeparamref name="${1:#:name}"/>
+
+snippet value
+abbr    <value></value>
+    <value>${0:#:description}</value>
+
+
+# Other
+snippet main
+options head
+    public static void Main(string[] args) {
+        ${0}
+    }
+
+snippet writeline
+alias   println p
+options head
+    Console.WriteLine(${1:#:message});${0}
+
+snippet write
+alias   print
+options head
+    Console.Write(${1:#:message});${0}
+
+snippet helloworld
+options head
+    public class ${1:Hello} {
+        public static void Main(string[] args) {
+            System.Console.WriteLine("Hello, world!");
+        }
+    }
+
+
+# NUnit
+snippet testclass
+alias   tc
+options head
+    [TestFixture]
+    public class ${1}Test {
+        ${0:TARGET}
+    }
+
+snippet testsetup
+alias   tsu
+options head
+    [SetUp]
+    public void SetUp() {
+        ${0:TARGET}
+    }
+
+snippet testteardown
+alias   ttd
+options head
+    [TearDown]
+    public void TearDown() {
+        ${0:TARGET}
+    }
+
+snippet test
+options head
+    [Test]
+    public void ${1:#:Name}Test() {
+        ${0:TARGET}
+    }
+
+snippet category
+options head
+    [Category("${0:#:category}")]
