@@ -1,0 +1,32 @@
+Include: include/setup.vader
+
+Execute (asciidoc):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#asciidoc#asciidoc().errorformat
+  new
+  file t.asciidoc
+
+  lgetexpr
+  \ "asciidoc: WARNING: t.asciidoc: line 1: include file not found: /etc/asciidoc/asciidoc.css\n".
+  \ 'asciidoc: ERROR: t.asciidoc: line 2: only book doctypes can contain level 0 sections'
+
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 1,
+  \  'bufnr': bufnr('%'),
+  \  'col': 0,
+  \  'valid': 1,
+  \  'vcol': 0,
+  \  'nr': -1,
+  \  'type': 'W',
+  \  'pattern': '',
+  \  'text': 'include file not found: /etc/asciidoc/asciidoc.css'},
+  \ {'lnum': 2,
+  \  'bufnr': bufnr('%'),
+  \  'col': 0,
+  \  'valid': 1,
+  \  'vcol': 0,
+  \  'nr': -1,
+  \  'type': 'E',
+  \  'pattern': '',
+  \  'text': 'only book doctypes can contain level 0 sections'}]
+  bwipe

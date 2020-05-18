@@ -1,0 +1,53 @@
+Include: include/setup.vader
+
+Execute (pulp parses success message):
+  new
+  file src/Main.purs
+  let output = [
+    \ '* Building project in /home/test/purescript/',
+    \ '{"warnings":[],"errors":[]}',
+    \ '* Build successful.',
+    \ ]
+  let result = neomake#makers#ft#purescript#pulp().process_output({'output': output})
+  AssertEqual [], result
+  bwipe
+
+Execute (pulp parses error message):
+  new
+  file src/Main.purs
+  let output = [
+    \ '* Building project in /home/test/purescript/',
+    \ '{"warnings":[],"errors":[{"position":{"startLine":4,"startColumn":1,"endLine":4,"endColumn":14},"message":"  Type variable a is undefined.\n\nwhile checking the kind of a -> a\nin value declaration foo\n","errorCode":"UndefinedTypeVariable","errorLink":"https://github.com/purescript/documentation/blob/master/errors/UndefinedTypeVariable.md","filename":"src/Other.purs","moduleName":"Other","suggestion":null}]}',
+    \ 'Compiling Other',
+    \ '* ERROR: Subcommand terminated with exit code 1',
+    \ ]
+  let result = neomake#makers#ft#purescript#pulp().process_output({'output': output})
+  AssertEqual [{
+    \ 'lnum': 4,
+    \ 'filename': 'src/Other.purs',
+    \ 'col': 1,
+    \ 'length': 13,
+    \ 'type': 'E',
+    \ 'text': "UndefinedTypeVariable :   Type variable a is undefined.\n\nwhile checking the kind of a -> a\nin value declaration foo\n",
+    \ }], result
+  bwipe
+
+Execute (pulp parses warning message):
+  new
+  file src/Main.purs
+  let output = [
+  \ '* Building project in /home/test/purescript',
+  \ '{"warnings":[{"position":{"startLine":3,"startColumn":1,"endLine":3,"endColumn":40},"message":"  The import of module Prelude contains the following unused references:\n\n    unit\n    pure\n    bind\n\n  It could be replaced with:\n\n    import Prelude (Unit)\n","errorCode":"UnusedExplicitImport","errorLink":"https://github.com/purescript/documentation/blob/master/errors/UnusedExplicitImport.md","filename":"src/Main.purs","moduleName":"Main","suggestion":{"replacement":"import Prelude (Unit)\n","replaceRange":{"startLine":3,"startColumn":1,"endLine":3,"endColumn":40}}}],"errors":[]}',
+  \ 'Compiling Main',
+  \ '* Build successful',
+  \ ]
+  let result = neomake#makers#ft#purescript#pulp().process_output({'output': output})
+  AssertEqual [{
+    \ 'lnum': 3,
+    \ 'filename': 'src/Main.purs',
+    \ 'col': 1,
+    \ 'type': 'W',
+    \ 'length': 39,
+    \ 'text': "UnusedExplicitImport :   The import of module Prelude contains the following unused references:\n\n    unit\n    pure\n    bind\n\n  It could be replaced with:\n\n    import Prelude (Unit)\n",
+    \ }], result
+  bwipe

@@ -1,0 +1,25 @@
+Include: ../include/setup.vader
+
+Execute (Resets ignore_automake_events always):
+  Save g:neomake_open_list
+  let g:neomake_open_list = 2
+  new
+
+  augroup neomake_tests
+    autocmd BufWritePost * CallNeomake 1, [g:error_maker]
+  augroup END
+
+  function! neomake#compat#save_prev_windows() abort
+    throw 'some error'
+  endfunction
+
+  doautocmd BufWritePost
+  AssertNeomakeMessage 'Error during output processing for error-maker: some error.', 0
+  doautocmd BufWritePost
+  AssertNeomakeMessage 'Error during output processing for error-maker: some error.', 0
+  bwipe
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/compat.vim
+  endif

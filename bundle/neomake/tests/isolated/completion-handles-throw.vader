@@ -1,0 +1,27 @@
+Include: ../include/setup.vader
+
+Execute (neomake#cmd#complete_makers: handles error from maker):
+  new
+  noautocmd set filetype=neomake_tests
+
+  " Smoke test.
+  let completions = neomake#cmd#complete_makers('tru', 'Neomake tru')
+  AssertEqual completions, ['true']
+
+  let s:called = 0
+  function! neomake#makers#ft#neomake_tests#true() abort
+      let s:called = 1
+      throw 'Neomake: some error'
+  endfunction
+
+  let completions = neomake#cmd#complete_makers('tru', 'Neomake tru')
+  AssertEqual completions, []
+  AssertNeomakeMessage 'Could not get maker true: some error.', 3
+
+  AssertEqual s:called, 1
+  bwipe
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/makers/ft/neomake_tests.vim
+  endif
