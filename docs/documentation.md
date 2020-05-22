@@ -195,7 +195,7 @@ add following to your custom configuration file.
 ```
 
 SpaceVim will automatically check for a new version
-every startup. You have restart Vim after updating.
+every startup. You have to restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
