@@ -74,7 +74,3 @@ spacevim-cn+unsubscribe@googlegroups.com
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
 - <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
 
-以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
-
-- <i class="fab fa-qq"></i> [`718087282` SpaceVim 用户](https://jq.qq.com/?_wv=1027&k=5Z6H2so)
-
