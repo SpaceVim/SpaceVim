@@ -93,7 +93,9 @@ SpaceVim 所有部分采用 GPLv3 许可。
 
 ### 公约
 
-SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名，按键绑定的定义以及文档的写法。请阅读下面的公约：[conventions](https://spacevim.org/cn/conventions/) 在您进行贡献前，请确认您已经了解了以上公约的内容。
+提交代码时，需要遵循一些约定，主要包括函数的命名格式、文档的写法、
+快捷键定义的规范等，具体内容可以查阅[《格式规范》](../conventions/),
+在您进行贡献前，请确认您已经了解了以上公约的内容。
 
 ### 拉取请求
 
@@ -107,6 +109,7 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 - `Remove:` 移除原先支持的某些特性
 - `Doc:` 更新帮助文档
 - `Website:` 更新网站内容
+- `Type:` 更新错别字
 
 示例如下：
 
@@ -127,7 +130,6 @@ git clone ${YOUR_OWN_REPOSITORY_URL}
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 ```
 
-- fetch upstream and rebase on top of upstream master
 - 在上游的主分支中取回并且重新定位上游
 
 ```sh
