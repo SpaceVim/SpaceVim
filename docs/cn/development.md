@@ -11,6 +11,7 @@ lang: zh
 - [寻求帮助](#寻求帮助)
 - [反馈问题](#反馈问题)
 - [贡献代码](#贡献代码)
+  - [项目代码结构](#项目代码结构)
   - [证书](#证书)
   - [公约](#公约)
   - [拉取请求](#拉取请求)
@@ -61,6 +62,25 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 ## 贡献代码
 
 我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。在任何情况下，都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/SpaceVim)进行提问和贡献代码。
+
+### 项目代码结构
+
+
+```txt
+├─ .ci/                           自动构建脚本
+├─ .github/                       issue/PR templates
+├─ .SpaceVim.d/                   开发者配置
+├─ autoload/SpaceVim.vim          核心逻辑文件
+├─ autoload/SpaceVim/api/         公共函数（API）
+├─ autoload/SpaceVim/layers/      可用模块
+├─ autoload/SpaceVim/plugins/     内置插件
+├─ autoload/SpaceVim/mapping/     快捷键
+├─ doc/                           帮助文档
+├─ docs/                          网站源码
+├─ wiki/                          维基源码
+├─ bin/                           可执行命令
+└─ test/                          测试文件
+```
 
 ### 证书
 
@@ -167,7 +187,6 @@ Further paragraphs come after blank lines.
 
 首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
 
-Layers with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 未关联配置的模块将会被拒绝。举个例子一个只有包和钩子的模块，就能被很简单地替换为变量 `g:spacevim_custom_plugins`。
 
 #### 文件头
@@ -261,9 +280,10 @@ endfunction
 
 按键映射是 SpaceVim 中非常重要的一部分。
 
-如果你只想要拥有自己的按键映射的话，你可以在 `bootstrap function` 文件中进行修改。
+如果你只想要拥有自己的按键映射的话，你可以在启动函数文件中进行新增。
 
-如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
+如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，
+把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
 
 始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。它应该是 `layername.md` 和 [documentation.md](https://spacevim.org/cn/documentation)。
 
