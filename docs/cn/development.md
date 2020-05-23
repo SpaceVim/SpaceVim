@@ -25,7 +25,7 @@ lang: zh
     - [改进现有的模块](#改进现有的模块)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
-    - [Contributing a banner](#contributing-a-banner)
+    - [欢迎界面LOGO](#欢迎界面logo)
 - [基于 SpaceVim 开发](#基于-spacevim-开发)
 - [更新日志](#更新日志)
 
@@ -309,13 +309,10 @@ endfunction
 上面所有的按键绑定都是默认的建议，但是它同样是基于自身的语言层的。
 
 
-#### Contributing a banner
+#### 欢迎界面LOGO
 
-The startup banner is by default the SpaceVim logo but there are also ASCII banners available in the `core/banner` layer.
-
-If you have some ASCII skills you can submit your artwork!
-
-You are free to choose a reasonable height size but the width size should be around 75 characters.
+启动界面的LOGO默认是SpaceVim内置的一些ASCII码绘制的图形，存储于 `core/banner` 模块，
+LOGO需要选择合适的高度，宽度限定75个字符宽度以内。
 
 ## 基于 SpaceVim 开发
 
