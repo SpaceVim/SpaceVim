@@ -312,7 +312,7 @@ endfunction
 #### 欢迎界面LOGO
 
 启动界面的LOGO默认是SpaceVim内置的一些ASCII码绘制的图形，存储于 `core/banner` 模块，
-LOGO需要选择合适的高度，宽度限定75个字符宽度以内。
+LOGO需要选择合适的高度，宽度限定90个字符宽度以内，高度限定在10以内。
 
 ## 基于 SpaceVim 开发
 
