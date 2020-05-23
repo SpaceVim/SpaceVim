@@ -21,14 +21,22 @@ function! SpaceVim#default#options() abort
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
     set guioptions-=e " Hide tab
-    if s:SYSTEM.isWindows
-      " please install the font in 'Dotfiles\font'
-      set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif s:SYSTEM.isOSX
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-    else
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
-    endif
+    try
+      if s:SYSTEM.isWindows
+        " please install the font in 'Dotfiles\font'
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
+      elseif s:SYSTEM.isOSX
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+      else
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+      endif
+    catch /^Vim\%((\a\+)\)\=:E518/
+      if has('gui_vimr')
+        " VimR has disabled support for guifont
+      else
+        throw v:exception
+      endif
+    endtry
   endif
 
   " indent use backspace delete indent, eol use backspace delete line at
