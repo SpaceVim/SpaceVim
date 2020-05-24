@@ -98,15 +98,68 @@ function! s:self.warp(argv, opts) abort
   return obj
 endfunction
 
+" @bug stdout data broken into two lines
+function! s:self.warp_nvim(argv, opts) abort
+  let obj = {}
+  let obj._argv = a:argv
+  let obj._opts = a:opts
+  let obj._eof = ''
+  function! obj.on_stdout(id, date, event) abort
+    if a:date[-1] == ''
+      if has_key(self._opts, 'on_stdout')
+        call self._opts.on_stdout(a:id, self._eof . a:date[0] + a:data[1:], 'stdout')
+      endif
+      let self._eof = ''
+    else
+      if has_key(self._opts, 'on_stdout')
+        call self._opts.on_stdout(a:id, self._eof . a:date[0] + a:data[1:-2], 'stdout')
+      endif
+      let self._eof = a:date[-1]
+    endif
+  endfunction
+  function! obj.on_stderr(id, date, event) abort
+    if a:date[-1] == ''
+      if has_key(self._opts, 'on_stderr')
+        call self._opts.on_stderr(a:id, self._eof . a:date[0] + a:data[1:], 'stderr')
+      endif
+      let self._eof = ''
+    else
+      if has_key(self._opts, 'on_stderr')
+        call self._opts.on_stderr(a:id, self._eof . a:date[0] + a:data[1:-2], 'stderr')
+      endif
+      let self._eof = a:date[-1]
+    endif
+  endfunction
+  function! obj.on_exit(id, date, event) abort
+    if has_key(self._opts, 'on_exit')
+      call self._opts.on_exit(a:id, a:date, 'exit')
+    endif
+  endfunction
+  let obj = {
+        \ 'argv': a:argv,
+        \ 'opts': {
+        \ 'on_stdout': obj.on_stdout,
+        \ 'on_stderr': obj.on_stderr,
+        \ 'on_exit': obj.on_exit,
+        \ }
+        \ }
+  if has_key(a:opts, 'cwd')
+    call extend(obj.opts, {'cwd' : a:opts.cwd})
+  endif
+  return obj
+endfunction
+
 " start a job, and return the job_id.
 function! s:self.start(argv, ...) abort
   if self.nvim_job
     try
-    if len(a:000) > 0
-      let job = jobstart(a:argv, a:1)
-    else
-      let job = jobstart(a:argv)
-    endif
+      if len(a:000) > 0
+        let opts = a:1
+      else
+        let opts = {}
+      endif
+      let wrapped = self.warp_nvim(a:argv, opts)
+      let job = jobstart(wrapped.argv, wrapped.opts)
     catch /^Vim\%((\a\+)\)\=:E903/
       return -1
     endtry
@@ -247,7 +300,7 @@ function! s:self.status(id) abort
       return job_status(get(self.jobs, a:id))
     endif
   else
-      call self.warn('[job API] Failed to get job status: ' . a:id)
+    call self.warn('[job API] Failed to get job status: ' . a:id)
   endif
 endfunction
 
@@ -274,7 +327,7 @@ endfunction
 
 function! s:self.chanclose(id, type) abort
   if self.nvim_job
-      call chanclose(a:id, a:type)
+    call chanclose(a:id, a:type)
   elseif self.vim_job
     if has_key(self.jobs, a:id) && a:type ==# 'stdin'
       call ch_close_in(get(self.jobs, a:id))
