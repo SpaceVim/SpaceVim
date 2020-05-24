@@ -90,7 +90,7 @@ function! SpaceVim#layers#git#config() abort
     autocmd FileType diff nnoremap <buffer><silent> q :call SpaceVim#mapping#close_current_buffer()<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
     if SpaceVim#layers#isLoaded('core#statusline')
-        autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
@@ -110,6 +110,7 @@ function! SpaceVim#layers#git#config() abort
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', l:stage_hunk_key], '<Plug>(GitGutterStageHunk)', 'stage-current-hunk', 0)
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>(GitGutterUndoHunk)', 'undo-cursor-hunk', 0)
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>(GitGutterPreviewHunk)', 'preview-cursor-hunk', 0)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'm'], 'Git branch', 'branch-manager', 1)
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort
