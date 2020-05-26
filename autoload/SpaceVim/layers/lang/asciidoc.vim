@@ -27,7 +27,17 @@ endf
 
 
 function! SpaceVim#layers#lang#asciidoc#config() abort
+  call SpaceVim#mapping#space#regesit_lang_mappings('asciidoc', function('s:language_specified_mappings'))
 endfunction
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','h'],
+        \ 'call call('
+        \ . string(function('s:compile_to_html')) . ', [])',
+        \ 'compile-to-html', 1)
+endfunction
+
+
+" https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
 
 
 " https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
