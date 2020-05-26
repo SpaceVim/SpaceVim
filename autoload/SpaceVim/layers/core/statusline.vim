@@ -88,6 +88,9 @@ let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
 endif
+if &spell
+  call add(s:loaded_modes, 'spell-checking')
+endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
