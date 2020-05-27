@@ -457,7 +457,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t n`    | toggle line numbers                                      |
 | `SPC t b`    | toggle background                                        |
 | `SPC t c`    | toggle conceal                                           |
-| `SPC t p`    | toggle paste mode                                           |
+| `SPC t p`    | toggle paste mode                                        |
 | `SPC t t`    | open tabs manager                                        |
 | `SPC T ~`    | display ~ in the fringe on empty lines                   |
 | `SPC T F`    | toggle frame fullscreen                                  |
@@ -2048,22 +2048,24 @@ Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a fil
 | [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)         |
 | [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)               |
 | [2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000)  | [nikolaussucher](https://github.com/nikolaussucher) |
+| [3000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/3000)  | [nahuef](https://github.com/nahuef)                 |
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                             |
-| ----------------- | --------------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry)     |
-| 100th stargazers  | [robertofarrell](https://github.com/robertofarrell) |
-| 1000th stargazers | [linsongze](https://github.com/linsongze)           |
-| 2000th stargazers | [fated](https://github.com/fated)                   |
-| 3000th stargazers | [urso](https://github.com/urso)                     |
-| 4000th stargazers | [wanghe4096](https://github.com/wanghe4096)         |
-| 5000th stargazers | [xxxxha](https://github.com/xxxxha)                 |
-| 6000th stargazers | [corenel](https://github.com/corenel)               |
-| 7000th stargazers | [mohab1989](https://github.com/mohab1989)           |
-| 8000th stargazers | [chocopowwwa](https://github.com/chocopowwwa)       |
-| 9000th stargazers | [mffathurr](https://github.com/mffathurr)           |
+| Achievements       | Account                                             |
+| ------------------ | --------------------------------------------------- |
+| First stargazers   | [monkeydterry](https://github.com/monkeydterry)     |
+| 100th stargazers   | [robertofarrell](https://github.com/robertofarrell) |
+| 1000th stargazers  | [mohebifar](https://github.com/mohebifar)           |
+| 2000th stargazers  | [myakove](https://github.com/myakove)               |
+| 3000th stargazers  | [adrian-spataru](https://github.com/adrian-spataru) |
+| 4000th stargazers  | [seungdols](https://github.com/seungdols)           |
+| 5000th stargazers  | [shiningdracon](https://github.com/shiningdracon)   |
+| 6000th stargazers  | [SummerMagic](https://github.com/SummerMagic)       |
+| 7000th stargazers  | [Murderlon](https://github.com/Murderlon)           |
+| 8000th stargazers  | [dbdr](https://github.com/dbdr)                     |
+| 9000th stargazers  | [Ruyka](https://github.com/Ruyka)                   |
+| 10000th stargazers | [royge](https://github.com/royge)                   |
 
 <!-- SpaceVim Achievements end -->
 
