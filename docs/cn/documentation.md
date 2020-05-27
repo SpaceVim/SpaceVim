@@ -445,6 +445,8 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t i`   | 切换显示当前对齐(TODO)                    |
 | `SPC t n`   | 显示/隐藏行号                             |
 | `SPC t b`   | 切换背景色                                |
+| `SPC t c`    | 切换 conceal 模式                                           |
+| `SPC t p`   | 切换 paste 模式                           |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
 | `SPC T F`   | 切换全屏(TODO)                            |
@@ -1717,11 +1719,10 @@ endfunction
 通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统，
 支持项目局部配置文件(`.SpaceVim.d/tasks.toml`)和全局配置文件(`~/.SpaceVim.d/tasks.toml`)，项目局部配置文件具有更高的优先权：
 
-| 快捷键 | 功能描述             |
-| ------------ | ----------------------------- |
-| `SPC p t e`  | 编辑任务配置文件 |
-| `SPC p t r`  | 选定任务并执行            |
-
+| 快捷键      | 功能描述         |
+| ----------- | ---------------- |
+| `SPC p t e` | 编辑任务配置文件 |
+| `SPC p t r` | 选定任务并执行   |
 
 #### 任务自动识别
 
@@ -1737,11 +1738,9 @@ SpaceVim 目前支持自动识别以下构建系统的任务：npm。
 任务提供源可以自动检测并新建任务。例如，一个任务提供源可以自动检测是否存在项目构建文件，比如：`package.json`，
 如果存在则根据其内容创建 npm 的构建任务。
 
-
 在 SpaceVim 里，如果需要新建任务提供源，需要使用启动函数，任务提供源是一个 Vim 函数，该函数返回一系列任务对象。
 
 以下为一个简单的示例：
-
 
 ```vim
 function! s:make_tasks() abort
@@ -1774,7 +1773,6 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
 将以上内容加入启动函数，在 SpceVim 仓库内按下 `SPC p t r` 快捷键，将会展示如下任务：
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
-
 
 #### 自定义任务
 
@@ -2007,6 +2005,5 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 使用命令 `svc` 在一个已存在的 Vim 服务器上打开文件，使用命令 `nsvc` 在一个已存在的 Neovim 服务器上打开文件。
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
-
 
 <!-- vim:set nowrap cole=0: -->

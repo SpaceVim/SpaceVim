@@ -110,6 +110,9 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
         \ . string(s:_function('s:toggle_spell_check')) . ', [])',
         \ 'toggle-spell-checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
+        \ . string(s:_function('s:toggle_paste')) . ', [])',
+        \ 'toggle-paste-mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
@@ -274,6 +277,21 @@ function! s:toggle_spell_check() abort
   else
     echo 'spell-checking disabled.'
   endif
+endfunction
+
+function! s:toggle_paste() abort
+  if &l:paste
+    let &l:paste = 0
+  else
+    let &l:paste = 1
+  endif
+  call SpaceVim#layers#core#statusline#toggle_mode('paste-mode')
+  if &l:paste == 1
+    echo 'paste-mode enabled.'
+  else
+    echo 'paste-mode disabled.'
+  endif
+  
 endfunction
 
 let s:whitespace_enable = 0

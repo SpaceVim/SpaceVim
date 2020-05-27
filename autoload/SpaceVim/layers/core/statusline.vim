@@ -69,6 +69,11 @@ let s:modes = {
       \ 'icon_asc' : 'S',
       \ 'desc' : 'spell-checking mode',
       \ },
+      \ 'paste-mode' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+      \ 'icon_asc' : 'p',
+      \ 'desc' : 'paste mode',
+      \ },
       \ 'whitespace' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('w'),
       \ 'icon_asc' : 'w',
