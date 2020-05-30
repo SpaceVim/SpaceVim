@@ -49,7 +49,11 @@
 
 
 
-let s:clang_executable = 'clang'
+if exists('s:clang_executable')
+  finish
+else
+  let s:clang_executable = 'clang'
+endif
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
 
@@ -129,11 +133,15 @@ function! SpaceVim#layers#lang#c#config() abort
   augroup SpaceVim_lang_c
     autocmd!
     if s:enable_clang_syntax
-      if has('nvim') && SpaceVim#util#haspy3lib('clang')
-        auto FileType c,cpp  ChromaticaStart
-        " else Clamp will start when detect c, cpp file
-      elseif !has('job')
-        " Clighter8 will start when detect c, cpp file
+      if has('nvim')
+        if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+          auto FileType c,cpp  ChromaticaStart
+        else
+          auto FileType c,cpp  ClampStart
+        endif
+      elseif has('job')
+        auto FileType c,cpp  ClStart
+      else
         auto FileType c,cpp  ClighterEnable
       endif
     endif
