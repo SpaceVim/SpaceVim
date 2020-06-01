@@ -26,8 +26,6 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
-let s:SYS = SpaceVim#api#import('system')
-
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
@@ -64,11 +62,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
-    if s:SYS.isWindows
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.cmd'}])
-    else
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': './install.sh'}])
-    endif
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
