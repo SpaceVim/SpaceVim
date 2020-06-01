@@ -62,7 +62,11 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf' : 1,
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
+    if executable('yarn')
       call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
+    else
+      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
+    endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, ['Shougo/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
