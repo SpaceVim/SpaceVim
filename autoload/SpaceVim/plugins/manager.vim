@@ -361,11 +361,6 @@ function! s:on_install_stdout(id, data, event) abort
 endfunction
 " @vimlint(EVL103, 0, a:event)
 
-function! s:lock_revision(repo) abort
-  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
-  call s:VIM_CO.system(cmd)
-endfunction
-
 function! s:on_build_exit(id, data, event) abort
   if a:id == -1
     let id = s:jobpid
@@ -400,9 +395,6 @@ function! s:on_install_exit(id, data, event) abort
   else
     call s:add_to_failed_list(s:pulling_repos[id].name)
     call s:msg_on_install_failed(s:pulling_repos[id].name)
-  endif
-  if get(s:pulling_repos[id], 'rev', '') !=# ''
-    call s:lock_revision(s:pulling_repos[id])
   endif
   if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
     call s:build(s:pulling_repos[id])
@@ -463,10 +455,9 @@ function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
   let url = s:get_uri(a:repo)
+  let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
   if get(a:repo, 'rev', '') !=# ''
-    let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
-  else
-    let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
+    let argv = argv + ['-b', a:repo.rev]
   endif
   if s:JOB.vim_job || s:JOB.nvim_job
     let jobid = s:JOB.start(argv,{
