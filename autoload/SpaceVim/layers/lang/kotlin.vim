@@ -39,7 +39,11 @@
 let s:SYS = SpaceVim#api#import('system')
 
 " Default Options:
-let s:enable_native_support = 0
+if exists('s:enable_native_support')
+  finish
+else
+  let s:enable_native_support = 0
+endif
 
 
 function! SpaceVim#layers#lang#kotlin#plugins() abort
