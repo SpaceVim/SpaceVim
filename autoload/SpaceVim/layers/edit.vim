@@ -15,8 +15,8 @@ let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
         \ ['junegunn/vim-emoji'],
         \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
         \ ['kana/vim-textobj-user'],
