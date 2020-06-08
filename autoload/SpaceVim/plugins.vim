@@ -184,9 +184,7 @@ function! s:install_manager() abort
   endif
 endf
 
-if get(g:,'spacevim_enable_plugins', 1)
-  call s:install_manager()
-endif
+exec 'set runtimepath+=' . g:_spacevim_root_dir . 'bundle/dein.vim/'
 
 function! SpaceVim#plugins#begin(path) abort
   let g:unite_source_menu_menus.AddedPlugins =

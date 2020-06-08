@@ -256,7 +256,6 @@ function! s:toggle_win_fringe() abort
   endif
 endfunction
 
-let g:_spacevim_cursorline_flag = -1
 function! s:toggle_cursorline() abort
   setl cursorline!
   let g:_spacevim_cursorline_flag = g:_spacevim_cursorline_flag * -1
