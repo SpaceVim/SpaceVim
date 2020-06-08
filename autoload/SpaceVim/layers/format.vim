@@ -22,7 +22,7 @@
 
 function! SpaceVim#layers#format#plugins() abort
     return [
-                \ ['neoformat/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
+                \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
                 \ ]
 endfunction
 
