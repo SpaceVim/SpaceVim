@@ -450,7 +450,7 @@ function! s:pull(repo) abort
 
     endif
   else
-    call s:msg_on_start(a:repo.name)
+    call s:msg_on_local(a:repo.name)
   endif
 endfunction
 
