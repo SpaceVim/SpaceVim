@@ -14,7 +14,7 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['scrooloose/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
-    call add(plugins, ['Shougo/vimfiler.vim',{
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vimfiler.vim',{
           \ 'merged' : 0,
           \ 'loadconf' : 1 ,
           \ 'loadconf_before' : 1,
