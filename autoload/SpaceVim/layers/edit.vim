@@ -22,7 +22,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
         \ ['kana/vim-textobj-entire'],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
