@@ -9,7 +9,7 @@
 scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ ['Yggdroot/indentLine', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
