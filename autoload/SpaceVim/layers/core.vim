@@ -39,7 +39,7 @@ function! SpaceVim#layers#core#plugins() abort
   if exists('*matchaddpos')
     call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
   endif
-  call add(plugins, ['gruvbox-community/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, ['tyru/open-browser.vim', {
         \ 'merged' : 0,
         \ 'loadconf' : 1,
