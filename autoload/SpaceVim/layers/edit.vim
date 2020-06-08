@@ -17,8 +17,8 @@ function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
         \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
         \ ['kana/vim-textobj-user'],
         \ ['kana/vim-textobj-indent'],
         \ ['kana/vim-textobj-line'],
