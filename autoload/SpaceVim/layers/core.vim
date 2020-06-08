@@ -20,7 +20,7 @@ function! SpaceVim#layers#core#plugins() abort
           \ 'loadconf_before' : 1,
           \ 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']
           \ }])
-    call add(plugins, ['Shougo/unite.vim',{
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/unite.vim',{
           \ 'merged' : 0,
           \ 'loadconf' : 1
           \ }])
