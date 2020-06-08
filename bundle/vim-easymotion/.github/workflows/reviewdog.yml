@@ -1,0 +1,36 @@
+name: reviewdog
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  vint:
+    name: runner / vint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-vint@v1
+        if: github.event_name == 'pull_request'
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          level: warning
+      - uses: reviewdog/action-vint@v1
+        if: github.event_name != 'pull_request'
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          level: warning
+
+  languagetool:
+    name: runner / languagetool
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-languagetool@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          level: info
