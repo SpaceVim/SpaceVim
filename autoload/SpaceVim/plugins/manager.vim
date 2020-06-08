@@ -425,7 +425,7 @@ endfunction
 function! s:pull(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  if a:repo.type ==# 'git'
+  if !get(a:repo, 'local', 0)
     let argv = ['git', 'pull', '--progress']
     if s:JOB.vim_job || s:JOB.nvim_job
       let jobid = s:JOB.start(argv,{
