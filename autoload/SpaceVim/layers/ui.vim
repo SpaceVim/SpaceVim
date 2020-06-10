@@ -17,9 +17,9 @@ function! SpaceVim#layers#ui#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
   if !SpaceVim#layers#isLoaded('core#statusline')
-    call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
-    call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline-themes',         { 'merged' : 0}])
   endif
 
   return plugins
