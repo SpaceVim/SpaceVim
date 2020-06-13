@@ -64,6 +64,11 @@ endf
 
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
+  " @bug getchar() does not work for <
+  " https://github.com/neovim/neovim/issues/12487
+  if ret ==# "\x80\xfc\<C-b><"
+    return '<'
+  endif
   return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
