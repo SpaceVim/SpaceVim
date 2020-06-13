@@ -1,0 +1,31 @@
+# This config is based on lightline.vim <https://github.com/itchyny/lightline.vim/blob/master/.travis.yml>
+
+language: ruby
+before_install:
+  - curl -f -L "https://raw.githubusercontent.com/vim-airline/vim-airline-themes/master/autoload/airline/themes/simple.vim" -o autoload/airline/themes/simple.vim
+  - curl -f -L "https://raw.githubusercontent.com/vim-airline/vim-airline-themes/master/autoload/airline/themes/molokai.vim" -o autoload/airline/themes/molokai.vim
+  - mkdir colors && curl -f -L 'https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim' -o colors/molokai.vim
+  - (if ! test -d $HOME/vim-$VIM_VERSION/bin; then
+       git clone https://github.com/vim/vim $HOME/vim &&
+       cd $HOME/vim &&
+       git checkout v$VIM_VERSION &&
+       ./configure --prefix=$HOME/vim-$VIM_VERSION &&
+       make &&
+       make install;
+     fi)
+    #rvm:
+    #  - 1.9.3
+cache:
+  directories:
+    - $HOME/vim-$VIM_VERSION
+
+env:
+  - VIM_VERSION=8.2.0000
+  - VIM_VERSION=8.1.0000
+  - VIM_VERSION=8.0.0000
+  - VIM_VERSION=7.4
+
+script:
+  - export PATH=$HOME/vim-$VIM_VERSION/bin:$PATH
+  - cd $TRAVIS_BUILD_DIR
+  - rake ci

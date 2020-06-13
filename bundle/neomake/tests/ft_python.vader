@@ -1,0 +1,434 @@
+Include: include/setup.vader
+
+Execute (python: errorformat):
+  new
+  e tests/fixtures/errors.py
+  call neomake#config#set('b:ft.python.python.exe', 'python3')
+  Neomake python
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 1,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 16,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'unexpected EOF while parsing'}]
+  bwipe
+
+Execute (python: pylama: errorformat):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#python#pylama().errorformat
+  new
+  file file1.py
+  lgetexpr "file1.py:16:1: [C] C901 'load_library' is too complex (13) [mccabe]"
+  AssertEqualQf getloclist(0), [
+    \ {'lnum': 16, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+    \  'nr': -1, 'type': 'C', 'pattern': '',
+    \  'text': 'C901 ''load_library'' is too complex (13) [mccabe]'}]
+
+  let e = getloclist(0)[0]
+  call neomake#makers#ft#python#PylamaEntryProcess(e)
+  AssertEqualQf [e], [{
+  \ 'lnum': 16,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 1,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': 901,
+  \ 'type': 'I',
+  \ 'pattern': '',
+  \ 'text': "C901 'load_library' is too complex (13) [mccabe]"}]
+  bwipe
+
+Execute (python: pylama: cwd):
+  let tempdir = tempname()
+  call mkdir(tempdir)
+
+  new
+  exe 'lcd '.tempdir
+  let maker = neomake#makers#ft#python#pylama()
+  if has_key(maker, 'cwd')
+    " Might happen with e.g. an existing /tmp/setup.cwd..
+    call vader#log(printf('NOTE: got cwd already: %s', maker.cwd))
+  endif
+
+  call mkdir('pylama/subdir', 'p')
+  call writefile([], 'pylama/setup.cfg')
+  lcd pylama/subdir
+  let maker = neomake#makers#ft#python#pylama()
+  AssertEqual maker.cwd, tempdir . neomake#utils#Slash() . 'pylama'
+  bwipe
+
+Execute (python: flake8: errorformat/postprocess: F811):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#python#flake8().errorformat
+
+  new
+  file file1.py
+  norm Iimport os
+  norm oimport os . path as os
+  norm ofrom os import os
+  lgetexpr "file1.py:2:1: F811 redefinition of unused 'os' from line 1"
+
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 2, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \  'nr': 811, 'type': 'F', 'pattern': '',
+  \  'text': "redefinition of unused 'os' from line 1"}]
+
+  let e = getloclist(0)[0]
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqualQf [e], [{
+  \ 'lnum': 2,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 21,
+  \ 'pattern': '',
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'length': 2,
+  \ 'type': 'E',
+  \ 'text': "F811 redefinition of unused 'os' from line 1"}]
+
+  lgetexpr "file1.py:3:1: F811 redefinition of unused 'os' from line 2"
+
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 3, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \  'nr': 811, 'type': 'F', 'pattern': '',
+  \  'text': "redefinition of unused 'os' from line 2"}]
+
+  let e = getloclist(0)[0]
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqualQf [e], [{
+  \ 'lnum': 3,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 16,
+  \ 'pattern': '',
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'length': 2,
+  \ 'type': 'E',
+  \ 'text': "F811 redefinition of unused 'os' from line 2"}]
+  bwipe!
+
+Execute (python: flake8: format of current error msg):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#python#flake8(), [
+  \ 'file1.py:1:1: F811 redefinition of unused ''os'' from line 1',
+  \ ])
+  let maker.name = 'flake8'
+  new
+  file file1.py
+  CallNeomake 1, [maker]
+  AssertEqual line('.'), 1
+  AssertEqual neomake#GetCurrentErrorMsg(),
+  \ 'flake8: F811 redefinition of unused ''os'' from line 1 (E)'
+  bwipe
+
+Execute (flake8: postprocess for F821 in continuous f-strings):
+  new
+  let bufnr = bufnr('%')
+  file t-undefined-in-fstring.py
+  call append(0, [
+  \ 'bar',
+  \ 'BAZ = 1',
+  \ 'foo = (f"prefix {foo}"',
+  \ '       f"prefix {BAZ} {baz} {obj.attr} {f(arg)}")',
+  \ ])
+
+  " Output from flake8:
+  " t-undefined-in-fstring.py:1:1: F821 undefined name 'bar'
+  " t-undefined-in-fstring.py:3:9: F821 undefined name 'baz'
+  " t-undefined-in-fstring.py:3:9: F821 undefined name 'obj'
+  " t-undefined-in-fstring.py:3:9: F821 undefined name 'f'
+  " t-undefined-in-fstring.py:3:11: F821 undefined name 'arg'
+  " t-undefined-in-fstring.py:3:18: F821 undefined name 'foo'
+
+  let e = {'lnum': 1, 'bufnr': bufnr, 'col': 1, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''bar'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [1, 1, 3]
+
+  " Correct for first line in f-string.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 18, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''foo'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [3, 18, 3]
+
+  " Needs adjustment for second line in f-string.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 9, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''baz'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [4, 24, 3]
+
+  " Needs adjustment for second line in f-string, handling objects.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 9, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''obj'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [4, 30, 3]
+
+  " Needs adjustment for second line in f-string, handling func.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 9, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''f'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [4, 41, 1]
+
+  " Needs adjustment for second line in f-string, handling func arg.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 11, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''arg'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col, e.length], [4, 43, 3]
+
+  " Something that cannot be found.
+  let e = {'lnum': 3, 'bufnr': bufnr, 'col': 9, 'valid': 1, 'vcol': 0, 'nr': 821, 'type': 'F', 'pattern': '', 'text': 'F821 undefined name ''cannotbefound'''}
+  call neomake#makers#ft#python#Flake8EntryProcess(e)
+  AssertEqual [e.lnum, e.col], [3, 9]
+  Assert !has_key(e, 'length')
+  bwipe!
+
+Execute (python: flake8: neomake#makers#ft#python#Flake8EntryProcess):
+  let bufnr = bufnr('%')
+  let entry = {'type': 'F', 'nr': 841, 'text': "local variable 'foo' is assigned to but never used", 'lnum': 1, 'col': 1, 'bufnr': bufnr}
+  call neomake#makers#ft#python#Flake8EntryProcess(entry)
+  AssertEqual entry.type, 'W'
+
+  let entry = {'type': 'F', 'nr': 999, 'text': "something", 'lnum': 1, 'col': 1, 'bufnr': bufnr}
+  call neomake#makers#ft#python#Flake8EntryProcess(entry)
+  AssertEqual entry.type, 'E'
+
+  let entry = {'type': 'F', 'nr': 404, 'text': "not found", 'lnum': 1, 'col': 1, 'bufnr': bufnr}
+  call neomake#makers#ft#python#Flake8EntryProcess(entry)
+  AssertEqual entry.type, 'W'
+
+  let entry = {'type': 'F', 'nr': 407, 'text': "no future", 'lnum': 1, 'col': 1, 'bufnr': bufnr}
+  call neomake#makers#ft#python#Flake8EntryProcess(entry)
+  AssertEqual entry.type, 'E'
+
+Execute (python: flake8):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#python#flake8().errorformat
+
+  new
+  file foo/bar.py
+  lgetexpr 'foo/bar.py:90:1: I001 isort found an import in the wrong position'
+  let llist = getloclist(0)
+  let bufnr = bufnr('%')
+  AssertEqualQf llist, [
+  \ {'lnum': 90, 'bufnr': bufnr, 'col': 1, 'valid': 1, 'vcol': 0,
+  \  'nr': 1, 'type': 'I', 'pattern': '',
+  \  'text': 'isort found an import in the wrong position'}]
+  let entry = llist[0]
+  call neomake#makers#ft#python#Flake8EntryProcess(entry)
+  AssertEqualQf [entry], [{'lnum': 90, 'bufnr': bufnr, 'col': 1, 'valid': 1,
+  \ 'vcol': 0, 'nr': -1, 'type': 'I', 'pattern': '',
+  \ 'text': 'I1 isort found an import in the wrong position'}]
+  bwipe
+
+Execute (python: flake8: supports_stdin):
+  new
+  noautocmd setfiletype python
+
+  let b:neomake = {'flake8': {'exe': 'echo', 'errorformat': '%m'}}
+  CallNeomake 1, ['flake8']
+  AssertNeomakeMessage '\vStarting .{-}: echo --format\=default --stdin-display-name '''' -.', 2
+  AssertEqual getloclist(0)[0].text,
+  \ '-1 --format=default --stdin-display-name  -'
+  bwipe
+
+Execute (python: flake8: supports_stdin: changes cwd (non-existing)):
+  new
+  let tempdir = tempname()
+  let fname = tempdir.neomake#utils#Slash().'fname'
+  exe 'file' fname
+  noautocmd setfiletype python
+
+  let b:neomake = {'flake8': {'exe': 'echo', 'errorformat': '%m'}}
+  CallNeomake 1, ['flake8']
+  AssertNeomakeMessage printf('\Vjobinfo.cd(): error when trying to change cwd to %s:', tempdir)
+  AssertNeomakeMessage printf('\vStarting .{-}: echo --format\=default --stdin-display-name %s -.', fname), 2
+  AssertNeomakeMessage printf('cwd: %s.', getcwd())
+  AssertEqual getloclist(0)[0].text,
+  \ printf('-1 --format=default --stdin-display-name %s -', fname)
+  bwipe
+
+Execute (python: flake8: supports_stdin: changes cwd (existing)):
+  new
+  let fname = tempname()
+  let tempdir = fnamemodify(fname, ':h')
+  exe 'file' fname
+  noautocmd setfiletype python
+
+  let b:neomake = {'flake8': {'exe': 'echo', 'errorformat': '%m'}}
+  CallNeomake 1, ['flake8']
+  AssertNeomakeMessage printf('\vStarting .{-}: echo --format\=default --stdin-display-name %s -.', fname), 2
+  AssertNeomakeMessage printf('cwd: %s (changed).', tempdir)
+  AssertEqual getloclist(0)[0].text,
+  \ printf('-1 --format=default --stdin-display-name %s -', fname)
+  bwipe
+
+Execute (python: flake8: supports_stdin: does not change cwd with buffer in subdir):
+  new
+  let cwd = tempname()
+  let fdir = cwd.neomake#utils#Slash().'subdir'
+  call mkdir(fdir, 'p')
+  let fname = fdir.neomake#utils#Slash().'fname'
+  exe 'file' fname
+  exe 'lcd' cwd
+  noautocmd setfiletype python
+
+  let b:neomake = {'flake8': {'exe': 'echo', 'errorformat': '%m'}}
+  CallNeomake 1, ['flake8']
+  AssertNeomakeMessageAbsent '\Verror when trying to change cwd'
+  AssertNeomakeMessage printf('\vStarting .{-}: echo --format\=default --stdin-display-name %s -.',
+  \ fname), 2
+  AssertNeomakeMessage printf('cwd: %s.', cwd)
+  AssertEqual getloclist(0)[0].text,
+  \ printf('-1 --format=default --stdin-display-name %s -', fname)
+  bwipe
+
+Execute (python: pylint):
+  let entry = {'type': 'F', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'E'
+  AssertEqual entry.col, 2
+
+  let entry = {'type': 'E', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'E'
+  AssertEqual entry.col, 2
+
+  let entry = {'type': 'W', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'W'
+  AssertEqual entry.col, 2
+
+  let entry = {'type': 'R', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'W'
+  AssertEqual entry.col, 2
+
+  let entry = {'type': 'C', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'W'
+  AssertEqual entry.col, 2
+
+  let entry = {'type': 'I', 'col': 1}
+  call neomake#makers#ft#python#PylintEntryProcess(entry)
+  AssertEqual entry.type, 'I'
+  AssertEqual entry.col, 2
+
+Execute (python: pylint: filters expected msgs on stderr):
+  let stderr = [
+  \ 'No config file found, using default configuration',
+  \ 'Using config file /Users/liyong/.pylintrc',
+  \ 'Some unexpected error',
+  \ ]
+  let maker = neomake#GetMaker('pylint', 'python')
+  let output = copy(stderr)
+  call maker.filter_output(output, {'source': 'stderr'})
+  AssertEqual output, [
+  \ 'Some unexpected error',
+  \ ]
+  let output = copy(stderr)
+  call maker.filter_output(output, {'source': 'stdout'})
+  AssertEqual output, stderr
+
+Execute (python: pylint: filters Python warnings):
+  let stderr = [
+  \ '/usr/lib/python3.6/inspect.py:79: Warning: gsignal.c:1675: parameter 1 of type ''<invalid>'' for signal "GstBus::sync_message" is not a value type',
+  \ '  return isinstance(object, type)',
+  \ '/usr/lib/python3.6/inspect.py:79: Warning: gsignal.c:1675: parameter 1 of type ''<invalid>'' for signal "GstBus::message" is not a value type',
+  \ '  return isinstance(object, type)',
+  \ 'Some unexpected error',
+  \ '/usr/lib/python3.6/inspect.py:79: Warning: g_param_spec_boxed: assertion ''G_TYPE_IS_BOXED (boxed_type)'' failed',
+  \ '  return isinstance(object, type)',
+  \ '/usr/lib/python3.6/inspect.py:79: Warning: validate_pspec_to_install: assertion ''G_IS_PARAM_SPEC (pspec)'' failed',
+  \ '  return isinstance(object, type)',
+  \ 'Another unexpected error',
+  \ ]
+  let maker = neomake#GetMaker('pylint', 'python')
+  let output = copy(stderr)
+  call maker.filter_output(output, {'source': 'stderr'})
+  AssertEqual output, [
+  \ 'Some unexpected error',
+  \ 'Another unexpected error',
+  \ ]
+  let output = copy(stderr)
+  call maker.filter_output(output, {'source': 'stdout'})
+  AssertEqual output, stderr
+
+Execute (neomake#makers#ft#python#FilterPythonWarnings):
+  let lines = [
+  \ '/usr/lib/python3.6/inspect.py:79: Warning: gsignal.c:1675: parameter 1 of type ''<invalid>'' for signal "GstBus::sync_message" is not a value type',
+  \ 'this is not a source location',
+  \]
+  call neomake#makers#ft#python#FilterPythonWarnings(lines, {'source': 'stderr'})
+  AssertEqual lines, [
+  \ 'this is not a source location',
+  \ ]
+
+Execute (neomake#makers#ft#python#FilterPythonWarnings: FutureWarning):
+  let lines = [
+  \ '/some/.venv 37 with space/lib/python3.7/site-packages/pycodestyle.py:113: FutureWarning: Possible nested set at position 1',
+  \ "  EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')",
+  \ ]
+  call neomake#makers#ft#python#FilterPythonWarnings(lines, {'source': 'stderr'})
+  AssertEqual lines, []
+
+Execute (python: mypy: handles --py2):
+  call g:NeomakeTestsSetPATH('')
+  let base_args = [
+  \ '--show-column-numbers',
+  \ '--show-error-codes',
+  \ '--check-untyped-defs',
+  \ '--ignore-missing-imports'
+  \ ]
+
+  " Defaults to py3.
+  call neomake#makers#ft#python#DetectPythonVersion()
+  let maker = neomake#makers#ft#python#mypy()
+  AssertEqual maker.args, base_args
+  AssertNeomakeMessage '\v^Failed to detect Python version: .*', 0
+
+  " Appends --py2 with Python 2.
+  call g:NeomakeTestsCreateExe('python', ['#!/bin/sh', 'echo Python 2.7.14'])
+  call neomake#makers#ft#python#DetectPythonVersion()
+  let maker = neomake#makers#ft#python#mypy()
+  AssertEqual maker.args, base_args + ['--py2']
+
+  " Does not append --py2 with Python 3.
+  call g:NeomakeTestsCreateExe('python', ['#!/bin/sh', 'echo Python 3.6.4'])
+  call neomake#makers#ft#python#DetectPythonVersion()
+  let maker = neomake#makers#ft#python#mypy()
+  AssertEqual maker.args, base_args
+
+Execute (python: mypy):
+  let maker = neomake#GetMaker('mypy', 'python')
+
+  let base_args = [
+  \ '--show-column-numbers',
+  \ '--show-error-codes',
+  \ '--check-untyped-defs',
+  \ '--ignore-missing-imports'
+  \ ]
+
+  let options = {'file_mode': 1}
+  let bound_maker = neomake#core#instantiate_maker(maker, options, 0)
+  AssertEqual bound_maker.args, ['--follow-imports=silent'] + base_args
+
+  new
+  let b:neomake = {'project_root': 'fake_project_root'}
+  let options = {'file_mode': 0, 'bufnr': bufnr('%')}
+  let bound_maker = neomake#core#instantiate_maker(maker, options, 0)
+  AssertEqual bound_maker.args, base_args + ['fake_project_root']
+
+  let b:neomake = {'project_root': ''}
+  let options = {'file_mode': 0, 'bufnr': bufnr('%')}
+  let bound_maker = neomake#core#instantiate_maker(maker, options, 0)
+  AssertEqual bound_maker.args, base_args + ['.']
+
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  AssertEqual bound_maker.supports_stdin(jobinfo), 0
+  let fname = bound_maker._get_fname_for_buffer(jobinfo)
+  AssertNeomakeMessage '\vUsing tempfile for unnamed buffer: "(.*)".', 3
+  let tmpfile = g:neomake_test_matchlist[1]
+  AssertEqual fname, tmpfile
+
+  bwipe

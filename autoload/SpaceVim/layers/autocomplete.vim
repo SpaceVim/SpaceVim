@@ -28,7 +28,7 @@
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
-        \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
         \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],

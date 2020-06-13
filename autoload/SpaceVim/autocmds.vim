@@ -70,6 +70,7 @@ function! SpaceVim#autocmds#init() abort
   augroup END
 endfunction
 
+let g:_spacevim_cursorline_flag = -1
 function! s:enable_cursorline() abort
   if g:_spacevim_cursorline_flag == -1
     setl cursorline

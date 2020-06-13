@@ -1,0 +1,92 @@
+snippet		new_project
+options		head
+	project(${1:project_name})
+	
+	set(${2:PROJECT}_VERSION_MAJOR 0)
+	set($2_VERSION_MINOR 0)
+	set($2_VERSION_TEENY 1)
+	set(PACKAGE_VERSION "${$2_VERSION_MAJOR}.${$2_VERSION_MINOR}.${$2_VERSION_TEENY}")
+	
+	cmake_minimum_required(VERSION ${3:2.8})
+	
+	${0}
+
+snippet		if
+abbr		if() endif()
+options		head
+	if(${1:#:condition})
+		${0}
+	endif()
+
+snippet		if_else
+abbr		if() else() endif()
+options		head
+	if(${1:#:condition})
+		${2}
+	else()
+		${3}
+	endif()
+
+snippet		foreach
+abbr		foreach() endforeach()
+options		head
+	foreach(${1:item} ${2:items})
+		${3}
+	endforeach($1)
+
+snippet		macro
+abbr		macro() endmacro()
+options		head
+	macro(${1:name} ${2:args})
+		${3}
+	endmacro($1)
+
+snippet		function
+abbr		function() endfunction()
+options		head
+	function(${1:name} ${2:args})
+		${3}
+	endfunction($1)
+
+snippet		message
+abbr		message("...")
+options		head
+	message("${1}")
+
+snippet		status_message
+abbr		message(STATUS "...")
+options		head
+	message(STATUS "${1}")
+
+snippet		warning_message
+abbr		message(WARNING "...")
+options		head
+	message(WARNING "${1}")
+
+snippet		author_warning_message
+abbr		message(AUTHOR_WARNING "...")
+options		head
+	message(AUTHOR_WARNING "${1}")
+
+snippet		send_error_message
+abbr		message(SEND_ERROR "...")
+options		head
+	message(SEND_ERROR "${1}")
+
+snippet		fatal_error_message
+abbr		message(FATAL_ERROR "...")
+options		head
+	message(FATAL_ERROR "${1}")
+
+snippet		while
+abbr		while() endwhile()
+options		head
+	while(${1:#:condition})
+		${2}
+	endwhile()
+
+snippet		file_GLOBE_RECURSE
+abbr		file(GLOB_RECURSE ...)
+options		head
+	file(GLOB_RECURSE ${1:#:var} ${2:#:glob_paths})
+

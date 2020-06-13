@@ -1,0 +1,266 @@
+snippet class
+    class ${1} ${2:#:extends_or_implements}{
+        ${0:TARGET}
+    }
+
+snippet interface
+    interface ${1} ${2:#:extends}{
+        ${0:TARGET}
+    }
+
+snippet method
+    ${1:void} ${2:#:method}(${3}) ${4:throws} {
+        ${0:TARGET}
+    }
+
+snippet enum
+abbr enum {}
+    enum ${1:#:name} {
+        ${0:TARGET}
+    }
+
+snippet set
+    public void set${1:Name}(${2:String} ${3:name}) {
+    this.$3 = $3;
+    }${0:TARGET}
+
+snippet get
+    public ${1:String} get${2:Name}() {
+    return $2;
+    }${0:TARGET}
+
+snippet setget
+    public void set${1:Name}(${2:String} ${3:name}) {
+    this.$3 = $3;
+    }
+    public $2 get$1() {
+    return $1;
+    }${0:TARGET}
+
+snippet var
+    ${1:#:type} ${2:#:var}${3};
+
+snippet const
+    static public final ${1:#:type} ${2:#:var} = ${3};${4}
+
+snippet const_string
+    static public final String ${1:var} = "${2}";${4}
+
+snippet final
+    public final ${1:#:type} ${2:#:var} = ${3};
+
+snippet assert
+    assert ${1:#:test} : ${2:#:Failure message};${3}
+
+snippet if
+    if (${1}) {
+        ${2:TARGET}
+    }
+
+snippet else
+    else {
+        ${1:TARGET}
+    }
+
+snippet elif
+alias elseif
+    else if (${1}) {
+        ${2:TARGET}
+    }
+
+snippet while
+    while (${1}) {
+        ${2:TARGET}
+    }
+
+snippet for
+    for (${1}; ${2}; ${3}) {
+        ${4:TARGET}
+    }
+
+snippet foreach
+alias   fore
+    for (${1} : ${2}) {
+        ${3:TARGET}
+    }
+
+snippet switch
+    switch (${1}) {
+        ${2:TARGET}
+    }
+
+snippet case
+    case ${1}:
+        ${2:TARGET}
+    ${0}
+
+snippet br
+    break;
+
+snippet default
+alias   de
+    default:
+        ${0}
+
+snippet try
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:e.printStackTrace();}
+    }
+
+snippet try_resources
+    try (${1:#:Resources}) {
+        ${0:TARGET}
+    } catch (${2:Exception} ${3:e}) {
+        ${4:e.printStackTrace();}
+    }
+
+snippet try_finally
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:e.printStackTrace();}
+    } finally {
+        ${4}
+    }
+
+snippet catch
+    catch (${1:Exception} ${2:e}) {
+        ${0:e.printStackTrace();}
+    }
+
+snippet finally
+    finally {
+        ${0:TARGET}
+    }
+
+snippet th
+options word
+    throw ${0}
+
+snippet sy
+options word
+    synchronized
+
+snippet testclass
+alias   tc
+options head
+    public class ${1} extends ${2:TestCase} {
+        ${0:TARGET}
+    }
+
+snippet test
+options head
+    public void test${1:#:Name}() throws Exception {
+        ${0:TARGET}
+    }
+
+snippet import
+alias   imt
+    import ${1};
+    ${0}
+
+snippet j.u
+    java.util.
+
+snippet j.i
+    java.io.
+
+snippet j.b
+    java.beans.
+
+snippet j.n
+    java.net
+
+snippet j.m
+    java.math.
+
+snippet main
+    class `expand('%:p:t:r')` {
+        public static void main(String args[]) {
+            ${0:#:body}
+        }
+    }
+
+
+snippet println
+options word
+    System.out.println(${1});
+
+snippet print
+options word
+    System.out.print(${1});
+
+snippet format
+options word
+    System.out.format(${1});
+
+#javadoc
+snippet comment
+    /**
+     * ${0:TARGET}
+     */
+
+snippet author
+    @author ${0:$TM_FULLNAME}
+
+snippet {code
+    {@code ${0}
+
+snippet deprecated
+    @deprecated ${0:#:description}
+
+snippet {docRoot
+    {@docRoot
+
+snippet {inheritDoc
+    {@inheritDoc
+
+snippet {link
+    {@link ${1:#:target} ${0:#:label}
+
+snippet {linkplain
+    {@linkplain ${1:#:target} ${0:#:label}
+
+snippet {literal
+    {@literal ${0}
+
+snippet param
+    @param ${1:#:var} ${0:#:description}
+
+snippet return
+    @return ${0:#:description}
+
+snippet see
+    @see ${0:#:reference}
+
+snippet serial
+    @serial ${0:#:description}
+
+snippet sd
+    @serialField ${0:#:description}
+
+snippet sf
+    @serialField ${1:#:name} ${2:#:type} ${0:#:description}
+
+snippet since
+    @since ${0:#:version}
+
+snippet throws
+    @throws ${1:#:class} ${0:#:description}
+
+snippet {value
+    {@value ${0}
+
+snippet version
+alias ver
+    @version ${0:#:version}
+
+snippet     helloworld
+options     head
+  public class ${1:Hello} {
+    static public void main(String args[]) {
+      System.out.println("Hello, world!");
+    }
+  }

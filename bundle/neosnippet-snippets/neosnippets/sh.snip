@@ -1,0 +1,98 @@
+snippet #!
+abbr    #!/bin/sh
+alias   shebang
+options head
+	#!/bin/${1:sh}
+	${0}
+
+
+snippet if
+	if [ ${1:#:condition} ]; then
+		${0:TARGET}
+	fi
+
+
+snippet el
+	else
+		${0:TARGET}
+
+
+snippet elif
+	elif [ ${1:#:condition} ]; then
+		${0:TARGET}
+
+
+snippet for
+	for ${1:i} in ${2:#:words}; do
+		${0:TARGET}
+	done
+
+snippet while
+alias wh
+	while ${1:#:condition} ; do
+		${0:TARGET}
+	done
+
+
+snippet until
+	until ${1:#:condition} ; do
+		${0:TARGET}
+	done
+
+
+snippet heredoc
+alias   h <<
+	<< ${1:EOF}
+		${0:#:TARGET}
+	$1
+
+snippet env
+	#!/usr/bin/env ${1}
+
+
+snippet tmp
+	${1:TMPFILE}=$(mktemp ${2:XXX})
+	trap "rm -f '${$1}'" 0               # EXIT
+	trap "rm -f '${$1}'; exit 1" 2       # INT
+	trap "rm -f '${$1}'; exit 1" 1 15    # HUP TERM
+	${0}
+
+snippet function
+alias func
+	${1:#:name}()
+	{
+		${0:TARGET}
+	}
+
+snippet     match-regexp
+abbr        =~
+options     head
+	if [[ $${1:string} =~ ${2:^regexp.*} ]]; then
+		${0}
+	fi
+
+snippet     assign
+abbr        var-assign
+options     head
+	${1:name}="${2:something}"
+
+snippet     case
+options     head
+	case "$${1:{name\}}" in
+		${2:pattern*})
+			${0}
+			;;
+		*)
+			${3:echo "$$1 Didn't match anything"}
+	esac
+
+snippet     warn
+options     head
+	echo "${0:TARGET}" 1>&2
+
+snippet     abort
+options     head
+	echo "${0:TARGET}" 1>&2
+	exit 1
+
+# vim: set noexpandtab :

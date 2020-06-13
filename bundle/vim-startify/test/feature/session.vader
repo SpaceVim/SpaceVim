@@ -1,0 +1,22 @@
+Before:
+  enew!
+
+Execute (:SSave foo | SClose):
+  edit include/testfile.txt
+  SSave foo
+  SClose
+Do (q):
+  q
+Expect (<blank>):
+  
+
+Execute (:SLoad foo):
+  SLoad foo
+Expect (textfile.txt):
+  This is just a simple test file.
+  Foo, bar, quux.
+
+Execute (Session: :SDelete! foo):
+  AssertEqual filereadable(g:startify_session_dir.'/foo'), 1
+  SDelete! foo
+  AssertEqual filereadable(g:startify_session_dir.'/foo'), 0

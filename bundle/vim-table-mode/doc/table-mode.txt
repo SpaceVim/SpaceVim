@@ -1,0 +1,522 @@
+*table-mode.txt*			Table Mode for easy table formatting
+===============================================================================
+	Table Mode, THE AWESOME AUTOMATIC TABLE CREATOR & FORMATTER
+                               VERSION 4.7.1.1
+
+		Author: Dhruva Sagar <http://dhruvasagar.com/>
+		License: MIT <http://opensource.org/licenses/MIT/>
+===============================================================================
+CONTENTS						*table-mode-contents*
+
+	1. Introduction .................... |table-mode-introduction|
+	2. Getting Started ................. |table-mode-getting-started|
+	3. Options ......................... |table-mode-options|
+	4. Mappings ........................ |table-mode-mappings|
+	5. Commands ........................ |table-mode-commands|
+	6. Contributing .................... |table-mode-contributing|
+	7. Report Issues ................... |table-mode-report-issues|
+
+===============================================================================
+INTRODUCTION					*table-mode-introduction*
+
+Table Mode is simple plugin that makes building tables in vim a breeze. It is
+inspired from tpope's auto aligning script for creating tables in vim -
+https://gist.github.com/tpope/287147, which in turn utilizes the Tabular
+Plugin.
+
+===============================================================================
+GETTING STARTED					*table-mode-getting-started*
+
+Create Table on the fly:
+	Using Table Mode is dead simple. You simply start typing on a new line
+	with the table separator - |table-mode-separator|, and you just type
+	away! The plugin does the rest automatically for you as you type. With
+	each additional separator you add, it aligns the table properly,
+	without having to do anything else.
+
+        Table Mode now supports gfm style tables and allows to define column
+        alignments with the aid of placing ':' (configured using
+        |g:table_mode_align_char|) on the table header border appropriately to
+        align content left or right.
+
+	The table mode is disabled by default and you can enter table mode
+	using |table-mode-toggle-map| or you can also enable it permanently
+	using |table-mode-always-active| if you wish though not recommended.
+
+	Table Mode allows for creation of tables within comments, it looks at
+	the 'commentstring' setting to identify whether the current line is
+	commented.
+
+Tableize content:
+	Table Mode enables conversion of delimited text into tables. Again
+	like table creation, this is also applicable within comments.
+
+Move between cells :
+	Now you can move between cells using table mode motions
+	'<Leader>t[hjkl]' to move left | down | up | right cells respectively.
+	You can use |table-mode-map-prefix| option to define the prefix
+	mapping to be used before 'hjkl'. The left | right motions wrap around
+	the table and move to the next | previous row after the last | first
+	cell in the current row if one exists.
+
+Manipulation of tables:
+	Tableize provides 3 easy ways to quickly manipulate tables.
+
+	1. Cell Text Object : A text object for table cell
+	defined by |table-mode-cell-text-object|.  You can use it with an
+	operator (d,c,y) to manipulate it easily. If you delete the cell using
+	this, it will delete the table separator along with it so if you type
+	out some new stuff, you will have to re-add it, which triggers a
+	re-alignment and the table would be formatted again.
+
+	2. Delete Column : Delete an entire table column using
+	|table-mode-delete-column-map| .
+
+	3. Delete Row : Delete an entire table row using
+	|table-mode-delete-row-map|
+
+	4. Insert Column : Insert a table column either before the cursor
+        using |table-mode-insert-column-before-map| or after the cusor using
+	|table-mode-insert-column-after-map|.
+
+Table Formulas:
+	Table Mode now has support for formulas like a spreadsheet. There
+	are 2 ways of defining formulas :
+
+		You can add formulas using |:TableAddFormula| or the mapping
+		|<Leader>tfa| defined by the option
+		|table-mode-add-formula-map| from within a table cell, which
+		will ask for input on the cmd-line with a 'f=' prompt. The
+		input formula will be appended to the formula line if one
+		exists or a new one will be created with the input formula
+		taking the current cell as the target cell. The formula line
+		is evaluated immediately to reflect the results.
+
+		You can directly also add / manipulate formula expressions in
+		the formula line. The formula line is a commented line right
+		after the table, beginning with 'tmf:' (table mode formula).
+		eg) '# tmf: $3=$2*$1'.  You can add multiple formulas on the
+		line separated with a ';' eg) '# tmf: $3=$2*$1;$4=$3/3.14'
+
+	You can evaluate the formula line using |:TableEvalFormulaLine| or the
+	mapping |<Leader>tfe| defined by the option |table-mode-expr-calc-map|
+
+Formula Expressions :
+	Expressions are of the format '$target = formula'.
+
+	The target can be of 2 forms :
+
+		'$n': This matches the table column number 'n'. So the formula
+		would be evaluated for each cell in that column and the result
+		would be placed in it. You can use negative indice to
+                represent column relative to the last, -1 being the last.
+
+		'$n,m': This matches the table cell n,m (row, column). So in
+		this case the formula would be evaluated and the result will
+		be placed in this cell. You can also use negative values to
+                refer to cells relative to the size, -1 being the last (row or
+                column).
+
+	The formula can be a simple mathematical expression involving cells
+	which are also defined by the same format as that of the target cell.
+	Apart from basic mathematical expressions, table mode also provides
+	special functions 'Min', 'Max', 'CountE' (number of empty cells),
+        'CountNE' (number of non-empty cells), 'PercentE' (percent of empty
+        cells), 'PercentNE' (percent of non-empty cells), 'Sum', 'Average',
+        and 'AverageNE' (average over non-empty cells). All these functions
+        take a range as input. A range can be of two forms :
+
+		'n:m': This represents cells in the current column from row
+		'n' through 'm'. If 'm' is negative it represents 'm' row
+		above the current row (of the target cell).
+
+		'r1,c1:r2,c2': This represents cells in the table from cell
+		r1,c1 through cell r2,c2 (row, column).
+
+	Examples :
+		$2 = $1 * $1
+		$2 = $1 / $1,3
+		$1,2 = $1,1 * $1,1
+		$5,1 = Sum(1:-1)
+		$5,3 = Sum(1,2:5,2)
+
+===============================================================================
+OPTIONS							*table-mode-options*
+
+Overview:
+	|table-mode-loaded| ............. Disable the plugin.
+	|table-mode-verbose| ............ Notify when Enabled/Disabled.
+	|table-mode-corner| ............. Set corner character.
+	|table-mode-separator| .......... Set separator character.
+	|table-mode-fillchar| ........... Set table fillchar character.
+	|table-mode-map-prefix| ......... Set prefix for table mode commands.
+	|table-mode-toggle-map| ......... Set table mode toggle mapping.
+	|table-mode-always-active| ...... Set table mode to always enabled.
+	|table-mode-delimiter| .......... Set the delimiter for Tableize.
+        |table-mode-corner-corner| ...... Set the character to be used for
+                                        extreme corners of the table border.
+        |table-mode-align-char|.......... Set the alignment character which
+                                        can be added to the table header
+                                        border to control alignment of that
+                                        column.
+        |table-mode-motion-up-map| ...... Set the table motion up mapping
+        |table-mode-motion-down-map| .... Set the table motion down mapping
+        |table-mode-motion-left-map| .... Set the table motion left mapping
+        |table-mode-motion-right-map| ... Set the table motion right mapping
+        |table-mode-cell-text-object-a-map|
+                                        Set the 'a' cell text object
+                                        mapping
+        |table-mode-cell-text-object-i-map|
+                                        Set the 'i' cell text object
+                                        mapping
+        |table-mode-realign-map| ........ Set the realign mapping
+        |table-mode-delete-row-map| ..... Set the delete row mapping
+        |table-mode-delete-column-map| .. Set the delete column mapping
+        |table-mode-insert-column-before-map|
+                                        Set the insert column before the
+                                        cursor mapping
+        |table-mode-insert-column-after-map|
+                                        Set the insert column after the
+                                        cursor mapping
+        |table-mode-add-formula-map| .... Set the add formula mapping
+        |table-mode-eval-formula-map| ... Set the eval formula mapping
+        |table-mode-echo-cell-map| ...... Set the echo cell mapping
+        |table-mode-sort-map| ........... Set the table sort mapping
+        |table-mode-syntax| ............. Control table mode syntax
+        |table-mode-auto-align| ......... Set if the table mode should auto
+                                        align as you type
+
+g:loaded_table_mode					*table-mode-loaded*
+	Use this option to disable the plugin: >
+		let g:loaded_table_mode = 1
+<
+g:table_mode_verbose					*table-mode-verbose*
+	Use this option to disable notifications: >
+		let g:table_mode_verbose = 0
+<
+g:table_mode_corner					*table-mode-corner*
+	Use this option to define the table corner character: >
+		let g:table_mode_corner = '+'
+<
+        Or only in the current buffer: >
+		let b:table_mode_corner = '+'
+<
+g:table_mode_separator					*table-mode-separator*
+	Use this option to define the table column separator character: >
+		let g:table_mode_separator = '|'
+<
+	This option also defines the trigger to be used to start creating a
+	table row in insert mode.
+
+g:table_mode_fillchar					*table-mode-fillchar*
+	Use this option to define the table header border fill character: >
+		let g:table_mode_fillchar = '-'
+<
+
+g:table_mode_map_prefix				      *table-mode-map-prefix*
+	Use this option to define the table mode mapping prefix that will be
+	prefixed for all other table mode mappings. >
+		let g:table_mode_map_prefix = '<Leader>t'
+<
+
+g:table_mode_toggle_map				     *table-mode-toggle-map*
+	Use this option to define the mapping for toggling the table mode: >
+		let g:table_mode_toggle_map = 'm'
+<
+	Read |table-mode-mappings-toggle| for more info.
+
+	NOTE you will need to use the |table-mode-map-prefix| before this to
+	get the desired effect.
+
+g:table_mode_always_active			    *table-mode-always-active*
+	Use this option to permanently enable the table mode: >
+		let g:table_mode_always_active = 0
+<
+	This will trigger table creation once you type the
+	|table-mode-separator| as long as it's the first character on
+	the line, which can be annoying. I recommend you to instead use the
+	|table-mode-mappings-toggle| or |table-mode-commands-toggle| to toggle
+	the table mode or |table-mode-commands-enable| to enable and
+	|table-mode-commands-disable| to disable mode when needed.
+
+g:table_mode_delimiter					*table-mode-delimiter*
+	Use this option to define the delimiter which used by
+	|table-mode-commands-tableize| >
+		let g:table_mode_delimiter = ','
+<
+g:table_mode_corner_corner                           *table-mode-corner-corner*
+        Use this option to define the character to be used for the extreme
+        corners of the table border. >
+                let g:table_mode_corner_corner = '|'
+<
+        Or only in the current buffer: >
+		let b:table_mode_corner_corner = '|'
+<
+g:table_mode_align_char                                  *table-mode-align-char*
+        Use this option to define the character to be used for defining
+        alignments for columns in the table header border. >
+                let g:table_mode_align_char = ':'
+<
+g:table_mode_disable_mappings                      *table-mode-disable-mappings*
+        Set this to true to disable all mappings. >
+                let g:table_mode_disable_mappings = 1
+<
+g:table_mode_motion_up_map                            *table-mode-motion-up-map*
+        Set this to configure the mapping to move up a cell vertically. >
+                let g:table_mode_motion_up_map = '{<Bar>'
+<
+g:table_mode_motion_down_map                        *table-mode-motion-down-map*
+        Set this to configure the mapping to move down a cell vertically. >
+                let g:table_mode_motion_down_map = '}<Bar>'
+>
+g:table_mode_motion_left_map                        *table-mode-motion-left-map*
+        Set this to configure the mapping to move to the left cell. >
+                let g:table_mode_motion_left_map = '[<Bar>'
+>
+g:table_mode_motion_right_map                      *table-mode-motion-right-map*
+        Set this to configure the mapping to move to the right cell. >
+                let g:table_mode_motion_right_map = ']<Bar>'
+>
+g:table_mode_cell_text_object_a_map          *table-mode-cell-text-object-a-map*
+        Set this to configure the mapping to define the text object for around
+        cell object. >
+                let g:table_mode_cell_text_object_a_map = 'a<Bar>'
+>
+g:table_mode_cell_text_object_i_map           *table-mode-cell-text-object-i-map*
+        Set this to configure the mapping to define the text object for inner
+        cell object. >
+                let g:table_mode_cell_text_object_i_map = 'i<Bar>'
+>
+g:table_mode_realign_map                                *table-mode-realign-map*
+        Set this to configure the mapping for table realign. >
+                let g:table_mode_realign_map = '<Leader>tr'
+>
+g:table_mode_delete_row_map                          *table-mode-delete-row-map*
+        Set this to configure the mapping for deleting a table row. >
+                let g:table_mode_delete_row_map = '<Leader>tdd'
+>
+g:table_mode_delete_column_map                    *table-mode-delete-column-map*
+        Set this to configure the mapping for deleting a table column. >
+                let g:table_mode_delete_column_map = '<Leader>tdc'
+>
+g:table_mode_insert_column_before_map      *table-mode-insert-column-before-map*
+        Set this to configure the mapping for inserting a table column before
+        the cursor. >
+                let g:table_mode_insert_column_before_map = '<Leader>tiC'
+>
+g:table_mode_insert_column_after_map        *table-mode-insert-column-after-map*
+        Set this to configure the mapping for inserting a table column after
+        the cursor. >
+                let g:table_mode_insert_column_after_map = '<Leader>tic'
+>
+g:table_mode_add_formula_map                        *table-mode-add-formula-map*
+        Set this to configure the mapping for adding a formula for a table
+        cell. >
+                let g:table_mode_add_formula_map = '<Leader>tfa'
+>
+g:table_mode_eval_formula_map                      *table-mode-eval-formula-map*
+        Set this to configure the mapping for evaluating the formula line. >
+                let g:table_mode_eval_formula_map = '<Leader>tfe'
+>
+g:table_mode_echo_cell_map                            *table-mode-echo-cell-map*
+        Set this to configure the mapping for echoing the tablemode
+        representation of the current cell. >
+                let g:table_mode_echo_cell_map = '<Leader>t?'
+>
+g:table_mode_sort_map                                      *table-mode-sort-map*
+        Set this to configure the mapping for sorting the table mode by
+        current column. >
+                let g:table_mode_sort_map = '<Leader>ts'
+>
+g:table_mode_tableize_map                              *table-mode-tableize-map*
+        Set this to configure the mapping for converting the visual selection
+        to a table. >
+                let g:table_mode_tableize_map = '<Leader>tt'
+>
+g:table_mode_tableize_d_map                          *table-mode-tableize-d-map*
+        Set this to configure the mapping for converting the visual selection
+        to a table, asking the user for a delimiter. >
+                let g:table_mode_tableize_d_map = '<Leader>T'
+>
+g:table_mode_syntax                                          *table-mode-syntax*
+        Control whether table mode should define table syntax definitions or
+        not. >
+                let g:table_mode_syntax = 1
+<
+g:table_mode_auto_align                                *table-mode-auto-align*
+        Set if the table mode should auto align as you type when table mode is
+        active. >
+                let g:table_mode_auto_align = 1
+<
+
+g:table_mode_update_time                              *table-mode-update-time*
+        Set the value of updatetime to be used when table mode is active,
+        used in combination with |table-mode-auto-align|. >
+                let g:table_mode_update_time = 500
+<
+
+g:table_mode_disable_tableize_mappings  *table-mode-disable-tableize-mappings*
+        Disables mappings for tableize. >
+                let g:table_mode_disable_tableize_mappings = 0
+<
+
+===============================================================================
+MAPPINGS						*table-mode-mappings*
+
+						*table-mode-mappings-prefix*
+<Leader>t	This is a prefix defined by the option |table-mode-map-prefix|
+		used before all other table mode commands.
+
+						*table-mode-mappings-toggle*
+<Leader>tm	Toggle table mode for the current buffer. You can change this
+		using the |toggle-mode-options-toggle-map| option.
+
+                NOTE This is applicable only if |table-mode-always-active| is
+                not set.
+
+						*table-mode-mappings-trigger*
+|		Trigger table creation in table mode. You can change this
+		using the |toggle-mode-options-separator| option.
+
+<Leader>tt	Triggers |table-mode-commands-tableize| on the visually
+		selected content.
+
+                                              *table-mode-mappings-op-trigger*
+<Leader>T	Triggers |table-mode-commands-tableize| on the visually
+		selected asking for user to input the delimiter.
+
+						*table-mode-mappings-realign*
+<Leader>tr	Realigns table columns
+
+<Leader>t?      Echo the current table cells representation for defining
+                formulas.
+
+						*table-mode-mappings-motions*
+[|              Move to previous cell
+]|              Move to next cell
+{|              Move to the cell above
+}|              Move to the cell below
+
+                                              *table-mode-mappings-delete-row*
+<Leader>tdd	Delete the entire table row you are on or multiple rows using
+		a [count]. You can change this using |table-mode-delete-row-map|
+		option.
+
+                                           *table-mode-mappings-delete-column*
+<Leader>tdc	Delete entire table column you are within. You can preceed it
+		with a [count] to delete multiple columns to the right. You
+		can change this using |table-mode-delete-column-map| option.
+
+                                    *table-mode-mappings-insert-column-before*
+<Leader>tiC	Insert a table column before the column you are within. You can
+		preceed it with a [count] to insert multiple columns. You can
+		change this using |table-mode-insert-column-before-map| option.
+
+                                     *table-mode-mappings-insert-column-after*
+<Leader>tic	Insert a table column after the column you are within. You can
+		preceed it with a [count] to insert multiple columns. You can
+		change this using |table-mode-insert-column-after-map| option.
+
+                                             *table-mode-mappings-add-formula*
+<Leader>tfa	Add a fomula for the current table cell. This invokes
+		|TableAddFormula| command.
+
+                                   *table-mode-mappings-evaluate-formula-line*
+<Leader>tfe	Evaluate the formula line which is a commented line right
+		after the table beginning with 'tmf:'. If one exists this
+		would evaluate the formula line and update the table
+		accordingly. This invokes the |TableEvalFormulaLine| command.
+
+
+                                               *table-mode-mappings-sort-column*
+<Leader>ts      Sort a column under the cursor. This invokes |TableSort|
+
+||              Expands to a header border. You can change this by changing
+                |table-mode-separator| option. You can change the character to
+                be used for the extreme corners of the border by changing
+                |table-mode-corner-corner| option.
+
+===============================================================================
+COMMANDS						*table-mode-commands*
+
+                                                            *:TableModeToggle*
+                                                 *table-mode-:TableModeToggle*
+:TableModeToggle
+	Toggles the table mode. Same effect as |toggle-mode-mappings-toggle|.
+
+	NOTE this is applicable only if |table-mode-always-active| is
+	not set.
+
+                                                            *:TableModeEnable*
+                                                 *table-mode-:TableModeEnable*
+:TableModeEnable
+	Enables Table Mode.
+
+	NOTE this is applicable only if |table-mode-always-active| is
+	not set.
+
+                                                           *:TableModeDisable*
+                                                *table-mode-:TableModeDisable*
+:TableModeDisable
+	Disables Table Mode.
+
+	NOTE this is applicable only if |table-mode-always-active| is
+	not set.
+
+                                                                   *:Tableize*
+							*table-mode-:Tableize*
+:Tableize
+	This converts the current line into a table if it consists of
+	|table-mode-delimiter|. This accepts a range, without which it
+	applies on the current line.
+
+	This accepts a {pattern} similar to Tabular which defines the
+	delimiter. eg.) >
+		:Tableize/;
+<
+	The above command will Tableize using ';' as the delimiter.
+
+	NOTE this is optional, by default without the expression it will
+	tableize the content using |table-mode-delimiter| as the delimiter.
+
+                                                           *:TableModeRealign*
+                                                *table-mode-:TableModeRealign*
+:TableModeRealign
+	This command triggers |table-mode-mappings-realign|
+
+                                                            *:TableAddFormula*
+                                                 *table-mode-:TableAddFormula*
+:TableAddFormula
+	This command is for defining a formula for the current table cell. It
+	takes input on the cmd-line with a 'f=' prompt and appends it to the
+	formula line if it exists or adds a new formula line with the
+	expression using the current cell as the target and the input formula.
+
+                                                       *:TableEvalFormulaLine*
+                                            *table-mode-:TableEvalFormulaLine*
+:TableEvalFormulaLine
+	This command when invoked from anywhere within the table or directly
+	on the formula line evaluates it and updates the table accordingly.
+
+                                                                  *:TableSort*
+                                                       *table-mode-:TableSort*
+:TableSort[!] [i][u][r][n][x][o]
+        This command sorts column under the cursor and inherits the same flags
+        as the |:sort| command.
+
+        With [!] the order is reversed.
+
+===============================================================================
+CONTRIBUTING						*table-mode-contributing*
+
+If you want to take a stab at it, by all means, send me a pull request on
+Github (http://github.com/dhruvasagar/vim-table-mode) or get in touch with me
+directly via e-mail at dhruva 'dot' sagar 'at' gmail.com.
+
+===============================================================================
+REPORT ISSUES					      *table-mode-report-issues*
+
+If you discover any issues, please report them at
+http://github.com/dhruvasagar/vim-table-mode/issues.
+
+ vim:tw=78:ts=8:ft=help:norl:ai:et

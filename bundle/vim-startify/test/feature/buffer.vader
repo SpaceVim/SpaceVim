@@ -1,0 +1,14 @@
+Before:
+  enew!
+  Startify
+
+Execute (Check buffer options):
+  AssertEqual 'startify', &filetype
+  AssertEqual 'wipe',     &bufhidden
+  AssertEqual '',         &buftype
+  AssertEqual 0,          &buflisted
+  AssertEqual 0,          &cursorcolumn
+  AssertEqual 0,          &cursorline
+  AssertEqual 0,          &list
+  AssertEqual 0,          &number
+  AssertEqual 0,          &swapfile

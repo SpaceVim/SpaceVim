@@ -1,0 +1,66 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        neovim: [false, true]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout themis.vim
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Install Vim or Neovim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: ${{ matrix.neovim }}
+      - name: Run unit tests
+        env:
+          THEMIS_VIM: ${{ steps.vim.outputs.executable }}
+          PROFILE_LOG: profile.txt
+        run: |
+          cd ./test
+          echo $THEMIS_VIM
+          ../vim-themis/bin/themis .
+      # covimerage seems not maintained for Windows. Skip taking code coverage on Windows
+      - name: Install Python
+        if: matrix.os != 'windows-latest'
+        uses: actions/setup-python@v1
+      - name: Install covimerage
+        if: matrix.os != 'windows-latest'
+        run: |
+          pip install covimerage
+          covimerage --version
+      - name: Run covimerage
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd ./test
+          covimerage write_coverage profile.txt
+      - name: Take coverage
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd ./test
+          coverage report
+          coverage xml
+      - name: Upload coverage to codecov
+        if: matrix.os != 'windows-latest'
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./test/coverage.xml
+
+  vint:
+    name: Run vint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+      - run: pip install vim-vint
+      - run: vint --warning --verbose --enable-neovim ./autoload ./plugin

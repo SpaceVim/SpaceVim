@@ -1,0 +1,107 @@
+" Based on https://github.com/tweekmonster/braceless.vim/blob/master/test/vim/vimrc
+" TODO: provide this by default in the Docker image already?!  e.g. /vimrc?!
+
+set noloadplugins
+
+" Indicator for tests being run.
+let g:neomake_test_messages = []
+
+" Shorter timeouts during tests.
+let g:neomake_action_queue_timeouts = {1: 10, 2: 20, 3: 30}
+
+" Remove some overhead by default, tested explicitly.
+let g:neomake_echo_current_error = 0
+
+let s:slash = has('win32') ? '\' : '/'
+
+if exists('$NEOMAKE_TESTS_DEP_PLUGINS_DIR')
+  let s:dep_plugins_base = $NEOMAKE_TESTS_DEP_PLUGINS_DIR
+else
+  let s:dep_plugins_base = join(
+        \ [expand('<sfile>:p:h'), '..', '..', 'build', 'vim', 'plugins'],
+        \ s:slash)
+endif
+
+if exists('$TESTS_VADER_DIR')
+  let s:vader_dir = expand($TESTS_VADER_DIR)
+else
+  let s:vader_dir = s:dep_plugins_base . s:slash . 'vader'
+endif
+
+let &runtimepath .= ','.s:vader_dir
+exe 'source' join([s:vader_dir, 'plugin', 'vader.vim'], s:slash)
+
+function! s:load_plugin_on_demand(name) abort
+  Save &runtimepath
+
+  " Restore/unset "loaded" var, to not skip loading on second invocation.
+  let var_name = substitute(a:name, '^vim-', '', '')
+  exe printf('Save g:loaded_%s', var_name)
+
+  let dir = s:dep_plugins_base.'/'.a:name
+  let &runtimepath .= ','.dir
+
+  let funcs_before = map(split(neomake#utils#redir('function /\C^[A-Z]'), '\n'),
+      \ "substitute(v:val, '\\v^function (.*)\\(.*$', '\\1', '')")
+
+  exe 'source '.join([dir, 'plugin', '*.vim'], s:slash)
+
+  let funcs_after = map(split(neomake#utils#redir('function /\C^[A-Z]'), '\n'),
+      \ "substitute(v:val, '\\v^function (.*)\\(.*$', '\\1', '')")
+
+  " Add new functions defined in the plugin to g:neomake_test_funcs_before,
+  " e.g. FugitiveDetect.
+  for f in funcs_after
+    if index(funcs_before, f) == -1
+      call add(g:neomake_test_funcs_before, f)
+    endif
+  endfor
+endfunction
+command! -nargs=1 NeomakeTestsLoadPlugin call s:load_plugin_on_demand(<args>)
+
+let s:plugin_dir = expand('<sfile>:p:h:h:h')
+let &runtimepath .= ','.s:plugin_dir
+
+exe 'source' join([s:plugin_dir, 'plugin', 'neomake.vim'], s:slash)
+
+filetype plugin indent on
+
+augroup ssshhhhhh
+  autocmd VimEnter * set visualbell t_vb=
+  autocmd GUIEnter * set visualbell t_vb=
+augroup END
+
+set noswapfile
+syntax on
+set number
+set background=dark
+set colorcolumn=80
+set showcmd
+set lazyredraw
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set backspace=2
+set nofoldenable
+set foldmethod=syntax
+set foldlevelstart=10
+set foldnestmax=10
+set ttimeoutlen=0
+set cmdheight=5
+set textwidth=79
+set hidden
+set splitbelow  " Easier for window numbers (incrementing).
+set complete=.  " Just simple completion from the current buffer.
+
+let mapleader=','
+
+" No '-- More --' prompt, which would hang Travis.
+set nomore
+
+if expand('$NEOMAKE_TEST_NO_COLORSCHEME') !=# '1'
+  colorscheme default
+endif
+
+" Avoid system call and warning.
+let g:neomake_clippy_rustup_has_nightly = 0

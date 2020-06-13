@@ -149,6 +149,7 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executable
+├─ bundle/                        forked repos
 └─ test/                          tests
 ```
 

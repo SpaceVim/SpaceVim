@@ -18,7 +18,7 @@ function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
   if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
-    call add(plugins, ['neomake/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_enable_ale
     call add(plugins, ['dense-analysis/ale', {'merged' : 0, 'loadconf_before' : 1}])
   else

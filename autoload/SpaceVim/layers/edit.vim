@@ -15,28 +15,28 @@ let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
-        \ ['kana/vim-textobj-user'],
-        \ ['kana/vim-textobj-indent'],
-        \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
-        \ ['kana/vim-textobj-entire'],
-        \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ ['easymotion/vim-easymotion'],
-        \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ ['godlygeek/tabular',           { 'merged' : 0}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-line'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
+        \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
+        \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
+        \ [g:_spacevim_root_dir . 'bundle/evim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if executable('fcitx')
-    call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
   if g:spacevim_enable_bepo_layout
-    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction

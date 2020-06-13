@@ -1,0 +1,232 @@
+*context_filetype.txt*	Vim script の context filetype ライブラリ
+
+Version: 1.0
+Author : Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS					*context_filetype-contents*
+
+概要			|context_filetype-introduction|
+インターフェース	|context_filetype-interface|
+  変数			  |context_filetype-variables|
+  関数			  |context_filetype-functions|
+変更履歴		|context_filetype-changelog|
+
+==============================================================================
+概要						*context_filetype-introduction*
+
+*context_filetype* はカーソル位置を基準とした、文脈から特定の filetype を判定す
+る為の Vim script ライブラリです。
+コード中に他の言語を埋め込むような言語で利用する事が出来ます。
+
+また、このプラグインは他のプラグインから使用する事を想定して作られています。
+
+
+==============================================================================
+サポート					*context_filetype-support*
+
+各 filetype で対応しているコンテキストの一覧です。
+
+- "c"
+ masm
+ gas
+
+- "cpp"
+ masm
+ gas
+
+- "d"
+ masm
+
+- "eruby"
+ ruby
+
+- "help"
+ vim
+
+- "html"
+ javascript
+ coffee
+ css
+
+- "int-nyaos"
+ lua
+
+- "lua"
+ vim
+
+- "nyaos"
+ lua
+
+- "perl16"
+ pir
+
+- "python"
+ vim
+
+- "vim"
+ python
+ ruby
+ lua
+
+- "vimshell"
+ vim
+
+- "xhtml"
+ javascript
+ coffee
+ css
+
+- "markdown"
+
+- "haml"
+ ruby
+ javascript
+ css
+
+
+==============================================================================
+インターフェース				*context_filetype-interface*
+
+------------------------------------------------------------------------------
+変数 						*context_filetype-variables*
+
+g:context_filetype#filetypes			*g:context_filetype#filetypes*
+		各 filetype を判定する為の辞書です。
+		各 filetype に対してリストで設定する事ができます。
+
+		"start"    : コンテキストの開始パターン
+		"end"      : コンテキストの終了パターン
+		"filetype" : 判定を行う filetype
+			      "end" または "filetype" に \1 が設定されている場
+			      合は "start" にマッチした値になります。
+>
+		" Examples:
+		let g:context_filetype#filetypes = {
+		\ 'perl6' : [
+		\   {
+		\     'start' : 'Q:PIR\s*{',
+		\     'end' : '}',
+		\     'filetype' : 'pir',
+		\   }
+		\ ],
+		\ 'vim' : [
+		\   {
+		\     'start' : '^\s*python <<\s*\(\h\w*\)',
+		\     'end' : '^\1',
+		\     'filetype' : 'python',
+		\   }
+		\ ],
+		\ 'markdown': [
+		\   {
+		\     'start' : '^\s*```\s*\(\h\w*\)',
+		\     'end' : '^\s*```$',
+		\     'filetype' : '\1',
+		\   },
+		\ ],
+		\}
+<
+b:context_filetype_filetypes			*b:context_filetype_filetypes*
+		バッファ変数版の |g:context_filetype#filetypes| です。
+		これが設定されている場合、|g:context_filetype#filetypes| は無
+		視されます。
+
+
+					*g:context_filetype#same_filetypes*
+g:context_filetype#same_filetypes
+		各 same filetype を判定する為の辞書です。
+		各 filetype に対してカンマ区切りの文字列で設定する事ができま
+		す。
+>
+		if !exists('g:context_filetype#same_filetypes')
+		  let g:context_filetype#same_filetypes = {}
+		endif
+		" In c buffers, completes from cpp and d buffers.
+		let g:context_filetype#same_filetypes.c = 'cpp,d'
+		" In cpp buffers, completes from c buffers.
+		let g:context_filetype#same_filetypes.cpp = 'c'
+		" In gitconfig buffers, completes from all buffers.
+		let g:context_filetype#same_filetypes.gitconfig = '_'
+		" In default, completes from all buffers.
+		let g:context_filetype#same_filetypes._ = '_'
+<
+
+				*g:context_filetype#ignore_composite_filetypes*
+g:context_filetype#ignore_composite_filetypes
+		複合 filetype を他の filetype に変換する為の辞書です。
+>
+		" Examples:
+		let g:context_filetype#ignore_composite_filetypes = {
+			\ 'ruby.spec' : 'ruby'
+			\ }
+<
+					*g:context_filetype#search_offset*
+g:context_filetype#search_offset
+		コンテキストを判定する時にカーソル位置からこの変数に設定され
+		ている行数の範囲のみを対象として判定を行います。
+		バッファの行数が多くて動作が重く感じる場合はこの値を小さくし
+		て試してみて下さい。
+Default: >
+		" カーソル位置から前後 200 行の範囲で判定を行う
+		let g:context_filetype#search_offset = 200
+<
+
+
+------------------------------------------------------------------------------
+関数 						*context_filetype-functions*
+
+context_filetype#version()			*context_filetype#version()*
+		バージョン情報を返す。
+		Note: このライブラリがインストールされているかどうかの判定を
+		使用する場合に利用することもできます。
+Example: >
+	let has_context_filetype = 0
+	silent! let has_context_filetype = context_filetype#version()
+	if has_context_filetype
+		" context_filetype.vim が使用出来る場合の処理
+	else
+		" context_filetype.vim が使用出来ない場合の処理
+	endif
+<
+
+						*context_filetype#default_filetypes()*
+context_filetype#default_filetypes()
+		デフォルトで設定されている |g:context_filetype#filetypes| の値
+		を返す。
+
+context_filetype#get([{filetype}])		*context_filetype#get()*
+		カーソル位置のコンテキスト情報を下記のようなフォーマットで返
+		す。
+>
+		{
+		  "filetype" : "vim",
+		  "range" : [[3, 2], [10, 2]]
+		}
+<
+		コンテキストの判定には {filetype} が使用され、{filetype} が渡
+		されなければ 'filetype' の値が使用される。
+
+context_filetype#get_filetype([{filetype}])	*context_filetype#get_filetype()*
+		カーソル位置のコンテキストの filetype を返す。
+		コンテキストの判定には {filetype} が使用され、{filetype} が渡
+		されなければ 'filetype' の値が使用される。
+		コンテキストが見つからなかった場合は {filetype} が返される。
+
+					*context_filetype#get_filetypes()*
+context_filetype#get_filetypes([{filetype}])
+		カーソル位置のコンテキストの filetype をリスト形式で返す。
+		この filetype には複合 filetype と same filetype が含まれる。
+		コンテキストの判定には {filetype} が使用され、{filetype} が渡
+		されなければ 'filetype' の値が使用される。
+
+context_filetype#get_range([{filetype}])	*context_filetype#get_range()*
+		カーソル位置のコンテキストの範囲を [[{start}], [{end}]] で返す。
+>
+		[[3, 1], [4, 2]]
+<
+		コンテキストの判定には {filetype} が使用され、{filetype} が渡
+		されなければ 'filetype' の値が使用される。
+		コンテキストが見つからなかった場合は [[0,0], [0,0]] が返される。
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

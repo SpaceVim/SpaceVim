@@ -1,0 +1,149 @@
+snippet     range
+abbr        set x/y range.
+options     head
+        set ${1:#:axis}range [${2:*}:${3:*}]
+
+snippet     xrange
+abbr        set xrange [X1:X2]
+options     head
+        set xrange [${1:*}:${2:*}]
+
+snippet     yrange
+abbr        set yrange [Y1:Y2]
+options     head
+        set yrange [${1:*}:${2:*}]
+
+snippet     title
+abbr        set title '...'
+options     head
+        set title ${1:#:title}
+
+snippet     labelaxis
+abbr        set title '...'
+options     head
+        set ${1:#:axis}label ${2:#:label}
+
+snippet     tics
+abbr        set x/y tics start, incr, end
+options     head
+        set ${1:#:axis}tics ${2:#:start}, ${3:#:incr}, ${4:#:end}
+
+snippet     xtics
+abbr        set xtics start, incr, end
+options     head
+        set xtics ${1:#:start}, ${2:#:incr}, ${3:#:end}
+
+snippet     ytics
+abbr        set ytics start, incr, end
+options     head
+        set ytics ${1:#:start}, ${2:#:incr}, ${3:#:end}
+
+snippet     datasep
+abbr        set datafile separator 'separator'
+options     head
+        set datafile separator '${1:#:separator}'
+
+snippet     term
+abbr        set terminal
+options     head
+        set terminal ${1:#:terminal}
+
+snippet     out
+abbr        set output 'filename'
+options     head
+        set output '${1:#:filename}'
+
+snippet     key
+abbr        set key
+options     head
+        set key
+
+snippet     key!
+abbr        unset key
+options     head
+        unset key
+
+snippet     grid
+abbr        set grid
+options     head
+        set grid
+
+snippet     grid!
+abbr        unset grid
+options     head
+        unset grid
+
+snippet     border
+abbr        set border
+options     head
+        set border
+
+snippet     print
+abbr        print
+options     head
+        print(${1:#:string}}
+
+snippet     sprintf
+abbr        sprintf
+options     head
+        sprintf('${1:#:format}', ${2:#:vars})
+
+snippet     multiplot
+abbr        set multiplot ... unset multiplot
+options     head
+        set multiplot
+        ${1:#:plot code}
+        unset multiplot
+
+snippet     if
+abbr        if (...) {...}
+options     head
+        if (${1:#:condition}) {
+            ${2:#:commands}
+        }
+
+snippet     else
+abbr        else {...}
+options     head
+        else {
+            ${1:#:commands}
+        }
+
+snippet     ifelse
+abbr        if (...) {...} else {...}
+options     head
+        if (${1:#:condition}) {
+            ${2:#:commands}
+        } else {
+            ${3:#:commands}
+        }
+
+snippet     while
+abbr        while (...) {...}
+options     head
+        while (${1:#:expression}) {
+            ${2:#:commands}
+        }
+
+snippet     do
+abbr        do for <iter> {...}
+options     head
+        do for ${1:#:iter} {
+            ${2:#:commands}
+        }
+
+snippet     fors
+abbr        for [string in "A B C..."]
+options     head
+        for [${1:str} in '${2:#:string list}']
+
+snippet     fori
+abbr        for [intvar = start, end, incr]
+options     head
+        for [${1:i} = ${2:#:start}, ${3:#:end}, ${4:1}
+
+snippet     logscale
+abbr        set logscale <axis>
+options     head
+        set logscale ${1:#:axis}
+

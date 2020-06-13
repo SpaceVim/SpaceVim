@@ -1,0 +1,96 @@
+# 
+%d
+filetype indent on
+set bs=2 et sts=4 sw=4 ft=javascript
+call setline(1, '$(document).ready(function() {})')
+DelimitMateReload
+exec "normal 31|i\<CR>x\<Esc>"
+================================================================================
+$(document).ready(function() {
+    x
+})
+--------------------------------------------------------------------------------
+# Issue #95
+new
+let b:delimitMate_jump_expansion = 1
+DelimitMateReload
+exec "normal i(\<CR>test)x"
+================================================================================
+(
+test
+)x
+--------------------------------------------------------------------------------
+# Remove CR expansion on BS
+%d
+exec "normal i(\<CR>\<BS>x"
+================================================================================
+(x)
+--------------------------------------------------------------------------------
+# Consider indentation with BS inside an empty CR expansion.
+%d
+exec "normal i(  \<CR>\<BS>\<BS>x"
+================================================================================
+(x)
+--------------------------------------------------------------------------------
+# Conflict with indentation settings (cindent). Issue #95
+se cindent
+call setline(1, ['sub foo {','    while (1) {', '        ', '    }', '}'])
+call cursor(3, 8)
+normal a}x
+================================================================================
+sub foo {
+    while (1) {
+        
+    }x
+}
+--------------------------------------------------------------------------------
+%d
+call setline(1, '"{bracketed}')
+normal A"x
+================================================================================
+"{bracketed}"x
+--------------------------------------------------------------------------------
+# Syntax folding enabled by autocmd breaks expansion. But ti can't be tested
+# with :normal
+new
+autocmd InsertEnter * let w:fdm=&foldmethod | setl foldmethod=manual
+autocmd InsertLeave * let &foldmethod = w:fdm
+set foldmethod=marker
+set foldmarker={,}
+set foldlevel=0
+set backspace=2
+exec "normal iabc {\<CR>x"
+================================================================================
+abc {
+    x
+}
+--------------------------------------------------------------------------------
+# expand_cr != 2
+%d_
+call setline(1, 'abc(def)')
+exec "normal $i\<CR>x"
+================================================================================
+abc(def
+        x)
+--------------------------------------------------------------------------------
+# expand_cr == 2
+%d_
+let delimitMate_expand_cr = 2
+DelimitMateReload
+call setline(1, 'abc(def)')
+exec "normal $i\<CR>x"
+================================================================================
+abc(def
+        x
+        )
+--------------------------------------------------------------------------------
+# Play nice with smartindent
+%d_
+set all&
+set smartindent
+exec "normal $i{\<CR>x"
+================================================================================
+{
+	x
+}
+--------------------------------------------------------------------------------
