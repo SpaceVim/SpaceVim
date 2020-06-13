@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Use privileged mode (to ignore e.g. $CDPATH).
+set -p
+
+# Change to directory of this script.
+cd "$( dirname "${BASH_SOURCE[0]}" )" || exit
+
+# Look for existing vader installation.
+if ! [ -e vader.vim ]; then
+  vader_dir=
+  shopt -s nullglob
+  vader_file=( "${HOME}"/.vim/*{bundle,plugged}*/vader*/plugin/vader.vim )
+  if [ -f "${vader_file[0]}" ]; then
+      # Remove "plugin/vader.vim" suffix.
+      vader_dir=${vader_file[0]%/*/*}
+  fi
+
+  if [ -d "$vader_dir" ]; then
+      [[ ! -L vader.vim ]] && ln -s "$vader_dir" vader.vim
+  else
+      git clone https://github.com/junegunn/vader.vim.git
+  fi
+fi
+
+echo '(Be patient.. testing can take a while.)'
+
+if [[ $CI = true ]]; then
+    vim -Nnu vimrc -i NONE +'Vader! feature/*.vader'
+else
+    env HOME=/dev/null vim -Nnesu vimrc -i NONE +'Vader! feature/*.vader'
+fi

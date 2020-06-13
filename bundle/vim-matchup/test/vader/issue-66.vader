@@ -1,0 +1,104 @@
+Given vim (Parentheses):
+  if l:x == 1
+    call one()
+  elseif l:x == 2
+    call two()
+  elseif l:x == 3
+    call three()
+  elseif l:x == 4
+    call four()
+  elseif l:x == 5
+    call five()
+  elseif l:x == 6
+    call six()
+  elseif l:x == 7
+    call seven()
+  elseif l:x == 8
+    call eight()
+  else
+    call none()
+  endif
+
+Do (Delete 3 inner %):
+  7gg
+  d3i%
+
+Expect vim (Verify):
+  if l:x == 1
+    call one()
+  elseif l:x == 2
+    call two()
+  elseif l:x == 3
+    call three()
+  elseif l:x == 4
+    call four()
+  elseif l:x == 5
+    call five()
+  elseif l:x == 6
+    call six()
+  elseif l:x == 7
+    call seven()
+  elseif l:x == 8
+    call eight()
+  else
+    call none()
+  endif
+
+Do (Delete 3 inner %, with blank first line):
+  ggO\<esc>
+  7gg
+  d3i%
+
+Expect vim (Verify):
+
+  if l:x == 1
+    call one()
+  elseif l:x == 2
+    call two()
+  elseif l:x == 3
+    call three()
+  elseif l:x == 4
+    call four()
+  elseif l:x == 5
+    call five()
+  elseif l:x == 6
+    call six()
+  elseif l:x == 7
+    call seven()
+  elseif l:x == 8
+    call eight()
+  else
+    call none()
+  endif
+
+Do (Delete inner %):
+  7gg
+  di%
+
+Expect vim (Verify):
+  if l:x == 1
+    call one()
+  elseif l:x == 2
+    call two()
+  elseif l:x == 3
+  elseif l:x == 4
+    call four()
+  elseif l:x == 5
+    call five()
+  elseif l:x == 6
+    call six()
+  elseif l:x == 7
+    call seven()
+  elseif l:x == 8
+    call eight()
+  else
+    call none()
+  endif
+
+Do (Delete 1 inner %):
+  7gg
+  d1i%
+
+Expect vim (Verify):
+  if l:x == 1
+  endif

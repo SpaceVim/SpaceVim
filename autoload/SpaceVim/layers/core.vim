@@ -27,24 +27,24 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   elseif g:spacevim_filemanager ==# 'defx'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
-    call add(plugins, ['kristijanhusak/defx-git',{'merged' : 0, 'loadconf' : 1}])
-    call add(plugins, ['kristijanhusak/defx-icons',{'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-git',{'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-icons',{'merged' : 0}])
   endif
 
   if !g:spacevim_vimcompatible
-    call add(plugins, ['rhysd/clever-f.vim', {'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/clever-f.vim', {'merged' : 0}])
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
   if exists('*matchaddpos')
-    call add(plugins, ['andymass/vim-matchup', {'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-matchup', {'merged' : 0}])
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/gruvbox', {'loadconf' : 1, 'merged' : 0}])
-  call add(plugins, ['tyru/open-browser.vim', {
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/open-browser.vim', {
         \ 'merged' : 0,
         \ 'loadconf' : 1,
         \}])
-  call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
   return plugins
 endfunction
