@@ -34,7 +34,7 @@ let s:filename = expand('<sfile>:~')
 
 function! SpaceVim#layers#incsearch#plugins() abort
   let plugins = []
-  call add(plugins, ['haya14busa/incsearch.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/incsearch.vim', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-fuzzy.vim', {'merged' : 0}])
   call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])

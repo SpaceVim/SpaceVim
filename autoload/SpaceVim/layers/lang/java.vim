@@ -116,7 +116,7 @@ function! SpaceVim#layers#lang#java#config() abort
     endif
     autocmd FileType jsp call <SID>JspFileTypeInit()
   augroup END
-  let g:neoformat_enabled_java = ['googlefmt']
+  let g:neoformat_enabled_java = get(g:, 'neoformat_enabled_java', ['googlefmt'])
   let g:neoformat_java_googlefmt = {
         \ 'exe': 'java',
         \ 'args': ['-jar', get(g:,'spacevim_layer_lang_java_formatter', ''), '-'],
