@@ -458,30 +458,34 @@ endfunction
 function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let url = s:get_uri(a:repo)
-  let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
-  if get(a:repo, 'rev', '') !=# ''
-    let argv = argv + ['-b', a:repo.rev]
-  endif
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_install_start(a:repo.name)
+  if !get(a:repo, 'local', 0)
+    let url = s:get_uri(a:repo)
+    let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
+    if get(a:repo, 'rev', '') !=# ''
+      let argv = argv + ['-b', a:repo.rev]
+    endif
+    if s:JOB.vim_job || s:JOB.nvim_job
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'on_exit' : function('s:on_install_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = a:repo
+        call s:msg_on_install_start(a:repo.name)
+      endif
+    else
+      let s:jobpid += 1
+      let s:pulling_repos[s:jobpid] = a:repo
+      call s:msg_on_start(a:repo.name)
+      redraw!
+      call s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'on_exit' : function('s:on_install_exit')
+            \ })
+
     endif
   else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-
+    call s:msg_on_local(a:repo.name)
   endif
 endfunction
 
