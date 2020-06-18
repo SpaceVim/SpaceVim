@@ -68,13 +68,13 @@ function! SpaceVim#layers#autocomplete#plugins() abort
       call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
-    call add(plugins, ['Shougo/deoplete.nvim', {
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete.nvim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
     if !has('nvim')
-      call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
-      call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-yarp',  {'merged': 0}])
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-hug-neovim-rpc',  {'merged': 0}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
