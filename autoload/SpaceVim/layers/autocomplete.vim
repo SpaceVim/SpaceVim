@@ -29,19 +29,19 @@
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
-        \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
-        \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
-        \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
-        \ ['Shougo/neosnippet-snippets',  { 'merged' : 0}],
-        \ ['Shougo/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
+        \ [g:_spacevim_root_dir . 'bundle/neco-syntax',          { 'on_event' : 'InsertEnter'}],
+        \ [g:_spacevim_root_dir . 'bundle/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
+        \ [g:_spacevim_root_dir . 'bundle/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
+        \ [g:_spacevim_root_dir . 'bundle/neosnippet-snippets',  { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/neopairs.vim',         { 'on_event' : 'InsertEnter'}],
         \ ]
-  call add(plugins, ['deoplete-plugins/deoplete-dictionary',        { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-dictionary',        { 'merged' : 0}])
   if g:spacevim_autocomplete_parens
-    call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/delimitMate',        { 'merged' : 0}])
   endif
   " snippet
   if g:spacevim_snippet_engine ==# 'neosnippet'
-    call add(plugins,  ['Shougo/neosnippet.vim', { 'on_event' : 'InsertEnter',
+    call add(plugins,  [g:_spacevim_root_dir . 'bundle/neosnippet.vim', { 'on_event' : 'InsertEnter',
           \ 'on_ft' : 'neosnippet',
           \ 'loadconf' : 1,
           \ 'on_cmd' : 'NeoSnippetEdit'}])
