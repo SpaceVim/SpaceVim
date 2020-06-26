@@ -237,11 +237,10 @@ function! SpaceVim#plugins#manager#update(...) abort
         let reponame = s:LIST.shift(s:plugins)
         let repo = neobundle#get(reponame)
       endif
-      if !empty(repo) && isdirectory(repo.path . '/.git') && !get(repo, 'local', 0)
+      if !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && filereadable(repo.path . '/.git/HEAD')
         call s:pull(repo)
-      elseif !empty(repo) && !isdirectory(repo.path . '/.git') && !get(repo, 'local', 0)
-        echom repo.path
-        echom delete(repo.path, 'rf')
+      elseif !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && !filereadable(repo.path . '/.git/HEAD')
+        call delete(repo.path, 'rf')
         call s:install(repo)
       elseif !empty(repo) && !isdirectory(repo.path . '/.git') && get(repo, 'local', 0)
         call s:pull(repo)
