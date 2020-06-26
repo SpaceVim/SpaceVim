@@ -440,6 +440,9 @@ function! s:pull(repo) abort
     endif
   else
     call s:msg_on_local(a:repo.name)
+    let s:pct_done += 1
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
   endif
 endfunction
 
