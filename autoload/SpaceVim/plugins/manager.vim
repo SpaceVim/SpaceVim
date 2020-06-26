@@ -239,7 +239,7 @@ function! SpaceVim#plugins#manager#update(...) abort
       endif
       if !empty(repo) && isdirectory(repo.path.'/.git')
         call s:pull(repo)
-      elseif !empty(repo) && !isdirectory(repo.path.'/.git')
+      elseif !empty(repo) && !isdirectory(repo.path.'/.git') && !get(a:repo, 'local', 0)
         call delete(repo.path, 'rf')
         call s:install(repo)
       elseif reponame ==# 'SpaceVim'
