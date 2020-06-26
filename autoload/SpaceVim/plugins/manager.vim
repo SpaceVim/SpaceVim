@@ -443,6 +443,21 @@ function! s:pull(repo) abort
     let s:pct_done += 1
     call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    if !empty(s:plugins)
+      let name = s:LIST.shift(s:plugins)
+      let repo = {}
+      if name ==# 'SpaceVim'
+        let repo = {
+              \ 'name' : 'SpaceVim',
+              \ 'path' : expand('~/.SpaceVim')
+              \ }
+      elseif g:spacevim_plugin_manager ==# 'dein'
+        let repo = dein#get(name)
+      elseif g:spacevim_plugin_manager ==# 'neobundle'
+        let repo = neobundle#get(name)
+      endif
+      call s:pull(repo)
+    endif
   endif
 endfunction
 
