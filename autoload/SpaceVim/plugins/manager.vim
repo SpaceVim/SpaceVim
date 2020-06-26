@@ -237,11 +237,13 @@ function! SpaceVim#plugins#manager#update(...) abort
         let reponame = s:LIST.shift(s:plugins)
         let repo = neobundle#get(reponame)
       endif
-      if !empty(repo) && isdirectory(repo.path.'/.git')
+      if !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && !filereadable(repo.path . '/.git/shallow.lock')
         call s:pull(repo)
-      elseif !empty(repo) && !isdirectory(repo.path.'/.git')
+      elseif !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && filereadable(repo.path . '/.git/shallow.lock')
         call delete(repo.path, 'rf')
         call s:install(repo)
+      elseif !empty(repo) && !isdirectory(repo.path . '/.git') && get(repo, 'local', 0)
+        call s:pull(repo)
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
@@ -443,6 +445,24 @@ function! s:pull(repo) abort
     endif
   else
     call s:msg_on_local(a:repo.name)
+    let s:pct_done += 1
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    if !empty(s:plugins)
+      let name = s:LIST.shift(s:plugins)
+      let repo = {}
+      if name ==# 'SpaceVim'
+        let repo = {
+              \ 'name' : 'SpaceVim',
+              \ 'path' : expand('~/.SpaceVim')
+              \ }
+      elseif g:spacevim_plugin_manager ==# 'dein'
+        let repo = dein#get(name)
+      elseif g:spacevim_plugin_manager ==# 'neobundle'
+        let repo = neobundle#get(name)
+      endif
+      call s:pull(repo)
+    endif
   endif
 endfunction
 
