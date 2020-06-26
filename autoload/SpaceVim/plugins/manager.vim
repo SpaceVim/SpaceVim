@@ -240,7 +240,8 @@ function! SpaceVim#plugins#manager#update(...) abort
       if !empty(repo) && isdirectory(repo.path . '/.git') && !get(repo, 'local', 0)
         call s:pull(repo)
       elseif !empty(repo) && !isdirectory(repo.path . '/.git') && !get(repo, 'local', 0)
-        call delete(repo.path, 'rf')
+        echom repo.path
+        echom delete(repo.path, 'rf')
         call s:install(repo)
       elseif !empty(repo) && !isdirectory(repo.path . '/.git') && get(repo, 'local', 0)
         call s:pull(repo)
