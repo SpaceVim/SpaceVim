@@ -56,6 +56,7 @@ function! SpaceVim#commands#load() abort
   ""
   " Command for install plugins.
   command! -nargs=* SPInstall call SpaceVim#commands#install_plugin(<f-args>)
+  command! -nargs=* SPClean call SpaceVim#commands#clean_plugin()
   command! -nargs=0 Report call SpaceVim#issue#new()
 endfunction
 
@@ -123,6 +124,17 @@ function! SpaceVim#commands#reinstall_plugin(...) abort
     call SpaceVim#plugins#manager#reinstall(a:000)
   elseif g:spacevim_plugin_manager ==# 'neobundle'
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
+  endif
+endfunction
+
+function! SpaceVim#commands#clean_plugin() abort
+  if g:spacevim_plugin_manager ==# 'dein'
+    call map(dein#check_clean(), "delete(v:val, 'rf')")
+    call dein#recache_runtimepath()
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    " @todo add SPClean support for neobundle
+  elseif g:spacevim_plugin_manager ==# 'vim-plug'
+    " @todo add SPClean support for vim-plug
   endif
 endfunction
 
