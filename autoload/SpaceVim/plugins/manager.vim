@@ -237,11 +237,8 @@ function! SpaceVim#plugins#manager#update(...) abort
         let reponame = s:LIST.shift(s:plugins)
         let repo = neobundle#get(reponame)
       endif
-      if !empty(repo) && isdirectory(repo.path.'/.git')
+      if !empty(repo)
         call s:pull(repo)
-      elseif !empty(repo) && !isdirectory(repo.path.'/.git') && !get(repo, 'local', 0)
-        call delete(repo.path, 'rf')
-        call s:install(repo)
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
