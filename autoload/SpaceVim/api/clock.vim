@@ -11,7 +11,7 @@ let s:self.__long = 0
 
 function! s:self.start() abort
   let self.__begin = reltime()
-  let s:self.__long = 0
+  let self.__long = 0
 endfunction
 
 function! s:self.pause() abort
