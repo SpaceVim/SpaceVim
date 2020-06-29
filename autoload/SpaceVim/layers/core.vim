@@ -845,7 +845,6 @@ function! s:jump_transient_state() abort
   call state.open()
 endfunction
 
-
 let g:_spacevim_autoclose_filetree = 1
 function! s:explore_current_dir(cur) abort
   if g:spacevim_filemanager ==# 'vimfiler'
