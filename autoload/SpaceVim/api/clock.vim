@@ -15,7 +15,7 @@ function! s:self.start() abort
 endfunction
 
 function! s:self.pause() abort
-  let self.__long = reltime() - self.__begin
+  let self.__long = reltimefloat(reltime(self.__begin))
 endfunction
 
 function! s:self.continue() abort
@@ -23,8 +23,8 @@ function! s:self.continue() abort
 endfunction
 
 function! s:self.end() abort
-  let self.__end = reltime()
-  return split(reltimestr(reltime(self.__end - self.__begin + self.__long)))[0] . ' sec')
+  let self.__end = reltimefloat(reltime(self.__begin))
+  return self.__end + self.__long
 endfunction
 
 
