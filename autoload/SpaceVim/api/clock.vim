@@ -22,6 +22,12 @@ function! s:self.continue() abort
   let self.__begin = reltime()
 endfunction
 
+function! s:self.end() abort
+  let self.__end = reltime()
+  return split(reltimestr(reltime(self.__end - self.__begin + self.__long)))[0] . ' sec')
+endfunction
+
+
 function! SpaceVim#api#clock#get() abort
   return deepcopy(s:self)
 endfunction
