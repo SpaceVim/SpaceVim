@@ -134,6 +134,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
         \ . string(s:_function('s:split_string')) . ', [0])',
         \ 'split-sexp', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', '.'], 'call call('
+        \ . string(s:_function('s:jump_transient_state')) . ', [])',
+        \ 'jump-transient-state', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'S'], 'call call('
         \ . string(s:_function('s:split_string')) . ', [1])',
         \ 'split-and-add-newline', 1)
@@ -792,6 +795,55 @@ function! s:restart_neovim_qt() abort
   call system('taskkill /f /t /im nvim.exe')
 endfunction
 
+function! s:jump_transient_state() abort
+  let state = SpaceVim#api#import('transient_state')
+  call state.set_title('Jump Transient State')
+  call state.defind_keys(
+        \ {
+        \ 'layout' : 'vertical split',
+        \ 'left' : [
+        \ {
+        \ 'key' : 'j',
+        \ 'desc' : 'next jump',
+        \ 'func' : '',
+        \ 'cmd' : 'try | exe "norm! \<C-i>"| catch | endtry ',
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'J',
+        \ 'desc' : 'previous jump',
+        \ 'func' : '',
+        \ 'cmd' : 'try | exe "norm! \<c-o>" | catch | endtry',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : 'c',
+        \ 'desc' : 'next change',
+        \ 'func' : '',
+        \ 'cmd' : "try | exe 'norm! g,' | catch | endtry",
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'C',
+        \ 'desc' : 'previous change',
+        \ 'func' : '',
+        \ 'cmd' : "try | exe 'norm! g;' | catch | endtry",
+        \ 'exit' : 0,
+        \ },
+        \ {
+        \ 'key' : 'q',
+        \ 'desc' : 'quit',
+        \ 'func' : '',
+        \ 'cmd' : '',
+        \ 'exit' : 1,
+        \ },
+        \ ],
+        \ }
+        \ )
+  call state.open()
+endfunction
 
 let g:_spacevim_autoclose_filetree = 1
 function! s:explore_current_dir(cur) abort
