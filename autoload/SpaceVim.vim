@@ -137,6 +137,25 @@ let g:spacevim_home_files_number        = 6
 let g:spacevim_enable_guicolors = 0
 
 ""
+" @section escape_key_binding, options-escape_key_binding
+" @parentsection options
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   escape_key_binding = 'jk'
+" <
+
+""
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   let g:spacevim_escape_key_binding = 'jk'
+" <
+let g:spacevim_escape_key_binding = 'jk'
+
+""
 " @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -1195,6 +1214,11 @@ function! SpaceVim#end() abort
     cnoremap <C-b> <Left>
     " @bug_vim with <silent> command line can not be cleared
     cnoremap <expr> <C-k> repeat('<Delete>', strchars(getcmdline()) - getcmdpos() + 1)
+
+    "Use escape_key_binding switch to normal mode
+    if !empty(g:spacevim_escape_key_binding)
+      exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
+    endif
   endif
   call SpaceVim#server#connect()
 

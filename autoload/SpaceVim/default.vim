@@ -209,9 +209,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
 
 
-  "Use jk switch to normal mode
-  inoremap jk <esc>
-
   "]<End> or ]<Home> move current line to the end or the begin of current buffer
   nnoremap <silent>]<End> ddGp``
   nnoremap <silent>]<Home> ddggP``
