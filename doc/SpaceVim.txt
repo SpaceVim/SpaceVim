@@ -43,32 +43,33 @@ CONTENTS                                                   *SpaceVim-contents*
       23. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
       24. enable_ycm.............................|SpaceVim-options-enable_ycm|
       25. error_symbol.........................|SpaceVim-options-error_symbol|
-      26. filemanager...........................|SpaceVim-options-filemanager|
-      27. filetree_direction.............|SpaceVim-options-filetree_direction|
-      28. guifont...................................|SpaceVim-options-guifont|
-      29. home_files_number...............|SpaceVim-options-home_files_number|
-      30. info_symbol...........................|SpaceVim-options-info_symbol|
-      31. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      32. language.................................|SpaceVim-options-language|
-      33. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      34. max_column.............................|SpaceVim-options-max_column|
-      35. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      36. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      37. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      38. relativenumber.....................|SpaceVim-options-relativenumber|
-      39. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      40. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      41. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      42. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      43. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      44. statusline_separator.........|SpaceVim-options-statusline_separator|
-      45. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      46. vim_help_language...............|SpaceVim-options-vim_help_language|
-      47. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      48. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      49. windows_index_type.............|SpaceVim-options-windows_index_type|
-      50. windows_leader.....................|SpaceVim-options-windows_leader|
-      51. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      26. escape_key_binding.............|SpaceVim-options-escape_key_binding|
+      27. filemanager...........................|SpaceVim-options-filemanager|
+      28. filetree_direction.............|SpaceVim-options-filetree_direction|
+      29. guifont...................................|SpaceVim-options-guifont|
+      30. home_files_number...............|SpaceVim-options-home_files_number|
+      31. info_symbol...........................|SpaceVim-options-info_symbol|
+      32. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      33. language.................................|SpaceVim-options-language|
+      34. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      35. max_column.............................|SpaceVim-options-max_column|
+      36. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      37. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      38. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      39. relativenumber.....................|SpaceVim-options-relativenumber|
+      40. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      41. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      42. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      43. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      44. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      45. statusline_separator.........|SpaceVim-options-statusline_separator|
+      46. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      47. vim_help_language...............|SpaceVim-options-vim_help_language|
+      48. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      49. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      50. windows_index_type.............|SpaceVim-options-windows_index_type|
+      51. windows_leader.....................|SpaceVim-options-windows_leader|
+      52. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -419,6 +420,15 @@ Set the error symbol for SpaceVim's syntax maker. Default is '✖'.
 <
 
 ==============================================================================
+ESCAPE_KEY_BINDING                       *SpaceVim-options-escape_key_binding*
+
+Set the key binding for switch to normal mode in insert mode. Default is `jk`,
+to disable this key binding, set this option to empty string.
+>
+  escape_key_binding = 'jk'
+<
+
+==============================================================================
 FILEMANAGER                                     *SpaceVim-options-filemanager*
 
 The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
@@ -713,6 +723,13 @@ Change the list number of files for SpaceVim home. Default is 6.
 Enable true color support in terminal. Default is 0.
 >
   let g:spacevim_enable_guicolors = 1
+<
+
+                                               *g:spacevim_escape_key_binding*
+Set the key binding for switch to normal mode in insert mode. Default is `jk`,
+to disable this key binding, set this option to empty string.
+>
+  let g:spacevim_escape_key_binding = 'jk'
 <
 
                                              *g:spacevim_enable_googlesuggest*
