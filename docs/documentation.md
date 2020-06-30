@@ -325,6 +325,12 @@ The different key bindings between SpaceVim and origin vim are shown as below.
       windows_smartclose = ''
   ```
 
+- The `jk` key has been mapped to `<Esc>` in insert mode. To disable this key binding, set `escape_key_binding` to empty string.
+  ```toml
+  [options]
+      escape_key_binding = ''
+  ```
+
 - The `Ctrl-a` binding on the command line can auto-complete variable names, but in SpaceVim it moves to the cursor to the beginning of the command line.
 - The `Ctrl-b` binding on the command line is mapped to `<Left>`, which will move cursor to the left.
 - The `Ctrl-f` binding on the command line is mapped to `<Right>`, which will move cursor to the right.
