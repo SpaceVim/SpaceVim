@@ -384,10 +384,10 @@ function! s:grep_stderr(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
-  call s:update_statusline()
   let s:std_line = 1
   let s:grepid = 0
 endfunction
