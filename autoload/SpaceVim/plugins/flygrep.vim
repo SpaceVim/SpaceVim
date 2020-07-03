@@ -754,7 +754,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
-  call Test_st()
+  call s:update_statusline()
   call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
@@ -794,7 +794,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " sometimes user can not see the flygrep windows, redraw only once.
   redraw
   call s:MPT.open()
-  call Test_st_clone()
+  call s:close_statusline()
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
   if has('gui_running')
@@ -803,7 +803,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
 endfunction
 " }}}
 
-function! s:create_statusline() abort
+function! s:update_statusline() abort
   call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
         \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
@@ -817,11 +817,7 @@ function! s:create_statusline() abort
         \ ])
 endfunction
 
-function! Test_st() abort
-  call s:create_statusline()
-endfunction
-
-function! Test_st_clone() abort
+function! s:close_statusline() abort
   call s:SL.close_float()
 endfunction
 
