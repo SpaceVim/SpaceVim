@@ -120,7 +120,12 @@ endfunction
 
 if exists('*nvim_win_close')
   function! s:self.close_float() abort
-    call nvim_win_close(self.__winid)
+    " @fixme: nvim_win_close only support one argv in old version
+    try
+      call nvim_win_close(self.__winid, 1)
+    catch /^Vim\%((\a\+)\)\=:E118/
+      call nvim_win_close(self.__winid)
+    endtry
   endfunction
 else
   function! s:self.close_float() abort
