@@ -14,12 +14,9 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
-<<<<<<< HEAD
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:JSON = SpaceVim#api#import('data#json')
-=======
 let s:SL = SpaceVim#api#import('vim#statusline')
->>>>>>> wsdjeg/floating_statusline
 " }}}
 
 let s:grepid = 0
