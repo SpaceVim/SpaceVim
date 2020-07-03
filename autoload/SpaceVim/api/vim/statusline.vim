@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:self = {}
+let s:self.__floating = SpaceVim#api#import('neovim#floating')
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -93,12 +94,12 @@ function! s:self.open_float(st) abort
   endif
   if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
   else
-    let self.__winid = nvim_open_win(self.__bufnr,
+    let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
-          \ &columns ,
-          \ 1,
           \ {
           \   'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 1,
           \   'row': &lines ,
           \   'col': 10
           \ })
