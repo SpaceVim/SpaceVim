@@ -818,6 +818,10 @@ function! Test_st() abort
   call s:create_statusline()
 endfunction
 
+function! Test_st_clone() abort
+  call s:SL.close_float()
+endfunction
+
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
 function! SpaceVim#plugins#flygrep#lineNr() abort
   if getline(1) ==# ''
