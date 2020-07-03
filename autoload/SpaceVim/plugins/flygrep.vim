@@ -340,6 +340,7 @@ function! s:close_grep_job() abort
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
   noautocmd normal! "_ggdG
+  call s:update_statusline()
   let s:complete_input_history_num = [0,0]
 endfunction
 
@@ -409,6 +410,7 @@ function! s:next_item() abort
   redraw
   call s:MPT._build_prompt()
   redrawstatus
+  call s:update_statusline()
 endfunction
 
 function! s:page_up() abort
@@ -463,6 +465,7 @@ function! s:previous_item() abort
   redraw
   call s:MPT._build_prompt()
   redrawstatus
+  call s:update_statusline()
 endfunction
 
 function! s:open_item() abort
