@@ -802,24 +802,6 @@ endfunction
 " }}}
 
 function! s:create_statusline() abort
-  let s:statusline_buf_id = nvim_create_buf(0,0)
-  let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
-        \ v:true,
-        \ {
-        \   'relative': 'editor',
-        \   'width'   : &columns ,
-        \   'height'  : 1,
-        \   'row'     : &lines ,
-        \   'col'     : 10
-        \ })
-  call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
-  call setbufvar(s:statusline_buf_id, '&number', 0)
-  call nvim_buf_set_virtual_text(
-        \ s:statusline_buf_id,
-        \ -1,
-        \ 0,
-        \ [
-        \ ])
   call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
         \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
