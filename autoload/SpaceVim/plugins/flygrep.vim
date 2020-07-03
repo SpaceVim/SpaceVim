@@ -407,10 +407,10 @@ function! s:next_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
-  call s:update_statusline()
 endfunction
 
 function! s:page_up() abort
@@ -462,10 +462,10 @@ function! s:previous_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
-  call s:update_statusline()
 endfunction
 
 function! s:open_item() abort
