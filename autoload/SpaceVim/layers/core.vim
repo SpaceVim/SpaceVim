@@ -733,11 +733,10 @@ function! s:comment_invert_yank(visual) range abort
   if a:visual
     normal! gvy
     normal! gv
-    exe 'normal' "\<Plug>NERDCommenterInvert"
   else
     normal! yy
-    call feedkeys("\<Plug>NERDCommenterInvert")
   endif
+  call feedkeys("\<Plug>NERDCommenterInvert")
 endfunction
 
 function! s:better_easymotion_overwin_line(is_visual) abort
