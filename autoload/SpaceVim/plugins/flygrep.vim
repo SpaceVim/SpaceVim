@@ -14,8 +14,12 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
+<<<<<<< HEAD
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:JSON = SpaceVim#api#import('data#json')
+=======
+let s:SL = SpaceVim#api#import('vim#statusline')
+>>>>>>> wsdjeg/floating_statusline
 " }}}
 
 let s:grepid = 0
@@ -800,8 +804,6 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
 endfunction
 " }}}
 
-let s:statusline_win_id = -1
-let s:statusline_buf_id = -1
 function! s:create_statusline() abort
   let s:statusline_buf_id = nvim_create_buf(0,0)
   let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
@@ -820,6 +822,8 @@ function! s:create_statusline() abort
         \ -1,
         \ 0,
         \ [
+        \ ])
+  call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
         \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
         \ [SpaceVim#plugins#flygrep#mode(), 'SpaceVim_statusline_b'],
@@ -828,8 +832,7 @@ function! s:create_statusline() abort
         \ ['', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
         \ [SpaceVim#plugins#flygrep#lineNr(), 'SpaceVim_statusline_b'],
         \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
-        \ ],
-        \ {})
+        \ ])
 endfunction
 
 function! Test_st() abort
