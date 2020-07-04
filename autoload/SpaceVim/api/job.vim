@@ -250,8 +250,6 @@ function! s:self.stop(id) abort
     if has_key(self.jobs, a:id)
       call jobstop(a:id)
       call remove(self.jobs, a:id)
-    else
-      call self.warn('[job API] Failed to stop job :' . a:id)
     endif
   elseif self.vim_job
     if has_key(self.jobs, a:id)
