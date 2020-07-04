@@ -578,6 +578,7 @@ if exists('*nvim_open_win')
           \ . keys . gname, 'LeaderGuiderName'],
           \ ['', 'LeaderGuiderSep2'],
           \ [s:guide_help_msg(), 'LeaderGuiderFill'],
+          \ [repeat(' ', 999), 'LeaderGuiderFill'],
           \ ])
   endfunction
   function! s:close_float_statusline() abort
@@ -602,6 +603,10 @@ else
           \ . s:guide_help_msg()
   endfunction
 endif
+
+function! Test_st() abort
+  call s:updateStatusline()
+endfunction
 
 function! s:guide_help_msg() abort
   if s:guide_help_mode == 1
@@ -636,7 +641,7 @@ function! s:winclose() abort " {{{
   endif
   call s:remove_cursor_highlight()
   if exists('*nvim_open_win')
-    call s:close_float_statusline()
+    " call s:close_float_statusline()
   endif
 endfunction " }}}
 function! s:page_down() abort " {{{
