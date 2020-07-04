@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:self = {}
+let s:self.__floating = SpaceVim#api#import('neovim#floating')
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -87,6 +88,53 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
   return l[:-4]
 endfunction
 
+function! s:self.open_float(st) abort
+  if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
+    let self.__bufnr = nvim_create_buf(0,0)
+  endif
+  if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+  else
+    let self.__winid = self.__floating.open_win(self.__bufnr,
+          \ v:false,
+          \ {
+          \   'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 1,
+          \   'row': &lines ,
+          \   'col': 10
+          \ })
+  endif
+  call setbufvar(self.__bufnr, '&relativenumber', 0)
+  call setbufvar(self.__bufnr, '&number', 0)
+  call setbufvar(self.__bufnr, '&cursorline', 0)
+  call setwinvar(win_id2win(self.__winid), '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
+  call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
+  call nvim_buf_set_virtual_text(
+        \ self.__bufnr,
+        \ -1,
+        \ 0,
+        \ a:st,
+        \ {})
+  redraw!
+endfunction
+
+if exists('*nvim_win_close')
+  function! s:self.close_float() abort
+    " @fixme: nvim_win_close only support one argv in old version
+    try
+      call nvim_win_close(self.__winid, 1)
+    catch /^Vim\%((\a\+)\)\=:E118/
+      call nvim_win_close(self.__winid)
+    endtry
+  endfunction
+else
+  function! s:self.close_float() abort
+    if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+      noautocmd execute win_id2win(self.__winid).'wincmd w'
+      noautocmd close
+    endif
+  endfunction
+endif
 function! SpaceVim#api#vim#statusline#get() abort
   return deepcopy(s:self)
 endfunction

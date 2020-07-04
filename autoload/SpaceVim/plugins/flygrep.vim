@@ -16,6 +16,7 @@ let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:JSON = SpaceVim#api#import('data#json')
+let s:SL = SpaceVim#api#import('vim#statusline')
 " }}}
 
 let s:grepid = 0
@@ -339,6 +340,7 @@ function! s:close_grep_job() abort
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
   noautocmd normal! "_ggdG
+  call s:update_statusline()
   let s:complete_input_history_num = [0,0]
 endfunction
 
@@ -383,6 +385,7 @@ function! s:grep_stderr(id, data, event) abort
 endfunction
 
 function! s:grep_exit(id, data, event) abort
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
@@ -404,6 +407,7 @@ function! s:next_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
@@ -458,6 +462,7 @@ function! s:previous_item() abort
   if s:preview_able == 1
     call s:preview()
   endif
+  call s:update_statusline()
   redraw
   call s:MPT._build_prompt()
   redrawstatus
@@ -753,6 +758,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
+  call s:update_statusline()
   call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
@@ -792,6 +798,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " sometimes user can not see the flygrep windows, redraw only once.
   redraw
   call s:MPT.open()
+  call s:close_statusline()
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
   if has('gui_running')
@@ -800,40 +807,22 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
 endfunction
 " }}}
 
-let s:statusline_win_id = -1
-let s:statusline_buf_id = -1
-function! s:create_statusline() abort
-  let s:statusline_buf_id = nvim_create_buf(0,0)
-  let s:statusline_win_id = nvim_open_win(s:statusline_buf_id,
-        \ v:true,
-        \ {
-        \   'relative': 'editor',
-        \   'width'   : &columns ,
-        \   'height'  : 1,
-        \   'row'     : &lines ,
-        \   'col'     : 10
-        \ })
-  call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
-  call setbufvar(s:statusline_buf_id, '&number', 0)
-  call nvim_buf_set_virtual_text(
-        \ s:statusline_buf_id,
-        \ -1,
-        \ 0,
-        \ [
+function! s:update_statusline() abort
+  call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
-        \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#mode(), 'SpaceVim_statusline_b'],
-        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
-        \ [getcwd(), 'SpaceVim_statusline_c'],
-        \ ['', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#lineNr(), 'SpaceVim_statusline_b'],
-        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
-        \ ],
-        \ {})
+        \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
+        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
+        \ [getcwd() . ' ', 'SpaceVim_statusline_c'],
+        \ [' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#lineNr() . ' ', 'SpaceVim_statusline_b'],
+        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
+        \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
+        \ ])
 endfunction
 
-function! Test_st() abort
-  call s:create_statusline()
+function! s:close_statusline() abort
+  call s:SL.close_float()
 endfunction
 
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{

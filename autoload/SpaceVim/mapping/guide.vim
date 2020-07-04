@@ -16,6 +16,12 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
+let s:SL = SpaceVim#api#import('vim#statusline')
+
+" guide specific var
+
+let s:winid = -1
+let s:bufnr = -1
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -394,7 +400,7 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
-    call s:FLOATING.win_config(win_getid(s:gwin), 
+    call s:FLOATING.win_config(win_getid(s:winid), 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -506,16 +512,13 @@ function! s:build_mpt(mpt) abort
 endfunction
 
 function! s:winopen() abort " {{{
-  if !exists('s:bufnr')
-    let s:bufnr = -1
-  endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if exists('*nvim_open_win')
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
-    call s:FLOATING.open_win(s:bufnr, v:true,
+    let s:winid = s:FLOATING.open_win(s:bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns,
@@ -543,8 +546,8 @@ function! s:winopen() abort " {{{
         autocmd WinLeave <buffer> call s:winclose()
       augroup END
     endif
+    let s:winid = winnr()
   endif
-  let s:gwin = winnr()
   let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
   if exists('&winhighlight')
@@ -560,31 +563,60 @@ function! s:winopen() abort " {{{
   call s:toggle_hide_cursor()
 endfunction " }}}
 
-function! s:updateStatusline() abort
-  call SpaceVim#mapping#guide#theme#hi()
-  let gname = get(s:guide_group, 'name', '')
-  if !empty(gname)
-    let gname = ' - ' . gname[1:]
-    let gname = substitute(gname,' ', '\\ ', 'g')
-  endif
-  let keys = get(s:, 'prefix_key_inp', '')
-  let keys = substitute(keys, '\', '\\\', 'g')
-  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
-        \ '%#LeaderGuiderSep1#' . s:lsep .
-        \ '%#LeaderGuiderName#\ ' .
-        \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . keys . gname
-        \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
-        \ . s:guide_help_msg()
+if exists('*nvim_open_win')
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      " let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    " let keys = substitute(keys, '\', '\\\', 'g')
+    call s:SL.open_float([
+          \ ['Guide: ', 'LeaderGuiderPrompt'],
+          \ [' ', 'LeaderGuiderSep1'],
+          \ [SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname, 'LeaderGuiderName'],
+          \ [' ', 'LeaderGuiderSep2'],
+          \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
+          \ [repeat(' ', 999), 'LeaderGuiderFill'],
+          \ ])
+  endfunction
+  function! s:close_float_statusline() abort
+    call s:SL.close_float()
+  endfunction
+else
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = substitute(keys, '\', '\\\', 'g')
+    exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
+          \ '%#LeaderGuiderSep1#' . s:lsep .
+          \ '%#LeaderGuiderName#\ ' .
+          \ SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname
+          \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
+          \ . s:guide_help_msg(1)
+  endfunction
+endif
+
+function! Test_st() abort
+  call s:updateStatusline()
 endfunction
 
-function! s:guide_help_msg() abort
+function! s:guide_help_msg(escape) abort
   if s:guide_help_mode == 1
     let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
   else
     let msg = ' [C-h paging/help]'
   endif
-  return substitute(msg,' ', '\\ ', 'g')
+  return a:escape ? substitute(msg,' ', '\\ ', 'g') : msg
 endfunction
 
 let s:t_ve = ''
@@ -597,16 +629,21 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  noautocmd execute s:gwin.'wincmd w'
-  if s:gwin == winnr()
-    noautocmd close
-    redraw!
-    exe s:winres
-    let s:gwin = -1
-    noautocmd execute s:winnr.'wincmd w'
-    call winrestview(s:winv)
-    if exists('*nvim_open_win')
-      doautocmd WinEnter
+  if exists('*nvim_win_close')
+    call nvim_win_close(s:winid, 1)
+    call s:close_float_statusline()
+  else
+    noautocmd execute s:winid.'wincmd w'
+    if s:winid == winnr()
+      noautocmd close
+      redraw!
+      exe s:winres
+      let s:winid = -1
+      noautocmd execute s:winnr.'wincmd w'
+      call winrestview(s:winv)
+      if exists('*nvim_open_win')
+        doautocmd WinEnter
+      endif
     endif
   endif
   call s:remove_cursor_highlight()
