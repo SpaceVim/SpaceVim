@@ -810,13 +810,13 @@ endfunction
 function! s:update_statusline() abort
   call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
-        \ ['', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#mode(), 'SpaceVim_statusline_b'],
-        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
-        \ [getcwd(), 'SpaceVim_statusline_c'],
-        \ ['', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#lineNr(), 'SpaceVim_statusline_b'],
-        \ ['', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
+        \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
+        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
+        \ [getcwd() . ' ', 'SpaceVim_statusline_c'],
+        \ [' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
+        \ [SpaceVim#plugins#flygrep#lineNr() . ' ', 'SpaceVim_statusline_b'],
+        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
         \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
         \ ])
 endfunction
