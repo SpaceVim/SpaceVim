@@ -19,7 +19,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
-  let s:project_rooter_ignores = filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"')
+  let s:project_rooter_ignores = map(filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"'), 'v:val[1:]')
 endfunction
 
 function! s:is_ignored_dir(dir) abort
