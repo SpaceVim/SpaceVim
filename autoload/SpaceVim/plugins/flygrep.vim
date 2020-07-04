@@ -808,6 +808,9 @@ endfunction
 " }}}
 
 function! s:update_statusline() abort
+  if !exists('*nvim_open_win')
+    return
+  endif
   call s:SL.open_float([
         \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
         \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
@@ -820,6 +823,7 @@ function! s:update_statusline() abort
         \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
         \ ])
 endfunction
+
 
 function! s:close_statusline() abort
   call s:SL.close_float()
