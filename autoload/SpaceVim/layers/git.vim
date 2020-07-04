@@ -84,6 +84,7 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Git log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Git log', 'git-log-of-current-repo', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'm'], 'Git branch', 'branch-manager', 1)
   endif
   augroup spacevim_layer_git
     autocmd!
@@ -110,7 +111,6 @@ function! SpaceVim#layers#git#config() abort
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', l:stage_hunk_key], '<Plug>(GitGutterStageHunk)', 'stage-current-hunk', 0)
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>(GitGutterUndoHunk)', 'undo-cursor-hunk', 0)
   call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>(GitGutterPreviewHunk)', 'preview-cursor-hunk', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'm'], 'Git branch', 'branch-manager', 1)
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort
