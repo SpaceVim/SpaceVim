@@ -569,17 +569,17 @@ if exists('*nvim_open_win')
     let gname = get(s:guide_group, 'name', '')
     if !empty(gname)
       let gname = ' - ' . gname[1:]
-      let gname = substitute(gname,' ', '\\ ', 'g')
+      " let gname = substitute(gname,' ', '\\ ', 'g')
     endif
     let keys = get(s:, 'prefix_key_inp', '')
-    let keys = substitute(keys, '\', '\\\', 'g')
+    " let keys = substitute(keys, '\', '\\\', 'g')
     call s:SL.open_float([
-          \ ['Guide:', 'LeaderGuiderPrompt'],
-          \ ['', 'LeaderGuiderSep1'],
+          \ ['Guide: ', 'LeaderGuiderPrompt'],
+          \ [' ', 'LeaderGuiderSep1'],
           \ [SpaceVim#mapping#leader#getName(s:prefix_key)
           \ . keys . gname, 'LeaderGuiderName'],
-          \ ['', 'LeaderGuiderSep2'],
-          \ [s:guide_help_msg(), 'LeaderGuiderFill'],
+          \ [' ', 'LeaderGuiderSep2'],
+          \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
           \ [repeat(' ', 999), 'LeaderGuiderFill'],
           \ ])
   endfunction
@@ -602,7 +602,7 @@ else
           \ SpaceVim#mapping#leader#getName(s:prefix_key)
           \ . keys . gname
           \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
-          \ . s:guide_help_msg()
+          \ . s:guide_help_msg(1)
   endfunction
 endif
 
@@ -610,13 +610,13 @@ function! Test_st() abort
   call s:updateStatusline()
 endfunction
 
-function! s:guide_help_msg() abort
+function! s:guide_help_msg(escape) abort
   if s:guide_help_mode == 1
     let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
   else
     let msg = ' [C-h paging/help]'
   endif
-  return substitute(msg,' ', '\\ ', 'g')
+  return a:escape ? substitute(msg,' ', '\\ ', 'g') : msg
 endfunction
 
 let s:t_ve = ''
