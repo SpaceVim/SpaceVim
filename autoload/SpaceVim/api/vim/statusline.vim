@@ -106,7 +106,9 @@ function! s:self.open_float(st) abort
   endif
   call setbufvar(self.__bufnr, '&relativenumber', 0)
   call setbufvar(self.__bufnr, '&number', 0)
+  call setbufvar(self.__bufnr, '&bufhidden', 'wipe')
   call setbufvar(self.__bufnr, '&cursorline', 0)
+  call setbufvar(self.__bufnr, '&modifiable', 0)
   call setwinvar(win_id2win(self.__winid), '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
   call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
   call nvim_buf_set_virtual_text(
