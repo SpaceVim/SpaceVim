@@ -19,7 +19,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
-  let s:project_rooter_ignores = filter(copy(g:spacevim_project_rooter_patterns), 'v:val ~=# "^!"')
+  let s:project_rooter_ignores = filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"')
 endfunction
 
 function! s:is_ignored_dir(dir) abort
@@ -207,7 +207,7 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
 endfunction
 
 let s:FILE = SpaceVim#api#import('file')
