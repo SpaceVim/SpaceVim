@@ -18,6 +18,11 @@ let s:KEY = SpaceVim#api#import('vim#key')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:SL = SpaceVim#api#import('vim#statusline')
 
+" guide specific var
+
+let s:winid = -1
+let s:bufnr = -1
+
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
 endfunction "}}}
@@ -395,7 +400,7 @@ function! s:start_buffer() abort " {{{
 
   setlocal modifiable
   if exists('*nvim_open_win')
-    call s:FLOATING.win_config(win_getid(s:gwin), 
+    call s:FLOATING.win_config(win_getid(s:winid), 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -507,16 +512,13 @@ function! s:build_mpt(mpt) abort
 endfunction
 
 function! s:winopen() abort " {{{
-  if !exists('s:bufnr')
-    let s:bufnr = -1
-  endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if exists('*nvim_open_win')
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif
-    call s:FLOATING.open_win(s:bufnr, v:true,
+    let s:winid = s:FLOATING.open_win(s:bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns,
@@ -544,8 +546,8 @@ function! s:winopen() abort " {{{
         autocmd WinLeave <buffer> call s:winclose()
       augroup END
     endif
+    let s:winid = winnr()
   endif
-  let s:gwin = winnr()
   let s:guide_help_mode = 0
   setlocal filetype=leaderGuide
   if exists('&winhighlight')
@@ -627,22 +629,24 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  noautocmd execute s:gwin.'wincmd w'
-  if s:gwin == winnr()
-    noautocmd close
-    redraw!
-    exe s:winres
-    let s:gwin = -1
-    noautocmd execute s:winnr.'wincmd w'
-    call winrestview(s:winv)
-    if exists('*nvim_open_win')
-      doautocmd WinEnter
+  if exists('*nvim_win_close')
+    call nvim_win_close(s:winid, 1)
+    call s:close_float_statusline()
+  else
+    noautocmd execute s:winid.'wincmd w'
+    if s:winid == winnr()
+      noautocmd close
+      redraw!
+      exe s:winres
+      let s:winid = -1
+      noautocmd execute s:winnr.'wincmd w'
+      call winrestview(s:winv)
+      if exists('*nvim_open_win')
+        doautocmd WinEnter
+      endif
     endif
   endif
   call s:remove_cursor_highlight()
-  if exists('*nvim_open_win')
-    " call s:close_float_statusline()
-  endif
 endfunction " }}}
 function! s:page_down() abort " {{{
   call feedkeys("\<c-c>", 'n')
