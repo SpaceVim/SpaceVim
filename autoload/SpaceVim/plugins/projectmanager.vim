@@ -207,7 +207,11 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  if g:spacevim_project_rooter_outermost
+    return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  else
+    return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  endif
 endfunction
 
 let s:FILE = SpaceVim#api#import('file')

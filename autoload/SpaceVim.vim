@@ -1018,6 +1018,9 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+""
+" Enable/Disable finding outermost directory for project root detection.
+let g:spacevim_project_rooter_outermost = 1
 
 ""
 " Config the command line prompt for flygrep and denite etc.
