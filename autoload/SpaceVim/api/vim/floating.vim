@@ -72,7 +72,7 @@ let s:self = {}
 "
 " Return: ~
 " Window handle, or 0 on error
-function! s:self.open_wind(buffer, options) abort
+function! s:self.open_win(buffer, options) abort
   let col = get(a:options, 'col', 1)
   let row = get(a:options, 'row', 1)
   let width = get(a:options, 'width', 1)
@@ -90,7 +90,11 @@ function! s:self.open_wind(buffer, options) abort
           \ 'minwidth' : width,
           \ }
   endif
-  return popup_creat(a:buffer, opt)
+  return popup_create(a:buffer, opt)
+endfunction
+
+function! SpaceVim#api#vim#floating#get() abort
+  return deepcopy(s:self)
 endfunction
 
 
