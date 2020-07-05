@@ -17,10 +17,19 @@
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:FILE = SpaceVim#api#import('file')
 
+function! s:update_rooter_patterns() abort
+  let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
+  let s:project_rooter_ignores = map(filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"'), 'v:val[1:]')
+endfunction
+
+function! s:is_ignored_dir(dir) abort
+  return len(filter(copy(s:project_rooter_ignores), 'a:dir =~# v:val')) > 0
+endfunction
 
 
 call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
 let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
+call s:update_rooter_patterns()
 
 let s:project_paths = {}
 
@@ -105,6 +114,7 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
   if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
     call setbufvar('%', 'rootDir', '')
     let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
+    call s:update_rooter_patterns()
   endif
   let rootdir = getbufvar('%', 'rootDir', '')
   if empty(rootdir)
@@ -161,7 +171,7 @@ function! s:find_root_directory() abort
   let fd = expand('%:p')
   let dirs = []
   call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
-  for pattern in g:spacevim_project_rooter_patterns
+  for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
       let dir = SpaceVim#util#findDirInParent(pattern, fd)
     else
@@ -171,6 +181,7 @@ function! s:find_root_directory() abort
     if ( ftype ==# 'dir' || ftype ==# 'file' ) 
           \ && dir !=# expand('~/.SpaceVim.d/')
           \ && dir !=# expand('~/.Rprofile')
+          \ && !s:is_ignored_dir(dir)
       let dir = s:FILE.unify_path(fnamemodify(dir, ':p'))
       if ftype ==# 'dir'
         let dir = fnamemodify(dir, ':h:h')
@@ -196,7 +207,11 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  if g:spacevim_project_rooter_outermost
+    return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  else
+    return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  endif
 endfunction
 
 let s:FILE = SpaceVim#api#import('file')

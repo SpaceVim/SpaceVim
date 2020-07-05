@@ -1680,7 +1680,30 @@ which will tell you the functional of all mappings starting with `z`.
 
 ### Managing projects
 
-SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
+SpaceVim will detect the root directory of the project based on `project_rooter_patterns` option, default is:
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+```
+
+The project manager will find outermost directory by default, to find nearest directory,
+you need to change `project_rooter_outermost` to `false`.
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+    project_rooter_outermost = false
+```
+
+when using nearest directory, something we want to ignore some directory,
+for example ignore `node_packages/` directory.
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
+    project_rooter_outermost = false
+```
 
 Project manager commands start with `p`:
 

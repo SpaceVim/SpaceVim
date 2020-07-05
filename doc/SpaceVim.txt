@@ -1135,6 +1135,9 @@ Set the project rooter patterns, by default it is `['.git/', '_darcs/',
                                      *g:spacevim_project_rooter_automatically*
 Enable/Disable changing directory automatically. Enabled by default.
 
+                                         *g:spacevim_project_rooter_outermost*
+Enable/Disable finding outermost directory for project root detection.
+
                                                *g:spacevim_commandline_prompt*
 Config the command line prompt for flygrep and denite etc.
 
