@@ -571,7 +571,7 @@ function! s:winopen() abort " {{{
   return [s:winid, s:bufnr]
 endfunction " }}}
 
-if exists('*nvim_open_win')
+if s:FLOATING.exists()
   function! s:updateStatusline() abort
     call SpaceVim#mapping#guide#theme#hi()
     let gname = get(s:guide_group, 'name', '')

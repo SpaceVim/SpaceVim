@@ -7,7 +7,11 @@
 "=============================================================================
 
 let s:self = {}
-let s:self.__floating = SpaceVim#api#import('neovim#floating')
+if has('nvim')
+  let s:self.__floating = SpaceVim#api#import('neovim#floating')
+else
+  let s:self.__floating = SpaceVim#api#import('vim#floating')
+endif
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -120,14 +124,9 @@ function! s:self.open_float(st) abort
   redraw!
 endfunction
 
-if exists('*nvim_win_close')
+if s:self.__floating.exists()
   function! s:self.close_float() abort
-    " @fixme: nvim_win_close only support one argv in old version
-    try
-      call nvim_win_close(self.__winid, 1)
-    catch /^Vim\%((\a\+)\)\=:E118/
-      call nvim_win_close(self.__winid)
-    endtry
+    call self.__floating.win_close(self.__winid, 1)
   endfunction
 else
   function! s:self.close_float() abort
