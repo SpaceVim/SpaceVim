@@ -12,6 +12,7 @@ if has('nvim')
 else
   let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
+let s:self.__buffer = SpaceVim#api#import('vim#buffer')
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -94,7 +95,7 @@ endfunction
 
 function! s:self.open_float(st) abort
   if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
-    let self.__bufnr = nvim_create_buf(0,0)
+    let self.__bufnr = self.__buffer.bufadd('')
   endif
   if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
   else
