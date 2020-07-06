@@ -93,6 +93,10 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
   return l[:-4]
 endfunction
 
+function! s:self.support_float() abort
+  return exists('*nvim_buf_set_virtual_text')
+endfunction
+
 function! s:self.open_float(st) abort
   if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
     let self.__bufnr = self.__buffer.bufadd('')

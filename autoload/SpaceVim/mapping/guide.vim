@@ -582,7 +582,7 @@ function! s:winopen() abort " {{{
   return [s:winid, s:bufnr]
 endfunction " }}}
 
-if s:FLOATING.exists()
+if s:SL.support_float()
   function! s:updateStatusline() abort
     call SpaceVim#mapping#guide#theme#hi()
     let gname = get(s:guide_group, 'name', '')
@@ -615,13 +615,13 @@ else
     endif
     let keys = get(s:, 'prefix_key_inp', '')
     let keys = substitute(keys, '\', '\\\', 'g')
-    exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
+    call setbufvar(s:bufnr, '&statusline', '%#LeaderGuiderPrompt#\ Guide:\ ' .
           \ '%#LeaderGuiderSep1#' . s:lsep .
           \ '%#LeaderGuiderName#\ ' .
           \ SpaceVim#mapping#leader#getName(s:prefix_key)
           \ . keys . gname
           \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
-          \ . s:guide_help_msg(1)
+          \ . s:guide_help_msg(1))
   endfunction
 endif
 
