@@ -72,7 +72,7 @@ let s:self = {}
 "
 " Return: ~
 " Window handle, or 0 on error
-function! s:self.open_win(buffer, options) abort
+function! s:self.open_win(buffer, focuce, options) abort
   let col = get(a:options, 'col', 1)
   let row = get(a:options, 'row', 1)
   let width = get(a:options, 'width', 1)
@@ -91,6 +91,14 @@ function! s:self.open_win(buffer, options) abort
           \ }
   endif
   return popup_create(a:buffer, opt)
+endfunction
+
+function! s:self.win_config(winid, options) abort
+  
+endfunction
+
+function! s:self.exists() abort
+  return exists('*popup_create')
 endfunction
 
 function! SpaceVim#api#vim#floating#get() abort
