@@ -395,7 +395,7 @@ function! s:start_buffer() abort " {{{
   let s:winv = winsaveview()
   let s:winnr = winnr()
   let s:winres = winrestcmd()
-  [s:winid, s:bufnr] = s:winopen()
+  let [s:winid, s:bufnr] = s:winopen()
   let layout = s:calc_layout()
   let string = s:create_string(layout)
 
@@ -424,9 +424,9 @@ function! s:start_buffer() abort " {{{
   if s:FLOATING.exists()
     " when using floating windows, and the flaating windows do not support
     " statusline, add extra black line at top and button of the content.
-    call s:BUFFER.buf_set_lines(s:bufnr, 1, -1, 0, [''] + split(string, "\n") + [''])
+    call s:BUFFER.buf_set_lines(s:bufnr, 0, -1, 0, [''] + split(string, "\n") + [''])
   else
-    call s:BUFFER.buf_set_lines(s:bufnr, 1, -1, 0, split(string, "\n"))
+    call s:BUFFER.buf_set_lines(s:bufnr, 0, -1, 0, split(string, "\n"))
   endif
   call setbufvar(s:bufnr, '&modifiable', 0)
   redraw!
@@ -568,6 +568,7 @@ function! s:winopen() abort " {{{
   " setlocal listchars=
   call s:updateStatusline()
   call s:toggle_hide_cursor()
+  return [s:winid, s:bufnr]
 endfunction " }}}
 
 if exists('*nvim_open_win')
