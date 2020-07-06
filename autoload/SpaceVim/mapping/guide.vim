@@ -637,8 +637,8 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  if exists('*nvim_win_close')
-    call nvim_win_close(s:winid, 1)
+  if s:FLOATING.exists()
+    s:FLOATING.win_close(s:winid, 1)
     call s:close_float_statusline()
   else
     noautocmd execute s:winid.'wincmd w'

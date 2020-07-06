@@ -68,6 +68,10 @@ function! s:self.win_config(winid, opt) abort
 endfunction
 
 
+function! s:self.win_close(id, focuce) abort
+  return nvim_win_close(a:id, a:focuce)
+endfunction
+
 function! SpaceVim#api#neovim#floating#get() abort
   return deepcopy(s:self)
 endfunction

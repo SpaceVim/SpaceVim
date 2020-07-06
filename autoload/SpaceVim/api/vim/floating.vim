@@ -118,6 +118,10 @@ function! s:self.exists() abort
   return exists('*popup_create')
 endfunction
 
+function! s:self.win_close(id, focuce) abort
+  return popup_close(a:id)
+endfunction
+
 function! SpaceVim#api#vim#floating#get() abort
   return deepcopy(s:self)
 endfunction
