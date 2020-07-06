@@ -515,10 +515,13 @@ function! s:build_mpt(mpt) abort
   echohl NONE
 endfunction
 
+
+" change this func, do not focus to the new windows, and return winid.
+
 function! s:winopen() abort " {{{
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
-  if exists('*nvim_open_win')
+  if s:FLOATING.exists()
     if !bufexists(s:bufnr)
       let s:bufnr = nvim_create_buf(v:false,v:false)
     endif

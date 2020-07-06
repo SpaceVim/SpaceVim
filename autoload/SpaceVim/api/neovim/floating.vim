@@ -8,6 +8,10 @@
 
 
 let s:self = {}
+
+function! s:self.exists() abort
+  return exists('*nvim_open_win')
+endfunction
 " in old version nvim_open_win api is:
 "    call nvim_open_win(s:bufnr, v:true, &columns, 12,
 "         \ {
