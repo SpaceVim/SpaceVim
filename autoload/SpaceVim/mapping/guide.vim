@@ -15,7 +15,11 @@ scriptencoding utf-8
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
-let s:FLOATING = SpaceVim#api#import('neovim#floating')
+if has('nvim')
+  let s:FLOATING = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOATING = SpaceVim#api#import('vim#floating')
+endif
 let s:SL = SpaceVim#api#import('vim#statusline')
 
 " guide specific var
