@@ -21,6 +21,7 @@ else
   let s:FLOATING = SpaceVim#api#import('vim#floating')
 endif
 let s:SL = SpaceVim#api#import('vim#statusline')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 " guide specific var
 
@@ -394,7 +395,7 @@ function! s:start_buffer() abort " {{{
   let s:winv = winsaveview()
   let s:winnr = winnr()
   let s:winres = winrestcmd()
-  call s:winopen()
+  [s:winid, s:bufnr] = s:winopen()
   let layout = s:calc_layout()
   let string = s:create_string(layout)
 
@@ -402,8 +403,8 @@ function! s:start_buffer() abort " {{{
     let layout.win_dim = min([g:leaderGuide_max_size, layout.win_dim])
   endif
 
-  setlocal modifiable
-  if exists('*nvim_open_win')
+  call setbufvar(s:bufnr, '&modifiable', 1)
+  if s:FLOATING.exists()
     call s:FLOATING.win_config(win_getid(s:winid), 
           \ {
           \ 'relative': 'editor',
@@ -420,15 +421,14 @@ function! s:start_buffer() abort " {{{
       noautocmd execute 'res '.layout.win_dim
     endif
   endif
-  normal! gg"_dd
-  if exists('*nvim_open_win')
+  if s:FLOATING.exists()
     " when using floating windows, and the flaating windows do not support
     " statusline, add extra black line at top and button of the content.
-    call setline(1, [''] + split(string, "\n") + [''])
+    call s:BUFFER.buf_set_lines(s:bufnr, 1, -1, 0, [''] + split(string, "\n") + [''])
   else
-    call setline(1, split(string, "\n"))
+    call s:BUFFER.buf_set_lines(s:bufnr, 1, -1, 0, split(string, "\n"))
   endif
-  setlocal nomodifiable
+  call setbufvar(s:bufnr, '&modifiable', 0)
   redraw!
   call s:wait_for_input()
 endfunction " }}}
