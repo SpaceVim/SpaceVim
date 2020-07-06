@@ -347,8 +347,6 @@ function! s:create_string(layout) abort " {{{
   endfor
   call insert(r, '')
   let output = join(r, "\n ")
-  cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <C-h> <LGCMD>paging_help<CR>
   return output
 endfunction " }}}
 
