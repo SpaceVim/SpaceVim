@@ -523,7 +523,7 @@ function! s:winopen() abort " {{{
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if s:FLOATING.exists()
     if !bufexists(s:bufnr)
-      let s:bufnr = nvim_create_buf(v:false,v:false)
+      let s:bufnr = s:BUFFER.bufadd('')
     endif
     let s:winid = s:FLOATING.open_win(s:bufnr, v:true,
           \ {
