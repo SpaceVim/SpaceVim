@@ -94,7 +94,24 @@ function! s:self.open_win(buffer, focuce, options) abort
 endfunction
 
 function! s:self.win_config(winid, options) abort
-  
+  let col = get(a:options, 'col', 1)
+  let row = get(a:options, 'row', 1)
+  let width = get(a:options, 'width', 1)
+  let height = get(a:options, 'height', 1) 
+  let relative = get(a:options, 'relative', 'editor')
+  if relative ==# 'win'
+  elseif relative ==# 'cursor'
+  elseif relative ==# 'editor'
+    let opt = {
+          \ 'line' : row,
+          \ 'col' : col,
+          \ 'maxheight' : height,
+          \ 'minheight' : height,
+          \ 'maxwidth' : width,
+          \ 'minwidth' : width,
+          \ }
+  endif
+  return popup_setoptions(a:winid, opt)
 endfunction
 
 function! s:self.exists() abort
