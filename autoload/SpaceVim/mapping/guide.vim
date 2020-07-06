@@ -556,14 +556,25 @@ function! s:winopen() abort " {{{
     let s:winid = winnr()
   endif
   let s:guide_help_mode = 0
-  setlocal filetype=leaderGuide
+  call setbufvar(s:bufnr, '&filetype', 'leaderGuide')
+  call setbufvar(s:bufnr, '&number', 0)
+  call setbufvar(s:bufnr, '&relativenumber', 0)
+  call setbufvar(s:bufnr, '&list', 0)
+  call setbufvar(s:bufnr, '&modeline', 0)
+  call setbufvar(s:bufnr, '&wrap', 0)
+  call setbufvar(s:bufnr, '&buflisted', 0)
+  call setbufvar(s:bufnr, '&buftype', 'nofile')
+  call setbufvar(s:bufnr, '&bufhidden', 'unload')
+  call setbufvar(s:bufnr, '&swapfile', 0)
+  call setbufvar(s:bufnr, '&cursorline', 0)
+  call setbufvar(s:bufnr, '&cursorcolumn', 0)
+  call setbufvar(s:bufnr, '&colorcolumn', '')
+  call setbufvar(s:bufnr, '&winfixwidth', 1)
+  call setbufvar(s:bufnr, '&winfixheight', 1)
+
   if exists('&winhighlight')
     set winhighlight=Normal:Pmenu
   endif
-  setlocal nonumber norelativenumber nolist nomodeline nowrap
-  setlocal nobuflisted buftype=nofile bufhidden=unload noswapfile
-  setlocal nocursorline nocursorcolumn colorcolumn=
-  setlocal winfixwidth winfixheight
   " @fixme not sure if the listchars should be changed!
   " setlocal listchars=
   call s:updateStatusline()
