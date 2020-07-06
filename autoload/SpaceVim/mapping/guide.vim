@@ -648,7 +648,7 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  if s:FLOATING.exists()
+  if s:SL.support_float()
     call s:FLOATING.win_close(s:winid, 1)
     call s:close_float_statusline()
   else
