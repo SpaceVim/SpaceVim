@@ -245,7 +245,7 @@ function! s:start_replace() abort
   catch
   endtr
   if s:grepid != 0
-      call s:JOB.stop(s:grepid)
+    call s:JOB.stop(s:grepid)
   endif
   let replace_text = s:current_grep_pattern
   if !empty(replace_text)
@@ -308,7 +308,7 @@ let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
 function! s:close_buffer() abort
   " NOTE: the jobid maybe -1, that is means the cmd is not executable.
   if s:grepid > 0
-      call s:JOB.stop(s:grepid)
+    call s:JOB.stop(s:grepid)
   endif
   call timer_stop(s:grep_timer_id)
   call timer_stop(s:preview_timer_id)
@@ -730,7 +730,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')
   if exists('*nvim_open_win')
-    let s:buffer_id = nvim_create_buf(v:false, v:false)
+    let s:buffer_id = s:BUFFER.bufadd('')
     let flygrep_win_height = 16
     let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
@@ -798,7 +798,9 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " sometimes user can not see the flygrep windows, redraw only once.
   redraw
   call s:MPT.open()
-  call s:close_statusline()
+  if s:SL.support_float()
+    call s:close_statusline()
+  endif
   call SpaceVim#logger#info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
   if has('gui_running')
