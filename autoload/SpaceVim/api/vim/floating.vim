@@ -82,7 +82,7 @@ function! s:self.open_win(buffer, focuce, options) abort
   elseif relative ==# 'cursor'
   elseif relative ==# 'editor'
     let opt = {
-          \ 'line' : row,
+          \ 'line' : row + 1,
           \ 'col' : col,
           \ 'maxheight' : height,
           \ 'minheight' : height,
@@ -103,7 +103,7 @@ function! s:self.win_config(winid, options) abort
   elseif relative ==# 'cursor'
   elseif relative ==# 'editor'
     let opt = {
-          \ 'line' : row,
+          \ 'line' : row + 1,
           \ 'col' : col,
           \ 'maxheight' : height,
           \ 'minheight' : height,
