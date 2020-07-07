@@ -405,7 +405,7 @@ function! s:start_buffer() abort " {{{
 
   call setbufvar(s:bufnr, '&modifiable', 1)
   if s:FLOATING.exists()
-    call s:FLOATING.win_config(win_getid(s:winid), 
+    let rst = s:FLOATING.win_config(win_getid(s:winid), 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -413,6 +413,9 @@ function! s:start_buffer() abort " {{{
           \ 'row'     : &lines - layout.win_dim - 4,
           \ 'col'     : 0
           \ })
+    call SpaceVim#logger#info(rst)
+    call SpaceVim#logger#info('row:')
+    call SpaceVim#logger#info(&lines - layout.win_dim - 4)
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
