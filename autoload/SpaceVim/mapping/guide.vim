@@ -405,7 +405,7 @@ function! s:start_buffer() abort " {{{
 
   call setbufvar(s:bufnr, '&modifiable', 1)
   if s:FLOATING.exists()
-    let rst = s:FLOATING.win_config(win_getid(s:winid), 
+    let rst = s:FLOATING.win_config(s:winid, 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
