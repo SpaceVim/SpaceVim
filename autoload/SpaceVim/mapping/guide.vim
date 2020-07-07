@@ -409,7 +409,6 @@ function! s:start_buffer() abort " {{{
           \ 'row'     : &lines - layout.win_dim - 4,
           \ 'col'     : 0
           \ })
-
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
