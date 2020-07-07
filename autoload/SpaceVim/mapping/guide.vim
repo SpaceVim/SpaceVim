@@ -250,7 +250,6 @@ function! s:escape_keys(inp) abort " {{{
   return substitute(ret, '|', '<Bar>', '')
 endfunction " }}}
 
-
 function! s:calc_layout() abort " {{{
   let ret = {}
   let smap = filter(copy(s:lmap), 'v:key !=# "name"')
@@ -265,8 +264,8 @@ function! s:calc_layout() abort " {{{
     let ret.col_width = maxlength
     let ret.win_dim = ret.n_cols * ret.col_width
   else
-    let ret.n_cols = winwidth(0) >= maxlength ? winwidth(0) / maxlength : 1
-    let ret.col_width = winwidth(0) / ret.n_cols
+    let ret.n_cols = winwidth(s:winid) >= maxlength ? winwidth(s:winid) / maxlength : 1
+    let ret.col_width = winwidth(s:winid) / ret.n_cols
     let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
     let ret.win_dim = ret.n_rows
   endif
