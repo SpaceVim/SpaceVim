@@ -344,8 +344,7 @@ function! s:create_string(layout) abort " {{{
       let mlen = strdisplaywidth(line)
     endif
   endfor
-  call insert(r, '')
-  let output = join(r, "\n ")
+  let output = join(r, "\n")
   return output
 endfunction " }}}
 
