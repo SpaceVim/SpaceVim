@@ -393,11 +393,7 @@ function! s:start_buffer() abort " {{{
   let s:winres = winrestcmd()
   let [s:winid, s:bufnr] = s:winopen()
   let layout = s:calc_layout()
-  call SpaceVim#logger#info(string(layout))
   let string = s:create_string(layout)
-  for str in split(string, "\n")
-    call SpaceVim#logger#info(str)
-  endfor
 
   if g:leaderGuide_max_size
     let layout.win_dim = min([g:leaderGuide_max_size, layout.win_dim])
@@ -413,9 +409,6 @@ function! s:start_buffer() abort " {{{
           \ 'row'     : &lines - layout.win_dim - 4,
           \ 'col'     : 0
           \ })
-    call SpaceVim#logger#info(rst)
-    call SpaceVim#logger#info('row:')
-    call SpaceVim#logger#info(&lines - layout.win_dim - 4)
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
