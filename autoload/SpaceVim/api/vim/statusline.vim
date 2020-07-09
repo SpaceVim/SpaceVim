@@ -145,6 +145,37 @@ function! s:self.open_float(st) abort
       call SpaceVim#logger#info(hg)
       call SpaceVim#logger#info(begin)
       call SpaceVim#logger#info(end)
+      " Guide:  [SPC] [C-h paging/help]
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ] Guide:
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderPrompt
+      " [ SpaceVim ] [22:37:29] [ Info ] 1
+      " [ SpaceVim ] [22:37:29] [ Info ] 7
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ] 
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderSep1
+      " [ SpaceVim ] [22:37:29] [ Info ] 8
+      " [ SpaceVim ] [22:37:29] [ Info ] 2
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ] [SPC]
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderName
+      " [ SpaceVim ] [22:37:29] [ Info ] 10
+      " [ SpaceVim ] [22:37:29] [ Info ] 5
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ] 
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderSep2
+      " [ SpaceVim ] [22:37:29] [ Info ] 15
+      " [ SpaceVim ] [22:37:29] [ Info ] 2
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ]  [C-h paging/help]
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderFill
+      " [ SpaceVim ] [22:37:29] [ Info ] 17
+      " [ SpaceVim ] [22:37:29] [ Info ] 18
+      " [ SpaceVim ] [22:37:29] [ Info ] fuck debug:
+      " [ SpaceVim ] [22:37:29] [ Info ]
+      " [ SpaceVim ] [22:37:29] [ Info ] LeaderGuiderFill
+      " [ SpaceVim ] [22:37:29] [ Info ] 35
+      " [ SpaceVim ] [22:37:29] [ Info ] 999
       call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
       let begin += end
     endfor
