@@ -140,7 +140,7 @@ function! s:self.open_float(st) abort
     let end = 0
     for [str, hg] in a:st
       let end += strchars(str)
-      call win_execute(self.__winid, 'call matchaddpos(hg, [[1, begin, end]])')
+      call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
       let begin = end
     endfor
   endif
