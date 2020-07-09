@@ -139,7 +139,7 @@ function! s:self.open_float(st) abort
     let begin = 1
     let end = 0
     for [str, hg] in a:st
-      let end = strchars(str)
+      let end = strlen(str)
       call SpaceVim#logger#info('fuck debug: ')
       call SpaceVim#logger#info(str)
       call SpaceVim#logger#info(hg)
