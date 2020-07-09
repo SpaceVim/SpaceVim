@@ -131,17 +131,17 @@ function! s:self.open_float(st) abort
           \ a:st,
           \ {})
   else
-    let l = ' '
+    let l = ''
     for [str, hg] in a:st
       let l .= str
     endfor
     call self.__buffer.buf_set_lines(self.__bufnr, 0, -1, 0, [l])
-    let begin = 0
+    let begin = 1
     let end = 0
     for [str, hg] in a:st
-      let end += strchars(str)
+      let end = strchars(str)
       call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
-      let begin = end
+      let begin += end
     endfor
   endif
   call setbufvar(self.__bufnr, '&modifiable', 0)
