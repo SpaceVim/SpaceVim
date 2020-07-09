@@ -13,6 +13,7 @@ else
   let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -135,6 +136,13 @@ function! s:self.open_float(st) abort
       let l .= str
     endfor
     call self.__buffer.buf_set_lines(self.__bufnr, 0, -1, 0, [l])
+    let begin = 0
+    let end = 0
+    for [str, hg] in a:st
+      let end += strchars(str)
+      call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [0, begin, end])')
+      let begin = end
+    endfor
   endif
   call setbufvar(self.__bufnr, '&modifiable', 0)
   redraw!
