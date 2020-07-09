@@ -140,6 +140,11 @@ function! s:self.open_float(st) abort
     let end = 0
     for [str, hg] in a:st
       let end = strchars(str)
+      call SpaceVim#logger#info('fuck debug: ')
+      call SpaceVim#logger#info(str)
+      call SpaceVim#logger#info(hg)
+      call SpaceVim#logger#info(begin)
+      call SpaceVim#logger#info(end)
       call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
       let begin += end
     endfor
