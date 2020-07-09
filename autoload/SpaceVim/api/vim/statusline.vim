@@ -13,6 +13,7 @@ else
   let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 
 function! s:self.check_width(len, sec, winwidth) abort
@@ -94,7 +95,7 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
 endfunction
 
 function! s:self.support_float() abort
-  return exists('*nvim_buf_set_virtual_text')
+  return self.__floating.exists()
 endfunction
 
 function! s:self.open_float(st) abort
@@ -106,28 +107,44 @@ function! s:self.open_float(st) abort
     let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
           \ {
-          \   'relative': 'editor',
-          \ 'width'   : &columns,
-          \ 'height'  : 1,
-          \   'row': &lines ,
-          \   'col': 10
+          \  'relative': 'editor',
+          \  'width'   : &columns,
+          \  'height'  : 1,
+          \  'row': &lines - 2 ,
+          \  'col': 0
           \ })
   endif
   call setbufvar(self.__bufnr, '&relativenumber', 0)
   call setbufvar(self.__bufnr, '&number', 0)
   call setbufvar(self.__bufnr, '&bufhidden', 'wipe')
   call setbufvar(self.__bufnr, '&cursorline', 0)
-  call setbufvar(self.__bufnr, '&modifiable', 0)
-  if exists('&winhighlight')
-    call setwinvar(win_id2win(self.__winid), '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
+  call setbufvar(self.__bufnr, '&modifiable', 1)
+  if exists('*nvim_buf_set_virtual_text')
+    if exists('&winhighlight')
+      call setwinvar(win_id2win(self.__winid), '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
+    endif
+    call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
+    call nvim_buf_set_virtual_text(
+          \ self.__bufnr,
+          \ -1,
+          \ 0,
+          \ a:st,
+          \ {})
+  else
+    let l = ''
+    for [str, hg] in a:st
+      let l .= str
+    endfor
+    call self.__buffer.buf_set_lines(self.__bufnr, 0, -1, 0, [l])
+    let begin = 1
+    let end = 0
+    for [str, hg] in a:st
+      let end = strlen(str)
+      call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
+      let begin += end
+    endfor
   endif
-  call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
-  call nvim_buf_set_virtual_text(
-        \ self.__bufnr,
-        \ -1,
-        \ 0,
-        \ a:st,
-        \ {})
+  call setbufvar(self.__bufnr, '&modifiable', 0)
   redraw!
 endfunction
 
