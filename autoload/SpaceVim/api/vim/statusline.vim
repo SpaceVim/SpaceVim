@@ -106,11 +106,11 @@ function! s:self.open_float(st) abort
     let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
           \ {
-          \   'relative': 'editor',
-          \ 'width'   : &columns,
-          \ 'height'  : 1,
-          \   'row': &lines ,
-          \   'col': 0
+          \  'relative': 'editor',
+          \  'width'   : &columns,
+          \  'height'  : 1,
+          \  'row': &lines - 2 ,
+          \  'col': 0
           \ })
   endif
   call setbufvar(self.__bufnr, '&relativenumber', 0)
