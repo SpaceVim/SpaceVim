@@ -30,15 +30,19 @@ endfunction
 "         \ })
 function! s:self.open_win(buf, focuce, opt) abort
   try
-    return nvim_open_win(a:buf, a:focuce, a:opt)
+    let id = nvim_open_win(a:buf, a:focuce, a:opt)
   catch /^Vim\%((\a\+)\)\=:E119/
-    return nvim_open_win(a:buf, a:focuce, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
+    let id =  nvim_open_win(a:buf, a:focuce, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
           \ {
           \ 'relative' : get(a:opt, 'relative', 'editor'),
           \ 'row' : get(a:opt, 'row', 5),
           \ 'col' : get(a:opt, 'col', 5),
           \ }) 
   endtry
+  if exists('&winhighlight') && id !=# 0 && has_key(a:opt, 'highlight')
+    call setwinvar(id, '&winhighlight', 'Normal:' . a:opt.highlight)
+  endif
+  return id
 endfunction
 
 function! s:self.win_config(winid, opt) abort
@@ -48,16 +52,16 @@ function! s:self.win_config(winid, opt) abort
   " 3：最新版本名称为 nvim_win_set_config，只接受 2 个参数
   " 这里实现的逻辑就是优先使用最新的api调用方式，当报错时顺历史变更顺序去尝试。
   try
-    return nvim_win_set_config(a:winid, a:opt)
+    let id = nvim_win_set_config(a:winid, a:opt)
   catch /^Vim\%((\a\+)\)\=:E119/
-    return nvim_win_set_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
+    let id = nvim_win_set_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
           \ {
           \ 'relative' : get(a:opt, 'relative', 'editor'),
           \ 'row' : get(a:opt, 'row', 5),
           \ 'col' : get(a:opt, 'col', 5),
           \ }) 
   catch /^Vim\%((\a\+)\)\=:E117/
-    return nvim_win_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
+    let id = nvim_win_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
           \ {
           \ 'relative' : get(a:opt, 'relative', 'editor'),
           \ 'row' : get(a:opt, 'row', 5),
@@ -65,6 +69,10 @@ function! s:self.win_config(winid, opt) abort
           \ }) 
   endtry
 
+  if exists('&winhighlight') && id !=# 0 && has_key(a:opt, 'highlight')
+    call setwinvar(id, '&winhighlight', 'Normal:' . a:opt.highlight)
+  endif
+  return id
 endfunction
 
 
