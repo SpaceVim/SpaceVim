@@ -107,11 +107,12 @@ function! s:self.open_float(st) abort
     let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
           \ {
-          \  'relative': 'editor',
-          \  'width'   : &columns,
-          \  'height'  : 1,
-          \  'row': &lines - 2 ,
-          \  'col': 0
+          \ 'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 1,
+          \ 'highlight' : 'SpaceVim_statusline_a_bold',
+          \ 'row': &lines - 2 ,
+          \ 'col': 0
           \ })
   endif
   call setbufvar(self.__bufnr, '&relativenumber', 0)
@@ -120,9 +121,6 @@ function! s:self.open_float(st) abort
   call setbufvar(self.__bufnr, '&cursorline', 0)
   call setbufvar(self.__bufnr, '&modifiable', 1)
   if exists('*nvim_buf_set_virtual_text')
-    if exists('&winhighlight')
-      call setwinvar(win_id2win(self.__winid), '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
-    endif
     call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
     call nvim_buf_set_virtual_text(
           \ self.__bufnr,
