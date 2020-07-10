@@ -8,6 +8,7 @@
 
 
 let s:self = {}
+let s:self.__dict = SpaceVim#api#import('data#dict')
 
 function! s:self.exists() abort
   return exists('*nvim_open_win')
@@ -29,8 +30,14 @@ endfunction
 "         \ 'col'     : 0
 "         \ })
 function! s:self.open_win(buf, focuce, opt) abort
+  if has_key(a:opt, 'highlight')
+    let hg = a:opt.highlight
+    let opt = self.__dict.omit(a:opt, ['highlight'])
+  else
+    let opt = a:opt
+  endif
   try
-    let id = nvim_open_win(a:buf, a:focuce, a:opt)
+    let id = nvim_open_win(a:buf, a:focuce, opt)
   catch /^Vim\%((\a\+)\)\=:E119/
     let id =  nvim_open_win(a:buf, a:focuce, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
           \ {
@@ -51,8 +58,14 @@ function! s:self.win_config(winid, opt) abort
   " 2：名称被重命名为 nvim_win_set_config，并且任然接受四个参数
   " 3：最新版本名称为 nvim_win_set_config，只接受 2 个参数
   " 这里实现的逻辑就是优先使用最新的api调用方式，当报错时顺历史变更顺序去尝试。
+  if has_key(a:opt, 'highlight')
+    let hg = a:opt.highlight
+    let opt = self.__dict.omit(a:opt, ['highlight'])
+  else
+    let opt = a:opt
+  endif
   try
-    let id = nvim_win_set_config(a:winid, a:opt)
+    let id = nvim_win_set_config(a:winid, opt)
   catch /^Vim\%((\a\+)\)\=:E119/
     let id = nvim_win_set_config(a:winid, get(a:opt, 'width', 5), get(a:opt, 'height', 5), 
           \ {
