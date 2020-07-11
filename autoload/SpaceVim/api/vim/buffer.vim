@@ -81,6 +81,22 @@ function! s:self.bufadd(name) abort
     return nr
   endif
 endfunction
+if exists('*nvim_create_buf')
+  function! s:self.create_buf(listed, scratch) abort
+    return nvim_create_buf(a:listed, a:scratch)
+  endfunction
+else
+  function! s:self.create_buf(listed, scratch) abort
+    let bufnr = self.bufadd('')
+    call setbufvar(bufnr, '&buflisted', a:listed)
+    if a:scratch
+      call setbufvar(bufnr, '&swapfile', 0)
+      call setbufvar(bufnr, '&bufhidden', 'hide')
+      call setbufvar(bufnr, '&buftype', 'nofile')
+    endif
+    return bufnr
+  endfunction
+endif
 
 function! s:self.open(opts) abort
   let buf = get(a:opts, 'bufname', '')
