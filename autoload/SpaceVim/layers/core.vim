@@ -288,7 +288,8 @@ function! SpaceVim#layers#core#config() abort
   " Toggles the comment state of the selected line(s). If the topmost selected
   " line is commented, all selected lines are uncommented and vice versa.
   nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
-  nnoremap <silent> <Plug>CommenterInvertYank :call <SID>comment_invert_yank()<Cr>
+  nnoremap <silent> <Plug>CommenterInvertYank :call <SID>comment_invert_yank(0)<Cr>
+  vnoremap <silent> <Plug>CommenterInvertYank :call <SID>comment_invert_yank(1)<Cr>
   nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
   nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
   nnoremap <silent> <Plug>CommentParagraphsInvert :call <SID>comment_paragraphs(1)<Cr>
@@ -728,11 +729,12 @@ function! s:comment_to_line(invert) abort
   endif
 endfunction
 
-function! s:comment_invert_yank() abort
-  if mode() ==# 'n'
+function! s:comment_invert_yank(visual) range abort
+  if a:visual
+    normal! gvy
+    normal! gv
+  else
     normal! yy
-  elseif mode() ==? 'v'
-    normal! y
   endif
   call feedkeys("\<Plug>NERDCommenterInvert")
 endfunction
