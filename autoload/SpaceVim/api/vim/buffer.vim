@@ -88,7 +88,9 @@ if exists('*nvim_create_buf')
 else
   function! s:self.create_buf(listed, scratch) abort
     let bufnr = self.bufadd('')
-    call setbufvar(bufnr, '&buflisted', a:listed)
+    " in vim, a:listed must be number, what the fuck!
+    " why can not use v:true and v:false
+    call setbufvar(bufnr, '&buflisted', a:listed ? 1 : 0)
     if a:scratch
       call setbufvar(bufnr, '&swapfile', 0)
       call setbufvar(bufnr, '&bufhidden', 'hide')
