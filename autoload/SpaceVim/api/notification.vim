@@ -116,7 +116,11 @@ function! s:self.redraw_windows() abort
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
   let self.begin_row = 2
   for hashkey in keys(s:notifications)
-    let self.begin_row += len(s:notifications[hashkey].message) + 2
+    if hashkey !=# self.hashkey
+      let self.begin_row += len(s:notifications[hashkey].message) + 2
+    else
+      break
+    endif
   endfor
   if self.win_is_open
     call self.__floating.win_config(self.winid,
