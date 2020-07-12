@@ -9,6 +9,7 @@
 
 " Global values, this can be used between different notification
 
+let s:notifications = []
 
 " dictionary values and functions
 
@@ -23,6 +24,7 @@ let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└'
 let s:self.title = ''
 let s:self.win_is_open = 0
 let s:self.timeout = 3000
+let s:self.hashkey = ''
 
 if has('nvim')
   let s:self.__floating = SpaceVim#api#import('neovim#floating')
@@ -30,6 +32,7 @@ else
   let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__password = SpaceVim#api#import('password')
 
 function! s:self.draw_border(title, width, height) abort
   let top = self.borderchars[4] .
@@ -77,6 +80,7 @@ function! s:self.close(...) dict
   if len(self.message) == 0
     noautocmd call self.__floating.win_close(self.border.winid, v:true)
     noautocmd call self.__floating.win_close(self.winid, v:true)
+    call remove(s:notifications, self.hashkey)
     let self.win_is_open = v:false
   else
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
@@ -113,6 +117,9 @@ function! s:self.notification(msg, color) abort
   endif
   if !bufexists(self.bufnr)
     let self.bufnr = self.__buffer.create_buf(0, 0)
+  endif
+  if empty(self.hashkey)
+    let self.hashkey = self.__password.generate_simple(10)
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(self.message)))
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
@@ -166,6 +173,7 @@ function! s:self.notification(msg, color) abort
   call setbufvar(self.border.bufnr, '&number', 0)
   call setbufvar(self.border.bufnr, '&relativenumber', 0)
   call setbufvar(self.border.bufnr, '&buftype', 'nofile')
+  call extend(s:notifications, {self.hashkey : self})
   call timer_start(self.timeout, self.close, {'repeat' : 1})
 endfunction
 
