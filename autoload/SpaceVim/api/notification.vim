@@ -133,9 +133,10 @@ function! s:self.notification(msg, color) abort
     let self.win_is_open = v:true
   endif
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
-  " if exists('&winhighlight')
-    " call setbufvar(self.bufnr, '&winhighlight', 'Normal:' . a:color)
-  " endif
+  if exists('&winhighlight')
+    call setbufvar(self.bufnr, '&winhighlight', 'Normal:Pmenu')
+    call setbufvar(self.border.bufnr, '&winhighlight', 'Normal:Pmenu')
+  endif
   call setbufvar(self.bufnr, '&number', 0)
   call setbufvar(self.bufnr, '&relativenumber', 0)
   call setbufvar(self.bufnr, '&buftype', 'nofile')
