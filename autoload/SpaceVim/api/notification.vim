@@ -95,13 +95,21 @@ function! s:self.notification(msg, color) abort
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg) + 1, 1 + len(s:shown) + 2))
   if self.win_is_open
-    call self.__floating.win_config(s:notification_winid,
+    call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg), 
           \ 'height'  : 1 + len(s:shown),
           \ 'row': 2,
           \ 'highlight' : a:color,
+          \ 'col': &columns - strwidth(a:msg) - 3,
+          \ })
+    call self.__floating.win_config(self.border.winid,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg) + 1, 
+          \ 'height'  : 1 + len(s:shown) + 2,
+          \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
   else
@@ -112,7 +120,6 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : 1 + len(s:shown) + 2,
           \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 3,
-          \ 'highlight' : a:color,
           \ })
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
