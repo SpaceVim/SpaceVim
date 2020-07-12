@@ -69,13 +69,34 @@ endfunction
 
 
 function! s:self.close(...) dict
-  if len(s:shown) == 1
-    noautocmd call self.__floating.win_close(self.border.winid, v:true)
-    noautocmd call self.__floating.win_close(self.winid, v:true)
-    let self.win_is_open = v:false
-  endif
   if !empty(s:shown)
     call remove(s:shown, 0)
+  endif
+  if len(s:shown) == 0
+    call self.__floating.win_close(self.border.winid, v:true)
+    call self.__floating.win_close(self.winid, v:true)
+    let self.win_is_open = v:false
+  else
+    call self.__floating.win_config(self.winid,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg), 
+          \ 'height'  : len(s:shown),
+          \ 'row': 3,
+          \ 'highlight' : a:color,
+          \ 'focusable' : v:false,
+          \ 'col': &columns - strwidth(a:msg) - 1,
+          \ })
+    call self.__floating.win_config(self.border.winid,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'height'  : len(s:shown) + 2,
+          \ 'row': 2,
+          \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'highlight' : 'VertSplit',
+          \ 'focusable' : v:false,
+          \ })
   endif
 endfunction
 
