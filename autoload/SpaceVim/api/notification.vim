@@ -17,6 +17,7 @@ let s:self = {}
 
 let s:self.winid = -1
 let s:self.bufnr = -1
+let s:self.border = {}
 let s:self.border.winid = -1
 let s:self.border.bufnr = -1
 let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
@@ -73,7 +74,7 @@ endfunction
 let s:buffer_id = s:BUFFER.bufadd('')
 let s:timer_id = -1
 
-function! s:self.close(...) abort
+function! s:self.close(...) dict
   if len(s:shown) == 1
     noautocmd call self.__floating.win_close(self.border.winid, v:true)
     noautocmd call self.__floating.win_close(self.winid, v:true)
@@ -101,7 +102,7 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : 1 + len(s:shown),
           \ 'row': 2,
           \ 'highlight' : a:color,
-          \ 'col': &columns - strwidth(a:msg) - 3
+          \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
   else
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
@@ -110,7 +111,7 @@ function! s:self.notification(msg, color) abort
           \ 'width'   : strwidth(a:msg) + 1, 
           \ 'height'  : 1 + len(s:shown) + 2,
           \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 3
+          \ 'col': &columns - strwidth(a:msg) - 3,
           \ 'highlight' : a:color,
           \ })
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
@@ -131,7 +132,7 @@ function! s:self.notification(msg, color) abort
   call setbufvar(self.bufnr, '&number', 0)
   call setbufvar(self.bufnr, '&relativenumber', 0)
   call setbufvar(self.bufnr, '&buftype', 'nofile')
-  call timer_start(self.timeout, function('self.close'), {'repeat' : 1})
+  call timer_start(self.timeout, self.close, {'repeat' : 1})
 endfunction
 
 
