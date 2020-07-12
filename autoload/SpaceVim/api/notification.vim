@@ -84,7 +84,7 @@ function! s:self.close(...) dict
     let self.win_is_open = v:false
   endif
   for hashkey in keys(s:notifications)
-      call s:notifications[hashkey].redraw_windows()
+      noautocmd call s:notifications[hashkey].redraw_windows()
   endfor
 endfunction
 
@@ -100,7 +100,7 @@ function! s:self.notification(msg, color) abort
   if empty(self.hashkey)
     let self.hashkey = self.__password.generate_simple(10)
   endif
-  call self.redraw_windows()
+  noautocmd call self.redraw_windows()
   call setbufvar(self.bufnr, '&number', 0)
   call setbufvar(self.bufnr, '&relativenumber', 0)
   call setbufvar(self.bufnr, '&buftype', 'nofile')
