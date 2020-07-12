@@ -82,9 +82,10 @@ function! s:self.close(...) dict
     noautocmd call self.__floating.win_close(self.winid, v:true)
     call remove(s:notifications, self.hashkey)
     let self.win_is_open = v:false
-  else
-    call self.redraw_windows()
   endif
+  for hashkey in keys(s:notifications)
+      call s:notifications[hashkey].redraw_windows()
+  endfor
 endfunction
 
 function! s:self.notification(msg, color) abort
