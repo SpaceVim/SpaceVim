@@ -83,6 +83,10 @@ function! s:self.close(...) dict
     call remove(s:notifications, self.hashkey)
     let self.win_is_open = v:false
   else
+    let self.begin_row = 2
+    for hashkey in keys(s:notifications)
+      let self.begin_row += len(s:notifications[hashkey].message) + 2
+    endfor
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
     call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
     call self.__floating.win_config(self.winid,
@@ -90,7 +94,7 @@ function! s:self.close(...) dict
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(self.message),
-          \ 'row': 3,
+          \ 'row': self.begin_row + 1,
           \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
           \ 'col': &columns - self.notification_width - 1,
@@ -100,7 +104,7 @@ function! s:self.close(...) dict
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(self.message) + 2,
-          \ 'row': 2,
+          \ 'row': self.begin_row,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
@@ -123,13 +127,17 @@ function! s:self.notification(msg, color) abort
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(self.message)))
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
+  let self.begin_row = 2
+  for hashkey in keys(s:notifications)
+    let self.begin_row += len(s:notifications[hashkey].message) + 2
+  endfor
   if self.win_is_open
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(self.message),
-          \ 'row': 3,
+          \ 'row': self.begin_row + 1,
           \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
           \ 'col': &columns - self.notification_width - 1,
@@ -139,7 +147,7 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(self.message) + 2,
-          \ 'row': 2,
+          \ 'row': self.begin_row,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
@@ -150,7 +158,7 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(self.message),
-          \ 'row': 3,
+          \ 'row': self.begin_row + 1,
           \ 'highlight' : self.notification_color,
           \ 'col': &columns - self.notification_width - 1,
           \ 'focusable' : v:false,
@@ -160,7 +168,7 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(self.message) + 2,
-          \ 'row': 2,
+          \ 'row': self.begin_row,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
