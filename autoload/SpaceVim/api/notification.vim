@@ -1,12 +1,52 @@
 let s:self = {}
 
+let s:self.winid = -1
+let s:self.border.winid = -1
+let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
+
 if has('nvim')
-    let s:FLOATING = SpaceVim#api#import('neovim#floating')
+    let s:self.__floating = SpaceVim#api#import('neovim#floating')
 else
-    let s:FLOATING = SpaceVim#api#import('vim#floating')
+    let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
+function! s:self.draw_border(title, width, height) abort
+  let top = self.borderchars[4] .
+          \ repeat(self.borderchars[0], a:width) .
+          \ self.borderchars[5]
+  let mid = self.borderchars[3] .
+          \ repeat(' ', a:width) .
+          \ self.borderchars[1]
+  let bot = self.borderchars[7] .
+          \ repeat(self.borderchars[2], a:width) .
+          \ self.borderchars[6]
+  let top = self.string_compose(top, 1, a:title)
+  let lines = [top] + repeat([mid], a:height) + [bot]
+  return lines
+endfunction
+
+function! s:self.string_compose(target, pos, source)
+  if a:source == ''
+    return a:target
+  endif
+  let pos = a:pos
+  let source = a:source
+  if pos < 0
+    let source = strcharpart(a:source, -pos)
+    let pos = 0
+  endif
+  let target = strcharpart(a:target, 0, pos)
+  if strchars(target) < pos
+    let target .= repeat(' ', pos - strchars(target))
+  endif
+  let target .= source
+  " vim popup will pad the end of title but not begin part
+  " so we build the title as ' floaterm idx/cnt'
+  " therefore, we need to add a space here
+  let target .= ' ' . strcharpart(a:target, pos + strchars(source) + 1)
+  return target
+endfunction
 
 let s:messages = []
 
@@ -19,7 +59,7 @@ let s:win_is_open = v:false
 
 function! s:close(...) abort
     if len(s:shown) == 1
-        noautocmd call s:FLOATING.win_close(s:notification_winid, v:true)
+        noautocmd call self.__floating.win_close(s:notification_winid, v:true)
         let s:win_is_open = v:false
     endif
     if !empty(s:shown)
@@ -30,7 +70,7 @@ endfunction
 function! s:self.notification(msg, color) abort
     call add(s:shown, a:msg)
     if s:win_is_open
-        call s:FLOATING.win_config(s:notification_winid,
+        call self.__floating.win_config(s:notification_winid,
                     \ {
                     \ 'relative': 'editor',
                     \ 'width'   : strwidth(a:msg), 
@@ -40,7 +80,7 @@ function! s:self.notification(msg, color) abort
                     \ 'col': &columns - strwidth(a:msg) - 3
                     \ })
     else
-        let s:notification_winid =  s:FLOATING.open_win(s:buffer_id, v:false,
+        let s:notification_winid =  self.__floating.open_win(s:buffer_id, v:false,
                     \ {
                     \ 'relative': 'editor',
                     \ 'width'   : strwidth(a:msg), 
