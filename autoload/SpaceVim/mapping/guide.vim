@@ -529,7 +529,7 @@ function! s:winopen() abort " {{{
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
   if s:FLOATING.exists()
     if !bufexists(s:bufnr)
-      let s:bufnr = s:BUFFER.bufadd('')
+      let s:bufnr = s:BUFFER.create_buf(v:false, v:true)
     endif
     let s:winid = s:FLOATING.open_win(s:bufnr, v:true,
           \ {

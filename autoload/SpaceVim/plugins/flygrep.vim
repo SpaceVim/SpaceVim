@@ -730,7 +730,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " set default handle func: s:flygrep
   let s:MPT._handle_fly = function('s:flygrep')
   if exists('*nvim_open_win')
-    let s:buffer_id = s:BUFFER.bufadd('')
+    let s:buffer_id = s:BUFFER.create_buf(v:false, v:true)
     let flygrep_win_height = 16
     let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
