@@ -94,7 +94,7 @@ function! s:self.notification(msg, color) abort
           \ {
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg), 
-          \ 'height'  : 1 + len(s:shown),
+          \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 1,
@@ -113,7 +113,7 @@ function! s:self.notification(msg, color) abort
           \ {
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg), 
-          \ 'height'  : 1 + len(s:shown),
+          \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 1
