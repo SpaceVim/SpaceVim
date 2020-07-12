@@ -68,8 +68,6 @@ function! s:self.string_compose(target, pos, source)
 endfunction
 
 
-let s:timer_id = -1
-
 function! s:self.close(...) dict
   if len(s:shown) == 1
     noautocmd call self.__floating.win_close(self.border.winid, v:true)
@@ -90,6 +88,7 @@ function! s:self.notification(msg, color) abort
     let self.bufnr = self.__buffer.create_buf(0, 0)
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(s:shown)))
+  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
   if self.win_is_open
     call self.__floating.win_config(self.winid,
           \ {
@@ -130,7 +129,6 @@ function! s:self.notification(msg, color) abort
           \ })
     let self.win_is_open = v:true
   endif
-  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
   call setbufvar(self.bufnr, '&number', 0)
   call setbufvar(self.bufnr, '&relativenumber', 0)
   call setbufvar(self.bufnr, '&buftype', 'nofile')
