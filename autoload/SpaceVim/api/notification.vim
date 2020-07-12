@@ -10,8 +10,9 @@
 " Global values, this can be used between different notification
 
 
-let s:self = {}
+" dictionary values and functions
 
+let s:self = {}
 let s:self.message = []
 let s:self.winid = -1
 let s:self.bufnr = -1
