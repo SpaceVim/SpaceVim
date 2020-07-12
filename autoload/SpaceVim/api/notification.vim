@@ -9,8 +9,6 @@
 
 " Global values, this can be used between different notification
 
-let s:messages = []
-
 let s:shown = []
 
 let s:self = {}
@@ -79,7 +77,7 @@ function! s:self.close(...) dict
     let self.win_is_open = v:false
   endif
   if !empty(s:shown)
-    call add(s:messages, remove(s:shown, 0))
+    call remove(s:shown, 0)
   endif
 endfunction
 
