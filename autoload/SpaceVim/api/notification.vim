@@ -107,6 +107,7 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : len(s:shown) + 2,
           \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'highlight' : 'Normal',
           \ })
   else
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
@@ -125,6 +126,7 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : len(s:shown) + 2,
           \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'highlight' : 'Normal',
           \ })
     let self.win_is_open = v:true
   endif
