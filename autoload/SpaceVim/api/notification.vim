@@ -97,6 +97,7 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
+          \ 'focusable' : v:false,
           \ 'col': &columns - strwidth(a:msg) - 1,
           \ })
     call self.__floating.win_config(self.border.winid,
@@ -107,6 +108,7 @@ function! s:self.notification(msg, color) abort
           \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 2,
           \ 'highlight' : 'VertSplit',
+          \ 'focusable' : v:false,
           \ })
   else
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
@@ -116,7 +118,8 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
-          \ 'col': &columns - strwidth(a:msg) - 1
+          \ 'col': &columns - strwidth(a:msg) - 1,
+          \ 'focusable' : v:false,
           \ })
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
@@ -126,6 +129,7 @@ function! s:self.notification(msg, color) abort
           \ 'row': 2,
           \ 'col': &columns - strwidth(a:msg) - 2,
           \ 'highlight' : 'VertSplit',
+          \ 'focusable' : v:false,
           \ })
     let self.win_is_open = v:true
   endif
