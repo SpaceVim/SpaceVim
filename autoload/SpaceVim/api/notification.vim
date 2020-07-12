@@ -89,16 +89,8 @@ function! s:self.notification(msg, color) abort
   if !bufexists(self.bufnr)
     let self.bufnr = self.__buffer.create_buf(0, 0)
   endif
-  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg) + 1, 1 + len(s:shown) + 2))
+  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(s:shown)))
   if self.win_is_open
-    call self.__floating.win_config(self.border.winid,
-          \ {
-          \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 1, 
-          \ 'height'  : 1 + len(s:shown) + 2,
-          \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 3,
-          \ })
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
@@ -107,6 +99,14 @@ function! s:self.notification(msg, color) abort
           \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3,
+          \ })
+    call self.__floating.win_config(self.border.winid,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'height'  : len(s:shown) + 2,
+          \ 'row': 2,
+          \ 'col': &columns - strwidth(a:msg) - 2,
           \ })
   else
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
@@ -121,10 +121,10 @@ function! s:self.notification(msg, color) abort
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 1, 
-          \ 'height'  : 1 + len(s:shown) + 2,
-          \ 'row': 3,
-          \ 'col': &columns - strwidth(a:msg) - 3,
+          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'height'  : len(s:shown) + 2,
+          \ 'row': 2,
+          \ 'col': &columns - strwidth(a:msg) - 2,
           \ })
     let self.win_is_open = v:true
   endif
