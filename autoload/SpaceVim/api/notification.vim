@@ -9,10 +9,10 @@
 
 " Global values, this can be used between different notification
 
-let s:shown = []
 
 let s:self = {}
 
+let s:self.message = []
 let s:self.winid = -1
 let s:self.bufnr = -1
 let s:self.border = {}
@@ -69,22 +69,22 @@ endfunction
 
 
 function! s:self.close(...) dict
-  if !empty(s:shown)
-    call remove(s:shown, 0)
-    let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
+  if !empty(self.message)
+    call remove(self.message, 0)
+    let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
   endif
-  if len(s:shown) == 0
+  if len(self.message) == 0
     noautocmd call self.__floating.win_close(self.border.winid, v:true)
     noautocmd call self.__floating.win_close(self.winid, v:true)
     let self.win_is_open = v:false
   else
-    call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(s:shown)))
-    call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
+    call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
+    call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
-          \ 'height'  : len(s:shown),
+          \ 'height'  : len(self.message),
           \ 'row': 3,
           \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
@@ -94,7 +94,7 @@ function! s:self.close(...) dict
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
-          \ 'height'  : len(s:shown) + 2,
+          \ 'height'  : len(self.message) + 2,
           \ 'row': 2,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
@@ -104,8 +104,8 @@ function! s:self.close(...) dict
 endfunction
 
 function! s:self.notification(msg, color) abort
-  call add(s:shown, a:msg)
-  let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
+  call add(self.message, a:msg)
+  let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
   let self.notification_color = a:color
   if !bufexists(self.border.bufnr)
     let self.border.bufnr = self.__buffer.create_buf(0, 0)
@@ -113,14 +113,14 @@ function! s:self.notification(msg, color) abort
   if !bufexists(self.bufnr)
     let self.bufnr = self.__buffer.create_buf(0, 0)
   endif
-  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(s:shown)))
-  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
+  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg), len(self.message)))
+  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
   if self.win_is_open
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
-          \ 'height'  : len(s:shown),
+          \ 'height'  : len(self.message),
           \ 'row': 3,
           \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
@@ -130,7 +130,7 @@ function! s:self.notification(msg, color) abort
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
-          \ 'height'  : len(s:shown) + 2,
+          \ 'height'  : len(self.message) + 2,
           \ 'row': 2,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
@@ -141,7 +141,7 @@ function! s:self.notification(msg, color) abort
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width, 
-          \ 'height'  : len(s:shown),
+          \ 'height'  : len(self.message),
           \ 'row': 3,
           \ 'highlight' : self.notification_color,
           \ 'col': &columns - self.notification_width - 1,
@@ -151,7 +151,7 @@ function! s:self.notification(msg, color) abort
           \ {
           \ 'relative': 'editor',
           \ 'width'   : self.notification_width + 2, 
-          \ 'height'  : len(s:shown) + 2,
+          \ 'height'  : len(self.message) + 2,
           \ 'row': 2,
           \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
