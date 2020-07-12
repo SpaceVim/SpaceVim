@@ -108,7 +108,7 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg), 
           \ 'height'  : 1 + len(s:shown),
-          \ 'row': 2,
+          \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
@@ -127,7 +127,7 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg) + 1, 
           \ 'height'  : 1 + len(s:shown) + 2,
-          \ 'row': 2,
+          \ 'row': 3,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
     let self.win_is_open = v:true
