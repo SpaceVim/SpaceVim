@@ -1,8 +1,24 @@
+"=============================================================================
+" notification.vim --- notification api
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+" Global values, this can be used between different notification
+
+let s:messages = []
+
+let s:shown = []
+
 let s:self = {}
 
 let s:self.winid = -1
 let s:self.border.winid = -1
 let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
+let s:self.title = ''
 
 if has('nvim')
     let s:self.__floating = SpaceVim#api#import('neovim#floating')
@@ -48,9 +64,6 @@ function! s:self.string_compose(target, pos, source)
   return target
 endfunction
 
-let s:messages = []
-
-let s:shown = []
 
 let s:buffer_id = s:BUFFER.bufadd('')
 let s:timer_id = -1
