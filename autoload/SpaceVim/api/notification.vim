@@ -30,7 +30,6 @@ if has('nvim')
 else
   let s:self.__floating = SpaceVim#api#import('vim#floating')
 endif
-let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
 
 function! s:self.draw_border(title, width, height) abort
@@ -71,7 +70,6 @@ function! s:self.string_compose(target, pos, source)
 endfunction
 
 
-let s:buffer_id = s:BUFFER.bufadd('')
 let s:timer_id = -1
 
 function! s:self.close(...) dict
