@@ -74,8 +74,8 @@ function! s:self.close(...) dict
     let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
   endif
   if len(s:shown) == 0
-    call self.__floating.win_close(self.border.winid, v:true)
-    call self.__floating.win_close(self.winid, v:true)
+    noautocmd call self.__floating.win_close(self.border.winid, v:true)
+    noautocmd call self.__floating.win_close(self.winid, v:true)
     let self.win_is_open = v:false
   else
     call self.__floating.win_config(self.winid,
