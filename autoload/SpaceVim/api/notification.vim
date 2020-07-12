@@ -95,6 +95,14 @@ function! s:self.notification(msg, color) abort
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, strwidth(a:msg) + 1, 1 + len(s:shown) + 2))
   if self.win_is_open
+    call self.__floating.win_config(self.border.winid,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg) + 1, 
+          \ 'height'  : 1 + len(s:shown) + 2,
+          \ 'row': 2,
+          \ 'col': &columns - strwidth(a:msg) - 3,
+          \ })
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
@@ -104,23 +112,7 @@ function! s:self.notification(msg, color) abort
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
-    call self.__floating.win_config(self.border.winid,
-          \ {
-          \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 1, 
-          \ 'height'  : 1 + len(s:shown) + 2,
-          \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 3,
-          \ })
   else
-    let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
-          \ {
-          \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 1, 
-          \ 'height'  : 1 + len(s:shown) + 2,
-          \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 3,
-          \ })
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
           \ 'relative': 'editor',
@@ -129,6 +121,14 @@ function! s:self.notification(msg, color) abort
           \ 'row': 2,
           \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3
+          \ })
+    let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : strwidth(a:msg) + 1, 
+          \ 'height'  : 1 + len(s:shown) + 2,
+          \ 'row': 2,
+          \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
     let self.win_is_open = v:true
   endif
