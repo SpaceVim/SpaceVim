@@ -78,6 +78,8 @@ function! s:self.close(...) dict
     noautocmd call self.__floating.win_close(self.winid, v:true)
     let self.win_is_open = v:false
   else
+    call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(s:shown)))
+    call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:shown)
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
