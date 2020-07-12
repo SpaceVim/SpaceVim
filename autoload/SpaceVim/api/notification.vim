@@ -98,7 +98,7 @@ function! s:self.notification(msg, color) abort
           \ 'height'  : 1 + len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
-          \ 'col': &columns - strwidth(a:msg) - 3,
+          \ 'col': &columns - strwidth(a:msg) - 1,
           \ })
     call self.__floating.win_config(self.border.winid,
           \ {
@@ -115,9 +115,9 @@ function! s:self.notification(msg, color) abort
           \ 'relative': 'editor',
           \ 'width'   : strwidth(a:msg), 
           \ 'height'  : 1 + len(s:shown),
-          \ 'row': 2,
+          \ 'row': 3,
           \ 'highlight' : a:color,
-          \ 'col': &columns - strwidth(a:msg) - 3
+          \ 'col': &columns - strwidth(a:msg) - 1
           \ })
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
