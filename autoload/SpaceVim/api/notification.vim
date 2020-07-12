@@ -71,6 +71,7 @@ endfunction
 function! s:self.close(...) dict
   if !empty(s:shown)
     call remove(s:shown, 0)
+    let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
   endif
   if len(s:shown) == 0
     call self.__floating.win_close(self.border.winid, v:true)
@@ -80,20 +81,20 @@ function! s:self.close(...) dict
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg), 
+          \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'focusable' : v:false,
-          \ 'col': &columns - strwidth(a:msg) - 1,
+          \ 'col': &columns - self.notification_width - 1,
           \ })
     call self.__floating.win_config(self.border.winid,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(s:shown) + 2,
           \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
           \ })
@@ -102,6 +103,7 @@ endfunction
 
 function! s:self.notification(msg, color) abort
   call add(s:shown, a:msg)
+  let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
   if !bufexists(self.border.bufnr)
     let self.border.bufnr = self.__buffer.create_buf(0, 0)
   endif
@@ -114,20 +116,20 @@ function! s:self.notification(msg, color) abort
     call self.__floating.win_config(self.winid,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg), 
+          \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
           \ 'focusable' : v:false,
-          \ 'col': &columns - strwidth(a:msg) - 1,
+          \ 'col': &columns - self.notification_width - 1,
           \ })
     call self.__floating.win_config(self.border.winid,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(s:shown) + 2,
           \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
           \ })
@@ -135,20 +137,20 @@ function! s:self.notification(msg, color) abort
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg), 
+          \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
           \ 'highlight' : a:color,
-          \ 'col': &columns - strwidth(a:msg) - 1,
+          \ 'col': &columns - self.notification_width - 1,
           \ 'focusable' : v:false,
           \ })
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : strwidth(a:msg) + 2, 
+          \ 'width'   : self.notification_width + 2, 
           \ 'height'  : len(s:shown) + 2,
           \ 'row': 2,
-          \ 'col': &columns - strwidth(a:msg) - 2,
+          \ 'col': &columns - self.notification_width - 2,
           \ 'highlight' : 'VertSplit',
           \ 'focusable' : v:false,
           \ })
