@@ -101,6 +101,7 @@ function! s:self.notification(msg, color) abort
           \ 'width'   : strwidth(a:msg) + 1, 
           \ 'height'  : 1 + len(s:shown) + 2,
           \ 'row': 2,
+          \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
     call self.__floating.win_config(self.winid,
@@ -128,6 +129,7 @@ function! s:self.notification(msg, color) abort
           \ 'width'   : strwidth(a:msg) + 1, 
           \ 'height'  : 1 + len(s:shown) + 2,
           \ 'row': 3,
+          \ 'highlight' : a:color,
           \ 'col': &columns - strwidth(a:msg) - 3,
           \ })
     let self.win_is_open = v:true
