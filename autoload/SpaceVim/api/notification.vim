@@ -99,13 +99,13 @@ function! s:self.notification(msg, color) abort
   if empty(self.hashkey)
     let self.hashkey = self.__password.generate_simple(10)
   endif
+  call self.redraw_windows()
   call setbufvar(self.bufnr, '&number', 0)
   call setbufvar(self.bufnr, '&relativenumber', 0)
   call setbufvar(self.bufnr, '&buftype', 'nofile')
   call setbufvar(self.border.bufnr, '&number', 0)
   call setbufvar(self.border.bufnr, '&relativenumber', 0)
   call setbufvar(self.border.bufnr, '&buftype', 'nofile')
-  call self.redraw_windows()
   call extend(s:notifications, {self.hashkey : self})
   call timer_start(self.timeout, self.close, {'repeat' : 1})
 endfunction
