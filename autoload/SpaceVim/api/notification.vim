@@ -9,7 +9,7 @@
 
 " Global values, this can be used between different notification
 
-let s:notifications = []
+let s:notifications = {}
 
 " dictionary values and functions
 
