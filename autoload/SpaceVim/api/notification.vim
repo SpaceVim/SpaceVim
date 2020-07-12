@@ -84,7 +84,7 @@ function! s:self.close(...) dict
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
-          \ 'highlight' : a:color,
+          \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
           \ 'col': &columns - self.notification_width - 1,
           \ })
@@ -104,6 +104,7 @@ endfunction
 function! s:self.notification(msg, color) abort
   call add(s:shown, a:msg)
   let self.notification_width = max(map(deepcopy(s:shown), 'strwidth(v:val)'))
+  let self.notification_color = a:color
   if !bufexists(self.border.bufnr)
     let self.border.bufnr = self.__buffer.create_buf(0, 0)
   endif
@@ -119,7 +120,7 @@ function! s:self.notification(msg, color) abort
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
-          \ 'highlight' : a:color,
+          \ 'highlight' : self.notification_color,
           \ 'focusable' : v:false,
           \ 'col': &columns - self.notification_width - 1,
           \ })
@@ -140,7 +141,7 @@ function! s:self.notification(msg, color) abort
           \ 'width'   : self.notification_width, 
           \ 'height'  : len(s:shown),
           \ 'row': 3,
-          \ 'highlight' : a:color,
+          \ 'highlight' : self.notification_color,
           \ 'col': &columns - self.notification_width - 1,
           \ 'focusable' : v:false,
           \ })
