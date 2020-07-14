@@ -180,16 +180,17 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
         call bufload(a:buffer)
       endif
       " 0, -1
-      let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
       if len(a:replacement) == a:end - a:start
         for i in range(a:start, a:end - 1)
           call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
         endfor
       else
+        let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
         let replacement = a:replacement + endtext
         for i in range(a:start, len(replacement) + a:start - 1)
           call setbufline(a:buffer, i + 1, replacement[i - a:start])
         endfor
+        call deletebufline(a:buffer,len(replacement) + a:start, '$')
       endif
     elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
       call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
