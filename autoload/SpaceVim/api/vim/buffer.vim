@@ -191,9 +191,11 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
         endfor
       endif
     elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
-      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
+      " len = 5, 3 -2  => 3 , 5
+      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 2, a:strict_indexing, a:replacement)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+      " len = 5, -3 -2 => 3, 5
+      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
     endif
   elseif has('python')
     py import vim
