@@ -159,11 +159,14 @@ endif
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
+  if !bufexists(a:buffer)
+    return
+  endif
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines')
+  if exists('*nvim_buf_set_lines') && 0
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif exists('*deletebufline') && exists('*bufload')
+  elseif exists('*deletebufline') && exists('*bufload') && 0
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
@@ -198,25 +201,33 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
     endif
   elseif has('python')
-    py import vim
-    py import string
-    if bufexists(a:buffer)
-      py bufnr = int(vim.eval("a:buffer"))
-      py start_line = int(vim.eval("a:start"))
-      py end_line = int(vim.eval("a:end"))
-      py lines = vim.eval("a:replacement")
-      py vim.buffers[bufnr][start_line:end_line] = lines
-    endif
+py << EOF
+import vim
+import string
+bufnr = int(vim.eval("a:buffer"))
+start_line = int(vim.eval("a:start"))
+if start_line < -1:
+    start_line += 1
+end_line = int(vim.eval("a:end"))
+if end_line < -1:
+    end_line += 1
+lines = vim.eval("a:replacement")
+vim.buffers[bufnr][start_line:end_line] = lines
+EOF
   elseif has('python3')
-    py3 import vim
-    py3 import string
-    if bufexists(a:buffer)
-      py3 bufnr = int(vim.eval("a:buffer"))
-      py3 start_line = int(vim.eval("a:start"))
-      py3 end_line = int(vim.eval("a:end"))
-      py3 lines = vim.eval("a:replacement")
-      py3 vim.buffers[bufnr][start_line:end_line] = lines
-    endif
+py3 << EOF
+import vim
+import string
+bufnr = int(vim.eval("a:buffer"))
+start_line = int(vim.eval("a:start"))
+if start_line < -1:
+    start_line += 1
+end_line = int(vim.eval("a:end"))
+if end_line < -1:
+    end_line += 1
+lines = vim.eval("a:replacement")
+vim.buffers[bufnr][start_line:end_line] = lines
+EOF
   elseif has('lua')
     " @todo add lua support
     lua require("spacevim.api.vim.buffer").buf_set_lines(
