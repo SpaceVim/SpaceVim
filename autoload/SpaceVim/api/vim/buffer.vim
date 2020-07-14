@@ -161,9 +161,9 @@ endif
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines') && 0
+  if exists('*nvim_buf_set_lines')
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif has('python') && 0
+  elseif has('python')
     py import vim
     py import string
     if bufexists(a:buffer)
@@ -173,7 +173,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py lines = vim.eval("a:replacement")
       py vim.buffers[bufnr][start_line:end_line] = lines
     endif
-  elseif has('python3') && 0
+  elseif has('python3')
     py3 import vim
     py3 import string
     if bufexists(a:buffer)
@@ -181,9 +181,9 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py3 start_line = int(vim.eval("a:start"))
       py3 end_line = int(vim.eval("a:end"))
       py3 lines = vim.eval("a:replacement")
-      py3 vim.buffers[bufnr][start_line:end_line - 1] = lines
+      py3 vim.buffers[bufnr][start_line:end_line] = lines
     endif
-  elseif has('lua') && 0
+  elseif has('lua')
     " @todo add lua support
     lua require("spacevim.api.vim.buffer").buf_set_lines(
           \ vim.eval("a:winid"),
