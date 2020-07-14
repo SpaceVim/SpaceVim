@@ -163,7 +163,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
   call setbufvar(a:buffer,'&ma', 1)
   if exists('*nvim_buf_set_lines')
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif exists('*setbufline') && exists('*bufload')
+  elseif exists('*deletebufline') && exists('*bufload')
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
@@ -179,7 +179,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       if !bufloaded(a:buffer)
         call bufload(a:buffer)
       endif
-      " 0, -1
+      " 0, 1 len = 1 a:replacement = 4
       if len(a:replacement) == a:end - a:start
         for i in range(a:start, a:end - 1)
           call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
@@ -190,7 +190,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
         for i in range(a:start, len(replacement) + a:start - 1)
           call setbufline(a:buffer, i + 1, replacement[i - a:start])
         endfor
-        call deletebufline(a:buffer,len(replacement) + a:start, '$')
+        call deletebufline(a:buffer,len(replacement) + a:start + 1, '$')
       endif
     elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
       call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
