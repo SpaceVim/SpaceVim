@@ -172,12 +172,16 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     if a:start > lct
       return
     elseif a:start >= 0 && a:end > a:start
-      if !buflisted(a:buffer)
+      " in vim, setbufline will not load buffer automatically
+      " but in neovim, nvim_buf_set_lines will do it.
+      " @fixme vim issue #5044
+      " https://github.com/vim/vim/issues/5044
+      if !bufloaded(a:buffer)
         call bufload(a:buffer)
       endif
-      let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end, '$')
+      let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
       if len(a:replacement) == a:end - a:start
-        for i in range(a:start, len(a:replacement) + a:start - 1)
+        for i in range(a:start, a:end - 1)
           call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
         endfor
       else
