@@ -90,6 +90,7 @@ function! s:self.open_win(buffer, focuce, options) abort
           \ 'maxwidth' : width,
           \ 'minwidth' : width,
           \ 'highlight' : highlight,
+          \ 'scrollbar' : 0,
           \ }
   endif
   return popup_create(a:buffer, opt)
@@ -113,6 +114,7 @@ function! s:self.win_config(winid, options) abort
           \ 'maxwidth' : width,
           \ 'minwidth' : width,
           \ 'highlight' : highlight,
+          \ 'scrollbar' : 0,
           \ }
   endif
   return popup_setoptions(a:winid, opt)
