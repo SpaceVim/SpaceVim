@@ -161,9 +161,9 @@ endif
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines')
+  if exists('*nvim_buf_set_lines') && 0
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif has('python')
+  elseif has('python') && 0
     py import vim
     py import string
     if bufexists(a:buffer)
@@ -173,7 +173,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py lines = vim.eval("a:replacement")
       py vim.buffers[bufnr][start_line:end_line] = lines
     endif
-  elseif has('python3')
+  elseif has('python3') && 0
     py3 import vim
     py3 import string
     if bufexists(a:buffer)
@@ -181,7 +181,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       py3 start_line = int(vim.eval("a:start"))
       py3 end_line = int(vim.eval("a:end"))
       py3 lines = vim.eval("a:replacement")
-      py3 vim.buffers[bufnr][start_line:end_line] = lines
+      py3 vim.buffers[bufnr][start_line:end_line - 1] = lines
     endif
   elseif has('lua') && 0
     " @todo add lua support
@@ -191,7 +191,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           \ vim.eval("a:end"),
           \ vim.eval("a:replacement")
           \ )
-  elseif exists('*setbufline') && exists('*bufload') && 0
+  elseif exists('*setbufline') && exists('*bufload')
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
