@@ -179,6 +179,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       if !bufloaded(a:buffer)
         call bufload(a:buffer)
       endif
+      " 0, -1
       let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
       if len(a:replacement) == a:end - a:start
         for i in range(a:start, a:end - 1)
@@ -190,11 +191,9 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
           call setbufline(a:buffer, i + 1, replacement[i - a:start])
         endfor
       endif
-    elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
-      " len = 5, 3 -2  => 3 , 5
-      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 2, a:strict_indexing, a:replacement)
+    elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
+      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-      " len = 5, -3 -2 => 3, 5
       call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
     endif
   elseif has('python')

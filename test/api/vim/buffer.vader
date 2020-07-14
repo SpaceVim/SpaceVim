@@ -17,6 +17,8 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 1', 'replace 2', 'replace 3']
   call buffer.buf_set_lines(nr, 2, -2, 0, ['replace 1', 'replace 2', 'replace 3'])
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 1', 'replace 2', 'replace 3', 'replace 3']
+  call buffer.buf_set_lines(nr, 0, -1, 0, ['line 1'])
+  AssertEqual getbufline(nr, 1, '$'), ['line 1']
   exe 'bd!' nr
   unlet nr
   unlet buffer
