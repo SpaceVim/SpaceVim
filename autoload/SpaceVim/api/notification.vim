@@ -84,7 +84,7 @@ function! s:self.close(...) dict
     let self.win_is_open = v:false
   endif
   for hashkey in keys(s:notifications)
-      noautocmd call s:notifications[hashkey].redraw_windows()
+      call s:notifications[hashkey].redraw_windows()
   endfor
 endfunction
 
