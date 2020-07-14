@@ -164,9 +164,9 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
   endif
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines') && 0
+  if exists('*nvim_buf_set_lines')
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif exists('*deletebufline') && exists('*bufload') && 0
+  elseif exists('*deletebufline') && exists('*bufload')
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
