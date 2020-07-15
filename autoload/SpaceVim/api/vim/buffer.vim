@@ -231,7 +231,7 @@ EOF
   elseif has('lua')
     " @todo add lua support
     lua require("spacevim.api.vim.buffer").buf_set_lines(
-          \ vim.eval("a:winid"),
+          \ vim.eval("a:buffer"),
           \ vim.eval("a:start"),
           \ vim.eval("a:end"),
           \ vim.eval("a:replacement")
