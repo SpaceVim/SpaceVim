@@ -159,39 +159,14 @@ endif
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
+  if !bufexists(a:buffer)
+    return
+  endif
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
   if exists('*nvim_buf_set_lines')
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif has('python')
-    py import vim
-    py import string
-    if bufexists(a:buffer)
-      py bufnr = int(vim.eval("a:buffer"))
-      py start_line = int(vim.eval("a:start"))
-      py end_line = int(vim.eval("a:end"))
-      py lines = vim.eval("a:replacement")
-      py vim.buffers[bufnr][start_line:end_line] = lines
-    endif
-  elseif has('python3')
-    py3 import vim
-    py3 import string
-    if bufexists(a:buffer)
-      py3 bufnr = int(vim.eval("a:buffer"))
-      py3 start_line = int(vim.eval("a:start"))
-      py3 end_line = int(vim.eval("a:end"))
-      py3 lines = vim.eval("a:replacement")
-      py3 vim.buffers[bufnr][start_line:end_line] = lines
-    endif
-  elseif has('lua') && 0
-    " @todo add lua support
-    lua require("spacevim.api.vim.buffer").buf_set_lines(
-          \ vim.eval("a:winid"),
-          \ vim.eval("a:start"),
-          \ vim.eval("a:end"),
-          \ vim.eval("a:replacement")
-          \ )
-  elseif exists('*setbufline') && exists('*bufload') && 0
+  elseif exists('*deletebufline') && exists('*bufload')
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
@@ -204,26 +179,63 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
       " but in neovim, nvim_buf_set_lines will do it.
       " @fixme vim issue #5044
       " https://github.com/vim/vim/issues/5044
-      let endtext = a:end > lct ? [] : getbufline(a:buffer, a:end + 1, '$')
-      if !buflisted(a:buffer)
+      if !bufloaded(a:buffer)
         call bufload(a:buffer)
       endif
-      " 0 start end $
+      " 0, 1 len = 1 a:replacement = 4
       if len(a:replacement) == a:end - a:start
-        for i in range(a:start, len(a:replacement) + a:start - 1)
+        for i in range(a:start, a:end - 1)
           call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
         endfor
       else
+        let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
         let replacement = a:replacement + endtext
         for i in range(a:start, len(replacement) + a:start - 1)
           call setbufline(a:buffer, i + 1, replacement[i - a:start])
         endfor
+        call deletebufline(a:buffer,len(replacement) + a:start + 1, '$')
       endif
-    elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
+    elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
       call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
     endif
+  elseif has('python')
+py << EOF
+import vim
+import string
+bufnr = int(vim.eval("a:buffer"))
+start_line = int(vim.eval("a:start"))
+if start_line < 0:
+    start_line = len(vim.buffers[bufnr]) + 1 + start_line
+end_line = int(vim.eval("a:end"))
+if end_line < 0:
+    end_line = len(vim.buffers[bufnr]) + 1 + end_line
+lines = vim.eval("a:replacement")
+vim.buffers[bufnr][start_line:end_line] = lines
+EOF
+  elseif has('python3')
+py3 << EOF
+import vim
+import string
+bufnr = int(vim.eval("a:buffer"))
+start_line = int(vim.eval("a:start"))
+if start_line < 0:
+    start_line = len(vim.buffers[bufnr]) + 1 + start_line
+end_line = int(vim.eval("a:end"))
+if end_line < 0:
+    end_line = len(vim.buffers[bufnr]) + 1 + end_line
+lines = vim.eval("a:replacement")
+vim.buffers[bufnr][start_line:end_line] = lines
+EOF
+  elseif has('lua')
+    " @todo add lua support
+    noautocmd lua require("spacevim.api.vim.buffer").set_lines(
+          \ vim.eval("a:buffer"),
+          \ vim.eval("a:start"),
+          \ vim.eval("a:end"),
+          \ vim.eval("a:replacement")
+          \ )
   else
     exe 'b' . a:buffer
     let lct = line('$')
