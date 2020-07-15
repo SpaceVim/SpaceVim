@@ -164,9 +164,9 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
   endif
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines')
+  if exists('*nvim_buf_set_lines') && 0
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
-  elseif exists('*deletebufline') && exists('*bufload')
+  elseif exists('*deletebufline') && exists('*bufload') && 0
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
@@ -206,11 +206,11 @@ import vim
 import string
 bufnr = int(vim.eval("a:buffer"))
 start_line = int(vim.eval("a:start"))
-if start_line < -1:
-    start_line += 1
+if start_line < 0:
+    start_line = len(vim.buffers[bufnr]) + 1 + start_line
 end_line = int(vim.eval("a:end"))
 if end_line < -1:
-    end_line += 1
+    end_line = len(vim.buffers[bufnr]) + 1 + end_line
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
@@ -220,11 +220,11 @@ import vim
 import string
 bufnr = int(vim.eval("a:buffer"))
 start_line = int(vim.eval("a:start"))
-if start_line < -1:
-    start_line += 1
+if start_line < 0:
+    start_line = len(vim.buffers[bufnr]) + 1 + start_line
 end_line = int(vim.eval("a:end"))
 if end_line < -1:
-    end_line += 1
+    end_line = len(vim.buffers[bufnr]) + 1 + end_line
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
