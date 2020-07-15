@@ -5,7 +5,7 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
         startindex = #vim.buffer(bufnr) + 1 + startindex
     end
     if endindex < 0 then
-        endindex = #vim.buffer(bufnr) + 1 + startindex
+        endindex = #vim.buffer(bufnr) + 1 + endindex
     end
     if #replacement == endindex - startindex then
         for i = startindex, endindex - 1, 1
