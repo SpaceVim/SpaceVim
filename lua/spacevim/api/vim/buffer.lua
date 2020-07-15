@@ -19,10 +19,10 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
                 replacement:add(vim.buffer(bufnr)[i])
             end
         end
-        for i = startindex, #replacement + startindex - 1 - 1, 1
+        for i = startindex, #replacement + startindex - 1, 1
         do
             if i + 1 > #vim.buffer(bufnr) then
-                vim.buffer(bufnr):insert(replacement[i - startindex + 1])
+                vim.buffer(bufnr):insert(replacement[i - startindex])
             else
                 vim.buffer(bufnr)[i + 1] = replacement[i - startindex + 1]
             end
