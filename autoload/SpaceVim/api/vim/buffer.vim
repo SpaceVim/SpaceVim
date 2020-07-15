@@ -200,7 +200,7 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
       call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
     endif
-  elseif has('python')
+  elseif has('python') && 0
 py << EOF
 import vim
 import string
@@ -214,7 +214,7 @@ if end_line < 0:
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
-  elseif has('python3')
+  elseif has('python3') && 0
 py3 << EOF
 import vim
 import string
