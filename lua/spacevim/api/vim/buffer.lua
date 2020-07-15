@@ -8,7 +8,7 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
         endindex = #vim.buffer(bufnr) + 1 + startindex
     end
     if #replacement == endindex - startindex then
-        for i = startindex, endindex, 1
+        for i = startindex, endindex - 1, 1
         do
             vim.buffer(bufnr)[i + 1] = replacement[i - startindex]
         end
@@ -18,16 +18,16 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
             do
                 replacement:add(vim.buffer(bufnr)[i])
             end
-            for i = startindex, #replacement + startindex, 1
-            do
-                vim.buffer(bufnr)[i + 1] = replacement[i - startindex]
-            end
-            for i = #replacement + startindex + 1, #vim.buffer(bufnr), 1
-            do
-                vim.buffer(bufnr)[#replacement + startindex + 1] = nil
-            end
-
         end
+        for i = startindex, #replacement + startindex, 1
+        do
+            vim.buffer(bufnr)[i + 1] = replacement[i - startindex]
+        end
+        for i = #replacement + startindex + 1, #vim.buffer(bufnr), 1
+        do
+            vim.buffer(bufnr)[#replacement + startindex + 1] = nil
+        end
+
     end
 end
 
