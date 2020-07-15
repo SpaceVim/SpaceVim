@@ -209,7 +209,7 @@ start_line = int(vim.eval("a:start"))
 if start_line < 0:
     start_line = len(vim.buffers[bufnr]) + 1 + start_line
 end_line = int(vim.eval("a:end"))
-if end_line < -1:
+if end_line < 0:
     end_line = len(vim.buffers[bufnr]) + 1 + end_line
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
@@ -223,7 +223,7 @@ start_line = int(vim.eval("a:start"))
 if start_line < 0:
     start_line = len(vim.buffers[bufnr]) + 1 + start_line
 end_line = int(vim.eval("a:end"))
-if end_line < -1:
+if end_line < 0:
     end_line = len(vim.buffers[bufnr]) + 1 + end_line
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
