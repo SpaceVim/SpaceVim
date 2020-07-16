@@ -33,7 +33,6 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:winid = -1
 let s:bufnr = -1
 
-
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
 endfunction "}}}
@@ -405,7 +404,6 @@ function! s:start_buffer() abort " {{{
     let layout.win_dim = min([g:leaderGuide_max_size, layout.win_dim])
   endif
 
-
   call setbufvar(s:bufnr, '&modifiable', 1)
   if s:FLOATING.exists()
     let rst = s:FLOATING.win_config(s:winid, 
@@ -415,6 +413,7 @@ function! s:start_buffer() abort " {{{
           \ 'height'  : layout.win_dim + 2,
           \ 'row'     : &lines - layout.win_dim - 4,
           \ 'col'     : 0
+          \ })
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -545,17 +544,6 @@ function! s:winopen() abort " {{{
           \ 'row'     : &lines - 14,
           \ 'col'     : 0
           \ })
-    let s:gwin = winnr()
-  elseif exists('*popup_create')
-    if !bufexists(s:bufnr)
-      let s:bufnr = bufadd('')
-    endif
-    let s:gwin = win_id2win(popup_create(s:bufnr,{
-          \ 'line' : &lines - 13,
-          \ 'col' : 1,
-          \ 'minwidth' : &columns,
-          \ 'minheight' : 11,
-          \ }))
   else
     if bufexists(s:bufnr)
       let qfbuf = &buftype ==# 'quickfix'
